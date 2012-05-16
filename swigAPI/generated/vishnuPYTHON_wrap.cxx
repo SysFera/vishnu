@@ -8330,6 +8330,351 @@ SWIGINTERN PyObject *ListUsers_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   return SWIG_Py_Void();
 }
 
+SWIGINTERN PyObject *_wrap_new_ListUsersOptions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_ListUsersOptions")) SWIG_fail;
+  result = (UMS_Data::ListUsersOptions *)new UMS_Data::ListUsersOptions();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_UMS_Data__ListUsersOptions, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_ListUsersOptions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_ListUsersOptions",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_ListUsersOptions" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ListUsersOptions__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions__initialize" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_getUserId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ListUsersOptions_getUserId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_getUserId" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  result = (ecore::EString *) &((UMS_Data::ListUsersOptions const *)arg1)->getUserId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_setUserId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ListUsersOptions_setUserId",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_setUserId" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ListUsersOptions_setUserId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ListUsersOptions_setUserId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setUserId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_getAuthSystemId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ListUsersOptions_getAuthSystemId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_getAuthSystemId" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  result = (ecore::EString *) &((UMS_Data::ListUsersOptions const *)arg1)->getAuthSystemId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_setAuthSystemId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ListUsersOptions_setAuthSystemId",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_setAuthSystemId" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ListUsersOptions_setAuthSystemId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ListUsersOptions_setAuthSystemId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setAuthSystemId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ListUsersOptions_eGet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_eGet" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ListUsersOptions_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "ListUsersOptions_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OOO:ListUsersOptions_eSet",&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_eSet" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ListUsersOptions_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "ListUsersOptions_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ListUsersOptions_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ListUsersOptions_eIsSet",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_eIsSet" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ListUsersOptions_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"OO:ListUsersOptions_eUnset",&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions_eUnset" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ListUsersOptions_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListUsersOptions__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ListUsersOptions__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_UMS_Data__ListUsersOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListUsersOptions__eClass" "', argument " "1"" of type '" "UMS_Data::ListUsersOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< UMS_Data::ListUsersOptions * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *ListUsersOptions_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_UMS_Data__ListUsersOptions, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
 SWIGINTERN PyObject *_wrap_new_Command(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   UMS_Data::Command *result = 0 ;
@@ -49808,6 +50153,19 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ListUsers_eUnset", _wrap_ListUsers_eUnset, METH_VARARGS, NULL},
 	 { (char *)"ListUsers__eClass", _wrap_ListUsers__eClass, METH_VARARGS, NULL},
 	 { (char *)"ListUsers_swigregister", ListUsers_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_ListUsersOptions", _wrap_new_ListUsersOptions, METH_VARARGS, NULL},
+	 { (char *)"delete_ListUsersOptions", _wrap_delete_ListUsersOptions, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions__initialize", _wrap_ListUsersOptions__initialize, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_getUserId", _wrap_ListUsersOptions_getUserId, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_setUserId", _wrap_ListUsersOptions_setUserId, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_getAuthSystemId", _wrap_ListUsersOptions_getAuthSystemId, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_setAuthSystemId", _wrap_ListUsersOptions_setAuthSystemId, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_eGet", _wrap_ListUsersOptions_eGet, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_eSet", _wrap_ListUsersOptions_eSet, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_eIsSet", _wrap_ListUsersOptions_eIsSet, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_eUnset", _wrap_ListUsersOptions_eUnset, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions__eClass", _wrap_ListUsersOptions__eClass, METH_VARARGS, NULL},
+	 { (char *)"ListUsersOptions_swigregister", ListUsersOptions_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_Command", _wrap_new_Command, METH_VARARGS, NULL},
 	 { (char *)"delete_Command", _wrap_delete_Command, METH_VARARGS, NULL},
 	 { (char *)"Command__initialize", _wrap_Command__initialize, METH_VARARGS, NULL},
@@ -51191,6 +51549,9 @@ static void *_p_UMS_Data__ConnectOptionsTo_p_ecore__EObject(void *x, int *SWIGUN
 static void *_p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((UMS_Data::ListSessionOptions *) x));
 }
+static void *_p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((UMS_Data::ListUsersOptions *) x));
+}
 static void *_p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((UMS_Data::ListCmdOptions *) x));
 }
@@ -51263,11 +51624,11 @@ static void *_p_FMS_Data__DirEntryTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPA
 static void *_p_IMS_Data__RestartOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::RestartOp *) x));
 }
-static void *_p_TMS_Data__ProgressionTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((ecore::EObject *)  ((TMS_Data::Progression *) x));
-}
 static void *_p_TMS_Data__ListProgressionTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((TMS_Data::ListProgression *) x));
+}
+static void *_p_TMS_Data__ProgressionTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((TMS_Data::Progression *) x));
 }
 static void *_p_VishnuExceptionTo_p_std__exception(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((std::exception *)  ((VishnuException *) x));
@@ -51655,7 +52016,7 @@ static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EClass[] = {  {&_swigt__p_ecore__EClass, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListSysInfo, _p_IMS_Data__ListSysInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsers, _p_UMS_Data__ListUsersTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccounts, _p_UMS_Data__ListAuthAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccounts, _p_UMS_Data__ListLocalAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListThreshold, _p_IMS_Data__ListThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptionsValues, _p_UMS_Data__ListOptionsValuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListProcesses, _p_IMS_Data__ListProcessesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessions, _p_UMS_Data__ListSessionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachines, _p_UMS_Data__ListMachinesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransferList, _p_FMS_Data__FileTransferListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCommands, _p_UMS_Data__ListCommandsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobs, _p_TMS_Data__ListJobsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__ListJobResults, _p_TMS_Data__ListJobResultsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListMetric, _p_IMS_Data__ListMetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntryList, _p_FMS_Data__DirEntryListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSystems, _p_UMS_Data__ListAuthSystemsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListQueues, _p_TMS_Data__ListQueuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListProgression, _p_TMS_Data__ListProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListSysInfo, _p_IMS_Data__ListSysInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsers, _p_UMS_Data__ListUsersTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccounts, _p_UMS_Data__ListAuthAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccounts, _p_UMS_Data__ListLocalAccountsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListThreshold, _p_IMS_Data__ListThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptionsValues, _p_UMS_Data__ListOptionsValuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListProcesses, _p_IMS_Data__ListProcessesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessions, _p_UMS_Data__ListSessionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachines, _p_UMS_Data__ListMachinesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransferList, _p_FMS_Data__FileTransferListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCommands, _p_UMS_Data__ListCommandsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobs, _p_TMS_Data__ListJobsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsersOptions, _p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__ListJobResults, _p_TMS_Data__ListJobResultsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ListMetric, _p_IMS_Data__ListMetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntryList, _p_FMS_Data__DirEntryListTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSystems, _p_UMS_Data__ListAuthSystemsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListQueues, _p_TMS_Data__ListQueuesTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListProgression, _p_TMS_Data__ListProgressionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EOperation[] = {  {&_swigt__p_ecore__EOperation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EReference[] = {  {&_swigt__p_ecore__EReference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EStructuralFeature[] = {  {&_swigt__p_ecore__EStructuralFeature, 0, 0, 0},{0, 0, 0, 0}};

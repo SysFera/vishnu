@@ -2325,6 +2325,194 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_L
 }
 
 
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1ListUsersOptions(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  UMS_Data::ListUsersOptions *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  result = (UMS_Data::ListUsersOptions *)new UMS_Data::ListUsersOptions();
+  *(UMS_Data::ListUsersOptions **)&jresult = result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_delete_1ListUsersOptions(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  delete arg1;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1_1initialize(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  (arg1)->_initialize();
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1getUserId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  result = (ecore::EString *) &((UMS_Data::ListUsersOptions const *)arg1)->getUserId();
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1setUserId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  (arg1)->setUserId((ecore::EString const &)*arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1getAuthSystemId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  result = (ecore::EString *) &((UMS_Data::ListUsersOptions const *)arg1)->getAuthSystemId();
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1setAuthSystemId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  (arg1)->setAuthSystemId((ecore::EString const &)*arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1eGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
+  jlong jresult = 0 ;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  ::ecore::EJavaObject result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  arg2 = (::ecore::EInt)jarg2; 
+  arg3 = jarg3 ? true : false; 
+  result = (arg1)->eGet(arg2,arg3);
+  *(::ecore::EJavaObject **)&jresult = new ::ecore::EJavaObject((const ::ecore::EJavaObject &)result); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1eSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jlong jarg3) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  arg2 = (::ecore::EInt)jarg2; 
+  arg3 = *(ecore::EJavaObject **)&jarg3;
+  if (!arg3) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "ecore::EJavaObject const & reference is null");
+    return ;
+  } 
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+}
+
+
+SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1eIsSet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  jboolean jresult = 0 ;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  arg2 = (::ecore::EInt)jarg2; 
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1eUnset(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  arg2 = (::ecore::EInt)jarg2; 
+  (arg1)->eUnset(arg2);
+}
+
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ListUsersOptions_1_1eClass(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jlong jresult = 0 ;
+  UMS_Data::ListUsersOptions *arg1 = (UMS_Data::ListUsersOptions *) 0 ;
+  ::ecore::EClass_ptr result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(UMS_Data::ListUsersOptions **)&jarg1; 
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  *(::ecore::EClass_ptr *)&jresult = result; 
+  return jresult;
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_new_1Command(JNIEnv *jenv, jclass jcls) {
   jlong jresult = 0 ;
   UMS_Data::Command *result = 0 ;
@@ -20373,7 +20561,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listUsers_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_listUsers_1_1SWIG_10(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
   std::string *arg1 = 0 ;
   UMS_Data::ListUsers *arg2 = 0 ;
@@ -20383,6 +20571,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_li
   (void)jenv;
   (void)jcls;
   (void)jarg2_;
+  (void)jarg3_;
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
@@ -26333,6 +26522,14 @@ SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_S
     (void)jenv;
     (void)jcls;
     *(ecore::EObject **)&baseptr = *(UMS_Data::ListUsers **)&jarg1;
+    return baseptr;
+}
+
+SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_SWIGListUsersOptionsUpcast(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+    jlong baseptr = 0;
+    (void)jenv;
+    (void)jcls;
+    *(ecore::EObject **)&baseptr = *(UMS_Data::ListUsersOptions **)&jarg1;
     return baseptr;
 }
 

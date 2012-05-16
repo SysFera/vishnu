@@ -137,8 +137,8 @@ public class VISHNU {
     return VISHNUJNI.listOptions__SWIG_1(sessionKey, ListOptionsValues.getCPtr(listOptValues), listOptValues);
   }
 
-  public static int listUsers(String sessionKey, ListUsers listUsers, SWIGTYPE_p_UMS_Data__ListUsersOptions listOptions) throws InternalUMSException {
-    return VISHNUJNI.listUsers__SWIG_0(sessionKey, ListUsers.getCPtr(listUsers), listUsers, SWIGTYPE_p_UMS_Data__ListUsersOptions.getCPtr(listOptions));
+  public static int listUsers(String sessionKey, ListUsers listUsers, ListUsersOptions listOptions) throws InternalUMSException {
+    return VISHNUJNI.listUsers__SWIG_0(sessionKey, ListUsers.getCPtr(listUsers), listUsers, ListUsersOptions.getCPtr(listOptions), listOptions);
   }
 
   public static int listUsers(String sessionKey, ListUsers listUsers) throws InternalUMSException {

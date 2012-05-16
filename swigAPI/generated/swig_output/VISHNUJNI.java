@@ -141,6 +141,18 @@ class VISHNUJNI {
   public final static native boolean ListUsers_eIsSet(long jarg1, ListUsers jarg1_, int jarg2);
   public final static native void ListUsers_eUnset(long jarg1, ListUsers jarg1_, int jarg2);
   public final static native long ListUsers__eClass(long jarg1, ListUsers jarg1_);
+  public final static native long new_ListUsersOptions();
+  public final static native void delete_ListUsersOptions(long jarg1);
+  public final static native void ListUsersOptions__initialize(long jarg1, ListUsersOptions jarg1_);
+  public final static native String ListUsersOptions_getUserId(long jarg1, ListUsersOptions jarg1_);
+  public final static native void ListUsersOptions_setUserId(long jarg1, ListUsersOptions jarg1_, String jarg2);
+  public final static native String ListUsersOptions_getAuthSystemId(long jarg1, ListUsersOptions jarg1_);
+  public final static native void ListUsersOptions_setAuthSystemId(long jarg1, ListUsersOptions jarg1_, String jarg2);
+  public final static native long ListUsersOptions_eGet(long jarg1, ListUsersOptions jarg1_, int jarg2, boolean jarg3);
+  public final static native void ListUsersOptions_eSet(long jarg1, ListUsersOptions jarg1_, int jarg2, long jarg3);
+  public final static native boolean ListUsersOptions_eIsSet(long jarg1, ListUsersOptions jarg1_, int jarg2);
+  public final static native void ListUsersOptions_eUnset(long jarg1, ListUsersOptions jarg1_, int jarg2);
+  public final static native long ListUsersOptions__eClass(long jarg1, ListUsersOptions jarg1_);
   public final static native long new_Command();
   public final static native void delete_Command(long jarg1);
   public final static native void Command__initialize(long jarg1, Command jarg1_);
@@ -1239,7 +1251,7 @@ class VISHNUJNI {
   public final static native int listHistoryCmd__SWIG_1(String jarg1, long jarg2, ListCommands jarg2_) throws InternalUMSException;
   public final static native int listOptions__SWIG_0(String jarg1, long jarg2, ListOptionsValues jarg2_, long jarg3, ListOptOptions jarg3_) throws InternalUMSException;
   public final static native int listOptions__SWIG_1(String jarg1, long jarg2, ListOptionsValues jarg2_) throws InternalUMSException;
-  public final static native int listUsers__SWIG_0(String jarg1, long jarg2, ListUsers jarg2_, long jarg3) throws InternalUMSException;
+  public final static native int listUsers__SWIG_0(String jarg1, long jarg2, ListUsers jarg2_, long jarg3, ListUsersOptions jarg3_) throws InternalUMSException;
   public final static native int listUsers__SWIG_1(String jarg1, long jarg2, ListUsers jarg2_) throws InternalUMSException;
   public final static native int addAuthSystem(String jarg1, long jarg2, AuthSystem jarg2_) throws InternalUMSException;
   public final static native int updateAuthSystem(String jarg1, long jarg2, AuthSystem jarg2_) throws InternalUMSException;
@@ -1320,6 +1332,7 @@ class VISHNUJNI {
   public final static native long SWIGListSessionOptionsUpcast(long jarg1);
   public final static native long SWIGUserUpcast(long jarg1);
   public final static native long SWIGListUsersUpcast(long jarg1);
+  public final static native long SWIGListUsersOptionsUpcast(long jarg1);
   public final static native long SWIGCommandUpcast(long jarg1);
   public final static native long SWIGListCommandsUpcast(long jarg1);
   public final static native long SWIGListCmdOptionsUpcast(long jarg1);

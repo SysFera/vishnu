@@ -325,6 +325,33 @@ class ListUsers(EObject):
 ListUsers_swigregister = _VISHNU.ListUsers_swigregister
 ListUsers_swigregister(ListUsers)
 
+class ListUsersOptions(EObject):
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListUsersOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListUsersOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self): 
+        this = _VISHNU.new_ListUsersOptions()
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListUsersOptions
+    __del__ = lambda self : None;
+    def _initialize(self): return _VISHNU.ListUsersOptions__initialize(self)
+    def getUserId(self): return _VISHNU.ListUsersOptions_getUserId(self)
+    def setUserId(self, *args): return _VISHNU.ListUsersOptions_setUserId(self, *args)
+    def getAuthSystemId(self): return _VISHNU.ListUsersOptions_getAuthSystemId(self)
+    def setAuthSystemId(self, *args): return _VISHNU.ListUsersOptions_setAuthSystemId(self, *args)
+    def eGet(self, *args): return _VISHNU.ListUsersOptions_eGet(self, *args)
+    def eSet(self, *args): return _VISHNU.ListUsersOptions_eSet(self, *args)
+    def eIsSet(self, *args): return _VISHNU.ListUsersOptions_eIsSet(self, *args)
+    def eUnset(self, *args): return _VISHNU.ListUsersOptions_eUnset(self, *args)
+    def _eClass(self): return _VISHNU.ListUsersOptions__eClass(self)
+ListUsersOptions_swigregister = _VISHNU.ListUsersOptions_swigregister
+ListUsersOptions_swigregister(ListUsersOptions)
+
 class Command(EObject):
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
