@@ -169,25 +169,6 @@ void Env::setParams(std::string& scriptContent, const std::string & params) {
 			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
 		}
 	}
-//	pos1 = 0;
-//	while(pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
-//		param = params.substr(pos1, pos2) ;
-//		pos = param.find("=");
-//		if(pos != std::string::npos ) {
-//			paramName = param.substr(0, pos) ;
-//			paramValue = param.substr(pos+1, std::string::npos) ;
-//			replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
-//			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
-//		}
-//		pos1 = pos2 + 1 ;
-//	}
-//	param = params.substr(pos1, std::string::npos) ; //last token
-//	if(pos = param.find("="), pos != std::string::npos ) {
-//		paramName = param.substr(0, pos) ;
-//		paramValue = param.substr(pos+1, std::string::npos) ;
-//		replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
-//		replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
-//	}
 }
 
 /**
