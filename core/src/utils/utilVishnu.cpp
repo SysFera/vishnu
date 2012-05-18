@@ -743,7 +743,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
 
-		std::string paramName = boost::to_upper_copy((*it).substr(0, pos)) ; // Keep the parameter name in upper case
+		std::string paramName = boost::(*it).substr(0, pos) ;
 		std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
 
 		// Check whether the parameter is duplicate
