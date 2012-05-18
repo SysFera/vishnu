@@ -304,7 +304,7 @@ int main (int argc, char* argv[]){
 
 		if(opt->count(paramOptName) || textParamsVector.size() != 0) {
 			string paramStr ;
-			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector, false);
+			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
 			if( ret != 0 ) return ret ;
 			subOp.setTextParams(paramStr) ;
 		}
@@ -313,7 +313,7 @@ int main (int argc, char* argv[]){
 		paramOptName = "fileParams" ;
 		if(opt->count(paramOptName) || fileParamsVector.size() != 0 ) {
 			string paramStr ;
-			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector, true) ;
+			int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector) ;
 			if( ret != 0 ) return ret ;
 			subOp.setFileParams(paramStr) ;
 		}

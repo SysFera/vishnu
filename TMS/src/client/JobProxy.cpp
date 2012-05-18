@@ -108,6 +108,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 		dagda_put_file(path, DIET_PERSISTENT, &DAGDA_ID[id]);
 		dagda_add_container_element((*diet_parameter(submitJobProfile,5)).desc.id, DAGDA_ID[id], id);
 		id++ ;
+		free(path) ;
 	}
 	/* End use Dagda to send file paramerers */
 

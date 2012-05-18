@@ -711,15 +711,13 @@ vishnu::checkEmptyString(const std::string& str,
  * \param OUT paramsStr a string containing all of parameters
  * \param IN paramOptName the name of the option for a single parameter
  * \param IN paramsVector a vector of parameters
- * \param IN isOfFileType tell whether the parameters are files or textual
  * \return true if all parameters are syntaxicaly valid
  */
 int
 vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 		std::string & paramsStr,
 		const std::string & paramOptName,
-		const ListStrings & paramsVector,
-		const bool & isOfFileType){
+		const ListStrings & paramsVector){
 
 	if( opt->count(paramOptName) ){
 		paramsStr = opt->get< std::string >(paramOptName) ;
