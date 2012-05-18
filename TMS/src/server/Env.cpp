@@ -5,6 +5,7 @@
  * \date December 2011
  */
 
+#include <boost/algorithm/string.hpp>
 #include "Env.hpp"
 
 /**
@@ -154,26 +155,39 @@ void Env::setParams(std::string& scriptContent, const std::string & params) {
 	std::string paramName ;
 	std::string paramValue ;
 	size_t pos, pos1, pos2 ;
+	ListStrings paramsVec ;
 
-	pos1 = 0;
-	while(pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
-		param = params.substr(pos1, pos2) ;
-		pos = param.find("=");
+	std::string& refParams = const_cast<std::string&>(params) ;
+	boost::trim(refParams);
+	boost::split(paramsVec, refParams, boost::is_any_of(" ")) ;
+	for(ListStrings::iterator it = paramsVec.begin(); it != paramsVec.end() ; it++) {
+		pos = it->find("=");
 		if(pos != std::string::npos ) {
-			paramName = param.substr(0, pos) ;
-			paramValue = param.substr(pos+1, std::string::npos) ;
+			paramName = it->substr(0, pos) ;
+			paramValue = it->substr(pos+1, std::string::npos) ;
 			replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
 			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
 		}
-		pos1 = pos2 + 1 ;
 	}
-	param = params.substr(pos1, std::string::npos) ; //last token
-	if(pos = param.find("="), pos != std::string::npos ) {
-		paramName = param.substr(0, pos) ;
-		paramValue = param.substr(pos+1, std::string::npos) ;
-		replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
-		replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
-	}
+//	pos1 = 0;
+//	while(pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
+//		param = params.substr(pos1, pos2) ;
+//		pos = param.find("=");
+//		if(pos != std::string::npos ) {
+//			paramName = param.substr(0, pos) ;
+//			paramValue = param.substr(pos+1, std::string::npos) ;
+//			replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
+//			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
+//		}
+//		pos1 = pos2 + 1 ;
+//	}
+//	param = params.substr(pos1, std::string::npos) ; //last token
+//	if(pos = param.find("="), pos != std::string::npos ) {
+//		paramName = param.substr(0, pos) ;
+//		paramValue = param.substr(pos+1, std::string::npos) ;
+//		replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
+//		replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
+//	}
 }
 
 /**
