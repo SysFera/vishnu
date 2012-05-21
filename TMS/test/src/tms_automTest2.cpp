@@ -409,6 +409,11 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
     } else if(BATCHTYPE=="LSF") {
       createCommand << "bsub < " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    } else if(BATCHTYPE=="SGE") {
+      std::string exe = boost::process::find_executable_in_path("qsub",
+                                                                SGE_BIN_PATH);
+      createCommand << exe << scriptFilePath << " > " << stdOutResult;
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     }
   
     ListJobs lsJobs;
