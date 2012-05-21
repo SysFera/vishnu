@@ -10,3 +10,5 @@
 
 
 ALTER TABLE job ADD COLUMN outputDir VARCHAR(255) DEFAULT '';
+
+
