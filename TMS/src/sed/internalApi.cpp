@@ -117,17 +117,17 @@ solveSubmitJob(diet_profile_t* pb) {
 		ListStrings fParamsVec ;
 		std::ostringstream fParamsBuf("") ;
 		size_t pos  ;
-		string filePath ;
-		char* defaultPath  = NULL ;
+		bfs::path fPath ;
 
+		char* defaultPath  = NULL ;
 		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
 		for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all file from the container
 			pos = fParamsVec[i].find("=") ;
 			if(pos == std::string::npos) continue ;
-			filePath =  mktemp(strdup("/tmp/PFILE-XXXXXX")) ;
+			fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upload%%%%%%") ;
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
-			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", filePath);
-			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=" << filePath ;
+			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", fPath.string());
+			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=" << fPath.string() ;
 			dagda_delete_data(fileContainer.elt_ids[i]);
 			free(defaultPath) ;
 		}
