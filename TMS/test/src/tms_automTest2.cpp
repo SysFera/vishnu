@@ -9,6 +9,7 @@
 #include "UMS_Data_forward.hpp"
 
 // TMS forward Headers
+#include "SGEConfig.hpp"
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
