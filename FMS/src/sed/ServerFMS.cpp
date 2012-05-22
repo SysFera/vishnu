@@ -378,7 +378,7 @@ ServerFMS::initMap() {
   functionPtr = headFile;
   mcb.insert( pair<string, functionPtr_t> (string("FileHead"),functionPtr));
   functionPtr = solveRemoveFile;
-  mcb.insert( pair<string, functionPtr_t> (string("DirRemove"),functionPtr));
+  mcb.insert( pair<string, functionPtr_t> (string("FileRemove"),functionPtr));
   functionPtr = solveRemoveDir;
   mcb.insert( pair<string, functionPtr_t> (string("DirRemove"),functionPtr));
   functionPtr = solveChangeGroup;
