@@ -99,24 +99,24 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int por
   zmq::socket_t socket (context, ZMQ_REP);
 
 // Connexion with broker
-  zmq::context_t brcontext (1);
-  zmq::socket_t brsocket (brcontext, ZMQ_REP);
+//  zmq::context_t brcontext (1);
+//  zmq::socket_t brsocket (brcontext, ZMQ_REP);
 
   string add = addr + ":" + convertToString<int>(port);
   cout << "Binded to address: " << add << endl;
   socket.bind(add.c_str());
 
-  string bradd = braddr + ":" + convertToString<int>(brport);
-  brsocket.connect(bradd.c_str());
-  boost::shared_ptr<diet_profile_t> prof;
+//  string bradd = braddr + ":" + convertToString<int>(brport);
+//  brsocket.connect(bradd.c_str());
+//  boost::shared_ptr<diet_profile_t> prof;
   boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("UMS", getUMSService(), addr, port));
-  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
+//  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
 // Handler for messages
-  BasicHandler hd (m);
-  boost::shared_ptr<Message> brrep = hd.send(brsocket);
-  TreatmentData brdata;
-  BasicHandler rep(brrep);
-  rep.treat();
+//  BasicHandler hd (m);
+//  boost::shared_ptr<Message> brrep = hd.send(brsocket);
+//  TreatmentData brdata;
+//  BasicHandler rep(brrep);
+//  rep.treat();
 
 
 
