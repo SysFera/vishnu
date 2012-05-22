@@ -127,7 +127,7 @@ solveSubmitJob(diet_profile_t* pb) {
 			fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upload%%%%%%") ;
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", fPath.string());
-			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=" << fPath.string() ;
+			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=/tmp/" << fPath.string() ;
 			dagda_delete_data(fileContainer.elt_ids[i]);
 			free(defaultPath) ;
 		}
