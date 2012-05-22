@@ -45,6 +45,7 @@
 %include "UMS_Data_forward.hpp"
 %include "UMS_Data/ConnectOptions.hpp"
 %include "UMS_Data/Session.hpp"
+%include "UMS_Data/ListUsersOptions.hpp"
 %include "UMS_Data/ListSessionOptions.hpp"
 %include "UMS_Data/User.hpp"
 %include "UMS_Data/Command.hpp"
@@ -104,6 +105,8 @@
 #ifdef SWIGJAVA
 %include "ecorecpp/mapping/EList.hpp"
 %include "UMS_Data/ListSessions.hpp"
+%include "UMS_Data/ListUsers.hpp"
+%include "UMS_Data/ListUsersOptions.hpp"
 %include "UMS_Data/ListUsers.hpp"
 %include "UMS_Data/ListCommands.hpp"
 %include "UMS_Data/ListLocalAccounts.hpp"
