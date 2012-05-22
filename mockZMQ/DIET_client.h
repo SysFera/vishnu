@@ -37,6 +37,9 @@ int
 diet_call(diet_profile_t* prof);
 
 int
+diet_call_gen(diet_profile_t* prof, int port);
+
+int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr);
 
 int
@@ -45,6 +48,8 @@ diet_profile_free(diet_profile_t* prof);
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos);
 
+bool
+isUMS(std::string test);
 
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof);
