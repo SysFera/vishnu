@@ -78,6 +78,7 @@ SGEServer::submit(const char* scriptPath,
   string Walltime;
 
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!=
       DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
@@ -103,6 +104,7 @@ SGEServer::submit(const char* scriptPath,
   while(!iss.eof()) {
     getline(iss, line);
     size_t pos = line.find('#');
+
     if(pos==string::npos) {
       continue;
     }
@@ -117,6 +119,7 @@ SGEServer::submit(const char* scriptPath,
         if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
           drmaa_exit(NULL, 0);
           throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+
                                    "SGE ERROR: "+std::string(diagnosis));
         }
       } else {
@@ -155,6 +158,7 @@ SGEServer::submit(const char* scriptPath,
               drmaa_exit(NULL, 0);
               throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                                        "SGE ERROR: "+std::string(diagnosis));
+
             }
           } else{
             scriptoption.append(line);
@@ -170,6 +174,7 @@ SGEServer::submit(const char* scriptPath,
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+
                              "SGE ERROR: "+std::string(diagnosis));
   }
   processOptions(scriptPath,options,cmdsOptions,jt);
@@ -182,16 +187,15 @@ SGEServer::submit(const char* scriptPath,
     }
   }
 
-
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_NATIVE_SPECIFICATION,
                                     scriptoption.c_str(),diagnosis,
                                     sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+
                              "SGE ERROR: "+std::string(diagnosis));
   }
-
   //To submit the job
   while ((drmaa_errno=drmaa_run_job(jobid, sizeof(jobid)-1, jt, diagnosis,
                sizeof(diagnosis)-1)) == DRMAA_ERRNO_DRM_COMMUNICATION_FAILURE) {
@@ -212,6 +216,7 @@ SGEServer::submit(const char* scriptPath,
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
 
+
   }
   std::string jobidstring(jobid);
   int size=256;
@@ -224,9 +229,9 @@ SGEServer::submit(const char* scriptPath,
 
   }
 
+
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_WD,Directory, size,diagnosis,
                                     sizeof(diagnosis)-1);
-
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     jobDIRECTORY = Directory;
   } else{
@@ -251,7 +256,7 @@ SGEServer::submit(const char* scriptPath,
       std::string part2 = jobErrorPathStr.substr(pos+1);
       if(!boost::algorithm::starts_with(part2, "/")){
         jobErrorPathStr = part1+jobDIRECTORY+"/"+part2;
-      }
+      }    
     }else if (pos==0){
       jobErrorPathStr = jobErrorPathStr.substr(1);
       if(!boost::algorithm::starts_with(jobErrorPathStr, "/")){
@@ -292,6 +297,7 @@ SGEServer::submit(const char* scriptPath,
       std::string part2 = jobOutputPathStr.substr(pos+1);
       if(!boost::algorithm::starts_with(part2, "/")){
           jobOutputPathStr = part1+jobDIRECTORY+"/"+part2;
+
       }
     } else if (pos==0){
       jobOutputPathStr = jobOutputPathStr.substr(1);
@@ -425,6 +431,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
   }
   drmaa_errno = drmaa_job_ps(jobId.c_str(), &state, diagnosis,
                              sizeof(diagnosis)-1);
+
 
   if (state==DRMAA_PS_RUNNING){
     std::string exe = boost::process::find_executable_in_path("qstat",
@@ -580,11 +587,11 @@ SGEServer::listQueues(const std::string& optqueueName) {
         while (std::getline(isstream, cline)){
           int state =0;
           if (boost::algorithm::starts_with(cline,(*it).c_str() )){
+
             std::vector< std::string >  SplitVec;
             boost::algorithm::split( SplitVec, cline,
                                      boost::algorithm::is_any_of(" "),
                                      boost::algorithm::token_compress_on );
-
             std::vector<std::string>::iterator itt;
 
             itt = SplitVec.end()-1;
