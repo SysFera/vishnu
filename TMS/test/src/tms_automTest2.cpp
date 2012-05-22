@@ -411,41 +411,41 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
       createCommand << "bsub < " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     } else if(BATCHTYPE=="SGE") {
-      std::string exe = boost::process::find_executable_in_path("qsub",
-                                                                SGE_BIN_PATH);
-      createCommand << exe << scriptFilePath << " > " << stdOutResult;
+      createCommand << SGE_BIN_PATH << "/qsub " << scriptFilePath << " 1> " << stdOutResult;  
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     }
-  
-    ListJobs lsJobs;
-    ListJobsOptions lsOptions;
-    lsOptions.setBatchJob(true);
-    BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
-    bool found= false;
-    int i=0;
-    std::string line;
-    std::string batchJobId;
-    int nbJobs =  lsJobs.getNbJobs();
-    BOOST_TEST_MESSAGE("************ Number of total jobs:" << nbJobs);
-    while ( ( false==found ) && ( i < nbJobs) ){
-      std::ifstream ifile(stdOutResult.c_str());
-      if (ifile.is_open()) {
-        while (!ifile.eof()) {
-          getline(ifile, line);
-          if(line.find(((lsJobs.getJobs().get(i))->getJobId()))!=std::string::npos) {
-            BOOST_TEST_MESSAGE("************ batch Job Id info: " << line);
-            BOOST_TEST_MESSAGE("************ result Job Id: " << (lsJobs.getJobs().get(i))->getJobId());
-            found = true;
-            break;
+    if(BATCHTYPE!="SGE"){
+      ListJobs lsJobs;
+      ListJobsOptions lsOptions;
+      lsOptions.setBatchJob(true);
+      BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId,lsJobs,lsOptions),0  );
+      bool found= false;
+      int i=0;
+      std::string line;
+      std::string batchJobId;
+      int nbJobs =  lsJobs.getNbJobs();
+      BOOST_TEST_MESSAGE("************ Number of total jobs:" << nbJobs);
+      while ( ( false==found ) && ( i < nbJobs) ){
+        std::ifstream ifile(stdOutResult.c_str());
+        if (ifile.is_open()) {
+          while (!ifile.eof()) {
+            getline(ifile, line);
+            if(line.find(((lsJobs.getJobs().get(i))->getJobId()))!=std::string::npos) {
+              BOOST_TEST_MESSAGE("************ batch Job Id info: " << line);
+              BOOST_TEST_MESSAGE("************ result Job Id: " << (lsJobs.getJobs().get(i))->getJobId());
+              found = true;
+              break;
+            }
           }
+          ifile.close();
         }
-        ifile.close(); 
+        i++;
       }
-      i++;
-    }
 
-    BOOST_CHECK( found ) ;
-    BOOST_TEST_MESSAGE("*********************** list batch jobs: normal call ok!!!!*****************************");
+      BOOST_CHECK( found ) ;
+      BOOST_TEST_MESSAGE("*********************** list batch jobs: normal call ok!!!!*****************************");
+      
+    }
     
     createCommand.str("");
     createCommand << "rm " << stdOutResult;
