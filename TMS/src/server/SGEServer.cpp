@@ -229,9 +229,12 @@ SGEServer::submit(const char* scriptPath,
   
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     jobDIRECTORY = Directory;
+    
   } else{
     jobDIRECTORY = getenv("HOME");
+    
   }
+  job.setJobWorkingDir(jobDIRECTORY);
 
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,
                                     diagnosis, sizeof(diagnosis)-1);
