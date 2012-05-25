@@ -182,7 +182,7 @@ SGEServer::submit(const char* scriptPath,
     }      
   }
   
-  
+  scriptoption += " -b no ";
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_NATIVE_SPECIFICATION,
                                     scriptoption.c_str(),diagnosis,
                                     sizeof(diagnosis)-1);
