@@ -411,7 +411,8 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
       createCommand << "bsub < " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     } else if(BATCHTYPE=="SGE") {
-      createCommand << SGE_BIN_PATH << "/qsub " << scriptFilePath << " 1> " << stdOutResult;  
+      createCommand << SGE_BIN_PATH << "/qsub " << scriptFilePath << " 1> " << stdOutResult;
+      BOOST_TEST_MESSAGE("**The SGE commande line is: " << createCommand.str().c_str());
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     }
     if(BATCHTYPE!="SGE"){
