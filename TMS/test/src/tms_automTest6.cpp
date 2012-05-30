@@ -13,6 +13,7 @@
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
 #include "TMS_testconfig.h"
+#include "SGEConfig.hpp"
 
 // C++ Headers
 #include <iostream>
@@ -50,7 +51,7 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
   try {
     
     //Check the batch type    
-    BOOST_CHECK(BATCHTYPE=="TORQUE" || BATCHTYPE=="SLURM" || BATCHTYPE=="LSF");
+    BOOST_CHECK(BATCHTYPE=="TORQUE" || BATCHTYPE=="SLURM" || BATCHTYPE=="LSF" || BATCHTYPE=="SGE");
 
     VishnuConnexion vc("root","vishnu_user");
 
@@ -98,6 +99,12 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
       //reconfig queues list
       createCommand << "badmin reconfig";
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    } else if(BATCHTYPE=="SGE") {
+      createCommand << SGE_BIN_PATH << "/qconf -Aq " << TMSCONFIGDIR << "/config_queues_SGE_test1.cfg ";
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+      createCommand.str("");
+      createCommand << SGE_BIN_PATH << "/qconf -Aq " << TMSCONFIGDIR << "/config_queues_SGE_test2.cfg ";
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     } else {
       BOOST_TEST_MESSAGE("***********************Unknown Batch Type*****************************");  
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown Batch Type");
@@ -143,6 +150,12 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
       outfile.close();
       delCommand << "badmin reconfig" ;
       BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
+    } else if (BATCHTYPE=="SGE"){
+      delCommand << SGE_BIN_PATH << "/qconf -dq " << "test_queue1";
+      BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
+      delCommand.str("");
+      delCommand << SGE_BIN_PATH << "/qconf -dq " << "test_queue2";
+      BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);    
     }
 
     BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************");

@@ -142,6 +142,13 @@
         <revdescription>
       <para>Add of Grid Engine batch scheduler. </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>22/05/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      <para>Add FAQ section. </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -739,6 +746,17 @@
           </listitem>
         </itemizedlist>
       </section>
+      <section>
+        <title> FAQ </title>
+        <itemizedlist>
+          <listitem>
+            <para> If the JAVA API (using the WS or the JAVA jars directly fails), with an error such as undefined reference in a JNI
+              call, please add the flags <emphasis role="italic">-Wl,--add-stdcall-alias</emphasis> at the compilation of the VISHNU
+              target in the swigAPI/CMakeLists.txt.
+	    </para>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
   </chapter>
   <reference>
@@ -907,15 +925,15 @@ The value must be an integer. Predefined values are: 0 (DEFAULT), 1 (CLOSE_ON_TI
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_connect_m</refentrytitle>
+        <refentrytitle>vishnu_connect</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_connect_m</refname>
+        <refname>vishnu_connect</refname>
         <refpurpose>opens a session by trying multiple couples (userId, password) each in turn</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_connect_m</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_connect</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-p <replaceable>closePolicy</replaceable></option></arg><arg
               choice="opt"><option>-d <replaceable>sessionInactivityDelay</replaceable></option></arg><arg
               choice="opt"><option>-s <replaceable>substituteUserId</replaceable></option></arg><arg
@@ -1191,15 +1209,15 @@ are specified, vishnu_reconnect will read them in the  .netrc file located in th
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_reconnect_m</refentrytitle>
+        <refentrytitle>vishnu_reconnect</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_reconnect_m</refname>
+        <refname>vishnu_reconnect</refname>
         <refpurpose>reconnects to a session that is still active by trying multiple couples (userId, password) each in turn</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_reconnect_m</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_reconnect</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>sessionId</replaceable></arg><arg choice="plain"><replaceable>userId</replaceable></arg><arg
               choice="plain"><replaceable>pwd</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -3397,8 +3415,8 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
-              choice="opt"><option>-Q</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
-              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3496,6 +3514,13 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><option>-Q <replaceable>selectQueueAutom</replaceable></option></term>
             <listitem>
               <para>allows to select automatically a queue which has the number of nodes requested by the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-L <replaceable>loadType</replaceable></option></term>
+            <listitem>
+              <para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job).
+The value must be an integer. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS).</para>
             </listitem>
           </varlistentry>
         </variablelist>
