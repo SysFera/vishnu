@@ -145,6 +145,14 @@
     <revdescription>
       <para>Add of Grid Engine batch scheduler. </para></revdescription>
   </revision> 
+  <revision>
+    <revnumber>14</revnumber>
+    <date>22/05/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add FAQ section. </para></revdescription>
+  </revision> 
+
   </revhistory>
 
     <copyright>
@@ -776,6 +784,19 @@
 	      If the message <emphasis role = "italic">"The batch scheduler indicates an error [SGE ERROR: warning: username your job is not allowed to run in any queue]"</emphasis> is returned after
 	      job submission on the batch scheduler SGE, you have to check the existence of a queue by using the command: <emphasis role = "bold"> qconf -sql</emphasis>. If there is no queue, you must add one by using the command <emphasis role = "bold">qconf -aq </emphasis>.
 	    </para>  
+	  </listitem>
+	  
+	</itemizedlist>
+      </section>
+      <section>
+	<title> FAQ </title>
+	
+	<itemizedlist>
+	  <listitem>
+	    <para> If the JAVA API (using the WS or the JAVA jars directly fails), with an error such as undefined reference in a JNI
+              call, please add the flags <emphasis role = "italic">-Wl,--add-stdcall-alias</emphasis> at the compilation of the VISHNU
+              target in the swigAPI/CMakeLists.txt.
+	    </para>
 	  </listitem>
 	  
 	</itemizedlist>
