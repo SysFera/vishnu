@@ -475,6 +475,32 @@ void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
 #endif
 }
 
+::ecore::EString const& SubmitOptions::getWorkId() const
+{
+    return m_workId;
+}
+
+void SubmitOptions::setWorkId(::ecore::EString const& _workId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_workId = m_workId;
+#endif
+    m_workId = _workId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__workId(),
+                _old_workId,
+                m_workId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 ::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
 {

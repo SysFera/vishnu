@@ -161,6 +161,12 @@ void SubmitOptions::_initialize()
                 m_textParams);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_workId);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -276,6 +282,12 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_textParams);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_workId);
+    }
+        return;
 
     }
     throw "Error";
@@ -331,6 +343,9 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_textParams);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_workId);
 
     }
     throw "Error";

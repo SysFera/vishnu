@@ -49,104 +49,103 @@ int JobServer::submitJob(const std::string& scriptContent,
 {
 
 
-  msessionServer.check(); //To check the sessionKey
+	msessionServer.check(); //To check the sessionKey
 
-  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
-  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-  machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine);
-  std::string machineName = machineServer.getMachineName();
-  delete machine;
+	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+	machine->setMachineId(mmachineId);
+	MachineServer machineServer(machine);
+	std::string machineName = machineServer.getMachineName();
+	delete machine;
 
-  Env env(mbatchType);
-  env.replaceEnvVariables(const_cast<std::string&>(scriptContent));
-  env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
-  env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
+	Env env(mbatchType);
+	env.replaceEnvVariables(const_cast<std::string&>(scriptContent));
+	env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
+	env.replaceAllOccurences(const_cast<std::string&>(scriptContent), "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
-  std::string jobSerialized ;
-  std::string submitOptionsSerialized;
-  char* scriptPath = NULL;
-  ::ecorecpp::serializer::serializer optSer;
-  ::ecorecpp::serializer::serializer jobSer;
+	std::string jobSerialized ;
+	std::string submitOptionsSerialized;
+	char* scriptPath = NULL;
+	::ecorecpp::serializer::serializer optSer;
+	::ecorecpp::serializer::serializer jobSer;
 
-  scriptPath = strdup("/tmp/job_scriptXXXXXX");
+	scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
-  std::string convertedScript;
-  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
-  if(scriptConvertor->scriptIsGeneric()) {
-    std::string genScript = scriptConvertor->getConvertedScript();
-    convertedScript = genScript;
-  } else {
-    convertedScript = scriptContent;
-  }
+	std::string convertedScript;
+	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
+	if(scriptConvertor->scriptIsGeneric()) {
+		std::string genScript = scriptConvertor->getConvertedScript();
+		convertedScript = genScript;
+	} else {
+		convertedScript = scriptContent;
+	}
 
-  vishnu::createTmpFile(scriptPath, convertedScript);
+	vishnu::createTmpFile(scriptPath, convertedScript);
 
-  submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
-  jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
+	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
+	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
-  sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
-  
-  vishnu::deleteFile(scriptPath);
+	SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
+	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
+
+	vishnu::deleteFile(scriptPath);
 
 
-  std::string errorInfo = sshJobExec.getErrorInfo();
+	std::string errorInfo = sshJobExec.getErrorInfo();
 
-  if(errorInfo.size()!=0) {
-     int code;
-     std::string message;
-     scanErrorMessage(errorInfo, code, message);
-     throw TMSVishnuException(code, message);
-  }
+	if(errorInfo.size()!=0) {
+		int code;
+		std::string message;
+		scanErrorMessage(errorInfo, code, message);
+		throw TMSVishnuException(code, message);
+	}
 
-  std::string updateJobSerialized = sshJobExec.getJobSerialized();
-  TMS_Data::Job_ptr job = NULL;
-  if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
-    throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
-  }
-  mjob = *job;
-  delete job;
+	std::string updateJobSerialized = sshJobExec.getJobSerialized();
+	TMS_Data::Job_ptr job = NULL;
+	if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
+		throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
+	}
+	mjob = *job;
+	delete job;
 
-  mjob.setSubmitMachineId(mmachineId);
-  mjob.setSubmitMachineName(machineName);
-  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
-  mjob.setSessionId(sessionId);
+	mjob.setSubmitMachineId(mmachineId);
+	mjob.setSubmitMachineName(machineName);
+	std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+	mjob.setSessionId(sessionId);
 
-  std::string BatchJobId=mjob.getJobId();
-  std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
-  mjob.setJobId(vishnuJobId);
+	std::string BatchJobId=mjob.getJobId();
+	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
+	mjob.setJobId(vishnuJobId);
 
-  string scriptContentStr = std::string(convertedScript);
-  size_t pos = scriptContentStr.find("'");
-  while(pos!=std::string::npos) {
-    scriptContentStr.replace(pos, 1, " ");
-    pos = scriptContentStr.find("'");
-  }
+	string scriptContentStr = std::string(convertedScript);
+	size_t pos = scriptContentStr.find("'");
+	while(pos!=std::string::npos) {
+		scriptContentStr.replace(pos, 1, " ");
+		pos = scriptContentStr.find("'");
+	}
 
-  if(mbatchType==SGE){
-    mjob.setOwner(acLogin);
-  }
+	if(mbatchType==SGE){
+		mjob.setOwner(acLogin);
+	}
 
-  std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-  std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
-    "jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
-    "status, submitDate, owner, jobQueue, wallClockLimit, groupName, jobDescription, memLimit,"
-    "nbNodes, nbNodesAndCpuPerNode)"
-    " values ("+numsession+",'"+mjob.getSubmitMachineId()+"','"+ mjob.getSubmitMachineName()+"','"+vishnuJobId+"','"
-    +BatchJobId+"',"+convertToString(mbatchType)+",'"+mjob.getJobName()+"','"+mjob.getJobPath()+"','"
-    +mjob.getOutputPath()+"','"+mjob.getErrorPath()+"','"
-    +scriptContentStr+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
-    +mjob.getJobWorkingDir()+"',"
-    +convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
-    +"',"+convertToString(mjob.getWallClockLimit())+",'"+mjob.getGroupName()+"','"+mjob.getJobDescription()+"',"
-    +convertToString(mjob.getMemLimit())
-    +","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"')" ;
+	std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
+	std::string sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId, submitMachineName, jobId,"
+			" batchJobId, batchType, jobName, jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, "
+			" jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
+			" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode)"
+			" VALUES ("+numsession+",'" + mjob.getSubmitMachineId()+"','" + mjob.getSubmitMachineName() + "',"
+			+ "'" + vishnuJobId + "','" + BatchJobId + "'," + convertToString(mbatchType) + ",'" + mjob.getJobName() + "',"
+			+ "'" + mjob.getJobPath() + "', '" + mjob.getOutputPath() + "','" + mjob.getErrorPath() + "','"
+			+ scriptContentStr + "'," + convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ","
+			+ "'" + mjob.getJobWorkingDir()+"'," + convertToString(mjob.getStatus()) + ", CURRENT_TIMESTAMP,"
+			+ "'" + mjob.getOwner() + "', '" + mjob.getJobQueue() +"', "+convertToString(mjob.getWallClockLimit()) + ","
+			+ "'" + mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"+convertToString(mjob.getMemLimit()) + ","
+			+ convertToString(mjob.getNbNodes())+", '"+mjob.getNbNodesAndCpuPerNode()+"')" ;
 
-  mdatabaseVishnu->process(sqlInsert);
+	mdatabaseVishnu->process(sqlInsert);
 
-  return 0;
+	return 0;
 }
 
 /**
