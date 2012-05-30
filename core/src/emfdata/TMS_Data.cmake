@@ -49,6 +49,8 @@ set(TMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResultImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResultsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterionImpl.cpp
    )
    
 set(TMS_Data_HEADERS
@@ -67,23 +69,25 @@ set(TMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Queue.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp
    )
 
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/TMS_DataFactory.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/TMS_DataPackage.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)   
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Job.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobs.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/SubmitOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobsOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ProgressOptions.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListProgression.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Progression.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListQueues.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Queue.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATION ${INCLUDE_INSTALL_DIR}/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data.hpp DESTINATION include/emf4cpp/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data_forward.hpp DESTINATION include/emf4cpp/)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/TMS_DataFactory.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/TMS_DataPackage.hpp DESTINATION include/emf4cpp/TMS_Data)   
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Job.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobs.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/SubmitOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobsOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ProgressOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListProgression.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Progression.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListQueues.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Queue.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp DESTINATION include/emf4cpp/TMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
@@ -93,3 +97,4 @@ target_link_libraries(emf4cpp-TMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-TMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
 install(TARGETS emf4cpp-TMS_Data DESTINATION ${LIB_INSTALL_DIR})
+

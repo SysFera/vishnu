@@ -64,6 +64,7 @@ makeSubJobOp(string pgName,
 		boost::function1<void, string>& ffileParams,
 		vector<string>& textParamsVector,
 		vector<string>& fileParamsVector,
+		boost::function1<void, string>& fworkId,
 		string& loadCriterionStr,
 		string& walltime,
 		string& dietConfig){
@@ -176,6 +177,10 @@ makeSubJobOp(string pgName,
 			"SEE ALSO --file.",
 			CONFIG,
 			ffileParams);
+	opt->add("wid,-w",
+			"Sets the identifier of the Work to which the job is related.  ",
+			CONFIG,
+			fworkId);
 
 	return opt;
 }
@@ -209,6 +214,7 @@ int main (int argc, char* argv[]){
 	boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
 	boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
 	boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
+	boost::function1<void,string> fworkId(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(subOp),_1));
 	vector<string> textParamsVector ;
 	vector<string> fileParamsVector ;
 	std::string loadCriterionStr;
@@ -219,7 +225,7 @@ int main (int argc, char* argv[]){
 	boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
 			fmemory, fnbCpu, fnbNodeAndCpu,
 			foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-			ftextParams, ffileParams, textParamsVector, fileParamsVector,
+			ftextParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
 			loadCriterionStr, walltime, dietConfig);
 
 	opt->add("selectQueueAutom,Q",
