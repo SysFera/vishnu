@@ -190,6 +190,14 @@
         <para>Prise en compte du gestionnaire de resources Grid Engine</para></revdescription>
       </revision>
       
+      <revision>
+      <revnumber>21</revnumber>
+      <date>30/05/2012</date>
+      <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+      <revdescription>
+        <para> Ajout des versions de LoadLeveler, GLIBC pour libcrypt et ssh</para></revdescription>
+      </revision>
+      
     </revhistory>
   </info>
   <chapter>
@@ -343,19 +351,19 @@
               <para>GCC version 4.4.3 minimum</para>
             </listitem>
             <listitem>
-              <para>CMAKE version 2.8 minimum si DIET 2.8, à partir de 2.6 sinon</para>
+              <para>CMAKE version 2.8 minimum avec DIET 2.8</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.45 minimum si DIET 2.7 ou inférieur, 1.46.1 si DIET 2.8 ou supérieur. Les librairies de boost nécessaires sont : program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
+              <para>BOOST version 1.46.1 avec DIET 2.8 ou supérieur. Les librairies de boost nécessaires sont : program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
             </listitem>
             <listitem>
               <para>OMNIORB version 4.1.4</para>
             </listitem>
             <listitem>
-              <para>libcrypt</para>
+              <para> GLIBC version minimum 2.7 pour un support natif du cryptage (libcrypt) </para>
             </listitem>
             <listitem>
-              <para>SSH</para>
+              <para>SSH version minimum openSSH 4.2</para>
             </listitem>
             <listitem>
               <para>DIET version 2.8 + le module log service associé</para>
@@ -377,7 +385,7 @@
               <para>Torque API v2.3.6</para>
             </listitem>
             <listitem>
-              <para>ou IBM LoadLeveler API</para>
+              <para>ou IBM LoadLeveler API 3.5.1.14</para>
             </listitem>
             <listitem>
               <para>ou SLURM API v2.2.1</para>
