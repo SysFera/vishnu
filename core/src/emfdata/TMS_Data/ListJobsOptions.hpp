@@ -179,6 +179,17 @@ namespace TMS_Data
          **/
         void setBatchJob(::ecore::EBoolean _batchJob);
 
+        /**
+         * \brief To get the wid
+         * \return The wid attribute value
+         **/
+        ::ecore::ELong getWid() const;
+        /**
+         * \brief To set the wid
+         * \param _wid The wid value
+         **/
+        void setWid(::ecore::ELong _wid);
+
         // References
 
 
@@ -223,6 +234,8 @@ namespace TMS_Data
         ::ecore::EString m_multipleStatus;
 
         ::ecore::EBoolean m_batchJob;
+
+        ::ecore::ELong m_wid;
 
         // References
 

@@ -349,6 +349,13 @@
         <details key="shortOption" value="b"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wid" eType="ecore:EDataType Ecore.ecore#//ELong"
+        defaultValueLiteral="-1">
+      <eAnnotations source="Description">
+        <details key="shortOption" value="-w"/>
+        <details key="content" value="Allows to gather information about jobs related to a given Work."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobPriority" instanceTypeName="JobPriority">
     <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>

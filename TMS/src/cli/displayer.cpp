@@ -52,6 +52,7 @@ displayJob(TMS_Data::Job& j){
 	cout << " Machine Id           : " << j.getSubmitMachineId() << endl;
 	cout << " Machine name         : " << j.getSubmitMachineName() << endl;
 	cout << " Job Id               : " << j.getJobId() << endl;
+	cout << " Work Id              : " << j.getWorkId() << endl;
 	cout << " Batch Job Id         : " << j.getBatchJobId() << endl;
 	cout << " Job name             : " << j.getJobName() << endl;
 	cout << " Job path             : " << j.getJobPath() << endl;
@@ -322,13 +323,13 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
 	std::string stateStr;
 	int state;
 
-	std::string nameHead = "name";
-	std::string memoryHead = "Memory";
-	std::string walltimeHead = "Walltime";
-	std::string nodeHead = "Node";
-	std::string nbRunJobsHead = "Running jobs";
-	std::string nbJobsQueHead = "Job in queue";
-	std::string stateHead = "State";
+	std::string nameHead = "NAME";
+	std::string memoryHead = "MEMORY";
+	std::string walltimeHead = "WALLTIME";
+	std::string nodeHead = "NODE";
+	std::string nbRunJobsHead = "RUNNING JOBS";
+	std::string nbJobsQueHead = "JOB IN QUEUE";
+	std::string stateHead = "STATE";
 
 	size_t maxNameSize = nameHead.size();
 	size_t maxMemorySize = memoryHead.size();
@@ -428,21 +429,24 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 	std::string jobName;
 	std::string owner;
 	std::string queue;
+	int workId;
 	int priority;
 	int status;
 	std::string machineId;
 
-	std::string jobIdHead = "Job id";
-	std::string jobNameHead = "Job name";
-	std::string ownerHead = "Owner";
-	std::string statusHead = "Status";
-	std::string queueHead = "Queue";
-	std::string priorityHead = "Priority";
-	std::string machineIdHead = "Machine id";
+	std::string jobIdHead = "ID";
+	std::string jobNameHead = "NAME";
+	std::string workIdHead = "WORK ID";
+	std::string ownerHead = "OWNER";
+	std::string statusHead = "STATUS";
+	std::string queueHead = "QUEUE";
+	std::string priorityHead = "PRIORITY";
+	std::string machineIdHead = "MACHINE";
 
 	size_t maxJobIdSize = jobIdHead.size();
 	size_t maxJobNameSize = jobNameHead.size();
 	size_t maxOwnerSize = ownerHead.size();
+	size_t maxWorkId = workIdHead.size();
 	size_t maxStatusSize = statusHead.size();
 	size_t maxQueueSize = queueHead.size();
 	size_t maxPrioritySize = priorityHead.size();
@@ -455,6 +459,9 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 		jobName = (listJobs.getJobs().get(i))->getJobName();
 		maxJobNameSize = std::max(maxJobNameSize, jobName.size());
+
+		workId = (listJobs.getJobs().get(i))->getWorkId();
+		maxWorkId = std::max(maxWorkId, convertToString(workId).size());
 
 		owner = (listJobs.getJobs().get(i))->getOwner();
 		maxOwnerSize = std::max(maxOwnerSize, owner.size());
@@ -472,9 +479,11 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 		maxMachineIdSize = std::max(maxMachineIdSize, machineId.size());
 	}
 
-	os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead << setw(maxOwnerSize+2) ;
-	os << left << ownerHead << setw(maxStatusSize+2) << statusHead  << setw(maxQueueSize+2) << left << queueHead;
-	os << setw(maxPrioritySize+2) << left << priorityHead << setw(maxMachineIdSize+2) << left << machineIdHead << endl;
+	os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead
+			<< setw(maxWorkId+2) << left << workIdHead << setw(maxOwnerSize+2) << left << ownerHead
+			<< setw(maxStatusSize+2) << statusHead << setw(maxQueueSize+2) << left << queueHead
+			<< setw(maxPrioritySize+2) << left << priorityHead
+			<< setw(maxMachineIdSize+2) << left << machineIdHead << endl;
 
 
 	setFill(maxJobIdSize, os);
@@ -490,6 +499,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 		jobId = (listJobs.getJobs().get(i))->getJobId();
 		jobName = (listJobs.getJobs().get(i))->getJobName();
+		workId =  (listJobs.getJobs().get(i))->getWorkId();
 		owner = (listJobs.getJobs().get(i))->getOwner();
 		status = (listJobs.getJobs().get(i))->getStatus();
 		queue = (listJobs.getJobs().get(i))->getJobQueue();
@@ -498,6 +508,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 		os << setw(maxJobIdSize+2) << left << jobId;
 		os << setw(maxJobNameSize+2) << left << jobName;
+		os << setw(maxWorkId+2) << left << workId;
 		os << setw(maxOwnerSize+2) << left << owner;
 		os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
 		os << setw(maxQueueSize+2) << left << queue;
