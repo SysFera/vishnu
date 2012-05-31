@@ -419,159 +419,164 @@ namespace TMS_Data
         static const int LISTJOBSOPTIONS__BATCHJOB = 56;
 
         /**
+         * \brief Constant for LISTJOBSOPTIONS__WID feature
+         */
+        static const int LISTJOBSOPTIONS__WID = 57;
+
+        /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 57;
+        static const int PROGRESSOPTIONS__JOBID = 58;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 58;
+        static const int PROGRESSOPTIONS__JOBOWNER = 59;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 59;
+        static const int LISTPROGRESSION__NBJOBS = 60;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 60;
+        static const int LISTPROGRESSION__PROGRESS = 61;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 61;
+        static const int PROGRESSION__JOBID = 62;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 62;
+        static const int PROGRESSION__JOBNAME = 63;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 63;
+        static const int PROGRESSION__WALLTIME = 64;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 64;
+        static const int PROGRESSION__STARTTIME = 65;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 65;
+        static const int PROGRESSION__ENDTIME = 66;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 66;
+        static const int PROGRESSION__PERCENT = 67;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 67;
+        static const int PROGRESSION__STATUS = 68;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 68;
+        static const int LISTQUEUES__NBQUEUES = 69;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 69;
+        static const int LISTQUEUES__QUEUES = 70;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 70;
+        static const int QUEUE__NAME = 71;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 71;
+        static const int QUEUE__MAXJOBCPU = 72;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 72;
+        static const int QUEUE__MAXPROCCPU = 73;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 73;
+        static const int QUEUE__MEMORY = 74;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 74;
+        static const int QUEUE__WALLTIME = 75;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 75;
+        static const int QUEUE__NODE = 76;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 76;
+        static const int QUEUE__NBRUNNINGJOBS = 77;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 77;
+        static const int QUEUE__NBJOBSINQUEUE = 78;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 78;
+        static const int QUEUE__STATE = 79;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 79;
+        static const int QUEUE__PRIORITY = 80;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 80;
+        static const int QUEUE__DESCRIPTION = 81;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 81;
+        static const int JOBRESULT__JOBID = 82;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 82;
+        static const int JOBRESULT__OUTPUTPATH = 83;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 83;
+        static const int JOBRESULT__ERRORPATH = 84;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTDIR feature
          */
-        static const int JOBRESULT__OUTPUTDIR = 84;
+        static const int JOBRESULT__OUTPUTDIR = 85;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 85;
+        static const int LISTJOBRESULTS__NBJOBS = 86;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 86;
+        static const int LISTJOBRESULTS__RESULTS = 87;
 
         /**
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
-        static const int LOADCRITERION__LOADTYPE = 87;
+        static const int LOADCRITERION__LOADTYPE = 88;
 
         // EClassifiers methods
 
@@ -1021,6 +1026,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getListJobsOptions__batchJob();
+
+        /**
+         * \brief Returns the reflective object for feature wid of class ListJobsOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListJobsOptions__wid();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ProgressOptions
@@ -1595,6 +1606,11 @@ namespace TMS_Data
          * \brief The instance for the feature batchJob of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__batchJob;
+
+        /**
+         * \brief The instance for the feature wid of class ListJobsOptions
+         */
+        ::ecore::EAttribute_ptr m_ListJobsOptions__wid;
 
         /**
          * \brief The instance for the feature jobId of class ProgressOptions

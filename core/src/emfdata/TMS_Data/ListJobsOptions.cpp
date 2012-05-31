@@ -32,7 +32,7 @@ using namespace ::TMS_Data;
 // Default constructor
 ListJobsOptions::ListJobsOptions() :
     m_nbCpu(-1), m_fromSubmitDate(-1), m_toSubmitDate(-1), m_status(-1),
-            m_priority(-1), m_batchJob(false)
+            m_priority(-1), m_batchJob(false), m_wid(-1)
 {
 
     /*PROTECTED REGION ID(ListJobsOptionsImpl__ListJobsOptionsImpl) START*/
@@ -306,6 +306,32 @@ void ListJobsOptions::setBatchJob(::ecore::EBoolean _batchJob)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__batchJob(),
                 _old_batchJob,
                 m_batchJob
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong ListJobsOptions::getWid() const
+{
+    return m_wid;
+}
+
+void ListJobsOptions::setWid(::ecore::ELong _wid)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_wid = m_wid;
+#endif
+    m_wid = _wid;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__wid(),
+                _old_wid,
+                m_wid
         );
         eNotify(&notification);
     }

@@ -177,7 +177,7 @@ makeSubJobOp(string pgName,
 			"SEE ALSO --file.",
 			CONFIG,
 			ffileParams);
-	opt->add("wid,-w",
+	opt->add("wid,w",
 			"Sets the identifier of the Work to which the job is related.  ",
 			CONFIG,
 			fwid);

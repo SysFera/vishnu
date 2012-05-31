@@ -111,6 +111,14 @@ int
 convertToInt(std::string val);
 
 /**
+ * \brief Function to convert a string to long int
+ * \param  val a value to convert to int
+ * \return int value of the corresponding string
+ */
+long
+convertToLong(std::string val) ;
+
+/**
  * \brief To crypt a password
  * \param salt The salt to use to crypt
  * \param password The password to crypt

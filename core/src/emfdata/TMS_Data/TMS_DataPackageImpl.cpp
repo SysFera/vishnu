@@ -312,6 +312,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
             m_ListJobsOptions__batchJob);
+    m_ListJobsOptions__wid = new ::ecore::EAttribute();
+    m_ListJobsOptions__wid->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WID);
+    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
+            m_ListJobsOptions__wid);
 
     // ProgressOptions
     m_ProgressOptionsEClass = new ::ecore::EClass();
@@ -1348,6 +1353,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__batchJob->setUnique(true);
     m_ListJobsOptions__batchJob->setDerived(false);
     m_ListJobsOptions__batchJob->setOrdered(true);
+    m_ListJobsOptions__wid->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_ListJobsOptions__wid->setName("wid");
+    m_ListJobsOptions__wid->setDefaultValueLiteral("-1");
+    m_ListJobsOptions__wid->setLowerBound(0);
+    m_ListJobsOptions__wid->setUpperBound(1);
+    m_ListJobsOptions__wid->setTransient(false);
+    m_ListJobsOptions__wid->setVolatile(false);
+    m_ListJobsOptions__wid->setChangeable(true);
+    m_ListJobsOptions__wid->setUnsettable(false);
+    m_ListJobsOptions__wid->setID(false);
+    m_ListJobsOptions__wid->setUnique(true);
+    m_ListJobsOptions__wid->setDerived(false);
+    m_ListJobsOptions__wid->setOrdered(true);
     // ProgressOptions
     m_ProgressOptionsEClass->setName("ProgressOptions");
     m_ProgressOptionsEClass->setAbstract(false);
@@ -2390,6 +2409,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__batchJob()
 {
     return m_ListJobsOptions__batchJob;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__wid()
+{
+    return m_ListJobsOptions__wid;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__jobId()
 {
