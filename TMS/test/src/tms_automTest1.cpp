@@ -112,7 +112,6 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 
     Job jobInfo;
     SubmitOptions subOptions;
-
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
@@ -127,7 +126,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 
       getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
     }
-
+    
     JobResult outputInfos;
     BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
     BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
@@ -441,7 +440,7 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
     Job jobInfo;
     SubmitOptions subOptions;
 
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+    
     BOOST_CHECK_THROW(submitJob(sessionKey, autom, scriptFilePath, jobInfo,subOptions) ,VishnuException );
     BOOST_TEST_MESSAGE("*********************** automatic submit job for user with no local accounts  ok!!!!*****************************");
 
