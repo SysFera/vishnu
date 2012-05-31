@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 // Default constructor
 SubmitOptions::SubmitOptions() :
     m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_selectQueueAutom(false),
-            m_criterion(0)
+            m_wid(0), m_criterion(0)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -475,26 +475,26 @@ void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
 #endif
 }
 
-::ecore::EString const& SubmitOptions::getWorkId() const
+::ecore::ELong SubmitOptions::getWid() const
 {
-    return m_workId;
+    return m_wid;
 }
 
-void SubmitOptions::setWorkId(::ecore::EString const& _workId)
+void SubmitOptions::setWid(::ecore::ELong _wid)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_workId = m_workId;
+    ::ecore::ELong _old_wid = m_wid;
 #endif
-    m_workId = _workId;
+    m_wid = _wid;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__workId(),
-                _old_workId,
-                m_workId
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__wid(),
+                _old_wid,
+                m_wid
         );
         eNotify(&notification);
     }
