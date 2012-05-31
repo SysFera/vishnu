@@ -234,7 +234,7 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_userId)
   string sessionKey=vc1.getConnexion();
 
   string machineId="machine_1";
-
+  
   try {
     //Setting submitjob parameters
 
@@ -242,8 +242,8 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_userId)
     Job jobInfo;
     SubmitOptions options;
 
-    BOOST_REQUIRE( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
-
+    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
+    
   // now let cancel the job
 
   // setting cancel job parameters
@@ -256,10 +256,11 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_userId)
     // get his session key
 
     sessionKey=vc2.getConnexion();
-
-    BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()),VishnuException  );
+    
+    BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()), VishnuException  );
 
     BOOST_TEST_MESSAGE("***********************  cancel a job: bad user  id  ok!!!!*****************************");
+    
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
