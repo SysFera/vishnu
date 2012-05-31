@@ -247,15 +247,15 @@ namespace TMS_Data
         void setTextParams(::ecore::EString const& _textParams);
 
         /**
-         * \brief To get the workId
-         * \return The workId attribute value
+         * \brief To get the wid
+         * \return The wid attribute value
          **/
-        ::ecore::EString const& getWorkId() const;
+        ::ecore::ELong getWid() const;
         /**
-         * \brief To set the workId
-         * \param _workId The workId value
+         * \brief To set the wid
+         * \param _wid The wid value
          **/
-        void setWorkId(::ecore::EString const& _workId);
+        void setWid(::ecore::ELong _wid);
 
         // References
         /**
@@ -323,7 +323,7 @@ namespace TMS_Data
 
         ::ecore::EString m_textParams;
 
-        ::ecore::EString m_workId;
+        ::ecore::ELong m_wid;
 
         // References
 

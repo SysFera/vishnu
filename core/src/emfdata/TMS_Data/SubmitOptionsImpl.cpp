@@ -161,10 +161,9 @@ void SubmitOptions::_initialize()
                 m_textParams);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_workId);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_wid);
     }
         return _any;
 
@@ -282,10 +281,10 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_textParams);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_workId);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+                m_wid);
     }
         return;
 
@@ -343,9 +342,8 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_textParams);
-    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_workId);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WID:
+        return m_wid != 0;
 
     }
     throw "Error";

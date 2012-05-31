@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 Job::Job() :
     m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
             m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    "")
+                    ""), m_workId(0)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -671,6 +671,32 @@ void Job::setOutputDir(::ecore::EString const& _outputDir)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__outputDir(),
                 _old_outputDir,
                 m_outputDir
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong Job::getWorkId() const
+{
+    return m_workId;
+}
+
+void Job::setWorkId(::ecore::ELong _workId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_workId = m_workId;
+#endif
+    m_workId = _workId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__workId(),
+                _old_workId,
+                m_workId
         );
         eNotify(&notification);
     }
