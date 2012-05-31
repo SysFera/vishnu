@@ -450,7 +450,7 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
     
     createCommand.str("");
     createCommand << "rm " << stdOutResult;
-    BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
+    //BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
