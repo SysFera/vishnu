@@ -5618,7 +5618,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listuser=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7871,7 +7871,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8053,7 +8053,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
