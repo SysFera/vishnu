@@ -44,7 +44,7 @@ namespace bfs= boost::filesystem;
 BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 
 // submit a job: normal call
-BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
+/*BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
@@ -166,7 +166,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 
       /* Only VISHNU provides this variable: VISHNU_SUBMIT_MACHINE_NAME
        */
-     envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
+/*     envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
 
     }
 
@@ -362,7 +362,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
 
   BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
 
-}
+}*/
 
 
 // automatic submit a job: normal call
@@ -394,10 +394,9 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
     Job jobInfo;
     Job jobInfo2;
     SubmitOptions subOptions;
-
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId1, scriptFilePathWaiting, jobInfo,subOptions),0  );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
+    
     BOOST_CHECK_EQUAL(submitJob(sessionKey, autom, scriptFilePath, jobInfo2,subOptions),0  );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo2.getJobId() );
 

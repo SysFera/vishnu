@@ -112,7 +112,7 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
 
     ListQueues listofQueues;
 
-    BOOST_CHECK_EQUAL( listQueues(sessionKey, machineId, listofQueues),0);
+    BOOST_CHECK_EQUAL(listQueues(sessionKey, machineId, listofQueues),0);
     bool success = false;
     string name;
 
