@@ -113,7 +113,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobName]              = "#$ -N ";
     mconversionTable[jobOutput]            = "#$ -o ";
     mconversionTable[jobError]             = "#$ -e ";
-    mconversionTable[jobWallClockLimit]    = "#$ -l s-rt=";
+    mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
     mconversionTable[cpuTime]              = "#$ -l s_cpu=";
     mconversionTable[nbCpu]                = ""; 
     mconversionTable[nbNodesAndCpuPerNode] = ""; 
@@ -453,6 +453,18 @@ ScriptGenConvertor::getConvertedScript() {
           value = "FAIL";
         } else if(value.compare("ALL")==0) {
           value= "ALL";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==SGE){
+        if(value.compare("BEGIN")==0) {
+          value= "b";
+        } else if(value.compare("END")==0) {
+          value = "e";
+        } else if(value.compare("ERROR")==0) {
+          value = "a";
+        } else if(value.compare("ALL")==0) {
+          value= "abe";
         } else {
           notificationIsNotValid = true;
         }

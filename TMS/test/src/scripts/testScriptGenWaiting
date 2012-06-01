@@ -33,6 +33,10 @@
 #BSUB -b 12:30
 #BSUB -q normal
 
+#$ -N mySGEjobName
+#$ -o mySGEJob-$JOB_ID.out
+#$ -e mySGEJob-$JOB_ID.err
+
 echo "The name of the submitted server is: " $HOSTNAME
  sleep 60
   ls -l

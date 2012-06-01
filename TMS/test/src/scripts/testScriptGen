@@ -32,6 +32,11 @@
 # PBS -q second_queue
 #SBATCH -p firstPart
 #BSUB -q priority
+
+#$ -N mySGEjobName
+#$ -o mySGEJob-$JOB_ID.out
+#$ -e mySGEJob-$JOB_ID.err
+
 echo "The name of the submitted server is: " $HOSTNAME
 
 echo "TEST OF VISHNU JOB OUTPUT ENVIRONMENT VARIABLES!...."
