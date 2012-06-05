@@ -23,9 +23,7 @@ namespace vishnu {
     /* [14] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER},
     /* [15] */ {DEFAULTBATCHCONFIGFILE, "defaultBatchConfigFile",STRING_PARAMETER},
     /* [16] */ {ADDR, "address",STRING_PARAMETER},
-    /* [17] */ {PORT, "port",INT_PARAMETER},
-    /* [18] */ {BRAD, "brokerAddress",STRING_PARAMETER},
-    /* [19] */ {BRPO, "borkerPort",INT_PARAMETER}
+    /* [17] */ {PORT, "port",INT_PARAMETER}
  };
 //}}RELAX<MISRA_0_1_3>
 }

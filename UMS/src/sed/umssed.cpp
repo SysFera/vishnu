@@ -92,7 +92,7 @@ controlSignal (int signum) {
 //}
 
 
-int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port, string braddr, int brport)
+int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port)
 {
   // Prepare our context and socket for server
   zmq::context_t context (1);
@@ -179,8 +179,6 @@ int main(int argc, char* argv[], char* envp[]) {
   string cfg;
   string address;
   int port;
-  string brokerAddress;
-  int brokerPort;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -196,8 +194,6 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
     config.getRequiredConfigValue<int>(vishnu::PORT, port);
-    config.getRequiredConfigValue<std::string>(vishnu::BRAD, brokerAddress);
-    config.getRequiredConfigValue<int>(vishnu::BRPO, brokerPort);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email" << std::endl;
       exit(1);
@@ -243,7 +239,7 @@ int main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       //      diet_print_service_table();
-      ZMQServerStart(&server, address, port, brokerAddress, brokerPort);
+      ZMQServerStart(&server, address, port);
       //      res = diet_SeD(cfg.c_str(), argc, argv);
       unregisterSeD(UMSTYPE, mid);
     } else {

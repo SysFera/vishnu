@@ -27,7 +27,7 @@
 #include "Server.hpp"
 #include "Message.hpp"
 
-int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int port, string braddr, int brport)
+int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int port)
 {
   // Prepare our context and socket for server
   zmq::context_t context (1);
@@ -129,8 +129,6 @@ int main(int argc, char* argv[], char* envp[]) {
 
   string address;
   int port;
-  string brokerAddress;
-  int brokerPort;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -145,8 +143,6 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
     config.getRequiredConfigValue<int>(vishnu::PORT, port);
-    config.getRequiredConfigValue<std::string>(vishnu::BRAD, brokerAddress);
-    config.getRequiredConfigValue<int>(vishnu::BRPO, brokerPort);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -263,7 +259,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
       // Initialize the DIET SeD
       if (!res) {
-        ZMQServerStart(&server, address, port, brokerAddress, brokerPort);
+        ZMQServerStart(&server, address, port);
 //        diet_print_service_table();
 //        res = diet_SeD(cfg.c_str(), argc, argv);
         unregisterSeD(TMSTYPE, machineId);

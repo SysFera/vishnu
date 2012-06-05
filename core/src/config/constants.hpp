@@ -40,8 +40,6 @@ namespace vishnu {
     DEFAULTBATCHCONFIGFILE,
     ADDR,
     PORT,
-    BRAD, // Broker Address
-    BRPO  // Broker Port
   } param_type_t;
 
   /**
