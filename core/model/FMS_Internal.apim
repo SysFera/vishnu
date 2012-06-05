@@ -2,9 +2,9 @@
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS_Internal">
     <services name="fileCreate" description="creates  files on  remote machines.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
-      <ports name="mode" description="The file access permissions in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path" longOptionName=""/>
+      <ports name="mode" description="The file access permissions in octal numeral system" optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="644">
         <dataType href="FMS.apim#//@modules.0/@typeList/@types.11"/>
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
@@ -16,9 +16,9 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.0"/>
     </services>
     <services name="DirCreate" description="creates directories on remote machines.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
-      <ports name="mode" description="the new directories permission access in octal numeral system." optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path" longOptionName=""/>
+      <ports name="mode" description="the new directories permission access in octal numeral system" optional="true" shortOptionLetter="m" longOptionName="" defaultValueLiteral="755">
         <dataType href="FMS.apim#//@modules.0/@typeList/@types.11"/>
       </ports>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
@@ -30,8 +30,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.1"/>
     </services>
     <services name="fileRemove" description="removes files from  remote hosts.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to remove following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to remove following the pattern  [host:]file path" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_SESSION_KEY_NOT_FOUND"/>
@@ -43,8 +43,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.2"/>
     </services>
     <services name="DirRemove" description="removes  directories (and subdirectories) from  remote machines.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to remove following the pattern  [host:]directory path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to remove following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
@@ -55,8 +55,8 @@
     </services>
     <services name="grpChange" description="changes group owner of  remote files/directories. ">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path." longOptionName=""/>
-      <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory."/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
+      <ports name="group" dataType="//@modules.0/@typeList/@types.0" description="the new group owner of file/directory"/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_INVALID_PARAM"/>
@@ -68,7 +68,7 @@
     <services name="modeChange" description="changes  access rights of remote files/directories.">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description=" the access rigths of file/directory in octal system." longOptionName=""/>
+      <ports name="mode" dataType="//@modules.0/@typeList/@types.1" description=" the access rigths of file/directory in octal system" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
       <resultCodes href="#ERRCODE_DBERR"/>
@@ -93,8 +93,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.6"/>
     </services>
     <services name="fileTail" description="displays a few last lines of  files located on remote machines">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file  following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The last &quot;nLine&quot; lines of the file." longOptionName=""/>
       <ports name="nLine" description="number of lines to display." optional="true" shortOptionLetter="n" longOptionName="line" defaultValueLiteral="10">
         <dataType href="FMS.apim#//@modules.0/@typeList/@types.12"/>
@@ -108,8 +108,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.7"/>
     </services>
     <services name="fileContent" description="displays content  of  files located on remote machines">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to display following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to display following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The content of the file." longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <resultCodes href="#VISHNU_OK"/>
@@ -121,9 +121,9 @@
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.8"/>
     </services>
-    <services name="dirList" description="displays  the content of a remote directory. ">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path." longOptionName=""/>
+    <services name="dirList" description="displays  the content of a remote directory">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="dirContent" direction="OUT" description="The content of the directory  (only files names with short format, all files informations with long format)." longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.6" description="List of options for the listDir command." optional="true" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
@@ -135,8 +135,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.9"/>
     </services>
     <services name="fileCopy" description="executes a synchronous copy of file." resultCodes="ERRCODE_DBERR ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_UNKNOWN_MACHINE ERRCODE_SESSIONKEY_NOT_FOUND VISHNU_OK">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The  source file to copy following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file." longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.7" description="the copy options." optional="true" shortOptionLetter="r"/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
@@ -165,8 +165,8 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.12"/>
     </services>
     <services name="fileAsyncMove" description="executes an asynchronous move of file.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
-      <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to move following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="src" dataType="//@modules.0/@typeList/@types.0" description="The source file to move following the pattern  [host:]file path" longOptionName=""/>
       <ports name="dest" dataType="//@modules.0/@typeList/@types.0" description="The path of the destination file." longOptionName=""/>
       <ports name="thrId" direction="OUT" dataType="//@modules.0/@typeList/@types.3" description="The file tranfer identifier (allowing for instance  to ckeck the status of a file transfer, or to cancel it)."/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.8" description="The mv command options" optional="true" shortOptionLetter="r"/>
@@ -189,7 +189,7 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.14"/>
     </services>
     <services name="fileTransfersList" description="displays the history of all file transfers submitted by User.">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key."/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="fileTransferList" direction="OUT" description="The file transfer container." longOptionName="">
         <dataType href="FMS.apim#//@modules.0/@typeList/@types.15"/>
       </ports>
@@ -203,7 +203,7 @@
       <usedByServices href="FMS.apim#//@modules.0/@services.15"/>
     </services>
     <services name="FilesInfo" description="displays the information  of  files." isCommand="false">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The file whose inode information will be displayed"/>
       <ports name="filesinfo" direction="OUT" dataType="//@modules.0/@typeList/@types.12" description="The  inode information." shortOptionLetter="" longOptionName=""/>
       <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
@@ -281,6 +281,6 @@
   </modules>
   <envVariableList>
     <envVariables name="VISHNU_CONFIG_FILE" description="Contains the path to the local configuration file for VISHNU"/>
-    <envVariables name="VISHNU_TRANSFER_CMD" description="It specifies the command to use for all file transfers by default. It takes its values in the set {SCP,RSYNC}." isUserOption="true"/>
+    <envVariables name="VISHNU_TRANSFER_CMD" description="It specifies the command to use for all file transfers by default. It takes its values in the set {SCP, RSYNC}" isUserOption="true"/>
   </envVariableList>
 </API>

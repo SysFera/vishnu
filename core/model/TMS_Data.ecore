@@ -385,7 +385,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="progress" upperBound="-1"
         eType="#//Progression" containment="true">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the list of jobs in progression."/>
+        <details key="content" value="Represents the list of jobs in progression"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -421,7 +421,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="percent" eType="ecore:EDataType Ecore.ecore#//EInt"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
-        <details key="content" value="Represent the job progression. "/>
+        <details key="content" value="Represent the job progression"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//JobStatus"
