@@ -21,14 +21,6 @@ int
 solveSubmitJob(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the addWork service
- * \param pb is a structure which corresponds to the descriptor of a profile
- * \return raises an exception on error
- */
-int
-solveAddWork(diet_profile_t* pb);
-
-/**
  * \brief Function to solve the jobCancel service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error

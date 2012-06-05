@@ -1,6 +1,6 @@
 include_directories(client api
-  ${DIET_INCLUDE_DIR}
-  ${OMNIORB4_INCLUDE_DIR}
+#  ${DIET_INCLUDE_DIR}
+#  ${OMNIORB4_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -10,6 +10,8 @@ include_directories(client api
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}/include/
+  ${ZMQ_INCLUDE_DIR}
+  ${MOCK_INCLUDE_DIR}
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
@@ -27,12 +29,15 @@ set(api_HEADERS api/api_tms.hpp)
 
 add_library(vishnu-tms-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 target_link_libraries(vishnu-tms-client
-  ${DIET_CLIENT_LIBRARIES}
+#  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
   vishnu-ums-client
-  ${LIBCRYPT_LIB})
+  ${LIBCRYPT_LIB}
+  ${ZMQ_LIBRARIES}
+  zmq_helper
+)
 
 install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
 set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
@@ -62,7 +67,10 @@ if (NOT CLIENT_ONLY)
     vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
-    emf4cpp-vishnu)
+    emf4cpp-vishnu
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+)
 
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
@@ -85,7 +93,7 @@ if (NOT CLIENT_ONLY)
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
   add_executable(tmssed ${sed_SRCS})
-  target_link_libraries(tmssed ${DIET_SERVER_LIBRARIES}
+  target_link_libraries(tmssed #${DIET_SERVER_LIBRARIES}
     ${Boost_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}
@@ -96,7 +104,10 @@ if (NOT CLIENT_ONLY)
     vishnu-tms-server
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
-    ${USED_BATCH_LIB})
+    ${USED_BATCH_LIB}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+    )
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)

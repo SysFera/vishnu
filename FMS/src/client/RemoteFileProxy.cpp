@@ -90,7 +90,7 @@ void RemoteFileProxy::getInfos() const {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(getInfosProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(getInfosProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -173,7 +173,7 @@ int RemoteFileProxy::chgrp(const string& group) {
     raiseDietMsgException(msgErrorDiet); 
   }
 
-  if(diet_paramstring_set(diet_parameter(chgrpProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(chgrpProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -237,7 +237,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(chmodProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(chmodProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -308,7 +308,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(headProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(headProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -384,7 +384,7 @@ string RemoteFileProxy::getContent() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(getContentProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(getContentProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -448,7 +448,7 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(mkfileProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(mkfileProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -509,7 +509,7 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(mkdirProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(mkdirProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -575,7 +575,7 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(rmProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(rmProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -640,7 +640,7 @@ int RemoteFileProxy::rmdir() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(rmdirProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(rmdirProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -701,7 +701,7 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(tailProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(tailProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
@@ -777,7 +777,7 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_paramstring_set(diet_parameter(lsProfile, 3), const_cast<char*>(getHost().c_str()),
+  if(diet_string_set(diet_parameter(lsProfile, 3), const_cast<char*>(getHost().c_str()),
         DIET_VOLATILE)) {
     msgErrorDiet += "with host parameter "+getHost();
     raiseDietMsgException(msgErrorDiet);
