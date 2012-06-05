@@ -16,6 +16,30 @@
 #include <boost/lexical_cast.hpp>
 #include "utilVishnu.hpp"
 
+static std::map<std::string, std::vector<std::string> > theConfig;
+
+void
+fill(std::map<std::string, std::vector<std::string> > &cfg, std::string mfile){
+  std::ifstream file(mfile.c_str());
+
+  if (file){
+    std::string line;
+    while(std::getline(file, line)){
+      std::istringstream iss(line);
+      std::string server;
+      std::string port;
+      std::vector<std::string> ports;
+      iss >> server;
+      while(iss >> port){
+        ports.push_back(port);
+      }
+      cfg.insert(std::pair<std::string, std::vector<std::string> >(server, ports));
+    }
+  } else {
+    std::cout << "failed to open file " << mfile << std::endl;
+  }
+}
+
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
   diet_profile_t* res = (diet_profile_t*) malloc(sizeof(diet_profile_t)*1);
@@ -101,16 +125,19 @@ isTMS(std::string test){
 
 int
 diet_call(diet_profile_t* prof){
-
+  int port;
   if (isUMS(std::string(prof->name))) {
-    diet_call_gen(prof, 5555);
+    port = vishnu::convertToInt((theConfig.find("UMS")->second).at(0));
+    diet_call_gen(prof, port);
 //  }
 //  else if (isFMS(std::string(prof->name))) {
 //    diet_call_gen(prof, 5556);
   } else if (isTMS(std::string(prof->name))) {
-    diet_call_gen(prof, 5557);
+    port = vishnu::convertToInt((theConfig.find("TMS")->second).at(0));
+    diet_call_gen(prof, port);
   } else {
-    diet_call_gen(prof, 5556);
+    port = vishnu::convertToInt((theConfig.find("FMS")->second).at(0));
+    diet_call_gen(prof, port);
 //    std::cerr << "Unknown service" << std::endl;
   }
 
@@ -260,6 +287,7 @@ my_deserialize(const std::string& prof){
 
 int
 diet_initialize(const char* cfg, int argc, char** argv){
+  fill(theConfig, std::string(cfg));
   return 0;
 }
 
