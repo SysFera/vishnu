@@ -33,15 +33,15 @@ diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
 int
 diet_string_set(diet_arg_t* arg, char* value, int pers){
   if (value) {
-    arg->prof->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
-    memcpy(arg->prof->param[arg->pos], value, strlen(value));
-    (arg->prof->param[arg->pos])[strlen(value)] = '\0';
+    ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
+    memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));
+    (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen(value)] = '\0';
 //    std::cout << " Setting val to : " << arg->prof->param[arg->pos] << " for pos " << arg->pos << std::endl;
 //    std::cout << " Setting val orig to : " << value << " for pos " << arg->pos << std::endl;
   } else {
-    arg->prof->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
-    memcpy(arg->prof->param[arg->pos], "", strlen(""));
-    (arg->prof->param[arg->pos])[strlen("")] = '\0';
+    ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
+    memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
+    (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen("")] = '\0';
   }
   return 0;
 }
@@ -84,6 +84,19 @@ isUMS(std::string test){
     test.compare("authAccountList") == 0);
 }
 
+bool
+isTMS(std::string test){
+  return (
+    test.find("job_Submit") != std::string::npos ||
+    test.compare("jobCancel") != std::string::npos ||
+    test.compare("jobInfo") != std::string::npos ||
+    test.compare("getListOfJobs") != std::string::npos ||
+    test.compare("getJobsProgression") != std::string::npos ||
+    test.compare("getListOfQueues") != std::string::npos ||
+    test.compare("jobOutputGetResult") != std::string::npos ||
+    test.compare("jobOutputGetCompletedJobs") != std::string::npos);
+}
+
 
 
 int
@@ -94,6 +107,8 @@ diet_call(diet_profile_t* prof){
 //  }
 //  else if (isFMS(std::string(prof->name))) {
 //    diet_call_gen(prof, 5556);
+  } else if (isTMS(std::string(prof->name))) {
+    diet_call_gen(prof, 5557);
   } else {
     diet_call_gen(prof, 5556);
 //    std::cerr << "Unknown service" << std::endl;
@@ -183,9 +198,9 @@ diet_call_gen(diet_profile_t* prof, int my_port){
 int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr){
 //  std::cout << "Getting arg in pos :" << arg->pos << " of value: " << arg->prof->param[arg->pos] << std::endl;
-  *value = (char *)malloc((strlen(arg->prof->param[arg->pos])+1)*sizeof (char));
-  memcpy(*value, arg->prof->param[arg->pos], strlen(arg->prof->param[arg->pos]));
-  (*value)[strlen(arg->prof->param[arg->pos])]='\0';
+  *value = (char *)malloc((strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])+1)*sizeof (char));
+  memcpy(*value, ((diet_profile_t*)(arg->prof))->param[arg->pos], strlen(((diet_profile_t*)(arg->prof))->param[arg->pos]));
+  (*value)[strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])]='\0';
 //  std::cout << "Value set :" << *value << std::endl;
 //  std::cout << " Getting val to : " << arg->prof->param[arg->pos] << "for pos " << arg->pos << std::endl;
   return 0;
@@ -252,3 +267,9 @@ int
 diet_finalize(){
   return 0;
 }
+
+int
+diet_container_set(diet_arg_t* arg, int flag){
+
+}
+
