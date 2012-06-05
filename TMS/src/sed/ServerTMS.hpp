@@ -10,11 +10,14 @@
 
 #include <string>
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 #include "DbConfiguration.hpp"
 #include "utilVishnu.hpp"
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "SeD.hpp"
+
+typedef int (*functionPtr_t)(diet_profile_t*);
 
 class Database;
 
@@ -41,7 +44,7 @@ static const char* SERVICES[NB_SRV] = {
  * \class ServerTMS
  * \brief This class describes the g server
  */
-class ServerTMS {
+class ServerTMS : public SeD{
 public :
 
   /**
@@ -103,6 +106,13 @@ public :
        BatchType batchType,
        std::string slaveBinDir,
        std::string batchDefaultConfigFile);
+  /**
+   * \brief To call a function upon receiving a request
+   * \param profile The profile of the service
+   * \return the error code of the function
+   */
+  int
+  call(diet_profile_t* profile);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -110,6 +120,12 @@ public :
   ~ServerTMS();
 
 private :
+/**
+ * \brief Init the ptr function map
+ * \param mid The machine Id
+ */
+  void
+  initMap(std::string mid);
 
   /**
    * \brief Constructor, private because class is singleton
@@ -136,8 +152,8 @@ private :
    * \param pb the resquest profile
    * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
    */
-  static void
-    setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues);
+//  static void
+//    setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues);
 
 
   /////////////////////////////////
@@ -166,7 +182,7 @@ private :
   /**
   * \brief Structure representing a profile description
   */
-  diet_profile_desc_t* mprofile;
+//  diet_profile_desc_t* mprofile;
   /**
   * \brief Instance of Database
   */
@@ -179,5 +195,9 @@ private :
    * \brief  Default batch submittion Options
    */
   std::vector<std::string> mdefaultBatchOption;
+  /**
+   * \brief map with function ptr for callback
+   */
+  std::map<string, functionPtr_t> mcb;
 };
 #endif // SERVER

@@ -23,7 +23,7 @@
 
 #include "TMS_Data.hpp"
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"

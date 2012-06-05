@@ -19,6 +19,77 @@
 #include "DbConfiguration.hpp"
 #include "MonitorTMS.hpp"
 
+//For ZMQ
+#include "zmq.hpp"
+#include "DIET_client.h"
+#include "Handler.hpp"
+#include "BasicHandler.hpp"
+#include "Server.hpp"
+#include "Message.hpp"
+
+int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int port, string braddr, int brport)
+{
+  // Prepare our context and socket for server
+  zmq::context_t context (1);
+  zmq::socket_t socket (context, ZMQ_REP);
+
+// Connexion with broker
+//  zmq::context_t brcontext (1);
+//  zmq::socket_t brsocket (brcontext, ZMQ_REP);
+
+  string add = addr + ":" + convertToString<int>(port);
+  cout << "Binded to address: " << add << endl;
+  socket.bind(add.c_str());
+
+//  string bradd = braddr + ":" + convertToString<int>(brport);
+//  brsocket.connect(bradd.c_str());
+//  boost::shared_ptr<diet_profile_t> prof;
+//  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("TMS", getTMSService(), addr, port));
+//  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
+// Handler for messages
+//  BasicHandler hd (m);
+//  boost::shared_ptr<Message> brrep = hd.send(brsocket);
+//  TreatmentData brdata;
+//  BasicHandler rep(brrep);
+//  rep.treat();
+
+
+
+//  socket.bind ("tcp://*:5555");
+
+  while (true) {
+//    std::cout << "Received a message" << std::endl;
+
+    //Receive message from ZMQ
+    zmq::message_t message(0);
+    try {
+      if (!socket.recv(&message, 0)) {
+	return false;
+      }
+    } catch (zmq::error_t error) {
+      std::cout << "E: " << error.what() << std::endl;
+      return false;
+    }
+
+    std::string data = static_cast<const char *>(message.data());
+    std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
+
+
+    // Deserialize and call UMS Method
+    boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+    tmsserver->get()->call(profile.get());
+
+    // Send reply back to client
+    std::string resultSerialized = my_serialize(profile.get());
+//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
+
+    zmq::message_t reply(resultSerialized.length()+1);
+    memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
+    socket.send(reply);
+  }
+  return 0;
+}
+
 /**
  * \brief To show how to use the sed
  * \fn int usage(char* cmd)
@@ -56,6 +127,11 @@ int main(int argc, char* argv[], char* envp[]) {
   string TMSTYPE = "TMS";
   string cfg;
 
+  string address;
+  int port;
+  string brokerAddress;
+  int brokerPort;
+
   if (argc != 2) {
     return usage(argv[0]);
   }
@@ -67,6 +143,10 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
+    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
+    config.getRequiredConfigValue<int>(vishnu::PORT, port);
+    config.getRequiredConfigValue<std::string>(vishnu::BRAD, brokerAddress);
+    config.getRequiredConfigValue<int>(vishnu::BRPO, brokerPort);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -183,8 +263,9 @@ int main(int argc, char* argv[], char* envp[]) {
 
       // Initialize the DIET SeD
       if (!res) {
-        diet_print_service_table();
-        res = diet_SeD(cfg.c_str(), argc, argv);
+        ZMQServerStart(&server, address, port, brokerAddress, brokerPort);
+//        diet_print_service_table();
+//        res = diet_SeD(cfg.c_str(), argc, argv);
         unregisterSeD(TMSTYPE, machineId);
       } else {
         std::cerr << std::endl;

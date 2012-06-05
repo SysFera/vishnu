@@ -268,7 +268,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
   diet_string_get(diet_parameter(profile, 2), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
-  diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
+  diet_string_get(diet_parameter(profile, 4), &destHost, NULL);
   diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
   diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
 
