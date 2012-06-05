@@ -68,24 +68,24 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   } catch (SystemException& e) {
     throw (e);
   }
-  config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
-  string cmd;
-  cmd = "cp "+path+" "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-  }
-  cmd = "chmod 777 "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-  }
-  srand(std::time(NULL));
-  cmd = "echo \"\\\nname="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-  }
+//  config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
+//  string cmd;
+//  cmd = "cp "+path+" "+cfg;
+//  res = system(cmd.c_str());
+//  if (res == -1) {
+//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+//  }
+//  cmd = "chmod 777 "+cfg;
+//  res = system(cmd.c_str());
+//  if (res == -1) {
+//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+//  }
+//  srand(std::time(NULL));
+//  cmd = "echo \"\\\nname="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
+//  res = system(cmd.c_str());
+//  if (res == -1) {
+//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+//  }
   return 0;
 }
 
