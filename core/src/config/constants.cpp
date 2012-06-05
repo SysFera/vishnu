@@ -22,9 +22,7 @@ namespace vishnu {
     /* [13] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
     /* [14] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER},
     /* [15] */ {ADDR, "address",STRING_PARAMETER},
-    /* [16] */ {PORT, "port",INT_PARAMETER},
-    /* [17] */ {BRAD, "brokerAddress",STRING_PARAMETER},
-    /* [18] */ {BRPO, "brokerPort",INT_PARAMETER}
+    /* [16] */ {PORT, "port",INT_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
