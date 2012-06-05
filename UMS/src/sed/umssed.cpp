@@ -52,44 +52,44 @@ controlSignal (int signum) {
   }
 }
 
-std::vector<std::string> &
-getUMSService() {
-  std::vector<std::string>* s = new std::vector<std::string>();
-  s->push_back("sessionConnect");
-  s->push_back("sessionReconnect");
-  s->push_back("sessionClose");
-  s->push_back("userCreate");
-  s->push_back("userUpdate");
-  s->push_back("userDelete");
-  s->push_back("userPasswordChange");
-  s->push_back("userPasswordReset");
-  s->push_back("machineCreate");
-  s->push_back("machineUpdate");
-  s->push_back("machineDelete");
-  s->push_back("localAccountCreate");
-  s->push_back("localAccountUpdate");
-  s->push_back("localAccountDelete");
-  s->push_back("configurationSave");
-  s->push_back("configurationRestore");
-  s->push_back("optionValueSet");
-  s->push_back("optionValueSetDefault");
-  s->push_back("sessionList");
-  s->push_back("localAccountList");
-  s->push_back("machineList");
-  s->push_back("commandList");
-  s->push_back("optionValueList");
-  s->push_back("userList");
-  s->push_back("restore");
-  s->push_back("authSystemCreate");
-  s->push_back("authSystemUpdate");
-  s->push_back("authSystemDelete");
-  s->push_back("authSystemList");
-  s->push_back("authAccountCreate");
-  s->push_back("authAccountUpdate");
-  s->push_back("authAccountDelete");
-  s->push_back("authAccountList");
-  return *s;
-}
+//std::vector<std::string> &
+//getUMSService() {
+//  std::vector<std::string>* s = new std::vector<std::string>();
+//  s->push_back("sessionConnect");
+//  s->push_back("sessionReconnect");
+//  s->push_back("sessionClose");
+//  s->push_back("userCreate");
+//  s->push_back("userUpdate");
+//  s->push_back("userDelete");
+//  s->push_back("userPasswordChange");
+//  s->push_back("userPasswordReset");
+//  s->push_back("machineCreate");
+//  s->push_back("machineUpdate");
+//  s->push_back("machineDelete");
+//  s->push_back("localAccountCreate");
+//  s->push_back("localAccountUpdate");
+//  s->push_back("localAccountDelete");
+//  s->push_back("configurationSave");
+//  s->push_back("configurationRestore");
+//  s->push_back("optionValueSet");
+//  s->push_back("optionValueSetDefault");
+//  s->push_back("sessionList");
+//  s->push_back("localAccountList");
+//  s->push_back("machineList");
+//  s->push_back("commandList");
+//  s->push_back("optionValueList");
+//  s->push_back("userList");
+//  s->push_back("restore");
+//  s->push_back("authSystemCreate");
+//  s->push_back("authSystemUpdate");
+//  s->push_back("authSystemDelete");
+//  s->push_back("authSystemList");
+//  s->push_back("authAccountCreate");
+//  s->push_back("authAccountUpdate");
+//  s->push_back("authAccountDelete");
+//  s->push_back("authAccountList");
+//  return *s;
+//}
 
 
 int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port, string braddr, int brport)
@@ -109,7 +109,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int por
 //  string bradd = braddr + ":" + convertToString<int>(brport);
 //  brsocket.connect(bradd.c_str());
 //  boost::shared_ptr<diet_profile_t> prof;
-  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("UMS", getUMSService(), addr, port));
+//  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("UMS", getUMSService(), addr, port));
 //  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
 // Handler for messages
 //  BasicHandler hd (m);
