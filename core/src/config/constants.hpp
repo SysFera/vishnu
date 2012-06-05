@@ -22,8 +22,7 @@ namespace vishnu {
  */
 
   typedef enum {
-    DIETCONFIGFILE=0,
-    VISHNUID,
+    VISHNUID=0,
     DBTYPE,
     DBHOST,
     DBPORT,

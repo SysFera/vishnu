@@ -171,7 +171,7 @@ int main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   AuthenticatorConfiguration authenticatorConfig(config);
 
-  std::string dietConfigFile;
+//  std::string dietConfigFile;
   std::string sendmailScriptPath;
   struct sigaction action;
   string UMSTYPE = "UMS";
@@ -187,7 +187,7 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
+//    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
