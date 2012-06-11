@@ -31,11 +31,11 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Work::Work() :
-    m_applicationId(""), m_subject(""), m_priority(-1), m_status(-1),
-            m_endDate(-1), m_estimatedHour(-1), m_doneRatio(0),
+    m_sessionId(""), m_applicationId(0), m_subject(""), m_priority(-1),
+            m_status(-1), m_endDate(-1), m_estimatedHour(-1), m_doneRatio(0),
             m_batchJobId(""), m_dateCreated(-1), m_dateEnded(-1),
             m_dateStarted(-1), m_lastUpdated(-1), m_projectId(""),
-            m_submitDate(-1), m_machineId(""), m_nbCPU(-1)
+            m_submitDate(0), m_machineId(""), m_nbCPU(-1)
 {
 
     /*PROTECTED REGION ID(WorkImpl__WorkImpl) START*/

@@ -1876,7 +1876,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__sessionId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Work__sessionId->setName("sessionId");
-    m_Work__sessionId->setDefaultValueLiteral("");
+    m_Work__sessionId->setDefaultValueLiteral("" "");
     m_Work__sessionId->setLowerBound(0);
     m_Work__sessionId->setUpperBound(1);
     m_Work__sessionId->setTransient(false);
@@ -1890,7 +1890,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__applicationId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Work__applicationId->setName("applicationId");
-    m_Work__applicationId->setDefaultValueLiteral("" "");
+    m_Work__applicationId->setDefaultValueLiteral("0");
     m_Work__applicationId->setLowerBound(0);
     m_Work__applicationId->setUpperBound(1);
     m_Work__applicationId->setTransient(false);
@@ -2114,7 +2114,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__submitDate->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Work__submitDate->setName("submitDate");
-    m_Work__submitDate->setDefaultValueLiteral("-1");
+    m_Work__submitDate->setDefaultValueLiteral("0");
     m_Work__submitDate->setLowerBound(0);
     m_Work__submitDate->setUpperBound(1);
     m_Work__submitDate->setTransient(false);
