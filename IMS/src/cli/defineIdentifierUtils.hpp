@@ -66,7 +66,8 @@ typedef enum{
   MACHINE,
   TRANSFER,
   USER,
-  AUTH
+  AUTH,
+  WORK
 } DefineIdentifierType;
 
 
@@ -110,6 +111,9 @@ struct DefineIdentifierFunc {
         break;
       case AUTH:
         res = defineAuthIdentifier(sessionKey, mnewFormat);
+        break;
+      case WORK:
+        res = defineWorkIdentifier(sessionKey, mnewFormat);
         break;
       default:
         break;

@@ -61,6 +61,16 @@ ObjectIdProxy::setAID(string fmt) {
 }
 
 void
+ObjectIdProxy::setWID(string fmt) {
+  try {
+    defineCall ("int_defineWorkIdentifier", fmt);
+  } catch (UserException& e) {
+    e.appendMsgComp("Bad authentication format");
+    throw (e);
+  }
+}
+
+void
 ObjectIdProxy::defineCall(string name, string fmt) {
   diet_profile_t* profile = NULL;
   string sessionKey;

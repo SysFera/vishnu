@@ -223,6 +223,17 @@ vishnu::defineAuthIdentifier(const string sessionKey,
   return IMS_SUCCESS;
 }
 
+int
+vishnu::defineWorkIdentifier(const string sessionKey,
+                             string fmt)
+  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setWID(fmt);
+  return IMS_SUCCESS;
+}
+
 
 int
 vishnu::loadShed(const string sessionKey,

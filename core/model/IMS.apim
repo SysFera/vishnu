@@ -141,6 +141,12 @@
       <details key="description" value="This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted."/>
       <details key="exCLI" value="To restart using the configuration file ums.cfg an UMS sed on machine_1:&#xA;vishnu_restart -v /tmp/ums.cfg -t 1 machine_1"/>
     </services>
+    <services name="defineWorkIdentifier" description="defines the shape of the identifiers automatically generated for the work" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <details key="description" value="This function allows an administrator to define the format of the identifier that will be automatically generated for the work. Once the format is defined, each time a work is added, the format will be used to define its identifier.&#xA;The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.&#xA;The available variables are: &#xA;$CPT: a counter&#xA;$DAY: The day the file transfer is done&#xA;$MONTH: The month the file transfer is done&#xA;$YEAR: The year the file transfer is done&#xA;$TYPE: The 'W' symb to remind it is a file transfer id&#xA;$NAME: The name of the work"/>
+      <details key="exCLI" value="To define the format to W_$CPT:&#xA;vishnu_define_work_identifier W_\$CPT"/>
+    </services>
     <resultCodeList>
       <resultCodes name="VISHNU_OK" description="Error code returned if success"/>
       <resultCodes name="ERRCODE_INVALID_PARAMETER" description="If a parameter is invalid" value="10"/>
