@@ -23,7 +23,7 @@ set(ALLCLI current_session_id connect reconnect close
   list_users list_sessions)
 
 #declare all scripting commands
-set(SCRIPTCLI setting_sshkey)
+set(SCRIPTCLI vishnu_setting_sshkey)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)
@@ -53,7 +53,7 @@ foreach(cli ${ALLCLI})
 endforeach()
 
 foreach(script ${SCRIPTCLI})
-   install(PROGRAMS ${CMDPREFIX}${script} DESTINATION ${BIN_INSTALL_DIR})
+   install(PROGRAMS ${script} DESTINATION ${BIN_INSTALL_DIR})
 endforeach()
 
 

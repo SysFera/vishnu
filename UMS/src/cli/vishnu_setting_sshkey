@@ -19,7 +19,7 @@ echo "Allows to add or remove a given key to/from the authorized keys of a user'
 echo "	[login]@MACHINE"
 echo "	  represents the login information to the remote machine"
 echo "	KEY" 
-echo "	  sets the corresponding key. Default value : $HOME/.ssh/id_rsa.pub"
+echo "	  sets the corresponding key."
 echo 
 echo "Allowed options:"
 echo "	-a"
