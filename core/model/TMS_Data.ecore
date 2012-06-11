@@ -575,13 +575,14 @@
     <eLiterals name="USE_NB_RUNNING_JOBS" value="2" literal="USE_NB_RUNNING_JOBS"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Work" instanceTypeName="Work">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sessionId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Is the id of the session that contained the job submission command"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicationId" eType="ecore:EDataType Ecore.ecore#//ELong"
-        defaultValueLiteral="&quot;&quot;">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="Is the id of the machine on which the job has been submitted."/>
       </eAnnotations>
@@ -674,7 +675,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="submitDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
-        defaultValueLiteral="-1">
+        defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="Date and time when job was submitted (unix timestamp)"/>
       </eAnnotations>

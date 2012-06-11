@@ -312,10 +312,9 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::WORK__SESSIONID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_sessionId);
+        return m_sessionId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__APPLICATIONID:
-        return m_applicationId != "";
+        return m_applicationId != 0;
     case ::TMS_Data::TMS_DataPackage::WORK__SUBJECT:
         return m_subject != "";
     case ::TMS_Data::TMS_DataPackage::WORK__PRIORITY:
@@ -350,7 +349,7 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::WORK__PROJECTID:
         return m_projectId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__SUBMITDATE:
-        return m_submitDate != -1;
+        return m_submitDate != 0;
     case ::TMS_Data::TMS_DataPackage::WORK__MACHINEID:
         return m_machineId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__NBCPU:
