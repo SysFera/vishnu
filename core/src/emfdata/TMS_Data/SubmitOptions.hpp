@@ -246,6 +246,17 @@ namespace TMS_Data
          **/
         void setTextParams(::ecore::EString const& _textParams);
 
+        /**
+         * \brief To get the wid
+         * \return The wid attribute value
+         **/
+        ::ecore::EString const& getWid() const;
+        /**
+         * \brief To set the wid
+         * \param _wid The wid value
+         **/
+        void setWid(::ecore::EString const& _wid);
+
         // References
         /**
          * \brief To get the criterion
@@ -311,6 +322,8 @@ namespace TMS_Data
         ::ecore::EString m_fileParams;
 
         ::ecore::EString m_textParams;
+
+        ::ecore::EString m_wid;
 
         // References
 
