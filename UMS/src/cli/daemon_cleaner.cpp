@@ -105,14 +105,9 @@ deleter(char* dietConfig,int ac,char* av[]){
 
 
                 if (vishnuInitialize(dietConfig, ac, av)) {
-// Triple call to avoid useless disconnexion problem
-                  if (vishnuInitialize(dietConfig, ac, av)) {
-                    if (vishnuInitialize(dietConfig, ac, av)) {
-                      syslog(LOG_ERR,"DIET initialization failed !");
+                  syslog(LOG_ERR,"DIET initialization failed !");
 
-                      exit (EXIT_FAILURE);
-                    }
-                  }
+                  exit (EXIT_FAILURE);
                 }
 
                 try{
