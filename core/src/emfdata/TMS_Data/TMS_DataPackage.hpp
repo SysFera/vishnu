@@ -134,6 +134,11 @@ namespace TMS_Data
         static const int SUBMITOPTIONS = 16;
 
         /**
+         * \brief Constant for Work class
+         */
+        static const int WORK = 17;
+
+        /**
          * \brief Constant for JOB__SESSIONID feature
          */
         static const int JOB__SESSIONID = 0;
@@ -359,209 +364,314 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__TEXTPARAMS = 44;
 
         /**
+         * \brief Constant for SUBMITOPTIONS__WID feature
+         */
+        static const int SUBMITOPTIONS__WID = 45;
+
+        /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
-        static const int LISTJOBSOPTIONS__JOBID = 45;
+        static const int LISTJOBSOPTIONS__JOBID = 46;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__NBCPU feature
          */
-        static const int LISTJOBSOPTIONS__NBCPU = 46;
+        static const int LISTJOBSOPTIONS__NBCPU = 47;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__FROMSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 47;
+        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 48;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__TOSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 48;
+        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 49;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__OWNER feature
          */
-        static const int LISTJOBSOPTIONS__OWNER = 49;
+        static const int LISTJOBSOPTIONS__OWNER = 50;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__STATUS feature
          */
-        static const int LISTJOBSOPTIONS__STATUS = 50;
+        static const int LISTJOBSOPTIONS__STATUS = 51;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__PRIORITY feature
          */
-        static const int LISTJOBSOPTIONS__PRIORITY = 51;
+        static const int LISTJOBSOPTIONS__PRIORITY = 52;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__QUEUE feature
          */
-        static const int LISTJOBSOPTIONS__QUEUE = 52;
+        static const int LISTJOBSOPTIONS__QUEUE = 53;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__MULTIPLESTATUS feature
          */
-        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 53;
+        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 54;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__BATCHJOB feature
          */
-        static const int LISTJOBSOPTIONS__BATCHJOB = 54;
+        static const int LISTJOBSOPTIONS__BATCHJOB = 55;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 55;
+        static const int PROGRESSOPTIONS__JOBID = 56;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 56;
+        static const int PROGRESSOPTIONS__JOBOWNER = 57;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 57;
+        static const int LISTPROGRESSION__NBJOBS = 58;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 58;
+        static const int LISTPROGRESSION__PROGRESS = 59;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 59;
+        static const int PROGRESSION__JOBID = 60;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 60;
+        static const int PROGRESSION__JOBNAME = 61;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 61;
+        static const int PROGRESSION__WALLTIME = 62;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 62;
+        static const int PROGRESSION__STARTTIME = 63;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 63;
+        static const int PROGRESSION__ENDTIME = 64;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 64;
+        static const int PROGRESSION__PERCENT = 65;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 65;
+        static const int PROGRESSION__STATUS = 66;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 66;
+        static const int LISTQUEUES__NBQUEUES = 67;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 67;
+        static const int LISTQUEUES__QUEUES = 68;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 68;
+        static const int QUEUE__NAME = 69;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 69;
+        static const int QUEUE__MAXJOBCPU = 70;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 70;
+        static const int QUEUE__MAXPROCCPU = 71;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 71;
+        static const int QUEUE__MEMORY = 72;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 72;
+        static const int QUEUE__WALLTIME = 73;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 73;
+        static const int QUEUE__NODE = 74;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 74;
+        static const int QUEUE__NBRUNNINGJOBS = 75;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 75;
+        static const int QUEUE__NBJOBSINQUEUE = 76;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 76;
+        static const int QUEUE__STATE = 77;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 77;
+        static const int QUEUE__PRIORITY = 78;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 78;
+        static const int QUEUE__DESCRIPTION = 79;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 79;
+        static const int JOBRESULT__JOBID = 80;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 80;
+        static const int JOBRESULT__OUTPUTPATH = 81;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 81;
+        static const int JOBRESULT__ERRORPATH = 82;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTDIR feature
          */
-        static const int JOBRESULT__OUTPUTDIR = 82;
+        static const int JOBRESULT__OUTPUTDIR = 83;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 83;
+        static const int LISTJOBRESULTS__NBJOBS = 84;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 84;
+        static const int LISTJOBRESULTS__RESULTS = 85;
 
         /**
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
-        static const int LOADCRITERION__LOADTYPE = 85;
+        static const int LOADCRITERION__LOADTYPE = 86;
+
+        /**
+         * \brief Constant for WORK__SESSIONID feature
+         */
+        static const int WORK__SESSIONID = 87;
+
+        /**
+         * \brief Constant for WORK__APPLICATIONID feature
+         */
+        static const int WORK__APPLICATIONID = 88;
+
+        /**
+         * \brief Constant for WORK__SUBJECT feature
+         */
+        static const int WORK__SUBJECT = 89;
+
+        /**
+         * \brief Constant for WORK__PRIORITY feature
+         */
+        static const int WORK__PRIORITY = 90;
+
+        /**
+         * \brief Constant for WORK__STATUS feature
+         */
+        static const int WORK__STATUS = 91;
+
+        /**
+         * \brief Constant for WORK__ENDDATE feature
+         */
+        static const int WORK__ENDDATE = 92;
+
+        /**
+         * \brief Constant for WORK__OWNER feature
+         */
+        static const int WORK__OWNER = 93;
+
+        /**
+         * \brief Constant for WORK__ESTIMATEDHOUR feature
+         */
+        static const int WORK__ESTIMATEDHOUR = 94;
+
+        /**
+         * \brief Constant for WORK__DONERATIO feature
+         */
+        static const int WORK__DONERATIO = 95;
+
+        /**
+         * \brief Constant for WORK__DESCRIPTION feature
+         */
+        static const int WORK__DESCRIPTION = 96;
+
+        /**
+         * \brief Constant for WORK__BATCHJOBID feature
+         */
+        static const int WORK__BATCHJOBID = 97;
+
+        /**
+         * \brief Constant for WORK__DATECREATED feature
+         */
+        static const int WORK__DATECREATED = 98;
+
+        /**
+         * \brief Constant for WORK__DATEENDED feature
+         */
+        static const int WORK__DATEENDED = 99;
+
+        /**
+         * \brief Constant for WORK__DATESTARTED feature
+         */
+        static const int WORK__DATESTARTED = 100;
+
+        /**
+         * \brief Constant for WORK__LASTUPDATED feature
+         */
+        static const int WORK__LASTUPDATED = 101;
+
+        /**
+         * \brief Constant for WORK__WORKID feature
+         */
+        static const int WORK__WORKID = 102;
+
+        /**
+         * \brief Constant for WORK__PROJECTID feature
+         */
+        static const int WORK__PROJECTID = 103;
+
+        /**
+         * \brief Constant for WORK__SUBMITDATE feature
+         */
+        static const int WORK__SUBMITDATE = 104;
+
+        /**
+         * \brief Constant for WORK__MACHINEID feature
+         */
+        static const int WORK__MACHINEID = 105;
+
+        /**
+         * \brief Constant for WORK__NBCPU feature
+         */
+        static const int WORK__NBCPU = 106;
 
         // EClassifiers methods
 
@@ -666,6 +776,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EEnum_ptr getLoadType();
+
+        /**
+         * \brief Returns the reflective object for class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getWork();
 
         // EStructuralFeatures methods
 
@@ -941,6 +1057,12 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__textParams();
 
         /**
+         * \brief Returns the reflective object for feature wid of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__wid();
+
+        /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
          * \return A pointer to the reflective object
          */
@@ -1186,6 +1308,126 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getLoadCriterion__loadType();
 
+        /**
+         * \brief Returns the reflective object for feature sessionId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__sessionId();
+
+        /**
+         * \brief Returns the reflective object for feature applicationId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__applicationId();
+
+        /**
+         * \brief Returns the reflective object for feature subject of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__subject();
+
+        /**
+         * \brief Returns the reflective object for feature priority of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__priority();
+
+        /**
+         * \brief Returns the reflective object for feature status of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__status();
+
+        /**
+         * \brief Returns the reflective object for feature endDate of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__endDate();
+
+        /**
+         * \brief Returns the reflective object for feature owner of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__owner();
+
+        /**
+         * \brief Returns the reflective object for feature estimatedHour of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__estimatedHour();
+
+        /**
+         * \brief Returns the reflective object for feature doneRatio of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__doneRatio();
+
+        /**
+         * \brief Returns the reflective object for feature description of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__description();
+
+        /**
+         * \brief Returns the reflective object for feature batchJobId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__batchJobId();
+
+        /**
+         * \brief Returns the reflective object for feature dateCreated of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__dateCreated();
+
+        /**
+         * \brief Returns the reflective object for feature dateEnded of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__dateEnded();
+
+        /**
+         * \brief Returns the reflective object for feature dateStarted of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__dateStarted();
+
+        /**
+         * \brief Returns the reflective object for feature lastUpdated of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__lastUpdated();
+
+        /**
+         * \brief Returns the reflective object for feature workId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__workId();
+
+        /**
+         * \brief Returns the reflective object for feature projectId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__projectId();
+
+        /**
+         * \brief Returns the reflective object for feature submitDate of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__submitDate();
+
+        /**
+         * \brief Returns the reflective object for feature machineId of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__machineId();
+
+        /**
+         * \brief Returns the reflective object for feature nbCPU of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__nbCPU();
+
     protected:
 
         /**
@@ -1256,6 +1498,11 @@ namespace TMS_Data
          * \brief The instance for the class LoadCriterion
          */
         ::ecore::EClass_ptr m_LoadCriterionEClass;
+
+        /**
+         * \brief The instance for the class Work
+         */
+        ::ecore::EClass_ptr m_WorkEClass;
 
         // EEnuminstances 
 
@@ -1515,6 +1762,11 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__textParams;
 
         /**
+         * \brief The instance for the feature wid of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__wid;
+
+        /**
          * \brief The instance for the feature jobId of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__jobId;
@@ -1718,6 +1970,106 @@ namespace TMS_Data
          * \brief The instance for the feature loadType of class LoadCriterion
          */
         ::ecore::EAttribute_ptr m_LoadCriterion__loadType;
+
+        /**
+         * \brief The instance for the feature sessionId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__sessionId;
+
+        /**
+         * \brief The instance for the feature applicationId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__applicationId;
+
+        /**
+         * \brief The instance for the feature subject of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__subject;
+
+        /**
+         * \brief The instance for the feature priority of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__priority;
+
+        /**
+         * \brief The instance for the feature status of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__status;
+
+        /**
+         * \brief The instance for the feature endDate of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__endDate;
+
+        /**
+         * \brief The instance for the feature owner of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__owner;
+
+        /**
+         * \brief The instance for the feature estimatedHour of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__estimatedHour;
+
+        /**
+         * \brief The instance for the feature doneRatio of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__doneRatio;
+
+        /**
+         * \brief The instance for the feature description of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__description;
+
+        /**
+         * \brief The instance for the feature batchJobId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__batchJobId;
+
+        /**
+         * \brief The instance for the feature dateCreated of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__dateCreated;
+
+        /**
+         * \brief The instance for the feature dateEnded of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__dateEnded;
+
+        /**
+         * \brief The instance for the feature dateStarted of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__dateStarted;
+
+        /**
+         * \brief The instance for the feature lastUpdated of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__lastUpdated;
+
+        /**
+         * \brief The instance for the feature workId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__workId;
+
+        /**
+         * \brief The instance for the feature projectId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__projectId;
+
+        /**
+         * \brief The instance for the feature submitDate of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__submitDate;
+
+        /**
+         * \brief The instance for the feature machineId of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__machineId;
+
+        /**
+         * \brief The instance for the feature nbCPU of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__nbCPU;
 
     };
 
