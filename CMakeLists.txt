@@ -9,7 +9,7 @@ project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 
-set( VISHNU_VERSION "1.2.7" CACHE STRING " the version of the source ")
+set( VISHNU_VERSION "1.2.8" CACHE STRING " the version of the source ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
