@@ -23,7 +23,7 @@ set(ALLCLI current_session_id connect reconnect close
   list_users list_sessions)
 
 #declare all scripting commands
-set(SCRIPTCLI vishnu_setting_sshkey)
+set(SCRIPTCLI setting_sshkey)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)
@@ -53,7 +53,9 @@ foreach(cli ${ALLCLI})
 endforeach()
 
 foreach(script ${SCRIPTCLI})
-   install(PROGRAMS ${script} DESTINATION ${BIN_INSTALL_DIR})
+   set(SCRIPTNAME "${CMDPREFIX}${script}")
+   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${script}.in" ${PROJECT_BINARY_DIR}/bin/${SCRIPTNAME} COPYONLY)
+   install(PROGRAMS ${PROJECT_BINARY_DIR}/bin/${SCRIPTNAME} DESTINATION ${BIN_INSTALL_DIR})
 endforeach()
 
 
