@@ -16,7 +16,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
   ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
 
 set(client_SRCS client/JobProxy.cpp
-  client/JobOutputProxy.cpp)
+  client/JobOutputProxy.cpp
+  client/WorkProxy.cpp
+)
 
 set(cli_SRCS cli/displayer.cpp)
 
@@ -75,7 +77,9 @@ if (NOT CLIENT_ONLY)
     server/ListQueuesServer.cpp
     server/JobOutputServer.cpp
     server/ScriptGenConvertor.cpp
-    server/Env.cpp)
+    server/Env.cpp
+    server/WorkServer.cpp
+    )
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)

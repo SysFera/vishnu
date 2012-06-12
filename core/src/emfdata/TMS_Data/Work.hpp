@@ -84,12 +84,12 @@ namespace TMS_Data
          * \brief To get the applicationId
          * \return The applicationId attribute value
          **/
-        ::ecore::ELong getApplicationId() const;
+        ::ecore::EString const& getApplicationId() const;
         /**
          * \brief To set the applicationId
          * \param _applicationId The applicationId value
          **/
-        void setApplicationId(::ecore::ELong _applicationId);
+        void setApplicationId(::ecore::EString const& _applicationId);
 
         /**
          * \brief To get the subject
@@ -178,17 +178,6 @@ namespace TMS_Data
          * \param _description The description value
          **/
         void setDescription(::ecore::EString const& _description);
-
-        /**
-         * \brief To get the batchJobId
-         * \return The batchJobId attribute value
-         **/
-        ::ecore::EString const& getBatchJobId() const;
-        /**
-         * \brief To set the batchJobId
-         * \param _batchJobId The batchJobId value
-         **/
-        void setBatchJobId(::ecore::EString const& _batchJobId);
 
         /**
          * \brief To get the dateCreated
@@ -289,6 +278,17 @@ namespace TMS_Data
          **/
         void setNbCPU(::ecore::EInt _nbCPU);
 
+        /**
+         * \brief To get the dueDate
+         * \return The dueDate attribute value
+         **/
+        ::ecore::ELong getDueDate() const;
+        /**
+         * \brief To set the dueDate
+         * \param _dueDate The dueDate value
+         **/
+        void setDueDate(::ecore::ELong _dueDate);
+
         // References
 
 
@@ -316,7 +316,7 @@ namespace TMS_Data
 
         ::ecore::EString m_sessionId;
 
-        ::ecore::ELong m_applicationId;
+        ::ecore::EString m_applicationId;
 
         ::ecore::EString m_subject;
 
@@ -333,8 +333,6 @@ namespace TMS_Data
         ::ecore::EInt m_doneRatio;
 
         ::ecore::EString m_description;
-
-        ::ecore::EString m_batchJobId;
 
         ::ecore::ELong m_dateCreated;
 
@@ -353,6 +351,8 @@ namespace TMS_Data
         ::ecore::EString m_machineId;
 
         ::ecore::EInt m_nbCPU;
+
+        ::ecore::ELong m_dueDate;
 
         // References
 

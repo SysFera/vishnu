@@ -17,10 +17,11 @@ static const int ERRCODE_ALREADY_TERMINATED = 105;
 static const int ERRCODE_ALREADY_CANCELED = 106;
 static const int ERRCODE_JOB_IS_NOT_TERMINATED = 107;
 static const int ERRCODE_ALREADY_DOWNLOADED = 108;
+static const int ERRCODE_UNKNOWN_WORKID = 109;
 
 /**
  * \brief This class allows to treat an error specific to  TMS Module
- */ 
+ */
 class TMSVishnuException: public UserException{
 
   public:

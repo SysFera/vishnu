@@ -536,10 +536,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__description->setFeatureID(
             ::TMS_Data::TMS_DataPackage::WORK__DESCRIPTION);
     m_WorkEClass->getEStructuralFeatures().push_back(m_Work__description);
-    m_Work__batchJobId = new ::ecore::EAttribute();
-    m_Work__batchJobId->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::WORK__BATCHJOBID);
-    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__batchJobId);
     m_Work__dateCreated = new ::ecore::EAttribute();
     m_Work__dateCreated->setFeatureID(
             ::TMS_Data::TMS_DataPackage::WORK__DATECREATED);
@@ -574,6 +570,9 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__nbCPU = new ::ecore::EAttribute();
     m_Work__nbCPU->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__NBCPU);
     m_WorkEClass->getEStructuralFeatures().push_back(m_Work__nbCPU);
+    m_Work__dueDate = new ::ecore::EAttribute();
+    m_Work__dueDate->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__DUEDATE);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__dueDate);
 
     // Create enums
 
@@ -1888,9 +1887,9 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__sessionId->setDerived(false);
     m_Work__sessionId->setOrdered(true);
     m_Work__applicationId->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Work__applicationId->setName("applicationId");
-    m_Work__applicationId->setDefaultValueLiteral("0");
+    m_Work__applicationId->setDefaultValueLiteral("" "");
     m_Work__applicationId->setLowerBound(0);
     m_Work__applicationId->setUpperBound(1);
     m_Work__applicationId->setTransient(false);
@@ -2013,20 +2012,6 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__description->setUnique(true);
     m_Work__description->setDerived(false);
     m_Work__description->setOrdered(true);
-    m_Work__batchJobId->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Work__batchJobId->setName("batchJobId");
-    m_Work__batchJobId->setDefaultValueLiteral("" "");
-    m_Work__batchJobId->setLowerBound(0);
-    m_Work__batchJobId->setUpperBound(1);
-    m_Work__batchJobId->setTransient(false);
-    m_Work__batchJobId->setVolatile(false);
-    m_Work__batchJobId->setChangeable(true);
-    m_Work__batchJobId->setUnsettable(false);
-    m_Work__batchJobId->setID(false);
-    m_Work__batchJobId->setUnique(true);
-    m_Work__batchJobId->setDerived(false);
-    m_Work__batchJobId->setOrdered(true);
     m_Work__dateCreated->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Work__dateCreated->setName("dateCreated");
@@ -2153,6 +2138,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__nbCPU->setUnique(true);
     m_Work__nbCPU->setDerived(false);
     m_Work__nbCPU->setOrdered(true);
+    m_Work__dueDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__dueDate->setName("dueDate");
+    m_Work__dueDate->setDefaultValueLiteral("-1");
+    m_Work__dueDate->setLowerBound(0);
+    m_Work__dueDate->setUpperBound(1);
+    m_Work__dueDate->setTransient(false);
+    m_Work__dueDate->setVolatile(false);
+    m_Work__dueDate->setChangeable(true);
+    m_Work__dueDate->setUnsettable(false);
+    m_Work__dueDate->setID(false);
+    m_Work__dueDate->setUnique(true);
+    m_Work__dueDate->setDerived(false);
+    m_Work__dueDate->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2901,10 +2900,6 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_Work__description;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getWork__batchJobId()
-{
-    return m_Work__batchJobId;
-}
 ::ecore::EAttribute_ptr TMS_DataPackage::getWork__dateCreated()
 {
     return m_Work__dateCreated;
@@ -2940,5 +2935,9 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getWork__nbCPU()
 {
     return m_Work__nbCPU;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__dueDate()
+{
+    return m_Work__dueDate;
 }
 
