@@ -37,7 +37,7 @@ addkey() {
     usage ; exit 1
   fi
   rmachine=$1
-  key_file=${2:-"$HOME/.ssh/id_rsa.pub"}
+  key_file=$2
   cat ${key_file} | ssh ${rmachine} 'mkdir -p .ssh && cat >> ~/.ssh/authorized_keys'
 }
 
@@ -48,7 +48,7 @@ removekey() {
     usage ; exit 1
   fi
   rmachine=$1
-  key_file=${2:-"$HOME/.ssh/id_rsa.pub"}
+  key_file=$2
   cat ${key_file} | ssh ${rmachine} 'set -e; \
 				key_file=`mktemp` ; \
 				cat > ${key_file} ; \
