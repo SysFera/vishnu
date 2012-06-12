@@ -79,6 +79,12 @@
       <details key="description" value="This command allows canceling a job submitted on a specific machine's batch scheduler."/>
       <details key="exCLI" value="To cancel the submission of the job J_1 on machine_1:&#xA;vishnu_cancel_job machine_1 J_1&#xA;&#xA;To cancel cancel all submitted jobs on machine_1&#xA;vishnu_cancel_job machine_1 all&#xA;"/>
     </services>
+    <services name="addWork" description="Allows to create a work consisting in running jobs." resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME" useJobEnv="true">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
+      <ports name="work" direction="INOUT" dataType="//@modules.0/@typeList/@types.3" description="The work to add"/>
+      <details key="description" value="This command adds a work in vishnu"/>
+      <details key="exCLI" value="To add a work called toto:&#xA;vishnu_add_work toto&#xA;"/>
+    </services>
     <typeList>
       <types name="ListJobs">
         <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//ListJobs"/>
@@ -106,6 +112,9 @@
       </types>
       <types name="JobResult">
         <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//JobResult"/>
+      </types>
+      <types name="Work" description="A work">
+        <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//Work"/>
       </types>
     </typeList>
     <resultCodeList>

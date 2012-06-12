@@ -624,54 +624,54 @@ namespace TMS_Data
         static const int WORK__DESCRIPTION = 96;
 
         /**
-         * \brief Constant for WORK__BATCHJOBID feature
-         */
-        static const int WORK__BATCHJOBID = 97;
-
-        /**
          * \brief Constant for WORK__DATECREATED feature
          */
-        static const int WORK__DATECREATED = 98;
+        static const int WORK__DATECREATED = 97;
 
         /**
          * \brief Constant for WORK__DATEENDED feature
          */
-        static const int WORK__DATEENDED = 99;
+        static const int WORK__DATEENDED = 98;
 
         /**
          * \brief Constant for WORK__DATESTARTED feature
          */
-        static const int WORK__DATESTARTED = 100;
+        static const int WORK__DATESTARTED = 99;
 
         /**
          * \brief Constant for WORK__LASTUPDATED feature
          */
-        static const int WORK__LASTUPDATED = 101;
+        static const int WORK__LASTUPDATED = 100;
 
         /**
          * \brief Constant for WORK__WORKID feature
          */
-        static const int WORK__WORKID = 102;
+        static const int WORK__WORKID = 101;
 
         /**
          * \brief Constant for WORK__PROJECTID feature
          */
-        static const int WORK__PROJECTID = 103;
+        static const int WORK__PROJECTID = 102;
 
         /**
          * \brief Constant for WORK__SUBMITDATE feature
          */
-        static const int WORK__SUBMITDATE = 104;
+        static const int WORK__SUBMITDATE = 103;
 
         /**
          * \brief Constant for WORK__MACHINEID feature
          */
-        static const int WORK__MACHINEID = 105;
+        static const int WORK__MACHINEID = 104;
 
         /**
          * \brief Constant for WORK__NBCPU feature
          */
-        static const int WORK__NBCPU = 106;
+        static const int WORK__NBCPU = 105;
+
+        /**
+         * \brief Constant for WORK__DUEDATE feature
+         */
+        static const int WORK__DUEDATE = 106;
 
         // EClassifiers methods
 
@@ -1369,12 +1369,6 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getWork__description();
 
         /**
-         * \brief Returns the reflective object for feature batchJobId of class Work
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getWork__batchJobId();
-
-        /**
          * \brief Returns the reflective object for feature dateCreated of class Work
          * \return A pointer to the reflective object
          */
@@ -1427,6 +1421,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getWork__nbCPU();
+
+        /**
+         * \brief Returns the reflective object for feature dueDate of class Work
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getWork__dueDate();
 
     protected:
 
@@ -2022,11 +2022,6 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_Work__description;
 
         /**
-         * \brief The instance for the feature batchJobId of class Work
-         */
-        ::ecore::EAttribute_ptr m_Work__batchJobId;
-
-        /**
          * \brief The instance for the feature dateCreated of class Work
          */
         ::ecore::EAttribute_ptr m_Work__dateCreated;
@@ -2070,6 +2065,11 @@ namespace TMS_Data
          * \brief The instance for the feature nbCPU of class Work
          */
         ::ecore::EAttribute_ptr m_Work__nbCPU;
+
+        /**
+         * \brief The instance for the feature dueDate of class Work
+         */
+        ::ecore::EAttribute_ptr m_Work__dueDate;
 
     };
 

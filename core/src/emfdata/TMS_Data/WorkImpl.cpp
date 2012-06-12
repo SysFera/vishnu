@@ -63,7 +63,7 @@ void Work::_initialize()
         return _any;
     case ::TMS_Data::TMS_DataPackage::WORK__APPLICATIONID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_applicationId);
     }
         return _any;
@@ -112,12 +112,6 @@ void Work::_initialize()
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_description);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::WORK__BATCHJOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_batchJobId);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::WORK__DATECREATED:
@@ -173,6 +167,12 @@ void Work::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_nbCPU);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::WORK__DUEDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
+                m_dueDate);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -190,7 +190,7 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return;
     case ::TMS_Data::TMS_DataPackage::WORK__APPLICATIONID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_applicationId);
     }
         return;
@@ -240,12 +240,6 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_description);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::WORK__BATCHJOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_batchJobId);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::WORK__DATECREATED:
@@ -302,6 +296,12 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_nbCPU);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::WORK__DUEDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+                m_dueDate);
+    }
+        return;
 
     }
     throw "Error";
@@ -314,7 +314,7 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::WORK__SESSIONID:
         return m_sessionId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__APPLICATIONID:
-        return m_applicationId != 0;
+        return m_applicationId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__SUBJECT:
         return m_subject != "";
     case ::TMS_Data::TMS_DataPackage::WORK__PRIORITY:
@@ -333,8 +333,6 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::WORK__DESCRIPTION:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_description);
-    case ::TMS_Data::TMS_DataPackage::WORK__BATCHJOBID:
-        return m_batchJobId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__DATECREATED:
         return m_dateCreated != -1;
     case ::TMS_Data::TMS_DataPackage::WORK__DATEENDED:
@@ -354,6 +352,8 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return m_machineId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__NBCPU:
         return m_nbCPU != -1;
+    case ::TMS_Data::TMS_DataPackage::WORK__DUEDATE:
+        return m_dueDate != -1;
 
     }
     throw "Error";

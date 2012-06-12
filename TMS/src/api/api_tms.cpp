@@ -26,6 +26,7 @@
 //TMS include
 #include "JobProxy.hpp"
 #include "JobOutputProxy.hpp"
+#include "WorkProxy.hpp"
 
 /**
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
@@ -339,3 +340,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	}
 	return 0;
 }
+
+int
+vishnu::addWork(const std::string& sessionKey,
+        Work& newWork)
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException){
+  checkEmptyString(sessionKey, "The session key");
+  SessionProxy sessionProxy(sessionKey);
+  WorkProxy workProxy(newWork, sessionProxy);
+  int res = workProxy.add();
+  return res;
+}
+

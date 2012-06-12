@@ -31,11 +31,11 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Work::Work() :
-    m_sessionId(""), m_applicationId(0), m_subject(""), m_priority(-1),
+    m_sessionId(""), m_applicationId(""), m_subject(""), m_priority(-1),
             m_status(-1), m_endDate(-1), m_estimatedHour(-1), m_doneRatio(0),
-            m_batchJobId(""), m_dateCreated(-1), m_dateEnded(-1),
-            m_dateStarted(-1), m_lastUpdated(-1), m_projectId(""),
-            m_submitDate(0), m_machineId(""), m_nbCPU(-1)
+            m_dateCreated(-1), m_dateEnded(-1), m_dateStarted(-1),
+            m_lastUpdated(-1), m_projectId(""), m_submitDate(0),
+            m_machineId(""), m_nbCPU(-1), m_dueDate(-1)
 {
 
     /*PROTECTED REGION ID(WorkImpl__WorkImpl) START*/
@@ -81,15 +81,15 @@ void Work::setSessionId(::ecore::EString const& _sessionId)
 #endif
 }
 
-::ecore::ELong Work::getApplicationId() const
+::ecore::EString const& Work::getApplicationId() const
 {
     return m_applicationId;
 }
 
-void Work::setApplicationId(::ecore::ELong _applicationId)
+void Work::setApplicationId(::ecore::EString const& _applicationId)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::ELong _old_applicationId = m_applicationId;
+    ::ecore::EString _old_applicationId = m_applicationId;
 #endif
     m_applicationId = _applicationId;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -309,32 +309,6 @@ void Work::setDescription(::ecore::EString const& _description)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__description(),
                 _old_description,
                 m_description
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-::ecore::EString const& Work::getBatchJobId() const
-{
-    return m_batchJobId;
-}
-
-void Work::setBatchJobId(::ecore::EString const& _batchJobId)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_batchJobId = m_batchJobId;
-#endif
-    m_batchJobId = _batchJobId;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__batchJobId(),
-                _old_batchJobId,
-                m_batchJobId
         );
         eNotify(&notification);
     }
@@ -569,6 +543,32 @@ void Work::setNbCPU(::ecore::EInt _nbCPU)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__nbCPU(),
                 _old_nbCPU,
                 m_nbCPU
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong Work::getDueDate() const
+{
+    return m_dueDate;
+}
+
+void Work::setDueDate(::ecore::ELong _dueDate)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_dueDate = m_dueDate;
+#endif
+    m_dueDate = _dueDate;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__dueDate(),
+                _old_dueDate,
+                m_dueDate
         );
         eNotify(&notification);
     }

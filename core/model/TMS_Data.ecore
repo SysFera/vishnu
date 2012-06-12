@@ -581,8 +581,8 @@
         <details key="content" value="Is the id of the session that contained the job submission command"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicationId" eType="ecore:EDataType Ecore.ecore#//ELong"
-        defaultValueLiteral="0">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="applicationId" eType="ecore:EDataType Ecore.ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Is the id of the machine on which the job has been submitted."/>
       </eAnnotations>
@@ -590,19 +590,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subject" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the name assigned to the job."/>
+        <details key="content" value="Represents the name assigned to the work."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="priority" eType="ecore:EDataType Ecore.ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="Represents the job priority. "/>
+        <details key="content" value="Represents the work priority. "/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="ecore:EDataType Ecore.ecore#//EInt"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="content" value="The current status of the job."/>
+        <details key="content" value="The current status of the work."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
@@ -631,12 +631,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Is the textual description of the job."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="batchJobId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="Represents the batch job id (given by the underlying batch scheduler )."/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateCreated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
@@ -690,6 +684,12 @@
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
         <details key="content" value="The current status of the job."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dueDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
+        defaultValueLiteral="-1">
+      <eAnnotations source="Description">
+        <details key="content" value="Is the maximum wall-clock time during which the job can run (in seconds)"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
