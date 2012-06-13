@@ -206,6 +206,14 @@
       <details key="description" value="This command allows to get current session identifier."/>
       <details key="exCLI" value="To get the current session identifier:&#xA;vishnu_current_session_id"/>
     </services>
+    <services name="SettingSshKey" description="set/remove an ssh public key on a remote user's authorized key file located on a remote machine" isFunction="false" resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
+      <ports name="addOption" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="An option to add an ssh key on the remote machine. At least one option must be used with this command." optional="true" shortOptionLetter="a" defaultValueLiteral=""/>
+      <ports name="removeOption" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="An option to remove an ssh key on the remote machine. At least one option must be used with this command." optional="true" shortOptionLetter="r" defaultValueLiteral=""/>
+      <ports name="connectParams" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The user's account connection parameters in the form &quot;login@machine&quot; "/>
+      <ports name="sshPublicKey" dataType="//@typeList/@types.0" description="The path until the ssh public key" longOptionName=""/>
+      <details key="description" value="This command allows to set/remove a specific ssh public key on a remote user account."/>
+      <details key="exCLI" value="To set a specific ssh public key on the remote machine aster whose login is toto:&#xA;vishnu_setting_ssh_key - a toto@aster /tmp/key.pub&#xA;&#xA;To remove a specific ssh public key on a remote user account:&#xA;vishnu_setting_ssh_key -r toto@aster /tmp/key.pub"/>
+    </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21"/>
@@ -244,6 +252,7 @@
       <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failed" value="15" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_INVALID_PARAM" description="an option or a parameter provided is invalid for this service" value="10"/>
     </resultCodeList>
   </modules>
   <envVariableList>
