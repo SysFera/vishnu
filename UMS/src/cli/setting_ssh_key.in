@@ -1,0 +1,83 @@
+#!/bin/sh
+# SERVICE		: setting_ssh_key
+# SUMMARY		: This script allows to add or remove a given key to/from the authorized keys of a user's remote account
+# COPYRIGHT		: SysFera SA
+# REVISIONS
+#  version		: 1.0
+#  date			: 29/05/12
+#  author		: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+#  comment		: First release
+
+set -e
+
+VISHNU_OK=0
+CLI_INVALID_PARAM=10
+CLI_UNKNOWN_OPTION=41
+CLI_ERROR_RUNTIME=16
+
+# Show help
+usage() {
+echo "Usage: vishnu_ssh_setting [OPTION] [login]@MACHINE KEY"
+echo 
+echo "Description:"
+echo "Allows to add or remove a given key to/from the authorized keys of a user's remote account"
+echo "	[login]@MACHINE"
+echo "	  represents the login information to the remote machine"
+echo "	KEY" 
+echo "	  sets the corresponding key."
+echo 
+echo "Allowed options:"
+echo "	-a"
+echo "	 default, add a key"
+echo "	-r"
+echo "	 remove a key"
+echo "	-h"
+echo "	 print the help"
+}
+
+# Add a key 
+addkey() {
+  rmachine=$1
+  key_file=$2
+  cat ${key_file} | ssh ${rmachine} 'mkdir -p .ssh && cat >> ~/.ssh/authorized_keys'
+}
+
+# Remove a key 
+removekey() {
+  rmachine=$1
+  key_file=$2
+  cat ${key_file} | ssh ${rmachine} 'set -e; \
+				key_file=`mktemp` ; \
+				cat > ${key_file} ; \
+				wallet=~/.ssh/authorized_keys ; \
+				wallet_backup=${wallet}.bak ; \
+                                if [ ! -e ${wallet} ] ; then exit 0 ; fi ; \
+				cp -f ${wallet} ${wallet_backup} ; \
+                                key=`cat ${key_file}` ; \
+                                cat ${wallet_backup} | sed s:"${key}":: | sed /^$/d > ${wallet}  ; \
+				rm -rf ${key_file} ;'
+}
+
+# Validate the number of paramters
+validate_params(){
+ [ $# -ne $1 ]  && echo "ERROR : Wrong number of parameters" && usage && exit ${CLI_INVALID_PARAM}
+ echo -n
+}
+
+# Start processing by checking the number of parameters
+validate_params 4 $@
+
+case $1 in 
+  -h) usage 
+      ;;
+  -a) addkey $2 $3 ;
+      ;;
+  -r) removekey $2 $3 ;
+      ;;
+   *) usage && exit ${CLI_UNKNOWN_OPTION}
+      ;;
+esac
+
+[ $? -ne 0 ] && exit ${CLI_ERROR_RUNTIME}
+
+exit ${VISHNU_OK}

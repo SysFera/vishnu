@@ -23,7 +23,7 @@ set(ALLCLI current_session_id connect reconnect close
   list_users list_sessions)
 
 #declare all scripting commands
-set(SCRIPTCLI setting_sshkey)
+set(SCRIPTCLI setting_ssh_key)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)
