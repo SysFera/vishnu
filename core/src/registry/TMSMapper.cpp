@@ -30,6 +30,7 @@ TMSMapper::TMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_GETJOBOUTPUT, "vishnu_get_job_output"));
   mmap.insert (pair<int, string>(VISHNU_GETCOMPLETEDJOB, "vishnu_get_completed_jobs_output"));
   mmap.insert (pair<int, string>(VISHNU_CANCEL, "vishnu_cancel_job"));
+  mmap.insert (pair<int, string>(VISHNU_ADD_WORK, "vishnu_add_work"));
 };
 
 int
@@ -152,6 +153,9 @@ TMSMapper::decode (const string& msg){
   case VISHNU_GETJOBINFO:
     res = decodeJobInfo(separatorPos, msg);
     break;
+  case VISHNU_ADD_WORK:
+    res = decodeAddWork(separatorPos, msg);
+    break;
   default:
     res = "";
     break;
@@ -247,8 +251,8 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
   }
   if(ac->getCriterion()!=NULL) {
     res += " -L ";
-    res += convertToString((ac->getCriterion())->getLoadType());  
-  }    
+    res += convertToString((ac->getCriterion())->getLoadType());
+  }
 
   u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
   TMS_Data::Job_ptr j = NULL;
@@ -262,7 +266,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
     res += " ";
     res += u;
   }
- 
+
   return res;
 }
 
@@ -374,7 +378,7 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
   if (u.compare("")){
     res += " -q ";
     res += u;
-  } 
+  }
   u = j->getMultipleStatus();
   if (u.compare("")){
     res += " -S ";
@@ -480,3 +484,71 @@ TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
 }
 
 
+string
+TMSMapper::decodeAddWork(vector<int> separator, const string& msg){
+  string res = string("");
+  string a;
+  int tmp;
+  res += (mmap.find(VISHNU_ADD_WORK))->second;
+  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+
+  TMS_Data::Work_ptr ac = NULL;
+
+  //To parse the object serialized
+  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+    throw SystemException(ERRCODE_INVMAPPER, "option: "+a);
+  }
+
+  res+=" ";
+  a = ac->getApplicationId();
+  if (a.compare("")){
+    res += " -a ";
+    res += a;
+  }
+  a = ac->getSubject();
+  if (a.compare("")){
+    res += " -s ";
+    res += a;
+  }
+  tmp = ac->getPriority();
+  if (tmp!=0){
+    res += " -l ";
+    res += convertToString(tmp);
+  }
+  a = ac->getOwner();
+  if (a.compare("")){
+    res += " -u ";
+    res += a;
+  }
+  tmp = ac->getEstimatedHour();
+  if (tmp!=0){
+    res += " -p ";
+    res += convertToString(tmp);
+  }
+  a = ac->getDescription();
+  if (a.compare("")){
+    res += " -d ";
+    res += a;
+  }
+  a = ac->getProjectId();
+  if (a.compare("")){
+    res += " -p ";
+    res += a;
+  }
+  a = ac->getMachineId();
+  if (a.compare("")){
+    res += " -m ";
+    res += a;
+  }
+  tmp = ac->getNbCPU();
+  if (tmp!=0){
+    res += " -n ";
+    res += convertToString(tmp);
+  }
+
+  if (ac != NULL) {
+    delete ac;
+  }
+
+  return res;
+}

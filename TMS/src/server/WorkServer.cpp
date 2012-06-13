@@ -50,10 +50,11 @@ WorkServer::add(int vishnuId) {
 
   std::string vishnuid;
 
-  std::string appId = "";
-  std::string projectId = "";
+  std::string appId = "1";
+  std::string projectId = "1";
   std::string timestamp = "CURRENT_TIMESTAMP";
-  std::string owner = "";
+  std::string owner = "1";
+  std::string machineId = "1";
 
   //if the user exists
   if (userServer.exist()) {
@@ -73,18 +74,18 @@ WorkServer::add(int vishnuId) {
         mwork->setWorkId(idWorkGenerated);
 
         //if the workId does not exist
-        if (getAttribut("where workid='"+mwork->getWorkId()+"'").size() == 0) {
+        if (getAttribut("where identifier='"+mwork->getWorkId()+"'").size() == 0) {
           //To inactive the work status
 //          mwork->setStatus(INACTIVE_STATUS);
 // TODO
           mwork->setStatus(0);
 
-          mdatabaseVishnu->process(sqlInsert + "('"+appId+"',"+timestamp+"\
+          mdatabaseVishnu->process(sqlInsert + "("+appId+","+timestamp+"\
             ,"+ timestamp+",'"+mwork->getDescription()+"',"+convertToString(mwork->getDoneRatio())+", \
-            '"+convertToString(mwork->getDueDate())+"', '"+convertToString(mwork->getEstimatedHour())+"' \
-            , '"+idWorkGenerated+"', "+timestamp+", '"+mwork->getMachineId()+"'\
-            , '"+convertToString(mwork->getNbCPU())+"', '"+owner+"', '"+convertToString(mwork->getPriority())+"' \
-            , '"+projectId+"', "+convertToString(mwork->getStatus())+", '"+mwork->getSubject()+"')");
+            "+timestamp+", '"+convertToString(mwork->getEstimatedHour())+"' \
+            , '"+idWorkGenerated+"', "+timestamp+", "+machineId+"\
+            , "+convertToString(mwork->getNbCPU())+", '"+owner+"', "+convertToString(mwork->getPriority())+" \
+            , "+projectId+", "+convertToString(mwork->getStatus())+", '"+mwork->getSubject()+"')");
 
 
         }//if the machine id is generated
@@ -266,7 +267,7 @@ WorkServer::getAttribut(std::string condition, std::string attrname) {
 std::string
 WorkServer::getWorkName() {
 
-  std::string  workName = getAttribut("where workid='"+getData()->getWorkId()+"'", "subject");
+  std::string  workName = getAttribut("where identifier='"+getData()->getWorkId()+"'", "subject");
 
   return workName;
 }
@@ -277,7 +278,7 @@ WorkServer::getWorkName() {
 */
 void WorkServer::checkWork() {
 
-  if(getAttribut("where workid='"+mwork->getWorkId()+"'").size()==0){
+  if(getAttribut("where identifier='"+mwork->getWorkId()+"'").size()==0){
     throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID, mwork->getWorkId()+" does not exist among the defined"
                              " work by VISHNU System");
   }
