@@ -67,7 +67,7 @@ boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & die
     opt->setPosition("subject",1);
   }
 
-  opt->add("priority,p",
+  opt->add("priority,l",
            "The priority for the work",
            group,
            fpri,
@@ -184,7 +184,7 @@ int main (int ac, char* av[]){
   boost::function1<void,std::string> fmac( boost::bind(&TMS_Data::Work::setMachineId,boost::ref(newWork),_1));
   boost::function1<void,int> fcpu( boost::bind(&TMS_Data::Work::setNbCPU,boost::ref(newWork),_1));
 
-  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], dietConfig, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,1);
+  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], dietConfig, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -192,7 +192,7 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"name site language sshPublicKeyFile machineDescription");
+    helpUsage(*opt,"");
     return ret;
   }
 

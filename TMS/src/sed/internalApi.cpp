@@ -65,10 +65,10 @@ solveSubmitJob(diet_profile_t* pb) {
 	int mapperkey;
 	std::string cmd = "";
 
-	diet_paramstring_get(diet_parameter(pb,0), &sessionKey, NULL);
+	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
 	diet_string_get(diet_parameter(pb,1), &machineId, NULL);
 	diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-	diet_paramstring_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
+	diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
 	diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
 
 	SessionServer sessionServer = SessionServer(std::string(sessionKey));
@@ -672,7 +672,7 @@ solveAddWork(diet_profile_t* pb) {
     std::string msgComp = "";
 
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_work");
     mapper->code(std::string(workSerialized), mapperkey);
     cmd = mapper->finalize(mapperkey);

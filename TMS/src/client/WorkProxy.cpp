@@ -32,7 +32,7 @@ int WorkProxy::add()
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc("workAdd", 1, 1, 3);
+  addProfile = diet_profile_alloc("addWork", 1, 1, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;

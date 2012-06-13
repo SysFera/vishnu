@@ -78,7 +78,7 @@ public:
   * \return the value of the attribut or empty string if no results
   */
   std::string
-  getAttribut(std::string condition, std::string attrname = "numworkid");
+  getAttribut(std::string condition, std::string attrname = "id");
 
   /**
    * \brief Function to get the work

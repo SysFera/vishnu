@@ -236,6 +236,20 @@ ServerTMS::init(int vishnuId,
   }
   diet_profile_desc_free(mprofile);
 
+  /* solveWorkCreate */
+
+  mprofile = diet_profile_desc_alloc(SERVICES[10], 1, 1, 3);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+
+  if (diet_service_table_add(mprofile, NULL, solveAddWork)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+
   /* JobOutPutGetCompletedJobs */
   mprofile = diet_profile_desc_alloc((SERVICES[7]+std::string(machineId)).c_str(), 2, 2, 5);
   diet_generic_desc_set(diet_param_desc(mprofile,0), DIET_STRING, DIET_CHAR);
@@ -283,18 +297,6 @@ ServerTMS::init(int vishnuId,
   }
   diet_profile_desc_free(mprofile);
 
-  /* solveWorkCreate */
-
-  mprofile = diet_profile_desc_alloc(SERVICES[10], 1, 1, 3);
-  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
-
-  if (diet_service_table_add(mprofile, NULL, solveAddWork)) {
-    return 1;
-  }
-  diet_profile_desc_free(mprofile);
 
 
   return 0;
