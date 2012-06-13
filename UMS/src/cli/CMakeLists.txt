@@ -32,7 +32,7 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   )
 
 #declare all scripted-based commands
-set(SCRIPTCLI setting_sshkey)
+set(SCRIPTCLI setting_ssh_key)
 
 #set the prefix of command
 set (CMDPREFIX vishnu_)

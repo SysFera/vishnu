@@ -1,5 +1,5 @@
 #!/bin/sh
-# FILENAME		: vishnu_sshkey_setting
+# SERVICE		: setting_ssh_key
 # SUMMARY		: This script allows to add or remove a given key to/from the authorized keys of a user's remote account
 # COPYRIGHT		: SysFera SA
 # REVISIONS
