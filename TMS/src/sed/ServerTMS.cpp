@@ -260,7 +260,7 @@ ServerTMS::init(int vishnuId,
   }
   diet_profile_desc_free(mprofile);
   /* automatic submitJob */
-  mprofile = diet_profile_desc_alloc(SERVICES[9], 4, 4, 6);
+  mprofile = diet_profile_desc_alloc(SERVICES[9], 5, 5, 7);
   diet_aggregator_desc_t *agg;
   //TO SELECT a SeD
   {
@@ -275,8 +275,9 @@ ServerTMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2), DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3), DIET_PARAMSTRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,4), DIET_STRING, DIET_CHAR);
-  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_FILE, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,5), DIET_CONTAINER, DIET_CHAR);  //for input files
   diet_generic_desc_set(diet_param_desc(mprofile,6), DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,7), DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveSubmitJob)) {
     return 1;
   }
