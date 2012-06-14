@@ -294,30 +294,36 @@ SOCIDatabase::startTransaction() {
 }
 
 void
-MYSQLDatabase::endTransaction(int transactionID) { //TODO: working here
-  bool ret;
-  MYSQL* conn = (&(mpool[transactionID].mmysql));
-  ret = mysql_commit(conn);
-  if (ret) {
-    ret = mysql_rollback(conn);
-    if (ret) {
-      releaseConnection(transactionID);
-      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
-    }
-    releaseConnection(transactionID);
-    throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
-  }
-  ret = mysql_autocommit(conn, true);
-  if (ret) {
-    ret = mysql_rollback(conn);
-    if (ret) {
-      releaseConnection(transactionID);
-      throw SystemException(ERRCODE_DBCONN, "Failed to rollback and end the transaction");
-    }
-    releaseConnection(transactionID);
-    throw SystemException(ERRCODE_DBCONN, "Failed to end the transaction");
-  }
-  releaseConnection(transactionID);
+SOCIDatabase::endTransaction(int transactionID) {
+
+	size_t pos= transactionID;
+	session & conn = (mpool->at(pos));
+
+	try
+	{
+	  conn.commit();
+	}
+	catch (exception const &e)
+	{
+		try
+		{
+		  conn.rollback();
+		  mpool->give_back(pos);
+		  throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
+
+		}
+		catch (exception const &e)
+		{
+			mpool->give_back(pos);
+			throw SystemException
+			(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
+
+
+		}
+	}
+
+	mpool->give_back(pos);
+
 }
 
 void
