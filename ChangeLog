@@ -3,6 +3,7 @@
 +--------------+
 
 * Fix compilation problem where libldap was not linked to the sed
+* Fixed bugzilla #363 for automatic user ssh key configuration on a remote machine 
 
 +--------------+
 | VISHNU 1.3.0 |
