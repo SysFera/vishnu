@@ -309,6 +309,13 @@
       <details key="description" value="This command allows to list local user-authentication configurations of VISHNU.&#xA;"/>
       <details key="exCLI" value="To list local user-authentication configurations: &#xA;vishnu_list_auth_accounts"/>
     </services>
+    <services name="SettingSshKey" description="sets/removes an ssh public key on a remote user's authorized key file located on a remote machine" isFunction="false" resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
+      <ports name="options" usage="CLI_ONLY" dataType="//@typeList/@types.40" description="An option to add/remove an ssh key on the remote machine. At least one option must be used with this command." optional="true" shortOptionLetter="" defaultValueLiteral=""/>
+      <ports name="connectParams" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The user's account connection parameters in the form &quot;login@machine&quot; "/>
+      <ports name="sshPublicKey" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The path to the ssh public key" longOptionName=""/>
+      <details key="description" value="This command allows to set/remove a specific ssh public key on a remote user account."/>
+      <details key="exCLI" value="To set a specific ssh public key on the remote machine aster whose login is toto:&#xA;vishnu_setting_ssh_key -a toto@aster /tmp/key.pub&#xA;&#xA;To remove a specific ssh public key on a remote user account:&#xA;vishnu_setting_ssh_key -r toto@aster /tmp/key.pub"/>
+    </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21"/>
@@ -356,6 +363,7 @@
       <resultCodes name="ERRCODE_UNKNOWN_AUTH_ACCOUNT" description="The user-authentication account is unknown" value="52"/>
       <resultCodes name="ERRCODE_UNKNOWN_ENCRYPTION_METHOD" description="The encryption method is unknown" value="53" diagnostic=""/>
       <resultCodes name="ERRCODE_READONLY_ACCOUNT" description="You can modify information. This account is read-only" value="54"/>
+      <resultCodes name="ERRCODE_INVALID_PARAM" description="an option or a parameter provided is invalid for this service" value="10"/>
     </resultCodeList>
   </modules>
   <envVariableList>
@@ -480,6 +488,9 @@
     </types>
     <types name="UpdateAddAuthSystemsOptions">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//UpdateAuthSystemsOptions"/>
+    </types>
+    <types name="SettingSshKeyOptions" description="The SettingSshKeyOptions is an object which encapsulates the options for service SettingSshKey">
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SettingSshKeyOptions"/>
     </types>
   </typeList>
 </API>
