@@ -1855,14 +1855,14 @@
                 <entry><para>addOption</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>a</para></entry>
-                <entry><para>An option to add an ssh key on a remote machine. At least one option must be used with this command.</para></entry>
+                <entry><para>An option to add an ssh key on a remote machine. At least one option must be used with this command</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>removeOption</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>An option to remove an ssh key on a remote machine. At least one option must be used with this command.</para></entry>
+                <entry><para>An option to remove an ssh key on a remote machine. At least one option must be used with this command</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
