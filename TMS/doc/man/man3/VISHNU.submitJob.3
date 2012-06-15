@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.submitJob
-.\"    Author:  SysFera SAS <info@sysfera.com>
+.\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: January 2012
+.\"      Date: June 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.4
 .\"  Language: English
 .\"
-.TH "VISHNU\&.SUBMITJOB" "3" "January 2012" "VISHNU 1.2" "TMS Python API Reference"
+.TH "VISHNU\&.SUBMITJOB" "3" "June 2012" "VISHNU 1.4" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,7 +28,7 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-VISHNU.submitJob \- submits a job on a machine through the use of a script (scriptFilePath)\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
+VISHNU.submitJob \- Allows to submit a job consisting in running a given script on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.submitJob('u
 .BI "ret=VISHNU\&.submitJob(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "scriptFilePath" ", Job\ " "jobInfo" ", SubmitOptions\ " "options\ =\ SubmitOptions()" ");"
@@ -119,13 +119,13 @@ TMSVishnuException("Permission denied" [104])
 .RE
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2012 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:
