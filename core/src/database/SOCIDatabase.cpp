@@ -24,14 +24,17 @@ const int CONN_TIMEOUT=15000; // in millisecond
 
 
 int
-SOCIDatabase::process(string request, int transacId){
+SOCIDatabase::process(string request, int transacId){ //TODO: working here
   int reqPos;
-  MYSQL* conn = NULL;
+  session& conn;
+  size_t pos;
+
   if (transacId==-1) {
     conn = getConnection(reqPos);
   } else {
     reqPos = -1;
-    conn = (&(mpool[transacId].mmysql));
+    pos = transacId;
+    conn = mpool->at(pos);
   }
 
   int res;
@@ -39,58 +42,35 @@ SOCIDatabase::process(string request, int transacId){
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBERR, "Empty SQL query");
   }
-  // The query must always end with a semicolumn when CLIENT_MULTI_STATEMENTS
-  // option is set
-  if (request.at(request.length()-1) != ';') {
-    request.append(";");
+
+  try
+  {
+      conn<<request;
   }
-
-  res=mysql_real_query(conn, request.c_str (), request.length());
-
-  if (res) {
-// try to reinitialise the socket
-    if (mysql_real_connect(&(mpool[reqPos].mmysql),
-                           mconfig.getDbHost().c_str(),
-                           mconfig.getDbUserName().c_str(),
-                           mconfig.getDbUserPassword().c_str(),
-                           mconfig.getDbName().c_str(),
-                           mconfig.getDbPort(),
-                           NULL,
-                           CLIENT_MULTI_STATEMENTS) ==NULL) {
-      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
-                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
-    }
-    res=mysql_real_query(conn, request.c_str (), request.length());
-    if (res) {
-      // Could not execute the query
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
-    }
-  }
-
-  // Due to CLIENT_MULTI_STATEMENTS option, results must always be retrieved
-  // process each statement result
-  do {
-    // did current statement return data?
-    MYSQL_RES *result = mysql_store_result(conn);
-    if (result) {
-      // yes; process rows and free the result set
-      mysql_free_result(result);
-    } else {
-      // no result set or error
-      if (mysql_field_count(conn) != 0) {
-        // some error occurred
-        releaseConnection(reqPos);
-        throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
+  catch(exception const &e)
+  {
+      try
+      {
+          // try to reconnect the session
+          conn.reconnect();
       }
-    }
-    // more results? -1 = no, >0 = error, 0 = yes (keep looping)
-    if ((res = mysql_next_result(conn)) > 0) {
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "P-Query error" + dbErrorMsg(conn));
-    }
-  } while (res == 0);
+      catch(exception const& e2)
+      {
+          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
+                                      + e2.what());
+      }
 
+      try
+      {
+          conn<<request;
+      }
+      catch(exception const& e3)
+      {
+          mpool->give_back(pos);
+          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
+                                      +e3.what());
+      }
+  }
   releaseConnection(reqPos);
   return SUCCESS;
 }
@@ -101,6 +81,27 @@ SOCIDatabase::process(string request, int transacId){
  */
 int
 SOCIDatabase::connect(){
+
+  struct backend_factory & backend;
+
+  switch(mconfig.getDbType())
+  {
+          case DbConfiguration::MYSQL :
+                  backend=mysql;
+                  break;
+          case DbConfiguration::POSTGRESQL:
+                  backend=postgresql;
+                  break;
+          /*case DbConfiguration::ORACLE:
+                  break;*/
+          default:
+                  throw SystemException
+                  (ERRCODE_DBERR, "Database instance type unknown or not managed");
+                  break;
+  }
+
+
+
   for (unsigned int i=0; i<mconfig.getDbPoolSize();i++) {
 
 	session & msession = mpool->at(i);
@@ -111,29 +112,14 @@ SOCIDatabase::connect(){
 	connectString+=" host="+mconfig.getDbHost();
 	connectString+=" port="+mconfig.getDbPort();
 
-
 	try
 	{
-		switch(mconfig.getDbType())
-		{
-			case DbConfiguration::MYSQL :
-				msession(mysql,connectString);
-				break;
-			case DbConfiguration::POSTGRESQL:
-				msession(postgresql,connectString);
-				break;
-			/*case DbConfiguration::ORACLE:
-				break;*/
-			default:
-				throw SystemException
-				(ERRCODE_DBERR, "Database instance type unknown or not managed");
-				break;
-		}
+	    msession.open(backend,connectString);
 	}
-    catch (exception const &e)
-    {
-        throw SystemException(ERRCODE_DBERR, "Cannot connect to the DB : "+e.what());
-    }
+	catch (exception const &e)
+	{
+          throw SystemException(ERRCODE_DBERR, "Cannot connect to the DB : "+e.what());
+        }
 
   }//for
   return SUCCESS;
@@ -180,44 +166,74 @@ SOCIDatabase::disconnect(){
  * \return The result of the latest request
  */
 DatabaseResult*
-MYSQLDatabase::getResult(string request, int transacId) {
+SOCIDatabase::getResult(string request, int transacId) { //TODO:working here
   int reqPos;
-  MYSQL* conn = NULL;
-  int res;
+  session& conn;
+  size_t pos;
+
   if (transacId==-1) {
     conn = getConnection(reqPos);
   } else {
     reqPos = -1;
-    conn = (&(mpool[transacId].mmysql));
-  }
-  // Execute the SQL query
-  if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
-
-// try to reinitialise the socket
-    if (mysql_real_connect(&(mpool[reqPos].mmysql),
-                           mconfig.getDbHost().c_str(),
-                           mconfig.getDbUserName().c_str(),
-                           mconfig.getDbUserPassword().c_str(),
-                           mconfig.getDbName().c_str(),
-                           mconfig.getDbPort(),
-                           NULL,
-                           CLIENT_MULTI_STATEMENTS) ==NULL) {
-      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
-                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
-    }
-    res=mysql_real_query(conn, request.c_str (), request.length());
-    if (res) {
-      releaseConnection(reqPos);
-      throw SystemException(ERRCODE_DBERR, "S-Query error" + dbErrorMsg(conn));
-    }
+    pos = transacId;
+    conn = mpool->at(pos);
   }
 
-  // Get the result handle (does not fetch data from the server)
-  MYSQL_RES *result = mysql_use_result(conn);
-  if (result == 0) {
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "Cannot get query results" + dbErrorMsg(conn));
+  // exectue request
+  rowset<row> results;
+  vector<vector<indicator>> inds;
+  try
+  {
+      conn<<request,into(results,inds);
   }
+  catch(exception const &e)
+  {
+      try
+      {
+          // try to reconnect the session
+          conn.reconnect();
+      }
+      catch(exception const& e2)
+      {
+          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
+                                      + e2.what());
+      }
+
+      try
+      {
+          conn<<request,into(results);
+      }
+      catch(exception const& e3)
+      {
+          mpool->give_back(pos);
+          throw SystemException(ERRCODE_DBERR, "Cannot get query results : "
+                                      + e3.what());
+      }
+  }
+
+
+
+  vector<string> rowStr;
+  vector<vector<string> > resultsStr;
+
+
+  for(rowset<row>::const_iterator itrs=results.begin(); itrs != results.end(); ++itrs)
+    {
+      rowStr.clear();
+      row const& current_row = *itrs;
+      for(size_t j=0; j<current_row.size();j++)
+        {
+          rowStr.push_back(current_row.get<string>(j));
+          //TODO : WARNING! get<string> --> exception bad cast ?
+        }
+
+    }
+
+
+
+
+
+
   int size = mysql_num_fields(result);
   // Fetch data rows
   MYSQL_ROW row;
@@ -264,15 +280,20 @@ SOCIDatabase::getConnection(int& id){ //TODO:working here
 }
 
 void
-MYSQLDatabase::releaseConnection(int pos) {
-  if (pos==-1){
+SOCIDatabase::releaseConnection(int pos) { //TODO: working here
+  if (pos<0){
     return;
   }
-  int ret = pthread_mutex_unlock(&(mpool[pos].mmutex));
-  if (ret) {
-    throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
+
+  try
+  {
+      mpool->give_back((size_t)pos);
   }
-  mpool[pos].mused = false;
+  catch (exception const &e)
+  {
+      throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
+  }
+
 }
 
 int
@@ -352,7 +373,14 @@ SOCIDatabase::flush(int transactionID){ //TODO: add try catch ?
   size_t pos= transactionID;
   session & conn = (mpool->at(pos));
 
-  conn.commit();
+  try
+  {
+	  conn.commit();
+  }
+  catch (exception const &e)
+  {
+	  throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
+  }
 
 }
 
@@ -376,5 +404,83 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
     throw (e);
   }
   return convertToInt(*iter);
+}
+
+
+
+
+std::string SOCIDatabase::dataToString(const row & r, size_t pos)
+{
+  std::string dataStr="";
+  data_type dt = r.get_properties(pos).get_data_type();
+  switch(dt)
+  {
+    case dt_string:
+        dataStr=r.get<std::string>(pos);
+        break;
+    case dt_double:
+        dataStr=convertToString(r.get<double>(pos));
+        break;
+    case dt_integer:
+        dataStr=convertToString(r.get<int>(pos));
+        break;
+    case dt_unsigned_long:
+        dataStr=convertToString(r.get<unsigned long>(pos));
+        break;
+    case dt_long_long:
+        dataStr=convertToString(r.get<long long>(pos));
+        break;
+    case dt_date:
+        std::tm time = r.get<std::tm>(pos);
+        dataStr.append(convertToString(time.tm_mon));
+        dataStr.append("-");
+        dataStr.append(convertToString(time.tm_mday));
+        dataStr.append("-");
+        dataStr.append(convertToString(time.tm_year));
+        dataStr.append("T");
+        dataStr.append(convertToString(time.tm_hour));
+        dataStr.append(":");
+        dataStr.append(convertToString(time.tm_min));
+        dataStr.append(":");
+        dataStr.append(convertToString(time.tm_sec));
+        break;
+  }
+
+  return dataStr;
+}
+
+
+vector<string> SOCIDatabase::rowToString(const row & r)
+{
+
+  vector<string> rowStr;
+  for(size_t i=0;i<r.size();++i)
+    {
+        string value="";
+        //data_type dt = r.get_properties(i).get_data_type();
+        indicator ind = r.get_indicator(i);
+
+
+        switch (ind)
+        {
+        case i_ok:
+            // the data was returned without problems
+            value=dataToString(r,i);
+
+            break;
+        case i_null:
+            // null value
+            value="";
+            break;
+        case i_truncated:
+            value="error:truncated";
+            break;
+        }
+
+        rowStr.push_back(value);
+
+    }
+
+  return rowStr;
 }
 
