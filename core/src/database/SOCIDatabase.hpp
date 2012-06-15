@@ -10,6 +10,8 @@
 
 #include "Database.hpp"
 #include <soci/soci.h>
+#include <soci/soci-backend.h>
+#include <vector>
 
 
 
@@ -145,6 +147,7 @@ private :
    */
   DbConfiguration::db_type_t mdbtype;
 
+
   /////////////////////////////////
   // Functions
   /////////////////////////////////
@@ -155,6 +158,18 @@ private :
    */
   int
   disconnect();
+
+  /*
+   * \brief convert a SOCI row into a vector of string
+   * \param the row to convert
+   */
+  std::vector<std::string>
+  rowToString(const soci::row & r);
+  /*
+   * \brief convert
+   */
+  std::string
+  dataToString(const soci::row & r, size_t pos);
 };
 
 
