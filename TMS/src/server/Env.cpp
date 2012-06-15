@@ -132,11 +132,21 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$JOB_NAME");
 		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$JOB_NAME");
 		//To replace VISHNU_BATCHJOB_NODEFILE
-		/*replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
-      //replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
-      //To replace VISHNU_BATCHJOB_NUM_NODES
-      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
-      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");*/
+      		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+     		pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+     		if(pos!=std::string::npos) {
+        		std::string fileName = "/tmp/SGE_NODELIST_XXXXXX";
+        		vishnu::createTmpFile(const_cast<char*>(fileName.c_str()));
+        		pos = scriptContent.rfind("\n", pos-1);
+        		scriptContent.insert(pos+1, "echo $HOSTNAME > "+fileName+"\n");
+        		std::string tmp = "echo $HOSTNAME > "+fileName+"\n";
+        		scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
+        		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+        		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+     		}		
+     		//To replace VISHNU_BATCHJOB_NUM_NODES
+      		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
+     		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");	
 		break;
 	default:
 		break;
