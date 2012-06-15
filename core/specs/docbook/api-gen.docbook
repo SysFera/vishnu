@@ -5791,7 +5791,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The submitJob() function submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>The submitJob() function allows to submit a job consisting in running a given script on a machine.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6287,7 +6287,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listJobs() function gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>The listJobs() function gets a list of all submitted jobs on a machine.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6678,7 +6678,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The cancelJob() function cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</para>
+        <para>The cancelJob() function allows to cancel a job submitted on a given machine.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -6892,6 +6892,16 @@
               <entry><para>string</para></entry>
               <entry><para>Represents the batch job id (given by the underlying batch scheduler ).</para></entry>
             </row>
+            <row>
+              <entry><para>outputDir</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Indicates the directory where the job has been launched.</para></entry>
+            </row>
+            <row>
+              <entry><para>workId</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Indicates the directory where the job has been launched.</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -6925,6 +6935,11 @@
             </row>
             <row>
               <entry><para>errorPath</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
+            </row>
+            <row>
+              <entry><para>outputDir</para></entry>
               <entry><para>string</para></entry>
               <entry><para>Is the path to the file containing errors occured during job's execution. </para></entry>
             </row>
@@ -7070,6 +7085,11 @@
               <entry><para>batchJob</para></entry>
               <entry><para>boolean</para></entry>
               <entry><para>allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu)</para></entry>
+            </row>
+            <row>
+              <entry><para>wid</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Allows to gather information about jobs related to a given Work.</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7417,6 +7437,21 @@
               <entry><para>criterion</para></entry>
               <entry><para><link linkend="LoadCriterion">LoadCriterion</link></para></entry>
               <entry><para>Represents the scheduling criterion to automatically submit a job</para></entry>
+            </row>
+            <row>
+              <entry><para>fileParams</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Sets a list of local files as parameters for the script.  </para><para>These files will be  uploaded onto the server before computing the script. At the execution time,  each path can be accessed through an environment variable.</para><para>E.g. --fileParams &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot; or -F &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot;.</para><para>At the execution, the environment variable $PFILE1, for example, will point to the uploaded copy of the file /path/to/file1. </para><para>The option --fileParam or -f allows to set each file individually.</para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+            </row>
+            <row>
+              <entry><para>textParams</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable.</para><para>E.g. --textParams &quot;PARAM1=value1 PARAM2=value2&quot; or -F &quot;PARAM1=value1 PARAM2=value2&quot;, will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>The option --textParam or -v allows to set each file individually.</para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+            </row>
+            <row>
+              <entry><para>wid</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Sets the identifier of the Work to which the job is related.</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -12175,7 +12210,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the remote  file in bytes</para></entry>
             </row>
             <row>
@@ -12267,7 +12302,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the file in bytes</para></entry>
             </row>
             <row>
@@ -12353,7 +12388,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the file </para></entry>
             </row>
             <row>
