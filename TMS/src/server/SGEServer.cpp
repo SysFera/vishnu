@@ -572,6 +572,8 @@ SGEServer::listQueues(const std::string& optqueueName) {
       argument.push_back("-f");
       argument.push_back("-q");
       argument.push_back((*it).c_str());
+      argument.push_back("-u");
+      argument.push_back("*");
       std::string exec = boost::process::find_executable_in_path("qstat", SGE_BIN_PATH);
       boost::process::child c3 = boost::process::create_child(exec, argument,
                                                               ctx);
