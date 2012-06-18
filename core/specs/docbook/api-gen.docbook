@@ -12175,7 +12175,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the remote  file in bytes</para></entry>
             </row>
             <row>
@@ -12267,7 +12267,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the file in bytes</para></entry>
             </row>
             <row>
@@ -12353,7 +12353,7 @@
             </row>
             <row>
               <entry><para>size</para></entry>
-              <entry><para>long</para></entry>
+              <entry><para>java.math.BigInteger</para></entry>
               <entry><para>The size of the file </para></entry>
             </row>
             <row>

@@ -157,6 +157,16 @@
 	    vishnu_list_authentication_system, vishnu_add_auth_account, vishnu_update_auth_account, vishnu_delete_auth_account, vishnu_list_auth_account.
 	  </para><para>Updates of IMS:</para><para>Added vishnu_define_auth_identifier</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>14/06/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	
+      <para>Updates of UMS:
+	  Added vishnu_setting_ssh_key command.
+	</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -2549,6 +2559,73 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
+      <section>
+        <title>vishnu_setting_ssh_key</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_setting_ssh_key command sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
+              choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>addOption</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>An option to add an ssh key on a remote machine. At least one option must be used with this command</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>removeOption</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>r</para></entry>
+                <entry><para>An option to remove an ssh key on a remote machine. At least one option must be used with this command</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>connectParams</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The user's account connection parameters in the form &quot;login@machine&quot; </para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>sshPublicKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The path to the ssh public key</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
@@ -2737,8 +2814,8 @@
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
-              choice="opt"><option>-Q</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
-              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2872,6 +2949,13 @@
                 <entry><para>boolean</para></entry>
                 <entry><para>Q</para></entry>
                 <entry><para>allows to select automatically a queue which has the number of nodes requested by the user</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>loadType</para></entry>
+                <entry><para><link linkend="LoadType">LoadType</link></para></entry>
+                <entry><para>L</para></entry>
+                <entry><para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
