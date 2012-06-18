@@ -1,12 +1,17 @@
 -- This script is for initialization of the VISHNU MYSQL database
 -- Script name          : mysql_create.sql
--- Script owner         : SysFera SAS
+-- Script owner         : SysFera SA
 
 -- REVISIONS
 -- Revision nb          : 1.0
 -- Revision date        : 07/06/11
 -- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
 -- Revision comment     : release of FMS and IMS modules (VISHNU v1.2.0)
+
+-- Revision nb          : 1.3
+-- Revision date        : 02/02/12
+-- Revision author      : Kevin Coulomb <kevin.coulomb@sysfera.com>
+-- Revision comment     : Add auth System
 
 USE vishnu;
 
@@ -30,31 +35,28 @@ CREATE TABLE vishnu (
   formatidjob VARCHAR(255)    ,
   formatidfiletransfer VARCHAR(255)    ,
   formatidmachine VARCHAR(255)    ,
-  usercpt INTEGER    ,
-  jobcpt INTEGER    ,
-  fileSubcpt INTEGER    ,
-  machinecpt INTEGER      ,
+  formatidauth VARCHAR(255)    ,
 PRIMARY KEY(vishnuid));
 
 CREATE TABLE machine (
   nummachineid SERIAL  NOT NULL ,
-  vishnu_vishnuid INTEGER   NOT NULL ,
+  vishnu_vishnuid BIGINT UNSIGNED   NOT NULL ,
   name VARCHAR(255)    ,
   site VARCHAR(255)    ,
   diskspace INTEGER    ,
   memory INTEGER    ,
   network INTEGER    ,
-  machineid VARCHAR(255)      ,
+  machineid VARCHAR(255)     unique ,
   status INTEGER      ,
   sshpublickey TEXT ,
-PRIMARY KEY(nummachineid),
+PRIMARY KEY(nummachineid),	
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
 
 CREATE TABLE users (
   numuserid SERIAL  NOT NULL ,
-  vishnu_vishnuid INTEGER   NOT NULL ,
-  userid VARCHAR(255)    ,
+  vishnu_vishnuid BIGINT UNSIGNED   NOT NULL ,
+  userid VARCHAR(255)    unique,
   pwd VARCHAR(255)    ,
   firstname VARCHAR(255)    ,
   lastname VARCHAR(255)    ,
@@ -68,7 +70,7 @@ PRIMARY KEY(numuserid),
 
 CREATE TABLE state (
   numstateid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   memory INTEGER    ,
   diskspace INTEGER    ,
   cpuload INTEGER    ,
@@ -79,7 +81,7 @@ PRIMARY KEY(numstateid),
 
 CREATE TABLE description (
   numdescriptionid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   lang VARCHAR(255)    ,
   description VARCHAR(255)      ,
 PRIMARY KEY(numdescriptionid),
@@ -88,9 +90,9 @@ PRIMARY KEY(numdescriptionid),
 
 CREATE TABLE vsession (
   numsessionid SERIAL NOT NULL ,
-  clmachine_numclmachineid INTEGER   NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
-  vsessionid VARCHAR(255)    ,
+  clmachine_numclmachineid BIGINT UNSIGNED   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
+  vsessionid VARCHAR(255)    unique,
   lastconnect TIMESTAMP    ,
   creation TIMESTAMP    ,
   closure TIMESTAMP    ,
@@ -98,6 +100,7 @@ CREATE TABLE vsession (
   state INTEGER    ,
   closepolicy INTEGER    ,
   timeout INTEGER      ,
+  authId VARCHAR(255)      ,
 PRIMARY KEY(numsessionid),
   FOREIGN KEY(users_numuserid)
     REFERENCES users(numuserid) ON DELETE CASCADE,
@@ -106,8 +109,8 @@ PRIMARY KEY(numsessionid),
 
 CREATE TABLE account (
   numaccountid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
   aclogin VARCHAR(255)    ,
   sshpathkey VARCHAR(255)    ,
   home VARCHAR(255)      ,
@@ -119,8 +122,8 @@ PRIMARY KEY(numaccountid),
 
 CREATE TABLE optionvalue (
   numoptionvalueid SERIAL  NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
-  optionu_numoptionid INTEGER   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
+  optionu_numoptionid BIGINT UNSIGNED   NOT NULL ,
   value INTEGER      ,
 PRIMARY KEY(numoptionvalueid),
   FOREIGN KEY(optionu_numoptionid)
@@ -130,8 +133,8 @@ PRIMARY KEY(numoptionvalueid),
 
 CREATE TABLE threshold (
   thresholdid SERIAL  NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   typet INTEGER    ,
   value INTEGER      ,
 PRIMARY KEY(thresholdid),
@@ -142,7 +145,7 @@ PRIMARY KEY(thresholdid),
 
 CREATE TABLE command (
   numcommandid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
   starttime TIMESTAMP    ,
   endtime TIMESTAMP    ,
   description TEXT    ,
@@ -166,8 +169,8 @@ CREATE TABLE process (
 
 CREATE TABLE filetransfer (
   numfiletransferid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
-  transferId VARCHAR(255)    ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
+  transferId VARCHAR(255)    unique,
   status INTEGER    ,
   userId VARCHAR(255),
   clientMachineId VARCHAR(255),
@@ -175,7 +178,7 @@ CREATE TABLE filetransfer (
   destinationMachineId VARCHAR(255),
   sourceFilePath VARCHAR(255),
   destinationFilePath VARCHAR(255),
-  fileSize INTEGER,
+  fileSize BIGINT UNSIGNED,
   startTime TIMESTAMP,
   trCommand INTEGER,
   processId INTEGER,
@@ -186,8 +189,8 @@ PRIMARY KEY(numfileTransferid),
 
 CREATE TABLE filesub (
   numfileid SERIAL  NOT NULL ,
-  command_numcommandid INTEGER   NOT NULL ,
-  fileid VARCHAR(255)    ,
+  command_numcommandid BIGINT UNSIGNED   NOT NULL ,
+  fileid VARCHAR(255)   unique ,
   name VARCHAR(255)    ,
   content VARCHAR(255)      ,
 PRIMARY KEY(numfileid),
@@ -196,10 +199,10 @@ PRIMARY KEY(numfileid),
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
-  jobId VARCHAR(255),
+  jobId VARCHAR(255) unique,
   batchJobId VARCHAR(255),
   batchType INTEGER,
   jobName VARCHAR(255),
@@ -225,6 +228,44 @@ PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);
 
+CREATE TABLE authsystem (
+  numauthsystemid SERIAL NOT NULL,
+  vishnu_vishnuid BIGINT UNSIGNED  NOT NULL  ,
+  authsystemid VARCHAR(255)  unique  ,
+  name VARCHAR(255)  ,
+  uri VARCHAR(255)  ,
+  authlogin VARCHAR(255)  ,
+  authpassword VARCHAR(255)  ,
+  userpwdencryption INTEGER UNSIGNED  ,
+  authtype INTEGER UNSIGNED  ,
+  status INTEGER UNSIGNED  ,
+PRIMARY KEY(numauthsystemid),
+  FOREIGN KEY(vishnu_vishnuid)
+     REFERENCES vishnu(vishnuid)
+);
+
+CREATE TABLE authaccount (
+  authaccountid SERIAL NOT NULL,
+  authsystem_authsystemid BIGINT UNSIGNED  NOT NULL  ,
+  users_numuserid BIGINT UNSIGNED  NOT NULL  ,
+  aclogin VARCHAR(255)  ,
+PRIMARY KEY(authaccountid),
+  FOREIGN KEY(users_numuserid)
+    REFERENCES users(numuserid) ON DELETE CASCADE,
+  FOREIGN KEY(authsystem_authsystemid)
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE
+);
+
+
+CREATE TABLE ldapauthsystem (
+  ldapauthsystid SERIAL NOT NULL,
+  authsystem_authsystemid BIGINT UNSIGNED  NOT NULL  ,
+  ldapbase VARCHAR(255)  ,
+PRIMARY KEY(ldapauthsystid),
+  FOREIGN KEY(authsystem_authsystemid)
+    REFERENCES authsystem(numauthsystemid) ON DELETE CASCADE);
+
+
 -- Role Creation;
 
 CREATE USER vishnu_user@'%' IDENTIFIED BY 'vishnu_user';
@@ -249,6 +290,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_db_admin";
 
 
 -- CREATE ROLE vishnu_user;
@@ -271,5 +315,8 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON filetransfer TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON filesub TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON job TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
 
 -- END
