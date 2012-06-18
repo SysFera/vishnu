@@ -165,6 +165,15 @@ public:
   getUserAccountLogin(const std::string& machineId);
 
 
+  /**
+  * \brief Function to get the home dir on a given machine
+  * \param machineId The machine identifier of machine on which the user have a account
+  * \return the user account login
+  */
+ std::string
+ getUserHome(const std::string& machineId);
+
+
 private:
 
   /////////////////////////////////
