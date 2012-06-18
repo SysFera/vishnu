@@ -65,14 +65,16 @@ validate_params(){
 }
 
 # Start processing by checking the number of parameters
-validate_params 4 $@
 
 case $1 in 
-  -h) usage 
+  -h) validate_params 2 $@
+      usage 
       ;;
-  -a) addkey $2 $3 ;
+  -a) validate_params 4 $@
+      addkey $2 $3 ;
       ;;
-  -r) removekey $2 $3 ;
+  -r) validate_params 4 $@
+      removekey $2 $3 ;
       ;;
    *) usage && exit ${CLI_UNKNOWN_OPTION}
       ;;
