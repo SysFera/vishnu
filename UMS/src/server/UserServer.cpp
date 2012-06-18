@@ -685,3 +685,43 @@ UserServer::CheckUserState(bool flagForChangePwd) {
   }
 }
 
+
+/**
+* \brief Function to get the home dir on a given machine
+* \param machineId The machine identifier of machine on which the user have a account
+* \return the user account login
+*/
+std::string
+UserServer::getUserHome(const std::string& machineId) {
+	  init();
+
+	  std::string userId = getData().getUserId();
+	  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
+	  account->setMachineId(machineId);
+	  account->setUserId(userId);
+	  LocalAccountServer localAccount(account, *msessionServer);
+
+	  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+	  machine->setMachineId(machineId);
+	  MachineServer machineServer(machine);
+
+	  //To get the database number id of the machine
+	  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
+	  //To get the database number id of the user
+	  std::string numUser = getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
+
+	  std::string home;
+	  if ((numMachine.size() > 0) && (numUser.size() > 0)) {
+	    home = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, "home");
+	  }
+
+	  if(home.size()==0) {
+	    delete account;
+	    delete machine;
+	    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
+	  }
+
+	  delete account;
+	  delete machine;
+	  return home;
+}
