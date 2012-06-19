@@ -72,8 +72,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
-		std::string dir = (!options.getWorkingDir().size()? home : options.getWorkingDir()) + "/OUTPUT_" + vishnuJobId ;
-		createOutputDir(dir) ;
+		std::string workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
+		std::string dir = workingDir + "/OUTPUT_" + vishnuJobId ;
+		try {
+			createOutputDir(dir) ;
+		}catch(...){
+			throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir from the working directory : " + workingDir) ;
+		}
 		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
 		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
 		mjob.setOutputDir(dir) ;
