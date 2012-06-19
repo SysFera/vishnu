@@ -71,7 +71,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
-		std::string home = UserServer(msessionServer).getUserHome(mmachineId);
+		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		std::string dir = (!options.getWorkingDir().size()? home : options.getWorkingDir()) + "/OUTPUT_" + vishnuJobId ;
 		createOutputDir(dir) ;
 		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
