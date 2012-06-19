@@ -166,12 +166,13 @@ public:
 
 
   /**
-  * \brief Function to get the home dir on a given machine
+  * \brief Function to get a certain user account property
   * \param machineId The machine identifier of machine on which the user have a account
+  * \param property The property name
   * \return the user account login
   */
- std::string
- getUserHome(const std::string& machineId);
+  std::string
+  getUserAccountProperty(const std::string& machineId, const std::string& property) ;
 
 
 private:
