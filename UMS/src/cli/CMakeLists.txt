@@ -31,6 +31,9 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   list_auth_accounts 
   )
 
+#declare all scripted-based commands
+set(SCRIPTCLI setting_ssh_key)
+
 #set the prefix of command
 set (CMDPREFIX vishnu_)
 
@@ -60,5 +63,11 @@ foreach(cli ${ALLCLI})
   genCli(${cli})
 endforeach()
 
+#Install all script-based commands
+foreach(script ${SCRIPTCLI})
+   set(SCRIPTNAME "${CMDPREFIX}${script}")
+   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/${script}.in" ${PROJECT_BINARY_DIR}/bin/${SCRIPTNAME} COPYONLY)
+   install(PROGRAMS ${PROJECT_BINARY_DIR}/bin/${SCRIPTNAME} DESTINATION ${BIN_INSTALL_DIR})
+endforeach()
 
 
