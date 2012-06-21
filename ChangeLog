@@ -1,4 +1,5 @@
 // TODO * Change IMS API to set optional parameters as const ref
+* Fixed bugzilla #363 for automatic user ssh key configuration on a remote machine
 * Change Python API to use real python list
 
 +--------------+
