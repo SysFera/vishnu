@@ -17,7 +17,7 @@ CLI_ERROR_RUNTIME=16
 
 # Show help
 usage() {
-echo "Usage: vishnu_ssh_setting [OPTION] [login]@MACHINE KEY"
+echo "Usage: `basename $0` [OPTION] [login]@MACHINE KEY"
 echo 
 echo "Description:"
 echo "Allows to add or remove a given key to/from the authorized keys of a user's remote account"
@@ -60,15 +60,22 @@ removekey() {
 
 # Validate the number of paramters
 validate_params(){
- [ $# -ne $1 ]  && echo "ERROR : Wrong number of parameters" && usage && exit ${CLI_INVALID_PARAM}
- echo -n
+ if [ $# -ne $1 ] ; then
+   echo "ERROR : Wrong number of parameters."
+   usage 
+   exit ${CLI_INVALID_PARAM}
+ fi
+ 
+ if [ ! -e $4 ] || [ `wc -l $4 | awk '{print $1}'` -ne 1 ]; then 
+   echo "The key file seems to be invalid." 
+   exit ${CLI_INVALID_PARAM}
+ fi
 }
 
 # Start processing by checking the number of parameters
 
 case $1 in 
-  -h) validate_params 2 $@
-      usage 
+  -h) usage 
       ;;
   -a) validate_params 4 $@
       addkey $2 $3 ;
@@ -76,7 +83,7 @@ case $1 in
   -r) validate_params 4 $@
       removekey $2 $3 ;
       ;;
-   *) usage && exit ${CLI_UNKNOWN_OPTION}
+   *) echo "ERROR : Wrong options." ; usage ; exit ${CLI_UNKNOWN_OPTION}
       ;;
 esac
 

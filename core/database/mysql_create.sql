@@ -40,7 +40,7 @@ PRIMARY KEY(vishnuid));
 
 CREATE TABLE machine (
   nummachineid SERIAL  NOT NULL ,
-  vishnu_vishnuid INTEGER   NOT NULL ,
+  vishnu_vishnuid BIGINT UNSIGNED   NOT NULL ,
   name VARCHAR(255)    ,
   site VARCHAR(255)    ,
   diskspace INTEGER    ,
@@ -49,13 +49,13 @@ CREATE TABLE machine (
   machineid VARCHAR(255)     unique ,
   status INTEGER      ,
   sshpublickey TEXT ,
-PRIMARY KEY(nummachineid),
+PRIMARY KEY(nummachineid),	
   FOREIGN KEY(vishnu_vishnuid)
     REFERENCES vishnu(vishnuid));
 
 CREATE TABLE users (
   numuserid SERIAL  NOT NULL ,
-  vishnu_vishnuid INTEGER   NOT NULL ,
+  vishnu_vishnuid BIGINT UNSIGNED   NOT NULL ,
   userid VARCHAR(255)    unique,
   pwd VARCHAR(255)    ,
   firstname VARCHAR(255)    ,
@@ -70,7 +70,7 @@ PRIMARY KEY(numuserid),
 
 CREATE TABLE state (
   numstateid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   memory INTEGER    ,
   diskspace INTEGER    ,
   cpuload INTEGER    ,
@@ -81,7 +81,7 @@ PRIMARY KEY(numstateid),
 
 CREATE TABLE description (
   numdescriptionid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   lang VARCHAR(255)    ,
   description VARCHAR(255)      ,
 PRIMARY KEY(numdescriptionid),
@@ -90,8 +90,8 @@ PRIMARY KEY(numdescriptionid),
 
 CREATE TABLE vsession (
   numsessionid SERIAL NOT NULL ,
-  clmachine_numclmachineid INTEGER   NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
+  clmachine_numclmachineid BIGINT UNSIGNED   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
   vsessionid VARCHAR(255)    unique,
   lastconnect TIMESTAMP    ,
   creation TIMESTAMP    ,
@@ -109,8 +109,8 @@ PRIMARY KEY(numsessionid),
 
 CREATE TABLE account (
   numaccountid SERIAL  NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
   aclogin VARCHAR(255)    ,
   sshpathkey VARCHAR(255)    ,
   home VARCHAR(255)      ,
@@ -122,8 +122,8 @@ PRIMARY KEY(numaccountid),
 
 CREATE TABLE optionvalue (
   numoptionvalueid SERIAL  NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
-  optionu_numoptionid INTEGER   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
+  optionu_numoptionid BIGINT UNSIGNED   NOT NULL ,
   value INTEGER      ,
 PRIMARY KEY(numoptionvalueid),
   FOREIGN KEY(optionu_numoptionid)
@@ -133,8 +133,8 @@ PRIMARY KEY(numoptionvalueid),
 
 CREATE TABLE threshold (
   thresholdid SERIAL  NOT NULL ,
-  users_numuserid INTEGER   NOT NULL ,
-  machine_nummachineid INTEGER   NOT NULL ,
+  users_numuserid BIGINT UNSIGNED   NOT NULL ,
+  machine_nummachineid BIGINT UNSIGNED   NOT NULL ,
   typet INTEGER    ,
   value INTEGER      ,
 PRIMARY KEY(thresholdid),
@@ -145,7 +145,7 @@ PRIMARY KEY(thresholdid),
 
 CREATE TABLE command (
   numcommandid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
   starttime TIMESTAMP    ,
   endtime TIMESTAMP    ,
   description TEXT    ,
@@ -169,7 +169,7 @@ CREATE TABLE process (
 
 CREATE TABLE filetransfer (
   numfiletransferid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
   transferId VARCHAR(255)    unique,
   status INTEGER    ,
   userId VARCHAR(255),
@@ -189,7 +189,7 @@ PRIMARY KEY(numfileTransferid),
 
 CREATE TABLE filesub (
   numfileid SERIAL  NOT NULL ,
-  command_numcommandid INTEGER   NOT NULL ,
+  command_numcommandid BIGINT UNSIGNED   NOT NULL ,
   fileid VARCHAR(255)   unique ,
   name VARCHAR(255)    ,
   content VARCHAR(255)      ,
@@ -199,7 +199,7 @@ PRIMARY KEY(numfileid),
 
 CREATE TABLE job (
   numjobid SERIAL  NOT NULL ,
-  vsession_numsessionid INTEGER   NOT NULL ,
+  vsession_numsessionid BIGINT UNSIGNED   NOT NULL ,
   submitMachineId VARCHAR(255),
   submitMachineName VARCHAR(255),
   jobId VARCHAR(255) unique,
@@ -230,7 +230,7 @@ PRIMARY KEY(numjobid),
 
 CREATE TABLE authsystem (
   numauthsystemid SERIAL NOT NULL,
-  vishnu_vishnuid INTEGER UNSIGNED  NOT NULL  ,
+  vishnu_vishnuid BIGINT UNSIGNED  NOT NULL  ,
   authsystemid VARCHAR(255)  unique  ,
   name VARCHAR(255)  ,
   uri VARCHAR(255)  ,
@@ -246,8 +246,8 @@ PRIMARY KEY(numauthsystemid),
 
 CREATE TABLE authaccount (
   authaccountid SERIAL NOT NULL,
-  authsystem_authsystemid INTEGER UNSIGNED  NOT NULL  ,
-  users_numuserid INTEGER UNSIGNED  NOT NULL  ,
+  authsystem_authsystemid BIGINT UNSIGNED  NOT NULL  ,
+  users_numuserid BIGINT UNSIGNED  NOT NULL  ,
   aclogin VARCHAR(255)  ,
 PRIMARY KEY(authaccountid),
   FOREIGN KEY(users_numuserid)
@@ -259,7 +259,7 @@ PRIMARY KEY(authaccountid),
 
 CREATE TABLE ldapauthsystem (
   ldapauthsystid SERIAL NOT NULL,
-  authsystem_authsystemid INTEGER UNSIGNED  NOT NULL  ,
+  authsystem_authsystemid BIGINT UNSIGNED  NOT NULL  ,
   ldapbase VARCHAR(255)  ,
 PRIMARY KEY(ldapauthsystid),
   FOREIGN KEY(authsystem_authsystemid)
