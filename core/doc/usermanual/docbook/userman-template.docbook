@@ -7,8 +7,8 @@
   <info>
     <title>User Manual</title>
     <productname>VISHNU</productname>
-    <releaseinfo>1.0</releaseinfo>
-    <date>March 8, 2011</date>
+    <releaseinfo>1.3</releaseinfo>
+    <date>June 21, 2012</date>
     <author>
       <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
     </author>
@@ -23,6 +23,9 @@
     </author>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+     <author>
+      <personname><firstname>Rodrigue</firstname><surname>Chakode</surname></personname>
     </author>
     
     <title> VISHNU User Manual</title>
@@ -138,6 +141,15 @@
       <para>Add of VISHNU commands for LDAP support and for connection and reconnection using multiples VISHNU accounts.</para></revdescription>
   </revision> 
 
+    <revision>
+    <revnumber>13</revnumber>
+    <date>21/06/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para>
+    </revdescription>
+  </revision> 
+  
   </revhistory>
 
     <copyright>
@@ -432,6 +444,9 @@
 	      named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
 	      and must be added by the user in the ssh authorized key directory of the UNIX account.
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
+	    </para>
+	    <para>  
+	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
 	  </section>
 	  

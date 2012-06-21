@@ -35,8 +35,14 @@
         <surname>Cissé</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Rodrigue</firstname>
+        <surname>Chakode</surname>
+      </personname>
+    </author>
     <title> VISHNU User Manual</title>
-    <date>March 8, 2011</date>
+    <date>June 21, 2012</date>
     <revhistory>
       <revision>
         <revnumber>1</revnumber>
@@ -135,6 +141,14 @@
         <revdescription>
       <para>Add of VISHNU commands for LDAP support and for connection and reconnection using multiples VISHNU accounts.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>21/06/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      
+    <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -173,7 +187,7 @@
 	same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.0</releaseinfo>
+    <releaseinfo>1.3</releaseinfo>
   </info>
   <chapter>
     <title> Document presentation</title>
@@ -408,6 +422,11 @@
 	      named <emphasis role="italic">&quot;userId-machineId&quot;</emphasis> is returned and stored in the $HOME/.vishnu/localAccountPublicKey/ directory
 	      and must be added by the user in the ssh authorized key directory of the UNIX account.
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
+	    </para>
+            <para>  
+	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
+                  role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis
+                  role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
           </section>
           <section>
@@ -3329,6 +3348,84 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <para>vishnu_list_auth_accounts</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_setting_ssh_key</refname>
+        <refpurpose>sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
+              choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows to set/remove a specific ssh public key on a remote user account.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>addOption</replaceable></option></term>
+            <listitem>
+              <para>An option to add an ssh key on a remote machine. At least one option must be used with this command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-r <replaceable>removeOption</replaceable></option></term>
+            <listitem>
+              <para>An option to remove an ssh key on a remote machine. At least one option must be used with this command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set a specific ssh public key on the remote machine aster whose login is toto:</para>
+        <para>vishnu_setting_ssh_key -a toto@aster /tmp/key.pub</para>
+        <para>To remove a specific ssh public key on a remote user account:</para>
+        <para>vishnu_setting_ssh_key -r toto@aster /tmp/key.pub</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>TMS Command reference</title>
@@ -3356,8 +3453,8 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
               choice="opt"><option>-g <replaceable>group</replaceable></option></arg><arg
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
-              choice="opt"><option>-Q</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
-              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3455,6 +3552,13 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term><option>-Q <replaceable>selectQueueAutom</replaceable></option></term>
             <listitem>
               <para>allows to select automatically a queue which has the number of nodes requested by the user.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-L <replaceable>loadType</replaceable></option></term>
+            <listitem>
+              <para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job).
+The value must be an integer. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -6439,7 +6543,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (SHELL).</
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6537,7 +6641,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6646,7 +6750,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6732,7 +6836,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6825,7 +6929,7 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (CPUUSE), 
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Vishnu initialization failes&quot; [15]</term>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
