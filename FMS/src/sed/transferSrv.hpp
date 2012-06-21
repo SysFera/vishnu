@@ -29,9 +29,9 @@ using namespace std;
 
 
 /**
- * \brief List file transfer solve function 
+ * \brief List file transfer solve function
  * \param pb is a structure which corresponds to the descriptor of a profile
- * \return 0 if the service succeeds 
+ * \return 0 if the service succeeds
  */
 int
 solveGetListOfFileTransfers(diet_profile_t* pb);
@@ -45,7 +45,7 @@ int
 solveFileTransferStop(diet_profile_t* pb);
 
 /**
- * \brief Function to build the File transfer (local to remote) service profile 
+ * \brief Function to build the File transfer (local to remote) service profile
  * \param serviceName the name of the service
  * \return the service profile
  */
@@ -53,35 +53,35 @@ solveFileTransferStop(diet_profile_t* pb);
 diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
 
 /**
- * \brief Function to build the asynchronous File transfer (local to remote) service profile 
+ * \brief Function to build the asynchronous File transfer (local to remote) service profile
  * \param serviceName the name of the service
  * \return the service profile
  */
 diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
 
 /**
- * \brief Function to build the File transfer (remote to local) service profile 
+ * \brief Function to build the File transfer (remote to local) service profile
  * \param serviceName the name of the service
  * \return the service profile
  */
 diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
 
 /**
- * \brief Function to build the File transfer (remote to local) service profile 
+ * \brief Function to build the File transfer (remote to local) service profile
  * \param serviceName the name of the service
  * \return the service profile
  */
 diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
 
 /**
- * \brief Function to build the File transfer list service profile 
+ * \brief Function to build the File transfer list service profile
  * \return the service profile
  */
 
 diet_profile_desc_t* getFileTransfersListProfile();
 
 /**
- * \brief Function to build the File transfer stop service profile 
+ * \brief Function to build the File transfer stop service profile
  * \return the service profile description
  */
 diet_profile_desc_t* getFileTransferStopProfile();
@@ -117,7 +117,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    
+
     if (transferMode==File::sync){
 
       if(transferType==File::copy){
@@ -128,7 +128,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       }
     }
     else{
-    
+
       if(transferType==File::copy){
         mapperkey = mapper->code("vishnu_copy_async_file");
       }
@@ -137,7 +137,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       }
 
     }
-   
+
     mapper->code(srcPath, mapperkey);
     mapper->code(dest, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
@@ -152,14 +152,21 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     MachineServer machineServer(machine);
 
     // check the machine
-    machineServer.checkMachine();
+    if (isNotIP(destHost)){
+      machineServer.checkMachine();
+    }
 
     // get the machineName
     destMachineName = machineServer.getMachineName();
     delete machine;
 
     // get the acLogin
-    destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
+    if (isNotIP(destHost)){
+      destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
+    } else {
+      destUser = destHost;
+    }
+
 
 
     CpFileOptions* options_ptr= NULL;
@@ -167,13 +174,13 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+    int vishnuId=ServerFMS::getInstance()->getVishnuId();
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
     // Perfor the transfer now
     if (transferMode==File::sync){
-   
+
      if(transferType==File::copy){
         fileTransferServer->addCpThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
       }
@@ -278,32 +285,32 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     if(std::string(destUser).size()==0){
       destCpltPath = std::string(destHost)+":"+std::string(destPath);
     }
-   
+
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
 
-    
+
     if (transferMode==File::sync){
-    
+
      if(transferType==File::copy){
       mapperkey = mapper->code("vishnu_copy_file");
     }
-   
+
       if(transferType==File::move){
       mapperkey = mapper->code("vishnu_move_file");
     }
-    
+
     }
-    
+
     else{
-    
+
       if(transferType==File::copy){
       mapperkey = mapper->code("vishnu_copy_async_file");
     }
-   
+
       if(transferType==File::move){
       mapperkey = mapper->code("vishnu_move_async_file");
     }
-   
+
     }
     mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
     mapper->code(destCpltPath, mapperkey);
@@ -319,14 +326,26 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     MachineServer srcMachineServer(machine);
 
     // check the source machine
-    srcMachineServer.checkMachine();
+    if (isNotIP(srcHost)){
+      srcMachineServer.checkMachine();
+    }
 
     // get the source machineName
-    srcMachineName = srcMachineServer.getMachineName();
+    if (isNotIP(srcHost)){
+      srcMachineName = srcMachineServer.getMachineName();
+    } else {
+      srcMachineName = srcHost;
+    }
+
     delete machine;
 
     // get the source machine user login
-    srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
+    if (isNotIP(srcHost)){
+      srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
+    } else {
+      srcUserLogin = destUser;
+    }
+
 
     if(strcmp(destUser,"")==0) {
 
@@ -336,14 +355,20 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
       MachineServer destMachineServer(machine);
 
       // check the destination machine
+    if (isNotIP(destHost)){
       destMachineServer.checkMachine();
+    }
 
       // get the destination machineName
       destMachineName = destMachineServer.getMachineName();
       delete machine;
 
       // get the destination  machine user login
+    if (isNotIP(destHost)){
       destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
+    } else {
+      destUserLogin = std::string(destUser);
+    }
 
     }
 
@@ -353,7 +378,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+    int vishnuId=ServerFMS::getInstance()->getVishnuId();
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
@@ -395,10 +420,10 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
       delete fileTransfer;
     }
-    
+
     //To register the command
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
- 
+
   } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
@@ -433,7 +458,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
 
 /**
- * \brief Function to solve the generic query service 
+ * \brief Function to solve the generic query service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return 0 if the service succeeds or an error code otherwise
  */
@@ -458,15 +483,15 @@ solveGenerique(diet_profile_t* pb) {
 
   QueryParameters* options = NULL;
   List* list = NULL;
-  
-  
+
+
   try {
     //To parse the object serialized
     if(!parseEmfObject(std::string(optionValueSerialized), options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
- 
-  
+
+
   QueryType query(options, sessionServer);
 
     //MAPPER CREATION
