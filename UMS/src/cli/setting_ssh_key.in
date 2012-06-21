@@ -17,7 +17,7 @@ CLI_ERROR_RUNTIME=16
 
 # Show help
 usage() {
-echo "Usage: vishnu_ssh_setting [OPTION] [login]@MACHINE KEY"
+echo "Usage: `basename $0` [OPTION] [login]@MACHINE KEY"
 echo 
 echo "Description:"
 echo "Allows to add or remove a given key to/from the authorized keys of a user's remote account"
