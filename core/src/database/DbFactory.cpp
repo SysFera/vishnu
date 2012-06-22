@@ -8,6 +8,9 @@
 #include <iostream>
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
+#ifdef USE_SOCI
+#include "SOCIDatabase.hpp"
+#endif
 #ifdef USE_POSTGRES
 #include "POSTGREDatabase.hpp"
 #endif
@@ -30,13 +33,17 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
   if (mdb != NULL) {
     throw SystemException(ERRCODE_DBERR, "Database instance already initialized");
   }
+
+#ifdef USE_SOCI
+	mdb=new SOCIDatabase(config);
+#else //not USE_SOCI
   switch (config.getDbType()){
     case DbConfiguration::POSTGRESQL :
 #ifdef USE_POSTGRES
       mdb = new POSTGREDatabase(config);
 #else
       throw SystemException(ERRCODE_DBERR, "PostgreSQL is not enabled (re-compile with ENABLE_POSTGRES)");
-#endif
+#endif // USE_POSTGRES
       break;
     case DbConfiguration::ORACLE:
       break;
@@ -45,11 +52,12 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
       mdb = new MYSQLDatabase(config);
 #else
       throw SystemException(ERRCODE_DBERR, "MySQL is not enabled (re-compile with ENABLE_MYSQL)");
-#endif
+#endif // USE_MYSQL
       break;
   default:
     throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
+#endif // USE_SOCI
   return mdb;
 }
 

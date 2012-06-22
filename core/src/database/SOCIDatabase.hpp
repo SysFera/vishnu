@@ -28,6 +28,7 @@ public :
    * \param request The request to process (must contain a SINGLE SQL statement without a semicolumn)
    * \param transacId the id of the transaction if one is used
    * \return 0 on success, an error code otherwise
+   * \brief NB : requests like create, drop and alter table put the transcation into auto-commit mode
    */
   int
   process(std::string request, int transacId = -1);
@@ -114,23 +115,7 @@ private :
    */
   void releaseConnection(int pos);
 
-  /**
-   * \brief An element of the pool
-   */
-  typedef struct pool_t{
-    /**
-     * \brief If the connexion is used
-     */
-    bool mused;
-    /**
-     * \brief The connection SOCI structure
-     */
-    soci::session msession;
-    /**
-     * \brief The associated mutex
-     */
-    pthread_mutex_t mmutex;
-  }pool_t;
+
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -139,13 +124,21 @@ private :
    */
   DbConfiguration mconfig;
   /**
-   * \brief The pool of connection
+   * \brief The pool of connections
    */
   soci::connection_pool* mpool;
   /**
    * \brief The configuration of the database client
    */
   DbConfiguration::db_type_t mdbtype;
+  /*
+   * \brief pointer to the backend factory
+   */
+  const struct soci::backend_factory * mbackend;
+  /*
+   * \brief connection status
+   */
+  bool is_connected;
 
 
   /////////////////////////////////
@@ -166,10 +159,25 @@ private :
   std::vector<std::string>
   rowToString(const soci::row & r);
   /*
-   * \brief convert
+   * \brief convert a data include in a SOCI row into string
    */
   std::string
   dataToString(const soci::row & r, size_t pos);
+  /*
+   * \brief convert SOCI rowset of row into a vector of vector of string
+   * \param rs : the query result rowset
+   * \param attributeNames : the names of the different columns are stocked here
+   * \return attributeNames by reference
+   */
+  std::vector< std::vector<std::string> >
+  rowsetToString(soci::rowset<soci::row> rs,std::vector<std::string> & attributeNames);
+
+  /*
+   * \brief return the column names of a SOCI row
+   */
+  std::vector<std::string>
+  getRowAttributeNames(const soci::row & rs);
+
 };
 
 
