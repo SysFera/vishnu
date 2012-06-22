@@ -9,8 +9,15 @@
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
+
+
+
+#ifdef USE_MYSQL
 #include <soci/mysql/soci-mysql.h>
+#endif
+#ifdef USE_POSTGRES
 #include <soci/postgresql/soci-postgresql.h>
+#endif
 
 
 using namespace std;
@@ -20,145 +27,186 @@ using namespace soci;
 /**
  * \brief timeout for gettig connection in getConnection
  */
-const int CONN_TIMEOUT=15000; // in millisecond
+const int CONN_TIMEOUT = 3000; // in millisecond
+
+int SOCIDatabase::process(string request, int transacId)
+{
+	if(!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot process request, not connected to DB");
+	}
+	int reqPos;
+	soci::session * pconn;
+	size_t pos;
+
+	try //try to get Connection
+	{
+		if (transacId == -1)
+		{
+			pconn =	&getConnection(reqPos);
+			pos = reqPos;
+		}
+		else
+		{
+			reqPos = -1;
+			pos = transacId;
+			pconn = &mpool->at(pos);
+		}
+	}
+	catch(exception const & e)
+	{
+		throw SystemException(ERRCODE_DBERR, "Cannot get transaction");
+	}
 
 
-int
-SOCIDatabase::process(string request, int transacId){ //TODO: working here
-  int reqPos;
-  session& conn;
-  size_t pos;
 
-  if (transacId==-1) {
-    conn = getConnection(reqPos);
-  } else {
-    reqPos = -1;
-    pos = transacId;
-    conn = mpool->at(pos);
-  }
+	int res;
+	if (request.empty())
+	{
+		releaseConnection(reqPos);
+		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
+	}
 
-  int res;
-  if (request.empty()) {
-    releaseConnection(reqPos);
-    throw SystemException(ERRCODE_DBERR, "Empty SQL query");
-  }
+	try
+	{
+		(*pconn) << request;
+	} catch (exception const &e)
+	{
+		throw SystemException(ERRCODE_DBERR, string("Cannot process request \n")+e.what());
 
-  try
-  {
-      conn<<request;
-  }
-  catch(exception const &e)
-  {
-      try
-      {
-          // try to reconnect the session
-          conn.reconnect();
-      }
-      catch(exception const& e2)
-      {
-          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
-                                      + e2.what());
-      }
+		//TODO : supprimer ?
+		try
+		{
+			// try to reconnect the session
+			pconn->reconnect();
+		} catch (exception const& e2)
+		{
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot reconnect to the DB : ") + e2.what());
+		}
 
-      try
-      {
-          conn<<request;
-      }
-      catch(exception const& e3)
-      {
-          mpool->give_back(pos);
-          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
-                                      +e3.what());
-      }
-  }
-  releaseConnection(reqPos);
-  return SUCCESS;
+		try
+		{
+			(*pconn) << request;
+		} catch (exception const& e3)
+		{
+			mpool->give_back(pos);
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot reconnect to the DB : ") + e3.what());
+		}
+	}
+
+
+	if(reqPos!=-1)
+	{
+		releaseConnection(reqPos);
+	}
+
+
+	return SUCCESS;
 }
 /**
  * \brief To make a connection to the database
  * \fn int connect()
  * \return raises an exception on error
  */
-int
-SOCIDatabase::connect(){
-
-  struct backend_factory & backend;
-
-  switch(mconfig.getDbType())
-  {
-          case DbConfiguration::MYSQL :
-                  backend=mysql;
-                  break;
-          case DbConfiguration::POSTGRESQL:
-                  backend=postgresql;
-                  break;
-          /*case DbConfiguration::ORACLE:
-                  break;*/
-          default:
-                  throw SystemException
-                  (ERRCODE_DBERR, "Database instance type unknown or not managed");
-                  break;
-  }
-
-
-
-  for (unsigned int i=0; i<mconfig.getDbPoolSize();i++) {
-
-	session & msession = mpool->at(i);
-	string connectString="";
-	connectString+="dbname="+mconfig.getDbName();
-	connectString+=" user="+mconfig.getDbUserName();
-	connectString+=" password="+mconfig.getDbUserPassword();
-	connectString+=" host="+mconfig.getDbHost();
-	connectString+=" port="+mconfig.getDbPort();
-
-	try
+int SOCIDatabase::connect()
+{
+	if(is_connected)
 	{
-	    msession.open(backend,connectString);
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot connect to DB, already connected to DB");
 	}
-	catch (exception const &e)
-	{
-          throw SystemException(ERRCODE_DBERR, "Cannot connect to the DB : "+e.what());
-        }
 
-  }//for
-  return SUCCESS;
+	//const struct backend_factory * backend;
+
+	switch (mconfig.getDbType())
+	{
+#ifdef USE_MYSQL
+	case DbConfiguration::MYSQL:
+		mbackend = &mysql;
+		break;
+#endif //USE_MYSQL
+#ifdef USE_POSTGRES
+	case DbConfiguration::POSTGRESQL:
+		mbackend = &postgresql;
+		break;
+#endif //POSTGRES
+		/*case DbConfiguration::ORACLE:
+		 break;*/
+	default:
+		throw SystemException(ERRCODE_DBERR,
+				"Database instance type unknown or not managed");
+		break;
+	}
+
+	string connectString = "";
+	connectString += "dbname=" + mconfig.getDbName();
+	connectString += " user=" + mconfig.getDbUserName();
+	connectString += " password=" + mconfig.getDbUserPassword();
+	connectString += " host=" + mconfig.getDbHost();
+	if(mconfig.getDbPort()!=0)
+	{
+		ostringstream oss;
+		oss<<mconfig.getDbPort();
+		connectString+=" port="+oss.str();// TODO: tester si vide !
+	}
+
+	cout<<connectString<<endl; //TODO : à enlever
+
+	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
+	{
+
+		soci::session & msession = mpool->at(i);
+
+		try
+		{
+			//msession.open(*backend,connectString);
+			msession.open(*mbackend, connectString);
+		} catch (exception const &e)
+		{
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot connect to the DB : ") + e.what());
+		}
+
+	} //for
+	is_connected=true;
+	return SUCCESS;
 }
 /**
  * \fn SOCIDatabase(DbConfiguration dbConfig)
  * \brief Constructor, raises an exception on error
  */
-SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig)
-  : Database(), mconfig(dbConfig), mdbtype(dbConfig.getDbType()) {
-  mpool = new connection_pool(mconfig.getDbPoolSize());
-
-  /* for (unsigned int i=0;i<mconfig.getDbPoolSize();i++) {
-    pthread_mutex_init(&(mpool[i].mmutex), NULL);
-    mpool[i].mused = false;
-    mysql_init(&(mpool[i].mmysql));
-  }*/
+SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig) :
+		Database(), mconfig(dbConfig), mdbtype(dbConfig.getDbType())
+{
+	mpool = new connection_pool(mconfig.getDbPoolSize());
+	is_connected = false;
 }
 
 /**
  * \fn ~Database()
  * \brief Destructor, raises an exception on error
  */
-SOCIDatabase::~SOCIDatabase(){
-  disconnect ();
+SOCIDatabase::~SOCIDatabase()
+{
+	disconnect();
 }
 /**
  * \brief To disconnect from the database
  * \fn disconnect()
  * \return 0 on success, an error code otherwise
  */
-int
-SOCIDatabase::disconnect(){
-  for (unsigned int i = 0 ; i < mconfig.getDbPoolSize() ; i++) {
-    (mpool->at(i)).close();
-  }
-  return SUCCESS;
+int SOCIDatabase::disconnect()
+{
+	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
+	{
+		(mpool->at(i)).close();
+	}
+	is_connected = false;
+	return SUCCESS;
 }
-
 
 /**
  * \brief To get the result of the latest request (if any result)
@@ -166,106 +214,77 @@ SOCIDatabase::disconnect(){
  * \return The result of the latest request
  */
 DatabaseResult*
-SOCIDatabase::getResult(string request, int transacId) { //TODO:working here
-  int reqPos;
-  session& conn;
-  size_t pos;
+SOCIDatabase::getResult(string request, int transacId)
+{
+	if(!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot get request result, not connected to DB");
+	}
 
-  if (transacId==-1) {
-    conn = getConnection(reqPos);
-  } else {
-    reqPos = -1;
-    pos = transacId;
-    conn = mpool->at(pos);
-  }
+	int reqPos;
+	//soci::session conn;
+	size_t pos;
 
-  // exectue request
-  rowset<row> results;
-  vector<vector<indicator>> inds;
-  try
-  {
-      conn<<request,into(results,inds);
-  }
-  catch(exception const &e)
-  {
-      try
-      {
-          // try to reconnect the session
-          conn.reconnect();
-      }
-      catch(exception const& e2)
-      {
-          throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB : "
-                                      + e2.what());
-      }
+	if (transacId == -1)
+	{
+		//conn
+		getConnection(reqPos);
+		pos = reqPos;
+	}
+	else
+	{
+		reqPos = -1;
+		pos = transacId;
+		//conn = mpool->at(pos);
+	}
+	soci::session & conn = mpool->at(pos);
 
-      try
-      {
-          conn<<request,into(results);
-      }
-      catch(exception const& e3)
-      {
-          mpool->give_back(pos);
-          throw SystemException(ERRCODE_DBERR, "Cannot get query results : "
-                                      + e3.what());
-      }
-  }
+	// exectue request
+	//rowset<row> results;
+	vector<vector<string> > resultsStr;
+	vector<string> attributesNames;
+	try
+	{
+		rowset<row> results = conn.prepare << request;
+		resultsStr = rowsetToString(results, attributesNames);
+	} catch (exception const &e)
+	{
+		try
+		{
+			// try to reconnect the session
+			conn.reconnect();
+		} catch (exception const& e2)
+		{
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot reconnect to the DB : ") + e2.what());
+		}
 
+		try
+		{
+			rowset<row> results = conn.prepare << request;
+			resultsStr = rowsetToString(results, attributesNames);
+		} catch (exception const& e3)
+		{
+			mpool->give_back(pos);
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot get query results : ") + e3.what());
+		}
+	}
 
-
-  vector<string> rowStr;
-  vector<vector<string> > resultsStr;
-
-
-  for(rowset<row>::const_iterator itrs=results.begin(); itrs != results.end(); ++itrs)
-    {
-      rowStr.clear();
-      row const& current_row = *itrs;
-      for(size_t j=0; j<current_row.size();j++)
-        {
-          rowStr.push_back(current_row.get<string>(j));
-          //TODO : WARNING! get<string> --> exception bad cast ?
-        }
-
-    }
-
-
-
-
-
-
-  int size = mysql_num_fields(result);
-  // Fetch data rows
-  MYSQL_ROW row;
-  vector<string> rowStr;
-  vector<vector<string> > results;
-  while ((row = mysql_fetch_row(result))) {
-    rowStr.clear();
-    for (unsigned int i=0;i<size;i++){
-      rowStr.push_back(string(row[i] ? row[i] : ""));
-    }
-    results.push_back(rowStr);
-  }
-  // Fetch column names
-  MYSQL_FIELD *field;
-  vector<string> attributesNames;
-  while((field = mysql_fetch_field( result))) {
-    attributesNames.push_back(string(field->name));
-  }
-  // Finalize
-  releaseConnection(reqPos);
-  return new DatabaseResult(results, attributesNames);
+	releaseConnection(reqPos); // nothing done if reqPos=-1
+	return new DatabaseResult(resultsStr, attributesNames);
 }
 
-
-session &
-SOCIDatabase::getConnection(int& id){ //TODO:working here
+soci::session &
+SOCIDatabase::getConnection(int& id)
+{
 
 	bool available_connection;
 	size_t pos;
-	available_connection=mpool->try_lease(pos,CONN_TIMEOUT);
+	available_connection = mpool->try_lease(pos, CONN_TIMEOUT);
 
-	if(available_connection)
+	if (available_connection)
 	{
 		id = (int) pos; //Transaction ID
 		return mpool->at(pos);
@@ -273,214 +292,355 @@ SOCIDatabase::getConnection(int& id){ //TODO:working here
 	else
 	{
 		//TIMEOUT PASSED
-		id=-1;
-		throw SystemException(ERRCODE_DBCONN, "Cannot get available DB connection");
+		id = -1;
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot get available DB connection : TIMEOUT passed");
 	}
 
 }
 
-void
-SOCIDatabase::releaseConnection(int pos) { //TODO: working here
-  if (pos<0){
-    return;
-  }
-
-  try
-  {
-      mpool->give_back((size_t)pos);
-  }
-  catch (exception const &e)
-  {
-      throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
-  }
-
-}
-
-int
-SOCIDatabase::startTransaction() {
-  int reqPos;
-  session & conn = getConnection(reqPos);
-
-  try
-  {
-	  conn.begin();
-  }
-  catch (exception const &e)
-  {
-	  throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
-  }
-
-  // DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
-  return reqPos;
-}
-
-void
-SOCIDatabase::endTransaction(int transactionID) {
-
-	size_t pos= transactionID;
-	session & conn = (mpool->at(pos));
+void SOCIDatabase::releaseConnection(int pos)
+{
+	if (pos < 0)
+	{
+		return;
+	}
 
 	try
 	{
-	  conn.commit();
+		mpool->give_back((size_t) pos);
+	} catch (exception const &e)
+	{
+		throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
 	}
-	catch (exception const &e)
+
+}
+
+int SOCIDatabase::startTransaction()
+{
+	if (!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot start transaction, not connected to DB");
+	}
+	int reqPos;
+	soci::session & conn = getConnection(reqPos);
+
+	try
+	{
+		conn.begin();
+	} catch (exception const &e)
+	{
+		throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
+	}
+
+	// DO NOT RELEASE THE CONNECTION, KEEPING TRANSACTION
+	return reqPos;
+}
+
+void SOCIDatabase::endTransaction(int transactionID)
+{
+	if (!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot end transaction, not connected to DB");
+	}
+	size_t pos = transactionID;
+	soci::session * pconn;
+	try
+	{
+		pconn=&(mpool->at(pos));
+	}
+	catch(exception const &e)
+	{
+		throw SystemException(ERRCODE_DBERR,
+				string("Cannot get transaction : \n") + e.what());
+	}
+
+	try
+	{
+		pconn->commit();
+	} catch (exception const &e)
 	{
 		try
 		{
-		  conn.rollback();
-		  mpool->give_back(pos);
-		  throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
+			pconn->rollback();
+
+
+		} catch (exception const &e2)
+		{
+			try
+			{
+				mpool->give_back(pos);
+			}
+			catch(exception const &e3)
+			{
+				throw SystemException(ERRCODE_DBCONN,
+						string("Failed to commit, rollback then end the transaction :\n")
+						+e.what()+"\n"+e2.what()+"\n"+e3.what());
+			}
+
+			throw SystemException(ERRCODE_DBCONN,
+					string("Failed to commit then rollback the transaction :\n")
+					+e.what()+"\n"+e2.what());
 
 		}
-		catch (exception const &e)
+
+		try
 		{
 			mpool->give_back(pos);
-			throw SystemException
-			(ERRCODE_DBCONN, "Failed to rollback and commit the transaction");
-
-
 		}
+		catch(exception const &e2)
+		{
+			throw SystemException(ERRCODE_DBERR,
+					string("Cannot commit then end transaction :\n") +e.what()+"\n"+ e2.what());
+		}
+
+
+		throw SystemException(ERRCODE_DBCONN,
+				string("Failed to commit the transaction\n")+e.what());
+
 	}
 
-	mpool->give_back(pos);
+	try
+	{
+		mpool->give_back(pos);
+	}
+	catch(exception const &e)
+	{
+		throw SystemException(ERRCODE_DBERR,
+				string("Cannot end transaction : \n") + e.what());
+	}
+
 
 }
 
-void
-SOCIDatabase::cancelTransaction(int transactionID) {
+void SOCIDatabase::cancelTransaction(int transactionID)
+{
 
-  size_t pos= transactionID;
-  session & conn = (mpool->at(pos));
+	if (!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot cancel transaction, not connected to DB");
+	}
+	size_t pos = transactionID;
 
-  try
-  {
-	  conn.rollback();
-  }
-  catch (exception const &e)
-  {
-	  mpool->give_back(pos);
-	  throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
-  }
 
-  mpool->give_back(pos);
+	soci::session * pconn;
+	try
+	{
+		pconn = &(mpool->at(pos));
+	}
+	catch (exception const & e)
+	{
+		throw SystemException(ERRCODE_DBCONN,string("Failed to cancel transaction : ")+e.what());
+	}
+
+	try
+	{
+		pconn->rollback();
+		mpool->give_back(pos);
+	} catch (exception const &e)
+	{
+		throw SystemException(ERRCODE_DBCONN, string("Failed to cancel transaction : ")+e.what());
+	}
+
+	//mpool->give_back(pos); TODO remove line
 }
 
-void
-SOCIDatabase::flush(int transactionID){ //TODO: add try catch ?
+void SOCIDatabase::flush(int transactionID)
+{
 
+	if(!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot flush transaction, not connected to DB");
+	}
+	size_t pos = transactionID;
+	soci::session & conn = (mpool->at(pos));
 
-  size_t pos= transactionID;
-  session & conn = (mpool->at(pos));
-
-  try
-  {
-	  conn.commit();
-  }
-  catch (exception const &e)
-  {
-	  throw SystemException(ERRCODE_DBCONN, "Failed to commit the transaction");
-  }
+	try
+	{
+		conn.commit();
+		conn.begin(); // after a commit, needs to restart the transcation
+	} catch (exception const &e)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Failed to commit the transaction");
+	}
 
 }
 
-int
-MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
-  std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
-  std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
-  vector<string> results = vector<string>();
-  vector<string>::iterator iter;
+int SOCIDatabase::generateId(string table, string fields, string val, int tid)
+{
+	if(!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot generate ID, not connected to DB");
+	}
 
-  try{
-    process(sqlCommand.c_str(), tid);
-    boost::scoped_ptr<DatabaseResult> result(getResult(getcpt.c_str(), tid));
-    if (result->getNbTuples()==0) {
-      throw SystemException(ERRCODE_DBERR, "Failure generating the id");
-    }
-    results.clear();
-    results = result->get(0);
-    iter = results.begin();
-  } catch (SystemException& e){
-    throw (e);
-  }
-  return convertToInt(*iter);
+	vector<string> results = vector<string>();
+	vector<string>::iterator iter;
+	std::string sqlCommand;
+	std::string getcpt;
+	switch (mdbtype)
+	{
+		case DbConfiguration::MYSQL:
+			sqlCommand=string("INSERT INTO " + table + fields + " values " + val);
+			getcpt=string("SELECT LAST_INSERT_ID() FROM vishnu");
+			try
+			{
+				process(sqlCommand.c_str(), tid);
+				boost::scoped_ptr<DatabaseResult> result(
+						getResult(getcpt.c_str(), tid));
+				if (result->getNbTuples() == 0)
+				{
+					throw SystemException(ERRCODE_DBERR, "Failure generating the id");
+				}
+				results.clear();
+				results = result->get(0);
+				iter = results.begin();
+			} catch (SystemException& e)
+			{
+				throw(e);
+			}
+		break;
+		case DbConfiguration::POSTGRESQL:
+			  sqlCommand=string("INSERT INTO "+table+ fields + " values " +val);
+			  sqlCommand += ";SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))";
+			try{
+			  boost::scoped_ptr<DatabaseResult> result(getResult(sqlCommand.c_str(), tid));
+			  if (result->getNbTuples()==0) {
+			    throw SystemException(ERRCODE_DBERR, "Failure generating the id");
+			  }
+			  results.clear();
+			  results = result->get(0);
+			  iter = results.begin();
+			} catch (SystemException& e){
+			  throw (e);
+			}
+		break;
+		default:
+			throw SystemException(ERRCODE_DBERR,
+					"Database instance type unknown or not managed");
+		break;
+	}
+
+	return vishnu::convertToInt(*iter);
+
+
 }
 
 
-
+/*
+ * private functions
+ */
 
 std::string SOCIDatabase::dataToString(const row & r, size_t pos)
 {
-  std::string dataStr="";
-  data_type dt = r.get_properties(pos).get_data_type();
-  switch(dt)
-  {
-    case dt_string:
-        dataStr=r.get<std::string>(pos);
-        break;
-    case dt_double:
-        dataStr=convertToString(r.get<double>(pos));
-        break;
-    case dt_integer:
-        dataStr=convertToString(r.get<int>(pos));
-        break;
-    case dt_unsigned_long:
-        dataStr=convertToString(r.get<unsigned long>(pos));
-        break;
-    case dt_long_long:
-        dataStr=convertToString(r.get<long long>(pos));
-        break;
-    case dt_date:
-        std::tm time = r.get<std::tm>(pos);
-        dataStr.append(convertToString(time.tm_mon));
-        dataStr.append("-");
-        dataStr.append(convertToString(time.tm_mday));
-        dataStr.append("-");
-        dataStr.append(convertToString(time.tm_year));
-        dataStr.append("T");
-        dataStr.append(convertToString(time.tm_hour));
-        dataStr.append(":");
-        dataStr.append(convertToString(time.tm_min));
-        dataStr.append(":");
-        dataStr.append(convertToString(time.tm_sec));
-        break;
-  }
+	std::string dataStr = "";
+	data_type dt = r.get_properties(pos).get_data_type();
+	switch (dt)
+	{
+	case dt_string:
+		dataStr = r.get<std::string>(pos);
+		break;
+	case dt_double:
+		dataStr = convertToString(r.get<double>(pos));
+		break;
+	case dt_integer:
+		dataStr = convertToString(r.get<int>(pos));
+		break;
+	case dt_unsigned_long:
+		dataStr = convertToString(r.get<unsigned long>(pos));
+		break;
+	case dt_long_long:
+		dataStr = convertToString(r.get<long long>(pos));
+		break;
+	case dt_date:
+		std::tm time = r.get<std::tm>(pos);
+		dataStr.append(convertToString(time.tm_mon));
+		dataStr.append("-");
+		dataStr.append(convertToString(time.tm_mday));
+		dataStr.append("-");
+		dataStr.append(convertToString(time.tm_year));
+		dataStr.append("T");
+		dataStr.append(convertToString(time.tm_hour));
+		dataStr.append(":");
+		dataStr.append(convertToString(time.tm_min));
+		dataStr.append(":");
+		dataStr.append(convertToString(time.tm_sec));
+		break;
+	}
 
-  return dataStr;
+	return dataStr;
 }
-
 
 vector<string> SOCIDatabase::rowToString(const row & r)
 {
 
-  vector<string> rowStr;
-  for(size_t i=0;i<r.size();++i)
-    {
-        string value="";
-        //data_type dt = r.get_properties(i).get_data_type();
-        indicator ind = r.get_indicator(i);
+	vector<string> rowStr;
+	for (size_t i = 0; i < r.size(); ++i)
+	{
+		string value = "";
+		//data_type dt = r.get_properties(i).get_data_type();
+		indicator ind = r.get_indicator(i);
 
+		switch (ind)
+		{
+		case i_ok:
+			// the data was returned without problems
+			value = dataToString(r, i);
 
-        switch (ind)
-        {
-        case i_ok:
-            // the data was returned without problems
-            value=dataToString(r,i);
+			break;
+		case i_null:
+			// null value
+			value = "";
+			break;
+		case i_truncated:
+			value = "error:truncated";
+			break;
+		}
 
-            break;
-        case i_null:
-            // null value
-            value="";
-            break;
-        case i_truncated:
-            value="error:truncated";
-            break;
-        }
+		rowStr.push_back(value);
 
-        rowStr.push_back(value);
+	}
 
-    }
+	return rowStr;
+}
 
-  return rowStr;
+vector<vector<string> > SOCIDatabase::rowsetToString(rowset<row> rs,
+		vector<string> & namesStr)
+{
+	vector<vector<string> > rsStr;
+	bool namesGetted = false;
+
+	for (rowset<row>::const_iterator it = rs.begin(); it != rs.end(); ++it)
+	{
+		rsStr.push_back(rowToString(*it));
+
+		if (!namesGetted)
+		{
+			namesStr = getRowAttributeNames(*it);
+			namesGetted = true;
+		}
+
+	}
+
+	return rsStr;
+
+}
+
+vector<string> SOCIDatabase::getRowAttributeNames(const row & r)
+{
+	vector<string> attributeStr;
+
+	for (size_t i = 0; i < r.size(); ++i)
+	{
+		attributeStr.push_back(r.get_properties(i).get_name());
+
+	}
+
+	return attributeStr;
 }
 
