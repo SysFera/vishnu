@@ -424,6 +424,12 @@ if(NOT CLIENT_ONLY)
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
+  if(SOCI_FOUND AND ENABLE_SOCI)
+    set(database_SRCS ${database_SRCS} database/SOCIDatabase.cpp)
+    include_directories(${DATABASE_INCLUDE_DIR})
+    set(DB_LIBS ${DATABASE_LIBS})
+  endif()
+
   if ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
     include_directories(${LDAP_PROXY_SOURCE_DIR})
     set(authenticator_SRCS
