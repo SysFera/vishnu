@@ -9,8 +9,7 @@
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
-
-
+//#define USE_MYSQL //TODO: à enlever
 
 #ifdef USE_MYSQL
 #include <soci/mysql/soci-mysql.h>
@@ -18,7 +17,6 @@
 #ifdef USE_POSTGRES
 #include <soci/postgresql/soci-postgresql.h>
 #endif
-
 
 using namespace std;
 using namespace vishnu;
@@ -31,12 +29,12 @@ const int CONN_TIMEOUT = 3000; // in millisecond
 
 int SOCIDatabase::process(string request, int transacId)
 {
-	if(!is_connected)
+	if (!is_connected)
 	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot process request, not connected to DB");
 	}
-	int reqPos;
+	int reqPos = -1;
 	soci::session * pconn;
 	size_t pos;
 
@@ -44,7 +42,7 @@ int SOCIDatabase::process(string request, int transacId)
 	{
 		if (transacId == -1)
 		{
-			pconn =	&getConnection(reqPos);
+			pconn = &getConnection(reqPos);
 			pos = reqPos;
 		}
 		else
@@ -53,14 +51,12 @@ int SOCIDatabase::process(string request, int transacId)
 			pos = transacId;
 			pconn = &mpool->at(pos);
 		}
-	}
-	catch(exception const & e)
+	} catch (exception const & e)
 	{
 		throw SystemException(ERRCODE_DBERR, "Cannot get transaction");
 	}
 
-
-
+	cout<<" ###p request : "<<request<<endl;//TODO : test, à supprimer
 	int res;
 	if (request.empty())
 	{
@@ -68,41 +64,32 @@ int SOCIDatabase::process(string request, int transacId)
 		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
 	}
 
+	vector<string> requests=split(request,';');
 	try
 	{
-		(*pconn) << request;
+		//(pconn->once)<<request;
+		for(vector<string>::const_iterator it=requests.begin();it!=requests.end();++it)
+		{
+			(pconn->once)<<(*it);
+		}
+
+
 	} catch (exception const &e)
 	{
-		throw SystemException(ERRCODE_DBERR, string("Cannot process request \n")+e.what());
 
-		//TODO : supprimer ?
-		try
-		{
-			// try to reconnect the session
-			pconn->reconnect();
-		} catch (exception const& e2)
-		{
-			throw SystemException(ERRCODE_DBERR,
-					string("Cannot reconnect to the DB : ") + e2.what());
-		}
+		//pconn->reconnect();
+		throw SystemException(ERRCODE_DBERR,
+				string("Cannot process request \n") + e.what());
 
-		try
-		{
-			(*pconn) << request;
-		} catch (exception const& e3)
-		{
-			mpool->give_back(pos);
-			throw SystemException(ERRCODE_DBERR,
-					string("Cannot reconnect to the DB : ") + e3.what());
-		}
 	}
 
-
-	if(reqPos!=-1)
+	if (reqPos != -1)
 	{
-		releaseConnection(reqPos);
+		//TODO : check
+		cout << "FIN DE TRANSACTION " << reqPos << "####" << endl;
+		endTransaction(reqPos);
+		//releaseConnection(reqPos); TO
 	}
-
 
 	return SUCCESS;
 }
@@ -113,7 +100,7 @@ int SOCIDatabase::process(string request, int transacId)
  */
 int SOCIDatabase::connect()
 {
-	if(is_connected)
+	if (is_connected)
 	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot connect to DB, already connected to DB");
@@ -125,16 +112,16 @@ int SOCIDatabase::connect()
 	{
 #ifdef USE_MYSQL
 	case DbConfiguration::MYSQL:
-		mbackend = &mysql;
-		break;
+	mbackend = &mysql;
+	break;
 #endif //USE_MYSQL
 #ifdef USE_POSTGRES
 	case DbConfiguration::POSTGRESQL:
-		mbackend = &postgresql;
-		break;
+	mbackend = &postgresql;
+	break;
 #endif //POSTGRES
-		/*case DbConfiguration::ORACLE:
-		 break;*/
+	/*case DbConfiguration::ORACLE:
+	 break;*/
 	default:
 		throw SystemException(ERRCODE_DBERR,
 				"Database instance type unknown or not managed");
@@ -146,14 +133,14 @@ int SOCIDatabase::connect()
 	connectString += " user=" + mconfig.getDbUserName();
 	connectString += " password=" + mconfig.getDbUserPassword();
 	connectString += " host=" + mconfig.getDbHost();
-	if(mconfig.getDbPort()!=0)
+	if (mconfig.getDbPort() != 0)
 	{
 		ostringstream oss;
-		oss<<mconfig.getDbPort();
-		connectString+=" port="+oss.str();// TODO: tester si vide !
+		oss << mconfig.getDbPort();
+		connectString += " port=" + oss.str(); // TODO: tester si vide !
 	}
 
-	cout<<connectString<<endl; //TODO : à enlever
+	cout << connectString << endl; //TODO : à enlever
 
 	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
 	{
@@ -171,7 +158,7 @@ int SOCIDatabase::connect()
 		}
 
 	} //for
-	is_connected=true;
+	is_connected = true;
 	return SUCCESS;
 }
 /**
@@ -191,7 +178,11 @@ SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig) :
  */
 SOCIDatabase::~SOCIDatabase()
 {
-	disconnect();
+	if (is_connected)
+	{
+		disconnect();
+	}
+	delete mpool;
 }
 /**
  * \brief To disconnect from the database
@@ -200,9 +191,23 @@ SOCIDatabase::~SOCIDatabase()
  */
 int SOCIDatabase::disconnect()
 {
+	if (!is_connected)
+	{
+		throw SystemException(ERRCODE_DBERR,
+				"Cannot disconnect : DB is not connected");
+	}
+	soci::session * pconn;
 	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
 	{
-		(mpool->at(i)).close();
+		pconn = &(mpool->at(i));
+		try
+		{
+			mpool->give_back(i);
+		} catch (exception & e)
+		{
+			// the session was already free
+		}
+		pconn->close();
 	}
 	is_connected = false;
 	return SUCCESS;
@@ -216,7 +221,7 @@ int SOCIDatabase::disconnect()
 DatabaseResult*
 SOCIDatabase::getResult(string request, int transacId)
 {
-	if(!is_connected)
+	if (!is_connected)
 	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot get request result, not connected to DB");
@@ -238,38 +243,21 @@ SOCIDatabase::getResult(string request, int transacId)
 		pos = transacId;
 		//conn = mpool->at(pos);
 	}
-	soci::session & conn = mpool->at(pos);
-
+	soci::session * pconn = &mpool->at(pos);
+	cout<<" ###gr request : "<<request<<endl;//TODO : test, à supprimer
 	// exectue request
 	//rowset<row> results;
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
 	try
 	{
-		rowset<row> results = conn.prepare << request;
+		rowset<row> results = pconn->prepare << request;
 		resultsStr = rowsetToString(results, attributesNames);
 	} catch (exception const &e)
 	{
-		try
-		{
-			// try to reconnect the session
-			conn.reconnect();
-		} catch (exception const& e2)
-		{
-			throw SystemException(ERRCODE_DBERR,
-					string("Cannot reconnect to the DB : ") + e2.what());
-		}
 
-		try
-		{
-			rowset<row> results = conn.prepare << request;
-			resultsStr = rowsetToString(results, attributesNames);
-		} catch (exception const& e3)
-		{
-			mpool->give_back(pos);
-			throw SystemException(ERRCODE_DBERR,
-					string("Cannot get query results : ") + e3.what());
-		}
+		throw SystemException(ERRCODE_DBERR,
+				string("Cannot get query results : \n") + e.what());
 	}
 
 	releaseConnection(reqPos); // nothing done if reqPos=-1
@@ -349,9 +337,8 @@ void SOCIDatabase::endTransaction(int transactionID)
 	soci::session * pconn;
 	try
 	{
-		pconn=&(mpool->at(pos));
-	}
-	catch(exception const &e)
+		pconn = &(mpool->at(pos));
+	} catch (exception const &e)
 	{
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot get transaction : \n") + e.what());
@@ -366,52 +353,49 @@ void SOCIDatabase::endTransaction(int transactionID)
 		{
 			pconn->rollback();
 
-
 		} catch (exception const &e2)
 		{
 			try
 			{
 				mpool->give_back(pos);
-			}
-			catch(exception const &e3)
+			} catch (exception const &e3)
 			{
 				throw SystemException(ERRCODE_DBCONN,
-						string("Failed to commit, rollback then end the transaction :\n")
-						+e.what()+"\n"+e2.what()+"\n"+e3.what());
+						string(
+								"Failed to commit, rollback then end the transaction :\n")
+								+ e.what() + "\n" + e2.what() + "\n"
+								+ e3.what());
 			}
 
 			throw SystemException(ERRCODE_DBCONN,
 					string("Failed to commit then rollback the transaction :\n")
-					+e.what()+"\n"+e2.what());
+							+ e.what() + "\n" + e2.what());
 
 		}
 
 		try
 		{
 			mpool->give_back(pos);
-		}
-		catch(exception const &e2)
+		} catch (exception const &e2)
 		{
 			throw SystemException(ERRCODE_DBERR,
-					string("Cannot commit then end transaction :\n") +e.what()+"\n"+ e2.what());
+					string("Cannot commit then end transaction :\n") + e.what()
+							+ "\n" + e2.what());
 		}
 
-
 		throw SystemException(ERRCODE_DBCONN,
-				string("Failed to commit the transaction\n")+e.what());
+				string("Failed to commit the transaction\n") + e.what());
 
 	}
 
 	try
 	{
 		mpool->give_back(pos);
-	}
-	catch(exception const &e)
+	} catch (exception const &e)
 	{
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot end transaction : \n") + e.what());
 	}
-
 
 }
 
@@ -425,15 +409,14 @@ void SOCIDatabase::cancelTransaction(int transactionID)
 	}
 	size_t pos = transactionID;
 
-
 	soci::session * pconn;
 	try
 	{
 		pconn = &(mpool->at(pos));
-	}
-	catch (exception const & e)
+	} catch (exception const & e)
 	{
-		throw SystemException(ERRCODE_DBCONN,string("Failed to cancel transaction : ")+e.what());
+		throw SystemException(ERRCODE_DBCONN,
+				string("Failed to cancel transaction : ") + e.what());
 	}
 
 	try
@@ -442,7 +425,8 @@ void SOCIDatabase::cancelTransaction(int transactionID)
 		mpool->give_back(pos);
 	} catch (exception const &e)
 	{
-		throw SystemException(ERRCODE_DBCONN, string("Failed to cancel transaction : ")+e.what());
+		throw SystemException(ERRCODE_DBCONN,
+				string("Failed to cancel transaction : ") + e.what());
 	}
 
 	//mpool->give_back(pos); TODO remove line
@@ -451,7 +435,7 @@ void SOCIDatabase::cancelTransaction(int transactionID)
 void SOCIDatabase::flush(int transactionID)
 {
 
-	if(!is_connected)
+	if (!is_connected)
 	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot flush transaction, not connected to DB");
@@ -473,7 +457,7 @@ void SOCIDatabase::flush(int transactionID)
 
 int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 {
-	if(!is_connected)
+	if (!is_connected)
 	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot generate ID, not connected to DB");
@@ -482,55 +466,61 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 	vector<string> results = vector<string>();
 	vector<string>::iterator iter;
 	std::string sqlCommand;
+	std::string sqlCommand2;
 	std::string getcpt;
 	switch (mdbtype)
 	{
-		case DbConfiguration::MYSQL:
-			sqlCommand=string("INSERT INTO " + table + fields + " values " + val);
-			getcpt=string("SELECT LAST_INSERT_ID() FROM vishnu");
-			try
+	case DbConfiguration::MYSQL:
+		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
+		getcpt = string("SELECT LAST_INSERT_ID() FROM vishnu");
+		try
+		{
+			process(sqlCommand.c_str(), tid);
+			boost::scoped_ptr<DatabaseResult> result(
+					getResult(getcpt.c_str(), tid));
+			if (result->getNbTuples() == 0)
 			{
-				process(sqlCommand.c_str(), tid);
-				boost::scoped_ptr<DatabaseResult> result(
-						getResult(getcpt.c_str(), tid));
-				if (result->getNbTuples() == 0)
-				{
-					throw SystemException(ERRCODE_DBERR, "Failure generating the id");
-				}
-				results.clear();
-				results = result->get(0);
-				iter = results.begin();
-			} catch (SystemException& e)
+				throw SystemException(ERRCODE_DBERR,
+						"Failure generating the id");
+			}
+			results.clear();
+			results = result->get(0);
+			iter = results.begin();
+		} catch (SystemException& e)
+		{
+			throw(e);
+		}
+		break;
+	case DbConfiguration::POSTGRESQL:
+		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
+		sqlCommand2 =string("SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))");
+		try
+		{
+			process(sqlCommand,tid);
+			boost::scoped_ptr<DatabaseResult> result(
+					getResult(sqlCommand2, tid));
+			if (result->getNbTuples() == 0)
 			{
-				throw(e);
+				throw SystemException(ERRCODE_DBERR,
+						"Failure generating the id");
 			}
+			results.clear();
+			results = result->get(0);
+			iter = results.begin();
+		} catch (SystemException& e)
+		{
+			throw(e);
+		}
 		break;
-		case DbConfiguration::POSTGRESQL:
-			  sqlCommand=string("INSERT INTO "+table+ fields + " values " +val);
-			  sqlCommand += ";SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))";
-			try{
-			  boost::scoped_ptr<DatabaseResult> result(getResult(sqlCommand.c_str(), tid));
-			  if (result->getNbTuples()==0) {
-			    throw SystemException(ERRCODE_DBERR, "Failure generating the id");
-			  }
-			  results.clear();
-			  results = result->get(0);
-			  iter = results.begin();
-			} catch (SystemException& e){
-			  throw (e);
-			}
-		break;
-		default:
-			throw SystemException(ERRCODE_DBERR,
-					"Database instance type unknown or not managed");
+	default:
+		throw SystemException(ERRCODE_DBERR,
+				"Database instance type unknown or not managed");
 		break;
 	}
 
 	return vishnu::convertToInt(*iter);
 
-
 }
-
 
 /*
  * private functions
@@ -643,4 +633,18 @@ vector<string> SOCIDatabase::getRowAttributeNames(const row & r)
 
 	return attributeStr;
 }
+
+
+
+
+vector<string> split(const string &s, char delim) {
+    stringstream ss(s);
+    string item;
+    vector<string> elems;
+    while(getline(ss, item, delim)) {
+        elems.push_back(item);
+    }
+    return elems;
+}
+
 

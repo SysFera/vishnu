@@ -15,7 +15,7 @@
 
 
 
-
+std::vector<std::string> split(const std::string &s, char delim);
 
 /**
  * \class SOCIDatabase
@@ -40,10 +40,18 @@ public :
   int
   connect();
   /**
+   * \brief To disconnect from the database
+   * \fn disconnect()
+   * \return 0 on success, an error code otherwise
+   */
+  int
+  disconnect();
+  /**
    * \brief Constructor, raises an exception on error
    * \fn SOCIDatabase(DbConfiguration dbConfig)
    * \param dbConfig  the configuration of the database client
    */
+
   SOCIDatabase(DbConfiguration dbConfig);
   /**
    * \fn ~SOCIDatabase()
@@ -144,13 +152,7 @@ private :
   /////////////////////////////////
   // Functions
   /////////////////////////////////
-  /**
-   * \brief To disconnect from the database
-   * \fn disconnect()
-   * \return 0 on success, an error code otherwise
-   */
-  int
-  disconnect();
+
 
   /*
    * \brief convert a SOCI row into a vector of string
