@@ -177,7 +177,6 @@ UserServer::update(UMS_Data::User *user) {
 
         //If there is a change
         if (!sqlCommand.empty()) {
-		std::cout<<"####$"<<sqlCommand<<std::endl; //TODO: test, à supprimer
           mdatabaseVishnu->process(sqlCommand.c_str());
         }
       } // End if the user whose information will be updated exists
