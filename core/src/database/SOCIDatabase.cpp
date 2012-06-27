@@ -9,7 +9,6 @@
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
-//#define USE_MYSQL //TODO: à enlever
 
 #ifdef USE_MYSQL
 #include <soci/mysql/soci-mysql.h>
@@ -86,9 +85,9 @@ int SOCIDatabase::process(string request, int transacId)
 	if (reqPos != -1)
 	{
 		//TODO : check
-		cout << "FIN DE TRANSACTION " << reqPos << "####" << endl;
-		endTransaction(reqPos);
-		//releaseConnection(reqPos); TO
+		cout << "FIN DE TRANSACTION " << reqPos << " ####" << endl;
+		//endTransaction(reqPos);
+		releaseConnection(reqPos);
 	}
 
 	return SUCCESS;
@@ -137,10 +136,10 @@ int SOCIDatabase::connect()
 	{
 		ostringstream oss;
 		oss << mconfig.getDbPort();
-		connectString += " port=" + oss.str(); // TODO: tester si vide !
+		connectString += " port=" + oss.str();
 	}
 
-	cout << connectString << endl; //TODO : à enlever
+
 
 	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
 	{
@@ -233,7 +232,6 @@ SOCIDatabase::getResult(string request, int transacId)
 
 	if (transacId == -1)
 	{
-		//conn
 		getConnection(reqPos);
 		pos = reqPos;
 	}
@@ -241,12 +239,10 @@ SOCIDatabase::getResult(string request, int transacId)
 	{
 		reqPos = -1;
 		pos = transacId;
-		//conn = mpool->at(pos);
 	}
 	soci::session * pconn = &mpool->at(pos);
 	//cout<<" ###gr request : "<<request<<endl;//TODO : test, à supprimer
-	// exectue request
-	//rowset<row> results;
+
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
 	try
@@ -260,7 +256,10 @@ SOCIDatabase::getResult(string request, int transacId)
 				string("Cannot get query results : \n") + e.what());
 	}
 
-	releaseConnection(reqPos); // nothing done if reqPos=-1
+	if(reqPos != -1)
+	{
+		releaseConnection(reqPos);
+	}
 	return new DatabaseResult(resultsStr, attributesNames);
 }
 
@@ -528,8 +527,8 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 
 
 /*
- * convert standard time to string YYYY-MM-DD HH-MM-SS
- * TODO: maybe put it in Utils
+ * \brief convert standard time to string YYYY-MM-DD HH-MM-SS
+ * \note :maybe put it in Utils
  */
 std::string convertTmToString(std::tm time)
 {
