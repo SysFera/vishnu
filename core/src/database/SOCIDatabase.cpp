@@ -56,7 +56,7 @@ int SOCIDatabase::process(string request, int transacId)
 		throw SystemException(ERRCODE_DBERR, "Cannot get transaction");
 	}
 
-	cout<<" ###p request : "<<request<<endl;//TODO : test, à supprimer
+	//cout<<" ###p request : "<<request<<endl;//TODO : test, à supprimer
 	int res;
 	if (request.empty())
 	{
@@ -244,7 +244,7 @@ SOCIDatabase::getResult(string request, int transacId)
 		//conn = mpool->at(pos);
 	}
 	soci::session * pconn = &mpool->at(pos);
-	cout<<" ###gr request : "<<request<<endl;//TODO : test, à supprimer
+	//cout<<" ###gr request : "<<request<<endl;//TODO : test, à supprimer
 	// exectue request
 	//rowset<row> results;
 	vector<vector<string> > resultsStr;
@@ -526,6 +526,29 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
  * private functions
  */
 
+
+/*
+ * convert standard time to string YYYY-MM-DD HH-MM-SS
+ * TODO: maybe put it in Utils
+ */
+std::string convertTmToString(std::tm time)
+{
+	string timeStr="";
+	timeStr.append(convertToString(1900+time.tm_year));
+	timeStr.append("-");
+	timeStr.append(convertToString(time.tm_mon));
+	timeStr.append("-");
+	timeStr.append(convertToString(time.tm_mday));
+	timeStr.append(" ");
+	timeStr.append(convertToString(time.tm_hour));
+	timeStr.append(":");
+	timeStr.append(convertToString(time.tm_min));
+	timeStr.append(":");
+	timeStr.append(convertToString(time.tm_sec));
+
+	return timeStr;
+}
+
 std::string SOCIDatabase::dataToString(const row & r, size_t pos)
 {
 	std::string dataStr = "";
@@ -549,19 +572,10 @@ std::string SOCIDatabase::dataToString(const row & r, size_t pos)
 		break;
 	case dt_date:
 		std::tm time = r.get<std::tm>(pos);
-		dataStr.append(convertToString(time.tm_mon));
-		dataStr.append("-");
-		dataStr.append(convertToString(time.tm_mday));
-		dataStr.append("-");
-		dataStr.append(convertToString(time.tm_year));
-		dataStr.append("T");
-		dataStr.append(convertToString(time.tm_hour));
-		dataStr.append(":");
-		dataStr.append(convertToString(time.tm_min));
-		dataStr.append(":");
-		dataStr.append(convertToString(time.tm_sec));
+		dataStr=convertTmToString(time);
 		break;
 	}
+
 
 	return dataStr;
 }
