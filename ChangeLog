@@ -1,3 +1,8 @@
++--------------+
+| VISHNU 1.2.8 |
++--------------+
+
+* Fixed bugzilla #363 for automatic user ssh key configuration on a remote machine 
 
 +--------------+
 | VISHNU 1.2.7 |

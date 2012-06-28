@@ -128,6 +128,17 @@
           <para>Extended vishnu_list_jobs options (added multipleStatus option for combination of several job states, added option to list all jobs submitted by the underlying batch scheduler (VISHNU jobs and jobs submitted out of VISHNU).</para>
         </revdescription>
       </revision>
+      
+      <revision>
+        <revnumber>12</revnumber>
+        <date>14/06/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of UMS:
+            Added vishnu_setting_ssh_key command.
+          </para>
+        </revdescription>
+      </revision>
 
       </revhistory>
     </info>
