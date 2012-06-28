@@ -364,9 +364,9 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__TEXTPARAMS = 45;
 
         /**
-         * \brief Constant for SUBMITOPTIONS__WID feature
+         * \brief Constant for SUBMITOPTIONS__WORKID feature
          */
-        static const int SUBMITOPTIONS__WID = 46;
+        static const int SUBMITOPTIONS__WORKID = 46;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
@@ -419,9 +419,9 @@ namespace TMS_Data
         static const int LISTJOBSOPTIONS__BATCHJOB = 56;
 
         /**
-         * \brief Constant for LISTJOBSOPTIONS__WID feature
+         * \brief Constant for LISTJOBSOPTIONS__WORKID feature
          */
-        static const int LISTJOBSOPTIONS__WID = 57;
+        static const int LISTJOBSOPTIONS__WORKID = 57;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
@@ -962,10 +962,10 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__textParams();
 
         /**
-         * \brief Returns the reflective object for feature wid of class SubmitOptions
+         * \brief Returns the reflective object for feature workId of class SubmitOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getSubmitOptions__wid();
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__workId();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
@@ -1028,10 +1028,10 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getListJobsOptions__batchJob();
 
         /**
-         * \brief Returns the reflective object for feature wid of class ListJobsOptions
+         * \brief Returns the reflective object for feature workId of class ListJobsOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getListJobsOptions__wid();
+        virtual ::ecore::EAttribute_ptr getListJobsOptions__workId();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ProgressOptions
@@ -1553,9 +1553,9 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__textParams;
 
         /**
-         * \brief The instance for the feature wid of class SubmitOptions
+         * \brief The instance for the feature workId of class SubmitOptions
          */
-        ::ecore::EAttribute_ptr m_SubmitOptions__wid;
+        ::ecore::EAttribute_ptr m_SubmitOptions__workId;
 
         /**
          * \brief The instance for the feature jobId of class ListJobsOptions
@@ -1608,9 +1608,9 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_ListJobsOptions__batchJob;
 
         /**
-         * \brief The instance for the feature wid of class ListJobsOptions
+         * \brief The instance for the feature workId of class ListJobsOptions
          */
-        ::ecore::EAttribute_ptr m_ListJobsOptions__wid;
+        ::ecore::EAttribute_ptr m_ListJobsOptions__workId;
 
         /**
          * \brief The instance for the feature jobId of class ProgressOptions

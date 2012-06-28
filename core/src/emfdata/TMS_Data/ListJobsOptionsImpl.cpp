@@ -114,9 +114,9 @@ void ListJobsOptions::_initialize()
                 m_batchJob);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WID:
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_wid);
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_workId);
     }
         return _any;
 
@@ -189,10 +189,10 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 _newValue, m_batchJob);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WID:
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
-                m_wid);
+                m_workId);
     }
         return;
 
@@ -228,8 +228,8 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 m_multipleStatus);
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB:
         return m_batchJob != false;
-    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WID:
-        return m_wid != -1;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID:
+        return m_workId != -1;
 
     }
     throw "Error";

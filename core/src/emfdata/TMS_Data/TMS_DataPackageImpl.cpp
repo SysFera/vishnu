@@ -246,11 +246,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__textParams);
-    m_SubmitOptions__wid = new ::ecore::EAttribute();
-    m_SubmitOptions__wid->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WID);
+    m_SubmitOptions__workId = new ::ecore::EAttribute();
+    m_SubmitOptions__workId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__wid);
+            m_SubmitOptions__workId);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -312,11 +312,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
             m_ListJobsOptions__batchJob);
-    m_ListJobsOptions__wid = new ::ecore::EAttribute();
-    m_ListJobsOptions__wid->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WID);
+    m_ListJobsOptions__workId = new ::ecore::EAttribute();
+    m_ListJobsOptions__workId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
-            m_ListJobsOptions__wid);
+            m_ListJobsOptions__workId);
 
     // ProgressOptions
     m_ProgressOptionsEClass = new ::ecore::EClass();
@@ -1184,20 +1184,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__textParams->setUnique(true);
     m_SubmitOptions__textParams->setDerived(false);
     m_SubmitOptions__textParams->setOrdered(true);
-    m_SubmitOptions__wid->setEType(
+    m_SubmitOptions__workId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
-    m_SubmitOptions__wid->setName("wid");
-    m_SubmitOptions__wid->setDefaultValueLiteral("0");
-    m_SubmitOptions__wid->setLowerBound(0);
-    m_SubmitOptions__wid->setUpperBound(1);
-    m_SubmitOptions__wid->setTransient(false);
-    m_SubmitOptions__wid->setVolatile(false);
-    m_SubmitOptions__wid->setChangeable(true);
-    m_SubmitOptions__wid->setUnsettable(false);
-    m_SubmitOptions__wid->setID(false);
-    m_SubmitOptions__wid->setUnique(true);
-    m_SubmitOptions__wid->setDerived(false);
-    m_SubmitOptions__wid->setOrdered(true);
+    m_SubmitOptions__workId->setName("workId");
+    m_SubmitOptions__workId->setDefaultValueLiteral("0");
+    m_SubmitOptions__workId->setLowerBound(0);
+    m_SubmitOptions__workId->setUpperBound(1);
+    m_SubmitOptions__workId->setTransient(false);
+    m_SubmitOptions__workId->setVolatile(false);
+    m_SubmitOptions__workId->setChangeable(true);
+    m_SubmitOptions__workId->setUnsettable(false);
+    m_SubmitOptions__workId->setID(false);
+    m_SubmitOptions__workId->setUnique(true);
+    m_SubmitOptions__workId->setDerived(false);
+    m_SubmitOptions__workId->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -1353,20 +1353,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__batchJob->setUnique(true);
     m_ListJobsOptions__batchJob->setDerived(false);
     m_ListJobsOptions__batchJob->setOrdered(true);
-    m_ListJobsOptions__wid->setEType(
+    m_ListJobsOptions__workId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
-    m_ListJobsOptions__wid->setName("wid");
-    m_ListJobsOptions__wid->setDefaultValueLiteral("-1");
-    m_ListJobsOptions__wid->setLowerBound(0);
-    m_ListJobsOptions__wid->setUpperBound(1);
-    m_ListJobsOptions__wid->setTransient(false);
-    m_ListJobsOptions__wid->setVolatile(false);
-    m_ListJobsOptions__wid->setChangeable(true);
-    m_ListJobsOptions__wid->setUnsettable(false);
-    m_ListJobsOptions__wid->setID(false);
-    m_ListJobsOptions__wid->setUnique(true);
-    m_ListJobsOptions__wid->setDerived(false);
-    m_ListJobsOptions__wid->setOrdered(true);
+    m_ListJobsOptions__workId->setName("workId");
+    m_ListJobsOptions__workId->setDefaultValueLiteral("-1");
+    m_ListJobsOptions__workId->setLowerBound(0);
+    m_ListJobsOptions__workId->setUpperBound(1);
+    m_ListJobsOptions__workId->setTransient(false);
+    m_ListJobsOptions__workId->setVolatile(false);
+    m_ListJobsOptions__workId->setChangeable(true);
+    m_ListJobsOptions__workId->setUnsettable(false);
+    m_ListJobsOptions__workId->setID(false);
+    m_ListJobsOptions__workId->setUnique(true);
+    m_ListJobsOptions__workId->setDerived(false);
+    m_ListJobsOptions__workId->setOrdered(true);
     // ProgressOptions
     m_ProgressOptionsEClass->setName("ProgressOptions");
     m_ProgressOptionsEClass->setAbstract(false);
@@ -2366,9 +2366,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__textParams;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__wid()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__workId()
 {
-    return m_SubmitOptions__wid;
+    return m_SubmitOptions__workId;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
@@ -2410,9 +2410,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_ListJobsOptions__batchJob;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__wid()
+::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__workId()
 {
-    return m_ListJobsOptions__wid;
+    return m_ListJobsOptions__workId;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__jobId()
 {
