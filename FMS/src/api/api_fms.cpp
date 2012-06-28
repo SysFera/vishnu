@@ -199,16 +199,71 @@ int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& pa
  */
 int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-
+  int result = 0;
     if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
     }
+    FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon copy error");
 
-    FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-    int result = fileTransferProxy.addCpThread(options);
+    try{
+      FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+      result = fileTransferProxy.addCpThread(options);
+      return result;
+    } catch (FMSVishnuException& ex){
+      e.appendMsgComp(" "+src+": "+ex.what());
+    }
+
+
+// If source is localhost
+    if ((src.find(std::string("localhost"))!=std::string::npos)){
+      // Get all the IP for the machine
+
+      std::vector<std::string> list = getIPList();
+// Try the transfert for each IP
+        for (int i =0;i<list.size();i++){
+          std::string tmp = src;
+          setIP(tmp, list.at(i));
+          try{
+            FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
+            result = fileTransferProxy.addCpThread(options);
+          } catch (VishnuException& ex){
+            e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	    continue;
+          }
+// The function returns '0' in case of success
+          if (result==0){
+            return result;
+          }
+        }// Else use the given IP
+// Else if destination is localhost
+    } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
+      // Get all the IP for the machine
+      std::vector<std::string> list = getIPList();
+// Try the transfert for each IP
+      for (int i =0;i<list.size();i++){
+        std::string tmp = dest;
+        setIP(tmp, list.at(i));
+        try{
+          FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
+          result = fileTransferProxy.addCpThread(options);
+        } catch (VishnuException& ex){
+          e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	  continue;
+        }
+
+// The function returns '0' in case of success
+        if (result==0){
+
+          return result;
+        }
+      }// Else use the given IP
+
+    }
+
+    throw e;
     return result;
+}
 
-  }
 
 /**
  * \brief copy the file in a asynchronous mode
@@ -227,12 +282,10 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
-
   FileTransferProxy fileTransferProxy(sessionKey, src, dest);
   int result = fileTransferProxy.addCpAsyncThread(options);
   transferInfo = fileTransferProxy.getFileTransfer();
   return result;
-
 }
 
 /**
@@ -333,19 +386,70 @@ int vishnu::listDir(const string& sessionKey,const string& path, DirEntryList& d
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
-    throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
+int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
+  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
-      if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
-        throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+  if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
+  }
+  int result = 0;
+  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon move error");
+  try{
+    FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+    result = fileTransferProxy.addMvThread(options);
+    return result;
+  } catch (FMSVishnuException& ex){
+    e.appendMsgComp(" "+src+": "+ex.what());
+  }
+
+
+// If source is localhost
+  if ((src.find(std::string("localhost"))!=std::string::npos)){
+    // Get all the IP for the machine
+    std::vector<std::string> list = getIPList();
+// Try the transfert for each IP
+    for (int i =0;i<list.size();i++){
+      std::string tmp = src;
+      setIP(tmp, list.at(i));
+      try{
+        FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
+        result = fileTransferProxy.addMvThread(options);
+      } catch (VishnuException& ex){
+        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	continue;
+      }
+// The function returns '0' in case of success
+      if (result==0){
+        return result;
+      }
+    }// Else use the given IP
+// Else if destination is localhost
+  } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
+    // Get all the IP for the machine
+    std::vector<std::string> list = getIPList();
+// Try the transfert for each IP
+    for (int i =0;i<list.size();i++){
+      std::string tmp = dest;
+      setIP(tmp, list.at(i));
+      try{
+        FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
+        result = fileTransferProxy.addMvThread(options);
+      } catch (VishnuException& ex){
+        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	continue;
       }
 
-      FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-      int result = fileTransferProxy.addMvThread(options);
-      return result;
+// The function returns '0' in case of success
+      if (result==0){
+        return result;
+      }
+    }// Else use the given IP
 
+  }
+  throw e;
+  return result;
 
-    }
+}
 /**
  * \brief move a file in a asynchronous mode
  * \param sessionKey the session key
