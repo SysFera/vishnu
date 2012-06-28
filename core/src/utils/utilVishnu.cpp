@@ -20,6 +20,18 @@
 #include<string>
 #include<cstring>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <ifaddrs.h>
+#include <stdlib.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <vector>
+#include <string>
+#include <iostream>
+#include <netinet/in.h>
+#include <net/if.h>
+
 
 #include "UserException.hpp"
 #include "SystemException.hpp"
@@ -693,4 +705,65 @@ vishnu::checkEmptyString(const std::string& str,
     throw UserException(ERRCODE_INVALID_PARAM, compMsg+" must be not empty");
   }
 
+}
+
+// Cela fait une copie de la liste en retour, à modifier si cela gène
+std::vector<std::string>
+vishnu::getIPList(){
+  std::vector<std::string> addresses;
+
+  struct ifaddrs *ifa=NULL,*ifEntry=NULL;
+  void *addPtr = NULL;
+  int rc = 0;
+  char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
+
+  // Recuperation of the interfaces
+  rc = getifaddrs(&ifa);
+  // If interfaces gotten without error
+  if (rc==0) {
+    // Browing the list of interface
+    for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
+      // If not address continue
+      if(ifEntry->ifa_addr->sa_data == NULL) {
+        continue;
+      }
+      // If IPV4
+      if(ifEntry->ifa_addr->sa_family==AF_INET) {
+        addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
+      } else {
+        //It isn't IPv4
+        continue;
+      }
+      // Converting address
+      const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
+                                addPtr,
+                                addressBuffer,
+                                sizeof(addressBuffer));
+      std::string localhost = "127.0.0.1";
+      // Adding the found adress
+      if(a != NULL && localhost.compare(std::string(a)) != 0) {
+        addresses.push_back(std::string(a));
+      }
+    }
+  }
+  // Freeing memory
+  freeifaddrs(ifa);
+
+  return addresses;
+}
+
+void
+vishnu::setIP(std::string& name, std::string IP){
+  std::string tmp = std::string("localhost");
+  name.replace(name.find(tmp), tmp.length(), IP);
+}
+
+bool
+vishnu::isNotIP(std::string name){
+  int pos=0;
+  int cpt=0;
+  while((pos=name.find(".", pos+1))!=std::string::npos) {
+    cpt++;
+  }
+  return (cpt!=3);
 }
