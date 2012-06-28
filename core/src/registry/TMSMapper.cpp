@@ -300,7 +300,6 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 	}
 
 	return res;
->>>>>>> 16915400556860c37697eccd3b488e05bc3b875e
 }
 
 string
