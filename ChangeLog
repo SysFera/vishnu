@@ -5,7 +5,7 @@
 * Fixed bugzilla #363 - Automatic user ssh key configuration on a remote machine 
 * Fixed bugzilla #368 - Lack of ListUserOptions class on Python interface
 * Fixed compilation problem where libldap was not linked to the sed
-* Feature request, fms client can be out of dns for copy and move
+* Fixed bugzilla #350 - Clients of FMS module can be out of DNS for copy and move of files
 	
 +--------------+
 | VISHNU 1.3.0 |
