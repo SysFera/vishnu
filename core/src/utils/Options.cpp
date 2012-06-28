@@ -125,12 +125,8 @@ Options::add(const std::string& name,
 
 
   po::options_description tmp_options;
-  std::string val ("");
-  po::typed_value<std::string> *option = po::value(&val);
 
-
-  tmp_options.add_options()(name.c_str(), option, desc.c_str());
-
+  tmp_options.add_options()(name.c_str(),desc.c_str());
 
   setGroup(tmp_options,group);
 
@@ -172,7 +168,7 @@ Options::add(const std::string& name,
           setGroup(tmp_options,group);
 
         }
-
+     
 
 /**
  *

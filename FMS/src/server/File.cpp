@@ -64,16 +64,17 @@ void File::exists(const bool exist) const {
 }
 
 File::File():exist("false") {
-
+  
 }
 
 File::File(const SessionServer& sessionServer,
            const string& path)
            :msessionServer(sessionServer) {
-
-
+  
+ 
+  
   size_t pos = path.find(':');
-
+  
   if (pos==string::npos) {
     setPath(path);
     setHost("localhost");
@@ -84,7 +85,7 @@ File::File(const SessionServer& sessionServer,
 }
 
 File::File(const File& file) {
-
+  
   operator=(file);
 }
 
@@ -147,7 +148,7 @@ file_size_t File::getSize() const {
 }
 
 time_t File::getAtime() const {
-
+ 
   if (!isUpToDate()){
     getInfos();
   }
@@ -169,7 +170,7 @@ time_t File::getCtime() const {
 }
 
 FileType File::getType() const {
-
+ 
   if (!isUpToDate()){
     getInfos();
   }
@@ -177,7 +178,7 @@ FileType File::getType() const {
 }
 
 file_host_t File::getHostType() const {
-
+ 
   if (getHost()=="localhost") {
     return local;
   }
@@ -195,9 +196,9 @@ File& File::operator=(const File& file) {
 
   mfileStat= file.getFileStat();
   setHost(file.getHost());
-
+ 
   exists(file.exists());
-
+  
   return *this;
 }
 
@@ -212,7 +213,7 @@ bool File::operator<(const File& file) {
 
 string File::extHost(const string& path) {
   size_t pos;
-
+  
   pos = path.find_first_of(':');
   if (pos == string::npos) {
     return "localhost";
@@ -223,9 +224,9 @@ string File::extHost(const string& path) {
 string File::extName(const string& path) {
 
   size_t pos;
-
+  
   pos = path.find_first_of(':');
-
+ 
   if (pos == string::npos){
     return path;
   }

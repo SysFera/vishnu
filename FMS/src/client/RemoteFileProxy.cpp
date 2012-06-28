@@ -71,7 +71,7 @@ void RemoteFileProxy::getInfos() const {
   getInfosProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(getInfosProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -79,7 +79,7 @@ void RemoteFileProxy::getInfos() const {
   }
 
   if(diet_string_set(diet_parameter(getInfosProfile, 1), const_cast<char*>(getPath().c_str()),
-        DIET_VOLATILE)){
+        DIET_VOLATILE)){  
     msgErrorDiet += "with file path parameter "+getPath();
     raiseDietMsgException(msgErrorDiet);
   }
@@ -170,7 +170,7 @@ int RemoteFileProxy::chgrp(const string& group) {
   if(diet_string_set(diet_parameter(chgrpProfile, 2), const_cast<char*>(localUser.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseDietMsgException(msgErrorDiet); 
   }
 
   if(diet_paramstring_set(diet_parameter(chgrpProfile, 3), const_cast<char*>(getHost().c_str()),
@@ -218,7 +218,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
   chmodProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(chmodProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -268,7 +268,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
 
   /*To raise a vishnu exception if the received message is not empty*/
   raiseExceptionIfNotEmptyMsg(errMsg);
-
+  
   return 0;
 }
 
@@ -289,7 +289,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   headProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters  
   if(diet_string_set(diet_parameter(headProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -330,7 +330,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   if (diet_call(headProfile)){
     raiseDietMsgException("Error calling DIET service");
   }
-
+  
   //Output parameter
   if(diet_string_get(diet_parameter(headProfile, 5), &fileHead, NULL)){
     msgErrorDiet += " by receiving fileHead message";
@@ -354,7 +354,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
  * the error message.
  */
 string RemoteFileProxy::getContent() {
-
+  
   char* fileContent, * errMsg;
   diet_profile_t* getContentProfile;
 
@@ -365,7 +365,7 @@ string RemoteFileProxy::getContent() {
   getContentProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(getContentProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -470,7 +470,7 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
 
   exists(true);
 
-  return 0;
+  return 0;  
 }
 
 /* Call the mkdir DIET server.
@@ -518,7 +518,7 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<CreateDirOptions*>(&options)).c_str());
-
+  
   diet_string_set(diet_parameter(mkdirProfile,4 ), optionsToString, DIET_VOLATILE);
   diet_string_set(diet_parameter(mkdirProfile, 5), NULL, DIET_VOLATILE);
 
@@ -536,7 +536,7 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
 
   exists(true);
 
-  return 0;
+  return 0;  
 }
 
 
@@ -556,7 +556,7 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
   rmProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(rmProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -584,9 +584,9 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
   optionsToString =  strdup(_ser.serialize_str(const_cast<RmFileOptions*>(&options)).c_str());
-
+  
   diet_string_set(diet_parameter(rmProfile,4 ), optionsToString, DIET_VOLATILE);
-
+  
   diet_string_set(diet_parameter(rmProfile,5), NULL, DIET_VOLATILE);
 
   if (diet_call(rmProfile)){
@@ -621,7 +621,7 @@ int RemoteFileProxy::rmdir() {
   rmdirProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters    
   if(diet_string_set(diet_parameter(rmdirProfile, 0), const_cast<char*>(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -657,7 +657,7 @@ int RemoteFileProxy::rmdir() {
     raiseDietMsgException(msgErrorDiet);
   }
 
-  /*To raise a vishnu exception if the received message is not empty*/
+  /*To raise a vishnu exception if the received message is not empty*/ 
   raiseExceptionIfNotEmptyMsg(errMsg);
 
   exists(true);
@@ -682,7 +682,7 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   tailProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(tailProfile, 0), strdup(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -709,7 +709,7 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::TailOfFileOptions_ptr>(&options)).c_str()); 
 
   if(diet_string_set(diet_parameter(tailProfile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += " by receiving tail of file options values ";
@@ -758,7 +758,7 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
   lsProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
+  //IN Parameters 
   if(diet_string_set(diet_parameter(lsProfile, 0), strdup(sessionKey.c_str()),
         DIET_VOLATILE)){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
@@ -785,7 +785,7 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str());
+  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options)).c_str()); 
 
   if(diet_string_set(diet_parameter(lsProfile, 4), optionsToString, DIET_VOLATILE)){
     msgErrorDiet += "with directory content option values ";
@@ -820,21 +820,20 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
 
 
 template <class TypeOfOption>
-int RemoteFileProxy::transferFile(const std::string& dest,
-                                  const TypeOfOption& options,
+int RemoteFileProxy::transferFile(const std::string& dest, 
+                                  const TypeOfOption& options, 
                                   const std::string& serviceName,
                                   FileTransfer& fileTransfer){
 
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
   bfs::path destPath(FileProxy::extName(dest));
+ 
+ if (destHost.compare("localhost") == 0) {
 
-  if (destHost.compare("localhost") == 0 || !vishnu::isNotIP(destHost)) {
+	  // The destination is local:  get its full qualified host name 
 
-	  // The destination is local:  get its full qualified host name
-    if (vishnu::isNotIP(destHost)){
 	  destHost =vishnu::getLocalMachineName("22");
-    }
 
 	  uid_t uid = getuid();
 	  struct passwd*  pw = getpwuid(uid);
@@ -847,10 +846,10 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 // build a complete local path
 	  bfs::system_complete(destPath);
 
-  }
+  }   
 
   std::string srcHost = getHost();
-  std::string srcPath = getPath();
+  std::string srcPath = getPath();    
 
   char *optionsToString = NULL;
   char *fileTransferInString = NULL;
@@ -866,7 +865,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
     transferFileProfile = diet_profile_alloc(serviceName.c_str(), 6, 6, 8);
   }
 
-  //IN Parameters
+  //IN Parameters  
 
   diet_string_set(diet_parameter(transferFileProfile, 0), const_cast<char*>(sessionKey.c_str()),
       DIET_VOLATILE);
@@ -876,7 +875,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   //to set the hostname of the source machine
   diet_paramstring_set(diet_parameter(transferFileProfile, 2), const_cast<char*>(srcHost.c_str()), DIET_VOLATILE);
   //to set the hostname of the destination machine
-  diet_string_set(diet_parameter(transferFileProfile, 3), const_cast<char*>(srcPath.c_str()),DIET_VOLATILE);
+  diet_string_set(diet_parameter(transferFileProfile, 3), const_cast<char*>(srcPath.c_str()),DIET_VOLATILE); 
 
   //to set the hostname of the destination machine
   diet_paramstring_set(diet_parameter(transferFileProfile, 4), const_cast<char*>(destHost.c_str()), DIET_VOLATILE);
@@ -889,7 +888,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
   diet_string_set(diet_parameter(transferFileProfile,6 ), optionsToString, DIET_VOLATILE);
 
-  if(!isAsyncTransfer) {
+  if(!isAsyncTransfer) { 
     diet_string_set(diet_parameter(transferFileProfile, 7), NULL, DIET_VOLATILE);
   } else {
     diet_string_set(diet_parameter(transferFileProfile, 7), NULL, DIET_VOLATILE);
@@ -910,7 +909,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);
-
+  
     FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
 
     parseEmfObject(std::string(fileTransferInString), fileTransfer_ptr);
@@ -918,7 +917,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
     fileTransfer = *fileTransfer_ptr;
 
   }
-
+  
 return 0;
 }
 
@@ -932,13 +931,13 @@ int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
   return transferFile(dest, options, "RemoteFileMove", fileTransfer);
 }
 
-int RemoteFileProxy::cpAsync(const std::string& dest,
+int RemoteFileProxy::cpAsync(const std::string& dest, 
                              const CpFileOptions& options,
                              FileTransfer& fileTransfer) {
   return transferFile(dest, options, "RemoteFileCopyAsync", fileTransfer);
 }
 
-int RemoteFileProxy::mvAsync(const std::string& dest,
+int RemoteFileProxy::mvAsync(const std::string& dest, 
                              const CpFileOptions& options,
                              FileTransfer& fileTransfer) {
   return transferFile(dest, options, "RemoteFileMoveAsync", fileTransfer);

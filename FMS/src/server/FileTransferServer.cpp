@@ -211,7 +211,6 @@ int FileTransferServer::addTransferThread(const std::string& srcUser,const std::
 
   updateData();// update datas and get the vishnu transfer id
 
-
   if (!srcFileServer->exists() || false==srcFileServer->getErrorMsg().empty()) { //if the file does not exist
 
     mfileTransfer.setStatus(3); //failed
@@ -383,7 +382,6 @@ int FileTransferServer::addCpThread(const std::string& srcUser,const std::string
   mtransferType=File::copy;
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   waitThread();
-
 
   std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
 
