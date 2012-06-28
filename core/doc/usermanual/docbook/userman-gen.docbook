@@ -149,6 +149,14 @@
       
     <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>28/06/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      
+    <para>Add a note for using FMS with a client out of the DNS. </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -682,7 +690,7 @@
               <listitem>
                 <para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis
                       role="bold">vishnu_copy_async_file</emphasis> (or <emphasis
-                      role="bold">vishnu_move_async_file</emphasis>) </para>
+                      role="bold">vishnu_move_async_file</emphasis>). Please note that if the client is outside the DNS, it is necessary to use 'localhost' as the machineid in the command. </para>
               </listitem>
               <listitem>
                 <para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis
