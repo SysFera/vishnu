@@ -164,6 +164,14 @@
       <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para>
     </revdescription>
   </revision> 
+   <revision>
+    <revnumber>16</revnumber>
+    <date>28/06/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add a section for the copy/move commands in FMS with the client out of the DNS. </para>
+    </revdescription>
+  </revision> 
   
   </revhistory>
 
@@ -737,9 +745,9 @@
 	  <title>Perform file transfer </title>
 	  <para> The user can submit a file transfer in many ways:
             <itemizedlist>
-              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
+              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>). To use the copy/move commands from a client out of the DNS, one must use 'localhost' as a machine id for the local machine. </para>
               </listitem>
-              <listitem><para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
+              <listitem><para> copy (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
 	      <listitem><para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis role="bold">vishnu_stop_file_transfers</emphasis>) </para>
               </listitem>
             </itemizedlist>
