@@ -179,8 +179,8 @@ public:
 			addOptionRequest("jobQueue", options->getQueue(), sqlRequest);
 		}
 
-		if(options->getWid() >= 0 ) {
-			long long int wid = options->getWid() ;
+		if(options->getWorkId() >= 0 ) {
+			long long int wid = options->getWorkId()  ;
 			addIntegerOptionRequest("workId", wid, sqlRequest);
 		}
 	}

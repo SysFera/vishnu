@@ -180,15 +180,15 @@ namespace TMS_Data
         void setBatchJob(::ecore::EBoolean _batchJob);
 
         /**
-         * \brief To get the wid
-         * \return The wid attribute value
+         * \brief To get the workId
+         * \return The workId attribute value
          **/
-        ::ecore::ELong getWid() const;
+        ::ecore::ELong getWorkId() const;
         /**
-         * \brief To set the wid
-         * \param _wid The wid value
+         * \brief To set the workId
+         * \param _workId The workId value
          **/
-        void setWid(::ecore::ELong _wid);
+        void setWorkId(::ecore::ELong _workId);
 
         // References
 
@@ -235,7 +235,7 @@ namespace TMS_Data
 
         ::ecore::EBoolean m_batchJob;
 
-        ::ecore::ELong m_wid;
+        ::ecore::ELong m_workId;
 
         // References
 

@@ -84,7 +84,7 @@ makeListJobOp(string pgName,
 		boost::function1<void, JobPriority>& fpriority,
 		boost::function1<void, string>& fqueue,
 		boost::function1<void, string>& fmutlStatus,
-		boost::function1<void, long long>& fwid,
+		boost::function1<void, long long>& fworkId,
 		string& dietConfig){
 	boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -143,10 +143,10 @@ makeListJobOp(string pgName,
 			"List the jobs with the specified status (combination of multiple status)",
 			CONFIG,
 			fmutlStatus);
-	opt->add("wid,w",
+	opt->add("workId,w",
 			"Allows to gather information about jobs related to a given Work.",
 			CONFIG,
-			fwid);
+			fworkId);
 
 	return opt;
 }
@@ -175,7 +175,7 @@ int main (int argc, char* argv[]){
 	boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
 	boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
 	boost::function1<void,string> fmutlStatus(boost::bind(&TMS_Data::ListJobsOptions::setMultipleStatus,boost::ref(jobOp),_1));
-	boost::function1<void,long long> fwid(boost::bind(&TMS_Data::ListJobsOptions::setWid,boost::ref(jobOp),_1));
+	boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::ListJobsOptions::setWorkId,boost::ref(jobOp),_1));
 	/*********** Out parameters *********************/
 	TMS_Data::ListJobs job;
 
@@ -190,7 +190,7 @@ int main (int argc, char* argv[]){
 			fpriority,
 			fqueue,
 			fmutlStatus,
-			fwid,
+			fworkId,
 			dietConfig);
 
 	opt->add("isBatchJob,b",

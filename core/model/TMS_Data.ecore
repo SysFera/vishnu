@@ -274,7 +274,7 @@
         <details key="content" value="Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable.&#xA;E.g. --textParams &quot;PARAM1=value1 PARAM2=value2&quot; or -F &quot;PARAM1=value1 PARAM2=value2&quot;, will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively. &#xA;&#xA;The option --textParam or -v allows to set each file individually.&#xA;&#xA;NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wid" eType="ecore:EDataType Ecore.ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workId" eType="ecore:EDataType Ecore.ecore#//ELong"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="shortOption" value="w"/>
@@ -349,10 +349,10 @@
         <details key="shortOption" value="b"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wid" eType="ecore:EDataType Ecore.ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="workId" eType="ecore:EDataType Ecore.ecore#//ELong"
         defaultValueLiteral="-1">
       <eAnnotations source="Description">
-        <details key="shortOption" value="-w"/>
+        <details key="shortOption" value="w"/>
         <details key="content" value="Allows to gather information about jobs related to a given Work."/>
       </eAnnotations>
     </eStructuralFeatures>

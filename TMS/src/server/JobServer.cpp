@@ -67,7 +67,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	if(options.getTextParams().size()) env.setParams(scriptContentRef, options.getTextParams()) ;
 	if(options.getFileParams().size()) env.setParams(scriptContentRef, options.getFileParams()) ;
 
-	mjob.setWorkId(options.getWid()) ;
+	mjob.setWorkId(options.getWorkId()) ;
 
 
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
