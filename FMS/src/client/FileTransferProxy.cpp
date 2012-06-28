@@ -21,6 +21,7 @@ int FileTransferProxy::addCpThread(const CpFileOptions& options){
   
   SessionProxy sessionProxy(msessionKey);
 
+
   boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,msrcFilePath));
 
   int result= f->cp(mdestFilePath,options);
