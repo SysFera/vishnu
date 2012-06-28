@@ -767,5 +767,3 @@ vishnu::isNotIP(std::string name){
   }
   return (cpt!=3);
 }
-
-
