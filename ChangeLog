@@ -3,6 +3,7 @@
 +--------------+
 
 * Fixed bugzilla #363 for automatic user ssh key configuration on a remote machine 
+* Feature request, FMS client can be out of DNS for copy and move
 
 +--------------+
 | VISHNU 1.2.7 |
