@@ -1,6 +1,6 @@
 /**
  * \file RemoteFileProxy.hpp
- * This file declares a  proxy class to handle a remote file
+ * This file declares a  proxy class to handle a a remote file
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -48,26 +48,26 @@ class RemoteFileProxy : public FileProxy {
       int transferFile(const std::string& dest,
           const TypeOfOption& options,
           const std::string& serviceName,
-          FileTransfer& fileTransfer);
+          FileTransfer& fileTransfer); 
 
   public:
 
     /**
      * \brief The default constructor
-     */
+     */ 
     RemoteFileProxy();
     /**
      * \brief Another constructor taking two parameters
      * \param sessionProxy  the session object proxy
      * \param path the path of the file
      * \param localUser the local user of the file
-     */
+     */ 
     RemoteFileProxy(const SessionProxy& sessionProxy,const std::string& path,
         const std::string& localUser);
     /**
      * \brief Another constructor by reference
-     * \param file the other file
-     */
+     * \param file the other file 
+     */ 
     explicit  RemoteFileProxy(const RemoteFileProxy& file);
 /**
  * \brief The default destructor
@@ -105,13 +105,13 @@ class RemoteFileProxy : public FileProxy {
     virtual int chmod(const mode_t mode);
     /**
      * \brief To get the first lines of the file
-     * \param options the options object
+     * \param options the options object 
      * \return the first lines of the file
      */
     virtual std::string head(const HeadOfFileOptions& options);
     /**
      * \brief To get the last lines of the file
-     * \param options the options object
+     * \param options the options object 
      * \return the last lines of the file
      */
     virtual std::string tail(const TailOfFileOptions& options);
@@ -124,62 +124,62 @@ class RemoteFileProxy : public FileProxy {
      * \brief To create a new file
      * \param mode the access permission of the file
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int mkfile(const mode_t mode=defaultFileAccessMode);
     /**
      * \brief To create a new directory
      * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int mkdir(const CreateDirOptions& options);
 
     /**
      * \brief To remove a file
-     * \param options the remove file options
+     * \param options the remove file options  
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int rm(const RmFileOptions& options);
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int rmdir();
     /**
      * \brief To list the content of a directory
-     * \param options the list options
+     * \param options the list options 
      * \return the content of the directory
-     */
-    //   virtual std::list<std::string> ls(const LsDirOptions& options) const;
+     */ 
+    //   virtual std::list<std::string> ls(const LsDirOptions& options) const; 
     virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const ;
     /**
-     * \brief To copy the file
+     * \brief To copy the file 
      * \param dest the copy destination
-     * \param options the copy options
+     * \param options the copy options  
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int cp(const std::string& dest, const CpFileOptions& options);
 
     /**
-     * \brief To move the file
+     * \brief To move the file 
      * \param dest the move destination
-     * \param options the move options
+     * \param options the move options  
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int mv(const std::string& dest, const CpFileOptions& options);
 
     /**
-     * \brief To copy the file in asynchronous mode
+     * \brief To copy the file in asynchronous mode 
      * \param dest the copy destination
-     * \param options the copy options
+     * \param options the copy options  
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
 
     /**
-     * \brief To move the file in asynchronous mode
+     * \brief To move the file in asynchronous mode 
      * \param dest the move destination
-     * \param options the move options
+     * \param options the move options  
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
