@@ -199,27 +199,25 @@ int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& pa
  */
 int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-
-    int result = 0;
+  int result = 0;
     if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
     }
+    FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon copy error");
 
     try{
       FileTransferProxy fileTransferProxy(sessionKey, src, dest);
       result = fileTransferProxy.addCpThread(options);
       return result;
-    } catch (FMSVishnuException& e){
-      if (e.getMsgComp().find("hostname")==std::string::npos){
-        throw (FMSVishnuException)e;
-      }
+    } catch (FMSVishnuException& ex){
+      e.appendMsgComp(" "+src+": "+ex.what());
     }
 
-    FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon copy error");
 
 // If source is localhost
     if ((src.find(std::string("localhost"))!=std::string::npos)){
       // Get all the IP for the machine
+
       std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
         for (int i =0;i<list.size();i++){
@@ -230,6 +228,7 @@ int vishnu::copyFile(const string& sessionKey,const string& src, const string& d
             result = fileTransferProxy.addCpThread(options);
           } catch (VishnuException& ex){
             e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	    continue;
           }
 // The function returns '0' in case of success
           if (result==0){
@@ -249,15 +248,18 @@ int vishnu::copyFile(const string& sessionKey,const string& src, const string& d
           result = fileTransferProxy.addCpThread(options);
         } catch (VishnuException& ex){
           e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	  continue;
         }
 
 // The function returns '0' in case of success
         if (result==0){
+
           return result;
         }
       }// Else use the given IP
 
     }
+
     throw e;
     return result;
 }
@@ -280,64 +282,10 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
-    int result = 0;
-
-    try{
-      FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-      result = fileTransferProxy.addCpAsyncThread(options);
-      return result;
-    } catch (FMSVishnuException& e){
-      if (e.getMsgComp().find("hostname")==std::string::npos){
-        throw e;
-      }
-    }
-
-    FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon copy error");
-
-// If source is localhost
-    if ((src.find(std::string("localhost"))!=std::string::npos)){
-      // Get all the IP for the machine
-      std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
-        for (int i =0;i<list.size();i++){
-          std::string tmp = src;
-          setIP(tmp, list.at(i));
-          try{
-            FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
-            result = fileTransferProxy.addCpAsyncThread(options);
-          } catch (VishnuException& ex){
-            e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-          }
-// The function returns '0' in case of success
-          if (result==0){
-            return result;
-          }
-        }// Else use the given IP
-// Else if destination is localhost
-    } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
-      // Get all the IP for the machine
-      std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
-      for (int i =0;i<list.size();i++){
-        std::string tmp = dest;
-        setIP(tmp, list.at(i));
-        try{
-          FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
-          result = fileTransferProxy.addCpAsyncThread(options);
-        } catch (VishnuException& ex){
-          e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-        }
-
-// The function returns '0' in case of success
-          if (result==0){
-            return result;
-          }
-      }// Else use the given IP
-    }
-    throw e;
-    return result;
-
-
+  FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+  int result = fileTransferProxy.addCpAsyncThread(options);
+  transferInfo = fileTransferProxy.getFileTransfer();
+  return result;
 }
 
 /**
@@ -445,17 +393,15 @@ int vishnu::moveFile(const string& sessionKey,const string& src, const string& d
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
   int result = 0;
+  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon move error");
   try{
     FileTransferProxy fileTransferProxy(sessionKey, src, dest);
     result = fileTransferProxy.addMvThread(options);
     return result;
-  } catch (FMSVishnuException& e){
-    if (e.getMsgComp().find("hostname")==std::string::npos){
-      throw e;
-    }
+  } catch (FMSVishnuException& ex){
+    e.appendMsgComp(" "+src+": "+ex.what());
   }
 
-  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon move error");
 
 // If source is localhost
   if ((src.find(std::string("localhost"))!=std::string::npos)){
@@ -470,6 +416,7 @@ int vishnu::moveFile(const string& sessionKey,const string& src, const string& d
         result = fileTransferProxy.addMvThread(options);
       } catch (VishnuException& ex){
         e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	continue;
       }
 // The function returns '0' in case of success
       if (result==0){
@@ -489,6 +436,7 @@ int vishnu::moveFile(const string& sessionKey,const string& src, const string& d
         result = fileTransferProxy.addMvThread(options);
       } catch (VishnuException& ex){
         e.appendMsgComp(" "+list.at(i)+": "+ex.what());
+	continue;
       }
 
 // The function returns '0' in case of success
@@ -520,62 +468,9 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
 
-  int result = 0;
-
-  try{
-    FileTransferProxy fileTransferProxy(sessionKey, src, dest);
-    result = fileTransferProxy.addMvAsyncThread(options);
-    return result;
-  } catch (FMSVishnuException& e){
-    if (e.getMsgComp().find("hostname")==std::string::npos){
-      throw e;
-    }
-  }
-
-  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon move error");
-
-// If source is localhost
-  if ((src.find(std::string("localhost"))!=std::string::npos)){
-    // Get all the IP for the machine
-    std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
-      std::string tmp = src;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, tmp, dest);
-        result = fileTransferProxy.addMvAsyncThread(options);
-      } catch (VishnuException & ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-      }
-// The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-// Else if destination is localhost
-  } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
-    // Get all the IP for the machine
-    std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
-      std::string tmp = dest;
-      setIP(tmp, list.at(i));
-      try{
-        FileTransferProxy fileTransferProxy(sessionKey, src, tmp);
-        result = fileTransferProxy.addMvAsyncThread(options);
-      } catch (VishnuException& ex){
-        e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-      }
-
-// The function returns '0' in case of success
-      if (result==0){
-        return result;
-      }
-    }// Else use the given IP
-
-  }
-  throw e;
+  FileTransferProxy fileTransferProxy(sessionKey, src, dest);
+  int result = fileTransferProxy.addMvAsyncThread(options);
+  transferInfo = fileTransferProxy.getFileTransfer();
   return result;
 }
 
