@@ -77,7 +77,7 @@ struct FMS_env_name_mapper{
  * \return The built option
  */
 boost::shared_ptr<Options>
-makeTransferCommandOptions(string pgName, 
+makeTransferCommandOptions(string pgName,
     string& dietConfig,
     string& trCmdStr,
     string& src,
@@ -94,7 +94,7 @@ makeTransferCommandOptions(string pgName,
   opt->add("trCommand,t",
       "The command to use to perform file transfer. The different values  are:\n"
       "O or scp: for SCP transfer\n"
-      "1 or rsync: for RSYNC transfer\n", 
+      "1 or rsync: for RSYNC transfer\n",
       ENV,
       trCmdStr);
 
@@ -168,7 +168,7 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
 
   // Check for vishnu config file
 
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
 
 
   if(trCmdStr.size()!=0) {
@@ -214,13 +214,13 @@ template<TransferType transferType>
 struct TransferAsyncFunc {
 
   /**
-   * \brief The file transfer source 
+   * \brief The file transfer source
    */
   std::string msrc;
 
   /**
    * \brief The file transfer destination
-   */ 
+   */
 
   std::string mdest;
   /**
@@ -238,7 +238,7 @@ struct TransferAsyncFunc {
    * \brief Constructor with parameters
    * \param src The source
    * \param dest The destination
-   * \param transferInfo The file transfer complete information 
+   * \param transferInfo The file transfer complete information
    * \param cpFileOptions The file transfer options
    */
   TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};

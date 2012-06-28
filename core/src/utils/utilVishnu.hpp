@@ -326,5 +326,26 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
      checkEmptyString(const std::string& str,
          const std::string& compMsg);
 
+    /**
+     * \brief Return all the IP of the machines (IPV4, except 127.0.0.1)
+     * \return The IP of the machine
+     */
+    std::vector<std::string>
+    getIPList();
+
+    /**
+     * \brief Replace localhost by the IP of the machine in the path
+     * \param name The string to replace the machine name
+     * \param IP The IP of the machine
+     */
+    void
+    setIP(std::string& name, std::string IP);
+
+    /**
+     * \brief Tells if the string is an IP address
+     * \param name The string to test
+     */
+    bool
+    isNotIP(std::string name);
 }
 #endif // _UTILVISHNU_H_

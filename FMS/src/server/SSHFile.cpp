@@ -117,7 +117,6 @@ void SSHFile::getInfos() const {
 
   fileStat = ssh.exec(STATCMD+getPath());
 
-
   if (fileStat.second.find("Warning")!=std::string::npos){
 
     fileStat = ssh.exec(STATCMD+getPath());

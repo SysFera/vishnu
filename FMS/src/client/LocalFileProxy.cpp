@@ -48,7 +48,7 @@ LocalFileProxy::LocalFileProxy() : FileProxy() {
 /* Standard constructor.
  * Use the file path as argument. */
 LocalFileProxy::LocalFileProxy(const SessionProxy& sessionProxy, const string& path) : FileProxy(sessionProxy,path) {
-  setHost("localhost");
+  //setHost("localhost");
   upToDate = false;
 }
 
@@ -83,10 +83,13 @@ int LocalFileProxy::transferFile(const string& dest,
   string host = FileProxy::extHost(dest);
   
   bfs::path localFullPath(bfs::system_complete(bfs::path(getPath())));
-  
+  std::string srcHost;
   // get the source full qualified host name 
-
-  std::string srcHost(vishnu::getLocalMachineName("22"));
+  if (getHost().find("localhost") != std::string::npos){
+    srcHost = vishnu::getLocalMachineName("22");
+  } else {
+    srcHost = getHost();
+  }
 
   uid_t uid = getuid();
   struct passwd*  pw = getpwuid(uid);
