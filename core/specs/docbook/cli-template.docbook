@@ -135,7 +135,7 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Updates of UMS:
-            Added vishnu_setting_ssh_key command.
+            Added vishnu_set_ssh_key command.
           </para>
         </revdescription>
       </revision>

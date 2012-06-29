@@ -1817,9 +1817,9 @@ opened the session).</para>
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To set a specific ssh public key on the remote machine aster whose login is toto:</para>
-        <para>vishnu_setting_ssh_key -a toto@aster /tmp/key.pub</para>
+        <para>vishnu_set_ssh_key -a toto@aster /tmp/key.pub</para>
         <para>To remove a specific ssh public key on a remote user account:</para>
-        <para>vishnu_setting_ssh_key -r toto@aster /tmp/key.pub</para>
+        <para>vishnu_set_ssh_key -r toto@aster /tmp/key.pub</para>
       </refsect1>
     </refentry>
   </reference>
@@ -3719,7 +3719,7 @@ homeDirectory path .</para>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listLocalAcct=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3812,7 +3812,7 @@ local configurations related to your VISHNU account. </para>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listMachine=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3907,7 +3907,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listCommands=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3997,7 +3997,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOptValues=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4095,7 +4095,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listsession=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

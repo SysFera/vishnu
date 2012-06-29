@@ -149,7 +149,7 @@
         <revdescription>
           
         <para>Updates of UMS:
-            Added vishnu_setting_ssh_key command.
+            Added vishnu_set_ssh_key command.
           </para></revdescription>
       </revision>
     </revhistory>
@@ -1819,13 +1819,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_setting_ssh_key</title>
+        <title>vishnu_set_ssh_key</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_setting_ssh_key command sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</para>
+        <para>The vishnu_set_ssh_key command sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>

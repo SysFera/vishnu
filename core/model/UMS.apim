@@ -211,7 +211,7 @@
       <ports name="connectParams" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The user's account connection parameters in the form &quot;login@machine&quot; "/>
       <ports name="sshPublicKey" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The path to the ssh public key" longOptionName=""/>
       <details key="description" value="This command allows to set/remove a specific ssh public key on a remote user account."/>
-      <details key="exCLI" value="To set a specific ssh public key on the remote machine aster whose login is toto:&#xA;vishnu_setting_ssh_key -a toto@aster /tmp/key.pub&#xA;&#xA;To remove a specific ssh public key on a remote user account:&#xA;vishnu_setting_ssh_key -r toto@aster /tmp/key.pub"/>
+      <details key="exCLI" value="To set a specific ssh public key on the remote machine aster whose login is toto:&#xA;vishnu_set_ssh_key -a toto@aster /tmp/key.pub&#xA;&#xA;To remove a specific ssh public key on a remote user account:&#xA;vishnu_set_ssh_key -r toto@aster /tmp/key.pub"/>
     </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
@@ -341,8 +341,8 @@
     <types name="AddLocalAccountOptions">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//AddLocalAccountOptions"/>
     </types>
-    <types name="SetSshKeyOptions" description="The SettingSshKeyOptions is an object which encapsulates the options for service SettingSshKey">
-      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SettingSshKeyOptions"/>
+    <types name="SetSshKeyOptions" description="The SetSshKeyOptions is an object which encapsulates the options for service SetSshKey">
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SetSshKeyOptions"/>
     </types>
   </typeList>
 </API>
