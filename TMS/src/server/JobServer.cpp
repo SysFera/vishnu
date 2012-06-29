@@ -67,6 +67,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	if(options.getTextParams().size()) env.setParams(scriptContentRef, options.getTextParams()) ;
 	if(options.getFileParams().size()) env.setParams(scriptContentRef, options.getFileParams()) ;
 
+	mjob.setWorkId(options.getWorkId()) ;
+
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		std::string workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
@@ -76,9 +78,9 @@ int JobServer::submitJob(const std::string& scriptContent,
 		}catch(...){
 			throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir from the working directory : " + workingDir) ;
 		}
-		mjob.setOutputDir(dir) ;
 		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
 		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
+		mjob.setOutputDir(dir) ;
 	}
 
 	std::string jobSerialized ;
@@ -108,7 +110,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
-
 	if(errorInfo.size()!=0) {
 		int code;
 		std::string message;
@@ -143,49 +144,70 @@ int JobServer::submitJob(const std::string& scriptContent,
 		mjob.setOwner(acLogin);
 	}
 
-	std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-	std::string sqlInsert = "insert into job (vsession_numsessionid, submitMachineId, submitMachineName, jobId, batchJobId, batchType, jobName,"
-			"jobPath, outputPath, errorPath, scriptContent, jobPrio, nbCpus, jobWorkingDir,"
-			"status, submitDate, owner, jobQueue, wallClockLimit, groupName, jobDescription, memLimit,"
-			"nbNodes, nbNodesAndCpuPerNode, outputDir)"
-			" values ("+numsession+",'"+mjob.getSubmitMachineId()+"','"+ mjob.getSubmitMachineName()+"','"+vishnuJobId+"','"
-			+BatchJobId+"',"+convertToString(mbatchType)+",'"+mjob.getJobName()+"','"+mjob.getJobPath()+"','"
-			+mjob.getOutputPath()+"','"+mjob.getErrorPath()+"','"
-			+"job"+"',"+convertToString(mjob.getJobPrio())+","+convertToString(mjob.getNbCpus())+",'"
-			+mjob.getJobWorkingDir()+"',"
-			+convertToString(mjob.getStatus())+",CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue()
-			+"',"+convertToString(mjob.getWallClockLimit())+",'"+mjob.getGroupName()+"','"+mjob.getJobDescription()+"',"
-			+convertToString(mjob.getMemLimit())
-			+","+convertToString(mjob.getNbNodes())+",'"+mjob.getNbNodesAndCpuPerNode()+"','"+mjob.getOutputDir() +"')";
+	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
+	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
+	std::string sqlInsert = "";
+	if(mjob.getWorkId() == 0){
+	  std::cout << "WorkID = 0" << std::endl;
+	  sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
+			" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
+			" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
+			" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir)"
+			" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
+			+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
+			+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
+			+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
+			+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
+			+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
+			+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
+			+ mjob.getOutputDir()  + "')";
+	}
+	else{
+		  std::cout << "WorkID = "<< mjob.getWorkId() << std::endl;
 
-	mdatabaseVishnu->process(sqlInsert);
+  sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
+		" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
+		" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
+		" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
+		" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
+		+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
+		+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
+		+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
+		+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
+		+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
+		+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
+		+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
 
-	return 0;
+}
+	std::cout << sqlInsert << std::endl;
+mdatabaseVishnu->process(sqlInsert);
+
+return 0;
 }
 
 /**
- * \brief Function to cancel job
- * \param slaveDirectory the path to the TMS slave executable
- * \return raises an exception on error
- */
+* \brief Function to cancel job
+* \param slaveDirectory the path to the TMS slave executable
+* \return raises an exception on error
+*/
 int JobServer::cancelJob(const std::string& slaveDirectory)
 {
 
-	msessionServer.check(); //To check the sessionKey
+msessionServer.check(); //To check the sessionKey
 
-	std::string acLogin;
-	std::string machineName;
-	std::string jobSerialized;
-	std::string batchJobId;
-	std::string initialJobId;
-	std::string jobId;
-	std::string owner;
-	int status;
-	std::vector<std::string> results;
-	std::vector<std::string>::iterator  iter;
-	acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-	machine->setMachineId(mmachineId);
+std::string acLogin;
+std::string machineName;
+std::string jobSerialized;
+std::string batchJobId;
+std::string initialJobId;
+std::string jobId;
+std::string owner;
+int status;
+std::vector<std::string> results;
+std::vector<std::string>::iterator  iter;
+acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
 	machineName = machineServer.getMachineName();
 	delete machine;

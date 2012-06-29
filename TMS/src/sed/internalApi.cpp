@@ -65,14 +65,13 @@ solveSubmitJob(diet_profile_t* pb) {
 	int mapperkey;
 	std::string cmd = "";
 
-	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+	diet_paramstring_get(diet_parameter(pb,0), &sessionKey, NULL);
 	diet_string_get(diet_parameter(pb,1), &machineId, NULL);
 	diet_string_get(diet_parameter(pb,2), &script_content, NULL);
-	diet_string_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
+	diet_paramstring_get(diet_parameter(pb,3), &submitOptionsSerialized, NULL);
 	diet_string_get(diet_parameter(pb,4), &jobSerialized, NULL);
 
 	SessionServer sessionServer = SessionServer(std::string(sessionKey));
-
 	try {
 		//MAPPER CREATION
 		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
@@ -81,7 +80,6 @@ solveSubmitJob(diet_profile_t* pb) {
 		mapper->code(std::string(submitOptionsSerialized), mapperkey);
 		mapper->code(std::string(jobSerialized), mapperkey);
 		cmd = mapper->finalize(mapperkey);
-
 		TMS_Data::Job_ptr job = NULL;
 		TMS_Data::SubmitOptions_ptr submitOptions = NULL;
 

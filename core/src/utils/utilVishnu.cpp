@@ -75,9 +75,21 @@ vishnu::convertToInt(std::string val) {
 }
 
 
-
-
-
+/**
+ * \brief Function to convert a string to long int
+ * \param  val a value to convert to int
+ * \return int value of the corresponding string
+ */
+long
+vishnu::convertToLong(std::string val) {
+#if 0
+	int intValue;
+	std::istringstream str(val);
+	str >> intValue;
+	return intValue;
+#endif
+	return vishnu::lexical_convertor<long>(val);
+}
 
 /**
  * \brief To crypt a password

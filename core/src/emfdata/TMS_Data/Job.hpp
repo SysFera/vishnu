@@ -334,6 +334,17 @@ namespace TMS_Data
          **/
         void setOutputDir(::ecore::EString const& _outputDir);
 
+        /**
+         * \brief To get the workId
+         * \return The workId attribute value
+         **/
+        ::ecore::ELong getWorkId() const;
+        /**
+         * \brief To set the workId
+         * \param _workId The workId value
+         **/
+        void setWorkId(::ecore::ELong _workId);
+
         // References
 
 
@@ -406,6 +417,8 @@ namespace TMS_Data
         ::ecore::EString m_batchJobId;
 
         ::ecore::EString m_outputDir;
+
+        ::ecore::ELong m_workId;
 
         // References
 
