@@ -108,7 +108,7 @@
   <chapter>
     <title> User account configuration </title>
     <para>
-      The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
+      The VISHNU software is a part of SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
       <itemizedlist>
 	<listitem>
 	  <para>User management services (UMS): authentication and session management.</para>
@@ -169,7 +169,7 @@
 	    </para>
 	    
 	    <para>
-	      <emphasis role = "bold">vishnu_setting_ssh_key -r $HOME/.vishnu/localAccountPublicKey/userId-machineId tartampion@test.intranet.lan </emphasis>
+	      <emphasis role = "bold">vishnu_set_ssh_key -r $HOME/.vishnu/localAccountPublicKey/userId-machineId tartampion@test.intranet.lan </emphasis>
 	    </para>  
 	    
 	    <para><emphasis role = "bold">Warning: </emphasis>A unix login can be used for only one local account on a specific machine</para>
