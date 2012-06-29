@@ -5572,7 +5572,7 @@ homeDirectory path .</para>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listLocalAcct=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5665,7 +5665,7 @@ local configurations related to your VISHNU account. </para>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listMachine=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5760,7 +5760,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listCommands=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5850,7 +5850,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOptValues=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5948,7 +5948,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listsession=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6242,7 +6242,7 @@ opened the session).</para>
         <refpurpose>lists VISHNU user-authentification systems</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthSys=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems <parameter>listAuthSys</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6654,7 +6654,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <refpurpose>lists local user-authentication configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthAccounts=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts <parameter>listAuthAccounts</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

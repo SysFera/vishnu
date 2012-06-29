@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listSessions \- lists all sessions of the user
 .SH "SYNOPSIS"
-.HP \w'ret,\ listsession=VISHNU\&.listSessions('u
-.BI "ret,\ listsession=VISHNU\&.listSessions(string\ " "sessionKey" ", ListSessionOptions\ " "options\ =\ ListSessionOptions()" ");"
+.HP \w'ret=VISHNU\&.listSessions('u
+.BI "ret=VISHNU\&.listSessions(string\ " "sessionKey" ", ListSessions\ " "listsession" ", ListSessionOptions\ " "options\ =\ ListSessionOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command is used to display and filter the list of all your sessions\&. For each session, a session identifier is provided which you can use to reconnect to a given session using the vishnu_reconnect command\&. The session\*(Aqs status is either 0 (inactive) or 1 (active)\&.
