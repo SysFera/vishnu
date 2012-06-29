@@ -161,7 +161,7 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
       
-    <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
+    <para>Add a section for the service vishnu_set_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
       </revision>
       <revision>
         <revnumber>16</revnumber>
@@ -446,7 +446,7 @@
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	    </para>
             <para>  
-	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
+	      With the command <emphasis role="italic">&quot;vishnu_set_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
                   role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis
                   role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
@@ -3417,15 +3417,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_setting_ssh_key</refname>
+        <refname>vishnu_set_ssh_key</refname>
         <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>rlogin</replaceable></arg><arg choice="plain"><replaceable>sshPubKey</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -3443,13 +3443,13 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-a <replaceable>a</replaceable></option></term>
+            <term><option>-a <replaceable>addOption</replaceable></option></term>
             <listitem>
               <para>option for adding a key.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-r <replaceable>r</replaceable></option></term>
+            <term><option>-r <replaceable>removeOption</replaceable></option></term>
             <listitem>
               <para>option for removing a key.</para>
             </listitem>
@@ -3472,7 +3472,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;null&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3488,7 +3488,9 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To add the public key located localy at $HOME/.ssh/rsa_id.pub to the authorized_keys of the user tartampion on the machine named slurm.intranet.lan : </para>
-        <para>vishnu_setting_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>vishnu_set_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>To remote the key added previously:</para>
+        <para>vishnu_set_ssh_key -r $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
       </refsect1>
     </refentry>
   </reference>
@@ -8877,37 +8879,6 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         </variablelist>
       </refsect1>
     </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>settingSshKey</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>settingSshKey</refname>
-        <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::settingSshKey</function></funcdef><paramdef/></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This command allows to add or remove a given key to/from the authorized keys of a user's remote account</para>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;null&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The name of the user option is unknown&quot; [41]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
   </reference>
   <reference>
     <title>TMS C++ API Reference</title>
@@ -13909,49 +13880,6 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The user-authentication account is unknown&quot; [52])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.settingSshKey</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.settingSshKey</refname>
-        <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.settingSshKey</function></funcdef><paramdef/></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This command allows to add or remove a given key to/from the authorized keys of a user's remote account</para>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>UserException(&quot;null&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
