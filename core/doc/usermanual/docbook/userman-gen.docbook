@@ -147,7 +147,7 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
       
-    <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
+    <para>Add a section for the service vishnu_set_ssh_key in UMS. </para></revdescription>
       </revision>
       <revision>
         <revnumber>14</revnumber>
@@ -432,7 +432,7 @@
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	    </para>
             <para>  
-	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
+	      With the command <emphasis role="italic">&quot;vishnu_set_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
                   role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis
                   role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
@@ -3358,15 +3358,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_setting_ssh_key</refname>
+        <refname>vishnu_set_ssh_key</refname>
         <refpurpose>sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -3429,9 +3429,9 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To set a specific ssh public key on the remote machine aster whose login is toto:</para>
-        <para>vishnu_setting_ssh_key -a toto@aster /tmp/key.pub</para>
+        <para>vishnu_set_ssh_key -a toto@aster /tmp/key.pub</para>
         <para>To remove a specific ssh public key on a remote user account:</para>
-        <para>vishnu_setting_ssh_key -r toto@aster /tmp/key.pub</para>
+        <para>vishnu_set_ssh_key -r toto@aster /tmp/key.pub</para>
       </refsect1>
     </refentry>
   </reference>
