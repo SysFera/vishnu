@@ -206,7 +206,7 @@
       <details key="description" value="This command allows to get current session identifier."/>
       <details key="exCLI" value="To get the current session identifier:&#xA;vishnu_current_session_id"/>
     </services>
-    <services name="SettingSshKey" description="sets/removes an ssh public key on a remote user's authorized key file located on a remote machine" isFunction="false" resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
+    <services name="SetSshKey" description="sets/removes an ssh public key on a remote user's authorized key file located on a remote machine" isFunction="false" resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
       <ports name="options" usage="CLI_ONLY" dataType="//@typeList/@types.28" description="An option to add/remove an ssh key on the remote machine. At least one option must be used with this command." optional="true" shortOptionLetter="" defaultValueLiteral=""/>
       <ports name="connectParams" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The user's account connection parameters in the form &quot;login@machine&quot; "/>
       <ports name="sshPublicKey" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The path to the ssh public key" longOptionName=""/>
@@ -341,7 +341,7 @@
     <types name="AddLocalAccountOptions">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//AddLocalAccountOptions"/>
     </types>
-    <types name="SettingSshKeyOptions" description="The SettingSshKeyOptions is an object which encapsulates the options for service SettingSshKey">
+    <types name="SetSshKeyOptions" description="The SettingSshKeyOptions is an object which encapsulates the options for service SettingSshKey">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SettingSshKeyOptions"/>
     </types>
   </typeList>

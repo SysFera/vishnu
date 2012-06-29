@@ -2356,15 +2356,15 @@ opened the session).</para>
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_setting_ssh_key</refname>
+        <refname>vishnu_set_ssh_key</refname>
         <refpurpose>sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>

@@ -182,7 +182,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SettingSshKeyOptions" instanceTypeName="SettingSshKeyOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="SettingSshKeyOptions" instanceTypeName="SetSshKeyOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addOption" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="Description">
         <details key="content" value="An option to add an ssh key on a remote machine. At least one option must be used with this command"/>
