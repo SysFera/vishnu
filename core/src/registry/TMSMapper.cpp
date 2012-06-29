@@ -293,7 +293,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 		res += u.substr(lastPos, pos - lastPos);
 	}
 
-	u = ac->getWid();
+	u = ac->getWorkId();
 	if (u.compare("")){
 		res += " -w ";
 		res += u;

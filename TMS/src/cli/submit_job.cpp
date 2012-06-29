@@ -64,6 +64,7 @@ makeSubJobOp(string pgName,
 		boost::function1<void, string>& ffileParams,
 		vector<string>& textParamsVector,
 		vector<string>& fileParamsVector,
+		boost::function1<void, long long>& fworkId,
 		string& loadCriterionStr,
 		string& walltime,
 		string& dietConfig){
@@ -142,40 +143,36 @@ makeSubJobOp(string pgName,
 			loadCriterionStr);
 	opt->add("textParam,v",
 			"Sets a textual parameter with a value passing in argument.\n"
-			"E.g. --param PARAM1=value1. So at the execution, any environment variable named"
-			"PARAM1 in the script will be set with 'value1'.\n"
-			"The name of the parameter can be any word and is case-insensitive, but the corresponding "
-			"environment variable must be in upper case in the script.\n\n"
+			"E.g. --param PARAM1=value1. So at the execution, any environment variable named "
+			"PARAM1 in the script will be set with 'value1'.\n\n"
 			"SEE ALSO --textParams.",
 			CONFIG,
 			textParamsVector);
 	opt->add("textParams,V",
 			"Sets a list of space-separated textual parameters.\n"
 			"E.g. --listParams=\"PARAM1=value1 PARAM2=value2.\n\n"
-			"SEE ALSO --params.",
+			"SEE ALSO --textParam.",
 			CONFIG,
 			ftextParams);
 	opt->add("fileParam,f",
 			"Sets a local file as a file parameter for the script. This file will be uploaded onto the server "
 			"before computing the script.\n"
-			"E.g. --file PFILE1=/path/to/file will allow to upload the file located at '/path/to/file' "
-			"onto the server.\n"
-			"Then within the script, the path of the destination files can be accessed through an "
-			"environment named PFILE1.\n"
-			"The name of the parameter can be any word and is case-insensitive, but the corresponding "
-			"environment variable must be in upper case in the script.\n\n"
+			"E.g. fileParam PFILE1=/path/to/file will allow to upload the file located at '/path/to/file' "
+			"onto the server.\n\n"
 			"SEE ALSO --fileParams.",
 			CONFIG,
 			fileParamsVector);
 	opt->add("fileParams,F",
 			"Sets a list of local files as parameters for the script. These files will be  uploaded onto the server "
 			"before computing the script.\n"
-			"E.g. --listFile=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\".\n"
-			"Then within the script, the paths of the destination files can be accessed through the environment"
-			"variables VISHNU_PFILE1 and VISHNU_PFILE2, respectively.\n\n"
-			"SEE ALSO --file.",
+			"E.g. --fileParams=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\".\n\n"
+			"SEE ALSO --fileParam.",
 			CONFIG,
 			ffileParams);
+	opt->add("workId,w",
+			"Sets the identifier of the Work to which the job is related.  ",
+			CONFIG,
+			fworkId);
 
 	return opt;
 }
@@ -209,6 +206,7 @@ int main (int argc, char* argv[]){
 	boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
 	boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
 	boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
+	boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(subOp),_1));
 	vector<string> textParamsVector ;
 	vector<string> fileParamsVector ;
 	std::string loadCriterionStr;
@@ -219,7 +217,7 @@ int main (int argc, char* argv[]){
 	boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
 			fmemory, fnbCpu, fnbNodeAndCpu,
 			foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-			ftextParams, ffileParams, textParamsVector, fileParamsVector,
+			ftextParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
 			loadCriterionStr, walltime, dietConfig);
 
 	opt->add("selectQueueAutom,Q",
@@ -332,7 +330,6 @@ int main (int argc, char* argv[]){
 			printSessionKeyMessage();
 			submitJob(sessionKey, machineId, scriptPath, job, subOp);
 		}
-
 		displaySubmit(job);
 		printSuccessMessage();
 	} catch(VishnuException& except){// catch all Vishnu runtime error

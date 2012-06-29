@@ -47,7 +47,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 
 	submitJobProfile = diet_profile_alloc(serviceName.c_str(), 5, 5, 7);
 	sessionKey = msessionProxy.getSessionKey();
-
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	//IN Parameters
 	if (diet_paramstring_set(diet_parameter(submitJobProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -129,7 +128,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	else {
 		raiseDietMsgException("DIET call failure");
 	}
-
 	/*To raise a vishnu exception if the receiving message is not empty*/
 	raiseExceptionIfNotEmptyMsg(errorInfo);
 
