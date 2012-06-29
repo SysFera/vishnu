@@ -2686,15 +2686,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_setting_ssh_key</refname>
+        <refname>vishnu_set_ssh_key</refname>
         <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>rlogin</replaceable></arg><arg choice="plain"><replaceable>sshPubKey</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -2757,7 +2757,9 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To add the public key located localy at $HOME/.ssh/rsa_id.pub to the authorized_keys of the user tartampion on the machine named slurm.intranet.lan : </para>
-        <para>vishnu_setting_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>vishnu_set_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>To remote the key added previously:</para>
+        <para>vishnu_set_ssh_key -r $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
       </refsect1>
     </refentry>
   </reference>

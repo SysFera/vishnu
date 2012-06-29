@@ -321,7 +321,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SettingSshKeyOptions" instanceTypeName="SettingSshKeyOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="SetSshKeyOptions" instanceTypeName="SetSshKeyOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addOption" eType="ecore:EDataType Ecore.ecore#//EBoolean">
       <eAnnotations source="Description">
         <details key="content" value="option for adding a key"/>
