@@ -2684,6 +2684,84 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <para>vishnu_list_auth_accounts</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_set_ssh_key</refname>
+        <refpurpose>sets/removes an ssh public key on a remote user's authorized key file located on a remote machine</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
+              choice="plain"><replaceable>connectParams</replaceable></arg><arg choice="plain"><replaceable>sshPublicKey</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This command allows to set/remove a specific ssh public key on a remote user account.</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>addOption</replaceable></option></term>
+            <listitem>
+              <para>An option to add an ssh key on a remote machine. At least one option must be used with this command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-r <replaceable>removeOption</replaceable></option></term>
+            <listitem>
+              <para>An option to remove an ssh key on a remote machine. At least one option must be used with this command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The name of the user option is unknown&quot; [41]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To set a specific ssh public key on the remote machine aster whose login is toto:</para>
+        <para>vishnu_set_ssh_key -a toto@aster /tmp/key.pub</para>
+        <para>To remove a specific ssh public key on a remote user account:</para>
+        <para>vishnu_set_ssh_key -r toto@aster /tmp/key.pub</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>UMS C++ API Reference</title>
@@ -5494,7 +5572,7 @@ homeDirectory path .</para>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listLocalAcct=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5587,7 +5665,7 @@ local configurations related to your VISHNU account. </para>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listMachine=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5682,7 +5760,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listCommands=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5772,7 +5850,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOptValues=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5870,7 +5948,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listsession=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6164,7 +6242,7 @@ opened the session).</para>
         <refpurpose>lists VISHNU user-authentification systems</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems <parameter>listAuthSys</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthSys=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -6576,7 +6654,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <refpurpose>lists local user-authentication configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts <parameter>listAuthAccounts</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthAccounts=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

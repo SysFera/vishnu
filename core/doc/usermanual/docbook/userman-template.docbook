@@ -146,7 +146,7 @@
     <date>21/06/2012</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para>
+      <para>Add a section for the service vishnu_set_ssh_key in UMS. </para>
     </revdescription>
   </revision> 
 
@@ -455,7 +455,7 @@
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	    </para>
 	    <para>  
-	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
+	      With the command <emphasis role="italic">&quot;vishnu_set_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
 	  </section>
 	  
