@@ -1,6 +1,6 @@
 /**
  * \file RemoteFileProxy.hpp
- * This file declares a  proxy class to handle a remote file
+ * This file declares a  proxy class to handle a a remote file
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 

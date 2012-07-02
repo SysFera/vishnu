@@ -161,7 +161,15 @@
     <date>21/06/2012</date>
     <authorinitials>SysFera</authorinitials>
     <revdescription>
-      <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para>
+      <para>Add a section for the service vishnu_set_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para>
+    </revdescription>
+  </revision> 
+   <revision>
+    <revnumber>16</revnumber>
+    <date>28/06/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add a section for the copy/move commands in FMS with the client out of the DNS. </para>
     </revdescription>
   </revision> 
   
@@ -461,7 +469,7 @@
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	    </para>
 	    <para>  
-	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
+	      With the command <emphasis role="italic">&quot;vishnu_set_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
 	  </section>
 	  
@@ -737,9 +745,9 @@
 	  <title>Perform file transfer </title>
 	  <para> The user can submit a file transfer in many ways:
             <itemizedlist>
-              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
+              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>). To use the copy/move commands from a client out of the DNS, one must use 'localhost' as a machine id for the local machine. </para>
               </listitem>
-              <listitem><para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
+              <listitem><para> copy (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
 	      <listitem><para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis role="bold">vishnu_stop_file_transfers</emphasis>) </para>
               </listitem>
             </itemizedlist>

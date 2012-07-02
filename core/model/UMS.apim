@@ -311,12 +311,12 @@
       <details key="description" value="This command allows to list local user-authentication configurations of VISHNU.&#xA;"/>
       <details key="exCLI" value="To list local user-authentication configurations: &#xA;vishnu_list_auth_accounts"/>
     </services>
-    <services name="settingSshKey" description="Allows to add or remove a given key to/from the authorized keys of a user's remote account." resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
+    <services name="setSshKey" description="Allows to add or remove a given key to/from the authorized keys of a user's remote account." isFunction="false" resultCodes="VISHNU_OK ERRCODE_CLI_ERROR_RUNTIME ERRCODE_UNKNOWN_OPTION ERRCODE_INVALID_PARAM">
       <ports name="rlogin" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="A ssh-compliant form of login information in the remote account (e.g. user@machine)"/>
       <ports name="sshPubKey" usage="CLI_ONLY" dataType="//@typeList/@types.0" description="The key add to the remote account"/>
       <ports name="options" usage="CLI_ONLY" dataType="//@typeList/@types.40" description="" optional="true" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This command allows to add or remove a given key to/from the authorized keys of a user's remote account"/>
-      <details key="exCLI" value="To add the public key located localy at $HOME/.ssh/rsa_id.pub to the authorized_keys of the user tartampion on the machine named slurm.intranet.lan : &#xA;vishnu_setting_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan"/>
+      <details key="exCLI" value="To add the public key located localy at $HOME/.ssh/rsa_id.pub to the authorized_keys of the user tartampion on the machine named slurm.intranet.lan : &#xA;vishnu_set_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan&#xA;&#xA;To remote the key added previously:&#xA;vishnu_set_ssh_key -r $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan"/>
     </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
@@ -365,7 +365,7 @@
       <resultCodes name="ERRCODE_UNKNOWN_AUTH_ACCOUNT" description="The user-authentication account is unknown" value="52"/>
       <resultCodes name="ERRCODE_UNKNOWN_ENCRYPTION_METHOD" description="The encryption method is unknown" value="53" diagnostic=""/>
       <resultCodes name="ERRCODE_READONLY_ACCOUNT" description="You can modify information. This account is read-only" value="54"/>
-      <resultCodes name="ERRCODE_INVALID_PARAM" value="10"/>
+      <resultCodes name="ERRCODE_INVALID_PARAM" description="an option or a parameter provided is invalid for this service" value="10"/>
     </resultCodeList>
   </modules>
   <envVariableList>
@@ -491,8 +491,8 @@
     <types name="UpdateAddAuthSystemsOptions">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//UpdateAuthSystemsOptions"/>
     </types>
-    <types name="SettingSshKeyOptions">
-      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SettingSshKeyOptions"/>
+    <types name="SetSshKeyOptions">
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SetSshKeyOptions"/>
     </types>
   </typeList>
 </API>

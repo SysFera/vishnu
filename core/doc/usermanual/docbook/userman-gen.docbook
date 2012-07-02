@@ -161,7 +161,15 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
       
-    <para>Add a section for the service vishnu_setting_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
+    <para>Add a section for the service vishnu_set_ssh_key in UMS that allows to configure ssh keys for remote accounts. </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>16</revnumber>
+        <date>28/06/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      
+    <para>Add a section for the copy/move commands in FMS with the client out of the DNS. </para></revdescription>
       </revision>
     </revhistory>
     <copyright>
@@ -438,7 +446,7 @@
 	      Doing this allows VISHNU to be directly connected on this UNIX account, running tasks as if it was the owner of the UNIX account.
 	    </para>
             <para>  
-	      With the command <emphasis role="italic">&quot;vishnu_setting_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
+	      With the command <emphasis role="italic">&quot;vishnu_set_ssh_key&quot;</emphasis> you can automatically add a local ssh public key to a remote account (in the authorized_keys file). This command also allows to remove a given key to that file. See the command reference section for the usage. <emphasis
                   role="bold">Note</emphasis> that to enable rollback in case of an inappropriate removal, the command makes a backup of the authorized_keys file in a file named <emphasis
                   role="italic">&quot;authorized_keys.bak&quot;</emphasis> before altering it.
 	    </para>
@@ -698,10 +706,10 @@
             <itemizedlist>
               <listitem>
                 <para> copy (or move) file between two hosts by the commands <emphasis
-                      role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>) </para>
+                      role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>). To use the copy/move commands from a client out of the DNS, one must use 'localhost' as a machine id for the local machine. </para>
               </listitem>
               <listitem>
-                <para> copy  (or move) file between two hosts in asynchronous way by the commands <emphasis
+                <para> copy (or move) file between two hosts in asynchronous way by the commands <emphasis
                       role="bold">vishnu_copy_async_file</emphasis> (or <emphasis
                       role="bold">vishnu_move_async_file</emphasis>) </para>
               </listitem>
@@ -3409,15 +3417,15 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
     </refentry>
     <refentry>
       <refmeta>
-        <refentrytitle>vishnu_setting_ssh_key</refentrytitle>
+        <refentrytitle>vishnu_set_ssh_key</refentrytitle>
         <manvolnum>1</manvolnum>
       </refmeta>
       <refnamediv>
-        <refname>vishnu_setting_ssh_key</refname>
+        <refname>vishnu_set_ssh_key</refname>
         <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_setting_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_set_ssh_key</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-a</option></arg><arg choice="opt"><option>-r</option></arg><arg
               choice="plain"><replaceable>rlogin</replaceable></arg><arg choice="plain"><replaceable>sshPubKey</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
@@ -3435,13 +3443,13 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-a <replaceable>a</replaceable></option></term>
+            <term><option>-a <replaceable>addOption</replaceable></option></term>
             <listitem>
               <para>option for adding a key.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-r <replaceable>r</replaceable></option></term>
+            <term><option>-r <replaceable>removeOption</replaceable></option></term>
             <listitem>
               <para>option for removing a key.</para>
             </listitem>
@@ -3464,7 +3472,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;null&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3480,7 +3488,9 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To add the public key located localy at $HOME/.ssh/rsa_id.pub to the authorized_keys of the user tartampion on the machine named slurm.intranet.lan : </para>
-        <para>vishnu_setting_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>vishnu_set_ssh_key -a $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
+        <para>To remote the key added previously:</para>
+        <para>vishnu_set_ssh_key -r $HOME/.ssh/rsa_id.pub tartampion@slurm.intranet.lan</para>
       </refsect1>
     </refentry>
   </reference>
@@ -8869,37 +8879,6 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         </variablelist>
       </refsect1>
     </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>settingSshKey</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>settingSshKey</refname>
-        <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::settingSshKey</function></funcdef><paramdef/></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This command allows to add or remove a given key to/from the authorized keys of a user's remote account</para>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>&quot;null&quot; [10]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;The name of the user option is unknown&quot; [41]</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
   </reference>
   <reference>
     <title>TMS C++ API Reference</title>
@@ -12727,7 +12706,7 @@ homeDirectory path .</para>
         <refpurpose>lists the local user configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccounts <parameter>listLocalAcct</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listLocalAcct=VISHNU.listLocalAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListLocalAccOptions <parameter>options = ListLocalAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12820,7 +12799,7 @@ local configurations related to your VISHNU account. </para>
         <refpurpose>lists the machines that are accessible through VISHNU</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachines <parameter>listMachine</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listMachine=VISHNU.listMachines</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListMachineOptions <parameter>options = ListMachineOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -12915,7 +12894,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the commands</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCommands <parameter>listCommands</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listCommands=VISHNU.listHistoryCmd</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListCmdOptions <parameter>options = ListCmdOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -13005,7 +12984,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists the options of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptionsValues <parameter>listOptValues</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOptValues=VISHNU.listOptions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListOptOptions <parameter>options = ListOptOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -13103,7 +13082,7 @@ for other VISHNU commands.</para>
         <refpurpose>lists all sessions of the user</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessions <parameter>listsession</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listsession=VISHNU.listSessions</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSessionOptions <parameter>options = ListSessionOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -13397,7 +13376,7 @@ opened the session).</para>
         <refpurpose>lists VISHNU user-authentification systems</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSystems <parameter>listAuthSys</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthSys=VISHNU.listAuthSystems</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthSysOptions <parameter>options = ListAuthSysOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -13809,7 +13788,7 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
         <refpurpose>lists local user-authentication configurations</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccounts <parameter>listAuthAccounts</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listAuthAccounts=VISHNU.listAuthAccounts</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListAuthAccOptions <parameter>options = ListAuthAccOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -13901,49 +13880,6 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
           </varlistentry>
           <varlistentry>
             <term>UMSVishnuException(&quot;The user-authentication account is unknown&quot; [52])</term>
-            <listitem/>
-          </varlistentry>
-        </variablelist>
-      </refsect1>
-    </refentry>
-    <refentry>
-      <refmeta>
-        <refentrytitle>VISHNU.settingSshKey</refentrytitle>
-        <manvolnum>3</manvolnum>
-      </refmeta>
-      <refnamediv>
-        <refname>VISHNU.settingSshKey</refname>
-        <refpurpose>Allows to add or remove a given key to/from the authorized keys of a user's remote account.</refpurpose>
-      </refnamediv>
-      <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.settingSshKey</function></funcdef><paramdef/></funcprototype></funcsynopsis>
-      </refsynopsisdiv>
-      <refsect1 id="description">
-        <title>DESCRIPTION</title>
-        <para>This command allows to add or remove a given key to/from the authorized keys of a user's remote account</para>
-      </refsect1>
-      <refsect1 id="returned objects">
-        <title>RETURNED OBJECTS</title>
-        <variablelist>
-          <varlistentry>
-            <term><emphasis>errorCode (integer)</emphasis></term>
-            <listitem>
-              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
-            </listitem>
-          </varlistentry>
-          <varlistentry/>
-        </variablelist>
-      </refsect1>
-      <refsect1 id="exceptions">
-        <title>EXCEPTIONS</title>
-        <para>The following exceptions may be thrown: </para>
-        <variablelist>
-          <varlistentry>
-            <term>UserException(&quot;null&quot; [10])</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>UMSVishnuException(&quot;The name of the user option is unknown&quot; [41])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -14181,7 +14117,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -14273,7 +14209,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listofQueues=VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -14377,7 +14313,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -14599,7 +14535,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -15843,7 +15779,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory. </refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>DirEntryList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, dirContent=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -16570,7 +16506,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileTransferList=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -16890,7 +16826,7 @@ The access to other user's sessions is only permitted to administrators.</para>
         <refpurpose>displays the current values of system metrics</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValue</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, metricValue=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -16977,7 +16913,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>displays the history of values of a system metric</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValues</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, metricValues=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -17138,7 +17074,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>To get the system info on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo <parameter>res</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, res=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
