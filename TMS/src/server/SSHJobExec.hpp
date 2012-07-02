@@ -59,6 +59,12 @@ class SSHJobExec {
               const char* copyOfOutputPath,
               const char* copyOfErrorPath);
 
+    /**
+     * \brief Function to execute a command via ssh
+     * \param cmd the command to execute
+     */
+    int
+    execCmd(const std::string& cmd);
 
     /**
      * \brief Function to return the job serialized content

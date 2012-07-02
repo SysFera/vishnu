@@ -131,6 +131,12 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__BATCHJOBID);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__batchJobId);
+    m_Job__outputDir = new ::ecore::EAttribute();
+    m_Job__outputDir->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__OUTPUTDIR);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__outputDir);
+    m_Job__workId = new ::ecore::EAttribute();
+    m_Job__workId->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__WORKID);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__workId);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -230,6 +236,21 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SELECTQUEUEAUTOM);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__selectQueueAutom);
+    m_SubmitOptions__fileParams = new ::ecore::EAttribute();
+    m_SubmitOptions__fileParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__FILEPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__fileParams);
+    m_SubmitOptions__textParams = new ::ecore::EAttribute();
+    m_SubmitOptions__textParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__TEXTPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__textParams);
+    m_SubmitOptions__workId = new ::ecore::EAttribute();
+    m_SubmitOptions__workId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__workId);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -291,6 +312,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__BATCHJOB);
     m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
             m_ListJobsOptions__batchJob);
+    m_ListJobsOptions__workId = new ::ecore::EAttribute();
+    m_ListJobsOptions__workId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID);
+    m_ListJobsOptionsEClass->getEStructuralFeatures().push_back(
+            m_ListJobsOptions__workId);
 
     // ProgressOptions
     m_ProgressOptionsEClass = new ::ecore::EClass();
@@ -445,6 +471,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::JOBRESULT__ERRORPATH);
     m_JobResultEClass->getEStructuralFeatures().push_back(
             m_JobResult__errorPath);
+    m_JobResult__outputDir = new ::ecore::EAttribute();
+    m_JobResult__outputDir->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOBRESULT__OUTPUTDIR);
+    m_JobResultEClass->getEStructuralFeatures().push_back(
+            m_JobResult__outputDir);
 
     // ListJobResults
     m_ListJobResultsEClass = new ::ecore::EClass();
@@ -472,6 +503,84 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::LOADCRITERION__LOADTYPE);
     m_LoadCriterionEClass->getEStructuralFeatures().push_back(
             m_LoadCriterion__loadType);
+
+    // Work
+    m_WorkEClass = new ::ecore::EClass();
+    m_WorkEClass->setClassifierID(WORK);
+    m_WorkEClass->setEPackage(this);
+    getEClassifiers().push_back(m_WorkEClass);
+    m_Work__sessionId = new ::ecore::EAttribute();
+    m_Work__sessionId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__SESSIONID);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__sessionId);
+    m_Work__applicationId = new ::ecore::EAttribute();
+    m_Work__applicationId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__APPLICATIONID);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__applicationId);
+    m_Work__subject = new ::ecore::EAttribute();
+    m_Work__subject->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__SUBJECT);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__subject);
+    m_Work__priority = new ::ecore::EAttribute();
+    m_Work__priority->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__PRIORITY);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__priority);
+    m_Work__status = new ::ecore::EAttribute();
+    m_Work__status->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__STATUS);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__status);
+    m_Work__endDate = new ::ecore::EAttribute();
+    m_Work__endDate->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__ENDDATE);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__endDate);
+    m_Work__owner = new ::ecore::EAttribute();
+    m_Work__owner->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__OWNER);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__owner);
+    m_Work__estimatedHour = new ::ecore::EAttribute();
+    m_Work__estimatedHour->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__ESTIMATEDHOUR);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__estimatedHour);
+    m_Work__doneRatio = new ::ecore::EAttribute();
+    m_Work__doneRatio->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__DONERATIO);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__doneRatio);
+    m_Work__description = new ::ecore::EAttribute();
+    m_Work__description->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__DESCRIPTION);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__description);
+    m_Work__dateCreated = new ::ecore::EAttribute();
+    m_Work__dateCreated->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__DATECREATED);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__dateCreated);
+    m_Work__dateEnded = new ::ecore::EAttribute();
+    m_Work__dateEnded->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__DATEENDED);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__dateEnded);
+    m_Work__dateStarted = new ::ecore::EAttribute();
+    m_Work__dateStarted->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__DATESTARTED);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__dateStarted);
+    m_Work__lastUpdated = new ::ecore::EAttribute();
+    m_Work__lastUpdated->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__LASTUPDATED);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__lastUpdated);
+    m_Work__workId = new ::ecore::EAttribute();
+    m_Work__workId->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__WORKID);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__workId);
+    m_Work__projectId = new ::ecore::EAttribute();
+    m_Work__projectId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__PROJECTID);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__projectId);
+    m_Work__submitDate = new ::ecore::EAttribute();
+    m_Work__submitDate->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__SUBMITDATE);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__submitDate);
+    m_Work__machineId = new ::ecore::EAttribute();
+    m_Work__machineId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__MACHINEID);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__machineId);
+    m_Work__nbCPU = new ::ecore::EAttribute();
+    m_Work__nbCPU->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__NBCPU);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__nbCPU);
+    m_Work__dueDate = new ::ecore::EAttribute();
+    m_Work__dueDate->setFeatureID(::TMS_Data::TMS_DataPackage::WORK__DUEDATE);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__dueDate);
 
     // Create enums
 
@@ -827,7 +936,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__batchJobId->setName("batchJobId");
-    m_Job__batchJobId->setDefaultValueLiteral("");
+    m_Job__batchJobId->setDefaultValueLiteral("" "");
     m_Job__batchJobId->setLowerBound(0);
     m_Job__batchJobId->setUpperBound(1);
     m_Job__batchJobId->setTransient(false);
@@ -838,6 +947,34 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__batchJobId->setUnique(true);
     m_Job__batchJobId->setDerived(false);
     m_Job__batchJobId->setOrdered(true);
+    m_Job__outputDir->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__outputDir->setName("outputDir");
+    m_Job__outputDir->setDefaultValueLiteral("");
+    m_Job__outputDir->setLowerBound(0);
+    m_Job__outputDir->setUpperBound(1);
+    m_Job__outputDir->setTransient(false);
+    m_Job__outputDir->setVolatile(false);
+    m_Job__outputDir->setChangeable(true);
+    m_Job__outputDir->setUnsettable(false);
+    m_Job__outputDir->setID(false);
+    m_Job__outputDir->setUnique(true);
+    m_Job__outputDir->setDerived(false);
+    m_Job__outputDir->setOrdered(true);
+    m_Job__workId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Job__workId->setName("workId");
+    m_Job__workId->setDefaultValueLiteral("0");
+    m_Job__workId->setLowerBound(0);
+    m_Job__workId->setUpperBound(1);
+    m_Job__workId->setTransient(false);
+    m_Job__workId->setVolatile(false);
+    m_Job__workId->setChangeable(true);
+    m_Job__workId->setUnsettable(false);
+    m_Job__workId->setID(false);
+    m_Job__workId->setUnique(true);
+    m_Job__workId->setDerived(false);
+    m_Job__workId->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -1097,6 +1234,48 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__selectQueueAutom->setUnique(true);
     m_SubmitOptions__selectQueueAutom->setDerived(false);
     m_SubmitOptions__selectQueueAutom->setOrdered(true);
+    m_SubmitOptions__fileParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__fileParams->setName("fileParams");
+    m_SubmitOptions__fileParams->setDefaultValueLiteral("");
+    m_SubmitOptions__fileParams->setLowerBound(0);
+    m_SubmitOptions__fileParams->setUpperBound(1);
+    m_SubmitOptions__fileParams->setTransient(false);
+    m_SubmitOptions__fileParams->setVolatile(false);
+    m_SubmitOptions__fileParams->setChangeable(true);
+    m_SubmitOptions__fileParams->setUnsettable(false);
+    m_SubmitOptions__fileParams->setID(false);
+    m_SubmitOptions__fileParams->setUnique(true);
+    m_SubmitOptions__fileParams->setDerived(false);
+    m_SubmitOptions__fileParams->setOrdered(true);
+    m_SubmitOptions__textParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__textParams->setName("textParams");
+    m_SubmitOptions__textParams->setDefaultValueLiteral("");
+    m_SubmitOptions__textParams->setLowerBound(0);
+    m_SubmitOptions__textParams->setUpperBound(1);
+    m_SubmitOptions__textParams->setTransient(false);
+    m_SubmitOptions__textParams->setVolatile(false);
+    m_SubmitOptions__textParams->setChangeable(true);
+    m_SubmitOptions__textParams->setUnsettable(false);
+    m_SubmitOptions__textParams->setID(false);
+    m_SubmitOptions__textParams->setUnique(true);
+    m_SubmitOptions__textParams->setDerived(false);
+    m_SubmitOptions__textParams->setOrdered(true);
+    m_SubmitOptions__workId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_SubmitOptions__workId->setName("workId");
+    m_SubmitOptions__workId->setDefaultValueLiteral("0");
+    m_SubmitOptions__workId->setLowerBound(0);
+    m_SubmitOptions__workId->setUpperBound(1);
+    m_SubmitOptions__workId->setTransient(false);
+    m_SubmitOptions__workId->setVolatile(false);
+    m_SubmitOptions__workId->setChangeable(true);
+    m_SubmitOptions__workId->setUnsettable(false);
+    m_SubmitOptions__workId->setID(false);
+    m_SubmitOptions__workId->setUnique(true);
+    m_SubmitOptions__workId->setDerived(false);
+    m_SubmitOptions__workId->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -1252,6 +1431,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__batchJob->setUnique(true);
     m_ListJobsOptions__batchJob->setDerived(false);
     m_ListJobsOptions__batchJob->setOrdered(true);
+    m_ListJobsOptions__workId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_ListJobsOptions__workId->setName("workId");
+    m_ListJobsOptions__workId->setDefaultValueLiteral("-1");
+    m_ListJobsOptions__workId->setLowerBound(0);
+    m_ListJobsOptions__workId->setUpperBound(1);
+    m_ListJobsOptions__workId->setTransient(false);
+    m_ListJobsOptions__workId->setVolatile(false);
+    m_ListJobsOptions__workId->setChangeable(true);
+    m_ListJobsOptions__workId->setUnsettable(false);
+    m_ListJobsOptions__workId->setID(false);
+    m_ListJobsOptions__workId->setUnique(true);
+    m_ListJobsOptions__workId->setDerived(false);
+    m_ListJobsOptions__workId->setOrdered(true);
     // ProgressOptions
     m_ProgressOptionsEClass->setName("ProgressOptions");
     m_ProgressOptionsEClass->setAbstract(false);
@@ -1649,6 +1842,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_JobResult__errorPath->setUnique(true);
     m_JobResult__errorPath->setDerived(false);
     m_JobResult__errorPath->setOrdered(true);
+    m_JobResult__outputDir->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_JobResult__outputDir->setName("outputDir");
+    m_JobResult__outputDir->setDefaultValueLiteral("");
+    m_JobResult__outputDir->setLowerBound(0);
+    m_JobResult__outputDir->setUpperBound(1);
+    m_JobResult__outputDir->setTransient(false);
+    m_JobResult__outputDir->setVolatile(false);
+    m_JobResult__outputDir->setChangeable(true);
+    m_JobResult__outputDir->setUnsettable(false);
+    m_JobResult__outputDir->setID(false);
+    m_JobResult__outputDir->setUnique(true);
+    m_JobResult__outputDir->setDerived(false);
+    m_JobResult__outputDir->setOrdered(true);
     // ListJobResults
     m_ListJobResultsEClass->setName("ListJobResults");
     m_ListJobResultsEClass->setAbstract(false);
@@ -1697,6 +1904,290 @@ TMS_DataPackage::TMS_DataPackage()
     m_LoadCriterion__loadType->setUnique(true);
     m_LoadCriterion__loadType->setDerived(false);
     m_LoadCriterion__loadType->setOrdered(true);
+    // Work
+    m_WorkEClass->setName("Work");
+    m_WorkEClass->setAbstract(false);
+    m_WorkEClass->setInterface(false);
+    m_Work__sessionId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__sessionId->setName("sessionId");
+    m_Work__sessionId->setDefaultValueLiteral("" "");
+    m_Work__sessionId->setLowerBound(0);
+    m_Work__sessionId->setUpperBound(1);
+    m_Work__sessionId->setTransient(false);
+    m_Work__sessionId->setVolatile(false);
+    m_Work__sessionId->setChangeable(true);
+    m_Work__sessionId->setUnsettable(false);
+    m_Work__sessionId->setID(false);
+    m_Work__sessionId->setUnique(true);
+    m_Work__sessionId->setDerived(false);
+    m_Work__sessionId->setOrdered(true);
+    m_Work__applicationId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__applicationId->setName("applicationId");
+    m_Work__applicationId->setDefaultValueLiteral("" "");
+    m_Work__applicationId->setLowerBound(0);
+    m_Work__applicationId->setUpperBound(1);
+    m_Work__applicationId->setTransient(false);
+    m_Work__applicationId->setVolatile(false);
+    m_Work__applicationId->setChangeable(true);
+    m_Work__applicationId->setUnsettable(false);
+    m_Work__applicationId->setID(false);
+    m_Work__applicationId->setUnique(true);
+    m_Work__applicationId->setDerived(false);
+    m_Work__applicationId->setOrdered(true);
+    m_Work__subject->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__subject->setName("subject");
+    m_Work__subject->setDefaultValueLiteral("" "");
+    m_Work__subject->setLowerBound(0);
+    m_Work__subject->setUpperBound(1);
+    m_Work__subject->setTransient(false);
+    m_Work__subject->setVolatile(false);
+    m_Work__subject->setChangeable(true);
+    m_Work__subject->setUnsettable(false);
+    m_Work__subject->setID(false);
+    m_Work__subject->setUnique(true);
+    m_Work__subject->setDerived(false);
+    m_Work__subject->setOrdered(true);
+    m_Work__priority->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Work__priority->setName("priority");
+    m_Work__priority->setDefaultValueLiteral("-1");
+    m_Work__priority->setLowerBound(0);
+    m_Work__priority->setUpperBound(1);
+    m_Work__priority->setTransient(false);
+    m_Work__priority->setVolatile(false);
+    m_Work__priority->setChangeable(true);
+    m_Work__priority->setUnsettable(false);
+    m_Work__priority->setID(false);
+    m_Work__priority->setUnique(true);
+    m_Work__priority->setDerived(false);
+    m_Work__priority->setOrdered(true);
+    m_Work__status->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Work__status->setName("status");
+    m_Work__status->setDefaultValueLiteral("-1");
+    m_Work__status->setLowerBound(0);
+    m_Work__status->setUpperBound(1);
+    m_Work__status->setTransient(false);
+    m_Work__status->setVolatile(false);
+    m_Work__status->setChangeable(true);
+    m_Work__status->setUnsettable(false);
+    m_Work__status->setID(false);
+    m_Work__status->setUnique(true);
+    m_Work__status->setDerived(false);
+    m_Work__status->setOrdered(true);
+    m_Work__endDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__endDate->setName("endDate");
+    m_Work__endDate->setDefaultValueLiteral("-1");
+    m_Work__endDate->setLowerBound(0);
+    m_Work__endDate->setUpperBound(1);
+    m_Work__endDate->setTransient(false);
+    m_Work__endDate->setVolatile(false);
+    m_Work__endDate->setChangeable(true);
+    m_Work__endDate->setUnsettable(false);
+    m_Work__endDate->setID(false);
+    m_Work__endDate->setUnique(true);
+    m_Work__endDate->setDerived(false);
+    m_Work__endDate->setOrdered(true);
+    m_Work__owner->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__owner->setName("owner");
+    m_Work__owner->setDefaultValueLiteral("");
+    m_Work__owner->setLowerBound(0);
+    m_Work__owner->setUpperBound(1);
+    m_Work__owner->setTransient(false);
+    m_Work__owner->setVolatile(false);
+    m_Work__owner->setChangeable(true);
+    m_Work__owner->setUnsettable(false);
+    m_Work__owner->setID(false);
+    m_Work__owner->setUnique(true);
+    m_Work__owner->setDerived(false);
+    m_Work__owner->setOrdered(true);
+    m_Work__estimatedHour->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__estimatedHour->setName("estimatedHour");
+    m_Work__estimatedHour->setDefaultValueLiteral("-1");
+    m_Work__estimatedHour->setLowerBound(0);
+    m_Work__estimatedHour->setUpperBound(1);
+    m_Work__estimatedHour->setTransient(false);
+    m_Work__estimatedHour->setVolatile(false);
+    m_Work__estimatedHour->setChangeable(true);
+    m_Work__estimatedHour->setUnsettable(false);
+    m_Work__estimatedHour->setID(false);
+    m_Work__estimatedHour->setUnique(true);
+    m_Work__estimatedHour->setDerived(false);
+    m_Work__estimatedHour->setOrdered(true);
+    m_Work__doneRatio->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Work__doneRatio->setName("doneRatio");
+    m_Work__doneRatio->setDefaultValueLiteral("0");
+    m_Work__doneRatio->setLowerBound(0);
+    m_Work__doneRatio->setUpperBound(1);
+    m_Work__doneRatio->setTransient(false);
+    m_Work__doneRatio->setVolatile(false);
+    m_Work__doneRatio->setChangeable(true);
+    m_Work__doneRatio->setUnsettable(false);
+    m_Work__doneRatio->setID(false);
+    m_Work__doneRatio->setUnique(true);
+    m_Work__doneRatio->setDerived(false);
+    m_Work__doneRatio->setOrdered(true);
+    m_Work__description->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__description->setName("description");
+    m_Work__description->setDefaultValueLiteral("");
+    m_Work__description->setLowerBound(0);
+    m_Work__description->setUpperBound(1);
+    m_Work__description->setTransient(false);
+    m_Work__description->setVolatile(false);
+    m_Work__description->setChangeable(true);
+    m_Work__description->setUnsettable(false);
+    m_Work__description->setID(false);
+    m_Work__description->setUnique(true);
+    m_Work__description->setDerived(false);
+    m_Work__description->setOrdered(true);
+    m_Work__dateCreated->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__dateCreated->setName("dateCreated");
+    m_Work__dateCreated->setDefaultValueLiteral("-1");
+    m_Work__dateCreated->setLowerBound(0);
+    m_Work__dateCreated->setUpperBound(1);
+    m_Work__dateCreated->setTransient(false);
+    m_Work__dateCreated->setVolatile(false);
+    m_Work__dateCreated->setChangeable(true);
+    m_Work__dateCreated->setUnsettable(false);
+    m_Work__dateCreated->setID(false);
+    m_Work__dateCreated->setUnique(true);
+    m_Work__dateCreated->setDerived(false);
+    m_Work__dateCreated->setOrdered(true);
+    m_Work__dateEnded->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__dateEnded->setName("dateEnded");
+    m_Work__dateEnded->setDefaultValueLiteral("-1");
+    m_Work__dateEnded->setLowerBound(0);
+    m_Work__dateEnded->setUpperBound(1);
+    m_Work__dateEnded->setTransient(false);
+    m_Work__dateEnded->setVolatile(false);
+    m_Work__dateEnded->setChangeable(true);
+    m_Work__dateEnded->setUnsettable(false);
+    m_Work__dateEnded->setID(false);
+    m_Work__dateEnded->setUnique(true);
+    m_Work__dateEnded->setDerived(false);
+    m_Work__dateEnded->setOrdered(true);
+    m_Work__dateStarted->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__dateStarted->setName("dateStarted");
+    m_Work__dateStarted->setDefaultValueLiteral("-1");
+    m_Work__dateStarted->setLowerBound(0);
+    m_Work__dateStarted->setUpperBound(1);
+    m_Work__dateStarted->setTransient(false);
+    m_Work__dateStarted->setVolatile(false);
+    m_Work__dateStarted->setChangeable(true);
+    m_Work__dateStarted->setUnsettable(false);
+    m_Work__dateStarted->setID(false);
+    m_Work__dateStarted->setUnique(true);
+    m_Work__dateStarted->setDerived(false);
+    m_Work__dateStarted->setOrdered(true);
+    m_Work__lastUpdated->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__lastUpdated->setName("lastUpdated");
+    m_Work__lastUpdated->setDefaultValueLiteral("-1");
+    m_Work__lastUpdated->setLowerBound(0);
+    m_Work__lastUpdated->setUpperBound(1);
+    m_Work__lastUpdated->setTransient(false);
+    m_Work__lastUpdated->setVolatile(false);
+    m_Work__lastUpdated->setChangeable(true);
+    m_Work__lastUpdated->setUnsettable(false);
+    m_Work__lastUpdated->setID(false);
+    m_Work__lastUpdated->setUnique(true);
+    m_Work__lastUpdated->setDerived(false);
+    m_Work__lastUpdated->setOrdered(true);
+    m_Work__workId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__workId->setName("workId");
+    m_Work__workId->setDefaultValueLiteral("");
+    m_Work__workId->setLowerBound(0);
+    m_Work__workId->setUpperBound(1);
+    m_Work__workId->setTransient(false);
+    m_Work__workId->setVolatile(false);
+    m_Work__workId->setChangeable(true);
+    m_Work__workId->setUnsettable(false);
+    m_Work__workId->setID(false);
+    m_Work__workId->setUnique(true);
+    m_Work__workId->setDerived(false);
+    m_Work__workId->setOrdered(true);
+    m_Work__projectId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__projectId->setName("projectId");
+    m_Work__projectId->setDefaultValueLiteral("" "");
+    m_Work__projectId->setLowerBound(0);
+    m_Work__projectId->setUpperBound(1);
+    m_Work__projectId->setTransient(false);
+    m_Work__projectId->setVolatile(false);
+    m_Work__projectId->setChangeable(true);
+    m_Work__projectId->setUnsettable(false);
+    m_Work__projectId->setID(false);
+    m_Work__projectId->setUnique(true);
+    m_Work__projectId->setDerived(false);
+    m_Work__projectId->setOrdered(true);
+    m_Work__submitDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__submitDate->setName("submitDate");
+    m_Work__submitDate->setDefaultValueLiteral("0");
+    m_Work__submitDate->setLowerBound(0);
+    m_Work__submitDate->setUpperBound(1);
+    m_Work__submitDate->setTransient(false);
+    m_Work__submitDate->setVolatile(false);
+    m_Work__submitDate->setChangeable(true);
+    m_Work__submitDate->setUnsettable(false);
+    m_Work__submitDate->setID(false);
+    m_Work__submitDate->setUnique(true);
+    m_Work__submitDate->setDerived(false);
+    m_Work__submitDate->setOrdered(true);
+    m_Work__machineId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Work__machineId->setName("machineId");
+    m_Work__machineId->setDefaultValueLiteral("" "");
+    m_Work__machineId->setLowerBound(0);
+    m_Work__machineId->setUpperBound(1);
+    m_Work__machineId->setTransient(false);
+    m_Work__machineId->setVolatile(false);
+    m_Work__machineId->setChangeable(true);
+    m_Work__machineId->setUnsettable(false);
+    m_Work__machineId->setID(false);
+    m_Work__machineId->setUnique(true);
+    m_Work__machineId->setDerived(false);
+    m_Work__machineId->setOrdered(true);
+    m_Work__nbCPU->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
+    m_Work__nbCPU->setName("nbCPU");
+    m_Work__nbCPU->setDefaultValueLiteral("-1");
+    m_Work__nbCPU->setLowerBound(0);
+    m_Work__nbCPU->setUpperBound(1);
+    m_Work__nbCPU->setTransient(false);
+    m_Work__nbCPU->setVolatile(false);
+    m_Work__nbCPU->setChangeable(true);
+    m_Work__nbCPU->setUnsettable(false);
+    m_Work__nbCPU->setID(false);
+    m_Work__nbCPU->setUnique(true);
+    m_Work__nbCPU->setDerived(false);
+    m_Work__nbCPU->setOrdered(true);
+    m_Work__dueDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__dueDate->setName("dueDate");
+    m_Work__dueDate->setDefaultValueLiteral("-1");
+    m_Work__dueDate->setLowerBound(0);
+    m_Work__dueDate->setUpperBound(1);
+    m_Work__dueDate->setTransient(false);
+    m_Work__dueDate->setVolatile(false);
+    m_Work__dueDate->setChangeable(true);
+    m_Work__dueDate->setUnsettable(false);
+    m_Work__dueDate->setID(false);
+    m_Work__dueDate->setUnique(true);
+    m_Work__dueDate->setDerived(false);
+    m_Work__dueDate->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2052,6 +2543,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_LoadTypeEEnum;
 }
+::ecore::EClass_ptr TMS_DataPackage::getWork()
+{
+    return m_WorkEClass;
+}
 
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__sessionId()
 {
@@ -2145,6 +2640,14 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_Job__batchJobId;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__outputDir()
+{
+    return m_Job__outputDir;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__workId()
+{
+    return m_Job__workId;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {
     return m_ListJobs__nbJobs;
@@ -2221,6 +2724,18 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__criterion;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__fileParams()
+{
+    return m_SubmitOptions__fileParams;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__textParams()
+{
+    return m_SubmitOptions__textParams;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__workId()
+{
+    return m_SubmitOptions__workId;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
     return m_ListJobsOptions__jobId;
@@ -2260,6 +2775,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__batchJob()
 {
     return m_ListJobsOptions__batchJob;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__workId()
+{
+    return m_ListJobsOptions__workId;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__jobId()
 {
@@ -2369,6 +2888,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_JobResult__errorPath;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getJobResult__outputDir()
+{
+    return m_JobResult__outputDir;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobResults__nbJobs()
 {
     return m_ListJobResults__nbJobs;
@@ -2380,5 +2903,85 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getLoadCriterion__loadType()
 {
     return m_LoadCriterion__loadType;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__sessionId()
+{
+    return m_Work__sessionId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__applicationId()
+{
+    return m_Work__applicationId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__subject()
+{
+    return m_Work__subject;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__priority()
+{
+    return m_Work__priority;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__status()
+{
+    return m_Work__status;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__endDate()
+{
+    return m_Work__endDate;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__owner()
+{
+    return m_Work__owner;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__estimatedHour()
+{
+    return m_Work__estimatedHour;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__doneRatio()
+{
+    return m_Work__doneRatio;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__description()
+{
+    return m_Work__description;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__dateCreated()
+{
+    return m_Work__dateCreated;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__dateEnded()
+{
+    return m_Work__dateEnded;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__dateStarted()
+{
+    return m_Work__dateStarted;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__lastUpdated()
+{
+    return m_Work__lastUpdated;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__workId()
+{
+    return m_Work__workId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__projectId()
+{
+    return m_Work__projectId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__submitDate()
+{
+    return m_Work__submitDate;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__machineId()
+{
+    return m_Work__machineId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__nbCPU()
+{
+    return m_Work__nbCPU;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__dueDate()
+{
+    return m_Work__dueDate;
 }
 

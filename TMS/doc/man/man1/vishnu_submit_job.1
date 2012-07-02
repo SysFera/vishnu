@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: vishnu_submit_job
-.\"    Author:  SysFera SAS <info@sysfera.com>
+.\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: January 2012
+.\"      Date: June 2012
 .\"    Manual: TMS Command reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.4
 .\"  Language: English
 .\"
-.TH "VISHNU_SUBMIT_JOB" "1" "January 2012" "VISHNU 1.2" "TMS Command reference"
+.TH "VISHNU_SUBMIT_JOB" "1" "June 2012" "VISHNU 1.4" "TMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,10 +28,10 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_submit_job \- submits a job on a machine through the use of a script (scriptFilePath)\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
+vishnu_submit_job \- Allows to submit a job consisting in running a given script on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_submit_job\fR\ 'u
-\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
+\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] [\fB\-F\ \fR\fB\fIfileParams\fR\fR] [\fB\-V\ \fR\fB\fItextParams\fR\fR] [\fB\-w\ \fR\fB\fIwid\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
 .SH "DESCRIPTION"
 .PP
 This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
@@ -116,6 +116,21 @@ allows to select automatically a queue which has the number of nodes requested b
 .RS 4
 The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs)\&. This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)\&. The value must be an integer\&. Predefined values are: 0 (USE_NB_WAITING_JOBS), 1 (USE_NB_JOBS), 2 (USE_NB_RUNNING_JOBS)\&.
 .RE
+.PP
+\fB\-F \fR\fB\fIfileParams\fR\fR
+.RS 4
+Sets a list of local files as parameters for the script\&. These files will be uploaded onto the server before computing the script\&. At the execution time, each path can be accessed through an environment variable\&. E\&.g\&. \-\-fileParams "PFILE1=/path/to/file1 PFILE2=/path/to/file2" or \-F "PFILE1=/path/to/file1 PFILE2=/path/to/file2"\&. At the execution, the environment variable $PFILE1, for example, will point to the uploaded copy of the file /path/to/file1\&. The option \-\-fileParam or \-f allows to set each file individually\&. NOTE: The name of parameter as well as those of the corresponding environment are case\-insensitive\&. \&.
+.RE
+.PP
+\fB\-V \fR\fB\fItextParams\fR\fR
+.RS 4
+Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable\&. E\&.g\&. \-\-textParams "PARAM1=value1 PARAM2=value2" or \-F "PARAM1=value1 PARAM2=value2", will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively\&. The option \-\-textParam or \-v allows to set each file individually\&. NOTE: The name of parameter as well as those of the corresponding environment are case\-insensitive\&.\&.
+.RE
+.PP
+\fB\-w \fR\fB\fIwid\fR\fR
+.RS 4
+Sets the identifier of the Work to which the job is related\&.\&.
+.RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
 The VISHNU Job Manager set the following variables in the environment of the batch script\&.
@@ -143,6 +158,11 @@ Set the name of the file contain the list of nodes assigned to the job\&.
 \fBVISHNU_BATCHJOB_NUM_NODES\fR
 .RS 4
 Set the total number of nodes in the job\*(Aqs resource allocation\&.
+.RE
+.PP
+\fBVISHNU_OUTPUT_DIR\fR
+.RS 4
+Define a generic directory where files generated through a script would be stored in order to be get out easily using the related VISHNU commands (vishnu_get_output or vishnu_get_completed_jobs_output)\&. For information, the real path of the directory is a set at the execution time with a directory automatically created within the job\*(Aqs working directory by the system\&.\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -228,13 +248,13 @@ To submit automatically the script toto on the best machine by using a machine w
 vishnu_submit_job autom toto \-L 1
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2012 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

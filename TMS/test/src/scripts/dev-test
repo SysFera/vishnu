@@ -1,0 +1,6 @@
+#!/bin/bash
+
+/bin/hostname 
+
+echo ${VISHNU_OUTPUT_DIR}
+

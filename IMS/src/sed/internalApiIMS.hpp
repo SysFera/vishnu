@@ -100,12 +100,19 @@ solveSetTID(diet_profile_t* pb);
 int
 solveSetMID(diet_profile_t* pb);
 /**
-* \brief Function to solve the service to set the machine id format
+* \brief Function to solve the service to set the authsystem id format
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
 int
 solveSetAID(diet_profile_t* pb);
+/**
+* \brief Function to solve the service to set the work id format
+* \param pb is a structure which corresponds to the descriptor of a profile
+* \return raises an exception on error
+*/
+int
+solveSetWID(diet_profile_t* pb);
 /**
 * \brief Function to solve the service to load shed
 * \fn    int solveLoadShed(diet_profile_t* pb)

@@ -13,7 +13,7 @@
  */
 
 /**
- * \brief Function to solve the jobSubmit service 
+ * \brief Function to solve the jobSubmit service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -21,7 +21,15 @@ int
 solveSubmitJob(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the jobCancel service 
+ * \brief Function to solve the addWork service
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveAddWork(diet_profile_t* pb);
+
+/**
+ * \brief Function to solve the jobCancel service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -37,7 +45,7 @@ int
 solveJobInfo(diet_profile_t* pb);
 
 /**
-* \brief Function to solve the generic query service 
+* \brief Function to solve the generic query service
 * \param pb is a structure which corresponds to the descriptor of a profile
 * \return raises an exception on error
 */
@@ -46,7 +54,7 @@ int
 solveGenerique(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the getListOfJobs service 
+ * \brief Function to solve the getListOfJobs service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -54,7 +62,7 @@ int
 solveGetListOfJobs(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the getJobsProgression service 
+ * \brief Function to solve the getJobsProgression service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -62,7 +70,7 @@ int
 solveGetListOfJobsProgression(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the getListOfQueues service 
+ * \brief Function to solve the getListOfQueues service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -70,7 +78,7 @@ int
 solveListOfQueues(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the jobOutPutGetResult service 
+ * \brief Function to solve the jobOutPutGetResult service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */
@@ -78,7 +86,7 @@ int
 solveJobOutPutGetResult(diet_profile_t* pb);
 
 /**
- * \brief Function to solve the jobOutputGetCompletedJobs service 
+ * \brief Function to solve the jobOutputGetCompletedJobs service
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \return raises an exception on error
  */

@@ -21,7 +21,7 @@ class Database;
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 10 
+#define NB_SRV 11
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
@@ -33,7 +33,8 @@ static const char* SERVICES[NB_SRV] = {
   "jobOutputGetResult_",
   "jobOutputGetCompletedJobs_",
   "getListOfJobs_all",
-  "jobSubmit_autom"
+  "jobSubmit_autom",
+  "addWork"
 };
 
 /**
@@ -119,7 +120,7 @@ private :
    */
   static void
     setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues);
-  
+
 
   /////////////////////////////////
   // Attributes
