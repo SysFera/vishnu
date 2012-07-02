@@ -59,7 +59,7 @@ char* crypt(const char* clef, const char* salt);
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
-
+  
   static const std::string ROOTUSERNAME = "root";
   static const std::string UMSMAPPERNAME = "UMS";
   static const std::string TMSMAPPERNAME = "TMS";
@@ -347,6 +347,5 @@ std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& ut
      */
     bool
     isNotIP(std::string name);
-
 }
 #endif // _UTILVISHNU_H_
