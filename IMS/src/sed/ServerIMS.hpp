@@ -19,7 +19,7 @@
 /**
  * \brief Number of service in IMS
  */
-#define NB_SRV 18
+#define NB_SRV 19
 #include "DIET_server.h"
 
 static const char* SRV[NB_SRV] = {
@@ -40,7 +40,9 @@ static const char* SRV[NB_SRV] = {
   "int_restart",
   "int_stop",
   "int_getSystemInfo",
-  "int_defineAuthIdentifier"};
+  "int_defineAuthIdentifier",
+  "int_defineWorkIdentifier"
+};
 /**
  * \class ServerIMS
  * \brief This class describes the IMS server

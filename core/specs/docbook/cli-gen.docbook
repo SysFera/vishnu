@@ -2788,7 +2788,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_submit_job command submits a job on a machine through the use of a script (scriptFilePath). If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script  using  VISHNU's generic directives for all batch schedulers</para>
+        <para>The vishnu_submit_job command allows to submit a job consisting in running a given script on a machine.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_submit_job</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
@@ -2805,6 +2805,9 @@
               choice="opt"><option>-D <replaceable>workingDir</replaceable></option></arg><arg
               choice="opt"><option>-T <replaceable>cpuTime</replaceable></option></arg><arg
               choice="opt"><option>-Q</option></arg><arg choice="opt"><option>-L <replaceable>loadType</replaceable></option></arg><arg
+              choice="opt"><option>-F <replaceable>fileParams</replaceable></option></arg><arg
+              choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
+              choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2840,7 +2843,7 @@
                 <entry><para>scriptFilePath</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.</para></entry>
+                <entry><para>The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -2946,6 +2949,27 @@
                 <entry><para><link linkend="LoadType">LoadType</link></para></entry>
                 <entry><para>L</para></entry>
                 <entry><para>The criterion to automatically submit a job (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs). This option is used only if the machine identifier is equal to autom (this keyword is used to submit automatically a job)</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>fileParams</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>F</para></entry>
+                <entry><para>Sets a list of local files as parameters for the script.  </para><para>These files will be  uploaded onto the server before computing the script. At the execution time,  each path can be accessed through an environment variable.</para><para>E.g. --fileParams &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot; or -F &quot;PFILE1=/path/to/file1 PFILE2=/path/to/file2&quot;.</para><para>At the execution, the environment variable $PFILE1, for example, will point to the uploaded copy of the file /path/to/file1. </para><para>The option --fileParam or -f allows to set each file individually.</para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>textParams</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>V</para></entry>
+                <entry><para>Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable.</para><para>E.g. --textParams &quot;PARAM1=value1 PARAM2=value2&quot; or -F &quot;PARAM1=value1 PARAM2=value2&quot;, will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>The option --textParam or -v allows to set each file individually.</para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>workId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>Sets the identifier of the Work to which the job is related</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3125,7 +3149,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_jobs command gets a list of all submitted jobs on a machine. If machine identifier is equal to all, submitted jobs on all machines are listed</para>
+        <para>The vishnu_list_jobs command gets a list of all submitted jobs on a machine.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_jobs</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-i <replaceable>jobId</replaceable></option></arg><arg
@@ -3137,7 +3161,8 @@
               choice="opt"><option>-p <replaceable>priority</replaceable></option></arg><arg
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
-              choice="opt"><option>-b</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-b</option></arg><arg choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3236,6 +3261,13 @@
                 <entry><para>boolean</para></entry>
                 <entry><para>b</para></entry>
                 <entry><para>allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu)</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>workId</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>w</para></entry>
+                <entry><para>Allows to gather information about jobs related to a given Work.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3348,7 +3380,7 @@
                 <entry><para>outDir</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>o</para></entry>
-                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory).</para></entry>
+                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory)</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3362,7 +3394,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_cancel_job command cancels a job from its id. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator.</para>
+        <para>The vishnu_cancel_job command allows to cancel a job submitted on a given machine.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_cancel_job</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>jobId</replaceable></arg></cmdsynopsis>
@@ -3406,6 +3438,19 @@
             </tbody>
           </tgroup>
         </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_add_work</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_add_work command allows to create a work consisting in running jobs.</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_add_work</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <para>This command defines no arguments.</para>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
@@ -4501,6 +4546,51 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
+      <section>
+        <title>vishnu_define_work_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_work_identifier command defines the shape of the identifiers automatically generated for the work</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_work_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
@@ -4703,7 +4793,7 @@
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
@@ -4748,7 +4838,7 @@
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -4949,7 +5039,7 @@
                 <entry><para>mode</para></entry>
                 <entry><para>mode_t</para></entry>
                 <entry/>
-                <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para> the access rigths of file/directory in octal system</para></entry>
                 <entry><para>YES</para></entry>
               </row>
               <row>
@@ -5121,7 +5211,7 @@
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_dir command displays  the content of a remote directory. </para>
+        <para>The vishnu_list_dir command displays  the content of a remote directory</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-l</option></arg><arg choice="opt"><option>-a</option></arg><arg
@@ -5227,14 +5317,14 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5270,7 +5360,7 @@
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -5329,14 +5419,14 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5372,7 +5462,7 @@
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -5431,14 +5521,14 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5474,7 +5564,7 @@
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
                 <entry><para>YES</para></entry>
               </row>
@@ -5533,14 +5623,14 @@
                 <entry><para>isRecursive</para></entry>
                 <entry><para>boolean</para></entry>
                 <entry><para>r</para></entry>
-                <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+                <entry><para>It specifies when the copy is recursive (case of directory) or not</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
                 <entry><para>t</para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5576,7 +5666,7 @@
                 <entry><para>VISHNU_TRANSFER_CMD</para></entry>
                 <entry><para>trCommand</para></entry>
                 <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-                <entry><para>the command to use to perform file transfer.</para></entry>
+                <entry><para>the command to use to perform file transfer</para></entry>
                 <entry><para>NO</para></entry>
                 <entry><para>YES</para></entry>
               </row>

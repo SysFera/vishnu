@@ -31,6 +31,7 @@ set(ALLCLI
   get_job_output
   list_queues 
   submit_job
+  add_work
   )
 
 #set the prefix of command

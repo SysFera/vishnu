@@ -49,7 +49,8 @@ namespace vishnu {
     USER = 1, /*!< For The users */
     JOB = 2, /*!< For the jobs */
     FILETRANSFERT = 3,  /*!< For the file tranfers*/
-    AUTH = 4  /*!< For the authentication system*/
+    AUTH = 4,  /*!< For the authentication system*/
+    WORK = 5  /*!< For the work*/
   } IdType;
   /**
    * \enum CmdStatus

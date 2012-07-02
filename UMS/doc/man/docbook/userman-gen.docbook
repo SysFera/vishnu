@@ -53,7 +53,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.3</releaseinfo>
+    <releaseinfo>1.4</releaseinfo>
   </info>
   <reference>
     <title>UMS Command reference</title>
@@ -3954,7 +3954,7 @@ The session's status is either 0 (inactive) or 1 (active).</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
+              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -5975,7 +5975,7 @@ The session's status is either 0 (inactive) or 1 (active).</para>
           <varlistentry>
             <term><emphasis>options</emphasis></term>
             <listitem>
-              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user..</para>
+              <para>Input argument. Allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para>
             </listitem>
           </varlistentry>
         </variablelist>

@@ -112,6 +112,10 @@ namespace TMS_Data
     class LoadCriterion;
     typedef LoadCriterion* LoadCriterion_ptr;
 
+    // Work
+    class Work;
+    typedef Work* Work_ptr;
+
     // Package & Factory
     class TMS_DataFactory;
     typedef TMS_DataFactory * TMS_DataFactory_ptr;

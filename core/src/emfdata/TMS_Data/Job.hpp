@@ -323,6 +323,28 @@ namespace TMS_Data
          **/
         void setBatchJobId(::ecore::EString const& _batchJobId);
 
+        /**
+         * \brief To get the outputDir
+         * \return The outputDir attribute value
+         **/
+        ::ecore::EString const& getOutputDir() const;
+        /**
+         * \brief To set the outputDir
+         * \param _outputDir The outputDir value
+         **/
+        void setOutputDir(::ecore::EString const& _outputDir);
+
+        /**
+         * \brief To get the workId
+         * \return The workId attribute value
+         **/
+        ::ecore::ELong getWorkId() const;
+        /**
+         * \brief To set the workId
+         * \param _workId The workId value
+         **/
+        void setWorkId(::ecore::ELong _workId);
+
         // References
 
 
@@ -393,6 +415,10 @@ namespace TMS_Data
         ::ecore::EString m_nbNodesAndCpuPerNode;
 
         ::ecore::EString m_batchJobId;
+
+        ::ecore::EString m_outputDir;
+
+        ::ecore::ELong m_workId;
 
         // References
 
