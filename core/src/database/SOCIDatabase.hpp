@@ -14,16 +14,8 @@
 #include <vector>
 
 
-/*
- * \brief split a string into a vector of string
- * \param s the string to split
- * \param delim the delimiter character delim
- */
+
 std::vector<std::string> split(const std::string &s, char delim);
-/*
- * \brief convert standard time to string YYYY-MM-DD HH-MM-SS
- * \note : maybe put it in utilVishnu
- */
 std::string convertTmToString(std::tm time);
 
 /**
@@ -34,9 +26,7 @@ class SOCIDatabase : public Database{
 public :
   /**
    * \brief Function to process the request in the database
-   * \param request The request to process
-   * \remark the request can be a multiple SQL statements separated by semicolons
-   * \remark the last semicolon is optional
+   * \param request The request to process (must contain a SINGLE SQL statement without a semicolumn)
    * \param transacId the id of the transaction if one is used
    * \return 0 on success, an error code otherwise
    * \brief NB : requests like create, drop and alter table put the transcation into auto-commit mode
