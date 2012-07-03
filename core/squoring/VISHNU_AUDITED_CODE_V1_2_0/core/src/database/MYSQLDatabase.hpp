@@ -8,14 +8,14 @@
 #ifndef _MYSDLDATABASE_H_
 #define _MYSQLDATABASE_H_
 
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "mysql.h"
 
 /**
  * \class MYSQLDatabase
  * \brief MYSQL implementation of the Database
  */
-class MYSQLDatabase : public Database{
+class MYSQLDatabase : public SOCIDatabase{
 public :
   /**
    * \brief Function to process the request in the database

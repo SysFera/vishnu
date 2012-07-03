@@ -8,7 +8,7 @@
 #ifndef _DBFACTORY_H_
 #define _DBFACTORY_H_
 
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "DbConfiguration.hpp"
 
 
@@ -34,21 +34,21 @@ public :
    * \param dbConfig  the configuration of the database
    * \return A database or a nil pointer
    */
-  Database*
+  SOCIDatabase*
   createDatabaseInstance(DbConfiguration dbConfig);
 
   /**
    * \brief Get the single instance of the database
    * \return A database or a nil pointer
    */
-  Database*
+  SOCIDatabase*
   getDatabaseInstance();
 
 private :
   /**
    * \brief The unique instance of the database
    */
-  static Database* mdb;
+  static SOCIDatabase* mdb;
 };
 
 

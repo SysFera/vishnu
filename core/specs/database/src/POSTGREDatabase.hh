@@ -14,7 +14,7 @@
  * \class POSGREDatabase
  * \brief POSTRE implementation of the Database class
  */
-class POSTGREDatabase : public Database{
+class POSTGREDatabase : public SOCIDatabase{
 public :
   static const int DATABASENOTCONNECTED = -1;
   /**
