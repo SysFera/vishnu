@@ -9,7 +9,7 @@
 #define _ORACLEDATABASE_HH_
 
 #include "InternalVishnuException.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "occi.h"
 #include <vector>
 
@@ -18,7 +18,7 @@ using namespace oracle::occi;
  * \class OracleDatabase
  * \brief Oracle implementation of the Database class
  */
-class OracleDatabase : public Database {
+class OracleDatabase : public SOCIDatabase {
 public :
   /**
    * \brief Function to process the request in the database

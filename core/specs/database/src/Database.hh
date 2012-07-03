@@ -15,7 +15,7 @@
  * \class Database
  * \brief This class describes a database
  */
-class Database{
+class SOCIDatabase{
 public :
   /**
    * \brief Function to process the request in the database
@@ -66,12 +66,12 @@ protected :
    * \fn Database()
    * \brief Constructor, raises an exception on error
    */
-  Database();
+  SOCIDatabase();
   /**
    * \fn ~Database()
    * \brief Destructor, raises an exception on error
    */
-  ~Database();
+  ~SOCIDatabase();
 private :
   /**
    * \brief To disconnect from the database

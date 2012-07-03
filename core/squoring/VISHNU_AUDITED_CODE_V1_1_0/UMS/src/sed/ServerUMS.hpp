@@ -21,7 +21,7 @@
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 
-class Database;
+class SOCIDatabase;
 
 static const char* SRV[NB_SRV] = {
   "sessionConnect",
@@ -127,7 +127,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  static Database *mdatabaseVishnu;
+  static SOCIDatabase *mdatabaseVishnu;
   /**
   * \brief Instance of UMSMapper
   */

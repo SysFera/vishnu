@@ -14,7 +14,7 @@
 #include <iostream>
 #include <exception>
 #include "UMSVishnuException.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include "SessionServer.hpp"
@@ -170,7 +170,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  SOCIDatabase *mdatabaseVishnu;
   /**
   * \brief An object which encapsulates session data
   */

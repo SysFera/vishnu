@@ -43,7 +43,7 @@ public :
    * \param type The type of database to create
    * \return A database or a nil pointer
    */
-  Database*
+  SOCIDatabase*
   create(int type, std::string host, std::string user, std::string pwd, std::string db = "", unsigned int port = 0);
 
 };

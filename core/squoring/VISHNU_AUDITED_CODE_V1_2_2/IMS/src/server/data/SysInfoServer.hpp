@@ -60,7 +60,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabase;
+  SOCIDatabase *mdatabase;
   /**
    * \brief Option for getting sysinfo
    */
