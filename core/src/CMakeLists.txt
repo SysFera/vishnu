@@ -426,6 +426,7 @@ if(NOT CLIENT_ONLY)
 
   if(SOCI_FOUND)
     set(database_SRCS ${database_SRCS} database/SOCIDatabase.cpp)
+    set(database_SRCS ${database_SRCS} database/SOCISession.cpp)
     include_directories(${DATABASE_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
