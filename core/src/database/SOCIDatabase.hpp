@@ -8,12 +8,15 @@
 #ifndef _SOCIDATABASE_H_
 #define _SOCIDATABASE_H_
 
-#include "Database.hpp"
+
 #include "SystemException.hpp"
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 #include <vector>
+#include "DatabaseResult.hpp"
+#include "DbConfiguration.hpp"
 
+static const int SUCCESS =  0;
 
 /*
  * \brief split a string into a vector of string
@@ -31,7 +34,7 @@ std::string convertTmToString(std::tm time);
  * \class SOCIDatabase
  * \brief SOCI implementation of the Database
  */
-class SOCIDatabase : public Database{
+class SOCIDatabase {
 public :
   /**
    * \brief Function to process the request in the database
@@ -69,6 +72,7 @@ public :
    * \fn ~SOCIDatabase()
    * \brief Destructor, raises an exception on error
    */
+  virtual
   ~SOCIDatabase();
   /**
   * \brief To get the result of a select request

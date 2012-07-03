@@ -75,7 +75,7 @@ OracleDatabase::OracleDatabase(string hostname,
                                string pwd,
                                string database,
                                unsigned int port)
-  :Database(), menvironment(NULL), mcon(NULL), mstmt(NULL), mres(NULL),
+  :SOCIDatabase(), menvironment(NULL), mcon(NULL), mstmt(NULL), mres(NULL),
    mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port),
    misConnected(false) {
 }

@@ -10,7 +10,7 @@
 
 #include <string>
 #include "DbConfiguration.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "UMSMapper.hpp"
 #include "TMSMapper.hpp"
 #include "FMSMapper.hpp"
@@ -115,7 +115,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  static Database *mdatabaseVishnu;
+  static SOCIDatabase *mdatabaseVishnu;
   /**
   * \brief Instance of UMSMapper
   */

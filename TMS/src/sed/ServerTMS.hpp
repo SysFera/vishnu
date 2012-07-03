@@ -16,7 +16,7 @@
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
 
-class Database;
+class SOCIDatabase;
 
 /**
  *  * \brief Number of service in TMS
@@ -50,7 +50,7 @@ public :
   /**
    * \brief To get the unique instance of the database
    */
-  Database* getDatabaseVishnu();
+  SOCIDatabase* getDatabaseVishnu();
 
   /**
    * \brief to get the VishnuId
@@ -151,7 +151,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  Database *mdatabaseVishnu;
+  SOCIDatabase *mdatabaseVishnu;
   /**
    * \brief Directory containing the slave binary
    */

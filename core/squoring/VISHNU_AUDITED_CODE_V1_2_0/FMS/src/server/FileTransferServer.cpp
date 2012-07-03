@@ -28,9 +28,9 @@ unsigned int FileTransferServer::msshPort=22;
 std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 
 
-Database* FileTransferServer::getDatabaseInstance(){
+SOCIDatabase* FileTransferServer::getDatabaseInstance(){
 
-  Database* databaseInstance (DbFactory().getDatabaseInstance());
+  SOCIDatabase* databaseInstance (DbFactory().getDatabaseInstance());
   if(databaseInstance !=NULL){
     return databaseInstance;
   }

@@ -33,7 +33,7 @@ vishnu::unregisterSeD(string type, string mid) {
   // Database execution
   try {
     DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
+    SOCIDatabase* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
     // Do nothing in case of error to delete the own proc of the database
@@ -63,7 +63,7 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   // Database execution
   try {
     DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
+    SOCIDatabase* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
     throw (e);
@@ -294,7 +294,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 int
 vishnu::getVishnuCounter(std::string vishnuIdString){
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
   int ret;
 
   std::string table;
@@ -324,7 +324,7 @@ std::string
 vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
 
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
@@ -344,7 +344,7 @@ void
 vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
 
   cpt = cpt+1;
 
