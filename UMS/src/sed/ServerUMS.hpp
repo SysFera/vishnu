@@ -22,7 +22,7 @@
 #include "DbConfiguration.hpp"
 #include "AuthenticatorConfiguration.hpp"
 
-class Database;
+class SOCIDatabase;
 class Authenticator;
 
 static const char* SRV[NB_SRV] = {
@@ -141,7 +141,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  static Database *mdatabaseVishnu;
+  static SOCIDatabase *mdatabaseVishnu;
   /**
   * \brief Instance of UMSMapper
   */

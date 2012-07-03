@@ -52,7 +52,7 @@ MYSQLDatabase::MYSQLDatabase(string hostname,
 			     string pwd,
 			     string database,
 			     unsigned int port)
-  : Database(), mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port) {
+  : SOCIDatabase(), mhost(hostname), musername(username), mpwd(pwd), mdatabase(database), mport(port) {
 
   for (unsigned int i=0;i<MPOOLSIZE;i++) {
     pthread_mutex_init(&(mpool[i].mmutex), NULL);

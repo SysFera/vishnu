@@ -12,7 +12,7 @@
 #include <exception>
 #include "VishnuException.hpp"
 #include "UMSVishnuException.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 
 /**
 * \class MachineClientServer
@@ -76,7 +76,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  SOCIDatabase *mdatabaseVishnu;
 
   /////////////////////////////////
   // Functions

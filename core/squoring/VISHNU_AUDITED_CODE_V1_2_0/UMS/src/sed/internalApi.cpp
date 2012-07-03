@@ -1248,7 +1248,7 @@ solveRestore(diet_profile_t* pb) {
 
   DbFactory factory;
   try {
-    Database* db = factory.getDatabaseInstance();
+    SOCIDatabase* db = factory.getDatabaseInstance();
     db->process(sqlcode);
   }
   catch (VishnuException& e) {

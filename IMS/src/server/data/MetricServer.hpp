@@ -112,7 +112,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabase;
+  SOCIDatabase *mdatabase;
   /**
    * \brief The name of the command
    */
