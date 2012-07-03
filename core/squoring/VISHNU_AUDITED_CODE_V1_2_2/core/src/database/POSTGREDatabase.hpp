@@ -8,7 +8,7 @@
 #ifndef _POSTGREDATABASE_H_
 #define _POSTGREDATABASE_H_
 
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 #include "DbConfiguration.hpp"
 #include "libpq-fe.h"
 #include <pthread.h>
@@ -17,7 +17,7 @@
  * \class POSTGREDatabase
  * \brief POSTGRESQL implementation of the Database class
  */
-class POSTGREDatabase : public Database {
+class POSTGREDatabase : public SOCIDatabase {
 public :
   /**
    * \brief Function to process the request in the database

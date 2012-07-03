@@ -28,7 +28,7 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
   std::string uri, authlogin, authpassword, ldapbase, authSystemStatus, userid, pwd;
 
   DbFactory factory;
-  Database* databaseVishnu = factory.getDatabaseInstance();
+  SOCIDatabase* databaseVishnu = factory.getDatabaseInstance();
 
   std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, authsystem.status, userid, pwd"
                            " FROM ldapauthsystem, authsystem, authaccount, users "

@@ -21,7 +21,7 @@ DbFactory::~DbFactory(){
 }
 
 
-Database*
+SOCIDatabase*
 DbFactory::create(int type, std::string host, std::string user, std::string pwd, std::string db, unsigned int port){
   switch (type){
   case MYSQLDB :

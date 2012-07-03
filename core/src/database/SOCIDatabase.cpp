@@ -163,7 +163,7 @@ int SOCIDatabase::connect()
  * \brief Constructor, raises an exception on error
  */
 SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig) :
-		Database(), mconfig(dbConfig), mdbtype(dbConfig.getDbType())
+	mconfig(dbConfig), mdbtype(dbConfig.getDbType())
 {
 	mpool = new connection_pool(mconfig.getDbPoolSize());
 	is_connected = false;

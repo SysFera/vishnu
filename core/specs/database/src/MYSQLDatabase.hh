@@ -15,7 +15,7 @@
  * \class MYSQLDatabase
  * \brief MYSQL implementation of the Database
  */
-class MYSQLDatabase : public Database{
+class MYSQLDatabase : public SOCIDatabase{
 public :
   static const int DATABASENOTCONNECTED = -1;
   /**
