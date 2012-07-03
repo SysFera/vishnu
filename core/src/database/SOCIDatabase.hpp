@@ -9,6 +9,7 @@
 #define _SOCIDATABASE_H_
 
 #include "Database.hpp"
+#include "SystemException.hpp"
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 #include <vector>
@@ -118,6 +119,33 @@ public :
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid);
 
+  /*
+   * \brief template function getResult
+   *
+   */
+  template<class I, class O>
+  void getResult(std::string request, const I input, O & output)
+  {
+  	soci::session * conn;
+  	int reqPos=-1;
+  	conn=getConnection(reqPos);
+  	std::vector<std::vector<std::string> > results;
+  	std::vector<std::string> attributeNames;
+
+
+  	try
+  	{
+  			((conn->prepare)<<request,soci::use(input),soci::into(output));
+  	}
+  	catch(std::exception const & e)
+  	{
+  		throw SystemException(ERRCODE_DBERR,std::string("Cannot get query result : \n")+e.what());
+  	}
+
+  	releaseConnection(reqPos);
+  	return;
+  }
+
 private :
   /**
    * \brief To get a valid connexion
@@ -125,7 +153,7 @@ private :
    * \param pos The position of the connection gotten in the pool
    * \return A valid and free connection
    */
-  soci::session & getConnection(int& pos);
+  soci::session * getConnection(int& pos);
 
   /**
    * \brief To release a connexion
