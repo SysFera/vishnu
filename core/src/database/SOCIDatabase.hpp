@@ -15,6 +15,7 @@
 #include <vector>
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
+#include "SOCISession.hpp"
 
 static const int SUCCESS =  0;
 
@@ -123,32 +124,22 @@ public :
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid);
 
+
   /*
-   * \brief template function getResult
-   *
+   * \brief To get a single session to the DB
+   * \param reqPos : pool position requested
    */
-  template<class I, class O>
-  void getResult(std::string request, const I input, O & output)
-  {
-  	soci::session * conn;
-  	int reqPos=-1;
-  	conn=getConnection(reqPos);
-  	std::vector<std::vector<std::string> > results;
-  	std::vector<std::string> attributeNames;
+  SOCISession
+  getSingleSession(int reqPos = -1);
+  /*
+   * \brief To release a single session previously getted
+   * \param sess : the single session to release
+   * \return SUCCES if the session was correctly released
+   */
+  int
+  releaseSingleSession(SOCISession & ss);
 
 
-  	try
-  	{
-  			((conn->prepare)<<request,soci::use(input),soci::into(output));
-  	}
-  	catch(std::exception const & e)
-  	{
-  		throw SystemException(ERRCODE_DBERR,std::string("Cannot get query result : \n")+e.what());
-  	}
-
-  	releaseConnection(reqPos);
-  	return;
-  }
 
 private :
   /**
