@@ -26,13 +26,6 @@ using namespace soci;
  */
 const int CONN_TIMEOUT = 3000; // in millisecond
 
-
-/**
- * \brief Function to process the request in the database
- * \remark If transacID equals -1, a free connexion is allocated
- * from the pool, the processed request is auto-commited and then
- * the connexion is released.
- */
 int SOCIDatabase::process(string request, int transacId)
 {
 	if (!is_connected)
@@ -62,6 +55,7 @@ int SOCIDatabase::process(string request, int transacId)
 		throw SystemException(ERRCODE_DBERR, "Cannot get transaction");
 	}
 
+	//cout<<" ###p request : "<<request<<endl;//TODO : test, à supprimer
 	int res;
 	if (request.empty())
 	{
@@ -69,30 +63,37 @@ int SOCIDatabase::process(string request, int transacId)
 		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
 	}
 
-	// To separate que request in case of multiple statements
 	vector<string> requests=split(request,';');
 	try
 	{
+		//(pconn->once)<<request;
 		for(vector<string>::const_iterator it=requests.begin();it!=requests.end();++it)
 		{
 			(pconn->once)<<(*it);
 		}
+
+
 	} catch (exception const &e)
 	{
+
+		//pconn->reconnect();
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot process request \n") + e.what());
+
 	}
 
 	if (reqPos != -1)
 	{
+		//TODO : check
+		cout << "FIN DE TRANSACTION " << reqPos << " ####" << endl;
+		//endTransaction(reqPos);
 		releaseConnection(reqPos);
 	}
 
 	return SUCCESS;
 }
 /**
- * \brief To make a connection to the database,
- * \biref Select the DBSM backend, between MYSQL, POSTGRESQL ...
+ * \brief To make a connection to the database
  * \fn int connect()
  * \return raises an exception on error
  */
@@ -103,6 +104,8 @@ int SOCIDatabase::connect()
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot connect to DB, already connected to DB");
 	}
+
+	//const struct backend_factory * backend;
 
 	switch (mconfig.getDbType())
 	{
@@ -116,11 +119,8 @@ int SOCIDatabase::connect()
 	mbackend = &postgresql;
 	break;
 #endif //POSTGRES
-#ifdef USE_ORACLE
-	case DbConfiguration::ORACLE:
-		throw SystemException(ERRCODE_DBERR," ORACLE is not supported yet");
-	break;
-#endif
+	/*case DbConfiguration::ORACLE:
+	 break;*/
 	default:
 		throw SystemException(ERRCODE_DBERR,
 				"Database instance type unknown or not managed");
@@ -143,21 +143,23 @@ int SOCIDatabase::connect()
 
 	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
 	{
+
 		soci::session & msession = mpool->at(i);
+
 		try
 		{
+			//msession.open(*backend,connectString);
 			msession.open(*mbackend, connectString);
 		} catch (exception const &e)
 		{
 			throw SystemException(ERRCODE_DBERR,
 					string("Cannot connect to the DB : ") + e.what());
 		}
-	} //for
 
+	} //for
 	is_connected = true;
 	return SUCCESS;
 }
-
 /**
  * \fn SOCIDatabase(DbConfiguration dbConfig)
  * \brief Constructor, raises an exception on error
@@ -203,11 +205,7 @@ int SOCIDatabase::disconnect()
 			mpool->give_back(i);
 		} catch (exception & e)
 		{
-			/* \remark the session was already free
-			 * no need to throw the exception
-			 * How to check if a soci::session is already free
-			 * before give it back ?
-			 */
+			// the session was already free
 		}
 	}
 	is_connected = false;
@@ -229,6 +227,7 @@ SOCIDatabase::getResult(string request, int transacId)
 	}
 
 	int reqPos;
+	//soci::session conn;
 	size_t pos;
 
 	if (transacId == -1)
@@ -249,6 +248,8 @@ SOCIDatabase::getResult(string request, int transacId)
 	}
 
 	soci::session * pconn = &mpool->at(pos);
+	//cout<<" ###gr request : "<<request<<endl;//TODO : test, à supprimer
+
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
 	try
@@ -433,6 +434,8 @@ void SOCIDatabase::cancelTransaction(int transactionID)
 		throw SystemException(ERRCODE_DBCONN,
 				string("Failed to cancel transaction : ") + e.what());
 	}
+
+	//mpool->give_back(pos); TODO remove line
 }
 
 void SOCIDatabase::flush(int transactionID)
@@ -687,11 +690,7 @@ vector<string> SOCIDatabase::getRowAttributeNames(const row & r)
 
 
 
-/*
- * \brief split a string into a vector of string
- * \param s the string to split
- * \param delim the delimiter character delim
- */
+
 vector<string> split(const string &s, char delim) {
     stringstream ss(s);
     string item;
