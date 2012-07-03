@@ -48,7 +48,7 @@ int SOCIDatabase::process(string request, int transacId)
 	{
 		if (transacId == -1)
 		{
-			pconn = &getConnection(reqPos);
+			pconn = getConnection(reqPos);
 			pos = reqPos;
 		}
 		else
@@ -197,6 +197,7 @@ int SOCIDatabase::disconnect()
 	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
 	{
 		pconn = &(mpool->at(i));
+		pconn->close();
 		try
 		{
 			mpool->give_back(i);
@@ -208,7 +209,6 @@ int SOCIDatabase::disconnect()
 			 * before give it back ?
 			 */
 		}
-		pconn->close();
 	}
 	is_connected = false;
 	return SUCCESS;
@@ -242,6 +242,12 @@ SOCIDatabase::getResult(string request, int transacId)
 		pos = transacId;
 	}
 
+	if (request.empty())
+	{
+		releaseConnection(reqPos);
+		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
+	}
+
 	soci::session * pconn = &mpool->at(pos);
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
@@ -263,7 +269,7 @@ SOCIDatabase::getResult(string request, int transacId)
 	return new DatabaseResult(resultsStr, attributesNames);
 }
 
-soci::session &
+soci::session *
 SOCIDatabase::getConnection(int& id)
 {
 
@@ -274,7 +280,7 @@ SOCIDatabase::getConnection(int& id)
 	if (available_connection)
 	{
 		id = (int) pos; //Transaction ID
-		return mpool->at(pos);
+		return &(mpool->at(pos));
 	}
 	else
 	{
@@ -311,11 +317,11 @@ int SOCIDatabase::startTransaction()
 				"Cannot start transaction, not connected to DB");
 	}
 	int reqPos;
-	soci::session & conn = getConnection(reqPos);
+	soci::session * conn = getConnection(reqPos);
 
 	try
 	{
-		conn.begin();
+		conn->begin();
 	} catch (exception const &e)
 	{
 		throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
@@ -518,6 +524,17 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 	return vishnu::convertToInt(*iter);
 
 }
+
+
+
+/**
+ * template function getResult
+ * TODO
+ */
+
+
+
+
 
 /*
  * private functions
