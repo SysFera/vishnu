@@ -504,6 +504,7 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveAccountAuthDelete)) {
     return 1;
   }
