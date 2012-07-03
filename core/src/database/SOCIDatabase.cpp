@@ -529,6 +529,29 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 }
 
 
+SOCISession SOCIDatabase::getSingleSession(int reqPos)
+{
+	session * conn=NULL;
+	if(reqPos==-1)
+	{
+		conn=getConnection(reqPos);
+	}
+	else
+	{
+		conn=&(mpool->at(reqPos));
+	}
+
+	return SOCISession(conn,reqPos);
+}
+
+int SOCIDatabase::releaseSingleSession(SOCISession & ss)
+{
+	releaseConnection(ss.getPoolPosition());
+	ss=SOCISession();
+
+	return SUCCESS;
+}
+
 
 /**
  * template function getResult
