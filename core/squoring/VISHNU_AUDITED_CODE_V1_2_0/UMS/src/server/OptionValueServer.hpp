@@ -16,7 +16,7 @@
 #include "VishnuException.hpp"
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 
 class SessionServer;
 
@@ -94,7 +94,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  SOCIDatabase *mdatabaseVishnu;
   /**
   * \brief An object which encapsulates user data
   */

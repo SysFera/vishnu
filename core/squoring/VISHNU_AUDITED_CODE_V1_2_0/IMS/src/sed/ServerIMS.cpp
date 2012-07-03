@@ -18,7 +18,7 @@
 using namespace vishnu;
 
 ServerIMS *ServerIMS::minstance       = NULL;
-Database  *ServerIMS::mdatabaseVishnu = NULL;
+SOCIDatabase  *ServerIMS::mdatabaseVishnu = NULL;
 UMSMapper *ServerIMS::mmapperUMS      = NULL;
 TMSMapper *ServerIMS::mmapperTMS      = NULL;
 FMSMapper *ServerIMS::mmapperFMS      = NULL;

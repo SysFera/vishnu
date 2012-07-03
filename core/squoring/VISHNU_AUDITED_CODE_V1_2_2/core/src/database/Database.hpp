@@ -18,7 +18,7 @@ static const int SUCCESS =  0;
  * \class Database
  * \brief This class describes a database
  */
-class Database{
+class SOCIDatabase{
 public :
   /**
    * \brief Function to process the request in the database
@@ -54,13 +54,13 @@ public :
    * \fn ~Database()
    * \brief Destructor, raises an exception on error
    */
-virtual ~Database();
+virtual ~SOCIDatabase();
 protected :
   /**
    * \fn Database()
    * \brief Constructor, raises an exception on error
    */
-  Database();
+  SOCIDatabase();
 
 private :
   /**

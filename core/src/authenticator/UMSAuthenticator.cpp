@@ -21,7 +21,7 @@ UMSAuthenticator::~UMSAuthenticator(){
 bool
 UMSAuthenticator::authenticate(UMS_Data::User& user) {
   DbFactory factory;
-  Database* databaseVishnu = factory.getDatabaseInstance();
+  SOCIDatabase* databaseVishnu = factory.getDatabaseInstance();
 
   //To encrypt the clear password
   user.setPassword(vishnu::cryptPassword(user.getUserId(), user.getPassword()));
