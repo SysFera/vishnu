@@ -10,6 +10,8 @@
 
 
 #include "SystemException.hpp"
+
+//#define SOCI_USE_BOOST
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 #include <vector>
