@@ -240,7 +240,7 @@ CREATE TABLE filetransfer (
   transferId VARCHAR(255) unique,
   status INTEGER,
   userId VARCHAR(255),
-  clientMachineName VARCHAR(255),
+  clientMachineid VARCHAR(255),
   sourceMachineId VARCHAR(255),
   destinationMachineId VARCHAR(255),
   sourceFilePath VARCHAR(255),
