@@ -128,7 +128,6 @@ solveSubmitJob(diet_profile_t* pb) {
 			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", fPath.string());
 			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=/tmp/" << fPath.string() ;
 			dagda_delete_data(fileContainer.elt_ids[i]);
-			free(defaultPath) ;
 		}
 		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
@@ -501,7 +500,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
 		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
-		free(fileNamesDescr) ;
+		if(fileNamesDescr)free(fileNamesDescr) ;
 
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
@@ -606,7 +605,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
 		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
-		free(fileNamesDescr) ;
+		if(fileNamesDescr)free(fileNamesDescr) ;
 
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
@@ -644,67 +643,67 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
 
 /**
-* \brief Function to solve the service solveAddWork
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
+ * \brief Function to solve the service solveAddWork
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
 int
 solveAddWork(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *workSerialized = NULL;
-  std::string empty("");
-  std::string errorInfo;
-  int mapperkey;
-  std::string cmd;
-  std::string finishError ="";
+	char *sessionKey = NULL;
+	char *workSerialized = NULL;
+	std::string empty("");
+	std::string errorInfo;
+	int mapperkey;
+	std::string cmd;
+	std::string finishError ="";
 
-  //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &workSerialized, NULL);
+	//IN Parameters
+	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+	diet_string_get(diet_parameter(pb,1), &workSerialized, NULL);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+	SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
-  TMS_Data::Work_ptr work = NULL;
+	TMS_Data::Work_ptr work = NULL;
 
-  try {
-    std::string msgComp = "";
+	try {
+		std::string msgComp = "";
 
-    //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_add_work");
-    mapper->code(std::string(workSerialized), mapperkey);
-    cmd = mapper->finalize(mapperkey);
+		//MAPPER CREATION
+		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
+		mapperkey = mapper->code("vishnu_add_work");
+		mapper->code(std::string(workSerialized), mapperkey);
+		cmd = mapper->finalize(mapperkey);
 
-    //To parse the object serialized
-    if(!parseEmfObject(std::string(workSerialized), work, msgComp)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
-    }
+		//To parse the object serialized
+		if(!parseEmfObject(std::string(workSerialized), work, msgComp)) {
+			throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+		}
 
-    WorkServer workServer = WorkServer(work, sessionServer);
-    workServer.add(ServerTMS::getInstance()->getVishnuId());
+		WorkServer workServer = WorkServer(work, sessionServer);
+		workServer.add(ServerTMS::getInstance()->getVishnuId());
 
-    //To serialize the user object
-    ::ecorecpp::serializer::serializer _ser;
-    std::string workSerializedUpdate = _ser.serialize_str(work);
+		//To serialize the user object
+		::ecorecpp::serializer::serializer _ser;
+		std::string workSerializedUpdate = _ser.serialize_str(work);
 
-    //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(workSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
-    //To save the connection
-    sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
-  } catch (VishnuException& e) {
-      try {
-        sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      e.appendMsgComp(finishError);
-      errorInfo =  e.buildExceptionString();
-      //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
-  }
-  delete work;
-  return 0;
+		//OUT Parameter
+		diet_string_set(diet_parameter(pb,2), strdup(workSerializedUpdate.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+		//To save the connection
+		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
+	} catch (VishnuException& e) {
+		try {
+			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
+		} catch (VishnuException& fe) {
+			finishError =  fe.what();
+			finishError +="\n";
+		}
+		e.appendMsgComp(finishError);
+		errorInfo =  e.buildExceptionString();
+		//OUT Parameter
+		diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+	}
+	delete work;
+	return 0;
 }

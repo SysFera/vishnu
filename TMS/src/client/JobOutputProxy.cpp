@@ -105,12 +105,11 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 			if( ! moutDir.size() ) {
 				moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId ;
 				vishnu::createOutputDir(moutDir);
-				jobResult.setOutputDir(moutDir) ;
 			}
+			jobResult.setOutputDir(moutDir) ;
 			//First get the description file
 			dagda_get_file(content.elt_ids[0], &fName);
 			std::string fDescStr = vishnu::get_file_content(fName) ;
-			free(fName) ;
 
 			ListStrings fDescVec ; boost::trim(fDescStr) ;
 			boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
@@ -123,8 +122,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 				dagda_get_file(content.elt_ids[i], &fName);
 				vishnu::boostMoveFile(std::string(fName), moutDir, boost::trim_copy(fDescVec[i]));
 				dagda_delete_data(content.elt_ids[i]);
-				free(fName) ;
 			}
+			jobResult.setOutputPath(moutDir+"/"+fDescVec[1]) ;
+			jobResult.setErrorPath(moutDir+"/"+fDescVec[2]) ;
 		}
 	} catch (CORBA::Exception & e) {//To catch CORBA exception sent by DAGDA
 		for(unsigned int i = 0; i < content.size; i++) {
@@ -234,7 +234,6 @@ JobOutputProxy::getCompletedJobsOutput() {
 					}
 					dagda_get_file(content.elt_ids[index++], &fName);
 					vishnu::boostMoveFile(std::string(fName), moutDir, boost::trim_copy(lineVec[i]));
-					free(fName) ;
 				}
 			}
 			for(unsigned int i = 0; i < content.size; i++) {
