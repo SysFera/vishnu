@@ -28,7 +28,7 @@ public:
 	void bind(values & v);
 
 	template<typename OUTPUT>
-	void exchange_into(OUTPUT out)
+	void exchange_into(OUTPUT & out)
 	{
 		try
 		{
@@ -40,7 +40,7 @@ public:
 		}
 	}
 	template<typename INPUT>
-	void exchange_use(INPUT in)
+	void exchange_use(INPUT & in)
 	{
 		try
 		{
