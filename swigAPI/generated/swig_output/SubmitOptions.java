@@ -107,6 +107,87 @@ public class SubmitOptions extends EObject {
     VISHNUJNI.SubmitOptions_setErrorPath(swigCPtr, this, _errorPath);
   }
 
+  public String getMailNotification() {
+    return VISHNUJNI.SubmitOptions_getMailNotification(swigCPtr, this);
+  }
+
+  public void setMailNotification(String _mailNotification) {
+    VISHNUJNI.SubmitOptions_setMailNotification(swigCPtr, this, _mailNotification);
+  }
+
+  public String getMailNotifyUser() {
+    return VISHNUJNI.SubmitOptions_getMailNotifyUser(swigCPtr, this);
+  }
+
+  public void setMailNotifyUser(String _mailNotifyUser) {
+    VISHNUJNI.SubmitOptions_setMailNotifyUser(swigCPtr, this, _mailNotifyUser);
+  }
+
+  public String getGroup() {
+    return VISHNUJNI.SubmitOptions_getGroup(swigCPtr, this);
+  }
+
+  public void setGroup(String _group) {
+    VISHNUJNI.SubmitOptions_setGroup(swigCPtr, this, _group);
+  }
+
+  public String getWorkingDir() {
+    return VISHNUJNI.SubmitOptions_getWorkingDir(swigCPtr, this);
+  }
+
+  public void setWorkingDir(String _workingDir) {
+    VISHNUJNI.SubmitOptions_setWorkingDir(swigCPtr, this, _workingDir);
+  }
+
+  public String getCpuTime() {
+    return VISHNUJNI.SubmitOptions_getCpuTime(swigCPtr, this);
+  }
+
+  public void setCpuTime(String _cpuTime) {
+    VISHNUJNI.SubmitOptions_setCpuTime(swigCPtr, this, _cpuTime);
+  }
+
+  public boolean isSelectQueueAutom() {
+    return VISHNUJNI.SubmitOptions_isSelectQueueAutom(swigCPtr, this);
+  }
+
+  public void setSelectQueueAutom(boolean _selectQueueAutom) {
+    VISHNUJNI.SubmitOptions_setSelectQueueAutom(swigCPtr, this, _selectQueueAutom);
+  }
+
+  public String getFileParams() {
+    return VISHNUJNI.SubmitOptions_getFileParams(swigCPtr, this);
+  }
+
+  public void setFileParams(String _fileParams) {
+    VISHNUJNI.SubmitOptions_setFileParams(swigCPtr, this, _fileParams);
+  }
+
+  public String getTextParams() {
+    return VISHNUJNI.SubmitOptions_getTextParams(swigCPtr, this);
+  }
+
+  public void setTextParams(String _textParams) {
+    VISHNUJNI.SubmitOptions_setTextParams(swigCPtr, this, _textParams);
+  }
+
+  public long getWorkId() {
+    return VISHNUJNI.SubmitOptions_getWorkId(swigCPtr, this);
+  }
+
+  public void setWorkId(long _workId) {
+    VISHNUJNI.SubmitOptions_setWorkId(swigCPtr, this, _workId);
+  }
+
+  public LoadCriterion getCriterion() {
+    long cPtr = VISHNUJNI.SubmitOptions_getCriterion(swigCPtr, this);
+    return (cPtr == 0) ? null : new LoadCriterion(cPtr, false);
+  }
+
+  public void setCriterion(LoadCriterion _criterion) {
+    VISHNUJNI.SubmitOptions_setCriterion(swigCPtr, this, LoadCriterion.getCPtr(_criterion), _criterion);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.SubmitOptions_eGet(swigCPtr, this, _featureID, _resolve), true);
   }
