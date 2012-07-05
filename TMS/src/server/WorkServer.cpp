@@ -41,7 +41,7 @@ mwork(work), msessionServer(session)
 */
 int
 WorkServer::add(int vishnuId) {
-  std::string sqlInsert = "insert into work (application_id, date_created, date_started, description, done_ratio, due_date, estimated_hours, identifier, last_updated, machine_id, nbcpus, owner_id, priority, project_id, status, subject) values ";
+  std::string sqlInsert = "insert into work (date_created, date_started, description, done_ratio, due_date, estimated_hours, identifier, last_updated, machine_id, nbcpus, owner_id, priority, status, subject) values ";
   std::string idWorkGenerated;
   std::string formatidwork;
 
@@ -50,8 +50,8 @@ WorkServer::add(int vishnuId) {
 
   std::string vishnuid;
 
-  std::string appId = "1";
-  std::string projectId = "1";
+  //std::string appId = "1";
+  //std::string projectId = "1";
   std::string timestamp = "CURRENT_TIMESTAMP";
   std::string owner = "1";
   std::string machineId = "1";
@@ -80,12 +80,12 @@ WorkServer::add(int vishnuId) {
 // TODO
           mwork->setStatus(0);
 
-          mdatabaseVishnu->process(sqlInsert + "("+appId+","+timestamp+"\
+          mdatabaseVishnu->process(sqlInsert + "("+timestamp+"\
             ,"+ timestamp+",'"+mwork->getDescription()+"',"+convertToString(mwork->getDoneRatio())+", \
             "+timestamp+", '"+convertToString(mwork->getEstimatedHour())+"' \
             , '"+idWorkGenerated+"', "+timestamp+", "+machineId+"\
             , "+convertToString(mwork->getNbCPU())+", '"+owner+"', "+convertToString(mwork->getPriority())+" \
-            , "+projectId+", "+convertToString(mwork->getStatus())+", '"+mwork->getSubject()+"')");
+            , "+convertToString(mwork->getStatus())+", '"+mwork->getSubject()+"')");
 
 
         }//if the machine id is generated
