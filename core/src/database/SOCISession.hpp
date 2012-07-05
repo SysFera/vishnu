@@ -11,6 +11,7 @@
 #include <soci/soci.h>
 #include "SystemException.hpp"
 #include "SOCIStatement.hpp"
+#include "SOCITemporaryTypes.hpp"
 
 #ifndef TRYCATCH
 #define TRYCATCH(a,b) \
@@ -19,24 +20,7 @@
 	throw SystemException(ERRCODE_DBERR,std::string(b)+e.what());}
 #endif
 
-class temporary_type
-{
-public:
-	details::once_temp_type once;
 
-	temporary_type(soci::session & sess)
-		:once(sess)
-	{}
-	temporary_type(temporary_type & other)
-			:once(other.once)
-	{}
-
-	~temporary_type();
-
-	temporary_type &operator ,(details::use_type_ptr const & in);
-	temporary_type &operator ,(details::into_type_ptr const & out);
-
-};
 
 
 
