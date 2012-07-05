@@ -43,12 +43,8 @@ public class EListPtr {
     this(VISHNUJNI.new_EListPtr__SWIG_1(SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t.getCPtr(t), ownership), true);
   }
 
-  public EListPtr(SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t t) {
-    this(VISHNUJNI.new_EListPtr__SWIG_2(SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t.getCPtr(t)), true);
-  }
-
   public EListPtr(EListPtr other) {
-    this(VISHNUJNI.new_EListPtr__SWIG_3(EListPtr.getCPtr(other), other), true);
+    this(VISHNUJNI.new_EListPtr__SWIG_2(EListPtr.getCPtr(other), other), true);
   }
 
   public SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t get() {
@@ -71,11 +67,7 @@ public class EListPtr {
   }
 
   public void reset(SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t other, boolean ownership) {
-    VISHNUJNI.EListPtr_reset__SWIG_0(swigCPtr, this, SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t.getCPtr(other), ownership);
-  }
-
-  public void reset(SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t other) {
-    VISHNUJNI.EListPtr_reset__SWIG_1(swigCPtr, this, SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t.getCPtr(other));
+    VISHNUJNI.EListPtr_reset(swigCPtr, this, SWIGTYPE_p_ecorecpp__mapping__EListT_ecore__EObject_t.getCPtr(other), ownership);
   }
 
 }

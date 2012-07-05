@@ -115,6 +115,14 @@ public class Session extends EObject {
     VISHNUJNI.Session_setTimeout(swigCPtr, this, _timeout);
   }
 
+  public String getAuthenId() {
+    return VISHNUJNI.Session_getAuthenId(swigCPtr, this);
+  }
+
+  public void setAuthenId(String _authenId) {
+    VISHNUJNI.Session_setAuthenId(swigCPtr, this, _authenId);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.Session_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

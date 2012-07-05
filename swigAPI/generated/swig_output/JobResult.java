@@ -67,6 +67,14 @@ public class JobResult extends EObject {
     VISHNUJNI.JobResult_setErrorPath(swigCPtr, this, _errorPath);
   }
 
+  public String getOutputDir() {
+    return VISHNUJNI.JobResult_getOutputDir(swigCPtr, this);
+  }
+
+  public void setOutputDir(String _outputDir) {
+    VISHNUJNI.JobResult_setOutputDir(swigCPtr, this, _outputDir);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.JobResult_eGet(swigCPtr, this, _featureID, _resolve), true);
   }
