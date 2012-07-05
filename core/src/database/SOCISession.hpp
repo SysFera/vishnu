@@ -19,6 +19,26 @@
 	throw SystemException(ERRCODE_DBERR,std::string(b)+e.what());}
 #endif
 
+class temporary_type
+{
+public:
+	details::once_temp_type once;
+
+	temporary_type(soci::session & sess)
+		:once(sess)
+	{}
+	temporary_type(temporary_type & other)
+			:once(other.once)
+	{}
+
+	~temporary_type();
+
+	temporary_type &operator ,(details::use_type_ptr const & in);
+	temporary_type &operator ,(details::into_type_ptr const & out);
+
+};
+
+
 
 class SOCISession
 {
@@ -66,25 +86,29 @@ public:
 	 * \brief begin a transaction
 	 * \return throw a SystemException in case of error
 	 */
-    void begin();
+	void begin();
 	/*
 	 * \brief commit a transaction
 	 * the transaction is ended after that function
 	 * \return thow a SystemException in case of error
 	 */
-    void commit();
-    /*
-     * \brief rollback a transaction
-     * the transaction is ended after that function
-     * \return throw a SystemException in case of error
-     */
-    void rollback();
+	void commit();
+	/*
+	 * \brief rollback a transaction
+	 * the transaction is ended after that function
+	 * \return throw a SystemException in case of error
+	 */
+	void rollback();
 
-	template <typename T>
-	soci::details::once_temp_type operator<<(T const & t)
+	/*
+	 * TODO : comment functions
+	 */
+
+	template<typename T>
+	temporary_type operator<<(T const & t)
 	{
-		soci::details::once_temp_type ret;
-		//TRYCATCH(ret=((*msession)<<t),"")
+		temporary_type ret(*msession);
+		TRYCATCH( ret.once<<t, "")
 		return ret;
 	}
 
@@ -105,8 +129,7 @@ public:
 
 		try
 		{
-			((msession->once) << request, soci::use(input),
-					soci::into(output));
+			((msession->once) << request, soci::use(input), soci::into(output));
 		} catch (std::exception const & e)
 		{
 			throw SystemException(ERRCODE_DBERR,
@@ -170,9 +193,6 @@ public:
 
 	SOCIStatement
 	getStatement();
-
-
-
 
 private:
 	soci::session * msession;
