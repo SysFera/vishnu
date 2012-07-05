@@ -10,30 +10,6 @@
 using namespace std;
 using namespace soci;
 
-/*
- * Class temporary_type
- */
-
-/*
- * the request was executed on the destructor of the last reference to the temporary type
- */
-temporary_type::~temporary_type()
-{
-	TRYCATCH((once.~once_temp_type()),"")
-}
-
-temporary_type&  temporary_type::operator ,(details::use_type_ptr const & in)
-{
-	TRYCATCH((once,in), "")
-	return *this;
-}
-
-temporary_type&  temporary_type::operator ,(details::into_type_ptr const & out)
-{
-	TRYCATCH((once,out), "")
-	return *this;
-}
-
 
 
 /*
