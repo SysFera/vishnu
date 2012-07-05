@@ -199,7 +199,7 @@ int main (int ac, char* av[]){
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"name site language sshPublicKeyFile machineDescription");
+    helpUsage(*opt);
     return 0;
   }
 
