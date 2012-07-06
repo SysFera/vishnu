@@ -216,6 +216,9 @@ public:
 
 
 
+	bool
+	got_data();
+
 private:
 	soci::session * msession;
 	size_t pool_position;
