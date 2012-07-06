@@ -99,3 +99,9 @@ SOCIStatement SOCISession::getStatement()
 	return SOCIStatement(*this);
 }
 
+bool SOCISession::got_data()
+{
+	bool ret;
+	TRYCATCH(ret=msession->got_data(),"")
+	return ret;
+}
