@@ -11,7 +11,6 @@
 
 #include "SystemException.hpp"
 
-//#define SOCI_USE_BOOST
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 #include <vector>
@@ -85,25 +84,25 @@ public :
  * \brief Start a transaction
  * \return The transaction ID
  */
-  virtual int
+  int
   startTransaction();
 /**
  * \brief End a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   endTransaction(int transactionID);
 /**
  * \brief Cancel a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   cancelTransaction(int transactionID);
 /**
  * \brief To commit a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   flush(int transactionID);
 /**
  * \brief To get a unique id
@@ -113,7 +112,7 @@ public :
  * \param tid: The transaction id
  * \return A new integer never returned by this function
  */
-  virtual int
+  int
   generateId(std::string table, std::string fields, std::string val, int tid);
 
 
