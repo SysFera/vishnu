@@ -88,6 +88,15 @@ public:
 	 * TODO : comment functions
 	 */
 
+
+	template<typename T>
+	temporary_type execute(T const & t)
+	{
+		temporary_type ret(*msession);
+		TRYCATCH( ret.once<<t, "")
+		return ret;
+	}
+
 	template<typename T>
 	temporary_type operator<<(T const & t)
 	{
@@ -95,6 +104,8 @@ public:
 		TRYCATCH( ret.once<<t, "")
 		return ret;
 	}
+
+
 
 	/*
 	 * \brief template function getResult
@@ -175,9 +186,15 @@ public:
 		return;
 	}
 
+	/*
+	 * \brief To get a Statement initialized with the SOCISession
+	 */
 	SOCIStatement
 	getStatement();
 
+	/*
+	 * \brief To know if last SQL query returned some result
+	 */
 	bool
 	got_data();
 
