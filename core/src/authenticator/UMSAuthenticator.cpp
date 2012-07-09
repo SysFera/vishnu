@@ -26,7 +26,7 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
   //To encrypt the clear password
   user.setPassword(vishnu::cryptPassword(user.getUserId(), user.getPassword()));
 
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
   std::string sqlCommand="SELECT numuserid FROM users where userid=:userid and pwd=:pwd";
   std::cerr<<sqlCommand<<std::endl;
   SOCISession sess=databaseVishnu->getSingleSession();
