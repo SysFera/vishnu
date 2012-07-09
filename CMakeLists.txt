@@ -142,7 +142,7 @@ if (ENABLE_MYSQL)
 endif (ENABLE_MYSQL)
 
 if (ENABLE_SOCI_ADVANCED)
-  add_definitions(-DUSE_SOCI)
+  add_definitions(-DUSE_SOCI_ADVANCED)
 endif (ENABLE_SOCI_ADVANCED)
 find_package(SOCI)
 if (SOCI_FOUND)
