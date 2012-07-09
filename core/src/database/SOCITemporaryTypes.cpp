@@ -24,20 +24,31 @@ using namespace soci;
 
 /*
  * the request was executed on the destructor of the last reference to the temporary type
+ * \return raises an VishnuException in case of error
  */
 temporary_type::~temporary_type()
 {
 	TRYCATCH((once.~once_temp_type()),"")
 }
 
-temporary_type&  temporary_type::operator ,(details::use_type_ptr const & in)
+temporary_type&  temporary_type::exchange(details::use_type_ptr const & in)
 {
 	TRYCATCH((once,in), "")
 	return *this;
 }
 
-temporary_type&  temporary_type::operator ,(details::into_type_ptr const & out)
+temporary_type&  temporary_type::exchange(details::into_type_ptr const & out)
 {
 	TRYCATCH((once,out), "")
 	return *this;
+}
+
+temporary_type&  temporary_type::operator ,(details::use_type_ptr const & in)
+{
+	return exchange(in);
+}
+
+temporary_type&  temporary_type::operator ,(details::into_type_ptr const & out)
+{
+	return exchange(out);
 }
