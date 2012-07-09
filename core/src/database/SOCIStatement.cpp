@@ -16,9 +16,10 @@ SOCIStatement::SOCIStatement(SOCIStatement const & other)
 
 }
 
-void SOCIStatement::operator=(SOCIStatement const & other)
+SOCIStatement& SOCIStatement::operator=(SOCIStatement const & other)
 {
 	mstatement=other.mstatement;
+	return *this;
 }
 
 void SOCIStatement::alloc()
@@ -45,10 +46,7 @@ void SOCIStatement::define_and_bind()
 {
 	TRYCATCH(mstatement.define_and_bind(),"Failed to define and bind :\n")
 }
-void SOCIStatement::undefine_and_bind()
-{
-	TRYCATCH(mstatement.undefine_and_bind(),"Failed to undefine and bind :\n")
-}
+
 
 bool SOCIStatement::execute(bool withDataExchange)
 {
@@ -63,12 +61,6 @@ bool SOCIStatement::execute(bool withDataExchange)
 	return false;
 }
 
-long long SOCIStatement::get_affected_rows()
-{
-	long long ret;
-	TRYCATCH( ret=mstatement.get_affected_rows(),"")
-	return ret;
-}
 
 bool SOCIStatement::fetch()
 {
