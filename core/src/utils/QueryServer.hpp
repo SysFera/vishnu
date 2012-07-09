@@ -179,7 +179,7 @@ protected:
    */
   void checkUserId(std::string userId) {
 
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 	  std::string sqlUserRequest = "SELECT userid from users where userid=:userid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string DBuserID;
@@ -205,7 +205,7 @@ protected:
    * \param machineId the machine identifier
    */
   void checkMachineId(std::string machineId) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlMachineRequest = "SELECT machineid from machine where machineid=:machineid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -232,7 +232,7 @@ protected:
    * \param clmachineId the machine client identifier
    */
   void checkClientMachineName(std::string clmachineId) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlclMachineRequest = "SELECT name from clmachine where name=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -260,7 +260,7 @@ protected:
    * \return raises an exception on error
    */
   void checkOptionName(std::string name) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlNameRequest = "SELECT description from optionu where description=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -287,7 +287,7 @@ protected:
    * \param sessionId the session identifier
    */
   void checkSessionId(std::string sessionId) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 	  std::string sqlSessionRequest="SELECT vsesionid from vsession where vsessionid=:sessionID";
 	  SOCISession sess = mdatabaseVishnu->getSingleSession();
 	  std::string vssessionid;
@@ -336,7 +336,7 @@ protected:
    */
   void
     checkJobId(std::string jobId) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
 	  std::string sqlJobRequest= "SELECT numjobid from job where jobId=:jobId";
 	  std::string numjobid;
 	  SOCISession sess=mdatabaseVishnu->getSingleSession();
@@ -362,7 +362,7 @@ protected:
    */
   void
     checkAuthSystemId(std::string authSystemId) {
-#ifdef USE_SOCI
+#ifdef USE_SOCI_ADVANCED
       std::string sqlJobRequest = "SELECT authsystemid from authsystem where "
     		  "authsystemid=:auth";
       std::string ret;
