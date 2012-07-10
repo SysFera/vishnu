@@ -17,9 +17,9 @@ INSERT INTO machine(vishnu_vishnuid, name, site, machineid, status)values(1, '@T
 UPDATE machine SET nummachineid=2 where machineid='machine_2';
 INSERT INTO description(machine_nummachineid, lang, description) values(2, 'ang', 'chocolate');
 UPDATE description SET numdescriptionid=2 where description='chocolate';
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 1, '@TEST_ROOT_LOGIN@', '@TEST_ROOT_SSHKEY@', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 2, '@TEST_ADMIN_LOGIN@', '@TEST_ADMIN_SSHKEY@', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 3, '@TEST_USER_LOGIN@', '@TEST_USER_SSHKEY@', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 1, '@TEST_ROOT_LOGIN@', '@TEST_ROOT_SSHKEY@', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 2, '@TEST_ADMIN_LOGIN@', '@TEST_ADMIN_SSHKEY@', 'home');
-INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 3, '@TEST_USER_LOGIN@', '@TEST_USER_SSHKEY@', 'home');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 1, '@TEST_ROOT_LOGIN@', '@TEST_ROOT_SSHKEY@', '@TEST_ROOT_HOME@');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 2, '@TEST_ADMIN_LOGIN@', '@TEST_ADMIN_SSHKEY@', '@TEST_ADMIN_HOME@');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(1, 3, '@TEST_USER_LOGIN@', '@TEST_USER_SSHKEY@', '@TEST_USER_HOME@');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 1, '@TEST_ROOT_LOGIN@', '@TEST_ROOT_SSHKEY@', '@TEST_ROOT_HOME@');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 2, '@TEST_ADMIN_LOGIN@', '@TEST_ADMIN_SSHKEY@', '@TEST_ADMIN_HOME@');
+INSERT INTO account(machine_nummachineid, users_numuserid, aclogin, sshpathkey, home) values(2, 3, '@TEST_USER_LOGIN@', '@TEST_USER_SSHKEY@', '@TEST_USER_HOME@');
