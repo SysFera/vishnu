@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 // Default constructor
 SubmitOptions::SubmitOptions() :
     m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_selectQueueAutom(false),
-            m_criterion(0)
+            m_workId(0), m_criterion(0)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -417,6 +417,84 @@ void SubmitOptions::setSelectQueueAutom(::ecore::EBoolean _selectQueueAutom)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__selectQueueAutom(),
                 _old_selectQueueAutom,
                 m_selectQueueAutom
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getFileParams() const
+{
+    return m_fileParams;
+}
+
+void SubmitOptions::setFileParams(::ecore::EString const& _fileParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_fileParams = m_fileParams;
+#endif
+    m_fileParams = _fileParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__fileParams(),
+                _old_fileParams,
+                m_fileParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& SubmitOptions::getTextParams() const
+{
+    return m_textParams;
+}
+
+void SubmitOptions::setTextParams(::ecore::EString const& _textParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_textParams = m_textParams;
+#endif
+    m_textParams = _textParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__textParams(),
+                _old_textParams,
+                m_textParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong SubmitOptions::getWorkId() const
+{
+    return m_workId;
+}
+
+void SubmitOptions::setWorkId(::ecore::ELong _workId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_workId = m_workId;
+#endif
+    m_workId = _workId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__workId(),
+                _old_workId,
+                m_workId
         );
         eNotify(&notification);
     }

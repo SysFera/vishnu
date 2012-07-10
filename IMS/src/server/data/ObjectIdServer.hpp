@@ -55,6 +55,11 @@ public:
    */
   void
   setAID(string fmt);
+  /**
+   * \brief To set the format of a work id
+   */
+  void
+  setWID(string fmt);
 protected:
 private:
   /**

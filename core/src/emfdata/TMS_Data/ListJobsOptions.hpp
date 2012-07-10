@@ -179,6 +179,17 @@ namespace TMS_Data
          **/
         void setBatchJob(::ecore::EBoolean _batchJob);
 
+        /**
+         * \brief To get the workId
+         * \return The workId attribute value
+         **/
+        ::ecore::ELong getWorkId() const;
+        /**
+         * \brief To set the workId
+         * \param _workId The workId value
+         **/
+        void setWorkId(::ecore::ELong _workId);
+
         // References
 
 
@@ -223,6 +234,8 @@ namespace TMS_Data
         ::ecore::EString m_multipleStatus;
 
         ::ecore::EBoolean m_batchJob;
+
+        ::ecore::ELong m_workId;
 
         // References
 

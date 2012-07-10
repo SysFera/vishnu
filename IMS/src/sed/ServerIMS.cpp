@@ -337,6 +337,18 @@ ServerIMS::init(int vishnuId,
   }
   diet_profile_desc_free(mprofile);
 
+  /* solveSetAID */
+
+  mprofile = diet_profile_desc_alloc(SRV[18], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+
+  if (diet_service_table_add(mprofile, NULL, solveSetWID)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
   return 0;
 }
 

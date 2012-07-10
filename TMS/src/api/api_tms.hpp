@@ -38,6 +38,16 @@ namespace vishnu {
             const SubmitOptions& options=SubmitOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
+
+/**
+ * \TODO
+ */
+  int
+  addWork(const std::string& sessionKey,
+          Work& newWork)
+    throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
+
+
   /**
   * \brief The cancelJob function cancels a job from its id
   * \param sessionKey : The session key
@@ -113,7 +123,7 @@ namespace vishnu {
 
 
   /**
-   * \brief The getJobOutput function gets outputPath and errorPath of a job from its id 
+   * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
    * \param sessionKey : The session key
    * \param machineId : The id of the machine
    * \param jobId : The Id of the job
@@ -130,7 +140,7 @@ namespace vishnu {
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
-   * \brief The getCompletedJobsOutput() function gets standard output and error output files 
+   * \brief The getCompletedJobsOutput() function gets standard output and error output files
    * of completed jobs (applies only once for each job)
    * \param sessionKey : The session key
    * \param machineId : The id of the machine

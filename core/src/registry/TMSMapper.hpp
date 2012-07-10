@@ -48,6 +48,10 @@ const int VISHNU_GETCOMPLETEDJOB         = 7;
  * \brief Cancel key
  */
 const int VISHNU_CANCEL                  = 8;
+/**
+ * \brief Add a work
+ */
+const int VISHNU_ADD_WORK                  = 9;
 
 /**
  * \class TMSMapper
@@ -85,7 +89,7 @@ public :
    * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
+  virtual int
   unregisterMapper();
 
   /**
@@ -137,7 +141,15 @@ protected:
    */
   virtual string
   decodeSubmit(vector<int> separator, const string& msg);
-  
+  /**
+   * \brief To decode the add work call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual string
+  decodeAddWork(vector<int> separator, const string& msg);
+
   /**
    * \brief To decode the get progression call sequence of the string returned by finalize
    * \fn string decodeProg(vector<int> separator, const string& msg)

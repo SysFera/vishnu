@@ -2,15 +2,15 @@
 <API xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="com.sysfera.codegen.apimodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
   <modules name="FMS">
     <services name="createFile" description="creates  files on  remote machines." resultCodes="ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_UNKNOWN_USERID">
-      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key." shortOptionLetter="" defaultValueLiteral=""/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path." longOptionName=""/>
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" shortOptionLetter="" defaultValueLiteral=""/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to create following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.0"/>
       <details key="description" value="Creates an empty file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
       <details key="exCLI" value="To create the file toto on machine_1:&#xA;vishnu_create_file machine_1:/tmp/toto"/>
     </services>
     <services name="createDir" description="creates directories on remote machines." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path." longOptionName=""/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to create following the pattern  [host:]directory path" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.19" description="the create directory command options" optional="true" shortOptionLetter=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.1"/>
       <details key="description" value="Creates an new directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command)"/>
@@ -43,7 +43,7 @@
     </services>
     <services name="chMod" description="changes  access rights of remote files/directories." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
-      <ports name="mode" dataType="//@modules.0/@typeList/@types.11" description=" the access rigths of file/directory in octal system." shortOptionLetter="" longOptionName=""/>
+      <ports name="mode" dataType="//@modules.0/@typeList/@types.11" description=" the access rigths of file/directory in octal system" shortOptionLetter="" longOptionName=""/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.5"/>
       <details key="description" value="Changes the permissions of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;The mode parameter is the same value as for the unix chmod command."/>
@@ -75,10 +75,10 @@
       <details key="description" value="Displays the content of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To view the content of the file toto on machine_1:&#xA;vishnu_content_of_file machine_1:/tmp/toto"/>
     </services>
-    <services name="listDir" description="displays  the content of a remote directory. " resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+    <services name="listDir" description="displays  the content of a remote directory" resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  directory to list following the pattern  [host:]directory path" longOptionName=""/>
-      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.20" description="The content of the directory." shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.20" description="The content of the directory" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.5" description="List of options for the listDir command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>

@@ -245,6 +245,9 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
           case 4 :
             array[*size].value = "A";
             break;
+          case 5 :
+            array[*size].value = "W";
+            break;
           default :
             break;
         }

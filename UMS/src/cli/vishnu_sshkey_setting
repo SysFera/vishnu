@@ -1,0 +1,90 @@
+#!/bin/bash
+# FILENAME		: vishnu_sshkey_setting
+# SUMMARY		: This script allows to add or remove a given key to/from the authorized keys of a user's remote account
+# COPYRIGHT		: SysFera SA
+# REVISIONS
+#  version		: 1.0
+#  date			: 29/05/12
+#  author		: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+#  comment		: First release
+
+set -e
+
+# Show help
+usage() {
+echo "SYNOPSIS"
+echo "vishnu_ssh_setting [OPTION] <[login]@MACHINE> [KEY]"
+echo 
+echo "DESCRIPTION"
+echo "Allows to add or remove a given key to/from the authorized keys of a user's remote account"
+echo "	[login]@MACHINE"
+echo "	  represents the login information to the remote machine"
+echo "	KEY" 
+echo "	  sets the corresponding key. Default value : $HOME/.ssh/id_rsa.pub"
+echo 
+echo "OPTION"
+echo "	-a"
+echo "	 default, add a key"
+echo "	-r"
+echo "	 remove a key"
+echo "	-h"
+echo "	 print the help"
+}
+
+# Add a key 
+addkey() {
+  if [ -z $1 ] ; then
+    echo "ERROR : You must specify at leat the remote machine's hostname/IP address" 
+    usage ; exit 1
+  fi
+  rmachine=$1
+  key_file=${2:-"$HOME/.ssh/id_rsa.pub"}
+  cat ${key_file} | ssh ${rmachine} 'mkdir -p .ssh && cat >> ~/.ssh/authorized_keys'
+}
+
+# Remove a key 
+removekey() {
+  if [ -z $1 ] ; then
+    echo "ERROR : You must specify at leat the remote machine's hostname/IP address" 
+    usage ; exit 1
+  fi
+  rmachine=$1
+  key_file=${2:-"$HOME/.ssh/id_rsa.pub"}
+  cat ${key_file} | ssh ${rmachine} 'set -e; \
+				key_file=`mktemp` ; \
+				cat > ${key_file} ; \
+				wallet=~/.ssh/authorized_keys ; \
+				wallet_backup=${wallet}.bak ; \
+                                if [ ! -e ${wallet} ] ; then exit 0 ; fi ; \
+				cp -f ${wallet} ${wallet_backup} ; \
+                                key=`cat ${key_file}` ; \
+                                cat ${wallet_backup} | sed s:"${key}":: | sed /^$/d > ${wallet}  ; \
+				rm -rf ${key_file} ;'
+}
+
+# Validate the number of paramters
+validate_params(){
+ [ $# -gt $1 ]  && echo "ERROR : Wrong parameters" && usage && exit 1
+ echo -n
+}
+
+# Start processing
+if [ -z $1  ] ; then
+  echo "ERROR !" && usage && exit 1
+fi
+
+case $1 in 
+  -h) usage 
+      ;;
+  -a) validate_params 4 $@ ;
+      addkey $2 $3 ;
+      ;;
+  -r) validate_params 4 $@ ;
+      removekey $2 $3 ;
+      ;;
+   *) validate_params 3 $@ ; 
+      addkey $2 $3
+      ;;
+esac
+
+exit 0
