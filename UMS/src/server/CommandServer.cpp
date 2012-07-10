@@ -85,9 +85,16 @@ CommandServer::isRunning() {
 
   sqlCommand.append(msessionServer.getAttribut("WHERE "
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
-
+#ifndef USE_SOCI_ADVANCED
+  SOCISession session = mdatabaseVishnu->getSingleSession();
+  session<<sqlCommand;
+  bool got_data=session.got_data();
+  mdatabaseVishnu->releaseSingleSession(session);
+  return(got_data);
+#else
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getNbTuples() != 0);
+#endif
 }
 
 /**
