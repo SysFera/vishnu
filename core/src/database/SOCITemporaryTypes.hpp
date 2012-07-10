@@ -107,7 +107,7 @@ public:
 	 *
 	 */
 	template<typename INPUT>
-	temporary_type & use(INPUT in)
+	temporary_type & use(INPUT & in)
 	{
 		return this->exchange(soci::use(in));
 	}
