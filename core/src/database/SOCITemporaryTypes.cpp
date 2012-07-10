@@ -28,7 +28,7 @@ using namespace soci;
  */
 temporary_type::~temporary_type()
 {
-	TRYCATCH((once.~once_temp_type()),"Failed to execute query")
+	TRYCATCH((once.~once_temp_type()),"Failed to execute query \n")
 }
 
 temporary_type&  temporary_type::exchange(details::use_type_ptr const & in)

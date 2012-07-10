@@ -55,6 +55,10 @@ public:
 	 * \brief To bind the the first unassociated field of the SQL result
 	 * with the pointer out.
 	 * This method can be repeated to associate each field of the SQL result
+	 *
+	 * BE CAREFUL : if the into_type_ptr out was created without soci::indicator,
+	 * this methode would raise exception in case of reading a NULL value in the database
+	 *
 	 * \sample by executing "select id,name from table"
 	 * exchange(out) --> integer id wrote where out points to.
 	 * exchange(out_next) --> string name wrote where out_next points to.
@@ -130,7 +134,8 @@ public:
 	template<typename OUTPUT>
 	temporary_type & into(OUTPUT & out)
 	{
-		return this->exchange(soci::into(out));
+		indicator ind; //TODO : meilleur solution pour la lecture de champ null ?
+		return this->exchange(soci::into(out,ind));
 	}
 
 };
