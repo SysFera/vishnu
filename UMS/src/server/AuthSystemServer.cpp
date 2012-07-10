@@ -277,10 +277,18 @@ AuthSystemServer::getData() {
 */
 std::string
 AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
-
+#ifdef USE_SOCI_ADVANCED
+	std::string ret;
+	std::string sqlCommand("SELECT "+attrname+" FROM authsystem "+condition);
+	SOCISession session = mdatabaseVishnu->getSingleSession();
+	(session<<sqlCommand).into(ret);
+	mdatabaseVishnu->releaseSingleSession(session);
+	return ret;
+#else
   std::string sqlCommand("SELECT "+attrname+" FROM authsystem "+condition);
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
+#endif
 }
 
 /**
