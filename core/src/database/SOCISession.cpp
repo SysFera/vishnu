@@ -67,7 +67,7 @@ void SOCISession::process(std::string request)
 
 void SOCISession::begin()
 {
-	TRYCATCH(msession->begin(),"Cannot begin transaction");
+	TRYCATCH(msession->begin(),"Cannot begin transaction \n");
 }
 void SOCISession::commit()
 {
