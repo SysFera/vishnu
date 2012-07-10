@@ -79,11 +79,12 @@ ServerFMS::init(int vishnuId,
 #ifdef USE_SOCI_ADVANCED
     sqlCommand="SELECT * FROM vishnu where vishnuid=:param";
     SOCISession session = mdatabaseVishnu->getSingleSession();
-    (session<<sqlCommand).use(mvishnuId);
+    session.execute(sqlCommand).use(mvishnuId);
+    std::cout<<session.advanced().get_last_query()<<std::endl;
     bool got_id = session.got_data();
     mdatabaseVishnu->releaseSingleSession(session);
     if(! got_id){
-    	SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+    	SystemException e(ERRCODE_DBERR, "2The vishnuid is unrecognized");
     	throw e;
     }
 #else
