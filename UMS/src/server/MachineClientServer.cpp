@@ -56,9 +56,16 @@ MachineClientServer::getId() {
   std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
   sqlCommand.append(mmachineSSHKey+ "' and name='");
   sqlCommand.append(mhostname+"'");
-
+#ifdef USE_SOCI_ADVANCED
+  std::string retId;
+  SOCISession session = mdatabaseVishnu->getSingleSession();
+  session.execute(sqlCommand).into(retId);
+  mdatabaseVishnu->releaseSingleSession(session);
+  return retId;
+#else
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
+#endif
 }
 /**
 * \brief Function to get the ssh key of the client machine
