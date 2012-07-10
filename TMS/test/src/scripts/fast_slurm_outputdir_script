@@ -1,0 +1,30 @@
+#!/bin/sh
+#SBATCH -J myFristJob
+#SBATCH -o myJob-%J.out
+#SBATCH -e myJob-%J.err
+#SBATCH -t 00:00:08
+#SBATCH -p firstPart
+#SBATCH --comment="my first slurm job"
+#SBATCH --share
+
+srun hostname
+sleep 10
+echo "Hello world!...."
+echo "Your job submit directory is: "$SLURM_SUBMIT_DIR
+echo "The list of nodes allocated to the job: " $SLURM_JOB_NODELIST
+echo "The count of processors available to the job on this node: " $SLURM_JOB_CPUS_PER_NODE
+
+echo "TEST OF VISHNU JOB OUTPUT ENVIRONMENT VARIABLES!...."
+echo "#TEST_JOB_ID: "$VISHNU_BATCHJOB_ID 
+echo "#TEST_JOB_NAME: " $VISHNU_BATCHJOB_NAME
+echo "#TEST_NODEFILE:" $VISHNU_BATCHJOB_NODEFILE
+cat $VISHNU_BATCHJOB_NODEFILE
+echo "#TEST_NUM_NODES: "$VISHNU_BATCHJOB_NUM_NODES
+echo "#TEST_SUBMIT_MACHINE_NAME: "$VISHNU_SUBMIT_MACHINE_NAME
+
+echo "CORRESPONDING JOB OUTPUT ENVIRONMENT VARIABLES!...."
+echo "#BATCH_JOB_ID: "$SLURM_JOB_ID
+echo "#BATCH_JOB_NAME: " $SLURM_JOB_NAME
+echo "#BATCH_NODEFILE:" 
+echo "#BATCH_NUM_NODES:" $SLURM_JOB_NUM_NODES 
+echo "Output directory test" > $VISHNU_OUTPUT_DIR/TMS_res
