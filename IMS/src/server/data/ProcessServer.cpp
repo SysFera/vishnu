@@ -35,10 +35,20 @@ ProcessServer::list(){
   
   if (mop->getMachineId().compare("") != 0){
     string machine = "SELECT machineid from machine where machineid='"+mop->getMachineId()+"'";
+#ifdef USE_SOCI_ADVANCED
+    SOCISession session = mdatabase->getSingleSession();
+    session<<machine;
+    bool got_data=session.got_data();
+    mdatabase->releaseSingleSession(session);
+    if(! got_data) {
+        throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
+    }
+#else
     DatabaseResult *res = mdatabase->getResult(machine.c_str());
     if(res->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
     }
+#endif
     request += "AND  machineid ='"+mop->getMachineId()+"'";
   }
 
@@ -147,6 +157,19 @@ ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
 
 bool
 ProcessServer::isIMSSeD(string Pname){
+#ifdef USE_SOCI_ADVANCED
+	string req="SELECT vishnuname from process where dietname='"+Pname+"'";
+	SOCISession session = mdatabase->getSingleSession();
+	string res;
+	session.execute(req).into(res);
+	bool got_data=session.got_data();
+	mdatabase->releaseSingleSession(session);
+	if( ! got_data) {
+	    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+	}
+	bool isIMS=(res.compare("IMS")==0);
+	return isIMS;
+#else
   string req = "SELECT * from process where dietname='"+Pname+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -155,6 +178,7 @@ ProcessServer::isIMSSeD(string Pname){
   vector<string> res;
   res = result->get(0);
   return (string(res.at(NAMEPOS)).compare("IMS")==0);
+#endif
 }
 
 void

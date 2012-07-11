@@ -9,6 +9,6 @@
 -- Revision comment     : initial version for upgrade from release 1.2.8 to 1.2.9
 
 
-ALTER TABLE job ADD COLUMN workId INTEGER DEFAULT 0;';
+ALTER TABLE job ADD COLUMN workId INTEGER DEFAULT 0;
 
 
