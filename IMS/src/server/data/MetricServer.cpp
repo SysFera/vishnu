@@ -115,15 +115,18 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
     throw (e);
   }
   
-
   // Getting the num machine id to insert
-  string reqnmid = "SELECT nummachineid from machine where  machineid ='" + mid + "'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
-  }
-  // numerical index always in position 0 in tables
-  nmid = result->get(0).at(0);
+    string reqnmid = "SELECT nummachineid from machine where  machineid =:mid";
+    SOCISession session = mdatabase->getSingleSession();
+    std::string res;
+    session.execute(reqnmid).use(mid).into(res);
+    bool got_data=session.got_data();
+    mdatabase->releaseSingleSession(session);
+    if(! got_data) {
+      throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+    }
+    nmid=res;
+
   // Filling values (If various in list, the latest is kept
   for (unsigned int i = 0 ; i < set->getMetric().size() ; i++){
     switch (set->getMetric().get(i)->getType()) {
@@ -176,18 +179,19 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 
 unsigned int
 MetricServer::checkUpFreq(){
-  // Get the corresponding frequency
-  string request = "select updatefreq from vishnu where vishnuid='";
-  request += convertToString(mvishnuId);
-  request += "'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVVISHNU, "Unknown VISHNU id");
-  }
-  vector<string> res;
-  res = result->get(0);
-  // Updating the frequency value
-  mfreq = convertToInt(res.at(0));
+
+// Get the corresponding frequency
+  string request = "select updatefreq from vishnu where vishnuid=:param";
+  SOCISession session = mdatabase->getSingleSession();
+  int freq;
+  session.execute(request).use(mvishnuId).into(freq);
+  bool got_data=session.got_data();
+  mdatabase->releaseSingleSession(session);
+  if(! got_data) {
+     throw IMSVishnuException(ERRCODE_INVVISHNU, "Unknown VISHNU id");
+    }
+  mfreq=freq; // FIXME updatafreq is integer in database, whereas mfreq is unsigned int
+
   // Returning the new frequency value
   return mfreq;
 }
@@ -250,11 +254,17 @@ MetricServer::getHistMet(string machineId){
 
   IMS_Data::MetricType type = mhop->getType();
 
+
   std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+machineId+ "'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
-  if(result->getNbTuples() == 0) {
+
+  SOCISession session = mdatabase->getSingleSession();
+  session.execute(reqnmid);
+  bool got_data=session.got_data();
+  mdatabase->releaseSingleSession(session);
+  if(! got_data) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
+
 
   if (mhop->getStartTime()>0) {
     time_t start = static_cast<time_t>(mhop->getStartTime());
