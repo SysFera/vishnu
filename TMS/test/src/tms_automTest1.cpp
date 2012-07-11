@@ -110,6 +110,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
     //To get the content of the script
     std::string scriptContent;
 
+    BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
+
     Job jobInfo;
     SubmitOptions subOptions;
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );

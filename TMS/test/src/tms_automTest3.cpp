@@ -64,6 +64,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
     Job jobInfo;
     SubmitOptions options;
 
+    BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
+
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
@@ -128,6 +130,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
     Job jobInfo;
     SubmitOptions options;
     
+    BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
+
     BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
     
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
@@ -152,13 +156,11 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
     
     BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
     
-    bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath())) && bfs::is_directory(bfs::path(outputInfos.getOutputDir()));
-    
+    bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getErrorPath())) && bfs::is_directory(bfs::path(outputInfos.getOutputDir()));
     
     BOOST_CHECK( pathExist );
     std::string filepath =  outputInfos.getOutputDir()+"/TMS_res";
-    bool fileexist = bfs::exists(bfs::path(filepath)) && (bfs::path(filepath).parent_path().string().compare(bfs::path(outputInfos.getOutputDir()).string())== 0);
-
+    bool fileexist = bfs::exists(bfs::path(filepath));
     BOOST_CHECK( fileexist );
     
     bool correctpath = (bfs::path(outputInfos.getOutputPath()).parent_path().string().compare(bfs::path(outputInfos.getOutputPath()).parent_path().string()) == 0);
@@ -170,7 +172,6 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
       bfs::remove (bfs::path(outputInfos.getOutputPath()));
       bfs::remove (bfs::path(outputInfos.getErrorPath()));
       bfs::remove (bfs::path(filepath));
-      bfs::remove_all(bfs::path(outputInfos.getOutputDir()));
     }
     BOOST_TEST_MESSAGE("*********************** get jobs output with outputdir: normal call ok!!!!*****************************");
   } catch (VishnuException& e) {
