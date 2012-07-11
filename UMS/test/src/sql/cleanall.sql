@@ -4,7 +4,6 @@ DELETE FROM ldapauthsystem;
 DELETE FROM authsystem;
 DELETE FROM command;
 DELETE FROM description;
-DELETE FROM filesub;
 DELETE FROM filetransfer;
 DELETE FROM job;
 DELETE FROM optionvalue;

@@ -150,7 +150,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
 	std::string sqlInsert = "";
 	if(mjob.getWorkId() == 0){
-		std::cout << "WorkID = 0" << std::endl;
 		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
@@ -165,8 +164,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ mjob.getOutputDir()  + "')";
 	}
 	else{
-		std::cout << "WorkID = "<< mjob.getWorkId() << std::endl;
-
 		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
@@ -181,7 +178,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
 
 	}
-	std::cout << sqlInsert << std::endl;
 	mdatabaseVishnu->process(sqlInsert);
 
 	return 0;
