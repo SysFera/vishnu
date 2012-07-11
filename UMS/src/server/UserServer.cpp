@@ -472,8 +472,16 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
 */
 std::string UserServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
+#ifdef USE_SOCI_ADVANCED
+  std::string ret;
+  SOCISession session = mdatabaseVishnu->getSingleSession();
+  session.execute(sqlCommand).into(ret);
+  mdatabaseVishnu->releaseSingleSession(session);
+  return ret;
+#else
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
+#endif
 }
 
 /**
