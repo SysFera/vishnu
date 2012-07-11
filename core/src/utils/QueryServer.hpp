@@ -288,7 +288,7 @@ protected:
    */
   void checkSessionId(std::string sessionId) {
 #ifdef USE_SOCI_ADVANCED
-	  std::string sqlSessionRequest="SELECT vsesionid from vsession where vsessionid=:sessionID";
+	  std::string sqlSessionRequest="SELECT vsessionid from vsession where vsessionid=:sessionID";
 	  SOCISession sess = mdatabaseVishnu->getSingleSession();
 	  std::string vssessionid;
 	  sess.execute(sqlSessionRequest).use(sessionId).into(vssessionid);
