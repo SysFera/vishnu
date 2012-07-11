@@ -23,7 +23,27 @@
 
 
 
-
+/*
+ * \class SOCISession
+ * \brief This class represent a connection session to the database.
+ * It allows different synthaxes to execute a query and exchanging data
+ *
+ * \sample
+ * SOCISession session= //from a SOCIDatabase//;
+ * string name;
+ * int myId;
+ * string query = "select name from tabe where id=:id"
+ *
+ * * those syntaxes are equivalent :
+ * - sythax 1 //TODO completer la synthaxe
+ * session.execute(query).use(myId).into(name);
+ *
+ * - syntax 2
+ * soci::indicator ind;
+ * session<<query,soci::use(myId,ind),soci::into(name);
+ *
+ *
+ */
 class SOCISession
 {
 
@@ -89,22 +109,30 @@ public:
 	 */
 
 
-	template<typename T>
-	temporary_type execute(T const & t)
-	{
-		temporary_type ret(*msession);
-		TRYCATCH( ret.once<<t, "")
-		return ret;
-	}
+	/*
+	 * \brief To execute a SQL query
+	 * \param query : the SQL query string to execute
+	 * \return temporary_type : allows output and input exchanging data
+	 * see temporary_type methods into(..) and use(..)
+	 */
+	temporary_type execute(std::string const & query);
+	/*
+	 * \brief another syntax to execute(std::string const & query)
+	 */
+	temporary_type operator<<(std::string const & query);
 
-	template<typename T>
-	temporary_type operator<<(T const & t)
-	{
-		temporary_type ret(*msession);
-		TRYCATCH( ret.once<<t, "")
-		return ret;
-	}
 
+	/*
+	 * \brief To get a Statement initialized with the current SOCISession
+	 */
+	SOCIStatement
+	getStatement();
+
+	/*
+	 * \brief To know if last SQL query returned some result
+	 */
+	bool
+	got_data();
 
 
 	/*
@@ -186,17 +214,7 @@ public:
 		return;
 	}
 
-	/*
-	 * \brief To get a Statement initialized with the SOCISession
-	 */
-	SOCIStatement
-	getStatement();
 
-	/*
-	 * \brief To know if last SQL query returned some result
-	 */
-	bool
-	got_data();
 
 private:
 	soci::session * msession;

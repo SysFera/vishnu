@@ -112,17 +112,23 @@ public:
 		return this->exchange(soci::use(in));
 	}
 
-	/*
+	/* \fn template function into(...)
 	 * \brief
 	 * write the first unassociated field of the SQL result in parameter 'out'
+	 *
+	 * Important : if the read data is a NULL value, out does not change value.
+	 *
 	 * \return Raises an exception in case of bad conversion
-	 * \param out can be of types :
+	 * \param first parameter 'out' can be of types :
 	 *
 	 * char (for character values)
 	 * short, int, unsigned long, long long, double (for numeric values)
 	 * char*, char[], std::string (for string values)
 	 * std::tm (for datetime values)
 	 * or an std::vector of those types
+	 * IMPORTANT : if output is a std::vector, it must have been declared with a maximum size
+	 * which represents the maximum number of result tuples.
+	 * sample : std::vector<int> values(100)
 	 *
 	 * soci::statement (for nested statements and PL/SQL cursors)
 	 * soci::blob (for Binary Large OBjects)
@@ -130,12 +136,41 @@ public:
 	 *
 	 * or a soci::row for dynamic resultset binding
 	 *
+	 * \param the second parameter is optionnal, it is a soci type : indicator
+	 * soci::indicator is an enum ok : i_ok, i_null, i_truncated
+	 * which is set after exchanging data
+	 * i_ok : exchanging data is successfull
+	 * i_null : the data to exchange is a null value
+	 * i_truncated : the to exchange data is troncated
+	 *
+	 * If the parameter 'out' is a std::vector, the second parameter shall be too.
+	 * If there is no second user parameter when calling function, a default one is set
+	 * because exchanging null or truncated data raises exception
 	 */
 	template<typename OUTPUT>
 	temporary_type & into(OUTPUT & out)
 	{
 		indicator ind; //TODO : meilleur solution pour la lecture de champ null ?
 		return this->exchange(soci::into(out,ind));
+	}
+
+	template<typename OUTPUT>
+	temporary_type & into(OUTPUT & out, soci::indicator & ind)
+	{
+		return this->exchange(soci::into(out,ind));
+	}
+
+	template<typename OUTPUT>
+	temporary_type & into(std::vector<OUTPUT> & out)
+	{
+		std::vector<indicator> inds; //TODO : meilleur solution pour la lecture de champ null ?
+		return this->exchange(soci::into(out,inds));
+	}
+
+	template<typename OUTPUT>
+	temporary_type & into(std::vector<OUTPUT> & out, std::vector<soci::indicator> & inds)
+	{
+		return this->exchange(soci::into(out,inds));
 	}
 
 };

@@ -367,7 +367,7 @@ string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
 	std::string sqlCommand = "SELECT errormsg from filetransfer where transferid=:tId";
 	std::string errormsg;
 	SOCISession session=FileTransferServer::getDatabaseInstance()->getSingleSession();
-	session<<sqlCommand,into(errormsg),use(transferid);
+	session.execute(sqlCommand).into(errormsg).use(transferid);
 	FileTransferServer::getDatabaseInstance()->releaseSingleSession(session);
 
 	return errormsg;
