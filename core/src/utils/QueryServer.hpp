@@ -183,7 +183,7 @@ protected:
 	  std::string sqlUserRequest = "SELECT userid from users where userid=:userid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string DBuserID;
-	  ss<<sqlUserRequest,into(DBuserID),use(userId);
+	  ss.execute(sqlUserRequest).into(DBuserID).use(userId);
 	  bool gotUser=ss.got_data();
 	  mdatabaseVishnu->releaseSingleSession(ss);
 	  if(! gotUser) {
@@ -210,7 +210,7 @@ protected:
 	  std::string sqlMachineRequest = "SELECT machineid from machine where machineid=:machineid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string id;
-	  ss<<sqlMachineRequest,into(id),use(machineId);
+	  ss.execute(sqlMachineRequest).into(id).use(machineId);
 	  bool gotMachine=ss.got_data();
 	  mdatabaseVishnu->releaseSingleSession(ss);
 	  if(! gotMachine) {
@@ -237,7 +237,7 @@ protected:
 	  std::string sqlclMachineRequest = "SELECT name from clmachine where name=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string name;
-	  ss<<sqlclMachineRequest,into(name),use(clmachineId);
+	  ss.execute(sqlclMachineRequest).into(name).use(clmachineId);
 	  bool gotMachine=ss.got_data();
 	  mdatabaseVishnu->releaseSingleSession(ss);
 	  if(! gotMachine) {
@@ -265,7 +265,7 @@ protected:
 	  std::string sqlNameRequest = "SELECT description from optionu where description=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string description;
-	  ss<<sqlNameRequest,into(description),use(name);
+	  ss.execute(sqlNameRequest).into(description).use(name);
 	  bool gotOption=ss.got_data();
 	  mdatabaseVishnu->releaseSingleSession(ss);
 	  if(! gotOption) {
@@ -291,7 +291,7 @@ protected:
 	  std::string sqlSessionRequest="SELECT vsesionid from vsession where vsessionid=:sessionID";
 	  SOCISession sess = mdatabaseVishnu->getSingleSession();
 	  std::string vssessionid;
-	  sess<<sqlSessionRequest,use(sessionId),into(vssessionid);
+	  sess.execute(sqlSessionRequest).use(sessionId).into(vssessionid);
 	  bool gotSession=sess.got_data();
 	  mdatabaseVishnu->releaseSingleSession(sess);
 	  if(!gotSession)
@@ -340,7 +340,7 @@ protected:
 	  std::string sqlJobRequest= "SELECT numjobid from job where jobId=:jobId";
 	  std::string numjobid;
 	  SOCISession sess=mdatabaseVishnu->getSingleSession();
-	  sess<<sqlJobRequest,use(jobId),into(numjobid);
+	  sess.execute(sqlJobRequest).use(jobId).into(numjobid);
 	  bool gotJob=sess.got_data();
 	  mdatabaseVishnu->releaseSingleSession(sess);
 	  if(!gotJob)
@@ -367,7 +367,7 @@ protected:
     		  "authsystemid=:auth";
       std::string ret;
       SOCISession sess=mdatabaseVishnu->getSingleSession();
-      sess<<sqlJobRequest,into(ret),use(authSystemId);
+      sess.execute(sqlJobRequest).into(ret).use(authSystemId);
       bool gotAuth=sess.got_data();
       mdatabaseVishnu->releaseSingleSession(sess);
       if(!gotAuth)

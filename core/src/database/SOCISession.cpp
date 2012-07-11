@@ -47,6 +47,21 @@ SOCISession::~SOCISession()
 /*
  * public functions
  */
+
+temporary_type SOCISession::execute(std::string const & query)
+{
+	temporary_type ret(*msession);
+	TRYCATCH( ret.once<<query, "")
+	return ret;
+}
+
+temporary_type SOCISession::operator<<(std::string const & query)
+{
+	temporary_type ret(*msession);
+	TRYCATCH( ret.once<<query, "")
+	return ret;
+}
+
 void SOCISession::process(std::string request)
 {
 	std::vector<std::vector<std::string> > results;
