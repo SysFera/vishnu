@@ -203,7 +203,7 @@ MetricServer::checkUpFreq(){
 	  mfreq=freq; // FIXME updatafreq is integer in database, whereas mfreq is unsigned int
 #else
   // Get the corresponding frequency
-  string request = "select * from vishnu where vishnuid='";
+  string request = "select updatefreq from vishnu where vishnuid='";
   request += convertToString(mvishnuId);
   request += "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
@@ -213,7 +213,7 @@ MetricServer::checkUpFreq(){
   vector<string> res;
   res = result->get(0);
   // Updating the frequency value
-  mfreq = convertToInt(res.at(FREQPOS));
+  mfreq = convertToInt(res.at(0)); //S*FW : FREQPOS
 #endif
   // Returning the new frequency value
   return mfreq;
