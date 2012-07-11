@@ -26,9 +26,13 @@ SysInfoServer::getSysInfo() {
 
   if(mop.getMachineId().compare("")) {
     string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mop.getMachineId()+"'";
-    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
-    if(result->getNbTuples() == 0) {
-      throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+
+    SOCISession session = mdatabase->getSingleSession();
+    session.execute(reqnmid);
+    bool got_data=session.got_data();
+    mdatabase->releaseSingleSession(session);
+    if( ! got_data ) {
+        throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
     }
     req += " AND  machineid ='"+mop.getMachineId()+"'";
   }
@@ -75,9 +79,13 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
   string reqnmid = "SELECT nummachineid from machine where  machineid ='"+sys->getMachineId()+"'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
-  if(result->getNbTuples() == 0) {
-    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+
+  SOCISession session = mdatabase->getSingleSession();
+  session.execute(reqnmid);
+  bool got_data = session.got_data();
+  mdatabase->releaseSingleSession(session);
+  if ( ! got_data) {
+	 throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
 
   string request = "update machine set ";
