@@ -160,17 +160,17 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
   req = "SELECT numuserid, privilege from users where userid='"+tree->getHandler()+"'";
   try {
 
-	    // Executing the request and getting the results
-	  SOCISession session =mdatabase->getSingleSession();
-	  string numuid; int privilege;
-	  session.execute(req).into(numuid).into(privilege);
-	  bool got_data = session.got_data();
-	  mdatabase->releaseSingleSession(session);
-	  if(! got_data) {
-	      throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
-	  }
-	  nuid=numuid;
-	  privil=privilege;
+    // Executing the request and getting the results
+  SOCISession session =mdatabase->getSingleSession();
+  string numuid; int privilege;
+  session.execute(req).into(numuid).into(privilege);
+  bool got_data = session.got_data();
+  mdatabase->releaseSingleSession(session);
+  if(! got_data) {
+      throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
+  }
+  nuid=numuid;
+  privil=privilege;
 
     // If not an admin
     if (privil == 0) {
