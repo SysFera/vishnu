@@ -178,7 +178,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
   }
   req = "SELECT numuserid, privilege from users where userid='"+tree->getHandler()+"'";
   try {
-#ifndef USE_SOCI_ADVANCED
+#ifdef USE_SOCI_ADVANCED
 	    // Executing the request and getting the results
 	  SOCISession session =mdatabase->getSingleSession();
 	  string numuid; int privilege;
