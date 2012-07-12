@@ -105,6 +105,11 @@ namespace TMS_Data
          * \return Pointer to the object
          */
         virtual LoadCriterion_ptr createLoadCriterion();
+        /**
+         * \brief Creates a new object of class Work
+         * \return Pointer to the object
+         */
+        virtual Work_ptr createWork();
 
         /**
          * \brief To create an object of a given class (reflective API)

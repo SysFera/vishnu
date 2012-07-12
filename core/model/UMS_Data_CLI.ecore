@@ -321,14 +321,14 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SettingSshKeyOptions" instanceTypeName="SettingSshKeyOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="a" eType="ecore:EDataType Ecore.ecore#//EBoolean">
+  <eClassifiers xsi:type="ecore:EClass" name="SetSshKeyOptions" instanceTypeName="SetSshKeyOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="addOption" eType="ecore:EDataType Ecore.ecore#//EBoolean">
       <eAnnotations source="Description">
         <details key="content" value="option for adding a key"/>
         <details key="shortOption" value="a"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="r" eType="ecore:EDataType Ecore.ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="removeOption" eType="ecore:EDataType Ecore.ecore#//EBoolean">
       <eAnnotations source="Description">
         <details key="content" value="option for removing a key"/>
         <details key="shortOption" value="r"/>

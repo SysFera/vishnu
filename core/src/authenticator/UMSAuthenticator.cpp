@@ -21,14 +21,27 @@ UMSAuthenticator::~UMSAuthenticator(){
 bool
 UMSAuthenticator::authenticate(UMS_Data::User& user) {
   DbFactory factory;
-  Database* databaseVishnu = factory.getDatabaseInstance();
+  SOCIDatabase* databaseVishnu = factory.getDatabaseInstance();
 
   //To encrypt the clear password
   user.setPassword(vishnu::cryptPassword(user.getUserId(), user.getPassword()));
 
+#ifdef USE_SOCI_ADVANCED
+  std::string sqlCommand="SELECT numuserid FROM users where userid=:userid and pwd=:pwd";
+  SOCISession sess=databaseVishnu->getSingleSession();
+  int id;
+  sess<<sqlCommand,soci::into(id),soci::use(user.getUserId()),soci::use(user.getPassword());
+  bool gotId=sess.got_data();
+  databaseVishnu->releaseSingleSession(sess);
+  return gotId;
+
+#else
   std::string sqlCommand = "SELECT numuserid FROM users "
                            "where userid='"+user.getUserId()+"'and pwd='"+user.getPassword()+"'";
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
+
+
   return (result->getFirstElement().size() != 0);
+#endif
 }
 

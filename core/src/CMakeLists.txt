@@ -167,7 +167,10 @@ set(TMS_Data_SRCS
   emfdata/TMS_Data/ListJobResults.cpp
   emfdata/TMS_Data/ListJobResultsImpl.cpp
   emfdata/TMS_Data/LoadCriterion.cpp
-  emfdata/TMS_Data/LoadCriterionImpl.cpp)
+  emfdata/TMS_Data/LoadCriterionImpl.cpp
+  emfdata/TMS_Data/Work.cpp
+  emfdata/TMS_Data/WorkImpl.cpp
+)
 
 set(TMS_Data_HEADERS
   emfdata/TMS_Data.hpp
@@ -185,7 +188,9 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/Queue.hpp
   emfdata/TMS_Data/JobResult.hpp
   emfdata/TMS_Data/ListJobResults.hpp
-   emfdata/TMS_Data/LoadCriterion.hpp)
+  emfdata/TMS_Data/LoadCriterion.hpp
+  emfdata/TMS_Data/Work.hpp
+)
 
 set(IMS_Data_SRCS
   emfdata/IMS_Data.cpp
@@ -403,24 +408,27 @@ if(NOT CLIENT_ONLY)
   set(database_SRCS
     database/DbConfiguration.cpp
     database/DbFactory.cpp
-    database/Database.cpp
+   # database/Database.cpp
     database/DatabaseResult.cpp)
   set(utils_server_SRCS utils/utilServer.cpp)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
-    set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
+   # set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
     include_directories(${MYSQL_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
-    set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
+   # set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
     include_directories(${DATABASE_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
-  if(SOCI_FOUND AND ENABLE_SOCI)
+  if(SOCI_FOUND)
     set(database_SRCS ${database_SRCS} database/SOCIDatabase.cpp)
+    set(database_SRCS ${database_SRCS} database/SOCISession.cpp)
+    set(database_SRCS ${database_SRCS} database/SOCITemporaryTypes.cpp)
+    set(database_SRCS ${database_SRCS} database/SOCIStatement.cpp)
     include_directories(${DATABASE_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
   endif()

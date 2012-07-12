@@ -16,7 +16,7 @@ using namespace vishnu;
 using namespace FMS_Data;
 
 // {{RELAX<MISRA_0_1_3> Three static variables 
-Database *ServerFMS::mdatabaseVishnu = NULL;
+SOCIDatabase *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
 FMSMapper *ServerFMS::mmapper = NULL;
 // }}RELAX<MISRA_0_1_3>
@@ -76,13 +76,24 @@ ServerFMS::init(int vishnuId,
 
     mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
     mmapper->registerMapper();
-
+#ifdef USE_SOCI_ADVANCED
+    sqlCommand="SELECT * FROM vishnu where vishnuid=:param";
+    SOCISession session = mdatabaseVishnu->getSingleSession();
+    session.execute(sqlCommand).use(mvishnuId);
+    bool got_id = session.got_data();
+    mdatabaseVishnu->releaseSingleSession(session);
+    if(! got_id){
+    	SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+    	throw e;
+    }
+#else
     /* Checking of vishnuid on the database */
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
     }
+#endif
 
   } catch (VishnuException& e) {
       std::cout << e.what() << std::endl;

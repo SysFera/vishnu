@@ -88,7 +88,7 @@ MYSQLDatabase::connect(){
  * \brief Constructor, raises an exception on error
  */
 MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
-  : Database(), mconfig(dbConfig) {
+  : SOCIDatabase(), mconfig(dbConfig) {
   mpool = new pool_t[mconfig.getDbPoolSize()];
   for (unsigned int i=0;i<mconfig.getDbPoolSize();i++) {
     pthread_mutex_init(&(mpool[i].mmutex), NULL);

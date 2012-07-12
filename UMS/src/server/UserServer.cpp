@@ -472,8 +472,16 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
 */
 std::string UserServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
+#ifdef USE_SOCI_ADVANCED
+  std::string ret;
+  SOCISession session = mdatabaseVishnu->getSingleSession();
+  session.execute(sqlCommand).into(ret);
+  mdatabaseVishnu->releaseSingleSession(session);
+  return ret;
+#else
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
+#endif
 }
 
 /**
@@ -685,3 +693,44 @@ UserServer::CheckUserState(bool flagForChangePwd) {
   }
 }
 
+/**
+* \brief Function to get a certain user account property
+* \param machineId The machine identifier of machine on which the user have a account
+* \param property The property name
+* \return the user account login
+*/
+std::string
+UserServer::getUserAccountProperty(const std::string& machineId, const std::string& property) {
+
+  init();
+
+  std::string userId = getData().getUserId();
+  UMS_Data::LocalAccount_ptr account = new UMS_Data::LocalAccount();
+  account->setMachineId(machineId);
+  account->setUserId(userId);
+  LocalAccountServer localAccount(account, *msessionServer);
+
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  machine->setMachineId(machineId);
+  MachineServer machineServer(machine);
+
+  //To get the database number id of the machine
+  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
+  //To get the database number id of the user
+  std::string numUser = getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
+
+  std::string value;
+  if ((numMachine.size() > 0) && (numUser.size() > 0)) {
+	  value = localAccount.getAttribut("where machine_nummachineid="+numMachine+" and users_numuserid="+numUser, property);
+  }
+
+  if(value.size()==0) {
+    delete account;
+    delete machine;
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
+  }
+
+  delete account;
+  delete machine;
+  return value;
+}

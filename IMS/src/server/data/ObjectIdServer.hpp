@@ -12,7 +12,7 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
-#include "Database.hpp"
+#include "SOCIDatabase.hpp"
 
 using namespace std;
 
@@ -55,6 +55,11 @@ public:
    */
   void
   setAID(string fmt);
+  /**
+   * \brief To set the format of a work id
+   */
+  void
+  setWID(string fmt);
 protected:
 private:
   /**
@@ -71,7 +76,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabase;
+  SOCIDatabase *mdatabase;
   /**
    * \brief The session
    */

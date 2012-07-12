@@ -33,7 +33,7 @@ vishnu::unregisterSeD(string type, string mid) {
   // Database execution
   try {
     DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
+    SOCIDatabase* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
     // Do nothing in case of error to delete the own proc of the database
@@ -52,6 +52,25 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+
+#ifdef USE_SOCI_ADVANCED
+  // Insert sed statement
+  string request = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) "
+		  "values(:pstatus, :vishnuname, :machineid, CURRENT_TIMESTAMP , :launchscript )";
+  // Database execution
+  try
+  {
+	  DbFactory factory;
+	  SOCIDatabase* database = factory.getDatabaseInstance();
+	  SOCISession session = database->getSingleSession();
+	  session.execute(request).use(PUNDEF).use(type).use(mid).use(s);
+	  database->releaseSingleSession(session);
+  }
+  catch (SystemException & e)
+  {
+	  throw(e);
+  }
+#else
   // Insert sed statement
   string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
   req += convertToString(PUNDEF);
@@ -60,14 +79,16 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   req += "', '";
   req += mid;
   req += "', CURRENT_TIMESTAMP, '"+s+"')";
+
   // Database execution
   try {
     DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
+    SOCIDatabase* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
     throw (e);
   }
+#endif
   config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
   string cmd;
   cmd = "cp "+path+" "+cfg;
@@ -224,6 +245,9 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
           case 4 :
             array[*size].value = "A";
             break;
+          case 5 :
+            array[*size].value = "W";
+            break;
           default :
             break;
         }
@@ -294,7 +318,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 int
 vishnu::getVishnuCounter(std::string vishnuIdString){
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
   int ret;
 
   std::string table;
@@ -324,14 +348,26 @@ std::string
 vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
 
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
+
+#ifdef USE_SOCI_ADVANCED
+  std::string sqlQuery("SELECT "+attrname+" FROM vishnu where vishnuid=:vishnuid");
+  std::string result;
+  databaseVishnu=factory.getDatabaseInstance();
+  SOCISession session=databaseVishnu->getSingleSession(transacId);
+  session<<sqlQuery,soci::use(vishnuid),soci::into(result);
+  if(transacId==-1) {
+	  databaseVishnu->releaseSingleSession(session);
+  }
+  return result;
+#else
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
   databaseVishnu = factory.getDatabaseInstance();
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str(), transacId));
   return result->getFirstElement();
-
+#endif
 }
 /**
  * \brief Function to increment a counter of the table vishnu
@@ -344,7 +380,7 @@ void
 vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   DbFactory factory;
-  Database *databaseVishnu;
+  SOCIDatabase *databaseVishnu;
 
   cpt = cpt+1;
 

@@ -32,6 +32,7 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "Env.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 using namespace std;

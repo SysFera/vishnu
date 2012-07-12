@@ -88,14 +88,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRecursive" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         defaultValueLiteral="false">
       <eAnnotations source="Description">
-        <details key="content" value="It specifies when the copy is recursive (case of directory) or not."/>
+        <details key="content" value="It specifies when the copy is recursive (case of directory) or not"/>
         <details key="shortOption" value="r"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="trCommand" eType="#//TransferCommand"
         defaultValueLiteral="2">
       <eAnnotations source="Description">
-        <details key="content" value="the command to use to perform file transfer."/>
+        <details key="content" value="the command to use to perform file transfer"/>
         <details key="shortOption" value="t"/>
         <details key="userOption" value="VISHNU_TRANSFER_CMD"/>
       </eAnnotations>

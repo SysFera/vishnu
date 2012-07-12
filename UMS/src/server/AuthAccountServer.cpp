@@ -235,10 +235,18 @@ AuthAccountServer::getData() {
 */
 std::string
 AuthAccountServer::getAttribut(std::string condition, std::string attrname) {
-
+#ifdef USE_SOCI_ADVANCED
+	std::string sqlCommand("SELECT "+attrname+" FROM authaccount "+condition);
+	SOCISession session = mdatabaseVishnu->getSingleSession();
+	std::string ret;
+	session.execute(sqlCommand).into(ret);
+	mdatabaseVishnu->releaseSingleSession(session);
+	return ret;
+#else
   std::string sqlCommand("SELECT "+attrname+" FROM authaccount "+condition);
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
+#endif
 }
 
 /**

@@ -35,10 +35,20 @@ ProcessServer::list(){
   
   if (mop->getMachineId().compare("") != 0){
     string machine = "SELECT machineid from machine where machineid='"+mop->getMachineId()+"'";
+#ifdef USE_SOCI_ADVANCED
+    SOCISession session = mdatabase->getSingleSession();
+    session<<machine;
+    bool got_data=session.got_data();
+    mdatabase->releaseSingleSession(session);
+    if(! got_data) {
+        throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
+    }
+#else
     DatabaseResult *res = mdatabase->getResult(machine.c_str());
     if(res->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
     }
+#endif
     request += "AND  machineid ='"+mop->getMachineId()+"'";
   }
 
@@ -147,14 +157,28 @@ ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
 
 bool
 ProcessServer::isIMSSeD(string Pname){
-  string req = "SELECT * from process where dietname='"+Pname+"'";
+#ifdef USE_SOCI_ADVANCED
+	string req="SELECT vishnuname from process where dietname='"+Pname+"'";
+	SOCISession session = mdatabase->getSingleSession();
+	string res;
+	session.execute(req).into(res);
+	bool got_data=session.got_data();
+	mdatabase->releaseSingleSession(session);
+	if( ! got_data) {
+	    throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
+	}
+	bool isIMS=(res.compare("IMS")==0);
+	return isIMS;
+#else
+  string req = "SELECT vishnuname from process where dietname='"+Pname+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
   }
   vector<string> res;
   res = result->get(0);
-  return (string(res.at(NAMEPOS)).compare("IMS")==0);
+  return (string(res.at(0)).compare("IMS")==0);
+#endif
 }
 
 void
@@ -195,8 +219,16 @@ bool
 ProcessServer::checkStopped(string machine, string type) {
   string req = "select * from process where machineid='"+machine+"' and vishnuname='"+type+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
   try {
+#ifdef USE_SOCI_ADVANCED
+	  SOCISession session = mdatabase->getSingleSession();
+	  session.execute(req);
+	  bool got_data=session.got_data();
+	  mdatabase->releaseSingleSession(session);
+	  return got_data;
+#else
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     return(result->getNbTuples() == 0);
+#endif
   } catch (SystemException& e) {
     throw (e);
   }
@@ -205,36 +237,79 @@ ProcessServer::checkStopped(string machine, string type) {
 
 void
 ProcessServer::getHost(string mid, string& hostname, string& acclog) {
-  string req = "select * from machine where machine.machineid='"+mid+"'";
+#ifdef USE_SOCI_ADVANCED
+	string req="select nummachineid,name from machine where machine.machineid=:mid";
+	SOCISession session=mdatabase->getSingleSession();
+	string nummachineid, name;
+	session.execute(req).use(mid).into(nummachineid).into(name);
+	if(! session.got_data()) {
+		mdatabase->releaseSingleSession(session);
+		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Machine not found");
+	}
+	hostname=name;
+
+	req="select aclogin from account, users where users.userid='root' "
+	"and users.numuserid=account.users_numuserid "
+	"and account.machine_nummachineid=:param";
+	string aclogin;
+	session.execute(req).use(nummachineid).into(aclogin);
+	if(! session.got_data()){
+		mdatabase->releaseSingleSession(session);
+	    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart the machine"+mid);
+	}
+	acclog=aclogin;
+	mdatabase->releaseSingleSession(session);
+#else
+  string req = "select nummachineid,name from machine where machine.machineid='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Machine not found");
   }
   vector<string> res;
   res = result->get(0);
-  hostname = res.at(2);
+  hostname = res.at(1);
 
-  req = "select * from account, users where users.userid='root' and users.numuserid=account.users_numuserid and account.machine_nummachineid='"+res.at(0)+"'";
+  req = "select aclogin from account, users where users.userid='root' and users.numuserid=account.users_numuserid and account.machine_nummachineid='"+res.at(0)+"'";
   boost::scoped_ptr<DatabaseResult> result2(mdatabase->getResult(req.c_str()));
   if(result2->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart the machine"+mid);
   }
   res = result2->get(0);
-  acclog = res.at(3);
+  acclog = res.at(0);
+#endif
 }
 
 
 // Return the last actif ims server
 string
 ProcessServer::getElectedMid() {
-  string req = "select * from machine, process where machine.machineid=process.machineid and process.vishnuname='IMS' and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
+#ifdef USE_SOCI_ADVANCED
+  string req = "select machine.machineid from machine, process "
+		  "where machine.machineid=process.machineid "
+		  "and process.vishnuname='IMS'"
+		  " and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
+
+  SOCISession session=mdatabase->getSingleSession();
+  string result;
+  session.execute(req).into(result);
+  bool got_data=session.got_data();
+  mdatabase->releaseSingleSession(session);
+
+  if( ! got_data ){
+	    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
+  }
+  return result;
+
+#else
+  string req = "select machine.machineid from machine, process where machine.machineid=process.machineid and process.vishnuname='IMS' and process.pstatus='"+convertToString(PRUNNING)+"' order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "No account found to restart on the machine");
   }
   vector<string> res;
   res = result->get(0);
-  return string(res.at(7));
+  return string(res.at(0));// S*FW : at(7)
+#endif
 }
 
 

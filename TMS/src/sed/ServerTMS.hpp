@@ -16,12 +16,12 @@
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
 
-class Database;
+class SOCIDatabase;
 
 /**
  *  * \brief Number of service in TMS
  *   */
-#define NB_SRV 10 
+#define NB_SRV 11
 
 static const char* SERVICES[NB_SRV] = {
   "jobSubmit_",
@@ -33,7 +33,8 @@ static const char* SERVICES[NB_SRV] = {
   "jobOutputGetResult_",
   "jobOutputGetCompletedJobs_",
   "getListOfJobs_all",
-  "jobSubmit_autom"
+  "jobSubmit_autom",
+  "addWork"
 };
 
 /**
@@ -50,7 +51,7 @@ public :
   /**
    * \brief To get the unique instance of the database
    */
-  Database* getDatabaseVishnu();
+  SOCIDatabase* getDatabaseVishnu();
 
   /**
    * \brief to get the VishnuId
@@ -119,7 +120,7 @@ private :
    */
   static void
     setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues);
-  
+
 
   /////////////////////////////////
   // Attributes
@@ -151,7 +152,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  Database *mdatabaseVishnu;
+  SOCIDatabase *mdatabaseVishnu;
   /**
    * \brief Directory containing the slave binary
    */

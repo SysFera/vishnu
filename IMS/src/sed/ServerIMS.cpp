@@ -19,7 +19,7 @@ using namespace vishnu;
 
 // {{RELAX<MISRA_0_1_3> Three static variables
 ServerIMS *ServerIMS::minstance       = NULL;
-Database  *ServerIMS::mdatabaseVishnu = NULL;
+SOCIDatabase  *ServerIMS::mdatabaseVishnu = NULL;
 UMSMapper *ServerIMS::mmapperUMS      = NULL;
 TMSMapper *ServerIMS::mmapperTMS      = NULL;
 FMSMapper *ServerIMS::mmapperFMS      = NULL;
@@ -95,13 +95,25 @@ ServerIMS::init(int vishnuId,
     mmapperFMS->registerMapper();
     mmapperUMS = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mmapperUMS->registerMapper();
+
+#ifdef USE_SOCI_ADVANCED
+    string sql("SELECT * FROM vishnu where vishnuid=:mvishnuId");
+    SOCISession session = mdatabaseVishnu->getSingleSession();
+    session<<sql,use(mvishnuId);
+    bool got_data=session.got_data();
+    mdatabaseVishnu->releaseSingleSession(session);
+    if(! got_data){
+    	SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+    	throw e;
+    }
+#else
     /* Checking of vishnuid on the database */
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
     }
-
+#endif
   } catch (VishnuException& e) {
       std::cout << e.buildExceptionString() << std::endl;
       exit(0);
@@ -333,6 +345,18 @@ ServerIMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveSetAID)) {
+    return 1;
+  }
+  diet_profile_desc_free(mprofile);
+
+  /* solveSetAID */
+
+  mprofile = diet_profile_desc_alloc(SRV[18], 1, 1, 2);
+  diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+
+  if (diet_service_table_add(mprofile, NULL, solveSetWID)) {
     return 1;
   }
   diet_profile_desc_free(mprofile);

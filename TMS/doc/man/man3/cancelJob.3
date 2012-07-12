@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: cancelJob
-.\"    Author:  SysFera SAS <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: January 2012
+.\"    Author:  SysFera SA <info@sysfera.com>
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: June 2012
 .\"    Manual: TMS C++ API Reference
-.\"    Source: VISHNU 1.2
+.\"    Source: VISHNU 1.4
 .\"  Language: English
 .\"
-.TH "CANCELJOB" "3" "January 2012" "VISHNU 1.2" "TMS C++ API Reference"
+.TH "CANCELJOB" "3" "June 2012" "VISHNU 1.4" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-cancelJob \- cancels a job from its id\&. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator\&.
+cancelJob \- Allows to cancel a job submitted on a given machine\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::cancelJob('u
 .BI "int vishnu::cancelJob(const\ string&\ " "sessionKey" ", const\ string&\ " "machineId" ", const\ string&\ " "jobId" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows canceling a job submitted on a specific machine\*(Aqs batch scheduler\&.
+cancels a job from its id\&. If job id is equal to all, all submitted jobs by all users will be cancelled if the user is an administrator, and only jobs submitted by the user will be cancelled if the user is not an administrator\&.
 .SH "ARGUMENTS"
 .PP
 \fIsessionKey\fR
@@ -104,13 +104,13 @@ The following exceptions may be thrown:
 .RE
 .SH "AUTHOR"
 .PP
-\fB SysFera SAS\fR <\&info@sysfera.com\&>
+\fB SysFera SA\fR <\&info@sysfera.com\&>
 .RS 4
 Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2012 SysFera SAS
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

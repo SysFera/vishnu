@@ -34,7 +34,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
 
   // Check if threshold already exist (update or insert)
   try {
-    insert = checkExist(tree);
+    insert = ! checkExist(tree); // insert if NOT exist
   } catch (SystemException& e) {
     throw (e);
   }
@@ -78,10 +78,20 @@ ThresholdServer::getThreshold() {
   if(mop.getMachineId().compare("")) {
     // Check machine mid correct
     string reqnmid = "SELECT * from machine where  machineid='"+mop.getMachineId()+"'";
+#ifdef USE_SOCI_ADVANCED
+    SOCISession session = mdatabase->getSingleSession();
+    session.execute(reqnmid);
+    bool got_data=session.got_data();
+    mdatabase->releaseSingleSession(session);
+    if(! got_data) {
+        throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
+    }
+#else
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
     }
+#endif
     req += " AND machineid='"+mop.getMachineId()+"'";
   }
   if(mop.getMetricType()==1 || // cpuuse
@@ -118,8 +128,16 @@ ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
   req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+"'";
   try {
     // Executing the request and getting the results
+#ifdef USE_SOCI_ADVANCED
+	  SOCISession session = mdatabase->getSingleSession();
+	  session<<req;
+	  bool got_data=session.got_data();
+	  mdatabase->releaseSingleSession(session);
+	  return got_data; //TODO got_data or NOT got_data ? FIXME
+#else
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
-    return (result->getNbTuples() == 0);
+    return (result->getNbTuples() != 0);//TODO == or != ? FIXME
+#endif
   } catch (SystemException& e) {
     throw (e);
   }
@@ -128,35 +146,60 @@ ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
 
 void
 ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid) {
-  string req = "SELECT * from machine where machineid='"+tree->getMachineId()+"'";
-  vector<string>::iterator iter;
+  string req = "SELECT nummachineid from machine where machineid='"+tree->getMachineId()+"'";
   std::vector<std::string> tmp;
 
   int privil;
   try {
+#ifdef USE_SOCI_ADVANCED
+    // Executing the request and getting the results
+	SOCISession session = mdatabase->getSingleSession();
+	req="SELECT nummachineid from machine where machineid='"+tree->getMachineId()+"'";
+	string nummid;
+	session.execute(req).into(nummid);
+	bool got_data = session.got_data();
+	if (! got_data) {
+		throw UserException(ERRCODE_INVALID_PARAM, "Invalid machine id for the threshold");
+	}
+	mdatabase->releaseSingleSession(session);
+	nmid=nummid;
+#else
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     if (result->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid machine id for the threshold");
     }
     tmp = result->get(0);
-    iter = tmp.begin();
-    nmid = (*(iter));
+    nmid = tmp.at(0);
     tmp.clear();
+#endif
   } catch (SystemException& e) {
     throw (e);
   }
-  req = "SELECT * from users where userid='"+tree->getHandler()+"'";
+  req = "SELECT numuserid, privilege from users where userid='"+tree->getHandler()+"'";
   try {
+#ifdef USE_SOCI_ADVANCED
+	    // Executing the request and getting the results
+	  SOCISession session =mdatabase->getSingleSession();
+	  string numuid; int privilege;
+	  session.execute(req).into(numuid).into(privilege);
+	  bool got_data = session.got_data();
+	  mdatabase->releaseSingleSession(session);
+	  if(! got_data) {
+	      throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
+	  }
+	  nuid=numuid;
+	  privil=privilege;
+#else
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     if (result->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Unknown handler for the threshold");
     }
     tmp = result->get(0);
-    iter = tmp.begin();
-    nuid = (*(iter));
-    privil = convertToInt((*(iter+6)));
+    nuid=tmp.at(0);
+    privil=convertToInt(tmp.at(1));
+#endif
     // If not an admin
     if (privil == 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid handler for the threshold, it must be an admin");

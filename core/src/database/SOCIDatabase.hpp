@@ -8,11 +8,17 @@
 #ifndef _SOCIDATABASE_H_
 #define _SOCIDATABASE_H_
 
-#include "Database.hpp"
+
+#include "SystemException.hpp"
+
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
 #include <vector>
+#include "DatabaseResult.hpp"
+#include "DbConfiguration.hpp"
+#include "SOCISession.hpp"
 
+static const int SUCCESS =  0;
 
 
 std::vector<std::string> split(const std::string &s, char delim);
@@ -22,7 +28,7 @@ std::string convertTmToString(std::tm time);
  * \class SOCIDatabase
  * \brief SOCI implementation of the Database
  */
-class SOCIDatabase : public Database{
+class SOCIDatabase {
 public :
   /**
    * \brief Function to process the request in the database
@@ -58,6 +64,7 @@ public :
    * \fn ~SOCIDatabase()
    * \brief Destructor, raises an exception on error
    */
+  virtual
   ~SOCIDatabase();
   /**
   * \brief To get the result of a select request
@@ -77,25 +84,25 @@ public :
  * \brief Start a transaction
  * \return The transaction ID
  */
-  virtual int
+  int
   startTransaction();
 /**
  * \brief End a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   endTransaction(int transactionID);
 /**
  * \brief Cancel a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   cancelTransaction(int transactionID);
 /**
  * \brief To commit a transaction
  * \param transactionID: The ID of the transaction
  */
-  virtual void
+  void
   flush(int transactionID);
 /**
  * \brief To get a unique id
@@ -105,8 +112,25 @@ public :
  * \param tid: The transaction id
  * \return A new integer never returned by this function
  */
-  virtual int
+  int
   generateId(std::string table, std::string fields, std::string val, int tid);
+
+
+  /*
+   * \brief To get a single session to the DB
+   * \param reqPos : pool position requested
+   */
+  SOCISession
+  getSingleSession(int reqPos = -1);
+  /*
+   * \brief To release a single session previously getted
+   * \param sess : the single session to release
+   * \return SUCCES if the session was correctly released
+   */
+  int
+  releaseSingleSession(SOCISession & ss);
+
+
 
 private :
   /**
@@ -115,7 +139,7 @@ private :
    * \param pos The position of the connection gotten in the pool
    * \return A valid and free connection
    */
-  soci::session & getConnection(int& pos);
+  soci::session * getConnection(int& pos);
 
   /**
    * \brief To release a connexion

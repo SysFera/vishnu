@@ -11,7 +11,7 @@
 #include "AuthenticatorFactory.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
-Database *ServerUMS::mdatabaseVishnu = NULL;
+SOCIDatabase *ServerUMS::mdatabaseVishnu = NULL;
 ServerUMS *ServerUMS::minstance = NULL;
 UMSMapper *ServerUMS::mmapper = NULL;
 TMSMapper *ServerUMS::mmapperTMS = NULL;
@@ -98,11 +98,22 @@ ServerUMS::init(int vishnuId,
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
+#ifdef USE_SOCI_ADVANCED
+    SOCISession session = mdatabaseVishnu->getSingleSession();
+    session<<sqlCommand;
+    bool got_data=session.got_data();
+    mdatabaseVishnu->releaseSingleSession(session);
+    if(! got_data){
+        SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
+        throw e;
+    }
+#else
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
     }
+#endif
 
   } catch (VishnuException& e) {
       std::cout << e.what() << std::endl;
@@ -504,6 +515,7 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
   if (diet_service_table_add(mprofile, NULL, solveAccountAuthDelete)) {
     return 1;
   }

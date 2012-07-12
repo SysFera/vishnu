@@ -65,11 +65,22 @@ void ListUsersServer::processOptions(UserServer userServer, const UMS_Data::List
   if(userId.size()!=0) {
     sqlRequest.append(" and userid=");
     sqlRequest.append("'"+userId+"'");
+#ifdef USE_ADVANCED_SOCI
+    SOCISession session=mdatabaseVishnu->getSingleSession();
+    session<<sqlRequest;
+    bool got_data = session.got_data();
+    mdatabaseVishnu->releaseSingleSession(session);
+    if(! got_data) {
+        UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
+        throw e ;
+    }
+#else
     boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlRequest.c_str()));
     if(ListofUsers->getNbTuples()==0) {
       UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
       throw e ;
     }
+#endif
   }
 }
 

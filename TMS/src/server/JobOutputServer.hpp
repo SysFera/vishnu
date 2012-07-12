@@ -45,7 +45,7 @@ public:
 
   /**
    * \brief Function to get the all completed jobs results
-   * \return The lits of job results data structure
+   * \return The list of job results data structure
    */
   TMS_Data::ListJobResults_ptr
   getCompletedJobsOutput();
@@ -81,7 +81,7 @@ public:
   /**
    * \brief An instance of vishnu database
    */
-  Database *mdatabaseVishnu;  
+  SOCIDatabase *mdatabaseVishnu;  
 };
 
 #endif
