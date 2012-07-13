@@ -133,10 +133,10 @@ ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
 	  session<<req;
 	  bool got_data=session.got_data();
 	  mdatabase->releaseSingleSession(session);
-	  return got_data; //TODO got_data or NOT got_data ? FIXME
+	  return got_data;
 #else
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
-    return (result->getNbTuples() != 0);//TODO == or != ? FIXME
+    return (result->getNbTuples() != 0);
 #endif
   } catch (SystemException& e) {
     throw (e);

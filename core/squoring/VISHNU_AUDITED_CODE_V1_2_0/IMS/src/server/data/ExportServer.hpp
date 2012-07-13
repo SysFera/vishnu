@@ -11,7 +11,7 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
-#include "SOCIDatabase.hpp"
+#include "Database.hpp"
 #include "UserServer.hpp"
 
 using namespace std;
@@ -57,7 +57,7 @@ protected:
   /**
    *  \brief The datase
    */
-  SOCIDatabase* mdatabase;
+  Database* mdatabase;
 private:
 };
 

@@ -20,7 +20,7 @@
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
 
-class SOCIDatabase;
+class Database;
 
 /**
  * \class ServerFMS
@@ -87,7 +87,7 @@ private :
   /**
   * \brief Instance of Database
   */
-  static SOCIDatabase *mdatabaseVishnu;
+  static Database *mdatabaseVishnu;
   /**
   * \brief Instance of FMSMapper
   */

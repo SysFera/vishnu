@@ -276,7 +276,7 @@ class FileTransferServer{
  * \brief Get A database instance to store file transfer information
  * \return the database instance
  */
-    static SOCIDatabase * getDatabaseInstance();
+    static Database * getDatabaseInstance();
   /**
    * \brief Update the ssh port
    * \param sshPort The new ssh port

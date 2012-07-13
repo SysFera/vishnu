@@ -105,7 +105,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  SOCIDatabase *mdatabaseVishnu;
+  Database *mdatabaseVishnu;
   /**
   * \brief The content of the ssh public key generated
   */

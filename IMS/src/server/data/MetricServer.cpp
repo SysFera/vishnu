@@ -129,7 +129,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
     nmid=res;
 #else
   // Getting the num machine id to insert
-  string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mid+"'"; //TODO check *
+  string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mid+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
