@@ -19,7 +19,7 @@ using namespace vishnu;
 
 // {{RELAX<MISRA_0_1_3> Three static variables 
 ServerIMS *ServerIMS::minstance       = NULL;
-SOCIDatabase  *ServerIMS::mdatabaseVishnu = NULL;
+Database  *ServerIMS::mdatabaseVishnu = NULL;
 UMSMapper *ServerIMS::mmapperUMS      = NULL;
 TMSMapper *ServerIMS::mmapperTMS      = NULL;
 FMSMapper *ServerIMS::mmapperFMS      = NULL;

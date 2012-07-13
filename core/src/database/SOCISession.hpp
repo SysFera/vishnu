@@ -35,14 +35,23 @@
  * string query = "select name from tabe where id=:id"
  *
  * * those syntaxes are equivalent :
- * - sythax 1 //TODO completer la synthaxe
+ * - sythax 1
  * session.execute(query).use(myId).into(name);
  *
  * - syntax 2
+ * session<<query,soci::use(myId, soci::indicator() ),soci::into(name);
+ *
+ * The use of soci::indicator is to prevent exception by reading data with null value.
+ * In those synthaxes above, the user cannot acces to the indicator.
+ * To acces the value of the indicator, you must use those synthax below :
+ *
+ * - synthax 1 bis
  * soci::indicator ind;
- * session<<query,soci::use(myId,ind),soci::into(name);
+ * session.execute(query).use(myId,ind).into(name);
  *
- *
+ * - synthax 2 bis
+ * soci::indicator ind;
+ * session<<query,soci::use(myId,ind),soci::into(name)
  */
 class SOCISession
 {
@@ -103,10 +112,6 @@ public:
 	 * \return throw a SystemException in case of error
 	 */
 	void rollback();
-
-	/*
-	 * TODO : comment functions
-	 */
 
 
 	/*
