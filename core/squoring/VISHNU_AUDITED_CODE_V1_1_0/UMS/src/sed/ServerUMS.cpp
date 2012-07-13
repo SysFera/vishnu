@@ -8,7 +8,7 @@
 #include "ServerUMS.hpp"
 #include "internalApi.hpp"
 
-SOCIDatabase *ServerUMS::mdatabaseVishnu = NULL;
+Database *ServerUMS::mdatabaseVishnu = NULL;
 ServerUMS *ServerUMS::minstance = NULL;
 UMSMapper *ServerUMS::mmapper = NULL;
 TMSMapper *ServerUMS::mmapperTMS = NULL;

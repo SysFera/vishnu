@@ -31,7 +31,7 @@ ServerTMS::getInstance() {
 /**
  * \brief To get the unique instance of the database
  */
-SOCIDatabase*
+Database*
 ServerTMS::getDatabaseVishnu() {
   return mdatabaseVishnu;
 }

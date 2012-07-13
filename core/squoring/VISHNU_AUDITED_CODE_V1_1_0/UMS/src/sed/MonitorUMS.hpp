@@ -60,7 +60,7 @@ private :
   /**
   * \brief An instance of vishnu database
   */
-  SOCIDatabase *mdatabaseVishnu;
+  Database *mdatabaseVishnu;
 
 };
 #endif // MONITORUMS

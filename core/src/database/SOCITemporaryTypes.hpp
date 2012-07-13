@@ -150,7 +150,7 @@ public:
 	template<typename OUTPUT>
 	temporary_type & into(OUTPUT & out)
 	{
-		indicator ind; //TODO : meilleur solution pour la lecture de champ null ?
+		indicator ind; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,ind));
 	}
 
@@ -163,7 +163,7 @@ public:
 	template<typename OUTPUT>
 	temporary_type & into(std::vector<OUTPUT> & out)
 	{
-		std::vector<indicator> inds; //TODO : meilleur solution pour la lecture de champ null ?
+		std::vector<indicator> inds; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,inds));
 	}
 

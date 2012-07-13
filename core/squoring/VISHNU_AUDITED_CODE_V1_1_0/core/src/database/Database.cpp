@@ -1,7 +1,7 @@
-#include "SOCIDatabase.hpp"
+#include "Database.hpp"
 
-SOCIDatabase:: SOCIDatabase(){};
+Database:: Database(){};
 
-SOCIDatabase::~SOCIDatabase(){};
+Database::~Database(){};
 
 

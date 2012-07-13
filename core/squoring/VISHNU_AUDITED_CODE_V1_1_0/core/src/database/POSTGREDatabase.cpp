@@ -91,7 +91,7 @@ POSTGREDatabase::POSTGREDatabase(std::string hostname,
                                  std::string pwd,
                                  std::string database,
                                  unsigned int port)
- : SOCIDatabase(), mhost(hostname), musername(username), mpwd(pwd),
+ : Database(), mhost(hostname), musername(username), mpwd(pwd),
     mdatabase(database), mport(port), misConnected(false), mSQLtransaction() {
   int i;
   for (i=0;i<POOLSIZE;i++){
