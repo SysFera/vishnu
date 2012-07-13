@@ -550,13 +550,6 @@ int SOCIDatabase::releaseSingleSession(SOCISession & ss)
 }
 
 
-/**
- * template function getResult
- * TODO
- */
-
-
-
 
 
 /*

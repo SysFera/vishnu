@@ -16,7 +16,7 @@
 #endif
 //#include "OracleDatabase.hpp"
 
-SOCIDatabase* DbFactory::mdb = NULL;
+Database* DbFactory::mdb = NULL;
 
 DbFactory::DbFactory(){
 }
@@ -24,7 +24,7 @@ DbFactory::DbFactory(){
 DbFactory::~DbFactory(){
 }
 
-SOCIDatabase*
+Database*
 DbFactory::createDatabaseInstance(DbConfiguration config)
 {
   if (mdb != NULL) {
@@ -59,7 +59,7 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
   return mdb;
 }
 
-SOCIDatabase* DbFactory::getDatabaseInstance()
+Database* DbFactory::getDatabaseInstance()
 {
   if (mdb == NULL) {
     throw SystemException(ERRCODE_DBERR, "Database instance not initialized");

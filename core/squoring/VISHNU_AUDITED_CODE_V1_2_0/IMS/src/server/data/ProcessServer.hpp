@@ -163,7 +163,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  SOCIDatabase *mdatabase;
+  Database *mdatabase;
   /**
    * \brief The name of the command
    */

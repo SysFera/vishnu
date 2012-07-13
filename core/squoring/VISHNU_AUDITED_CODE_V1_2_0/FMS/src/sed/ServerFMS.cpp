@@ -14,7 +14,7 @@
 
 using namespace vishnu;
 using namespace FMS_Data;
-SOCIDatabase *ServerFMS::mdatabaseVishnu = NULL;
+Database *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
 FMSMapper *ServerFMS::mmapper = NULL;
 
