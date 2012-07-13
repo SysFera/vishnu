@@ -87,7 +87,7 @@ POSTGREDatabase::connect(){
  * \brief Constructor
  */
 POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
- : SOCIDatabase(), mconfig(dbConfig), misConnected(false) {
+ : Database(), mconfig(dbConfig), misConnected(false) {
   int i;
   mpool = new pool_t[mconfig.getDbPoolSize()];
   for (i=0;i<mconfig.getDbPoolSize();i++){

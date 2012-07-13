@@ -16,7 +16,7 @@ using namespace vishnu;
 using namespace FMS_Data;
 
 // {{RELAX<MISRA_0_1_3> Three static variables 
-SOCIDatabase *ServerFMS::mdatabaseVishnu = NULL;
+Database *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
 FMSMapper *ServerFMS::mmapper = NULL;
 // }}RELAX<MISRA_0_1_3>

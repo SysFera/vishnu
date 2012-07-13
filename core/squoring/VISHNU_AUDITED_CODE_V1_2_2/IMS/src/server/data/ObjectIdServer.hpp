@@ -12,7 +12,7 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
-#include "SOCIDatabase.hpp"
+#include "Database.hpp"
 
 using namespace std;
 
@@ -66,7 +66,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  SOCIDatabase *mdatabase;
+  Database *mdatabase;
   /**
    * \brief The session
    */

@@ -37,7 +37,7 @@ vishnu::registerSeD(string type, ExecConfiguration config){
   // Database execution
   try {
     DbFactory factory;
-    SOCIDatabase* database = factory.getDatabaseInstance();
+    Database* database = factory.getDatabaseInstance();
     database->process(req.c_str());
   } catch (SystemException& e) {
     throw (e);
@@ -48,7 +48,7 @@ vishnu::registerSeD(string type, ExecConfiguration config){
 string
 vishnu::getMidFromHost(string hostname){
   DbFactory factory;
-  SOCIDatabase* database = factory.getDatabaseInstance();
+  Database* database = factory.getDatabaseInstance();
   string req = "SELECT * from machine where name='"+hostname+"'";
   boost::scoped_ptr<DatabaseResult> result(database->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -271,7 +271,7 @@ std::string
 vishnu::getAttrVishnu(std::string attrname, std::string vishnuid) {
 
   DbFactory factory;
-  SOCIDatabase *databaseVishnu;
+  Database *databaseVishnu;
 
   std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
 
@@ -291,7 +291,7 @@ void
 vishnu::incrementCpt(std::string cptName, int cpt) {
 
   DbFactory factory;
-  SOCIDatabase *databaseVishnu;
+  Database *databaseVishnu;
 
   cpt = cpt+1;
 

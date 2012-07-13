@@ -31,9 +31,9 @@ std::string FileTransferServer::msshCommand="/usr/bin/ssh";
 // }}RELAX<MISRA_0_1_3>
 
 // Get The Database instance
-SOCIDatabase* FileTransferServer::getDatabaseInstance(){
+Database* FileTransferServer::getDatabaseInstance(){
 
-  SOCIDatabase* databaseInstance (DbFactory().getDatabaseInstance());
+  Database* databaseInstance (DbFactory().getDatabaseInstance());
   if(databaseInstance ==NULL){
     throw SystemException(ERRCODE_DBERR, "Get a null instance of database" );
   }
