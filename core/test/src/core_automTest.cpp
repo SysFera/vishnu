@@ -1,13 +1,13 @@
 #include <boost/test/unit_test.hpp>
 
 #include "core_testconfig.h"
+#include "SOCIDatabase.hpp"
 
 
 BOOST_AUTO_TEST_SUITE( soci_database_test )
 
 
 using namespace std;
-using namespace soci;
 using namespace vishnu;
 
 
