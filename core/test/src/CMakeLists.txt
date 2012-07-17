@@ -41,3 +41,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core_testconfig.h.in
 include_directories(${PROJECT_BINARY_DIR}/include/)
 
 add_library(vishnu-test utils.cpp)
+
+include(coreTestingMacros)
+core_test_setup()
+core_test(core_automTest)
