@@ -1,0 +1,7 @@
+// core_testconfig.h.in
+
+#ifndef _CORE_TESTCONFIG_H_IN_
+#define _CORE_TESTCONFIG_H_IN_
+
+
+#endif /* _CORE_TESTCONFIG_H_IN_ */
