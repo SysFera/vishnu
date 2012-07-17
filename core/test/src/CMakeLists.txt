@@ -33,6 +33,10 @@ endif (APPLE)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/diet_config_tests.h.in
   ${PROJECT_BINARY_DIR}/include/diet_config_tests.h)
+  
+# Create header for VISHNU core tests
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core_testconfig.h.in
+  ${PROJECT_BINARY_DIR}/include/core_testconfig.h)
 
 include_directories(${PROJECT_BINARY_DIR}/include/)
 
