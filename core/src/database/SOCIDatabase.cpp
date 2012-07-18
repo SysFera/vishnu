@@ -75,7 +75,9 @@ int SOCIDatabase::process(string request, int transacId)
 	{
 		for(vector<string>::const_iterator it=requests.begin();it!=requests.end();++it)
 		{
+			if(! it->empty()) {
 			(pconn->once)<<(*it);
+			}
 		}
 	} catch (exception const &e)
 	{
@@ -230,17 +232,26 @@ SOCIDatabase::getResult(string request, int transacId)
 
 	int reqPos;
 	size_t pos;
+	soci::session * pconn;
 
-	if (transacId == -1)
+	try {
+		if (transacId == -1)
+		{
+			getConnection(reqPos);
+			pos = reqPos;
+		}
+		else
+		{
+			reqPos = -1;
+			pos = transacId;
+		}
+		pconn = &mpool->at(pos);
+	} catch (exception const & e)
 	{
-		getConnection(reqPos);
-		pos = reqPos;
+		throw SystemException(ERRCODE_DBERR,
+				string("Cannot get connection : \n") + e.what());
 	}
-	else
-	{
-		reqPos = -1;
-		pos = transacId;
-	}
+
 
 	if (request.empty())
 	{
@@ -248,7 +259,6 @@ SOCIDatabase::getResult(string request, int transacId)
 		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
 	}
 
-	soci::session * pconn = &mpool->at(pos);
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
 	try
