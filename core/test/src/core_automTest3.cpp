@@ -133,9 +133,19 @@ BOOST_AUTO_TEST_CASE( getting_results_with_transaction )
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }
 
+BOOST_AUTO_TEST_CASE( clean_test )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	BOOST_CHECK(myDatabase->process("drop table if exists paco")==0);
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
 BOOST_AUTO_TEST_CASE( finalize_test )
 {
 	// TODO this should be in a Fixture class
+
+
 
 	try {
 		if(myDatabase != NULL){
