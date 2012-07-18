@@ -309,12 +309,14 @@ void SOCIDatabase::releaseConnection(int pos)
 		return;
 	}
 
+
 	try
 	{
 		mpool->give_back((size_t) pos);
 	} catch (exception const &e)
 	{
-		throw SystemException(ERRCODE_DBCONN, "Cannot release connection lock");
+		throw SystemException(ERRCODE_DBCONN,
+				string("Cannot release connection lock : ")+e.what());
 	}
 
 }
@@ -454,12 +456,13 @@ void SOCIDatabase::flush(int transactionID)
 				"Cannot flush transaction, not connected to DB");
 	}
 	size_t pos = transactionID;
-	soci::session & conn = (mpool->at(pos));
+	soci::session * conn;
 
 	try
 	{
-		conn.commit();
-		conn.begin(); // after a commit, needs to restart the transcation
+		conn = &(mpool->at(pos));
+		conn->commit();
+		conn->begin(); // after a commit, needs to restart the transcation
 	} catch (exception const &e)
 	{
 		throw SystemException(ERRCODE_DBCONN,
@@ -538,14 +541,26 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 
 SOCISession SOCIDatabase::getSingleSession(int reqPos)
 {
-	session * conn=NULL;
-	if(reqPos==-1)
+	if (!is_connected)
 	{
-		conn=getConnection(reqPos);
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot get single session, not connected to DB");
 	}
-	else
+
+	session * conn=NULL;
+	try {
+		if(reqPos==-1)
+		{
+			conn=getConnection(reqPos);
+		}
+		else
+		{
+			conn=&(mpool->at(reqPos));
+		}
+	} catch( exception const & e)
 	{
-		conn=&(mpool->at(reqPos));
+		throw SystemException(ERRCODE_DBCONN,
+				string("Cannot get single session : ")+e.what());
 	}
 
 	return SOCISession(conn,reqPos);
@@ -553,7 +568,20 @@ SOCISession SOCIDatabase::getSingleSession(int reqPos)
 
 int SOCIDatabase::releaseSingleSession(SOCISession & ss)
 {
+	if (!is_connected)
+	{
+		throw SystemException(ERRCODE_DBCONN,
+				"Cannot release single session, not connected to DB");
+	}
+
+	try {
 	releaseConnection(ss.getPoolPosition());
+	} catch (exception const & e)
+	{
+		// the session was already free
+		throw SystemException(ERRCODE_DBCONN,
+						string("The session was already free : ")+e.what());
+	}
 	ss=SOCISession();
 
 	return SUCCESS;

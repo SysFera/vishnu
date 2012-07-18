@@ -95,4 +95,25 @@ BOOST_AUTO_TEST_CASE( ending_transactions )
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }
 
+BOOST_AUTO_TEST_CASE( flushing_transactions )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+
+	// ending transaction with disconnected database
+	BOOST_CHECK_THROW(myDatabase->flush(0),VishnuException);
+	// connection to database
+	BOOST_REQUIRE(myDatabase->connect()==0);
+	BOOST_CHECK(myDatabase->startTransaction()==0);
+	BOOST_CHECK_NO_THROW(myDatabase->flush(0));
+	// transaction id 5 is out of connection pool size
+	BOOST_CHECK_THROW(myDatabase->flush(5),VishnuException);
+	// a transaction can be flushed many times
+	BOOST_CHECK_NO_THROW(myDatabase->flush(0));
+	BOOST_CHECK_NO_THROW(myDatabase->endTransaction(0));
+	// flush an inactive transaction start it
+	BOOST_CHECK_NO_THROW(myDatabase->flush(0));
+	// disconnect from database
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
