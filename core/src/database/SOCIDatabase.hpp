@@ -118,7 +118,9 @@ public :
 
   /*
    * \brief To get a single session to the DB
-   * \param reqPos : pool position requested
+   * \param (optional) reqPos : pool position requested
+   * session without requested position have to been release
+   * with method releaseSingleSession(SOCISession)
    */
   SOCISession
   getSingleSession(int reqPos = -1);
