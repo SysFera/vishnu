@@ -38,37 +38,20 @@ BOOST_AUTO_TEST_CASE( initialisation )
 	BOOST_CHECK_THROW(myDatabase->disconnect(),VishnuException);
 }
 
-BOOST_AUTO_TEST_CASE( getting_single_session )
+BOOST_AUTO_TEST_CASE( getting_single_statement )
 {
 	BOOST_REQUIRE(myDatabase != NULL);
 
 	BOOST_TEST_MESSAGE("getting single session to database");
-	// processing with disconnected database
-	BOOST_CHECK_THROW(myDatabase->getSingleSession(),VishnuException);
-	// connection to database
 	BOOST_REQUIRE(myDatabase->connect()==0);
 	try {
-	SOCISession session;
-	SOCISession session2;
-	SOCISession session3;
-	SOCISession nullSession;
-	BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
-	// get Single session with requested position
-	BOOST_CHECK_NO_THROW(session2 = myDatabase->getSingleSession(2));
-	BOOST_CHECK_THROW(session3 = myDatabase->getSingleSession(147),VishnuException);
-	BOOST_CHECK(myDatabase->releaseSingleSession(session)==0);
-	// single session with requested position does not need to be released
-	BOOST_CHECK_THROW(myDatabase->releaseSingleSession(session2),VishnuException);
-	BOOST_CHECK_THROW(myDatabase->releaseSingleSession(nullSession), VishnuException);
+	SOCISession session=myDatabase->getSingleSession();
+	SOCIStatement statement=session.getStatement();
+	// getting a single statement
+	BOOST_CHECK_NO_THROW(statement=session.getStatement());
 
+	myDatabase->releaseSingleSession(session);
 
-	// maximum : 5 sessions, set in configuration file
-	BOOST_CHECK_NO_THROW(myDatabase->getSingleSession());
-	BOOST_CHECK_NO_THROW(myDatabase->getSingleSession());
-	BOOST_CHECK_NO_THROW(myDatabase->getSingleSession());
-	BOOST_CHECK_NO_THROW(myDatabase->getSingleSession());
-	BOOST_CHECK_NO_THROW(myDatabase->getSingleSession());
-	BOOST_CHECK_THROW(myDatabase->getSingleSession(),VishnuException);
 	} catch(exception const & e)
 	{
 		BOOST_MESSAGE(e.what());
@@ -79,23 +62,25 @@ BOOST_AUTO_TEST_CASE( getting_single_session )
 
 }
 
-BOOST_AUTO_TEST_CASE( session_transaction_test )
+BOOST_AUTO_TEST_CASE( executing_statement_test )
 {
 	BOOST_REQUIRE(myDatabase != NULL);
-	BOOST_CHECK(myDatabase->connect()==0);
-	try{
-		SOCISession session;
-		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
 
-		BOOST_CHECK_NO_THROW(session.rollback());
-		BOOST_CHECK_NO_THROW(session.commit());
-		BOOST_CHECK_NO_THROW(session.begin());
-		BOOST_CHECK_NO_THROW(session.commit());
-		BOOST_CHECK_NO_THROW(session.rollback());
+	BOOST_TEST_MESSAGE("getting single session to database");
+	BOOST_REQUIRE(myDatabase->connect()==0);
+	try {
+	SOCISession session=myDatabase->getSingleSession();
+	SOCIStatement statement=session.getStatement();
+	SOCIStatement statement2=session.getStatement();
 
+	BOOST_CHECK_NO_THROW(statement.prepare("drop table if exists paco"));
+	BOOST_CHECK(statement.execute(false)==false);
+	BOOST_CHECK_NO_THROW(statement2.prepare("create table paco(id int, nom varchar(255));"));
+	BOOST_CHECK(statement.execute(true)==false);
 
-		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
-	} catch (exception const & e)
+	myDatabase->releaseSingleSession(session);
+
+	} catch(exception const & e)
 	{
 		BOOST_MESSAGE(e.what());
 		BOOST_CHECK(false);
@@ -104,23 +89,31 @@ BOOST_AUTO_TEST_CASE( session_transaction_test )
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }
 
-BOOST_AUTO_TEST_CASE( session_process_test )
+BOOST_AUTO_TEST_CASE( repeating_statement_test )
 {
 	BOOST_REQUIRE(myDatabase != NULL);
-	BOOST_CHECK(myDatabase->connect()==0);
-	try{
-		SOCISession session;
-		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
 
+	BOOST_TEST_MESSAGE("getting single session to database");
+	BOOST_REQUIRE(myDatabase->connect()==0);
+	try {
+	SOCISession session=myDatabase->getSingleSession();
+	SOCIStatement statement=session.getStatement();
 
-		// executing simple request
-		BOOST_TEST_MESSAGE("execute SQL process by creating table");
-		BOOST_CHECK_NO_THROW(session.execute("drop table if exists paco"));
-		BOOST_CHECK_NO_THROW(session<<"create table paco(id int, nom varchar(255))");
+	BOOST_CHECK_NO_THROW(statement.prepare("insert into paco(id,nom) values (:id,:name)"));
+	int i =0;
+	string name="";
+	statement.exchange_use(i);
+	statement.exchange_use(name);
+	statement.alloc();
+	for(i=0;i<10;++i)
+	{
 
+	}
+	BOOST_CHECK(statement.execute(false)==false);
 
-		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
-	} catch (exception const & e)
+	myDatabase->releaseSingleSession(session);
+
+	} catch(exception const & e)
 	{
 		BOOST_MESSAGE(e.what());
 		BOOST_CHECK(false);

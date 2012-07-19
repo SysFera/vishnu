@@ -50,4 +50,5 @@ core_test(core_automTest1)
 core_test(core_automTest2)
 core_test(core_automTest3)
 core_test(core_automTest4)
+core_test(core_automTest5)
 
