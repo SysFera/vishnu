@@ -51,11 +51,15 @@ public:
 
 	/*
 	 * \brief function which allocates necessary internal resources.
+	 * FIXME : Is this method usefull ?? Maybe do not encapsule it
+	 * --> it is usefull for Oracle backend
+	 * Shall be called automatically
 	 */
 	void alloc();
 
 	/*
 	 * \brief function, which is used to bind the values object
+	 * FIXME : Is this method usefull ?? Maybe do not encapsule it.
 	 * this is used in the object-relational mapping and normally called automatically
 	 */
 	void bind(soci::values & v);
@@ -123,16 +127,16 @@ public:
 		}
 	}
 
-	/*
-	 * \brief function for cleaning up resources, normally called automatically.
-	 */
-	void clean_up();
 
 	/*
-	 * \brief function for preparing the statement for repeated execution
+	 * \brief function for preparing the statement for repeated execution.
+	 * Successive calls of prepare(query) append the SQL request string,
+	 * but you cannot insert multiple commands into a prepared statement
 	 * \param std::string query the SQL query
 	 * parameters must begin by ':' and cannot be between quotes '
 	 * \sample "Select id from table where name=:param"
+	 * \return raises an exception in case of multiples command,
+	 * raises an exception in case of bad synthax
 	 */
     void prepare(std::string const & query,
         details::statement_type eType = details::st_repeatable_query);
@@ -141,16 +145,26 @@ public:
      * \brief function for actually executing the registered bindings
      *  normally called automatically
      *  must be called :
-     *  after : exchange_into, exchange_use, alloc, prepare
+     *  after : exchange_into, exchange_use, (alloc?), prepare
      *  before : execute
      */
     void define_and_bind();
+
+	/*
+	 * \brief function for cleaning up resources, normally called automatically.
+	 * Deallocate all bind and define objects
+	 * After clean up, the SOCI statement cannot me used, because it has no more backend.
+	 * It must be re-affected from a session.
+	 */
+	void clean_up();
 
     /*
      * \brief function for executing the statement.
      * \param withDataExchange
      * if false then there is no data exchange with locally bound variables
      * (this form should be used if later fetch of multiple rows is foreseen).
+     * This means that the statement should be executed,
+     *  but the actual data exchange will be performed later.
      * \return true if there was at least one row of data returned.
      *
      */
@@ -172,6 +186,7 @@ public:
      * \brief function for extracting the type information for the result
      * (note: no data is exchanged).
      * This is normally called automatically and only when dynamic resultset binding is used
+     * FIXME : Is this method usefull ?? Maybe do not encapsule it
      */
     void describe();
 
@@ -200,6 +215,7 @@ public:
 
 private:
 	soci::statement mstatement;
+	bool hasBackend;
 
 };
 

@@ -24,6 +24,9 @@ SOCIStatement& SOCIStatement::operator=(SOCIStatement const & other)
 
 void SOCIStatement::alloc()
 {
+	if(mstatement.get_backend() == NULL) {
+		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
+	}
 	TRYCATCH(mstatement.alloc(),"Cannot alloc ressources for statement:\n")
 }
 
@@ -40,6 +43,9 @@ void SOCIStatement::clean_up()
 void SOCIStatement::prepare(std::string const & query,
         details::statement_type eType)
 {
+	if(mstatement.get_backend() == NULL) {
+		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
+	}
 	TRYCATCH(mstatement.prepare(query,eType),"Failed to prepare statement:\n")
 }
 void SOCIStatement::define_and_bind()
@@ -50,6 +56,9 @@ void SOCIStatement::define_and_bind()
 
 bool SOCIStatement::execute(bool withDataExchange)
 {
+	if(mstatement.get_backend() == NULL) {
+		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
+	}
 	try{
 		return mstatement.execute(withDataExchange);
 	}
@@ -64,6 +73,9 @@ bool SOCIStatement::execute(bool withDataExchange)
 
 bool SOCIStatement::fetch()
 {
+	if(mstatement.get_backend() == NULL) {
+		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
+	}
 	bool ret=false;
 	TRYCATCH(ret=mstatement.fetch(),"")
 	return ret;
@@ -77,6 +89,9 @@ bool SOCIStatement::got_data() const
 }
 void SOCIStatement::describe()
 {
+	if(mstatement.get_backend() == NULL) {
+		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
+	}
 	TRYCATCH(mstatement.describe(),"")
 }
 void SOCIStatement::set_row(row * r)
