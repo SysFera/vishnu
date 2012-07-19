@@ -105,11 +105,23 @@ public:
 	 * soci::blob (for Binary Large OBjects)
 	 * soci::row_id (for row identifiers)
 	 *
+	 * \param the second parameter is optionnal, it is a soci type : indicator
+	 * soci::indicator is an enum ok : i_ok, i_null, i_truncated
+	 * which is set after exchanging data
+	 * i_ok : exchanging data is successfull
+	 * i_null : the data to exchange is a null value
+	 * i_truncated : the data to exchange data is troncated
 	 */
 	template<typename INPUT>
 	temporary_type & use(INPUT & in)
 	{
 		return this->exchange(soci::use(in));
+	}
+
+	template<typename INPUT>
+	temporary_type & use(INPUT & in, soci::indicator & indic)
+	{
+		return this->exchange(soci::use(in,indic));
 	}
 
 	/* \fn template function into(...)
