@@ -141,7 +141,6 @@ BOOST_AUTO_TEST_CASE( clean_up_statement )
 	BOOST_CHECK_THROW(statement.prepare("drop table if exists paco"),VishnuException);
 	BOOST_CHECK_THROW(statement.execute(false),VishnuException);
 	BOOST_CHECK_THROW(statement.alloc(),VishnuException);
-	BOOST_CHECK_THROW(statement.describe(),VishnuException);
 	BOOST_CHECK_NO_THROW(statement.define_and_bind());
 
 
