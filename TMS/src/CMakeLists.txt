@@ -1,6 +1,4 @@
 include_directories(client api
-#  ${DIET_INCLUDE_DIR}
-#  ${OMNIORB4_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -32,7 +30,6 @@ set(api_HEADERS api/api_tms.hpp)
 
 add_library(vishnu-tms-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 target_link_libraries(vishnu-tms-client
-#  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
@@ -53,6 +50,7 @@ add_subdirectory(cli)
 if (NOT CLIENT_ONLY)
   include(config.cmake)
   include_directories(server
+    utils
     ${DATA_BASE_INCLUDE_DIR}
     ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
@@ -74,14 +72,18 @@ if (NOT CLIENT_ONLY)
     emf4cpp-vishnu
     ${ZMQ_LIBRARIES}
     zmq_helper
-)
+    )
 
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
     sed/internalApi.cpp
     sed/MonitorTMS.cpp)
 
-  set(server_SRCS ${UsedBatchServer}
+  
+  add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
+  add_definitions(-DMODULE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
+
+  set(server_SRCS
     server/BatchServer.cpp
     server/SSHJobExec.cpp
     server/JobServer.cpp
@@ -91,13 +93,19 @@ if (NOT CLIENT_ONLY)
     server/ScriptGenConvertor.cpp
     server/Env.cpp
     server/WorkServer.cpp
-    )
+    utils/SharedLibrary.cc)
+ if(WIN32)
+   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
+ else()
+   set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
+ endif()
+ 
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
   add_executable(tmssed ${sed_SRCS})
-  target_link_libraries(tmssed #${DIET_SERVER_LIBRARIES}
+  target_link_libraries(tmssed
     ${Boost_LIBRARIES}
     ${LOG_LIBRARY}
     ${DATABASE_LIBS}
@@ -110,8 +118,29 @@ if (NOT CLIENT_ONLY)
     emf4cpp-vishnu
     ${USED_BATCH_LIB}
     ${ZMQ_LIBRARIES}
-    zmq_helper
-    )
+    zmq_helper)
+
+  if (VISHNU_USE_TORQUE)
+    add_library(vishnu-tms-torque ${TORQUESERVER_SRCS})
+    install(TARGETS vishnu-tms-torque DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+  if (VISHNU_USE_LOADLEVELER)
+    add_library(vishnu-tms-loadleveler ${LOADLEVELERSERVER_SRCS})
+    install(TARGETS vishnu-tms-loadleveler DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+  if (VISHNU_USE_SLURM)
+    add_library(vishnu-tms-slurm ${SLURMSERVER_SRCS})
+    install(TARGETS vishnu-tms-slurm DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+  if (VISHNU_USE_LSF)
+    add_library(vishnu-tms-lsf ${LSFSERVER_SRCS})
+    install(TARGETS vishnu-tms-lsf DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+  if (VISHNU_USE_SGE)
+    add_library(vishnu-tms-sge ${SGESERVER_SRCS})
+    install(TARGETS vishnu-tms-sge DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)

@@ -6,33 +6,11 @@
  */
 
 #include "BatchFactory.hpp"
-#ifdef HAVE_TORQUE_2_3
-#include "TorqueServer.hpp"
-#endif
-#ifdef HAVE_PBSPRO_10_4
-#include "PbsProServer.hpp"
-#endif
-#ifdef HAVE_LOADLEVELER_3_5
-#include "LLServer.hpp"
-#endif
-#ifdef HAVE_SLURM_2_2
-#include "SlurmServer.hpp"
-#endif
-#ifdef HAVE_SLURM_2_3
-#include "SlurmServer.hpp"
-#endif
-#ifdef HAVE_LSF_7_0
-#include "LSFServer.hpp"
-#endif
-#ifdef HAVE_SGE_11
-#include "SGEServer.hpp"
-#include "SGEConfig.hpp"
-#include <iostream>
+#include "SharedLibrary.hh"
 
 extern "C" {
 #include "drmaa.h"
 }
-#endif
 #include <iostream>
 
 static int created=0;
@@ -51,26 +29,55 @@ BatchFactory::BatchFactory() {
  */
 BatchServer*
 BatchFactory::getBatchServerInstance() {
-
+  void *factory(NULL);
+  BatchServer *instance(NULL);
+  dadi::SharedLibrary *plugin(NULL);
 #ifdef HAVE_TORQUE_2_3
-  mbatchServer = new TorqueServer();
-#elif HAVE_LOADLEVELER_3_5
-  mbatchServer = new LLServer();
+      plugin = new dadi::SharedLibrary("tms-server-torque2.3");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
+#elif HAVE_LOADLEVELER_2_5
+      plugin = new dadi::SharedLibrary("tms-server-loadleveler2.5");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #elif HAVE_SLURM_2_2
-  mbatchServer = new SlurmServer();
+      plugin = new dadi::SharedLibrary("tms-server-slurm2.2");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #elif HAVE_SLURM_2_3
-  mbatchServer = new SlurmServer();
+      plugin = new dadi::SharedLibrary("tms-server-slurm2.3");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #elif HAVE_LSF_7_0
-  mbatchServer = new LSFServer();
+      plugin = new dadi::SharedLibrary("tms-server-lsf7.0");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #elif HAVE_SGE_11
-  mbatchServer = new SGEServer();
+      plugin = new dadi::SharedLibrary("tms-server-sge11");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #elif HAVE_PBSPRO_10_4
-  mbatchServer = new PbsProServer();
+      plugin = new dadi::SharedLibrary("tms-server-pbspro10.4");
+      if (plugin->isLoaded()) {
+        factory = plugin->symbol("create_plugin_instance");
+        ((int (*)(void **))(factory))((void**) &instance);
+      }
 #else
-  mbatchServer = NULL;
 #endif
 
-  return mbatchServer;
+  return static_cast<BatchServer *>(instance);
 }
 
 /**

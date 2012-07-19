@@ -42,6 +42,7 @@ namespace bp = boost::process;
  * \brief Constructor
  */
 SGEServer::SGEServer():BatchServer() {
+  setenv("SGE_ROOT",SGE_ROOT_PATH,1);
   msymbolMap["\%j"] = "";
   msymbolMap["\%J"] = "";
 
@@ -185,7 +186,7 @@ SGEServer::submit(const char* scriptPath,
       job.setWallClockLimit(vishnu::convertStringToWallTime(Walltime));
     }
   }
-  
+
   scriptoption += " -b no ";
   drmaa_errno = drmaa_set_attribute(jt, DRMAA_NATIVE_SPECIFICATION,
                                     scriptoption.c_str(),diagnosis,
@@ -234,10 +235,10 @@ SGEServer::submit(const char* scriptPath,
                                     sizeof(diagnosis)-1);
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     jobDIRECTORY = Directory;
-    
+
   } else{
     jobDIRECTORY = getenv("HOME");
-    
+
   }
   job.setJobWorkingDir(jobDIRECTORY);
 
@@ -259,7 +260,7 @@ SGEServer::submit(const char* scriptPath,
       std::string part2 = jobErrorPathStr.substr(pos+1);
       if(!boost::algorithm::starts_with(part2, "/")){
         jobErrorPathStr = part1+jobDIRECTORY+"/"+part2;
-      }    
+      }
     }else if (pos==0){
       jobErrorPathStr = jobErrorPathStr.substr(1);
       if(!boost::algorithm::starts_with(jobErrorPathStr, "/")){
@@ -837,3 +838,13 @@ SGEServer::processOptions(const char* scriptPath,
 
 }
 
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new SGEServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
+}
