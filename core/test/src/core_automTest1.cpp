@@ -2,6 +2,7 @@
 
 #include "core_testconfig.h"
 #include "SOCIDatabase.hpp"
+#include "DbFactory.hpp"
 
 
 BOOST_AUTO_TEST_SUITE( soci_database_test )
@@ -12,6 +13,40 @@ using namespace vishnu;
 
 const std::string configFilePath(TESTCORECONFIGPATH);
 
+
+
+/*
+ * DbFactory unit tests
+ */
+
+BOOST_AUTO_TEST_CASE( database_factory_get_before_create )
+{
+	DbFactory factory;
+	BOOST_CHECK_THROW(factory.getDatabaseInstance(),VishnuException);
+}
+
+
+BOOST_AUTO_TEST_CASE( database_factory_create )
+{
+	DbFactory factory;
+	ExecConfiguration exConfig;
+	DbConfiguration myConfig(exConfig);
+	BOOST_CHECK(factory.createDatabaseInstance(myConfig)!=NULL);
+	BOOST_CHECK_THROW(factory.createDatabaseInstance(myConfig),VishnuException);
+}
+
+BOOST_AUTO_TEST_CASE( database_factory_get_after_create )
+{
+	DbFactory factory;
+	BOOST_CHECK(factory.getDatabaseInstance()!=NULL);
+	BOOST_CHECK(factory.getDatabaseInstance()!=NULL);
+	BOOST_CHECK(factory.getDatabaseInstance()==factory.getDatabaseInstance());
+}
+
+
+/*
+ * SOCIDatabase unit tests - connections
+ */
 BOOST_AUTO_TEST_CASE( connect_and_disconnect )
 {
 
@@ -78,6 +113,6 @@ BOOST_AUTO_TEST_CASE( connect_with_bad_hosts )
 	BOOST_CHECK_THROW(badHost.connect(),VishnuException);
 	BOOST_CHECK_THROW(badHost.disconnect(),VishnuException);
 
-} // BOOST_AUTO_TEST_CASE( connect_and_disconnect )
+}
 
 BOOST_AUTO_TEST_SUITE_END()
