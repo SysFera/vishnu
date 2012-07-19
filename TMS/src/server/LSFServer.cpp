@@ -42,12 +42,12 @@ LSFServer::LSFServer():BatchServer() {
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
  * \param job The job data structure
- * \param envp The list of environment variables used by LSF submission function 
+ * \param envp The list of environment variables used by LSF submission function
  * \return raises an exception on error
  */
-int 
-LSFServer::submit(const char* scriptPath, 
-    const TMS_Data::SubmitOptions& options, 
+int
+LSFServer::submit(const char* scriptPath,
+    const TMS_Data::SubmitOptions& options,
     TMS_Data::Job& job, char** envp) {
 
   struct submit  req;
@@ -84,7 +84,7 @@ LSFServer::submit(const char* scriptPath,
   req.jsdlFlag = -1;
   //parse the file
   if(LSFParser::parse_file(scriptPath, &req) < 0) {
-    return -1; 
+    return -1;
   };
   //processes the vishnu options
   processOptions(scriptPath, options, &req);
@@ -97,7 +97,7 @@ LSFServer::submit(const char* scriptPath,
      bfs::path errPath(bfs::system_complete(bfs::path(req.errFile)));
      req.errFile = strdup((errPath.native()).c_str()) ;
   }
-  //Check the job output path 
+  //Check the job output path
   std::string errorMsg = checkLSFOutPutPath(req.outFile);
   if(errorMsg.size()!=0) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
@@ -163,9 +163,9 @@ LSFServer::submit(const char* scriptPath,
  * \param req The LSF submit option structure to fill
  * \return raises an exception on error
  */
-void 
+void
 LSFServer::processOptions(const char* scriptPath,
-    const TMS_Data::SubmitOptions& options, 
+    const TMS_Data::SubmitOptions& options,
     struct submit* req) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
@@ -179,7 +179,7 @@ LSFServer::processOptions(const char* scriptPath,
   if(!options.getName().empty()){
     req->options |=SUB_JOB_NAME;
     req->jobName = strdup(options.getName().c_str());
-  } 
+  }
   if(!options.getQueue().empty()) {
     req->options |=SUB_QUEUE;
     req->queue = strdup(options.getQueue().c_str());
@@ -198,8 +198,8 @@ LSFServer::processOptions(const char* scriptPath,
   //minimum nb nodes per per processor
   if(options.getNbCpu()!=-1) {
     req->numProcessors = options.getNbCpu();
-    req->maxNumProcessors= options.getNbCpu();  
-    
+    req->maxNumProcessors= options.getNbCpu();
+
     //compte the number of unique nodes
     std::vector<std::string> tmpHosts;
     for(int i=0; i < req->numAskedHosts; i++) {
@@ -211,7 +211,7 @@ LSFServer::processOptions(const char* scriptPath,
     int node = endTmp-tmpHosts.begin();
     if(node <=0) {
       node = 1;
-    } 
+    }
     req->numProcessors = req->maxNumProcessors= req->numProcessors*node;
   }
 
@@ -224,7 +224,7 @@ LSFServer::processOptions(const char* scriptPath,
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
     if(posNbNodes!=std::string::npos) {
       std::string nbNodesStr = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1);
 
       struct hostInfoEnt *hostInfo;
       char **hosts = NULL;
@@ -234,7 +234,7 @@ LSFServer::processOptions(const char* scriptPath,
       hostInfo = lsb_hostinfo(hosts, &numhosts);
       if(nbNodes > numhosts) {
         throw UserException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERRROR: "
-                  "The number of nodes is greater than the number of total nodes."); 
+                  "The number of nodes is greater than the number of total nodes.");
       }
       if(req->numAskedHosts > 0) {
         delete [] req->askedHosts;
@@ -244,12 +244,12 @@ LSFServer::processOptions(const char* scriptPath,
       req->numAskedHosts = nbNodes;
       for (int i = 0; i < nbNodes; i++, hostInfo++) {
           req->askedHosts[i] = hostInfo->host;
-      } 
-      
-      //set the number of processor     
+      }
+
+      //set the number of processor
       req->numProcessors = vishnu::convertToInt(cpuPerNode);
-      req->maxNumProcessors = req->numProcessors = req->numProcessors*nbNodes; 
-     } 
+      req->maxNumProcessors = req->numProcessors = req->numProcessors*nbNodes;
+     }
   }
 
   if(!(options.getMailNotification().empty())) {
@@ -295,7 +295,7 @@ LSFServer::processOptions(const char* scriptPath,
       for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
          queue =  listOfQueues->getQueues().get(i);
          if(!queuesList.empty()) {
-           queuesList = queuesList+" "+queue->getName(); 
+           queuesList = queuesList+" "+queue->getName();
          } else {
            queuesList = queue->getName();
          }
@@ -354,7 +354,7 @@ void LSFServer::replaceSymbolInToJobPath(std::string& path) {
   std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
 
   for(iter=msymbolMap.begin(); iter!=end; ++iter) {
-    //find the symbol position 
+    //find the symbol position
     size_t pos0 = path.find((iter->first)[0]);
     size_t pos1 = path.find((iter->first)[1], pos0);
     while(pos0!=std::string::npos && pos1!=std::string::npos) {
@@ -362,7 +362,7 @@ void LSFServer::replaceSymbolInToJobPath(std::string& path) {
       if(widthStr.size()==0) {
         path.erase(pos0, 2);//remove symbol[0]+symbol[1]
         path.insert(pos0, iter->second);
-      } 
+      }
       //Pass to the next symbol
       pos0 = path.find(iter->first[0], pos0+1);
       pos1 = path.find(iter->first[1],pos0);
@@ -387,7 +387,7 @@ bool LSFServer::containsAnExcludedLSFSymbols(const std::string& path, std::strin
   bool ret = false;
   std::string widthStr;
   for(iter=excludedSymbols.begin(); iter!=end; ++iter) {
-    //find the symbol position 
+    //find the symbol position
     size_t pos0 = path.find((*iter)[0]);
     size_t pos1 = path.find((*iter)[1], pos0);
     while(pos0!=std::string::npos && pos1!=std::string::npos) {
@@ -407,7 +407,7 @@ bool LSFServer::containsAnExcludedLSFSymbols(const std::string& path, std::strin
 
 
 /**
- * \brief Function To convert vishnu job Id to LSF job Id 
+ * \brief Function To convert vishnu job Id to LSF job Id
  * \param jobId: vishnu job Id
  * \return the converted LSF job id
  */
@@ -428,7 +428,7 @@ LS_LONG_INT LSFServer::convertToLSFJobId(const std::string& jobId) {
 int
 LSFServer::cancel(const char* jobId) {
 
-  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId); 
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
   if (lsb_init(NULL) < 0) {
     lsb_perror((char*)"LSFServer::cancel: lsb_init() failed");
     return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
@@ -445,13 +445,13 @@ LSFServer::cancel(const char* jobId) {
 
 /**
  * \brief Function to get the status of the job
- * \param jobId the identifier of the job 
- * \return -1 if the job is unknown or server not  unavailable 
+ * \param jobId the identifier of the job
+ * \return -1 if the job is unknown or server not  unavailable
  */
-int 
+int
 LSFServer::getJobState(const std::string& jobId) {
 
-  int state = 5; //TERMINATED 
+  int state = 5; //TERMINATED
   LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
 
   struct jobInfoEnt *jobInfo;
@@ -476,13 +476,13 @@ LSFServer::getJobState(const std::string& jobId) {
 
 /**
  * \brief Function to get the start time of the job
- * \param jobId the identifier of the job 
+ * \param jobId the identifier of the job
  * \return 0 if the job is unknown
  */
-time_t 
+time_t
 LSFServer::getJobStartTime(const std::string& jobId) {
 
-  time_t startTime = 0; 
+  time_t startTime = 0;
 
   LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
   struct jobInfoEnt *jobInfo;
@@ -502,14 +502,14 @@ LSFServer::getJobStartTime(const std::string& jobId) {
 
   startTime = jobInfo->startTime;
   return startTime;
-} 
+}
 
 /**
- * \brief Function to convert the LSF state into VISHNU state 
+ * \brief Function to convert the LSF state into VISHNU state
  * \param state the state to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 LSFServer::convertLSFStateToVishnuState(const unsigned int& state) {
 
   int res = 0;
@@ -536,9 +536,9 @@ LSFServer::convertLSFStateToVishnuState(const unsigned int& state) {
 /**
  * \brief Function to convert the LSF priority into VISHNU priority
  * \param prio the priority to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 LSFServer::convertLSFPrioToVishnuPrio(const uint32_t& prio) {
   if(prio < -512) {
     return 1;
@@ -551,7 +551,7 @@ LSFServer::convertLSFPrioToVishnuPrio(const uint32_t& prio) {
   } else if(prio >= 1023) {
     return 5;
   }
-  return 1; 
+  return 1;
 }
 
 /**
@@ -585,9 +585,9 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
     job.setJobDescription(jobInfo->submit.jobDescription);
   }
   job.setJobPrio(convertLSFPrioToVishnuPrio(jobInfo->jobPriority));
-  //mem limit 
+  //mem limit
   job.setMemLimit(jobInfo->submit.rLimits[LSF_RLIMIT_RSS]);
-  
+
   //compte the number of unique nodes
   std::vector<std::string> tmpHosts;
   for(int i=0; i < jobInfo->submit.numAskedHosts; i++) {
@@ -613,16 +613,16 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
   }
 
   //fill the msymbol map
-  msymbolMap["\%J"] = lsb_jobid2str(jobInfo->jobId); 
+  msymbolMap["\%J"] = lsb_jobid2str(jobInfo->jobId);
 }
 
 /**
- * \brief Function to request the status of queues 
- * \param optQueueName (optional) the name of the queue to request 
- * \return The requested status in to ListQueues data structure 
+ * \brief Function to request the status of queues
+ * \param optQueueName (optional) the name of the queue to request
+ * \return The requested status in to ListQueues data structure
  */
 TMS_Data::ListQueues*
-LSFServer::listQueues(const std::string& OptqueueName) { 
+LSFServer::listQueues(const std::string& OptqueueName) {
 
   struct queueInfoEnt *queueInfo;
   char **queues = NULL;
@@ -632,20 +632,20 @@ LSFServer::listQueues(const std::string& OptqueueName) {
   int options = 0;
   std::string errorMsg;
 
-  
+
   boost::unique_lock<boost::shared_mutex> lock(vishnu::mutex);//To avoid muti-calls to lsb_queueinfo
- 
+
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
   if (lsb_init(NULL) < 0) {
    errorMsg = "LSFServer::listQueues: lsb_init() failed";
-   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
+   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
-  
+
   if(!OptqueueName.empty()) {
    queues = new char*[1];
    queues[0]= strdup(OptqueueName.c_str());
-   numQueues = 1; 
+   numQueues = 1;
    queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
    delete queues;
   } else {
@@ -654,7 +654,7 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 
   if (queueInfo == NULL) {
     std::string errorMsg = "LSFServer::listQueues: lsb_queueinfo() failed";
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);    
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
 
   for (int i = 0; i < numQueues; i++) {
@@ -664,7 +664,7 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     if (queueInfo[i].qStatus & QUEUE_STAT_ACTIVE) {
       if (!queueInfo[i].qStatus & QUEUE_STAT_OPEN) {
         queue->setState(0);
-      } 
+      }
       if (queueInfo[i].qStatus & QUEUE_STAT_RUN) {
         queue->setState(2);
       } else {
@@ -689,14 +689,14 @@ LSFServer::listQueues(const std::string& OptqueueName) {
       istream_iterator<string>(),
       back_inserter<vector<string> >(hostListStreamTokens));
     queue->setNode(hostListStreamTokens.size());
- 
+
     queue->setMaxProcCpu(queueInfo[i].procLimit);
     queue->setMaxJobCpu(queueInfo[i].procJobLimit);//Undefined
 
     // Adding created queue to the list
     mlistQueues->getQueues().push_back(queue);
   }
-  
+
   mlistQueues->setNbQueues(mlistQueues->getQueues().size());
 
   return mlistQueues;
@@ -706,7 +706,7 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 /**
  * \brief Function to get a list of submitted jobs
  * \param listOfJobs the ListJobs structure to fill
- * \param ignoredIds the list of job ids to ignore 
+ * \param ignoredIds the list of job ids to ignore
  */
 void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
@@ -715,7 +715,7 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
   if (lsb_init(NULL) < 0) {
      errorMsg = "LSFServer::fillListOfJobs: lsb_init() failed";
-     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
+     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
 
   int numJobs = lsb_openjobinfo(0, NULL, (char*)"all", NULL, NULL, CUR_JOB);
@@ -724,11 +724,11 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
       return;
     } else {
       errorMsg = "LSFServer::fillListOfJobs: lsb_openjobinfo failed";
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
     }
   }
 
-  int more = 1; 
+  int more = 1;
   struct jobInfoEnt *jobInfo;
   int jobStatus;
   long nbRunningJobs = 0;
@@ -737,8 +737,8 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     jobInfo = lsb_readjobinfo(&more);
     if (jobInfo == NULL) {
       errorMsg = "LSFServer::fillListOfJobs: lsb_readjobinfo failed";
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg); 
-    } 
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
+    }
     std::vector<std::string>::const_iterator iter;
     iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(jobInfo->jobId));
     if(iter==ignoredIds.end()) {
@@ -766,3 +766,13 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 LSFServer::~LSFServer() {
 }
 
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new LSFServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
+}

@@ -45,12 +45,12 @@ SlurmServer::SlurmServer():BatchServer() {
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
  * \param job The job data structure
- * \param envp The list of environment variables used by Slurm submission function 
+ * \param envp The list of environment variables used by Slurm submission function
  * \return raises an exception on error
  */
-int 
-SlurmServer::submit(const char* scriptPath, 
-    const TMS_Data::SubmitOptions& options, 
+int
+SlurmServer::submit(const char* scriptPath,
+    const TMS_Data::SubmitOptions& options,
     TMS_Data::Job& job, char** envp) {
 
   std::vector<std::string> cmdsOptions;
@@ -70,7 +70,7 @@ SlurmServer::submit(const char* scriptPath,
   slurm_parse_script(argc, argv, &desc);
 
   std::string errorMsg;
-  //Check the job output path 
+  //Check the job output path
   errorMsg = checkSLURMOutPutPath(desc.std_out);
   if(errorMsg.size()!=0) {
     xfree(desc.script);
@@ -124,7 +124,7 @@ SlurmServer::submit(const char* scriptPath,
   }
 
   jobId = resp->job_id;
-  //Fill the vishnu job structure 
+  //Fill the vishnu job structure
   fillJobInfo(job, jobId);
 
   if(jobOutputPath.size()!=0) {
@@ -193,7 +193,7 @@ void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
   std::map<std::string, std::string>::const_iterator end=msymbolMap.end();
 
   for(iter=msymbolMap.begin(); iter!=end; ++iter) {
-    //find the symbol position 
+    //find the symbol position
     size_t pos0 = path.find((iter->first)[0]);
     size_t pos1 = path.find((iter->first)[1], pos0);
     while(pos0!=std::string::npos && pos1!=std::string::npos) {
@@ -202,13 +202,13 @@ void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
         path.erase(pos0, 2);//remove symbol[0]+symbol[1]
         path.insert(pos0, iter->second);
       } else if(widthStr.find_first_not_of("0123456789")==std::string::npos) {
-        width = vishnu::convertToInt(widthStr);  
+        width = vishnu::convertToInt(widthStr);
         if(width > SLURM_MAX_WIDTH) {
           width = SLURM_MAX_WIDTH;
         }
         path.erase(pos0, widthStr.size()+2);//remove symbol[0]+width+symbol[1]
         os << setfill('0') << setw(width) << iter->second;
-        path.insert(pos0, os.str()); 
+        path.insert(pos0, os.str());
       } else {
         if((widthStr.substr(0,1)).find_first_not_of("0123456789")==std::string::npos){
           path.erase(pos0, 1);//remove symbol[0]
@@ -235,14 +235,14 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
   excludedSymbols.push_back("\%n");
   excludedSymbols.push_back("\%N");
   excludedSymbols.push_back("\%s");
-  
+
 
   std::vector<std::string>::const_iterator iter;
   std::vector<std::string>::const_iterator end=excludedSymbols.end();
   bool ret = false;
   std::string widthStr;
   for(iter=excludedSymbols.begin(); iter!=end; ++iter) {
-    //find the symbol position 
+    //find the symbol position
     size_t pos0 = path.find((*iter)[0]);
     size_t pos1 = path.find((*iter)[1], pos0);
     while(pos0!=std::string::npos && pos1!=std::string::npos) {
@@ -276,9 +276,9 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
  * \param cmdsOptions The list of the option value
  * \return raises an exception on error
  */
-void 
+void
 SlurmServer::processOptions(const char* scriptPath,
-                            const TMS_Data::SubmitOptions& options, 
+                            const TMS_Data::SubmitOptions& options,
                             std::vector<std::string>&cmdsOptions) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
@@ -306,7 +306,7 @@ SlurmServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back(options.getErrorPath());
   }
   if(options.getWallTime()!=-1) {
-    cmdsOptions.push_back("-t"); 
+    cmdsOptions.push_back("-t");
     std::string timeStr = vishnu::convertWallTimeToString(options.getWallTime());
     size_t pos = timeStr.rfind(":");
     int i=0;
@@ -339,7 +339,7 @@ SlurmServer::processOptions(const char* scriptPath,
     size_t posNbNodes = NbNodesAndCpuPerNode.find(":");
     if(posNbNodes!=std::string::npos) {
       std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
-      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1); 
+      std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1);
       cmdsOptions.push_back("--nodes="+nbNodes);
       cmdsOptions.push_back("--mincpus="+cpuPerNode);
     }
@@ -395,7 +395,7 @@ SlurmServer::processOptions(const char* scriptPath,
           isNodeStr >> minnode;
           isNodeStr >> sparator;
           isNodeStr >> maxNode;
-          node = maxNode; 
+          node = maxNode;
         } else {
           node = vishnu::convertToInt(nodeStr);
         }
@@ -405,7 +405,7 @@ SlurmServer::processOptions(const char* scriptPath,
       }
       if(options.getNbCpu()!=-1) {
         cpu=options.getNbCpu();
-      } 
+      }
     } else {
       isNode.str(optionNodesValue);
       isNode >> node;
@@ -442,7 +442,7 @@ SlurmServer::processOptions(const char* scriptPath,
 }
 
 /**
- * \brief Function To convert vishnu job Id to slurm job Id 
+ * \brief Function To convert vishnu job Id to slurm job Id
  * \param jobId: vishnu job Id
  * \return the converted slurm job id
  */
@@ -462,9 +462,9 @@ return slurmJobId;
  */
 int
 SlurmServer::cancel(const char* jobId) {
-  
+
   uint32_t slurmJobId = convertToSlurmJobId(jobId);
-  
+
   int res = slurm_kill_job(slurmJobId, SIGKILL, false);
   if(res) {
     char* errorMsg = slurm_strerror(res);
@@ -473,16 +473,16 @@ SlurmServer::cancel(const char* jobId) {
     } else {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::cancel: Unknown error");
     }
-  } 
+  }
   return 0;
 }
 
 /**
  * \brief Function to get the status of the job
- * \param jobId the identifier of the job 
- * \return -1 if the job is unknown or server not  unavailable 
+ * \param jobId the identifier of the job
+ * \return -1 if the job is unknown or server not  unavailable
  */
-int 
+int
 SlurmServer::getJobState(const std::string& jobId) {
 
   uint32_t slurmJobId = convertToSlurmJobId(jobId);
@@ -491,7 +491,7 @@ SlurmServer::getJobState(const std::string& jobId) {
   job_info_msg_t * job_buffer_ptr = NULL;
   res = slurm_load_job(&job_buffer_ptr, slurmJobId, 1);
 
-  int state = 5; //TERMINATED 
+  int state = 5; //TERMINATED
   if(!res) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     state = convertSlurmStateToVishnuState(slurmJobInfo.job_state);
@@ -510,13 +510,13 @@ SlurmServer::getJobState(const std::string& jobId) {
 
 /**
  * \brief Function to get the start time of the job
- * \param jobId the identifier of the job 
+ * \param jobId the identifier of the job
  * \return 0 if the job is unknown
  */
-time_t 
+time_t
 SlurmServer::getJobStartTime(const std::string& jobId) {
 
-  time_t startTime = 0; 
+  time_t startTime = 0;
 
   uint32_t slurmJobId = convertToSlurmJobId(jobId);
 
@@ -534,14 +534,14 @@ SlurmServer::getJobStartTime(const std::string& jobId) {
   }
 
   return startTime;
-} 
+}
 
 /**
- * \brief Function to convert the Slurm state into VISHNU state 
+ * \brief Function to convert the Slurm state into VISHNU state
  * \param state the state to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 SlurmServer::convertSlurmStateToVishnuState(const uint16_t& state) {
 
   int res = 0;
@@ -568,9 +568,9 @@ SlurmServer::convertSlurmStateToVishnuState(const uint16_t& state) {
 /**
  * \brief Function to convert the Slurm priority into VISHNU priority
  * \param prio the priority to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 SlurmServer::convertSlurmPrioToVishnuPrio(const uint32_t& prio) {
   if(prio < -512) {
     return 1;
@@ -583,7 +583,7 @@ SlurmServer::convertSlurmPrioToVishnuPrio(const uint32_t& prio) {
   } else if(prio >= 1023) {
     return 5;
   }
-  return 1; 
+  return 1;
 }
 
 /**
@@ -600,7 +600,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
   res = slurm_load_job(&job_buffer_ptr, jobId, 1);
 
   if(!res) {
-   
+
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     job.setJobId(vishnu::convertToString(jobId));
     job.setBatchJobId(vishnu::convertToString(jobId));
@@ -655,8 +655,8 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
 }
 
 /**
- * \brief Function to compute the number of running and waiting jobs of each queue 
- * \param run contains the number of running jobs of each queue 
+ * \brief Function to compute the number of running and waiting jobs of each queue
+ * \param run contains the number of running jobs of each queue
  * \param que contains the number of waiting jobs of each queue
  * \return non zero if error
  */
@@ -681,19 +681,19 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
         default:
          break;
       }
-    } 
-  } 
+    }
+  }
 
  return res;
 }
 
 /**
- * \brief Function to request the status of queues 
- * \param optQueueName (optional) the name of the queue to request 
- * \return The requested status in to ListQueues data structure 
+ * \brief Function to request the status of queues
+ * \param optQueueName (optional) the name of the queue to request
+ * \return The requested status in to ListQueues data structure
  */
 TMS_Data::ListQueues*
-SlurmServer::listQueues(const std::string& OptqueueName) { 
+SlurmServer::listQueues(const std::string& OptqueueName) {
 
   partition_info_msg_t *allPartition = NULL;
   partition_info_t *partition = NULL;
@@ -715,7 +715,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
-  
+
   partition = allPartition->partition_array;
   bool OptQueueNameFound = false;
   for (uint32_t i = 0; i < allPartition->record_count; i++) {
@@ -723,7 +723,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
     if(OptqueueName.size()!=0) {
       for (uint32_t j = 0; j < allPartition->record_count; j++) {
         if(OptqueueName.compare(std::string(partition[j].name))==0) {
-          OptQueueNameFound = true;  
+          OptQueueNameFound = true;
           i = j;
           break;
         }
@@ -735,8 +735,8 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
     //Set the queue state
-    switch(partition[i].state_up) { 
-      case PARTITION_DOWN: 
+    switch(partition[i].state_up) {
+      case PARTITION_DOWN:
         queue->setState(0);
         break;
       case PARTITION_INACTIVE:
@@ -757,7 +757,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
       queue->setNbJobsInQueue(que[partition[i].name]);
     }
 
-    queue->setName(partition[i].name); 
+    queue->setName(partition[i].name);
     queue->setPriority(convertSlurmPrioToVishnuPrio(partition[i].priority));
 
     //Here we multiplie the max_time by 60 because SLURM max_time in minutes
@@ -765,7 +765,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
         queue->setWallTime(60*partition[i].max_time);
     }
     queue->setMemory(-1);//UNDEFINED in SLURM
-    queue->setDescription("");//UNDEFINED in SLURM    
+    queue->setDescription("");//UNDEFINED in SLURM
     queue->setMaxProcCpu(partition[i].total_cpus);
     queue->setMaxJobCpu(partition[i].total_cpus);
     queue->setNode(partition[i].total_nodes);
@@ -790,7 +790,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 /**
  * \brief Function to get a list of submitted jobs
  * \param listOfJobs the ListJobs structure to fill
- * \param ignoredIds the list of job ids to ignore 
+ * \param ignoredIds the list of job ids to ignore
  */
 void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
@@ -851,7 +851,7 @@ SlurmServer::getSlurmResourceValue(const char* file,
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line,slurmPrefix)){
         line = line.substr(slurmPrefix.size());
-        if(!shortOptionLetterSyntax.empty()&& line.find(longOptionLetterSyntax)==std::string::npos){ 
+        if(!shortOptionLetterSyntax.empty()&& line.find(longOptionLetterSyntax)==std::string::npos){
           pos = line.find(shortOptionLetterSyntax);
           if(pos!=std::string::npos){
             resourceValue = line.substr(pos+shortOptionLetterSyntax.size());
@@ -881,3 +881,13 @@ SlurmServer::getSlurmResourceValue(const char* file,
 SlurmServer::~SlurmServer() {
 }
 
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new SlurmServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
+}
