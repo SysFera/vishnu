@@ -1,0 +1,14 @@
+dietConfigFile = @ETC_INSTALL_DIR@/SeD.cfg
+vishnuId = 1
+databaseType = postgresql
+databaseHost = localhost
+databaseName =  vishnu
+databaseUserName = vishnu
+databaseUserPassword = vishnu
+databaseConnectionsNb = 5
+sendmailScriptPath = @SBIN_DIR@/sendmail.py
+vishnuMachineId = machine_1
+batchSchedulerType = TORQUE
+intervalMonitor = 1
+
+
