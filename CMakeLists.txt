@@ -29,6 +29,10 @@ else (POSTGRESQL_FOUND)
 endif(POSTGRESQL_FOUND)
 # COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
+# INSTALL_SYSV option set to OFF by default
+option(INSTALL_SYSV "install systemV init scripts" OFF)
+# INSTALL_SYSTEMD option set to OFF by default
+option(INSTALL_SYSTEMD "install systemd services" OFF)
 
 # Options set to OFF by default
 option(CLIENT_ONLY "only compile the client side")
@@ -548,6 +552,6 @@ if(COMPILE_FMS)
   endif (BUILD_TESTING)
 endif (COMPILE_FMS)
 
-
 # module that adds an uninstall target
 include(CMakeUninstall)
+add_subdirectory(contrib)
