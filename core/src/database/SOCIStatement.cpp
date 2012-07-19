@@ -87,16 +87,16 @@ bool SOCIStatement::got_data() const
 	TRYCATCH(ret=mstatement.got_data(),"")
 	return ret;
 }
-void SOCIStatement::describe()
+
+
+void SOCIStatement::exchange(details::into_type_ptr const & out)
 {
-	if(mstatement.get_backend() == NULL) {
-		throw SystemException(ERRCODE_DBERR,"There is no backend for statement");
-	}
-	TRYCATCH(mstatement.describe(),"")
+	TRYCATCH(mstatement.exchange(out),"Failed to exchange output data :\n")
 }
-void SOCIStatement::set_row(row * r)
+
+void SOCIStatement::exchange(details::use_type_ptr const & in)
 {
-	TRYCATCH(mstatement.set_row(r),"Failed to set row :\n")
+	TRYCATCH(mstatement.exchange(in),"Failed to exchange input data :\n")
 }
 
 
