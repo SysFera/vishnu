@@ -26,12 +26,12 @@ LLServer::LLServer():BatchServer() {
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
  * \param job The job data structure
- * \param envp The list of environment variables used by LL submission function 
+ * \param envp The list of environment variables used by LL submission function
  * \return raises an exception on error
  */
-int 
-LLServer::submit(const char* scriptPath, 
-                 const TMS_Data::SubmitOptions& options, 
+int
+LLServer::submit(const char* scriptPath,
+                 const TMS_Data::SubmitOptions& options,
                  TMS_Data::Job& job, char** envp) {
 
   //Puts the options values into the scriptPath
@@ -67,12 +67,12 @@ LLServer::submit(const char* scriptPath,
   job.setNbCpus(nbCpu);
   int node = llJobInfo.step_list[0]->max_processors;
   job.setNbNodes(node);
-  if(node!=-1) { 
+  if(node!=-1) {
     job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
   }
   //To fill the job working dir
-  job.setJobWorkingDir(llJobInfo.step_list[0]->iwd); 
-  
+  job.setJobWorkingDir(llJobInfo.step_list[0]->iwd);
+
   llfree_job_info(&llJobInfo,LL_JOB_VERSION);
 
   return 0;
@@ -83,18 +83,18 @@ LLServer::submit(const char* scriptPath,
  * \param jobId the identifier of the job to cancel
  * \return raises an exception on error
  */
-int 
-LLServer::cancel(const char* jobId) { 
+int
+LLServer::cancel(const char* jobId) {
 
   std::ostringstream cmd;
-  std::string  cancelCommand="llcancel"; 
-  
+  std::string  cancelCommand="llcancel";
+
   cmd << cancelCommand << " " << jobId;
-  if(system((cmd.str()).c_str())) { 
+  if(system((cmd.str()).c_str())) {
     return -1; //error messages are written to stderr, VISHNU redirects these messages into a file
   }
- 
- return 0; 
+
+ return 0;
 }
 
 /**
@@ -104,7 +104,7 @@ LLServer::cancel(const char* jobId) {
  * \return raises an exception on error
  */
 void
-LLServer::processOptions(const char* scriptPath, 
+LLServer::processOptions(const char* scriptPath,
                          const TMS_Data::SubmitOptions& options) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
@@ -114,13 +114,13 @@ LLServer::processOptions(const char* scriptPath,
   if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the SelectQueueAutom (-Q) and getQueue (-q) options together.\n");
   }
- 
-  std::string content = vishnu::get_file_content(scriptPath); 
+
+  std::string content = vishnu::get_file_content(scriptPath);
   std::string optionLineToInsert;
   if(content.size()!=0) {
     if(options.getName().size()!=0){
       optionLineToInsert ="# @ job_name="+options.getName()+"\n";
-      insertOptionLine(optionLineToInsert, content); 
+      insertOptionLine(optionLineToInsert, content);
     }
     if(options.getQueue().size()!=0) {
       optionLineToInsert ="# @ class="+options.getQueue()+"\n";
@@ -128,7 +128,7 @@ LLServer::processOptions(const char* scriptPath,
     }
     if(options.getOutputPath().size()!=0) {
       optionLineToInsert ="# @ output="+options.getOutputPath()+"\n";
-      insertOptionLine(optionLineToInsert, content); 
+      insertOptionLine(optionLineToInsert, content);
     }
     if(options.getErrorPath().size()!=0) {
       optionLineToInsert ="# @ error="+options.getErrorPath()+"\n";
@@ -155,7 +155,7 @@ LLServer::processOptions(const char* scriptPath,
         std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
         std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1);
         optionLineToInsert = "# @ node="+nbNodes+"\n";
-        insertOptionLine(optionLineToInsert, content);  
+        insertOptionLine(optionLineToInsert, content);
         optionLineToInsert = "# @ tasks_per_node=1\n";
         insertOptionLine(optionLineToInsert, content);
         optionLineToInsert ="# @ tasks_affinity = core(1) \n";
@@ -166,10 +166,10 @@ LLServer::processOptions(const char* scriptPath,
     if(options.getMailNotification()!="") {
       std::string notification = options.getMailNotification();
       if(notification.compare("BEGIN")==0) {
-        optionLineToInsert = "# @ notification=start\n"; 
+        optionLineToInsert = "# @ notification=start\n";
         insertOptionLine(optionLineToInsert, content);
       } else if(notification.compare("END")==0) {
-        optionLineToInsert = "# @ notification=complete\n"; 
+        optionLineToInsert = "# @ notification=complete\n";
         insertOptionLine(optionLineToInsert, content);
       } else if(notification.compare("ERROR")==0) {
         optionLineToInsert = "# @ notification=error\n";
@@ -245,13 +245,13 @@ LLServer::processOptions(const char* scriptPath,
 }
 
 /**
- * \brief Function to insert option into string 
- * \param optionLineToInsert the option to insert 
+ * \brief Function to insert option into string
+ * \param optionLineToInsert the option to insert
  * \param content The buffer containing the inserted option
  * \return raises an exception on error
  */
 void
-LLServer::insertOptionLine(const std::string& optionLineToInsert, 
+LLServer::insertOptionLine(const std::string& optionLineToInsert,
                            std::string& content) {
 
   size_t pos = 0;
@@ -291,12 +291,12 @@ LLServer::insertOptionLine(const std::string& optionLineToInsert,
 
 /**
  * \brief Function to get the status of the job
- * \param jobId the identifier of the job 
- * \return -1 if the job is unknown or server not  unavailable 
+ * \param jobId the identifier of the job
+ * \return -1 if the job is unknown or server not  unavailable
  */
 int
 LLServer::getJobState(const std::string& jobId) {
- 
+
   LL_element *queryObject;
   LL_element *queryInfos;
   LL_element *step;
@@ -346,7 +346,7 @@ LLServer::getJobState(const std::string& jobId) {
           switch(state) {
             case STATE_NOTQUEUED:
               res = 1;
-              break; 
+              break;
             case STATE_PENDING:case STATE_HOLD:
               res = 2;
               break;
@@ -357,7 +357,7 @@ LLServer::getJobState(const std::string& jobId) {
             case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
               res = 4;
               break;
-            case STATE_COMPLETED:case STATE_TERMINATED: 
+            case STATE_COMPLETED:case STATE_TERMINATED:
               res = 5;
               break;
             case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
@@ -382,7 +382,7 @@ LLServer::getJobState(const std::string& jobId) {
             }
           } else {
             rc = ll_get_data(step, LL_StepHoldType, &holdType);
-            if(holdType) { 
+            if(holdType) {
               return 2;
             }
           }
@@ -392,16 +392,16 @@ LLServer::getJobState(const std::string& jobId) {
     }
     queryInfos = ll_next_obj(queryObject);
   }
- return 5; 
+ return 5;
 }
 
 /**
  * \brief Function to get the start time of the job
- * \param jobId the identifier of the job 
+ * \param jobId the identifier of the job
  * \return 0 if the job is unknown or server not  unavailable
  */
-time_t 
-LLServer::getJobStartTime(const std::string& jobId) { 
+time_t
+LLServer::getJobStartTime(const std::string& jobId) {
 
   LL_element *queryObject;
   LL_element *queryInfos;
@@ -443,7 +443,7 @@ LLServer::getJobStartTime(const std::string& jobId) {
     if(!rc)
     {
       while(step) {
-        rc = ll_get_data(step, LL_StepDispatchTime, &startTime); 
+        rc = ll_get_data(step, LL_StepDispatchTime, &startTime);
         if(!rc) {
           return startTime;
         } else {
@@ -462,11 +462,11 @@ LLServer::getJobStartTime(const std::string& jobId) {
 
 /**
  * \brief Function to get the number of nodes of the job
- * \param jobId the identifier of the job 
+ * \param jobId the identifier of the job
  * \return -1 if the job is unknown or server not  unavailable
  */
-int 
-LLServer::getJobNodeCount(const std::string& jobId) { 
+int
+LLServer::getJobNodeCount(const std::string& jobId) {
 
   LL_element *queryObject;
   LL_element *queryInfos;
@@ -508,7 +508,7 @@ LLServer::getJobNodeCount(const std::string& jobId) {
     if(!rc)
     {
       while(step) {
-        rc = ll_get_data(step, LL_StepNodeCount, &nbNodes); 
+        rc = ll_get_data(step, LL_StepNodeCount, &nbNodes);
         if(!rc) {
           return nbNodes;
         } else {
@@ -525,11 +525,11 @@ LLServer::getJobNodeCount(const std::string& jobId) {
 }
 
 /**
- * \brief Function to request the status of queues 
- * \param optQueueName (optional) the name of the queue to request 
- * \return The requested status in to ListQueues data structure 
+ * \brief Function to request the status of queues
+ * \param optQueueName (optional) the name of the queue to request
+ * \return The requested status in to ListQueues data structure
  */
-TMS_Data::ListQueues* 
+TMS_Data::ListQueues*
 LLServer::listQueues(const std::string& optQueueName) {
 
   LL_element *queryObject;
@@ -563,7 +563,7 @@ LLServer::listQueues(const std::string& optQueueName) {
 
   if(rc) {
     std::ostringstream oss;
-    oss << "LOADLEVELER: ll_set_request() return code (" << rc << ") is non-zero."; 
+    oss << "LOADLEVELER: ll_set_request() return code (" << rc << ") is non-zero.";
     errMsg = oss.str();
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errMsg);
   }
@@ -584,7 +584,7 @@ LLServer::listQueues(const std::string& optQueueName) {
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
- 
+
   std::map<std::string, size_t> run;
   std::map<std::string, size_t> que;
   computeNbRunJobsAndQueueJobs(run, que);
@@ -624,16 +624,16 @@ LLServer::listQueues(const std::string& optQueueName) {
       pos = description.find("\"");
     }
 
-    queue->setDescription(description);  
+    queue->setDescription(description);
 
     ll_get_data(queryInfos, LL_ClassCpuLimitHard, &maxCpu);
     queue->setMaxProcCpu(maxCpu);
 
     ll_get_data(queryInfos, LL_ClassMaxProcessors, &maxProcs);
-    queue->setMaxJobCpu(maxProcs);    
+    queue->setMaxJobCpu(maxProcs);
 
     // Adding created queue to the list
-    mlistQueues->getQueues().push_back(queue); 
+    mlistQueues->getQueues().push_back(queue);
 
     queryInfos = ll_next_obj(queryObject);
 
@@ -647,13 +647,13 @@ LLServer::listQueues(const std::string& optQueueName) {
 }
 
 /**
- * \brief Function to compute the number of running and waiting jobs of each queue 
- * \param run contains the number of running jobs of each queue 
+ * \brief Function to compute the number of running and waiting jobs of each queue
+ * \param run contains the number of running jobs of each queue
  * \param que contains the number of waiting jobs of each queue
  * \return raises an exception on error
  */
-int 
-LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run, 
+int
+LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
                                        std::map<std::string, size_t>& que) {
 
   LL_element *queryObject;
@@ -709,7 +709,7 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
                 res = 0;
                 break;
             }
-          } 
+          }
         }
         ll_get_data(queryInfos, LL_JobGetNextStep, &step);
       }
@@ -721,11 +721,11 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
 }
 
 /**
- * \brief Function to convert the LL state into VISHNU state 
+ * \brief Function to convert the LL state into VISHNU state
  * \param state the state to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 LLServer::convertLLStateToVishnuState(int state) {
   int res = 0;
   switch(state) {
@@ -805,9 +805,9 @@ LLServer::convertLLStateToVishnuState(int state) {
 /**
  * \brief Function to convert the LL priority into VISHNU priority
  * \param prio the priority to convert
- * \return VISHNU state 
+ * \return VISHNU state
  */
-int 
+int
 LLServer::convertLLPrioToVishnuPrio(const int& prio) {
 
   if(prio < -50) {
@@ -826,7 +826,7 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
 /**
  * \brief Function to get a list of submitted jobs
  * \param listOfJobs the ListJobs structure to fill
- * \param ignoredIds the list of job ids to ignore 
+ * \param ignoredIds the list of job ids to ignore
  */
 void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     const std::vector<string>& ignoredIds) {
@@ -838,7 +838,7 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
   int state;
   int err_code;
   int pri;
-  char  *owner; 
+  char  *owner;
   char* jclass;
 
   queryObject = ll_query(JOBS);
@@ -1007,4 +1007,15 @@ LLServer::getLLResourceValue(const char* file,
  * \brief Destructor
  */
 LLServer::~LLServer() {
+}
+
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new LLServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
 }
