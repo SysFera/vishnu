@@ -605,7 +605,7 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
 	int  file_descriptor = mkstemp( fileName ) ;
 	size_t file_size = file_content.size();
 	if( file_descriptor == -1 ) {
-		throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
+		throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create the file "+std::string(fileName));
 	}
 
 	if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)!=0) {
@@ -801,23 +801,42 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
 /**
  * \brief Function to list file containing in a directory. Recursivity is not taken into account
- * \param lFiles a vector containing the set of files
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
  * Throw exception on error
  * */
 void
-vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath) {
+vishnu::appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath) {
 
 	if( ! bfs::exists( dirPath ) ) return ;
 	for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
 
 		if ( bfs::is_directory( *it ) ) continue ;
-		lFiles.push_back( it->path().string() ) ;
 		fileNames << ((fileNames.str().size() != 0)? " " : "") + it->path().string() ;   //TODO Check if it's a absolute or a relative path
 	}
 }
 
+/**
+ * \brief Function to get the list of output files related to a job
+ * \param result : The Job Result
+ * Throw exception on error
+ * */
+std::string
+vishnu::getResultFiles(const TMS_Data::JobResult & result, const bool & appendJobId) {
+
+	std::ostringstream ossFileName ; /* starts with the job id */
+	ossFileName << ((appendJobId)? result.getJobId() : "") ;
+	if( bfs::exists(result.getOutputPath()) ) {
+		ossFileName << (ossFileName.str().size()? " " : "") << result.getOutputPath() ;
+	}
+	if( bfs::exists(result.getErrorPath()) && (result.getErrorPath() != result.getOutputPath())) {
+		ossFileName << (ossFileName.str().size()? " " : "") << result.getErrorPath() ;
+	}
+	appendFilesFromDir(ossFileName, result.getOutputDir()) ;
+	ossFileName << "\n" ;
+
+	return ossFileName.str() ;
+}
 
 /**
  * \brief Function to create a directory

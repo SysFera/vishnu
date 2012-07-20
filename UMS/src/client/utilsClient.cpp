@@ -34,3 +34,4 @@ void checkEmail(const std::string& mail) {
   }
 
 }
+
