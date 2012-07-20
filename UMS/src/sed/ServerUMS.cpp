@@ -98,7 +98,6 @@ ServerUMS::init(int vishnuId,
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
-#ifdef USE_SOCI_ADVANCED
     SOCISession session = mdatabaseVishnu->getSingleSession();
     session<<sqlCommand;
     bool got_data=session.got_data();
@@ -107,13 +106,6 @@ ServerUMS::init(int vishnuId,
         SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
         throw e;
     }
-#else
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      throw e;
-    }
-#endif
 
   } catch (VishnuException& e) {
       std::cout << e.what() << std::endl;

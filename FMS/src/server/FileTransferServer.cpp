@@ -43,7 +43,6 @@ SOCIDatabase* FileTransferServer::getDatabaseInstance(){
 // Check The transfer id
 
 void FileTransferServer::checkTransferId(std::string transferId) {
-#ifdef USE_SOCI_ADVANCED
 	std::string sqlTransferRequest =
 			"SELECT transferId from filetransfer where transferId=:param";
 	SOCISession session= FileTransferServer::getDatabaseInstance()->getSingleSession();
@@ -54,13 +53,6 @@ void FileTransferServer::checkTransferId(std::string transferId) {
 		throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");
 	}
 
-#else
-  std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
-  boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
-  if(transfer->getNbTuples()==0) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");
-  }
-#endif
 }
 
 // add a query to the sql request
@@ -347,23 +339,16 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-#ifdef USE_SOCI_ADVANCED
   std::string sqlUpdateRequest = "UPDATE filetransfer "
 		  "SET status=:status, errorMsg=:err where transferid=:tId and status<>2";
   SOCISession session =FileTransferServer::getDatabaseInstance()->getSingleSession();
   session<<sqlUpdateRequest,use(status),use(errorMsgCleaned),use(transferId);
   FileTransferServer::getDatabaseInstance()->releaseSingleSession(session);
-#else
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
-    + " and status<>2";
-  FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
-#endif
 }
 
 // get error message from database
 
 string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
-#ifdef USE_SOCI_ADVANCED
 	std::string sqlCommand = "SELECT errormsg from filetransfer where transferid=:tId";
 	std::string errormsg;
 	SOCISession session=FileTransferServer::getDatabaseInstance()->getSingleSession();
@@ -372,13 +357,6 @@ string FileTransferServer::getErrorFromDatabase(const std::string& transferid){
 
 	return errormsg;
 
-#else
-  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ transferid +"'";
-
-  boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
-
-  return result->getFirstElement();
-#endif
 }
 
 /**

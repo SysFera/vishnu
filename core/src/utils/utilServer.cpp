@@ -53,7 +53,6 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
 
-#ifdef USE_SOCI_ADVANCED
   // Insert sed statement
   string request = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) "
 		  "values(:pstatus, :vishnuname, :machineid, CURRENT_TIMESTAMP , :launchscript )";
@@ -70,25 +69,7 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
   {
 	  throw(e);
   }
-#else
-  // Insert sed statement
-  string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
-  req += convertToString(PUNDEF);
-  req += "', '";
-  req += type;
-  req += "', '";
-  req += mid;
-  req += "', CURRENT_TIMESTAMP, '"+s+"')";
 
-  // Database execution
-  try {
-    DbFactory factory;
-    SOCIDatabase* database = factory.getDatabaseInstance();
-    database->process(req.c_str());
-  } catch (SystemException& e) {
-    throw (e);
-  }
-#endif
   config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
   string cmd;
   cmd = "cp "+path+" "+cfg;
@@ -350,7 +331,6 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
   DbFactory factory;
   SOCIDatabase *databaseVishnu;
 
-#ifdef USE_SOCI_ADVANCED
   std::string sqlQuery("SELECT "+attrname+" FROM vishnu where vishnuid=:vishnuid");
   std::string result;
   databaseVishnu=factory.getDatabaseInstance();
@@ -360,14 +340,6 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
 	  databaseVishnu->releaseSingleSession(session);
   }
   return result;
-#else
-
-  std::string sqlCommand("SELECT "+attrname+" FROM vishnu where vishnuid="+vishnuid);
-
-  databaseVishnu = factory.getDatabaseInstance();
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str(), transacId));
-  return result->getFirstElement();
-#endif
 }
 /**
  * \brief Function to increment a counter of the table vishnu

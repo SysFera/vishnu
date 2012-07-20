@@ -254,7 +254,6 @@ MetricServer::getHistMet(string machineId){
 
   IMS_Data::MetricType type = mhop->getType();
 
-
   std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+machineId+ "'";
 
   SOCISession session = mdatabase->getSingleSession();
