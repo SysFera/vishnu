@@ -20,8 +20,11 @@ const std::string configFilePath=configFileDir+"/soci/";
  * DbFactory unit tests
  */
 
+
 BOOST_AUTO_TEST_CASE( database_factory_get_before_create )
 {
+	BOOST_TEST_MESSAGE("===== DbFactory unit test =====");
+	BOOST_TEST_MESSAGE("--- get database instance before create it--- ");
 	DbFactory factory;
 	BOOST_CHECK_THROW(factory.getDatabaseInstance(),VishnuException);
 }
@@ -29,6 +32,7 @@ BOOST_AUTO_TEST_CASE( database_factory_get_before_create )
 
 BOOST_AUTO_TEST_CASE( database_factory_create )
 {
+	BOOST_TEST_MESSAGE("--- create database instance ---");
 	DbFactory factory;
 	ExecConfiguration exConfig;
 	DbConfiguration myConfig(exConfig);
@@ -38,6 +42,7 @@ BOOST_AUTO_TEST_CASE( database_factory_create )
 
 BOOST_AUTO_TEST_CASE( database_factory_get_after_create )
 {
+	BOOST_TEST_MESSAGE("--- get database instance ---");
 	DbFactory factory;
 	BOOST_CHECK(factory.getDatabaseInstance()!=NULL);
 	BOOST_CHECK(factory.getDatabaseInstance()!=NULL);
@@ -50,9 +55,9 @@ BOOST_AUTO_TEST_CASE( database_factory_get_after_create )
  */
 BOOST_AUTO_TEST_CASE( connect_and_disconnect )
 {
+	BOOST_TEST_MESSAGE("===== SOCIDatabase unit tests (1) : connections =====");
 
-
-	BOOST_TEST_MESSAGE("Testing normal connection to Database");
+	BOOST_TEST_MESSAGE("--- valid connection to database ---");
 	ExecConfiguration exConfig;
 	std::string configFile=configFilePath+"soci-test_config.cfg";
 	exConfig.initFromFile(configFile);
@@ -61,13 +66,14 @@ BOOST_AUTO_TEST_CASE( connect_and_disconnect )
 	SOCIDatabase myDatabase(myConfig);
 	BOOST_CHECK(myDatabase.connect()==0);
 	BOOST_CHECK(myDatabase.disconnect()==0);
-	BOOST_TEST_MESSAGE("Normal connection to Database -- ok");
 
+	BOOST_TEST_MESSAGE("--- disconnection from connected database ---");
 	BOOST_CHECK_THROW(myDatabase.disconnect(),VishnuException);
 }
 
 BOOST_AUTO_TEST_CASE( connect_with_bad_database )
 {
+	BOOST_TEST_MESSAGE("--- connection to unexistant database ---");
 	ExecConfiguration exBadConfig;
 	std::string badConfigFile=configFilePath+"soci-test_bad_DB.cfg";
 	exBadConfig.initFromFile(badConfigFile);
@@ -75,12 +81,14 @@ BOOST_AUTO_TEST_CASE( connect_with_bad_database )
 	badConfig.check();
 	SOCIDatabase badDB(badConfig);
 	BOOST_CHECK_THROW(badDB.connect(),VishnuException);
+	BOOST_TEST_MESSAGE("--- disconnect from non-connected database ---");
 	BOOST_CHECK_THROW(badDB.disconnect(),VishnuException);
 
 }
 
 BOOST_AUTO_TEST_CASE( connect_with_bad_user )
 {
+	BOOST_TEST_MESSAGE("--- connection with bad user login ---");
 	ExecConfiguration exBadConfig;
 	std::string badConfigFile=configFilePath+"soci-test_bad_user.cfg";
 	exBadConfig.initFromFile(badConfigFile);
@@ -93,6 +101,7 @@ BOOST_AUTO_TEST_CASE( connect_with_bad_user )
 
 BOOST_AUTO_TEST_CASE( connect_with_bad_password )
 {
+	BOOST_TEST_MESSAGE("--- connection with bad user password ---");
 	ExecConfiguration exBadConfig;
 	std::string badConfigFile=configFilePath+"soci-test_bad_password.cfg";
 	exBadConfig.initFromFile(badConfigFile);
@@ -105,6 +114,7 @@ BOOST_AUTO_TEST_CASE( connect_with_bad_password )
 
 BOOST_AUTO_TEST_CASE( connect_with_bad_hosts )
 {
+	BOOST_TEST_MESSAGE("--- connection with invalid host ---");
 	ExecConfiguration exBadConfig;
 	std::string badConfigFile=configFilePath+"soci-test_bad_host.cfg";
 	exBadConfig.initFromFile(badConfigFile);
