@@ -10,7 +10,9 @@ BOOST_AUTO_TEST_SUITE( soci_database_test )
 using namespace std;
 using namespace vishnu;
 
-const std::string configFilePath(TESTCORECONFIGPATH);
+const std::string configFileDir(TESTCORECONFIGPATH);
+const std::string configFilePath=configFileDir+"/soci/";
+
 static SOCIDatabase * myDatabase=NULL;
 
 BOOST_AUTO_TEST_CASE( initialisation )
