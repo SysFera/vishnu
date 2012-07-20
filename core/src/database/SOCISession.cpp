@@ -50,6 +50,9 @@ SOCISession::~SOCISession()
 
 temporary_type SOCISession::execute(std::string const & query)
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"Cannot execute : session is null");
+	}
 	temporary_type ret(*msession);
 	TRYCATCH( ret.once<<query, "")
 	return ret;
@@ -57,9 +60,7 @@ temporary_type SOCISession::execute(std::string const & query)
 
 temporary_type SOCISession::operator<<(std::string const & query)
 {
-	temporary_type ret(*msession);
-	TRYCATCH( ret.once<<query, "")
-	return ret;
+	return execute(query);
 }
 
 
@@ -67,10 +68,16 @@ temporary_type SOCISession::operator<<(std::string const & query)
 
 void SOCISession::begin()
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"Cannot begin : session is null");
+	}
 	TRYCATCH(msession->begin(),"Cannot begin transaction \n");
 }
 void SOCISession::commit()
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"Cannot commit : session is null");
+	}
 	try
 	{
 		msession->commit();
@@ -83,6 +90,9 @@ void SOCISession::commit()
 }
 void SOCISession::rollback()
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"Cannot rollback : session is null");
+	}
 	try
 	{
 		msession->rollback();
@@ -96,12 +106,37 @@ void SOCISession::rollback()
 
 SOCIStatement SOCISession::getStatement()
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"Cannot get statement : session is null");
+	}
 	return SOCIStatement(*this);
 }
 
 bool SOCISession::got_data()
 {
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"session is null");
+	}
 	bool ret;
 	TRYCATCH(ret=msession->got_data(),"")
 	return ret;
+}
+
+
+soci::session & SOCISession::advanced()
+{
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"session is null");
+	}
+	return *msession;
+}
+/*
+ * \brief get the pool position where the session is from
+ */
+size_t SOCISession::getPoolPosition()
+{
+	if(msession==NULL) {
+		throw SystemException(ERRCODE_DBERR,"session is null");
+	}
+	return pool_position;
 }

@@ -208,7 +208,7 @@ public:
 	 * parameters must begin by ':' and cannot be between quotes '
 	 * \sample "Select id from table where name=:param"
 	 * \return raises an exception in case of multiples command,
-	 * raises an exception in case of bad synthax
+	 * raises an exception in case of bad syntax
 	 */
     void prepare(std::string const & query,
         details::statement_type eType = details::st_repeatable_query);
