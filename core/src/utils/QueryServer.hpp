@@ -179,7 +179,6 @@ protected:
    */
   void checkUserId(std::string userId) {
 
-#ifdef USE_SOCI_ADVANCED
 	  std::string sqlUserRequest = "SELECT userid from users where userid=:userid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
 	  std::string DBuserID;
@@ -190,13 +189,6 @@ protected:
 		  throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
 	  }
 
-#else
-    std::string sqlUserRequest = "SELECT userid from users where userid='"+userId+"'";
-    boost::scoped_ptr<DatabaseResult> user(mdatabaseVishnu->getResult(sqlUserRequest.c_str()));
-    if(user->getNbTuples()==0) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
-    }
-#endif
   }
 
   /**
@@ -205,7 +197,6 @@ protected:
    * \param machineId the machine identifier
    */
   void checkMachineId(std::string machineId) {
-#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlMachineRequest = "SELECT machineid from machine where machineid=:machineid";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -217,13 +208,6 @@ protected:
 		  throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
 	  }
 
-#else
-    std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
-    boost::scoped_ptr<DatabaseResult> machine(mdatabaseVishnu->getResult(sqlMachineRequest.c_str()));
-    if(machine->getNbTuples()==0) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
-    }
-#endif
   }
 
   /**
@@ -232,7 +216,6 @@ protected:
    * \param clmachineId the machine client identifier
    */
   void checkClientMachineName(std::string clmachineId) {
-#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlclMachineRequest = "SELECT name from clmachine where name=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -244,13 +227,6 @@ protected:
 		  throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
 	  }
 
-#else
-    std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
-    boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseVishnu->getResult(sqlclMachineRequest.c_str()));
-    if(clmachine->getNbTuples()==0) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
-    }
-#endif
   }
 
   /**
@@ -260,7 +236,6 @@ protected:
    * \return raises an exception on error
    */
   void checkOptionName(std::string name) {
-#ifdef USE_SOCI_ADVANCED
 
 	  std::string sqlNameRequest = "SELECT description from optionu where description=:name";
 	  SOCISession ss = mdatabaseVishnu->getSingleSession();
@@ -272,13 +247,6 @@ protected:
 		  throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
 	  }
 
-#else
-    std::string sqlNameRequest = "SELECT description from optionu where description='"+name+"'";
-    boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseVishnu->getResult(sqlNameRequest.c_str()));
-    if(nameResults->getNbTuples()==0) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
-    }
-#endif
   }
 
   /**
@@ -287,7 +255,6 @@ protected:
    * \param sessionId the session identifier
    */
   void checkSessionId(std::string sessionId) {
-#ifdef USE_SOCI_ADVANCED
 	  std::string sqlSessionRequest="SELECT vsessionid from vsession where vsessionid=:sessionID";
 	  SOCISession sess = mdatabaseVishnu->getSingleSession();
 	  std::string vssessionid;
@@ -298,13 +265,6 @@ protected:
 	  {
 		  throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
 	  }
-#else
-    std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
-    boost::scoped_ptr<DatabaseResult> session(mdatabaseVishnu->getResult(sqlSessionRequest.c_str()));
-    if(session->getNbTuples()==0) {
-      throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
-    }
-#endif
   }
 
   /**
@@ -336,7 +296,6 @@ protected:
    */
   void
     checkJobId(std::string jobId) {
-#ifdef USE_SOCI_ADVANCED
 	  std::string sqlJobRequest= "SELECT numjobid from job where jobId=:jobId";
 	  std::string numjobid;
 	  SOCISession sess=mdatabaseVishnu->getSingleSession();
@@ -347,13 +306,6 @@ protected:
 	  {
 		  throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	  }
-#else
-      std::string sqlJobRequest = "SELECT numjobid from job where jobId='"+jobId+"'";
-      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-      if(result->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-      }
-#endif
     }
 
     /**
@@ -362,7 +314,6 @@ protected:
    */
   void
     checkAuthSystemId(std::string authSystemId) {
-#ifdef USE_SOCI_ADVANCED
       std::string sqlJobRequest = "SELECT authsystemid from authsystem where "
     		  "authsystemid=:auth";
       std::string ret;
@@ -374,13 +325,6 @@ protected:
       {
     	  throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
       }
-#else
-      std::string sqlJobRequest = "SELECT authsystemid from authsystem where authsystemid='"+authSystemId+"'";
-      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-      if(result->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
-      }
-#endif
     }
 
 protected:

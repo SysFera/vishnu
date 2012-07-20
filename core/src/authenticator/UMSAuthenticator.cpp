@@ -26,7 +26,6 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
   //To encrypt the clear password
   user.setPassword(vishnu::cryptPassword(user.getUserId(), user.getPassword()));
 
-#ifdef USE_SOCI_ADVANCED
   std::string sqlCommand="SELECT numuserid FROM users where userid=:userid and pwd=:pwd";
   SOCISession sess=databaseVishnu->getSingleSession();
   int id;
@@ -35,13 +34,5 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
   databaseVishnu->releaseSingleSession(sess);
   return gotId;
 
-#else
-  std::string sqlCommand = "SELECT numuserid FROM users "
-                           "where userid='"+user.getUserId()+"'and pwd='"+user.getPassword()+"'";
-  boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
-
-
-  return (result->getFirstElement().size() != 0);
-#endif
 }
 
