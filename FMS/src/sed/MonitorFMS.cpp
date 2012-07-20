@@ -47,7 +47,6 @@ MonitorFMS::init(int vishnuId, DbConfiguration dbConfig) {
   DbFactory factory;
 
   mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
-#ifdef USE_SOCI_ADVANCED
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid=:vishnuid");
   try
   {
@@ -66,22 +65,6 @@ MonitorFMS::init(int vishnuId, DbConfiguration dbConfig) {
   {
 	  exit(0);
   }
-#else
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
-
-  try {
-    /*connection to the database*/
-    mdatabaseVishnu->connect();
-
-    /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
-    }
-  } catch (VishnuException& e) {
-    exit(0);
-  }
-#endif
 }
 
 /**

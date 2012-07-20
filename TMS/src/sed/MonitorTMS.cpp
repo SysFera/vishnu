@@ -59,7 +59,6 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
     mdatabaseVishnu->connect();
 
     /* Checking of vishnuid on the database */
-#ifdef USE_SOCI_ADVANCED
     SOCISession session = mdatabaseVishnu->getSingleSession();
     session.execute(sqlCommand);
     bool got_data = session.got_data();
@@ -67,12 +66,6 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
     if( ! got_data ) {
         throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
-#else
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
-    }
-#endif
   } catch (VishnuException& e) {
     exit(0);
   }
