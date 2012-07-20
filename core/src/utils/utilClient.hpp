@@ -63,4 +63,5 @@ void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const s
   }
 
 }
+
 #endif

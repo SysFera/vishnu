@@ -3,6 +3,9 @@ include_directories(
   ZMQHelper
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${EMF_DATA_DIR}
+  ${TMS_EMF_DATA_DIR}
+  ${EMF4CPP_INCLUDE_DIR}
 )
 
 

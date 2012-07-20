@@ -19,6 +19,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
 #include "Options.hpp"
+#include "TMS_Data.hpp"
 
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
@@ -376,13 +377,22 @@ validateParameters(const boost::shared_ptr<Options> & opt,
 
 /**
  * \brief Function to list file containing in a directory
- * \param lFiles a vector containing the set of files
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
  * Throw exception on error
  * */
 void
-appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath);
+appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath);
+
+
+/**
+ * \brief Function to get the list of output files related to a job
+ * \param result : The Job Result
+ * Throw exception on error
+ * */
+std::string
+getResultFiles(const TMS_Data::JobResult & result, const bool & appendJobId=false);
+
 
 
 /**

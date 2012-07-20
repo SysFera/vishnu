@@ -49,11 +49,11 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
   //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(addProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,1), strdup(workToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
@@ -117,11 +117,11 @@ int WorkProxy::update()
   workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(updateProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(updateProfile,1), strdup(workToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
@@ -164,11 +164,11 @@ int WorkProxy::deleteWork()
   workId = mwork.getWorkId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(deleteProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(deleteProfile,1), strdup(workId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(workId.c_str()), DIET_VOLATILE)) {
     msg += "with workId parameter "+workId;
     raiseDietMsgException(msg);
   }

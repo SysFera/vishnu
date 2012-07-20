@@ -42,4 +42,5 @@ void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, con
  */
 void checkEmail(const std::string& mail);
 
+
 #endif

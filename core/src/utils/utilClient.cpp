@@ -58,3 +58,4 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
     }
   }
 }
+
