@@ -26,7 +26,7 @@
 /*
  * \class SOCISession
  * \brief This class represent a connection session to the database.
- * It allows different synthaxes to execute a query and exchanging data
+ * It allows different syntaxes to execute a query and exchanging data
  *
  * \sample
  * SOCISession session= //from a SOCIDatabase//;
@@ -42,14 +42,14 @@
  * session<<query,soci::use(myId, soci::indicator() ),soci::into(name);
  *
  * The use of soci::indicator is to prevent exception by reading data with null value.
- * In those synthaxes above, the user cannot acces to the indicator.
- * To acces the value of the indicator, you must use those synthax below :
+ * In those syntaxes above, the user cannot acces to the indicator.
+ * To acces the value of the indicator, you must use those syntaxes below :
  *
- * - synthax 1 bis
+ * - syntax 1 bis
  * soci::indicator ind;
  * session.execute(query).use(myId,ind).into(name);
  *
- * - synthax 2 bis
+ * - syntax 2 bis
  * soci::indicator ind;
  * session<<query,soci::use(myId,ind),soci::into(name)
  */
@@ -83,17 +83,11 @@ public:
 	 * it allows to use all the public function of soci::session
 	 * be aware of soci exceptions
 	 */
-	soci::session & advanced()
-	{
-		return *msession;
-	}
+	soci::session & advanced();
 	/*
 	 * \brief get the pool position where the session is from
 	 */
-	size_t getPoolPosition()
-	{
-		return pool_position;
-	}
+	size_t getPoolPosition();
 
 	/*
 	 * \brief begin a transaction

@@ -539,7 +539,7 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 }
 
 
-SOCISession SOCIDatabase::getSingleSession(int reqPos)
+SOCISession SOCIDatabase::getSingleSession(int transactionId)
 {
 	if (!is_connected)
 	{
@@ -548,14 +548,18 @@ SOCISession SOCIDatabase::getSingleSession(int reqPos)
 	}
 
 	session * conn=NULL;
+	SOCISession ret;
+	int reqPos=-1;
 	try {
-		if(reqPos==-1)
+		if(transactionId==-1)
 		{
 			conn=getConnection(reqPos);
+			ret  = SOCISession(conn,reqPos);
 		}
 		else
 		{
-			conn=&(mpool->at(reqPos));
+			conn=&(mpool->at(transactionId));
+			ret = SOCISession(conn,transactionId);
 		}
 	} catch( exception const & e)
 	{
@@ -563,7 +567,7 @@ SOCISession SOCIDatabase::getSingleSession(int reqPos)
 				string("Cannot get single session : ")+e.what());
 	}
 
-	return SOCISession(conn,reqPos);
+	return ret;
 }
 
 int SOCIDatabase::releaseSingleSession(SOCISession & ss)
