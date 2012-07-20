@@ -8,9 +8,6 @@
 #include "BatchFactory.hpp"
 #include "SharedLibrary.hh"
 
-extern "C" {
-#include "drmaa.h"
-}
 #include <iostream>
 
 static int created=0;
