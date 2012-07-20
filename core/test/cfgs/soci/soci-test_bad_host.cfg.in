@@ -1,11 +1,11 @@
 # Configuration of the VISHNU UMS SeD
-dietConfigFile=/home/jbghoul/conf/serveur.cfg
+dietConfigFile=@TEST_CONFIG_PATH@/SeD_testing.cfg
 vishnuId=1
-databaseType=mysql
+databaseType=@TEST_DB_TYPE@
 databaseHost=invalidHost
-databaseName=vishnu
-databaseUserName=root
-databaseUserPassword=sysfera
+databaseName=@TEST_DB_NAME@
+databaseUserName=@TEST_DB_LOGIN@
+databaseUserPassword=@TEST_DB_PASSWORD@
 databaseConnectionsNb=5
 sendmailScriptPath=/usr/local/sbin/sendmail.py
 vishnuMachineId=machine_1

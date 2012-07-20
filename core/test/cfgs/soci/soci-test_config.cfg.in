@@ -1,0 +1,15 @@
+# Configuration of the VISHNU UMS SeD
+dietConfigFile=@TEST_CONFIG_PATH@/SeD_testing.cfg
+vishnuId=1
+databaseType=@TEST_DB_TYPE@
+databaseHost=@TEST_DB_HOST@
+databaseName=@TEST_DB_NAME@
+databaseUserName=@TEST_DB_LOGIN@
+databaseUserPassword=@TEST_DB_PASSWORD@
+databaseConnectionsNb=5
+sendmailScriptPath=/usr/local/sbin/sendmail.py
+vishnuMachineId=machine_1
+authenticationType=UMS
+address=tcp://*
+port=5555
+
