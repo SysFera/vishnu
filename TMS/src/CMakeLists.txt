@@ -12,6 +12,8 @@ include_directories(client api
   ${PROJECT_BINARY_DIR}/include/
   ${ZMQ_INCLUDE_DIR}
   ${MOCK_INCLUDE_DIR}
+  ${UMS_API_SOURCE_DIR}
+  ${FMS_API_SOURCE_DIR}
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
@@ -20,6 +22,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
 set(client_SRCS client/JobProxy.cpp
   client/JobOutputProxy.cpp
   client/WorkProxy.cpp
+  client/tmsClientUtils.cpp
 )
 
 set(cli_SRCS cli/displayer.cpp)
@@ -34,6 +37,7 @@ target_link_libraries(vishnu-tms-client
   emf4cpp-vishnu
   vishnu-core
   vishnu-ums-client
+  vishnu-fms-client
   ${LIBCRYPT_LIB}
   ${ZMQ_LIBRARIES}
   zmq_helper

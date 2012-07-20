@@ -106,7 +106,7 @@ JobOutputServer::getJobOutput() {
 	switch(status) {
 	case 7: throw TMSVishnuException(ERRCODE_ALREADY_DOWNLOADED); break ;
 	case 6: throw TMSVishnuException(ERRCODE_ALREADY_CANCELED); break ;
-	case 5: break ; //Job is terminated and get have output
+	case 5: break ; //terminated job
 	default: throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED); //status would be less than 5
 	}
 
@@ -118,8 +118,8 @@ JobOutputServer::getJobOutput() {
 	}
 
 	mjobResult.setOutputDir( outputDir ) ;
-	mjobResult.setOutputPath( outputPath) ;
-	mjobResult.setErrorPath( errorPath) ;
+	mjobResult.setOutputPath( outputPath ) ;
+	mjobResult.setErrorPath( errorPath ) ;
 
 	return mjobResult;
 }
