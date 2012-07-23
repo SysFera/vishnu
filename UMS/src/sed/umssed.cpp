@@ -7,6 +7,7 @@
 #include "DbConfiguration.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/format.hpp>
 #include <boost/scoped_ptr.hpp>
 #include "AuthenticatorConfiguration.hpp"
 
@@ -52,79 +53,18 @@ controlSignal (int signum) {
   }
 }
 
-//std::vector<std::string> &
-//getUMSService() {
-//  std::vector<std::string>* s = new std::vector<std::string>();
-//  s->push_back("sessionConnect");
-//  s->push_back("sessionReconnect");
-//  s->push_back("sessionClose");
-//  s->push_back("userCreate");
-//  s->push_back("userUpdate");
-//  s->push_back("userDelete");
-//  s->push_back("userPasswordChange");
-//  s->push_back("userPasswordReset");
-//  s->push_back("machineCreate");
-//  s->push_back("machineUpdate");
-//  s->push_back("machineDelete");
-//  s->push_back("localAccountCreate");
-//  s->push_back("localAccountUpdate");
-//  s->push_back("localAccountDelete");
-//  s->push_back("configurationSave");
-//  s->push_back("configurationRestore");
-//  s->push_back("optionValueSet");
-//  s->push_back("optionValueSetDefault");
-//  s->push_back("sessionList");
-//  s->push_back("localAccountList");
-//  s->push_back("machineList");
-//  s->push_back("commandList");
-//  s->push_back("optionValueList");
-//  s->push_back("userList");
-//  s->push_back("restore");
-//  s->push_back("authSystemCreate");
-//  s->push_back("authSystemUpdate");
-//  s->push_back("authSystemDelete");
-//  s->push_back("authSystemList");
-//  s->push_back("authAccountCreate");
-//  s->push_back("authAccountUpdate");
-//  s->push_back("authAccountDelete");
-//  s->push_back("authAccountList");
-//  return *s;
-//}
-
-
-int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int port)
-{
+int
+ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver,
+               std::string addr, int port) {
   // Prepare our context and socket for server
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
 
-// Connexion with broker
-//  zmq::context_t brcontext (1);
-//  zmq::socket_t brsocket (brcontext, ZMQ_REP);
-
-  string add = addr + ":" + convertToString<int>(port);
-  cout << "Binded to address: " << add << endl;
+  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
+  cout << "Binded to address: " << add << "\n";
   socket.bind(add.c_str());
 
-//  string bradd = braddr + ":" + convertToString<int>(brport);
-//  brsocket.connect(bradd.c_str());
-//  boost::shared_ptr<diet_profile_t> prof;
-//  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("UMS", getUMSService(), addr, port));
-//  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
-// Handler for messages
-//  BasicHandler hd (m);
-//  boost::shared_ptr<Message> brrep = hd.send(brsocket);
-//  TreatmentData brdata;
-//  BasicHandler rep(brrep);
-//  rep.treat();
-
-
-
-//  socket.bind ("tcp://*:5555");
-
   while (true) {
-//    std::cout << "Received a message" << std::endl;
-
     //Receive message from ZMQ
     zmq::message_t message(0);
     try {
@@ -132,7 +72,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int por
 	return false;
       }
     } catch (zmq::error_t error) {
-      std::cout << "E: " << error.what() << std::endl;
+      std::cout << "E: " << error.what() << "\n";
       return false;
     }
 
@@ -142,11 +82,10 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int por
 
     // Deserialize and call UMS Method
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    umsserver->get()->call(profile.get());
+    umsserver->call(profile.get());
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile.get());
-//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
 
     zmq::message_t reply(resultSerialized.length()+1);
     memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
@@ -163,15 +102,14 @@ int ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver, string addr, int por
  * \param envp Array of environment variables
  * \return The result of the diet sed call
  */
-int main(int argc, char* argv[], char* envp[]) {
-
+int
+main(int argc, char* argv[], char* envp[]) {
   int res = 0;
   int vishnuId = 0;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
   AuthenticatorConfiguration authenticatorConfig(config);
 
-//  std::string dietConfigFile;
   std::string sendmailScriptPath;
   struct sigaction action;
   string UMSTYPE = "UMS";
@@ -187,7 +125,6 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-//    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
