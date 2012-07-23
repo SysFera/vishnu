@@ -28,19 +28,19 @@ usage(char* cmd) {
   return 1;
 }
 
-int ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver, string addr, int port)
-{
-  // Prepare our context and socket
+
+int
+ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver,
+               std::string addr, int port) {
+  // Prepare our context and socket for server
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
-  string add = addr + ":" + convertToString<int>(port);
-  cout << "Binded to address: " << add << endl;
+
+  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
+  cout << "Binded to address: " << add << "\n";
   socket.bind(add.c_str());
-//  socket.bind ("tcp://*:5556");
 
   while (true) {
-//    std::cout << "Received a message" << std::endl;
-
     //Receive message from ZMQ
     zmq::message_t message(0);
     try {
@@ -48,7 +48,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver, string addr, int por
 	return false;
       }
     } catch (zmq::error_t error) {
-      std::cout << "E: " << error.what() << std::endl;
+      std::cout << "E: " << error.what() << "\n";
       return false;
     }
 
@@ -58,11 +58,10 @@ int ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver, string addr, int por
 
     // Deserialize and call UMS Method
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    fmsserver->get()->call(profile.get());
+    fmsserver->call(profile.get());
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile.get());
-//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
 
     zmq::message_t reply(resultSerialized.length()+1);
     memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
@@ -79,14 +78,14 @@ int ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver, string addr, int por
  * \param envp Array of environment variables
  * \return The result of the diet sed call
  */
-int main(int argc, char* argv[], char* envp[]) {
+int
+main(int argc, char* argv[], char* envp[]) {
 
   int res = 0;
   int vishnuId = 0;
   int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
-//  std::string dietConfigFile;
   string FMSTYPE = "FMS";
   string mid;
   string cfg;
@@ -100,7 +99,6 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-//    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
