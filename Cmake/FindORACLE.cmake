@@ -3,9 +3,10 @@
 #
 
 SET( ORACLE_FOUND_STRING "Whether an Oracle installation was found." )
+SET( ORACLE_DIR $ENV{ORACLE_DIR})
 
 find_path(ORACLE_INCLUDE_DIR
- occi.h
+  occi.h
   paths
   ${ORACLE_DIR}/include
   ${ORACLE_DIR}/sdk/include
