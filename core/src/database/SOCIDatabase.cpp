@@ -16,6 +16,12 @@
 #ifdef USE_POSTGRES
 #include <soci/postgresql/soci-postgresql.h>
 #endif
+#ifdef USE_ORACLE
+#include <soci/oracle/soci-oracle.h>
+#endif
+#ifdef USE_SQLITE3
+#include <soci/sqlite3/soci-sqlite3.h>
+#endif
 
 using namespace std;
 using namespace vishnu;
@@ -120,7 +126,14 @@ int SOCIDatabase::connect()
 #endif //POSTGRES
 #ifdef USE_ORACLE
 	case DbConfiguration::ORACLE:
-		throw SystemException(ERRCODE_DBERR," ORACLE is not supported yet");
+		mbackend = &oracle;
+		throw SystemException(ERRCODE_DBERR,"ORACLE is not supported yet");
+	break;
+#endif
+#ifdef USE_SQLITE3
+	case DbConfiguration::SQLITE3:
+		mbackend = &sqlite3;
+		throw SystemException(ERRCODE_DBERR,"SQLITE3 is not supported yet");
 	break;
 #endif
 	default:
@@ -527,6 +540,14 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 		{
 			throw(e);
 		}
+		break;
+	case DbConfiguration::ORACLE:
+		throw SystemException(ERRCODE_DBERR,
+						"ORACLE not supported yet");
+		break;
+	case DbConfiguration::SQLITE3:
+		throw SystemException(ERRCODE_DBERR,
+						"SQLITE3 not supported yet");
 		break;
 	default:
 		throw SystemException(ERRCODE_DBERR,

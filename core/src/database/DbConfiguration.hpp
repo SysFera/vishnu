@@ -24,7 +24,8 @@ public:
   typedef enum {
     POSTGRESQL,
     ORACLE,
-    MYSQL
+    MYSQL,
+    SQLITE3
   } db_type_t;
 
   /**
