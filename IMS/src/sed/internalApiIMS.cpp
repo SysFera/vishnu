@@ -9,7 +9,6 @@
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
-#include "DIET_server.h"
 #include "data/ProcessServer.hpp"
 #include "data/MetricServer.hpp"
 #include "data/ObjectIdServer.hpp"
@@ -1124,4 +1123,3 @@ solveGetSysInfo(diet_profile_t* pb){
   }
   return 0;
 }
-

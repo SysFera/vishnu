@@ -1,6 +1,4 @@
 #include "ProcessCtl.hpp"
-#include <omniORB4/CORBA.h>
-#include "DIET_admin.h"
 #include "IMSVishnuException.hpp"
 
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
@@ -75,7 +73,7 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
     // Make sure the process is really not running on the machine
     stop(&proc);
   } catch (VishnuException &e) {
-    // Do nothing, stop just to make sure the process is not running anymore    
+    // Do nothing, stop just to make sure the process is not running anymore
   }
 
   boost::to_lower(type);
@@ -89,9 +87,9 @@ ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
   // * Set the rights to 777
   // * Copy on the machine to restart
   // * SSH and exec the script launching the sed with the generated conf file
-  
+
   // This complicated scheme is used because a fork duplicate the sockets, and a fork exec would kill the database connexions of the sed
-  
+
   // This part of the code is dirty but functionnal, make it better when it will be possible
   // TODO clean the code using the diet syntax with the | ssh -q
   string tmp = "";
@@ -126,11 +124,6 @@ ProcessCtl::stop(IMS_Data::Process_ptr p) {
     } catch (SystemException& e) {
       throw (e);
     }
-  } 
-  // Diet admin api, remove a sed from hierarchy and stop it
-  res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
-  if (res != DIET_NO_ERROR) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid remove with error code: "+convertToString(res));
   }
 }
 
@@ -191,4 +184,3 @@ ProcessCtl::stopAll() {
   }
 
 }
-

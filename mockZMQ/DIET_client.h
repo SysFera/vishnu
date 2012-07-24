@@ -14,13 +14,13 @@
 
 typedef struct toto {
   char* id;
-}toto;
+} toto;
 
 typedef struct diet_arg_t {
   int pos;
   void* prof;
   toto desc;
-}diet_arg_t;
+} diet_arg_t;
 
 typedef struct diet_profile_t {
   char ** param;
@@ -29,13 +29,13 @@ typedef struct diet_profile_t {
   int OUT;
   char* name;
   diet_arg_t* parameters;
-}diet_profile_t;
+} diet_profile_t;
 
 
-typedef struct diet_container_t{
+typedef struct diet_container_t {
   int size;
-  char* elt_ids[2];  
-}diet_container_t;
+  char* elt_ids[2];
+} diet_container_t;
 
 
 #define DIET_VOLATILE 1

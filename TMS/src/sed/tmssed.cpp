@@ -11,6 +11,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <sys/types.h>
 #include <signal.h>
+#include <boost/format.hpp>
 #include <boost/scoped_ptr.hpp>
 
 #include "MachineServer.hpp"
@@ -27,39 +28,18 @@
 #include "Server.hpp"
 #include "Message.hpp"
 
-int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int port)
-{
+int
+ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver,
+               std::string addr, int port) {
   // Prepare our context and socket for server
   zmq::context_t context (1);
   zmq::socket_t socket (context, ZMQ_REP);
 
-// Connexion with broker
-//  zmq::context_t brcontext (1);
-//  zmq::socket_t brsocket (brcontext, ZMQ_REP);
-
-  string add = addr + ":" + convertToString<int>(port);
-  cout << "Binded to address: " << add << endl;
+  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
+  cout << "Binded to address: " << add << "\n";
   socket.bind(add.c_str());
 
-//  string bradd = braddr + ":" + convertToString<int>(brport);
-//  brsocket.connect(bradd.c_str());
-//  boost::shared_ptr<diet_profile_t> prof;
-//  boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server ("TMS", getTMSService(), addr, port));
-//  boost::shared_ptr<Message> m = boost::shared_ptr<Message>(new Message("", ADSE, s, prof));
-// Handler for messages
-//  BasicHandler hd (m);
-//  boost::shared_ptr<Message> brrep = hd.send(brsocket);
-//  TreatmentData brdata;
-//  BasicHandler rep(brrep);
-//  rep.treat();
-
-
-
-//  socket.bind ("tcp://*:5555");
-
   while (true) {
-//    std::cout << "Received a message" << std::endl;
-
     //Receive message from ZMQ
     zmq::message_t message(0);
     try {
@@ -67,7 +47,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int por
 	return false;
       }
     } catch (zmq::error_t error) {
-      std::cout << "E: " << error.what() << std::endl;
+      std::cout << "E: " << error.what() << "\n";
       return false;
     }
 
@@ -81,7 +61,6 @@ int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int por
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile.get());
-//    std::cout << " Serialized to send : " << resultSerialized << std::endl;
 
     zmq::message_t reply(resultSerialized.length()+1);
     memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
@@ -98,9 +77,7 @@ int ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver, string addr, int por
  */
 int
 usage(char* cmd) {
-  std::cerr << std::endl;
-  std::cout << "Usage: " << cmd << " vishnu_config.cfg" << std::endl;
-  std::cerr << std::endl;
+  std::cout << "\nUsage: " << cmd << " vishnu_config.cfg\n\n";
   return 1;
 }
 

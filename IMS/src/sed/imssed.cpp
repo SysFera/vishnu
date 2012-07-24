@@ -7,9 +7,8 @@
 #include "utilServer.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/format.hpp>
 
-#include "controller/logTool/Watcher.hpp"
-#include "controller/logTool/ToolFactory.hpp"
 #include "controller/HM/HM.hpp"
 
 #include <boost/thread.hpp>
@@ -63,7 +62,7 @@ controlSignal (int signum) {
       }
       break;
     default:
-     break;
+      break;
   }
 }
 
@@ -76,8 +75,8 @@ controlSignal (int signum) {
  * \param envp Array of environment variables
  * \return The result of the diet sed call
  */
-int main(int argc, char* argv[], char* envp[]) {
-
+int
+main(int argc, char* argv[], char* envp[]) {
   int res = 0;
   int vishnuId = 0;
   ExecConfiguration config;
@@ -96,21 +95,21 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
-    config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
+    config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT,
+                                               sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
   } catch (UserException& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << "\n";
     exit(1);
   }catch (std::exception& e) {
-    std::cerr << argv[0] << " : "<< e.what() << std::endl;
+    std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
   // Check DIET Configuration file
   if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
-    std::cerr << "Error: cannot open DIET configuration file" << std::endl;
+    std::cerr << "Error: cannot open DIET configuration file" << "\n";
     exit(1);
   }
 
@@ -119,11 +118,6 @@ int main(int argc, char* argv[], char* envp[]) {
   res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
 
   registerSeD(IMSTYPE, config, cfg);
-
-  // Watcher thread
-  Watcher w(IMSVishnuTool_v1, argc, argv, mid);
-  thread thr1(bind(&Watcher::run, &w));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
-
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);
@@ -137,13 +131,11 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the DIET SeD
   if (!res) {
-    diet_print_service_table();
-    res = diet_SeD(cfg.c_str(), argc, argv);
     unregisterSeD(IMSTYPE, mid);
     pid_t pid = getpid();
     kill(pid, SIGINT);
   } else {
-    std::cerr << "There was a problem during services initialization" << std::endl;
+    std::cerr << "There was a problem during services initialization\n";
     exit(1);
   }
   // To avoid quitting to fast in case of problems

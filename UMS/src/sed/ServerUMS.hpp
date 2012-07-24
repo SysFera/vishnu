@@ -3,7 +3,7 @@
  * \brief This file presents the implementation of the UMS server.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 31/01/2001
-*/
+ */
 
 #ifndef _SERVERUMS_H_
 #define _SERVERUMS_H_
@@ -21,51 +21,49 @@
 #include "SeD.hpp"
 
 
-using namespace std;
 /**
  * \brief Number of service in UMS
  */
 #define NB_SRV 33
-#define UNKNOWN_SERVICE 1
 
-typedef int (*functionPtr_t)(diet_profile_t*);
 class Database;
 class Authenticator;
 
 static const char* SRV[NB_SRV] = {
-  "sessionConnect",//0
-  "sessionReconnect",//1
-  "sessionClose",//2
-  "userCreate",//3
-  "userUpdate",//4
-  "userDelete",//5
-  "userPasswordChange",//6
-  "userPasswordReset",//7
-  "machineCreate",//8
-  "machineUpdate",//9
-  "machineDelete",//10
-  "localAccountCreate",//11
-  "localAccountUpdate",//12
-  "localAccountDelete",//13
-  "configurationSave",//14
-  "configurationRestore",//15
-  "optionValueSet",//16
-  "optionValueSetDefault",//17
-  "sessionList",//18
-  "localAccountList",//19
-  "machineList",//20
-  "commandList",//21
-  "optionValueList",//22
-  "userList",//23
-  "restore",//24
-  "authSystemCreate",//25
-  "authSystemUpdate",//26
-  "authSystemDelete",//27
-  "authSystemList",//28
-  "authAccountCreate",//29
-  "authAccountUpdate",//30
-  "authAccountDelete",//31
-  "authAccountList"};//32
+  "sessionConnect",  // 0
+  "sessionReconnect",  // 1
+  "sessionClose",  // 2
+  "userCreate",  // 3
+  "userUpdate",  // 4
+  "userDelete",  // 5
+  "userPasswordChange",  // 6
+  "userPasswordReset",  // 7
+  "machineCreate",  // 8
+  "machineUpdate",  // 9
+  "machineDelete",  // 10
+  "localAccountCreate",  // 11
+  "localAccountUpdate",  // 12
+  "localAccountDelete",  // 13
+  "configurationSave",  // 14
+  "configurationRestore",  // 15
+  "optionValueSet",  // 16
+  "optionValueSetDefault",  // 17
+  "sessionList",  // 18
+  "localAccountList",  // 19
+  "machineList",  // 20
+  "commandList",  // 21
+  "optionValueList",  // 22
+  "userList",  // 23
+  "restore",  // 24
+  "authSystemCreate",  // 25
+  "authSystemUpdate",  // 26
+  "authSystemDelete",  // 27
+  "authSystemList",  // 28
+  "authAccountCreate",  // 29
+  "authAccountUpdate",  // 30
+  "authAccountDelete",  // 31
+  "authAccountList"};  // 32
+
 /**
  * \class ServerUMS
  * \brief This class describes the UMS server
@@ -108,24 +106,16 @@ public :
        std::string sendmailScriptPath,
        AuthenticatorConfiguration authenticatorConfig);
 
-/**
- * \brief To call a function upon receiving a request
- * \param profile The profile of the service
- * \return the error code of the function
- */
-int
-call(diet_profile_t* profile);
-
   /**
    * \brief Destructor, raises an exception on error
    * \fn ~ServerUMS()
    */
   ~ServerUMS();
 
-private :
-/**
- * \brief Init the ptr function map
- */
+private:
+  /**
+   * \brief Init the ptr function map
+   */
   void
   initMap();
 
@@ -147,45 +137,37 @@ private :
    */
   static ServerUMS *minstance;
   /**
-  * \brief The path to the sendmail script
-  */
+   * \brief The path to the sendmail script
+   */
   std::string msendmailScriptPath;
   /**
-  * \brief The vishnu id
-  */
+   * \brief The vishnu id
+   */
   int mvishnuId;
   /**
-  * \brief Structure representing a profile description
-  */
-//  diet_profile_desc_t* mprofile;
-  /**
-  * \brief Instance of Database
-  */
+   * \brief Instance of Database
+   */
   static Database *mdatabaseVishnu;
   /**
-  * \brief Instance of UMSMapper
-  */
+   * \brief Instance of UMSMapper
+   */
   static UMSMapper *mmapper;
   /**
-  * \brief Instance of UMSMapper
-  */
+   * \brief Instance of UMSMapper
+   */
   static TMSMapper *mmapperTMS;
   /**
-  * \brief Instance of UMSMapper
-  */
+   * \brief Instance of UMSMapper
+   */
   static FMSMapper *mmapperFMS;
   /**
-  * \brief Instance of UMSMapper
-  */
+   * \brief Instance of UMSMapper
+   */
   static IMSMapper *mmapperIMS;
   /**
-  * \brief Instance of Authenticator
-  */
-  static Authenticator *mauthenticator;
-  /**
-   * \brief map with function ptr for callback
+   * \brief Instance of Authenticator
    */
-  std::map<string, functionPtr_t> mcb;
+  static Authenticator *mauthenticator;
 };
 
 #endif // SERVERUMS
