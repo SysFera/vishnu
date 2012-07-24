@@ -856,6 +856,13 @@ CREATE TABLE `work` (
 ) 
 ;
 
+
+DROP TABLE IF EXISTS 'keygen';
+CREATE TABLE `keygen` (
+  `id` integer primary key autoincrement
+) 
+;
+
 -- Role Creation;
 -- There is no Role or Privilege support in SQLITE3
 

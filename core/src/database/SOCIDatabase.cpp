@@ -133,7 +133,6 @@ int SOCIDatabase::connect()
 #ifdef USE_SQLITE3
 	case DbConfiguration::SQLITE3:
 		mbackend = &sqlite3;
-		throw SystemException(ERRCODE_DBERR,"SQLITE3 is not supported yet");
 	break;
 #endif
 	default:
@@ -546,8 +545,25 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 						"ORACLE not supported yet");
 		break;
 	case DbConfiguration::SQLITE3:
-		throw SystemException(ERRCODE_DBERR,
-						"SQLITE3 not supported yet");
+		sqlCommand = string("INSERT INTO keygen DEFAULT VALUES");
+		sqlCommand2 =string("SELECT max(id) from keygen");
+		try
+		{
+			process(sqlCommand);
+			boost::scoped_ptr<DatabaseResult> result(
+					getResult(sqlCommand2));
+			if (result->getNbTuples() == 0)
+			{
+				throw SystemException(ERRCODE_DBERR,
+						"Failure generating the id");
+			}
+			results.clear();
+			results = result->get(0);
+			iter = results.begin();
+		} catch (SystemException& e)
+		{
+			throw(e);
+		}
 		break;
 	default:
 		throw SystemException(ERRCODE_DBERR,
