@@ -312,9 +312,6 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-#find_package(LOGSERVICE REQUIRED)
-set(LOG_LIBRARY "")
-
 find_package(Boost 1.45
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
@@ -527,6 +524,7 @@ if(COMPILE_TMS)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
+  find_package(Sigar REQUIRED)
   add_definitions(-DCOMPILE_IMS)
   add_definitions(-DUSE_LOG_SERVICE)
   add_definitions(-DHAVE_ALT_BATCH)

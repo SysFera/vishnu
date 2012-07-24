@@ -1,5 +1,4 @@
 include_directories(client api
-#  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
@@ -9,8 +8,7 @@ include_directories(client api
   ${PROJECT_BINARY_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
-)
+  ${MOCK_INCLUDE_DIR})
 
 set(client_SRCS client/SessionProxy.cpp
   client/AuthAccountProxy.cpp
@@ -41,7 +39,6 @@ set(api_HEADERS api/api_ums.hpp)
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ums-client
-#  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core

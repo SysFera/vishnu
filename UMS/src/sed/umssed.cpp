@@ -29,7 +29,7 @@ using namespace vishnu;
  */
 int
 usage(char* cmd) {
-  std::cout << "Usage: " << std::string(cmd) << " vishnu_config.cfg\n";
+  std::cout << "Usage: " << cmd << " vishnu_config.cfg\n";
   return 1;
 }
 
@@ -82,7 +82,7 @@ ZMQServerStart(boost::scoped_ptr<ServerUMS>* umsserver,
 
     // Deserialize and call UMS Method
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    umsserver->call(profile.get());
+    (*umsserver)->call(profile.get());
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile.get());

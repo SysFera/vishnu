@@ -19,6 +19,7 @@ add_library(zmq_helper
   TreatmentData.cpp
   BasicHandler.cpp
   HandlerFactory.cpp
+  SeD.cpp
   ZMQHelper/mdclient.cpp)
 
 target_link_libraries (zmq_helper

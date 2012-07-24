@@ -8,6 +8,7 @@
 #include "MonitorFMS.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/format.hpp>
 #include <boost/scoped_ptr.hpp>
 
 //For ZMQ
@@ -58,7 +59,7 @@ ZMQServerStart(boost::scoped_ptr<ServerFMS>* fmsserver,
 
     // Deserialize and call UMS Method
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    fmsserver->call(profile.get());
+    (*fmsserver)->call(profile.get());
 
     // Send reply back to client
     std::string resultSerialized = my_serialize(profile.get());
