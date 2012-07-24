@@ -38,6 +38,7 @@ loadPluginBatch(const char *name) {
     ((int (*)(void **))(factory))((void**) &instance);
   }
 
+  return instance;
 }
 
 
