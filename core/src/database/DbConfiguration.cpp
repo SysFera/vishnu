@@ -33,8 +33,11 @@ void DbConfiguration::check() throw (UserException)
     mdbType = DbConfiguration::POSTGRESQL;
   } else if (dbTypeStr == "mysql") {
     mdbType = DbConfiguration::MYSQL;
+  } else if (dbTypeStr == "sqlite3") {
+    mdbType = DbConfiguration::SQLITE3;
   } else {
-    throw UserException(ERRCODE_INVALID_PARAM, "Configuration for database type is invalid (must be 'oracle' or 'postgresql' or 'mysql')");
+    throw UserException(ERRCODE_INVALID_PARAM,
+    		"Configuration for database type is invalid (must be 'oracle' or 'postgresql' or 'mysql' or 'sqlite3')");
   }
   mexecConfig.getRequiredConfigValue<std::string>(vishnu::DBHOST, mdbHost);
   mexecConfig.getConfigValue<unsigned>(vishnu::DBPORT, mdbPort);
