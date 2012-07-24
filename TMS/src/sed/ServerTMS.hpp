@@ -21,9 +21,9 @@ typedef int (*functionPtr_t)(diet_profile_t*);
 
 class Database;
 
-/**
- *  * \brief Number of service in TMS
- *   */
+ /**
+  * \brief Number of service in TMS
+  */
 #define NB_SRV 11
 
 static const char* SERVICES[NB_SRV] = {
@@ -44,7 +44,7 @@ static const char* SERVICES[NB_SRV] = {
  * \class ServerTMS
  * \brief This class describes the g server
  */
-class ServerTMS : public SeD{
+class ServerTMS : public SeD {
 public :
 
   /**
@@ -112,10 +112,10 @@ call(diet_profile_t* profile);
   ~ServerTMS();
 
 private :
-/**
- * \brief Init the ptr function map
- * \param mid The machine Id
- */
+  /**
+   * \brief Init the ptr function map
+   * \param mid The machine Id
+   */
   void
   initMap(std::string mid);
 

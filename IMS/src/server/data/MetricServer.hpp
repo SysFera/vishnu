@@ -13,7 +13,7 @@
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
 
-using namespace std;
+class sigar_t;
 
 /**
  * \class MetricServer
@@ -26,21 +26,25 @@ public:
    * \param session: A session to use for the call
    * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session, string mail);
+  MetricServer(const UserServer session, std::string mail);
   /**
    * \brief Constructor
    * \param session: A session to use for the call
    * \param op: Options for the get metric history call
    * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op, string mail);
+  MetricServer(const UserServer session,
+               IMS_Data::MetricHistOp_ptr op,
+               std::string mail);
   /**
    * \brief Constructor
    * \param session: A session to use for the call
    * \param op: Options for the get current metric value call
    * \param mail: The script to send mails
    */
-  MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op, string mail);
+  MetricServer(const UserServer session,
+               IMS_Data::CurMetricOp_ptr op,
+               std::string mail);
   /**
    * \brief Destructor
    */
@@ -69,7 +73,7 @@ public:
    * \param machineId: The vishnu id of the machine
    */
   IMS_Data::ListMetric*
-  getHistMet(string machineId);
+  getHistMet(std::string machineId);
 
   /**
    * \brief To add all the monitored types of metric in the database at a time t
@@ -77,13 +81,12 @@ public:
    * \param mid: The machine id of the machine to add the set
    */
   void
-  addMetricSet(IMS_Data::ListMetric* set, string mid);
+  addMetricSet(IMS_Data::ListMetric* set, std::string mid);
 
 
-protected:
 private:
   /**
-   * \brief To send a mail 
+   * \brief To send a mail
    * \param val: The value of the metric
    * \param threshold: The value of the threshold
    * \param type: The type of the threshold
@@ -92,7 +95,8 @@ private:
    * \param mid: The machine id of the machine where the threshold is reached
    */
   void
-  sendMail(int val, int threshold, int type, string email, string uid, string mid);
+  sendMail(int val, int threshold, int type,
+           std::string email, std::string uid, std::string mid);
   /**
    * \brief The position of the frequency in the vishnu table
    */
@@ -110,17 +114,17 @@ private:
    */
   UserServer msession;
   /**
-  * \brief An instance of vishnu database
-  */
+   * \brief An instance of vishnu database
+   */
   Database *mdatabase;
   /**
    * \brief The name of the command
    */
-  string mcommandName;
+  std::string mcommandName;
   /**
    * \brief The process to send mails
    */
-  string msendmail;
+  std::string msendmail;
   /**
    * \brief The options for the history of metrics
    */
@@ -129,6 +133,7 @@ private:
    * \brief The options for the current metrics
    */
   IMS_Data::CurMetricOp_ptr mcop;
+  sigar_t *sigar; /**< Sigar context */
 };
 
 #endif
