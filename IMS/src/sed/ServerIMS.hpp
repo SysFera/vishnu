@@ -94,7 +94,7 @@ private:
    * \brief init the function pointer map
    */
   void
-  initMap();
+  initMap(std::string mid);
 
   /**
    * \brief Constructor, private because class is singleton

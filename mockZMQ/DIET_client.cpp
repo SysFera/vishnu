@@ -124,6 +124,30 @@ isTMS(std::string test) {
 }
 
 
+bool
+isIMS(std::string test){
+  return (
+    test.compare("int_exportCommands") == 0 ||
+    test.find("int_getMetricCurentValue") == 0 ||
+    test.compare("int_getMetricHistory") == 0 ||
+    test.compare("int_getProcesses") == 0 ||
+    test.compare("int_setSystemInfo") == 0 ||
+    test.compare("int_setSystemThreshold") == 0 ||
+    test.compare("int_getSystemThreshold") == 0 ||
+    test.compare("int_defineUserIdentifier") == 0 ||
+    test.compare("int_defineJobIdentifier") == 0 ||
+    test.compare("int_defineTransferIdentifier") == 0 ||
+    test.compare("int_defineMachineIdentifier") == 0 ||
+    test.compare("int_loadShed") == 0 ||
+    test.compare("int_setUpdateFrequency") == 0 ||
+    test.compare("int_getUpdateFrequency") == 0 ||
+    test.compare("int_restart") == 0 ||
+    test.compare("int_stop") == 0 ||
+    test.compare("int_getSystemInfo") == 0 ||
+    test.compare("int_defineAuthIdentifier") == 0 ||
+    test.compare("int_defineWorkIdentifier") == 0);
+}
+
 
 int
 diet_call(diet_profile_t* prof){
@@ -131,16 +155,15 @@ diet_call(diet_profile_t* prof){
   if (isUMS(std::string(prof->name))) {
     port = vishnu::convertToInt((theConfig.find("UMS")->second).at(0));
     diet_call_gen(prof, port);
-//  }
-//  else if (isFMS(std::string(prof->name))) {
-//    diet_call_gen(prof, 5556);
   } else if (isTMS(std::string(prof->name))) {
     port = vishnu::convertToInt((theConfig.find("TMS")->second).at(0));
+    diet_call_gen(prof, port);
+  } else if (isIMS(std::string(prof->name))) {
+    port = vishnu::convertToInt((theConfig.find("IMS")->second).at(0));
     diet_call_gen(prof, port);
   } else {
     port = vishnu::convertToInt((theConfig.find("FMS")->second).at(0));
     diet_call_gen(prof, port);
-//    std::cerr << "Unknown service" << std::endl;
   }
 
 
