@@ -111,14 +111,14 @@ isUMS(std::string test){
 bool
 isTMS(std::string test){
   return (
-    test.find("job_Submit") != std::string::npos ||
-    test.compare("jobCancel") != std::string::npos ||
-    test.compare("jobInfo") != std::string::npos ||
-    test.compare("getListOfJobs") != std::string::npos ||
-    test.compare("getJobsProgression") != std::string::npos ||
-    test.compare("getListOfQueues") != std::string::npos ||
-    test.compare("jobOutputGetResult") != std::string::npos ||
-    test.compare("jobOutputGetCompletedJobs") != std::string::npos);
+    test.compare("job_Submit") == std::string::npos ||
+    test.compare("jobCancel") == 0 ||
+    test.compare("jobInfo") == 0 ||
+    test.compare("getListOfJobs") == 0 ||
+    test.compare("getJobsProgression") == 0 ||
+    test.compare("getListOfQueues") == 0 ||
+    test.compare("jobOutputGetResult") == 0 ||
+    test.compare("jobOutputGetCompletedJobs") == 0);
 }
 
 
@@ -300,4 +300,3 @@ int
 diet_container_set(diet_arg_t* arg, int flag){
 
 }
-
