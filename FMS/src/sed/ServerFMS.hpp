@@ -13,7 +13,6 @@
  * \brief Number of services in FMS
  */
 #define NB_SRV 22
-#define UNKNOWN_SERVICE 1
 
 #include "DIET_client.h"
 #include "FMSMapper.hpp"
