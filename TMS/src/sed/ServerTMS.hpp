@@ -17,8 +17,6 @@
 #include "MapperRegistry.hpp"
 #include "SeD.hpp"
 
-typedef int (*functionPtr_t)(diet_profile_t*);
-
 class Database;
 
  /**
