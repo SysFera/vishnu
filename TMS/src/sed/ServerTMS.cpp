@@ -241,16 +241,3 @@ ServerTMS::initMap(std::string mid) {
   functionPtr = solveAddWork;
   mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
 }
-
-int
-ServerTMS::call(diet_profile_t* profile){
-  map<string, functionPtr_t>::iterator it;
-  it = mcb.find(string(profile->name));
-  if (it == mcb.end()) {
-    std::cerr << "not found service : " << profile->name << std::endl;
-    return 0;
-  }
-  int (*functionPtr)(diet_profile_t*);
-  functionPtr = it->second;
-  return (*functionPtr)(profile);
-}
