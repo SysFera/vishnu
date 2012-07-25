@@ -54,7 +54,7 @@ int ConfigurationProxy::save()
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
@@ -110,15 +110,15 @@ int ConfigurationProxy::restore(bool fromFile)
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* errorInfo;
-  char* configurationInString = NULL;
   std::string msg = "call of function diet_string_set is rejected ";
 
+  std::string configurationInString = "";
   if(fromFile) { // To get the content of the mfile
-    configurationInString = strdup(vishnu::get_file_content(mfilePath).c_str());
+    configurationInString = vishnu::get_file_content(mfilePath);
   }
   else { //To serialize the mconfiguration object in to configurationInString
     ::ecorecpp::serializer::serializer _ser;
-    configurationInString =  strdup((_ser.serialize_str(mconfiguration)).c_str());
+    configurationInString =  _ser.serialize_str(mconfiguration);
   }
   //To intialize the service description
   profile = diet_profile_alloc("configurationRestore", 1, 1, 2);
@@ -126,11 +126,11 @@ int ConfigurationProxy::restore(bool fromFile)
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), configurationInString, DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(configurationInString.c_str()), DIET_VOLATILE)) {
     msg += "with configurationInString parameter "+std::string(configurationInString);
     raiseDietMsgException(msg);
   }

@@ -358,6 +358,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		//Start dealing with output
 		JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
 		TMS_Data::JobResult result = jobOutputServer.getJobOutput();
+		ostringstream missingFiles ;
 		string jobFiles =  vishnu::getResultFiles(result, false) ;
 		string outputInfo = "/tmp/vishnu-"+result.getJobId()+"-outdescrXXXXXX"; // extension by convention
 
@@ -513,6 +514,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		std::ostringstream ossFileName ;
 		int nbResult = completedJobsOutput->getResults().size() ;
 		for(size_t i = 0; i < nbResult; i++) {
+			ostringstream missingFiles ; missingFiles.clear() ;
 			ossFileName << vishnu::getResultFiles(*completedJobsOutput->getResults().get(i), true) ;
 		}
 		string outputInfo = "/tmp/vishnu-outdescrXXXXXX"; // extension by convention

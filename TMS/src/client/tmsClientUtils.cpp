@@ -50,7 +50,7 @@ std::string copyFile(const std::string & sessionKey,
 	if( bfs::exists(dest) ) {
 		dest = bfs::unique_path(dest+".gen%%").string() ;
 	}
-	if( vishnu::copyFile(sessionKey, src, dest, copts ) ) {
+	if( vishnu::copyFile(sessionKey, src, dest, copts)!=0 ) {
 		throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "error while copying the file " + src
 				+" to "+dest+" (machine name : "+ getMachineName(sessionKey, srcMid) + ")");
 	}
