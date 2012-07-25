@@ -50,11 +50,11 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   localAccountToString =  _ser.serialize_str(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(localAccountToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(localAccountToString.c_str()), DIET_VOLATILE)) {
     msg += "with localAccountToString parameter "+localAccountToString;
     raiseDietMsgException(msg);
   }
@@ -136,15 +136,15 @@ int LocalAccountProxy::deleteLocalAccount()
   machineId = mlocalAccount.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,2), strdup(machineId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }

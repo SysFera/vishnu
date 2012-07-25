@@ -54,7 +54,6 @@ int UserProxy::add(UMS_Data::User& user)
 {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* userToString;
   char* errorInfo;
   char* userInString;
   std::string msg = "call of function diet_string_set is rejected ";
@@ -64,14 +63,14 @@ int UserProxy::add(UMS_Data::User& user)
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the user object in to userToString
-  userToString =  strdup(_ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user)).c_str());
+  std::string userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), userToString, DIET_VOLATILE)) {
-    msg += "with userToString parameter "+std::string(userToString);
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userToString.c_str()), DIET_VOLATILE)) {
+    msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
 
@@ -132,11 +131,11 @@ int UserProxy::update(const UMS_Data::User& user)
   userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(userToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userToString.c_str()), DIET_VOLATILE)) {
     msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
@@ -182,11 +181,11 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   userId = user.getUserId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), strdup(userId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
@@ -238,17 +237,17 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   profile = diet_profile_alloc("userPasswordChange", 3, 3, 4);
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>((muser.getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,1), strdup(password.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(password.c_str()), DIET_VOLATILE)) {
     msg += "with password parameter "+password;
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,2), strdup(newPassword.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(newPassword.c_str()), DIET_VOLATILE)) {
     msg += "with newPassword parameter "+newPassword;
     raiseDietMsgException(msg);
   }
@@ -296,12 +295,12 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), strdup((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>((msessionProxy->getSessionKey()).c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,1), strdup((user.getUserId()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>((user.getUserId()).c_str()), DIET_VOLATILE)) {
     msg += "with userId parameter "+user.getUserId();
     raiseDietMsgException(msg);
   }

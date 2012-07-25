@@ -81,7 +81,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	}
 
 	if( moutDir.size()==0 ) {
-		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId ;
+		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
 		vishnu::createOutputDir(moutDir);
 	}
 	jobResult.setOutputDir(moutDir) ;
@@ -90,24 +90,35 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	copts.setIsRecursive(false) ;
 	copts.setTrCommand(0); // for using scp
 	string outputInfo = copyFile(sessionKey, mmachineId, routputInfo, "/tmp", copts) ;
-	string fDescStr = vishnu::get_file_content(outputInfo) ; boost::trim(fDescStr) ;
-	ListStrings fDescVec ; 	boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
+	//	string fDescStr = vishnu::get_file_content(outputInfo) ; boost::trim(fDescStr) ;
+	//	ListStrings fDescVec ; 	boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
 
-	switch(fDescVec.size()) {
+	string line="" ;
+	istringstream fdescStream (vishnu::get_file_content(routputInfo, false)) ;
+	ListStrings lineVec ;
+	getline(fdescStream, line) ; boost::trim(line) ;
+	boost::split(lineVec, line, boost::is_any_of(" ")) ;
+
+	switch(line.size()) {
 	case 0:
-		throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "the output files seem to be uncomplete");
+//		throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "the output files seem to be uncomplete");
 		break;
 	case 1:
-		jobResult.setOutputPath(moutDir+"/"+fDescVec[0]) ;
-		jobResult.setErrorPath(moutDir+"/"+fDescVec[0]) ;
+		jobResult.setOutputPath(moutDir+"/"+lineVec[0]) ;
+		jobResult.setErrorPath(moutDir+"/"+lineVec[0]) ;
 		break;
 	default:
-		jobResult.setOutputPath(moutDir+"/"+fDescVec[0]) ;
-		jobResult.setErrorPath(moutDir+"/"+fDescVec[1]) ;
+		jobResult.setOutputPath(moutDir+"/"+lineVec[0]) ;
+		jobResult.setErrorPath(moutDir+"/"+lineVec[1]) ;
 		break;
 	}
 
-	copyFiles(sessionKey, mmachineId, fDescVec, moutDir, copts, 0) ;
+	//TODO
+	if(line.size()!=0) {
+		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0) ;
+	}
+	getline(fdescStream, line) ;
+	vishnu::saveMissingFiles(moutDir+"/MISSING", line) ;
 
 	diet_profile_free(getJobOutPutProfile);
 	return jobResult;
@@ -183,10 +194,12 @@ JobOutputProxy::getCompletedJobsOutput() {
 	while( getline(fdescStream, line) ) {
 		boost::trim(line) ;
 		boost::split(lineVec, line, boost::is_any_of(" ")) ;
-		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] ;
+		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime() ;
 		vishnu::createOutputDir(moutDir);
 		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(moutDir);
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1) ;
+		if( !getline(fdescStream, line)) break ;
+		vishnu::saveMissingFiles(moutDir+"/MISSING", line) ;
 	}
 
 	diet_profile_free(getCompletedJobsOutputProfile);
