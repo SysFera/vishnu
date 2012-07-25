@@ -98,13 +98,6 @@ public :
        std::string machineId,
        BatchType batchType,
        std::string slaveBinDir);
-/**
- * \brief To call a function upon receiving a request
- * \param profile The profile of the service
- * \return the error code of the function
- */
-int
-call(diet_profile_t* profile);
 
   /**
    * \brief Destructor, raises an exception on error
