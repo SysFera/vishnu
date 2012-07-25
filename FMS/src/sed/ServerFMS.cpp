@@ -409,16 +409,3 @@ ServerFMS::initMap() {
   mcb.insert( pair<string, functionPtr_t> (string("FileTransferStop"),functionPtr));
 
 }
-
-int
-ServerFMS::call(diet_profile_t* profile){
-  map<string, functionPtr_t>::iterator it;
-  it = mcb.find(string(profile->name));
-  if (it == mcb.end()) {
-    std::cerr << "not found service : " << profile->name << std::endl;
-    return UNKNOWN_SERVICE;
-  }
-  int (*functionPtr)(diet_profile_t*);
-  functionPtr = it->second;
-  return (*functionPtr)(profile);
-}
