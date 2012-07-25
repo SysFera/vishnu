@@ -109,16 +109,18 @@ isUMS(std::string test){
 }
 
 bool
-isTMS(std::string test){
+isTMS(std::string test) {
+  /* TMS services are often postfixed by _<machineID>
+     so we just check that the basename is present */
   return (
-    test.compare("job_Submit") == std::string::npos ||
-    test.compare("jobCancel") == 0 ||
-    test.compare("jobInfo") == 0 ||
-    test.compare("getListOfJobs") == 0 ||
-    test.compare("getJobsProgression") == 0 ||
-    test.compare("getListOfQueues") == 0 ||
-    test.compare("jobOutputGetResult") == 0 ||
-    test.compare("jobOutputGetCompletedJobs") == 0);
+    test.find("job_Submit") == 0 ||
+    test.find("jobCancel") == 0 ||
+    test.find("jobInfo") == 0 ||
+    test.find("getListOfJobs") == 0 ||
+    test.find("getJobsProgression") == 0 ||
+    test.find("getListOfQueues") == 0 ||
+    test.find("jobOutputGetResult") == 0 ||
+    test.find("jobOutputGetCompletedJobs") == 0);
 }
 
 
