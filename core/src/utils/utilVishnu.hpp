@@ -291,6 +291,13 @@ void createTmpFile(char* fileName, const std::string& file_content);
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
+ * \param content The content of the file
+ */
+void saveMissingFiles(const std::string & fileName, const std::string& file_content);
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
  */
 void createTmpFile(char* fileName);
 
@@ -378,19 +385,22 @@ validateParameters(const boost::shared_ptr<Options> & opt,
  * \brief Function to list file containing in a directory
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
- * Throw exception on error
+ * \return true on success and false if not
  * */
-void
+bool
 appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath);
 
 
 /**
  * \brief Function to get the list of output files related to a job
  * \param result : The Job Result
+ * \param appendJobId : Determine whether or not append the job id before the files lists
+ * \return The list of files
  * Throw exception on error
  * */
 std::string
-getResultFiles(const TMS_Data::JobResult & result, const bool & appendJobId=false);
+getResultFiles(const TMS_Data::JobResult & result,
+		const bool & appendJobId);
 
 
 

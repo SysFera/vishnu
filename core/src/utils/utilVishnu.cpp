@@ -254,6 +254,7 @@ vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffs
 /**
  * \brief Simple function to read the content of the regular file
  * \param filePath: the path to the file
+ * \param rejectEmptyFile: tell whether empty file will be rejected
  * \return The content of the file
  */
 std::string
@@ -626,6 +627,26 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
+ * \param content The content of the file
+ */
+void vishnu::saveMissingFiles(const std::string & fileName, const std::string& content) {
+
+	bfs::ofstream file(fileName);
+
+	ListStrings missingFiles ;
+	boost::split(missingFiles, content, boost::is_any_of(" ")) ;
+	int count = missingFiles.size() ;
+	for(int i=1; i<count; i++) {
+		file<<missingFiles[i] << "\n";
+		std::cout << missingFiles[i]<< std::endl;
+	}
+
+	file.close();
+}
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
  */
 void vishnu::createTmpFile(char* fileName) {
 
@@ -773,7 +794,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
 		size_t pos = (*it).find("=") ;
 		if( pos == 0 || pos == std::string::npos || pos == (*it).size() - 1 ){
-			std::cerr << "Uncompleted definition for the parameter : '" << *it << "'"<< std::endl ;
+			std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n" ;
 			return CLI_ERROR_INVALID_PARAMETER;
 		}
 
@@ -785,7 +806,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 			size_t start = 0 ;
 			while( pos = paramsStr.find(paramName+"=", start), pos != std::string::npos ){
 				if( pos == 0 || paramsStr[pos-1] == char(' ') ) {
-					std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
+					std::cerr << "Duplicate parameter : '" << paramName << "'\n" ;
 					return CLI_ERROR_INVALID_PARAMETER ;
 				}
 				start = pos + paramName.size() ;
@@ -803,39 +824,59 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
  * \brief Function to list file containing in a directory. Recursivity is not taken into account
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
- * Throw exception on error
+ * \return true on success and false if not
  * */
-void
+bool
 vishnu::appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath) {
 
-	if( ! bfs::exists( dirPath ) ) return ;
+	if( ! bfs::exists(dirPath) ) return false;
 	for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
-
 		if ( bfs::is_directory( *it ) ) continue ;
 		fileNames << ((fileNames.str().size() != 0)? " " : "") + it->path().string() ;   //TODO Check if it's a absolute or a relative path
 	}
+
+	return true;
 }
 
 /**
  * \brief Function to get the list of output files related to a job
  * \param result : The Job Result
+ * \param appendJobId : Determine whether or not append the job id before the files lists
+ * \return The list of files
  * Throw exception on error
  * */
 std::string
-vishnu::getResultFiles(const TMS_Data::JobResult & result, const bool & appendJobId) {
+vishnu::getResultFiles(const TMS_Data::JobResult & result,
+		const bool & appendJobId) {
 
-	std::ostringstream ossFileName ; /* starts with the job id */
-	ossFileName << ((appendJobId)? result.getJobId() : "") ;
+	std::ostringstream existingFiles ; /* starts with the job id */
+	std::ostringstream  missingFiles ;
+	if(appendJobId) {
+		existingFiles <<  result.getJobId() ;
+	}
+	missingFiles << "***MISSING";
+	existingFiles << ((appendJobId)? result.getJobId() : "") ;
 	if( bfs::exists(result.getOutputPath()) ) {
-		ossFileName << (ossFileName.str().size()? " " : "") << result.getOutputPath() ;
+		existingFiles << (existingFiles.str().size()? " " : "") << result.getOutputPath() ;
+	} else {
+		missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputPath() ;
+		std::cerr<< "Warning : The output file no longer exists : " << result.getOutputPath()<< "\n" ;
 	}
 	if( bfs::exists(result.getErrorPath()) && (result.getErrorPath() != result.getOutputPath())) {
-		ossFileName << (ossFileName.str().size()? " " : "") << result.getErrorPath() ;
+		existingFiles << (existingFiles.str().size()? " " : "") << result.getErrorPath() ;
+	}else {
+		if(! bfs::exists(result.getErrorPath())) {
+			missingFiles << (missingFiles.str().size()? " " : "") << result.getErrorPath() ;
+			std::cerr<< "Warning : The error file no longer exists : " << result.getErrorPath()<< "\n" ;
+		}
 	}
-	appendFilesFromDir(ossFileName, result.getOutputDir()) ;
-	ossFileName << "\n" ;
+	if( !appendFilesFromDir(existingFiles, result.getOutputDir())) {
+		missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputDir() ;
+		std::cerr<< "Warning : The output directory no longer exists : " << result.getOutputDir() << "\n" ;
+	}
 
-	return ossFileName.str() ;
+	existingFiles << "\n" << missingFiles.str() << "\n" ;
+	return existingFiles.str() ;
 }
 
 /**
