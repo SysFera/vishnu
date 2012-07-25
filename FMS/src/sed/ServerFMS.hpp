@@ -99,9 +99,5 @@ private :
   * \brief Instance of FMSMapper
   */
   static FMSMapper *mmapper;
-  /**
-   * \brief map with function ptr for callback
-   */
-  std::map<string, functionPtr_t> mcb;
 };
 #endif // SERVERFMS

@@ -164,9 +164,5 @@ private :
    * \brief Directory containing the slave binary
    */
   std::string mslaveBinDir;
-  /**
-   * \brief map with function ptr for callback
-   */
-  std::map<string, functionPtr_t> mcb;
 };
 #endif // SERVER
