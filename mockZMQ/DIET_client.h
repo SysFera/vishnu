@@ -64,6 +64,10 @@ diet_parameter(diet_profile_t* prof, int pos);
 
 bool
 isUMS(std::string test);
+bool
+isTMS(std::string test);
+bool
+isIMS(std::string test);
 
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof);
