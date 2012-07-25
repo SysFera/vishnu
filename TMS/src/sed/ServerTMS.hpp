@@ -129,16 +129,6 @@ private :
   ServerTMS& operator=(const ServerTMS&);
 
   /**
-  * \brief Function to get the default Batch submission options
-  * \param configPath The job script path
-  * \param defaultOptions The list of the option value
-  * \return raises an exception on error
-  */
-  void
-  getConfigOptions(const char* configPath,
-                   std::vector<std::string>& defaultOptions, const char* batchKey);
-
-  /**
    * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
    * \param pb the resquest profile
    * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
@@ -186,9 +176,5 @@ private :
    * \brief  Default batch submittion Options
    */
   std::vector<std::string> mdefaultBatchOption;
-  /**
-   * \brief map with function ptr for callback
-   */
-  std::map<string, functionPtr_t> mcb;
 };
 #endif // SERVER
