@@ -23,25 +23,25 @@
 #define NB_SRV 19
 
 static const char* SRV[NB_SRV] = {
-  "int_exportCommands",
-  "int_getMetricCurentValue",
-  "int_getMetricHistory",
-  "int_getProcesses",
-  "int_setSystemInfo",
-  "int_setSystemThreshold",
-  "int_getSystemThreshold",
-  "int_defineUserIdentifier",
-  "int_defineJobIdentifier",
-  "int_defineTransferIdentifier",
-  "int_defineMachineIdentifier",
-  "int_loadShed",
-  "int_setUpdateFrequency",
-  "int_getUpdateFrequency",
-  "int_restart",
-  "int_stop",
-  "int_getSystemInfo",
-  "int_defineAuthIdentifier",
-  "int_defineWorkIdentifier"
+  "int_exportCommands", // 0
+  "int_getMetricCurentValue", // 1
+  "int_getMetricHistory", // 2
+  "int_getProcesses", // 3
+  "int_setSystemInfo", // 4
+  "int_setSystemThreshold", // 5
+  "int_getSystemThreshold", // 6
+  "int_defineUserIdentifier", // 7
+  "int_defineJobIdentifier", // 8
+  "int_defineTransferIdentifier", // 9
+  "int_defineMachineIdentifier", // 10
+  "int_loadShed", // 11
+  "int_setUpdateFrequency", // 12
+  "int_getUpdateFrequency", // 13
+  "int_restart", // 14
+  "int_stop", // 15
+  "int_getSystemInfo", // 16
+  "int_defineAuthIdentifier", // 17
+  "int_defineWorkIdentifier" // 18
 };
 /**
  * \class ServerIMS
