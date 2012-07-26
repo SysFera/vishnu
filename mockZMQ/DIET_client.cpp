@@ -113,7 +113,7 @@ isTMS(std::string test) {
   /* TMS services are often postfixed by _<machineID>
      so we just check that the basename is present */
   return (
-    test.find("job_Submit") == 0 ||
+    test.find("jobSubmit") == 0 ||
     test.find("jobCancel") == 0 ||
     test.find("jobInfo") == 0 ||
     test.find("getListOfJobs") == 0 ||
