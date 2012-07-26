@@ -152,7 +152,7 @@ ServerIMS::initMap(std::string mid) {
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[10], solveSetMID));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[11], solveLoadShed));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[13], solveGetUpFreq));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[12], solveSetWID));
+  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[12], solveSetUpFreq));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[13], solveLoadShed));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[14], solveRestart));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[15], solveStop));
