@@ -66,7 +66,7 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
 IMS_Data::ListThreshold_ptr
 ThresholdServer::getThreshold() {
   // Basic request
-  string req = "SELECT * from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
+  string req = "SELECT typet, value, machineid, userid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
   vector<string> results = vector<string>();
   vector<string>::iterator iter;
 
@@ -77,7 +77,7 @@ ThresholdServer::getThreshold() {
   // Adding option to request
   if(mop.getMachineId().compare("")) {
     // Check machine mid correct
-    string reqnmid = "SELECT * from machine where  machineid='"+mop.getMachineId()+"'";
+    string reqnmid = "SELECT nummachineid from machine where  machineid='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -100,10 +100,10 @@ ThresholdServer::getThreshold() {
       results = result->get(i);
       iter = results.begin();
       IMS_Data::Threshold_ptr tree = ecoreFactory->createThreshold();
-      tree->setType(convertToInt(*(iter+3)));
-      tree->setValue(convertToInt(*(iter+4)));
-      tree->setMachineId(*(iter+12));
-      tree->setHandler(*(iter+17));
+      tree->setType(convertToInt(*(iter)));
+      tree->setValue(convertToInt(*(iter+1)));
+      tree->setMachineId(*(iter+2));
+      tree->setHandler(*(iter+3));
       mlistObject->getThreshold().push_back(tree);
     }
   } catch (SystemException& e) {
@@ -114,7 +114,7 @@ ThresholdServer::getThreshold() {
 
 bool
 ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
-  string req = "SELECT * from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
+  string req = "SELECT nummachineid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
   req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+"'";
   try {
     // Executing the request and getting the results
@@ -128,7 +128,7 @@ ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
 
 void
 ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid) {
-  string req = "SELECT * from machine where machineid='"+tree->getMachineId()+"'";
+  string req = "SELECT nummachineid from machine where machineid='"+tree->getMachineId()+"'";
   vector<string>::iterator iter;
   std::vector<std::string> tmp;
 
@@ -146,7 +146,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
   } catch (SystemException& e) {
     throw (e);
   }
-  req = "SELECT * from users where userid='"+tree->getHandler()+"'";
+  req = "SELECT numuserid, privilege from users where userid='"+tree->getHandler()+"'";
   try {
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
@@ -156,7 +156,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, s
     tmp = result->get(0);
     iter = tmp.begin();
     nuid = (*(iter));
-    privil = convertToInt((*(iter+6)));
+    privil = convertToInt((*(iter+1)));
     // If not an admin
     if (privil == 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid handler for the threshold, it must be an admin");

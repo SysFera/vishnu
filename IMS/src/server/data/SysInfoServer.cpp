@@ -20,12 +20,12 @@ SysInfoServer::~SysInfoServer() {
 
 IMS_Data::ListSysInfo_ptr
 SysInfoServer::getSysInfo() {
-  string req = "SELECT * from machine WHERE vishnu_vishnuid='"+convertToString(mvishnuId)+"'";
+  string req = "SELECT diskspace, machineid, memory from machine WHERE vishnu_vishnuid='"+convertToString(mvishnuId)+"'";
   vector<string> results = vector<string>();
   vector<string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
-    string reqnmid = "SELECT * from machine where  machineid ='"+mop.getMachineId()+"'";
+    string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -42,17 +42,17 @@ SysInfoServer::getSysInfo() {
 	results = result->get(i);
 	iter = results.begin();
 	IMS_Data::SystemInfo_ptr sys = ecoreFactory->createSystemInfo();
-        if ((*(iter+4)).empty()) {
+        if ((*(iter)).empty()) {
           sys->setDiskSpace(-1);
         } else {
-          sys->setDiskSpace(convertToInt(*(iter+4)));
+          sys->setDiskSpace(convertToInt(*(iter)));
         }
-        if ((*(iter+5)).empty()) {
+        if ((*(iter+2)).empty()) {
           sys->setMemory(-1);
         } else {
-          sys->setMemory(convertToInt(*(iter+5)));
+          sys->setMemory(convertToInt(*(iter+2)));
         }
-	sys->setMachineId(*(iter+7));
+	sys->setMachineId(*(iter+1));
 	mlistObject->getSysInfo().push_back(sys);
       }
   } catch (SystemException& e) {
@@ -74,7 +74,7 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
-  string reqnmid = "SELECT * from machine where  machineid ='"+sys->getMachineId()+"'";
+  string reqnmid = "SELECT nummachineid from machine where  machineid ='"+sys->getMachineId()+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");

@@ -81,31 +81,31 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   vector<string>::iterator iter;
 
   // Getting the num machine id to insert
-  string reqThre = "SELECT * from threshold, users, machine where machine.machineid='"+mid+"' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
+  string reqThre = "SELECT typet, value, userid, email from threshold, users, machine where machine.machineid='" + mid + "' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqThre.c_str()));
     for (size_t i = 0; i < result->getNbTuples(); i++){
       results.clear();
       results = result->get(i);
       iter = results.begin();
-      switch (convertToInt(*(iter+3))) {
+      switch (convertToInt(*(iter))) {
       case 1://cpu
-	cpu_thre.setType(convertToInt(*(iter+3)));
-	cpu_thre.setValue(convertToInt(*(iter+4)));
-	cpu_user.setUserId(*(iter+7));
-	cpu_user.setEmail(*(iter+12));
+	cpu_thre.setType(convertToInt(*(iter)));
+        cpu_thre.setValue(convertToInt(*(iter+1)));
+        cpu_user.setUserId(*(iter+2));
+        cpu_user.setEmail(*(iter+3));
 	break;
       case 2://disk
-	disk_thre.setType(convertToInt(*(iter+3)));
-	disk_thre.setValue(convertToInt(*(iter+4)));
-	disk_user.setUserId(*(iter+7));
-	disk_user.setEmail(*(iter+12));
+	disk_thre.setType(convertToInt(*(iter)));
+        disk_thre.setValue(convertToInt(*(iter+1)));
+        disk_user.setUserId(*(iter+2));
+        disk_user.setEmail(*(iter+3));
 	break;
       case 3://memory
-	mem_thre.setType(convertToInt(*(iter+3)));
-	mem_thre.setValue(convertToInt(*(iter+4)));
-	mem_user.setUserId(*(iter+7));
-	mem_user.setEmail(*(iter+12));
+	mem_thre.setType(convertToInt(*(iter)));
+        mem_thre.setValue(convertToInt(*(iter+1)));
+        mem_user.setUserId(*(iter+2));
+        mem_user.setEmail(*(iter+3));
 	break;
       default :
 	break;
@@ -117,7 +117,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   
 
   // Getting the num machine id to insert
-  string reqnmid = "SELECT * from machine where  machineid ='"+mid+"'";
+  string reqnmid = "SELECT nummachineid from machine where  machineid ='" + mid + "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -177,7 +177,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 unsigned int
 MetricServer::checkUpFreq(){
   // Get the corresponding frequency
-  string request = "select * from vishnu where vishnuid='";
+  string request = "select updatefreq from vishnu where vishnuid='";
   request += convertToString(mvishnuId);
   request += "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
@@ -187,7 +187,7 @@ MetricServer::checkUpFreq(){
   vector<string> res;
   res = result->get(0);
   // Updating the frequency value
-  mfreq = convertToInt(res.at(FREQPOS));
+  mfreq = convertToInt(res.at(0));
   // Returning the new frequency value
   return mfreq;
 }
@@ -244,13 +244,13 @@ MetricServer::getCurMet(){
 
 IMS_Data::ListMetric*
 MetricServer::getHistMet(string machineId){
-  string request = "select * from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
+  std::string request = "select cpuload, state.diskspace, state.memory, time from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
   vector<string>::iterator iter;
   vector<string> results = vector<string>();
 
   IMS_Data::MetricType type = mhop->getType();
 
-  string reqnmid = "SELECT * from machine where  machineid='"+machineId+"'";
+  std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+machineId+ "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -298,8 +298,8 @@ MetricServer::getHistMet(string machineId){
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(1);
-	met->setValue(convertToInt(*(iter+4)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setValue(convertToInt(*(iter)));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -310,8 +310,8 @@ MetricServer::getHistMet(string machineId){
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(2);
-	met->setValue(convertToInt(*(iter+3)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setValue(convertToInt(*(iter+1)));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -323,7 +323,7 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -335,17 +335,17 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(2);
-	met->setValue(convertToInt(*(iter+3)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setValue(convertToInt(*(iter+1)));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(1);
-	met->setValue(convertToInt(*(iter+4)));
-	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+5))));
+        met->setValue(convertToInt(*(iter)));
+        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
