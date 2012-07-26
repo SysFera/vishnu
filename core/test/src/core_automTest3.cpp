@@ -64,17 +64,17 @@ BOOST_AUTO_TEST_CASE( processing_request_without_transaction )
 	BOOST_CHECK(myDatabase->process("drop table if exists paco")==0);
 	// SQL request with semicolon
 	BOOST_TEST_MESSAGE("--- process request with semicolon ---");
-	BOOST_CHECK(myDatabase->process("create table paco(id int,nom varchar(255));")==0);
+	BOOST_CHECK(myDatabase->process("create table paco(id int,name varchar(255));")==0);
 	// multiple SQL request separated by semicolons
 	BOOST_TEST_MESSAGE("--- process multiple requests ---");
 	std::string requests;
 	std::string requests2;
-	requests+="insert into paco(id,nom) values('1','lloris');";
-	requests+="insert into paco(id,nom) values('3','cris')";
+	requests+="insert into paco(id,name) values('1','lloris');";
+	requests+="insert into paco(id,name) values('3','cris')";
 	BOOST_CHECK(myDatabase->process(requests)==0);
 	requests2+="insert into paco(id) values('5')";
 	requests2+=";";
-	requests2+="insert into paco(nom) values('kallstrom');";
+	requests2+="insert into paco(name) values('kallstrom');";
 	BOOST_CHECK(myDatabase->process(requests2)==0);
 
 	// disconnect from database
@@ -91,15 +91,15 @@ BOOST_AUTO_TEST_CASE( processing_request_with_transaction )
 	BOOST_CHECK(myDatabase->startTransaction()==0);
 	// process request in transaction
 	BOOST_TEST_MESSAGE("--- process request in valid transaction ---");
-	BOOST_CHECK(myDatabase->process("insert into paco(id,nom) values('9','lisandro')",0)==0);
+	BOOST_CHECK(myDatabase->process("insert into paco(id,name) values('9','lisandro')",0)==0);
+	BOOST_CHECK_NO_THROW(myDatabase->endTransaction(0));
 	// process request in invalid transaction (out of connection pool size)
 	BOOST_TEST_MESSAGE("--- process request in invalid transaction");
-	BOOST_CHECK_THROW(myDatabase->process("insert into paco(id,nom) values('7','ederson')",147),
+	BOOST_CHECK_THROW(myDatabase->process("insert into paco(id,name) values('7','ederson')",147),
 			VishnuException);
 	// process request with a required connection pool position
 	BOOST_TEST_MESSAGE("--- process request in inactive transaction ---");
-	BOOST_CHECK(myDatabase->process("insert into paco(id,nom) values (null,null);",1)==0);
-	BOOST_CHECK_NO_THROW(myDatabase->endTransaction(0));
+	BOOST_CHECK_NO_THROW(myDatabase->process("insert into paco(id,name) values (null,null);",1));
 
 	// disconnect from database
 	BOOST_CHECK(myDatabase->disconnect()==0);
@@ -141,11 +141,11 @@ BOOST_AUTO_TEST_CASE( getting_results_with_transaction )
 	BOOST_TEST_MESSAGE("--- get result in invalid transaction ---");
 	BOOST_CHECK_THROW(myDatabase->getResult("select * from paco",147),VishnuException);
 	BOOST_CHECK_NO_THROW(myDatabase->getResult("select * from paco",0));
+	// end transaction
+	BOOST_CHECK_NO_THROW(myDatabase->endTransaction(0));
 	// with a required connection pool position
 	BOOST_TEST_MESSAGE("--- get result in inactive transaction ---");
 	BOOST_CHECK_NO_THROW(myDatabase->getResult("select * from paco",1));
-	// end transaction
-	BOOST_CHECK_NO_THROW(myDatabase->endTransaction(0));
 	// disconnect from database
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }

@@ -478,7 +478,7 @@ void SOCIDatabase::flush(int transactionID)
 	} catch (exception const &e)
 	{
 		throw SystemException(ERRCODE_DBCONN,
-				"Failed to commit the transaction");
+				string("Failed to commit the transaction : ")+e.what());
 	}
 
 }
@@ -501,44 +501,10 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 	case DbConfiguration::MYSQL:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
 		getcpt = string("SELECT LAST_INSERT_ID() FROM vishnu");
-		try
-		{
-			process(sqlCommand.c_str(), tid);
-			boost::scoped_ptr<DatabaseResult> result(
-					getResult(getcpt.c_str(), tid));
-			if (result->getNbTuples() == 0)
-			{
-				throw SystemException(ERRCODE_DBERR,
-						"Failure generating the id");
-			}
-			results.clear();
-			results = result->get(0);
-			iter = results.begin();
-		} catch (SystemException& e)
-		{
-			throw(e);
-		}
 		break;
 	case DbConfiguration::POSTGRESQL:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
 		sqlCommand2 =string("SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))");
-		try
-		{
-			process(sqlCommand,tid);
-			boost::scoped_ptr<DatabaseResult> result(
-					getResult(sqlCommand2, tid));
-			if (result->getNbTuples() == 0)
-			{
-				throw SystemException(ERRCODE_DBERR,
-						"Failure generating the id");
-			}
-			results.clear();
-			results = result->get(0);
-			iter = results.begin();
-		} catch (SystemException& e)
-		{
-			throw(e);
-		}
 		break;
 	case DbConfiguration::ORACLE:
 		throw SystemException(ERRCODE_DBERR,
@@ -546,29 +512,30 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 		break;
 	case DbConfiguration::SQLITE3:
 		sqlCommand = string("INSERT INTO keygen DEFAULT VALUES");
-		sqlCommand2 =string("SELECT max(id) from keygen");
-		try
-		{
-			process(sqlCommand);
-			boost::scoped_ptr<DatabaseResult> result(
-					getResult(sqlCommand2));
-			if (result->getNbTuples() == 0)
-			{
-				throw SystemException(ERRCODE_DBERR,
-						"Failure generating the id");
-			}
-			results.clear();
-			results = result->get(0);
-			iter = results.begin();
-		} catch (SystemException& e)
-		{
-			throw(e);
-		}
+		sqlCommand2 =string("select seq from sqlite_sequence where name='"+table+"';");
 		break;
 	default:
 		throw SystemException(ERRCODE_DBERR,
 				"Database instance type unknown or not managed");
 		break;
+	}
+
+	try
+	{
+		process(sqlCommand);
+		boost::scoped_ptr<DatabaseResult> result(
+				getResult(sqlCommand2));
+		if (result->getNbTuples() == 0)
+		{
+			throw SystemException(ERRCODE_DBERR,
+					"Failure generating the id");
+		}
+		results.clear();
+		results = result->get(0);
+		iter = results.begin();
+	} catch (SystemException& e)
+	{
+		throw(e);
 	}
 
 	return vishnu::convertToInt(*iter);

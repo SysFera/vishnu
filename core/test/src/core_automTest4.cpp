@@ -139,6 +139,7 @@ BOOST_AUTO_TEST_CASE( session_transaction_test )
 		BOOST_TEST_MESSAGE("--- commit active session ---");
 		BOOST_CHECK_NO_THROW(session.commit());
 		BOOST_TEST_MESSAGE("--- rollback active session ---");
+		BOOST_CHECK_NO_THROW(session.begin());
 		BOOST_CHECK_NO_THROW(session.rollback());
 
 
@@ -167,7 +168,7 @@ BOOST_AUTO_TEST_CASE( session_process_test )
 		// executing simple request
 		BOOST_TEST_MESSAGE("--- execute request in valid session ---");
 		BOOST_CHECK_NO_THROW(session.execute("drop table if exists paco"));
-		BOOST_CHECK_NO_THROW(session<<"create table paco(id int, nom varchar(255))");
+		BOOST_CHECK_NO_THROW(session<<"create table paco(id int, name varchar(255))");
 
 
 		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
@@ -198,7 +199,7 @@ BOOST_AUTO_TEST_CASE( session_exchange_test )
 
 		string name="Kallstrom";
 		string name2="Lisandro";
-		string request = "insert into paco(id,nom) values(:id,:name);";
+		string request = "insert into paco(id,name) values(:id,:name);";
 		BOOST_TEST_MESSAGE("--- execute request exchanging input data ---");
 		BOOST_CHECK_NO_THROW(session.execute(request).use(id).use(name));
 		soci::indicator null_ind=soci::i_null;
@@ -220,7 +221,7 @@ BOOST_AUTO_TEST_CASE( session_exchange_test )
 		// exchanging output data
 		int reqid = -1;
 		string reqname="";
-		string request2 = "select id,nom from paco where ";
+		string request2 = "select id,name from paco where ";
 		// reading a complete unique tuple
 		BOOST_TEST_MESSAGE("--- exchange output data ---");
 		BOOST_CHECK_NO_THROW(session.execute(request2+"id=6").into(reqid).into(reqname));
@@ -234,7 +235,7 @@ BOOST_AUTO_TEST_CASE( session_exchange_test )
 		BOOST_CHECK(reqname==name);
 		BOOST_CHECK(session.got_data()==false);
 
-		// reading null value in 'nom'
+		// reading null value in 'name'
 		BOOST_TEST_MESSAGE("--- exchange output data reading null value ---");
 		BOOST_CHECK_NO_THROW(session.execute(request2+"id=7").into(reqid).into(reqname));
 		BOOST_CHECK(reqid==7);
@@ -249,7 +250,7 @@ BOOST_AUTO_TEST_CASE( session_exchange_test )
 		vector<int> ids(10);
 		vector<string> names(10);
 		BOOST_TEST_MESSAGE("--- exchange out data with many results in vector---");
-		BOOST_CHECK_NO_THROW(session.execute(request2+"nom is not null").into(ids).into(names));
+		BOOST_CHECK_NO_THROW(session.execute(request2+"name is not null").into(ids).into(names));
 		BOOST_CHECK(ids.size()==2);
 		BOOST_CHECK(names.size()==2);
 		BOOST_CHECK(ids[0]==6);
