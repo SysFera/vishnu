@@ -29,5 +29,7 @@ protected:
   std::map<std::string, functionPtr_t> mcb;
 };
 
+int
+ZMQServerStart(boost::shared_ptr<SeD> server, std::string addr, int port);
 
 #endif // __SED__H__
