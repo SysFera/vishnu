@@ -11,8 +11,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <sys/types.h>
 #include <signal.h>
-#include <boost/format.hpp>
-#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "MachineServer.hpp"
 #include "ServerTMS.hpp"
@@ -28,46 +27,6 @@
 #include "Server.hpp"
 #include "Message.hpp"
 
-int
-ZMQServerStart(boost::scoped_ptr<ServerTMS>* tmsserver,
-               std::string addr, int port) {
-  // Prepare our context and socket for server
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
-
-  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
-  cout << "Binded to address: " << add << "\n";
-  socket.bind(add.c_str());
-
-  while (true) {
-    //Receive message from ZMQ
-    zmq::message_t message(0);
-    try {
-      if (!socket.recv(&message, 0)) {
-	return false;
-      }
-    } catch (zmq::error_t error) {
-      std::cout << "E: " << error.what() << "\n";
-      return false;
-    }
-
-    std::string data = static_cast<const char *>(message.data());
-    std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
-
-
-    // Deserialize and call UMS Method
-    boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    tmsserver->get()->call(profile.get());
-
-    // Send reply back to client
-    std::string resultSerialized = my_serialize(profile.get());
-
-    zmq::message_t reply(resultSerialized.length()+1);
-    memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
-    socket.send(reply);
-  }
-  return 0;
-}
 
 /**
  * \brief To show how to use the sed
@@ -222,7 +181,7 @@ int main(int argc, char* argv[], char* envp[]) {
       }
 
       //Initialize the TMS Server
-      boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
+      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, defaultBatchConfig);
       registerSeD(TMSTYPE, config, cfg);
 
@@ -236,7 +195,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
       // Initialize the DIET SeD
       if (!res) {
-        ZMQServerStart(&server, address, port);
+        ZMQServerStart(server, address, port);
 //        diet_print_service_table();
 //        res = diet_SeD(cfg.c_str(), argc, argv);
         unregisterSeD(TMSTYPE, machineId);

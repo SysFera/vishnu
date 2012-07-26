@@ -7,7 +7,6 @@
 #include "utilServer.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include <boost/format.hpp>
 
 #include "controller/HM/HM.hpp"
 
@@ -45,47 +44,6 @@ int
 usage(char* cmd) {
   std::cout << "Usage: %s <vishnu_config.cfg> \n"+ std::string(cmd);
   return 1;
-}
-
-int
-ZMQServerStart(boost::scoped_ptr<ServerIMS>* imsserver,
-               std::string addr, int port) {
-  // Prepare our context and socket for server
-  zmq::context_t context (1);
-  zmq::socket_t socket (context, ZMQ_REP);
-
-  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
-  cout << "Binded to address: " << add << "\n";
-  socket.bind(add.c_str());
-
-  while (true) {
-    //Receive message from ZMQ
-    zmq::message_t message(0);
-    try {
-      if (!socket.recv(&message, 0)) {
-	return false;
-      }
-    } catch (zmq::error_t error) {
-      std::cout << "E: " << error.what() << "\n";
-      return false;
-    }
-
-    std::string data = static_cast<const char *>(message.data());
-    std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
-
-
-    // Deserialize and call UMS Method
-    boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    (*imsserver)->call(profile.get());
-
-    // Send reply back to client
-    std::string resultSerialized = my_serialize(profile.get());
-
-    zmq::message_t reply(resultSerialized.length()+1);
-    memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
-    socket.send(reply);
-  }
-  return 0;
 }
 
 /**
@@ -160,7 +118,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the IMS Server (Opens a connection to the database)
 //  ServerIMS* server = ServerIMS::getInstance();
-  boost::scoped_ptr<ServerIMS> server(ServerIMS::getInstance());
+  boost::shared_ptr<ServerIMS> server(ServerIMS::getInstance());
 
   res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
 
@@ -178,7 +136,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the DIET SeD
   if (!res) {
-    ZMQServerStart(&server, address, port);
+    ZMQServerStart(server, address, port);
     unregisterSeD(IMSTYPE, mid);
     pid_t pid = getpid();
     kill(pid, SIGINT);
