@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( executing_statement_test )
 
 	BOOST_CHECK_NO_THROW(statement.prepare("drop table if exists paco"));
 	BOOST_MESSAGE("--- execute SQL command ---");
-	BOOST_CHECK(statement.execute(false)==false);
+	BOOST_CHECK(statement.execute(true)==false);
 	// second call - SQL request appends to previous -- syntax error
 	BOOST_MESSAGE("--- prepare with second request ---");
 	BOOST_CHECK_THROW(statement.prepare("drop table if exists paco"),VishnuException);
@@ -192,8 +192,8 @@ BOOST_AUTO_TEST_CASE( executing_statement_test )
 
 
 	SOCIStatement statement2=session.getStatement();
-	BOOST_CHECK_NO_THROW(statement2.prepare("create table paco(id int, nom varchar(255));"));
-	BOOST_CHECK(statement2.execute(false)==false);
+	BOOST_CHECK_NO_THROW(statement2.prepare("create table paco(id int, name varchar(255));"));
+	BOOST_CHECK(statement2.execute(true)==false);
 
 	myDatabase->releaseSingleSession(session);
 
@@ -217,7 +217,7 @@ BOOST_AUTO_TEST_CASE( repeating_statement_with_input )
 	SOCIStatement statement=session.getStatement();
 
 	BOOST_MESSAGE("--- prepare statement with input data ---");
-	BOOST_CHECK_NO_THROW(statement.prepare("insert into paco(id,nom) values (:id,:name)"));
+	BOOST_CHECK_NO_THROW(statement.prepare("insert into paco(id,name) values (:id,:name)"));
 	int i =0;
 	string name="";
 	BOOST_MESSAGE("--- exchange input data ---");
@@ -261,7 +261,7 @@ BOOST_AUTO_TEST_CASE( repeating_statement_with_output )
 	SOCISession session=myDatabase->getSingleSession();
 	SOCIStatement statement=session.getStatement();
 
-	BOOST_CHECK_NO_THROW(statement.prepare("select nom from paco where id=:id"));
+	BOOST_CHECK_NO_THROW(statement.prepare("select name from paco where id=:id"));
 	int i =0;
 	string name;
 	vector<string> names;
@@ -313,7 +313,7 @@ BOOST_AUTO_TEST_CASE( fetch_statement_with_output )
 	SOCISession session=myDatabase->getSingleSession();
 	SOCIStatement statement=session.getStatement();
 
-	BOOST_CHECK_NO_THROW(statement.prepare("select nom from paco"));
+	BOOST_CHECK_NO_THROW(statement.prepare("select name from paco"));
 	string name;
 	BOOST_CHECK_NO_THROW(statement.exchange_into(name));
 	BOOST_CHECK_NO_THROW(statement.alloc());
