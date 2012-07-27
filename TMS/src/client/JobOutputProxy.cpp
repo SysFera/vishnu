@@ -93,31 +93,27 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	//	string fDescStr = vishnu::get_file_content(outputInfo) ; boost::trim(fDescStr) ;
 	//	ListStrings fDescVec ; 	boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
 
-	string line="" ;
+	string line = "" ;
 	istringstream fdescStream (vishnu::get_file_content(routputInfo, false)) ;
+	if(! getline(fdescStream, line)) line = "";
+
+	boost::trim(line);
 	ListStrings lineVec ;
 	getline(fdescStream, line) ; boost::trim(line) ;
 	boost::split(lineVec, line, boost::is_any_of(" ")) ;
 
-	switch(line.size()) {
-	case 0:
-//		throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "the output files seem to be uncomplete");
-		break;
-	case 1:
+	int nbFiles = lineVec.size() ;
+	if( nbFiles > 0 && line.size() >0 ) {
+		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0) ;
 		jobResult.setOutputPath(moutDir+"/"+lineVec[0]) ;
-		jobResult.setErrorPath(moutDir+"/"+lineVec[0]) ;
-		break;
-	default:
-		jobResult.setOutputPath(moutDir+"/"+lineVec[0]) ;
-		jobResult.setErrorPath(moutDir+"/"+lineVec[1]) ;
-		break;
+		if(nbFiles == 1) {
+			jobResult.setErrorPath(moutDir+"/"+lineVec[0]) ;
+		} else {
+			jobResult.setErrorPath(moutDir+"/"+lineVec[1]) ;
+		}
 	}
 
-	//TODO
-	if(line.size()!=0) {
-		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0) ;
-	}
-	getline(fdescStream, line) ;
+	if(! getline(fdescStream, line)) line = "";
 	vishnu::saveMissingFiles(moutDir+"/MISSING", line) ;
 
 	diet_profile_free(getJobOutPutProfile);

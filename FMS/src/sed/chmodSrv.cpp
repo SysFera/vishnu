@@ -36,10 +36,11 @@ using namespace std;
 /* Returns the n first line of the file to the client application. */
 int solveChangeMode (diet_profile_t* profile) {
   string localPath, localUser, userKey, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *modeInString, *errMsg = NULL;
+  char* path, *user, *host,*sessionKey, *modeInString;
   std::string finishError ="";
-  int mapperkey;
   std::string cmd = "";
+  std::string errMsg = "";
+  int mapperkey;
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
@@ -99,12 +100,9 @@ int solveChangeMode (diet_profile_t* profile) {
       finishError +="\n";
     }
     err.appendMsgComp(finishError);
-    errMsg = strdup(err.buildExceptionString().c_str());
-  }
-  if (errMsg==NULL) {
-    errMsg = strdup("");
+    errMsg = err.buildExceptionString();
   }
 
-  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   return 0;
 }
