@@ -500,7 +500,7 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 	{
 	case DbConfiguration::MYSQL:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
-		getcpt = string("SELECT LAST_INSERT_ID() FROM vishnu");
+		sqlCommand2 = string("SELECT LAST_INSERT_ID() FROM vishnu");
 		break;
 	case DbConfiguration::POSTGRESQL:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
@@ -522,9 +522,10 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 
 	try
 	{
-		process(sqlCommand);
+		process(sqlCommand,tid);
+
 		boost::scoped_ptr<DatabaseResult> result(
-				getResult(sqlCommand2));
+				getResult(sqlCommand2,tid));
 		if (result->getNbTuples() == 0)
 		{
 			throw SystemException(ERRCODE_DBERR,

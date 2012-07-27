@@ -62,6 +62,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
   std::string pwd;
   std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
   "privilege, email, passwordstate, status) values ";
+  std::string sqlUpdate = "update users set ";
 
   std::string idUserGenerated;
   std::string passwordCrypted;
@@ -83,17 +84,23 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       //To get the password encrypted
       passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
-      //If the user to add does not exists
-      if (getAttribut("where userid='"+user->getUserId()+"'").size() == 0) {
+      // If there only one field reserved by getObjectId
+      if (getAttribut("where userid='"+user->getUserId()+"'","count(numuserid)") == "1") {
 
         //To active the user status
         user->setStatus(ACTIVE_STATUS);
-        //To insert user on the database
-        mdatabaseVishnu->process(sqlInsert + "(" + convertToString(vishnuId)+", "
-        "'"+user->getUserId()+"','"+passwordCrypted+"','"
-        + user->getFirstname()+"','"+user->getLastname()+"',"+
-        convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-        "0, "+convertToString(user->getStatus())+")");
+
+        sqlUpdate+="vishnu_vishnuid="+convertToString(vishnuId)+", ";
+        sqlUpdate+="pwd='"+passwordCrypted+"', ";
+        sqlUpdate+="firstname='"+user->getFirstname()+"', ";
+        sqlUpdate+="lastname='"+user->getLastname()+"', ";
+        sqlUpdate+="privilege="+convertToString(user->getPrivilege())+", ";
+        sqlUpdate+="email='"+user->getEmail()+"', ";
+        sqlUpdate+="passwordstate=0, ";
+        sqlUpdate+="status="+convertToString(user->getStatus())+" ";
+        sqlUpdate+="where userid='"+user->getUserId()+"';";
+        mdatabaseVishnu->process(sqlUpdate);
+
 
         //Send email
         std::string emailBody = getMailContent(*user, true);
