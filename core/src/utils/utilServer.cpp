@@ -297,7 +297,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 }
 
 int
-vishnu::getVishnuCounter(std::string vishnuIdString){
+vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   DbFactory factory;
   SOCIDatabase *databaseVishnu;
   int ret;
@@ -306,14 +306,63 @@ vishnu::getVishnuCounter(std::string vishnuIdString){
   std::string fields;
   std::string val;
 
-  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
-  val = " (1, 't', 't', 't', 't', 't') ";
-  table = "vishnu";
+
+  bool insert=true;
+  switch(type) {
+  case MACHINE:
+	  table="machine";
+	  fields=" (vishnu_vishnuid) ";
+	  val = " ("+vishnuIdString+") ";
+	  break;
+  case USER:
+	  table="user";
+	  fields=" (vishnu_vishnuid) ";
+	  val = " ("+vishnuIdString+") ";
+	  break;
+  case JOB:
+	  table="job";
+	  fields=" (vsession_numsessionid) ";
+	  val= " (select max(numsessionid) from vsession) "; //FIXME insert invalid value then update it
+	  break;
+  case FILETRANSFERT:
+	  table="filetransfer";
+	  fields=" (vsession_numsessionid) ";
+	  val= " (select max(numsessionid) from vsession) "; //FIXME insert invalid value then update it
+	  break;
+  case AUTH:
+	  table="authsystem";
+	  fields=" (vishnu_vishnuid) ";
+	  val = " ("+vishnuIdString+") ";
+	  break;
+  case WORK:
+	  //FIXME : no auto-increment field in work
+	  fields = " (application_id,date_created,done_ratio, estimated_hours,identifier,"
+			  "last_updated, nbcpus, owner_id, priority, project_id, start_date,"
+			  "status, subject) ";
+	  val = " (1, CURRENT_TIMESTAMP, 1, 1.0, 't',"
+			  " CURRENT_TIMESTAMP, 1, 1,1,1, CURRENT_TIMESTAMP,"
+			  "1,'toto') ";
+	  table = "work";
+	  insert=false; //FIXME improve default values for 'val', get foreign keys
+	  break;
+  default:
+	  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
+	  val = " (1, 't', 't', 't', 't', 't') ";
+	  table = "vishnu";
+	  insert=false;
+	  break;
+  }
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
   ret = databaseVishnu->generateId(table, fields, val, tid);
-  databaseVishnu->cancelTransaction(tid);
+  if(insert) {
+	  //TODO : replace cancel by flush or end -- insert must be commited
+	  databaseVishnu->cancelTransaction(tid);
+  }
+  else {
+	  databaseVishnu->cancelTransaction(tid);
+  }
   return ret;
 }
 
@@ -385,7 +434,7 @@ vishnu::getObjectId(int vishnuId,
 
   //To get the counter
   int counter;
-  counter = getVishnuCounter(vishnuIdString);
+  counter = getVishnuCounter(vishnuIdString,type);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
@@ -430,10 +479,9 @@ std::string vishnu::parseErrorMessage (const std::string& errorMsg){
       result.erase(endOfLinePos);
     }
 
-    return result;
   }
 
-
+  return result;
 }
 
 
