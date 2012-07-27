@@ -36,8 +36,9 @@ using namespace std;
 /* Returns the n first line of the file to the client application. */
 int solveChangeGroup (diet_profile_t* profile) {
   string localPath, localUser,userKey="", acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *group, *errMsg = NULL;
+  char* path, *user, *host,*sessionKey, *group;
   std::string finishError ="";
+  std::string errMsg ="";
   int mapperkey;
   std::string cmd = "";
 
@@ -96,11 +97,8 @@ int solveChangeGroup (diet_profile_t* profile) {
       finishError +="\n";
     }
     err.appendMsgComp(finishError);
-    errMsg = strdup(err.buildExceptionString().c_str());
+    errMsg = err.buildExceptionString().c_str();
   }
-  if (errMsg==NULL) {
-    errMsg = strdup("");
-  }
-  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   return 0;
 }

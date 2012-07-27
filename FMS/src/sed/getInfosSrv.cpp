@@ -45,12 +45,13 @@ namespace ba=boost::algorithm;
  */
 int get_infos(diet_profile_t* profile) {
 
-  char* path, * user, * host, *sessionKey, *fileStatSerialized=NULL;
+  char* path, * user, * host, *sessionKey;
   string localPath, localUser, userKey, machineName;
-  char* errMsg = NULL;
   std::string finishError ="";
-  int mapperkey;
   std::string cmd = "";
+  std::string fileStatSerialized = "";
+  std::string errMsg = "";
+  int mapperkey;
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &path, NULL);
@@ -95,7 +96,7 @@ int get_infos(diet_profile_t* profile) {
 
       *fileStat_ptr=file->getFileStat();
       ::ecorecpp::serializer::serializer _ser;
-      fileStatSerialized = strdup(_ser.serialize_str(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get())).c_str());
+      fileStatSerialized = _ser.serialize_str(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get()));
 
     } else {
 
@@ -114,16 +115,11 @@ int get_infos(diet_profile_t* profile) {
     }
     err.appendMsgComp(finishError);
 
-    errMsg = strdup(err.buildExceptionString().c_str());
-    fileStatSerialized=strdup("");
+    errMsg = err.buildExceptionString();
+    fileStatSerialized="";
   }
 
-  if (errMsg==NULL){
-    errMsg = strdup("");
-  }
-
-
-  diet_string_set(diet_parameter(profile, 4),fileStatSerialized, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(fileStatSerialized.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   return 0;
 }

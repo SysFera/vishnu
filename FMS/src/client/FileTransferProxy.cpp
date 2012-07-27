@@ -70,7 +70,6 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   diet_profile_t* profile = NULL;
   
-  char* optionsToString = NULL;
   char* errorInfo = NULL;
   std::string serviceName = "FileTransferStop";
 
@@ -78,7 +77,7 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(msessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(msessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+msessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -86,9 +85,9 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the option object in to optionsInString
-  optionsToString =  strdup(_ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options)).c_str());
+  string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options));
 
-  if (diet_string_set(diet_parameter(profile,1), optionsToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(optionsToString.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(optionsToString);
     raiseDietMsgException(msgErrorDiet);
   }

@@ -37,11 +37,13 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n last lines of a file to the client application. */
 int tailFile(diet_profile_t* profile) {
-  string localPath, localUser, userKey, tail, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL, *optionsSerialized= NULL;
+  string localPath, localUser, userKey, acLogin, machineName;
+  char* path, *user, *host,*sessionKey, *optionsSerialized= NULL;
   std::string finishError ="";
-  int mapperkey;
   std::string cmd = "";
+  std::string result = "";
+  std::string errMsg = "";
+  int mapperkey;
 
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
@@ -54,19 +56,19 @@ int tailFile(diet_profile_t* profile) {
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
-    try {
+  try {
 
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_tail");
-   mapper->code(std::string(host)+":"+std::string(path), mapperkey);
-    mapper->code(optionsSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+	Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+	mapperkey = mapper->code("vishnu_tail_of_file");
+	mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+	mapper->code(optionsSerialized, mapperkey);
+	cmd = mapper->finalize(mapperkey);
 
     // check the sessionKey
 
     sessionServer.check();
-   //
+    //
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);
@@ -85,36 +87,31 @@ int tailFile(diet_profile_t* profile) {
 
 boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-    TailOfFileOptions_ptr options_ptr= NULL;
- if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
+  TailOfFileOptions_ptr options_ptr= NULL;
+  if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_Tail: TailOfFileOptions object is not well built");
-    }
-
-      tail = file->tail(*options_ptr);
-      result = strdup(tail.c_str());
-
-      //To register the command
-      sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
-
-    } catch (VishnuException& err) {
-      try {
-        sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      err.appendMsgComp(finishError);
-
-      result = strdup("");
-       errMsg = strdup(err.buildExceptionString().c_str());
-    }
-    if (errMsg==NULL){
-      errMsg = strdup("");
-    }
-    else {
-    result = strdup("");
   }
-  diet_string_set(diet_parameter(profile, 5), result, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
+
+  tail = file->tail(*options_ptr);
+  result = strdup(tail.c_str());
+
+  //To register the command
+  sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);
+
+    result = "";
+	errMsg = err.buildExceptionString();
+  }
+
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(result.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 6), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   return 0;
 }

@@ -22,11 +22,11 @@ MetricProxy::setUpFreq(int freq) {
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
-  if (diet_string_set(diet_parameter(profile,1), strdup(convertToString(freq).c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(convertToString(freq).c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with frequency parameter "+freq;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -58,7 +58,7 @@ MetricProxy::getUpFreq() {
   profile = diet_profile_alloc(serviceName.c_str(), 0, 0, 2);
   sessionKey = msessionProxy.getSessionKey();
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }

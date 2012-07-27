@@ -65,8 +65,8 @@ solveExport(diet_profile_t* pb){
     exp->exporte(oldSessionId, content);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,4), strdup(content.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,5), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(content.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -80,8 +80,8 @@ solveExport(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,4), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,5), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (expOp) {
     delete expOp;
@@ -133,8 +133,8 @@ solveCurMetric(diet_profile_t* pb){
     curSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(curSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(curSer.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -148,8 +148,8 @@ solveCurMetric(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
   }
   if (curOp) {
@@ -203,8 +203,8 @@ solveOldMetric(diet_profile_t* pb){
     histSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(histSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(histSer.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -219,8 +219,8 @@ solveOldMetric(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
   }
   if (histOp) {
@@ -272,8 +272,8 @@ solvePS(diet_profile_t* pb){
     processSer = _ser.serialize_str(const_cast<IMS_Data::ListProcesses_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(processSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(processSer.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -288,8 +288,8 @@ solvePS(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (processOp) {
     delete processOp;
@@ -332,7 +332,7 @@ solveSetSysInfo(diet_profile_t* pb){
     // Listing the old metric
     sysser.setSysInfo(sysinf);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -347,7 +347,7 @@ solveSetSysInfo(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (sysinf) {
     delete sysinf;
@@ -399,8 +399,8 @@ solveGetThreshold(diet_profile_t* pb){
     treeSer = _ser.serialize_str(const_cast<IMS_Data::ListThreshold_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(treeSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(treeSer.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -416,8 +416,8 @@ solveGetThreshold(diet_profile_t* pb){
     retErr = e.buildExceptionString();
     // Setting diet output parameters
 
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (treeOp) {
     delete treeOp;
@@ -459,7 +459,7 @@ solveGetUpFreq(diet_profile_t* pb){
 
     // Setting out diet param
     diet_string_set(diet_parameter(pb,1), freqSer, DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -473,8 +473,8 @@ solveGetUpFreq(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,1), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -514,7 +514,7 @@ solveSetThreshold(diet_profile_t* pb){
     // Listing the old metric
     treeser.setThreshold(treeinf);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -529,7 +529,7 @@ solveSetThreshold(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (treeinf) {
     delete treeinf;
@@ -566,7 +566,7 @@ solveSetUID(diet_profile_t* pb){
     // Listing the old metric
     ob.setUID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -581,7 +581,7 @@ solveSetUID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -615,7 +615,7 @@ solveSetJID(diet_profile_t* pb){
     // Listing the old metric
     ob.setTID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -630,7 +630,7 @@ solveSetJID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -664,7 +664,7 @@ solveSetTID(diet_profile_t* pb){
     // Listing the old metric
     ob.setFID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -679,7 +679,7 @@ solveSetTID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -713,7 +713,7 @@ solveSetMID(diet_profile_t* pb){
     // Listing the old metric
     ob.setMID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -728,7 +728,7 @@ solveSetMID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -762,7 +762,7 @@ solveSetAID(diet_profile_t* pb){
     // Listing the old metric
     ob.setAID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -777,7 +777,7 @@ solveSetAID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -811,7 +811,7 @@ solveSetWID(diet_profile_t* pb){
     // Listing the old metric
     ob.setWID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -826,7 +826,7 @@ solveSetWID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -864,7 +864,7 @@ solveLoadShed(diet_profile_t* pb){
     // Load shedding
     proc.loadShed(convertToInt(string(type)));
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -879,7 +879,7 @@ solveLoadShed(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -914,7 +914,7 @@ solveSetUpFreq(diet_profile_t* pb){
     // Listing the old metric
     met.setUpFreq(convertToInt(string(freq)));
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -929,7 +929,7 @@ solveSetUpFreq(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -975,7 +975,7 @@ solveRestart(diet_profile_t* pb){
     ctl.restart(reOp, mid);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -989,7 +989,7 @@ solveRestart(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (reOp) {
     delete reOp;
@@ -1034,7 +1034,7 @@ solveStop(diet_profile_t* pb){
     ctl.stop(procObj);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -1048,7 +1048,7 @@ solveStop(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (procObj) {
     delete procObj;
@@ -1099,8 +1099,8 @@ solveGetSysInfo(diet_profile_t* pb){
     sysSer = _ser.serialize_str(const_cast<IMS_Data::ListSysInfo_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), strdup(sysSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(sysSer.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -1115,8 +1115,8 @@ solveGetSysInfo(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), strdup(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(""), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
   if (sysOp) {
     delete sysOp;

@@ -35,11 +35,13 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int contentFile(diet_profile_t* profile) {
-  string localPath, localUser, userKey, content, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *result = NULL;
+  string localPath, localUser, userKey, acLogin, machineName;
+  char* path, *user, *host,*sessionKey;
   std::string finishError ="";
-  int mapperkey;
   std::string cmd = "";
+  std::string result = "";
+  std::string errMsg = "";
+  int mapperkey;
 
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
@@ -56,7 +58,7 @@ int contentFile(diet_profile_t* profile) {
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_more");
+    mapperkey = mapper->code("vishnu_content_of_file");
     mapper->code(std::string(host)+":"+std::string(path), mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -82,9 +84,7 @@ int contentFile(diet_profile_t* profile) {
     FileFactory::setSSHServer(machineName);
     boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
 
-
-      content = file->getContent();
-      result = strdup(content.c_str());
+	result = file->getContent();
 
       //To register the command
       sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);

@@ -305,11 +305,7 @@ int vishnu::head(const string& sessionKey,const string& path, string& contentOfF
     SessionProxy sessionProxy(sessionKey);
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string head;
-
-    head = f->head(options);
-
-    contentOfFile= strdup(head.c_str());
+    contentOfFile = f->head(options);
 
     return 0;
 
@@ -331,9 +327,7 @@ int vishnu::more(const string& sessionKey,const string& path, string& contentOfF
 
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string content= f->getContent();
-
-    contentOfFile= strdup(content.c_str());
+    contentOfFile= f->getContent();
 
     return 0;
 
@@ -492,11 +486,7 @@ int vishnu::tail(const string& sessionKey,const string& path, string& contentOfF
 
     boost::scoped_ptr<FileProxy> f(FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string tail;
-
-    tail= f->tail(options);
-
-    contentOfFile= strdup(tail.c_str());
+    contentOfFile= f->tail(options);
 
     return 0;
 
