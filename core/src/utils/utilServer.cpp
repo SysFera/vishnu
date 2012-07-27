@@ -313,35 +313,43 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  table="machine";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
+	  insert=false; //FIXME
 	  break;
   case USER:
-	  table="user";
+	  table="users";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
 	  break;
   case JOB:
 	  table="job";
 	  fields=" (vsession_numsessionid) ";
-	  val= " (select max(numsessionid) from vsession) "; //FIXME insert invalid value then update it
+	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  insert=false; //FIXME
 	  break;
   case FILETRANSFERT:
 	  table="filetransfer";
 	  fields=" (vsession_numsessionid) ";
-	  val= " (select max(numsessionid) from vsession) "; //FIXME insert invalid value then update it
+	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  insert=false; //FIXME
 	  break;
   case AUTH:
 	  table="authsystem";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
+	  insert=false; //FIXME
 	  break;
   case WORK:
 	  //FIXME : no auto-increment field in work
-	  fields = " (application_id,date_created,done_ratio, estimated_hours,identifier,"
-			  "last_updated, nbcpus, owner_id, priority, project_id, start_date,"
-			  "status, subject) ";
-	  val = " (1, CURRENT_TIMESTAMP, 1, 1.0, 't',"
-			  " CURRENT_TIMESTAMP, 1, 1,1,1, CURRENT_TIMESTAMP,"
-			  "1,'toto') ";
+	  fields = " (application_id"
+			  ",date_created,done_ratio, estimated_hours,identifier,"
+			  "last_updated, nbcpus, owner_id, priority, "
+			  "project_id, "
+			  "start_date, status, subject) ";
+	  val = " ((select min(id) from application_version),"
+			  " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+			  " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+			  "(select min(id) from project), "
+			  "CURRENT_TIMESTAMP, 1,'toto') ";
 	  table = "work";
 	  insert=false; //FIXME improve default values for 'val', get foreign keys
 	  break;
@@ -358,7 +366,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   ret = databaseVishnu->generateId(table, fields, val, tid);
   if(insert) {
 	  //TODO : replace cancel by flush or end -- insert must be commited
-	  databaseVishnu->cancelTransaction(tid);
+	  databaseVishnu->endTransaction(tid);
   }
   else {
 	  databaseVishnu->cancelTransaction(tid);
@@ -366,6 +374,67 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   return ret;
 }
 
+/**
+ * \brief To set the objectId in the specified row in the database
+ * \param key : the key to identify the reserved row
+ * \param objectId : the objectId to set
+ * \param type : the type of the object
+ */
+void
+vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
+
+	std::string table;
+	std::string keyname;
+	std::string idname;
+	switch(type) {
+		case MACHINE:
+			table="machine";
+			keyname="nummachineid";
+			idname="machineid";
+			break;
+		case USER:
+			table="users";
+			keyname="numuserid";
+			idname="userid";
+			break;
+		case JOB:
+			table="job";
+			keyname="numjobid";
+			idname="jobid";
+			break;
+		case FILETRANSFERT:
+			table="filetransfer";
+			keyname="numfiletransferid";
+			idname="transferid";
+			break;
+		case AUTH:
+			table="authsystem";
+			keyname="numauthsystemid";
+			idname="authsystemid";
+			break;
+		case WORK:
+			table="work";
+			keyname="id";
+			idname="identifier";
+			break;
+		default:
+			throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
+			break;
+	}
+	std::string sqlReserve="UPDATE "+table+" ";
+	sqlReserve+="set "+idname+"='"+objectId+"' ";
+	sqlReserve+="where "+keyname+"="+convertToString(key)+";";
+
+	DbFactory factory;
+	try {
+		factory.getDatabaseInstance()->process(sqlReserve);
+	}
+	catch (exception const & e)
+	{
+		throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
+	}
+
+}
 
 /**
  * \brief Function to get information from the table vishnu
@@ -448,6 +517,8 @@ vishnu::getObjectId(int vishnuId,
       pthread_mutex_unlock(&(mutex));
       throw e;
     }
+    // To set the idGenerated in the related row
+    reserveObjectId(counter,idGenerated,type);
 
   } else {
     pthread_mutex_unlock(&(mutex));
