@@ -41,8 +41,10 @@ int solveListDir(diet_profile_t* profile) {
   string localPath, localUser, userKey, acLogin, machineName;
   FMS_Data::DirEntryList* ls;
 
-  char* path, *user, *host,*sessionKey, *errMsg = NULL, *optionsSerialized= NULL;
-  std::string finishError ="", result="";
+  char* path, *user, *host,*sessionKey, *optionsSerialized= NULL;
+  std::string finishError ="";
+  std::string result = "";
+  std::string errMsg = "" ;
   int mapperkey;
   std::string cmd = "";
 
@@ -110,16 +112,10 @@ int solveListDir(diet_profile_t* profile) {
         finishError +="\n";
       }
       err.appendMsgComp(finishError);
-      result = strdup("");
-      errMsg = strdup(err.buildExceptionString().c_str());
+      errMsg = err.buildExceptionString();
+      result = "";
     }
-    if (errMsg==NULL) {
-      errMsg = strdup("");
-    }
-    else {
-      result = strdup("");
-    }
-    diet_string_set(diet_parameter(profile, 5),strdup(result.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 5), const_cast<char*>(result.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 6), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
     return 0;
 }
