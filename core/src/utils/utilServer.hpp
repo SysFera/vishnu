@@ -207,10 +207,11 @@ namespace vishnu {
   /**
    * \brief Function to get a specific vishnu counter
    * \param vishnuId the id of the vishnu configuration
+   * \param type : the type of id generated
    * \return The int counter value
    */
   int
-  getVishnuCounter(std::string vishnuId);
+  getVishnuCounter(std::string vishnuId, IdType type);
 
   /**
    * \brief Function to get information from the table vishnu

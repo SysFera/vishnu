@@ -511,7 +511,7 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 						"ORACLE not supported yet");
 		break;
 	case DbConfiguration::SQLITE3:
-		sqlCommand = string("INSERT INTO keygen DEFAULT VALUES");
+		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
 		sqlCommand2 =string("select seq from sqlite_sequence where name='"+table+"';");
 		break;
 	default:
