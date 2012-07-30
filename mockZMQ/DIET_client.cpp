@@ -15,6 +15,7 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 #include "utilVishnu.hpp"
+#include "zhelpers.hpp"
 
 static std::map<std::string, std::vector<std::string> > theConfig;
 
@@ -166,80 +167,31 @@ diet_call(diet_profile_t* prof){
     diet_call_gen(prof, port);
   }
 
-
-
-//  try {
-
-//  zmq::context_t ctx(1);
-//  zmq::socket_t sock(ctx, ZMQ_REQ);
-////  std::string address;
-////  address = std::string(prof->address);
-////  address += ":";
-////  address += vishnu::convertToString<int>(prof->port);
-//  sock.connect("tcp://localhost:5555");
-////  std::cerr << "send: \"" << my_serialize(prof).c_str() << std::endl;
-//  std::string s1 = my_serialize(prof);
-//  zmq::message_t request(s1.length()+1);
-//  memcpy((void*)request.data(), s1.c_str(), s1.length()+1);
-//  sock.send(request);
-//
-//  zmq::message_t reply;
-//  std::cout << "b4 recv " << std::endl;
-//  sock.recv(&reply);
-//  std::cout << "a4 recv " << std::endl;
-////  std::cout << "Client receive : " << (char*)reply.data() << std::endl;
-//
-//  boost::shared_ptr<diet_profile_t>
-//    tmp(my_deserialize(static_cast<char *>(reply.data())));
-//  std::cout << "a5 recv " << std::endl;
-////  *prof =
-//  prof->IN = tmp->IN;
-//  prof->OUT = tmp->OUT;
-//  prof->INOUT = tmp->INOUT;
-//  for(int i=0;i<=prof->OUT;++i){
-//    prof->param[i] = strdup(tmp->param[i]);
-//  }
-//  std::cout << "error:  " << prof->param[prof->OUT] << std::endl;
-//  if (strcmp(prof->param[prof->OUT], "")!=0){
-//    std::cout << "a7 recv " << std::endl;
-//    diet_call_fms(prof);
-//  }
-//
-//  std::cout << "a6 recv " << std::endl;
-//  } catch (...){
-//    std::cout << "Failed -> in exception " << std::endl;
-//    diet_call_fms(prof);
-//  }
-
   return 0;
 }
 
 int
-diet_call_gen(diet_profile_t* prof, int my_port){
+diet_call_gen(diet_profile_t* prof, int my_port) {
   zmq::context_t ctx(1);
-  zmq::socket_t sock(ctx, ZMQ_REQ);
-//  std::string address;
-//  address = std::string(prof->address);
-//  address += ":";
-  std::string toto  = vishnu::convertToString<int>(my_port);
-  sock.connect(std::string("tcp://localhost:"+toto).c_str());
-//  std::cerr << "send: \"" << my_serialize(prof).c_str() << std::endl;
+  boost::format addr("tcp://%1%:%2%");
+  std::string uri = boost::str(addr % "localhost" % my_port);
+  LazyPirateClient lpc(ctx, uri);
+
   std::string s1 = my_serialize(prof);
-  zmq::message_t request(s1.length()+1);
-  memcpy((void*)request.data(), s1.c_str(), s1.length()+1);
-  sock.send(request);
 
-  zmq::message_t reply;
-  sock.recv(&reply);
-//  std::cout << "Client receive : " << (char*)reply.data() << std::endl;
+  if (!lpc.send(s1)) {
+    std::cerr << "E: request failed, exiting ...\n";
+    exit(-1);
+  }
 
-  boost::shared_ptr<diet_profile_t>
-    tmp(my_deserialize(static_cast<char *>(reply.data())));
-//  *prof =
+  std::string response = lpc.recv();
+
+  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i=0;i<=prof->OUT;++i){
+  for(int i = 0; i <= prof->OUT; ++i){
     prof->param[i] = strdup(tmp->param[i]);
   }
 
@@ -248,13 +200,11 @@ diet_call_gen(diet_profile_t* prof, int my_port){
 
 
 int
-diet_string_get(diet_arg_t* arg, char** value, void* ptr){
-//  std::cout << "Getting arg in pos :" << arg->pos << " of value: " << arg->prof->param[arg->pos] << std::endl;
+diet_string_get(diet_arg_t* arg, char** value, void* ptr) {
   *value = (char *)malloc((strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])+1)*sizeof (char));
   memcpy(*value, ((diet_profile_t*)(arg->prof))->param[arg->pos], strlen(((diet_profile_t*)(arg->prof))->param[arg->pos]));
   (*value)[strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])]='\0';
 //  std::cout << "Value set :" << *value << std::endl;
-//  std::cout << " Getting val to : " << arg->prof->param[arg->pos] << "for pos " << arg->pos << std::endl;
   return 0;
 }
 
@@ -264,7 +214,7 @@ diet_profile_free(diet_profile_t* prof){
 }
 
 diet_arg_t*
-diet_parameter(diet_profile_t* prof, int pos){
+diet_parameter(diet_profile_t* prof, int pos) {
   diet_arg_t* res = (diet_arg_t*) malloc(sizeof(diet_arg_t)*1);
   res->prof = prof;
   res->pos = pos;
@@ -273,7 +223,7 @@ diet_parameter(diet_profile_t* prof, int pos){
 
 
 std::string
-my_serialize(diet_profile_t* prof){
+my_serialize(diet_profile_t* prof) {
   std::stringstream res;
   res << prof->name <<  "$$$"
       << prof->IN << "$$$"
@@ -287,7 +237,7 @@ my_serialize(diet_profile_t* prof){
 }
 
 boost::shared_ptr<diet_profile_t>
-my_deserialize(const std::string& prof){
+my_deserialize(const std::string& prof) {
   boost::shared_ptr<diet_profile_t> res;
   std::vector<int> vec;
 
@@ -311,17 +261,16 @@ my_deserialize(const std::string& prof){
 }
 
 int
-diet_initialize(const char* cfg, int argc, char** argv){
+diet_initialize(const char* cfg, int argc, char** argv) {
   fill(theConfig, std::string(cfg));
   return 0;
 }
 
 int
-diet_finalize(){
+diet_finalize() {
   return 0;
 }
 
 int
-diet_container_set(diet_arg_t* arg, int flag){
-
+diet_container_set(diet_arg_t* arg, int flag) {
 }
