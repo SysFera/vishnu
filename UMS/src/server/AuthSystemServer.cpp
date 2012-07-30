@@ -42,9 +42,7 @@ int
 AuthSystemServer::add(int vishnuId) {
 
   std::string numAuth;
-  std::string sqlInsert = "insert into authsystem (vishnu_vishnuid, "
-  "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
-
+  std::string sqlUpdate = "UPDATE authsystem set ";
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -55,20 +53,22 @@ AuthSystemServer::add(int vishnuId) {
     if (userServer.isAdmin()) {
       checkValues();
       mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
-      //To check if the authentication id generated and the name to save do not exist
+      // To check if the authentication id generated and the name to save do not exist,
+      // except the authentication reserved by getObjectId
       if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'"
-        " or name='"+mauthsystem->getName()+"'").size() == 0) {
+        " or name='"+mauthsystem->getName()+"'", "count(*)") == "1") {
         //To active the user-authentication system
         mauthsystem->setStatus(ACTIVE_STATUS);
-        mdatabaseVishnu->process( sqlInsert + "(" + convertToString(vishnuId)+", "
-                                  "'"+mauthsystem->getAuthSystemId()+"','"+mauthsystem->getName()+"','"
-                                  + mauthsystem->getURI()+"','"+mauthsystem->getAuthLogin()+"', '"+
-                                  mauthsystem->getAuthPassword() + "',"
-                                  +convertToString(mauthsystem->getUserPasswordEncryption())+ ","
-                                  +convertToString(mauthsystem->getType()) +","
-                                  +convertToString(mauthsystem->getStatus())+")"
-                                );
 
+        sqlUpdate+="name='"+mauthsystem->getName()+"',";
+        sqlUpdate+="uri='"+mauthsystem->getURI()+"',";
+        sqlUpdate+="authlogin='"+mauthsystem->getAuthLogin()+"',";
+        sqlUpdate+="authpassword='"+mauthsystem->getAuthPassword()+"',";
+        sqlUpdate+="userpwdencryption="+convertToString(mauthsystem->getUserPasswordEncryption())+",";
+        sqlUpdate+="authtype="+convertToString(mauthsystem->getType())+",";
+        sqlUpdate+="status="+convertToString(mauthsystem->getStatus())+" ";
+        sqlUpdate+="WHERE authsystemid='"+mauthsystem->getAuthSystemId()+"';";
+        mdatabaseVishnu->process(sqlUpdate);
 
           //If the Ldap base is defined and the type is ldap
           if (mauthsystem->getType() == LDAPTYPE ) { // LDAP
