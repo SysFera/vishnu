@@ -329,7 +329,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  table="filetransfer";
 	  fields=" (vsession_numsessionid) ";
 	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-	  insert=false; //FIXME
 	  break;
   case AUTH:
 	  table="authsystem";
