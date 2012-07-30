@@ -317,8 +317,8 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  break;
   case USER:
 	  table="users";
-	  fields=" (vishnu_vishnuid) ";
-	  val = " ("+vishnuIdString+") ";
+	  fields=" (vishnu_vishnuid,pwd,userid) ";
+	  val = " ("+vishnuIdString+",'tata','titi') ";
 	  break;
   case JOB:
 	  table="job";
