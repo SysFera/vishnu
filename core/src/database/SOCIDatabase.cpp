@@ -281,7 +281,7 @@ SOCIDatabase::getResult(string request, int transacId)
 	{
 
 		throw SystemException(ERRCODE_DBERR,
-				string("Cannot get query results : \n") + e.what());
+				string("Cannot get query results ["+request+"] \n") + e.what());
 	}
 
 	if(reqPos != -1)
@@ -495,7 +495,7 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 	vector<string>::iterator iter;
 	std::string sqlCommand;
 	std::string sqlCommand2;
-	std::string getcpt;
+	std::string sqlAttributeName;
 	switch (mdbtype)
 	{
 	case DbConfiguration::MYSQL:
@@ -504,7 +504,14 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 		break;
 	case DbConfiguration::POSTGRESQL:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
-		sqlCommand2 =string("SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))");
+		sqlAttributeName="(SELECT pg_attribute.attname "
+				"FROM pg_index, pg_class, pg_attribute "
+				"WHERE  pg_class.oid = '"+table+"'::regclass "
+						"AND  indrelid = pg_class.oid "
+						"AND  pg_attribute.attrelid = pg_class.oid "
+						"AND  pg_attribute.attnum = any(pg_index.indkey) "
+						"AND indisprimary) ";
+		sqlCommand2 =string("SELECT currval(pg_get_serial_sequence('"+table+"',"+sqlAttributeName+"))");
 		break;
 	case DbConfiguration::ORACLE:
 		throw SystemException(ERRCODE_DBERR,
