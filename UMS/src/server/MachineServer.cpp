@@ -43,7 +43,7 @@ mmachine(machine), msessionServer(session)
 */
 int
 MachineServer::add(int vishnuId) {
-  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
+  std::string sqlUpdate = "update machine set ";
   std::string idMachineGenerated;
   std::string formatidmachine;
 
@@ -70,19 +70,23 @@ MachineServer::add(int vishnuId) {
         mmachine->setMachineId(idMachineGenerated);
 
         //if the machineId does not exist
-        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'","count(*)") == "1") {
           //To active the machine status
           mmachine->setStatus(ACTIVE_STATUS);
 
-          mdatabaseVishnu->process(sqlInsert + "("+vishnuid+",'"+mmachine->getName()+"'\
-            ,'"+ mmachine->getSite()+"','"+mmachine->getMachineId()+"',"+convertToString(mmachine->getStatus())+", \
-            '"+mmachine->getSshPublicKey()+"')");
+          sqlUpdate+="name='"+mmachine->getName()+"',";
+          sqlUpdate+="site='"+mmachine->getSite()+"',";
+          sqlUpdate+="status="+convertToString(mmachine->getStatus())+",";
+          sqlUpdate+="sshpublickey='"+mmachine->getSshPublicKey()+"' ";
+          sqlUpdate+="where machineid='"+mmachine->getMachineId()+"';";
+          mdatabaseVishnu->process(sqlUpdate);
 
           //To insert the description of the machine
           mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, \
             description) values                                         \
             ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+", \
             '"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+
 
         }//if the machine id is generated
         else {
