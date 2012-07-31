@@ -11,14 +11,14 @@ include_directories(
 
 add_library(zmq_helper
   DIET_client.cpp
-  mockDagda.cpp
-  Message.cpp
+#  mockDagda.cpp
+#  Message.cpp
   Annuary.cpp
   Server.cpp
-  Handler.cpp
-  TreatmentData.cpp
-  BasicHandler.cpp
-  HandlerFactory.cpp
+#  Handler.cpp
+#  TreatmentData.cpp
+#  BasicHandler.cpp
+#  HandlerFactory.cpp
   SeD.cpp
   utils.cpp
   ZMQHelper/mdclient.cpp)
