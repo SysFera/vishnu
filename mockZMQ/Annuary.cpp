@@ -2,9 +2,16 @@
 #include "mdcliapi.hpp"
 #include <string>
 #include <boost/shared_ptr.hpp>
-
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <string>
+#include <sstream>
+#include <fstream>
+#include "utilVishnu.hpp"
 
 Annuary::Annuary(){
+  mservers = std::vector<boost::shared_ptr<Server> > ();
 }
 
 Annuary::~Annuary(){
@@ -38,16 +45,133 @@ Annuary::remove(std::string name, int port, std::string address){
 }
 
 
-boost::shared_ptr<Server>
+std::vector<boost::shared_ptr<Server> >*
 Annuary::get(std::string service){
   int i;
+  std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
   for (i=0;i<mservers.size();++i){
     if (mservers.at(i)->hasService(service)){
-      return mservers.at(i);
+      res->push_back(mservers.at(i));
     }
   }
-  return boost::shared_ptr<Server>();
+  return res;
 }
 
 
+// Init the annuary from a file
+void
+Annuary::initFromFile(std::string infile){
+  std::ifstream tfile(infile.c_str());
+
+  if (tfile){
+    std::string line;
+    while(std::getline(tfile, line)){
+      std::istringstream iss(line);
+      std::string name;
+      std::string addr;
+      std::string port;
+      boost::shared_ptr<Server> server;
+      std::vector<std::string> ports;
+      iss >> name;
+      iss >> addr;
+      iss >> port;
+      std::vector<std::string> services;
+      fillServices(services, name);
+      server = boost::shared_ptr<Server>(new Server(name, services, addr, vishnu::convertToInt(port)));
+      mservers.push_back(server);
+    }
+  } else {
+    std::cout << "failed to open file " << tfile << " for initialisation of annuary " << std::endl;
+  }
+}
+
+void
+Annuary::fillServices(std::vector< std::string> &services, std::string name){
+  if (name.compare("UMS") == 0){
+    services.push_back("sessionConnect") ;
+    services.push_back("sessionReconnect") ;
+    services.push_back("sessionClose") ;
+    services.push_back("userCreate") ;
+    services.push_back("userUpdate") ;
+    services.push_back("userDelete") ;
+    services.push_back("userPasswordChange") ;
+    services.push_back("userPasswordReset") ;
+    services.push_back("machineCreate") ;
+    services.push_back("machineUpdate") ;
+    services.push_back("machineDelete") ;
+    services.push_back("localAccountCreate") ;
+    services.push_back("localAccountUpdate") ;
+    services.push_back("localAccountDelete") ;
+    services.push_back("configurationSave") ;
+    services.push_back("configurationRestore") ;
+    services.push_back("optionValueSet") ;
+    services.push_back("optionValueSetDefault") ;
+    services.push_back("sessionList") ;
+    services.push_back("localAccountList") ;
+    services.push_back("machineList") ;
+    services.push_back("commandList") ;
+    services.push_back("optionValueList") ;
+    services.push_back("userList") ;
+    services.push_back("restore") ;
+    services.push_back("authSystemCreate") ;
+    services.push_back("authSystemUpdate") ;
+    services.push_back("authSystemDelete") ;
+    services.push_back("authSystemList") ;
+    services.push_back("authAccountCreate") ;
+    services.push_back("authAccountUpdate") ;
+    services.push_back("authAccountDelete") ;
+    services.push_back("authAccountList") ;
+  } else if (name.compare("TMS") == 0) {
+    services.push_back("jobSubmit") ;
+    services.push_back("jobCancel") ;
+    services.push_back("jobInfo") ;
+    services.push_back("getListOfJobs") ;
+    services.push_back("getJobsProgression") ;
+    services.push_back("getListOfQueues") ;
+    services.push_back("jobOutputGetResult") ;
+    services.push_back("jobOutputGetCompletedJobs") ;
+  } else if (name.compare("IMS") == 0) {
+    services.push_back("int_exportCommands") ;
+    services.push_back("int_getMetricCurentValue") ;
+    services.push_back("int_getMetricHistory") ;
+    services.push_back("int_getProcesses") ;
+    services.push_back("int_setSystemInfo") ;
+    services.push_back("int_setSystemThreshold") ;
+    services.push_back("int_getSystemThreshold") ;
+    services.push_back("int_defineUserIdentifier") ;
+    services.push_back("int_defineJobIdentifier") ;
+    services.push_back("int_defineTransferIdentifier") ;
+    services.push_back("int_defineMachineIdentifier") ;
+    services.push_back("int_loadShed") ;
+    services.push_back("int_setUpdateFrequency") ;
+    services.push_back("int_getUpdateFrequency") ;
+    services.push_back("int_restart") ;
+    services.push_back("int_stop") ;
+    services.push_back("int_getSystemInfo") ;
+    services.push_back("int_defineAuthIdentifier") ;
+    services.push_back("int_defineWorkIdentifier") ;
+  } else if (name.compare("FMS") == 0) {
+    services.push_back("FileCopyAsync") ;
+    services.push_back("FileMoveAsync") ;
+    services.push_back("FileMove") ;
+    services.push_back("FileCopy") ;
+    services.push_back("FileGetInfos") ;
+    services.push_back("FileChangeGroup") ;
+    services.push_back("FileChangeMode") ;
+    services.push_back("FileHead") ;
+    services.push_back("FileContent") ;
+    services.push_back("FileCreate") ;
+    services.push_back("DirCreate") ;
+    services.push_back("FileRemove") ;
+    services.push_back("DirRemove") ;
+    services.push_back("FileTail") ;
+    services.push_back("DirList") ;
+    services.push_back("RemoteFileCopyAsync") ;
+    services.push_back("RemoteFileMoveAsync") ;
+    services.push_back("RemoteFileCopy") ;
+    services.push_back("RemoteFileMove") ;
+    } else { // Routage
+    services.push_back("routage")
+  }
+}
 

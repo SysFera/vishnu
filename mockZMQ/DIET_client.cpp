@@ -154,17 +154,30 @@ int
 diet_call(diet_profile_t* prof){
   int port;
   if (isUMS(std::string(prof->name))) {
-    port = vishnu::convertToInt((theConfig.find("UMS")->second).at(0));
-    diet_call_gen(prof, port);
+    if (theConfig.find("UMS")!= std::map::end){
+      port = vishnu::convertToInt((theConfig.find("UMS")->second).at(0));
+      diet_call_gen(prof, port);
+    } else {
+
+    }
   } else if (isTMS(std::string(prof->name))) {
-    port = vishnu::convertToInt((theConfig.find("TMS")->second).at(0));
-    diet_call_gen(prof, port);
+    if (theConfig.find("TMS")!= std::map::end){
+      port = vishnu::convertToInt((theConfig.find("TMS")->second).at(0));
+      diet_call_gen(prof, port);
+    } else {
+    }
   } else if (isIMS(std::string(prof->name))) {
-    port = vishnu::convertToInt((theConfig.find("IMS")->second).at(0));
-    diet_call_gen(prof, port);
+    if (theConfig.find("IMS")!= std::map::end){
+      port = vishnu::convertToInt((theConfig.find("IMS")->second).at(0));
+      diet_call_gen(prof, port);
+    } else {
+    }
   } else {
-    port = vishnu::convertToInt((theConfig.find("FMS")->second).at(0));
-    diet_call_gen(prof, port);
+    if (theConfig.find("FMS")!= std::map::end){
+      port = vishnu::convertToInt((theConfig.find("FMS")->second).at(0));
+      diet_call_gen(prof, port);
+    } else {
+    }
   }
 
   return 0;
