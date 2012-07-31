@@ -606,9 +606,11 @@ int SOCIDatabase::releaseSingleSession(SOCISession & ss)
 std::string convertTmToString(std::tm time)
 {
 	string timeStr="";
+	// tm_year : years since 1900
 	timeStr.append(convertToString(1900+time.tm_year));
 	timeStr.append("-");
-	timeStr.append(convertToString(time.tm_mon));
+	// tm_mon is in [0..11]
+	timeStr.append(convertToString(1+time.tm_mon));
 	timeStr.append("-");
 	timeStr.append(convertToString(time.tm_mday));
 	timeStr.append(" ");
