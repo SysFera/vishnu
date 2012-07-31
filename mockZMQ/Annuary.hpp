@@ -18,10 +18,18 @@ public :
   int
   remove(std::string name, int port, std::string address);
 
-  boost::shared_ptr<Server>
+  std::vector<boost::shared_ptr<Server> >*
   get(std::string service);
 
+// Init the annuary from a file
+  void
+  initFromFile(std::string file);
+
+
 private :
+  void
+  fillServices(std::vector<std::string> & services, std::string name);
+
   std::vector<boost::shared_ptr<Server> > mservers;
   int pos;
 
