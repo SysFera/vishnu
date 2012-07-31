@@ -147,38 +147,38 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
-	std::string sqlInsert = "";
-	if(mjob.getWorkId() == 0){
-		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
-				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
-				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
-				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir)"
-				" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
-				+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
-				+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
-				+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
-				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
-				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
-				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir()  + "')";
-	}
-	else{
-		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
-				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
-				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
-				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
-				" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
-				+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
-				+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
-				+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
-				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
-				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
-				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
 
+	std::string sqlUpdate = "UPDATE job set ";
+	sqlUpdate+="vsession_numsessionid="+numsession+",";
+	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
+	sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"',";
+	sqlUpdate+="batchJobId='"+BatchJobId+"',";
+	sqlUpdate+="batchType="+convertToString(mbatchType)+",";
+	sqlUpdate+="jobName='"+mjob.getJobName()+"',";
+	sqlUpdate+="jobPath='"+mjob.getJobPath()+"',";
+	sqlUpdate+="outputPath='"+mjob.getOutputPath()+"',";
+	sqlUpdate+="errorPath='"+mjob.getErrorPath()+"',";
+	sqlUpdate+="scriptContent='job',";
+	sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+",";
+	sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+",";
+	sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"',";
+	sqlUpdate+="status="+convertToString(mjob.getStatus())+",";
+	sqlUpdate+="submitDate=CURRENT_TIMESTAMP,";
+	sqlUpdate+="owner='"+mjob.getOwner()+"',";
+	sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"',";
+	sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+",";
+	sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
+	sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"',";
+	sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+",";
+	sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+",";
+	sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"',";
+	sqlUpdate+="outputDir='"+mjob.getOutputDir()+"' ";
+	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
+	if(mjob.getWorkId() != 0) {
+		sqlUpdate+=",workId='"+convertToString(mjob.getWorkId())+"' ";
 	}
-	mdatabaseVishnu->process(sqlInsert);
+	sqlUpdate+="WHERE jobid='"+vishnuJobId+"';";
+	mdatabaseVishnu->process(sqlUpdate);
 
 	return 0;
 }
