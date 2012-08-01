@@ -42,7 +42,7 @@ fill(std::map<std::string, std::pair<std::string, std::string> > &cfg, std::stri
 
     }
   } else {
-    std::cout << "failed to open file " << tfile << " for initialisation of client " << std::endl;
+    std::cout << "failed to open file " << tfile << " for initialisation of client " << "\n";
   }
 }
 
@@ -66,8 +66,8 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));
     (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen(value)] = '\0';
-//    std::cout << " Setting val to : " << arg->prof->param[arg->pos] << " for pos " << arg->pos << std::endl;
-//    std::cout << " Setting val orig to : " << value << " for pos " << arg->pos << std::endl;
+//    std::cout << " Setting val to : " << arg->prof->param[arg->pos] << " for pos " << arg->pos << "\n";
+//    std::cout << " Setting val orig to : " << value << " for pos " << arg->pos << "\n";
   } else {
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
@@ -132,8 +132,8 @@ isTMS(std::string test) {
 
 bool
 isIMS(std::string test){
-  std::cout << "test is : " << test << std::endl;
-  std::cout << "bool : " << test.find("int_getMetricCurentValue") << std::endl;
+  std::cout << "test is : " << test << "\n";
+  std::cout << "bool : " << test.find("int_getMetricCurentValue") << "\n";
 
   return (
     test.compare("int_exportCommands") == 0 ||
@@ -170,8 +170,8 @@ getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string se
   }
 
   std::string response = lpc.recv();
-  std::cout << "response received: ->" << response << "<- ," << response.size() <<  std::endl;
-  if (response.size() <= 1) {
+  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+  if (0 == response.length()) {
       throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
   }
   int precDol = response.find("$");
@@ -179,13 +179,13 @@ getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string se
   int tmp;
   while (precDol != std::string::npos) {
     tmp = response.find("$", precDol+1);
-    std::cout << "token1: " << tmp << std::endl;
+    std::cout << "token1: " << tmp << "\n";
     if(tmp != std::string::npos){
       server = response.substr(precDol+1, tmp-precDol);
-      std::cout << "server: " << server << std::endl;
+      std::cout << "server: " << server << "\n";
     } else {
       server = response.substr(precDol+1, std::string::npos);
-      std::cout << "server: " << server << std::endl;
+      std::cout << "server: " << server << "\n";
     }
     precDol = tmp;
 
@@ -198,14 +198,14 @@ getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string se
     tmp = server.find("#", 0);
     prec = tmp;
     nameServ = server.substr(0, tmp);
-    std::cout << "token2: " << nameServ << std::endl;
-    std::cout << "cpt: " << prec << std::endl;
+    std::cout << "token2: " << nameServ << "\n";
+    std::cout << "cpt: " << prec << "\n";
     tmp = server.find("#", prec+1);
-    std::cout << "tmp found: " << tmp << std::endl;
+    std::cout << "tmp found: " << tmp << "\n";
     addr = server.substr(prec+1, tmp-prec-1);
-    std::cout << "token3: " << addr << std::endl;
+    std::cout << "token3: " << addr << "\n";
     port = vishnu::convertToInt(server.substr(tmp+1, std::string::npos));
-    std::cout << "token4: " << port << std::endl;
+    std::cout << "token4: " << port << "\n";
 
     boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr, port));
     serv.push_back(s);
@@ -244,7 +244,8 @@ diet_call(diet_profile_t* prof){
       port = vishnu::convertToInt((theConfig.find("routage")->second).second);
       addr = (theConfig.find("routage")->second).first;
       diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+    } else if (theConfig.find("namer")!= theConfig.end()){
+      // Then ask name server
       port = vishnu::convertToInt((theConfig.find("namer")->second).second);
       addr = (theConfig.find("namer")->second).first;
       getServerAddresses(serv, prof->name, port, addr);
@@ -258,7 +259,8 @@ diet_call(diet_profile_t* prof){
       port = vishnu::convertToInt((theConfig.find("IMS")->second).second);
       addr = (theConfig.find("IMS")->second).first;
       diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+    } else if (theConfig.find("namer")!= theConfig.end()){
+      // Then ask name server
       port = vishnu::convertToInt((theConfig.find("namer")->second).second);
       addr = (theConfig.find("namer")->second).first;
       getServerAddresses(serv, prof->name, port, addr);
@@ -268,11 +270,12 @@ diet_call(diet_profile_t* prof){
       throw SystemException(ERRCODE_SYSTEM, "No corresponding IMS server found");
     }
   } else {
-    if (theConfig.find("FMS")!= theConfig.end()){
+    if (theConfig.find("FMS") != theConfig.end()){
       port = vishnu::convertToInt((theConfig.find("FMS")->second).second);
       addr = (theConfig.find("FMS")->second).first;
       diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+    } else if (theConfig.find("namer") != theConfig.end()) {
+      // Then ask name server
       port = vishnu::convertToInt((theConfig.find("namer")->second).second);
       addr = (theConfig.find("namer")->second).first;
       getServerAddresses(serv, prof->name, port, addr);
@@ -320,7 +323,7 @@ diet_string_get(diet_arg_t* arg, char** value, void* ptr) {
   *value = (char *)malloc((strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])+1)*sizeof (char));
   memcpy(*value, ((diet_profile_t*)(arg->prof))->param[arg->pos], strlen(((diet_profile_t*)(arg->prof))->param[arg->pos]));
   (*value)[strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])]='\0';
-//  std::cout << "Value set :" << *value << std::endl;
+//  std::cout << "Value set :" << *value << "\n";
   return 0;
 }
 
