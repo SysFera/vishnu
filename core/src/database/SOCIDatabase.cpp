@@ -87,8 +87,12 @@ int SOCIDatabase::process(string request, int transacId)
 		}
 	} catch (exception const &e)
 	{
+		if (reqPos != -1)
+		{
+				releaseConnection(reqPos);
+		}
 		throw SystemException(ERRCODE_DBERR,
-				string("Cannot process request \n") + e.what());
+				string("Cannot process request \n")+ pconn->get_last_query() + e.what());
 	}
 
 	if (reqPos != -1)
@@ -279,6 +283,10 @@ SOCIDatabase::getResult(string request, int transacId)
 		resultsStr = rowsetToString(results, attributesNames);
 	} catch (exception const &e)
 	{
+		if(reqPos != -1)
+		{
+				releaseConnection(reqPos);
+		}
 
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot get query results ["+request+"] \n") + e.what());
