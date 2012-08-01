@@ -51,7 +51,7 @@ int
 diet_call(diet_profile_t* prof);
 
 int
-diet_call_gen(diet_profile_t* prof, int port);
+diet_call_gen(diet_profile_t* prof, int port, std::string addr);
 
 int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr);
