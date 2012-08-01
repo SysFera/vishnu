@@ -347,8 +347,8 @@ vishnu::addWork(const std::string& sessionKey,
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException){
   checkEmptyString(sessionKey, "The session key");
   SessionProxy sessionProxy(sessionKey);
-  WorkProxy workProxy(newWork, sessionProxy);
-  int res = workProxy.add();
+  WorkProxy workProxy(sessionProxy);
+  int res = workProxy.add(newWork);
   return res;
 }
 
