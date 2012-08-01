@@ -359,7 +359,13 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
-  ret = databaseVishnu->generateId(table, fields, val, tid);
+  try {
+	  ret = databaseVishnu->generateId(table, fields, val, tid);
+  }
+  catch(exception const & e) {
+	  databaseVishnu->cancelTransaction(tid);
+	  throw e;
+  }
   if(insert) {
 	  databaseVishnu->endTransaction(tid);
   }
@@ -448,7 +454,7 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
   std::string result;
   databaseVishnu=factory.getDatabaseInstance();
   SOCISession session=databaseVishnu->getSingleSession(transacId);
-  session<<sqlQuery,soci::use(vishnuid),soci::into(result);
+  session.execute(sqlQuery).use(vishnuid).into(result);
   if(transacId==-1) {
 	  databaseVishnu->releaseSingleSession(session);
   }

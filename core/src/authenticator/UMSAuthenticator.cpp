@@ -29,7 +29,7 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
   std::string sqlCommand="SELECT numuserid FROM users where userid=:userid and pwd=:pwd";
   SOCISession sess=databaseVishnu->getSingleSession();
   int id;
-  sess<<sqlCommand,soci::into(id),soci::use(user.getUserId()),soci::use(user.getPassword());
+  sess.execute(sqlCommand).into(id).use(user.getUserId()).use(user.getPassword());
   bool gotId=sess.got_data();
   databaseVishnu->releaseSingleSession(sess);
   return gotId;
