@@ -8,20 +8,28 @@
 #ifndef _SOCIDATABASE_H_
 #define _SOCIDATABASE_H_
 
-
-#include "SystemException.hpp"
-
+#include <vector>
+#include <boost/scoped_ptr.hpp>
 #include <soci/soci.h>
 #include <soci/soci-backend.h>
-#include <vector>
+#include "SystemException.hpp"
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
 #include "SOCISession.hpp"
 
 static const int SUCCESS =  0;
 
-
+/**
+ * \brief split a string into a vector of string
+ * \param s the string to split
+ * \param delim the delimiter character delim
+ */
 std::vector<std::string> split(const std::string &s, char delim);
+
+/**
+ * \brief convert standard time to string YYYY-MM-DD HH-MM-SS
+ *  note : maybe put it in Utils
+ */
 std::string convertTmToString(std::tm time);
 
 /**
@@ -80,58 +88,54 @@ public :
    */
   DbConfiguration::db_type_t
   getDbType() { return mdbtype; };
-/**
- * \brief Start a transaction
- * \return The transaction ID
- */
+  /**
+   * \brief Start a transaction
+   * \return The transaction ID
+   */
   int
   startTransaction();
-/**
- * \brief End a transaction
- * \param transactionID: The ID of the transaction
- */
+  /**
+   * \brief End a transaction
+   * \param transactionID: The ID of the transaction
+   */
   void
   endTransaction(int transactionID);
-/**
- * \brief Cancel a transaction
- * \param transactionID: The ID of the transaction
- */
+  /**
+   * \brief Cancel a transaction
+   * \param transactionID: The ID of the transaction
+   */
   void
   cancelTransaction(int transactionID);
-/**
- * \brief To commit a transaction
- * \param transactionID: The ID of the transaction
- */
+  /**
+   * \brief To commit a transaction
+  * \param transactionID: The ID of the transaction
+  */
   void
   flush(int transactionID);
-/**
- * \brief To get a unique id
- * \param table: The table to use to generate the id
- * \param fields: The fields of the table
- * \param val: The values of the fields to insert
- * \param tid: The transaction id
- * \return A new integer never returned by this function
- */
+  /**
+   * \brief To get a unique id
+   * \param table: The table to use to generate the id
+   * \param fields: The fields of the table
+   * \param val: The values of the fields to insert
+   * \param tid: The transaction id
+   * \return A new integer never returned by this function
+   */
   int
   generateId(std::string table, std::string fields, std::string val, int tid);
-
-
-  /*
+  /**
    * \brief To get a single session to the DB
    * \param (optional) transactionId : the id of the transaction if one is used
    * This id was gotten by method startTransaction()
    */
   SOCISession
   getSingleSession(int transactionId = -1);
-  /*
+  /**
    * \brief To release a single session previously getted
    * \param sess : the single session to release
    * \return SUCCES if the session was correctly released
    */
   int
   releaseSingleSession(SOCISession & ss);
-
-
 
 private :
   /**
@@ -160,16 +164,16 @@ private :
   /**
    * \brief The pool of connections
    */
-  soci::connection_pool* mpool;
+  boost::scoped_ptr<soci::connection_pool> mpool;
   /**
    * \brief The configuration of the database client
    */
   DbConfiguration::db_type_t mdbtype;
-  /*
+  /**
    * \brief pointer to the backend factory
    */
   const struct soci::backend_factory * mbackend;
-  /*
+  /**
    * \brief connection status
    */
   bool is_connected;

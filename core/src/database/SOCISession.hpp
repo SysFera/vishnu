@@ -9,9 +9,10 @@
 #define _SOCISESSION_H_
 
 #include <soci/soci.h>
+#include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "SOCIStatement.hpp"
-#include "SOCITemporaryTypes.hpp"
+#include "SOCITemporaryType.hpp"
 
 #ifndef TRYCATCH
 #define TRYCATCH(a,b) \
@@ -23,7 +24,7 @@
 
 
 
-/*
+/**
  * \class SOCISession
  * \brief This class represent a connection session to the database.
  * It allows different syntaxes to execute a query and exchanging data
@@ -57,85 +58,88 @@ class SOCISession
 {
 
 public:
-	/*
+	/**
 	 * \brief default constructor
 	 * \brief no soci session is pointed
 	 */
 	SOCISession();
-	/*
+	/**
 	 * \brief constructor from a pool connection
 	 * \param assession : the session to use
 	 * \param pos : the pool position where assesion is from
 	 */
 	SOCISession(soci::session * asession, size_t pos);
-	/*
+	/**
 	 * \brief copy constructor
 	 * \param s : the SOCISession to copy
 	 */
 	SOCISession(const SOCISession & s);
-	/*
+	/**
 	 * \brief default destructor
 	 */
 	~SOCISession();
 
-	/*
+	/**
 	 * \brief to acces the soci session implements
 	 * it allows to use all the public function of soci::session
 	 * be aware of soci exceptions
 	 */
-	soci::session & advanced();
-	/*
+	soci::session &
+	getAdvanced();
+	/**
 	 * \brief get the pool position where the session is from
 	 */
-	size_t getPoolPosition();
+	size_t
+	getPoolPosition();
 
-	/*
+	/**
 	 * \brief begin a transaction
 	 * \return throw a SystemException in case of error
 	 */
-	void begin();
-	/*
+	void
+	begin();
+	/**
 	 * \brief commit a transaction
 	 * the transaction is ended after that function
 	 * \return thow a SystemException in case of error
 	 */
-	void commit();
-	/*
+	void
+	commit();
+	/**
 	 * \brief rollback a transaction
 	 * the transaction is ended after that function
 	 * \return throw a SystemException in case of error
 	 */
-	void rollback();
+	void
+	rollback();
 
 
-	/*
+	/**
 	 * \brief To execute a SQL query
 	 * \param query : the SQL query string to execute
 	 * \return temporary_type : allows output and input exchanging data
 	 * see temporary_type methods into(..) and use(..)
 	 */
-	temporary_type execute(std::string const & query);
-	/*
+	SOCITemporaryType
+	execute(std::string const & query);
+	/**
 	 * \brief another syntax to execute(std::string const & query)
 	 */
-	temporary_type operator<<(std::string const & query);
+	SOCITemporaryType
+	operator<<(std::string const & query);
 
 
-	/*
+	/**
 	 * \brief To get a Statement initialized with the current SOCISession
 	 */
 	SOCIStatement
 	getStatement();
 
-	/*
+	/**
 	 * \brief To know if last SQL query returned some result
 	 */
 	bool
 	got_data();
-
-
-
-
 
 private:
 	soci::session * msession;

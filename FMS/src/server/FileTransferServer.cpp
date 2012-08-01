@@ -46,7 +46,7 @@ void FileTransferServer::checkTransferId(std::string transferId) {
 	std::string sqlTransferRequest =
 			"SELECT transferId from filetransfer where transferId=:param";
 	SOCISession session= FileTransferServer::getDatabaseInstance()->getSingleSession();
-	session<<sqlTransferRequest,use(transferId);
+	session.execute(sqlTransferRequest).use(transferId);
 	bool got_data=session.got_data();
 	FileTransferServer::getDatabaseInstance()->releaseSingleSession(session);
 	if(! got_data){
@@ -353,7 +353,7 @@ void FileTransferServer::updateStatus(const FMS_Data::Status& status,const std::
   std::string sqlUpdateRequest = "UPDATE filetransfer "
 		  "SET status=:status, errorMsg=:err where transferid=:tId and status<>2";
   SOCISession session =FileTransferServer::getDatabaseInstance()->getSingleSession();
-  session<<sqlUpdateRequest,use(status),use(errorMsgCleaned),use(transferId);
+  session.execute(sqlUpdateRequest).use(status).use(errorMsgCleaned).use(transferId);
   FileTransferServer::getDatabaseInstance()->releaseSingleSession(session);
 }
 

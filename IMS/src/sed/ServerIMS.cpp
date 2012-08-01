@@ -98,7 +98,7 @@ ServerIMS::init(int vishnuId,
 
     string sql("SELECT * FROM vishnu where vishnuid=:mvishnuId");
     SOCISession session = mdatabaseVishnu->getSingleSession();
-    session<<sql,use(mvishnuId);
+    session.execute(sql).use(mvishnuId);
     bool got_data=session.got_data();
     mdatabaseVishnu->releaseSingleSession(session);
     if(! got_data){

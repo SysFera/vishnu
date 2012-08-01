@@ -12,11 +12,9 @@
 #include "SystemException.hpp"
 
 
-using namespace soci;
-
 class SOCISession;
 
-/*
+/**
  * \class SOCIStatement
  * \brief SQL statement for prepared queries
  * allows to prepare a query with exchanging data
@@ -31,43 +29,47 @@ class SOCISession;
  */
 class SOCIStatement{
 public:
-	/*
+	/**
 	 * \brief Constructor from an exisiting session
 	 */
-	SOCIStatement(SOCISession & sess);
-	/*
+	explicit SOCIStatement(SOCISession & sess);
+	/**
 	 * \brief copy constructor
 	 */
 	SOCIStatement(SOCIStatement const & other);
-	/*
+	/**
 	 * \brief operator =
 	 */
-	SOCIStatement& operator=(SOCIStatement const & other);
+	SOCIStatement&
+	operator=(SOCIStatement const & other);
 
-	/*
+	/**
 	 * \brief To access the soci implementation of statement
 	 */
-	soci::statement & advanced(){return mstatement;}
+	soci::statement &
+	advanced(){return mstatement;}
 
-	/*
+	/**
 	 * \brief function which allocates necessary internal resources.
 	 * FIXME : Is this method usefull ?? Maybe do not encapsule it
 	 * --> it is usefull for Oracle backend
 	 * Shall be called automatically
 	 */
-	void alloc();
+	void
+	alloc();
 
-	/*
+	/**
 	 * \brief function, which is used to bind the values object
 	 * FIXME : Is this method usefull ?? Maybe do not encapsule it.
 	 * this is used in the object-relational mapping and normally called automatically
 	 */
-	void bind(soci::values & v);
+	void
+	bind(soci::values & v);
 
 
 
 
-	/*
+	/**
 	 * \fn exchange
 	 * \param out pointer to get the result of the SQL query
 	 * into_type_ptr is a type returned by the template function soci::into(T)
@@ -82,8 +84,9 @@ public:
 	 * exchange(out) --> integer id wrote where out points to.
 	 * exchange(out_next) --> string name wrote where out_next points to.
 	 */
-	void exchange(details::into_type_ptr const & out);
-	/*
+	void
+	exchange(soci::details::into_type_ptr const & out);
+	/**
 	 * \fn exchange
 	 * \param in pointer to value used to set a parameter in the SQL query
 	 * use_type_ptr is a type returned by the template function soci::use(T)
@@ -94,16 +97,12 @@ public:
 	 * exchange(in) --> :param1 is set with the value pointed by in
 	 * exchange(in_next) --> :param2 is set with the value pointed by in_next
 	 */
-	void exchange(details::use_type_ptr const & in);
+	void
+	exchange(soci::details::use_type_ptr const & in);
 
 
-
-
-
-
-
-
-	/* \fn template function exchange_into(...)
+	/**
+	 *  \fn template function exchange_into(...)
 	 * \brief
 	 * write the first unassociated field of the SQL result in parameter 'out'
 	 *
@@ -141,7 +140,7 @@ public:
 	template<typename OUTPUT>
 	void exchange_into(OUTPUT & out)
 	{
-		indicator ind; //useful for prevent exception by reading null value
+		soci::indicator ind; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,ind));
 	}
 	template<typename OUTPUT>
@@ -153,7 +152,7 @@ public:
 	template<typename OUTPUT>
 	void exhchange_into(std::vector<OUTPUT> & out)
 	{
-		std::vector<indicator> inds; //useful for prevent exception by reading null value
+		std::vector<soci::indicator> inds; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,inds));
 	}
 
@@ -163,7 +162,7 @@ public:
 		return this->exchange(soci::into(out,inds));
 	}
 
-	/*
+	/**
 	 * \brief template function exchange_use
 	 * use the value of parameter 'in' to set the first unbound paramater in the SQL query
 	 * \return Raises an exception in case of bad conversion
@@ -200,7 +199,7 @@ public:
 	}
 
 
-	/*
+	/**
 	 * \brief function for preparing the statement for repeated execution.
 	 * Successive calls of prepare(query) append the SQL request string,
 	 * but you cannot insert multiple commands into a prepared statement
@@ -210,27 +209,30 @@ public:
 	 * \return raises an exception in case of multiples command,
 	 * raises an exception in case of bad syntax
 	 */
-    void prepare(std::string const & query,
-        details::statement_type eType = details::st_repeatable_query);
+    void
+    prepare(std::string const & query,
+        soci::details::statement_type eType = soci::details::st_repeatable_query);
 
-    /*
+    /**
      * \brief function for actually executing the registered bindings
      *  normally called automatically
      *  must be called :
      *  after : exchange_into, exchange_use, (alloc?), prepare
      *  before : execute
      */
-    void define_and_bind();
+    void
+    define_and_bind();
 
-	/*
+	/**
 	 * \brief function for cleaning up resources, normally called automatically.
 	 * Deallocate all bind and define objects
 	 * After clean up, the SOCI statement cannot me used, because it has no more backend.
 	 * It must be re-affected from a session.
 	 */
-	void clean_up();
+	void
+	clean_up();
 
-    /*
+    /**
      * \brief function for executing the statement.
      * \param withDataExchange
      * if false then there is no data exchange with locally bound variables
@@ -240,18 +242,21 @@ public:
      * \return true if there was at least one row of data returned.
      *
      */
-    bool execute(bool withDataExchange = false);
+    bool
+    execute(bool withDataExchange = false);
 
-    /*
+    /**
      * \brief function for retrieving the next portion of the result.
      * \return true if there was new data.
      */
-    bool fetch();
+    bool
+    fetch();
 
-    /*
+    /**
      * \return true if the most recent execution returned any rows
      */
-    bool got_data() const;
+    bool
+    got_data() const;
 
 
 
