@@ -17,6 +17,7 @@
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
+#include "SystemException.hpp"
 
 static std::map<std::string, std::pair<std::string, std::string> > theConfig;
 
@@ -131,6 +132,9 @@ isTMS(std::string test) {
 
 bool
 isIMS(std::string test){
+  std::cout << "test is : " << test << std::endl;
+  std::cout << "bool : " << test.find("int_getMetricCurentValue") << std::endl;
+
   return (
     test.compare("int_exportCommands") == 0 ||
     test.find("int_getMetricCurentValue") == 0 ||
@@ -166,7 +170,10 @@ getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string se
   }
 
   std::string response = lpc.recv();
-  std::cout << "response received: " << response << std::endl;
+  std::cout << "response received: ->" << response << "<- ," << response.size() <<  std::endl;
+  if (response.size() <= 1) {
+      throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
+  }
   int precDol = response.find("$");
   std::string server;
   int tmp;
@@ -208,10 +215,8 @@ getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string se
 boost::shared_ptr<Server>
 electServer(std::vector<boost::shared_ptr<Server> > serv){
   if (serv.size() <= 0){
-    // TODO THROW EXCEPTION
-    std::cout << "No server found" << std::endl;
+    throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
   }
-
   return serv.at(0);
 }
 
@@ -232,7 +237,7 @@ diet_call(diet_profile_t* prof){
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
     } else {
-      // TODO THROW EXCEPTION
+      throw SystemException(ERRCODE_SYSTEM, "No corresponding UMS server found");
     }
   } else if (isTMS(std::string(prof->name))) { // if tms
     if (theConfig.find("routage")!= theConfig.end()){ // look for the router
@@ -246,7 +251,7 @@ diet_call(diet_profile_t* prof){
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
     } else {
-      // TODO THROW EXCEPTION
+      throw SystemException(ERRCODE_SYSTEM, "No corresponding TMS server found");
     }
   } else if (isIMS(std::string(prof->name))) {
     if (theConfig.find("IMS")!= theConfig.end()){
@@ -260,7 +265,7 @@ diet_call(diet_profile_t* prof){
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
     } else {
-      // TODO THROW EXCEPTION
+      throw SystemException(ERRCODE_SYSTEM, "No corresponding IMS server found");
     }
   } else {
     if (theConfig.find("FMS")!= theConfig.end()){
@@ -274,6 +279,7 @@ diet_call(diet_profile_t* prof){
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
     } else {
+      throw SystemException(ERRCODE_SYSTEM, "No corresponding FMS server found");
     }
   }
 
