@@ -59,7 +59,7 @@ int main(int argc, char** argv){
       std::cout << "E: " << error.what() << std::endl;
       return 0;
     }
-    std::string data = static_cast<const char *>(message.data());
+    std::string data(static_cast<const char*>(message.data()), message.size());
     std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
 
     // Deserialize
