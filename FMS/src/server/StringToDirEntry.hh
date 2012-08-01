@@ -33,8 +33,7 @@ class  PermsHandler {
   public:
     PermsHandler (const std::string& rawPerms):mrawPerms(rawPerms){ }
     mode_t getPermissions () const {
-
-      if (mrawPerms.size()!=9){
+      if (mrawPerms.size() < 9){
       throw FMSVishnuException (ERRCODE_RUNTIME_ERROR, "Can not get file permissions ");
       }
       std::istringstream iss (convertPerms(mrawPerms.substr(0,3))+convertPerms(mrawPerms.substr(3,3))+convertPerms(mrawPerms.substr(6,3)));
