@@ -347,7 +347,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 			  "(select min(id) from project), "
 			  "CURRENT_TIMESTAMP, 1,'toto') ";
 	  table = "work";
-	  insert=false; //FIXME improve default values for 'val', get foreign keys
 	  break;
   default:
 	  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";

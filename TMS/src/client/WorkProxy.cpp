@@ -9,20 +9,20 @@
 #include "utilsClient.hpp"
 
 /**
- * \param work The object which encapsulates the information of the work
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-WorkProxy::WorkProxy(const TMS_Data::Work& work, const SessionProxy& session):
-  mwork(work), msessionProxy(session)
+WorkProxy::WorkProxy(const SessionProxy& session):
+	msessionProxy(session)
 {
 }
 
 /**
  * \brief Function to add a new work
+ * \param work The object which encapsulates the work information
  * \return raises an exception on error
  */
-int WorkProxy::add()
+int WorkProxy::add(TMS_Data::Work& work)
 {
 
   diet_profile_t* addProfile = NULL;
@@ -37,7 +37,7 @@ int WorkProxy::add()
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the work object in to workToString
-  workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
+  workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&work));
 
   //IN Parameters
   if(diet_string_set(diet_parameter(addProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -75,7 +75,8 @@ int WorkProxy::add()
   //To parse work object serialized
   parseEmfObject(std::string(workInString), work_ptr, "Error by receiving Work object serialized");
 
-  mwork = *work_ptr;
+  work = *work_ptr;
+  mwork = work;
   delete work_ptr;
 
   diet_profile_free(addProfile);

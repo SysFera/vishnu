@@ -23,16 +23,16 @@ class WorkProxy
   public:
 
     /**
-     * \param work The object which encapsulates the information of the work
      * \param session The object which encapsulates the session information (ex: identifier of the session)
      * \brief Constructor, raises an exception on error
      */
-    WorkProxy(const TMS_Data::Work& work, const SessionProxy& session);
+    WorkProxy(const SessionProxy& session);
     /**
      * \brief Function to add a new machine
+     * \param work The object which encapsulates the work information
      * \return raises an exception on error
      */
-    int add();
+    int add(TMS_Data::Work& work);
     /**
      * \brief Function to update machine description
      * \return raises an exception on error
