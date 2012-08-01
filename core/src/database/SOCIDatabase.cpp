@@ -5,7 +5,6 @@
  * \date 16/06/12
  */
 #include "SOCIDatabase.hpp"
-#include <boost/scoped_ptr.hpp>
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
@@ -39,10 +38,10 @@ const int CONN_TIMEOUT = 3000; // in millisecond
  * from the pool, the processed request is auto-commited and then
  * the connexion is released.
  */
-int SOCIDatabase::process(string request, int transacId)
+int
+SOCIDatabase::process(string request, int transacId)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot process request, not connected to DB");
 	}
@@ -50,21 +49,19 @@ int SOCIDatabase::process(string request, int transacId)
 	soci::session * pconn;
 	size_t pos;
 
-	try //try to get Connection
-	{
-		if (transacId == -1)
-		{
+	//try to get Connection
+	try {
+		if (transacId == -1) {
 			pconn = getConnection(reqPos);
 			pos = reqPos;
 		}
-		else
-		{
+		else {
 			reqPos = -1;
 			pos = transacId;
 			pconn = &mpool->at(pos);
 		}
-	} catch (exception const & e)
-	{
+	}
+	catch (exception const & e) {
 		throw SystemException(ERRCODE_DBERR, "Cannot get transaction");
 	}
 
@@ -77,26 +74,22 @@ int SOCIDatabase::process(string request, int transacId)
 
 	// To separate que request in case of multiple statements
 	vector<string> requests=split(request,';');
-	try
-	{
-		for(vector<string>::const_iterator it=requests.begin();it!=requests.end();++it)
-		{
+	try {
+		for(vector<string>::const_iterator it=requests.begin();it!=requests.end();++it) {
 			if(! it->empty()) {
 			(pconn->once)<<(*it);
 			}
 		}
-	} catch (exception const &e)
-	{
-		if (reqPos != -1)
-		{
+	}
+	catch (exception const &e) {
+		if (reqPos != -1) {
 				releaseConnection(reqPos);
 		}
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot process request \n")+ pconn->get_last_query() + e.what());
 	}
 
-	if (reqPos != -1)
-	{
+	if (reqPos != -1) {
 		releaseConnection(reqPos);
 	}
 
@@ -108,16 +101,15 @@ int SOCIDatabase::process(string request, int transacId)
  * \fn int connect()
  * \return raises an exception on error
  */
-int SOCIDatabase::connect()
+int
+SOCIDatabase::connect()
 {
-	if (is_connected)
-	{
+	if (is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot connect to DB, already connected to DB");
 	}
 
-	switch (mconfig.getDbType())
-	{
+	switch (mconfig.getDbType()) {
 #ifdef USE_MYSQL
 	case DbConfiguration::MYSQL:
 	mbackend = &mysql;
@@ -150,8 +142,7 @@ int SOCIDatabase::connect()
 	connectString += " user=" + mconfig.getDbUserName();
 	connectString += " password=" + mconfig.getDbUserPassword();
 	connectString += " host=" + mconfig.getDbHost();
-	if (mconfig.getDbPort() != 0)
-	{
+	if (mconfig.getDbPort() != 0) {
 		ostringstream oss;
 		oss << mconfig.getDbPort();
 		connectString += " port=" + oss.str();
@@ -159,8 +150,7 @@ int SOCIDatabase::connect()
 
 
 
-	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++)
-	{
+	for (unsigned int i = 0; i < mconfig.getDbPoolSize(); i++) {
 		soci::session & msession = mpool->at(i);
 		try
 		{
@@ -181,9 +171,10 @@ int SOCIDatabase::connect()
  * \brief Constructor, raises an exception on error
  */
 SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig) :
-	mconfig(dbConfig), mdbtype(dbConfig.getDbType())
+	mconfig(dbConfig), mdbtype(dbConfig.getDbType()),
+	mpool(new connection_pool(mconfig.getDbPoolSize()))
 {
-	mpool = new connection_pool(mconfig.getDbPoolSize());
+	//mpool = new connection_pool(mconfig.getDbPoolSize());
 	is_connected = false;
 }
 
@@ -193,21 +184,20 @@ SOCIDatabase::SOCIDatabase(DbConfiguration dbConfig) :
  */
 SOCIDatabase::~SOCIDatabase()
 {
-	if (is_connected)
-	{
+	if (is_connected) {
 		disconnect();
 	}
-	delete mpool;
+	//delete mpool; boost::scoped_ptr
 }
 /**
  * \brief To disconnect from the database
  * \fn disconnect()
  * \return 0 on success, an error code otherwise
  */
-int SOCIDatabase::disconnect()
+int
+SOCIDatabase::disconnect()
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBERR,
 				"Cannot disconnect : DB is not connected");
 	}
@@ -240,8 +230,7 @@ int SOCIDatabase::disconnect()
 DatabaseResult*
 SOCIDatabase::getResult(string request, int transacId)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot get request result, not connected to DB");
 	}
@@ -251,40 +240,35 @@ SOCIDatabase::getResult(string request, int transacId)
 	soci::session * pconn;
 
 	try {
-		if (transacId == -1)
-		{
+		if (transacId == -1) {
 			getConnection(reqPos);
 			pos = reqPos;
 		}
-		else
-		{
+		else {
 			reqPos = -1;
 			pos = transacId;
 		}
 		pconn = &mpool->at(pos);
-	} catch (exception const & e)
-	{
+	}
+	catch (exception const & e) {
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot get connection : \n") + e.what());
 	}
 
 
-	if (request.empty())
-	{
+	if (request.empty()) {
 		releaseConnection(reqPos);
 		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
 	}
 
 	vector<vector<string> > resultsStr;
 	vector<string> attributesNames;
-	try
-	{
+	try	{
 		rowset<row> results = pconn->prepare << request;
 		resultsStr = rowsetToString(results, attributesNames);
-	} catch (exception const &e)
-	{
-		if(reqPos != -1)
-		{
+	}
+	catch (exception const &e) {
+		if(reqPos != -1) {
 				releaseConnection(reqPos);
 		}
 
@@ -292,8 +276,7 @@ SOCIDatabase::getResult(string request, int transacId)
 				string("Cannot get query results ["+request+"] \n") + e.what());
 	}
 
-	if(reqPos != -1)
-	{
+	if(reqPos != -1) {
 		releaseConnection(reqPos);
 	}
 	return new DatabaseResult(resultsStr, attributesNames);
@@ -322,40 +305,38 @@ SOCIDatabase::getConnection(int& id)
 
 }
 
-void SOCIDatabase::releaseConnection(int pos)
+void
+SOCIDatabase::releaseConnection(int pos)
 {
-	if (pos < 0)
-	{
+	if (pos < 0) {
 		return;
 	}
 
 
-	try
-	{
+	try	{
 		mpool->give_back((size_t) pos);
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e) {
 		throw SystemException(ERRCODE_DBCONN,
 				string("Cannot release connection lock : ")+e.what());
 	}
 
 }
 
-int SOCIDatabase::startTransaction()
+int
+SOCIDatabase::startTransaction()
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot start transaction, not connected to DB");
 	}
 	int reqPos;
 	soci::session * conn = getConnection(reqPos);
 
-	try
-	{
+	try	{
 		conn->begin();
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e) {
 		throw SystemException(ERRCODE_DBCONN, "Failed to start transaction");
 	}
 
@@ -365,38 +346,33 @@ int SOCIDatabase::startTransaction()
 
 void SOCIDatabase::endTransaction(int transactionID)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot end transaction, not connected to DB");
 	}
 	size_t pos = transactionID;
 	soci::session * pconn;
-	try
-	{
+	try	{
 		pconn = &(mpool->at(pos));
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e)	{
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot get transaction : \n") + e.what());
 	}
 
-	try
-	{
+	try	{
 		pconn->commit();
-	} catch (exception const &e)
-	{
-		try
-		{
+	}
+	catch (exception const &e) {
+		try	{
 			pconn->rollback();
 
-		} catch (exception const &e2)
-		{
-			try
-			{
+		}
+		catch (exception const &e2)	{
+			try	{
 				mpool->give_back(pos);
-			} catch (exception const &e3)
-			{
+			}
+			catch (exception const &e3)	{
 				throw SystemException(ERRCODE_DBCONN,
 						string(
 								"Failed to commit, rollback then end the transaction :\n")
@@ -410,11 +386,10 @@ void SOCIDatabase::endTransaction(int transactionID)
 
 		}
 
-		try
-		{
+		try	{
 			mpool->give_back(pos);
-		} catch (exception const &e2)
-		{
+		}
+		catch (exception const &e2)	{
 			throw SystemException(ERRCODE_DBERR,
 					string("Cannot commit then end transaction :\n") + e.what()
 							+ "\n" + e2.what());
@@ -425,76 +400,72 @@ void SOCIDatabase::endTransaction(int transactionID)
 
 	}
 
-	try
-	{
+	try	{
 		mpool->give_back(pos);
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e) {
 		throw SystemException(ERRCODE_DBERR,
 				string("Cannot end transaction : \n") + e.what());
 	}
 
 }
 
-void SOCIDatabase::cancelTransaction(int transactionID)
+void
+SOCIDatabase::cancelTransaction(int transactionID)
 {
 
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot cancel transaction, not connected to DB");
 	}
 	size_t pos = transactionID;
 
 	soci::session * pconn;
-	try
-	{
+	try	{
 		pconn = &(mpool->at(pos));
-	} catch (exception const & e)
-	{
+	}
+	catch (exception const & e)	{
 		throw SystemException(ERRCODE_DBCONN,
 				string("Failed to cancel transaction : ") + e.what());
 	}
 
-	try
-	{
+	try	{
 		pconn->rollback();
 		mpool->give_back(pos);
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e) {
 		throw SystemException(ERRCODE_DBCONN,
 				string("Failed to cancel transaction : ") + e.what());
 	}
 }
 
-void SOCIDatabase::flush(int transactionID)
+void
+SOCIDatabase::flush(int transactionID)
 {
 
-	if (!is_connected)
-	{
+	if (!is_connected)	{
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot flush transaction, not connected to DB");
 	}
 	size_t pos = transactionID;
 	soci::session * conn;
 
-	try
-	{
+	try	{
 		conn = &(mpool->at(pos));
 		conn->commit();
 		conn->begin(); // after a commit, needs to restart the transcation
-	} catch (exception const &e)
-	{
+	}
+	catch (exception const &e)	{
 		throw SystemException(ERRCODE_DBCONN,
 				string("Failed to commit the transaction : ")+e.what());
 	}
 
 }
 
-int SOCIDatabase::generateId(string table, string fields, string val, int tid)
+int
+SOCIDatabase::generateId(string table, string fields, string val, int tid)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot generate ID, not connected to DB");
 	}
@@ -535,22 +506,20 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 		break;
 	}
 
-	try
-	{
+	try	{
 		process(sqlCommand,tid);
 
 		boost::scoped_ptr<DatabaseResult> result(
 				getResult(sqlCommand2,tid));
-		if (result->getNbTuples() == 0)
-		{
+		if (result->getNbTuples() == 0)	{
 			throw SystemException(ERRCODE_DBERR,
 					"Failure generating the id");
 		}
 		results.clear();
 		results = result->get(0);
 		iter = results.begin();
-	} catch (SystemException& e)
-	{
+	}
+	catch (SystemException& e) {
 		throw(e);
 	}
 
@@ -559,10 +528,10 @@ int SOCIDatabase::generateId(string table, string fields, string val, int tid)
 }
 
 
-SOCISession SOCIDatabase::getSingleSession(int transactionId)
+SOCISession
+SOCIDatabase::getSingleSession(int transactionId)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot get single session, not connected to DB");
 	}
@@ -571,18 +540,16 @@ SOCISession SOCIDatabase::getSingleSession(int transactionId)
 	SOCISession ret;
 	int reqPos=-1;
 	try {
-		if(transactionId==-1)
-		{
+		if(transactionId==-1) {
 			conn=getConnection(reqPos);
 			ret  = SOCISession(conn,reqPos);
 		}
-		else
-		{
+		else {
 			conn=&(mpool->at(transactionId));
 			ret = SOCISession(conn,transactionId);
 		}
-	} catch( exception const & e)
-	{
+	}
+	catch( exception const & e)	{
 		throw SystemException(ERRCODE_DBCONN,
 				string("Cannot get single session : ")+e.what());
 	}
@@ -590,23 +557,22 @@ SOCISession SOCIDatabase::getSingleSession(int transactionId)
 	return ret;
 }
 
-int SOCIDatabase::releaseSingleSession(SOCISession & ss)
+int SOCIDatabase::releaseSingleSession(SOCISession & sess)
 {
-	if (!is_connected)
-	{
+	if (!is_connected) {
 		throw SystemException(ERRCODE_DBCONN,
 				"Cannot release single session, not connected to DB");
 	}
 
 	try {
-	releaseConnection(ss.getPoolPosition());
-	} catch (exception const & e)
-	{
+	releaseConnection(sess.getPoolPosition());
+	}
+	catch (exception const & e)	{
 		// the session was already free
 		throw SystemException(ERRCODE_DBCONN,
 						string("The session was already free : ")+e.what());
 	}
-	ss=SOCISession();
+	sess=SOCISession();
 
 	return SUCCESS;
 }
@@ -619,11 +585,12 @@ int SOCIDatabase::releaseSingleSession(SOCISession & ss)
  */
 
 
-/*
+/**
  * \brief convert standard time to string YYYY-MM-DD HH-MM-SS
  * \note :maybe put it in Utils
  */
-std::string convertTmToString(std::tm time)
+std::string
+convertTmToString(std::tm time)
 {
 	string timeStr="";
 	// tm_year : years since 1900
@@ -643,7 +610,8 @@ std::string convertTmToString(std::tm time)
 	return timeStr;
 }
 
-std::string SOCIDatabase::dataToString(const row & r, size_t pos)
+std::string
+SOCIDatabase::dataToString(const row & r, size_t pos)
 {
 	std::string dataStr = "";
 	data_type dt = r.get_properties(pos).get_data_type();
@@ -674,12 +642,12 @@ std::string SOCIDatabase::dataToString(const row & r, size_t pos)
 	return dataStr;
 }
 
-vector<string> SOCIDatabase::rowToString(const row & r)
+vector<string>
+SOCIDatabase::rowToString(const row & r)
 {
 
 	vector<string> rowStr;
-	for (size_t i = 0; i < r.size(); ++i)
-	{
+	for (size_t i = 0; i < r.size(); ++i) {
 		string value = "";
 		//data_type dt = r.get_properties(i).get_data_type();
 		indicator ind = r.get_indicator(i);
@@ -713,28 +681,24 @@ vector<vector<string> > SOCIDatabase::rowsetToString(rowset<row> rs,
 	vector<vector<string> > rsStr;
 	bool namesGetted = false;
 
-	for (rowset<row>::const_iterator it = rs.begin(); it != rs.end(); ++it)
-	{
+	for (rowset<row>::const_iterator it = rs.begin(); it != rs.end(); ++it)	{
 		rsStr.push_back(rowToString(*it));
-
-		if (!namesGetted)
-		{
+		if (!namesGetted) {
 			namesStr = getRowAttributeNames(*it);
 			namesGetted = true;
 		}
-
 	}
 
 	return rsStr;
 
 }
 
-vector<string> SOCIDatabase::getRowAttributeNames(const row & r)
+vector<string>
+SOCIDatabase::getRowAttributeNames(const row & r)
 {
 	vector<string> attributeStr;
 
-	for (size_t i = 0; i < r.size(); ++i)
-	{
+	for (size_t i = 0; i < r.size(); ++i) {
 		attributeStr.push_back(r.get_properties(i).get_name());
 
 	}
@@ -744,12 +708,13 @@ vector<string> SOCIDatabase::getRowAttributeNames(const row & r)
 
 
 
-/*
+/**
  * \brief split a string into a vector of string
  * \param s the string to split
  * \param delim the delimiter character delim
  */
-vector<string> split(const string &s, char delim) {
+vector<string>
+split(const string &s, char delim) {
     stringstream ss(s);
     string item;
     vector<string> elems;

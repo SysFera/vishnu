@@ -1,54 +1,53 @@
 /**
- * \file SOCITemporaryTypes.hpp
+ * \file SOCITemporaryType.hpp
  * \brief This file presents tempory types used by SOCI session.
  * \author Jean-Baptiste Ghoul (jean-baptiste.ghoul@sysfera.com)
  * \date 05/07/12
  */
 
-#ifndef _SOCITEMPORARYTYPES_H_
-#define _SOCITEMPORARYTYPES_H_
+#ifndef _SOCITEMPORARYTYPE_H_
+#define _SOCITEMPORARYTYPE_H_
 
 #include <soci/soci.h>
 
-using namespace soci;
 
-/*
+/**
  * \class temporary_type
  * \brief temporary type used when executing SQL command by SOCISession.
  * This class allows exchanging data in the SQL query :
  * - input to set value of parameters in the SQL string command
  * - output to get the result of the SQL command
  */
-class temporary_type
+class SOCITemporaryType
 {
 public:
-	/*
+	/**
 	 * \brief the soci implementation of the temporary type
 	 * once_temp_type in one of the two soci temporary type
 	 */
-	details::once_temp_type once;
+	soci::details::once_temp_type once;
 
-	/*
+	/**
 	 * \brief constructor from an existing session
 	 */
-	temporary_type(soci::session & sess)
+	SOCITemporaryType(soci::session & sess)
 		:once(sess)
 	{}
-	/*
+	/**
 	 * \brief copy constructor
 	 */
-	temporary_type(const temporary_type & other)
+	SOCITemporaryType(const SOCITemporaryType & other)
 			:once(other.once)
 	{}
 
-	/*
+	/**
 	 * \brief destructor
 	 * the SQL query is finally executed at the destruction of the temporary type
 	 * if it is the last reference to.
 	 */
-	~temporary_type();
+	~SOCITemporaryType();
 
-	/*
+	/**
 	 * \fn exchange
 	 * \param out pointer to get the result of the SQL query
 	 * into_type_ptr is a type returned by the template function soci::into(T)
@@ -63,8 +62,9 @@ public:
 	 * exchange(out) --> integer id wrote where out points to.
 	 * exchange(out_next) --> string name wrote where out_next points to.
 	 */
-	temporary_type & exchange(details::into_type_ptr const & out);
-	/*
+	SOCITemporaryType &
+	exchange(soci::details::into_type_ptr const & out);
+	/**
 	 * \fn exchange
 	 * \param in pointer to value used to set a parameter in the SQL query
 	 * use_type_ptr is a type returned by the template function soci::use(T)
@@ -75,21 +75,24 @@ public:
 	 * exchange(in) --> :param1 is set with the value pointed by in
 	 * exchange(in_next) --> :param2 is set with the value pointed by in_next
 	 */
-	temporary_type & exchange(details::use_type_ptr const & in);
-	/*
+	SOCITemporaryType &
+	exchange(soci::details::use_type_ptr const & in);
+	/**
 	 * \brief operator ,
 	 * another syntax to call exchange(details::into_type_ptr)
 	 */
-	temporary_type & operator ,(details::into_type_ptr const & out);
-	/*
+	SOCITemporaryType &
+	operator ,(soci::details::into_type_ptr const & out);
+	/**
 	 * \brief operator ,
 	 * another syntax to call exchange(details::use_type_ptr)
 	 */
-	temporary_type & operator ,(details::use_type_ptr const & in);
+	SOCITemporaryType &
+	operator ,(soci::details::use_type_ptr const & in);
 
 
 
-	/*
+	/**
 	 * \brief template function use
 	 * use the value of parameter 'in' to set the first unbinded paramater in the SQL query
 	 * \return Raises an exception in case of bad conversion
@@ -113,18 +116,19 @@ public:
 	 * i_truncated : the data to exchange data is troncated
 	 */
 	template<typename INPUT>
-	temporary_type & use(INPUT & in)
+	SOCITemporaryType & use(INPUT & in)
 	{
 		return this->exchange(soci::use(in));
 	}
 
 	template<typename INPUT>
-	temporary_type & use(INPUT & in, soci::indicator & indic)
+	SOCITemporaryType & use(INPUT & in, soci::indicator & indic)
 	{
 		return this->exchange(soci::use(in,indic));
 	}
 
-	/* \fn template function into(...)
+	/**
+	 * \fn template function into(...)
 	 * \brief
 	 * write the first unassociated field of the SQL result in parameter 'out'
 	 *
@@ -160,27 +164,27 @@ public:
 	 * because exchanging null or truncated data raises exception
 	 */
 	template<typename OUTPUT>
-	temporary_type & into(OUTPUT & out)
+	SOCITemporaryType & into(OUTPUT & out)
 	{
-		indicator ind; //useful for prevent exception by reading null value
+		soci::indicator ind; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,ind));
 	}
 
 	template<typename OUTPUT>
-	temporary_type & into(OUTPUT & out, soci::indicator & ind)
+	SOCITemporaryType & into(OUTPUT & out, soci::indicator & ind)
 	{
 		return this->exchange(soci::into(out,ind));
 	}
 
 	template<typename OUTPUT>
-	temporary_type & into(std::vector<OUTPUT> & out)
+	SOCITemporaryType & into(std::vector<OUTPUT> & out)
 	{
-		std::vector<indicator> inds; //useful for prevent exception by reading null value
+		std::vector<soci::indicator> inds; //useful for prevent exception by reading null value
 		return this->exchange(soci::into(out,inds));
 	}
 
 	template<typename OUTPUT>
-	temporary_type & into(std::vector<OUTPUT> & out, std::vector<soci::indicator> & inds)
+	SOCITemporaryType & into(std::vector<OUTPUT> & out, std::vector<soci::indicator> & inds)
 	{
 		return this->exchange(soci::into(out,inds));
 	}
