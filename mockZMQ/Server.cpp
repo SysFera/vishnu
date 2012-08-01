@@ -42,7 +42,7 @@ bool
 Server::hasService(std::string service){
   int i;
   for (i=0;i<mservices.size();++i){
-    if (service.compare(mservices.at(i))==0){
+    if (service.find(mservices.at(i))==0){
       return true;
     }
   }
