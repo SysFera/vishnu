@@ -170,8 +170,9 @@ Annuary::fillServices(std::vector< std::string> &services, std::string name){
     services.push_back("RemoteFileMoveAsync") ;
     services.push_back("RemoteFileCopy") ;
     services.push_back("RemoteFileMove") ;
+    services.push_back("FileTransfersList") ;
     } else { // Routage
-    services.push_back("routage")
+    services.push_back("routage");
   }
 }
 

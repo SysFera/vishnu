@@ -16,6 +16,7 @@
 #include <boost/lexical_cast.hpp>
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
+#include "Server.hpp"
 
 static std::map<std::string, std::vector<std::string> > theConfig;
 
@@ -149,33 +150,113 @@ isIMS(std::string test){
     test.compare("int_defineWorkIdentifier") == 0);
 }
 
+void
+getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string servname, int port){
+  zmq::context_t ctx(1);
+  boost::format addr("tcp://%1%:%2%");
+  std::string uri = boost::str(addr % "localhost" % port);
+  LazyPirateClient lpc(ctx, uri);
+
+  if (!lpc.send(servname)) {
+    std::cerr << "E: request failed, exiting ...\n";
+    exit(-1);
+  }
+
+  std::string response = lpc.recv();
+  std::cout << "response received: " << response << std::endl;
+  int precDol = response.find("$");
+  std::string server;
+  int tmp;
+  while (precDol != std::string::npos) {
+    tmp = response.find("$", precDol+1);
+    std::cout << "token1: " << tmp << std::endl;
+    if(tmp != std::string::npos){
+      server = response.substr(precDol+1, tmp-precDol);
+      std::cout << "server: " << server << std::endl;
+    } else {
+      server = response.substr(precDol+1, std::string::npos);
+      std::cout << "server: " << server << std::endl;
+    }
+    precDol = tmp;
+
+    std::string nameServ;
+    std::string addr;
+    int port;
+    int prec;
+    std::vector< std::string> vec;
+
+    tmp = server.find("#", 0);
+    prec = tmp;
+    nameServ = server.substr(0, tmp);
+    std::cout << "token2: " << nameServ << std::endl;
+    std::cout << "cpt: " << prec << std::endl;
+    tmp = server.find("#", prec+1);
+    std::cout << "tmp found: " << tmp << std::endl;
+    addr = server.substr(prec+1, tmp-prec-1);
+    std::cout << "token3: " << addr << std::endl;
+    port = vishnu::convertToInt(server.substr(tmp+1, std::string::npos));
+    std::cout << "token4: " << port << std::endl;
+
+    boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr, port));
+    serv.push_back(s);
+  }
+}
+
+boost::shared_ptr<Server>
+electServer(std::vector<boost::shared_ptr<Server> > serv){
+  if (serv.size() <= 0){
+    // TODO THROW EXCEPTION
+    std::cout << "No server found" << std::endl;
+  }
+
+  return serv.at(0);
+}
 
 int
 diet_call(diet_profile_t* prof){
   int port;
-  if (isUMS(std::string(prof->name))) {
-    if (theConfig.find("UMS")!= std::map::end){
+  std::vector<boost::shared_ptr<Server> > serv;
+  if (isUMS(std::string(prof->name))) {  // If UMS,
+    if (theConfig.find("UMS") != theConfig.end()){ // search for it in config
       port = vishnu::convertToInt((theConfig.find("UMS")->second).at(0));
       diet_call_gen(prof, port);
+      } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+      getServerAddresses(serv, prof->name, vishnu::convertToInt((theConfig.find("namer")->second).at(0)));
+      boost::shared_ptr<Server> elected = electServer(serv);
+      diet_call_gen(prof, elected.get()->getPort());
     } else {
-
+      // TODO THROW EXCEPTION
     }
-  } else if (isTMS(std::string(prof->name))) {
-    if (theConfig.find("TMS")!= std::map::end){
+  } else if (isTMS(std::string(prof->name))) { // if tms
+        if (theConfig.find("routage")!= theConfig.end()){ // look for the router
       port = vishnu::convertToInt((theConfig.find("TMS")->second).at(0));
       diet_call_gen(prof, port);
+        } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+      getServerAddresses(serv, prof->name, vishnu::convertToInt((theConfig.find("namer")->second).at(0)));
+      boost::shared_ptr<Server> elected = electServer(serv);
+      diet_call_gen(prof, elected.get()->getPort());
     } else {
+      // TODO THROW EXCEPTION
     }
   } else if (isIMS(std::string(prof->name))) {
-    if (theConfig.find("IMS")!= std::map::end){
+    if (theConfig.find("IMS")!= theConfig.end()){
       port = vishnu::convertToInt((theConfig.find("IMS")->second).at(0));
       diet_call_gen(prof, port);
+    } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+      getServerAddresses(serv, prof->name, vishnu::convertToInt((theConfig.find("namer")->second).at(0)));
+      boost::shared_ptr<Server> elected = electServer(serv);
+      diet_call_gen(prof, elected.get()->getPort());
     } else {
+      // TODO THROW EXCEPTION
     }
   } else {
-    if (theConfig.find("FMS")!= std::map::end){
+    if (theConfig.find("FMS")!= theConfig.end()){
       port = vishnu::convertToInt((theConfig.find("FMS")->second).at(0));
       diet_call_gen(prof, port);
+    } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
+      getServerAddresses(serv, prof->name, vishnu::convertToInt((theConfig.find("namer")->second).at(0)));
+      boost::shared_ptr<Server> elected = electServer(serv);
+      diet_call_gen(prof, elected.get()->getPort());
     } else {
     }
   }
