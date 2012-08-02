@@ -11,38 +11,41 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 #include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
 #include "SystemException.hpp"
 
-static std::map<std::string, std::pair<std::string, std::string> > theConfig;
+
+typedef std::multimap<std::string, std::pair<std::string, std::string> > ConfigMap;
+static ConfigMap theConfig;
 
 void
-fill(std::map<std::string, std::pair<std::string, std::string> > &cfg, std::string mfile){
+fill(ConfigMap& cfg, const std::string& mfile) {
   std::ifstream tfile(mfile.c_str());
 
-  if (tfile){
+  if (tfile) {
     std::string line;
-    while(std::getline(tfile, line)){
-      std::istringstream iss(line);
-      std::string name;
-      std::string addr;
-      std::string port;
-      iss >> name;
-      iss >> addr;
-      iss >> port;
+    std::vector<std::string> buff;
+    int i(0);
+    while(std::getline(tfile, line)) {
+      boost::algorithm::split(buff, line, boost::algorithm::is_space());
+      if (buff.size() != 3) {
+        std::cerr << boost::format("E: invalid line in config file (%1%:%2%)\n") % tfile % i;
+        break;
+      }
 
-      std::pair<std::string, std::string> mpair = std::pair<std::string, std::string>(addr, port);
-
-      cfg.insert(std::pair<std::string, std::pair<std::string,std::string> > (name, mpair));
-
+      cfg.insert(std::make_pair(buff[0], std::make_pair(buff[1], buff[2])));
+      ++i;
     }
   } else {
-    std::cout << "failed to open file " << tfile << " for initialisation of client " << "\n";
+    std::cerr << boost::format("failed to open file %1% for initialisation of client\n") % tfile;
   }
 }
 
