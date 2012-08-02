@@ -51,13 +51,13 @@ private:
 
 class LazyPirateClient {
 public:
-  LazyPirateClient(zmq::context_t& ctx, std::string& addr)
+  LazyPirateClient(zmq::context_t& ctx, const std::string& addr)
     : ctx_(ctx), addr_(addr) {
     reset();
   }
 
   bool
-  send(std::string& data, int retries = 3, int timeout = 2500) {
+  send(const std::string& data, int retries = 3, int timeout = 2500) {
     while (retries) {
       sock_->send(data);
       bool expect_reply(true);
