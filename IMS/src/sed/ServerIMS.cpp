@@ -140,7 +140,7 @@ ServerIMS::~ServerIMS() {
 void
 ServerIMS::initMap(std::string mid) {
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[0], solveExport));
-  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[1])+mid, solveCurMetric));
+  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[1])+"@"+mid, solveCurMetric));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[2], solveOldMetric));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[3], solvePS));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[4], solveSetSysInfo));

@@ -125,7 +125,7 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, int port, std::string addr);
+diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 /**
  * \brief Overload of DIET function, get the value of a string(char *) in the profile
@@ -153,28 +153,6 @@ diet_profile_free(diet_profile_t* prof);
  */
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos);
-
-/**
- * \brief To know if test is a UMS service
- * \param test name of a service
- * \return True if test belongs to the UMS module
- */
-bool
-isUMS(std::string test);
-/**
- * \brief To know if test is a TMS service
- * \param test name of a service
- * \return True if test belongs to the TMS module
- */
-bool
-isTMS(std::string test);
-/**
- * \brief To know if test is a IMS service
- * \param test name of a service
- * \return True if test belongs to the IMS module
- */
-bool
-isIMS(std::string test);
 
 /**
  * \brief To deserialize a profile

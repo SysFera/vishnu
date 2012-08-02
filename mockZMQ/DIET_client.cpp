@@ -9,12 +9,14 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <map>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/assign/list_of.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/tuple/tuple.hpp>
@@ -24,9 +26,121 @@
 #include "SystemException.hpp"
 
 
+// private declarations
+int
+diet_call_gen(diet_profile_t* prof, const std::string& uri);
+
+// entry layout: 0 -> host 1 -> port 2 ->protocol
 typedef boost::tuple<std::string, std::string, std::string> ConfigEntry;
 typedef std::multimap<std::string, ConfigEntry> ConfigMap;
 static ConfigMap theConfig;
+
+typedef std::map<std::string, std::string> ServiceMap;
+static ServiceMap sMap = boost::assign::map_list_of
+  /* UMS services */
+  ("sessionConnect", "UMS")
+  ("sessionReconnect", "UMS")
+  ("sessionClose", "UMS")
+  ("userCreate", "UMS")
+  ("userUpdate", "UMS")
+  ("userDelete", "UMS")
+  ("userPasswordChange", "UMS")
+  ("userPasswordReset", "UMS")
+  ("machineCreate", "UMS")
+  ("machineUpdate", "UMS")
+  ("machineDelete", "UMS")
+  ("localAccountCreate", "UMS")
+  ("localAccountUpdate", "UMS")
+  ("localAccountDelete", "UMS")
+  ("configurationSave", "UMS")
+  ("configurationRestore", "UMS")
+  ("optionValueSet", "UMS")
+  ("optionValueSetDefault", "UMS")
+  ("sessionList", "UMS")
+  ("localAccountList", "UMS")
+  ("machineList", "UMS")
+  ("commandList", "UMS")
+  ("optionValueList", "UMS")
+  ("userList", "UMS")
+  ("restore", "UMS")
+  ("authSystemCreate", "UMS")
+  ("authSystemUpdate", "UMS")
+  ("authSystemDelete", "UMS")
+  ("authSystemList", "UMS")
+  ("authAccountCreate", "UMS")
+  ("authAccountUpdate", "UMS")
+  ("authAccountDelete", "UMS")
+  ("authAccountList", "UMS")
+  /* TMS services */
+  ("jobSubmit", "TMS")
+  ("jobCancel", "TMS")
+  ("jobInfo", "TMS")
+  ("getListOfJobs", "TMS")
+  ("getJobsProgression", "TMS")
+  ("getListOfQueues", "TMS")
+  ("jobOutputGetResult", "TMS")
+  ("jobOutputGetCompletedJobs", "TMS")
+  /* IMS services */
+  ("int_exportCommands", "IMS")
+  ("int_getMetricCurentValue", "IMS")
+  ("int_getMetricHistory", "IMS")
+  ("int_getProcesses", "IMS")
+  ("int_setSystemInfo", "IMS")
+  ("int_setSystemThreshold", "IMS")
+  ("int_getSystemThreshold", "IMS")
+  ("int_defineUserIdentifier", "IMS")
+  ("int_defineJobIdentifier", "IMS")
+  ("int_defineTransferIdentifier", "IMS")
+  ("int_defineMachineIdentifier", "IMS")
+  ("int_loadShed", "IMS")
+  ("int_setUpdateFrequency", "IMS")
+  ("int_getUpdateFrequency", "IMS")
+  ("int_restart", "IMS")
+  ("int_stop", "IMS")
+  ("int_getSystemInfo", "IMS")
+  ("int_defineAuthIdentifier", "IMS")
+  ("int_defineWorkIdentifier", "IMS")
+  /* FMS services */
+  ("FileCopyAsync", "FMS")
+  ("FileMoveAsync", "FMS")
+  ("FileMove", "FMS")
+  ("FileCopy", "FMS")
+  ("FileGetInfos", "FMS")
+  ("FileChangeGroup", "FMS")
+  ("FileChangeMode", "FMS")
+  ("FileHead", "FMS")
+  ("FileContent", "FMS")
+  ("FileCreate", "FMS")
+  ("DirCreate", "FMS")
+  ("FileRemove", "FMS")
+  ("DirRemove", "FMS")
+  ("FileTail", "FMS")
+  ("DirList", "FMS")
+  ("RemoteFileCopyAsync", "FMS")
+  ("RemoteFileMoveAsync", "FMS")
+  ("RemoteFileCopy", "FMS")
+  ("RemoteFileMove", "FMS")
+  ("FileTransfersList", "FMS")
+  ;
+
+
+std::string
+make_uri(const ConfigEntry& entry) {
+  return boost::str(
+    boost::format("%3%://%1%:%2%")
+    % entry.get<0>() % entry.get<1>() % entry.get<2>());
+}
+
+std::string
+get_module(const std::string& service) {
+  std::size_t pos = service.find("@");
+  if (std::string::npos) {
+    return sMap[service];
+  } else {
+    return sMap[service.substr(0, pos)];
+  }
+}
+
 
 void
 fill(ConfigMap& cfg, const std::string& mfile) {
@@ -46,8 +160,8 @@ fill(ConfigMap& cfg, const std::string& mfile) {
       case 4:
         /* pgm is unsupported for now, the same for inproc which should be
            obvious, by default, we use tcp */
-        if ((buff[2] != "tcp") || (buff[2] != "ipc")) {
-          buff[2] = "tcp";
+        if ((buff[3] != "tcp") && (buff[3] != "ipc")) {
+          buff[3] = "tcp";
         }
         break;
       default:
@@ -97,95 +211,13 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
   return 0;
 }
 
-bool
-isUMS(std::string test){
-  return (
-    test.compare("sessionConnect") == 0 ||
-    test.compare("sessionReconnect") == 0 ||
-    test.compare("sessionClose") == 0 ||
-    test.compare("userCreate") == 0 ||
-    test.compare("userUpdate") == 0 ||
-    test.compare("userDelete") == 0 ||
-    test.compare("userPasswordChange") == 0 ||
-    test.compare("userPasswordReset") == 0 ||
-    test.compare("machineCreate") == 0 ||
-    test.compare("machineUpdate") == 0 ||
-    test.compare("machineDelete") == 0 ||
-    test.compare("localAccountCreate") == 0 ||
-    test.compare("localAccountUpdate") == 0 ||
-    test.compare("localAccountDelete") == 0 ||
-    test.compare("configurationSave") == 0 ||
-    test.compare("configurationRestore") == 0 ||
-    test.compare("optionValueSet") == 0 ||
-    test.compare("optionValueSetDefault") == 0 ||
-    test.compare("sessionList") == 0 ||
-    test.compare("localAccountList") == 0 ||
-    test.compare("machineList") == 0 ||
-    test.compare("commandList") == 0 ||
-    test.compare("optionValueList") == 0 ||
-    test.compare("userList") == 0 ||
-    test.compare("restore") == 0 ||
-    test.compare("authSystemCreate") == 0 ||
-    test.compare("authSystemUpdate") == 0 ||
-    test.compare("authSystemDelete") == 0 ||
-    test.compare("authSystemList") == 0 ||
-    test.compare("authAccountCreate") == 0 ||
-    test.compare("authAccountUpdate") == 0 ||
-    test.compare("authAccountDelete") == 0 ||
-    test.compare("authAccountList") == 0);
-}
-
-bool
-isTMS(std::string test) {
-  /* TMS services are often postfixed by _<machineID>
-     so we just check that the basename is present */
-  return (
-    test.find("jobSubmit") == 0 ||
-    test.find("jobCancel") == 0 ||
-    test.find("jobInfo") == 0 ||
-    test.find("getListOfJobs") == 0 ||
-    test.find("getJobsProgression") == 0 ||
-    test.find("getListOfQueues") == 0 ||
-    test.find("jobOutputGetResult") == 0 ||
-    test.find("jobOutputGetCompletedJobs") == 0);
-}
-
-
-bool
-isIMS(std::string test){
-  std::cout << "test is : " << test << "\n";
-  std::cout << "bool : " << test.find("int_getMetricCurentValue") << "\n";
-
-  return (
-    test.compare("int_exportCommands") == 0 ||
-    test.find("int_getMetricCurentValue") == 0 ||
-    test.compare("int_getMetricHistory") == 0 ||
-    test.compare("int_getProcesses") == 0 ||
-    test.compare("int_setSystemInfo") == 0 ||
-    test.compare("int_setSystemThreshold") == 0 ||
-    test.compare("int_getSystemThreshold") == 0 ||
-    test.compare("int_defineUserIdentifier") == 0 ||
-    test.compare("int_defineJobIdentifier") == 0 ||
-    test.compare("int_defineTransferIdentifier") == 0 ||
-    test.compare("int_defineMachineIdentifier") == 0 ||
-    test.compare("int_loadShed") == 0 ||
-    test.compare("int_setUpdateFrequency") == 0 ||
-    test.compare("int_getUpdateFrequency") == 0 ||
-    test.compare("int_restart") == 0 ||
-    test.compare("int_stop") == 0 ||
-    test.compare("int_getSystemInfo") == 0 ||
-    test.compare("int_defineAuthIdentifier") == 0 ||
-    test.compare("int_defineWorkIdentifier") == 0);
-}
-
 void
-getServerAddresses(std::vector<boost::shared_ptr<Server> > &serv, std::string servname, int port, std::string addre){
+getServerAddresses(const std::string& uri, const std::string service,
+                   std::vector<boost::shared_ptr<Server> > &serv) {
   zmq::context_t ctx(1);
-  boost::format addr("tcp://%1%:%2%");
-  std::string uri = boost::str(addr % addre % port);
   LazyPirateClient lpc(ctx, uri);
 
-  if (!lpc.send(servname)) {
+  if (!lpc.send(service)) {
     std::cerr << "E: request failed, exiting ...\n";
     exit(-1);
   }
@@ -242,79 +274,44 @@ electServer(std::vector<boost::shared_ptr<Server> > serv){
 }
 
 int
-diet_call(diet_profile_t* prof){
-  int port;
-  std::string addr;
+diet_call(diet_profile_t* prof) {
   std::vector<boost::shared_ptr<Server> > serv;
-  if (isUMS(std::string(prof->name))) {  // If UMS,
-    if (theConfig.find("UMS") != theConfig.end()){ // search for it in config
-      port = vishnu::convertToInt((theConfig.find("UMS")->second).get<1>());
-      addr = (theConfig.find("UMS")->second).get<0>();
-      diet_call_gen(prof, port, addr);
-      } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
-      addr = (theConfig.find("namer")->second).get<0>();
-      getServerAddresses(serv, prof->name, port, addr);
-      boost::shared_ptr<Server> elected = electServer(serv);
-      diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
-    } else {
-      throw SystemException(ERRCODE_SYSTEM, "No corresponding UMS server found");
-    }
-  } else if (isTMS(std::string(prof->name))) { // if tms
-    if (theConfig.find("routage")!= theConfig.end()){ // look for the router
-      port = vishnu::convertToInt((theConfig.find("routage")->second).get<1>());
-      addr = (theConfig.find("routage")->second).get<0>();
-      diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer")!= theConfig.end()){
-      // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
-      addr = (theConfig.find("namer")->second).get<0>();
-      getServerAddresses(serv, prof->name, port, addr);
-      boost::shared_ptr<Server> elected = electServer(serv);
-      diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
-    } else {
-      throw SystemException(ERRCODE_SYSTEM, "No corresponding TMS server found");
-    }
-  } else if (isIMS(std::string(prof->name))) {
-    if (theConfig.find("IMS")!= theConfig.end()){
-      port = vishnu::convertToInt((theConfig.find("IMS")->second).get<1>());
-      addr = (theConfig.find("IMS")->second).get<0>();
-      diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer")!= theConfig.end()){
-      // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
-      addr = (theConfig.find("namer")->second).get<0>();
-      getServerAddresses(serv, prof->name, port, addr);
-      boost::shared_ptr<Server> elected = electServer(serv);
-      diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
-    } else {
-      throw SystemException(ERRCODE_SYSTEM, "No corresponding IMS server found");
-    }
+  std::string uri;
+
+  std::string service(prof->name);
+  std::string module = get_module(service);
+
+  ConfigMap::iterator it = theConfig.find(module);
+  // if no entry in configuration, just ask naming service
+  if (theConfig.end() != it) {
+    uri = make_uri(it->second);
   } else {
-    if (theConfig.find("FMS") != theConfig.end()){
-      port = vishnu::convertToInt((theConfig.find("FMS")->second).get<1>());
-      addr = (theConfig.find("FMS")->second).get<0>();
-      diet_call_gen(prof, port, addr);
-    } else if (theConfig.find("namer") != theConfig.end()) {
-      // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
-      addr = (theConfig.find("namer")->second).get<0>();
-      getServerAddresses(serv, prof->name, port, addr);
+    it = theConfig.find("namer");
+    if (theConfig.end() != it) {
+      ConfigEntry namer = it->second;
+      uri = make_uri(namer);
+      getServerAddresses(uri, service, serv);
       boost::shared_ptr<Server> elected = electServer(serv);
-      diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
+      uri = boost::str(
+        boost::format("tcp://%1%:%2%")
+        % elected->getAddress() % elected->getPort());
     } else {
-      throw SystemException(ERRCODE_SYSTEM, "No corresponding FMS server found");
+      // basically you're screwed here
+      throw SystemException(ERRCODE_SYSTEM,
+                            boost::str(
+                              boost::format("No corresponding %1% server found")
+                              % service));
     }
   }
+
+  diet_call_gen(prof, uri);
 
   return 0;
 }
 
 int
-diet_call_gen(diet_profile_t* prof, int my_port, std::string addre) {
+diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   zmq::context_t ctx(1);
-  boost::format addr("tcp://%1%:%2%");
-  std::string uri = boost::str(addr % addre % my_port);
   LazyPirateClient lpc(ctx, uri);
 
   std::string s1 = my_serialize(prof);
