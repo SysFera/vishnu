@@ -17,13 +17,15 @@
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/tuple/tuple.hpp>
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
 #include "SystemException.hpp"
 
 
-typedef std::multimap<std::string, std::pair<std::string, std::string> > ConfigMap;
+typedef boost::tuple<std::string, std::string, std::string> ConfigEntry;
+typedef std::multimap<std::string, ConfigEntry> ConfigMap;
 static ConfigMap theConfig;
 
 void
@@ -36,16 +38,34 @@ fill(ConfigMap& cfg, const std::string& mfile) {
     int i(0);
     while(std::getline(tfile, line)) {
       boost::algorithm::split(buff, line, boost::algorithm::is_space());
-      if (buff.size() != 3) {
-        std::cerr << boost::format("E: invalid line in config file (%1%:%2%)\n") % tfile % i;
+
+      switch (buff.size()) {
+      case 3:
+        buff.push_back("tcp");
         break;
+      case 4:
+        /* pgm is unsupported for now, the same for inproc which should be
+           obvious, by default, we use tcp */
+        if ((buff[2] != "tcp") || (buff[2] != "ipc")) {
+          buff[2] = "tcp";
+        }
+        break;
+      default:
+        // we skip faulty entries
+        std::cerr <<
+          boost::format("E: invalid line in config file (%1%:%2%)\n")
+          % mfile % i;
+        continue;
       }
 
-      cfg.insert(std::make_pair(buff[0], std::make_pair(buff[1], buff[2])));
+      cfg.insert(std::make_pair(buff[0],
+                                boost::make_tuple(buff[1], buff[2], buff[3])));
       ++i;
     }
   } else {
-    std::cerr << boost::format("failed to open file %1% for initialisation of client\n") % tfile;
+    std::cerr <<
+      boost::format("failed to open file %1% for initialisation of client\n")
+      % mfile;
   }
 }
 
@@ -69,8 +89,6 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));
     (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen(value)] = '\0';
-//    std::cout << " Setting val to : " << arg->prof->param[arg->pos] << " for pos " << arg->pos << "\n";
-//    std::cout << " Setting val orig to : " << value << " for pos " << arg->pos << "\n";
   } else {
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
@@ -230,12 +248,12 @@ diet_call(diet_profile_t* prof){
   std::vector<boost::shared_ptr<Server> > serv;
   if (isUMS(std::string(prof->name))) {  // If UMS,
     if (theConfig.find("UMS") != theConfig.end()){ // search for it in config
-      port = vishnu::convertToInt((theConfig.find("UMS")->second).second);
-      addr = (theConfig.find("UMS")->second).first;
+      port = vishnu::convertToInt((theConfig.find("UMS")->second).get<1>());
+      addr = (theConfig.find("UMS")->second).get<0>();
       diet_call_gen(prof, port, addr);
       } else if (theConfig.find("namer")!= theConfig.end()){ // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).second);
-      addr = (theConfig.find("namer")->second).first;
+      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
+      addr = (theConfig.find("namer")->second).get<0>();
       getServerAddresses(serv, prof->name, port, addr);
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
@@ -244,13 +262,13 @@ diet_call(diet_profile_t* prof){
     }
   } else if (isTMS(std::string(prof->name))) { // if tms
     if (theConfig.find("routage")!= theConfig.end()){ // look for the router
-      port = vishnu::convertToInt((theConfig.find("routage")->second).second);
-      addr = (theConfig.find("routage")->second).first;
+      port = vishnu::convertToInt((theConfig.find("routage")->second).get<1>());
+      addr = (theConfig.find("routage")->second).get<0>();
       diet_call_gen(prof, port, addr);
     } else if (theConfig.find("namer")!= theConfig.end()){
       // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).second);
-      addr = (theConfig.find("namer")->second).first;
+      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
+      addr = (theConfig.find("namer")->second).get<0>();
       getServerAddresses(serv, prof->name, port, addr);
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
@@ -259,13 +277,13 @@ diet_call(diet_profile_t* prof){
     }
   } else if (isIMS(std::string(prof->name))) {
     if (theConfig.find("IMS")!= theConfig.end()){
-      port = vishnu::convertToInt((theConfig.find("IMS")->second).second);
-      addr = (theConfig.find("IMS")->second).first;
+      port = vishnu::convertToInt((theConfig.find("IMS")->second).get<1>());
+      addr = (theConfig.find("IMS")->second).get<0>();
       diet_call_gen(prof, port, addr);
     } else if (theConfig.find("namer")!= theConfig.end()){
       // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).second);
-      addr = (theConfig.find("namer")->second).first;
+      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
+      addr = (theConfig.find("namer")->second).get<0>();
       getServerAddresses(serv, prof->name, port, addr);
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
@@ -274,13 +292,13 @@ diet_call(diet_profile_t* prof){
     }
   } else {
     if (theConfig.find("FMS") != theConfig.end()){
-      port = vishnu::convertToInt((theConfig.find("FMS")->second).second);
-      addr = (theConfig.find("FMS")->second).first;
+      port = vishnu::convertToInt((theConfig.find("FMS")->second).get<1>());
+      addr = (theConfig.find("FMS")->second).get<0>();
       diet_call_gen(prof, port, addr);
     } else if (theConfig.find("namer") != theConfig.end()) {
       // Then ask name server
-      port = vishnu::convertToInt((theConfig.find("namer")->second).second);
-      addr = (theConfig.find("namer")->second).first;
+      port = vishnu::convertToInt((theConfig.find("namer")->second).get<1>());
+      addr = (theConfig.find("namer")->second).get<0>();
       getServerAddresses(serv, prof->name, port, addr);
       boost::shared_ptr<Server> elected = electServer(serv);
       diet_call_gen(prof, elected.get()->getPort(), elected.get()->getAddress());
