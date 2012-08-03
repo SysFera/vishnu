@@ -170,10 +170,6 @@ private :
    */
   DbConfiguration::db_type_t mdbtype;
   /**
-   * \brief pointer to the backend factory
-   */
-  const struct soci::backend_factory * mbackend;
-  /**
    * \brief connection status
    */
   bool is_connected;
