@@ -54,8 +54,14 @@ SOCISession::execute(std::string const & query)
 	if(msession==NULL) {
 		throw SystemException(ERRCODE_DBERR,"Cannot execute : session is null");
 	}
+	std::string request=query;
+	// SOCI for ORACLE does not support semi-colom
+	while (msession->get_backend_name()=="oracle" && query[query.length()-1] == ';') {
+		request.erase(request.length()-1,1);
+	}
+
 	SOCITemporaryType ret(*msession);
-	TRYCATCH( ret.once<<query, "")
+	TRYCATCH( ret.once<<request, "")
 	return ret;
 }
 

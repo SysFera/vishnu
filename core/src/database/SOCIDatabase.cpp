@@ -123,7 +123,7 @@ SOCIDatabase::connect()
 #ifdef USE_ORACLE
 	case DbConfiguration::ORACLE:
 		mbackend = &oracle;
-		throw SystemException(ERRCODE_DBERR,"ORACLE is not supported yet");
+		//throw SystemException(ERRCODE_DBERR,"ORACLE is not supported yet");
 	break;
 #endif
 #ifdef USE_SQLITE3
@@ -259,6 +259,11 @@ SOCIDatabase::getResult(string request, int transacId)
 	if (request.empty()) {
 		releaseConnection(reqPos);
 		throw SystemException(ERRCODE_DBERR, "Empty SQL query");
+	}
+
+	// SOCI for ORACLE does not support semi-colom
+	while( mdbtype==DbConfiguration::ORACLE && request[request.length()-1]== ';'){
+		request.erase(request.length()-1,1);
 	}
 
 	vector<vector<string> > resultsStr;
@@ -493,8 +498,8 @@ SOCIDatabase::generateId(string table, string fields, string val, int tid)
 		sqlCommand2 =string("SELECT currval(pg_get_serial_sequence('"+table+"',"+sqlAttributeName+"))");
 		break;
 	case DbConfiguration::ORACLE:
-		throw SystemException(ERRCODE_DBERR,
-						"ORACLE not supported yet");
+		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
+		sqlCommand2 =string("select S_"+table+".CURRVAL from DUAL");
 		break;
 	case DbConfiguration::SQLITE3:
 		sqlCommand = string("INSERT INTO " + table + fields + " values " + val);
