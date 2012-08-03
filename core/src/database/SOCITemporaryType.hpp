@@ -30,15 +30,11 @@ public:
 	/**
 	 * \brief constructor from an existing session
 	 */
-	SOCITemporaryType(soci::session & sess)
-		:once(sess)
-	{}
+	SOCITemporaryType(soci::session & sess);
 	/**
 	 * \brief copy constructor
 	 */
-	SOCITemporaryType(const SOCITemporaryType & other)
-			:once(other.once)
-	{}
+	SOCITemporaryType(const SOCITemporaryType & other);
 
 	/**
 	 * \brief destructor
@@ -189,6 +185,9 @@ public:
 		return this->exchange(soci::into(out,inds));
 	}
 
+private:
+	int nbUses;
+	int nbIntos;
 };
 
 
