@@ -25,14 +25,14 @@ class Database;
 #define NB_SRV 11
 
 static const char* SERVICES[NB_SRV] = {
-  "jobSubmit_",
-  "jobCancel_",
-  "jobInfo_",
-  "getListOfJobs_",
-  "getJobsProgression_",
-  "getListOfQueues_",
-  "jobOutputGetResult_",
-  "jobOutputGetCompletedJobs_",
+  "jobSubmit",
+  "jobCancel",
+  "jobInfo",
+  "getListOfJobs",
+  "getJobsProgression",
+  "getListOfQueues",
+  "jobOutputGetResult",
+  "jobOutputGetCompletedJobs",
   "getListOfJobs_all",
   "jobSubmit_autom",
   "addwork"

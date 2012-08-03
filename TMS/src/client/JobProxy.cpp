@@ -35,7 +35,7 @@ int
 JobProxy::submitJob(const std::string& scriptContent,
 		const TMS_Data::SubmitOptions& options) {
 
-	string serviceName = "jobSubmit_";
+	string serviceName = "jobSubmit@";
 	serviceName.append(mmachineId);
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	string sessionKey = msessionProxy.getSessionKey().c_str();
@@ -167,7 +167,7 @@ JobProxy::cancelJob() {
 	diet_profile_t* cancelJobProfile = NULL;
 	std::string sessionKey;
 	char* errorInfo = NULL;
-	std::string serviceName = "jobCancel_";
+	std::string serviceName = "jobCancel@";
 	serviceName.append(mmachineId);
 
 	cancelJobProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
@@ -227,7 +227,7 @@ JobProxy::getJobInfo() {
 	std::string sessionKey;
 	char* jobInString = NULL;
 	char* errorInfo = NULL;
-	std::string serviceName = "jobInfo_";
+	std::string serviceName = "jobInfo@";
 	serviceName.append(mmachineId);
 
 	getJobInfoProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
