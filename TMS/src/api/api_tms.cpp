@@ -151,7 +151,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	checkEmptyString(sessionKey, "The session key");
 	checkEmptyString(machineId, "The machine id");
 
-	std::string serviceName = "getListOfJobs_";
+	std::string serviceName = "getListOfJobs@";
 	serviceName.append(machineId);
 
 	SessionProxy sessionProxy(sessionKey);
@@ -200,7 +200,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	checkEmptyString(sessionKey, "The session key");
 	checkEmptyString(machineId, "The machine id");
 
-	std::string serviceName = "getJobsProgression_";
+	std::string serviceName = "getJobsProgression@";
 	serviceName.append(machineId);
 
 	SessionProxy sessionProxy(sessionKey);
@@ -242,7 +242,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	checkEmptyString(sessionKey, "The session key");
 	checkEmptyString(machineId, "The machine id");
 
-	std::string serviceName = "getListOfQueues_";
+	std::string serviceName = "getListOfQueues@";
 	serviceName.append(machineId);
 
 	SessionProxy sessionProxy(sessionKey);
