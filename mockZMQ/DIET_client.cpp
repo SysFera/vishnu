@@ -134,7 +134,7 @@ make_uri(const ConfigEntry& entry) {
 std::string
 get_module(const std::string& service) {
   std::size_t pos = service.find("@");
-  if (std::string::npos) {
+  if (std::string::npos == pos) {
     return sMap[service];
   } else {
     return sMap[service.substr(0, pos)];
