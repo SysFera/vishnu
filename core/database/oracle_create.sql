@@ -17,10 +17,7 @@ CREATE TABLE vishnu (
   formatidjob VARCHAR2(255)    ,
   formatidfiletransfer VARCHAR2(255)    ,
   formatidmachine VARCHAR2(255)    ,
-  usercpt BINARY_FLOAT    ,
-  jobcpt BINARY_FLOAT    ,
-  fileSubcpt BINARY_FLOAT    ,
-  machinecpt BINARY_FLOAT      ,
+  formatidauth VARCHAR2(255)    ,
 PRIMARY KEY(vishnuid));
 
 CREATE SEQUENCE s_vishnu;
@@ -338,7 +335,7 @@ END;
 -- Table for processes
 
 CREATE TABLE process (
-  numprocess NIBARY_FLOAT NOT NULL,
+  numprocess BINARY_FLOAT NOT NULL,
   pstatus INTEGER,
   vishnuname VARCHAR(255),
   dietname VARCHAR(255),
@@ -418,7 +415,7 @@ END;
 -- Table for jobs
 
 CREATE TABLE job (
-  numjobid SERIAL  NOT NULL ,
+  numjobid BINARY_FLOAT NOT NULL ,
   vsession_numsessionid BINARY_FLOAT   NOT NULL ,  
   submitMachineId VARCHAR2(255),
   submitMachineName VARCHAR2(255),

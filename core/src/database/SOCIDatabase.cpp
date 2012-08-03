@@ -9,19 +9,6 @@
 #include "utilVishnu.hpp"
 
 
-#ifdef USE_MYSQL
-#include <soci/mysql/soci-mysql.h>
-#endif
-#ifdef USE_POSTGRES
-#include <soci/postgresql/soci-postgresql.h>
-#endif
-#ifdef USE_ORACLE
-#include <soci/oracle/soci-oracle.h>
-#endif
-#ifdef USE_SQLITE3
-#include <soci/sqlite3/soci-sqlite3.h>
-#endif
-
 using namespace std;
 using namespace vishnu;
 using namespace soci;
@@ -109,28 +96,20 @@ SOCIDatabase::connect()
 				"Cannot connect to DB, already connected to DB");
 	}
 
+	std::string backend;
 	switch (mconfig.getDbType()) {
-#ifdef USE_MYSQL
 	case DbConfiguration::MYSQL:
-	mbackend = &mysql;
-	break;
-#endif //USE_MYSQL
-#ifdef USE_POSTGRES
+		backend = "mysql";
+		break;
 	case DbConfiguration::POSTGRESQL:
-	mbackend = &postgresql;
-	break;
-#endif //POSTGRES
-#ifdef USE_ORACLE
+		backend = "postgresql";
+		break;
 	case DbConfiguration::ORACLE:
-		mbackend = &oracle;
-		//throw SystemException(ERRCODE_DBERR,"ORACLE is not supported yet");
-	break;
-#endif
-#ifdef USE_SQLITE3
+		backend = "oracle";
+		break;
 	case DbConfiguration::SQLITE3:
-		mbackend = &sqlite3;
-	break;
-#endif
+		backend = "sqlite3";
+		break;
 	default:
 		throw SystemException(ERRCODE_DBERR,
 				"Database instance type unknown or not managed");
@@ -154,7 +133,7 @@ SOCIDatabase::connect()
 		soci::session & msession = mpool->at(i);
 		try
 		{
-			msession.open(*mbackend, connectString);
+			msession.open(backend, connectString);
 		} catch (exception const &e)
 		{
 			throw SystemException(ERRCODE_DBERR,
