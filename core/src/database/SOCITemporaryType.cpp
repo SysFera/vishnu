@@ -21,13 +21,28 @@ using namespace soci;
 /*
  * Class temporary_type
  */
-
+/**
+ * \brief constructor from an existing session
+ */
+SOCITemporaryType::SOCITemporaryType(soci::session & sess)
+	:once(sess),nbIntos(0),nbUses(0)
+{}
+/**
+ * \brief copy constructor
+ */
+SOCITemporaryType::SOCITemporaryType(const SOCITemporaryType & other)
+		:once(other.once),nbIntos(other.nbIntos),nbUses(other.nbUses)
+{}
 /**
  * the request was executed on the destructor of the last reference to the temporary type
  * \return raises an VishnuException in case of error
  */
 SOCITemporaryType::~SOCITemporaryType()
 {
+	string tmp;
+	if(nbIntos==0) {
+		once,soci::into(tmp);
+	}
 	TRYCATCH((once.~once_temp_type()),"Failed to execute query \n")
 }
 
@@ -35,6 +50,7 @@ SOCITemporaryType &
 SOCITemporaryType::exchange(details::use_type_ptr const & in)
 {
 	TRYCATCH((once,in), "")
+	nbUses++;
 	return *this;
 }
 
@@ -42,6 +58,7 @@ SOCITemporaryType &
 SOCITemporaryType::exchange(details::into_type_ptr const & out)
 {
 	TRYCATCH((once,out), "")
+	nbIntos++;
 	return *this;
 }
 
