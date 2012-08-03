@@ -36,7 +36,7 @@
  * string query = "select name from tabe where id=:id"
  *
  * * those syntaxes are equivalent :
- * - sythax 1
+ * - synthax 1
  * session.execute(query).use(myId).into(name);
  *
  * - syntax 2
