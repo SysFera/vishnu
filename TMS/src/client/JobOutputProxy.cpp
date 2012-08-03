@@ -35,7 +35,7 @@ JobOutputProxy::JobOutputProxy( const SessionProxy& session,
 TMS_Data::JobResult
 JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
-	std::string serviceName = "jobOutputGetResult_";
+	std::string serviceName = "jobOutputGetResult@";
 	serviceName.append(mmachineId);
 
 	diet_profile_t* getJobOutPutProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
@@ -131,7 +131,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 	char* errorInfo = NULL;
 	TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
 
-	std::string serviceName = "jobOutputGetCompletedJobs_";
+	std::string serviceName = "jobOutputGetCompletedJobs@";
 	serviceName.append(mmachineId);
 
 	getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
