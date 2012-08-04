@@ -77,19 +77,7 @@ vishnu::convertToTimeType(std::string date) {
  */
 int
 vishnu::convertToInt(std::string val) {
-#if 0
-  int intValue;
-  std::istringstream str(val);
-  str >> intValue;
-  return intValue;
-#endif
-  int value = -1 ;
-  if(! val.empty()) {
-    value = vishnu::lexical_convertor<int>(val);
-  } else {
-    value = -1 ;
-  }
-  return value ;
+  return vishnu::lexical_convertor<int>(val);
 }
 
 
@@ -100,19 +88,7 @@ vishnu::convertToInt(std::string val) {
  */
 long
 vishnu::convertToLong(std::string val) {
-#if 0
-  int intValue;
-  std::istringstream str(val);
-  str >> intValue;
-  return intValue;
-#endif
-  int value = -1 ;
-  if(! val.empty()) {
-    value = vishnu::lexical_convertor<long>(val);
-  } else {
-    value = -1 ;
-  }
-  return value ;
+  return vishnu::lexical_convertor<long>(val);
 }
 
 /**
