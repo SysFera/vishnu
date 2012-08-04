@@ -35,12 +35,12 @@ namespace bfs=boost::filesystem;
  * \brief The type of the Batch
  */
 typedef enum {
-	TORQUE = 0,/*!< For TORQUE batch type */
-	LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
-	SLURM = 2, /*!< For SLURM batch type */
-	LSF = 3, /*!< For LSF batch type */
-	SGE = 4, /*!< For SGE batch type */
-	UNDEFINED = 5 /*!< IF batch type is not defined*/
+  TORQUE = 0,/*!< For TORQUE batch type */
+  LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
+  SLURM = 2, /*!< For SLURM batch type */
+  LSF = 3, /*!< For LSF batch type */
+  SGE = 4, /*!< For SGE batch type */
+  UNDEFINED = 5 /*!< IF batch type is not defined*/
 } BatchType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
@@ -56,13 +56,13 @@ static const int ACTIVE_STATUS=1;
  * \param salt This string is used to perturb the algorithm
  * \return the string encrypted
  */
-char* crypt(const char* clef, const char* salt);
+char*
+crypt(const char* clef, const char* salt);
 /**
  * \namespace vishnu
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
-
 static const std::string ROOTUSERNAME = "root";
 static const std::string UMSMAPPERNAME = "UMS";
 static const std::string TMSMAPPERNAME = "TMS";
