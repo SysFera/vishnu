@@ -13,7 +13,8 @@
 #include <list>
 #include <iostream>
 #include <sstream>
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/lexical_cast.hpp>
 #include "QueryServer.hpp"
 #include "SessionServer.hpp"
 #include "FMS_Data.hpp"
@@ -68,9 +69,9 @@ public:
     //To check if the fromMachineId is defined
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
-      
+
       sqlRequest.append(" and (sourceMachineId='"+options->getFromMachineId()+"'"+" or destinationMachineId='"+options->getFromMachineId()+"')");
-      
+
       onlyProgressFile = false;
     }
 
@@ -78,14 +79,14 @@ public:
     if (options->getUserId().size() != 0) {
 
       //Creation of the object user
-      UserServer userServer = UserServer(msessionServer);   
+      UserServer userServer = UserServer(msessionServer);
 
       userServer.init();
       if (!userServer.isAdmin()) {
         UMSVishnuException e (ERRCODE_NO_ADMIN);
         throw e;
-      } 
-    
+      }
+
       //To check the user Id
       checkUserId(options->getUserId());
       //To add the userId on the request
@@ -114,7 +115,7 @@ public:
    */
   FMS_Data::FileTransferList*
     list() {
-  
+
       std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
         "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg,"
         " trCommand from filetransfer, vsession "
@@ -131,15 +132,15 @@ public:
       processOptions(mparameters, sqlListOfFiles);
       sqlListOfFiles.append(" order by startTime");
 
-      
+
       boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseVishnu->getResult(sqlListOfFiles.c_str()));
-      
+
       time_t startTime;
-        
+
 
       if (ListOfFiles->getNbTuples() != 0){
-      
-        
+
+
         for (size_t i = 0; i < ListOfFiles->getNbTuples(); ++i) {
           results.clear();
           results = ListOfFiles->get(i);
@@ -147,7 +148,7 @@ public:
 
           FMS_Data::FileTransfer_ptr filetransfer = ecoreFactory->createFileTransfer();
 
-          
+
           filetransfer->setTransferId(*iter);
           int trStatus=convertToInt(*(++iter));
           filetransfer->setStatus((trStatus >=0&& trStatus<5 ? trStatus:4));
@@ -161,10 +162,10 @@ public:
          // file_size_t fileSize;
 
           //iss >> fileSize;
-          filetransfer->setSize(vishnu::lexical_convertor<file_size_t>(*(++iter)));
+          filetransfer->setSize(boost::lexical_cast<file_size_t>(*(++iter)));
           //convert the endDate into UTC date
           std::string tmpTime = *(++iter);
-          startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime)); 
+          startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
           filetransfer->setStart_time(startTime);
           filetransfer->setErrorMsg(*(++iter));
           // Check the transfer Command enum value
@@ -213,7 +214,7 @@ private:
    * \param status the file transfer status
    */
   void checkStatus(int status) {
-      
+
     if(status < 0 || status > 4) {
       throw UserException(ERRCODE_INVALID_PARAM, "The file transfer status option value is incorrect");
     }

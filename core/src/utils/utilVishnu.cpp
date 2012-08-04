@@ -15,6 +15,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
+#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <time.h>
 
@@ -56,7 +57,7 @@ namespace bs=boost::system;
  * \return The converted value
  */
 long long
-vishnu::convertToTimeType(std::string date) {
+vishnu::convertToTimeType(const std::string& date) {
   if(date.size()==0 ||
      // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
      date.find("0000-00-00")!=std::string::npos) {
@@ -76,8 +77,8 @@ vishnu::convertToTimeType(std::string date) {
  * \return int value of the corresponding string
  */
 int
-vishnu::convertToInt(std::string val) {
-  return vishnu::lexical_convertor<int>(val);
+vishnu::convertToInt(const std::string& val) {
+  return boost::lexical_cast<int>(val);
 }
 
 
@@ -87,8 +88,8 @@ vishnu::convertToInt(std::string val) {
  * \return int value of the corresponding string
  */
 long
-vishnu::convertToLong(std::string val) {
-  return vishnu::lexical_convertor<long>(val);
+vishnu::convertToLong(const std::string& val) {
+  return boost::lexical_cast<long>(val);
 }
 
 /**
@@ -579,11 +580,11 @@ long vishnu::diffLocaltimeUTCtime() {
  */
 void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
 
-	int  file_descriptor = mkstemp( fileName ) ;
-	size_t file_size = file_content.size();
-	if( file_descriptor == -1 ) {
-		throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create the file "+std::string(fileName));
-	}
+  int  file_descriptor = mkstemp( fileName ) ;
+  size_t file_size = file_content.size();
+  if( file_descriptor == -1 ) {
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create the file "+std::string(fileName));
+  }
 
   if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)!=0) {
     close(file_descriptor);
