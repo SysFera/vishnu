@@ -77,10 +77,11 @@ static boost::shared_mutex mutex;
  * \return the string version of val
  */
 template <class T>
-std::string convertToString(T val) {
-	std::ostringstream out;
-	out << val;
-	return out.str();
+std::string
+convertToString(T val) {
+  std::ostringstream out;
+  out << val;
+  return out.str();
 }
 
 /**
@@ -89,28 +90,16 @@ std::string convertToString(T val) {
  * \param date The date to convert
  * \return The converted value
  */
-long long convertToTimeType(std::string date);
+long long
+convertToTimeType(const std::string& date);
 
-/**
- * \brief generic Function to convert a string to int
- * \param  val a value to convert to int
- * \return int value of the corresponding string
- */
-template<typename Target>
-Target
-lexical_convertor (const std::string& source){
-	Target intValue;
-	std::istringstream str(source);
-	str >> intValue;
-	return intValue;
-}
 /**
  * \brief Function to convert a string to int
  * \param  val a value to convert to int
  * \return int value of the corresponding string
  */
 int
-convertToInt(std::string val);
+convertToInt(const std::string& val);
 
 /**
  * \brief Function to convert a string to long int
@@ -118,7 +107,7 @@ convertToInt(std::string val);
  * \return int value of the corresponding string
  */
 long
-convertToLong(std::string val) ;
+convertToLong(const std::string& val) ;
 
 /**
  * \brief To crypt a password
