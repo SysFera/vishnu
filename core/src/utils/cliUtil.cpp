@@ -69,7 +69,7 @@ usage (const Options & opt,const std::string& mess,const std::string& eWhat){
 
 void 
 checkVishnuConfig(const Options & opt){
-  if (opt.count("dietConfig")==0){
+  if ((opt.count("dietConfig") == 0) && (opt.count("help") == 0)) {
     throw runtime_error( "Set the VISHNU_CONFIG_FILE in your environment variable");
   }
 
