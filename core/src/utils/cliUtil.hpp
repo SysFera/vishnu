@@ -6,7 +6,7 @@
 /**
  * \brief Contains a generic diet error message
  */
-const std::string dietErrorMsg="DIET initialization failed !";
+const std::string dietErrorMsg = "DIET initialization failed !";
 
 /**
  * \struct env_name_mapper
@@ -16,7 +16,7 @@ const std::string dietErrorMsg="DIET initialization failed !";
  * is called to obtain the option name. If it returns empty string
  * the variable is ignored.
  */
-struct env_name_mapper{
+struct env_name_mapper {
 
 /**
  * Mapper operator for environnement variable
@@ -24,28 +24,25 @@ struct env_name_mapper{
  * \return The name used in the program
  */
 
-	std::string operator ()(std::string name){
+  std::string
+  operator ()(const std::string& name) {
+    std::string result;
+    if ("VISHNU_CONFIG_FILE" == name) {
+      result = "dietConfig";
+    }
 
-		std::string result= "";
-
-                if (name=="VISHNU_CONFIG_FILE") {
-
-                        result="dietConfig";
-                }
-
-
-		return result;
-	}
+    return result;
+  }
 };
 
 /**
  * \enum ErrorType
  * \brief a convenient type to classify error type
  */
-typedef enum{
-PARAMERROR,/*!< for any invalid parameter error */
-EXECERROR /*!<  for any runtime error */
-}ErrorType;
+typedef enum {
+  PARAMERROR,/*!< for any invalid parameter error */
+  EXECERROR /*!<  for any runtime error */
+} ErrorType;
 
 /**
  * \brief helper function to display help about a specific command
@@ -53,7 +50,7 @@ EXECERROR /*!<  for any runtime error */
  * \param signature: defines the usage of the command
  */
 void
-helpUsage (const Options& opt,const std::string& signature);
+helpUsage(const Options& opt, const std::string& signature);
 
 /**
  * \brief helper function to display error about a specific command
@@ -63,7 +60,7 @@ helpUsage (const Options& opt,const std::string& signature);
  */
 
 void
-errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& err=PARAMERROR);
+errorUsage(const std::string& cli, const std::string& errMsg, const ErrorType& err=PARAMERROR);
 
 /**
  * \brief Helper function to display information (error or usage) about a specific command
@@ -74,7 +71,7 @@ errorUsage (const std::string& cli,const std::string& errMsg,const ErrorType& er
  */
 
 int
-usage (const Options& opt,const std::string& mess,const std::string& ewhat);
+usage(const Options& opt, const std::string& mess, const std::string& ewhat);
 
 
 /**
