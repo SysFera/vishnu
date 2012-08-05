@@ -67,16 +67,14 @@ private:
 
 
 int
-ZMQServerStart(boost::shared_ptr<SeD> server,
-               std::string addr, int port) {
+ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   // Prepare our context and socket for server
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
   // bind our sockets
-  std::string add = boost::str(boost::format("%1%:%2%") % addr % port);
-  std::cerr << "Binded to address: " << add << "\n";
-  socket_server.bind(add.c_str());
+  std::cerr << "Binded to address: " << uri << "\n";
+  socket_server.bind(uri.c_str());
   socket_workers.bind("inproc://vishnu");
 
   // Create our threads pool
@@ -88,7 +86,6 @@ ZMQServerStart(boost::shared_ptr<SeD> server,
   // boost::thread t(ZMQWorker(context, server, 0));
   // connect our workers threads to our server via a queue
   zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
-  std::cout << "proy\n";
 
   return 0;
 }

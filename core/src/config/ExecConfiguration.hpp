@@ -80,8 +80,7 @@ public:
    */
   template<typename T>
   bool
-  getConfigValue(vishnu::param_type_t param, T& value) const
-  {
+  getConfigValue(vishnu::param_type_t param, T& value) const {
     const std::string& key = (vishnu::params)[param].value;
     ConfigMap::const_iterator it = mconfig.find(key);
     if (mconfig.end() == it) {
