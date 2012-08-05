@@ -47,8 +47,7 @@ main(int argc, char* argv[], char* envp[]) {
   string FMSTYPE = "FMS";
   string mid;
   string cfg;
-  string address;
-  int port;
+  string uri;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -60,17 +59,16 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
-    config.getRequiredConfigValue<int>(vishnu::PORT, port);
+    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
     dbConfig.check();
   } catch (UserException& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << "\n";
     exit(1);
   }catch (std::exception& e) {
-    std::cerr << argv[0] << " : "<< e.what() << std::endl;
+    std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
 
@@ -91,17 +89,15 @@ main(int argc, char* argv[], char* envp[]) {
       registerSeD(FMSTYPE, config, cfg);
       // Initialize the DIET SeD
       if (!res) {
-//        diet_print_service_table();
-//        res = diet_SeD(cfg.c_str(), argc, argv);
-        ZMQServerStart(server, address, port);
+        ZMQServerStart(server, uri);
         unregisterSeD(FMSTYPE, mid);
       } else {
-        std::cerr << "There was a problem during services initialization" << std::endl;
+        std::cerr << "There was a problem during services initialization\n";
         unregisterSeD(FMSTYPE, mid);
         exit(1);
       }
     } catch (VishnuException& e) {
-      std::cerr << e.what() << std::endl;
+      std::cerr << e.what() << "\n";
       exit(1);
     }
   }  else if (pid == 0) {
@@ -115,7 +111,7 @@ main(int argc, char* argv[], char* envp[]) {
       monitor.run();
     }
   } else {
-    std::cerr << "There was a problem to initialize the server" << std::endl;
+    std::cerr << "There was a problem to initialize the server\n";
     exit(1);
   }
 

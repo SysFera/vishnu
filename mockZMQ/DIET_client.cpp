@@ -19,7 +19,6 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/tuple/tuple.hpp>
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
@@ -30,9 +29,7 @@
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
-// entry layout: 0 -> host 1 -> port 2 ->protocol
-typedef boost::tuple<std::string, std::string, std::string> ConfigEntry;
-typedef std::multimap<std::string, ConfigEntry> ConfigMap;
+typedef std::multimap<std::string, std::string> ConfigMap;
 static ConfigMap theConfig;
 
 typedef std::map<std::string, std::string> ServiceMap;
@@ -123,14 +120,6 @@ static ServiceMap sMap = boost::assign::map_list_of
   ("FileTransfersList", "FMS")
   ;
 
-
-std::string
-make_uri(const ConfigEntry& entry) {
-  return boost::str(
-    boost::format("%3%://%1%:%2%")
-    % entry.get<0>() % entry.get<1>() % entry.get<2>());
-}
-
 std::string
 get_module(const std::string& service) {
   std::size_t pos = service.find("@");
@@ -154,15 +143,8 @@ fill(ConfigMap& cfg, const std::string& mfile) {
       boost::algorithm::split(buff, line, boost::algorithm::is_space());
 
       switch (buff.size()) {
-      case 3:
+      case 2:
         buff.push_back("tcp");
-        break;
-      case 4:
-        /* pgm is unsupported for now, the same for inproc which should be
-           obvious, by default, we use tcp */
-        if ((buff[3] != "tcp") && (buff[3] != "ipc")) {
-          buff[3] = "tcp";
-        }
         break;
       default:
         // we skip faulty entries
@@ -172,8 +154,7 @@ fill(ConfigMap& cfg, const std::string& mfile) {
         continue;
       }
 
-      cfg.insert(std::make_pair(buff[0],
-                                boost::make_tuple(buff[1], buff[2], buff[3])));
+      cfg.insert(std::make_pair(buff[0], buff[1]));
       ++i;
     }
   } else {
@@ -284,12 +265,11 @@ diet_call(diet_profile_t* prof) {
   ConfigMap::iterator it = theConfig.find(module);
   // if no entry in configuration, just ask naming service
   if (theConfig.end() != it) {
-    uri = make_uri(it->second);
+    uri = it->second;
   } else {
     it = theConfig.find("namer");
     if (theConfig.end() != it) {
-      ConfigEntry namer = it->second;
-      uri = make_uri(namer);
+      uri = it->second;
       getServerAddresses(uri, service, serv);
       boost::shared_ptr<Server> elected = electServer(serv);
       uri = boost::str(

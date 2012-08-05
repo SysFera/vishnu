@@ -15,14 +15,14 @@ namespace vishnu {
     /* [6]  */ {DBPASSWORD, "databaseUserPassword", STRING_PARAMETER},
     /* [7]  */ {SENDMAILSCRIPT, "sendmailScriptPath", STRING_PARAMETER},
     /* [8]  */ {BATCHTYPE, "batchSchedulerType", STRING_PARAMETER},
-    /* [9] */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER},
+    /* [9]  */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER},
     /* [10] */ {REMOTEBINDIR, "vishnuRemoteBinDirectory", STRING_PARAMETER},
     /* [11] */ {INTERVALMONITOR, "intervalMonitor", INT_PARAMETER},
     /* [12] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
-    /* [13] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER},
-    /* [14] */ {ADDR, "address",STRING_PARAMETER},
-    /* [15] */ {PORT, "port",INT_PARAMETER}
+    /* [13] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
+    /* [14] */ {ADDR, "address", STRING_PARAMETER},
+    /* [15] */ {PORT, "port", INT_PARAMETER},
+    /* [16] */ {URI, "uri", URI_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
-

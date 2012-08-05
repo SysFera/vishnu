@@ -73,8 +73,7 @@ main(int argc, char* argv[], char* envp[]) {
   string UMSTYPE = "UMS";
   string mid;
   string cfg;
-  string address;
-  int port;
+  string uri;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -87,24 +86,24 @@ main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
-    config.getRequiredConfigValue<int>(vishnu::PORT, port);
+    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
-      std::cerr << "Error: cannot open the script file for sending email" << std::endl;
+      std::cerr << "Error: cannot open the script file for sending email\n";
       exit(1);
     }
     authenticatorConfig.check();
     if (authenticatorConfig.getAuthenType() != AuthenticatorConfiguration::UMS) {
       #ifndef USE_LDAP
-        std::cerr << "Error: this authentification type uses LDAP and this server has not been compiled with LDAP library" << std::endl;
+        std::cerr << "Error: this authentification type uses LDAP and "
+                  << "this server has not been compiled with LDAP library\n";
         exit(1);
       #endif
     }
   } catch (UserException& e) {
-    std::cerr << e.what() << std::endl;
+    std::cerr << e.what() << "\n";
     exit(1);
   }catch (std::exception& e) {
-    std::cerr << argv[0] << " : "<< e.what() << std::endl;
+    std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
 
@@ -133,12 +132,10 @@ main(int argc, char* argv[], char* envp[]) {
 
     // Initialize the DIET SeD
     if (!res) {
-      //      diet_print_service_table();
-      ZMQServerStart(server, address, port);
-      //      res = diet_SeD(cfg.c_str(), argc, argv);
+      ZMQServerStart(server, uri);
       unregisterSeD(UMSTYPE, mid);
     } else {
-      std::cerr << "There was a problem during services initialization" << std::endl;
+      std::cerr << "There was a problem during services initialization\n";
       exit(1);
     }
   }
@@ -153,7 +150,7 @@ main(int argc, char* argv[], char* envp[]) {
       monitor.run();
     }
   } else {
-    std::cerr << "There was a problem to initialize the server" << std::endl;
+    std::cerr << "There was a problem to initialize the server\n";
     exit(1);
   }
   return res;
