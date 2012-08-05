@@ -86,8 +86,7 @@ main(int argc, char* argv[], char* envp[]) {
   struct sigaction action;
   string mid;
   string cfg;
-  string address;
-  int port;
+  string uri;
 
   if (argc < 2) {
     return usage(argv[0]);
@@ -101,8 +100,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT,
                                                sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::ADDR, address);
-    config.getRequiredConfigValue<int>(vishnu::PORT, port);
+    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
   } catch (UserException& e) {
     std::cerr << e.what() << "\n";
     exit(1);
@@ -136,7 +134,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   // Initialize the DIET SeD
   if (!res) {
-    ZMQServerStart(server, address, port);
+    ZMQServerStart(server, uri);
     unregisterSeD(IMSTYPE, mid);
     pid_t pid = getpid();
     kill(pid, SIGINT);

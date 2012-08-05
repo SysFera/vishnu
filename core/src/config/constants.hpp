@@ -14,7 +14,7 @@ namespace vishnu {
     INT_PARAMETER,
     ULONG_PARAMETER,
     STRING_PARAMETER,
-    ADDRESS_PARAMETER
+    URI_PARAMETER
   } c_type_t ;
 
 /**
@@ -39,30 +39,25 @@ namespace vishnu {
     DEFAULTBATCHCONFIGFILE,
     ADDR,
     PORT,
+    URI
   } param_type_t;
 
   /**
    * \brief A convenient data type to store a parameter
    */
-  struct param_t
-  {
+  struct param_t {
     /**
      * \brief key to retrieve the parameter
      */
     param_type_t key;
-
-
     /**
      * \brief the value of the parameter
      */
     const std::string value;
-
    /**
     * \brief the type of the parameter
     */
-
     c_type_t type;
-
   };
 
   /**

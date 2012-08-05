@@ -30,6 +30,6 @@ protected:
 };
 
 int
-ZMQServerStart(boost::shared_ptr<SeD> server, std::string addr, int port);
+ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri);
 
 #endif // __SED__H__
