@@ -35,7 +35,7 @@ loadPluginBatch(const char *name) {
   plugin = new dadi::SharedLibrary(libname);
   if (plugin->isLoaded()) {
     factory = plugin->symbol("create_plugin_instance");
-    ((int (*)(void **))(factory))((void**) &instance);
+    reinterpret_cast<factory_function>(factory)(reinterpret_cast<void**>(&instance));
   }
 
   return instance;
