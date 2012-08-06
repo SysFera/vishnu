@@ -142,11 +142,7 @@ fill(ConfigMap& cfg, const std::string& mfile) {
     while(std::getline(tfile, line)) {
       boost::algorithm::split(buff, line, boost::algorithm::is_space());
 
-      switch (buff.size()) {
-      case 2:
-        buff.push_back("tcp");
-        break;
-      default:
+      if (buff.size() != 2) {
         // we skip faulty entries
         std::cerr <<
           boost::format("E: invalid line in config file (%1%:%2%)\n")
@@ -321,7 +317,6 @@ diet_string_get(diet_arg_t* arg, char** value, void* ptr) {
   *value = (char *)malloc((strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])+1)*sizeof (char));
   memcpy(*value, ((diet_profile_t*)(arg->prof))->param[arg->pos], strlen(((diet_profile_t*)(arg->prof))->param[arg->pos]));
   (*value)[strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])]='\0';
-//  std::cout << "Value set :" << *value << "\n";
   return 0;
 }
 
