@@ -295,12 +295,169 @@ BOOST_AUTO_TEST_CASE( session_exchange_test )
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }
 
+BOOST_AUTO_TEST_CASE( type_conversion_init )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	try{
+		SOCISession session;
+		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
+
+		// executing simple request
+		BOOST_TEST_MESSAGE("--- type conversion test ---");
+		std::string sqlCreate="CREATE TABLE typeconversion ("
+				"integer integer, double double precision,"
+				"varchar varchar, timestamp timestamp without time zone)";
+		BOOST_CHECK_NO_THROW(session.execute("drop table if exists typeconversion"));
+		BOOST_CHECK_NO_THROW(session.execute(sqlCreate));
+		BOOST_CHECK_NO_THROW(session.execute("insert into typeconversion default values"));
+
+
+		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
+	} catch (exception const & e)
+	{
+		BOOST_MESSAGE(e.what());
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
+BOOST_AUTO_TEST_CASE( type_conversion_integer )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	try{
+		SOCISession session;
+		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
+
+		// executing simple request
+		BOOST_TEST_MESSAGE("--- type conversion : integer ---");
+		std::string sqlUpdate="update typeconversion set integer=7";
+		std::string sqlSelect="select integer from typeconversion";
+		int expected = 7;
+		int read;
+		BOOST_CHECK_NO_THROW(session.execute(sqlUpdate));
+		BOOST_CHECK_NO_THROW(session.execute(sqlSelect).into(read));
+		BOOST_CHECK(read==expected);
+
+
+		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
+	} catch (exception const & e)
+	{
+		BOOST_MESSAGE(e.what());
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
+
+BOOST_AUTO_TEST_CASE( type_conversion_double )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	try{
+		SOCISession session;
+		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
+
+		// executing simple request
+		BOOST_TEST_MESSAGE("--- type conversion : double precision ---");
+		std::string sqlUpdate="update typeconversion set double=3.14";
+		std::string sqlSelect="select double from typeconversion";
+		double expected = 3.14;
+		double read;
+		BOOST_CHECK_NO_THROW(session.execute(sqlUpdate));
+		BOOST_CHECK_NO_THROW(session.execute(sqlSelect).into(read));
+		BOOST_CHECK(read==expected);
+
+
+		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
+	} catch (exception const & e)
+	{
+		BOOST_MESSAGE(e.what());
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
+BOOST_AUTO_TEST_CASE( type_conversion_varchar )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	try{
+		SOCISession session;
+		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
+
+		// executing simple request
+		BOOST_TEST_MESSAGE("--- type conversion : varchar ---");
+		std::string sqlUpdate="update typeconversion set varchar='toto'";
+		std::string sqlSelect="select varchar from typeconversion";
+		std::string expected = "toto";
+		std::string read;
+		BOOST_CHECK_NO_THROW(session.execute(sqlUpdate));
+		BOOST_CHECK_NO_THROW(session.execute(sqlSelect).into(read));
+		BOOST_CHECK(read==expected);
+
+
+		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
+	} catch (exception const & e)
+	{
+		BOOST_MESSAGE(e.what());
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
+
+BOOST_AUTO_TEST_CASE( type_conversion_time )
+{
+	BOOST_REQUIRE(myDatabase != NULL);
+	BOOST_CHECK(myDatabase->connect()==0);
+	try{
+		SOCISession session;
+		BOOST_CHECK_NO_THROW(session = myDatabase->getSingleSession());
+
+		// executing simple request
+		BOOST_TEST_MESSAGE("--- type conversion : timestamp ---");
+		std::string sqlUpdate="update typeconversion set timestamp=:param";
+		std::string sqlSelect="select timestamp from typeconversion";
+		std::string strExpected = "2012-07-31 22:54:28";
+		std::tm expected;
+		expected.tm_year=2012-1900;
+		expected.tm_mon=7-1;
+		expected.tm_mday=31;
+		expected.tm_hour=22;
+		expected.tm_min=54;
+		expected.tm_sec=28;
+		std::tm read;
+		BOOST_CHECK_NO_THROW(session.execute(sqlUpdate).use(strExpected));
+		BOOST_CHECK_NO_THROW(session.execute(sqlSelect).into(read));
+		BOOST_CHECK(read.tm_year==expected.tm_year);
+		BOOST_CHECK(read.tm_mon==expected.tm_mon);
+		BOOST_CHECK(read.tm_mday==expected.tm_mday);
+		BOOST_CHECK(read.tm_hour==expected.tm_hour);
+		BOOST_CHECK(read.tm_min==expected.tm_min);
+		BOOST_CHECK(read.tm_sec==expected.tm_sec);
+
+
+		BOOST_CHECK_NO_THROW(myDatabase->releaseSingleSession(session));
+	} catch (exception const & e)
+	{
+		BOOST_MESSAGE(e.what());
+		BOOST_CHECK(false);
+	}
+
+	BOOST_CHECK(myDatabase->disconnect()==0);
+}
 
 BOOST_AUTO_TEST_CASE( clean_test )
 {
 	BOOST_REQUIRE(myDatabase != NULL);
 	BOOST_CHECK(myDatabase->connect()==0);
 	BOOST_CHECK(myDatabase->process("drop table if exists paco")==0);
+	BOOST_CHECK(myDatabase->process("drop table if exists typeconversion")==0);
 	BOOST_CHECK(myDatabase->disconnect()==0);
 }
 
