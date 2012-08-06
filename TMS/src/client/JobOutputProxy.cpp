@@ -89,9 +89,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	CpFileOptions copts;
 	copts.setIsRecursive(false) ;
 	copts.setTrCommand(0); // for using scp
-	string outputInfo = copyFile(sessionKey, mmachineId, routputInfo, "/tmp", copts) ;
-	//	string fDescStr = vishnu::get_file_content(outputInfo) ; boost::trim(fDescStr) ;
-	//	ListStrings fDescVec ; 	boost::split(fDescVec, fDescStr, boost::is_any_of(" ")) ;
+	string outputInfo = genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
 
 	string line = "" ;
 	istringstream fdescStream (vishnu::get_file_content(routputInfo, false)) ;

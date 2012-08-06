@@ -1,9 +1,9 @@
 /**
-* \file ServerTMS.cpp
-* \brief This file presents the implementation of the TMS server.
-* \author Daouda Traore (daouda.traore@sysfera.com)
-* \date April
-*/
+ * \file ServerTMS.cpp
+ * \brief This file presents the implementation of the TMS server.
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date April
+ */
 
 #include "ServerTMS.hpp"
 #include "internalApi.hpp"
@@ -14,6 +14,10 @@
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
 #include "UserServer.hpp"
+#include "api_ums.hpp"
+#include "UserServer.hpp"
+#include "SessionServer.hpp"
+
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
@@ -40,9 +44,9 @@ ServerTMS::getDatabaseVishnu() {
 }
 
 /**
-* \brief To get the vishnuId
-* \return the path of the configuration file
-*/
+ * \brief To get the vishnuId
+ * \return the path of the configuration file
+ */
 int
 ServerTMS::getVishnuId() const {
   return mvishnuId;
@@ -241,3 +245,61 @@ ServerTMS::initMap(std::string mid) {
   functionPtr = solveAddWork;
   mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
 }
+
+/**
+ * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
+ * \param pb the resquest profile
+ * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
+ */
+void
+ServerTMS::setBatchLoadPerformance(diet_profile_t* pb/*, estVector_t perfValues*/) {
+
+	BatchFactory factory;
+	BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+
+	boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+	TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
+	batchServer->fillListOfJobs(listOfJobs);
+
+	//TODO to correct
+	char* sessionKey ; //= (diet_paramstring_get_desc(diet_parameter(pb, 0)))->param;
+	SessionServer sessionServer = SessionServer(std::string(sessionKey));
+	long LoadValue = std::numeric_limits<long>::max();
+
+	try {
+		std::string machineId = ServerTMS::getInstance()->getMachineId();
+		UserServer(sessionServer).getUserAccountLogin(machineId);
+		//TODO to correct
+		char* jobSerialized ; //= (diet_paramstring_get_desc(diet_parameter(pb, 3)))->param;
+		TMS_Data::SubmitOptions_ptr submitOptions = NULL;
+		if(vishnu::parseEmfObject(std::string(jobSerialized), submitOptions)) {
+			if(submitOptions->getCriterion()!=NULL) {
+				switch((submitOptions->getCriterion())->getLoadType()) {
+				case 0 :
+					LoadValue = listOfJobs->getNbWaitingJobs();
+					break;
+				case 1 :
+					LoadValue = listOfJobs->getNbJobs();
+					break;
+				case 2 :
+					LoadValue = listOfJobs->getNbRunningJobs();
+					break;
+				default :
+					LoadValue = listOfJobs->getNbWaitingJobs();
+					break;
+				}
+			} else {
+				LoadValue = listOfJobs->getNbWaitingJobs();
+			}
+		}
+	} catch (VishnuException& e) {
+	}
+
+	/*
+	 ** store the LoadValue value in the user estimate space,
+	 */
+	// diet_est_set(perfValues, 0, LoadValue);
+
+	delete listOfJobs;
+}
+
