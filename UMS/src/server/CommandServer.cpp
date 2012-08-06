@@ -86,7 +86,7 @@ CommandServer::isRunning() {
   sqlCommand.append(msessionServer.getAttribut("WHERE "
   "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
   SOCISession session = mdatabaseVishnu->getSingleSession();
-  session<<sqlCommand;
+  session.execute(sqlCommand);
   bool got_data=session.got_data();
   mdatabaseVishnu->releaseSingleSession(session);
   return(got_data);
