@@ -3,7 +3,7 @@
  * \brief This file presents the implementation of the TMS server.
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April
-*/
+ */
 
 #ifndef _TMS_SERVER_H_
 #define _TMS_SERVER_H_
@@ -16,6 +16,7 @@
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "SeD.hpp"
+#include "SessionServer.hpp"
 
 class Database;
 
@@ -49,6 +50,16 @@ public :
    * \brief To get the unique instance of the server
    */
   static ServerTMS*  getInstance();
+
+  /**
+   * \brief Function to select a server for automatic selection
+   * \param sessionKey The session key
+   * \param criterion The selection criterion
+   * \return the machine id
+   */
+  static std::string
+  selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion);
+
   /**
    * \brief To get the unique instance of the database
    */
@@ -61,16 +72,16 @@ public :
   int
   getVishnuId() const;
   /**
-  * \brief To get the batchType
-  * \return the type of the underlying batch scheduler
-  */
+   * \brief To get the batchType
+   * \return the type of the underlying batch scheduler
+   */
   BatchType
   getBatchType();
 
- /**
-  * \brief To get the machine id of the TMS server
-  * \return the machine id
-  */
+  /**
+   * \brief To get the machine id of the TMS server
+   * \return the machine id
+   */
   std::string
   getMachineId();
 
@@ -87,8 +98,7 @@ public :
    */
   std::vector<std::string>
   getDefaultBatchOption();
-
-   /**
+  /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
@@ -99,11 +109,10 @@ public :
    */
   int
   init(int vishnuId,
-       DbConfiguration dbConfig,
-       std::string machineId,
-       BatchType batchType,
-       std::string slaveBinDir,
-       std::string batchDefaultConfigFile);
+	   DbConfiguration dbConfig,
+	   std::string machineId,
+	   BatchType batchType,
+	   std::string slaveBinDir);
 
   /**
    * \brief Destructor, raises an exception on error

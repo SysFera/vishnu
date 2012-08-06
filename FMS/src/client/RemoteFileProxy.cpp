@@ -101,7 +101,7 @@ void RemoteFileProxy::getInfos() const {
   diet_string_set(diet_parameter(getInfosProfile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(getInfosProfile)) {
-    raiseDietMsgException("Error calling DIET service to obtain file informations");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(getInfosProfile, 4), &fileStatInString, NULL)){
@@ -188,7 +188,7 @@ int RemoteFileProxy::chgrp(const string& group) {
   diet_string_set(diet_parameter(chgrpProfile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(chgrpProfile)) {
-    raiseDietMsgException("Error calling DIET service to change file group");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(chgrpProfile, 5), &errMsg, NULL)){
@@ -257,7 +257,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
 
 
   if (diet_call(chmodProfile)){
-    raiseDietMsgException("Error calling DIET service to obtain file informations");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   //Output parameter
@@ -328,7 +328,7 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   diet_string_set(diet_parameter(headProfile, 6), NULL, DIET_VOLATILE);
 
   if (diet_call(headProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
   
   //Output parameter
@@ -394,7 +394,7 @@ string RemoteFileProxy::getContent() {
   diet_string_set(diet_parameter(getContentProfile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(getContentProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(getContentProfile, 4), &fileContent, NULL)){
@@ -457,7 +457,7 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
   diet_string_set(diet_parameter(mkfileProfile, 4), NULL, DIET_VOLATILE);
 
   if (diet_call(mkfileProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(mkfileProfile, 4), &errMsg, NULL)){
@@ -522,7 +522,7 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_string_set(diet_parameter(mkdirProfile, 5), NULL, DIET_VOLATILE);
 
   if (diet_call(mkdirProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(mkdirProfile, 5), &errMsg, NULL)){
@@ -588,7 +588,7 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_string_set(diet_parameter(rmProfile,5), NULL, DIET_VOLATILE);
 
   if (diet_call(rmProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(rmProfile,5), &errMsg, NULL)){
@@ -647,7 +647,7 @@ int RemoteFileProxy::rmdir() {
   diet_string_set(diet_parameter(rmdirProfile, 4), NULL, DIET_VOLATILE);
 
   if (diet_call(rmdirProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(rmdirProfile, 4), &errMsg, NULL)){
@@ -718,7 +718,7 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   diet_string_set(diet_parameter(tailProfile, 6), NULL, DIET_VOLATILE);
 
   if (diet_call(tailProfile)){
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(diet_parameter(tailProfile, 5), &fileTail, NULL)){
@@ -794,7 +794,7 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
   diet_string_set(diet_parameter(lsProfile, 6), NULL, DIET_VOLATILE);
 
   if (diet_call(lsProfile)) {
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   //Output parameters
@@ -894,7 +894,7 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   }
 
   if (diet_call(transferFileProfile)) {
-    raiseDietMsgException("Error calling DIET service");
+    raiseDietMsgException("error while contacting the file management service");
   }
 
   if(!isAsyncTransfer) {

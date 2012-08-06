@@ -6,8 +6,9 @@
 #include "api_fms.hpp"
 #include "api_ums.hpp"
 #include <boost/algorithm/string.hpp>
-#include <boost/filesystem.hpp>
 #include <boost/algorithm/string/find.hpp>
+#include <boost/filesystem.hpp>
+#include "tmsClientUtils.hpp"
 
 using namespace std;
 namespace bfs=boost::filesystem;
@@ -59,12 +60,12 @@ JobProxy::submitJob(const std::string& scriptContent,
 	}
 
 	ListStrings paramsVec ;
-	boost::split(paramsVec, options.getFileParams(), boost::is_any_of(" ")) ;
-
+	string paramsStr = options.getFileParams();
+	boost::split(paramsVec, paramsStr, boost::is_space()) ;
 	string rdestDir = bfs::unique_path("/tmp/fms%%%%%%").string();
-	string fqdnDestDir = "";
-	if( paramsVec.size() ) {
-		fqdnDestDir = mmachineId + ":" +  rdestDir;
+
+	if (paramsVec.size() > 0 && paramsStr.size() != 0) {
+		string fqdnDestDir = mmachineId + ":" +  rdestDir;
 		if(vishnu::createDir(sessionKey, fqdnDestDir)){
 			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the upload directory : "+fqdnDestDir);
 		}
@@ -77,27 +78,21 @@ JobProxy::submitJob(const std::string& scriptContent,
 		string param = (*it).substr(0, pos) ;
 		string path = (*it).substr(pos+1, std::string::npos);
 
-		if( ! bfs::exists(path) ) throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
+		size_t colonPos = path.find(":");
+		std::string filerMachineId;
+		if ((colonPos == string::npos) && !bfs::exists(path)) {
+		  throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
+		  filerMachineId = path.substr(0, colonPos);
+		  path = path.substr(++colonPos, string::npos);
+		}
 
 		string rpath = rdestDir + "/" + bfs::path(path).filename().string();
-		string fqdnPath = mmachineId + ":" +  + "/" + rpath;
 
 		CpFileOptions copts;
 		copts.setIsRecursive(true) ;
 		copts.setTrCommand(0); // for using scp
-		if( vishnu::copyFile(sessionKey, path, fqdnPath, copts) ) {
 
-			UMS_Data::ListMachines machines;
-			UMS_Data::ListMachineOptions mopts;
-			mopts.setListAllMachine(false);
-			mopts.setMachineId(mmachineId);
-			if(vishnu::listMachines(sessionKey, machines, mopts) || !machines.getMachines().size()) {
-				throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to get the information concerning the machine "+mmachineId);
-			}
-			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "error while copying the file " + path
-					+" to "+fqdnPath+" (machine name : "+machines.getMachines().get(0)->getName()+ ")");
-		}
-
+		genericFileCopier(sessionKey, filerMachineId, path, mmachineId, rpath, copts);
 		paramsBuf << ((paramsBuf.str().size() != 0)? " " : "") + param << "=" << rpath ;
 	}
 
