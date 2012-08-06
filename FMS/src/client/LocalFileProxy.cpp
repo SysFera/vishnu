@@ -142,7 +142,7 @@ int LocalFileProxy::transferFile(const string& dest,
 	}
 
 	if (diet_call(profile)) {
-		raiseDietMsgException("Error calling DIET service");
+	  raiseDietMsgException("error while contacting the file management service");
 	}
 
 	if(!isAsyncTransfer) {

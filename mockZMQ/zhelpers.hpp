@@ -78,7 +78,7 @@ public:
           expect_reply = false;
           break;
         } else {
-          std::cerr << "W: no response from server, retrying ...\n";
+          std::cerr << "W: no response from "+addr_+", retrying ...\n";
           reset();
           sock_->send(data);
         }

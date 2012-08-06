@@ -99,16 +99,15 @@ solveSubmitJob(diet_profile_t* pb) {
 
 		if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
 			sessionServer.check(); //To check the sessionKey
-			machineId = (ServerTMS::getInstance()->getMachineId()).c_str();
+			machineId = ServerTMS::getInstance()->getMachineId();
 			try {
 				UserServer(sessionServer).getUserAccountLogin(machineId);
 			} catch (VishnuException& e) {
 				throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on any of the machines.");
 			}
 		} else {
-			if(submitOptions->getCriterion()!=NULL) {
-				throw UserException(ERRCODE_INVALID_PARAM, "Criterion option is used only if the machine identifier is equal"
-						" to autom (this keyword is used to submit automatically a job)");
+			if(submitOptions->getCriterion() != NULL) {
+				throw UserException(ERRCODE_INVALID_PARAM, "Criterion option is used only for automatic machine selection");
 			}
 		}
 

@@ -19,20 +19,6 @@
 inline std::string getMachineName(const std::string & sessionKey, const std::string & machineId);
 
 /**
- * \brief Function to copy a remote file to a local directory
- * \param srcMid : Id of the remote machine
- * \param rfile : Path of the file to copy
- * \param ldestDir : Destination directory on the local machine
- * \param copts : Copy option (false => non recursive, 0 => scp)
- * \return Throw exception on error
- */
-std::string copyFile(const std::string & sessionKey,
-		const std::string & srcMid,
-		const std::string & rfile,
-		const std::string & ldestDir,
-		const CpFileOptions& copts);
-
-/**
  * \brief Function to copy a list of remote files to a local directory
  * \param srcMid : Id of the remote machine
  * \param rfiles : List of the files to copy
@@ -47,5 +33,22 @@ void copyFiles(const std::string & sessionKey,
 		const std::string & ldestDir,
 		const CpFileOptions& copts,
 		const int & startPos=0);
+
+/**
+ * \brief Function to copy a remote file to a local directory
+ * \param srcMachineId : Id of the source machine
+ * \param srcPath : Path of the source file
+ * \param destMachineId : Id of the destination machine
+ * \param destPath : The destination path (may be a directory)
+ * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \return The copied file or throw exception on error
+ */
+std::string
+genericFileCopier(const std::string & sessionKey,
+                  const std::string & srcMachineId,
+                  const std::string & srcPath,
+                  const std::string & destMachineId,
+                  const std::string & destPath,
+                  const CpFileOptions& copts);
 
 #endif /* TMSCLIENTUTILS_HPP_ */

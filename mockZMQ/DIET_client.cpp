@@ -280,9 +280,9 @@ diet_call(diet_profile_t* prof) {
     }
   }
 
-  diet_call_gen(prof, uri);
+  return diet_call_gen(prof, uri);
 
-  return 0;
+ // return 0;
 }
 
 int
@@ -294,7 +294,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
-    exit(-1);
+    return 1;
   }
 
   std::string response = lpc.recv();
