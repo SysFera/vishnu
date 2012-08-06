@@ -408,21 +408,10 @@ if(NOT CLIENT_ONLY)
   set(database_SRCS
     database/DbConfiguration.cpp
     database/DbFactory.cpp
-   # database/Database.cpp
+ #   database/DbService.cpp
+ #   database/SQLCatalog.cpp
     database/DatabaseResult.cpp)
   set(utils_server_SRCS utils/utilServer.cpp)
-
-  if(MYSQL_FOUND AND ENABLE_MYSQL)
-   # set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
-    include_directories(${MYSQL_INCLUDE_DIR})
-    set(DB_LIBS ${DATABASE_LIBS})
-  endif()
-
-  if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
-   # set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
-    include_directories(${DATABASE_INCLUDE_DIR})
-    set(DB_LIBS ${DATABASE_LIBS})
-  endif()
 
   if(SOCI_FOUND)
     set(database_SRCS ${database_SRCS} database/SOCIDatabase.cpp)
