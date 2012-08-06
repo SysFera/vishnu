@@ -105,7 +105,7 @@ private:
 
 extern "C" {
   /** factory method signature */
-  typedef bool (*factory_function)(void **instance);
+  typedef int (*factory_function)(void **instance);
 
 /**
  * @brief Plugin factory
