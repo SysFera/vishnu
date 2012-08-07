@@ -47,7 +47,7 @@ MonitorFMS::init(int vishnuId, DbConfiguration dbConfig) {
   DbFactory factory;
 
   mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid=:vishnuid");
+  std::string sqlCommand("SELECT vishnuid FROM vishnu where vishnuid=:vishnuid");
   try
   {
 	  /*connection to the database*/
