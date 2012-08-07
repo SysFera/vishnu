@@ -6,7 +6,10 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${DATABASE_INCLUDE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
-)
+  ${MOCK_INCLUDE_DIR}
+  ${ZMQ_INCLUDE_DIR}
+  ZMQHelper
+  )
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -329,7 +332,8 @@ add_library(vishnu-core ${config_SRCS}
 
 target_link_libraries(vishnu-core
   emf4cpp-vishnu
-  ${LIBCRYPT_LIB})
+  ${LIBCRYPT_LIB}
+)
 
 
 set(EMF-ECORE-HEADERS
@@ -459,7 +463,8 @@ if(NOT CLIENT_ONLY)
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
-  target_link_libraries(vishnu-core-server ${DB_LIBS})
+  target_link_libraries(vishnu-core-server ${DB_LIBS}
+    ${ZMQ_LIBRARIES})
 
   install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
 endif()

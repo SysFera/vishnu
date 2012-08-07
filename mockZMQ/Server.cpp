@@ -7,8 +7,8 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
-Server::Server(std::string name, std::vector<std::string> &serv, std::string addr, int port) :
-    mname(name), mservices(serv), maddress(addr), mport(port) {
+Server::Server(std::string name, std::vector<std::string> &serv, std::string uri) :
+    mname(name), mservices(serv), muri(uri){
 }
 
 Server::~Server(){}
@@ -54,14 +54,10 @@ Server::getName(){
   return mname;
 }
 
-int
-Server::getPort(){
-  return mport;
-}
 
 std::string
-Server::getAddress(){
-  return maddress;
+Server::getURI(){
+  return muri;
 }
 
 std::vector<std::string>&
@@ -76,8 +72,7 @@ Server::toString(){
   std::stringstream res;
   int i;
   res << mname << "$$$"
-      << maddress << "$$$"
-      << mport << "$$$";
+      << muri << "$$$";
   for (i=0 ; i<mservices.size()-1 ; ++i){
     res << mservices.at(i) << "$$$";
   }
@@ -91,20 +86,18 @@ Server::fromString(std::string prof){
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
   std::string name;
-  int port;
-  std::string address;
+  std::string uri;
   std::vector<std::string> services;
   int i;
 
   if (!vecString.empty()) {
     std::vector<std::string>::iterator it= vecString.begin();
     name = std::string(strdup((it++)->c_str()));
-    address = std::string(strdup((it++)->c_str()));
-    port = boost::lexical_cast<int>(*(it++));
+    uri = std::string(strdup((it++)->c_str()));
     for (i=0; it != vecString.end(); it++,i++){
-      services.at(i) = std::string(strdup(it->c_str()));
+      services.push_back(std::string(strdup(it->c_str())));
     }
-    res.reset(new Server(name, services, address, port));
+    res.reset(new Server(name, services, uri));
   }
   return res;
 }

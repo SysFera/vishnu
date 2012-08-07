@@ -37,9 +37,8 @@ namespace vishnu {
     DBPOOLSIZE,
     AUTHENTYPE,
     DEFAULTBATCHCONFIGFILE,
-    ADDR,
-    PORT,
-    URI
+    URI,
+    URINAMER
   } param_type_t;
 
   /**

@@ -21,13 +21,9 @@ private:
    */
   std::vector<std::string> mservices;
   /**
-   * \brief The address the server is running over
+   * \brief The uri the server is running over
    */
-  std::string maddress;
-  /**
-   * \brief The port the server is listening to
-   */
-  int mport;
+  std::string muri;
 
 public:
 
@@ -43,10 +39,9 @@ public:
    * \brief Constructor
    * \param name The name of the server
    * \param serv The services offered by the server
-   * \param addr The address the server is running
-   * \param port The port the server is listening to
+   * \param uri The uri the server is running
    */
-  Server(std::string name, std::vector<std::string> &serv, std::string addr, int port);
+  Server(std::string name, std::vector<std::string> &serv, std::string uri);
 
   /**
    * \brief Destructor
@@ -81,13 +76,6 @@ public:
   getName();
 
   /**
-   * \brief Getter for the port
-   * \return The port the server is listening
-   */
-  int
-  getPort();
-
-  /**
    * \brief Getter for the services
    * \return The list of services of the server
    */
@@ -95,11 +83,11 @@ public:
   getServices();
 
   /**
-   * \brief Getter for the address
-   * \return The address of the server
+   * \brief Getter for the uri
+   * \return The uri of the server
    */
   std::string
-  getAddress();
+  getURI();
 
   /**
    * \brief DEPRECATED Serializer for the server object
