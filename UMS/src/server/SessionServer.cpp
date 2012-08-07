@@ -271,7 +271,17 @@ SessionServer::getSessionToclosebyTimeout() {
         " and closepolicy=1";
       break;
     case DbConfiguration::ORACLE:
-      throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
+      sqlCommand = "SELECT sessionkey from vsession where"
+    			" ( select (cast(current_timestamp as date) - cast(lastconnect as date))*24*60*60 from dual )"
+    			"> timeout "
+    			"and state=1 and closepolicy=1";
+      //throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
+      break;
+    case DbConfiguration::SQLITE3:
+      sqlCommand = "SELECT sessionkey from vsession where"
+  			" ( strftime('%s',current_timestamp) - strftime('%s',lastconnect) )"
+  			"> timeout "
+  			"and state=1 and closepolicy=1";
       break;
     default:
       break;
