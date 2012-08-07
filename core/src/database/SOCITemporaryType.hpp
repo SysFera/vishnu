@@ -110,17 +110,21 @@ public:
 	 * i_ok : exchanging data is successfull
 	 * i_null : the data to exchange is a null value
 	 * i_truncated : the data to exchange data is troncated
+	 *
+	 * \param (optional) name : name of the parameter to bind with the input data,
+	 * if name is empty or not specified, the input data is bound by position
 	 */
 	template<typename INPUT>
-	SOCITemporaryType & use(INPUT & in)
+	SOCITemporaryType & use(INPUT const & in, std::string const & name = std::string())
 	{
-		return this->exchange(soci::use(in));
+		return this->exchange(soci::use(in,name));
 	}
 
 	template<typename INPUT>
-	SOCITemporaryType & use(INPUT & in, soci::indicator & indic)
+	SOCITemporaryType & use(INPUT const & in, soci::indicator & indic,
+			std::string const & name = std::string())
 	{
-		return this->exchange(soci::use(in,indic));
+		return this->exchange(soci::use(in,indic, name));
 	}
 
 	/**
