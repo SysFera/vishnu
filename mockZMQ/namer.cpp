@@ -64,9 +64,7 @@ public:
 
     // Send reply back to client
       std::cout << " Serialized to send : " << resultSerialized << std::endl;
-      zmq::message_t reply(resultSerialized.length()+1);
-      memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
-      socket.send(reply);
+      s_send(socket, resultSerialized) ;
     }
   }
 
@@ -118,10 +116,7 @@ public:
 
       // Send reply back to client
       std::cout << " Serialized to send : " << resultSerialized << std::endl;
-      zmq::message_t reply(resultSerialized.length()+1);
-      memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
-      socket.send(reply);
-
+      s_send(socket, resultSerialized);
     }
   }
 

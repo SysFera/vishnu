@@ -24,7 +24,10 @@
 ServerTMS *ServerTMS::minstance = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
 //}}RELAX<MISRA_0_1_3>
-
+/**
+ * \brief Path to the file containing the namer uri
+ */
+std::string ServerTMS::muriNamerCfg = "/tmp/vishnu-urinamer.cfg";
 /**
  * \brief To get the unique instance of the server
  */
@@ -34,6 +37,38 @@ ServerTMS::getInstance() {
     minstance = new ServerTMS();
   }
   return minstance;
+}
+
+/**
+ * \brief Function to select a server for automatic selection
+ * \param sessionKey The session key
+ * \param criterion The selection criterion
+ * \return the machine id
+ */
+std::string
+ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
+
+	std::cout << muriNamerCfg << std::endl;
+	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
+	UserServer userServer = UserServer(SessionServer(sessionKey));
+	userServer.init();
+	string userId = userServer.getData().getUserId();
+
+	if( userId.size() == 0 ) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
+	}
+
+	UMS_Data::ListMachines machines;
+	UMS_Data::ListMachineOptions mopts;
+	mopts.setListAllMachine(false);
+	mopts.setUserId(userId);
+	mopts.setMachineId("");
+	vishnu::listMachines(sessionKey, machines, mopts) ;
+	if(machines.getMachines().size() == 0) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to the user "+userId);
+	}
+	return machines.getMachines().get(0)->getMachineId();
+
 }
 
 /**
@@ -114,7 +149,8 @@ ServerTMS::init(int vishnuId,
                 std::string machineId,
                 BatchType batchType,
                 std::string slaveBinDir,
-                std::string batchDefaultConfigFile
+                std::string batchDefaultConfigFile,
+    			const std::string & uriNamer
                )
 {
 
@@ -127,8 +163,11 @@ ServerTMS::init(int vishnuId,
   //initialization of the slave directory
   mslaveBinDir = slaveBinDir;
 
+//set the name uri
+  vishnu::saveInFile(muriNamerCfg, "namer "+uriNamer) ;
+
   //initialization of the default batch config file
- // mdefaultBatchConfig = batchDefaultConfigFile;
+  // mdefaultBatchConfig = batchDefaultConfigFile;
   switch(mbatchType) {
     case TORQUE :
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");

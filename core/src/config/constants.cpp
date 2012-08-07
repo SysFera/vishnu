@@ -19,10 +19,11 @@ namespace vishnu {
     /* [10] */ {REMOTEBINDIR, "vishnuRemoteBinDirectory", STRING_PARAMETER},
     /* [11] */ {INTERVALMONITOR, "intervalMonitor", INT_PARAMETER},
     /* [12] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
-    /* [13] */ {AUTHENTYPE, "authenticationType",STRING_PARAMETER},
+    /* [13] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
     /* [14] */ {DEFAULTBATCHCONFIGFILE, "defaultBatchConfigFile",STRING_PARAMETER},
-	/* [15] */ {URI, "uri", URI_PARAMETER},
-    /* [16] */ {URINAMER, "uriNamer", URI_PARAMETER}
+    /* [15] */ {URI, "uri", URI_PARAMETER},
+    /* [16] */ {URINAMERSUB, "uriNamerSub", URI_PARAMETER},
+    /* [17] */ {URINAMERSRV, "uriNamerSrv", URI_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }

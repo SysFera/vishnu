@@ -51,4 +51,18 @@ genericFileCopier(const std::string & sessionKey,
                   const std::string & destPath,
                   const CpFileOptions& copts);
 
+
+/**
+ * \brief Function to copy a remote file to a local directory
+ * \param srcFiles : String describing the source files
+ * \param destMachineId : Id of the destination machine
+ * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \return A string describing the destination file. The function throw exception on error
+ */
+std::string
+sendInputFiles(const std::string & sessionKey,
+                  const std::string & srcFiles,
+                  const std::string & destMachineId,
+                  const CpFileOptions & copts);
+
 #endif /* TMSCLIENTUTILS_HPP_ */

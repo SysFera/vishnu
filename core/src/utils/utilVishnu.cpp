@@ -577,13 +577,29 @@ vishnu::createTmpFile(char* fileName, const std::string& file_content) {
  * \param content The content of the file
  */
 void
-vishnu::saveMissingFiles(const std::string & fileName,
+vishnu::saveInFile(const std::string & fileName,
                          const std::string& content) {
 
   bfs::ofstream file(fileName);
 
+  file << content << "\n";
+
+  file.close();
+}
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ * \param missingDesc The content of the file
+ */
+void
+vishnu::recordMissingFiles(const std::string & fileName,
+                         const std::string& missingDesc) {
+
+  bfs::ofstream file(fileName);
+
   ListStrings missingFiles ;
-  boost::split(missingFiles, content, boost::is_space());
+  boost::split(missingFiles, missingDesc, boost::is_space());
   int count = missingFiles.size() ;
   for(int i = 1; i < count; i++) {
     file << missingFiles[i] << "\n";

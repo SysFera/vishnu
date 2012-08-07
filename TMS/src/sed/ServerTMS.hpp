@@ -112,7 +112,8 @@ public :
 	   DbConfiguration dbConfig,
 	   std::string machineId,
 	   BatchType batchType,
-	   std::string slaveBinDir);
+	   std::string slaveBinDir,
+	   const std::string & uriNamer);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -137,13 +138,13 @@ private :
    */
   ServerTMS& operator=(const ServerTMS&);
 
-  /**
-   * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
-   * \param pb the resquest profile
-   * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
-   */
-//  static void
-//    setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues);
+	/**
+	 * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
+	 * \param pb the resquest profile
+	 * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
+	 */
+	static void
+	setBatchLoadPerformance(diet_profile_t* pb/*, estVector_t perfValues*/);
 
 
   /////////////////////////////////

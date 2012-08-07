@@ -464,7 +464,7 @@ if(NOT CLIENT_ONLY)
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server ${DB_LIBS}
-    ${ZMQ_LIBRARIES})
+    ${ZMQ_LIBRARIES} zmq_helper)
 
   install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
 endif()
