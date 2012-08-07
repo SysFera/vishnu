@@ -136,7 +136,7 @@ main(int argc, char* argv[], char* envp[]) {
   // Initialize the DIET SeD
   if (!res) {
     ZMQServerStart(server, uri);
-    unregisterSeD(IMSTYPE, mid);
+    unregisterSeD(IMSTYPE, config);
     pid_t pid = getpid();
     kill(pid, SIGINT);
   } else {
