@@ -63,6 +63,7 @@ int main(int argc, char* argv[], char* envp[]) {
   string cfg;
 
   string uri;
+  string uriNamerSrv;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -75,6 +76,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::URINAMERSRV, uriNamerSrv);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -140,13 +142,6 @@ int main(int argc, char* argv[], char* envp[]) {
   if (pid > 0) {
 
     try {
-      //Check if machineId is authorized
-      if (0 == machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)){
-        std::cerr << "\n" << AUTOMATIC_SUBMIT_JOB_KEYWORD
-                  << " is not authorized as machine identifier. "
-                  << "It is a TMS keyword.\n\n";
-        exit(1);
-      }
       if (0 == machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)) {
         std::cerr << "\n" << LIST_JOBS_ON_MACHINES_KEYWORD
                   << " is not authorized as machine identifier. "
@@ -157,7 +152,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory);
+                         batchType, remoteBinDirectory, uriNamerSrv);
 
       std::vector<std::string> ls = server.get()->getServices();
       registerSeD(TMSTYPE, config, cfg, ls);
@@ -167,9 +162,12 @@ int main(int argc, char* argv[], char* envp[]) {
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
       machine->setMachineId(machineId);
 
-      MachineServer machineServer(machine);
-      machineServer.checkMachine();
-      delete machine;
+
+      if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD) != 0) {
+          MachineServer machineServer(machine);
+    	  machineServer.checkMachine();
+          delete machine;
+      }
 
       // Initialize the DIET SeD
       if (!res) {

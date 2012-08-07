@@ -28,7 +28,7 @@ vishnu::unregisterSeD(string type, ExecConfiguration config) {
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  config.getRequiredConfigValue<std::string>(vishnu::URINAMER, urinamer);
+  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
   zmq::context_t ctx(1);
   LazyPirateClient lpc(ctx, urinamer);
   std::vector<std::string> tmp;
@@ -56,7 +56,7 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  config.getRequiredConfigValue<std::string>(vishnu::URINAMER, urinamer);
+  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
   zmq::context_t ctx(1);
   LazyPirateClient lpc(ctx, urinamer);
 
