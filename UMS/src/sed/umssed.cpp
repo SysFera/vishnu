@@ -74,6 +74,7 @@ main(int argc, char* argv[], char* envp[]) {
   string mid;
   string cfg;
   string uri;
+  string urinamer;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -119,9 +120,10 @@ main(int argc, char* argv[], char* envp[]) {
     res = server->init(vishnuId, dbConfig, sendmailScriptPath, authenticatorConfig);
 
     try {
-      registerSeD(UMSTYPE, config, cfg);
+      std::vector<std::string> ls = server.get()->getServices();
+      registerSeD(UMSTYPE, config, cfg, ls);
     } catch (VishnuException& e) {
-
+      std::cout << "failed to register with err" << e.what()  << std::endl;
     }
 
     //Declaration of signal handler

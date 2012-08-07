@@ -12,6 +12,8 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 #include "DbFactory.hpp"
+#include "zhelpers.hpp"
+#include "Server.hpp"
 
 // To get the hostname
 #include <unistd.h>
@@ -42,50 +44,28 @@ vishnu::unregisterSeD(string type, string mid) {
 }
 
 int
-vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
-  string s = config.scriptToString();
-  string mid;
-  string path;
-  int res;
-  // The temporary file that will be used to launch diet
-  cfg = "/tmp/sed.cfg";
+vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
+   string uri;
+   string urinamer;
 
   // Getting the machine id
-  config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-  // Insert sed statement
-  string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
-  req += convertToString(PUNDEF);
-  req += "', '";
-  req += type;
-  req += "', '";
-  req += mid;
-  req += "', CURRENT_TIMESTAMP, '"+s+"')";
-  // Database execution
-  try {
-    DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
-    database->process(req.c_str());
-  } catch (SystemException& e) {
-    throw (e);
+  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+  config.getRequiredConfigValue<std::string>(vishnu::URINAMER, urinamer);
+  zmq::context_t ctx(1);
+  std::cout << "pirate " << urinamer << std::endl;
+  LazyPirateClient lpc(ctx, urinamer);
+
+  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
+  std::string req = s.get()->toString();
+  std::cout << "sending " << req << std::endl;
+
+  if (!lpc.send(req)) {
+    std::cerr << "E: request failed, exiting ...\n";
+    exit(-1);
   }
-//  config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
-//  string cmd;
-//  cmd = "cp "+path+" "+cfg;
-//  res = system(cmd.c_str());
-//  if (res == -1) {
-//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-//  }
-//  cmd = "chmod 777 "+cfg;
-//  res = system(cmd.c_str());
-//  if (res == -1) {
-//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-//  }
-//  srand(std::time(NULL));
-//  cmd = "echo \"\\\nname="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
-//  res = system(cmd.c_str());
-//  if (res == -1) {
-//    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-//  }
+  std::string response = lpc.recv();
+  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+
   return 0;
 }
 

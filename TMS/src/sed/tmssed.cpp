@@ -158,7 +158,9 @@ int main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
                          batchType, remoteBinDirectory);
-      registerSeD(TMSTYPE, config, cfg);
+
+      std::vector<std::string> ls = server.get()->getServices();
+      registerSeD(TMSTYPE, config, cfg, ls);
 
       UMS_Data::UMS_DataFactory_ptr ecoreFactory =
         UMS_Data::UMS_DataFactory::_instance();

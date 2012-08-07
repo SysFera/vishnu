@@ -22,6 +22,13 @@ public:
   virtual int
   call(diet_profile_t* prof);
 
+  /**
+   * \brief To get the services offered by the server
+   * \return the services offered by the server
+   */
+  virtual std::vector<std::string>
+  getServices();
+
 protected:
   /**
    * \brief map with function ptr for callback

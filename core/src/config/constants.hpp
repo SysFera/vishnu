@@ -36,9 +36,8 @@ namespace vishnu {
     INTERVALMONITOR,
     DBPOOLSIZE,
     AUTHENTYPE,
-    ADDR,
-    PORT,
-    URI
+    URI,
+    URINAMER
   } param_type_t;
 
   /**

@@ -87,17 +87,18 @@ namespace vishnu {
 
   /**
    * \brief To register the server in the database
-   * \param type: The type of the SeD
-   * \param config: The configuration of the executable
-   * \param cfg: The created path to the config file
+   * \param type The type of the SeD
+   * \param config The configuration of the executable
+   * \param cfg The created path to the config file
+   * \param services The list of services
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  registerSeD(std::string type, ExecConfiguration config, std::string &cfg);
+  registerSeD(std::string type, ExecConfiguration config, std::string &cfg, std::vector<std::string>& services);
   /**
    * \brief To unregister the server in the database (set as stopped)
-   * \param type: The type of the SeD
-   * \param mid: The machine id
+   * \param type The type of the SeD
+   * \param mid The machine id
    * \return 0 if the function succeeds or another value otherwise
    */
   int

@@ -212,35 +212,25 @@ getServerAddresses(const std::string& uri, const std::string service,
   int tmp;
   while (precDol != std::string::npos) {
     tmp = response.find("$", precDol+1);
-    std::cout << "token1: " << tmp << "\n";
     if(tmp != std::string::npos){
       server = response.substr(precDol+1, tmp-precDol);
-      std::cout << "server: " << server << "\n";
     } else {
       server = response.substr(precDol+1, std::string::npos);
-      std::cout << "server: " << server << "\n";
     }
     precDol = tmp;
 
     std::string nameServ;
     std::string addr;
-    int port;
     int prec;
     std::vector< std::string> vec;
 
     tmp = server.find("#", 0);
     prec = tmp;
     nameServ = server.substr(0, tmp);
-    std::cout << "token2: " << nameServ << "\n";
-    std::cout << "cpt: " << prec << "\n";
     tmp = server.find("#", prec+1);
-    std::cout << "tmp found: " << tmp << "\n";
     addr = server.substr(prec+1, tmp-prec-1);
-    std::cout << "token3: " << addr << "\n";
-    port = vishnu::convertToInt(server.substr(tmp+1, std::string::npos));
-    std::cout << "token4: " << port << "\n";
 
-    boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr, port));
+    boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr));
     serv.push_back(s);
   }
 }
@@ -272,8 +262,8 @@ diet_call(diet_profile_t* prof) {
       getServerAddresses(uri, service, serv);
       boost::shared_ptr<Server> elected = electServer(serv);
       uri = boost::str(
-        boost::format("tcp://%1%:%2%")
-        % elected->getAddress() % elected->getPort());
+        boost::format("%1%")
+        % elected->getURI());
     } else {
       // basically you're screwed here
       throw SystemException(ERRCODE_SYSTEM,

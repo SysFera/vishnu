@@ -86,7 +86,8 @@ main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
 
-      registerSeD(FMSTYPE, config, cfg);
+      std::vector<std::string> ls = server.get()->getServices();
+      registerSeD(FMSTYPE, config, cfg, ls);
       // Initialize the DIET SeD
       if (!res) {
         ZMQServerStart(server, uri);
