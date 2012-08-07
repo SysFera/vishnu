@@ -16,6 +16,7 @@
 #include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -140,6 +141,8 @@ fill(ConfigMap& cfg, const std::string& mfile) {
     std::vector<std::string> buff;
     int i(0);
     while(std::getline(tfile, line)) {
+      // trim trailing whitespaces, end of lines
+      boost::algorithm::trim(line);
       boost::algorithm::split(buff, line, boost::algorithm::is_space());
 
       if (buff.size() != 2) {
