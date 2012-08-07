@@ -52,7 +52,7 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
   mmachineId = machineId;
   mbatchType = batchType;
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+  std::string sqlCommand("SELECT vishnuid FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
   try {
     /*connection to the database*/

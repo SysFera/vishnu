@@ -54,12 +54,11 @@ MonitorUMS::init(int vishnuId,
   AuthenticatorFactory authfactory;
   mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
+  std::string sqlCommand("SELECT vishnuid FROM vishnu where vishnuid="+convertToString(vishnuId));
 
   try {
     /*connection to the database*/
     mdatabaseVishnu->connect();
-#ifdef SOCI_USE_ADVANCED
     /* Checking of vishnuid on the database */
     SOCISession session=mdatabaseVishnu->getSingleSession();
     session<<sqlCommand;
@@ -68,13 +67,6 @@ MonitorUMS::init(int vishnuId,
     if(!got_data){
         throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
-#else
-    /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
-    if (result->getResults().size() == 0) {
-      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
-    }
-#endif
   } catch (VishnuException& e) {
     exit(0);
   }

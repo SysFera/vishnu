@@ -79,7 +79,6 @@ CommandServer::record(CmdType cmdType,
 */
 bool
 CommandServer::isRunning() {
-	//TODO check
   std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL "
   "and vsession_numsessionid=");
 

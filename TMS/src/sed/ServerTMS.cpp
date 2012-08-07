@@ -130,7 +130,7 @@ ServerTMS::init(int vishnuId,
     mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
     mmapper->registerMapper();
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+    std::string sqlCommand("SELECT vishnuid FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
     /* Checking of vishnuid on the database */
     SOCISession session = mdatabaseVishnu->getSingleSession();

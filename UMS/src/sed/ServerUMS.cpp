@@ -84,7 +84,7 @@ ServerUMS::init(int vishnuId,
 
     mvishnuId = vishnuId;
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
+    std::string sqlCommand("SELECT vishnuid FROM vishnu where vishnuid="+convertToString(mvishnuId));
 
     /*connection to the database*/
     mdatabaseVishnu->connect();

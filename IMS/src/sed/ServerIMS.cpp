@@ -71,9 +71,6 @@ ServerIMS::init(int vishnuId,
   DbFactory factory;
   mvishnuId = vishnuId;
 
-  string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
-
-
   try {
     //To get database instance
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
@@ -96,7 +93,7 @@ ServerIMS::init(int vishnuId,
     mmapperUMS = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
     mmapperUMS->registerMapper();
 
-    string sql("SELECT * FROM vishnu where vishnuid=:mvishnuId");
+    string sql("SELECT vishnuid FROM vishnu where vishnuid=:mvishnuId");
     SOCISession session = mdatabaseVishnu->getSingleSession();
     session.execute(sql).use(mvishnuId);
     bool got_data=session.got_data();

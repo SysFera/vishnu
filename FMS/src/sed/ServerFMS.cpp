@@ -69,14 +69,14 @@ ServerFMS::init(int vishnuId,
 
     mvishnuId = vishnuId;
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(mvishnuId));
+    std::string sqlCommand;
 
     /*connection to the database*/
     mdatabaseVishnu->connect();
 
     mmapper = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
     mmapper->registerMapper();
-    sqlCommand="SELECT * FROM vishnu where vishnuid=:param";
+    sqlCommand="SELECT vishnuid FROM vishnu where vishnuid=:param";
     SOCISession session = mdatabaseVishnu->getSingleSession();
     session.execute(sqlCommand).use(mvishnuId);
     bool got_id = session.got_data();
