@@ -166,7 +166,7 @@ ProcessServer::isIMSSeD(string Pname){
 
 void
 ProcessServer::fillContent(IMS_Data::Process_ptr p) {
-  string req = "SELECT * from process where vishnuname='"+p->getProcessName()+"'";
+  string req = "SELECT pstatus, dietname, uptime, launchscript from process where vishnuname='"+p->getProcessName()+"'";
   req += " AND machineid='"+p->getMachineId()+"' order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -174,15 +174,16 @@ ProcessServer::fillContent(IMS_Data::Process_ptr p) {
   }
   vector<string> res;
   res = result->get(0);
-  p->setState(convertToInt(res.at(1)));
-  p->setDietId(res.at(3));
-  p->setTimestamp(convertToInt(res.at(5)));
-  p->setScript(res.at(6));
+  p->setState(convertToInt(res.at(0)));
+  p->setDietId(res.at(1));
+  p->setTimestamp(convertToInt(res.at(2)));
+  p->setScript(res.at(3));
 }
 
 void
 ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
-  string req = "SELECT * from process where dietname='"+p->getDietId()+"'";
+  string req = "SELECT pstatus, vishnuname, machineid, uptime, launchscript from process"
+		  " where dietname='"+p->getDietId()+"'";
   req += " order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -190,17 +191,17 @@ ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
   }
   vector<string> res;
   res = result->get(0);
-  p->setState(convertToInt(res.at(1)));
-  p->setProcessName(res.at(2));
-  p->setMachineId(res.at(4));
-  p->setTimestamp(convertToInt(res.at(5)));
-  p->setScript(res.at(6));
+  p->setState(convertToInt(res.at(0)));
+  p->setProcessName(res.at(1));
+  p->setMachineId(res.at(2));
+  p->setTimestamp(convertToInt(res.at(3)));
+  p->setScript(res.at(4));
 }
 
 
 bool
 ProcessServer::checkStopped(string machine, string type) {
-  string req = "select * from process where machineid='"+machine+"' and vishnuname='"+type+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
+  string req = "select numprocess from process where machineid='"+machine+"' and vishnuname='"+type+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
   try {
 	  SOCISession session = mdatabase->getSingleSession();
 	  session.execute(req);
