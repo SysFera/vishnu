@@ -120,7 +120,8 @@ main(int argc, char* argv[], char* envp[]) {
 
   res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
 
-  registerSeD(IMSTYPE, config, cfg);
+  std::vector<std::string> ls = server.get()->getServices();
+  registerSeD(IMSTYPE, config, cfg, ls);
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);

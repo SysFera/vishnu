@@ -20,9 +20,8 @@ namespace vishnu {
     /* [11] */ {INTERVALMONITOR, "intervalMonitor", INT_PARAMETER},
     /* [12] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
     /* [13] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
-    /* [14] */ {ADDR, "address", STRING_PARAMETER},
-    /* [15] */ {PORT, "port", INT_PARAMETER},
-    /* [16] */ {URI, "uri", URI_PARAMETER}
+    /* [14] */ {URI, "uri", URI_PARAMETER},
+    /* [15] */ {URINAMER, "uriNamer", URI_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }

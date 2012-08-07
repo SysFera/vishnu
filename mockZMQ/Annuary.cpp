@@ -23,21 +23,20 @@ Annuary::~Annuary(){
 
 
 int
-Annuary::add(std::string name, std::vector<std::string> services, int port, std::string address){
+Annuary::add(std::string name, std::vector<std::string> services, std::string uri){
   boost::shared_ptr<Server> s;
-  s.reset (new Server(name, services, address, port));
+  s.reset (new Server(name, services, uri));
   mservers.push_back(s);
   return 0;
 }
 
 
 int
-Annuary::remove(std::string name, int port, std::string address){
+Annuary::remove(std::string name, std::string uri){
   int i;
   for (i=0;i<mservers.size();++i){
     if (name.compare(mservers.at(i)->getName()) == 0 &&
-        address.compare(mservers.at(i).get()->getAddress()) == 0 &&
-        port == mservers.at(i).get()->getPort()){
+        uri.compare(mservers.at(i).get()->getURI()) == 0){
       mservers.erase(mservers.begin()+i);
     }
   }
@@ -68,16 +67,14 @@ Annuary::initFromFile(std::string infile){
     while(std::getline(tfile, line)){
       std::istringstream iss(line);
       std::string name;
-      std::string addr;
-      std::string port;
+      std::string uri;
       boost::shared_ptr<Server> server;
       std::vector<std::string> ports;
       iss >> name;
-      iss >> addr;
-      iss >> port;
+      iss >> uri;
       std::vector<std::string> services;
       fillServices(services, name);
-      server = boost::shared_ptr<Server>(new Server(name, services, addr, vishnu::convertToInt(port)));
+      server = boost::shared_ptr<Server>(new Server(name, services, uri));
       mservers.push_back(server);
     }
   } else {

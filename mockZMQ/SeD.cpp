@@ -16,6 +16,18 @@ SeD::call(diet_profile_t* profile) {
   return (*functionPtr)(profile);
 }
 
+std::vector<std::string>
+SeD::getServices(){
+  std::vector<std::string> res;
+  std::map<std::string, functionPtr_t>::iterator it;
+  for (it = mcb.begin() ; it != mcb.end() ; ++ it ) {
+    res.push_back(it->first);
+  }
+  return res;
+}
+
+
+
 
 
 class ZMQWorker {
