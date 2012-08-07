@@ -474,6 +474,65 @@ SGEServer::getJobStartTime(const std::string& jobId) {
 }
 
 /**
+ * \brief Function to get the start time of the job
+ * \param jobId the identifier of the job
+ * \return 0 if the job is unknown or server not  unavailable
+ */
+time_t
+SGEServer::getJobEndTime(const std::string& jobId) {
+  
+  
+  time_t endTime = 0;
+  int state=-1;
+  size_t pos;
+  char diagnosis[DRMAA_ERROR_STRING_BUFFER];
+  int drmaa_errno;
+  
+  drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
+  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&
+    (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             "SGE ERROR: "+std::string(diagnosis));
+  }
+  drmaa_errno = drmaa_job_ps(jobId.c_str(), &state, diagnosis,
+                               sizeof(diagnosis)-1);
+  if (state==DRMAA_PS_DONE || state==DRMAA_PS_FAILED){
+    std::string exe = boost::process::find_executable_in_path("qacct",
+                                                              SGE_BIN_PATH);
+    std::vector<std::string> args;
+    boost::process::context ctx;
+    args.push_back("-j");
+    args.push_back(jobId);
+    ctx.streams[boost::process::stdout_id] = boost::process::behavior::pipe();
+    boost::process::child c = boost::process::create_child(exe, args, ctx);
+    boost::process::pistream is(c.get_handle(boost::process::stdout_id));
+    
+    
+    std::string line;
+    std:: string time;
+    
+    while (std::getline(is, line)){
+      boost::algorithm::trim_left(line);
+      if(boost::algorithm::starts_with(line, "end_time")){
+        pos =8;
+        if(pos!=std::string::npos){
+          line = line.substr(pos+2);
+          boost::algorithm::trim_left(line);
+          struct tm tm_obj;
+          strptime(time.c_str(), "%a %b %d %H:%M:%S %Y", &tm_obj);
+          endTime = mktime(&tm_obj);
+        }
+      }
+      
+    } 
+    
+  }
+
+  drmaa_exit(NULL, 0);
+  return endTime;
+}    
+
+/**
  * \brief Function to request the status of queues
  * \param optQueueName (optional) the name of the queue to request
  * \return The requested status in to ListQueues data structure

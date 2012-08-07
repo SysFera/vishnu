@@ -483,6 +483,56 @@ TorqueServer::getJobStartTime(const std::string& jobId) {
 return startTime;
 } 
 
+
+/**
+ * \brief Function to get the end time of the job
+ * \param jobId the identifier of the job
+ * \return 0 if the job is unknown or server not  unavailable
+ */
+time_t
+TorqueServer::getJobEndTime(const std::string& jobId) {
+  
+  int connect;
+  struct batch_status *p_status = NULL;
+  struct attrl *a;
+  time_t endTime = 0;
+  
+  char tmsJobIdOut[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
+  
+  if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
+  {
+    std::ostringstream jobIdError;
+    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
+  } else {
+    serverOut[0] = '\0';
+  }
+  
+  // Connect to the torque server
+  connect = cnt2server(serverOut);
+  
+  if(connect <= 0) {
+    return 0;
+  } else {
+    p_status = pbs_statjob(connect, tmsJobIdOut, NULL, NULL);
+    pbs_disconnect(connect);
+  }
+  
+  if(p_status!=NULL) {
+    a = p_status->attribs;
+    while(a!=NULL) {
+      if (!strcmp(a->name, "end_time")){
+        
+        std::istringstream iss(std::string(a->value));
+        iss >> endTime;
+        break;
+      }
+      a = a->next;
+    }
+  }
+  
+  return endTime;
+} 
 /**
  * \brief Function to convert the Torque state into VISHNU state 
  * \param state the state to convert

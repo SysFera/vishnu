@@ -31,9 +31,9 @@ using namespace ::TMS_Data;
 
 // Default constructor
 Job::Job() :
-    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
-            m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    ""), m_workId(0)
+    m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1),
+            m_startDate(-1), m_endDate(-1), m_wallClockLimit(-1),
+            m_memLimit(-1), m_nbNodes(-1), m_batchJobId(""), m_workId(0)
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -385,6 +385,32 @@ void Job::setSubmitDate(::ecore::ELong _submitDate)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__submitDate(),
                 _old_submitDate,
                 m_submitDate
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong Job::getStartDate() const
+{
+    return m_startDate;
+}
+
+void Job::setStartDate(::ecore::ELong _startDate)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_startDate = m_startDate;
+#endif
+    m_startDate = _startDate;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__startDate(),
+                _old_startDate,
+                m_startDate
         );
         eNotify(&notification);
     }

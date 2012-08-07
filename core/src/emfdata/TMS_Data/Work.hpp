@@ -257,6 +257,17 @@ namespace TMS_Data
         void setSubmitDate(::ecore::ELong _submitDate);
 
         /**
+         * \brief To get the startDate
+         * \return The startDate attribute value
+         **/
+        ::ecore::ELong getStartDate() const;
+        /**
+         * \brief To set the startDate
+         * \param _startDate The startDate value
+         **/
+        void setStartDate(::ecore::ELong _startDate);
+
+        /**
          * \brief To get the machineId
          * \return The machineId attribute value
          **/
@@ -347,6 +358,8 @@ namespace TMS_Data
         ::ecore::EString m_projectId;
 
         ::ecore::ELong m_submitDate;
+
+        ::ecore::ELong m_startDate;
 
         ::ecore::EString m_machineId;
 

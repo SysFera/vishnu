@@ -97,6 +97,9 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__submitDate->setFeatureID(
             ::TMS_Data::TMS_DataPackage::JOB__SUBMITDATE);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__submitDate);
+    m_Job__startDate = new ::ecore::EAttribute();
+    m_Job__startDate->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__STARTDATE);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__startDate);
     m_Job__endDate = new ::ecore::EAttribute();
     m_Job__endDate->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__ENDDATE);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__endDate);
@@ -571,6 +574,10 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__submitDate->setFeatureID(
             ::TMS_Data::TMS_DataPackage::WORK__SUBMITDATE);
     m_WorkEClass->getEStructuralFeatures().push_back(m_Work__submitDate);
+    m_Work__startDate = new ::ecore::EAttribute();
+    m_Work__startDate->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::WORK__STARTDATE);
+    m_WorkEClass->getEStructuralFeatures().push_back(m_Work__startDate);
     m_Work__machineId = new ::ecore::EAttribute();
     m_Work__machineId->setFeatureID(
             ::TMS_Data::TMS_DataPackage::WORK__MACHINEID);
@@ -807,6 +814,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__submitDate->setUnique(true);
     m_Job__submitDate->setDerived(false);
     m_Job__submitDate->setOrdered(true);
+    m_Job__startDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Job__startDate->setName("startDate");
+    m_Job__startDate->setDefaultValueLiteral("-1");
+    m_Job__startDate->setLowerBound(0);
+    m_Job__startDate->setUpperBound(1);
+    m_Job__startDate->setTransient(false);
+    m_Job__startDate->setVolatile(false);
+    m_Job__startDate->setChangeable(true);
+    m_Job__startDate->setUnsettable(false);
+    m_Job__startDate->setID(false);
+    m_Job__startDate->setUnique(true);
+    m_Job__startDate->setDerived(false);
+    m_Job__startDate->setOrdered(true);
     m_Job__endDate->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
     m_Job__endDate->setName("endDate");
@@ -2146,6 +2167,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_Work__submitDate->setUnique(true);
     m_Work__submitDate->setDerived(false);
     m_Work__submitDate->setOrdered(true);
+    m_Work__startDate->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
+    m_Work__startDate->setName("startDate");
+    m_Work__startDate->setDefaultValueLiteral("0");
+    m_Work__startDate->setLowerBound(0);
+    m_Work__startDate->setUpperBound(1);
+    m_Work__startDate->setTransient(false);
+    m_Work__startDate->setVolatile(false);
+    m_Work__startDate->setChangeable(true);
+    m_Work__startDate->setUnsettable(false);
+    m_Work__startDate->setID(false);
+    m_Work__startDate->setUnique(true);
+    m_Work__startDate->setDerived(false);
+    m_Work__startDate->setOrdered(true);
     m_Work__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Work__machineId->setName("machineId");
@@ -2600,6 +2635,10 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_Job__submitDate;
 }
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__startDate()
+{
+    return m_Job__startDate;
+}
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__endDate()
 {
     return m_Job__endDate;
@@ -2971,6 +3010,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getWork__submitDate()
 {
     return m_Work__submitDate;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getWork__startDate()
+{
+    return m_Work__startDate;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getWork__machineId()
 {

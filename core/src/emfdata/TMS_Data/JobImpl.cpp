@@ -132,6 +132,12 @@ void Job::_initialize()
                 m_submitDate);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__STARTDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
+                m_startDate);
+    }
+        return _any;
     case ::TMS_Data::TMS_DataPackage::JOB__ENDDATE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
@@ -289,6 +295,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_submitDate);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__STARTDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+                m_startDate);
+    }
+        return;
     case ::TMS_Data::TMS_DataPackage::JOB__ENDDATE:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
@@ -405,6 +417,8 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return m_status != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__SUBMITDATE:
         return m_submitDate != -1;
+    case ::TMS_Data::TMS_DataPackage::JOB__STARTDATE:
+        return m_startDate != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__ENDDATE:
         return m_endDate != -1;
     case ::TMS_Data::TMS_DataPackage::JOB__OWNER:

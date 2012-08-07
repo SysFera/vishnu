@@ -105,10 +105,29 @@ MonitorTMS::run() {
           sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
          
           mdatabaseVishnu->process(sqlUpdatedRequest.c_str()); 
-
           if(state==5) {
-            sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
+            char buffer[80];
+            time_t end = batchServer->getJobEndTime(batchJobId);
+            if (end != 0) {
+              strftime (buffer,80, "%m/%d/%Y %H:%M:%S",localtime(&end));
+              string buff(buffer);
+              sqlUpdatedRequest = "UPDATE job SET endDate='"+ buff+"' where jobId='"+jobId+"'";
+              
+            } else {
+              sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
+            }
+
             mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+           
+            
+          } else {
+            char buffer[80];
+            time_t start = batchServer->getJobStartTime(batchJobId);         
+            strftime (buffer,80, "%m/%d/%Y %H:%M:%S",localtime(&start));
+            string buff(buffer);
+            sqlUpdatedRequest = "UPDATE job SET startDate='"+ buff+"' where jobId='"+jobId+"'";
+            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+            
           }
         }
       }

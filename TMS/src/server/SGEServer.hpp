@@ -63,7 +63,14 @@ class SGEServer : public BatchServer
      */
     time_t 
     getJobStartTime(const std::string& jobId);
-
+    
+    /**
+     * \brief Function to get the end time of the job
+     * \param jobId the identifier of the job
+     * \return 0 if the job is unknown
+     */
+    time_t
+    getJobEndTime(const std::string& jobId);
    
     /**
      * \brief Function to request the status of queues 

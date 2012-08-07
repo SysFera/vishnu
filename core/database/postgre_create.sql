@@ -230,6 +230,7 @@ CREATE TABLE job (
   memLimit INTEGER,
   nbNodes INTEGER,
   nbNodesAndCpuPerNode VARCHAR(255),
+  startDate TIMESTAMP,
 PRIMARY KEY(numjobid),
     FOREIGN KEY(vsession_numsessionid)
     REFERENCES vsession(numsessionid) ON DELETE CASCADE);

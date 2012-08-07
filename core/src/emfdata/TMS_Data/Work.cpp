@@ -35,7 +35,7 @@ Work::Work() :
             m_status(-1), m_endDate(-1), m_estimatedHour(-1), m_doneRatio(0),
             m_dateCreated(-1), m_dateEnded(-1), m_dateStarted(-1),
             m_lastUpdated(-1), m_projectId(""), m_submitDate(0),
-            m_machineId(""), m_nbCPU(-1), m_dueDate(-1)
+            m_startDate(0), m_machineId(""), m_nbCPU(-1), m_dueDate(-1)
 {
 
     /*PROTECTED REGION ID(WorkImpl__WorkImpl) START*/
@@ -491,6 +491,32 @@ void Work::setSubmitDate(::ecore::ELong _submitDate)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__submitDate(),
                 _old_submitDate,
                 m_submitDate
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::ELong Work::getStartDate() const
+{
+    return m_startDate;
+}
+
+void Work::setStartDate(::ecore::ELong _startDate)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::ELong _old_startDate = m_startDate;
+#endif
+    m_startDate = _startDate;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getWork__startDate(),
+                _old_startDate,
+                m_startDate
         );
         eNotify(&notification);
     }

@@ -534,6 +534,34 @@ SlurmServer::getJobStartTime(const std::string& jobId) {
   }
 
   return startTime;
+}
+
+/**
+ * \brief Function to get the end time of the job
+ * \param jobId the identifier of the job
+ * \return 0 if the job is unknown
+ */
+time_t
+SlurmServer::getJobEndTime(const std::string& jobId) {
+  
+  time_t endTime = 0;
+  
+  uint32_t slurmJobId = convertToSlurmJobId(jobId);
+  
+  int res;
+  job_info_msg_t * job_buffer_ptr = NULL;
+  res = slurm_load_job(&job_buffer_ptr, slurmJobId, 1);
+  
+  if(!res) {
+    job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
+    endTime = slurmJobInfo.end_time;
+  }
+  
+  if(job_buffer_ptr!=NULL) {
+    slurm_free_job_info_msg(job_buffer_ptr);
+  }
+  
+  return endTime;
 } 
 
 /**

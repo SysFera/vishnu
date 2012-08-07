@@ -161,13 +161,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
 				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
 				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir()  + "')";
+                                + mjob.getOutputDir() +"')";
 	}
 	else{
 		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
-				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
+                                " groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
 				" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
 				+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
 				+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
@@ -175,7 +175,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
 				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
 				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
+                                + mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ",)";
 
 	}
 	mdatabaseVishnu->process(sqlInsert);

@@ -156,6 +156,12 @@ void Work::_initialize()
                 m_submitDate);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::WORK__STARTDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
+                m_startDate);
+    }
+        return _any;
     case ::TMS_Data::TMS_DataPackage::WORK__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
@@ -284,6 +290,12 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_submitDate);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::WORK__STARTDATE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
+                m_startDate);
+    }
+        return;
     case ::TMS_Data::TMS_DataPackage::WORK__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
@@ -348,6 +360,8 @@ void Work::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return m_projectId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__SUBMITDATE:
         return m_submitDate != 0;
+    case ::TMS_Data::TMS_DataPackage::WORK__STARTDATE:
+        return m_startDate != 0;
     case ::TMS_Data::TMS_DataPackage::WORK__MACHINEID:
         return m_machineId != "";
     case ::TMS_Data::TMS_DataPackage::WORK__NBCPU:

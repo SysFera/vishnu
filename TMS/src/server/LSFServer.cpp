@@ -505,6 +505,35 @@ LSFServer::getJobStartTime(const std::string& jobId) {
 } 
 
 /**
+ * \brief Function to get the end time of the job
+ * \param jobId the identifier of the job
+ * \return 0 if the job is unknown
+ */
+time_t
+LSFServer::getJobEndTime(const std::string& jobId) {
+  
+  time_t endTime = 0;
+  
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
+  struct jobInfoEnt *jobInfo;
+  int numJobs;
+  
+  if (lsb_init(NULL) < 0) {
+    return endTime;
+  }
+  
+  numJobs = lsb_openjobinfo(lsfJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
+  jobInfo = lsb_readjobinfo(&numJobs);
+  lsb_closejobinfo();
+  
+  if (jobInfo == NULL) {
+    return endTime;
+  }
+  
+  endTime = jobInfo->endTime;
+  return endTime;
+} 
+/**
  * \brief Function to convert the LSF state into VISHNU state 
  * \param state the state to convert
  * \return VISHNU state 
