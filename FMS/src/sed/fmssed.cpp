@@ -91,10 +91,10 @@ main(int argc, char* argv[], char* envp[]) {
       // Initialize the DIET SeD
       if (!res) {
         ZMQServerStart(server, uri);
-        unregisterSeD(FMSTYPE, mid);
+        unregisterSeD(FMSTYPE, config);
       } else {
         std::cerr << "There was a problem during services initialization\n";
-        unregisterSeD(FMSTYPE, mid);
+        unregisterSeD(FMSTYPE, config);
         exit(1);
       }
     } catch (VishnuException& e) {

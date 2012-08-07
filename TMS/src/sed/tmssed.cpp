@@ -174,7 +174,7 @@ int main(int argc, char* argv[], char* envp[]) {
       // Initialize the DIET SeD
       if (!res) {
         ZMQServerStart(server, uri);
-        unregisterSeD(TMSTYPE, machineId);
+        unregisterSeD(TMSTYPE, config);
       } else {
         std::cerr << "\nThere was a problem during services initialization\n\n";
         exit(1);

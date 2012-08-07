@@ -135,7 +135,7 @@ main(int argc, char* argv[], char* envp[]) {
     // Initialize the DIET SeD
     if (!res) {
       ZMQServerStart(server, uri);
-      unregisterSeD(UMSTYPE, mid);
+      unregisterSeD(UMSTYPE, config);
     } else {
       std::cerr << "There was a problem during services initialization\n";
       exit(1);

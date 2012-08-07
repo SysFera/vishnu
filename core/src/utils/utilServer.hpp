@@ -102,7 +102,7 @@ namespace vishnu {
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  unregisterSeD(std::string type, std::string mid);
+  unregisterSeD(std::string type, ExecConfiguration config);
 
   /**
    * \brief Return true if the string starts with 'MONTH'

@@ -103,20 +103,25 @@ public:
       std::string data(static_cast<const char*>(message.data()), message.size());
       std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
 
+      int mode = vishnu::convertToInt(data.substr(0,1));
+
+
       // Deserialize
-      boost::shared_ptr<Server> server = Server::fromString(data);
+      boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
 
-      mann.get()->add(server.get()->getName(), server.get()->getServices(), server.get()->getURI());
-
-
+      if(mode==1) { // If add a server
+        mann.get()->add(server.get()->getName(), server.get()->getServices(), server.get()->getURI());
+      } else if (mode == 0) {
+        mann.get()->remove(server.get()->getName(), server.get()->getURI());
+      }
       std::string resultSerialized = "OK";
 
-
-    // Send reply back to client
+      // Send reply back to client
       std::cout << " Serialized to send : " << resultSerialized << std::endl;
       zmq::message_t reply(resultSerialized.length()+1);
       memcpy(reply.data(), resultSerialized.c_str(), resultSerialized.length()+1);
       socket.send(reply);
+
     }
   }
 
