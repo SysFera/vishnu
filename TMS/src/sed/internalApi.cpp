@@ -95,30 +95,31 @@ solveSubmitJob(diet_profile_t* pb) {
 		}
 
 		if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-			sessionServer.check(); //To check the sessionKey
-			machineId = ServerTMS::getInstance()->getMachineId();
+			std::cerr << "I: start scheduling for automatic submitting" << std::endl;
+			sessionServer.check();
+			machineId =  ServerTMS::selectMachine(sessionKey, submitOptions->getCriterion()) ; //TODO
+			string msg = AUTOMATIC_SUBMIT_JOB_KEYWORD + ":" + machineId ;
+			diet_string_set(diet_parameter(pb,5), const_cast<char*>(msg.c_str()), DIET_VOLATILE);
+			diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+			std::cerr << "I: machine selected and sent back: " << machineId << std::endl;
 			try {
 				UserServer(sessionServer).getUserAccountLogin(machineId);
 			} catch (VishnuException& e) {
 				throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on any of the machines.");
 			}
 		} else {
-			if(submitOptions->getCriterion() != NULL) {
-				throw UserException(ERRCODE_INVALID_PARAM, "Criterion option is used only for automatic machine selection");
-			}
+			JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
+			int vishnuId = ServerTMS::getInstance()->getVishnuId();
+			std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
+			jobServer.submitJob(cscriptContent, *submitOptions, vishnuId, slaveDirectory);
+			*job = jobServer.getData();
+
+			::ecorecpp::serializer::serializer _ser;
+			string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
+			diet_string_set(diet_parameter(pb,5), const_cast<char*>(updateJobSerialized.c_str()), DIET_VOLATILE);
+			diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+			sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
 		}
-
-		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
-		int vishnuId = ServerTMS::getInstance()->getVishnuId();
-		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
-		jobServer.submitJob(cscriptContent, *submitOptions, vishnuId, slaveDirectory);
-		*job = jobServer.getData();
-
-		::ecorecpp::serializer::serializer _ser;
-		string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
-		diet_string_set(diet_parameter(pb,5), const_cast<char*>(updateJobSerialized.c_str()), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
 	} catch (VishnuException& e) {
 		try {
 			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);

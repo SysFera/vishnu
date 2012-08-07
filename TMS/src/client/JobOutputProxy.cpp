@@ -99,7 +99,6 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	ListStrings lineVec ;
 	getline(fdescStream, line) ; boost::trim(line) ;
 	boost::split(lineVec, line, boost::is_any_of(" ")) ;
-
 	int nbFiles = lineVec.size() ;
 	if( nbFiles > 0 && line.size() >0 ) {
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0) ;
@@ -112,7 +111,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	}
 
 	if(! getline(fdescStream, line)) line = "";
-	vishnu::saveMissingFiles(moutDir+"/MISSING", line) ;
+	vishnu::recordMissingFiles(moutDir+"/MISSING", line) ;
 
 	diet_profile_free(getJobOutPutProfile);
 	return jobResult;
@@ -193,7 +192,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(moutDir);
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1) ;
 		if( !getline(fdescStream, line)) break ;
-		vishnu::saveMissingFiles(moutDir+"/MISSING", line) ;
+		vishnu::recordMissingFiles(moutDir+"/MISSING", line) ;
 	}
 
 	diet_profile_free(getCompletedJobsOutputProfile);

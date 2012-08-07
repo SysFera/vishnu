@@ -37,7 +37,8 @@ namespace vishnu {
     DBPOOLSIZE,
     AUTHENTYPE,
     URI,
-    URINAMER
+    URINAMERSUB,
+    URINAMERSRV
   } param_type_t;
 
   /**

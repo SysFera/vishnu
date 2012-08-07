@@ -104,9 +104,10 @@ public :
 	int
 	init(int vishnuId,
 			DbConfiguration dbConfig,
-			std::string machineId,
+			const std::string & machineId,
 			BatchType batchType,
-			std::string slaveBinDir);
+			const std::string & slaveBinDir,
+			const std::string & uriNamer);
 
 	/**
 	 * \brief Destructor, raises an exception on error
@@ -152,6 +153,10 @@ private :
 	 */
 	static TMSMapper *mmapper;
 	/**
+	 * \brief Path to the file containing the namer uri
+	 */
+	static std::string muriNamerCfg;
+	/**
 	 * \brief The vishnu id
 	 */
 	int mvishnuId;
@@ -175,5 +180,7 @@ private :
 	 * \brief Directory containing the slave binary
 	 */
 	std::string mslaveBinDir;
+
+
 };
 #endif // SERVER

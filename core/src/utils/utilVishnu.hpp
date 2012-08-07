@@ -282,7 +282,14 @@ void createTmpFile(char* fileName, const std::string& file_content);
  * \param fileName The name of the file to create
  * \param content The content of the file
  */
-void saveMissingFiles(const std::string & fileName, const std::string& file_content);
+void saveInFile(const std::string & fileName, const std::string& content);
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ * \param missingDesc The content of the file
+ */
+void recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
 
 /**
  * \brief Function to create temporary file
@@ -425,7 +432,6 @@ mklink(const std::string& src) ;
   parseVersion(const std::string& version);
 
 } //END NAMESPACE
-
 
 
 #endif // _UTILVISHNU_H_

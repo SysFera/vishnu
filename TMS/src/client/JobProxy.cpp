@@ -59,49 +59,17 @@ JobProxy::submitJob(const std::string& scriptContent,
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	ListStrings paramsVec ;
-	string paramsStr = options.getFileParams();
-	boost::split(paramsVec, paramsStr, boost::is_space()) ;
-	string rdestDir = bfs::unique_path("/tmp/fms%%%%%%").string();
-
-	if (paramsVec.size() > 0 && paramsStr.size() != 0) {
-		string fqdnDestDir = mmachineId + ":" +  rdestDir;
-		if(vishnu::createDir(sessionKey, fqdnDestDir)){
-			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the upload directory : "+fqdnDestDir);
-		}
-	}
-
-	std::ostringstream paramsBuf ;
-	for(ListStrings::const_iterator it = paramsVec.begin(); it != paramsVec.end(); it++){
-
-		size_t pos = (*it).find("=") ; if(pos == std::string::npos) continue ; //*it would be in the form of param=path
-		string param = (*it).substr(0, pos) ;
-		string path = (*it).substr(pos+1, std::string::npos);
-
-		size_t colonPos = path.find(":");
-		std::string filerMachineId;
-		if ((colonPos == string::npos) && !bfs::exists(path)) {
-		  throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
-		  filerMachineId = path.substr(0, colonPos);
-		  path = path.substr(++colonPos, string::npos);
-		}
-
-		string rpath = rdestDir + "/" + bfs::path(path).filename().string();
-
+	TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
+	if(mmachineId != AUTOMATIC_SUBMIT_JOB_KEYWORD) {
 		CpFileOptions copts;
 		copts.setIsRecursive(true) ;
-		copts.setTrCommand(0); // for using scp
-
-		genericFileCopier(sessionKey, filerMachineId, path, mmachineId, rpath, copts);
-		paramsBuf << ((paramsBuf.str().size() != 0)? " " : "") + param << "=" << rpath ;
+		copts.setTrCommand(0);
+		string inputFiles = sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
+		options_.setFileParams(inputFiles);
 	}
 
-	TMS_Data::SubmitOptions& refOptions = const_cast<TMS_Data::SubmitOptions&>(options);
-	refOptions.setFileParams(paramsBuf.str()) ;
-
 	::ecorecpp::serializer::serializer _ser;
-	//To serialize the options object in to optionsInString
-	string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&refOptions));
+	string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
 
 	if (diet_string_set(diet_parameter(submitJobProfile,3), const_cast<char*>(optionsToString.c_str()), DIET_VOLATILE)) {
 		msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
@@ -109,8 +77,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	}
 
 	_ser.resetSerializer();
-
-	//To serialize the job object in to optionsInString
 	string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str();
 
 	if (diet_string_set(diet_parameter(submitJobProfile,4), const_cast<char*>(jobToString.c_str()), DIET_VOLATILE)) {
@@ -122,10 +88,10 @@ JobProxy::submitJob(const std::string& scriptContent,
 	diet_string_set(diet_parameter(submitJobProfile,5), NULL, DIET_VOLATILE);
 	diet_string_set(diet_parameter(submitJobProfile,6), NULL, DIET_VOLATILE);
 
-	char* jobInString = NULL;
+	char* cresultMsg = NULL;
 	char* errorInfo = NULL;
 	if(!diet_call(submitJobProfile)) {
-		if(diet_string_get(diet_parameter(submitJobProfile,5), &jobInString, NULL)){
+		if(diet_string_get(diet_parameter(submitJobProfile,5), &cresultMsg, NULL)){
 			msgErrorDiet += " by receiving User serialized  message";
 			raiseDietMsgException(msgErrorDiet);
 		}
@@ -138,16 +104,27 @@ JobProxy::submitJob(const std::string& scriptContent,
 		raiseDietMsgException("DIET call failure");
 	}
 
+	if (diet_string_set(diet_parameter(submitJobProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
+		msgErrorDiet += "with machineId parameter "+mmachineId;
+		raiseDietMsgException(msgErrorDiet);
+	}
+
 	/*To raise a vishnu exception if the receiving message is not empty*/
 	raiseExceptionIfNotEmptyMsg(errorInfo);
 
-	TMS_Data::Job_ptr job_ptr = NULL;
+	string resultMsg = cresultMsg ;
+	if(boost::starts_with(resultMsg, AUTOMATIC_SUBMIT_JOB_KEYWORD+":")) {
+		size_t pos = AUTOMATIC_SUBMIT_JOB_KEYWORD.size() + 1 ;
+		mmachineId = resultMsg.substr(pos, string::npos) ;
+		submitJob(scriptContent, options) ;
+	} else {
+		TMS_Data::Job_ptr job_ptr = NULL;
+		string serializedJob = resultMsg ;
+		parseEmfObject(serializedJob, job_ptr);
+		mjob = *job_ptr;
+		delete job_ptr;
+	}
 
-	parseEmfObject(std::string(jobInString), job_ptr);
-
-	mjob = *job_ptr;
-
-	delete job_ptr;
 	diet_profile_free(submitJobProfile);
 	return 0;
 }

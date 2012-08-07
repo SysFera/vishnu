@@ -12,6 +12,8 @@
 #include <boost/format.hpp>
 #include "utilVishnu.hpp"
 #include "tmsClientUtils.hpp"
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/find.hpp>
 
 using namespace std;
 namespace bfs = boost::filesystem;
@@ -90,6 +92,58 @@ std::string genericFileCopier(const std::string & sessionKey,
 	}
 
 	return dest ;
+}
+
+/**
+ * \brief Function to copy a remote file to a local directory
+ * \param srcFiles : String describing the source files
+ * \param destMachineId : Id of the destination machine
+ * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \return A string describing the destination file. The function throw exception on error
+ */
+std::string
+sendInputFiles(const std::string & sessionKey,
+                  const std::string & srcFiles,
+                  const std::string & destMachineId,
+                  const CpFileOptions& copts) {
+
+	ListStrings listFiles ;
+	boost::split(listFiles, srcFiles, boost::is_space()) ;
+	string rdestDir = bfs::unique_path("/tmp/fms%%%%%%").string();
+
+	if (listFiles.size() > 0 && srcFiles.size() != 0) {
+		string fqdnDestDir = destMachineId + ":" +  rdestDir;
+		if(vishnu::createDir(sessionKey, fqdnDestDir)){
+			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the upload directory : "+fqdnDestDir);
+		}
+	}
+
+	std::ostringstream paramsBuf ;
+	for(ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); it++){
+
+		size_t pos = (*it).find("=") ; if(pos == std::string::npos) continue ; //*it would be in the form of param=path
+		string param = (*it).substr(0, pos) ;
+		string path = (*it).substr(pos+1, std::string::npos);
+
+		size_t colonPos = path.find(":");
+		std::string filerMachineId;
+		if ((colonPos == string::npos) && !bfs::exists(path)) {
+			throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
+			filerMachineId = path.substr(0, colonPos);
+			path = path.substr(++colonPos, string::npos);
+		}
+
+		string rpath = rdestDir + "/" + bfs::path(path).filename().string();
+
+		CpFileOptions copts;
+		copts.setIsRecursive(true) ;
+		copts.setTrCommand(0); // for using scp
+
+		genericFileCopier(sessionKey, filerMachineId, path, destMachineId, rpath, copts);
+		paramsBuf << ((paramsBuf.str().size() != 0)? " " : "") + param << "=" << rpath ;
+	}
+
+	return paramsBuf.str() ;
 }
 
 
