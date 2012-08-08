@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION "2.8.4")
+
+# uninstall target requires that install_manifest.txt has been generated
+if(NOT EXISTS "@PROJECT_BINARY_DIR@/install_manifest.txt")
+    message(FATAL_ERROR
+      "Cannot find install manifest: \"@PROJECT_BINARY_DIR@/install_manifest.txt\"")
+endif()
+
+# parse install_manifest.txt nto a cmake list
+file(READ "@PROJECT_BINARY_DIR@/install_manifest.txt" files)
+string(REGEX REPLACE "\n" ";" files "${files}")
+list(REVERSE files)
+# uninstall files
+foreach (file ${files})
+  message(STATUS "Uninstalling \"$ENV{DESTDIR}${file}\"")
+  # test existence then delete
+  if(EXISTS "$ENV{DESTDIR}${file}")
+    execute_process(
+      COMMAND @CMAKE_COMMAND@ -E remove "$ENV{DESTDIR}${file}"
+      OUTPUT_VARIABLE rm_out
+      RESULT_VARIABLE rm_retval
+      )
+    if(NOT ${rm_retval} EQUAL 0)
+      message(FATAL_ERROR "Problem when removing \"$ENV{DESTDIR}${file}\"")
+    endif()
+  else(EXISTS "$ENV{DESTDIR}${file}")
+    message(STATUS "File \"$ENV{DESTDIR}${file}\" does not exist.")
+  endif()
+endforeach()
+
