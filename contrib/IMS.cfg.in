@@ -8,7 +8,4 @@ databaseUserPassword = vishnu
 databaseConnectionsNb = 5
 sendmailScriptPath = @SBIN_DIR@/sendmail.py
 vishnuMachineId = machine_1
-batchSchedulerType = TORQUE
-intervalMonitor = 1
-
 

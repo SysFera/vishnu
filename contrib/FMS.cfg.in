@@ -1,4 +1,4 @@
-dietConfigFile = @ETC_INSTALL_DIR@/SeD.cfg
+dietConfigFile = @ETC_INSTALL_DIR@/vishnu/SeD.cfg
 vishnuId = 1
 databaseType = postgresql
 databaseHost = localhost
