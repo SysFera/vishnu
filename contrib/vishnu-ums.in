@@ -15,7 +15,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Vishnu UMS"
 NAME=umssed
-CONFIG_FILE="@ETC_INSTALL_DIR@/UMS.cfg"
+CONFIG_FILE="@ETC_INSTALL_DIR@/vishnu/UMS.cfg"
 DAEMON=@SBIN_DIR@/umssed
 DAEMON_ARGS="$CONFIG_FILE"
 PIDFILE=/var/run/$NAME.pid

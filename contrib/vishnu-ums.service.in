@@ -1,0 +1,12 @@
+[Unit]
+Description=Vishnu User Mgmt Service
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart=@SBIN_DIR@/umssed @ETC_INSTALL_DIR@/vishnu/ums.cfg
+User=vishnu
+Group=vishnu
+
+[Install]
+WantedBy=multi-user.target

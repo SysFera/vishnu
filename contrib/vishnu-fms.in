@@ -15,7 +15,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Vishnu FMS"
 NAME=tmssed
-CONFIG_FILE="@ETC_INSTALL_DIR@/FMS.cfg"
+CONFIG_FILE="@ETC_INSTALL_DIR@/vishnu/FMS.cfg"
 DAEMON=@SBIN_DIR@/fmssed
 DAEMON_ARGS="$CONFIG_FILE"
 PIDFILE=/var/run/$NAME.pid
