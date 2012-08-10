@@ -10,7 +10,7 @@
 #include <boost/scoped_array.hpp>
 #include <boost/test/unit_test.hpp>
 
-#include "diet_config_tests.h"
+//#include "diet_config_tests.h"
 
 namespace utils {
     namespace ba = boost::assign;

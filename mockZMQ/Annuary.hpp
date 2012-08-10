@@ -27,6 +27,10 @@ public :
    * \brief Copy constructor
    */
   ~Annuary();
+  /**
+   * \brief Constructor
+   */
+  Annuary(std::vector<boost::shared_ptr<Server> >& serv);
 
   /**
    * \brief Add a server in the annuary
