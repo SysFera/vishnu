@@ -110,10 +110,10 @@ public :
   int
   init(int vishnuId,
 	   DbConfiguration dbConfig,
-	   std::string machineId,
+	   const std::string& machineId,
 	   BatchType batchType,
-	   std::string slaveBinDir,
-	   const std::string & uriNamer);
+	   const std::string& slaveBinDir,
+	   const std::string& uriNamer);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -135,11 +135,12 @@ private :
 
   /**
    * \brief Function to compute the load performance of a given machine
+   * \param sessionKey The session key
    * \param pb the request profile
    * \param the criteria of (number of waiting jobs, running jobs and total jobs)
    */
   static long
-  getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion);
+  getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion);
 
   /**
    * \brief operator=
