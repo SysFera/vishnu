@@ -134,18 +134,17 @@ private :
   ServerTMS();
 
   /**
+   * \brief Function to compute the load performance of a given machine
+   * \param pb the request profile
+   * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+   */
+  static long
+  getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion);
+
+  /**
    * \brief operator=
    */
   ServerTMS& operator=(const ServerTMS&);
-
-	/**
-	 * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
-	 * \param pb the resquest profile
-	 * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
-	 */
-	static void
-	setBatchLoadPerformance(diet_profile_t* pb/*, estVector_t perfValues*/);
-
 
   /////////////////////////////////
   // Attributes
@@ -159,24 +158,28 @@ private :
    */
   static TMSMapper *mmapper;
   /**
+   * \brief Path to the file containing the namer uri
+   */
+  static std::string muriNamerCfg;
+  /**
    * \brief The vishnu id
    */
   int mvishnuId;
   /**
-  * \brief represents The batch Type
-  */
+   * \brief represents The batch Type
+   */
   BatchType mbatchType;
   /**
-  * \brief represents The batch Type
-  */
+   * \brief represents The batch Type
+   */
   std::string mmachineId;
   /**
-  * \brief Structure representing a profile description
-  */
-//  diet_profile_desc_t* mprofile;
+   * \brief Structure representing a profile description
+   */
+  //  diet_profile_desc_t* mprofile;
   /**
-  * \brief Instance of Database
-  */
+   * \brief Instance of Database
+   */
   Database *mdatabaseVishnu;
   /**
    * \brief Directory containing the slave binary
