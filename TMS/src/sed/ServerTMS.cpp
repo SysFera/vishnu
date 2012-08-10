@@ -15,6 +15,7 @@
 #include "BatchFactory.hpp"
 #include "UserServer.hpp"
 #include "api_ums.hpp"
+#include "api_tms.hpp"
 #include "UserServer.hpp"
 #include "SessionServer.hpp"
 
@@ -175,33 +176,82 @@ void
 ServerTMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
-  functionPtr = solveSubmitJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[0])+"@"+mid,functionPtr));
-  functionPtr = solveCancelJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[1])+"@"+mid,functionPtr));
-  functionPtr = solveJobInfo;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[2])+"@"+mid,functionPtr));
-  functionPtr = solveGetListOfJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[3])+"@"+mid,functionPtr));
-  functionPtr = solveGetListOfJobsProgression;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[4])+"@"+mid,functionPtr));
-  functionPtr = solveListOfQueues;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[5])+"@"+mid,functionPtr));
-  functionPtr = solveJobOutPutGetResult;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[6])+"@"+mid,functionPtr));
-  functionPtr = solveJobOutPutGetCompletedJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[7])+"@"+mid,functionPtr));
-// Remove ?
-  functionPtr = solveGetListOfJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[8]),functionPtr));
-  functionPtr = solveSubmitJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
-  functionPtr = solveAddWork;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
+	functionPtr = solveSubmitJob;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[0])+"@"+mid,functionPtr));
+	functionPtr = solveCancelJob;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[1])+"@"+mid,functionPtr));
+	functionPtr = solveJobInfo;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[2])+"@"+mid,functionPtr));
+	functionPtr = solveGetListOfJobs;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[3])+"@"+mid,functionPtr));
+	functionPtr = solveGetListOfJobsProgression;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[4])+"@"+mid,functionPtr));
+	functionPtr = solveListOfQueues;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[5])+"@"+mid,functionPtr));
+	functionPtr = solveJobOutPutGetResult;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[6])+"@"+mid,functionPtr));
+	functionPtr = solveJobOutPutGetCompletedJobs;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[7])+"@"+mid,functionPtr));
+	// Remove ?
+	functionPtr = solveGetListOfJobs;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[8]),functionPtr));
+	functionPtr = solveSubmitJob;
+	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
+    functionPtr = solveAddWork;
+    mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
 }
 
 
 /**
+ * \brief Function to select a server for automatic selection
+ * \param sessionKey The session key
+ * \param criterion The selection criterion
+ * \return the machine id
+ */
+std::string
+ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
+
+	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
+
+	SessionServer sessionServer = SessionServer(sessionKey); ;
+	UserServer userServer = UserServer(sessionServer);
+
+	userServer.init();
+
+	string userId = userServer.getData().getUserId();
+	if( userId.size() == 0 ) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
+	}
+
+	UMS_Data::ListMachineOptions mopts;
+	mopts.setListAllMachine(false);
+	mopts.setUserId(userId);
+	mopts.setMachineId("");
+
+	UMS_Data::ListMachines machines;
+	vishnu::listMachines(sessionKey, machines, mopts) ;
+
+	int machineCount = machines.getMachines().size() ;
+	if( machineCount == 0) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to this user: "+userId);
+	}
+
+	string machineId = "" ;
+	long load = std::numeric_limits<long>::max();
+	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
+	for(int i=0; i< machineCount; i++) {
+		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+		if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
+			machineId = machine->getMachineId();
+		}
+	}
+	return machineId;
+>>>>>>> complete the algorithms for auto submision
+}
+
+
+/**
+<<<<<<< HEAD
  * \brief Function to select a server for automatic selection
  * \param sessionKey The session key
  * \param criterion The selection criterion
@@ -254,25 +304,30 @@ ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion
  */
 long
 ServerTMS::getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion) {
+=======
+ * \brief Function to compute the load performance of a given machine
+ * \param sessionKey The session key
+ * \param pb the request profile
+ * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+ */
+long
+ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion) {
 
-	BatchFactory factory;
-	BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-	boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
-	TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
-	batchServer->fillListOfJobs(listOfJobs);
-
+	TMS_Data::ListJobs jobs ;
+	TMS_Data::ListJobsOptions jobOtions ;
+	vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
 	long LoadValue = std::numeric_limits<long>::max();
 	try {
 		switch(criterion->getLoadType()) {
 		case NBRUNNINGJOBS :
-			LoadValue = listOfJobs->getNbRunningJobs();
+			LoadValue = jobs.getNbRunningJobs();
 			break;
 		case NBJOBS :
-			LoadValue = listOfJobs->getNbJobs();
+			LoadValue = jobs.getNbJobs();
 			break;
 		case NBWAITINGJOBS :
 		default :
-			LoadValue = listOfJobs->getNbWaitingJobs();
+			LoadValue =jobs.getNbWaitingJobs();
 			break;
 		}
 	} catch (VishnuException& ex) {
@@ -281,9 +336,6 @@ ServerTMS::getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const
 		std::cerr << "E: unknown error while calculating the load performance of the machine "
 				<< machine->getMachineId() << " (" << machine->getName() <<")."<< std::endl;
 	}
-
-	delete listOfJobs;
-
 	return LoadValue ;
 }
 
