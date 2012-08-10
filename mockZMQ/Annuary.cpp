@@ -14,6 +14,10 @@ Annuary::Annuary(){
   mservers = std::vector<boost::shared_ptr<Server> > ();
 }
 
+Annuary::Annuary(std::vector<boost::shared_ptr<Server> >& serv){
+  mservers = serv;
+}
+
 Annuary::~Annuary(){
 //  int i;
 //  for (i=0;i<mservers.size();++i){

@@ -11,7 +11,8 @@ Server::Server(std::string name, std::vector<std::string> &serv, std::string uri
     mname(name), mservices(serv), muri(uri){
 }
 
-Server::~Server(){}
+Server::~Server(){
+}
 
 
 int
@@ -26,6 +27,7 @@ Server::add(std::string service){
   if (!found){
     mservices.push_back(service);
   }
+  return 0;
 }
 
 int
@@ -36,6 +38,7 @@ Server::remove(std::string service){
       mservices.erase(mservices.begin()+i);
     }
   }
+  return 0;
 }
 
 bool

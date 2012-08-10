@@ -37,6 +37,29 @@ target_link_libraries(namer
   vishnu-core
 )
 
+add_executable(testServer
+  TestServer.cpp
+  Server.cpp
+  )
+target_link_libraries(testServer
+  ${ZMQ_LIBRARIES} 
+  ${Boost_LIBRARIES}
+  zmq_helper
+  vishnu-core
+)
+
+add_executable(testAnnuary
+  TestAnnuary.cpp
+  Annuary.cpp
+  )
+target_link_libraries(testAnnuary
+  ${ZMQ_LIBRARIES} 
+  ${Boost_LIBRARIES}
+  zmq_helper
+  vishnu-core
+)
+
+
 # --------------------------------------------------------------------------
 #add_subdirectory(ZMQHelper)
 # --------------------------------------------------------------------------
