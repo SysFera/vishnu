@@ -1,4 +1,3 @@
-
 if(NOT CLIENT_ONLY)
   # common stuff for init scripts
   # hack to avoid installing configuration stuff in /usr/etc
@@ -61,4 +60,5 @@ if(NOT CLIENT_ONLY)
         DESTINATION "/lib/systemd/system/"
         PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
     endforeach()
+endif()
 endif()

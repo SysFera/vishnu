@@ -114,6 +114,7 @@ if (NOT CLIENT_ONLY)
     vishnu-core-server
     vishnu-ums-server
     vishnu-tms-server
+    vishnu-tms-client
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
     ${USED_BATCH_LIB}
