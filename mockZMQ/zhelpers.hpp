@@ -15,7 +15,7 @@ public:
 
   bool
   setLinger(int linger = -1) {
-    setsockopt(ZMQ_LINGER, &linger, sizeof(linger));
+    return (0 == setsockopt(ZMQ_LINGER, &linger, sizeof(linger)));
   }
 
   bool
