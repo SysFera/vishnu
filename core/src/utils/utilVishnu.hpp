@@ -43,6 +43,16 @@ typedef enum {
   UNDEFINED = 5 /*!< IF batch type is not defined*/
 } BatchType;
 
+/**
+ * \enum LoadType
+ * \brief The type of the scheduling criteria
+ */
+typedef enum {
+	NBWAITINGJOBS = 0,
+	NBJOBS = 1,
+	NBRUNNINGJOBS =2
+} LoadType;
+
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
 static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 typedef std::vector<std::string> ListStrings ;

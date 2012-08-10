@@ -261,37 +261,31 @@ int main (int argc, char* argv[]){
 		}
 
 		//To set the load criterion
-		int loadCriterionType;
+		if ((loadCriterionStr.size() > 1)) {
+			std::cerr << "Invalid load criterion " << loadCriterionStr << std::endl;
+			return -1;
+		}
+		int loadCriterionType = NBWAITINGJOBS;
 		TMS_Data::LoadCriterion_ptr loadCriterion_ptr = new TMS_Data::LoadCriterion();
 		if(loadCriterionStr.size()!=0) {
-			size_t pos = loadCriterionStr.find_first_not_of("0123456789");
-			if(pos!=std::string::npos) {
-				if(loadCriterionStr.size()==1) {
-					switch(loadCriterionStr[0]) {
-					case 'W' :
-						loadCriterionType = 0;
-						break;
-					case 'T' :
-						loadCriterionType = 1;
-						break;
-					case 'R' :
-						loadCriterionType = 2;
-						break;
-					default:
-						loadCriterionType = 0;
-						break;
-					}
-				}
-				if ((loadCriterionStr.size() > 1)) {
-					std::cerr << "Unknown load criterion " << loadCriterionStr << std::endl;
-					return -1;
-				}
-			} else {
-				loadCriterionType = convertToInt(loadCriterionStr);
+			switch(loadCriterionStr[0]) {
+			case '2' :
+			case 'R' :
+				loadCriterionType = NBRUNNINGJOBS;
+				break;
+			case '1' :
+			case 'T' :
+				loadCriterionType = NBJOBS;
+				break;
+			case '0' ://Default
+			case 'W' :
+			default:
+				loadCriterionType = NBWAITINGJOBS;
+				break;
 			}
-			loadCriterion_ptr->setLoadType(loadCriterionType);
-			subOp.setCriterion(loadCriterion_ptr);
 		}
+		loadCriterion_ptr->setLoadType(loadCriterionType);
+		subOp.setCriterion(loadCriterion_ptr);
 
 		if(opt->count("selectQueueAutom")) {
 			subOp.setSelectQueueAutom(true);
