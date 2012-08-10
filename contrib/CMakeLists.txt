@@ -60,5 +60,6 @@ if(NOT CLIENT_ONLY)
         DESTINATION "/lib/systemd/system/"
         PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
     endforeach()
+  endif()
 endif()
 endif()
