@@ -32,42 +32,10 @@ std::string ServerTMS::muriNamerCfg = "/tmp/vishnu-urinamer.cfg";
  */
 ServerTMS*
 ServerTMS::getInstance() {
-  if (minstance == NULL) {
-    minstance = new ServerTMS();
-  }
-  return minstance;
-}
-
-/**
- * \brief Function to select a server for automatic selection
- * \param sessionKey The session key
- * \param criterion The selection criterion
- * \return the machine id
- */
-std::string
-ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
-
-	std::cout << muriNamerCfg << std::endl;
-	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
-	UserServer userServer = UserServer(SessionServer(sessionKey));
-	userServer.init();
-	string userId = userServer.getData().getUserId();
-
-	if( userId.size() == 0 ) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
+	if (minstance == NULL) {
+		minstance = new ServerTMS();
 	}
-
-	UMS_Data::ListMachines machines;
-	UMS_Data::ListMachineOptions mopts;
-	mopts.setListAllMachine(false);
-	mopts.setUserId(userId);
-	mopts.setMachineId("");
-	vishnu::listMachines(sessionKey, machines, mopts) ;
-	if(machines.getMachines().size() == 0) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to the user "+userId);
-	}
-	return machines.getMachines().get(0)->getMachineId();
-
+	return minstance;
 }
 
 /**
@@ -75,7 +43,7 @@ ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion
  */
 Database*
 ServerTMS::getDatabaseVishnu() {
-  return mdatabaseVishnu;
+	return mdatabaseVishnu;
 }
 
 /**
@@ -84,25 +52,25 @@ ServerTMS::getDatabaseVishnu() {
  */
 int
 ServerTMS::getVishnuId() const {
-  return mvishnuId;
+	return mvishnuId;
 }
 
 /**
-  * \brief To get the batchType
-  * \return the id of the underlying batch scheduler
-  */
+ * \brief To get the batchType
+ * \return the id of the underlying batch scheduler
+ */
 BatchType
 ServerTMS::getBatchType()  {
-  return mbatchType;
+	return mbatchType;
 }
 
 /**
-  * \brief To get the machine id of the TMS server
-  * \return the machine id
-  */
+ * \brief To get the machine id of the TMS server
+ * \return the machine id
+ */
 std::string
 ServerTMS::getMachineId() {
-  return mmachineId;
+	return mmachineId;
 }
 
 /**
@@ -111,18 +79,18 @@ ServerTMS::getMachineId() {
  */
 string
 ServerTMS::getSlaveDirectory() {
-  return mslaveBinDir;
+	return mslaveBinDir;
 }
 
 /**
-* \brief Constructor (private)
-*/
+ * \brief Constructor (private)
+ */
 ServerTMS::ServerTMS() {
-//  mprofile = NULL;
-  mbatchType = UNDEFINED;
-  mmachineId = "";
-  mdatabaseVishnu = NULL;
-  mslaveBinDir = "";
+	//  mprofile = NULL;
+	mbatchType = UNDEFINED;
+	mmachineId = "";
+	mdatabaseVishnu = NULL;
+	mslaveBinDir = "";
 }
 
 /**
@@ -136,124 +104,71 @@ ServerTMS::ServerTMS() {
  */
 int
 ServerTMS::init(int vishnuId,
-                DbConfiguration dbConfig,
-    			const std::string & machineId,
-    			BatchType batchType,
-    			const std::string & slaveBinDir,
-    			const std::string & uriNamer
-               )
+		DbConfiguration dbConfig,
+		const std::string & machineId,
+		BatchType batchType,
+		const std::string & slaveBinDir,
+		const std::string & uriNamer
+)
 {
 
-  //initialization of the batchType
-  mbatchType = batchType;
+	//initialization of the batchType
+	mbatchType = batchType;
 
-  //initialization of the machineId
-  mmachineId = machineId;
+	//initialization of the machineId
+	mmachineId = machineId;
 
-  //initialization of the slave directory
-  mslaveBinDir = slaveBinDir;
+	//initialization of the slave directory
+	mslaveBinDir = slaveBinDir;
 
-  //set the name uri
-  vishnu::saveInFile(muriNamerCfg, "namer "+uriNamer) ;
+	//set the name uri
+	vishnu::saveInFile(muriNamerCfg, "namer "+uriNamer) ;
 
-  // initialization of the service table
-//  diet_service_table_init(NB_SRV);
+	// initialization of the service table
+	//  diet_service_table_init(NB_SRV);
 
-  DbFactory factory;
+	DbFactory factory;
 
-  try {
-    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+	try {
+		mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
-    //initialization of vishnuId
-    mvishnuId = vishnuId;
+		//initialization of vishnuId
+		mvishnuId = vishnuId;
 
-    /*connection to the database*/
-    mdatabaseVishnu->connect();
+		/*connection to the database*/
+		mdatabaseVishnu->connect();
 
-    mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
-    mmapper->registerMapper();
+		mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
+		mmapper->registerMapper();
 
-    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+		std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
-    /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+		/* Checking of vishnuid on the database */
+		boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
 
-    if (result->getResults().size() == 0) {
-      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      throw e;
-    }
-
-
-  } catch (VishnuException& e) {
-      std::cout << e.what() << std::endl;
-      exit(0);
-  }
+		if (result->getResults().size() == 0) {
+			SystemException e(ERRCODE_DBERR, "vishnuid is unrecognized");
+			throw e;
+		}
 
 
-  initMap(machineId);
-  return 0;
+	} catch (VishnuException& e) {
+		std::cout << e.what() << std::endl;
+		exit(0);
+	}
+
+	initMap(machineId);
+	return 0;
 }
 
-//void
-//ServerTMS::setBatchLoadPerformance(diet_profile_t* pb, estVector_t perfValues) {
-//
-//  BatchFactory factory;
-//  BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-//
-//  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
-//  TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
-//  batchServer->fillListOfJobs(listOfJobs);
-//
-//  char* sessionKey = (diet_paramstring_get_desc(diet_parameter(pb, 0)))->param;
-//  SessionServer sessionServer = SessionServer(std::string(sessionKey));
-//  long LoadValue = std::numeric_limits<long>::max();
-//
-//  try {
-//    std::string machineId = ServerTMS::getInstance()->getMachineId();
-//    UserServer(sessionServer).getUserAccountLogin(machineId);
-//    char* jobSerialized = (diet_paramstring_get_desc(diet_parameter(pb, 3)))->param;
-//    TMS_Data::SubmitOptions_ptr submitOptions = NULL;
-//    if(vishnu::parseEmfObject(std::string(jobSerialized), submitOptions)) {
-//      if(submitOptions->getCriterion()!=NULL) {
-//        switch((submitOptions->getCriterion())->getLoadType()) {
-//          case 0 :
-//            LoadValue = listOfJobs->getNbWaitingJobs();
-//            break;
-//          case 1 :
-//            LoadValue = listOfJobs->getNbJobs();
-//            break;
-//          case 2 :
-//            LoadValue = listOfJobs->getNbRunningJobs();
-//            break;
-//          default :
-//            LoadValue = listOfJobs->getNbWaitingJobs();
-//            break;
-//        }
-//      } else {
-//        LoadValue = listOfJobs->getNbWaitingJobs();
-//      }
-//    }
-//  } catch (VishnuException& e) {
-//  }
-//
-//  /*
-//   ** store the LoadValue value in the user estimate space,
-//   */
-//  diet_est_set(perfValues, 0, LoadValue);
-//
-//  delete listOfJobs;
-//}
 
-/**
-* \brief Destructor, raises an exception on error
-*/
 ServerTMS::~ServerTMS() {
-  if (mmapper != NULL) {
-    delete mmapper;
-  }
-  if (mdatabaseVishnu != NULL) {
-    delete mdatabaseVishnu;
-  }
+	if (mmapper != NULL) {
+		delete mmapper;
+	}
+	if (mdatabaseVishnu != NULL) {
+		delete mdatabaseVishnu;
+	}
 }
 
 void
@@ -285,60 +200,90 @@ ServerTMS::initMap(std::string mid) {
   mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
 }
 
+
 /**
- * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
- * \param pb the resquest profile
- * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
+ * \brief Function to select a server for automatic selection
+ * \param sessionKey The session key
+ * \param criterion The selection criterion
+ * \return the machine id
  */
-void
-ServerTMS::setBatchLoadPerformance(diet_profile_t* pb/*, estVector_t perfValues*/) {
+std::string
+ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
+
+	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
+
+	SessionServer sessionServer = SessionServer(sessionKey); ;
+	UserServer userServer = UserServer(sessionServer);
+
+	userServer.init();
+
+	string userId = userServer.getData().getUserId();
+	if( userId.size() == 0 ) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
+	}
+
+	UMS_Data::ListMachineOptions mopts;
+	mopts.setListAllMachine(false);
+	mopts.setUserId(userId);
+	mopts.setMachineId("");
+
+	UMS_Data::ListMachines machines;
+	vishnu::listMachines(sessionKey, machines, mopts) ;
+
+	int machineCount = machines.getMachines().size() ;
+	if( machineCount == 0) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to this user: "+userId);
+	}
+
+	string machineId = "" ;
+	long load = std::numeric_limits<long>::max();
+	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
+	for(int i=0; i< machineCount; i++) {
+		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+		if(getMachineLoadPerformance(machine, criterion) < load) {
+			machineId = machine->getMachineId();
+		}
+	}
+	return machineId;
+}
+
+/**
+ * \brief Function to compute the load performance of a given machine
+ * \param pb the request profile
+ * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+ */
+long
+ServerTMS::getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion) {
 
 	BatchFactory factory;
 	BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-
 	boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
 	TMS_Data::ListJobs* listOfJobs = new TMS_Data::ListJobs();
 	batchServer->fillListOfJobs(listOfJobs);
 
-	//TODO to correct
-	char* sessionKey ; //= (diet_paramstring_get_desc(diet_parameter(pb, 0)))->param;
-	SessionServer sessionServer = SessionServer(std::string(sessionKey));
 	long LoadValue = std::numeric_limits<long>::max();
-
 	try {
-		std::string machineId = ServerTMS::getInstance()->getMachineId();
-		UserServer(sessionServer).getUserAccountLogin(machineId);
-		//TODO to correct
-		char* jobSerialized ; //= (diet_paramstring_get_desc(diet_parameter(pb, 3)))->param;
-		TMS_Data::SubmitOptions_ptr submitOptions = NULL;
-		if(vishnu::parseEmfObject(std::string(jobSerialized), submitOptions)) {
-			if(submitOptions->getCriterion()!=NULL) {
-				switch((submitOptions->getCriterion())->getLoadType()) {
-				case 0 :
-					LoadValue = listOfJobs->getNbWaitingJobs();
-					break;
-				case 1 :
-					LoadValue = listOfJobs->getNbJobs();
-					break;
-				case 2 :
-					LoadValue = listOfJobs->getNbRunningJobs();
-					break;
-				default :
-					LoadValue = listOfJobs->getNbWaitingJobs();
-					break;
-				}
-			} else {
-				LoadValue = listOfJobs->getNbWaitingJobs();
-			}
+		switch(criterion->getLoadType()) {
+		case NBRUNNINGJOBS :
+			LoadValue = listOfJobs->getNbRunningJobs();
+			break;
+		case NBJOBS :
+			LoadValue = listOfJobs->getNbJobs();
+			break;
+		case NBWAITINGJOBS :
+		default :
+			LoadValue = listOfJobs->getNbWaitingJobs();
+			break;
 		}
-	} catch (VishnuException& e) {
+	} catch (VishnuException& ex) {
+		std::cerr << ex.what() << std::endl;
+	} catch(...) {
+		std::cerr << "E: unknown error while calculating the load performance of the machine "
+				<< machine->getMachineId() << " (" << machine->getName() <<")."<< std::endl;
 	}
 
-	/*
-	 ** store the LoadValue value in the user estimate space,
-	 */
-	// diet_est_set(perfValues, 0, LoadValue);
-
 	delete listOfJobs;
+
+	return LoadValue ;
 }
 

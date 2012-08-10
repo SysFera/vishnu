@@ -128,18 +128,18 @@ private :
 	ServerTMS();
 
 	/**
+	 * \brief Function to compute the load performance of a given machine
+	 * \param pb the request profile
+	 * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+	 */
+	static long
+	getMachineLoadPerformance(const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion);
+
+
+	/**
 	 * \brief operator=
 	 */
 	ServerTMS& operator=(const ServerTMS&);
-
-	/**
-	 * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
-	 * \param pb the resquest profile
-	 * \param perfValues The vector contain the estimation load performance (number of waiting jobs, running jobs and total jobs)
-	 */
-	static void
-	setBatchLoadPerformance(diet_profile_t* pb/*, estVector_t perfValues*/);
-
 
 	/////////////////////////////////
 	// Attributes
