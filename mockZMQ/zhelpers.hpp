@@ -15,7 +15,12 @@ public:
 
   bool
   setLinger(int linger = -1) {
-    return (0 == setsockopt(ZMQ_LINGER, &linger, sizeof(linger)));
+    try {
+      setsockopt(ZMQ_LINGER, &linger, sizeof(linger));
+      return true;
+    } catch (const zmq::error_t& e) {
+      return false;
+    }
   }
 
   bool
