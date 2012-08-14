@@ -12,6 +12,7 @@ include_directories(client api
   ${MOCK_INCLUDE_DIR}
   ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
