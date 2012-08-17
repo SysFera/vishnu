@@ -657,7 +657,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxSiteSize+2) << left << site;
-     os << setw(8) << left << status;
+     os << setw(8) << left << (status?"ACTIVE":"INACTIVE");
      os << endl;
   }
 
@@ -915,7 +915,7 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      os << setw(maxLastnameSize+2) << left << lastname;
      os << setw(maxUserIdSize+2) << left << userId;
      os << setw(11) << left << privilege ;
-     os << setw(8) << left << status ;
+     os << setw(8) << left << (status?"ACTIVE":"INACTIVE") ;
      os << endl;
 
   }
