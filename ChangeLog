@@ -4,6 +4,7 @@
 
 // TODO * Change IMS API to set optional parameters as const ref
 * Change Python API to use real python list
+* Added status display on textual form for vishnu_list_users and vishnu_list_machines 
 
 +--------------+
 | VISHNU 1.4.0 |
