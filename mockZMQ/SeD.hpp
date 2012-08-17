@@ -15,6 +15,11 @@ typedef int (*functionPtr_t)(diet_profile_t*);
 class SeD {
 public:
   /**
+   * \brief Constructor
+   */
+  SeD();
+
+  /**
    * \brief To call a function upon receiving a request
    * \param profile The profile of the service
    * \return the error code of the function

@@ -23,13 +23,14 @@ struct LoadShedFunc {
 
  IMS_Data::LoadShedType mloadShedType;
  std::string mmachineId;
+ IMS_Data::SupervisorOp mop;
 
-  LoadShedFunc(const IMS_Data::LoadShedType& loadShedType, const std::string& machineId):
-   mloadShedType(loadShedType), mmachineId(machineId)
+  LoadShedFunc(const IMS_Data::LoadShedType& loadShedType, const std::string& machineId, const IMS_Data::SupervisorOp& op):
+    mloadShedType(loadShedType), mmachineId(machineId), mop(op)
   {};
 
   int operator()(std::string sessionKey) {
-    return loadShed(sessionKey, mmachineId, mloadShedType);
+    return loadShed(sessionKey, mmachineId, mloadShedType, mop);
   }
 };
 
@@ -42,8 +43,10 @@ int main (int argc, char* argv[]){
 
    /********** EMF data ************/
   IMS_Data::LoadShedType loadShedType;
+  IMS_Data::SupervisorOp op;
 
   /**************** Describe options *************/
+  boost::function1<void,string> fsc(boost::bind(&IMS_Data::SupervisorOp::setScript,boost::ref(op),_1));
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
@@ -68,12 +71,17 @@ int main (int argc, char* argv[]){
 
   opt->setPosition("loadShedType",1);
 
+  opt->add("script,s",
+	   "The supervisor script",
+	   CONFIG,
+	   fsc);
+
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId loadShedType \n\nloadShedType values: 1 for HARD and 2 for SOFT");
 
   //call of the api function
-  LoadShedFunc loadShedFunc(loadShedType, machineId);
+  LoadShedFunc loadShedFunc(loadShedType, machineId, op);
   return GenericCli().run(loadShedFunc, dietConfig, argc, argv);
 }
 

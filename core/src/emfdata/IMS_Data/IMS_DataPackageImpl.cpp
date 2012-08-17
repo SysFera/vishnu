@@ -163,21 +163,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_MetricHistOpEClass->getEStructuralFeatures().push_back(
             m_MetricHistOp__type);
 
-    // RestartOp
-    m_RestartOpEClass = new ::ecore::EClass();
-    m_RestartOpEClass->setClassifierID(RESTARTOP);
-    m_RestartOpEClass->setEPackage(this);
-    getEClassifiers().push_back(m_RestartOpEClass);
-    m_RestartOp__vishnuConf = new ::ecore::EAttribute();
-    m_RestartOp__vishnuConf->setFeatureID(
-            ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF);
-    m_RestartOpEClass->getEStructuralFeatures().push_back(
-            m_RestartOp__vishnuConf);
-    m_RestartOp__sedType = new ::ecore::EAttribute();
-    m_RestartOp__sedType->setFeatureID(
-            ::IMS_Data::IMS_DataPackage::RESTARTOP__SEDTYPE);
-    m_RestartOpEClass->getEStructuralFeatures().push_back(m_RestartOp__sedType);
-
     // CurMetricOp
     m_CurMetricOpEClass = new ::ecore::EClass();
     m_CurMetricOpEClass->setClassifierID(CURMETRICOP);
@@ -272,6 +257,22 @@ IMS_DataPackage::IMS_DataPackage()
     m_ListSysInfoEClass->getEStructuralFeatures().push_back(
             m_ListSysInfo__sysInfo);
 
+    // SupervisorOp
+    m_SupervisorOpEClass = new ::ecore::EClass();
+    m_SupervisorOpEClass->setClassifierID(SUPERVISOROP);
+    m_SupervisorOpEClass->setEPackage(this);
+    getEClassifiers().push_back(m_SupervisorOpEClass);
+    m_SupervisorOp__script = new ::ecore::EAttribute();
+    m_SupervisorOp__script->setFeatureID(
+            ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT);
+    m_SupervisorOpEClass->getEStructuralFeatures().push_back(
+            m_SupervisorOp__script);
+    m_SupervisorOp__name = new ::ecore::EAttribute();
+    m_SupervisorOp__name->setFeatureID(
+            ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME);
+    m_SupervisorOpEClass->getEStructuralFeatures().push_back(
+            m_SupervisorOp__name);
+
     // Create enums
 
     m_MetricTypeEEnum = new ::ecore::EEnum();
@@ -293,11 +294,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_ProcessStateEEnum->setClassifierID(PROCESSSTATE);
     m_ProcessStateEEnum->setEPackage(this);
     getEClassifiers().push_back(m_ProcessStateEEnum);
-
-    m_SeDTypeEEnum = new ::ecore::EEnum();
-    m_SeDTypeEEnum->setClassifierID(SEDTYPE);
-    m_SeDTypeEEnum->setEPackage(this);
-    getEClassifiers().push_back(m_SeDTypeEEnum);
 
     // Create data types
 
@@ -587,37 +583,6 @@ IMS_DataPackage::IMS_DataPackage()
     m_MetricHistOp__type->setUnique(true);
     m_MetricHistOp__type->setDerived(false);
     m_MetricHistOp__type->setOrdered(true);
-    // RestartOp
-    m_RestartOpEClass->setName("RestartOp");
-    m_RestartOpEClass->setAbstract(false);
-    m_RestartOpEClass->setInterface(false);
-    m_RestartOp__vishnuConf->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_RestartOp__vishnuConf->setName("vishnuConf");
-    m_RestartOp__vishnuConf->setDefaultValueLiteral("" "");
-    m_RestartOp__vishnuConf->setLowerBound(0);
-    m_RestartOp__vishnuConf->setUpperBound(1);
-    m_RestartOp__vishnuConf->setTransient(false);
-    m_RestartOp__vishnuConf->setVolatile(false);
-    m_RestartOp__vishnuConf->setChangeable(true);
-    m_RestartOp__vishnuConf->setUnsettable(false);
-    m_RestartOp__vishnuConf->setID(false);
-    m_RestartOp__vishnuConf->setUnique(true);
-    m_RestartOp__vishnuConf->setDerived(false);
-    m_RestartOp__vishnuConf->setOrdered(true);
-    m_RestartOp__sedType->setEType(m_SeDTypeEEnum);
-    m_RestartOp__sedType->setName("sedType");
-    m_RestartOp__sedType->setDefaultValueLiteral("0");
-    m_RestartOp__sedType->setLowerBound(0);
-    m_RestartOp__sedType->setUpperBound(1);
-    m_RestartOp__sedType->setTransient(false);
-    m_RestartOp__sedType->setVolatile(false);
-    m_RestartOp__sedType->setChangeable(true);
-    m_RestartOp__sedType->setUnsettable(false);
-    m_RestartOp__sedType->setID(false);
-    m_RestartOp__sedType->setUnique(true);
-    m_RestartOp__sedType->setDerived(false);
-    m_RestartOp__sedType->setOrdered(true);
     // CurMetricOp
     m_CurMetricOpEClass->setName("CurMetricOp");
     m_CurMetricOpEClass->setAbstract(false);
@@ -795,6 +760,38 @@ IMS_DataPackage::IMS_DataPackage()
     m_ListSysInfo__sysInfo->setUnique(true);
     m_ListSysInfo__sysInfo->setDerived(false);
     m_ListSysInfo__sysInfo->setOrdered(true);
+    // SupervisorOp
+    m_SupervisorOpEClass->setName("SupervisorOp");
+    m_SupervisorOpEClass->setAbstract(false);
+    m_SupervisorOpEClass->setInterface(false);
+    m_SupervisorOp__script->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SupervisorOp__script->setName("script");
+    m_SupervisorOp__script->setDefaultValueLiteral("" "");
+    m_SupervisorOp__script->setLowerBound(0);
+    m_SupervisorOp__script->setUpperBound(1);
+    m_SupervisorOp__script->setTransient(false);
+    m_SupervisorOp__script->setVolatile(false);
+    m_SupervisorOp__script->setChangeable(true);
+    m_SupervisorOp__script->setUnsettable(false);
+    m_SupervisorOp__script->setID(false);
+    m_SupervisorOp__script->setUnique(true);
+    m_SupervisorOp__script->setDerived(false);
+    m_SupervisorOp__script->setOrdered(true);
+    m_SupervisorOp__name->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SupervisorOp__name->setName("name");
+    m_SupervisorOp__name->setDefaultValueLiteral("" "");
+    m_SupervisorOp__name->setLowerBound(0);
+    m_SupervisorOp__name->setUpperBound(1);
+    m_SupervisorOp__name->setTransient(false);
+    m_SupervisorOp__name->setVolatile(false);
+    m_SupervisorOp__name->setChangeable(true);
+    m_SupervisorOp__name->setUnsettable(false);
+    m_SupervisorOp__name->setID(false);
+    m_SupervisorOp__name->setUnique(true);
+    m_SupervisorOp__name->setDerived(false);
+    m_SupervisorOp__name->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -945,60 +942,6 @@ IMS_DataPackage::IMS_DataPackage()
         m_ProcessStateEEnum->getELiterals().push_back(_el);
     }
 
-    // SeDType
-    m_SeDTypeEEnum->setName("SeDType");
-    m_SeDTypeEEnum->setSerializable(true);
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UNDEFINED
-        _el->setName("UNDEFINED");
-        _el->setValue(0);
-        _el->setLiteral("UNDEFINED");
-        _el->setEEnum(m_SeDTypeEEnum);
-        m_SeDTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // UMS
-        _el->setName("UMS");
-        _el->setValue(1);
-        _el->setLiteral("UMS");
-        _el->setEEnum(m_SeDTypeEEnum);
-        m_SeDTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // TMS
-        _el->setName("TMS");
-        _el->setValue(2);
-        _el->setLiteral("TMS");
-        _el->setEEnum(m_SeDTypeEEnum);
-        m_SeDTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // FMS
-        _el->setName("FMS");
-        _el->setValue(3);
-        _el->setLiteral("FMS");
-        _el->setEEnum(m_SeDTypeEEnum);
-        m_SeDTypeEEnum->getELiterals().push_back(_el);
-    }
-
-    {
-        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // IMS
-        _el->setName("IMS");
-        _el->setValue(4);
-        _el->setLiteral("IMS");
-        _el->setEEnum(m_SeDTypeEEnum);
-        m_SeDTypeEEnum->getELiterals().push_back(_el);
-    }
-
     _initialize();
 }
 
@@ -1042,10 +985,6 @@ IMS_DataPackage::IMS_DataPackage()
 {
     return m_MetricHistOpEClass;
 }
-::ecore::EClass_ptr IMS_DataPackage::getRestartOp()
-{
-    return m_RestartOpEClass;
-}
 ::ecore::EClass_ptr IMS_DataPackage::getCurMetricOp()
 {
     return m_CurMetricOpEClass;
@@ -1078,9 +1017,9 @@ IMS_DataPackage::IMS_DataPackage()
 {
     return m_ListSysInfoEClass;
 }
-::ecore::EEnum_ptr IMS_DataPackage::getSeDType()
+::ecore::EClass_ptr IMS_DataPackage::getSupervisorOp()
 {
-    return m_SeDTypeEEnum;
+    return m_SupervisorOpEClass;
 }
 
 ::ecore::EAttribute_ptr IMS_DataPackage::getMetric__type()
@@ -1155,14 +1094,6 @@ IMS_DataPackage::IMS_DataPackage()
 {
     return m_MetricHistOp__type;
 }
-::ecore::EAttribute_ptr IMS_DataPackage::getRestartOp__vishnuConf()
-{
-    return m_RestartOp__vishnuConf;
-}
-::ecore::EAttribute_ptr IMS_DataPackage::getRestartOp__sedType()
-{
-    return m_RestartOp__sedType;
-}
 ::ecore::EAttribute_ptr IMS_DataPackage::getCurMetricOp__metricType()
 {
     return m_CurMetricOp__metricType;
@@ -1206,5 +1137,13 @@ IMS_DataPackage::IMS_DataPackage()
 ::ecore::EReference_ptr IMS_DataPackage::getListSysInfo__sysInfo()
 {
     return m_ListSysInfo__sysInfo;
+}
+::ecore::EAttribute_ptr IMS_DataPackage::getSupervisorOp__script()
+{
+    return m_SupervisorOp__script;
+}
+::ecore::EAttribute_ptr IMS_DataPackage::getSupervisorOp__name()
+{
+    return m_SupervisorOp__name;
 }
 

@@ -1,3 +1,7 @@
+if (BUILD_TESTING)
+  add_subdirectory(tests)
+endif()
+
 include_directories(
   ${ZMQ_INCLUDE_DIR}
   ZMQHelper
@@ -6,6 +10,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
 )
 
 
@@ -31,28 +36,6 @@ add_executable(namer
   )
 
 target_link_libraries(namer
-  ${ZMQ_LIBRARIES} 
-  ${Boost_LIBRARIES}
-  zmq_helper
-  vishnu-core
-)
-
-add_executable(testServer
-  TestServer.cpp
-  Server.cpp
-  )
-target_link_libraries(testServer
-  ${ZMQ_LIBRARIES} 
-  ${Boost_LIBRARIES}
-  zmq_helper
-  vishnu-core
-)
-
-add_executable(testAnnuary
-  TestAnnuary.cpp
-  Annuary.cpp
-  )
-target_link_libraries(testAnnuary
   ${ZMQ_LIBRARIES} 
   ${Boost_LIBRARIES}
   zmq_helper

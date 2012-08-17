@@ -21,21 +21,23 @@ using namespace vishnu;
 
 struct StopFunc {
 
-  IMS_Data::Process mprocess;
+  std::string mmid;
+  IMS_Data::SupervisorOp mop;
 
-  StopFunc(IMS_Data::Process process):
-   mprocess(process)
+  StopFunc(std::string mid, const IMS_Data::SupervisorOp& op):
+    mmid(mid), mop(op)
   {};
 
   int operator()(std::string sessionKey) {
-    return stop(sessionKey, mprocess);
+    return stop(sessionKey, mmid, mop);
   }
 };
 
 
 boost::shared_ptr<Options>
 makeStopOpt(string pgName,
-            boost::function1<void, string>& fDietId,
+            boost::function1<void, string>& fname,
+            boost::function1<void, string>& fop,
             string& dietConfig) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -47,10 +49,15 @@ makeStopOpt(string pgName,
            dietConfig);
 
     // All cli options
-   opt->add("dietId,d",
-            "The diet id of the process",
+  opt->add("script,s",
+	   "The supervisor script",
+	   CONFIG,
+	   fop);
+
+  opt->add( "processName,n",
+            "represents the name of the element",
             CONFIG,
-            fDietId);
+            fname,1);
 
   return opt;
 }
@@ -64,21 +71,16 @@ int main (int argc, char* argv[]){
   string processName;
 
    /********** EMF data ************/
-  IMS_Data::Process process;
+  IMS_Data::SupervisorOp op;
 
   /******** Callback functions ******************/
-  boost::function1<void, string> fDietId (boost::bind(&IMS_Data::Process::setDietId,boost::ref(process),_1));
+  boost::function1<void,string> fop(boost::bind(&IMS_Data::SupervisorOp::setScript,boost::ref(op),_1));
+  boost::function1<void,string> fname(boost::bind(&IMS_Data::SupervisorOp::setName,boost::ref(op),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fDietId, dietConfig);
+  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fname, fop, dietConfig);
 
 
-  opt->add( "processName,p",
-            "represents the name of the process",
-            HIDDEN,
-            processName,1);
-
-  opt->setPosition("processName",1);
 
   opt->add( "machineId,i",
             "represents the id of the machine",
@@ -91,10 +93,8 @@ int main (int argc, char* argv[]){
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "processName machineId");
 
-  process.setMachineId(machineId);
-  process.setProcessName(processName);
   //call of the api function
-  StopFunc stopFunc(process);
+  StopFunc stopFunc(machineId, op);
   return GenericCli().run(stopFunc, dietConfig, argc, argv);
 
 }

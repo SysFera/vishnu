@@ -213,7 +213,7 @@ getServerAddresses(const std::string& uri, const std::string service,
   while (precDol != std::string::npos) {
     tmp = response.find("$", precDol+1);
     if(tmp != std::string::npos){
-      server = response.substr(precDol+1, tmp-precDol);
+      server = response.substr(precDol+1, tmp-precDol-1);
     } else {
       server = response.substr(precDol+1, std::string::npos);
     }
