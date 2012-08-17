@@ -159,22 +159,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RestartOp" instanceTypeName="RestartOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="vishnuConf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description">
-        <details key="content" value="The path to the vishnu configuration file"/>
-        <details key="shortOption" value="v"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sedType" eType="#//SeDType"
-        defaultValueLiteral="0">
-      <eAnnotations source="Description">
-        <details key="content" value="The type of the vishnu sed"/>
-        <details key="shortOption" value="t"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CurMetricOp" instanceTypeName="CurMetricOp">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="metricType" eType="#//MetricType"
         defaultValueLiteral="0">
@@ -269,14 +253,20 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SeDType" instanceTypeName="SeDType">
-    <eAnnotations source="Description">
-      <details key="content" value="The type of sed that can be relaunched"/>
-    </eAnnotations>
-    <eLiterals name="UNDEFINED"/>
-    <eLiterals name="UMS" value="1"/>
-    <eLiterals name="TMS" value="2"/>
-    <eLiterals name="FMS" value="3"/>
-    <eLiterals name="IMS" value="4"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SupervisorOp" instanceTypeName="SupervisorOp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description" references="#//SupervisorOp/script/%Description%">
+        <details key="content" value="The path to the supervisord script file on the machine"/>
+        <details key="shortOption" value="s"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description" references="#//SupervisorOp/name/%Description%">
+        <details key="content" value="The path to the supervisord script file on the machine"/>
+        <details key="shortOption" value="n"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

@@ -23,29 +23,29 @@ using namespace std;
 
 int
 vishnu::unregisterSeD(string type, ExecConfiguration config) {
-  string uri;
-  string urinamer;
-
-  // Getting the machine id
-  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
-  zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, urinamer);
-  std::vector<std::string> tmp;
-  tmp.push_back("deleting");
-
-  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
-
-  std::string req = "0"+s.get()->toString();
-  std::cout << "sending " << req << std::endl;
-
-  if (!lpc.send(req)) {
-    std::cerr << "E: request failed, exiting ...\n";
-    exit(-1);
-  }
-  std::string response = lpc.recv();
-  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
-
+//  string uri;
+//  string urinamer;
+//
+//  // Getting the machine id
+//  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+//  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
+//  zmq::context_t ctx(1);
+//  LazyPirateClient lpc(ctx, urinamer);
+//  std::vector<std::string> tmp;
+//  tmp.push_back("deleting");
+//
+//  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
+//
+//  std::string req = "0"+s.get()->toString();
+//  std::cout << "sending " << req << std::endl;
+//
+//  if (!lpc.send(req)) {
+//    std::cerr << "E: request failed, exiting ...\n";
+//    exit(-1);
+//  }
+//  std::string response = lpc.recv();
+//  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+//
   return 0;
 }
 

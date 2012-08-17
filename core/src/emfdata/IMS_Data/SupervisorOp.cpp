@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * IMS_Data/RestartOp.cpp
+ * IMS_Data/SupervisorOp.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "RestartOp.hpp"
+#include "SupervisorOp.hpp"
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "IMS_Data/IMS_DataPackage.hpp"
@@ -30,73 +30,73 @@
 using namespace ::IMS_Data;
 
 // Default constructor
-RestartOp::RestartOp() :
-    m_vishnuConf(""), m_sedType(0)
+SupervisorOp::SupervisorOp() :
+    m_script(""), m_name("")
 {
 
-    /*PROTECTED REGION ID(RestartOpImpl__RestartOpImpl) START*/
+    /*PROTECTED REGION ID(SupervisorOpImpl__SupervisorOpImpl) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 }
 
-RestartOp::~RestartOp()
+SupervisorOp::~SupervisorOp()
 {
 }
 
-/*PROTECTED REGION ID(RestartOp.cpp) START*/
+/*PROTECTED REGION ID(SupervisorOp.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
 // Attributes
 
-::ecore::EString const& RestartOp::getVishnuConf() const
+::ecore::EString const& SupervisorOp::getScript() const
 {
-    return m_vishnuConf;
+    return m_script;
 }
 
-void RestartOp::setVishnuConf(::ecore::EString const& _vishnuConf)
+void SupervisorOp::setScript(::ecore::EString const& _script)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_vishnuConf = m_vishnuConf;
+    ::ecore::EString _old_script = m_script;
 #endif
-    m_vishnuConf = _vishnuConf;
+    m_script = _script;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getRestartOp__vishnuConf(),
-                _old_vishnuConf,
-                m_vishnuConf
+                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getSupervisorOp__script(),
+                _old_script,
+                m_script
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::IMS_Data::SeDType RestartOp::getSedType() const
+::ecore::EString const& SupervisorOp::getName() const
 {
-    return m_sedType;
+    return m_name;
 }
 
-void RestartOp::setSedType(::IMS_Data::SeDType _sedType)
+void SupervisorOp::setName(::ecore::EString const& _name)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::IMS_Data::SeDType _old_sedType = m_sedType;
+    ::ecore::EString _old_name = m_name;
 #endif
-    m_sedType = _sedType;
+    m_name = _name;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getRestartOp__sedType(),
-                _old_sedType,
-                m_sedType
+                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getSupervisorOp__name(),
+                _old_name,
+                m_name
         );
         eNotify(&notification);
     }

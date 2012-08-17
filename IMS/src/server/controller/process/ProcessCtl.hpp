@@ -40,25 +40,25 @@ public:
    * \param isAPI: If called with the external API or not
    */
   void
-  restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI = true);
+  restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
    */
   void
-  stop(IMS_Data::Process_ptr p);
+  stop(IMS_Data::SupervisorOp_ptr op);
   /**
    * To perform load schedding operations
    * \param type: The type of loadShedding
    */
   void
-  loadShed(int type);
+  loadShed(int type, IMS_Data::SupervisorOp_ptr op);
 protected:
 private:
   /**
    * \brief To stop all the vishnu processes on a machine
    */
   void
-  stopAll();
+  stopAll(IMS_Data::SupervisorOp_ptr op);
   /**
    * \brief The process server
    */
@@ -66,7 +66,7 @@ private:
   /**
    * \brief The option to restart
    */
-  IMS_Data::RestartOp mop;
+  IMS_Data::SupervisorOp mop;
   /**
    * \brief The machine id
    */

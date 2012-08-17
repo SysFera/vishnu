@@ -442,8 +442,19 @@ IMSMapper::decodeLoad(vector<int> separator, const string& msg) {
   u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
   res += u;
   res += " ";
-  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
   res += convertToString(u);
+  u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
+  IMS_Data::SupervisorOp_ptr op = NULL;
+  //To parse the object serialized
+  if(!parseEmfObject(u, op)) {
+    throw IMSVishnuException(ERRCODE_INVALID_PARAM);
+  }
+  u = op->getScript();
+  if (u.compare("")){
+    res += " -s ";
+    res += u;
+  }
   return res;
 }
 
@@ -470,15 +481,25 @@ IMSMapper::decodeStop(vector<int> separator, const string& msg) {
   string u;
   res += (mmap.find(VISHNU_STOP))->second;
   res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  IMS_Data::Process_ptr ac = NULL;
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res += u;
+  res += " ";
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
+  IMS_Data::SupervisorOp_ptr op = NULL;
   //To parse the object serialized
-  if(!parseEmfObject(u, ac)) {
+  if(!parseEmfObject(u, op)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  res += ac->getProcessName();
-  res += " ";
-  res += ac->getMachineId();
+  u = op->getScript();
+  if (u.compare("")){
+    res += " -s ";
+    res += u;
+  }
+  u = op->getName();
+  if (u.compare("")){
+    res += " -n ";
+    res += u;
+  }
   return res;
 }
 string
@@ -491,13 +512,20 @@ IMSMapper::decodeRestart(vector<int> separator, const string& msg) {
   res += u;
   res += " ";
   u = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
-  IMS_Data::RestartOp_ptr ac = NULL;
+  IMS_Data::SupervisorOp_ptr ac = NULL;
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  res += ac->getVishnuConf();
-  res += " ";
-  res += convertToString(ac->getSedType());
+  u = ac->getScript();
+  if (u.compare("")){
+    res += " -s ";
+    res += u;
+  }
+  u = ac->getName();
+  if (u.compare("")){
+    res += " -n ";
+    res += u;
+  }
   return res;
 }
 string
