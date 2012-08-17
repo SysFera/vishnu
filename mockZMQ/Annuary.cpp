@@ -29,6 +29,16 @@ Annuary::~Annuary(){
 int
 Annuary::add(std::string name, std::vector<std::string> services, std::string uri){
   boost::shared_ptr<Server> s;
+  std::vector<boost::shared_ptr<Server> >* tmp = Annuary::get(services.at(0));
+  std::vector<boost::shared_ptr<Server> >::iterator it;
+
+// Do not add an already existing server
+  for (it = tmp->begin(); it != tmp->end() ; ++it){
+    if (name.compare(it->get()->getName()) == 0 &&
+        uri.compare(it->get()->getURI()) == 0){
+      return 0;
+    }
+  }
   s.reset (new Server(name, services, uri));
   mservers.push_back(s);
   return 0;
@@ -42,6 +52,7 @@ Annuary::remove(std::string name, std::string uri){
     if (name.compare(mservers.at(i)->getName()) == 0 &&
         uri.compare(mservers.at(i).get()->getURI()) == 0){
       mservers.erase(mservers.begin()+i);
+      break;
     }
   }
   return 0;
@@ -52,6 +63,9 @@ std::vector<boost::shared_ptr<Server> >*
 Annuary::get(std::string service){
   int i;
   std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
+  if (service.compare("")==0){
+    return &mservers;
+  }
   for (i=0;i<mservers.size();++i){
     if (mservers.at(i)->hasService(service)){
       res->push_back(mservers.at(i));

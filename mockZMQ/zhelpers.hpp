@@ -7,8 +7,6 @@
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
 
-
-
 class Socket : public zmq::socket_t, public boost::noncopyable {
 public:
   Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
@@ -58,7 +56,7 @@ class LazyPirateClient {
 public:
   LazyPirateClient(zmq::context_t& ctx, const std::string& addr)
     : ctx_(ctx), addr_(addr) {
-    reset();
+      reset();
   }
 
   bool

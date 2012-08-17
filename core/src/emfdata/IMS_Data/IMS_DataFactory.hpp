@@ -81,11 +81,6 @@ namespace IMS_Data
          */
         virtual MetricHistOp_ptr createMetricHistOp();
         /**
-         * \brief Creates a new object of class RestartOp
-         * \return Pointer to the object
-         */
-        virtual RestartOp_ptr createRestartOp();
-        /**
          * \brief Creates a new object of class CurMetricOp
          * \return Pointer to the object
          */
@@ -120,6 +115,11 @@ namespace IMS_Data
          * \return Pointer to the object
          */
         virtual ListSysInfo_ptr createListSysInfo();
+        /**
+         * \brief Creates a new object of class SupervisorOp
+         * \return Pointer to the object
+         */
+        virtual SupervisorOp_ptr createSupervisorOp();
 
         /**
          * \brief To create an object of a given class (reflective API)

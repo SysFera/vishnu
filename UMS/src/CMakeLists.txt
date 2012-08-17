@@ -8,7 +8,9 @@ include_directories(client api
   ${PROJECT_BINARY_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR})
+  ${MOCK_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  )
 
 set(client_SRCS client/SessionProxy.cpp
   client/AuthAccountProxy.cpp

@@ -37,7 +37,7 @@ namespace vishnu {
   exportCommands(const string sessionKey,
 		 const string oldSessionId,
 		 string filename,
-		 IMS_Data::ExportOp op)
+		 const IMS_Data::ExportOp& op=IMS_Data::ExportOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -52,7 +52,7 @@ namespace vishnu {
   getMetricCurrentValue(const string sessionKey,
 			string machineId,
 			IMS_Data::ListMetric& val,
-			IMS_Data::CurMetricOp op)
+			const IMS_Data::CurMetricOp& op=IMS_Data::CurMetricOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -67,7 +67,7 @@ namespace vishnu {
   getMetricHistory(const string sessionKey,
 		   string machineId,
 		   IMS_Data::ListMetric& list,
-		   IMS_Data::MetricHistOp op)
+		   const IMS_Data::MetricHistOp& op=IMS_Data::MetricHistOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -80,7 +80,7 @@ namespace vishnu {
   int
   getProcesses(const string sessionKey,
 	       IMS_Data::ListProcesses& list,
-	       IMS_Data::ProcessOp op)
+	       const IMS_Data::ProcessOp& op=IMS_Data::ProcessOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -115,7 +115,7 @@ namespace vishnu {
   int
   getSystemThreshold(const string sessionKey,
 		     IMS_Data::ListThreshold& list,
-		     IMS_Data::ThresholdOp op)
+		     const IMS_Data::ThresholdOp& op=IMS_Data::ThresholdOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -194,7 +194,8 @@ namespace vishnu {
   int
   loadShed(const string sessionKey,
 	   string machineId,
-	   IMS_Data::LoadShedType loadShedType)
+	   IMS_Data::LoadShedType loadShedType,
+           const IMS_Data::SupervisorOp& op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -226,7 +227,8 @@ namespace vishnu {
    */
   int
   stop(const string sessionKey,
-       IMS_Data::Process proc)
+       string machineId,
+       const IMS_Data::SupervisorOp& op)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -239,7 +241,7 @@ namespace vishnu {
   int
   getSystemInfo(const string sessionKey,
 		IMS_Data::ListSysInfo& list,
-		IMS_Data::SysInfoOp op)
+		const IMS_Data::SysInfoOp& op=IMS_Data::SysInfoOp())
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
@@ -249,11 +251,11 @@ namespace vishnu {
    * \param op: The options for the restart, the vishnuConfigurationFile and the type of sed to be restarted on the machine
    * \return int : an error code
    */
-  int
-  restart(const string sessionKey,
-	  string machineId,
-	  IMS_Data::RestartOp op)
-    throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
+   int
+   restart(const string sessionKey,
+           string machineId,
+           const IMS_Data::SupervisorOp& op)
+     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu
 

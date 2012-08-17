@@ -224,8 +224,6 @@ set(IMS_Data_SRCS
   emfdata/IMS_Data/ExportOpImpl.cpp
   emfdata/IMS_Data/MetricHistOp.cpp
   emfdata/IMS_Data/MetricHistOpImpl.cpp
-  emfdata/IMS_Data/RestartOp.cpp
-  emfdata/IMS_Data/RestartOpImpl.cpp
   emfdata/IMS_Data/CurMetricOp.cpp
   emfdata/IMS_Data/CurMetricOpImpl.cpp
   emfdata/IMS_Data/ProcessOp.cpp
@@ -239,7 +237,9 @@ set(IMS_Data_SRCS
   emfdata/IMS_Data/SysInfoOp.cpp
   emfdata/IMS_Data/SysInfoOpImpl.cpp
   emfdata/IMS_Data/ListSysInfo.cpp
-  emfdata/IMS_Data/ListSysInfoImpl.cpp)
+  emfdata/IMS_Data/ListSysInfoImpl.cpp
+  emfdata/IMS_Data/SupervisorOp.cpp
+  emfdata/IMS_Data/SupervisorOpImpl.cpp)
 
 set(IMS_Data_HEADERS
   emfdata/IMS_Data.hpp
@@ -253,7 +253,6 @@ set(IMS_Data_HEADERS
   emfdata/IMS_Data/Process.hpp
   emfdata/IMS_Data/ExportOp.hpp
   emfdata/IMS_Data/MetricHistOp.hpp
-  emfdata/IMS_Data/RestartOp.hpp
   emfdata/IMS_Data/CurMetricOp.hpp
   emfdata/IMS_Data/ProcessOp.hpp
   emfdata/IMS_Data/ThresholdOp.hpp
@@ -261,6 +260,7 @@ set(IMS_Data_HEADERS
   emfdata/IMS_Data/Threshold.hpp
   emfdata/IMS_Data/SysInfoOp.hpp
   emfdata/IMS_Data/ListSysInfo.hpp
+  emfdata/IMS_Data/Supervisor.hpp
    )
 set(FMS_Data_SRCS
   emfdata/FMS_Data.cpp

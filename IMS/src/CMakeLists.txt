@@ -11,7 +11,9 @@ include_directories(client api utils
   ${Boost_INCLUDE_DIRS}
   ${SIGAR_INCLUDE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR})
+  ${MOCK_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+)
 
 
 set(client_SRCS

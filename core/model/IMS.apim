@@ -99,6 +99,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
       <ports name="loadShedType" dataType="//@typeList/@types.6" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <ports name="op" dataType="//@typeList/@types.27" description="The option for the supervision" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <usedServices href="IMS_Internal.apim#//@modules.0/@services.12"/>
       <details key="description" value="This function allows an administrator to shed load on a machine. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted). HARD mode will additionally stop all the VISHNU processes on the machine. If a user without administrator rights uses this function, all the user's jobs and file transfers will be cancelled on the machine. In the HARD mode, the stopped processes will not be automatically restarted.&#xA;Type values:&#xA;HARD = 1&#xA;SOFT   = 2"/>
       <details key="exCLI" value="To make a hard load shedding on machine_1:&#xA;vishnu_load_shed machine_1 1"/>
@@ -119,8 +120,8 @@
     </services>
     <services name="stop" description="To stop (and do not try to relaunch) a SeD" adminOnly="true" resultCodes="ERRCODE_DBERR VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
-      <ports name="process" usage="API_ONLY" dataType="//@typeList/@types.19" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
-      <ports name="process" usage="CLI_ONLY" dataType="//@typeList/@types.26" description="The process to stop and do not try to restart anymore" defaultValueLiteral=""/>
+      <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
+      <ports name="op" dataType="//@typeList/@types.27" description="The option for the supervision" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <usedServices href="IMS_Internal.apim#//@modules.0/@services.16"/>
       <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;The processName must be UMS, TMS, IMS or FMS , in upper case.&#xA;"/>
       <details key="exCLI" value="To stop the UMS process on machine_1:&#xA;vishnu_stop UMS machine_1"/>
@@ -136,7 +137,7 @@
     <services name="restart" description="To restart a SeD or a MA" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
-      <ports name="options" dataType="//@typeList/@types.22" description="The option for the restart" defaultValueLiteral=""/>
+      <ports name="op" dataType="//@typeList/@types.27" description="The option for the restart" defaultValueLiteral=""/>
       <usedServices href="IMS_Internal.apim#//@modules.0/@services.15"/>
       <details key="description" value="This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted."/>
       <details key="exCLI" value="To restart using the configuration file ums.cfg an UMS sed on machine_1:&#xA;vishnu_restart -v /tmp/ums.cfg -t 1 machine_1"/>
@@ -243,6 +244,9 @@
     </types>
     <types name="ProcessCLI" description="The process object for the cli">
       <ECoreType xsi:type="ecore:EClass" href="IMS_Data_CLI.ecore#//ProcessCLI"/>
+    </types>
+    <types name="SupervisorOp" description="The option for the supervision">
+      <ECoreType xsi:type="ecore:EClass" href="IMS_Data.ecore#//SupervisorOp"/>
     </types>
   </typeList>
 </API>

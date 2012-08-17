@@ -2,6 +2,19 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include "utils.hpp"
+#include "utilVishnu.hpp"
+
+int
+heartbeat(diet_profile_t* pb){
+  std::string ack("OK");
+  diet_string_set(diet_parameter(pb,1), const_cast<char*>(ack.c_str()), DIET_VOLATILE);
+}
+
+SeD::SeD(){
+  int (*functionPtr)(diet_profile_t*);
+  mcb.insert( std::pair<std::string, functionPtr_t> ("heartbeat",heartbeat));
+}
+
 
 int
 SeD::call(diet_profile_t* profile) {

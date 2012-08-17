@@ -58,4 +58,4 @@ public:
   char* mav[2];
 };
 
-typedef DietSeDFixture<TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;
+typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;

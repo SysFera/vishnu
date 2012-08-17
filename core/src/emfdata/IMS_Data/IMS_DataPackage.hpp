@@ -119,34 +119,29 @@ namespace IMS_Data
         static const int PROCESSSTATE = 13;
 
         /**
-         * \brief Constant for RestartOp class
+         * \brief Constant for SupervisorOp class
          */
-        static const int RESTARTOP = 14;
-
-        /**
-         * \brief Constant for SeDType class
-         */
-        static const int SEDTYPE = 15;
+        static const int SUPERVISOROP = 14;
 
         /**
          * \brief Constant for SysInfoOp class
          */
-        static const int SYSINFOOP = 16;
+        static const int SYSINFOOP = 15;
 
         /**
          * \brief Constant for SystemInfo class
          */
-        static const int SYSTEMINFO = 17;
+        static const int SYSTEMINFO = 16;
 
         /**
          * \brief Constant for Threshold class
          */
-        static const int THRESHOLD = 18;
+        static const int THRESHOLD = 17;
 
         /**
          * \brief Constant for ThresholdOp class
          */
-        static const int THRESHOLDOP = 19;
+        static const int THRESHOLDOP = 18;
 
         /**
          * \brief Constant for METRIC__TYPE feature
@@ -239,69 +234,69 @@ namespace IMS_Data
         static const int METRICHISTOP__TYPE = 17;
 
         /**
-         * \brief Constant for RESTARTOP__VISHNUCONF feature
-         */
-        static const int RESTARTOP__VISHNUCONF = 18;
-
-        /**
-         * \brief Constant for RESTARTOP__SEDTYPE feature
-         */
-        static const int RESTARTOP__SEDTYPE = 19;
-
-        /**
          * \brief Constant for CURMETRICOP__METRICTYPE feature
          */
-        static const int CURMETRICOP__METRICTYPE = 20;
+        static const int CURMETRICOP__METRICTYPE = 18;
 
         /**
          * \brief Constant for PROCESSOP__MACHINEID feature
          */
-        static const int PROCESSOP__MACHINEID = 21;
+        static const int PROCESSOP__MACHINEID = 19;
 
         /**
          * \brief Constant for THRESHOLDOP__MACHINEID feature
          */
-        static const int THRESHOLDOP__MACHINEID = 22;
+        static const int THRESHOLDOP__MACHINEID = 20;
 
         /**
          * \brief Constant for THRESHOLDOP__METRICTYPE feature
          */
-        static const int THRESHOLDOP__METRICTYPE = 23;
+        static const int THRESHOLDOP__METRICTYPE = 21;
 
         /**
          * \brief Constant for LISTTHRESHOLD__THRESHOLD feature
          */
-        static const int LISTTHRESHOLD__THRESHOLD = 24;
+        static const int LISTTHRESHOLD__THRESHOLD = 22;
 
         /**
          * \brief Constant for THRESHOLD__VALUE feature
          */
-        static const int THRESHOLD__VALUE = 25;
+        static const int THRESHOLD__VALUE = 23;
 
         /**
          * \brief Constant for THRESHOLD__MACHINEID feature
          */
-        static const int THRESHOLD__MACHINEID = 26;
+        static const int THRESHOLD__MACHINEID = 24;
 
         /**
          * \brief Constant for THRESHOLD__TYPE feature
          */
-        static const int THRESHOLD__TYPE = 27;
+        static const int THRESHOLD__TYPE = 25;
 
         /**
          * \brief Constant for THRESHOLD__HANDLER feature
          */
-        static const int THRESHOLD__HANDLER = 28;
+        static const int THRESHOLD__HANDLER = 26;
 
         /**
          * \brief Constant for SYSINFOOP__MACHINEID feature
          */
-        static const int SYSINFOOP__MACHINEID = 29;
+        static const int SYSINFOOP__MACHINEID = 27;
 
         /**
          * \brief Constant for LISTSYSINFO__SYSINFO feature
          */
-        static const int LISTSYSINFO__SYSINFO = 30;
+        static const int LISTSYSINFO__SYSINFO = 28;
+
+        /**
+         * \brief Constant for SUPERVISOROP__SCRIPT feature
+         */
+        static const int SUPERVISOROP__SCRIPT = 29;
+
+        /**
+         * \brief Constant for SUPERVISOROP__NAME feature
+         */
+        static const int SUPERVISOROP__NAME = 30;
 
         // EClassifiers methods
 
@@ -366,12 +361,6 @@ namespace IMS_Data
         virtual ::ecore::EClass_ptr getMetricHistOp();
 
         /**
-         * \brief Returns the reflective object for class RestartOp
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EClass_ptr getRestartOp();
-
-        /**
          * \brief Returns the reflective object for class CurMetricOp
          * \return A pointer to the reflective object
          */
@@ -420,10 +409,10 @@ namespace IMS_Data
         virtual ::ecore::EClass_ptr getListSysInfo();
 
         /**
-         * \brief Returns the reflective object for class SeDType
+         * \brief Returns the reflective object for class SupervisorOp
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EEnum_ptr getSeDType();
+        virtual ::ecore::EClass_ptr getSupervisorOp();
 
         // EStructuralFeatures methods
 
@@ -536,18 +525,6 @@ namespace IMS_Data
         virtual ::ecore::EAttribute_ptr getMetricHistOp__type();
 
         /**
-         * \brief Returns the reflective object for feature vishnuConf of class RestartOp
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getRestartOp__vishnuConf();
-
-        /**
-         * \brief Returns the reflective object for feature sedType of class RestartOp
-         * \return A pointer to the reflective object
-         */
-        virtual ::ecore::EAttribute_ptr getRestartOp__sedType();
-
-        /**
          * \brief Returns the reflective object for feature metricType of class CurMetricOp
          * \return A pointer to the reflective object
          */
@@ -613,6 +590,18 @@ namespace IMS_Data
          */
         virtual ::ecore::EReference_ptr getListSysInfo__sysInfo();
 
+        /**
+         * \brief Returns the reflective object for feature script of class SupervisorOp
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSupervisorOp__script();
+
+        /**
+         * \brief Returns the reflective object for feature name of class SupervisorOp
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSupervisorOp__name();
+
     protected:
 
         /**
@@ -660,11 +649,6 @@ namespace IMS_Data
         ::ecore::EClass_ptr m_MetricHistOpEClass;
 
         /**
-         * \brief The instance for the class RestartOp
-         */
-        ::ecore::EClass_ptr m_RestartOpEClass;
-
-        /**
          * \brief The instance for the class CurMetricOp
          */
         ::ecore::EClass_ptr m_CurMetricOpEClass;
@@ -699,6 +683,11 @@ namespace IMS_Data
          */
         ::ecore::EClass_ptr m_ListSysInfoEClass;
 
+        /**
+         * \brief The instance for the class SupervisorOp
+         */
+        ::ecore::EClass_ptr m_SupervisorOpEClass;
+
         // EEnuminstances 
 
         /**
@@ -720,11 +709,6 @@ namespace IMS_Data
          * \brief The instance for the enum ProcessState
          */
         ::ecore::EEnum_ptr m_ProcessStateEEnum;
-
-        /**
-         * \brief The instance for the enum SeDType
-         */
-        ::ecore::EEnum_ptr m_SeDTypeEEnum;
 
         // EDataType instances 
 
@@ -822,16 +806,6 @@ namespace IMS_Data
         ::ecore::EAttribute_ptr m_MetricHistOp__type;
 
         /**
-         * \brief The instance for the feature vishnuConf of class RestartOp
-         */
-        ::ecore::EAttribute_ptr m_RestartOp__vishnuConf;
-
-        /**
-         * \brief The instance for the feature sedType of class RestartOp
-         */
-        ::ecore::EAttribute_ptr m_RestartOp__sedType;
-
-        /**
          * \brief The instance for the feature metricType of class CurMetricOp
          */
         ::ecore::EAttribute_ptr m_CurMetricOp__metricType;
@@ -885,6 +859,16 @@ namespace IMS_Data
          * \brief The instance for the feature sysInfo of class ListSysInfo
          */
         ::ecore::EReference_ptr m_ListSysInfo__sysInfo;
+
+        /**
+         * \brief The instance for the feature script of class SupervisorOp
+         */
+        ::ecore::EAttribute_ptr m_SupervisorOp__script;
+
+        /**
+         * \brief The instance for the feature name of class SupervisorOp
+         */
+        ::ecore::EAttribute_ptr m_SupervisorOp__name;
 
     };
 

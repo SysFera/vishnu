@@ -454,11 +454,8 @@ solveGetUpFreq(diet_profile_t* pb){
     int res;
     res = met.checkUpFreq();
 
-    freqSer = new char[convertToString(res).size()+1];
-    memcpy(freqSer, convertToString(res).c_str(), convertToString(res).size());
-
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,1), freqSer, DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), const_cast<char*>(convertToString(res).c_str()), DIET_VOLATILE);
     diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
@@ -834,8 +831,9 @@ solveSetWID(diet_profile_t* pb){
 int
 solveLoadShed(diet_profile_t* pb){
   char *sessionKey   = NULL;
-  char* mid = NULL;
+  char* mid  = NULL;
   char* type = NULL;
+  char* op   = NULL;
   string error;
   string retErr = "";
   int mapperkey;
@@ -845,9 +843,12 @@ solveLoadShed(diet_profile_t* pb){
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &mid,NULL);
   diet_string_get(diet_parameter(pb,2), &type,NULL);
+  diet_string_get(diet_parameter(pb,3), &op,NULL);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
+  IMS_Data::SupervisorOp_ptr opObj = NULL;
+
   try {
     userServer.init();
     //MAPPER CREATION
@@ -855,14 +856,20 @@ solveLoadShed(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_load_shed");
     mapper->code(string(mid), mapperkey);
     mapper->code(string(type), mapperkey);
+    mapper->code(string(op), mapperkey);
     cmd = mapper->finalize(mapperkey);
     sessionServer.check();
+
+    // Getting options
+    if(!parseEmfObject(string(op), opObj)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_loadshed: stop option object is not well built");
+    }
 
     // Creating the process server with the options
     ProcessCtl proc(mid, userServer);
 
     // Load shedding
-    proc.loadShed(convertToInt(string(type)));
+    proc.loadShed(convertToInt(string(type)), opObj);
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
@@ -951,7 +958,7 @@ solveRestart(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
-  IMS_Data::RestartOp_ptr reOp = NULL;
+  IMS_Data::SupervisorOp_ptr reOp = NULL;
 
   try {
     userServer.init();
@@ -1000,41 +1007,44 @@ solveRestart(diet_profile_t* pb){
 int
 solveStop(diet_profile_t* pb){
   char *sessionKey = NULL;
-  char *proc       = NULL;
+  char *mid        = NULL;
+  char *op         = NULL;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &proc,NULL);
+  diet_string_get(diet_parameter(pb,1), &mid,NULL);
+  diet_string_get(diet_parameter(pb,2), &op,NULL);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
-  IMS_Data::Process_ptr procObj = NULL;
+  IMS_Data::SupervisorOp_ptr opObj = NULL;
 
   try {
     userServer.init();
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_stop");
-    mapper->code(string(proc), mapperkey);
+    mapper->code(string(mid), mapperkey);
+    mapper->code(string(op), mapperkey);
     cmd = mapper->finalize(mapperkey);
     sessionServer.check();
 
     // Getting options
-    if(!parseEmfObject(string(proc), procObj)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_restart: restart option object is not well built");
+    if(!parseEmfObject(string(op), opObj)) {
+      throw UserException(ERRCODE_INVALID_PARAM, "solve_stop: stop option object is not well built");
     }
 
     // Creating the process server with the options
-    ProcessCtl ctl("", userServer);
+    ProcessCtl ctl(std::string(mid), userServer);
 
     // Listing the old metric
-    ctl.stop(procObj);
+    ctl.stop(opObj);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -1048,10 +1058,10 @@ solveStop(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
   }
-  if (procObj) {
-    delete procObj;
+  if (opObj) {
+    delete opObj;
   }
   return 0;
 }

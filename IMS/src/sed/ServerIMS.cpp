@@ -150,12 +150,11 @@ ServerIMS::initMap(std::string mid) {
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[8], solveSetJID));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[9], solveSetTID));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[10], solveSetMID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[11], solveLoadShed));
+  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[11])+"@"+mid, solveLoadShed));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[13], solveGetUpFreq));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[12], solveSetUpFreq));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[13], solveLoadShed));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[14], solveRestart));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[15], solveStop));
+  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[14])+"@"+mid, solveRestart));
+  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[15])+"@"+mid, solveStop));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[16], solveGetSysInfo));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[17], solveSetAID));
   mcb.insert(std::pair<std::string, functionPtr_t>(SRV[18], solveSetWID));

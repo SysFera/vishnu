@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * IMS_Data/RestartOpImpl.cpp
+ * IMS_Data/SupervisorOpImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "RestartOp.hpp"
+#include "SupervisorOp.hpp"
 #include <IMS_Data/IMS_DataPackage.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -28,18 +28,18 @@
 
 using namespace ::IMS_Data;
 
-/*PROTECTED REGION ID(RestartOpImpl.cpp) START*/
+/*PROTECTED REGION ID(SupervisorOpImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void RestartOp::_initialize()
+void SupervisorOp::_initialize()
 {
     // Supertypes
 
     // Rerefences
 
-    /*PROTECTED REGION ID(RestartOpImpl__initialize) START*/
+    /*PROTECTED REGION ID(SupervisorOpImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -49,22 +49,21 @@ void RestartOp::_initialize()
 
 
 // EObject
-::ecore::EJavaObject RestartOp::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject SupervisorOp::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_vishnuConf);
+                m_script);
     }
         return _any;
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__SEDTYPE:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
     {
-        ::ecorecpp::mapping::any_traits< ::IMS_Data::SeDType >::toAny(_any,
-                m_sedType);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
     }
         return _any;
 
@@ -72,21 +71,21 @@ void RestartOp::_initialize()
     throw "Error";
 }
 
-void RestartOp::eSet(::ecore::EInt _featureID,
+void SupervisorOp::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_vishnuConf);
+                m_script);
     }
         return;
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__SEDTYPE:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
     {
-        ::ecorecpp::mapping::any_traits< ::IMS_Data::SeDType >::fromAny(
-                _newValue, m_sedType);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_name);
     }
         return;
 
@@ -94,20 +93,20 @@ void RestartOp::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-::ecore::EBoolean RestartOp::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean SupervisorOp::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__VISHNUCONF:
-        return m_vishnuConf != "";
-    case ::IMS_Data::IMS_DataPackage::RESTARTOP__SEDTYPE:
-        return m_sedType != 0;
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
+        return m_script != "";
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
+        return m_name != "";
 
     }
     throw "Error";
 }
 
-void RestartOp::eUnset(::ecore::EInt _featureID)
+void SupervisorOp::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -116,11 +115,11 @@ void RestartOp::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr RestartOp::_eClass()
+::ecore::EClass_ptr SupervisorOp::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =
-                    dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (::IMS_Data::IMS_DataPackage::_instance())->getRestartOp();
+                    dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (::IMS_Data::IMS_DataPackage::_instance())->getSupervisorOp();
     return _eclass;
 }
 

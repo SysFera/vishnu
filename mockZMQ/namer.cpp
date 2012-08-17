@@ -5,6 +5,7 @@
 //#include "HandlerFactory.hpp"
 //#include "TreatmentData.hpp"
 #include "utilVishnu.hpp"
+#include "zhelpers.hpp"
 
 #include <boost/thread.hpp>
 
@@ -126,6 +127,47 @@ private:
   boost::shared_ptr<Annuary>& mann;
 };
 
+class Heartbeat{
+public:
+  Heartbeat(int freq, boost::shared_ptr<Annuary>& ann):mfreq(freq), mann(ann){
+  }
+
+  ~Heartbeat(){
+  }
+
+
+  void
+  run(){
+    zmq::context_t ctxt (1);
+    std::vector<boost::shared_ptr<Server> >::iterator it;
+    while (true) {
+      std::vector<boost::shared_ptr<Server> >* serv = mann->get("");
+      for(it = serv->begin(); it != serv->end() ; ++it){
+        std::string uri = it->get()->getURI();
+        LazyPirateClient lpc(ctxt, uri);
+        diet_profile_t* hb = NULL;
+        hb = diet_profile_alloc("heartbeat", 0, 0, 1);
+        //OUT Parameters
+        diet_string_set(diet_parameter(hb,0), const_cast<char *>("hb"), DIET_VOLATILE);
+        diet_string_set(diet_parameter(hb,1), NULL, DIET_VOLATILE);
+        std::string p1 = my_serialize(hb);
+
+        if (!lpc.send(p1)) {
+          std::cerr << "Deconnexion of "+uri;
+          mann->remove(it->get()->getName(), it->get()->getURI());
+        }
+      }
+      sleep(mfreq);
+    }
+  }
+
+
+private:
+  int mfreq;
+  boost::shared_ptr<Annuary>& mann;
+};
+
+
 
 int main(int argc, char** argv){
   // Prepare our context and socket
@@ -145,9 +187,11 @@ int main(int argc, char** argv){
 //  ann.get()->initFromFile(cfg);
   AddressDealer AD = AddressDealer(uriAddr, ann);
   AddressSubscriber AS = AddressSubscriber(uriSubs, ann);
+//  Heartbeat HB = Heartbeat(20, ann);
 
   boost::thread th1(boost::bind(&AddressDealer::run, &AD));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
   boost::thread th2(boost::bind(&AddressSubscriber::run, &AS));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
+//  boost::thread th3(boost::bind(&Heartbeat::run, &HB));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   // To avoid quitting to fast in case of problems
   while(1){

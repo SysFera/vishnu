@@ -40,23 +40,26 @@ class ProcessCtlProxy {
   * \return raises an exception on error
   */
   int
-  restart(const IMS_Data::RestartOp& options);
+  restart(const IMS_Data::SupervisorOp& options);
 
   /**
   * \brief Function to get the refresh period
   * \param process The data structure containing information about the process to stop
+  * \param op option for the supervisor
   * \return raises an exception on error
   */
   int
-  stop(IMS_Data::Process process);
+  stop(const IMS_Data::SupervisorOp& op);
 
   /**
   * \brief Function to get the refresh period
   * \param loadShedType the type of the load shedding mode (SOFT or HARD)
   * \return raises an exception on error
+  * \return raises an exception on error
   */
   int
-  loadShed(IMS_Data::LoadShedType loadShedType);
+  loadShed(IMS_Data::LoadShedType loadShedType,
+           const IMS_Data::SupervisorOp& op);
 
   /**
     * \brief Destructor, raises an exception on error

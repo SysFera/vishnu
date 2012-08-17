@@ -26,7 +26,6 @@
 #include <IMS_Data/Process.hpp>
 #include <IMS_Data/ExportOp.hpp>
 #include <IMS_Data/MetricHistOp.hpp>
-#include <IMS_Data/RestartOp.hpp>
 #include <IMS_Data/CurMetricOp.hpp>
 #include <IMS_Data/ProcessOp.hpp>
 #include <IMS_Data/ThresholdOp.hpp>
@@ -34,6 +33,7 @@
 #include <IMS_Data/Threshold.hpp>
 #include <IMS_Data/SysInfoOp.hpp>
 #include <IMS_Data/ListSysInfo.hpp>
+#include <IMS_Data/SupervisorOp.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -63,8 +63,6 @@ IMS_DataFactory::IMS_DataFactory()
         return createExportOp();
     case IMS_DataPackage::METRICHISTOP:
         return createMetricHistOp();
-    case IMS_DataPackage::RESTARTOP:
-        return createRestartOp();
     case IMS_DataPackage::CURMETRICOP:
         return createCurMetricOp();
     case IMS_DataPackage::PROCESSOP:
@@ -79,6 +77,8 @@ IMS_DataFactory::IMS_DataFactory()
         return createSysInfoOp();
     case IMS_DataPackage::LISTSYSINFO:
         return createListSysInfo();
+    case IMS_DataPackage::SUPERVISOROP:
+        return createSupervisorOp();
     default:
         throw "IllegalArgumentException";
     }
@@ -117,13 +117,6 @@ IMS_DataFactory::IMS_DataFactory()
         IMS_DataPackage_ptr _epkg =
                 dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (getEPackage());
         return _epkg->getProcessState()->getEEnumLiteralByLiteral(_literalValue)->getValue();
-    }
-    case IMS_DataPackage::SEDTYPE:
-    {
-        ::ecore::EJavaObject _any;
-        IMS_DataPackage_ptr _epkg =
-                dynamic_cast< ::IMS_Data::IMS_DataPackage_ptr > (getEPackage());
-        return _epkg->getSeDType()->getEEnumLiteralByLiteral(_literalValue)->getValue();
     }
     default:
         throw "IllegalArgumentException";
@@ -168,14 +161,6 @@ IMS_DataFactory::IMS_DataFactory()
                 ::ecore::EInt >(_instanceValue);
         return _epkg->getProcessState()->getEEnumLiteral(_value)->getName();
     }
-    case IMS_DataPackage::SEDTYPE:
-    {
-        IMS_DataPackage_ptr _epkg = ::IMS_Data::instanceOf<
-                ::IMS_Data::IMS_DataPackage >(getEPackage());
-        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
-                ::ecore::EInt >(_instanceValue);
-        return _epkg->getSeDType()->getEEnumLiteral(_value)->getName();
-    }
     default:
         throw "IllegalArgumentException";
     }
@@ -209,10 +194,6 @@ MetricHistOp_ptr IMS_DataFactory::createMetricHistOp()
 {
     return new MetricHistOp();
 }
-RestartOp_ptr IMS_DataFactory::createRestartOp()
-{
-    return new RestartOp();
-}
 CurMetricOp_ptr IMS_DataFactory::createCurMetricOp()
 {
     return new CurMetricOp();
@@ -240,5 +221,9 @@ SysInfoOp_ptr IMS_DataFactory::createSysInfoOp()
 ListSysInfo_ptr IMS_DataFactory::createListSysInfo()
 {
     return new ListSysInfo();
+}
+SupervisorOp_ptr IMS_DataFactory::createSupervisorOp()
+{
+    return new SupervisorOp();
 }
 
