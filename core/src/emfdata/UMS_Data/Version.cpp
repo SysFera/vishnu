@@ -50,15 +50,15 @@ Version::~Version()
 
 // Attributes
 
-::ecore::EString const& Version::getMajor() const
+::ecore::EInt Version::getMajor() const
 {
     return m_major;
 }
 
-void Version::setMajor(::ecore::EString const& _major)
+void Version::setMajor(::ecore::EInt _major)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_major = m_major;
+    ::ecore::EInt _old_major = m_major;
 #endif
     m_major = _major;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -76,15 +76,15 @@ void Version::setMajor(::ecore::EString const& _major)
 #endif
 }
 
-::ecore::EString const& Version::getMinor() const
+::ecore::EInt Version::getMinor() const
 {
     return m_minor;
 }
 
-void Version::setMinor(::ecore::EString const& _minor)
+void Version::setMinor(::ecore::EInt _minor)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_minor = m_minor;
+    ::ecore::EInt _old_minor = m_minor;
 #endif
     m_minor = _minor;
 #ifdef ECORECPP_NOTIFICATION_API
@@ -102,15 +102,15 @@ void Version::setMinor(::ecore::EString const& _minor)
 #endif
 }
 
-::ecore::EString const& Version::getPatch() const
+::ecore::EInt Version::getPatch() const
 {
     return m_patch;
 }
 
-void Version::setPatch(::ecore::EString const& _patch)
+void Version::setPatch(::ecore::EInt _patch)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_patch = m_patch;
+    ::ecore::EInt _old_patch = m_patch;
 #endif
     m_patch = _patch;
 #ifdef ECORECPP_NOTIFICATION_API

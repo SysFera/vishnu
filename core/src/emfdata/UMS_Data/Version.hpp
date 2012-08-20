@@ -72,34 +72,34 @@ namespace UMS_Data
          * \brief To get the major
          * \return The major attribute value
          **/
-        ::ecore::EString const& getMajor() const;
+        ::ecore::EInt getMajor() const;
         /**
          * \brief To set the major
          * \param _major The major value
          **/
-        void setMajor(::ecore::EString const& _major);
+        void setMajor(::ecore::EInt _major);
 
         /**
          * \brief To get the minor
          * \return The minor attribute value
          **/
-        ::ecore::EString const& getMinor() const;
+        ::ecore::EInt getMinor() const;
         /**
          * \brief To set the minor
          * \param _minor The minor value
          **/
-        void setMinor(::ecore::EString const& _minor);
+        void setMinor(::ecore::EInt _minor);
 
         /**
          * \brief To get the patch
          * \return The patch attribute value
          **/
-        ::ecore::EString const& getPatch() const;
+        ::ecore::EInt getPatch() const;
         /**
          * \brief To set the patch
          * \param _patch The patch value
          **/
-        void setPatch(::ecore::EString const& _patch);
+        void setPatch(::ecore::EInt _patch);
 
         // References
 
@@ -126,11 +126,11 @@ namespace UMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_major;
+        ::ecore::EInt m_major;
 
-        ::ecore::EString m_minor;
+        ::ecore::EInt m_minor;
 
-        ::ecore::EString m_patch;
+        ::ecore::EInt m_patch;
 
         // References
 
