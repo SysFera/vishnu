@@ -10,6 +10,7 @@
 #include "utilServer.hpp"
 #include "ServerUMS.hpp"
 #include "vishnu_version.hpp"
+#include "VersionManager.hpp"
 
 using namespace vishnu;
 
@@ -44,15 +45,25 @@ solveSessionConnect(diet_profile_t* pb) {
   SessionServer sessionServer("");
 
   ConnectOptions_ptr connectOpt = NULL;
-  Version_ptr versionObj = NULL;
+  Version_ptr versionClient = NULL;
+  UMS_Data::Version_ptr versionServer = NULL;
 
   try {
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(version), versionObj)) {
+    if(!parseEmfObject(std::string(version), versionClient)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
+    versionServer = vishnu::parseVersion(VISHNU_VERSION);
+    if (versionServer == NULL) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The parameter version of the server is mal formed");
+    }
+    VersionManager manager(versionClient, versionServer);
+    if (!manager.isCompatible()) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Your client version is not"
+                                                      " compatible with the server");
+    }
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
@@ -76,6 +87,8 @@ solveSessionConnect(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete connectOpt;
+  delete versionClient;
+  delete versionServer;
   return 0;
 }
 /**
@@ -110,12 +123,22 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(""));
   sessionServer.getData().setSessionId(std::string(sessionId));
-  Version_ptr versionObj = NULL;
+  Version_ptr versionClient = NULL;
+  UMS_Data::Version_ptr versionServer = NULL;
 
   try {
       //To parse the object serialized
-      if(!parseEmfObject(std::string(version), versionObj)) {
+      if(!parseEmfObject(std::string(version), versionClient)) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+      }
+      versionServer = vishnu::parseVersion(VISHNU_VERSION);
+      if (versionServer == NULL) {
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The parameter version of the server is mal formed");
+      }
+      VersionManager manager(versionClient, versionServer);
+      if (!manager.isCompatible()) {
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Your client version is not"
+                                                        " compatible with the server");
       }
 
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
@@ -133,6 +156,8 @@ solveSessionReconnect(diet_profile_t* pb) {
       diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
       diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
+  delete versionClient;
+  delete versionServer;
   return 0;
 }
 /**

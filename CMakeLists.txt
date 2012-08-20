@@ -278,6 +278,7 @@ set(UTILVISHNU_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/utils)
 set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
 set(AUTHENTICATOR_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/authenticator)
+set(VERSION_MANAGER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/version)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${PROJECT_BINARY_DIR}/vishnu_version.hpp)

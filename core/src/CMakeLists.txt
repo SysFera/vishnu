@@ -4,7 +4,9 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
   ${DATABASE_INCLUDE_DIR}
-  ${AUTHENTICATOR_INCLUDE_DIR})
+  ${AUTHENTICATOR_INCLUDE_DIR}
+  ${VERSION_MANAGER_SOURCE_DIR}
+)
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -447,7 +449,11 @@ if(NOT CLIENT_ONLY)
     authenticator/UMSAuthenticator.cpp)
   endif ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
 
-  add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS})
+  include_directories(${UMS_EMF_DATA_DIR})
+  set (version_manager_SRCS
+       version/VersionManager.cpp)
+
+  add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server ${DB_LIBS})

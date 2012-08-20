@@ -154,7 +154,6 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
     versionToString =  _serializeVersion.serialize_str(vers);
   }
 
-
   if(connect) {
     // SERIALIZE DATA MODEL
     ::ecorecpp::serializer::serializer _ser;
