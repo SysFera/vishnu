@@ -53,6 +53,7 @@
 #include "UMS_Data/AuthAccount.hpp"
 #include "UMS_Data/ListAuthAccounts.hpp"
 #include "UMS_Data/ListAuthAccOptions.hpp"
+#include "UMS_Data/Version.hpp"
 
 // Package & Factory
 #include "UMS_Data/UMS_DataPackage.hpp"

@@ -659,6 +659,21 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListAuthAccOptionsEClass->getEStructuralFeatures().push_back(
             m_ListAuthAccOptions__authSystemId);
 
+    // Version
+    m_VersionEClass = new ::ecore::EClass();
+    m_VersionEClass->setClassifierID(VERSION);
+    m_VersionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_VersionEClass);
+    m_Version__major = new ::ecore::EAttribute();
+    m_Version__major->setFeatureID(::UMS_Data::UMS_DataPackage::VERSION__MAJOR);
+    m_VersionEClass->getEStructuralFeatures().push_back(m_Version__major);
+    m_Version__minor = new ::ecore::EAttribute();
+    m_Version__minor->setFeatureID(::UMS_Data::UMS_DataPackage::VERSION__MINOR);
+    m_VersionEClass->getEStructuralFeatures().push_back(m_Version__minor);
+    m_Version__patch = new ::ecore::EAttribute();
+    m_Version__patch->setFeatureID(::UMS_Data::UMS_DataPackage::VERSION__PATCH);
+    m_VersionEClass->getEStructuralFeatures().push_back(m_Version__patch);
+
     // Create enums
 
     m_SessionCloseTypeEEnum = new ::ecore::EEnum();
@@ -2171,6 +2186,52 @@ UMS_DataPackage::UMS_DataPackage()
     m_ListAuthAccOptions__authSystemId->setUnique(true);
     m_ListAuthAccOptions__authSystemId->setDerived(false);
     m_ListAuthAccOptions__authSystemId->setOrdered(true);
+    // Version
+    m_VersionEClass->setName("Version");
+    m_VersionEClass->setAbstract(false);
+    m_VersionEClass->setInterface(false);
+    m_Version__major->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Version__major->setName("major");
+    m_Version__major->setDefaultValueLiteral("");
+    m_Version__major->setLowerBound(0);
+    m_Version__major->setUpperBound(1);
+    m_Version__major->setTransient(false);
+    m_Version__major->setVolatile(false);
+    m_Version__major->setChangeable(true);
+    m_Version__major->setUnsettable(false);
+    m_Version__major->setID(false);
+    m_Version__major->setUnique(true);
+    m_Version__major->setDerived(false);
+    m_Version__major->setOrdered(true);
+    m_Version__minor->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Version__minor->setName("minor");
+    m_Version__minor->setDefaultValueLiteral("");
+    m_Version__minor->setLowerBound(0);
+    m_Version__minor->setUpperBound(1);
+    m_Version__minor->setTransient(false);
+    m_Version__minor->setVolatile(false);
+    m_Version__minor->setChangeable(true);
+    m_Version__minor->setUnsettable(false);
+    m_Version__minor->setID(false);
+    m_Version__minor->setUnique(true);
+    m_Version__minor->setDerived(false);
+    m_Version__minor->setOrdered(true);
+    m_Version__patch->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Version__patch->setName("patch");
+    m_Version__patch->setDefaultValueLiteral("");
+    m_Version__patch->setLowerBound(0);
+    m_Version__patch->setUpperBound(1);
+    m_Version__patch->setTransient(false);
+    m_Version__patch->setVolatile(false);
+    m_Version__patch->setChangeable(true);
+    m_Version__patch->setUnsettable(false);
+    m_Version__patch->setID(false);
+    m_Version__patch->setUnique(true);
+    m_Version__patch->setDerived(false);
+    m_Version__patch->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2469,6 +2530,10 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EClass_ptr UMS_DataPackage::getListAuthAccOptions()
 {
     return m_ListAuthAccOptionsEClass;
+}
+::ecore::EClass_ptr UMS_DataPackage::getVersion()
+{
+    return m_VersionEClass;
 }
 
 ::ecore::EAttribute_ptr UMS_DataPackage::getConnectOptions__closePolicy()
@@ -2866,5 +2931,17 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getListAuthAccOptions__authSystemId()
 {
     return m_ListAuthAccOptions__authSystemId;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getVersion__major()
+{
+    return m_Version__major;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getVersion__minor()
+{
+    return m_Version__minor;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getVersion__patch()
+{
+    return m_Version__patch;
 }
 

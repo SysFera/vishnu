@@ -175,6 +175,11 @@ namespace UMS_Data
          * \return Pointer to the object
          */
         virtual ListAuthAccOptions_ptr createListAuthAccOptions();
+        /**
+         * \brief Creates a new object of class Version
+         * \return Pointer to the object
+         */
+        virtual Version_ptr createVersion();
 
         /**
          * \brief To create an object of a given class (reflective API)

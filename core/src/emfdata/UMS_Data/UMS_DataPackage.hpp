@@ -209,6 +209,11 @@ namespace UMS_Data
         static const int USER = 31;
 
         /**
+         * \brief Constant for Version class
+         */
+        static const int VERSION = 32;
+
+        /**
          * \brief Constant for CONNECTOPTIONS__CLOSEPOLICY feature
          */
         static const int CONNECTOPTIONS__CLOSEPOLICY = 0;
@@ -703,6 +708,21 @@ namespace UMS_Data
          */
         static const int LISTAUTHACCOPTIONS__AUTHSYSTEMID = 98;
 
+        /**
+         * \brief Constant for VERSION__MAJOR feature
+         */
+        static const int VERSION__MAJOR = 99;
+
+        /**
+         * \brief Constant for VERSION__MINOR feature
+         */
+        static const int VERSION__MINOR = 100;
+
+        /**
+         * \brief Constant for VERSION__PATCH feature
+         */
+        static const int VERSION__PATCH = 101;
+
         // EClassifiers methods
 
         /**
@@ -896,6 +916,12 @@ namespace UMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getListAuthAccOptions();
+
+        /**
+         * \brief Returns the reflective object for class Version
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getVersion();
 
         // EStructuralFeatures methods
 
@@ -1502,6 +1528,24 @@ namespace UMS_Data
          */
         virtual ::ecore::EAttribute_ptr getListAuthAccOptions__authSystemId();
 
+        /**
+         * \brief Returns the reflective object for feature major of class Version
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getVersion__major();
+
+        /**
+         * \brief Returns the reflective object for feature minor of class Version
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getVersion__minor();
+
+        /**
+         * \brief Returns the reflective object for feature patch of class Version
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getVersion__patch();
+
     protected:
 
         /**
@@ -1642,6 +1686,11 @@ namespace UMS_Data
          * \brief The instance for the class ListAuthAccOptions
          */
         ::ecore::EClass_ptr m_ListAuthAccOptionsEClass;
+
+        /**
+         * \brief The instance for the class Version
+         */
+        ::ecore::EClass_ptr m_VersionEClass;
 
         // EEnuminstances 
 
@@ -2174,6 +2223,21 @@ namespace UMS_Data
          * \brief The instance for the feature authSystemId of class ListAuthAccOptions
          */
         ::ecore::EAttribute_ptr m_ListAuthAccOptions__authSystemId;
+
+        /**
+         * \brief The instance for the feature major of class Version
+         */
+        ::ecore::EAttribute_ptr m_Version__major;
+
+        /**
+         * \brief The instance for the feature minor of class Version
+         */
+        ::ecore::EAttribute_ptr m_Version__minor;
+
+        /**
+         * \brief The instance for the feature patch of class Version
+         */
+        ::ecore::EAttribute_ptr m_Version__patch;
 
     };
 
