@@ -7,6 +7,7 @@ include_directories(client api
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}
+  ${VERSION_MANAGER_SOURCE_DIR}
 )
 
 set(client_SRCS client/SessionProxy.cpp
