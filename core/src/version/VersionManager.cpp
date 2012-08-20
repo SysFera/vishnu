@@ -6,6 +6,7 @@
  */
 
 #include "VersionManager.hpp"
+#include "utilVishnu.hpp"
 
 VersionManager::VersionManager(const UMS_Data::Version_ptr& _client,
                  const UMS_Data::Version_ptr& _server):mclient(_client), mserver(_server){
@@ -19,10 +20,21 @@ VersionManager::isCompatible() {
 
   bool compatible = true;
 
-  if (((mclient->getMajor()) != mserver->getMajor()) ||
-    (mclient->getMinor() > mserver->getMinor()) ) {
+  if ((mclient->getMajor()) != mserver->getMajor()) {
     compatible = false;
+    merrormsg = "Compatibility problem: the major of the server version is different of the client's major version";
   }
+
+  if ((mclient->getMinor()) > mserver->getMinor()) {
+    compatible = false;
+    merrormsg = "Compatibility problem: The minor of the server version (minor="
+                +vishnu::convertToString<>(mserver->getMinor())+") is lower than the client's minor version";
+  }
+
   return compatible;
 }
 
+std::string
+VersionManager::getError() {
+  return merrormsg;
+}

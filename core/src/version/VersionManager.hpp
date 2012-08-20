@@ -32,12 +32,19 @@ public :
    * \fn ~VersionManager()
    */
   ~VersionManager();
-   /**
+  /**
   * \brief To check the compatibility between the client and the server
   * \return true if client and server are compatible else false
   */
   bool
   isCompatible();
+
+  /**
+  * \brief To check the compatibility between the client and the server
+  * \return the error message registered by the version manager
+  */
+  std::string
+  getError();
 
   private:
     /**
@@ -49,6 +56,10 @@ public :
      * \brief The object which encapsulates the server version
      */
     UMS_Data::Version_ptr mserver;
+    /**
+     * \brief The error message registered by the version manager
+     */
+    std::string merrormsg;
 };
 
 
