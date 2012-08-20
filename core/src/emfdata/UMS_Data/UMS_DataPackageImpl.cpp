@@ -2191,7 +2191,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_VersionEClass->setAbstract(false);
     m_VersionEClass->setInterface(false);
     m_Version__major->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__major->setName("major");
     m_Version__major->setDefaultValueLiteral("");
     m_Version__major->setLowerBound(0);
@@ -2205,7 +2205,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__major->setDerived(false);
     m_Version__major->setOrdered(true);
     m_Version__minor->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__minor->setName("minor");
     m_Version__minor->setDefaultValueLiteral("");
     m_Version__minor->setLowerBound(0);
@@ -2219,7 +2219,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__minor->setDerived(false);
     m_Version__minor->setOrdered(true);
     m_Version__patch->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__patch->setName("patch");
     m_Version__patch->setDefaultValueLiteral("");
     m_Version__patch->setLowerBound(0);

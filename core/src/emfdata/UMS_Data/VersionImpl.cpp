@@ -57,20 +57,17 @@ void Version::_initialize()
     {
     case ::UMS_Data::UMS_DataPackage::VERSION__MAJOR:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_major);
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_major);
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::VERSION__MINOR:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_minor);
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_minor);
     }
         return _any;
     case ::UMS_Data::UMS_DataPackage::VERSION__PATCH:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_patch);
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_patch);
     }
         return _any;
 
@@ -85,19 +82,19 @@ void Version::eSet(::ecore::EInt _featureID,
     {
     case ::UMS_Data::UMS_DataPackage::VERSION__MAJOR:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_major);
     }
         return;
     case ::UMS_Data::UMS_DataPackage::VERSION__MINOR:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_minor);
     }
         return;
     case ::UMS_Data::UMS_DataPackage::VERSION__PATCH:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
                 m_patch);
     }
         return;
@@ -111,14 +108,11 @@ void Version::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::UMS_Data::UMS_DataPackage::VERSION__MAJOR:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_major);
+        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_major);
     case ::UMS_Data::UMS_DataPackage::VERSION__MINOR:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_minor);
+        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_minor);
     case ::UMS_Data::UMS_DataPackage::VERSION__PATCH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_patch);
+        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_patch);
 
     }
     throw "Error";
