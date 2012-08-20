@@ -968,10 +968,6 @@ vishnu::parseVersion(const std::string& version) {
     return NULL;
   }
 
-  std::cout << "major" << vers->getMajor() << std::endl;
-  std::cout << "minor" << vers->getMinor() << std::endl;
-  std::cout << "patch" << vers->getPatch() << std::endl;
-
   return vers;
 }
 
