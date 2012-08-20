@@ -15,7 +15,7 @@
 using namespace vishnu;
 using namespace FMS_Data;
 
-// {{RELAX<MISRA_0_1_3> Three static variables 
+// {{RELAX<MISRA_0_1_3> Three static variables
 Database *ServerFMS::mdatabaseVishnu = NULL;
 ServerFMS* ServerFMS::minstance = NULL;
 FMSMapper *ServerFMS::mmapper = NULL;
@@ -101,7 +101,7 @@ ServerFMS::init(int vishnuId,
     return 1;
   }
   diet_profile_desc_free(mprofile);
-  
+
   // content of file
 
   mprofile = getContentProfile();
@@ -199,6 +199,18 @@ ServerFMS::init(int vishnuId,
 
   diet_profile_desc_free(mprofile);
 
+// Change owner file
+
+  mprofile = getChangeOwnerProfile();
+
+  if ( diet_service_table_add(mprofile, NULL, solveChangeOwner)){
+
+    return 1;
+
+  }
+
+  diet_profile_desc_free(mprofile);
+
 // Change mode file
 
   mprofile = getChangeModeProfile();
@@ -228,7 +240,7 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferFileProfile("FileCopy");
 
-  
+
   if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::copy,File::sync>)){
 
     return 1;
@@ -251,7 +263,7 @@ ServerFMS::init(int vishnuId,
 
   mprofile = getTransferFileProfile("FileMove");
 
-  
+
   if ( diet_service_table_add(mprofile, NULL, solveTransferFile<File::move,File::sync>)){
 
     return 1;

@@ -214,6 +214,17 @@
       <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
       <usedByServices href="FMS.apim#//@modules.0/@services.16"/>
     </services>
+    <services name="ownerChange" description="changes owner of  remote files/directories. ">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
+      <ports name="user" dataType="//@modules.0/@typeList/@types.0" description="the new owner of file/directory"/>
+      <ports name="errorInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="Additional information provided when an error code is returned" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
+      <resultCodes href="#VISHNU_OK"/>
+      <resultCodes href="#ERRCODE_INVALID_PARAM"/>
+      <resultCodes href="#ERRCODE_INVALID_PATH"/>
+      <resultCodes href="#ERRCODE_DBERR"/>
+      <resultCodes href="FMS.apim#ERRCODE_SESSIONKEY_EXPIRED"/>
+    </services>
     <typeList>
       <types name="string" description="String standard">
         <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>

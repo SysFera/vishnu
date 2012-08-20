@@ -85,6 +85,10 @@ const int VISHNU_LIST_FILE_TRANSFERS      = 16;
  * \brief Get file info key
  */
 const int VISHNU_GET_FILE_INFO            = 17;
+/**
+ * \brief Change owner key
+ */
+const int VISHNU_CH_OWN                   = 18;
 
 
 /**
@@ -118,7 +122,7 @@ public :
    * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
+  virtual int
   unregisterMapper();
 
   /**
@@ -176,7 +180,7 @@ protected:
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
-   */ 
+   */
   string
     decodeCreateDir(vector<int> separator, const string& msg);
 
@@ -206,6 +210,15 @@ protected:
    */
   string
     decodeChGrp(vector<int> separator, const string& msg);
+
+  /**
+   * \brief To decode the change owner call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  string
+    decodeChOwn(vector<int> separator, const string& msg);
 
   /**
    * \brief To decode the change mode call sequence of the string returned by finalize

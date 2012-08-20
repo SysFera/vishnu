@@ -199,6 +199,23 @@ int SSHFile::chgrp(const string& group) {
   return 0;
 }
 
+/* Change the file group through ssh. */
+int SSHFile::chown(const string& user) {
+  SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
+      sshPublicKey, sshPrivateKey);
+  pair<string,string> chownResult;
+
+  if (!exists()){
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
+  }
+  chownResult = ssh.exec(CHOWNCMD+user+" "+getPath());
+  if (chownResult.second.length()!=0) {
+    throw FMSVishnuException(ERRCODE_INVALID_PATH,"Error changing file group: "+chownResult.second);
+  }
+//  setGroup(group);
+  return 0;
+}
+
 /* Change the file mode through ssh. */
 int SSHFile::chmod(const mode_t mode) {
   ostringstream os;
