@@ -61,8 +61,7 @@ solveSessionConnect(diet_profile_t* pb) {
     }
     VersionManager manager(versionClient, versionServer);
     if (!manager.isCompatible()) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Your client version is not"
-                                                      " compatible with the server");
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, manager.getError());
     }
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
@@ -137,8 +136,7 @@ solveSessionReconnect(diet_profile_t* pb) {
       }
       VersionManager manager(versionClient, versionServer);
       if (!manager.isCompatible()) {
-        throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Your client version is not"
-                                                        " compatible with the server");
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, manager.getError());
       }
 
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
