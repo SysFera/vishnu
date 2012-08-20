@@ -45,6 +45,7 @@
 #include <UMS_Data/AuthAccount.hpp>
 #include <UMS_Data/ListAuthAccounts.hpp>
 #include <UMS_Data/ListAuthAccOptions.hpp>
+#include <UMS_Data/Version.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -112,6 +113,8 @@ UMS_DataFactory::UMS_DataFactory()
         return createListAuthAccounts();
     case UMS_DataPackage::LISTAUTHACCOPTIONS:
         return createListAuthAccOptions();
+    case UMS_DataPackage::VERSION:
+        return createVersion();
     default:
         throw "IllegalArgumentException";
     }
@@ -336,5 +339,9 @@ ListAuthAccounts_ptr UMS_DataFactory::createListAuthAccounts()
 ListAuthAccOptions_ptr UMS_DataFactory::createListAuthAccOptions()
 {
     return new ListAuthAccOptions();
+}
+Version_ptr UMS_DataFactory::createVersion()
+{
+    return new Version();
 }
 

@@ -173,6 +173,10 @@ namespace UMS_Data
     class ListAuthAccOptions;
     typedef ListAuthAccOptions* ListAuthAccOptions_ptr;
 
+    // Version
+    class Version;
+    typedef Version* Version_ptr;
+
     // Package & Factory
     class UMS_DataFactory;
     typedef UMS_DataFactory * UMS_DataFactory_ptr;

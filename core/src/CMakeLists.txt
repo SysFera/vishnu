@@ -104,7 +104,10 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/ListAuthAccounts.cpp
   emfdata/UMS_Data/ListAuthAccountsImpl.cpp
   emfdata/UMS_Data/ListAuthAccOptions.cpp
-  emfdata/UMS_Data/ListAuthAccOptionsImpl.cpp)
+  emfdata/UMS_Data/ListAuthAccOptionsImpl.cpp
+  emfdata/UMS_Data/Version.cpp
+  emfdata/UMS_Data/VersionImpl.cpp)
+
 
 set(UMS_Data_HEADERS
   emfdata/UMS_Data.hpp
@@ -136,7 +139,8 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/ListAuthSysOptions.hpp
   emfdata/UMS_Data/AuthAccount.hpp
   emfdata/UMS_Data/ListAuthAccounts.hpp
-  emfdata/UMS_Data/ListAuthAccOptions.hpp)
+  emfdata/UMS_Data/ListAuthAccOptions.hpp
+  emfdata/UMS_Data/Version.hpp)
 
 set(TMS_Data_SRCS
   emfdata/TMS_Data.cpp
