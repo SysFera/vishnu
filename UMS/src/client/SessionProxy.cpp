@@ -15,6 +15,8 @@
 #include "UserProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
+#include "vishnu_version.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \fn explicit SessionProxy(const std::string& sessionKey)
@@ -64,6 +66,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string sshKey3;
   std::string sshKey4;
   std::string optionsToString;
+  std::string versionToString;
   char* sessionInString;
   char* errorInfo;
   size_t length;
@@ -141,14 +144,25 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string salt = "$6$"+user.getData().getUserId()+"$";
   encryptedKey = crypt(key, salt.c_str());
 
+  UMS_Data::Version_ptr vers = vishnu::parseVersion(VISHNU_VERSION);
+  if (vers == NULL) {
+    throw std::runtime_error("The number of the version is mal formed");
+  } else {
+    // SERIALIZE DATA MODEL
+    ::ecorecpp::serializer::serializer _serializeVersion;
+    //To serialize the version object in to versionToString
+    versionToString =  _serializeVersion.serialize_str(vers);
+  }
+
+
   if(connect) {
     // SERIALIZE DATA MODEL
     ::ecorecpp::serializer::serializer _ser;
     //To serialize the options object in to optionsToString
     optionsToString =  _ser.serialize_str(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
-    profile = diet_profile_alloc("sessionConnect", 4, 4, 6);
+    profile = diet_profile_alloc("sessionConnect", 5, 5, 7);
   } else {
-    profile = diet_profile_alloc("sessionReconnect", 4, 4, 6);
+    profile = diet_profile_alloc("sessionReconnect", 5, 5, 7);
   }
 
   //IN Parameters
@@ -179,16 +193,22 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
       raiseDietMsgException(msg);
     }
   }
+
+  if(diet_string_set(diet_parameter(profile,5), strdup(versionToString.c_str()), DIET_VOLATILE)) {
+      msg += "with version parameter "+versionToString;
+      raiseDietMsgException(msg);
+  }
+
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,5), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,7), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,5), &sessionInString, NULL)){
+    if(diet_string_get(diet_parameter(profile,6), &sessionInString, NULL)){
       msg += "by receiving sessionInString value";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,6), &errorInfo, NULL)) {
+    if(diet_string_get(diet_parameter(profile,7), &errorInfo, NULL)) {
       msg += "to receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -206,8 +226,12 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   msession = *session_ptr;
   delete session_ptr;
 
-  if(key!=NULL) {
+  if (key!=NULL) {
     delete [] key;
+  }
+
+  if (vers != NULL) {
+    delete vers;
   }
 
   return 0;

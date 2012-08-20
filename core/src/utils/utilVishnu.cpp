@@ -932,3 +932,48 @@ vishnu::isNotIP(std::string name){
   }
   return (cpt!=3);
 }
+
+/**
+* \brief Function to parse the string representing the version
+* \param version the string representing the version
+* \return  The version object
+*/
+UMS_Data::Version_ptr
+vishnu::parseVersion(const std::string& version) {
+  UMS_Data::Version_ptr vers = NULL;
+  std::string major;
+  std::string minor;
+  std::string patch;
+
+  size_t found = version.find_first_of(".");
+  if (found != std::string::npos) {
+    major = version.substr(0, found) ;
+    std::string rest = version.substr(found+1, version.size()) ;
+    found = rest.find_first_of(".");
+    if (found != std::string::npos) {
+     minor = rest.substr(0, found);
+     patch = rest.substr(found+1, rest.size());
+    }
+    if ((major.size() != 0) && (minor.size() != 0)
+    && (patch.size() != 0)) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    vers = ecoreFactory->createVersion();
+    vers->setMajor(convertToInt(major));
+    vers->setMinor(convertToInt(minor));
+    vers->setPatch(convertToInt(patch));
+    }
+  }
+
+  if ((vers->getMajor() < 0) || (vers->getMinor() < 0)  || (vers->getPatch() < 0)) {
+    return NULL;
+  }
+
+  std::cout << "major" << vers->getMajor() << std::endl;
+  std::cout << "minor" << vers->getMinor() << std::endl;
+  std::cout << "patch" << vers->getPatch() << std::endl;
+
+  return vers;
+}
+
+
+

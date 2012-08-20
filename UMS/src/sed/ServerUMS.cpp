@@ -119,7 +119,7 @@ ServerUMS::init(int vishnuId,
 
   /* solveSessionConnect */
 
-  mprofile = diet_profile_desc_alloc(SRV[0], 4, 4, 6);
+  mprofile = diet_profile_desc_alloc(SRV[0], 5, 5, 7);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
@@ -127,6 +127,7 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,7),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveSessionConnect)) {
     return 1;
@@ -135,7 +136,7 @@ ServerUMS::init(int vishnuId,
 
   /* solveSessionReconnect */
 
-  mprofile = diet_profile_desc_alloc(SRV[1], 4, 4, 6);
+  mprofile = diet_profile_desc_alloc(SRV[1], 5, 5, 7);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
@@ -143,6 +144,7 @@ ServerUMS::init(int vishnuId,
   diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,5),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,6),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,7),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveSessionReconnect)) {
     return 1;
