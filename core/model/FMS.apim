@@ -147,6 +147,13 @@
       <details key="description" value="Get the details of a remote file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To get the data concerning the file toto on machine_1:&#xA;vishnu_get_file_info machine_1:/tmp/toto"/>
     </services>
+    <services name="chOwn" description="changes group owner of  remote files/directories. " resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
+      <ports name="owner" dataType="//@modules.0/@typeList/@types.0" description="the new owner of file/directory" longOptionName=""/>
+      <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file/directory following the pattern  [host:]file path" longOptionName=""/>
+      <details key="description" value="Changes the owner attribute of a file or directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;The owner must follow the unix &quot;chown&quot; syntax : [user][:[group]]"/>
+      <details key="exCLI" value="To change the group owner to  test of the file toto on machine_1:&#xA;vishnu_ch_owner test machine_1:/tmp/toto"/>
+    </services>
     <typeList>
       <types name="string" description="String standard">
         <ECoreType xsi:type="ecore:EDataType" href="Ecore.ecore#//EString"/>
