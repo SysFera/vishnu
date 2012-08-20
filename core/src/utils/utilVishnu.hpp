@@ -23,6 +23,7 @@
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include "UMS_Data.hpp"
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
@@ -405,6 +406,14 @@ std::string createSuffixFromCurTime() ;
  */
 std::string
 mklink(const std::string& src) ;
+
+ /**
+   * \brief Function to parse the string representing the version
+   * \param version the string representing the version
+   * \return  The version object
+   */
+  UMS_Data::Version_ptr
+  parseVersion(const std::string& version);
 
 } //END NAMESPACE
 

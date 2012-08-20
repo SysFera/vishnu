@@ -9,6 +9,7 @@
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "ServerUMS.hpp"
+#include "vishnu_version.hpp"
 
 using namespace vishnu;
 
@@ -26,6 +27,7 @@ solveSessionConnect(diet_profile_t* pb) {
   char *clientKey = NULL;
   char *clientHostname = NULL;
   char *options = NULL;
+  char *version = NULL;
   std::string empty("");
   std::string errorInfo;
 
@@ -35,14 +37,21 @@ solveSessionConnect(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
   diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
   diet_string_get(diet_parameter(pb,4), &options, NULL);
+  diet_string_get(diet_parameter(pb,5), &version, NULL);
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
   SessionServer sessionServer("");
 
   ConnectOptions_ptr connectOpt = NULL;
+  Version_ptr versionObj = NULL;
 
   try {
+
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(version), versionObj)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
 
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
@@ -57,14 +66,14 @@ solveSessionConnect(diet_profile_t* pb) {
     std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,6), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,7), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete connectOpt;
   return 0;
@@ -83,6 +92,7 @@ solveSessionReconnect(diet_profile_t* pb) {
   char *clientKey = NULL;
   char *clientHostname = NULL;
   char *sessionId = NULL;
+  char *version = NULL;
   std::string empty("");
   std::string errorInfo;
 
@@ -92,6 +102,7 @@ solveSessionReconnect(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
   diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
   diet_string_get(diet_parameter(pb,4), &sessionId, NULL);
+  diet_string_get(diet_parameter(pb,5), &version, NULL);
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
   MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
@@ -99,8 +110,14 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(std::string(""));
   sessionServer.getData().setSessionId(std::string(sessionId));
+  Version_ptr versionObj = NULL;
 
   try {
+      //To parse the object serialized
+      if(!parseEmfObject(std::string(version), versionObj)) {
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+      }
+
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
       //To serialize the user object
       ::ecorecpp::serializer::serializer _ser;
@@ -108,13 +125,13 @@ solveSessionReconnect(diet_profile_t* pb) {
       std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,5), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,5), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,6), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
