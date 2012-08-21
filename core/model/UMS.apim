@@ -494,5 +494,8 @@
     <types name="SetSshKeyOptions">
       <ECoreType xsi:type="ecore:EClass" href="UMS_Data_CLI.ecore#//SetSshKeyOptions"/>
     </types>
+    <types name="Version" description="">
+      <ECoreType xsi:type="ecore:EClass" href="UMS_Data.ecore#//Version"/>
+    </types>
   </typeList>
 </API>
