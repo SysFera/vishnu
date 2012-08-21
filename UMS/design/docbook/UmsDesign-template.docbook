@@ -53,6 +53,14 @@
 	    </para>
           </revdescription>
         </revision>
+	<revision>
+          <revnumber>5</revnumber>
+          <date>21/08/2012</date>
+          <authorinitials>SysFera</authorinitials>
+          <revdescription>
+	    <para> Added Version object on Services:  sessionConnect, sessionReconnect, userPasswordChange. </para>
+          </revdescription>
+        </revision>
       </revhistory>
     </info>
     <chapter>
