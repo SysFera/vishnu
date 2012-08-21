@@ -98,10 +98,10 @@ public:
 			//To check the job status options
 			checkJobStatus(options->getStatus());
 			//To add the number of the cpu to the request
-			addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
+			addOptionRequest("job.status", convertToString(options->getStatus()), sqlRequest);
 		} else {
 			if (options->getJobId().empty() && options->getMultipleStatus().empty()) {
-				sqlRequest.append(" and status < 5 ");
+				sqlRequest.append(" and job.status < 5 ");
 			}
 		}
 
@@ -194,11 +194,12 @@ public:
 	list() {
 		std::string sqlListOfJobs =
 				"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, workId, jobPath,"
-				" outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, status, submitDate, endDate, owner, jobQueue,"
-				" wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId "
-				"FROM job, vsession "
+				" outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, owner, jobQueue,"
+				" wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid "
+				"FROM job, vsession, users "
 				"WHERE vsession.numsessionid=job.vsession_numsessionid"
-				" AND status > 0 ";
+        " AND vsession.users_numuserid=users.numuserid"
+				" AND job.status > 0 ";
 
 		if(mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0) {
 			sqlListOfJobs.append(" and job.submitMachineId='"+mmachineId+"'");
@@ -286,7 +287,7 @@ public:
 				batchJobId = *(++ii);
 				job->setBatchJobId(batchJobId);
 				ignoredIds.push_back(batchJobId);
-
+        job->setUserId(*(++ii));
 				mlistObject->getJobs().push_back(job);
 			}
 			mlistObject->setNbJobs(mlistObject->getJobs().size());

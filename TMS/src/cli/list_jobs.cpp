@@ -198,6 +198,10 @@ int main (int argc, char* argv[]){
 			" batch scheduler (jobs submitted through vishnu and out of vishnu)",
 			CONFIG);
 
+  opt->add("isListAll,l",
+      "allows to list all information",
+      CONFIG);
+
 	opt->add("machineId,m",
 			"represents the id of the machine",
 			HIDDEN,
@@ -277,6 +281,10 @@ int main (int argc, char* argv[]){
 			jobOp.setBatchJob(true);
 		}
 
+    if (opt->count("isListAll")) {
+      jobOp.setListAll(true);
+    }
+
 		// initializing DIET
 		if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
 			errorUsage(argv[0],dietErrorMsg,EXECERROR);
@@ -293,7 +301,7 @@ int main (int argc, char* argv[]){
 		}
 
 		if(jobOp.getOwner().size()==0 && jobOp.getJobId().size()==0  && jobOp.getNbCpu() <= 0
-				&& jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 ) {
+				&& jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 && !jobOp.isListAll()) {
 			std::cout << job << std::endl;
 		} else {
 			displayListJobs(job);
