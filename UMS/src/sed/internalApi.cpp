@@ -57,7 +57,7 @@ solveSessionConnect(diet_profile_t* pb) {
 
     versionServer = vishnu::parseVersion(VISHNU_VERSION);
     if (versionServer == NULL) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The parameter version of the server is mal formed");
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION of the server is incorrect");
     }
     VersionManager manager(versionClient, versionServer);
     if (!manager.isCompatible()) {
