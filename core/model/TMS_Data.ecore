@@ -139,6 +139,11 @@
         <details key="content" value="Indicates the directory where the job has been launched."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="represents the vishnu identifier of the owner of the job"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobs" instanceTypeName="ListJobs">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nbJobs" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"
@@ -354,6 +359,12 @@
       <eAnnotations source="Description">
         <details key="shortOption" value="w"/>
         <details key="content" value="Allows to gather information about jobs related to a given Work."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="Description">
+        <details key="content" value="lists all information of the job"/>
+        <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

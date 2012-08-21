@@ -703,5 +703,31 @@ void Job::setWorkId(::ecore::ELong _workId)
 #endif
 }
 
+::ecore::EString const& Job::getUserId() const
+{
+    return m_userId;
+}
+
+void Job::setUserId(::ecore::EString const& _userId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_userId = m_userId;
+#endif
+    m_userId = _userId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__userId(),
+                _old_userId,
+                m_userId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

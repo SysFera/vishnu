@@ -119,6 +119,12 @@ void ListJobsOptions::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_workId);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__LISTALL:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
+                m_listAll);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -195,6 +201,12 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 m_workId);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__LISTALL:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
+                _newValue, m_listAll);
+    }
+        return;
 
     }
     throw "Error";
@@ -230,6 +242,9 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
         return m_batchJob != false;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID:
         return m_workId != -1;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__LISTALL:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EBoolean >::is_set(
+                m_listAll);
 
     }
     throw "Error";
