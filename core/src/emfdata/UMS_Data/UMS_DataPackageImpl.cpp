@@ -673,6 +673,10 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__patch = new ::ecore::EAttribute();
     m_Version__patch->setFeatureID(::UMS_Data::UMS_DataPackage::VERSION__PATCH);
     m_VersionEClass->getEStructuralFeatures().push_back(m_Version__patch);
+    m_Version__stringformat = new ::ecore::EAttribute();
+    m_Version__stringformat->setFeatureID(
+            ::UMS_Data::UMS_DataPackage::VERSION__STRINGFORMAT);
+    m_VersionEClass->getEStructuralFeatures().push_back(m_Version__stringformat);
 
     // Create enums
 
@@ -2232,6 +2236,20 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__patch->setUnique(true);
     m_Version__patch->setDerived(false);
     m_Version__patch->setOrdered(true);
+    m_Version__stringformat->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Version__stringformat->setName("stringformat");
+    m_Version__stringformat->setDefaultValueLiteral("");
+    m_Version__stringformat->setLowerBound(0);
+    m_Version__stringformat->setUpperBound(1);
+    m_Version__stringformat->setTransient(false);
+    m_Version__stringformat->setVolatile(false);
+    m_Version__stringformat->setChangeable(true);
+    m_Version__stringformat->setUnsettable(false);
+    m_Version__stringformat->setID(false);
+    m_Version__stringformat->setUnique(true);
+    m_Version__stringformat->setDerived(false);
+    m_Version__stringformat->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -2943,5 +2961,9 @@ UMS_DataPackage::UMS_DataPackage()
 ::ecore::EAttribute_ptr UMS_DataPackage::getVersion__patch()
 {
     return m_Version__patch;
+}
+::ecore::EAttribute_ptr UMS_DataPackage::getVersion__stringformat()
+{
+    return m_Version__stringformat;
 }
 

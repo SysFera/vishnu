@@ -723,6 +723,11 @@ namespace UMS_Data
          */
         static const int VERSION__PATCH = 101;
 
+        /**
+         * \brief Constant for VERSION__STRINGFORMAT feature
+         */
+        static const int VERSION__STRINGFORMAT = 102;
+
         // EClassifiers methods
 
         /**
@@ -1546,6 +1551,12 @@ namespace UMS_Data
          */
         virtual ::ecore::EAttribute_ptr getVersion__patch();
 
+        /**
+         * \brief Returns the reflective object for feature stringformat of class Version
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getVersion__stringformat();
+
     protected:
 
         /**
@@ -2238,6 +2249,11 @@ namespace UMS_Data
          * \brief The instance for the feature patch of class Version
          */
         ::ecore::EAttribute_ptr m_Version__patch;
+
+        /**
+         * \brief The instance for the feature stringformat of class Version
+         */
+        ::ecore::EAttribute_ptr m_Version__stringformat;
 
     };
 

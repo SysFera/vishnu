@@ -70,6 +70,12 @@ void Version::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_patch);
     }
         return _any;
+    case ::UMS_Data::UMS_DataPackage::VERSION__STRINGFORMAT:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_stringformat);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -98,6 +104,12 @@ void Version::eSet(::ecore::EInt _featureID,
                 m_patch);
     }
         return;
+    case ::UMS_Data::UMS_DataPackage::VERSION__STRINGFORMAT:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_stringformat);
+    }
+        return;
 
     }
     throw "Error";
@@ -113,6 +125,9 @@ void Version::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_minor);
     case ::UMS_Data::UMS_DataPackage::VERSION__PATCH:
         return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_patch);
+    case ::UMS_Data::UMS_DataPackage::VERSION__STRINGFORMAT:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_stringformat);
 
     }
     throw "Error";
