@@ -205,6 +205,15 @@
             
         <para>Updates of TMS:</para><para>Added batchJobId field on TMS job data.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>15</revnumber>
+        <date>21/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+        <para>Updates of TMS:</para><para>Added UserId on TMS job structure and listAll option on TMS ListJobsOptions structure.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -3163,7 +3172,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="ListSessionOptions">ListSessionOptions</link></para></entry>
-                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
+                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (actives or inactives, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -5769,7 +5778,7 @@
               <row>
                 <entry><para>scriptFilePath</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.</para></entry>
+                <entry><para>The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -5783,7 +5792,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="SubmitOptions">SubmitOptions</link></para></entry>
-                <entry><para>Is an instance of the class SubmitOptions. Each optional value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance.</para></entry>
+                <entry><para>Is an instance of the class SubmitOptions. Each optional value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -6041,7 +6050,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="ProgressOptions">ProgressOptions</link></para></entry>
-                <entry><para>Is an object containing the available options jobs for progression .</para></entry>
+                <entry><para>Is an object containing the available options jobs for progression</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -6548,7 +6557,7 @@
               <row>
                 <entry><para>outDir</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory).</para></entry>
+                <entry><para>Specifies the output directory where the files will be stored (by default, the current directory)</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>no</para></entry>
               </row>
@@ -6756,6 +6765,125 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cancelJob</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const string&amp; <parameter>jobId</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function TMS::addWork</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>work</para></entry>
+                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para>The work to add</para></entry>
+                <entry><para>INOUT</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The addWork() function allows to create a work consisting in running jobs.</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service was performed  successfully</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_BATCH_SCHEDULER_ERROR</para></entry>
+                <entry><para>The batch scheduler indicates an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>Error invalid parameters</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The sessionKey is expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
+                <entry><para>Permission denied</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_BATCH_SCHEDULER</para></entry>
+                <entry><para>The batch scheduler type is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBCONN</para></entry>
+                <entry><para>Vishnu not available (Database connection)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SYSTEM</para></entry>
+                <entry><para>Vishnu not available (System)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SSH</para></entry>
+                <entry><para>Vishnu not available (SSH error)</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addWork</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Job&amp; <parameter>work</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
@@ -6901,6 +7029,11 @@
               <entry><para>workId</para></entry>
               <entry><para>long</para></entry>
               <entry><para>Indicates the directory where the job has been launched.</para></entry>
+            </row>
+            <row>
+              <entry><para>userId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>represents the vishnu identifier of the owner of the job</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7087,9 +7220,14 @@
               <entry><para>allows to select all jobs submitted  through the underlying batch scheduler  (jobs submitted through vishnu and out of vishnu)</para></entry>
             </row>
             <row>
-              <entry><para>wid</para></entry>
+              <entry><para>workId</para></entry>
               <entry><para>long</para></entry>
               <entry><para>Allows to gather information about jobs related to a given Work.</para></entry>
+            </row>
+            <row>
+              <entry><para>listAll</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>lists all information of the job</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7120,7 +7258,7 @@
             <row>
               <entry><para>progress</para></entry>
               <entry><para>List of <link linkend="Progression">Progression</link></para></entry>
-              <entry><para>Represents the list of jobs in progression.</para></entry>
+              <entry><para>Represents the list of jobs in progression</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -7259,7 +7397,7 @@
             <row>
               <entry><para>percent</para></entry>
               <entry><para>int</para></entry>
-              <entry><para>Represent the job progression. </para></entry>
+              <entry><para>Represent the job progression</para></entry>
             </row>
             <row>
               <entry><para>status</para></entry>
@@ -7449,9 +7587,9 @@
               <entry><para>Sets a list of parameters for the script so at the execution, each of parameter can be used as an environment variable.</para><para>E.g. --textParams &quot;PARAM1=value1 PARAM2=value2&quot; or -F &quot;PARAM1=value1 PARAM2=value2&quot;, will set the environment variables named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>The option --textParam or -v allows to set each file individually.</para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
             </row>
             <row>
-              <entry><para>wid</para></entry>
+              <entry><para>workId</para></entry>
               <entry><para>long</para></entry>
-              <entry><para>Sets the identifier of the Work to which the job is related.</para></entry>
+              <entry><para>Sets the identifier of the Work to which the job is related</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -9210,6 +9348,85 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function IMS::defineWorkIdentifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The defineWorkIdentifier() function defines the shape of the identifiers automatically generated for the work</para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>Error code returned if success</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>The database generated an error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
+                <entry><para>If a parameter is invalid</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineWorkIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
@@ -9876,14 +10093,14 @@
               <row>
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -10010,7 +10227,7 @@
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -10527,7 +10744,7 @@
               <row>
                 <entry><para>mode</para></entry>
                 <entry><para>mode_t</para></entry>
-                <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para> the access rigths of file/directory in octal system</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -11068,7 +11285,7 @@
               <row>
                 <entry><para>dirContent</para></entry>
                 <entry><para><link linkend="DirEntryList">DirEntryList</link></para></entry>
-                <entry><para>The content of the directory.</para></entry>
+                <entry><para>The content of the directory</para></entry>
                 <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -11083,7 +11300,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir() function displays  the content of a remote directory. </para>
+        <para>The listDir() function displays  the content of a remote directory</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -12110,6 +12327,136 @@
         <para><emphasis role="bold">Signature </emphasis></para>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFileInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
+      <section>
+        <title>Function FMS::chOwn</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This function can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="8cm"/>
+            <colspec colwidth="2cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Description
+</entry>
+                <entry>Mode
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>sessionKey</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The session key</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>owner</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>the new owner of file/directory</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>yes</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The chOwn() function changes group owner of  remote files/directories. </para>
+        <para><emphasis role="bold">Return Value </emphasis></para>
+        <para>An error code is returned when an error occurs during the execution of the function</para>
+        <informaltable>
+          <tgroup cols="2">
+            <colspec colwidth="8.5cm"/>
+            <colspec colwidth="9cm"/>
+            <thead>
+              <row>
+                <entry>Name
+</entry>
+                <entry>Description
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>ERRCODE_CONFIGNOTFOUND</para></entry>
+                <entry><para>Undefined configuration parameter</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_DIET</para></entry>
+                <entry><para>Vishnu not available (Service bus failure)</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_INVALID_PATH</para></entry>
+                <entry><para>The path provided is invalid.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_NO_ADMIN</para></entry>
+                <entry><para>The user is not an administrator</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_RUNTIME_ERROR</para></entry>
+                <entry><para>Runtime error</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
+                <entry><para>The session key has expired. The session is closed.</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNDEFINED</para></entry>
+                <entry><para>Internal Error: Undefined exception</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_FILE_TRANSFER</para></entry>
+                <entry><para>The transfer id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_LOCAL_ACCOUNT</para></entry>
+                <entry><para>The local account  is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
+              </row>
+              <row>
+                <entry><para>VISHNU_OK</para></entry>
+                <entry><para>The service has been performed succesfully.</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Signature </emphasis></para>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chOwn</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>owner</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+      </section>
     </section>
     <section>
       <title>Data types definitions</title>
@@ -12134,12 +12481,12 @@
             <row>
               <entry><para>isRecursive</para></entry>
               <entry><para>boolean</para></entry>
-              <entry><para>It specifies when the copy is recursive (case of directory) or not.</para></entry>
+              <entry><para>It specifies when the copy is recursive (case of directory) or not</para></entry>
             </row>
             <row>
               <entry><para>trCommand</para></entry>
               <entry><para><link linkend="TransferCommand">TransferCommand</link></para></entry>
-              <entry><para>the command to use to perform file transfer.</para></entry>
+              <entry><para>the command to use to perform file transfer</para></entry>
             </row>
           </tbody>
         </tgroup>

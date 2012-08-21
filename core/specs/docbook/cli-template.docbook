@@ -144,6 +144,17 @@
 	  <para>Added vishnu_define_auth_identifier</para>
         </revdescription>
       </revision>
+      
+      <revision>
+        <revnumber>13</revnumber>
+        <date>21/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:</para>
+          <para>Extended vishnu_list_jobs options (added -l options for listing all information about jobs).</para>
+	</revdescription>
+      </revision>
+
       </revhistory>
     </info>
   <chapter>

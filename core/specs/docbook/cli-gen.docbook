@@ -157,6 +157,15 @@
 	    vishnu_list_authentication_system, vishnu_add_auth_account, vishnu_update_auth_account, vishnu_delete_auth_account, vishnu_list_auth_account.
 	  </para><para>Updates of IMS:</para><para>Added vishnu_define_auth_identifier</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>13</revnumber>
+        <date>21/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+          
+	<para>Updates of TMS:</para><para>Extended vishnu_list_jobs options (added -l options for listing all information about jobs).</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -3162,7 +3171,7 @@
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
               choice="opt"><option>-b</option></arg><arg choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-l</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -3268,6 +3277,13 @@
                 <entry><para>long</para></entry>
                 <entry><para>w</para></entry>
                 <entry><para>Allows to gather information about jobs related to a given Work.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>listAll</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>lists all information of the job</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -5841,6 +5857,58 @@
                 <entry><para>string</para></entry>
                 <entry/>
                 <entry><para>The file whose inode information will be displayed</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_ch_own</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by any VISHNU user</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_ch_own command changes group owner of  remote files/directories. </para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_ch_own</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>owner</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>owner</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>the new owner of file/directory</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>path</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>YES</para></entry>
               </row>
             </tbody>
