@@ -954,18 +954,20 @@ vishnu::parseVersion(const std::string& version) {
      minor = rest.substr(0, found);
      patch = rest.substr(found+1, rest.size());
     }
+    //if the string major, minor, patch are not empty
     if ((major.size() != 0) && (minor.size() != 0)
     && (patch.size() != 0)) {
-    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-    vers = ecoreFactory->createVersion();
-    vers->setMajor(convertToInt(major));
-    vers->setMinor(convertToInt(minor));
-    vers->setPatch(convertToInt(patch));
+      //if the values major, minor, patch are positives and major value higher than zero
+      if ((convertToInt(major) > 0) && (convertToInt(minor) >= 0)
+        && (convertToInt(patch) >= 0)) {
+        UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+        vers = ecoreFactory->createVersion();
+        vers->setMajor(convertToInt(major));
+        vers->setMinor(convertToInt(minor));
+        vers->setPatch(convertToInt(patch));
+        vers->setStringformat(version);
+      }
     }
-  }
-
-  if ((vers->getMajor() < 0) || (vers->getMinor() < 0)  || (vers->getPatch() < 0)) {
-    return NULL;
   }
 
   return vers;
