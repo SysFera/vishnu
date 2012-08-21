@@ -69,6 +69,14 @@
 		   SystemAuthenticationList, AccountAuthCreate, AccountAuthUpdate, AccountAuthDelete, AccountAuthList.
 	    </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>21/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	    
+          <para> Added Version object on Services:  sessionConnect, sessionReconnect, userPasswordChange. </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -556,6 +564,13 @@
                 <entry><para>IN</para></entry>
               </row>
               <row>
+                <entry><para>version</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Version">Version</link></para></entry>
+                <entry><para>is an object which encapsulates the version's information </para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
                 <entry><para>session</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="Session">Session</link></para></entry>
@@ -702,6 +717,13 @@
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>sessionId is the identifier of the session defined in the database</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>version</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Version">Version</link></para></entry>
+                <entry><para>is an object which encapsulates the version's information </para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -934,7 +956,7 @@
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="ListSessionOptions">ListSessionOptions</link></para></entry>
-                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user.</para></entry>
+                <entry><para>allows the user to list sessions using several optional criteria such as: the state of sessions (active or inactive, by default, all sessions are listed), a period, a specific session or for admin to list all sessions of all users or sessions of a specific user</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1518,6 +1540,13 @@
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
                 <entry><para>passwordNew represents the new password of the user</para></entry>
+                <entry><para>IN</para></entry>
+              </row>
+              <row>
+                <entry><para>version</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para><link linkend="Version">Version</link></para></entry>
+                <entry><para>is an object which encapsulates the version's information </para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
