@@ -146,7 +146,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
 
   UMS_Data::Version_ptr vers = vishnu::parseVersion(VISHNU_VERSION);
   if (vers == NULL) {
-    throw std::runtime_error("The number of the version is mal formed");
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION is incorrect");
   } else {
     // SERIALIZE DATA MODEL
     ::ecorecpp::serializer::serializer _serializeVersion;
