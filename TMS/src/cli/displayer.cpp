@@ -11,7 +11,7 @@ using namespace vishnu;
  * \brief To display the output of all job
  * \param j: the list of jobs output to display
  */
-void 
+void
 displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
 	cout << setw(75) << setfill('-') << ""
 			<< endl << setw(10)  << left << setfill(' ')<< " Job ID" << " |  Location of Downloaded Files"
@@ -28,7 +28,7 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
  * \brief To display the output of a job
  * \param j: the job output result
  */
-void 
+void
 displayJobOutput(TMS_Data::JobResult_ptr j){
 	cout << " ----------------------------------------------------------------" << endl;
 	cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files" << endl;
@@ -42,13 +42,14 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
  * \fn void displayJob(Job& j)
  * \param j: The job to display the info
  */
-void 
+void
 displayJob(TMS_Data::Job& j){
 
 	boost::posix_time::ptime pt;
 
 	cout << " ------------------------ " << endl;
 	cout << " Session Id           : " << j.getSessionId() << endl;
+  cout << " User Id              : " << j.getUserId() << endl;
 	cout << " Machine Id           : " << j.getSubmitMachineId() << endl;
 	cout << " Machine name         : " << j.getSubmitMachineName() << endl;
 	cout << " Job Id               : " << j.getJobId() << endl;
@@ -96,7 +97,7 @@ displayJob(TMS_Data::Job& j){
  * \fn void displayJobProgress(ListProgression& j)
  * \param j: The progression to display the info
  */
-void 
+void
 displayJobProgress(ListProgression& j){
 	for (size_t i = 0 ; i < j.getProgress().size() ; i++){
 		displayProgress(*(j.getProgress().get(i)));
@@ -137,9 +138,9 @@ displayProgress(Progression& p){
 /**
  * \brief To display the list of jobs
  * \fn void displayListJobs(ListJobs& j)
- * \param j: The list of job to display 
+ * \param j: The list of job to display
  */
-void 
+void
 displayListJobs(ListJobs& j){
 	for (size_t i = 0 ; i < j.getJobs().size() ; i++){
 		displayJob(*(j.getJobs().get(i)));
@@ -213,7 +214,7 @@ displaySubmit(TMS_Data::Job job){
 }
 
 /**
- * \brief  function to convert job status into string 
+ * \brief  function to convert job status into string
  * \param state: The state of job
  * \return The converted state value
  */
@@ -253,7 +254,7 @@ std::string convertJobStateToString(const int& state) {
 }
 
 /**
- * \brief  function to convert job priority into string 
+ * \brief  function to convert job priority into string
  * \param state: The state of job
  * \return The converted state value
  */
@@ -292,7 +293,7 @@ std::string convertJobPriorityToString(const int& prio) {
 
 
 /**
- * \brief Display a '-' caracter 
+ * \brief Display a '-' caracter
  * \param size: The number of '-' to diplay
  * \The output stream in which the display will be done.
  */
@@ -307,7 +308,7 @@ setFill(int size, ostream& os) {
 
 /**
  * \brief Helper function to display a list of queues
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param lsQueues: The list to display
  * \return The output stream in which the list of users has been printed
  */
@@ -418,7 +419,7 @@ operator<<(std::ostream& os, ListQueues& lsQueues) {
 
 /**
  * \brief Helper function to display a list of jobs
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param listJobs: The list to display
  * \return The output stream in which the list of users has been printed
  */
@@ -463,7 +464,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 		workId = (listJobs.getJobs().get(i))->getWorkId();
 		maxWorkId = std::max(maxWorkId, convertToString(workId).size());
 
-		owner = (listJobs.getJobs().get(i))->getOwner();
+		owner = (listJobs.getJobs().get(i))->getUserId();
 		maxOwnerSize = std::max(maxOwnerSize, owner.size());
 
 		queue = (listJobs.getJobs().get(i))->getJobQueue();
@@ -500,7 +501,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 		jobId = (listJobs.getJobs().get(i))->getJobId();
 		jobName = (listJobs.getJobs().get(i))->getJobName();
 		workId =  (listJobs.getJobs().get(i))->getWorkId();
-		owner = (listJobs.getJobs().get(i))->getOwner();
+		owner = (listJobs.getJobs().get(i))->getUserId();
 		status = (listJobs.getJobs().get(i))->getStatus();
 		queue = (listJobs.getJobs().get(i))->getJobQueue();
 		priority = (listJobs.getJobs().get(i))->getJobPrio();
@@ -528,7 +529,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 /**
  * \brief Helper function to display a list of jobs progression
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param listProgress: The list to display
  * \return The output stream in which the list of users has been printed
  */
