@@ -7,6 +7,8 @@
 #include "UserProxy.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
+#include "vishnu_version.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \fn  UserProxy(const std::string& userId, const std::string& password)
@@ -222,8 +224,18 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   diet_profile_t* profile = NULL;
   char* errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
+  std::string versionToString;
 
-  profile = diet_profile_alloc("userPasswordChange", 2, 2, 3);
+  UMS_Data::Version_ptr versionObj = vishnu::parseVersion(VISHNU_VERSION);
+  if (versionObj == NULL) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION is incorrect");
+  } else {
+    // SERIALIZE DATA MODEL
+    ::ecorecpp::serializer::serializer _ser;
+    //To serialize the version object in to versionToString
+    versionToString =  _ser.serialize_str(versionObj);
+  }
+  profile = diet_profile_alloc("userPasswordChange", 3, 3, 4);
 
   //IN Parameters
   if(diet_string_set(diet_parameter(profile,0), strdup((muser.getUserId()).c_str()), DIET_VOLATILE)) {
@@ -241,11 +253,16 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
     raiseDietMsgException(msg);
   }
 
+  if(diet_string_set(diet_parameter(profile,3), strdup(versionToString.c_str()), DIET_VOLATILE)) {
+      msg += "with version parameter "+versionToString;
+      raiseDietMsgException(msg);
+  }
+
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -257,6 +274,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   diet_profile_free(profile);
+  delete versionObj;
 
   return 0;
 }

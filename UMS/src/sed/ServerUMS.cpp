@@ -199,11 +199,12 @@ ServerUMS::init(int vishnuId,
 
   /* solveUserPasswordChange */
 
-  mprofile = diet_profile_desc_alloc(SRV[6], 2, 2, 3);
+  mprofile = diet_profile_desc_alloc(SRV[6], 3, 3, 4);
   diet_generic_desc_set(diet_param_desc(mprofile,0),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,1),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,2),DIET_STRING, DIET_CHAR);
   diet_generic_desc_set(diet_param_desc(mprofile,3),DIET_STRING, DIET_CHAR);
+  diet_generic_desc_set(diet_param_desc(mprofile,4),DIET_STRING, DIET_CHAR);
 
   if (diet_service_table_add(mprofile, NULL, solveUserPasswordChange)) {
     return 1;

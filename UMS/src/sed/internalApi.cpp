@@ -59,9 +59,9 @@ solveSessionConnect(diet_profile_t* pb) {
     if (versionServer == NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION of the server is incorrect");
     }
-    VersionManager manager(versionClient, versionServer);
-    if (!manager.isCompatible()) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, manager.getError());
+    VersionManager versionManager(versionClient, versionServer);
+    if (!versionManager.isCompatible()) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
     }
     //To parse the object serialized
     if(!parseEmfObject(std::string(options), connectOpt)) {
@@ -134,9 +134,9 @@ solveSessionReconnect(diet_profile_t* pb) {
       if (versionServer == NULL) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The parameter version of the server is mal formed");
       }
-      VersionManager manager(versionClient, versionServer);
-      if (!manager.isCompatible()) {
-        throw UMSVishnuException(ERRCODE_INVALID_PARAM, manager.getError());
+      VersionManager versionManager(versionClient, versionServer);
+      if (!versionManager.isCompatible()) {
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
       }
 
       sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
@@ -401,6 +401,7 @@ solveUserPasswordChange(diet_profile_t* pb) {
   char *userId = NULL;
   char *password = NULL;
   char *newPassword = NULL;
+  char *version = NULL;
   std::string empty("");
   std::string errorInfo;
 
@@ -408,18 +409,33 @@ solveUserPasswordChange(diet_profile_t* pb) {
   diet_string_get(diet_parameter(pb,0), &userId, NULL);
   diet_string_get(diet_parameter(pb,1), &password, NULL);
   diet_string_get(diet_parameter(pb,2), &newPassword, NULL);
+  diet_string_get(diet_parameter(pb,3), &version, NULL);
 
   UserServer userServer = UserServer(std::string(userId), std::string(password));
+  Version_ptr versionClient = NULL;
+  UMS_Data::Version_ptr versionServer = NULL;
 
   try {
+    //To parse the object serialized
+    if(!parseEmfObject(std::string(version), versionClient)) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+    }
+    versionServer = vishnu::parseVersion(VISHNU_VERSION);
+    if (versionServer == NULL) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION of the server is incorrect");
+    }
+    VersionManager versionManager(versionClient, versionServer);
+    if (!versionManager.isCompatible()) {
+      throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
+    }
     userServer.changePassword(std::string(newPassword));
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
