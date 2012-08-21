@@ -101,6 +101,17 @@ namespace UMS_Data
          **/
         void setPatch(::ecore::EInt _patch);
 
+        /**
+         * \brief To get the stringformat
+         * \return The stringformat attribute value
+         **/
+        ::ecore::EString const& getStringformat() const;
+        /**
+         * \brief To set the stringformat
+         * \param _stringformat The stringformat value
+         **/
+        void setStringformat(::ecore::EString const& _stringformat);
+
         // References
 
 
@@ -131,6 +142,8 @@ namespace UMS_Data
         ::ecore::EInt m_minor;
 
         ::ecore::EInt m_patch;
+
+        ::ecore::EString m_stringformat;
 
         // References
 

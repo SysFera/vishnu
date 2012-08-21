@@ -128,5 +128,31 @@ void Version::setPatch(::ecore::EInt _patch)
 #endif
 }
 
+::ecore::EString const& Version::getStringformat() const
+{
+    return m_stringformat;
+}
+
+void Version::setStringformat(::ecore::EString const& _stringformat)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_stringformat = m_stringformat;
+#endif
+    m_stringformat = _stringformat;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::UMS_Data::UMS_DataPackage::_instance()->getVersion__stringformat(),
+                _old_stringformat,
+                m_stringformat
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 
