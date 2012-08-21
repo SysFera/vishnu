@@ -20,17 +20,24 @@ VersionManager::isCompatible() {
 
   bool compatible = true;
 
+  merrormsg = "";
+
   if ((mclient->getMajor()) != mserver->getMajor()) {
     compatible = false;
-    merrormsg = "Compatibility problem: the major of the server version is different of the client's major version";
+    merrormsg = "Compatibility problem: the major of the server version (v"+
+                mserver->getStringformat()+") is different of the client's major version (v"
+                +mclient->getStringformat()+")";
   }
 
-  if ((mclient->getMinor()) > mserver->getMinor()) {
-    compatible = false;
-    merrormsg = "Compatibility problem: The minor of the server version (minor="
-                +vishnu::convertToString<>(mserver->getMinor())+") is lower than the client's minor version";
+  //If no messages are already registered
+  if (merrormsg.size() == 0) {
+    if ((mclient->getMinor()) > mserver->getMinor()) {
+      compatible = false;
+      merrormsg = "Compatibility problem: The minor of the server version (v"
+                  +mserver->getStringformat()+") is lower than the client's minor version"
+                  " (v"+mclient->getStringformat()+")";
+    }
   }
-
   return compatible;
 }
 
