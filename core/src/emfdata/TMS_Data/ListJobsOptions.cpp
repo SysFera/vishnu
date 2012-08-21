@@ -338,5 +338,31 @@ void ListJobsOptions::setWorkId(::ecore::ELong _workId)
 #endif
 }
 
+::ecore::EBoolean ListJobsOptions::isListAll() const
+{
+    return m_listAll;
+}
+
+void ListJobsOptions::setListAll(::ecore::EBoolean _listAll)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_listAll = m_listAll;
+#endif
+    m_listAll = _listAll;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getListJobsOptions__listAll(),
+                _old_listAll,
+                m_listAll
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 

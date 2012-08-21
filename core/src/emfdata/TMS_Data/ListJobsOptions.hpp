@@ -190,6 +190,17 @@ namespace TMS_Data
          **/
         void setWorkId(::ecore::ELong _workId);
 
+        /**
+         * \brief To get the listAll
+         * \return The listAll attribute value
+         **/
+        ::ecore::EBoolean isListAll() const;
+        /**
+         * \brief To set the listAll
+         * \param _listAll The listAll value
+         **/
+        void setListAll(::ecore::EBoolean _listAll);
+
         // References
 
 
@@ -236,6 +247,8 @@ namespace TMS_Data
         ::ecore::EBoolean m_batchJob;
 
         ::ecore::ELong m_workId;
+
+        ::ecore::EBoolean m_listAll;
 
         // References
 

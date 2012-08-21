@@ -345,6 +345,17 @@ namespace TMS_Data
          **/
         void setWorkId(::ecore::ELong _workId);
 
+        /**
+         * \brief To get the userId
+         * \return The userId attribute value
+         **/
+        ::ecore::EString const& getUserId() const;
+        /**
+         * \brief To set the userId
+         * \param _userId The userId value
+         **/
+        void setUserId(::ecore::EString const& _userId);
+
         // References
 
 
@@ -419,6 +430,8 @@ namespace TMS_Data
         ::ecore::EString m_outputDir;
 
         ::ecore::ELong m_workId;
+
+        ::ecore::EString m_userId;
 
         // References
 

@@ -202,6 +202,12 @@ void Job::_initialize()
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any, m_workId);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOB__USERID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_userId);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -361,6 +367,12 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_workId);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOB__USERID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_userId);
+    }
+        return;
 
     }
     throw "Error";
@@ -435,6 +447,9 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
                 m_outputDir);
     case ::TMS_Data::TMS_DataPackage::JOB__WORKID:
         return m_workId != 0;
+    case ::TMS_Data::TMS_DataPackage::JOB__USERID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_userId);
 
     }
     throw "Error";
