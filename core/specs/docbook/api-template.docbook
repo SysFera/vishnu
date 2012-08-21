@@ -194,6 +194,16 @@
         </revdescription>
       </revision>
     
+      <revision>
+        <revnumber>15</revnumber>
+        <date>21/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Updates of TMS:</para>
+            <para>Added UserId on TMS job structure and listAll option on TMS ListJobsOptions structure.</para>
+        </revdescription>
+      </revision>
+      
       </revhistory>
     </info>
     
