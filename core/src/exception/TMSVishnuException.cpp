@@ -27,5 +27,5 @@ TMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_ALREADY_CANCELED, std::string("The job is already canceled")));
   mp.insert(std::pair<int, std::string>(ERRCODE_JOB_IS_NOT_TERMINATED, std::string("The job is not terminated")));
   mp.insert(std::pair<int, std::string>(ERRCODE_ALREADY_DOWNLOADED, std::string("The job is already downloaded")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_WORKID, std::string("The work id is invalid")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_WORKID, std::string("The work id is unknown")));
 }
