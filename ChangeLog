@@ -1,10 +1,13 @@
 +-----------------------------+
-| VISHNU 2.0.0 - Beta version|
+| VISHNU 2.0.0 - Beta version |
 +-----------------------------+
 
 // TODO * Change IMS API to set optional parameters as const ref
 * Change Python API to use real python list
 * Added status display on textual form for vishnu_list_users and vishnu_list_machines 
+* Fixed bugzilla #399 - Extended vishnu_list_jobs options for listing all information about job
+* Added Client/Server version management for services: connect, reconnect and changePassword
+
 
 +--------------+
 | VISHNU 1.4.0 |
