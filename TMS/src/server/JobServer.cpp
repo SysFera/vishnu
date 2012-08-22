@@ -164,6 +164,15 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ mjob.getOutputDir()  + "')";
 	}
 	else{
+    //FIXME It will be better to put this sql request on Worker Server object
+    std::string sql = "SELECT * from work where id="+ convertToString<>(mjob.getWorkId());
+    boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sql.c_str()));
+
+    //If the workId is unknown
+    if (sqlResult->getNbTuples() == 0) {
+      throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID);
+    }
+
 		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
