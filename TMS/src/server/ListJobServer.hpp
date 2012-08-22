@@ -173,7 +173,7 @@ public:
 		if (options->getQueue().size() != 0) {
 			BatchFactory factory;
 			BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
 			batchServer->listQueues(options->getQueue()); //raise an exception if options->getQueue does not exist
 
 			addOptionRequest("jobQueue", options->getQueue(), sqlRequest);
@@ -298,7 +298,7 @@ public:
 		if(mparameters->isBatchJob() && !mparameters->getJobId().empty() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0){
 			BatchFactory factory;
 			BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
 
 			if(mlistObject != NULL) {
 				std::vector<std::string>::const_iterator iter = ignoredIds.begin();
@@ -321,7 +321,7 @@ public:
 		if(mparameters->isBatchJob() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0 && allOptionsAreNotSet){
 			BatchFactory factory;
 			BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+			boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
 
 			batchServer->fillListOfJobs(mlistObject, ignoredIds);
 		}

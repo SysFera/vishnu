@@ -27,7 +27,7 @@ ListQueuesServer::ListQueuesServer(const SessionServer& session,
  : moption(option), mlistQueues(NULL)
 {
    BatchFactory factory;
-   mbatchServer = factory.getBatchServerInstance(batchType);
+   mbatchServer = factory.getBatchServerInstance();
 }
 
 /**

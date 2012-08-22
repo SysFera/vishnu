@@ -5,7 +5,7 @@
  * \date April
  */
 
-#ifndef TMS_BATCH_FACTORY_H 
+#ifndef TMS_BATCH_FACTORY_H
 #define TMS_BATCH_FACTORY_H
 
 #include "utilVishnu.hpp"
@@ -25,19 +25,19 @@ class BatchFactory
      * \brief Constructor
      */
     BatchFactory();
-   
+
     /**
      * \brief Destructor
      */
     ~BatchFactory();
-   
+
     /**
-     * \brief Function to create a batchServer. 
+     * \brief Function to create a batchServer.
      * \param batchType The type of batchServer to create
      * \return an instance of BatchServer
      */
     BatchServer*
-    getBatchServerInstance(BatchType batchType);
+    getBatchServerInstance();
 
     /**
      * \brief Function to delete a batchServer.
@@ -45,7 +45,7 @@ class BatchFactory
     void deleteBatchServerInstance();
 
   private :
-    
+
     /**
      * \brief an instance of the batchServer
      */
