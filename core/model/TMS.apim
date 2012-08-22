@@ -144,6 +144,7 @@
       <resultCodes name="ERRCODE_CLI_ERROR_MISSING_PARAMETER" description="Missing parameters" value="14" usage="CLI_ONLY"/>
       <resultCodes name="ERRCODE_CLI_ERROR_DIET" description="Vishnu initialization failed" value="15" usage="CLI_ONLY" diagnostic=""/>
       <resultCodes name="ERRCODE_CLI_ERROR_RUNTIME" description="Undefined error" value="16" usage="CLI_ONLY" diagnostic=""/>
+      <resultCodes name="ERRCODE_UNKNOWN_WORKID" description="The work id is unknown" value="109" diagnostic=""/>
     </resultCodeList>
   </modules>
   <envVariableList>
