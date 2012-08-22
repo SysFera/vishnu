@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.submitJob
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: June 2012
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: August 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 1.4
+.\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.SUBMITJOB" "3" "June 2012" "VISHNU 1.4" "TMS Python API Reference"
+.TH "VISHNU\&.SUBMITJOB" "3" "August 2012" "VISHNU 2.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -49,7 +49,7 @@ Input argument\&. Is the id of the machine on which the job must be submitted\&.
 .PP
 \fIscriptFilePath\fR
 .RS 4
-Input argument\&. The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit\&.\&.
+Input argument\&. The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit\&.
 .RE
 .PP
 \fIjobInfo\fR
@@ -59,7 +59,7 @@ Output argument\&. The Job object containing the output information (ex: jobId a
 .PP
 \fIoptions\fR
 .RS 4
-Input argument\&. Is an instance of the class SubmitOptions\&. Each optional value is associated to a set operation (e\&.g: setNbCpu(\&.\&.\&.)) in the class SubmitOptions\&. If no set operation is not called on the instance object options, the job is submitted with the options defined in the scriptFilePath\&. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath\&. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance\&.\&.
+Input argument\&. Is an instance of the class SubmitOptions\&. Each optional value is associated to a set operation (e\&.g: setNbCpu(\&.\&.\&.)) in the class SubmitOptions\&. If no set operation is not called on the instance object options, the job is submitted with the options defined in the scriptFilePath\&. Otherewise the job is submitted with the optional values set by the options object and optional values defined in the scriptFilePath, but optional values set by SubmitOptions object take precedence over those in scriptFilePath\&. With in the object options or within the scriptFilePath, the last occurance of an optional value takes precedence over earlier occurance\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP

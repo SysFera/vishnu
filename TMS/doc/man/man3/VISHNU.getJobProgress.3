@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.getJobProgress
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: June 2012
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: August 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 1.4
+.\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.GETJOBPROGR" "3" "June 2012" "VISHNU 1.4" "TMS Python API Reference"
+.TH "VISHNU\&.GETJOBPROGR" "3" "August 2012" "VISHNU 2.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getJobProgress \- gets the progression status of jobs
 .SH "SYNOPSIS"
-.HP \w'ret=VISHNU\&.getJobProgress('u
-.BI "ret=VISHNU\&.getJobProgress(string\ " "sessionKey" ", string\ " "machineId" ", ListProgression\ " "listProgress" ", ProgressOptions\ " "options\ =\ ProgressOptions()" ");"
+.HP \w'ret,\ listProgress=VISHNU\&.getJobProgress('u
+.BI "ret,\ listProgress=VISHNU\&.getJobProgress(string\ " "sessionKey" ", string\ " "machineId" ", ProgressOptions\ " "options\ =\ ProgressOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows getting the progression status of a job based on the wall\-clock time specified\&.
@@ -54,7 +54,7 @@ Output argument\&. Is the object containing jobs progression information\&.
 .PP
 \fIoptions\fR
 .RS 4
-Input argument\&. Is an object containing the available options jobs for progression \&.\&.
+Input argument\&. Is an object containing the available options jobs for progression\&.
 .RE
 .SH "RETURNED OBJECTS"
 .PP

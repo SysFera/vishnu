@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.listJobs
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: June 2012
+.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
+.\"      Date: August 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 1.4
+.\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "VISHNU\&.LISTJOBS" "3" "June 2012" "VISHNU 1.4" "TMS Python API Reference"
+.TH "VISHNU\&.LISTJOBS" "3" "August 2012" "VISHNU 2.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listJobs \- gets a list of all submitted jobs on a machine\&.
 .SH "SYNOPSIS"
-.HP \w'ret=VISHNU\&.listJobs('u
-.BI "ret=VISHNU\&.listJobs(string\ " "sessionKey" ", string\ " "machineId" ", ListJobs\ " "listOfJobs" ", ListJobsOptions\ " "options\ =\ ListJobsOptions()" ");"
+.HP \w'ret,\ listOfJobs=VISHNU\&.listJobs('u
+.BI "ret,\ listOfJobs=VISHNU\&.listJobs(string\ " "sessionKey" ", string\ " "machineId" ", ListJobsOptions\ " "options\ =\ ListJobsOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows displaying the jobs submitted on a specific machine\*(Aqs batch scheduler\&. If machine identifier is equal to all, submitted jobs on all machines are listed

@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_get_completed_jobs_output
+.\"     Title: addWork
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: August 2012
-.\"    Manual: TMS Command reference
+.\"    Manual: TMS C++ API Reference
 .\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_COMPLETED" "1" "August 2012" "VISHNU 2.0" "TMS Command reference"
+.TH "ADDWORK" "3" "August 2012" "VISHNU 2.0" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,33 +28,27 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_get_completed_jobs_output \- gets standard output and error output files of completed jobs (applies only once for each job)
+addWork \- Allows to create a work consisting in running jobs\&.
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_get_completed_jobs_output\fR\ 'u
-\fBvishnu_get_completed_jobs_output\fR [\fB\-h\fR] [\fB\-o\ \fR\fB\fIoutDir\fR\fR] \fImachineId\fR
+.HP \w'int\ vishnu::addWork('u
+.BI "int vishnu::addWork(const\ string&\ " "sessionKey" ", Job&\ " "work" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows getting the output files of all the completed jobs\&.
-.SH "OPTIONS"
+This command adds a work in vishnu
+.SH "ARGUMENTS"
 .PP
-\fB\-h \fR\fB\fIhelp\fR\fR
+\fIsessionKey\fR
 .RS 4
-help about the command\&.
+Input argument\&. The session key\&.
 .RE
 .PP
-\fB\-o \fR\fB\fIoutDir\fR\fR
+\fIwork\fR
 .RS 4
-Specifies the output directory where the files will be stored (by default, the current directory)\&.
+Input/Output argument\&. The work to add\&.
 .RE
-.SH "ENVIRONMENT"
+.SH "EXCEPTIONS"
 .PP
-\fBVISHNU_CONFIG_FILE\fR
-.RS 4
-Contains the path to the local configuration file for VISHNU\&.
-.RE
-.SH "DIAGNOSTICS"
-.PP
-The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
+The following exceptions may be thrown:
 .PP
 "Vishnu not available (Service bus failure)" [1]
 .RS 4
@@ -76,19 +70,7 @@ The following diagnostics may be issued on stderr and the command will return th
 .RS 4
 .RE
 .PP
-"There is no open session in this terminal" [13]
-.RS 4
-.RE
-.PP
-"Missing parameters" [14]
-.RS 4
-.RE
-.PP
-"Vishnu initialization failed" [15]
-.RS 4
-.RE
-.PP
-"Undefined error" [16]
+"Error invalid parameters" [10]
 .RS 4
 .RE
 .PP
@@ -111,11 +93,6 @@ The following diagnostics may be issued on stderr and the command will return th
 "Permission denied" [104]
 .RS 4
 .RE
-.SH "EXAMPLE"
-.PP
-To get the completed job on machine_1:
-.PP
-vishnu_get_completed_jobs_output machine_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>
