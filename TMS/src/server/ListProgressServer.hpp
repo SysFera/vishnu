@@ -1,23 +1,23 @@
 /* This file is a part of VISHNU.
 
-* Copyright SysFera SAS (2011) 
+* Copyright SysFera SAS (2011)
 
 * contact@sysfera.com
 
-* This software is a computer program whose purpose is to provide 
+* This software is a computer program whose purpose is to provide
 * access to distributed computing resources.
 *
 * This software is governed by the CeCILL  license under French law and
-* abiding by the rules of distribution of free software.  You can  use, 
+* abiding by the rules of distribution of free software.  You can  use,
 * modify and/ or redistribute the software under the terms of the CeCILL
 * license as circulated by CEA, CNRS and INRIA at the following URL
-* "http://www.cecill.info". 
+* "http://www.cecill.info".
 
 * As a counterpart to the access to the source code and  rights to copy,
 * modify and redistribute granted by the license, users are provided only
 * with a limited warranty  and the software's author,  the holder of the
 * economic rights,  and the successive licensors  have only  limited
-* liability. 
+* liability.
 *
 * In this respect, the user's attention is drawn to the risks associated
 * with loading,  using,  modifying and/or developing or reproducing the
@@ -26,9 +26,9 @@
 * therefore means  that it is reserved for developers  and  experienced
 * professionals having in-depth computer knowledge. Users are therefore
 * encouraged to load and test the software's suitability as regards their
-* requirements in conditions enabling the security of their systems and/or 
-* data to be ensured and,  more generally, to use and operate it in the 
-* same conditions as regards security. 
+* requirements in conditions enabling the security of their systems and/or
+* data to be ensured and,  more generally, to use and operate it in the
+* same conditions as regards security.
 *
 * The fact that you are presently reading this means that you have had
 * knowledge of the CeCILL license and that you accept its terms.
@@ -68,7 +68,7 @@ public:
 
   /**
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \param machineId The identifier of the machine on which the jobs whill be listed  
+   * \param machineId The identifier of the machine on which the jobs whill be listed
    * \brief Constructor, raises an exception on error
    */
   ListProgressServer(const SessionServer session, const std::string& machineId):
@@ -97,7 +97,7 @@ public:
    */
   TMS_Data::ListProgression*
   list() {
-    
+
     //To check the sessionKey
     msessionServer.check();
 
@@ -121,17 +121,17 @@ public:
       sqlRequest.append(" and jobId='"+jobId+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);        
+        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     } else {
       if(mparameters->getJobOwner().size()!=0) {
-        acLogin = mparameters->getJobOwner(); 
+        acLogin = mparameters->getJobOwner();
       }
       sqlRequest.append(" and owner='"+acLogin+"'");
     }
 
     sqlRequest.append("  and status < 5 order by jobId");
-    
+
     boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
 
     if (sqlResult->getNbTuples() != 0){
@@ -150,18 +150,18 @@ public:
         job->setEndTime(convertToTimeType(*(++iter)));
         status = convertToInt(*(++iter));
         job->setStatus(status);
-        batchJobId = *(++iter);    
+        batchJobId = *(++iter);
 
         BatchFactory factory;
-        BatchType batchType  = ServerTMS::getInstance()->getBatchType(); 
-        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType));
+        BatchType batchType  = ServerTMS::getInstance()->getBatchType();
+        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
 
-        startTime = batchServer->getJobStartTime(batchJobId); 
+        startTime = batchServer->getJobStartTime(batchJobId);
         if(startTime!=0) {
           job->setStartTime(startTime);
 
           if(status==5) {
-            job->setPercent(100);  
+            job->setPercent(100);
           } else if(status==4) {
             time_t currentTime = vishnu::getCurrentTimeInUTC();
             int percent = 0;
@@ -183,16 +183,16 @@ public:
             job->setPercent(percent);
           } else {
             job->setPercent(0);
-          } 
+          }
         } else {
           job->setPercent(0);
         }
-        mlistObject->getProgress().push_back(job); 
+        mlistObject->getProgress().push_back(job);
       }
     }
-    
+
     mlistObject->setNbJobs(mlistObject->getProgress().size());
-   
+
     return mlistObject;
 
   }
@@ -228,7 +228,7 @@ public:
    /**
   * \brief The identifier of the machine in which the jobs whill be listed
   */
-  std::string mmachineId; 
+  std::string mmachineId;
 };
 
 #endif

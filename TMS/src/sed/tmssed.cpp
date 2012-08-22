@@ -71,7 +71,7 @@ int main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
-#ifndef HAVE_TORQUE
+#ifndef HAVE_TORQUE_2_3
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize TORQUE batch type because this server has not compiled with TORQUE library" << std::endl;
       std::cerr << std::endl;
@@ -79,24 +79,24 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = TORQUE;
     } else if (batchTypeStr == "LOADLEVELER") {
-#ifndef HAVE_LOADLEVELER
+#ifndef HAVE_LOADLEVELER_2_5
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize LOADLEVELER batch type because this server has not compiled with LOADLEVELER library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
       batchType = LOADLEVELER;
-    } else if (batchTypeStr == "SLURM") { 
-#ifndef HAVE_SLURM
+    } else if (batchTypeStr == "SLURM") {
+#ifndef HAVE_SLURM_2_2
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize SLURM batch type because this server has not compiled with SLURM library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
       batchType = SLURM;
-    
-    } else if (batchTypeStr == "LSF") { 
-#ifndef HAVE_LSF
+
+    } else if (batchTypeStr == "LSF") {
+#ifndef HAVE_LSF_7_0
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize LSF batch type because this server has not compiled with LSF library" << std::endl;
       std::cerr << std::endl;
@@ -104,7 +104,7 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = LSF;
     } else if (batchTypeStr == "SGE") {
-#ifndef HAVE_SGE
+#ifndef HAVE_SGE_11
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize SGE batch type because this server has not compiled with SGE library" << std::endl;
       std::cerr << std::endl;
@@ -142,7 +142,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
     try {
       //Check if machineId is authorized
-      if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0){ 
+      if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0){
         std::cerr << std::endl;
         std::cerr << AUTOMATIC_SUBMIT_JOB_KEYWORD;
         std::cerr << " is not authorized as machine identifier. It is a TMS keyword." << std::endl;
@@ -156,7 +156,7 @@ int main(int argc, char* argv[], char* envp[]) {
         std::cerr << std::endl;
         exit(1);
       }
- 
+
       //Initialize the TMS Server
       boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);

@@ -6,21 +6,25 @@
  */
 
 #include "BatchFactory.hpp"
-#ifdef HAVE_TORQUE
+#ifdef HAVE_TORQUE_2_3
 #include "TorqueServer.hpp"
 #endif
-#ifdef HAVE_LOADLEVELER
+#ifdef HAVE_LOADLEVELER_2_5
 #include "LLServer.hpp"
 #endif
-#ifdef HAVE_SLURM
+#ifdef HAVE_SLURM_2_2
 #include "SlurmServer.hpp"
 #endif
-#ifdef HAVE_LSF
+#ifdef HAVE_SLURM_2_3
+#include "SlurmServer.hpp"
+#endif
+#ifdef HAVE_LSF_7_0
 #include "LSFServer.hpp"
 #endif
-#ifdef HAVE_SGE
+#ifdef HAVE_SGE_11
 #include "SGEServer.hpp"
 #include "SGEConfig.hpp"
+#include <iostream>
 
 extern "C" {
 #include "drmaa.h"
@@ -43,49 +47,23 @@ BatchFactory::BatchFactory() {
  * \return an instance of BatchServer
  */
 BatchServer*
-BatchFactory::getBatchServerInstance(BatchType batchType) {
+BatchFactory::getBatchServerInstance() {
 
-  switch (batchType){
-    case TORQUE:
-#ifdef HAVE_TORQUE
-      mbatchServer = new TorqueServer();
+#ifdef HAVE_TORQUE_2_3
+  mbatchServer = new TorqueServer();
+#elif HAVE_LOADLEVELER_2_5
+  mbatchServer = new LLServer();
+#elif HAVE_SLURM_2_2
+  mbatchServer = new SlurmServer();
+#elif HAVE_SLURM_2_3
+  mbatchServer = new SlurmServer2_3();
+#elif HAVE_LSF_7_0
+  mbatchServer = new LSFServer();
+#elif HAVE_SGE_11
+  mbatchServer = new SGEServer();
 #else
-      mbatchServer = NULL;
+  mbatchServer = NULL;
 #endif
-      break;
-    case LOADLEVELER:
-#ifdef HAVE_LOADLEVELER
-      mbatchServer = new LLServer();
-#else
-      mbatchServer = NULL;
-#endif
-      break;
-    case SLURM:
-#ifdef HAVE_SLURM
-      mbatchServer = new SlurmServer();
-#else
-      mbatchServer = NULL;
-#endif
-      break;
-    case LSF:
-#ifdef HAVE_LSF
-      mbatchServer = new LSFServer();
-#else
-      mbatchServer = NULL;
-#endif
-      break;
-    case SGE:
-#ifdef HAVE_SGE
-      mbatchServer = new SGEServer();
-      setenv("SGE_ROOT",SGE_ROOT_PATH,1);   
-#else
-      mbatchServer = NULL;
-#endif
-      break;      
-    default:
-      mbatchServer = NULL;
-      break;
-  }
 
   return mbatchServer;
 }

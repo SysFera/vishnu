@@ -120,7 +120,7 @@ main(int argc, char* argv[], char* envp[])
 
     //To create batchServer Factory
     BatchFactory factory;
-    batchServer = factory.getBatchServerInstance(batchType);
+    batchServer = factory.getBatchServerInstance();
     if(batchServer==NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
     }

@@ -98,13 +98,13 @@ MonitorTMS::run() {
         ++iter;
         batchJobId = *iter;
         BatchFactory factory;
-        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
-        
+        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
+
         state = batchServer->getJobState(batchJobId);
         if(state!=-1) {
           sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
-         
-          mdatabaseVishnu->process(sqlUpdatedRequest.c_str()); 
+
+          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
 
           if(state==5) {
             sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
