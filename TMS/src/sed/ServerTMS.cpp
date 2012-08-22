@@ -401,8 +401,8 @@ ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::M
 	} catch (VishnuException& ex) {
 		std::cerr << ex.what() << std::endl;
 	} catch(...) {
-		std::cerr << "E: unknown error while calculating the load performance of the machine "
-				<< machine->getMachineId() << " (" << machine->getName() <<")."<< std::endl;
+		std::cerr << "E: error while calculating the load performance of the machine "
+				<< machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
 	}
 	return LoadValue ;
 }
