@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_get_completed_jobs_output
+.\"     Title: VISHNU.addWork
 .\"    Author:  SysFera SA <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: August 2012
-.\"    Manual: TMS Command reference
+.\"    Manual: TMS Python API Reference
 .\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "VISHNU_GET_COMPLETED" "1" "August 2012" "VISHNU 2.0" "TMS Command reference"
+.TH "VISHNU\&.ADDWORK" "3" "August 2012" "VISHNU 2.0" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,94 +28,80 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_get_completed_jobs_output \- gets standard output and error output files of completed jobs (applies only once for each job)
+VISHNU.addWork \- Allows to create a work consisting in running jobs\&.
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_get_completed_jobs_output\fR\ 'u
-\fBvishnu_get_completed_jobs_output\fR [\fB\-h\fR] [\fB\-o\ \fR\fB\fIoutDir\fR\fR] \fImachineId\fR
+.HP \w'ret=VISHNU\&.addWork('u
+.BI "ret=VISHNU\&.addWork(string\ " "sessionKey" ", Job\ " "work" ");"
 .SH "DESCRIPTION"
 .PP
-This command allows getting the output files of all the completed jobs\&.
-.SH "OPTIONS"
+This command adds a work in vishnu
+.SH "ARGUMENTS"
 .PP
-\fB\-h \fR\fB\fIhelp\fR\fR
+\fIsessionKey\fR
 .RS 4
-help about the command\&.
+Input argument\&. The session key\&.
 .RE
 .PP
-\fB\-o \fR\fB\fIoutDir\fR\fR
+\fIwork\fR
 .RS 4
-Specifies the output directory where the files will be stored (by default, the current directory)\&.
+Input/Output argument\&. The work to add\&.
 .RE
-.SH "ENVIRONMENT"
+.SH "RETURNED OBJECTS"
 .PP
-\fBVISHNU_CONFIG_FILE\fR
+\fIerrorCode (integer)\fR
 .RS 4
-Contains the path to the local configuration file for VISHNU\&.
-.RE
-.SH "DIAGNOSTICS"
-.PP
-The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
-.PP
-"Vishnu not available (Service bus failure)" [1]
-.RS 4
+Output parameter\&. Contains 0 on success and the error code on failure\&.
 .RE
 .PP
-"Vishnu not available (Database error)" [2]
 .RS 4
 .RE
+.SH "EXCEPTIONS"
 .PP
-"Vishnu not available (Database connection)" [3]
+The following exceptions may be thrown:
+.PP
+SystemException("Vishnu not available (Service bus failure)" [1])
 .RS 4
 .RE
 .PP
-"Vishnu not available (System)" [4]
+SystemException("Vishnu not available (Database error)" [2])
 .RS 4
 .RE
 .PP
-"Vishnu not available (SSH error)" [9]
+SystemException("Vishnu not available (Database connection)" [3])
 .RS 4
 .RE
 .PP
-"There is no open session in this terminal" [13]
+SystemException("Vishnu not available (System)" [4])
 .RS 4
 .RE
 .PP
-"Missing parameters" [14]
+SystemException("Vishnu not available (SSH error)" [9])
 .RS 4
 .RE
 .PP
-"Vishnu initialization failed" [15]
+UserException("Error invalid parameters" [10])
 .RS 4
 .RE
 .PP
-"Undefined error" [16]
+UMSVishnuException("The sessionKey is expired\&. The session is closed\&." [29])
 .RS 4
 .RE
 .PP
-"The sessionKey is expired\&. The session is closed\&." [29]
+UMSVishnuException("The machine id is unknown" [32])
 .RS 4
 .RE
 .PP
-"The machine id is unknown" [32]
+TMSVishnuException("The batch scheduler type is unknown" [101])
 .RS 4
 .RE
 .PP
-"The batch scheduler type is unknown" [101]
+TMSVishnuException("The batch scheduler indicates an error" [102])
 .RS 4
 .RE
 .PP
-"The batch scheduler indicates an error" [102]
+TMSVishnuException("Permission denied" [104])
 .RS 4
 .RE
-.PP
-"Permission denied" [104]
-.RS 4
-.RE
-.SH "EXAMPLE"
-.PP
-To get the completed job on machine_1:
-.PP
-vishnu_get_completed_jobs_output machine_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SA\fR <\&info@sysfera.com\&>
