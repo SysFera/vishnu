@@ -30,7 +30,8 @@
 using namespace ::UMS_Data;
 
 // Default constructor
-Version::Version()
+Version::Version() :
+    m_major(0), m_minor(0), m_patch(0), m_stringformat("")
 {
 
     /*PROTECTED REGION ID(VersionImpl__VersionImpl) START*/

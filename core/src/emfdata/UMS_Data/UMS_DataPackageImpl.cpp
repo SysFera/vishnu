@@ -2197,7 +2197,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__major->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__major->setName("major");
-    m_Version__major->setDefaultValueLiteral("");
+    m_Version__major->setDefaultValueLiteral("0");
     m_Version__major->setLowerBound(0);
     m_Version__major->setUpperBound(1);
     m_Version__major->setTransient(false);
@@ -2211,7 +2211,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__minor->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__minor->setName("minor");
-    m_Version__minor->setDefaultValueLiteral("");
+    m_Version__minor->setDefaultValueLiteral("0");
     m_Version__minor->setLowerBound(0);
     m_Version__minor->setUpperBound(1);
     m_Version__minor->setTransient(false);
@@ -2225,7 +2225,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__patch->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
     m_Version__patch->setName("patch");
-    m_Version__patch->setDefaultValueLiteral("");
+    m_Version__patch->setDefaultValueLiteral("0");
     m_Version__patch->setLowerBound(0);
     m_Version__patch->setUpperBound(1);
     m_Version__patch->setTransient(false);
@@ -2239,7 +2239,7 @@ UMS_DataPackage::UMS_DataPackage()
     m_Version__stringformat->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Version__stringformat->setName("stringformat");
-    m_Version__stringformat->setDefaultValueLiteral("");
+    m_Version__stringformat->setDefaultValueLiteral("" "");
     m_Version__stringformat->setLowerBound(0);
     m_Version__stringformat->setUpperBound(1);
     m_Version__stringformat->setTransient(false);
