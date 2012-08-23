@@ -120,14 +120,13 @@ void Version::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::UMS_Data::UMS_DataPackage::VERSION__MAJOR:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_major);
+        return m_major != 0;
     case ::UMS_Data::UMS_DataPackage::VERSION__MINOR:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_minor);
+        return m_minor != 0;
     case ::UMS_Data::UMS_DataPackage::VERSION__PATCH:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EInt >::is_set(m_patch);
+        return m_patch != 0;
     case ::UMS_Data::UMS_DataPackage::VERSION__STRINGFORMAT:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_stringformat);
+        return m_stringformat != "";
 
     }
     throw "Error";
