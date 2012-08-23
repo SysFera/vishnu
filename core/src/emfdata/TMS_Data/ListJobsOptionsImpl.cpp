@@ -243,8 +243,7 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__WORKID:
         return m_workId != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__LISTALL:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EBoolean >::is_set(
-                m_listAll);
+        return m_listAll != false;
 
     }
     throw "Error";

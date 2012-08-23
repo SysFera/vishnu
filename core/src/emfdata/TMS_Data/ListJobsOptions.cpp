@@ -32,7 +32,7 @@ using namespace ::TMS_Data;
 // Default constructor
 ListJobsOptions::ListJobsOptions() :
     m_nbCpu(-1), m_fromSubmitDate(-1), m_toSubmitDate(-1), m_status(-1),
-            m_priority(-1), m_batchJob(false), m_workId(-1)
+            m_priority(-1), m_batchJob(false), m_workId(-1), m_listAll(false)
 {
 
     /*PROTECTED REGION ID(ListJobsOptionsImpl__ListJobsOptionsImpl) START*/

@@ -361,7 +361,8 @@
         <details key="content" value="Allows to gather information about jobs related to a given Work."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="listAll" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
       <eAnnotations source="Description">
         <details key="content" value="lists all information of the job"/>
         <details key="shortOption" value="l"/>

@@ -1470,7 +1470,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_ListJobsOptions__listAll->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEBoolean());
     m_ListJobsOptions__listAll->setName("listAll");
-    m_ListJobsOptions__listAll->setDefaultValueLiteral("");
+    m_ListJobsOptions__listAll->setDefaultValueLiteral("false");
     m_ListJobsOptions__listAll->setLowerBound(0);
     m_ListJobsOptions__listAll->setUpperBound(1);
     m_ListJobsOptions__listAll->setTransient(false);
