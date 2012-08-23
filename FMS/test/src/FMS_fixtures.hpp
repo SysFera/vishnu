@@ -3,7 +3,7 @@
  *
  * Author : bisnard
  */
-
+#include "diet_fixtures.hpp"
 #include "UMS_fixtures.hpp"
 #include "FMS_testconfig.h"
 #include <boost/test/unit_test.hpp>

@@ -15,6 +15,7 @@
 #include <boost/thread.hpp>
 #include "UMS_testconfig.h"
 #include "diet_config_tests.h"
+#include "diet_fixtures.hpp"
 #include "utils.hpp"
 
 namespace ba = boost::assign;
@@ -29,7 +30,7 @@ char ConfigUMSSeD[] = UMSSEDCONF;
 char BinDirUMSSeD[] = UMSSEDBINDIR;
 
 template <const char *name, const char *binDir, const char *config>
-class UMSSEDFixtureTemplate
+class UMSSEDFixtureTemplate : public NamerFixture
 {
   boost::scoped_ptr<bp::child> UMSSeD;
 
@@ -99,5 +100,4 @@ public:
   }
 };
 
-
-typedef UMSSEDFixtureTemplate<UMSSeD,BinDirUMSSeD,ConfigUMSSeD>  UMSSeDFixture;
+typedef UMSSEDFixtureTemplate<UMSSeD, BinDirUMSSeD, ConfigUMSSeD>  UMSSeDFixture;
