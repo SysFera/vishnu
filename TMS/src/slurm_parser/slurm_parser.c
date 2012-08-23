@@ -140,8 +140,13 @@ static int _fill_job_desc_from_opts(job_desc_msg_t *desc)
 	if (opt.hold)
 		desc->priority     = 0;
 
+#ifdef HAVE_SLURM_2_2
 	if (opt.conn_type != (uint16_t) NO_VAL)
 		desc->conn_type = opt.conn_type;
+#elif HAVE_SLURM_2_3
+	if (opt.conn_type != (uint16_t) NO_VAL)
+          (desc->conn_type)[0] = opt.conn_type;
+#endif
 	if (opt.reboot)
 		desc->reboot = 1;
 	if (opt.no_rotate)
