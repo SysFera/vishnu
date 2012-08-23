@@ -342,6 +342,10 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             <term>&quot;Permission denied&quot; [104]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The work id is unknown&quot; [109]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -1485,6 +1489,10 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term>&quot;Permission denied&quot; [104]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The work id is unknown&quot; [109]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -2333,6 +2341,10 @@ If the machine identifier is equal to autom, the job will be automatically submi
           </varlistentry>
           <varlistentry>
             <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>TMSVishnuException(&quot;The work id is unknown&quot; [109])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
