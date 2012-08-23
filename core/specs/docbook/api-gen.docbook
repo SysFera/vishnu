@@ -212,7 +212,9 @@
         <revdescription>
           
             
-        <para>Updates of TMS:</para><para>Added UserId on TMS job structure and listAll option on TMS ListJobsOptions structure.</para></revdescription>
+	    
+	    
+        <para>Updates of TMS:</para><para> Modified job structure (added UserId to store the vishnu id of the owner of the job).</para><para> Modified ListJobsOptions structure (added listAll option for listing all information about jobs).</para><para> Modified SubmitOptions structure (added workid to associate a job at a work).</para></revdescription>
       </revision>
       <revision>
         <revnumber>16</revnumber>
