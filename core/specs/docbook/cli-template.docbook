@@ -151,7 +151,8 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
           <para>Updates of TMS:</para>
-          <para>Extended vishnu_list_jobs options (added -l options for listing all information about jobs).</para>
+          <para>Extended vishnu_list_jobs options (added -l option for listing all information about jobs).</para>
+	  <para>Extended vishnu_submit_job options (added -w option for associating a job at a work).</para>
 	</revdescription>
       </revision>
 
