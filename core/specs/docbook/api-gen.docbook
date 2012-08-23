@@ -5845,6 +5845,10 @@
                 <entry><para>The batch scheduler type is unknown</para></entry>
               </row>
               <row>
+                <entry><para>ERRCODE_UNKNOWN_WORKID</para></entry>
+                <entry><para>The work id is unknown</para></entry>
+              </row>
+              <row>
                 <entry><para>ERRCODE_UNDEFINED</para></entry>
                 <entry><para>Internal Error: Undefined exception</para></entry>
               </row>
