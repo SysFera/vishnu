@@ -34,253 +34,233 @@ namespace bs = boost::system;
 
 class setDIETEnvFixture {
 public:
-  setDIETEnvFixture() {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: setting environment ==" );
+	setDIETEnvFixture() {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: setting environment ==" );
 
-    // Set env regarding omniORB
-    setenv("OMNINAMES_LOGDIR", OMNINAMES_LOGDIR, 1);
-    setenv("OMNIORB_CONFIG", OMNIORB_CONFIG, 1);
+		// Set env regarding DIET compiled libraries
+		bp::environment::iterator i_c;
+		if (getenv(ENV_LIBRARY_PATH_NAME)) {
+			std::string dietLibPath = std::string(ENV_LIBRARY_PATH)
+			+ std::string(getenv(ENV_LIBRARY_PATH_NAME));
+			setenv(ENV_LIBRARY_PATH_NAME, dietLibPath.c_str(), 1);
 
-    // Set env regarding DIET compiled libraries
-    bp::environment::iterator i_c;
-    if (getenv(ENV_LIBRARY_PATH_NAME)) {
-      std::string dietLibPath = std::string(ENV_LIBRARY_PATH)
-        + std::string(getenv(ENV_LIBRARY_PATH_NAME));
-      setenv(ENV_LIBRARY_PATH_NAME, dietLibPath.c_str(), 1);
+			BOOST_TEST_MESSAGE( "== Test setup [END]: setting environment ==" );
+		}
 
-      BOOST_TEST_MESSAGE( "== Test setup [END]: setting environment ==" );
-    }
+	}
 
-  }
-
-  ~setDIETEnvFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: unsetting environment ==" );
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: unsetting environment ==" );
-  }
+	~setDIETEnvFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: unsetting environment ==" );
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: unsetting environment ==" );
+	}
 
 };
 
 
 class createTmpDirsFixture : public setDIETEnvFixture {
 public:
-  createTmpDirsFixture() {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: creating directories ==" );
+	createTmpDirsFixture() {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: creating directories ==" );
 
-    bf::create_directory(MA_DAGDA_DIR);
-    bf::create_directory(LA_DAGDA_DIR);
-    bf::create_directory(SED_DAGDA_DIR);
-    bf::create_directory(CLIENT_DAGDA_DIR);
+		bf::create_directory(MA_DAGDA_DIR);
+		bf::create_directory(LA_DAGDA_DIR);
+		bf::create_directory(SED_DAGDA_DIR);
+		bf::create_directory(CLIENT_DAGDA_DIR);
 
-    BOOST_TEST_MESSAGE( "== Test setup [END]: creating directories ==" );
-  }
+		BOOST_TEST_MESSAGE( "== Test setup [END]: creating directories ==" );
+	}
 
-  ~createTmpDirsFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: deleting directories ==" );
+	~createTmpDirsFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: deleting directories ==" );
 
-    bf::remove_all(MA_DAGDA_DIR);
-    bf::remove_all(LA_DAGDA_DIR);
-    bf::remove_all(SED_DAGDA_DIR);
-    bf::remove_all(CLIENT_DAGDA_DIR);
+		bf::remove_all(MA_DAGDA_DIR);
+		bf::remove_all(LA_DAGDA_DIR);
+		bf::remove_all(SED_DAGDA_DIR);
+		bf::remove_all(CLIENT_DAGDA_DIR);
 
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: deleting directories ==" );
- }
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: deleting directories ==" );
+	}
 
 };
 
 
 /* Diet test fixture (aka test context)
- * basically setup omniNames before starting our test
+ * basically setup the naming service before starting our test
  * and then cleanup after test has been executed
  */
-class OmniNamesFixture : public createTmpDirsFixture {
-  boost::scoped_ptr<bp::child> processNamingService;
+class NamerFixture : public createTmpDirsFixture {
+	boost::scoped_ptr<bp::child> processNamingService;
 
 public:
-  OmniNamesFixture() : processNamingService(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching OmniNames ==" );
+	NamerFixture() : processNamingService(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching Namer ==" );
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path(OMNINAMES_COMMAND, OMNINAMES_PATH);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find " << OMNINAMES_COMMAND << ": " << e.what() );
-      return;
-    }
+		std::string exec;
+		try {
+			exec = bp::find_executable_in_path(NAMER_COMMAND, BIN_DIR);
+		} catch (bs::system_error& e) {
+			BOOST_TEST_MESSAGE( "can't find " << NAMER_COMMAND << ": " << e.what() );
+			return;
+		}
 
-    BOOST_TEST_MESSAGE( OMNINAMES_COMMAND << " found: " << exec );
-    logdir = bf::unique_path(OMNINAMES_LOGDIR "%%%%-%%%%-%%%%-%%%%").native();
-    bf::create_directory(logdir);
-    BOOST_TEST_MESSAGE( "OmniNames log directory: " + logdir );
+		BOOST_TEST_MESSAGE( NAMER_COMMAND << " found: " << exec );
 
+		// Clean OMNINAME_LOGDIR
+		bf::remove_all(MA_DAGDA_DIR);
 
-    // Clean OMNINAME_LOGDIR
-    bf::remove_all(MA_DAGDA_DIR);
-
-
-    // setup omniNames environment
-    bp::context ctx;
-    ctx.process_name = OMNINAMES_COMMAND;
-    ctx.env["OMNINAMES_LOGDIR"] = logdir;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
-    ctx.env["ORBsupportBooststrapAgent"] = "1";
-    ctx.env["ORBInitRef"] = ORB_INIT_REF;
+		// setup omniNames environment
+		bp::context ctx;
+		ctx.process_name = NAMER_COMMAND;
 
 #ifndef DEBUG_TESTS
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
+		// setup omniNames arguments
+		std::vector<std::string> args = ba::list_of(NAMER_URI_SRV)
+		(NAMER_URI_SUB)
+		("") ;
+		bp::child c = bp::create_child(exec, args, ctx);
+		processNamingService.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching Namer ==" );
+	}
 
-    // setup omniNames arguments
-    std::vector<std::string> args = ba::list_of("-always")
-      ("-start")("2815")
-      ("-ignoreport")
-      ("-ORBendPoint")(OMNINAMES_ENDPOINT);
-    // launch Naming Service
-    bp::child c = bp::create_child(exec, args, ctx);
-    processNamingService.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching OmniNames ==" );
-  }
+	~NamerFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping Namer ==" );
 
-  ~OmniNamesFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping OmniNames ==" );
-    bf::remove_all(logdir);
-
-    if (processNamingService) {
-      processNamingService->terminate();
-      processNamingService->wait();
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping OmniNames ==" );
-  }
-
-private:
-  std::string logdir;
+		if (processNamingService) {
+			processNamingService->terminate();
+			processNamingService->wait();
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping Namer ==" );
+	}
 };
 
 
 template <const char *config,  class parentFixture>
 class DietAgentFixture : public parentFixture
 {
-  boost::scoped_ptr<bp::child> processAgent;
+	boost::scoped_ptr<bp::child> processAgent;
 
 public:
-  DietAgentFixture() : processAgent(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]:  Launching DIET Agent (config file: "
-                        << config << ") ==" );
+	DietAgentFixture() : processAgent(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]:  Launching DIET Agent (config file: "
+				<< config << ") ==" );
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path("dietAgent", DIETAGENT_DIR);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find dietAgent: " << e.what() );
-      return;
-    }
+		std::string exec;
+		try {
+			exec = bp::find_executable_in_path("dietAgent", DIETAGENT_DIR);
+		} catch (bs::system_error& e) {
+			BOOST_TEST_MESSAGE( "can't find dietAgent: " << e.what() );
+			return;
+		}
 
-    BOOST_TEST_MESSAGE( "dietAgent found: " << exec );
+		BOOST_TEST_MESSAGE( "dietAgent found: " << exec );
 
-    // setup dietAgent environment
-    bp::context ctx;
-    ctx.process_name = "dietAgent";
-    bp::environment::iterator i_c;
-    i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
-    if (i_c != ctx.env.end()) {
-      i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
-    } else {
-      ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
-    }
-    ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
+		// setup dietAgent environment
+		bp::context ctx;
+		ctx.process_name = "dietAgent";
+		bp::environment::iterator i_c;
+		i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
+		if (i_c != ctx.env.end()) {
+			i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
+		} else {
+			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
+		}
+//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
+//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
 #ifndef DEBUG_TESTS
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
 
-    // setup dietAGent arguments
-    std::vector<std::string> args = ba::list_of(config);
+		// setup dietAGent arguments
+		std::vector<std::string> args = ba::list_of(config);
 
-    // launch diet Agent
-    const bp::child c = bp::create_child(exec, args, ctx);
+		// launch diet Agent
+		const bp::child c = bp::create_child(exec, args, ctx);
 
-    processAgent.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Launching DIET Agent ==" );
-  }
+		processAgent.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test setup [END]: Launching DIET Agent ==" );
+	}
 
-  ~DietAgentFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIET Agent ==" );
-    if (processAgent) {
-      processAgent->terminate();
-      processAgent->wait();
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIET Agent ==" );
-  }
+	~DietAgentFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIET Agent ==" );
+		if (processAgent) {
+			processAgent->terminate();
+			processAgent->wait();
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIET Agent ==" );
+	}
 };
 
 
 template <const char *config,  class parentFixture>
 class DietMADAGFixture : public parentFixture
 {
-  boost::scoped_ptr<bp::child> processMADAG;
+	boost::scoped_ptr<bp::child> processMADAG;
 
 public:
-  DietMADAGFixture() : processMADAG(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]:  Launching DIET maDagAgent (config file: "
-                        << config << ") ==" );
+	DietMADAGFixture() : processMADAG(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]:  Launching DIET maDagAgent (config file: "
+				<< config << ") ==" );
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path("maDagAgent", DIETMADAG_DIR);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find maDagAgent: " << e.what() );
-      return;
-    }
+		std::string exec;
+		try {
+			exec = bp::find_executable_in_path("maDagAgent", DIETMADAG_DIR);
+		} catch (bs::system_error& e) {
+			BOOST_TEST_MESSAGE( "can't find maDagAgent: " << e.what() );
+			return;
+		}
 
-    BOOST_TEST_MESSAGE( "maDagAgent found: " << exec );
+		BOOST_TEST_MESSAGE( "maDagAgent found: " << exec );
 
-    // setup maDagAgent environment
-    bp::context ctx;
-    ctx.process_name = "maDagAgent";
-    bp::environment::iterator i_c;
-    i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
-    if (i_c != ctx.env.end()) {
-      i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
-    } else {
-      ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
-    }
-    ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
+		// setup maDagAgent environment
+		bp::context ctx;
+		ctx.process_name = "maDagAgent";
+		bp::environment::iterator i_c;
+		i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
+		if (i_c != ctx.env.end()) {
+			i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
+		} else {
+			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
+		}
+//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
+//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 
 
-    // setup maDagAgent arguments
-    std::vector<std::string> args = ba::list_of(config);
+		// setup maDagAgent arguments
+		std::vector<std::string> args = ba::list_of(config);
 
-    // launch diet maDagAgent
-    const bp::child c = bp::create_child(exec, args, ctx);
+		// launch diet maDagAgent
+		const bp::child c = bp::create_child(exec, args, ctx);
 
-    processMADAG.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Launching DIET maDagAgent ==" );
-  }
+		processMADAG.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test setup [END]: Launching DIET maDagAgent ==" );
+	}
 
-  ~DietMADAGFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIET maDagAgent ==" );
-    if (processMADAG) {
-      processMADAG->terminate();
-      processMADAG->wait();
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIET maDagAgent ==" );
-  }
+	~DietMADAGFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIET maDagAgent ==" );
+		if (processMADAG) {
+			processMADAG->terminate();
+			processMADAG->wait();
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIET maDagAgent ==" );
+	}
 };
 
 
@@ -288,166 +268,166 @@ public:
 template <const char *name, const char *binDir, const char *config, class AgentParent>
 class DietSeDFixture : public AgentParent
 {
-  boost::scoped_ptr<bp::child> processSeD;
+	boost::scoped_ptr<bp::child> processSeD;
 
 public:
-  DietSeDFixture() : processSeD(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching "
-                        <<  name << " ==");
+	DietSeDFixture() : processSeD(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching "
+				<<  name << " ==");
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path(name, binDir);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find " << name << ": "
-                          << e.what() );
-      BOOST_TEST_MESSAGE( "search path: " << binDir );
-      return;
-    }
+		std::string exec;
+		try {
+			exec = bp::find_executable_in_path(name, binDir);
+		} catch (bs::system_error& e) {
+			BOOST_TEST_MESSAGE( "can't find " << name << ": "
+					<< e.what() );
+			BOOST_TEST_MESSAGE( "search path: " << binDir );
+			return;
+		}
 
-    BOOST_TEST_MESSAGE( "SeD found: " << exec );
+		BOOST_TEST_MESSAGE( "SeD found: " << exec );
 
-    // setup SeD environment
-    bp::context ctx;
-    ctx.process_name = name;
-    bp::environment::iterator i_c;
-    i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
-    if (i_c != ctx.env.end()) {
-      i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
-    } else {
-      ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
-    }
-    ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
+		// setup SeD environment
+		bp::context ctx;
+		ctx.process_name = name;
+		bp::environment::iterator i_c;
+		i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
+		if (i_c != ctx.env.end()) {
+			i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
+		} else {
+			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
+		}
+//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
+//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 #ifndef DEBUG_TESTS
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
 
-    // setup SeD arguments
-    std::vector<std::string> args = ba::list_of(std::string(config));
+		// setup SeD arguments
+		std::vector<std::string> args = ba::list_of(std::string(config));
 
-    // launch SeD
-    const bp::child c = bp::create_child(exec, args, ctx);
-    processSeD.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
-    BOOST_TEST_MESSAGE( "== Test setup [END]: launching "
-                        << name << " ==" );
-  }
+		// launch SeD
+		const bp::child c = bp::create_child(exec, args, ctx);
+		processSeD.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
+		BOOST_TEST_MESSAGE( "== Test setup [END]: launching "
+				<< name << " ==" );
+	}
 
 
-  ~DietSeDFixture()
-  {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping "
-                        << name << " ==" );
-    if( processSeD ) {
-      try {
-        processSeD->terminate();
-        
-        // FIXME: currently processSeD->wait() crashes, we need to set the signal handler of SIGCHLD to SID_DFL
-        signal(SIGCHLD, SIG_DFL);
-      } catch (...) {
-        BOOST_TEST_MESSAGE( "== Problem while stopping "
-                            << name << " ==" );
-      }
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
-                        << name << " ==" );
-  }
+	~DietSeDFixture()
+	{
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping "
+				<< name << " ==" );
+		if( processSeD ) {
+			try {
+				processSeD->terminate();
+
+				// FIXME: currently processSeD->wait() crashes, we need to set the signal handler of SIGCHLD to SID_DFL
+				signal(SIGCHLD, SIG_DFL);
+			} catch (...) {
+				BOOST_TEST_MESSAGE( "== Problem while stopping "
+						<< name << " ==" );
+			}
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
+				<< name << " ==" );
+	}
 };
 
 #ifdef USE_LOG_SERVICE
 template <const char *config>
-class LogServiceFixture : public OmniNamesFixture {
-  boost::scoped_ptr<bp::child> process;
+class LogServiceFixture : public NamerFixture {
+	boost::scoped_ptr<bp::child> process;
 
 public:
-  LogServiceFixture() : process(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching LogService ==" );
-    BOOST_TEST_MESSAGE( LOGSERVICE_COMMAND  << " found: " << LOGCENTRAL_PATH);
+	LogServiceFixture() : process(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching LogService ==" );
+		BOOST_TEST_MESSAGE( LOGSERVICE_COMMAND  << " found: " << LOGCENTRAL_PATH);
 
-    // setup LogService environment
-    bp::context ctx;
-    ctx.process_name = LOGSERVICE_COMMAND;
-    ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
+		// setup LogService environment
+		bp::context ctx;
+		ctx.process_name = LOGSERVICE_COMMAND;
+//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
+//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 
-    // setup LogService arguments
-    std::vector<std::string> args = ba::list_of(std::string("-config"))
-      (std::string(config));
+		// setup LogService arguments
+		std::vector<std::string> args = ba::list_of(std::string("-config"))
+		(std::string(config));
 
-    // launch LogService
-    bp::child c = bp::create_child(LOGCENTRAL_PATH, args, ctx);
-    process.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching LogService ==" );
-  }
+		// launch LogService
+		bp::child c = bp::create_child(LOGCENTRAL_PATH, args, ctx);
+		process.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching LogService ==" );
+	}
 
-  ~LogServiceFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping LogService ==" );
-    if (process) {
-      process->terminate();
-      process->wait();
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping LogService ==" );
-  }
+	~LogServiceFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping LogService ==" );
+		if (process) {
+			process->terminate();
+			process->wait();
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping LogService ==" );
+	}
 };
 
 
 template <const char *config>
 class DIETLogToolFixture : public LogServiceFixture<config> {
-  boost::scoped_ptr<bp::child> process;
+	boost::scoped_ptr<bp::child> process;
 
 public:
-  DIETLogToolFixture() : process(NULL) {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching DIETLogTool ==" );
+	DIETLogToolFixture() : process(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching DIETLogTool ==" );
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path(DIETLOGTOOL_COMMAND, DIETLOGTOOL_PATH);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find " << DIETLOGTOOL_COMMAND << ": " << e.what() );
-      return;
-    }
+		std::string exec;
+		try {
+			exec = bp::find_executable_in_path(DIETLOGTOOL_COMMAND, DIETLOGTOOL_PATH);
+		} catch (bs::system_error& e) {
+			BOOST_TEST_MESSAGE( "can't find " << DIETLOGTOOL_COMMAND << ": " << e.what() );
+			return;
+		}
 
-    BOOST_TEST_MESSAGE( DIETLOGTOOL_COMMAND << " found: " << exec );
+		BOOST_TEST_MESSAGE( DIETLOGTOOL_COMMAND << " found: " << exec );
 
-    // setup LogService environment
-    bp::context ctx;
-    ctx.process_name = DIETLOGTOOL_COMMAND;
-    ctx.env["OMNINAMES_LOGDIR"] = OMNINAMES_LOGDIR;
-    ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
+		// setup LogService environment
+		bp::context ctx;
+		ctx.process_name = DIETLOGTOOL_COMMAND;
+//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
+//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
+		// redirect output to /dev/null
+		ctx.streams[bp::stdout_id] = bp::behavior::null();
+		ctx.streams[bp::stderr_id] = bp::behavior::null();
 
-    // setup LogService arguments
-    std::vector<std::string> args= ba::list_of("");
+		// setup LogService arguments
+		std::vector<std::string> args= ba::list_of("");
 
-    // launch DIETLogTool
-    bp::child c = bp::create_child(exec, args, ctx);
-    process.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching DIETLogTool ==" );
-  }
+		// launch DIETLogTool
+		bp::child c = bp::create_child(exec, args, ctx);
+		process.reset(utils::copy_child(c));
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching DIETLogTool ==" );
+	}
 
-  ~DIETLogToolFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIETLogTool ==" );
-    if (process) {
-      process->terminate();
-      process->wait();
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIETLogTool ==" );
-  }
+	~DIETLogToolFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping DIETLogTool ==" );
+		if (process) {
+			process->terminate();
+			process->wait();
+		}
+		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping DIETLogTool ==" );
+	}
 };
 #endif // USE_LOG_SERVICE
 
@@ -457,7 +437,7 @@ public:
 char ConfigMasterAgent[] = MASTER_AGENT_CONFIG;
 char ConfigLocalAgent[]  = LOCAL_AGENT_CONFIG;
 char ConfigMADAG[]  = MADAG_CONFIG;
-typedef DietAgentFixture<ConfigMasterAgent, OmniNamesFixture> DietMAFixture;
+typedef DietAgentFixture<ConfigMasterAgent, NamerFixture> DietMAFixture;
 typedef DietAgentFixture<ConfigLocalAgent, DietMAFixture> DietLAFixture;
 typedef DietMADAGFixture<ConfigMADAG, DietLAFixture> DietMADAGFixtureLA;
 
