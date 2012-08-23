@@ -214,6 +214,15 @@
             
         <para>Updates of TMS:</para><para>Added UserId on TMS job structure and listAll option on TMS ListJobsOptions structure.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>16</revnumber>
+        <date>23/08/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+            
+        <para>Updates of TMS:</para><para>Added ERRCODE_UNKNOWN_WORKID on service TMS::submitJob.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
