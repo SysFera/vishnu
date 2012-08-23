@@ -2,24 +2,17 @@
 # Author: B.Isnard
 # Date: April 2011
 
-if(BUILD_TESTING)
+if (BUILD_TESTING)
 
-  #OmniORB is mandatory for running tests
-  find_package(OmniORB)
-  if (OMNIORB4_FOUND)
-    add_definitions(-D__OMNIORB4__)
-  else (OMNIORB4_FOUND)
-    message("omniORB installation was not found. Please provide OMNIORB4_DIR:")
-    set(OMNIORB4_DIR "" CACHE PATH "Root of omniORB install tree.")
-  endif (OMNIORB4_FOUND)
+  #ZMQ is mandatory for running tests
+  find_package(ZMQ)
+#  if (NOT ZMQ_FOUND)
+#    message("ZMQ installation was not found. Please provide ZMQ_DIR:")
+#    set(ZMQ_DIR "" CACHE PATH "Root of ZMQ install tree.")
+#  endif (ZMQ_FOUND)
 
-  set(OMNINAMES_LOGDIR ${CMAKE_CURRENT_BINARY_DIR}/log
-    CACHE PATH "PATH to the omniNames directory")
-  set(OMNIORB_INSTALL_DIR "" CACHE PATH
-    "PATH to the omniORB installation directory")
-  set(LOCAL_TEST_PORT "2809" CACHE STRING "Test port for the omniNames")
-
-  file(MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/log)
+  set(NAMER_INSTALL_DIR ${PROJECT_BINARY_DIR}/bin CACHE PATH
+    "PATH to the ZeroMQ installation directory")
 
   #Boost::process is required
   include_directories(third-party)
