@@ -56,7 +56,7 @@ BatchFactory::getBatchServerInstance() {
 #elif HAVE_SLURM_2_2
   mbatchServer = new SlurmServer();
 #elif HAVE_SLURM_2_3
-  mbatchServer = new SlurmServer2_3();
+  mbatchServer = new SlurmServer();
 #elif HAVE_LSF_7_0
   mbatchServer = new LSFServer();
 #elif HAVE_SGE_11
