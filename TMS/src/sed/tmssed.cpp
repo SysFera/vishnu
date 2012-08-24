@@ -87,7 +87,7 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = LOADLEVELER;
     } else if (batchTypeStr == "SLURM") {
-#ifndef HAVE_SLURM_2_2
+#if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize SLURM batch type because this server has not compiled with SLURM library" << std::endl;
       std::cerr << std::endl;
