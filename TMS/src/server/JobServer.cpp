@@ -313,13 +313,14 @@ TMS_Data::Job JobServer::getJobInfo() {
 	std::vector<std::string>::iterator  iter;
 	std::string sqlRequest =
 			"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
-			"  outputPath, errorPath, outputDir, jobPrio, nbCpus, jobWorkingDir, status, "
+			"  outputPath, errorPath, outputDir, jobPrio, nbCpus, jobWorkingDir, job.status, "
 			"  submitDate, endDate, owner, jobQueue,wallClockLimit, groupName, jobDescription, "
-			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId"
-			" FROM job, vsession "
+			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid"
+			" FROM job, vsession, users "
 			" WHERE vsession.numsessionid=job.vsession_numsessionid "
-			"  AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
-			"  AND job.jobId='"+mjob.getJobId()+"'";
+      " AND vsession.users_numuserid=users.numuserid"
+			" AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
+			" AND job.jobId='"+mjob.getJobId()+"'";
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -352,7 +353,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 		mjob.setNbNodes(convertToInt(*(++iter)));
 		mjob.setNbNodesAndCpuPerNode(*(++iter));
 		mjob.setBatchJobId(*(++iter));
-
+    mjob.setUserId(*(++iter));
 	} else {
 		throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	}
