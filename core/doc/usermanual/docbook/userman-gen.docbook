@@ -3781,6 +3781,10 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             <term>&quot;Permission denied&quot; [104]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The work id is unknown&quot; [109]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
       <refsect1 id="example">
@@ -4144,7 +4148,7 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
               choice="opt"><option>-q <replaceable>queue</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>multipleStatus</replaceable></option></arg><arg
               choice="opt"><option>-b</option></arg><arg choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-l</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4225,6 +4229,12 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-w <replaceable>workId</replaceable></option></term>
             <listitem>
               <para>Allows to gather information about jobs related to a given Work..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-l <replaceable>listAll</replaceable></option></term>
+            <listitem>
+              <para>lists all information of the job.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -6730,6 +6740,104 @@ values can be obtained using the vishnu_list_machine command).
         <para>vishnu_get_file_info machine_1:/tmp/toto</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_ch_own</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_ch_own</refname>
+        <refpurpose>changes group owner of  remote files/directories. </refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_ch_own</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>owner</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>Changes the owner attribute of a file or directory at the location given by the path parameter.
+The path must be provided in the form 'machine_id:path' (the machine_id
+values can be obtained using the vishnu_list_machine command).
+The owner must follow the unix &quot;chown&quot; syntax : [user][:[group]]</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To change the group owner to  test of the file toto on machine_1:</para>
+        <para>vishnu_ch_owner test machine_1:/tmp/toto</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>IMS Command reference</title>
@@ -9181,6 +9289,10 @@ If the machine identifier is equal to autom, the job will be automatically submi
             <term>&quot;Permission denied&quot; [104]</term>
             <listitem/>
           </varlistentry>
+          <varlistentry>
+            <term>&quot;The work id is unknown&quot; [109]</term>
+            <listitem/>
+          </varlistentry>
         </variablelist>
       </refsect1>
     </refentry>
@@ -11624,6 +11736,107 @@ values can be obtained using the vishnu_list_machine command).
             <term><emphasis>filesinfo</emphasis></term>
             <listitem>
               <para>Output argument. The  inode information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined configuration parameter&quot; [12]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The user is not an administrator&quot; [25]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key is unrecognized&quot; [28]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The session key has expired. The session is closed.&quot; [29]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The machine id is unknown&quot; [32]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The local account  is unknown&quot; [38]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The path provided is invalid.&quot; [201]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Runtime error&quot; [202]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;The transfer id is unknown&quot; [203]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>chOwn</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>chOwn</refname>
+        <refpurpose>changes group owner of  remote files/directories. </refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chOwn</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>owner</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>Changes the owner attribute of a file or directory at the location given by the path parameter.
+The path must be provided in the form 'machine_id:path' (the machine_id
+values can be obtained using the vishnu_list_machine command).
+The owner must follow the unix &quot;chown&quot; syntax : [user][:[group]]</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>owner</emphasis></term>
+            <listitem>
+              <para>Input argument. The new owner of file/directory.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>path</emphasis></term>
+            <listitem>
+              <para>Input argument. The  file/directory following the pattern  [host:]file path.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -14281,6 +14494,10 @@ If the machine identifier is equal to autom, the job will be automatically submi
           </varlistentry>
           <varlistentry>
             <term>TMSVishnuException(&quot;Permission denied&quot; [104])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>TMSVishnuException(&quot;The work id is unknown&quot; [109])</term>
             <listitem/>
           </varlistentry>
         </variablelist>
@@ -17029,6 +17246,119 @@ values can be obtained using the vishnu_list_machine command).
             <term><emphasis>filesinfo</emphasis></term>
             <listitem>
               <para>Output argument. The  inode information.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry/>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Service bus failure)&quot; [1])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Vishnu not available (Database error)&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>SystemException(&quot;Internal Error: Undefined exception&quot; [9])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;Undefined configuration parameter&quot; [12])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The user is not an administrator&quot; [25])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key is unrecognized&quot; [28])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The session key has expired. The session is closed.&quot; [29])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The machine id is unknown&quot; [32])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UMSVishnuException(&quot;The local account  is unknown&quot; [38])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The path provided is invalid.&quot; [201])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;Runtime error&quot; [202])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>FMSVishnuException(&quot;The transfer id is unknown&quot; [203])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.chOwn</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.chOwn</refname>
+        <refpurpose>changes group owner of  remote files/directories. </refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.chOwn</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>owner</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>Changes the owner attribute of a file or directory at the location given by the path parameter.
+The path must be provided in the form 'machine_id:path' (the machine_id
+values can be obtained using the vishnu_list_machine command).
+The owner must follow the unix &quot;chown&quot; syntax : [user][:[group]]</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>owner</emphasis></term>
+            <listitem>
+              <para>Input argument. The new owner of file/directory.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>path</emphasis></term>
+            <listitem>
+              <para>Input argument. The  file/directory following the pattern  [host:]file path.</para>
             </listitem>
           </varlistentry>
         </variablelist>
