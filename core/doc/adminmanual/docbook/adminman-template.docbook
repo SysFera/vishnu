@@ -197,6 +197,14 @@
       <revdescription>
         <para> Ajout des versions de LoadLeveler, GLIBC pour libcrypt et ssh</para></revdescription>
       </revision>
+
+      <revision>
+      <revnumber>22</revnumber>
+      <date>30/05/2012</date>
+      <authorinitials>K. COULOMB</authorinitials>
+      <revdescription>
+        <para> Nouvelle compilation avec les batchs</para></revdescription>
+      </revision>
       
     </revhistory>
   </info>
@@ -488,10 +496,10 @@
         ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
       </para>
     </listitem>
-	  <listitem>
-	    <para>
-	      VISHNU_USE_LOADLEVELER, compile le SeD TMS pour load leveler (OFF par défaut). Les variables LOADLEVELER_INCLUDE_DIR et LOADLEVELER_LIB doivent être renseignées si le flag VISHNU_USE_SLURM est à ON.</para>
-
+    <listitem>
+      <para>
+	VISHNU_BATCH, compile le SeD TMS avec le batch correspondant (TORQUE par défaut). Les variables (BATCHNAME)_INCLUDE_DIR et (BATCHNAME)_LIB doivent être renseignées.</para>
+      
       <itemizedlist>
         <listitem> 
           <para>
@@ -503,15 +511,6 @@
             LOADLEVELER_LIB indique le chemin absolu jusqu'à la librairie llapi.so
           </para>
         </listitem>
-      </itemizedlist>
-    
-    </listitem>
-
-	  <listitem>
-	    <para>
-	      VISHNU_USE_TORQUE, compile le SeD TMS pour torque (OFF par défaut). Les variables TORQUE_INCLUDE_DIR et TORQUE_LIB doivent être renseignées si le flag VISHNU_USE_TORQUE est à ON.</para>
-
-      <itemizedlist>
         <listitem> 
           <para>
             TORQUE_INCLUDE_DIR indique le chemin absolu vers le fichier pbs_ifl.h
@@ -522,15 +521,6 @@
             TORQUE_LIB indique le chemin absolu jusqu'à la librairie libtorque.so
           </para>
         </listitem>
-      </itemizedlist>
-
-    </listitem>
-
-    <listitem>
-      <para>
-        VISHNU_USE_SLURM, compile le SeD TMS pour SLURM (OFF par défaut). Les variables SLURM_INCLUDE_DIR et SLURM_LIB doivent être renseignées si le flag VISHNU_USE_SLURM est à ON.</para>
-
-      <itemizedlist>
         <listitem> 
           <para>
             SLURM_INCLUDE_DIR indique le chemin absolu vers le fichier slurm/slurm.h
@@ -541,14 +531,6 @@
             SLURM_LIB indique le chemin absolu jusqu'à la librairie libslurm.so
           </para>
         </listitem>
-      </itemizedlist>
-
-    </listitem>
-    <listitem>
-      <para>
-        VISHNU_USE_LSF, compile le SeD TMS pour LSF (OFF par défaut). Les variables LSF_INCLUDE_DIR, LSBATCH_LIB et LSF_LIB doivent être renseignées si le flag VISHNU_USE_LSF est à ON.</para> 
-    
-      <itemizedlist>
         <listitem> 
           <para>
             LSF_INCLUDE_DIR indique le chemin absolu vers le fichier lsf/lsbatch.h
@@ -564,14 +546,6 @@
             LSF_LIB indique le chemin absolu jusqu'à la librairie liblsf.so
           </para>
         </listitem>
-      </itemizedlist>
-    </listitem>
-    
-    <listitem>
-      <para>
-        VISHNU_USE_SGE, compile le SeD TMS pour Grid Engine (OFF par défaut). Les variables SGE_ROOT, SGE_INCLUDE_DIR, SGE_BIN_DIR et SGE_LIB doivent être renseignées si le flag VISHNU_USE_SGE est à ON.</para> 
-
-      <itemizedlist>
         <listitem> 
           <para>
             SGE_ROOT indique le chemin absolu jusqu'au répertoire d'installation de Grid Engine
@@ -594,8 +568,14 @@
         </listitem>
         
       </itemizedlist>
-
+      
     </listitem>
+    <listitem>
+      <para>
+        VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
+      </para>
+    </listitem>
+
   </itemizedlist>
 </para>
 <para>
@@ -612,7 +592,7 @@
   <listitem><para>2. générer le Makefile</para>
     <itemizedlist>
       <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
-        <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
+        <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_BATCH=TORQUE -DVISHNU_BATCH_VERSION=2.3 -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
     </itemizedlist>
   </listitem>
   <listitem><para>3. lancer la compilation avec 2 jobs</para>
