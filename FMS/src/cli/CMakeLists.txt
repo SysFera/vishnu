@@ -31,7 +31,6 @@ set(ALLCLI
   remove_file
   remove_dir
   ch_grp
-  ch_own
   ch_mod
   content_of_file
   list_dir

@@ -166,32 +166,6 @@ vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
   }
 
 /**
- * \brief change the group of a file
- * \param sessionKey the session key
- * \param group the name of the new group to use for this file
- * \param path  the file path using host:path format
- * \return 0 if everything is OK, another value otherwise
- */
-  int
-vishnu::chOwn(const string& sessionKey, const string& user, const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
-
-    //To check the remote path
-    vishnu::checkRemotePath(path);
-
-    SessionProxy sessionProxy(sessionKey);
-
-    boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
-
-
-    int result= f->chown(user);
-
-    return result;
-
-
-  }
-
-/**
  * \brief  change the permissions of a file
  * \param sessionKey the session key
  * \param mode the path new mode
