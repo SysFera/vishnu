@@ -83,7 +83,13 @@ vishnu::convertToInt(std::string val) {
 	str >> intValue;
 	return intValue;
 #endif
-	return vishnu::lexical_convertor<int>(val);
+	int value = -1 ;
+	if(! val.empty()) {
+		value = vishnu::lexical_convertor<int>(val);
+	} else {
+		value = -1 ;
+	}
+	return value ;
 }
 
 
@@ -100,7 +106,13 @@ vishnu::convertToLong(std::string val) {
 	str >> intValue;
 	return intValue;
 #endif
-	return vishnu::lexical_convertor<long>(val);
+	int value = -1 ;
+	if(! val.empty()) {
+		value = vishnu::lexical_convertor<long>(val);
+	} else {
+		value = -1 ;
+	}
+	return value ;
 }
 
 /**
@@ -838,11 +850,11 @@ vishnu::createSuffixFromCurTime() {
 	tinfo = localtime ( &rawtime );
 
 	ossBuf << "_" << (1900 + tinfo->tm_year)
-				<< ( tinfo->tm_mon < 9? "0": "")<< tinfo->tm_mon + 1
-				<< ( tinfo->tm_mday < 10? "0": "" )<< tinfo->tm_mday
-				<< ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour
-				<< ( tinfo->tm_min < 10? "0": "" )<< tinfo->tm_min
-				<< ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec ;
+						<< ( tinfo->tm_mon < 9? "0": "")<< tinfo->tm_mon + 1
+						<< ( tinfo->tm_mday < 10? "0": "" )<< tinfo->tm_mday
+						<< ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour
+						<< ( tinfo->tm_min < 10? "0": "" )<< tinfo->tm_min
+						<< ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec ;
 
 	return ossBuf.str() ;
 }
@@ -867,7 +879,7 @@ vishnu::mklink(const std::string& src) {
 		bfs::create_symlink(src, dest) ;
 	}catch (...) {
 		throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::mklink : "
-						"error while making a link on the file " + src + " from " + dest.string());
+				"error while making a link on the file " + src + " from " + dest.string());
 	}
 	return dest.string() ;
 }
@@ -875,102 +887,102 @@ vishnu::mklink(const std::string& src) {
 // Cela fait une copie de la liste en retour, à modifier si cela gène
 std::vector<std::string>
 vishnu::getIPList(){
-  std::vector<std::string> addresses;
+	std::vector<std::string> addresses;
 
-  struct ifaddrs *ifa=NULL,*ifEntry=NULL;
-  void *addPtr = NULL;
-  int rc = 0;
-  char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
+	struct ifaddrs *ifa=NULL,*ifEntry=NULL;
+	void *addPtr = NULL;
+	int rc = 0;
+	char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
 
-  // Recuperation of the interfaces
-  rc = getifaddrs(&ifa);
-  // If interfaces gotten without error
-  if (rc==0) {
-    // Browing the list of interface
-    for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
-      // If not address continue
-      if(ifEntry->ifa_addr->sa_data == NULL) {
-        continue;
-      }
-      // If IPV4
-      if(ifEntry->ifa_addr->sa_family==AF_INET) {
-        addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
-      } else {
-        //It isn't IPv4
-        continue;
-      }
-      // Converting address
-      const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
-                                addPtr,
-                                addressBuffer,
-                                sizeof(addressBuffer));
-      std::string localhost = "127.0.0.1";
-      // Adding the found adress
-      if(a != NULL && localhost.compare(std::string(a)) != 0) {
-        addresses.push_back(std::string(a));
-      }
-    }
-  }
-  // Freeing memory
-  freeifaddrs(ifa);
+	// Recuperation of the interfaces
+	rc = getifaddrs(&ifa);
+	// If interfaces gotten without error
+	if (rc==0) {
+		// Browing the list of interface
+		for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
+			// If not address continue
+			if(ifEntry->ifa_addr->sa_data == NULL) {
+				continue;
+			}
+			// If IPV4
+			if(ifEntry->ifa_addr->sa_family==AF_INET) {
+				addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
+			} else {
+				//It isn't IPv4
+				continue;
+			}
+			// Converting address
+			const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
+					addPtr,
+					addressBuffer,
+					sizeof(addressBuffer));
+			std::string localhost = "127.0.0.1";
+			// Adding the found adress
+			if(a != NULL && localhost.compare(std::string(a)) != 0) {
+				addresses.push_back(std::string(a));
+			}
+		}
+	}
+	// Freeing memory
+	freeifaddrs(ifa);
 
-  return addresses;
+	return addresses;
 }
 
 void
 vishnu::setIP(std::string& name, std::string IP){
-  std::string tmp = std::string("localhost");
-  name.replace(name.find(tmp), tmp.length(), IP);
+	std::string tmp = std::string("localhost");
+	name.replace(name.find(tmp), tmp.length(), IP);
 }
 
 bool
 vishnu::isNotIP(std::string name){
-  int pos=0;
-  int cpt=0;
-  while((pos=name.find(".", pos+1))!=std::string::npos) {
-    cpt++;
-  }
-  return (cpt!=3);
+	int pos=0;
+	int cpt=0;
+	while((pos=name.find(".", pos+1))!=std::string::npos) {
+		cpt++;
+	}
+	return (cpt!=3);
 }
 
 /**
-* \brief Function to parse the string representing the version
-* \param version the string representing the version
-* \return  The version object
-*/
+ * \brief Function to parse the string representing the version
+ * \param version the string representing the version
+ * \return  The version object
+ */
 UMS_Data::Version_ptr
 vishnu::parseVersion(const std::string& version) {
-  UMS_Data::Version_ptr vers = NULL;
-  std::string major;
-  std::string minor;
-  std::string patch;
+	UMS_Data::Version_ptr vers = NULL;
+	std::string major;
+	std::string minor;
+	std::string patch;
 
-  size_t found = version.find_first_of(".");
-  if (found != std::string::npos) {
-    major = version.substr(0, found) ;
-    std::string rest = version.substr(found+1, version.size()) ;
-    found = rest.find_first_of(".");
-    if (found != std::string::npos) {
-     minor = rest.substr(0, found);
-     patch = rest.substr(found+1, rest.size());
-    }
-    //if the string major, minor, patch are not empty
-    if ((major.size() != 0) && (minor.size() != 0)
-    && (patch.size() != 0)) {
-      //if the values major, minor, patch are positives and major value higher than zero
-      if ((convertToInt(major) > 0) && (convertToInt(minor) >= 0)
-        && (convertToInt(patch) >= 0)) {
-        UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-        vers = ecoreFactory->createVersion();
-        vers->setMajor(convertToInt(major));
-        vers->setMinor(convertToInt(minor));
-        vers->setPatch(convertToInt(patch));
-        vers->setStringformat(version);
-      }
-    }
-  }
+	size_t found = version.find_first_of(".");
+	if (found != std::string::npos) {
+		major = version.substr(0, found) ;
+		std::string rest = version.substr(found+1, version.size()) ;
+		found = rest.find_first_of(".");
+		if (found != std::string::npos) {
+			minor = rest.substr(0, found);
+			patch = rest.substr(found+1, rest.size());
+		}
+		//if the string major, minor, patch are not empty
+		if ((major.size() != 0) && (minor.size() != 0)
+				&& (patch.size() != 0)) {
+			//if the values major, minor, patch are positives and major value higher than zero
+			if ((convertToInt(major) > 0) && (convertToInt(minor) >= 0)
+					&& (convertToInt(patch) >= 0)) {
+				UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+				vers = ecoreFactory->createVersion();
+				vers->setMajor(convertToInt(major));
+				vers->setMinor(convertToInt(minor));
+				vers->setPatch(convertToInt(patch));
+				vers->setStringformat(version);
+			}
+		}
+	}
 
-  return vers;
+	return vers;
 }
 
 
