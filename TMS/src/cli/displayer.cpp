@@ -438,7 +438,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 	std::string jobIdHead = "ID";
 	std::string jobNameHead = "NAME";
 	std::string workIdHead = "WORK ID";
-	std::string ownerHead = "OWNER";
+	std::string ownerHead = "USER";
 	std::string statusHead = "STATUS";
 	std::string queueHead = "QUEUE";
 	std::string priorityHead = "PRIORITY";
