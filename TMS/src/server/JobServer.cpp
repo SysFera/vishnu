@@ -148,9 +148,9 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
 	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
-	std::string sqlInsert = "";
+	std::string sql = "";
 	if(mjob.getWorkId() == 0){
-		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
+		sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
 				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir)"
@@ -164,16 +164,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ mjob.getOutputDir()  + "')";
 	}
 	else{
-    //FIXME It will be better to put this sql request on Worker Server object
-    std::string sql = "SELECT * from work where id="+ convertToString<>(mjob.getWorkId());
-    boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sql.c_str()));
-
-    //If the workId is unknown
-    if (sqlResult->getNbTuples() == 0) {
-      throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID);
-    }
-
-		sqlInsert = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
+		sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
 				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
@@ -187,7 +178,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 				+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
 
 	}
-	mdatabaseVishnu->process(sqlInsert);
+	mdatabaseVishnu->process(sql);
 
 	return 0;
 }
@@ -312,13 +303,13 @@ TMS_Data::Job JobServer::getJobInfo() {
 	std::vector<std::string> results;
 	std::vector<std::string>::iterator  iter;
 	std::string sqlRequest =
-			"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath,"
+			"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, workId, "
 			"  outputPath, errorPath, outputDir, jobPrio, nbCpus, jobWorkingDir, job.status, "
 			"  submitDate, endDate, owner, jobQueue,wallClockLimit, groupName, jobDescription, "
 			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid"
 			" FROM job, vsession, users "
 			" WHERE vsession.numsessionid=job.vsession_numsessionid "
-      " AND vsession.users_numuserid=users.numuserid"
+			" AND vsession.users_numuserid=users.numuserid"
 			" AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
 			" AND job.jobId='"+mjob.getJobId()+"'";
 
@@ -335,6 +326,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 		mjob.setJobId(*(++iter));
 		mjob.setJobName(*(++iter));
 		mjob.setJobPath(*(++iter));
+		mjob.setWorkId(convertToLong(*(++iter)));
 		mjob.setOutputPath(*(++iter));
 		mjob.setErrorPath(*(++iter));
 		mjob.setOutputDir(*(++iter));
@@ -353,7 +345,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 		mjob.setNbNodes(convertToInt(*(++iter)));
 		mjob.setNbNodesAndCpuPerNode(*(++iter));
 		mjob.setBatchJobId(*(++iter));
-    mjob.setUserId(*(++iter));
+		mjob.setUserId(*(++iter));
 	} else {
 		throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	}
