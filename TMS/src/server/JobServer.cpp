@@ -147,11 +147,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
-	std::string workId = "NULL" ;
-	if(mjob.getWorkId() != 0){
-		workId = convertToString(mjob.getWorkId()) ;
-	}
+	std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
 	std::string sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 			" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 			" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
