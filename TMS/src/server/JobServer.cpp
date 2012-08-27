@@ -148,36 +148,22 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
 	//FIXME : Hack to take care about workid nullable ref. Externalize the ORM part
-	std::string sql = "";
-	if(mjob.getWorkId() == 0){
-		sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
-				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
-				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
-				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir)"
-				" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
-				+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
-				+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
-				+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
-				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
-				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
-				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir()  + "')";
+	std::string workId = "NULL" ;
+	if(mjob.getWorkId() != 0){
+		workId = convertToString(mjob.getWorkId()) ;
 	}
-	else{
-		sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
-				" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
-				" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
-				" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
-				" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
-				+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
-				+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
-				+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
-				+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
-				+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
-				+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
-				+ mjob.getOutputDir() + "'," + convertToString(mjob.getWorkId()) + ")";
-
-	}
+	std::string sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
+			" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
+			" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
+			" groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, outputDir, workId)"
+			" values (" + numsession + ",'" + mjob.getSubmitMachineId() + "','" + mjob.getSubmitMachineName() + "',"
+			+ "'" + vishnuJobId + "','" + BatchJobId + "',"+ convertToString(mbatchType) + ",'" + mjob.getJobName()
+			+ "','" + mjob.getJobPath() + "','" + mjob.getOutputPath() + "','" + mjob.getErrorPath()+"','" + "job" + "',"
+			+ convertToString(mjob.getJobPrio()) + "," + convertToString(mjob.getNbCpus()) + ",'" + mjob.getJobWorkingDir() + "',"
+			+ convertToString(mjob.getStatus()) + "," + "CURRENT_TIMESTAMP,'"+mjob.getOwner()+"','"+mjob.getJobQueue() + "',"
+			+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
+			+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
+			+ mjob.getOutputDir() + "'," + workId + ")";
 	mdatabaseVishnu->process(sql);
 
 	return 0;
