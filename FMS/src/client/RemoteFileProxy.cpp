@@ -202,69 +202,6 @@ int RemoteFileProxy::chgrp(const string& group) {
   return 0;
 }
 
-/* Call the change owner DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
- * the error message.
- */
-int RemoteFileProxy::chown(const string& user) {
-  diet_profile_t* chownProfile;
-  char* errMsg;
-
-  std::string serviceName("FileChangeOwner");
-
-  std::string sessionKey=this->getSession().getSessionKey();
-
-
-  chownProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 5);
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
-  if(diet_string_set(diet_parameter(chownProfile, 0), const_cast<char*>(sessionKey.c_str()),
-        DIET_VOLATILE)){
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(diet_parameter(chownProfile, 1), const_cast<char*>(getPath().c_str()),
-        DIET_VOLATILE)){
-    msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(diet_parameter(chownProfile, 2), const_cast<char*>(localUser.c_str()),
-        DIET_VOLATILE)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  if(diet_paramstring_set(diet_parameter(chownProfile, 3), const_cast<char*>(getHost().c_str()),
-        DIET_VOLATILE)){
-    msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(diet_parameter(chownProfile, 4), const_cast<char*>(user.c_str()),
-        DIET_VOLATILE)){
-    msgErrorDiet += "with group parameter "+user;
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  diet_string_set(diet_parameter(chownProfile, 5), NULL, DIET_VOLATILE);
-
-  if (diet_call(chownProfile)) {
-    raiseDietMsgException("Error calling DIET service to change file group");
-  }
-
-  if(diet_string_get(diet_parameter(chownProfile, 5), &errMsg, NULL)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
-
-  return 0;
-}
-
 /* Call the change mode DIET server.
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.

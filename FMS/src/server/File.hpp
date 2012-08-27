@@ -254,12 +254,6 @@ class File {
        */
     virtual int chgrp(const std::string& group) = 0;
       /**
-       * \brief To update the owner of the file
-       * \param user the new owner
-       * \return 0 if the command succeeds, an error code otherwise
-       */
-    virtual int chown(const std::string& user) = 0;
-      /**
        * \brief To update the new file access permissions
        * \param mode the new file access permissions
        * \return 0 if the command succeeds, an error code otherwise

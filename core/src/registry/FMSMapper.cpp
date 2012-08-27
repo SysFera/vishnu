@@ -37,7 +37,6 @@ FMSMapper::FMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_STOP_FILE_TRANSFER, "vishnu_stop_file_transfer"));
   mmap.insert (pair<int, string>(VISHNU_LIST_FILE_TRANSFERS, "vishnu_list_file_transfers"));
   mmap.insert (pair<int, string>(VISHNU_GET_FILE_INFO, "vishnu_get_file_info"));
-  mmap.insert (pair<int, string>(VISHNU_CH_OWN, "vishnu_ch_own"));
 };
 
 int
@@ -151,9 +150,6 @@ FMSMapper::decode (const string& msg){
     case VISHNU_CH_GRP:
       res = decodeChGrp(separatorPos, msg);
       break;
-    case VISHNU_CH_OWN:
-      res = decodeChOwn(separatorPos, msg);
-      break;
     case VISHNU_CH_MOD:
       res = decodeChMod(separatorPos, msg);
       break;
@@ -233,7 +229,7 @@ FMSMapper::decodeCreateDir(vector<int> separator, const string& msg){
 
   return res;
 }
-
+    
 string
 FMSMapper::decodeRemoveFile(vector<int> separator, const string& msg){
   string res = "";
@@ -243,7 +239,7 @@ FMSMapper::decodeRemoveFile(vector<int> separator, const string& msg){
   u   = msg.substr(separator.at(0)+1, separator.at(1)-separator.at(0)-1);
   res += u;
   res+= " ";
-
+  
   u  = msg.substr(separator.at(1)+1);
   FMS_Data::RmFileOptions_ptr ac = NULL;
 
@@ -258,7 +254,7 @@ FMSMapper::decodeRemoveFile(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 
 string
 FMSMapper::decodeRemoveDir(vector<int> separator, const string& msg){
@@ -268,10 +264,10 @@ FMSMapper::decodeRemoveDir(vector<int> separator, const string& msg){
   res+= " ";
   u    = msg.substr(separator.at(0)+1);
   res += u;
-
+  
   return res;
 }
-
+      
 string
 FMSMapper::decodeChGrp(vector<int> separator, const string& msg){
   string res = "";
@@ -286,22 +282,7 @@ FMSMapper::decodeChGrp(vector<int> separator, const string& msg){
 
   return res;
 }
-
-string
-FMSMapper::decodeChOwn(vector<int> separator, const string& msg){
-  string res = "";
-  string u;
-  res += (mmap.find(VISHNU_CH_OWN))->second;
-  res+= " ";
-  u    = msg.substr(separator.at(0)+1, separator.at(1)-separator.at(0)-1);
-  res += u;
-  res+= " ";
-  u    = msg.substr(separator.at(1)+1);
-  res+= u;
-
-  return res;
-}
-
+      
 string
 FMSMapper::decodeChMod(vector<int> separator, const string& msg){
   string res = "";
@@ -316,7 +297,7 @@ FMSMapper::decodeChMod(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeHeadOfFile(vector<int> separator, const string& msg){
   string res = "";
@@ -353,7 +334,7 @@ FMSMapper::decodeTailOfFile(vector<int> separator, const string& msg){
 
   u    = msg.substr(separator.at(1)+1);
   FMS_Data::TailOfFileOptions_ptr ac = NULL;
-
+  
   //To parse the object serialized
   if(!vishnu::parseEmfObject(u, ac)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
@@ -361,10 +342,10 @@ FMSMapper::decodeTailOfFile(vector<int> separator, const string& msg){
 
   res += " -n ";
   res += vishnu::convertToString(ac->getNline());
-
+ 
   return res;
 }
-
+      
 string
 FMSMapper::decodeContentOfFile(vector<int> separator, const string& msg){
   string res = "";
@@ -376,7 +357,7 @@ FMSMapper::decodeContentOfFile(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeListDir(vector<int> separator, const string& msg){
 
@@ -404,9 +385,9 @@ FMSMapper::decodeListDir(vector<int> separator, const string& msg){
     res += " -a ";
   }
   return res;
-
+ 
 }
-
+      
 string
 FMSMapper::decodeCopyFile(vector<int> separator, const string& msg){
 
@@ -439,7 +420,7 @@ FMSMapper::decodeCopyFile(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeCopyAsyncFile(vector<int> separator, const string& msg){
 
@@ -453,7 +434,7 @@ FMSMapper::decodeCopyAsyncFile(vector<int> separator, const string& msg){
   u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
   res += u;
   res+= " ";
-
+  
   u    = msg.substr(separator.at(2)+1);
   FMS_Data::CpFileOptions_ptr ac = NULL;
 
@@ -461,10 +442,10 @@ FMSMapper::decodeCopyAsyncFile(vector<int> separator, const string& msg){
   if(!vishnu::parseEmfObject(u, ac)) {
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
-
+                  
   if(ac->isIsRecursive()) {
     res += " -r ";
-  }
+  }               
 
   if(ac->getTrCommand()!=-1){
     res += " -t "+vishnu::convertToString(ac->getTrCommand());
@@ -472,10 +453,10 @@ FMSMapper::decodeCopyAsyncFile(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeMoveFile(vector<int> separator, const string& msg){
-
+  
   string res = "";
   string u;
   res += (mmap.find(VISHNU_MOVE_FILE))->second;
@@ -486,7 +467,7 @@ FMSMapper::decodeMoveFile(vector<int> separator, const string& msg){
   u    = msg.substr(separator.at(1)+1, separator.at(2)-separator.at(1)-1);
   res += u;
   res+= " ";
-
+  
   u    = msg.substr(separator.at(2)+1);
   FMS_Data::CpFileOptions_ptr ac = NULL;
 
@@ -495,16 +476,16 @@ FMSMapper::decodeMoveFile(vector<int> separator, const string& msg){
     throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
   }
 
-  if(ac->getTrCommand()!=-1){
+  if(ac->getTrCommand()!=-1){  
     res += " -t "+vishnu::convertToString(ac->getTrCommand());
   }
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeMoveAsyncFile(vector<int> separator, const string& msg){
-
+ 
   string res = "";
   string u;
   res += (mmap.find(VISHNU_MOVE_ASYNC_FILE))->second;
@@ -530,10 +511,10 @@ FMSMapper::decodeMoveAsyncFile(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeStopFileTransfer(vector<int> separator, const string& msg){
-
+  
   string res = "";
   string u;
   res += (mmap.find(VISHNU_STOP_FILE_TRANSFER))->second;
@@ -560,10 +541,10 @@ FMSMapper::decodeStopFileTransfer(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeListFileTransfers(vector<int> separator, const string& msg){
-
+ 
   string res = "";
   string u;
   res += (mmap.find(VISHNU_LIST_FILE_TRANSFERS))->second;
@@ -594,7 +575,7 @@ FMSMapper::decodeListFileTransfers(vector<int> separator, const string& msg){
 
   return res;
 }
-
+      
 string
 FMSMapper::decodeGetFileInfo(vector<int> separator, const string& msg){
 

@@ -19,87 +19,83 @@
 #define STATCMD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
 #else
 /**
- * \brief An alias of stat command
+ * \brief An alias of stat command 
  */
 #define STATCMD " LANG=C stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
 #endif
 
 /* Define the command to use through ssh. */
 /**
- * \brief An alias of change group command
+ * \brief An alias of change group command 
  */
 #define CHGRPCMD "chgrp "
 /**
- * \brief An alias of change group command
- */
-#define CHOWNCMD "chown "
-/**
- * \brief An alias of change mode command
+ * \brief An alias of change mode command 
  */
 #define CHMODCMD "chmod "
 /**
- * \brief An alias of head command
+ * \brief An alias of head command 
  */
 #define HEADCMD  "head -"
 /**
- * \brief An alias of head command
+ * \brief An alias of head command 
  */
 #define CATCMD  "cat "
 /**
- * \brief An alias of ls command
+ * \brief An alias of ls command 
  */
 //#define LSCMD  " LANG=C ls -ln --time-style=full-iso "
 #define LSCMD  " LANG=C ls -l --time-style=\"+%Y-%m-%d %H:%M:%S %:::z\"  "
 
 /**
- * \brief An alias of mkdir command
+ * \brief An alias of mkdir command 
  */
 #define MKDIRCMD "mkdir "
 /**
- * \brief An alias of touch command
+ * \brief An alias of touch command 
  */
 #define MKFILECMD "touch "
 /**
- * \brief An alias of rm command
+ * \brief An alias of rm command 
  */
 #define RMCMD    "rm -f "
 /**
- * \brief An alias of recursive rm command
+ * \brief An alias of recursive rm command 
  */
 #define RMRCMD    "rm -rf "
 /**
- * \brief An alias of rmdir command
+ * \brief An alias of rmdir command 
  */
 #define RMDIRCMD "rmdir "
 /**
- * \brief An alias of tail command
+ * \brief An alias of tail command 
  */
 #define TAILCMD  "tail -"
 /**
- * \brief An alias of scp command
+ * \brief An alias of scp command 
  */
 #define CPCMD    "scp -o Compression=yes -o StrictHostKeyChecking=no "
 /**
- * \brief An alias of mv command
+ * \brief An alias of mv command 
  */
 #define MVCMD    "mv "
 /**
- * \brief An alias of ls -a command
+ * \brief An alias of ls -a command 
  */
 #define LSACMD  "ls -a "
 /**
- * \brief An alias of ls -l command
+ * \brief An alias of ls -l command 
  */
 #define LSLCMD "ls -l "
 /**
- * \brief An alias of ls -al command
+ * \brief An alias of ls -al command 
  */
 #define LSALCMD  "ls -al "
 
 #include "File.hpp"
 
 /**
- *\brief  A class for file representation through SSH.
+ *\brief  A class for file representation through SSH. 
  */
 class SSHFile : public File {
 
@@ -163,7 +159,7 @@ class SSHFile : public File {
      * \brief Another constructor by value
      * \param sessionServer   the session object server
      * \param path the path of the file
-     * \param sshHost the ssh host
+     * \param sshHost the ssh host 
      * \param sshUser the ssh user
      * \param sshPublicKey the ssh public key
      * \param sshPrivateKey the ssh private key
@@ -186,8 +182,8 @@ class SSHFile : public File {
 
     /**
      * \brief Another constructor by reference
-     * \param file the other file
-     */
+     * \param file the other file 
+     */ 
     explicit  SSHFile(const SSHFile& file);
 
     /**
@@ -226,12 +222,6 @@ class SSHFile : public File {
      */
     virtual int chgrp(const std::string& group);
     /**
-     * \brief To update the owner of the file
-     * \param user the new owner
-     * \return 0 if the command succeeds, an error code otherwise
-     */
-    virtual int chown(const std::string& group);
-    /**
      * \brief To update the new file access permissions
      * \param mode the new file access permissions
      * \return 0 if the command succeeds, an error code otherwise
@@ -240,14 +230,14 @@ class SSHFile : public File {
 
     /**
      * \brief To get the first lines of the file
-     * \param options the options object
+     * \param options the options object 
      * \return the first lines of the file
      */
     virtual std::string head(const HeadOfFileOptions& options);
 
     /**
      * \brief To get the last lines of the file
-     * \param options the options object
+     * \param options the options object 
      * \return the last lines of the file
      */
     virtual std::string tail(const TailOfFileOptions& options);
@@ -260,44 +250,44 @@ class SSHFile : public File {
      * \brief To create a new file
      * \param mode the access permission of the file
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int mkfile(const mode_t mode);
     /**
      * \brief To create a new directory
      * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int mkdir(const CreateDirOptions& options);
     /**
      * \brief To remove a file
      * \param options The file deletion options
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int rm(const FMS_Data::RmFileOptions& options);
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
-     */
+     */ 
     virtual int rmdir();
     /**
      * \brief To list the content of a directory
-     * \param options the list options
+     * \param options the list options 
      * \return the content of the directory
-     */
+     */ 
     //virtual std::list<std::string> ls(const LsDirOptions& options) const;
     virtual  FMS_Data::DirEntryList*  ls(const LsDirOptions& options) const;
-
+    
     /**
-     * \brief To copy the file
+     * \brief To copy the file 
      * \param path the copy destination
-     * \param options the copy options
+     * \param options the copy options  
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int cp(const std::string& path, const CpFileOptions& options);
     /**
-     * \brief To move the file
+     * \brief To move the file 
      * \param path the move destination
-     * \param options the move options
+     * \param options the move options  
      * \return 0 if the command succeeds, an error code otherwise
      */
     virtual int mv(const std::string& path, const CpFileOptions& options);
@@ -306,7 +296,7 @@ class SSHFile : public File {
 
 
 /**
- * \brief  A class to call command through SSH.
+ * \brief  A class to call command through SSH. 
  */
 
 
@@ -369,7 +359,7 @@ class SSHExec {
      * \brief A constructor by value
      * \param sshCommand the ssh command path
      * \param scpCommand the scp command path
-     * \param server the ssh host
+     * \param server the ssh host 
      * \param sshPort the ssh port
      * \param userName the ssh user
      * \param password the ssh password
@@ -387,7 +377,7 @@ class SSHExec {
     /**
      * \brief Get the last execution return value
      * \return the last execution return value
-     */
+     */ 
     const int& getLastExecStatus() const;
     /**
      * \brief Get the last execution process identifier
@@ -404,7 +394,7 @@ class SSHExec {
     /**
      * \brief perform a command through ssh
      * \param cmd the command to perform
-     * \return the command output an error
+     * \return the command output an error 
      */
     std::pair<std::string, std::string> exec(const std::string& cmd) const;
 };
