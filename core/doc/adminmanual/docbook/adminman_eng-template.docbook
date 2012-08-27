@@ -194,6 +194,13 @@
       <revdescription>
         <para> Add version of LoadLeveler, GLIBC for libcrypt and ssh</para></revdescription>
       </revision>
+      <revision>
+      <revnumber>22</revnumber>
+      <date>27/08/2012</date>
+      <authorinitials>K. COULOMB</authorinitials>
+      <revdescription>
+        <para> Add new TMS compilation documentation</para></revdescription>
+      </revision>
       
     </revhistory>
   </info>
@@ -450,7 +457,7 @@
 	  <listitem>
 	    <para>
 	      COMPILE_TMS, compile the TMS module (OFF by default). If ON, COMPILE_UMS must be activated and
-              one of the following options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER, VISHNU_USE_SLURM, VISHNU_USE_LSF or VISHNU_USE_SGE must be activated.
+              the following options VISHNU_BATCH and VISHNU_BATCH_VERSION must be filled.
 	    </para>
 	  </listitem>
 	  <listitem>
@@ -490,8 +497,8 @@
           </listitem>
 	  <listitem>
 	    <para>
-	      VISHNU_USE_LOADLEVELER, compile the TMS SeD for load leveler (OFF by default). The LOADLEVELER_INCLUDE_DIR and LOADLEVELER_LIB variables must be filled if activated.</para>
-
+	      VISHNU_BATCH, compile the TMS SeD for the corresponding batch (TORQUE by default). The (BATCHNAME)_INCLUDE_DIR and (BATCHNAME)_LIB variables must be filled.</para>
+            
             <itemizedlist>
               <listitem> 
                 <para>
@@ -503,15 +510,6 @@
                   LOADLEVELER_LIB indicate the absolute path to the llapi.so library
                 </para>
               </listitem>
-            </itemizedlist>
-            
-          </listitem>
-
-	  <listitem>
-	    <para>
-	      VISHNU_USE_TORQUE, compile the TMS SeD for torque (OFF by default). The TORQUE_INCLUDE_DIR and TORQUE_LIB variables must be filled if activated..</para>
-
-            <itemizedlist>
               <listitem> 
                 <para>
                   TORQUE_INCLUDE_DIR indicate the absolute path to the pbs_ifl.h file.
@@ -522,15 +520,6 @@
                   TORQUE_LIB indicates the absolute path to the libtorque.so library.
                 </para>
               </listitem>
-            </itemizedlist>
-
-          </listitem>
-
-          <listitem>
-            <para>
-              VISHNU_USE_SLURM, compile the TMS SeD for SLURM (OFF by default). The SLURM_INCLUDE_DIR and SLURM_LIB variables must be filled if activated.</para>
-
-            <itemizedlist>
               <listitem> 
                 <para>
                   SLURM_INCLUDE_DIR indicate the absolute path to the file slurm/slurm.h
@@ -541,14 +530,6 @@
                   SLURM_LIB indicate the absolute path to the libslurm.so library.
                 </para>
               </listitem>
-            </itemizedlist>
-
-          </listitem>
-          <listitem>
-            <para>
-              VISHNU_USE_LSF, compile the TMS SeD for LSF (OFF by default). The LSF_INCLUDE_DIR, LSBATCH_LIB and LSF_LIB variables must be filled if activated.</para> 
-
-            <itemizedlist>
               <listitem> 
                 <para>
                   LSF_INCLUDE_DIR indicate the absolute path to the lsf/lsbatch.h file
@@ -564,15 +545,6 @@
                   LSF_LIB indicate the absolute path to the liblsf.so  library
                 </para>
               </listitem>
-            </itemizedlist>
-
-          </listitem>
-          <listitem>
-            <para>
-              VISHNU_USE_SGE, compile the TMS SeD for Grid Engine (OFF by default). 
-              The SGE_ROOT, SGE_INCLUDE_DIR, SGE_BIN_DIR and SGE_LIB variables must be filled if activated.</para> 
-
-            <itemizedlist>
               <listitem> 
                 <para>
                   SGE_ROOT indicate the absolute path to the directory where Grid Engine is installed
@@ -593,14 +565,17 @@
                   SGE_LIB indicate the absolute path to the libdrmaa.so library
                 </para>
               </listitem>
-              
+            
             </itemizedlist>
-
           </listitem>
-
+          <listitem>
+            <para>
+              VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
+            </para>
+          </listitem>
         </itemizedlist>
-      </para>
-      <para>
+        </para>
+        <para>
         For instance, to compile VISHNU (clients and servers) with UMS and TMS (torque) with the
         Python API and install it in /opt/vishnu:
       </para>
@@ -614,7 +589,7 @@
         <listitem><para>2. generate the Makefile</para>
           <itemizedlist>
             <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
-              <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_USE_TORQUE=0N -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
+              <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_BATCH=TORQUE -DVISHNU_BATCH_VERSION=2.3 -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
           </itemizedlist>
         </listitem>
         <listitem><para>3. Compile using 2 threads</para>

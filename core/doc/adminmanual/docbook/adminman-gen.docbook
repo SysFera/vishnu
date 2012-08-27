@@ -206,7 +206,7 @@
       </revision>
       <revision>
         <revnumber>22</revnumber>
-        <date>30/05/2012</date>
+        <date>27/08/2012</date>
         <authorinitials>K. COULOMB</authorinitials>
         <revdescription>
         <para> Nouvelle compilation avec les batchs</para></revdescription>
@@ -459,7 +459,7 @@
           <listitem>
             <para>
 	      COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
-              l'une des options VISHNU_USE_TORQUE, VISHNU_USE_LOADLEVELER, VISHNU_USE_SLURM, VISHNU_USE_LSF ou VISHNU_USE_SGE doit être à ON.
+              les options VISHNU_BATCH et VISHNU_BATCH_VERSION doivent être remplies.
 	    </para>
           </listitem>
           <listitem>
