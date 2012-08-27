@@ -5866,58 +5866,6 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
-      <section>
-        <title>vishnu_ch_own</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by any VISHNU user</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_ch_own command changes group owner of  remote files/directories. </para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_ch_own</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>owner</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>owner</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>the new owner of file/directory</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
-                <entry><para>path</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
