@@ -75,7 +75,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		std::string workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
 		std::string prefix = (boost::algorithm::ends_with(workingDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
-		std::string dir = workingDir + prefix + vishnuJobId ;
+		std::string dir = workingDir + prefix + vishnuJobId + vishnu::createSuffixFromCurTime(); ;
 		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
 		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
 		mjob.setOutputDir(dir) ;
