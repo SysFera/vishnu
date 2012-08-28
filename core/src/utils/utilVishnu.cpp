@@ -826,9 +826,6 @@ vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, 
  * */
 void
 vishnu::createOutputDir(std::string& dirPath) {
-
-	dirPath += createSuffixFromCurTime() ;
-
 	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
 
 	if( ! bfs::create_directory(bfs::path(dirPath)) ) {

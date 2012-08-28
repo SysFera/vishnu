@@ -103,7 +103,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 		char* fName = NULL ;
 		if (content.size != 0) {
 			if( ! moutDir.size() ) {
-				moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId ;
+				moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId + vishnu::createSuffixFromCurTime();
 				vishnu::createOutputDir(moutDir);
 			}
 			jobResult.setOutputDir(moutDir) ;
@@ -221,8 +221,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 			ListStrings lineVec ;
 			while( getline(fdescStream, line) ) {
 				boost::trim(line) ; boost::split(lineVec, line, boost::is_any_of(" ")) ;
-
-				moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] ;
+				moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
 				vishnu::createOutputDir(moutDir);
 				listJobResults_ptr->getResults().get(jnum++)->setOutputDir(moutDir);
 
