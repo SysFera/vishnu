@@ -6,6 +6,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <string.h>
+
 
 class Socket : public zmq::socket_t, public boost::noncopyable {
 public:
