@@ -49,7 +49,7 @@ displayJob(TMS_Data::Job& j){
 
 	cout << " ------------------------ " << endl;
 	cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")"<< endl;
-	cout << " Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "none") << endl;
+	cout << " Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED") << endl;
 	cout << " User                 : " << j.getUserId() << endl;
 	cout << " Session              : " << j.getSessionId() << endl;
 	cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
