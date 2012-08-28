@@ -127,6 +127,11 @@ vishnu::connect(UMS_Data::ListUsers& users,
   UMS_Data::User* user;
   bool connected = false;
   int ret;
+  SystemException excep;
+  UMSVishnuException umsexcep;
+  bool umsexcepfound = false;
+  bool excepfound = false;
+
 // For each account
   for(cpt=0;cpt<users.getUsers().size();cpt++){
     user = users.getUsers().at(cpt);
@@ -141,13 +146,24 @@ vishnu::connect(UMS_Data::ListUsers& users,
       connected = true;
       break;
 // Catching bad authentication exceptions
-    } catch (UserException &e){
+    } catch (UMSVishnuException &e){
+      umsexcep = e;
+      umsexcepfound = true;
     } catch (SystemException &e){
+      excep =e;
+      excepfound = true;
     }
   }
 //If no user account has managed to connect
   if(!connected){
-    throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "No account could be used to connect");
+    //throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "No account could be used to connect");
+    //If an exception has been found
+    if (excepfound) {
+      throw excep;
+    }
+    if (umsexcepfound) {
+      throw umsexcep;
+    }
   }
   return ret;
 }
