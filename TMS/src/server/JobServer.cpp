@@ -148,6 +148,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
 	std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
+
 	std::string sql = "INSERT INTO job (vsession_numsessionid, submitMachineId,"
 			" submitMachineName, jobId, batchJobId, batchType, jobName,jobPath, outputPath, errorPath,"
 			" scriptContent, jobPrio, nbCpus, jobWorkingDir, status, submitDate, owner, jobQueue, wallClockLimit,"
@@ -160,6 +161,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 			+ convertToString(mjob.getWallClockLimit()) + ",'"+mjob.getGroupName() + "','" + mjob.getJobDescription()+"',"
 			+ convertToString(mjob.getMemLimit()) + "," + convertToString(mjob.getNbNodes()) + ",'" + mjob.getNbNodesAndCpuPerNode() + "','"
 			+ mjob.getOutputDir() + "'," + workId + ")";
+
 	mdatabaseVishnu->process(sql);
 
 	return 0;

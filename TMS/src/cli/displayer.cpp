@@ -436,7 +436,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 	std::string jobIdHead = "ID";
 	std::string jobNameHead = "NAME";
-	std::string workIdHead = "WORK   ";
+	std::string workIdHead = "WORK";
 	std::string ownerHead = "OWNER";
 	std::string statusHead = "STATUS";
 	std::string queueHead = "QUEUE";
@@ -446,7 +446,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 	size_t maxJobIdSize = jobIdHead.size();
 	size_t maxJobNameSize = jobNameHead.size();
 	size_t maxOwnerSize = ownerHead.size();
-	size_t maxWorkId = workIdHead.size();
+	size_t maxWorkIdSize = workIdHead.size();
 	size_t maxStatusSize = statusHead.size();
 	size_t maxQueueSize = queueHead.size();
 	size_t maxPrioritySize = priorityHead.size();
@@ -461,8 +461,8 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 		maxJobNameSize = std::max(maxJobNameSize, jobName.size());
 
 		workId = (listJobs.getJobs().get(i))->getWorkId();
-		workId_ = (workId!=-1? convertToString(workId) : "none") ;
-		maxWorkId = std::max(maxWorkId, workId_.size());
+		workId_ = (workId!=-1? convertToString(workId) : " -- ") ;
+		maxWorkIdSize = std::max(maxWorkIdSize, workId_.size());
 
 		owner = (listJobs.getJobs().get(i))->getUserId();
 		maxOwnerSize = std::max(maxOwnerSize, owner.size());
@@ -481,7 +481,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 	}
 
 	os << setw(maxJobIdSize+2) << left << jobIdHead << setw(maxJobNameSize+2) << left << jobNameHead
-			<< setw(maxWorkId+2) << left << workIdHead << setw(maxOwnerSize+2) << left << ownerHead
+			<< setw(maxWorkIdSize+2) << left << workIdHead << setw(maxOwnerSize+2) << left << ownerHead
 			<< setw(maxStatusSize+2) << statusHead << setw(maxQueueSize+2) << left << queueHead
 			<< setw(maxPrioritySize+2) << left << priorityHead
 			<< setw(maxMachineIdSize+2) << left << machineIdHead << endl;
@@ -489,6 +489,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 	setFill(maxJobIdSize, os);
 	setFill(maxJobNameSize, os);
+	setFill(maxWorkIdSize, os);
 	setFill(maxOwnerSize, os);
 	setFill(maxStatusSize, os);
 	setFill(maxQueueSize, os);
@@ -501,7 +502,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 		jobId = (listJobs.getJobs().get(i))->getJobId();
 		jobName = (listJobs.getJobs().get(i))->getJobName();
 		workId = (listJobs.getJobs().get(i))->getWorkId();
-		workId_ = (workId!=-1? convertToString(workId) : "none") ;
+		workId_ = (workId!=-1? convertToString(workId) : " -- ") ;
 		owner = (listJobs.getJobs().get(i))->getUserId();
 		status = (listJobs.getJobs().get(i))->getStatus();
 		queue = (listJobs.getJobs().get(i))->getJobQueue();
@@ -510,7 +511,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
 
 		os << setw(maxJobIdSize+2) << left << jobId;
 		os << setw(maxJobNameSize+2) << left << jobName;
-		os << setw(maxWorkId+2) << left << workId_;
+		os << setw(maxWorkIdSize+2) << left << workId_;
 		os << setw(maxOwnerSize+2) << left << owner;
 		os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
 		os << setw(maxQueueSize+2) << left << queue;
@@ -547,13 +548,13 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 	int percent;
 	boost::posix_time::ptime pt;
 
-	std::string jobIdHead = "Job id";
-	std::string jobNameHead = "Job name";
-	std::string walltimeHead = "Walltime";
-	std::string startTimeHead = "Start time";
-	std::string endTimeHead = "End time";
-	std::string statusHead = "Status";
-	std::string percentHead = "Percent";
+	std::string jobIdHead = "JOB ID";
+	std::string jobNameHead = "JOB NAME";
+	std::string walltimeHead = "WALLTIME";
+	std::string startTimeHead = "START TIME";
+	std::string endTimeHead = "END TIME";
+	std::string statusHead = "STATUS";
+	std::string percentHead = "PERCENT";
 
 	size_t maxJobIdSize = jobIdHead.size();
 	size_t maxJobNameSize = jobNameHead.size();
