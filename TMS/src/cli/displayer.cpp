@@ -50,15 +50,15 @@ displayJob(TMS_Data::Job& j){
 	cout << " ------------------------ " << endl;
 	cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")"<< endl;
 	cout << " Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "none") << endl;
-	cout << " Session              : " << j.getSessionId() << endl;
 	cout << " User                 : " << j.getUserId() << endl;
+	cout << " Session              : " << j.getSessionId() << endl;
 	cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
 	cout << " Job name             : " << j.getJobName() << endl;
 	cout << " Job path             : " << j.getJobPath() << endl;
 	cout << " Output path (remote) : " << j.getOutputPath() << endl;
 	cout << " Error path  (remote) : " << j.getErrorPath() << endl;
 	cout << " Output dir (remote)  : " << j.getOutputDir() << endl;
-	cout << " Priority             : " << j.getJobPrio() << "(" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
+	cout << " Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
 	cout << " CPU per Node         : " << j.getNbCpus() << endl;
 	cout << " Working dir (remote) : " << j.getJobWorkingDir() << endl;
 	cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
