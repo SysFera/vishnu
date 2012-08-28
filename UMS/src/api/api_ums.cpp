@@ -156,7 +156,6 @@ vishnu::connect(UMS_Data::ListUsers& users,
   }
 //If no user account has managed to connect
   if(!connected){
-    //throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "No account could be used to connect");
     //If an exception has been found
     if (excepfound) {
       throw excep;
