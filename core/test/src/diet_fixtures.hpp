@@ -171,8 +171,6 @@ public:
 		} else {
 			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
 		}
-//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
-//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
 #ifndef DEBUG_TESTS
 		// redirect output to /dev/null
@@ -233,8 +231,6 @@ public:
 		} else {
 			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
 		}
-//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
-//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
 		// redirect output to /dev/null
 		ctx.streams[bp::stdout_id] = bp::behavior::null();
@@ -271,7 +267,7 @@ class DietSeDFixture : public AgentParent
 	boost::scoped_ptr<bp::child> processSeD;
 
 public:
-	DietSeDFixture() : processSeD(NULL) {
+	DietSeDFixture() : processSeD(NULL){
 		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching "
 				<<  name << " ==");
 
@@ -297,20 +293,16 @@ public:
 		} else {
 			ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
 		}
-//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
-//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 #ifndef DEBUG_TESTS
 		// redirect output to /dev/null
 		ctx.streams[bp::stdout_id] = bp::behavior::null();
 		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
-
-		// setup SeD arguments
-		std::vector<std::string> args = ba::list_of(std::string(config));
-
 		// launch SeD
-		const bp::child c = bp::create_child(exec, args, ctx);
-		processSeD.reset(utils::copy_child(c));
+		std::vector<std::string> sedArgs = ba::list_of(std::string(config));
+		const bp::child sed = bp::create_child(exec, sedArgs, ctx);
+		processSeD.reset(utils::copy_child(sed));
+
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
 		BOOST_TEST_MESSAGE( "== Test setup [END]: launching "
 				<< name << " ==" );
@@ -324,7 +316,6 @@ public:
 		if( processSeD ) {
 			try {
 				processSeD->terminate();
-
 				// FIXME: currently processSeD->wait() crashes, we need to set the signal handler of SIGCHLD to SID_DFL
 				signal(SIGCHLD, SIG_DFL);
 			} catch (...) {
@@ -332,6 +323,7 @@ public:
 						<< name << " ==" );
 			}
 		}
+
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
 		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
 				<< name << " ==" );
@@ -351,8 +343,6 @@ public:
 		// setup LogService environment
 		bp::context ctx;
 		ctx.process_name = LOGSERVICE_COMMAND;
-//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
-//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
 		// redirect output to /dev/null
 		ctx.streams[bp::stdout_id] = bp::behavior::null();
@@ -402,8 +392,6 @@ public:
 		// setup LogService environment
 		bp::context ctx;
 		ctx.process_name = DIETLOGTOOL_COMMAND;
-//		ctx.env["NAMER_LOGDIR"] = NAMER_LOGDIR;
-//		ctx.env["OMNIORB_CONFIG"] = OMNIORB_CONFIG;
 
 		// redirect output to /dev/null
 		ctx.streams[bp::stdout_id] = bp::behavior::null();

@@ -14,6 +14,7 @@ using namespace vishnu;
 
 char TMSSeDInit[] = "tmssed";
 char ConfigTMSSeDInit[] = TMSSEDCONF;
+char ConfigTMSSchedInit[] = TMSSCHEDCONF;
 char BinDirTMSSeDInit[] = TMSSEDBINDIR;
 
 class TMSFixtureInit : public UMSSeDFixture {
@@ -58,4 +59,5 @@ public:
   char* mav[2];
 };
 
-typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;
+typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSchedInit, TMSFixtureInit> TMSSchedFixtureInit;
+typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSSchedFixtureInit> TMSSeDFixtureInit;
