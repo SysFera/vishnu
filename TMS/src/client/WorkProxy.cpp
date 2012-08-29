@@ -7,6 +7,7 @@
 #include "TMSVishnuException.hpp"
 #include "WorkProxy.hpp"
 #include "utilsClient.hpp"
+#include "TMS_Data.hpp"
 
 /**
  * \param work The object which encapsulates the information of the work
@@ -44,8 +45,8 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
 
   ::ecorecpp::serializer::serializer _ser2;
   //To serialize the options object in to optionsInString
-//  optionsToString =  strdup(_ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop))).c_str());
-//  tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
+  optionsToString =  strdup(_ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop)).c_str());
+  //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
   //IN Parameters
   if(diet_string_set(diet_parameter(addProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
