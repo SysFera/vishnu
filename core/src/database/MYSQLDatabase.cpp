@@ -46,8 +46,8 @@ MYSQLDatabase::process(string request, int transacId){
 
 	res=mysql_real_query(conn, request.c_str (), request.length());
 	if (res) {
-		if(dbErrorNo(conn) != CR_SERVER_LOST) {
-			throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
+		if (dbErrorNo(conn) != CR_SERVER_LOST) {
+			throw SystemException(ERRCODE_DBERR, dbErrorMsg(&(mpool[reqPos].mmysql)));
 		}
 		// try to reinitialise the socket
 		if (mysql_real_connect(&(mpool[reqPos].mmysql),
