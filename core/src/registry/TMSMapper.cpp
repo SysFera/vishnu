@@ -419,6 +419,11 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
 	if (j->isBatchJob()){
 		res += " -b ";
 	}
+
+	if (j->isListAll()) {
+    res += " -l ";
+  }
+
 	return res;
 }
 string
