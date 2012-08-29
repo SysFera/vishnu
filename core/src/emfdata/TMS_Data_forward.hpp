@@ -116,6 +116,10 @@ namespace TMS_Data
     class Work;
     typedef Work* Work_ptr;
 
+    // AddWorkOptions
+    class AddWorkOptions;
+    typedef AddWorkOptions* AddWorkOptions_ptr;
+
     // Package & Factory
     class TMS_DataFactory;
     typedef TMS_DataFactory * TMS_DataFactory_ptr;

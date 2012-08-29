@@ -176,6 +176,8 @@ set(TMS_Data_SRCS
   emfdata/TMS_Data/LoadCriterionImpl.cpp
   emfdata/TMS_Data/Work.cpp
   emfdata/TMS_Data/WorkImpl.cpp
+  emfdata/TMS_Data/AddWorkOptions.cpp
+  emfdata/TMS_Data/AddWorkOptionsImpl.cpp
 )
 
 set(TMS_Data_HEADERS
@@ -196,6 +198,7 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/ListJobResults.hpp
   emfdata/TMS_Data/LoadCriterion.hpp
   emfdata/TMS_Data/Work.hpp
+  emfdata/TMS_Data/AddWorkOptions.hpp
 )
 
 set(IMS_Data_SRCS

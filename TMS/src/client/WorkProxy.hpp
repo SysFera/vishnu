@@ -32,7 +32,7 @@ class WorkProxy
      * \brief Function to add a new machine
      * \return raises an exception on error
      */
-    int add();
+  int add(const TMS_Data::AddWorkOptions& op);
     /**
      * \brief Function to update machine description
      * \return raises an exception on error

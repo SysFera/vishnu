@@ -3465,9 +3465,105 @@
         <para><emphasis role="bold">Description </emphasis></para>
         <para>The vishnu_add_work command allows to create a work consisting in running jobs.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_add_work</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_work</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a <replaceable>applicationId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>subject</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>owner</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>estimatedHour</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>description</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>projectId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>nbCPU</replaceable></option></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
-        <para>This command defines no arguments.</para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>applicationId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>a</para></entry>
+                <entry><para>Is the id of the machine on which the job has been submitted.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>subject</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>Represents the name assigned to the work.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>priority</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>l</para></entry>
+                <entry><para>Represents the work priority. </para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>owner</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>u</para></entry>
+                <entry><para>Represents the job owner.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>estimatedHour</para></entry>
+                <entry><para>long</para></entry>
+                <entry><para>e</para></entry>
+                <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>description</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>d</para></entry>
+                <entry><para>Is the textual description of the job.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>projectId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>p</para></entry>
+                <entry><para>Is the id of the session that contained the job submission command</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>m</para></entry>
+                <entry><para>Is the id of the session that contained the job submission command</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>nbCPU</para></entry>
+                <entry><para>int</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>The current status of the job.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>

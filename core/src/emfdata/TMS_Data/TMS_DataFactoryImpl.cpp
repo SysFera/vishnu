@@ -32,6 +32,7 @@
 #include <TMS_Data/ListJobResults.hpp>
 #include <TMS_Data/LoadCriterion.hpp>
 #include <TMS_Data/Work.hpp>
+#include <TMS_Data/AddWorkOptions.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -73,6 +74,8 @@ TMS_DataFactory::TMS_DataFactory()
         return createLoadCriterion();
     case TMS_DataPackage::WORK:
         return createWork();
+    case TMS_DataPackage::ADDWORKOPTIONS:
+        return createAddWorkOptions();
     default:
         throw "IllegalArgumentException";
     }
@@ -227,5 +230,9 @@ LoadCriterion_ptr TMS_DataFactory::createLoadCriterion()
 Work_ptr TMS_DataFactory::createWork()
 {
     return new Work();
+}
+AddWorkOptions_ptr TMS_DataFactory::createAddWorkOptions()
+{
+    return new AddWorkOptions();
 }
 

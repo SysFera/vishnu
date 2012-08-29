@@ -40,6 +40,7 @@
 #include "TMS_Data/ListJobResults.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
 #include "TMS_Data/Work.hpp"
+#include "TMS_Data/AddWorkOptions.hpp"
 
 // Package & Factory
 #include "TMS_Data/TMS_DataPackage.hpp"

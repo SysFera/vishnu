@@ -343,12 +343,14 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 int
 vishnu::addWork(const std::string& sessionKey,
-        Work& newWork)
+                Work& newWork,
+                const AddWorkOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException){
   checkEmptyString(sessionKey, "The session key");
   SessionProxy sessionProxy(sessionKey);
   WorkProxy workProxy(newWork, sessionProxy);
-  int res = workProxy.add();
+  int res = workProxy.add(options);
+  newWork = workProxy.getData();
   return res;
 }
 

@@ -73,6 +73,8 @@
 %include "TMS_Data/Queue.hpp"
 %include "TMS_Data/SubmitOptions.hpp"
 %include "TMS_Data/LoadCriterion.hpp"
+%include "TMS_Data/Work.hpp"
+%include "TMS_Data/AddWorkOptions.hpp"
 
 // All EMF includes (same as in IMS_Data.hpp)
 %include "IMS_Data_forward.hpp"

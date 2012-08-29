@@ -519,68 +519,69 @@ TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
 string
 TMSMapper::decodeAddWork(vector<int> separator, const string& msg){
   string res = string("");
-  string a;
-  int tmp;
-  res += (mmap.find(VISHNU_ADD_WORK))->second;
-  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-
-  TMS_Data::Work_ptr ac = NULL;
-
-  //To parse the object serialized
-  if(!parseEmfObject(std::string(std::string(a)), ac)) {
-    throw SystemException(ERRCODE_INVMAPPER, "option: "+a);
-  }
-
-  res+=" ";
-  a = ac->getApplicationId();
-  if (a.compare("")){
-    res += " -a ";
-    res += a;
-  }
-  a = ac->getSubject();
-  if (a.compare("")){
-    res += " -s ";
-    res += a;
-  }
-  tmp = ac->getPriority();
-  if (tmp!=0){
-    res += " -l ";
-    res += convertToString(tmp);
-  }
-  a = ac->getOwner();
-  if (a.compare("")){
-    res += " -u ";
-    res += a;
-  }
-  tmp = ac->getEstimatedHour();
-  if (tmp!=0){
-    res += " -p ";
-    res += convertToString(tmp);
-  }
-  a = ac->getDescription();
-  if (a.compare("")){
-    res += " -d ";
-    res += a;
-  }
-  a = ac->getProjectId();
-  if (a.compare("")){
-    res += " -p ";
-    res += a;
-  }
-  a = ac->getMachineId();
-  if (a.compare("")){
-    res += " -m ";
-    res += a;
-  }
-  tmp = ac->getNbCPU();
-  if (tmp!=0){
-    res += " -n ";
-    res += convertToString(tmp);
-  }
-
-  if (ac != NULL) {
-    delete ac;
-  }
+// TODO FIX WHEN FUNCTIONNAL
+//  string a;
+//  int tmp;
+//  res += (mmap.find(VISHNU_ADD_WORK))->second;
+//  a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+//
+//  TMS_Data::Work_ptr ac = NULL;
+//
+//  //To parse the object serialized
+//  if(!parseEmfObject(std::string(std::string(a)), ac)) {
+//    throw SystemException(ERRCODE_INVMAPPER, "option: "+a);
+//  }
+//
+//  res+=" ";
+//  a = ac->getApplicationId();
+//  if (a.compare("")){
+//    res += " -a ";
+//    res += a;
+//  }
+//  a = ac->getSubject();
+//  if (a.compare("")){
+//    res += " -s ";
+//    res += a;
+//  }
+//  tmp = ac->getPriority();
+//  if (tmp!=0){
+//    res += " -l ";
+//    res += convertToString(tmp);
+//  }
+//  a = ac->getOwner();
+//  if (a.compare("")){
+//    res += " -u ";
+//    res += a;
+//  }
+//  tmp = ac->getEstimatedHour();
+//  if (tmp!=0){
+//    res += " -p ";
+//    res += convertToString(tmp);
+//  }
+//  a = ac->getDescription();
+//  if (a.compare("")){
+//    res += " -d ";
+//    res += a;
+//  }
+//  a = ac->getProjectId();
+//  if (a.compare("")){
+//    res += " -p ";
+//    res += a;
+//  }
+//  a = ac->getMachineId();
+//  if (a.compare("")){
+//    res += " -m ";
+//    res += a;
+//  }
+//  tmp = ac->getNbCPU();
+//  if (tmp!=0){
+//    res += " -n ";
+//    res += convertToString(tmp);
+//  }
+//
+//  if (ac != NULL) {
+//    delete ac;
+//  }
 
   return res;
 }
