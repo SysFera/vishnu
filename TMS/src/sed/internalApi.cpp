@@ -651,6 +651,7 @@ int
 solveAddWork(diet_profile_t* pb) {
 	char *sessionKey = NULL;
 	char *workSerialized = NULL;
+	char *opSerialized = NULL;
 	std::string empty("");
 	std::string errorInfo;
 	int mapperkey;
@@ -660,9 +661,11 @@ solveAddWork(diet_profile_t* pb) {
 	//IN Parameters
 	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
 	diet_string_get(diet_parameter(pb,1), &workSerialized, NULL);
+	diet_string_get(diet_parameter(pb,2), &opSerialized, NULL);
 
 	SessionServer sessionServer = SessionServer(std::string(sessionKey));
 
+	TMS_Data::AddWorkOptions_ptr workop = NULL;
 	TMS_Data::Work_ptr work = NULL;
 
 	try {
@@ -672,23 +675,28 @@ solveAddWork(diet_profile_t* pb) {
 		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
 		mapperkey = mapper->code("vishnu_add_work");
 		mapper->code(std::string(workSerialized), mapperkey);
+		mapper->code(std::string(opSerialized), mapperkey);
 		cmd = mapper->finalize(mapperkey);
 
 		//To parse the object serialized
-		if(!parseEmfObject(std::string(workSerialized), work, msgComp)) {
+		if(!parseEmfObject(std::string(workSerialized), work)) {
+			throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+		}
+		//To parse the object serialized
+		if(!parseEmfObject(std::string(opSerialized), workop)) {
 			throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
 		}
 
 		WorkServer workServer = WorkServer(work, sessionServer);
-		workServer.add(ServerTMS::getInstance()->getVishnuId());
+		workServer.add(ServerTMS::getInstance()->getVishnuId(), workop);
 
 		//To serialize the user object
 		::ecorecpp::serializer::serializer _ser;
 		std::string workSerializedUpdate = _ser.serialize_str(work);
 
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,2), strdup(workSerializedUpdate.c_str()), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), strdup(workSerializedUpdate.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
 		//To save the connection
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
 	} catch (VishnuException& e) {
@@ -701,8 +709,8 @@ solveAddWork(diet_profile_t* pb) {
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 	}
 	delete work;
 	return 0;

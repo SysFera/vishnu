@@ -81,7 +81,8 @@
     </services>
     <services name="addWork" description="Allows to create a work consisting in running jobs." resultCodes="VISHNU_OK ERRCODE_UNKNOWN_MACHINE ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_INVALID_PARAM ERRCODE_SESSIONKEY_EXPIRED ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME" useJobEnv="true">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
-      <ports name="work" direction="INOUT" dataType="//@modules.0/@typeList/@types.3" description="The work to add"/>
+      <ports name="work" direction="OUT" dataType="//@modules.0/@typeList/@types.9" description="The work to add" defaultValueLiteral=""/>
+      <ports name="option" dataType="//@modules.0/@typeList/@types.10" description="Options to add the work" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <details key="description" value="This command adds a work in vishnu"/>
       <details key="exCLI" value="To add a work called toto:&#xA;vishnu_add_work toto&#xA;"/>
     </services>
@@ -115,6 +116,9 @@
       </types>
       <types name="Work" description="A work">
         <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//Work"/>
+      </types>
+      <types name="AddWorkOptions" description="">
+        <ECoreType xsi:type="ecore:EClass" href="TMS_Data.ecore#//AddWorkOptions"/>
       </types>
     </typeList>
     <resultCodeList>

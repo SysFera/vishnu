@@ -110,6 +110,11 @@ namespace TMS_Data
          * \return Pointer to the object
          */
         virtual Work_ptr createWork();
+        /**
+         * \brief Creates a new object of class AddWorkOptions
+         * \return Pointer to the object
+         */
+        virtual AddWorkOptions_ptr createAddWorkOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)

@@ -49,94 +49,99 @@ namespace TMS_Data
         // IDs for classifiers
 
         /**
+         * \brief Constant for AddWorkOptions class
+         */
+        static const int ADDWORKOPTIONS = 0;
+
+        /**
          * \brief Constant for Job class
          */
-        static const int JOB = 0;
+        static const int JOB = 1;
 
         /**
          * \brief Constant for JobPriority class
          */
-        static const int JOBPRIORITY = 1;
+        static const int JOBPRIORITY = 2;
 
         /**
          * \brief Constant for JobResult class
          */
-        static const int JOBRESULT = 2;
+        static const int JOBRESULT = 3;
 
         /**
          * \brief Constant for JobStatus class
          */
-        static const int JOBSTATUS = 3;
+        static const int JOBSTATUS = 4;
 
         /**
          * \brief Constant for ListJobResults class
          */
-        static const int LISTJOBRESULTS = 4;
+        static const int LISTJOBRESULTS = 5;
 
         /**
          * \brief Constant for ListJobs class
          */
-        static const int LISTJOBS = 5;
+        static const int LISTJOBS = 6;
 
         /**
          * \brief Constant for ListJobsOptions class
          */
-        static const int LISTJOBSOPTIONS = 6;
+        static const int LISTJOBSOPTIONS = 7;
 
         /**
          * \brief Constant for ListProgression class
          */
-        static const int LISTPROGRESSION = 7;
+        static const int LISTPROGRESSION = 8;
 
         /**
          * \brief Constant for ListQueues class
          */
-        static const int LISTQUEUES = 8;
+        static const int LISTQUEUES = 9;
 
         /**
          * \brief Constant for LoadCriterion class
          */
-        static const int LOADCRITERION = 9;
+        static const int LOADCRITERION = 10;
 
         /**
          * \brief Constant for LoadType class
          */
-        static const int LOADTYPE = 10;
+        static const int LOADTYPE = 11;
 
         /**
          * \brief Constant for Progression class
          */
-        static const int PROGRESSION = 11;
+        static const int PROGRESSION = 12;
 
         /**
          * \brief Constant for ProgressOptions class
          */
-        static const int PROGRESSOPTIONS = 12;
+        static const int PROGRESSOPTIONS = 13;
 
         /**
          * \brief Constant for Queue class
          */
-        static const int QUEUE = 13;
+        static const int QUEUE = 14;
 
         /**
          * \brief Constant for QueuePriority class
          */
-        static const int QUEUEPRIORITY = 14;
+        static const int QUEUEPRIORITY = 15;
 
         /**
          * \brief Constant for QueueStatus class
          */
-        static const int QUEUESTATUS = 15;
+        static const int QUEUESTATUS = 16;
 
         /**
          * \brief Constant for SubmitOptions class
          */
-        static const int SUBMITOPTIONS = 16;
+        static const int SUBMITOPTIONS = 17;
 
         /**
          * \brief Constant for Work class
          */
-        static const int WORK = 17;
+        static const int WORK = 18;
 
         /**
          * \brief Constant for JOB__SESSIONID feature
@@ -693,6 +698,51 @@ namespace TMS_Data
          */
         static const int WORK__DUEDATE = 110;
 
+        /**
+         * \brief Constant for ADDWORKOPTIONS__APPLICATIONID feature
+         */
+        static const int ADDWORKOPTIONS__APPLICATIONID = 111;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__SUBJECT feature
+         */
+        static const int ADDWORKOPTIONS__SUBJECT = 112;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__PRIORITY feature
+         */
+        static const int ADDWORKOPTIONS__PRIORITY = 113;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__OWNER feature
+         */
+        static const int ADDWORKOPTIONS__OWNER = 114;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__ESTIMATEDHOUR feature
+         */
+        static const int ADDWORKOPTIONS__ESTIMATEDHOUR = 115;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__DESCRIPTION feature
+         */
+        static const int ADDWORKOPTIONS__DESCRIPTION = 116;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__PROJECTID feature
+         */
+        static const int ADDWORKOPTIONS__PROJECTID = 117;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__MACHINEID feature
+         */
+        static const int ADDWORKOPTIONS__MACHINEID = 118;
+
+        /**
+         * \brief Constant for ADDWORKOPTIONS__NBCPU feature
+         */
+        static const int ADDWORKOPTIONS__NBCPU = 119;
+
         // EClassifiers methods
 
         /**
@@ -802,6 +852,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getWork();
+
+        /**
+         * \brief Returns the reflective object for class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getAddWorkOptions();
 
         // EStructuralFeatures methods
 
@@ -1472,6 +1528,60 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getWork__dueDate();
 
+        /**
+         * \brief Returns the reflective object for feature applicationId of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__applicationId();
+
+        /**
+         * \brief Returns the reflective object for feature subject of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__subject();
+
+        /**
+         * \brief Returns the reflective object for feature priority of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__priority();
+
+        /**
+         * \brief Returns the reflective object for feature owner of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__owner();
+
+        /**
+         * \brief Returns the reflective object for feature estimatedHour of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__estimatedHour();
+
+        /**
+         * \brief Returns the reflective object for feature description of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__description();
+
+        /**
+         * \brief Returns the reflective object for feature projectId of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__projectId();
+
+        /**
+         * \brief Returns the reflective object for feature machineId of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__machineId();
+
+        /**
+         * \brief Returns the reflective object for feature nbCPU of class AddWorkOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getAddWorkOptions__nbCPU();
+
     protected:
 
         /**
@@ -1547,6 +1657,11 @@ namespace TMS_Data
          * \brief The instance for the class Work
          */
         ::ecore::EClass_ptr m_WorkEClass;
+
+        /**
+         * \brief The instance for the class AddWorkOptions
+         */
+        ::ecore::EClass_ptr m_AddWorkOptionsEClass;
 
         // EEnuminstances 
 
@@ -2134,6 +2249,51 @@ namespace TMS_Data
          * \brief The instance for the feature dueDate of class Work
          */
         ::ecore::EAttribute_ptr m_Work__dueDate;
+
+        /**
+         * \brief The instance for the feature applicationId of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__applicationId;
+
+        /**
+         * \brief The instance for the feature subject of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__subject;
+
+        /**
+         * \brief The instance for the feature priority of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__priority;
+
+        /**
+         * \brief The instance for the feature owner of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__owner;
+
+        /**
+         * \brief The instance for the feature estimatedHour of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__estimatedHour;
+
+        /**
+         * \brief The instance for the feature description of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__description;
+
+        /**
+         * \brief The instance for the feature projectId of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__projectId;
+
+        /**
+         * \brief The instance for the feature machineId of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__machineId;
+
+        /**
+         * \brief The instance for the feature nbCPU of class AddWorkOptions
+         */
+        ::ecore::EAttribute_ptr m_AddWorkOptions__nbCPU;
 
     };
 

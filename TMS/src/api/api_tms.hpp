@@ -44,7 +44,8 @@ namespace vishnu {
  */
   int
   addWork(const std::string& sessionKey,
-          Work& newWork)
+          Work& newWork,
+          const AddWorkOptions& options=AddWorkOptions())
     throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 

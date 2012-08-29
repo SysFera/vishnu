@@ -47,7 +47,7 @@ public:
   * \return raises an exception on error
   */
   int
-  add(int vishnuId);
+  add(int vishnuId, TMS_Data::AddWorkOptions*& op);
   /**
   * \brief Function to update a VISHNU work
   * \return raises an exception on error
@@ -100,6 +100,10 @@ private:
   * \brief The work data structure
   */
   TMS_Data::Work *mwork;
+  /**
+  * \brief The options data structure
+  */
+  TMS_Data::AddWorkOptions *mworkop;
   /**
   * \brief An object which encapsulates session data
   */

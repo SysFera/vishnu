@@ -6816,10 +6816,17 @@
               </row>
               <row>
                 <entry><para>work</para></entry>
-                <entry><para><link linkend="Job">Job</link></para></entry>
+                <entry><para><link linkend="Work">Work</link></para></entry>
                 <entry><para>The work to add</para></entry>
-                <entry><para>INOUT</para></entry>
+                <entry><para>OUT</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>option</para></entry>
+                <entry><para><link linkend="AddWorkOptions">AddWorkOptions</link></para></entry>
+                <entry><para>Options to add the work</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -6897,11 +6904,77 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addWork</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Job&amp; <parameter>work</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addWork</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Work&amp; <parameter>work</parameter></paramdef><paramdef>const AddWorkOptions&amp; <parameter>option = AddWorkOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
       <title>Data types definitions</title>
+      <para xml:id="AddWorkOptions"><emphasis role="bold">Class TMS::AddWorkOptions Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>applicationId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the machine on which the job has been submitted.</para></entry>
+            </row>
+            <row>
+              <entry><para>subject</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the name assigned to the work.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the work priority. </para></entry>
+            </row>
+            <row>
+              <entry><para>owner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job owner.</para></entry>
+            </row>
+            <row>
+              <entry><para>estimatedHour</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
+            </row>
+            <row>
+              <entry><para>description</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the textual description of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>projectId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>nbCPU</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The current status of the job.</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
       <para xml:id="Job"><emphasis role="bold">Class TMS::Job Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
@@ -7605,6 +7678,127 @@
               <entry><para>workId</para></entry>
               <entry><para>long</para></entry>
               <entry><para>Sets the identifier of the Work to which the job is related</para></entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+      <para xml:id="Work"><emphasis role="bold">Class TMS::Work Content</emphasis></para>
+      <informaltable>
+        <tgroup cols="3">
+          <colspec colwidth="4cm"/>
+          <colspec colwidth="3cm"/>
+          <colspec colwidth="8cm"/>
+          <colspec colwidth="2cm"/>
+          <thead>
+            <row>
+              <entry>Name
+</entry>
+              <entry>Type
+</entry>
+              <entry>Description
+</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>sessionId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>applicationId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the machine on which the job has been submitted.</para></entry>
+            </row>
+            <row>
+              <entry><para>subject</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the name assigned to the work.</para></entry>
+            </row>
+            <row>
+              <entry><para>priority</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the work priority. </para></entry>
+            </row>
+            <row>
+              <entry><para>status</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The current status of the work.</para></entry>
+            </row>
+            <row>
+              <entry><para>endDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Represents the execution end date of the job (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>owner</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Represents the job owner.</para></entry>
+            </row>
+            <row>
+              <entry><para>estimatedHour</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
+            </row>
+            <row>
+              <entry><para>doneRatio</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>Represents the job owner group name.</para></entry>
+            </row>
+            <row>
+              <entry><para>description</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the textual description of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>dateCreated</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>dateEnded</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>dateStarted</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>lastUpdated</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>workId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>projectId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>submitDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Date and time when job was submitted (unix timestamp)</para></entry>
+            </row>
+            <row>
+              <entry><para>machineId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Is the id of the session that contained the job submission command</para></entry>
+            </row>
+            <row>
+              <entry><para>nbCPU</para></entry>
+              <entry><para>int</para></entry>
+              <entry><para>The current status of the job.</para></entry>
+            </row>
+            <row>
+              <entry><para>dueDate</para></entry>
+              <entry><para>long</para></entry>
+              <entry><para>Is the maximum wall-clock time during which the job can run (in seconds)</para></entry>
             </row>
           </tbody>
         </tgroup>

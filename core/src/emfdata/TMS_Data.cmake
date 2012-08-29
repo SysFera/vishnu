@@ -53,6 +53,8 @@ set(TMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterionImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Work.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/WorkImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptionsImpl.cpp
    )
    
 set(TMS_Data_HEADERS
@@ -73,6 +75,7 @@ set(TMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Work.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data.hpp DESTINATION include/emf4cpp/)
