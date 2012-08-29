@@ -254,9 +254,9 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 		res += convertToString((ac->getCriterion())->getLoadType());
 	}
 
+
 	u    = msg.substr(separator.at(2)+1, msg.size()-separator.at(2));
 	TMS_Data::Job_ptr j = NULL;
-
 	//To parse the object serialized
 	if(!parseEmfObject(u, j)) {
 		throw SystemException(ERRCODE_INVMAPPER, "job: "+u);
@@ -266,6 +266,13 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 		res += " ";
 		res += u;
 	}
+
+	u = convertToString<>(ac->getWorkId());
+  if (ac->getWorkId() != 0){
+    res += " -w ";
+    res += u;
+  }
+
 	u = ac->getTextParams();
 	if (u.compare("")){
 		size_t lastPos = 0;
@@ -291,12 +298,6 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 		}
 		res += " -f ";
 		res += u.substr(lastPos, pos - lastPos);
-	}
-
-	u = ac->getWorkId();
-	if (u.compare("")){
-		res += " -w ";
-		res += u;
 	}
 
 	return res;
