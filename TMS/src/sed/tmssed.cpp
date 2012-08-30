@@ -36,8 +36,8 @@
  */
 int
 usage(char* cmd) {
-  std::cout << "\nUsage: " << cmd << " vishnu_config.cfg\n\n";
-  return 1;
+	std::cout << "\nUsage: " << cmd << " vishnu_config.cfg\n\n";
+	return 1;
 }
 
 /**
@@ -117,84 +117,84 @@ int main(int argc, char* argv[], char* envp[]) {
                 << "this server has not compiled with SGE library\n\n";
       exit(1);
 #endif
-      batchType = SGE;
-    } else {
-      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')\n\n";
-      exit(1);
-    }
-    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
-    if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
-      remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
-    }
-  } catch (UserException& e) {
-    std::cerr << "\n" << e.what() << "\n\n";
-    exit(1);
-  }catch (std::exception& e) {
-    std::cerr << "\n" << argv[0] << " : "<< e.what() << "\n\n";
-    exit(1);
-  }
+			batchType = SGE;
+		} else {
+			std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')\n\n";
+			exit(1);
+		}
+		config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
+		if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
+			remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
+		}
+	} catch (UserException& e) {
+		std::cerr << "\n" << e.what() << "\n\n";
+		exit(1);
+	}catch (std::exception& e) {
+		std::cerr << "\n" << argv[0] << " : "<< e.what() << "\n\n";
+		exit(1);
+	}
 
-  // Fork a child for UMS monitoring
-  pid_t pid;
-  pid_t ppid;
-  pid = fork();
+	// Fork a child for UMS monitoring
+	pid_t pid;
+	pid_t ppid;
+	pid = fork();
 
-  if (pid > 0) {
+	if (pid > 0) {
 
-    try {
-      if (0 == machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)) {
-        std::cerr << "\n" << LIST_JOBS_ON_MACHINES_KEYWORD
-                  << " is not authorized as machine identifier. "
-                  << "It is a TMS keyword.\n\n";
-        exit(1);
-      }
+		try {
+			if (0 == machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)) {
+				std::cerr << "\n" << LIST_JOBS_ON_MACHINES_KEYWORD
+						<< " is not authorized as machine identifier. "
+						<< "It is a TMS keyword.\n\n";
+				exit(1);
+			}
 
-      //Initialize the TMS Server
-      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, uriNamerSrv);
+			//Initialize the TMS Server
+			boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
+			res = server->init(vishnuId, dbConfig, machineId,
+					batchType, remoteBinDirectory, uriNamerSrv);
 
-      std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(TMSTYPE, config, cfg, ls);
+			std::vector<std::string> ls = server.get()->getServices();
+			registerSeD(TMSTYPE, config, cfg, ls);
 
-      UMS_Data::UMS_DataFactory_ptr ecoreFactory =
-        UMS_Data::UMS_DataFactory::_instance();
-      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-      machine->setMachineId(machineId);
+			UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+					UMS_Data::UMS_DataFactory::_instance();
+			UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+			machine->setMachineId(machineId);
 
 
-      if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD) != 0) {
-          MachineServer machineServer(machine);
-    	  machineServer.checkMachine();
-          delete machine;
-      }
+			if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD) != 0) {
+				MachineServer machineServer(machine);
+				machineServer.checkMachine();
+				delete machine;
+			}
 
-      // Initialize the DIET SeD
-      if (!res) {
-        ZMQServerStart(server, uri);
-        unregisterSeD(TMSTYPE, config);
-      } else {
-        std::cerr << "\nThere was a problem during services initialization\n\n";
-        exit(1);
-      }
-    } catch (VishnuException& e) {
-      std::cerr << e.what() << "\n";
-      exit(1);
-    }
+			// Initialize the DIET SeD
+			if (!res) {
+				ZMQServerStart(server, uri);
+				unregisterSeD(TMSTYPE, config);
+			} else {
+				std::cerr << "\nThere was a problem during services initialization\n\n";
+				exit(1);
+			}
+		} catch (VishnuException& e) {
+			std::cerr << e.what() << "\n";
+			exit(1);
+		}
 
-  }  else if (pid == 0) {
-    // Initialize the TMS Monitor (Opens a connection to the database)
-    MonitorTMS monitor(interval);
-    dbConfig.setDbPoolSize(1);
-    monitor.init(vishnuId, dbConfig, machineId, batchType);
-    ppid = getppid();
+	}  else if (pid == 0) {
+		// Initialize the TMS Monitor (Opens a connection to the database)
+		MonitorTMS monitor(interval);
+		dbConfig.setDbPoolSize(1);
+		monitor.init(vishnuId, dbConfig, machineId, batchType);
+		ppid = getppid();
 
-    while(kill(ppid,0) == 0) {
-      monitor.run();
-    }
-  } else {
-    std::cerr << "\nThere was a problem to initialize the server\n\n";
-    exit(1);
-  }
-  return res;
+		while(kill(ppid,0) == 0) {
+			monitor.run();
+		}
+	} else {
+		std::cerr << "\nThere was a problem to initialize the server\n\n";
+		exit(1);
+	}
+	return res;
 }

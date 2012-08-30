@@ -1,0 +1,14 @@
+# Configuration of the VISHNU UMS SeD
+dietConfigFile=@DIETSEDCONF@
+vishnuId=1
+databaseType=@TEST_DB_TYPE@
+databaseHost=@TEST_DB_HOST@
+databaseName=@TEST_DB_NAME@
+databaseUserName=@TEST_DB_LOGIN@
+databaseUserPassword=@TEST_DB_PASSWORD@
+batchSchedulerType=@TEST_BATCH_TYPE@
+vishnuMachineId=autom
+intervalMonitor=1
+uri=@TEST_ZMQ_TMS_SCHED_URI@
+uriNamerSub=@TEST_ZMQ_NAMER_URI_SUB@
+uriNamerSrv=@TEST_ZMQ_NAMER_URI_SRV@
