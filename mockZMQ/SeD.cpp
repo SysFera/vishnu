@@ -58,9 +58,11 @@ public:
       //Receive message from ZMQ
       zmq::message_t message(0);
       try {
+        sleep(2);
         socket.recv(&message, 0);
       } catch (zmq::error_t error) {
         std::cout << "E: " << error.what() << "\n";
+        continue;
       }
 
       std::string data = static_cast<const char *>(message.data());
