@@ -36,7 +36,7 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
 
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc("addWork", 2, 2, 4);
+  addProfile = diet_profile_alloc("addwork", 2, 2, 4);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;

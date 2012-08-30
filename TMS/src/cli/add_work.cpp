@@ -149,9 +149,10 @@ boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & die
 struct AddWorkFunc {
 
   TMS_Data::Work mnewWork;
+  TMS_Data::AddWorkOptions mnewWorkop;
 
-  AddWorkFunc(TMS_Data::Work work):
-    mnewWork(work)
+  AddWorkFunc(TMS_Data::Work work, TMS_Data::AddWorkOptions workop):
+    mnewWork(work), mnewWorkop(workop)
   {};
 
   int operator()(std::string sessionKey) {
@@ -171,18 +172,19 @@ int main (int ac, char* av[]){
 
   /********** EMF data ************/
   TMS_Data::Work newWork;
+  TMS_Data::AddWorkOptions newWorkop;
 
   /**************** Callback functions *************/
 
-  boost::function1<void,std::string> fapp(boost::bind(&TMS_Data::Work::setApplicationId,boost::ref(newWork),_1));
-  boost::function1<void,std::string> fsub( boost::bind(&TMS_Data::Work::setSubject,boost::ref(newWork),_1));
-  boost::function1<void,int> fpri( boost::bind(&TMS_Data::Work::setPriority,boost::ref(newWork),_1));
-  boost::function1<void,std::string> fown( boost::bind(&TMS_Data::Work::setOwner,boost::ref(newWork),_1));
-  boost::function1<void,int> fest( boost::bind(&TMS_Data::Work::setEstimatedHour,boost::ref(newWork),_1));
-  boost::function1<void,std::string> fdesc( boost::bind(&TMS_Data::Work::setDescription,boost::ref(newWork),_1));
-  boost::function1<void,std::string> fpro( boost::bind(&TMS_Data::Work::setProjectId,boost::ref(newWork),_1));
-  boost::function1<void,std::string> fmac( boost::bind(&TMS_Data::Work::setMachineId,boost::ref(newWork),_1));
-  boost::function1<void,int> fcpu( boost::bind(&TMS_Data::Work::setNbCPU,boost::ref(newWork),_1));
+  boost::function1<void,std::string> fapp(boost::bind(&TMS_Data::AddWorkOptions::setApplicationId,boost::ref(newWorkop),_1));
+  boost::function1<void,std::string> fsub( boost::bind(&TMS_Data::AddWorkOptions::setSubject,boost::ref(newWorkop),_1));
+  boost::function1<void,int> fpri( boost::bind(&TMS_Data::AddWorkOptions::setPriority,boost::ref(newWorkop),_1));
+  boost::function1<void,std::string> fown( boost::bind(&TMS_Data::AddWorkOptions::setOwner,boost::ref(newWorkop),_1));
+  boost::function1<void,int> fest( boost::bind(&TMS_Data::AddWorkOptions::setEstimatedHour,boost::ref(newWorkop),_1));
+  boost::function1<void,std::string> fdesc( boost::bind(&TMS_Data::AddWorkOptions::setDescription,boost::ref(newWorkop),_1));
+  boost::function1<void,std::string> fpro( boost::bind(&TMS_Data::AddWorkOptions::setProjectId,boost::ref(newWorkop),_1));
+  boost::function1<void,std::string> fmac( boost::bind(&TMS_Data::AddWorkOptions::setMachineId,boost::ref(newWorkop),_1));
+  boost::function1<void,int> fcpu( boost::bind(&TMS_Data::AddWorkOptions::setNbCPU,boost::ref(newWorkop),_1));
 
   boost::shared_ptr<Options> opt= makeWorkOptions(av[0], dietConfig, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
 
@@ -203,7 +205,7 @@ int main (int ac, char* av[]){
     return 0;
   }
 
-  AddWorkFunc apiFunc(newWork);
+  AddWorkFunc apiFunc(newWork, newWorkop);
   return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }// end of main
