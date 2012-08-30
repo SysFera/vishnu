@@ -73,16 +73,18 @@ public:
 
 
       // Deserialize and call UMS Method
-      boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-      server_->call(profile.get());
+      if (data.size() != 0) {
+        boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+        server_->call(profile.get());
 
-      // Send reply back to client
-      std::string resultSerialized = my_serialize(profile.get());
+        // Send reply back to client
+        std::string resultSerialized = my_serialize(profile.get());
 
-      zmq::message_t reply(resultSerialized.length()+1);
-      memcpy(reply.data(), resultSerialized.c_str(),
-             resultSerialized.length()+1);
-      socket.send(reply);
+        zmq::message_t reply(resultSerialized.length());
+        memcpy(reply.data(), resultSerialized.c_str(),
+              resultSerialized.length());
+        socket.send(reply);
+      }
     }
   }
 
