@@ -170,7 +170,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, defaultBatchConfig);
+                         batchType, remoteBinDirectory, defaultBatchConfig, uriNamerSrv);
 
       std::vector<std::string> ls = server.get()->getServices();
       registerSeD(TMSTYPE, config, cfg, ls);
