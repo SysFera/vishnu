@@ -34,7 +34,7 @@ static const char* SERVICES[NB_SRV] = {
   "jobOutputGetCompletedJobs_",
   "getListOfJobs_all",
   "jobSubmit_autom",
-  "addWork"
+  "addwork"
 };
 
 /**
