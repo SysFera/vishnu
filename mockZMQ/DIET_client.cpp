@@ -349,7 +349,7 @@ my_deserialize(const std::string& prof) {
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
 
-  if (!vecString.empty()) {
+  if (!vecString.empty() && vecString.at(0).compare("") != 0) {
     res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
     res->name = strdup((it++)->c_str());
