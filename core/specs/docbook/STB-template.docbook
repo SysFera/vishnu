@@ -87,6 +87,14 @@
               <para> Prise en compte du support de Grid Engine.</para>
             </revdescription>
           </revision>
+	  <revision>
+            <revnumber>10</revnumber>
+            <date>31/08/2012</date>
+            <authorinitials>SysFera</authorinitials>
+            <revdescription>
+              <para> Support SLURM 2.3 et 24.</para>
+            </revdescription>
+          </revision>
 	  
         </revhistory>
     </info>

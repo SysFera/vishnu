@@ -218,9 +218,14 @@ endif (ll)
 if (slurm)
   string (COMPARE EQUAL ${batch_version_tmp} "2_2" version)
   string (COMPARE EQUAL ${batch_version_tmp} "2_3" version2)
-  if (NOT (version OR version2) )
+  string (COMPARE EQUAL ${batch_version_tmp} "2_4" version3)
+# Slurm 2.4 compile with 2.3 implementation
+  if (version3)
+    set(batch_version_tmp "2_3")
+  endif()
+  if (NOT (version OR version2 OR version3) )
     message (FATAL_ERROR "Invalid SLURM version, supported are:
-      2.2 or 2.3")
+      2.2 or 2.3 or 2.4")
   endif()
 
   add_definitions(-DHAVE_SLURM_${batch_version_tmp})
