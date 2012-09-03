@@ -1,12 +1,8 @@
 #include "Server.hpp"
 #include "Annuary.hpp"
-#include "Message.hpp"
-//#include "Handler.hpp"
-//#include "HandlerFactory.hpp"
-//#include "TreatmentData.hpp"
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
-
+#include "DIET_client.h"
 #include <boost/thread.hpp>
 
 #define SEPARATOR "#"
