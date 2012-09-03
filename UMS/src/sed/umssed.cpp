@@ -13,10 +13,7 @@
 //For ZMQ
 #include "zmq.hpp"
 #include "DIET_client.h"
-#include "Handler.hpp"
-#include "BasicHandler.hpp"
 #include "Server.hpp"
-#include "Message.hpp"
 
 using namespace vishnu;
 
