@@ -487,6 +487,10 @@ if (BUILD_TESTING)
 endif (BUILD_TESTING)
 
 if (ENABLE_PYTHON OR ENABLE_JAVA)
+  set (COMPILE_UMS 1 )
+  set (COMPILE_FMS 1 )
+  set (COMPILE_TMS 1 )
+  set (COMPILE_IMS 1 )
   add_subdirectory(swigAPI)
 endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
