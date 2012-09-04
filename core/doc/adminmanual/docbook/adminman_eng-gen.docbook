@@ -363,25 +363,27 @@
           <para>Dependency for all the modules VISHNU:</para>
           <itemizedlist>
             <listitem>
-              <para>GCC version 4.4.3 minimum</para>
+              <para>GCC: Version 4.4.3 or higher.</para>
             </listitem>
             <listitem>
-              <para>CMAKE version 2.8 minimum with DIET 2.8</para>
+              <para>CMAKE: Version 2.8 or higher.</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.46.1 with DIET 2.8 or later. The necessaries libs are: program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
+              <para>BOOST: Version 1.46.1 or higher. At least the following modules <emphasis>program_options, 
+              date_time, thread, filesystem, system, unit_test_framework, serialization, random</emphasis> and 
+              <emphasis>regex</emphasis> should be installed.</para>
             </listitem>
             <listitem>
-              <para>OMNIORB version 4.1.4</para>
+              <para>OMNIORB: Version or 4.1.4 or higher.</para>
             </listitem>
             <listitem>
-              <para>GLIBC version minimum 2.7 for encryption support with libcrypt</para>
+              <para>GLIBC: Version 2.7 or higher.</para>
             </listitem>
             <listitem>
-              <para>SSH version minimum openSSH 4.2</para>
+              <para>OpenSSH: Version 4.2 or higher.</para>
             </listitem>
             <listitem>
-              <para>DIET version 2.8 + the associated log service</para>
+              <para>DIET: Version 2.8 with LOG SERVICE enabled.</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -389,27 +391,27 @@
           <para>Optional dependencies for UMS:</para>
           <itemizedlist>
             <listitem>
-              <para>LDAP: OpenLDAP 2.4</para>
+              <para>OpenLDAP: Version 2.4 or higher.</para>
             </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>Dependencies for TMS:</para>
+          <para>According to the underlying TMS Bacth Scheduler, you may need to install one of the following API:</para>
           <itemizedlist>
             <listitem>
-              <para>Torque API v2.3.6</para>
+              <para>Torque API: Tested with the version 2.3.6.</para>
             </listitem>
             <listitem>
-              <para>or IBM LoadLeveler API 3.5.1.14</para>
+              <para>IBM LoadLeveler API: Tested with the version 3.5.1.14</para>
             </listitem>
             <listitem>
-              <para>or SLURM API v2.2.1</para>
+              <para>SLURM API: Tested with the versions v2.2.x, 2.3.x and 2.4.x.</para>
             </listitem>
             <listitem>
-              <para>or LSF API v7.0.6.134609</para>
+              <para>LSF API: Tested with the version v7.0.6.134609.</para>
             </listitem>
             <listitem>
-              <para>or Grid Engine API 2011.11</para>
+              <para>Grid Engine API: Tested with the version 2011.11.</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -417,13 +419,13 @@
           <para>Optional dependency:</para>
           <itemizedlist>
             <listitem>
-              <para>SWIG 1.3.40 (SWIG 2 is not compatible)</para>
+              <para>SWIG: 1.3.40. WARNING: The version 2 is not supported.</para>
             </listitem>
             <listitem>
-              <para>JAVA SDK version 1.6</para>
+              <para>JAVA SDK: Version 1.6</para>
             </listitem>
             <listitem>
-              <para>Python version 2.x x>=5</para>
+              <para>Python: Version 2.x, x >= 5.</para>
             </listitem>
             <listitem>
               <para>Database (one is mandatory), only on the server machines, can choose: </para>
@@ -922,10 +924,17 @@
                 <para> 'databaseConnectionsNb=5': The number of DB connexions that can be opened on the DB. By default it is 10.</para>
               </listitem>
               <listitem>
-                <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py': The script used to send mails. It is installed with the UMS module in the sbin directory.</para>
+                <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py': The script used to send mails. It is installed with the UMS module 
+		in the sbin directory.</para>
               </listitem>
               <listitem>
                 <para>'authenticationType=LDAP': Use only LDAP to authentify the users (see LDAP for the 4 values available).</para>
+              </listitem>
+              <listitem>
+                <para>'vishnuMachineId=machine_1' : Optionnal, this parameter specifies the identifier of the machine related to the SeD.</para>
+                <para><emphasis role="bold">IMPORTANT: </emphasis>During the first initialialization, i.e. when there is not yet a machine 
+                registered into the system, this parameter must be leave empty. Indeed, when set, its value should correspond to a VISHNU 
+                machine, otherwise the SeD will fail.</para>
               </listitem>
             </itemizedlist>
           </para>
@@ -5605,7 +5614,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listuser=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7997,7 +8006,7 @@ $NAME: The name of the work</para>
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8179,7 +8188,7 @@ $NAME: The name of the work</para>
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
