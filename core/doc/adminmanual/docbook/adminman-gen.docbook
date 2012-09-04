@@ -348,35 +348,51 @@
     <title>Installation à partir des sources</title>
     <section>
       <title>Objectifs</title>
-      <para> Ce chapitre va présenter comment installer VISHNU à partir des sources. Il expliquera comment installer les serveurs et/ou les clients (l'installation d'un serveur implique l'installation du client associé). Le module UMS est nécessaire pour tout les autres modules, sinon n'importe quel module peut être installé sur une machine donnée sans dépendance des autres, et cela n'empêche pas d'utiliser les services même si les serveurs sont sur des machines différentes. Toutefois, pour que IMS puisse faire du délestage sur une machine, il faut que les modules concernés (TMS et/ou FMS) par le délestage soient installés avec IMS sur la machine en question. </para>
+      <para> Ce chapitre présentera comment installer VISHNU à partir des sources.</para>
+      <para>Nous décrirons comment installer et configurer la partie serveur et la partie client. 
+      L'installation de la partie client est indépendante de la partie serveur. Mais, à l'inverse, 
+      l'installation de la partie serveur nécessite l'installation de la partie client. 
+      Par ailleurs, il faut noter que le module UMS est requis pour faire fonctionner les modules FMS, IMS et TMS. 
+      Même si ces derniers peuvent être installés sur des machines indépendantes. Toutefois, pour qu'IMS puisse gérer 
+      le délestage, les différents modules doivent être installés sur la même machine.
+      </para>
     </section>
     <section>
       <title>Prérequis</title>
-      <para>Les logiciels suivants doivent être installés sur le système, avec les fichiers de développement (paquets -dev):</para>
+      <para>La compilation des sources de Vishnu dépend d'un ensemble de bibliothèques présentées ci-dessous.
+      Sur la plupart des distributions GNU/Linux tels que Debian, Ubuntu, Redhat, Fedora ou SuSE Linux, ces bibliothèques peuvent 
+      être facilement installées à partir du gestionnaire de paquets (apt-get, yum ou zypper). Vous pouvez également les installer
+      à partir des sources téléchargeables sur leur site respectif. 
+      </para>
       <itemizedlist>
         <listitem>
-          <para>Dépendances requises pour tous les modules VISHNU:</para>
+          <para>Dépendances requises:</para>
           <itemizedlist>
             <listitem>
-              <para>GCC version 4.4.3 minimum</para>
+              <para>GCC : Version 4.4.3 ou ultérieure.</para>
             </listitem>
             <listitem>
-              <para>CMAKE version 2.8 minimum avec DIET 2.8</para>
+              <para>CMAKE : Version 2.8 ou ultérieure.</para>
             </listitem>
             <listitem>
-              <para>BOOST version 1.46.1 avec DIET 2.8 ou supérieur. Les librairies de boost nécessaires sont : program_options, date_time, thread, filesystem, system, unit_test_framework, serialization, random et regex </para>
+              <para>BOOST : Version 1.46.1 ou ultérieure. Au 
+              moins les modules <emphasis>program_options</emphasis>, <emphasis>date_time, thread, filesystem, 
+              system, unit_test_framework, serialization, random</emphasis> et <emphasis>regex</emphasis> doivent 
+              être installés
+              </para>
             </listitem>
             <listitem>
-              <para>OMNIORB version 4.1.4</para>
+              <para>OMNIORB : Version 4.1.4 ou ultérieure.</para>
             </listitem>
             <listitem>
-              <para> GLIBC version minimum 2.7 pour un support natif du cryptage (libcrypt) </para>
+              <para> GLIBC : Version 2.7 ou ultérieure.</para>
             </listitem>
             <listitem>
-              <para>SSH version minimum openSSH 4.2</para>
+              <para>openSSH : Version 4.2 ou ultérieure.</para>
             </listitem>
             <listitem>
-              <para>DIET version 2.8 + le module log service associé</para>
+              <para>DIET : version 2.8 ou ultérieure. Le module 
+              <emphasis>LOG SERVICE</emphasis> doit être activé.</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -384,27 +400,27 @@
           <para>Dépendances optionelles pour le module UMS:</para>
           <itemizedlist>
             <listitem>
-              <para>LDAP: OpenLDAP 2.4</para>
+              <para>OpenLDAP : Version 2.4</para>
             </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
-          <para>Dépendances requises pour le module TMS:</para>
+          <para>En fonction du Batch Scheduler sous-jacent à TMS, vous devez installer les APIs correspondantes :</para>
           <itemizedlist>
             <listitem>
-              <para>Torque API v2.3.6</para>
+              <para>Torque API : Version 2.3.6.</para>
             </listitem>
             <listitem>
-              <para>ou IBM LoadLeveler API 3.5.1.14</para>
+              <para>IBM LoadLeveler API : Version 3.5.1.14</para>
             </listitem>
             <listitem>
-              <para>ou SLURM API v2.2.1</para>
+              <para>SLURM API : Versions 2.2.x, 2.3.x ou 2.4.x. Non testé avec les versions inférieures ou supérieures.</para>
             </listitem>
             <listitem>
-              <para>ou LSF API v7.0.6.134609</para>
+              <para>LSF API : Version 7.0.6.134609</para>
             </listitem>
             <listitem>
-              <para>ou Grid Engine API 2011.11</para>
+              <para>Grid Engine API : Version 2011.11</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -412,22 +428,22 @@
           <para>Dépendances optionnelles:</para>
           <itemizedlist>
             <listitem>
-              <para>SWIG 1.3.40 (SWIG 2 n'est pas compatible)</para>
+              <para>SWIG : Version 1.3.40 (ATTENTION : la version 2 de SWIG n'est pas supporté).</para>
             </listitem>
             <listitem>
-              <para>JAVA SDK version 1.6</para>
+              <para>JAVA SDK : Version 1.6.</para>
             </listitem>
             <listitem>
-              <para>Python version 2.x x>=5</para>
+              <para>Python : Version 2.x, x>=5.</para>
             </listitem>
             <listitem>
               <para>Base de données, à mettre sur les machines avec des serveurs, au choix : </para>
               <itemizedlist>
                 <listitem>
-                  <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+                  <para>PGSQL-API (api PostGreSQL) : Version 8.0 minimum.</para>
                 </listitem>
                 <listitem>
-                  <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+                  <para>MYSQL-API (api MySQL) : Version 5.1 minimum.</para>
                 </listitem>
               </itemizedlist>
             </listitem>
@@ -885,7 +901,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
           </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à :
+          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à :
             <itemizedlist>
               <listitem>
                 <para>
@@ -934,6 +950,12 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
               </listitem>
               <listitem>
                 <para>'authenticationType=LDAP' : Utilise uniquement LDAP pour authentifier un utilisateur.</para>
+              </listitem>
+              <listitem>
+                <para>'vishnuMachineId=machine_1' : Optionnel, ce paramètre indique l'identifiant de la machine associée au SeD.</para>
+                <para><emphasis role="bold">IMPORTANT :</emphasis> Lors de la première initialialisation, c'est-à-dire lorsqu'il n'y a pas 
+                encore de machine créée dans le système, vous devez laisser ce paramètre vide. 
+                En effet, lorsque définie, sa valeur doit correspondre à une machine VISHNU, sinon le démarrage du SeD échoue.</para>
               </listitem>
             </itemizedlist>
           </para>
@@ -5552,7 +5574,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, listuser=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7944,7 +7966,7 @@ $NAME: The name of the work</para>
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8126,7 +8148,7 @@ $NAME: The name of the work</para>
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
