@@ -34,6 +34,7 @@
 #include "ListQueuesServer.hpp"
 #include "ListProgressServer.hpp"
 #include "JobOutputServer.hpp"
+#include "WorkServer.hpp"
 
 #include "internalApi.hpp"
 

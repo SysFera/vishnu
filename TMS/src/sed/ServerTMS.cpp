@@ -176,29 +176,29 @@ void
 ServerTMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
-	functionPtr = solveSubmitJob;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[0])+"@"+mid,functionPtr));
-	functionPtr = solveCancelJob;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[1])+"@"+mid,functionPtr));
-	functionPtr = solveJobInfo;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[2])+"@"+mid,functionPtr));
-	functionPtr = solveGetListOfJobs;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[3])+"@"+mid,functionPtr));
-	functionPtr = solveGetListOfJobsProgression;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[4])+"@"+mid,functionPtr));
-	functionPtr = solveListOfQueues;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[5])+"@"+mid,functionPtr));
-	functionPtr = solveJobOutPutGetResult;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[6])+"@"+mid,functionPtr));
-	functionPtr = solveJobOutPutGetCompletedJobs;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[7])+"@"+mid,functionPtr));
-	// Remove ?
-	functionPtr = solveGetListOfJobs;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[8]),functionPtr));
-	functionPtr = solveSubmitJob;
-	mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
-    functionPtr = solveAddWork;
-    mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
+  functionPtr = solveSubmitJob;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[0])+"@"+mid,functionPtr));
+  functionPtr = solveCancelJob;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[1])+"@"+mid,functionPtr));
+  functionPtr = solveJobInfo;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[2])+"@"+mid,functionPtr));
+  functionPtr = solveGetListOfJobs;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[3])+"@"+mid,functionPtr));
+  functionPtr = solveGetListOfJobsProgression;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[4])+"@"+mid,functionPtr));
+  functionPtr = solveListOfQueues;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[5])+"@"+mid,functionPtr));
+  functionPtr = solveJobOutPutGetResult;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[6])+"@"+mid,functionPtr));
+  functionPtr = solveJobOutPutGetCompletedJobs;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[7])+"@"+mid,functionPtr));
+  // Remove ?
+  functionPtr = solveGetListOfJobs;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[8]),functionPtr));
+  functionPtr = solveSubmitJob;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
+  functionPtr = solveAddWork;
+  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
 }
 
 
