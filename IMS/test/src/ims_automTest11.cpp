@@ -59,7 +59,7 @@ BOOST_FIXTURE_TEST_SUITE(load_schedding_soft, IMSSeDFixture)
 //Test category 2
 //IA4.1-B : Soft load schedding normal call
 //Soft load schedding: normal call
-BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call) 
+BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA4.1-B: Soft load schedding normal call");
@@ -77,6 +77,7 @@ BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
   //ListJobs
   ListJobs lsJobs;
   ListJobsOptions lsOptions;
+  IMS_Data::SupervisorOp supop;
 
   try {
     //To submit 2 jobs
@@ -87,7 +88,7 @@ BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
     //To check that the jobs are submitted
     BOOST_REQUIRE(lsJobs.getJobs().size() != 0);
     //Launch load schedding SOFT
-    BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType), 0);
+    BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType, supop), 0);
     lsJobs.getJobs().clear();
     //time to get the correct update of the Batch scheduler
     sleep(5);
