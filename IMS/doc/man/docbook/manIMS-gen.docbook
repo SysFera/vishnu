@@ -1615,6 +1615,89 @@ The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (
         <para>vishnu_restart -v /tmp/ums.cfg -t 1 machine_1</para>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>vishnu_define_work_identifier</refentrytitle>
+        <manvolnum>1</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>vishnu_define_work_identifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the work</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <cmdsynopsis><command>vishnu_define_work_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the work. Once the format is defined, each time a work is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'W' symb to remind it is a file transfer id
+$NAME: The name of the work</para>
+      </refsect1>
+      <refsect1 id="options">
+        <title>OPTIONS</title>
+        <variablelist>
+          <varlistentry>
+            <term><option>-h <replaceable>help</replaceable></option></term>
+            <listitem>
+              <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="environment">
+        <title>ENVIRONMENT</title>
+        <variablelist>
+          <varlistentry>
+            <term><envar>VISHNU_CONFIG_FILE</envar></term>
+            <listitem>
+              <para>Contains the path to the local configuration file for VISHNU.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="diagnostics">
+        <title>DIAGNOSTICS</title>
+        <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;There is no open session in this terminal&quot; [13]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Missing parameters&quot; [14]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Vishnu initialization failed&quot; [15]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;Undefined error&quot; [16]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="example">
+        <title>EXAMPLE</title>
+        <para>To define the format to W_$CPT:</para>
+        <para>vishnu_define_work_identifier W_\$CPT</para>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>IMS C++ API Reference</title>
@@ -2663,6 +2746,62 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         </variablelist>
       </refsect1>
     </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>defineWorkIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>defineWorkIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the work</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::defineWorkIdentifier</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the work. Once the format is defined, each time a work is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'W' symb to remind it is a file transfer id
+$NAME: The name of the work</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>&quot;The database generated an error&quot; [2]</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>&quot;If a parameter is invalid&quot; [10]</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
   </reference>
   <reference>
     <title>IMS Python API Reference</title>
@@ -2764,7 +2903,7 @@ The access to other user's sessions is only permitted to administrators.</para>
         <refpurpose>displays the current values of system metrics</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValue</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, metricValue=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2851,7 +2990,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>displays the history of values of a system metric</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValues</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, metricValues=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2935,7 +3074,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3117,7 +3256,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3798,7 +3937,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To get the system info on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo <parameter>res</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, res=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3901,6 +4040,74 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <term><emphasis>options</emphasis></term>
             <listitem>
               <para>Input argument. The option for the restart.</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="returned objects">
+        <title>RETURNED OBJECTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>errorCode (integer)</emphasis></term>
+            <listitem>
+              <para>Output parameter. Contains 0 on success and the error code on failure.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry/>
+        </variablelist>
+      </refsect1>
+      <refsect1 id="exceptions">
+        <title>EXCEPTIONS</title>
+        <para>The following exceptions may be thrown: </para>
+        <variablelist>
+          <varlistentry>
+            <term>SystemException(&quot;The database generated an error&quot; [2])</term>
+            <listitem/>
+          </varlistentry>
+          <varlistentry>
+            <term>UserException(&quot;If a parameter is invalid&quot; [10])</term>
+            <listitem/>
+          </varlistentry>
+        </variablelist>
+      </refsect1>
+    </refentry>
+    <refentry>
+      <refmeta>
+        <refentrytitle>VISHNU.defineWorkIdentifier</refentrytitle>
+        <manvolnum>3</manvolnum>
+      </refmeta>
+      <refnamediv>
+        <refname>VISHNU.defineWorkIdentifier</refname>
+        <refpurpose>defines the shape of the identifiers automatically generated for the work</refpurpose>
+      </refnamediv>
+      <refsynopsisdiv>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.defineWorkIdentifier</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>format</parameter></paramdef></funcprototype></funcsynopsis>
+      </refsynopsisdiv>
+      <refsect1 id="description">
+        <title>DESCRIPTION</title>
+        <para>This function allows an administrator to define the format of the identifier that will be automatically generated for the work. Once the format is defined, each time a work is added, the format will be used to define its identifier.
+The format can contain various variables, a variable is preceded by the '$' symbol. Moreover, the counter variable '$CPT' MUST be present in the format, otherwise it will be rejected.
+The available variables are: 
+$CPT: a counter
+$DAY: The day the file transfer is done
+$MONTH: The month the file transfer is done
+$YEAR: The year the file transfer is done
+$TYPE: The 'W' symb to remind it is a file transfer id
+$NAME: The name of the work</para>
+      </refsect1>
+      <refsect1 id="arguments">
+        <title>ARGUMENTS</title>
+        <variablelist>
+          <varlistentry>
+            <term><emphasis>sessionKey</emphasis></term>
+            <listitem>
+              <para>Input argument. The session key.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>format</emphasis></term>
+            <listitem>
+              <para>Input argument. The new format to use.</para>
             </listitem>
           </varlistentry>
         </variablelist>

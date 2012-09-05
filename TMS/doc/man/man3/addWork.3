@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: addWork
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
-.\"      Date: August 2012
+.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\"      Date: September 2012
 .\"    Manual: TMS C++ API Reference
 .\"    Source: VISHNU 2.0
 .\"  Language: English
 .\"
-.TH "ADDWORK" "3" "August 2012" "VISHNU 2.0" "TMS C++ API Reference"
+.TH "ADDWORK" "3" "September 2012" "VISHNU 2.0" "TMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 addWork \- Allows to create a work consisting in running jobs\&.
 .SH "SYNOPSIS"
 .HP \w'int\ vishnu::addWork('u
-.BI "int vishnu::addWork(const\ string&\ " "sessionKey" ", Job&\ " "work" ");"
+.BI "int vishnu::addWork(const\ string&\ " "sessionKey" ", Work&\ " "work" ", const\ AddWorkOptions&\ " "option\ =\ AddWorkOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command adds a work in vishnu
@@ -44,7 +44,12 @@ Input argument\&. The session key\&.
 .PP
 \fIwork\fR
 .RS 4
-Input/Output argument\&. The work to add\&.
+Output argument\&. The work to add\&.
+.RE
+.PP
+\fIoption\fR
+.RS 4
+Input argument\&. Options to add the work\&.
 .RE
 .SH "EXCEPTIONS"
 .PP

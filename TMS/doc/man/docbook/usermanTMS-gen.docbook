@@ -15,7 +15,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>August 2012</date>
+    <date>September 2012</date>
     <copyright>
       <year>2012</year>
       <holder>SysFera SA</holder>
@@ -1244,7 +1244,16 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
         <refpurpose>Allows to create a work consisting in running jobs.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <cmdsynopsis><command>vishnu_add_work</command><arg choice="opt"><option>-h</option></arg></cmdsynopsis>
+        <cmdsynopsis><command>vishnu_add_work</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-a <replaceable>applicationId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>subject</replaceable></option></arg><arg
+              choice="opt"><option>-l <replaceable>priority</replaceable></option></arg><arg
+              choice="opt"><option>-u <replaceable>owner</replaceable></option></arg><arg
+              choice="opt"><option>-e <replaceable>estimatedHour</replaceable></option></arg><arg
+              choice="opt"><option>-d <replaceable>description</replaceable></option></arg><arg
+              choice="opt"><option>-p <replaceable>projectId</replaceable></option></arg><arg
+              choice="opt"><option>-m <replaceable>machineId</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>nbCPU</replaceable></option></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1257,6 +1266,60 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-a <replaceable>applicationId</replaceable></option></term>
+            <listitem>
+              <para>Is the id of the machine on which the job has been submitted..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>subject</replaceable></option></term>
+            <listitem>
+              <para>Represents the name assigned to the work..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-l <replaceable>priority</replaceable></option></term>
+            <listitem>
+              <para>Represents the work priority. .</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-u <replaceable>owner</replaceable></option></term>
+            <listitem>
+              <para>Represents the job owner..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-e <replaceable>estimatedHour</replaceable></option></term>
+            <listitem>
+              <para>Is the maximum wall-clock time during which the job can run (in seconds).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-d <replaceable>description</replaceable></option></term>
+            <listitem>
+              <para>Is the textual description of the job..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>projectId</replaceable></option></term>
+            <listitem>
+              <para>Is the id of the session that contained the job submission command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-m <replaceable>machineId</replaceable></option></term>
+            <listitem>
+              <para>Is the id of the session that contained the job submission command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>nbCPU</replaceable></option></term>
+            <listitem>
+              <para>The current status of the job..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2154,7 +2217,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to create a work consisting in running jobs.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addWork</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Job&amp; <parameter>work</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::addWork</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>Work&amp; <parameter>work</parameter></paramdef><paramdef>const AddWorkOptions&amp; <parameter>option = AddWorkOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2172,7 +2235,13 @@ If the machine identifier is equal to autom, the job will be automatically submi
           <varlistentry>
             <term><emphasis>work</emphasis></term>
             <listitem>
-              <para>Input/Output argument. The work to add.</para>
+              <para>Output argument. The work to add.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>option</emphasis></term>
+            <listitem>
+              <para>Input argument. Options to add the work.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3092,7 +3161,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>Allows to create a work consisting in running jobs.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addWork</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Job <parameter>work</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.addWork</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Work <parameter>work</parameter></paramdef><paramdef>AddWorkOptions <parameter>option = AddWorkOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3110,7 +3179,13 @@ If the machine identifier is equal to autom, the job will be automatically submi
           <varlistentry>
             <term><emphasis>work</emphasis></term>
             <listitem>
-              <para>Input/Output argument. The work to add.</para>
+              <para>Output argument. The work to add.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>option</emphasis></term>
+            <listitem>
+              <para>Input argument. Options to add the work.</para>
             </listitem>
           </varlistentry>
         </variablelist>
