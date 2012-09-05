@@ -1,6 +1,10 @@
+#include <boost/test/unit_test.hpp>
+
 #include <iostream>
 #include <vector>
 #include "Annuary.hpp"
+
+BOOST_AUTO_TEST_SUITE( test_suite )
 
 class TestAnnuary{
 public:
@@ -22,53 +26,40 @@ public:
     boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server(name, services, uri));
     Annuary ann(mservers);
     ann.add(name, services, uri);
-    if (ann.get("loup")->size() != 2){
-      std::cerr << "Failed add annuary " << std::endl;
-    }
-
+    BOOST_CHECK(ann.get("loup")->size() != 2);
   }
   void
   testRemove(){
     Annuary ann(mservers);
     ann.remove(name, uri);
-    if (ann.get("loup")->size() != 0){
-      std::cerr << "Failed remove annuary " << std::endl;
-    }
+    BOOST_CHECK(ann.get("loup")->size() != 0);
   }
 
   void
   testRemoveBadURI(){
     Annuary ann(mservers);
     ann.remove(name, uri+"1");
-    if (ann.get("loup")->size() == 0){
-      std::cerr << "Failed remove annuary bad uri " << std::endl;
-    }
+    BOOST_CHECK(ann.get("loup")->size() == 0);
   }
 
   void
   testRemoveBadName(){
     Annuary ann(mservers);
     ann.remove(name+"1", uri);
-    if (ann.get("loup")->size() == 0){
-      std::cerr << "Failed remove annuary bad name " << std::endl;
-    }
+    BOOST_CHECK(ann.get("loup")->size() == 0);
   }
 
   void
   testGet(){
     Annuary ann(mservers);
-    if (!ann.get("loup") ||
-        !ann.get("belette")){
-      std::cerr << "Failed get annuary " << std::endl;
-    }
+    BOOST_CHECK(!ann.get("loup") ||
+                !ann.get("belette"));
   }
 
   void
   testGetBad(){
     Annuary ann(mservers);
-    if (ann.get("bad")->size() != 0){
-      std::cerr << "Failed get annuary bad getter " << std::endl;
-    }
+    BOOST_CHECK(ann.get("bad")->size() != 0);
   }
 
 private:
@@ -78,13 +69,21 @@ private:
   std::vector<std::string> services;
 };
 
-int main(int argc, char** argv){
+
+
+BOOST_AUTO_TEST_CASE( my_test )
+{
+  BOOST_MESSAGE("Z1\n");
+
   TestAnnuary test;
   test.testAdd();
   test.testRemove();
+  BOOST_MESSAGE("Z4");
   test.testGet();
   test.testGetBad();
   test.testRemoveBadName();
   test.testRemoveBadURI();
-  return 0;
-}
+  BOOST_MESSAGE("ZE");
+} // boost auto test case
+
+BOOST_AUTO_TEST_SUITE_END()

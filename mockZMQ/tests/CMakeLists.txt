@@ -19,6 +19,7 @@ add_executable(testServer
   )
 target_link_libraries(testServer
   ${Boost_LIBRARIES}
+  fake_zmq
   zmq_helper
   vishnu-core
 )
@@ -29,6 +30,7 @@ add_executable(testAnnuary
   )
 target_link_libraries(testAnnuary
   ${Boost_LIBRARIES}
+  fake_zmq
   zmq_helper
   vishnu-core
 )
