@@ -6,8 +6,8 @@
    <info>
       <title> VISHNU - UMS - Tests report</title>
       <productname>VISHNU</productname>
-      <releaseinfo>1.3.0</releaseinfo>
-      <date>March 2012</date>
+      <releaseinfo>2.0.0 Beta</releaseinfo>
+      <date>September 2012</date>
     
     <author>
       <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
@@ -32,6 +32,15 @@
         <authorinitials>  SYSFERA SA</authorinitials>
         <revdescription>
           <para>First version</para>
+        </revdescription>
+      </revision>
+      
+      <revision>
+        <revnumber>1</revnumber>
+        <date>05/09/2012</date>
+        <authorinitials>  SYSFERA SA</authorinitials>
+        <revdescription>
+          <para>Added tests of versions compatibility between client and server</para>
         </revdescription>
       </revision>
 
@@ -1725,7 +1734,86 @@ same conditions as regards security.</para>
       </informaltable>
     </section>
     
-
+    <section>
+      <title> Tests for version management </title>
+      <para><emphasis role = "italic"> API commands: connect, reconnect, changePassword</emphasis></para>
+      
+      <para><emphasis role = "bold">Compatible versions </emphasis>: means couple of versions in which the major of the client and the server are the same or 
+      couple of versions in which the minor of the client's version is lower than server's version. 
+      </para>
+	   
+     <informaltable>
+        <tgroup cols="5">
+          <colspec colwidth="2.0cm"/>
+          <colspec colwidth="6cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="3.5cm"/>
+          <colspec colwidth="1.5cm"/>
+          <thead>
+            <row>
+              <entry>ID test</entry>
+              <entry>Description of the test cases</entry>
+              <entry>Output expected</entry>
+              <entry>Output gotten</entry>
+              <entry>Error</entry>
+            </row>
+          </thead>
+          <tbody>
+            
+	    <row>
+              <entry><para>Connect with compatible versions between client and server</para></entry>
+              <entry><para>Normal connection with compatible versions</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	   
+	    <row>
+              <entry><para>Reconnect with compatible versions between client and server</para></entry>
+              <entry><para>Normal reconnection with compatible versions</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>A session is opened</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    
+	    <row>
+              <entry><para>Change password of the user with compatible versions between client and server</para></entry>
+              <entry><para>Normal change of the user password with compatible versions</para></entry>
+              <entry><para>The password is changed</para></entry>
+              <entry><para>The password is changed</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    
+	    <row>
+              <entry><para>Connect with no compatible version between client and server</para></entry>
+              <entry><para>Normal connection with no compatible versions </para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	   
+	    <row>
+              <entry><para>Reconnect with compatible version between client and server</para></entry>
+              <entry><para>Normal reconnection with compatible no version</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    
+	    <row>
+              <entry><para>Change password of the user with no compatible version between client and server</para></entry>
+              <entry><para>Normal change of the user password with no compatible version</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>VishnuException</para></entry>
+              <entry><para>0</para></entry>
+            </row>
+	    
+ 
+          </tbody>
+        </tgroup>
+      </informaltable>
+    </section>
+    
   </chapter> <!-- end Functionnal Tests --> 
   
   <chapter>
