@@ -148,6 +148,7 @@ endif()
 
 if (COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)
+  set (COMPILE_FMS 1)
   string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
 endif(COMPILE_TMS)
 
@@ -320,7 +321,7 @@ set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
 
 # mock
-set(MOCK_INCLUDE_DIR 
+set(MOCK_INCLUDE_DIR
   ${VISHNU_SOURCE_DIR}/mockZMQ
 )
 
