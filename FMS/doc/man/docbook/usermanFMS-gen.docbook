@@ -7,7 +7,7 @@
     <author>
       <personname>
         <firstname/>
-        <surname>SysFera SAS</surname>
+        <surname>SysFera SA</surname>
       </personname>
       <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
       <address>
@@ -18,7 +18,7 @@
     <date>December 2011</date>
     <copyright>
       <year>2011</year>
-      <holder>SysFera SAS</holder>
+      <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
       <para>These manual pages are provided under the following conditions:</para>
@@ -103,15 +103,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -234,19 +226,11 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -361,19 +345,11 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -482,39 +458,15 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -603,39 +555,15 @@ values can be obtained using the vishnu_list_machine command)</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -725,39 +653,15 @@ The mode parameter is the same value as for the unix chmod command.</para>
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -854,39 +758,15 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -983,39 +863,15 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1105,39 +961,15 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1187,7 +1019,7 @@ values can be obtained using the vishnu_list_machine command).
       </refmeta>
       <refnamediv>
         <refname>vishnu_list_dir</refname>
-        <refpurpose>displays  the content of a remote directory. </refpurpose>
+        <refpurpose>displays  the content of a remote directory</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-h</option></arg><arg
@@ -1240,39 +1072,15 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1350,13 +1158,13 @@ i.e. a local copy cannot be handled by this command.
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the copy is recursive (case of directory) or not..</para>
+              <para>It specifies when the copy is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
-              <para>the command to use to perform file transfer..
+              <para>the command to use to perform file transfer.
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
@@ -1384,39 +1192,15 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1495,13 +1279,13 @@ The command listFileTransfers can be used to check the status of the transfer af
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the copy is recursive (case of directory) or not..</para>
+              <para>It specifies when the copy is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
-              <para>the command to use to perform file transfer..
+              <para>the command to use to perform file transfer.
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
@@ -1529,19 +1313,11 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1639,13 +1415,13 @@ i.e. a local move cannot be handled by this command.
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the copy is recursive (case of directory) or not..</para>
+              <para>It specifies when the copy is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
-              <para>the command to use to perform file transfer..
+              <para>the command to use to perform file transfer.
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
@@ -1673,39 +1449,15 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1784,13 +1536,13 @@ The command listFileTransfers can be used to check the status of the transfer af
           <varlistentry>
             <term><option>-r <replaceable>isRecursive</replaceable></option></term>
             <listitem>
-              <para>It specifies when the copy is recursive (case of directory) or not..</para>
+              <para>It specifies when the copy is recursive (case of directory) or not.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><option>-t <replaceable>trCommand</replaceable></option></term>
             <listitem>
-              <para>the command to use to perform file transfer..
+              <para>the command to use to perform file transfer.
 The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED).</para>
             </listitem>
           </varlistentry>
@@ -1818,39 +1570,15 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -1959,39 +1687,15 @@ The command listFileTransfers can be used to check the status of the transfer af
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2112,39 +1816,15 @@ The value must be an integer. Predefined values are: 0 (INPROGRESS), 1 (COMPLETE
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2238,39 +1918,15 @@ values can be obtained using the vishnu_list_machine command).
         <para>The following diagnostics may be issued on stderr and the command will return the code provided within brackets: </para>
         <variablelist>
           <varlistentry>
-            <term>&quot;Vishnu not available (Service bus failure)&quot; [1]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
             <term>&quot;Vishnu not available (Database error)&quot; [2]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;Internal Error: Undefined exception&quot; [9]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
             <term>&quot;Undefined configuration parameter&quot; [12]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;There is no open session in this terminal&quot; [13]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Missing parameters&quot; [14]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Vishnu initialization failed&quot; [15]</term>
-            <listitem/>
-          </varlistentry>
-          <varlistentry>
-            <term>&quot;Undefined error&quot; [16]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2340,13 +1996,13 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>Input argument. The session key..</para>
+              <para>Input argument. The session key.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>path</emphasis></term>
             <listitem>
-              <para>Input argument. The  file to create following the pattern  [host:]file path..</para>
+              <para>Input argument. The  file to create following the pattern  [host:]file path.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2444,7 +2100,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><emphasis>path</emphasis></term>
             <listitem>
-              <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+              <para>Input argument. The  directory to create following the pattern  [host:]directory path.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2472,7 +2128,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2572,7 +2228,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2666,7 +2322,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2766,7 +2422,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2839,7 +2495,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
           <varlistentry>
             <term><emphasis>mode</emphasis></term>
             <listitem>
-              <para>Input argument.  the access rigths of file/directory in octal system..</para>
+              <para>Input argument.  the access rigths of file/directory in octal system.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -2867,7 +2523,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -2974,7 +2630,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3081,7 +2737,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3182,7 +2838,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3231,7 +2887,7 @@ values can be obtained using the vishnu_list_machine command).
       </refmeta>
       <refnamediv>
         <refname>listDir</refname>
-        <refpurpose>displays  the content of a remote directory. </refpurpose>
+        <refpurpose>displays  the content of a remote directory</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>DirEntryList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
@@ -3261,7 +2917,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory..</para>
+              <para>Output argument. The content of the directory.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3289,7 +2945,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3398,7 +3054,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3514,7 +3170,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3623,7 +3279,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3739,7 +3395,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3833,7 +3489,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -3937,7 +3593,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4042,7 +3698,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>&quot;an option or a parameter provided is invalid for this service.&quot; [10]</term>
+            <term>&quot;an option or a parameter provided is invalid for this service&quot; [10]</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4111,13 +3767,13 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><emphasis>sessionKey</emphasis></term>
             <listitem>
-              <para>Input argument. The session key..</para>
+              <para>Input argument. The session key.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
             <term><emphasis>path</emphasis></term>
             <listitem>
-              <para>Input argument. The  file to create following the pattern  [host:]file path..</para>
+              <para>Input argument. The  file to create following the pattern  [host:]file path.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -4227,7 +3883,7 @@ values can be obtained using the vishnu_list_machine command)</para>
           <varlistentry>
             <term><emphasis>path</emphasis></term>
             <listitem>
-              <para>Input argument. The  directory to create following the pattern  [host:]directory path..</para>
+              <para>Input argument. The  directory to create following the pattern  [host:]directory path.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -4267,7 +3923,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4379,7 +4035,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4485,7 +4141,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4597,7 +4253,7 @@ values can be obtained using the vishnu_list_machine command)</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4670,7 +4326,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
           <varlistentry>
             <term><emphasis>mode</emphasis></term>
             <listitem>
-              <para>Input argument.  the access rigths of file/directory in octal system..</para>
+              <para>Input argument.  the access rigths of file/directory in octal system.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -4710,7 +4366,7 @@ The mode parameter is the same value as for the unix chmod command.</para>
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4834,7 +4490,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -4958,7 +4614,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5076,7 +4732,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5125,10 +4781,10 @@ values can be obtained using the vishnu_list_machine command).
       </refmeta>
       <refnamediv>
         <refname>VISHNU.listDir</refname>
-        <refpurpose>displays  the content of a remote directory. </refpurpose>
+        <refpurpose>displays  the content of a remote directory</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>DirEntryList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, dirContent=VISHNU.listDir</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5155,7 +4811,7 @@ values can be obtained using the vishnu_list_machine command).
           <varlistentry>
             <term><emphasis>dirContent</emphasis></term>
             <listitem>
-              <para>Output argument. The content of the directory..</para>
+              <para>Output argument. The content of the directory.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -5195,7 +4851,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5316,7 +4972,7 @@ i.e. a local copy cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5444,7 +5100,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5565,7 +5221,7 @@ i.e. a local move cannot be handled by this command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5693,7 +5349,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5799,7 +5455,7 @@ The command listFileTransfers can be used to check the status of the transfer af
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -5855,7 +5511,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileTransferList=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5915,7 +5571,7 @@ using a vishnu synchronous or asynchronous copy or move file command.
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
@@ -6032,7 +5688,7 @@ values can be obtained using the vishnu_list_machine command).
             <listitem/>
           </varlistentry>
           <varlistentry>
-            <term>UserException(&quot;an option or a parameter provided is invalid for this service.&quot; [10])</term>
+            <term>UserException(&quot;an option or a parameter provided is invalid for this service&quot; [10])</term>
             <listitem/>
           </varlistentry>
           <varlistentry>
