@@ -55,35 +55,22 @@ public:
     zmq::socket_t socket(*ctx_, ZMQ_REP);
     socket.connect("inproc://vishnu");
     while (true) {
-      //Receive message from ZMQ
-      zmq::message_t message(0);
+      std::string data = "";
       try {
-        sleep(2);
-        socket.recv(&message, 0);
+    	data = s_recv(socket);
       } catch (zmq::error_t error) {
         std::cout << "E: " << error.what() << "\n";
         continue;
       }
-
-      std::string data = static_cast<const char *>(message.data());
-      std::cerr << boost::str(
-        boost::format("ZMQ Worker: %|1$02| |"
-                      "recv: %2% | size: %3%\n")
-        % id_ % data % data.length());
-
+      std::cout << boost::str(boost::format("ZMQ Worker: %|1$02| |recv: %2% | size: %3%\n")% id_ % data % data.length());
 
       // Deserialize and call UMS Method
       if (data.size() != 0) {
         boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
         server_->call(profile.get());
-
         // Send reply back to client
         std::string resultSerialized = my_serialize(profile.get());
-
-        zmq::message_t reply(resultSerialized.length());
-        memcpy(reply.data(), resultSerialized.c_str(),
-              resultSerialized.length());
-        socket.send(reply);
+        s_send(socket, resultSerialized);
       }
     }
   }
