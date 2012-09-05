@@ -171,6 +171,14 @@
       
     <para>Add a section for the copy/move commands in FMS with the client out of the DNS. </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>17</revnumber>
+        <date>04/09/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      
+    <para>Add option -l on list job. </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
