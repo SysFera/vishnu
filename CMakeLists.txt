@@ -298,7 +298,7 @@ add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
 
 # mock
 set(MOCK_INCLUDE_DIR 
-${VISHNU_SOURCE_DIR}/mockZMQ
+  ${VISHNU_SOURCE_DIR}/mockZMQ
 )
 
 #Core
