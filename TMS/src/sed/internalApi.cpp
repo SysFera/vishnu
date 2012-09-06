@@ -120,13 +120,16 @@ solveSubmitJob(diet_profile_t* pb) {
 
 		char* defaultPath  = NULL ;
 		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
-		for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all file from the container
+		std::string userHome = UserServer(sessionServer).getUserAccountProperty(machineId, "home");
+		std::string inputDir = userHome+"/INPUT"+vishnu::createSuffixFromCurTime()+"/";
+		vishnu::createOutputDir(inputDir);
+		for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all files from the container
 			pos = fParamsVec[i].find("=") ;
 			if(pos == std::string::npos) continue ;
-			fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upload%%%%%%") ;
+			fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upl%%%%%%") ;
 			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
-			vishnu::boostMoveFile(std::string(defaultPath), "/tmp/", fPath.string());
-			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "") + fParamsVec[i].substr(0, pos) << "=/tmp/" << fPath.string() ;
+			vishnu::boostMoveFile(std::string(defaultPath), inputDir, fPath.string());
+			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string() ;
 			dagda_delete_data(fileContainer.elt_ids[i]);
 		}
 		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
