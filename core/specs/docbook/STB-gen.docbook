@@ -99,7 +99,7 @@
         <authorinitials>SysFera</authorinitials>
         <revdescription>
               
-            <para> Support SLURM 2.3 et 24.</para></revdescription>
+            <para> Support SLURM 2.3 et 2.4, new cmake version.</para></revdescription>
       </revision>
     </revhistory>
   </info>
