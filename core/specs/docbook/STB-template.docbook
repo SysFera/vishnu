@@ -92,7 +92,7 @@
             <date>31/08/2012</date>
             <authorinitials>SysFera</authorinitials>
             <revdescription>
-              <para> Support SLURM 2.3 et 24.</para>
+              <para> Support SLURM 2.3 et 2.4, new cmake version.</para>
             </revdescription>
           </revision>
 	  
