@@ -750,7 +750,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.1</para></entry>
               <entry><para>CMake</para></entry>
-              <entry><para>CMake v2.8 minimum</para></entry>
+              <entry><para>CMake v2.8.3 minimum</para></entry>
             </row>
             <row>
               <entry><para>3.2</para></entry>
@@ -765,7 +765,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.4</para></entry>
               <entry><para>Python</para></entry>
-              <entry><para>Python v2.5 minimum</para></entry>
+              <entry><para>Python v2.5 ou v2.6</para></entry>
             </row>
             <row>
               <entry><para>3.5</para></entry>
