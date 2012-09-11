@@ -9,7 +9,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  ${VISHNU_SOURCE_DIR}/mockZMQ/
 )
 
 
@@ -19,7 +19,8 @@ add_library(zmq_helper
   Server.cpp
   SeD.cpp
   utils.cpp
-  ZMQHelper/mdclient.cpp)
+#  ZMQHelper/mdclient.cpp
+)
 
 target_link_libraries (zmq_helper
   ${ZMQ_LIBRARIES} ${Boost_LIBRARIES})

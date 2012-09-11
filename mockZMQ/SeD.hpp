@@ -4,6 +4,7 @@
 #include "DIET_client.h"
 #include <map>
 #include <string>
+#include <vector>
 
 #define UNKNOWN_SERVICE 1;
 
