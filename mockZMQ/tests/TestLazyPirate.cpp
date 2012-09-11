@@ -14,34 +14,26 @@ public:
   void
   testSend(){
     LazyPirateClient lp(ctxt, addr);
-    if (!lp.send("bonjour")){
-      std::cerr << "Fail test send " << std::endl;
-    }
+    BOOST_CHECK(lp.send("bonjour"));
   }
   void
   testSendBadAddr(){
-    LazyPirateClient lp (ctxt, "1"+addr);
-    if (!lp.send("bonjour")){
-      std::cerr << "Fail test send bad addr " << std::endl;
-    }
+    LazyPirateClient lp (ctxt, "bad");
+    BOOST_CHECK_THROW(lp.send("bonjour"), std::exception);
   }
 
   void
   testRecv(){
     LazyPirateClient lp (ctxt, addr);
     lp.send("bonjour");
-    if (lp.recv().compare("ok") != 0){
-      std::cerr << "Fail test recv " << std::endl;
-    }
+    BOOST_CHECK(lp.recv().compare("ok") == 0);
   }
 
   void
   testRecvBadAddr(){
-    LazyPirateClient lp (ctxt, "1"+addr);
-    lp.send("bonjour");
-    if (lp.recv().compare("ok") == 0){
-      std::cerr << "Fail test recv bad addr " << std::endl;
-    }
+    LazyPirateClient lp (ctxt, "bad");
+    BOOST_CHECK_THROW(lp.send("bonjour"), std::exception);
+    BOOST_CHECK(lp.recv().compare("ok") !=0 );
   }
 
 private:
@@ -50,14 +42,3 @@ private:
 };
 
 
-
-
-
-int main(int argc, char** argv){
-  LazyPirateClientTest test;
-  test.testSend();
-  test.testSendBadAddr();
-  test.testRecv();
-  test.testRecvBadAddr();
-  return 0;
-}

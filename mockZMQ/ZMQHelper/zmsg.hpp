@@ -37,6 +37,8 @@
 #include <vector>
 #include <string>
 #include <stdarg.h>
+#include <iostream>
+#include <iomanip>
 
 class zmsg {
 public:

@@ -8,7 +8,7 @@
 #ifndef __DIETMOCK__
 #define __DIETMOCK__
 
-#include "mdcliapi.hpp"
+//#include "mdcliapi.hpp"
 #include <string>
 #include <boost/shared_ptr.hpp>
 

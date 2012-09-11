@@ -1,8 +1,10 @@
 #include "SeD.hpp"
 #include <iostream>
 #include <boost/format.hpp>
+#include "zhelpers.hpp"
 #include "utils.hpp"
 #include "utilVishnu.hpp"
+#include "zmq.hpp"
 
 int
 heartbeat(diet_profile_t* pb){
