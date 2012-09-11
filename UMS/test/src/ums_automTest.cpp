@@ -856,7 +856,7 @@ try {
 
   // Test configure option bad option value
   opva.setOptionName(ona);
-  opva.setValue     ("TOTO");
+  opva.setValue     ("-30");
   BOOST_REQUIRE(restore        (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad value configure option U1.3.1E2" );
   BOOST_CHECK  (connect        (uid, pwd , sess, cop )==0);
@@ -883,7 +883,7 @@ try {
 
   // Test configure option bad option value
   opva.setOptionName(ona);
-  opva.setValue     ("TOTO");
+  opva.setValue     ("-30");
   BOOST_REQUIRE(restore        (sqlScript+"/clean_session.sql" )==0);
   BOOST_MESSAGE(" Testing bad value configure option U1.3.1E2" );
   BOOST_CHECK  (connect        (uid, pwd , sess, cop )==0);
