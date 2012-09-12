@@ -4,7 +4,7 @@
  * Author : bisnard
  */
 #include "diet_fixtures.hpp"
-#include "UMS_fixtures.hpp"
+#include "FMS_fixtures.hpp"
 #include "TMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
@@ -17,7 +17,7 @@ char ConfigTMSSeDInit[] = TMSSEDCONF;
 char ConfigTMSSchedInit[] = TMSSCHEDCONF;
 char BinDirTMSSeDInit[] = TMSSEDBINDIR;
 
-class TMSFixtureInit : public UMSSeDFixture {
+class TMSFixtureInit : public FMSSeDFixture {
 
 public:
   TMSFixtureInit():mac(2){

@@ -200,7 +200,7 @@ getServerAddresses(const std::string& uri, const std::string service,
 
   if (!lpc.send(service)) {
     std::cerr << "E: request failed, exiting ...\n";
-    exit(-1);
+    throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
   }
 
   std::string response = lpc.recv();
@@ -288,7 +288,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
-    return 1;
+    return -1;
   }
 
   std::string response = lpc.recv();

@@ -78,8 +78,13 @@ vishnu::convertToTimeType(const std::string& date) {
  * \return int value of the corresponding string
  */
 int
-vishnu::convertToInt(const std::string& val) {
-  return boost::lexical_cast<int>(val);
+vishnu::convertToInt(const std::string& sval) {
+	int value = -1;
+	try{
+		value = boost::lexical_cast<int>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 
@@ -89,8 +94,13 @@ vishnu::convertToInt(const std::string& val) {
  * \return int value of the corresponding string
  */
 long
-vishnu::convertToLong(const std::string& val) {
-  return boost::lexical_cast<long>(val);
+vishnu::convertToLong(const std::string& sval) {
+	long value = -1;
+	try{
+		value = boost::lexical_cast<long>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 /**
@@ -323,7 +333,7 @@ vishnu::convertWallTimeToString(const long& walltime) {
   if(s < 10) {
     StrWallTime << "0" << s;
   } else {
-    StrWallTime << s ;
+    StrWallTime << s;
   }
 
   return StrWallTime.str();
@@ -548,7 +558,7 @@ vishnu::diffLocaltimeUTCtime() {
  */
 void
 vishnu::createTmpFile(char* fileName, const std::string& file_content) {
-  int file_descriptor = mkstemp( fileName ) ;
+  int file_descriptor = mkstemp( fileName );
   size_t file_size = file_content.size();
   if (file_descriptor == -1) {
     throw
@@ -598,9 +608,9 @@ vishnu::recordMissingFiles(const std::string & fileName,
 
   bfs::ofstream file(fileName);
 
-  ListStrings missingFiles ;
+  ListStrings missingFiles;
   boost::split(missingFiles, missingDesc, boost::is_space());
-  int count = missingFiles.size() ;
+  int count = missingFiles.size();
   for(int i = 1; i < count; i++) {
     file << missingFiles[i] << "\n";
     std::cout << missingFiles[i] << "\n";
@@ -615,7 +625,7 @@ vishnu::recordMissingFiles(const std::string & fileName,
  */
 void
 vishnu::createTmpFile(char* fileName) {
-  int  file_descriptor = mkstemp(fileName) ;
+  int  file_descriptor = mkstemp(fileName);
   if( file_descriptor == -1 ) {
     throw SystemException(ERRCODE_SYSTEM,
                           "vishnu::createTmpFile: Cannot create new tmp file");
@@ -736,31 +746,31 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
                            const ListStrings & paramsVector) {
 
   if (opt->count(paramOptName)) {
-    paramsStr = opt->get<std::string>(paramOptName) ;
+    paramsStr = opt->get<std::string>(paramOptName);
   }
 
   // Append other parameters in paramStr
   for(ListStrings::const_iterator it = paramsVector.begin();
-      it != paramsVector.end() ; it++) {
-    paramsStr += " " + *it ;
+      it != paramsVector.end(); it++) {
+    paramsStr += " " + *it;
   }
 
   //Now check the syntax of parameters and set them suitable for VISHNU
-  ListStrings paramsVecBuffer ;
+  ListStrings paramsVecBuffer;
   boost::trim(paramsStr);
   boost::split(paramsVecBuffer, paramsStr, boost::is_space(), boost::token_compress_on);
 
-  paramsStr = "" ; // Reinitialization for outpout
+  paramsStr = ""; // Reinitialization for outpout
   for(ListStrings::iterator it = paramsVecBuffer.begin();
-      it != paramsVecBuffer.end() ; it++) {
+      it != paramsVecBuffer.end(); it++) {
     size_t pos = (*it).find("=");
     if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
-      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n" ;
+      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
       return CLI_ERROR_INVALID_PARAMETER;
     }
 
-    std::string paramName = (*it).substr(0, pos) ; // Keep the parameter name in upper case
-    std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
+    std::string paramName = (*it).substr(0, pos); // Keep the parameter name in upper case
+    std::string paramValue = (*it).substr(pos+1, std::string::npos);
 
     // Check whether the parameter is duplicate
     if (paramsStr.size()) {
@@ -768,17 +778,17 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
       while (pos = paramsStr.find(paramName + "=", start),
              pos != std::string::npos) {
         if (pos == 0 || paramsStr[pos-1] == char(' ')) {
-          std::cerr << "Duplicate parameter : '" << paramName << "'\n" ;
-          return CLI_ERROR_INVALID_PARAMETER ;
+          std::cerr << "Duplicate parameter : '" << paramName << "'\n";
+          return CLI_ERROR_INVALID_PARAMETER;
         }
-        start = pos + paramName.size() ;
+        start = pos + paramName.size();
       }
-      paramsStr += " " ;
+      paramsStr += " ";
     }
     // Append the parameter
-    paramsStr += paramName + "=" + paramValue ;
+    paramsStr += paramName + "=" + paramValue;
   }
-  return 0 ;
+  return 0;
 }
 
 
@@ -796,7 +806,7 @@ vishnu::appendFilesFromDir(std::ostringstream& fileNames,
   }
 
   for (bfs::directory_iterator it(dirPath);
-       it != bfs::directory_iterator() ; ++it) {
+       it != bfs::directory_iterator(); ++it) {
     if ( bfs::is_directory( *it )) {
       continue;
     }
@@ -829,7 +839,7 @@ vishnu::getResultFiles(const TMS_Data::JobResult & result,
     existingFiles << (existingFiles.str().size()? " " : "") << result.getOutputPath();
   } else {
     missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputPath();
-    std::cerr<< "Warning : The output file no longer exists : " << result.getOutputPath()<< "\n";
+    std::cerr<< "W: the output file no longer exists : " << result.getOutputPath()<< "\n";
   }
 
   if( bfs::exists(result.getErrorPath()) && (result.getErrorPath() !=
@@ -838,12 +848,12 @@ vishnu::getResultFiles(const TMS_Data::JobResult & result,
   } else {
     if (!bfs::exists(result.getErrorPath())) {
       missingFiles << (missingFiles.str().size()? " " : "") << result.getErrorPath();
-      std::cerr<< "Warning : The error file no longer exists : " << result.getErrorPath()<< "\n";
+      std::cerr<< "W: the error file no longer exists : " << result.getErrorPath()<< "\n";
     }
   }
   if( !appendFilesFromDir(existingFiles, result.getOutputDir())) {
     missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputDir();
-    std::cerr<< "Warning : The output directory no longer exists : " << result.getOutputDir() << "\n";
+    std::cerr<< "W: the output directory no longer exists : " << result.getOutputDir() << "\n";
   }
 
   existingFiles << "\n" << missingFiles.str() << "\n";
@@ -918,62 +928,62 @@ vishnu::mklink(const std::string& src) {
 // Cela fait une copie de la liste en retour, à modifier si cela gène
 std::vector<std::string>
 vishnu::getIPList(){
-  std::vector<std::string> addresses;
+	std::vector<std::string> addresses;
 
-  struct ifaddrs *ifa=NULL,*ifEntry=NULL;
-  void *addPtr = NULL;
-  int rc = 0;
-  char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
+	struct ifaddrs *ifa=NULL,*ifEntry=NULL;
+	void *addPtr = NULL;
+	int rc = 0;
+	char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
 
-  // Recuperation of the interfaces
-  rc = getifaddrs(&ifa);
-  // If interfaces gotten without error
-  if (rc==0) {
-    // Browing the list of interface
-    for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
-      // If not address continue
-      if(ifEntry->ifa_addr->sa_data == NULL) {
-        continue;
-      }
-      // If IPV4
-      if(ifEntry->ifa_addr->sa_family==AF_INET) {
-        addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
-      } else {
-        //It isn't IPv4
-        continue;
-      }
-      // Converting address
-      const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
-                                addPtr,
-                                addressBuffer,
-                                sizeof(addressBuffer));
-      std::string localhost = "127.0.0.1";
-      // Adding the found adress
-      if(a != NULL && localhost.compare(std::string(a)) != 0) {
-        addresses.push_back(std::string(a));
-      }
-    }
-  }
-  // Freeing memory
-  freeifaddrs(ifa);
+	// Recuperation of the interfaces
+	rc = getifaddrs(&ifa);
+	// If interfaces gotten without error
+	if (rc==0) {
+		// Browing the list of interface
+		for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
+			// If not address continue
+			if(ifEntry->ifa_addr->sa_data == NULL) {
+				continue;
+			}
+			// If IPV4
+			if(ifEntry->ifa_addr->sa_family==AF_INET) {
+				addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
+			} else {
+				//It isn't IPv4
+				continue;
+			}
+			// Converting address
+			const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
+					addPtr,
+					addressBuffer,
+					sizeof(addressBuffer));
+			std::string localhost = "127.0.0.1";
+			// Adding the found adress
+			if(a != NULL && localhost.compare(std::string(a)) != 0) {
+				addresses.push_back(std::string(a));
+			}
+		}
+	}
+	// Freeing memory
+	freeifaddrs(ifa);
 
-  return addresses;
+	return addresses;
 }
 
 void
 vishnu::setIP(std::string& name, std::string IP){
-  std::string tmp = std::string("localhost");
-  name.replace(name.find(tmp), tmp.length(), IP);
+	std::string tmp = std::string("localhost");
+	name.replace(name.find(tmp), tmp.length(), IP);
 }
 
 bool
 vishnu::isNotIP(std::string name){
-  unsigned int pos=0;
-  int cpt=0;
-  while((pos=name.find(".", pos+1))!=std::string::npos) {
-    cpt++;
-  }
-  return (cpt!=3);
+	unsigned int pos=0;
+	int cpt=0;
+	while((pos=name.find(".", pos+1))!=std::string::npos) {
+		cpt++;
+	}
+	return (cpt!=3);
 }
 
 /**
@@ -983,10 +993,10 @@ vishnu::isNotIP(std::string name){
  */
 UMS_Data::Version_ptr
 vishnu::parseVersion(const std::string& version) {
-  UMS_Data::Version_ptr vers = NULL;
-  std::string major;
-  std::string minor;
-  std::string patch;
+	UMS_Data::Version_ptr vers = NULL;
+	std::string major;
+	std::string minor;
+	std::string patch;
 
   size_t found = version.find_first_of(".");
   if (found != std::string::npos) {
