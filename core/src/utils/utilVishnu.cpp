@@ -78,8 +78,13 @@ vishnu::convertToTimeType(const std::string& date) {
  * \return int value of the corresponding string
  */
 int
-vishnu::convertToInt(const std::string& val) {
-  return boost::lexical_cast<int>(val);
+vishnu::convertToInt(const std::string& sval) {
+	int value = -1;
+	try{
+		value = boost::lexical_cast<int>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 
@@ -89,8 +94,13 @@ vishnu::convertToInt(const std::string& val) {
  * \return int value of the corresponding string
  */
 long
-vishnu::convertToLong(const std::string& val) {
-  return boost::lexical_cast<long>(val);
+vishnu::convertToLong(const std::string& sval) {
+	long value = -1;
+	try{
+		value = boost::lexical_cast<long>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 /**
@@ -323,7 +333,7 @@ vishnu::convertWallTimeToString(const long& walltime) {
   if(s < 10) {
     StrWallTime << "0" << s;
   } else {
-    StrWallTime << s ;
+    StrWallTime << s;
   }
 
   return StrWallTime.str();
@@ -548,7 +558,7 @@ vishnu::diffLocaltimeUTCtime() {
  */
 void
 vishnu::createTmpFile(char* fileName, const std::string& file_content) {
-  int file_descriptor = mkstemp( fileName ) ;
+  int file_descriptor = mkstemp( fileName );
   size_t file_size = file_content.size();
   if (file_descriptor == -1) {
     throw
@@ -598,9 +608,9 @@ vishnu::recordMissingFiles(const std::string & fileName,
 
   bfs::ofstream file(fileName);
 
-  ListStrings missingFiles ;
+  ListStrings missingFiles;
   boost::split(missingFiles, missingDesc, boost::is_space());
-  int count = missingFiles.size() ;
+  int count = missingFiles.size();
   for(int i = 1; i < count; i++) {
     file << missingFiles[i] << "\n";
     std::cout << missingFiles[i] << "\n";
@@ -615,7 +625,7 @@ vishnu::recordMissingFiles(const std::string & fileName,
  */
 void
 vishnu::createTmpFile(char* fileName) {
-  int  file_descriptor = mkstemp(fileName) ;
+  int  file_descriptor = mkstemp(fileName);
   if( file_descriptor == -1 ) {
     throw SystemException(ERRCODE_SYSTEM,
                           "vishnu::createTmpFile: Cannot create new tmp file");
@@ -736,31 +746,31 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
                            const ListStrings & paramsVector) {
 
   if (opt->count(paramOptName)) {
-    paramsStr = opt->get<std::string>(paramOptName) ;
+    paramsStr = opt->get<std::string>(paramOptName);
   }
 
   // Append other parameters in paramStr
   for(ListStrings::const_iterator it = paramsVector.begin();
-      it != paramsVector.end() ; it++) {
-    paramsStr += " " + *it ;
+      it != paramsVector.end(); it++) {
+    paramsStr += " " + *it;
   }
 
   //Now check the syntax of parameters and set them suitable for VISHNU
-  ListStrings paramsVecBuffer ;
+  ListStrings paramsVecBuffer;
   boost::trim(paramsStr);
   boost::split(paramsVecBuffer, paramsStr, boost::is_space(), boost::token_compress_on);
 
-  paramsStr = "" ; // Reinitialization for outpout
+  paramsStr = ""; // Reinitialization for outpout
   for(ListStrings::iterator it = paramsVecBuffer.begin();
-      it != paramsVecBuffer.end() ; it++) {
+      it != paramsVecBuffer.end(); it++) {
     size_t pos = (*it).find("=");
     if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
-      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n" ;
+      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
       return CLI_ERROR_INVALID_PARAMETER;
     }
 
-    std::string paramName = (*it).substr(0, pos) ; // Keep the parameter name in upper case
-    std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
+    std::string paramName = (*it).substr(0, pos); // Keep the parameter name in upper case
+    std::string paramValue = (*it).substr(pos+1, std::string::npos);
 
     // Check whether the parameter is duplicate
     if (paramsStr.size()) {
@@ -768,17 +778,17 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
       while (pos = paramsStr.find(paramName + "=", start),
              pos != std::string::npos) {
         if (pos == 0 || paramsStr[pos-1] == char(' ')) {
-          std::cerr << "Duplicate parameter : '" << paramName << "'\n" ;
-          return CLI_ERROR_INVALID_PARAMETER ;
+          std::cerr << "Duplicate parameter : '" << paramName << "'\n";
+          return CLI_ERROR_INVALID_PARAMETER;
         }
-        start = pos + paramName.size() ;
+        start = pos + paramName.size();
       }
-      paramsStr += " " ;
+      paramsStr += " ";
     }
     // Append the parameter
-    paramsStr += paramName + "=" + paramValue ;
+    paramsStr += paramName + "=" + paramValue;
   }
-  return 0 ;
+  return 0;
 }
 
 
@@ -796,7 +806,7 @@ vishnu::appendFilesFromDir(std::ostringstream& fileNames,
   }
 
   for (bfs::directory_iterator it(dirPath);
-       it != bfs::directory_iterator() ; ++it) {
+       it != bfs::directory_iterator(); ++it) {
     if ( bfs::is_directory( *it )) {
       continue;
     }
@@ -820,16 +830,14 @@ vishnu::getResultFiles(const TMS_Data::JobResult & result,
                        const bool & appendJobId) {
   std::ostringstream existingFiles; /* starts with the job id */
   std::ostringstream  missingFiles;
-  if(appendJobId) {
-    existingFiles << result.getJobId();
-  }
+
   missingFiles << "***MISSING";
   existingFiles << ((appendJobId)? result.getJobId() : "");
   if( bfs::exists(result.getOutputPath()) ) {
     existingFiles << (existingFiles.str().size()? " " : "") << result.getOutputPath();
   } else {
     missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputPath();
-    std::cerr<< "Warning : The output file no longer exists : " << result.getOutputPath()<< "\n";
+    std::cerr<< "W: the output file no longer exists : " << result.getOutputPath()<< "\n";
   }
 
   if( bfs::exists(result.getErrorPath()) && (result.getErrorPath() !=
@@ -838,12 +846,12 @@ vishnu::getResultFiles(const TMS_Data::JobResult & result,
   } else {
     if (!bfs::exists(result.getErrorPath())) {
       missingFiles << (missingFiles.str().size()? " " : "") << result.getErrorPath();
-      std::cerr<< "Warning : The error file no longer exists : " << result.getErrorPath()<< "\n";
+      std::cerr<< "W: the error file no longer exists : " << result.getErrorPath()<< "\n";
     }
   }
   if( !appendFilesFromDir(existingFiles, result.getOutputDir())) {
     missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputDir();
-    std::cerr<< "Warning : The output directory no longer exists : " << result.getOutputDir() << "\n";
+    std::cerr<< "W: the output directory no longer exists : " << result.getOutputDir() << "\n";
   }
 
   existingFiles << "\n" << missingFiles.str() << "\n";
@@ -990,8 +998,8 @@ vishnu::parseVersion(const std::string& version) {
 
 	size_t found = version.find_first_of(".");
 	if (found != std::string::npos) {
-		major = version.substr(0, found) ;
-		std::string rest = version.substr(found+1, version.size()) ;
+		major = version.substr(0, found);
+		std::string rest = version.substr(found+1, version.size());
 		found = rest.find_first_of(".");
 		if (found != std::string::npos) {
 			minor = rest.substr(0, found);

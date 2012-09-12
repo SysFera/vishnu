@@ -77,41 +77,42 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 		raiseDietMsgException(msgErrorDiet);
 	}
 	if( ! boost::starts_with(routputInfo, "/") ) {
-		raiseExceptionIfNotEmptyMsg(routputInfo) ;
+		raiseExceptionIfNotEmptyMsg(routputInfo);
 	}
 
 	if( moutDir.size()==0 ) {
 		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
 		vishnu::createOutputDir(moutDir);
 	}
-	jobResult.setOutputDir(moutDir) ;
+	jobResult.setOutputDir(moutDir);
 
 	CpFileOptions copts;
-	copts.setIsRecursive(false) ;
+	copts.setIsRecursive(false);
 	copts.setTrCommand(0); // for using scp
 	string outputInfo = genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
 
-	string line = "" ;
-	istringstream fdescStream (vishnu::get_file_content(routputInfo, false)) ;
+	string line = "";
+	istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
 	if(! getline(fdescStream, line)) line = "";
 
 	boost::trim(line);
-	ListStrings lineVec ;
-	getline(fdescStream, line) ; boost::trim(line) ;
-	boost::split(lineVec, line, boost::is_any_of(" ")) ;
-	int nbFiles = lineVec.size() ;
+	ListStrings lineVec;
+	getline(fdescStream, line); boost::trim(line);
+	boost::split(lineVec, line, boost::is_any_of(" "));
+	int nbFiles = lineVec.size();
 	if( nbFiles > 0 && line.size() >0 ) {
-		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0) ;
-		jobResult.setOutputPath(moutDir+"/"+lineVec[0]) ;
+		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0);
+		jobResult.setOutputPath(moutDir+"/"+lineVec[0]);
 		if(nbFiles == 1) {
-			jobResult.setErrorPath(moutDir+"/"+lineVec[0]) ;
+			jobResult.setErrorPath(moutDir+"/"+lineVec[0]);
 		} else {
-			jobResult.setErrorPath(moutDir+"/"+lineVec[1]) ;
+			jobResult.setErrorPath(moutDir+"/"+lineVec[1]);
 		}
 	}
 
-	if(! getline(fdescStream, line)) line = "";
-	vishnu::recordMissingFiles(moutDir+"/MISSING", line) ;
+	if( !getline(fdescStream, line))
+		line = "";
+	vishnu::recordMissingFiles(moutDir+"/MISSING", line);
 
 	diet_profile_free(getJobOutPutProfile);
 	return jobResult;
@@ -165,7 +166,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 		raiseDietMsgException(msgErrorDiet);
 	}
 	if( ! boost::starts_with(routputInfo, "/") ) {
-		raiseExceptionIfNotEmptyMsg(routputInfo) ;
+		raiseExceptionIfNotEmptyMsg(routputInfo);
 	}
 
 	char* listJobResultInString = NULL;
@@ -177,22 +178,24 @@ JobOutputProxy::getCompletedJobsOutput() {
 
 
 	CpFileOptions copts;
-	copts.setIsRecursive(false) ;
+	copts.setIsRecursive(false);
 	copts.setTrCommand(0); // for using scp
 
-	string line ;
-	ListStrings lineVec ;
-	istringstream fdescStream (vishnu::get_file_content(routputInfo, false)) ;
-	int numJob = 0 ;
+	string line;
+	ListStrings lineVec;
+	istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
+	int numJob = 0;
 	while( getline(fdescStream, line) ) {
-		boost::trim(line) ;
-		boost::split(lineVec, line, boost::is_any_of(" ")) ;
-		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime() ;
+		boost::trim(line);
+		boost::split(lineVec, line, boost::is_any_of(" "));
+		std::cout << lineVec[0]<< std::endl;
+		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
+		std::cout << moutDir << std::endl;
 		vishnu::createOutputDir(moutDir);
 		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(moutDir);
-		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1) ;
-		if( !getline(fdescStream, line)) break ;
-		vishnu::recordMissingFiles(moutDir+"/MISSING", line) ;
+		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1);
+		if( !getline(fdescStream, line)) break;
+		vishnu::recordMissingFiles(moutDir+"/MISSING", line);
 	}
 
 	diet_profile_free(getCompletedJobsOutputProfile);
