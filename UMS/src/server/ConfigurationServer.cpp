@@ -198,6 +198,11 @@ int ConfigurationServer::restore(int vishnuId) {
   std::string sqlCodeDescMachine = "";
   std::string sqlcodeAuthSystem = "";
   std::string sqlcodeLdapAuthSystem = "";
+  std::string cleanAllModelInfo  = "delete from parameter_value; delete from work; delete from project_machine;  delete from user_role; delete from project_role_permissions;"
+  "delete from project_member_project_role; delete from project_member; delete from project_role; delete from project_application; delete from notification;"
+  "delete from application_parameter; delete from application_version; delete from application; delete from project; delete from acl_entry;"
+  "delete from acl_object_identity; delete from acl_class; delete from acl_sid; delete from role; delete from global_project_role_permissions;"
+  "delete from global_project_role; delete from permission; delete from test_report; delete from permission_module; ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -207,7 +212,7 @@ int ConfigurationServer::restore(int vishnuId) {
     //if the user exists
     if (userServer.exist()) {
 
-      mdatabaseVishnu->process("DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
+      mdatabaseVishnu->process(cleanAllModelInfo+" DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
       "DELETE FROM machine; DELETE FROM account; DELETE FROM authsystem; delete FROM authaccount;");
 
       //To get all users
