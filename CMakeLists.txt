@@ -435,7 +435,9 @@ if (BUILD_TESTING)
   set(TEST_ZMQ_FMS_URI "tcp://*:5520" CACHE STRING "Uri for binding FMS")
   set(TEST_ZMQ_TMS_SCHED_URI "tcp://*:5530" CACHE STRING "Uri for binding the TMS's scheduler for automatic submission")
   set(TEST_ZMQ_TMS_SED1_URI "tcp://*:5531" CACHE STRING "Uri for binding the first TMS SeD")
-  set(TEST_ZMQ_TMS_SED2_URI "tcp://*:5532" CACHE STRING "Uri for binding the second TMS SeD")
+  set(TEST_ZMQ_TMS_SED2_URI "tcp://*:5532" CACHE STRING "Uri for binding the second TMS SeD")  
+  
+  set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)

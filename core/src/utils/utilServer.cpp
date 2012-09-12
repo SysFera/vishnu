@@ -63,11 +63,11 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
   boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
 // prefix with 1 to say registering the sed
   std::string req = "1"+s.get()->toString();
-  std::cout << "sending " << req << std::endl;
 
+  std::cout << "sending " << req << std::endl;
   if (!lpc.send(req)) {
-    std::cerr << "E: request failed, exiting ...\n";
-    exit(-1);
+	std::cerr << "W: failed to register in the naming service\n";
+    return -1; //instead of exiting
   }
   std::string response = lpc.recv();
   std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
