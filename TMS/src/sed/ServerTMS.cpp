@@ -364,12 +364,10 @@ ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion
 	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
 	for(int i=0; i< machineCount; i++) {
 		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
-		std::cout << "HERE=>"<<machine->getMachineId()<< std::endl;
 		if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
 			machineId = machine->getMachineId();
 		}
 	}
-	std::cout << "HEREddd=>"<< machineId<< std::endl;
 	return machineId;
 }
 
