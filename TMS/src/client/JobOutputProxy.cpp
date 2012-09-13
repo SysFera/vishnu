@@ -91,27 +91,25 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	copts.setTrCommand(0); // for using scp
 	string outputInfo = genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
 
-	string line = "";
+	string line;
 	istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
 	if(! getline(fdescStream, line)) line = "";
-
 	boost::trim(line);
 	ListStrings lineVec;
-	getline(fdescStream, line); boost::trim(line);
 	boost::split(lineVec, line, boost::is_any_of(" "));
 	int nbFiles = lineVec.size();
 	if( nbFiles > 0 && line.size() >0 ) {
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0);
-		jobResult.setOutputPath(moutDir+"/"+lineVec[0]);
+		std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
+		jobResult.setOutputPath(moutDir+"/"+fileName);
 		if(nbFiles == 1) {
-			jobResult.setErrorPath(moutDir+"/"+lineVec[0]);
+			jobResult.setErrorPath(moutDir+"/"+fileName);
 		} else {
-			jobResult.setErrorPath(moutDir+"/"+lineVec[1]);
+			jobResult.setErrorPath(moutDir+"/"+fileName);
 		}
 	}
-
-	if( !getline(fdescStream, line))
-		line = "";
+	//save missing files
+	if( !getline(fdescStream, line)) line = "";
 	vishnu::recordMissingFiles(moutDir+"/MISSING", line);
 
 	diet_profile_free(getJobOutPutProfile);
@@ -188,9 +186,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 	while( getline(fdescStream, line) ) {
 		boost::trim(line);
 		boost::split(lineVec, line, boost::is_any_of(" "));
-		std::cout << lineVec[0]<< std::endl;
 		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
-		std::cout << moutDir << std::endl;
 		vishnu::createOutputDir(moutDir);
 		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(moutDir);
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1);
