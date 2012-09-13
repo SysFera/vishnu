@@ -241,10 +241,12 @@ ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion
 	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
 	for(int i=0; i< machineCount; i++) {
 		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+		std::cout << "HERE=>"<<machine->getMachineId()<< std::endl;
 		if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
 			machineId = machine->getMachineId();
 		}
 	}
+	std::cout << "HEREddd=>"<< machineId<< std::endl;
 	return machineId;
 }
 
@@ -256,23 +258,24 @@ ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion
  * \param the criteria of (number of waiting jobs, running jobs and total jobs)
  */
 long
-ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion) {
+ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr& machine, const TMS_Data::LoadCriterion_ptr& criterion) {
 
 	TMS_Data::ListJobs jobs ;
 	TMS_Data::ListJobsOptions jobOtions ;
 	vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
-	long LoadValue = std::numeric_limits<long>::max();
+	long load = std::numeric_limits<long>::max();
+	int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
 	try {
-		switch(criterion->getLoadType()) {
+		switch(criterionType) {
 		case NBRUNNINGJOBS :
-			LoadValue = jobs.getNbRunningJobs();
+			load = jobs.getNbRunningJobs();
 			break;
 		case NBJOBS :
-			LoadValue = jobs.getNbJobs();
+			load = jobs.getNbJobs();
 			break;
 		case NBWAITINGJOBS :
 		default :
-			LoadValue =jobs.getNbWaitingJobs();
+			load =jobs.getNbWaitingJobs();
 			break;
 		}
 	} catch (VishnuException& ex) {
@@ -281,6 +284,6 @@ ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::M
 		std::cerr << "E: error while calculating the load performance of the machine "
 				<< machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
 	}
-	return LoadValue ;
+	return load ;
 }
 
