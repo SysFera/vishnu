@@ -152,7 +152,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	checkEmptyString(machineId, "The machine id");
 
 	std::string serviceName = "getListOfJobs@";
-	serviceName.append(machineId);
+	std::string serviceSuffix = (machineId != LIST_JOBS_ON_MACHINES_KEYWORD)? machineId : AUTOMATIC_SUBMIT_JOB_KEYWORD;
+	serviceName.append(serviceSuffix);
 
 	SessionProxy sessionProxy(sessionKey);
 

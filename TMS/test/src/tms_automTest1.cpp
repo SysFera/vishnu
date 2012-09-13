@@ -399,7 +399,7 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId1, scriptFilePathWaiting, jobInfo,subOptions),0 );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
     
-    BOOST_CHECK_EQUAL(submitJob(sessionKey, autom, scriptFilePath, jobInfo2,subOptions),0 );
+    BOOST_CHECK_EQUAL(submitJob(sessionKey, autom, scriptFilePath, jobInfo2, subOptions),0 );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo2.getJobId() );
 
     BOOST_TEST_MESSAGE("************ Submit machine Id " << jobInfo2.getSubmitMachineId() );
