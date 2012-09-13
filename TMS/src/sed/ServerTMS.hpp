@@ -134,7 +134,7 @@ private :
 	 * \param the criteria of (number of waiting jobs, running jobs and total jobs)
 	 */
 	static long
-	getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr &machine, const TMS_Data::LoadCriterion_ptr & criterion);
+	getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr& machine, const TMS_Data::LoadCriterion_ptr & criterion);
 
 	/**
 	 * \brief operator=

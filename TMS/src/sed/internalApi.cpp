@@ -96,13 +96,15 @@ solveSubmitJob(diet_profile_t* pb) {
 		}
 
 		if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-			std::cerr << "I: start scheduling for automatic submitting" << std::endl;
 			sessionServer.check();
-			machineId =  ServerTMS::selectMachine(sessionKey, submitOptions->getCriterion()) ; //TODO
-			string msg = AUTOMATIC_SUBMIT_JOB_KEYWORD + ":" + machineId ;
+
+			std::cerr << "I: selecting a machine for automatic submission\n";
+			machineId =  ServerTMS::selectMachine(sessionKey, submitOptions->getCriterion()) ;
+			std::cerr << "I: selected machine =>" << machineId << "\n";
+
+			string msg = AUTOMATIC_SUBMIT_JOB_KEYWORD+":"+machineId ;
 			diet_string_set(diet_parameter(pb,5), const_cast<char*>(msg.c_str()), DIET_VOLATILE);
 			diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-			std::cerr << "I: machine selected and sent back: " << machineId << std::endl;
 			try {
 				UserServer(sessionServer).getUserAccountLogin(machineId);
 			} catch (VishnuException& e) {
