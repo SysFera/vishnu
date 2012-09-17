@@ -829,7 +829,7 @@ vishnu::createOutputDir(std::string& dirPath) {
 	if( bfs::exists(dirPath) && bfs::is_directory(dirPath) ) return ;
 
 	if( ! bfs::create_directory(bfs::path(dirPath)) ) {
-		throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create output directory : " + std::string(dirPath)) ;
+		throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create the directory : " + dirPath) ;
 	}
 }
 
