@@ -51,7 +51,7 @@ BatchFactory::getBatchServerInstance() {
 
 #ifdef HAVE_TORQUE_2_3
   mbatchServer = new TorqueServer();
-#elif HAVE_LOADLEVELER_2_5
+#elif HAVE_LOADLEVELER_3_5
   mbatchServer = new LLServer();
 #elif HAVE_SLURM_2_2
   mbatchServer = new SlurmServer();
