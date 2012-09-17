@@ -112,27 +112,29 @@ solveSubmitJob(diet_profile_t* pb) {
 		dagda_get_container(IDContainer);
 		dagda_get_container_elements(IDContainer, &fileContainer);
 
-		std::string fParamsStr = submitOptions->getFileParams() ;
-		ListStrings fParamsVec ;
-		std::ostringstream fParamsBuf("") ;
-		size_t pos  ;
-		bfs::path fPath ;
-
-		char* defaultPath  = NULL ;
-		boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
-		std::string userHome = UserServer(sessionServer).getUserAccountProperty(machineId, "home");
-		std::string inputDir = userHome+"/INPUT"+vishnu::createSuffixFromCurTime()+"/";
-		vishnu::createOutputDir(inputDir);
-		for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all files from the container
-			pos = fParamsVec[i].find("=") ;
-			if(pos == std::string::npos) continue ;
-			fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upl%%%%%%") ;
-			dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
-			vishnu::boostMoveFile(std::string(defaultPath), inputDir, fPath.string());
-			fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string() ;
-			dagda_delete_data(fileContainer.elt_ids[i]);
+		if(submitOptions->getFileParams().size() != 0) {
+			std::string fParamsStr = submitOptions->getFileParams() ;
+			ListStrings fParamsVec ;
+			std::ostringstream fParamsBuf("") ;		char* defaultPath  = NULL ;
+			boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
+			std::string userHome = UserServer(sessionServer).getUserAccountProperty(machineId, "home");
+			std::string inputDir = userHome+"/INPUT"+vishnu::createSuffixFromCurTime()+"/";
+			try {
+				vishnu::createOutputDir(inputDir);
+			} catch(...) {
+				throw UserException(ERRCODE_SYSTEM, "Cannot create the directory : " + inputDir);
+			}
+			for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all files from the container
+				size_t pos = fParamsVec[i].find("=") ;
+				if(pos == std::string::npos) continue ;
+				bfs::path fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upl%%%%%%") ;
+				dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
+				vishnu::boostMoveFile(std::string(defaultPath), inputDir, fPath.string());
+				fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string() ;
+				dagda_delete_data(fileContainer.elt_ids[i]);
+			}
+			submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 		}
-		submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
 		int vishnuId = ServerTMS::getInstance()->getVishnuId();
@@ -147,15 +149,15 @@ solveSubmitJob(diet_profile_t* pb) {
 		diet_string_set(diet_parameter(pb,6), updateJobSerialized, DIET_VOLATILE);
 		diet_string_set(diet_parameter(pb,7), strdup(empty.c_str()), DIET_VOLATILE);
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
-	} catch (VishnuException& e) {
+	} catch (VishnuException& ex) {
 		try {
 			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
 		} catch (VishnuException& fe) {
-			finishError =  fe.what();
-			finishError +="\n";
+			finishError = fe.what();
+			finishError += "\n";
 		}
-		e.appendMsgComp(finishError);
-		errorInfo =  e.buildExceptionString();
+		ex.appendMsgComp(finishError);
+		errorInfo =  ex.buildExceptionString();
 		diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
 		diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
 	}
