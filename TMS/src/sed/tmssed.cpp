@@ -73,15 +73,15 @@ int main(int argc, char* argv[], char* envp[]) {
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE_2_3
       std::cerr << std::endl;
-      std::cerr << "Error: can't initialize TORQUE batch type because this server has not compiled with TORQUE library" << std::endl;
+      std::cerr << "Error: can't initialize TORQUE batch type because this server has not been compiled with TORQUE library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
       batchType = TORQUE;
     } else if (batchTypeStr == "LOADLEVELER") {
-#ifndef HAVE_LOADLEVELER_2_5
+#ifndef HAVE_LOADLEVELER_3_5
       std::cerr << std::endl;
-      std::cerr << "Error: can't initialize LOADLEVELER batch type because this server has not compiled with LOADLEVELER library" << std::endl;
+      std::cerr << "Error: can't initialize LOADLEVELER batch type because this server has not been compiled with LOADLEVELER library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
@@ -89,7 +89,7 @@ int main(int argc, char* argv[], char* envp[]) {
     } else if (batchTypeStr == "SLURM") {
 #if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
       std::cerr << std::endl;
-      std::cerr << "Error: can't initialize SLURM batch type because this server has not compiled with SLURM library" << std::endl;
+      std::cerr << "Error: can't initialize SLURM batch type because this server has not been compiled with SLURM library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
@@ -98,7 +98,7 @@ int main(int argc, char* argv[], char* envp[]) {
     } else if (batchTypeStr == "LSF") {
 #ifndef HAVE_LSF_7_0
       std::cerr << std::endl;
-      std::cerr << "Error: can't initialize LSF batch type because this server has not compiled with LSF library" << std::endl;
+      std::cerr << "Error: can't initialize LSF batch type because this server has not been compiled with LSF library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
@@ -106,7 +106,7 @@ int main(int argc, char* argv[], char* envp[]) {
     } else if (batchTypeStr == "SGE") {
 #ifndef HAVE_SGE_11
       std::cerr << std::endl;
-      std::cerr << "Error: can't initialize SGE batch type because this server has not compiled with SGE library" << std::endl;
+      std::cerr << "Error: can't initialize SGE batch type because this server has not been compiled with SGE library" << std::endl;
       std::cerr << std::endl;
       exit(1);
 #endif
