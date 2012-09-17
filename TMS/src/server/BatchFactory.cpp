@@ -9,7 +9,7 @@
 #ifdef HAVE_TORQUE_2_3
 #include "TorqueServer.hpp"
 #endif
-#ifdef HAVE_LOADLEVELER_2_5
+#ifdef HAVE_LOADLEVELER_3_5
 #include "LLServer.hpp"
 #endif
 #ifdef HAVE_SLURM_2_2
