@@ -203,8 +203,8 @@ getServerAddresses(const std::string& uri, const std::string service,
     throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
   }
 
+  // Receive response
   std::string response = lpc.recv();
-  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
   if (0 == response.length()) {
       throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
   }

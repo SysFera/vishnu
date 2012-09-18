@@ -112,9 +112,9 @@ sendInputFiles(const std::string & sessionKey,
 	string rdestDir = bfs::unique_path("/tmp/fms%%%%%%").string();
 
 	if (listFiles.size() > 0 && srcFiles.size() != 0) {
-		string fqdnDestDir = destMachineId + ":" +  rdestDir;
+		string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%rdestDir).str();
 		if(vishnu::createDir(sessionKey, fqdnDestDir)){
-			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the upload directory : "+fqdnDestDir);
+			throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the remote directory for input files: "+fqdnDestDir);
 		}
 	}
 
