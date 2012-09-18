@@ -81,7 +81,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	}
 
 	if( moutDir.size()==0 ) {
-		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
+		moutDir = bfs::path(bfs::current_path()).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
 		vishnu::createOutputDir(moutDir);
 	}
 	jobResult.setOutputDir(moutDir);
@@ -186,12 +186,13 @@ JobOutputProxy::getCompletedJobsOutput() {
 	while( getline(fdescStream, line) ) {
 		boost::trim(line);
 		boost::split(lineVec, line, boost::is_any_of(" "));
-		moutDir = (bfs::path(bfs::current_path().string())).string() + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
-		vishnu::createOutputDir(moutDir);
-		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(moutDir);
+		std::string baseDir = (moutDir.size()!=0)? bfs::absolute(moutDir).string() : bfs::path(bfs::current_path()).string();
+		std::string targetDir = baseDir + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
+		vishnu::createOutputDir(targetDir);
+		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
 		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1);
 		if( !getline(fdescStream, line)) break;
-		vishnu::recordMissingFiles(moutDir+"/MISSING", line);
+		vishnu::recordMissingFiles(targetDir+"/MISSING", line);
 	}
 
 	diet_profile_free(getCompletedJobsOutputProfile);
