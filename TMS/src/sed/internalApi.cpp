@@ -18,6 +18,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/format.hpp>
 
 
 //EMF
@@ -106,40 +107,68 @@ solveSubmitJob(diet_profile_t* pb) {
 			}
 		}
 
-		char* IDContainer = NULL ;
-		diet_container_t fileContainer;
-		IDContainer = (pb->parameters[5]).desc.id ;
-		dagda_get_container(IDContainer);
-		dagda_get_container_elements(IDContainer, &fileContainer);
-
 		if(submitOptions->getFileParams().size() != 0) {
 			std::string fParamsStr = submitOptions->getFileParams() ;
 			ListStrings fParamsVec ;
-			std::ostringstream fParamsBuf("") ;		char* defaultPath  = NULL ;
+			std::ostringstream fParamsBuf("") ;
 			boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
 			std::string userHome = UserServer(sessionServer).getUserAccountProperty(machineId, "home");
 			std::string inputDir = userHome+"/INPUT"+vishnu::createSuffixFromCurTime()+"/";
-			try {
-				vishnu::createOutputDir(inputDir);
-			} catch(...) {
-				throw UserException(ERRCODE_SYSTEM, "Cannot create the directory : " + inputDir);
+
+			// Create the directory for uploading the input files
+			std::string acLogin = UserServer(sessionServer).getUserAccountLogin(machineId);
+			UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+			machine->setMachineId(machineId);
+			MachineServer machineServer(machine);
+			std::string machineName = machineServer.getMachineName();
+
+			//Create a ssh proxy
+			SSHJobExec sshJobExec(acLogin, machineName);
+
+			//Create the remote directory for input files
+			std::string remoteCmd = (boost::format("mkdir %1%")%inputDir).str();
+			if( sshJobExec.execCmd(remoteCmd)!=0) {
+				throw UserException(ERRCODE_SYSTEM, "Cannot create the directory for input files: " + inputDir);
 			}
+
+			// Now initializate the dagda container
+			char* IDContainer = NULL ;
+			diet_container_t fileContainer;
+			IDContainer = (pb->parameters[5]).desc.id ;
+			dagda_get_container(IDContainer);
+			dagda_get_container_elements(IDContainer, &fileContainer);
+
+			// Get the input files uploaded by dagda (see JobProxy)
 			for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all files from the container
 				size_t pos = fParamsVec[i].find("=") ;
 				if(pos == std::string::npos) continue ;
-				bfs::path fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos)) + ".upl%%%%%%") ;
-				dagda_get_file(fileContainer.elt_ids[i], &defaultPath);
-				vishnu::boostMoveFile(std::string(defaultPath), inputDir, fPath.string());
+
+				// Get the current file from the dagda container
+				char* srcFile = NULL ;
+				bfs::path fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos))+".upl%%%%%%") ;
+				dagda_get_file(fileContainer.elt_ids[i], &srcFile);
+				try {
+					// Copy the file using ssh so to allow the local account to have a right access on it
+					remoteCmd = (boost::format("cp %1% %2%/%3%")%std::string(srcFile)%inputDir%fPath.string()).str();
+					if(sshJobExec.execCmd(remoteCmd)){
+						throw UserException(ERRCODE_SYSTEM, "Cannot upload the file: "+std::string(srcFile));
+					}
+				} catch(std::exception & ex){
+					throw UserException(ERRCODE_SYSTEM, ex.what());
+				}
+				//vishnu::boostMoveFile(, inputDir, fPath.string());
 				fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string() ;
 				dagda_delete_data(fileContainer.elt_ids[i]);
 			}
 			submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
 		}
 
+		// Get a batch instance
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
 		int vishnuId = ServerTMS::getInstance()->getVishnuId();
 		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
 
+		// Now submit the job
 		jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory);
 		*job = jobServer.getData();
 
