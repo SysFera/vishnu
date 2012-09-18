@@ -87,6 +87,22 @@ class SlurmServer : public BatchServer
         const std::vector<string>& ignoredIds=std::vector<string>());
 
     /**
+     * \brief Function to get the used NbCpu by the job
+     * \param jobId the identifier of the job
+     * \return 0 if the job is unknown or server not  unavailable
+     */
+    int
+    getJobUsedNbCpu(const char* jobId);
+    
+    /**
+     * \brief Function to get the used NbNodes allocated for the job
+     * \param jobId the identifier of the job
+     * \return 0 if the job is unknown or server not  unavailable
+     */
+    int
+    getJobNbNodes(const char* jobId);
+
+    /**
      * \brief Destructor
      */
     ~SlurmServer(); 

@@ -91,6 +91,22 @@ public:
    */
   virtual void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                       const std::vector<string>& ignoredIds=std::vector<string>())=0;
+                      
+  /**
+   * \brief Function to get the used NbCpu by the job
+   * \param jobId the identifier of the job
+   * \return 0 if the job is unknown or server not  unavailable
+   */
+  virtual int
+  getJobUsedNbCpu(const char* jobId)=0;
+
+  /**
+   * \brief Function to get the used NbNodes allocated for the job
+   * \param jobId the identifier of the job
+   * \return 0 if the job is unknown or server not  unavailable
+   */
+  virtual int
+  getJobNbNodes(const char* jobId)=0;
    
   /**
    * \brief Destructor
