@@ -314,7 +314,6 @@ PbsProServer::processOptions(const char* scriptPath,
         if(queue->getNode()>=node){
           std::string queueName = queue->getName();
           TMS_Data::ListQueues* resourceMin =  queuesResourceMin(queueName);
-
           std::string walltimeStr = getPbsProResourceValue(scriptPath, "walltime");
           long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
           long qwalltimeMax = queue->getWallTime();
@@ -492,7 +491,6 @@ PbsProServer::pbs_cancel(const char* jobId,
  */
 int
 PbsProServer::getJobState(const std::string& jobId) {
-
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
