@@ -35,10 +35,17 @@
 */
 
 /**
+<<<<<<< HEAD
  * \file PbsProServer.cpp
  * \brief This file contains the VISHNU PbsProServer class.
  * \author Amine Bsila (amine.bsila@sysfera.com)
  * \date September 2012
+=======
+ * \file TorqueServer.hpp
+ * \brief This file contains the VISHNU TorqueServer class.
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date April 2011
+>>>>>>> Add PbsProServer files
  */
 
 
@@ -69,6 +76,7 @@ PbsProServer::PbsProServer():BatchServer() {
 }
 
 /**
+
  * \brief Function to submit PbsPro job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
@@ -91,7 +99,6 @@ PbsProServer::submit(const char* scriptPath,
   //processes the options
   processOptions(scriptPath, options, cmdsOptions);
   argc = cmdsOptions.size()+2;
-
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
   argv[1] = const_cast<char*>(scriptPath);
@@ -127,7 +134,6 @@ PbsProServer::submit(const char* scriptPath,
   errMsg[0] = '\0';
   get_pbs_error_msg(errMsg);
 
-
   if(errMsg[0]!='\0') {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "PBS ERROR: "+std::string(errMsg));
   }
@@ -149,7 +155,6 @@ PbsProServer::submit(const char* scriptPath,
   pbs_errno = 0;
   char*jobId = pbs_submit(connect, (struct attropl *)attrib,
                           scriptTmp, destination, NULL);
-
   if (jobId == NULL) {
     std::ostringstream submit_error;
     char* errmsg = pbs_geterrmsg(connect);
@@ -495,7 +500,6 @@ PbsProServer::pbs_cancel(const char* jobId,
  */
 int
 PbsProServer::getJobState(const std::string& jobId) {
-
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
@@ -511,6 +515,7 @@ PbsProServer::getJobState(const std::string& jobId) {
   } else {
     serverOut[0] = '\0';
   }
+
 
   // Connect to the PbsPro server
   connect = cnt2server(serverOut);
@@ -543,7 +548,6 @@ return state;
  */
 time_t
 PbsProServer::getJobStartTime(const std::string& jobId) {
-
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
