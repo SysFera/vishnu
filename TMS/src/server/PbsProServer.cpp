@@ -118,14 +118,11 @@ PbsProServer::submit(const char* scriptPath,
 
   destination[0] = '\0';
   serverOut[0] = '\0';
-  
   //parses the scripthPath and sets the options values
   pbs_prepare_script(argc, argv, envp, scriptTmp, destination, serverOut, &attrib);
 
   errMsg[0] = '\0';
   get_pbs_error_msg(errMsg);
-
-
   if(errMsg[0]!='\0') {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "PBS ERROR: "+std::string(errMsg));
   }
@@ -432,7 +429,6 @@ PbsProServer::pbs_cancel(const char* jobId,
  */
 int
 PbsProServer::getJobState(const std::string& jobId) {
-
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
@@ -794,7 +790,7 @@ PbsProServer::listQueues(const std::string& optqueueName) {
     }
     else {
       errorMsg = "PBS: pbs_statque: getting status of server\n";
-    }
+l    }
 
     pbs_disconnect(connect);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
