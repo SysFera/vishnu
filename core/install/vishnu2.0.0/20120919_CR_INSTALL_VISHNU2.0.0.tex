@@ -300,7 +300,126 @@ son installation, la priorit\'e est plus de valider le webboard
 et son int\'egration avec VISHNU. Des services repr\'esentatifs des modules 
 sur chaque machine ont \'et\'e manuellement appell\'es 
 (soumission de job et liste des queues sur TMS par exemple ou 
-connexion et liste des machines sur UMS).
+connexion et liste des machines sur UMS). Vu que FMS et IMS ne sont
+pas impact\'ees par les changements pour la release 2.0.0, les tests
+les concernant ont \'et\'e limit\'es.
+Ci-dessous les divers sc\'enarios test\'es~:
+
+\subsection{Connexion avec netrc}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\end{itemize}
+
+\subsection{Connexion avec nom d'utilisateur/mot de passe}
+\begin{itemize}
+\item Lancement de la connexion avec nom d'utilisateur et mot de passe\\
+  \textit{vishnu\_connect -u root -w vishnu\_user}
+\end{itemize}
+
+\subsection{Soumission d'un job sur aster4}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Soumission d'un job\\
+  \textit{vishnu\_submit\_job aster4 $\sim$/SYSFERA/src/TMS/test/src/script/fast\_lsf\_script} \\
+  \textit{Note : le script r\'eellement utilis\'e est l\'eg\`erement modifi\'e pour correspondre aux exigences de lsf sur aster4} \\
+\end{itemize}
+
+\subsection{Soumission d'un job sur ivanoe}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Soumission d'un job\\
+  \textit{vishnu\_submit\_job ivanoe $\sim$/SYSFERA/src/TMS/test/src/script/fast\_slurm\_script}\\
+  \textit{Note : le script r\'eellement utilis\'e est l\'eg\`erement modifi\'e pour correspondre aux exigences de SLURM sur ivanoe} \\
+\end{itemize}
+
+\subsection{Soumission d'un job sur clamart2}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Soumission d'un job \\
+  \textit{vishnu\_submit\_job clamart2 $\sim$/SYSFERA/src/TMS/test/src/script/fast\_torque\_script}\\
+  \textit{Note : le script r\'eellement utilis\'e est l\'eg\`erement modifi\'e pour correspondre aux exigences de TORQUE sur clamart2} \\
+\end{itemize}
+
+\subsection{Lister les queues sur clamart2}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Soumission d'un job\\
+  \textit{vishnu\_list\_queues clamart2} \\
+\end{itemize}
+
+\subsection{Lister les queues sur clamart2}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Soumission d'un job\\
+  \textit{vishnu\_list\_queues clamart2} \\
+\end{itemize}
+
+\subsection{Lister les queues sur clamart2}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Lister les queues\\
+  \textit{vishnu\_list\_queues clamart2} \\
+\end{itemize}
+
+\subsection{Lister les queues sur aster4}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Lister les queues\\
+  \textit{vishnu\_list\_queues aster4} \\
+\end{itemize}
+
+\subsection{Lister les queues sur ivanoe}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Lister les queues\\
+  \textit{vishnu\_list\_queues ivanoe} \\
+\end{itemize}
+
+\subsection{Lister le contenu d'un r\'epertoire sur aster4}
+\begin{itemize}
+\item Lancement de la connexion sans préciser les identifiants\\
+  \textit{vishnu\_connect}
+\item Lister le r\'epertoire /tmp\\
+  \textit{vishnu\_list\_dir aster4:/tmp}
+\end{itemize}
+
+\subsection{Bilan r\'ecapitulatif}
+
+\begin{tabular}{|c|c|}
+\hline 
+Fonctionnalités & Résultats \\
+\hline 
+Connexion netrc & OK \\
+\hline
+Connexion sans netrc & OK \\
+\hline
+Soumission aster4 & OK \\
+\hline
+Liste queues aster4 & OK \\
+\hline
+Soumission ivanoe & OK \\
+\hline
+Liste queue ivanoe & OK \\
+\hline
+Soumission clamart2 & OK \\
+\hline
+Liste queues clamart2 & OK \\
+\hline
+Lister le tmp de clamart2 & OK \\
+\hline
+\end{tabular}
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                            BIBLIOGRAPHY                            %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
