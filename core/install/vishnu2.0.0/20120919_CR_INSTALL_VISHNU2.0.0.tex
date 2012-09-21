@@ -56,7 +56,7 @@
 \usepackage{enumitem}
 %%%% OPTION
 %% Title and author of the document
-\title{Rapport d'installation de VISHNU 2.0.0}
+\title{Rapport d'installation de VISHNU 2.0.0 beta}
 \author{K. Coulomb}
 
 %%%% OPTION
@@ -166,20 +166,18 @@
     
 \subsection{Objectif}
 L'objectif de ce document est de faire un compte rendu de la mise à
-jour de VISHNU de la version 2.0.0 ainsi que du webboard sur les machines
+jour de VISHNU pour sa version 2.0.0 beta ainsi que la mise à disposition du WebBoard sur les machines
 de la plateforme de EDF R\&D. Cette mise à jour a été 
-réalisée en distant en utilisant le VPN par K. Coulomb et P. Martinez pour SysFera.
+réalisée à distance en utilisant le VPN par K. Coulomb et P. Martinez pour SysFera.
 
 \subsection{Plateforme}
 A la base, cette mise à jour devait \^etre r\'ealis\'ee sur la 
-plateforme de test de EDF. Toutefois, \`a cause d'un probl\`eme
+plateforme de tests de EDF. Toutefois, \`a cause d'un probl\`eme
 r\'eseau sur une partie des machines (le r\'eseau HPSLAB \'etait
 inaccessible), il n'\'etait pas possible d'installer sur la
-plateforme de test. De fait, les machines sur lesquelles l'installation
-a \'et\'e r\'ealis\'e correspondent aux machines utilis\'ees pour
-la production. L'\'el\'ement qui diff\`ere est que sur la plupart
-des machines, un compte unix diff\'erent sera utilis\'e que celui
-qui contient les installations. Dans un second temps, un déploiement
+plateforme de tests. De fait, les machines sur lesquelles l'installation
+a \'et\'e r\'ealis\'ee correspondent aux machines utilis\'ees en production. L'\'el\'ement qui diff\`ere est que sur la plupart
+des machines, un compte unix diff\'erent contenant les installations est utilis\'e. Dans un second temps, un déploiement
 utilisant les m\^emes comptes unix que la production a \'et\'e 
 utilis\'e.
 
@@ -205,9 +203,8 @@ utilis\'e.
 \section{Phase 1}
 \subsection{But}
 Lors de la premi\`ere phase de l'installation, vu que les
-machines de la plateforme de test \'etaient inaccessible,
-il a \'et\'e convenu par les diff\'erents partis de 
-r\'ealiser l'installation sur les machines de la
+machines de la plateforme de tests \'etaient inaccessibles,
+il a \'et\'e décidé de r\'ealiser l'installation sur les machines de la
 plateforme de production. Toutefois, pour \'eviter des
 conflits, cette installation a \'et\'e faite sur des comptes
 unix correspondants \`a d'autres utilisateurs que ceux 
@@ -244,18 +241,15 @@ la compilation de VISHNU s'est faite sans probl\`eme sur la machine.
 L'autre probl\`eme majeur est li\'e \`a la machine BGP. La compilation de 
 cmake a r\'eussi mais celle de VISHNU \'echouait avec des probl\`emes d'include
 directory. Apr\`es quelques petits tests pour essayer de r\'esoudre
-le probl\`eme, une discussion avec EDF a mis en avant que la machine
+le probl\`eme, une discussion avec EDF a mis en avant le fait que la machine
 allait bient\^ot \^etre arr\'et\'ee et qu'il ne fallait pas perdre
 de temps avec elle, de fait les efforts de r\'esolution de probl\`emes
 sont pass\'es sur le probl\`eme cmake sur ivanoe.
-Un autre probl\`eme a \'et\'e la mise en place d'un patch. SysFera s'est 
-rendu compte d'un bug dans VISHNU pour la restauration des configurations
-(commande vishnu\_restore\_configuration). De fait, apr\`es l'installation,
-un patch a \'et\'e appliqu\'e sur claui2q1 au module UMS. Il n'a pas \'et\'e
+Un autre probl\`eme a \'et\'e le fait de garder la cohérence au niveau du modèle de données entre
+VISHNU et le WebBoard. En effet, la restauration n'était pas possible lorsque des informations du WebBoard étaient enregistrées. SysFera
+a donc mis à disposition un patch permettant de restaurer une configuration sans blocage au niveau du modèle de données. Ce patch impacte uniquement le cot\'e serveur et il n'a pas \'et\'e
 appliqu\'e sur les autres machines car UMS n'est pas destin\'e \`a tourner 
-dessus. Ce patch impacte uniquement le cot\'e serveur.
-D'ailleurs, la mise en place de ce patch a \'et\'e ralentie
-par un probl\`eme d'espace disque sur la machine (No space left on device).
+dessus. Il est important de noter que la validation de ce patch a \'et\'e freiné par un probl\`eme d'espace disque sur la machine (No space left on device).
 
 \section{Phase 2}
 \subsection{But}
@@ -295,9 +289,8 @@ a \'et\'e ouvert. D'une mani\`ere g\'en\'erale, les connexions sautent
 de mani\`ere al\'eatoire, plus ou moins fr\'equement selon les jours.
 
 \section{Tests de validation}
-Sur VISHNU m\^eme, peu de tests ont \'et\'e fait pour valider 
-son installation, la priorit\'e est plus de valider le webboard
-et son int\'egration avec VISHNU. Des services repr\'esentatifs des modules 
+
+Les difficultés d'accès au VPN n'ont pas permis d'effectuer une liste exhaustive de tests. Des services repr\'esentatifs des modules 
 sur chaque machine ont \'et\'e manuellement appell\'es 
 (soumission de job et liste des queues sur TMS par exemple ou 
 connexion et liste des machines sur UMS). Vu que FMS et IMS ne sont
