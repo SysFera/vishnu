@@ -1,0 +1,6 @@
+Install cmake 2.8.9 sur toute machines dans le home
+aster4 : done
+claui2q1 : done (+ tout client)
+bgp : pb compil
+clay1pfr : prob
+ivanoe : ok

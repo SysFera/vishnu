@@ -1,0 +1,319 @@
+%%%% OPTION
+%% Change class according to your needs
+%%  - article (no chapter)
+%%  - report
+%%  - etc.
+\documentclass{article}
+
+
+\IfFileExists{ifxetex.sty}{%
+  \usepackage{ifxetex}%
+}{%
+  \newif\ifxetex
+  \xetexfalse
+}
+  \ifxetex
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{fancybox}
+\usepackage{makeidx}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{eurosym}
+
+\usepackage[hyperlink]{sysfera}
+
+
+
+%%%%
+%% TODO:
+%%  - ajouter une macro pour mettre l'objet du document
+%%  - faire les footers avec l'adresse et tels de SysFera
+%%  - enlever un max de paquets docbook
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the following macros to configure your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% Change language: fr/en
+%%  - for French: use french in babel, and fr in \setupsysferalocale
+%%  - for English: use english in babel, and en in \setupsysferalocale
+
+\usepackage[french]{babel}
+\setupsysferalocale{fr}
+\frenchbsetup{CompactItemize=false} % Fix itemize clash 
+\usepackage{enumitem}
+%%%% OPTION
+%% Title and author of the document
+\title{Rapport d'installation de VISHNU 2.0.0}
+\author{K. Coulomb}
+
+%%%% OPTION
+%% Document reference
+%% Use command \SFdocumentreference to set the document reference.
+%% Latter on, you can use the \SFthisdocument macro to retrieve
+%% this reference.
+\SFdocumentreference{20120919\_CR\_INSTALL\_VISHNU2.0.0}
+\SFprojectname{VISHNU}
+\SFprojectleader{E.P. Capo-Chichi}
+\SFclient{EDF}
+
+
+%%%% OPTION
+%% Release information. If the argument is not empty, then a box with
+%% the content of the argument will be visible at the top of the document
+%\SFreleaseinfo{Réalisé} % will show "Travail en cours" at the
+                                 % top of the page
+\SFreleaseinfo{} % won't show anything
+
+%%%% OPTION
+%% Draft watermark. You can also show a grey watermak on all pages of
+%% your document using the following command.
+%\showwatermark{DRAFT}
+
+
+%%%% OPTION
+%% Add a logo into the header.
+%% First parameter sets the width of the image relatively to the
+%% \textwidth
+%% Second parameter is the path to the image
+% \SFsetheadlogo{.25}{fig/logosysfera.pdf}
+
+%%%% OPTION
+%% Collaborators:
+%% You can redefine the Indexation of the document using the following command:
+\renewcommand{\SFindexation}{
+  \begin{SFindtable}
+    \SFinditem{\writtenby}{K. Coulomb}{19 septembre 2012}
+%    \SFinditem{\verifiedby}{E.P. CapoChichi}{06 avril 2012}
+%    \SFinditem{\approvedby}{E.P. CapoChichi}{06 avril 2012}
+  \end{SFindtable}
+}
+% \renewcommand{\SFindexation}{} % disable this table
+
+
+%%%% OPTION
+%% Revision History Table:
+%% Add a new \SFrevitem entry for adding a new entry in the revision
+%% history table.
+\renewcommand{\SFrevhistory}{
+\begin{SFrevtable}
+  \SFrevitem{1}{19/09/2012}{Premiere version}{K. Coulomb}
+\end{SFrevtable}
+}
+% \renewcommand{\SFrevhistory}{} % disable this table
+
+
+%%%% OPTION
+%% References Table
+%% Add a new \SFrefitem entry for adding a new entry in the list of
+%% reference documents.
+%\renewcommand{\SFreferenceTable}{
+%\begin{SFreftable}
+%  \SFrefitem{ref1}{techDocument}{Ce document}
+%  \SFrefitem{ref2}{techDocument}{Ce document}
+%\end{SFreftable}
+%}
+\renewcommand{\SFreferenceTable}{} % disable this table
+
+%%%% OPTION
+%% Authorization Table
+%% Add a new \SFauthviewitem entry for adding a new entry in the list of
+%% authorized users.
+\renewcommand{\SFauthview}{
+\begin{SFauthviewtable}
+  \SFauthviewitem{SysFera}{Tous les membres de SysFera}
+  \SFauthviewitem{EDF}{S. Kortas, D. Bateman}
+\end{SFauthviewtable}
+}
+% \renewcommand{\SFauthview}{} % disable this table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\makeindex
+\makeglossary
+
+
+\begin{document}
+
+\frontmatter % do not disable, this is used for page numbering
+\maketitle % do not disable, otherwise you won't have any title
+%%%% OPTION
+\tableofcontents % comment to disable the table of contents
+\mainmatter % do not disable, this is used for page numbering
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Write your document below this comment                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\section{Pr\'esentation}
+    
+\subsection{Objectif}
+L'objectif de ce document est de faire un compte rendu de la mise à
+jour de VISHNU de la version 2.0.0 ainsi que du webboard sur les machines
+de la plateforme de EDF R\&D. Cette mise à jour a été 
+réalisée en distant en utilisant le VPN par K. Coulomb et P. Martinez pour SysFera.
+
+\subsection{Plateforme}
+A la base, cette mise à jour devait \^etre r\'ealis\'ee sur la 
+plateforme de test de EDF. Toutefois, \`a cause d'un probl\`eme
+r\'eseau sur une partie des machines (le r\'eseau HPSLAB \'etait
+inaccessible), il n'\'etait pas possible d'installer sur la
+plateforme de test. De fait, les machines sur lesquelles l'installation
+a \'et\'e r\'ealis\'e correspondent aux machines utilis\'ees pour
+la production. L'\'el\'ement qui diff\`ere est que sur la plupart
+des machines, un compte unix diff\'erent sera utilis\'e que celui
+qui contient les installations. Dans un second temps, un déploiement
+utilisant les m\^emes comptes unix que la production a \'et\'e 
+utilis\'e.
+
+\subsection{Les machines sur comptes secondaires}
+\begin{itemize}
+\item claui2q1 (login vishnu2) : UMS, FMS, IMS, database, clients
+\item clamart2 (login kortas) : TMS de type torque/maui
+\item bgp (login kortas) : TMS de type LoadLeveler
+\item ivanoe (login : C70353) : TMS de type  Slurm
+\item aster4.cla.edfgdf.fr (login kortas) : TMS de type  LSF
+\item webboard (login vishnu) : Le webboard, clients VISHNU avec python/java
+\end{itemize}
+
+\subsection{Les machines sur comptes production}
+\begin{itemize}
+\item claui2q1 (login vishnu) : UMS, FMS, IMS, database
+\item clamart2 (login vishnu) : TMS de type torque/maui
+\item bgp (login vishnu) : TMS de type LoadLeveler
+\item ivanoe (login : vishnu) : TMS de type  Slurm
+\item aster4.cla.edfgdf.fr (login kortas) : TMS de type  LSF
+\end{itemize}
+
+\section{Phase 1}
+\subsection{But}
+Lors de la premi\`ere phase de l'installation, vu que les
+machines de la plateforme de test \'etaient inaccessible,
+il a \'et\'e convenu par les diff\'erents partis de 
+r\'ealiser l'installation sur les machines de la
+plateforme de production. Toutefois, pour \'eviter des
+conflits, cette installation a \'et\'e faite sur des comptes
+unix correspondants \`a d'autres utilisateurs que ceux 
+qui ont la version de production install\'ee (voir le d\'etail
+des machines avec les comptes secondaires). Le d\'eploiement
+de cette installation devra utiliser le m\^eme bus CORBA 
+que la version tournant actuellement. 
+
+\subsection{R\'ealisations}
+Vu que les \'el\'ements tels DIET, omniORB, boost \'etaient 
+d\'ej\`a install\'es sur les machines, ces \'el\'ements l\`a
+ont \'et\'e r\'eutilis\'es et non r\'einstall\'es. Il avait \'et\'e pr\'evu
+de mettre la derni\`ere version de DIET (2.8.1), mais vu que l'installation
+se d\'eroulait sur la plateforme de production,
+SysFera a jug\'e pr\'ef\'erable de ne pas installer la
+version de DIET la plus \`a jour car SysFera n'\'etait pas confiant
+quand \`a la bonne tenue de 2 versions de DIET diff\'erentes sur un 
+m\^eme bus CORBA. De plus, il fallait installer sur chaque machine
+une version de cmake plus r\'ecente car les besoins de VISHNU pour 
+la version 2.0.0 beta ont \'et\'e augment\'e. La version choisie a \'et\'e
+la release actuelle de cmake (2.8.9).
+
+\subsection{Probl\`emes rencontr\'es}
+Lors de cette premi\`eres phases, divers probl\`emes ont \'et\'e rencontr\'es.
+Tout d'abord, sur la machine ivanoe, la phase de compilation de cmake ne 
+fonctionnait pas. Pour \^etre pr\'ecis c'est la phase de configure qui bloquait
+syst\'ematiquement. Diff\'erentes versions de cmake ont \'et\'e essay\'ees (2.8.6,
+2.8.8, 2.8.9) sans succ\`es. En d\'esespoir de cause, les binaires
+pr\'ecompil\'es de cmake ont \'et\'e transf\'er\'es sur la machine et
+cela a permis de compiler VISHNU. A noter que diff\'erentes options du
+configure ont \'et\'e test\'ees (activer/d\'esactiver certains \'el\'ements)
+mais cela ne changeait pas le probl\`eme. Une fois ce probl\`eme r\'egl\'e,
+la compilation de VISHNU s'est faite sans probl\`eme sur la machine.
+L'autre probl\`eme majeur est li\'e \`a la machine BGP. La compilation de 
+cmake a r\'eussi mais celle de VISHNU \'echouait avec des probl\`emes d'include
+directory. Apr\`es quelques petits tests pour essayer de r\'esoudre
+le probl\`eme, une discussion avec EDF a mis en avant que la machine
+allait bient\^ot \^etre arr\'et\'ee et qu'il ne fallait pas perdre
+de temps avec elle, de fait les efforts de r\'esolution de probl\`emes
+sont pass\'es sur le probl\`eme cmake sur ivanoe.
+Un autre probl\`eme a \'et\'e la mise en place d'un patch. SysFera s'est 
+rendu compte d'un bug dans VISHNU pour la restauration des configurations
+(commande vishnu\_restore\_configuration). De fait, apr\`es l'installation,
+un patch a \'et\'e appliqu\'e sur claui2q1 au module UMS. Il n'a pas \'et\'e
+appliqu\'e sur les autres machines car UMS n'est pas destin\'e \`a tourner 
+dessus. Ce patch impacte uniquement le cot\'e serveur.
+D'ailleurs, la mise en place de ce patch a \'et\'e ralentie
+par un probl\`eme d'espace disque sur la machine (No space left on device).
+
+\section{Phase 2}
+\subsection{But}
+La seconde phase est bas\'ee sur la nouvelle version de DIET (2.8.1)
+qui a \'et\'e install\'ee par Mr Kortas sur les machines de 
+production sur les comptes unix de production. Le déploiement a utilis\'e
+un autre port et d'autres instances du bus de communication (CORBA)
+afin d'\'eviter au maximums d'\'eventuels conflits.
+
+\subsection{Probl\`emes}
+Les versions de VISHNU qui tournent d\'ej\`a sur les machines utilisent
+la version de DIET 2.8.0 et la hi\'erarchie est d\'ej\`a d\'eploy\'ee.
+Toutefois, lors du d\'eploiement de VISHNU 2.0.0 beta, malgré le 
+l'utilisation de CORBA sur un autre port, le démarrage des 
+\'el\'ements au travers des forwarders ne se faisait pas correctement.
+La source exacte du probl\`eme n'a pas \'et\'e identifi\'ee, mais 
+SysFera suppose que la pr\'esence de deux binaires forwarders diff\'erents
+repr\'esentants des tunnels entre les deux m\^emes machines est la
+cause du probl\`eme, le mauvais forwarder devant \^etre sollicit\'e 
+ceci devant entrainer un blocage au niveau de CORBA avec des objets 
+similaires diff\'erents entre la source en DIET 2.8.1 et la destination
+en DIET 2.8.0 (ou vice versa). 
+Pour valider cette source d'erreur, la plateforme de production a 
+\'et\'e coup\'ee, et cela laissait l'installation 2.0.0 fonctionner.
+SysFera a donc conclu que deux instances diff\'erentes de DIET ne peuvent 
+pas fonctionner simmultan\'ement en utilisant le m\'echanisme des
+forwarders.
+
+\section{Remarque g\'en\'erales}
+Contrairement \`a d'habitude, SysFera a du faire plusieurs 
+transferts de donn\'ees plut\^ot volumineux, avec la mise en
+place d'une nouvelle connexion en fibre. De ce fait, les 
+transferts \'etaient plus rapides et cette rapidit\'e des 
+transferts entrainait un crash du VPN. SysFera a donc
+contact\'e le support li\'e au VPN et un rapport d'incident 
+a \'et\'e ouvert. D'une mani\`ere g\'en\'erale, les connexions sautent
+de mani\`ere al\'eatoire, plus ou moins fr\'equement selon les jours.
+
+\section{Tests de validation}
+Sur VISHNU m\^eme, peu de tests ont \'et\'e fait pour valider 
+son installation, la priorit\'e est plus de valider le webboard
+et son int\'egration avec VISHNU. Des services repr\'esentatifs des modules 
+sur chaque machine ont \'et\'e manuellement appell\'es 
+(soumission de job et liste des queues sur TMS par exemple ou 
+connexion et liste des machines sur UMS).
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            BIBLIOGRAPHY                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% You can deactivate bibliography by commenting the following 3
+%% lines.
+%% If you wish to add a bibliography, you need to update the
+%% \biblography command. Its argument is the name of .bib file.
+%%\clearpage
+%\bibliography{techDocument}
+%\bibliographystyle{plain}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /BIBLIOGRAPHY                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\end{document}
