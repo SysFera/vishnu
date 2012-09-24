@@ -122,12 +122,10 @@ solveSubmitJob(diet_profile_t* pb) {
 			MachineServer machineServer(machine);
 			std::string machineName = machineServer.getMachineName();
 
-			//Create a ssh proxy
+			//Create a ssh proxy for creating the remote directory for input files
 			SSHJobExec sshJobExec(acLogin, machineName);
-
-			//Create the remote directory for input files
 			std::string remoteCmd = (boost::format("mkdir %1%")%inputDir).str();
-			if( sshJobExec.execCmd(remoteCmd)!=0) {
+			if( sshJobExec.execCmd(remoteCmd) != 0) {
 				throw UserException(ERRCODE_SYSTEM, "Cannot create the directory for input files: " + inputDir);
 			}
 
@@ -518,13 +516,17 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		ListStrings filePaths ;
 		std::ostringstream ossFileName("") ;
 		ossFileName << result.getJobId(); /* each line starts with the associated job id */
-		if( bfs::exists(result.getOutputPath()) ) {
-			filePaths.push_back( result.getOutputPath() ) ;
+		if( bfs::exists(result.getOutputPath())) {
+			filePaths.push_back(result.getOutputPath()) ;
 			ossFileName << " " << result.getJobId() << ".stdout" ;
+		} else {
+			throw SystemException(ERRCODE_INVDATA, "The output file does not longer exist "+result.getErrorPath());
 		}
-		if( bfs::exists(result.getErrorPath()) ) {
-			filePaths.push_back( result.getErrorPath() ) ;
+		if( bfs::exists(result.getErrorPath())) {
+			filePaths.push_back(result.getErrorPath()) ;
 			ossFileName << " " << result.getJobId() << ".stderr" ;
+		} else {
+			throw SystemException(ERRCODE_INVDATA, "The error file does not longer exist "+result.getErrorPath());
 		}
 		vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir()) ;
 		ossFileName << std::endl ;
@@ -643,9 +645,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
 		size_t nbFiles = filePaths.size() ;
 		char *fileIds[nbFiles] ;
-		std::cout << "H0   "<< nbFiles << std::endl ;
 		for(int i = 0; i < nbFiles;  i++) {
-			std::cout << "FILE   "<< filePaths[i] << std::endl ;
 			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
 		}
