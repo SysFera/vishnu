@@ -35,10 +35,10 @@
 */
 
 /**
- * \file TorqueServer.hpp
- * \brief This file contains the VISHNU TorqueServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com)
- * \date April 2011
+ * \file PbsProServer.cpp
+ * \brief This file contains the VISHNU PbsProServer class.
+ * \author Amine Bsila (amine.bsila@sysfera.com)
+ * \date September 2012
  */
 
 
@@ -48,13 +48,13 @@
 #include <boost/algorithm/string.hpp>
 
 extern "C" {
-#include "pbs_ifl.h" //Torque includes
+#include "pbs_ifl.h" //PbsPro includes
 #include "pbs_error.h"
 #include "cmds.h"
 #include "pbs_sub.h"
 }
 
-#include "TorqueServer.hpp"
+#include "PbsProServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
@@ -64,20 +64,20 @@ using namespace vishnu;
 /**
  * \brief Constructor
  */
-TorqueServer::TorqueServer():BatchServer() {
+PbsProServer::PbsProServer():BatchServer() {
   serverOut[0] = '\0'; //serveur par defaut
 }
 
 /**
- * \brief Function to submit Torque job
+ * \brief Function to submit PbsPro job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
  * \param job The job data structure
- * \param envp The list of environment variables used by Torque submission function
+ * \param envp The list of environment variables used by PbsPro submission function
  * \return raises an exception on error
  */
 int
-TorqueServer::submit(const char* scriptPath,
+PbsProServer::submit(const char* scriptPath,
                      const TMS_Data::SubmitOptions& options,
                      TMS_Data::Job& job, char** envp) {
 
@@ -91,9 +91,6 @@ TorqueServer::submit(const char* scriptPath,
   //processes the options
   processOptions(scriptPath, options, cmdsOptions);
   argc = cmdsOptions.size()+2;
-  std::cout << "********************************************************" << std::endl;
-  std::cout << "After processOptions the script path is :" << scriptPath << " the cmdsoptions is" << cmdsOptions << std::endl;
-  std::cout << "********************************************************" << std::endl;
 
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
@@ -113,7 +110,7 @@ TorqueServer::submit(const char* scriptPath,
   } else {
     int nbCpu;
     int nbNodes;
-    nbNodes = getTorqueNbNodesInScript(scriptPath, nbCpu);
+    nbNodes = getPbsProNbNodesInScript(scriptPath, nbCpu);
     if(nbNodes==-1) {
       nbNodes=1;
     }
@@ -124,33 +121,27 @@ TorqueServer::submit(const char* scriptPath,
 
   destination[0] = '\0';
   serverOut[0] = '\0';
-  std::cout << "********************************************************" << std::endl;
-  std::cout << "Before parsing the script" << std::endl;
-  std::cout << "********************************************************" << std::endl;
   //parses the scripthPath and sets the options values
   pbs_prepare_script(argc, argv, envp, scriptTmp, destination, serverOut, &attrib);
 
   errMsg[0] = '\0';
   get_pbs_error_msg(errMsg);
-  std::cout << "********************************************************" << std::endl;
-  std::cout << "After parsing the script end the error msg is" << errMsg << std::endl;
-  std::cout << "********************************************************" << std::endl;
 
 
   if(errMsg[0]!='\0') {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "TORQUE ERROR: "+std::string(errMsg));
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "PBS ERROR: "+std::string(errMsg));
   }
 
   int connect = cnt2server(serverOut);
   if (connect <= 0) {
     std::ostringstream connect_error;
-    connect_error << "TORQUE ERROR: pbs_submit: cannot connect to server ";
+    connect_error << "PBS ERROR: pbs_submit: cannot connect to server ";
     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbse_to_txt(pbs_errno) << std::endl;
 
     if (getenv("PBSDEBUG") != NULL)
     {
-      connect_error << "TORQUE ERROR: pbs_submit: pbs_server daemon may not be running on host";
-      connect_error << "or hostname in file '$TORQUEHOME/server_name' may be incorrect" << std::endl;
+      connect_error << "PBS ERROR: pbs_submit: pbs_server daemon may not be running on host";
+      connect_error << "or hostname in file '$PBSHOME/server_name' may be incorrect" << std::endl;
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
   }
@@ -158,9 +149,6 @@ TorqueServer::submit(const char* scriptPath,
   pbs_errno = 0;
   char*jobId = pbs_submit(connect, (struct attropl *)attrib,
                           scriptTmp, destination, NULL);
-  std::cout << "********************************************************" << std::endl;
-  std::cout << "After pbs_submit scriptTmp = " << scriptTmp << std::endl;
-  std::cout << "********************************************************" << std::endl;
 
   if (jobId == NULL) {
     std::ostringstream submit_error;
@@ -168,12 +156,12 @@ TorqueServer::submit(const char* scriptPath,
 
     if (errmsg != NULL)
     {
-      submit_error << "TORQUE ERROR: pbs_submit: " << errmsg  << std::endl;
+      submit_error << "PBS ERROR: pbs_submit: " << errmsg  << std::endl;
 
     }
     else
     {
-      submit_error << "TORQUE ERROR: pbs_submit: Error (" << pbs_errno << "-";
+      submit_error << "PBS ERROR: pbs_submit: Error (" << pbs_errno << "-";
       submit_error << pbse_to_txt(pbs_errno) << std::endl;
     }
     pbs_disconnect(connect);
@@ -204,7 +192,7 @@ TorqueServer::submit(const char* scriptPath,
  * \return raises an exception on error
  */
 void
-TorqueServer::processOptions(const char* scriptPath,
+PbsProServer::processOptions(const char* scriptPath,
                              const TMS_Data::SubmitOptions& options,
                              std::vector<std::string>&cmdsOptions) {
 
@@ -308,7 +296,7 @@ TorqueServer::processOptions(const char* scriptPath,
     istringstream isNode;
     std::string optionNodesValue = options.getNbNodesAndCpuPerNode();
     if(optionNodesValue.empty()) {
-      node = getTorqueNbNodesInScript(scriptPath, cpu);
+      node = getPbsProNbNodesInScript(scriptPath, cpu);
       if(options.getNbCpu()!=-1) {
         cpu=options.getNbCpu();
       }
@@ -330,7 +318,7 @@ TorqueServer::processOptions(const char* scriptPath,
           std::string queueName = queue->getName();
           TMS_Data::ListQueues* resourceMin =  queuesResourceMin(queueName);
 
-          std::string walltimeStr = getTorqueResourceValue(scriptPath, "walltime");
+          std::string walltimeStr = getPbsProResourceValue(scriptPath, "walltime");
           long walltime = options.getWallTime()==-1?vishnu::convertStringToWallTime(walltimeStr):options.getWallTime();
           long qwalltimeMax = queue->getWallTime();
           long qwalltimeMin = ((resourceMin->getQueues()).get(0))->getWallTime();
@@ -357,7 +345,7 @@ TorqueServer::processOptions(const char* scriptPath,
  * \return raises an exception on error
  */
 int
-TorqueServer::cancel(const char* jobId) {
+PbsProServer::cancel(const char* jobId) {
   char remoteServer[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
   return pbs_cancel(jobId, remoteServer);
 }
@@ -370,7 +358,7 @@ TorqueServer::cancel(const char* jobId) {
  * \return raises an exception on error
  */
 int
-TorqueServer::pbs_cancel(const char* jobId,
+PbsProServer::pbs_cancel(const char* jobId,
                          char remoteServer[],
                          bool isLocal) {
 
@@ -384,7 +372,7 @@ TorqueServer::pbs_cancel(const char* jobId,
     if (get_server(tmsJobId, tmsJobIdOut, serverOut))
     {
       std::ostringstream jobIdError;
-      jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
+      jobIdError << "PBS ERROR: pbs_deljob: illegally formed job identifier: " << tmsJobId << std::endl;
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
     }
   }
@@ -398,7 +386,7 @@ TorqueServer::pbs_cancel(const char* jobId,
   if (connect <= 0)
   {
     std::ostringstream connect_error;
-    connect_error << "TORQUE ERROR: cannot connect to server ";
+    connect_error << "PBS ERROR: cannot connect to server ";
     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbse_to_txt(pbs_errno) << std::endl;
 
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
@@ -411,9 +399,9 @@ TorqueServer::pbs_cancel(const char* jobId,
   if (stat && (pbs_errno != PBSE_UNKJOBID)) {
     char* errmsg = pbs_geterrmsg(connect);
     if(errmsg!=NULL) {
-       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: " << errmsg  << " " << tmsJobIdOut << std::endl;
+       pbs_del_error <<  "PBS ERROR: pbs_deljob: " << errmsg  << " " << tmsJobIdOut << std::endl;
     } else {
-       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: Server returned error " << pbs_errno << " for job " << tmsJobIdOut << std::endl;
+       pbs_del_error <<  "PBS ERROR: pbs_deljob: Server returned error " << pbs_errno << " for job " << tmsJobIdOut << std::endl;
     }
     pbs_disconnect(connect);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, pbs_del_error.str());
@@ -444,7 +432,7 @@ TorqueServer::pbs_cancel(const char* jobId,
  * \return -1 if the job is unknown or server not  unavailable
  */
 int
-TorqueServer::getJobState(const std::string& jobId) {
+PbsProServer::getJobState(const std::string& jobId) {
 
   int connect;
   struct batch_status *p_status = NULL;
@@ -456,13 +444,13 @@ TorqueServer::getJobState(const std::string& jobId) {
   if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
-    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
+    jobIdError << "PBS ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
   } else {
     serverOut[0] = '\0';
   }
 
-  // Connect to the torque server
+  // Connect to the PbsPro server
   connect = cnt2server(serverOut);
 
   if(connect <= 0) {
@@ -476,7 +464,7 @@ TorqueServer::getJobState(const std::string& jobId) {
       a = p_status->attribs;
       while(a!=NULL) {
          if(!strcmp(a->name, ATTR_state)){
-          state = convertTorqueStateToVishnuState(std::string(a->value));
+           state = convertPbsProStateToVishnuState(std::string(a->value));
           break;
          }
       a = a->next;
@@ -492,7 +480,7 @@ return state;
  * \return 0 if the job is unknown or server not  unavailable
  */
 time_t
-TorqueServer::getJobStartTime(const std::string& jobId) {
+PbsProServer::getJobStartTime(const std::string& jobId) {
 
   int connect;
   struct batch_status *p_status = NULL;
@@ -504,13 +492,13 @@ TorqueServer::getJobStartTime(const std::string& jobId) {
   if (get_server(strdup(jobId.c_str()), tmsJobIdOut, serverOut))
   {
     std::ostringstream jobIdError;
-    jobIdError << "TORQUE ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
+    jobIdError << "PBS ERROR: pbs_deljob: illegally formed job identifier: " << jobId.c_str() << std::endl;
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,  jobIdError.str());
   } else {
     serverOut[0] = '\0';
   }
 
-  // Connect to the torque server
+  // Connect to the PbsPro server
   connect = cnt2server(serverOut);
 
   if(connect <= 0) {
@@ -537,12 +525,12 @@ return startTime;
 }
 
 /**
- * \brief Function to convert the Torque state into VISHNU state
+ * \brief Function to convert the PbsPro state into VISHNU state
  * \param state the state to convert
  * \return VISHNU state
  */
 int
-TorqueServer::convertTorqueStateToVishnuState(std::string state) {
+PbsProServer::convertPbsProStateToVishnuState(std::string state) {
 
   if(state.compare("T")==0) {
     return 1; //SUBMITTED
@@ -562,12 +550,12 @@ TorqueServer::convertTorqueStateToVishnuState(std::string state) {
 }
 
 /**
- * \brief Function to convert the Torque priority into VISHNU priority
+ * \brief Function to convert the PbsPro priority into VISHNU priority
  * \param prio the priority to convert
  * \return VISHNU state
  */
 int
-TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
+PbsProServer::convertPbsProPrioToVishnuPrio(const int& prio) {
 
   if(prio < -512) {
     return 1;
@@ -589,7 +577,7 @@ TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
  * \param p: The batch status structure containing the job info
  */
 void
-TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
+PbsProServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   struct attrl *a;
   size_t pos_found;
   string str;
@@ -699,7 +687,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   job.setJobName(name);
   job.setOwner(owner);
   if (state.compare("")!=0) {
-    job.setStatus(convertTorqueStateToVishnuState(state));
+    job.setStatus(convertPbsProStateToVishnuState(state));
   } else {
     job.setStatus(0);
   }
@@ -709,7 +697,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   job.setErrorPath(error);
 
   if (prio.compare("")!=0) {
-    job.setJobPrio(convertTorquePrioToVishnuPrio(convertToInt(prio.c_str())));
+    job.setJobPrio(convertPbsProPrioToVishnuPrio(convertToInt(prio.c_str())));
   } else {
     job.setJobPrio(100);
   }
@@ -741,7 +729,7 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   }
 
   if (mem.compare("")!=0) {
-    job.setMemLimit(convertTorqueMem(mem));
+    job.setMemLimit(convertPbsProMem(mem));
   } else {
     job.setMemLimit(0);
   }
@@ -768,23 +756,23 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
  * \return The requested status in to ListQueues data structure
  */
 TMS_Data::ListQueues*
-TorqueServer::listQueues(const std::string& optqueueName) {
+PbsProServer::listQueues(const std::string& optqueueName) {
 
   int connect;
   std::string errorMsg;
 
   serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
-  // Connect to the torque server
+  // Connect to the PbsPro server
   connect = cnt2server(serverOut);
 
   if (connect <= 0)
   {
-    errorMsg = "TORQUE: pbs_statque: cannot connect to server ";
+    errorMsg = "PBS: pbs_statque: cannot connect to server ";
 
     if (getenv("PBSDEBUG") != NULL)
     {
-      errorMsg.append("TORQUE: pbs_statque: pbs_server daemon may not be running on host");
-      errorMsg.append(" or hostname in file '$TORQUEHOME/server_name' may be incorrect\n");
+      errorMsg.append("PBS: pbs_statque: pbs_server daemon may not be running on host");
+      errorMsg.append(" or hostname in file '$PBSHOME/server_name' may be incorrect\n");
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
@@ -802,11 +790,11 @@ TorqueServer::listQueues(const std::string& optqueueName) {
     char* errmsg = pbs_geterrmsg(connect);
     if(errmsg!=NULL)
     {
-      errorMsg = "TORQUE: pbs_statque: ";
+      errorMsg = "PBS: pbs_statque: ";
       errorMsg.append(std::string(errmsg));
     }
     else {
-      errorMsg = "TORQUE: pbs_statque: getting status of server\n";
+      errorMsg = "PBS: pbs_statque: getting status of server\n";
     }
 
     pbs_disconnect(connect);
@@ -878,7 +866,7 @@ TorqueServer::listQueues(const std::string& optqueueName) {
         } else if(!strcmp(a->name, ATTR_rescmax)){
           if(!strcmp(a->resource, "mem")) {
             std::string mem = std::string(a->value);
-            queue->setMemory(convertTorqueMem(mem));
+            queue->setMemory(convertPbsProMem(mem));
           } else if(!strcmp(a->resource, "ncpus")) {
             queue->setMaxProcCpu(vishnu::convertToInt(std::string(a->value)));
           }
@@ -892,7 +880,7 @@ TorqueServer::listQueues(const std::string& optqueueName) {
             queue->setMaxJobCpu(nbCpu);
           }
         } else if (!strcmp(a->name, ATTR_p)){
-          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
+          queue->setPriority(convertPbsProPrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
         } else if (!strcmp(a->name, ATTR_comment)) {
           queue->setDescription(std::string(a->value));
         }
@@ -908,13 +896,13 @@ TorqueServer::listQueues(const std::string& optqueueName) {
 }
 
 /**
- * \brief Function to get the number of nodes in the torque node format
+ * \brief Function to get the number of nodes in the PbsPro node format
  * \param format The node format
  * \param nbCpu The minimum number of cpu per node
  * \return the number of node
  */
 int
-TorqueServer::getNbNodesInNodeFormat(const std::string& format,
+PbsProServer::getNbNodesInNodeFormat(const std::string& format,
                                      int& nbCpu,
                                      int& maxNbCpu) {
 
@@ -953,13 +941,13 @@ TorqueServer::getNbNodesInNodeFormat(const std::string& format,
 }
 
 /**
- * \brief Function to get the torque formated cpu per node
+ * \brief Function to get the PbsPro formated cpu per node
  * \param cpu The given cpu in string
  * \param scriptPath The path of the script that enventually contain the node format or the number of node
  * \return formated cpu per node
  */
 std::string
-TorqueServer::getFormatedCpuPerNode(const int& cpu,
+PbsProServer::getFormatedCpuPerNode(const int& cpu,
                                     const std::string& scriptPath) {
 
   std::string nbCpuStr = vishnu::convertToString(cpu);
@@ -1026,13 +1014,13 @@ TorqueServer::getFormatedCpuPerNode(const int& cpu,
 
 
 /**
- * \brief Function to get the torque number of nodes in script
+ * \brief Function to get the PbsPro number of nodes in script
  * \param scriptPath The path of the script that enventually contain the node format or the number of node
  * \param nbCpu The maximum number of cpus in the script
  * \return the number of nodes in the given script
  */
 int
-TorqueServer::getTorqueNbNodesInScript(const std::string& scriptPath, int& maxNbCpu) {
+PbsProServer::getPbsProNbNodesInScript(const std::string& scriptPath, int& maxNbCpu) {
 
   std::string scriptContent = vishnu::get_file_content(scriptPath);
   std::istringstream iss(scriptContent);
@@ -1072,7 +1060,7 @@ TorqueServer::getTorqueNbNodesInScript(const std::string& scriptPath, int& maxNb
  * \param src The string to modify
  */
 void
-TorqueServer::findAndInsert(const std::string& valueToFind,
+PbsProServer::findAndInsert(const std::string& valueToFind,
                             const std::string& valueToInsert,
                             const size_t& begin,
                             size_t& end,
@@ -1093,7 +1081,7 @@ TorqueServer::findAndInsert(const std::string& valueToFind,
 }
 
 /**
- * \brief Function to compute the number of nodes and cpus in the torque format nodes
+ * \brief Function to compute the number of nodes and cpus in the PbsPro format nodes
  * \param nextNodeContent The node content to parse
  * \param ppn The syntaxe containing the number of processors per node
  * \param nbNodes The computed number of nodes
@@ -1101,7 +1089,7 @@ TorqueServer::findAndInsert(const std::string& valueToFind,
  * \param nbCpu The maximum numbers of cpus
  */
 void
-TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
+PbsProServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
                                      const std::string& ppn,
                                      int& nbNodes,
                                      int& nbCpu,
@@ -1133,12 +1121,12 @@ TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
 }
 
 /**
- * \brief Function to convert torque memory into mb
+ * \brief Function to convert PbsPro memory into mb
  * \param memStr memory to convert
  * \return the converted memory
  */
 int
-TorqueServer::convertTorqueMem(const std::string& memStr) {
+PbsProServer::convertPbsProMem(const std::string& memStr) {
 
   size_t posSuffix = memStr.find_first_not_of("0123456789");
   int mem;
@@ -1170,7 +1158,7 @@ TorqueServer::convertTorqueMem(const std::string& memStr) {
     } else if(suffix.compare("tw")==0) {
       mem = mem << 23;
     }
-  } else { //default value of torque is in byte
+  } else { //default value of PbsPro is in byte
     mem = vishnu::convertToInt(memStr);
     mem = mem +((1 << 20)-1);
     mem = mem >> 20;
@@ -1183,7 +1171,7 @@ TorqueServer::convertTorqueMem(const std::string& memStr) {
  * \param listOfJobs the ListJobs structure to fill
  * \param ignoredIds the list of job ids to ignore
  */
-void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+void PbsProServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                                   const std::vector<string>& ignoredIds) {
 
    int connect = cnt2server(serverOut);
@@ -1192,13 +1180,13 @@ void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
    {
      std::ostringstream connect_error;
 
-     connect_error << "TORQUE ERROR: pbs_selstat: cannot connect to server ";
+     connect_error << "PBS ERROR: pbs_selstat: cannot connect to server ";
      connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbse_to_txt(pbs_errno) << std::endl;
 
      if (getenv("PBSDEBUG") != NULL)
      {
-       connect_error <<  "TORQUE ERROR: pbs_server daemon may not be running on host";
-       connect_error <<  " or hostname in file '$TORQUEHOME/server_name' may be incorrect" << endl;
+       connect_error <<  "PBS ERROR: pbs_server daemon may not be running on host";
+       connect_error <<  " or hostname in file '$PBSHOME/server_name' may be incorrect" << endl;
      }
      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
    }
@@ -1244,7 +1232,7 @@ void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 }
 
 /**
- * \brief Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script
+ * \brief Function to get the value of PbsPro resource (nodes, walltime, cpu) in the script
  * \param file The file contain the script to scan
  * \param resourceName The name of the option (nodes, walltime, cpu) whose value will be returned
  * \return The value of the resource
@@ -1253,7 +1241,7 @@ std::string
 PbsProServer::getPbsProResourceValue(const char* file, const std::string& resourceName) {
 
   std::string resourceValue;
-  std::string torquePrefix = "#PBS";
+  std::string pbsPrefix = "#PBS";
   std::string line;
   ifstream ifile(file);
   if (ifile.is_open()) {
@@ -1264,8 +1252,8 @@ PbsProServer::getPbsProResourceValue(const char* file, const std::string& resour
         continue;
       }
       line = line.erase(0, pos);
-      if(boost::algorithm::starts_with(line,torquePrefix)){
-        line = line.substr(torquePrefix.size());
+      if(boost::algorithm::starts_with(line,pbsPrefix)){
+        line = line.substr(pbsPrefix.size());
         pos = line.find("-l");
         if(pos!=std::string::npos){
           pos = line.find(resourceName+"=", pos+2);
@@ -1293,17 +1281,17 @@ PbsProServer::queuesResourceMin(const std::string& optqueueName) {
   std::string errorMsg;
 
   serverOut[0] = '\0'; //le bon a recuperer dans la base vishnu
-  // Connect to the torque server
+  // Connect to the PbsPro server
   connect = cnt2server(serverOut);
 
   if (connect <= 0)
   {
-    errorMsg = "TORQUE: pbs_statque: cannot connect to server ";
+    errorMsg = "PBS: pbs_statque: cannot connect to server ";
 
     if (getenv("VPBSDEBUG") != NULL)
     {
-      errorMsg.append("TORQUE: pbs_statque: pbs_server daemon may not be running on host");
-      errorMsg.append(" or hostname in file '$TORQUEHOME/server_name' may be incorrect\n");
+      errorMsg.append("PBS: pbs_statque: pbs_server daemon may not be running on host");
+      errorMsg.append(" or hostname in file '$PBSHOME/server_name' may be incorrect\n");
     }
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
   }
@@ -1320,11 +1308,11 @@ PbsProServer::queuesResourceMin(const std::string& optqueueName) {
     char* errmsg = pbs_geterrmsg(connect);
     if(errmsg!=NULL)
     {
-      errorMsg = "TORQUE: pbs_statque: ";
+      errorMsg = "PBS: pbs_statque: ";
       errorMsg.append(std::string(errmsg));
     }
     else {
-      errorMsg = "TORQUE: pbs_statque: getting status of server\n";
+      errorMsg = "PBS: pbs_statque: getting status of server\n";
     }
 
     pbs_disconnect(connect);
@@ -1377,7 +1365,7 @@ PbsProServer::queuesResourceMin(const std::string& optqueueName) {
             queue->setNode(vishnu::convertToInt(std::string(a->value)));
           }
         } else if (!strcmp(a->name, ATTR_p)){
-          queue->setPriority(convertTorquePrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
+          queue->setPriority(convertPbsProPrioToVishnuPrio(vishnu::convertToInt(std::string(a->value))));
         } else if (!strcmp(a->name, ATTR_comment)) {
           queue->setDescription(std::string(a->value));
         }

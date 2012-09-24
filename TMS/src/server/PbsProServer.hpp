@@ -25,7 +25,7 @@ public:
   PbsProServer();
   
   /**
-   * \brief Function to submit Torque job
+   * \brief Function to submit PbsPro job
    * \param scriptPath the path to the script containing the job characteristique
    * \param options the options to submit job
    * \param job The job data structure
@@ -136,7 +136,7 @@ private:
               struct batch_status *p);
   
   /**
-   * \brief Function to get the number of nodes in the torque node format
+   * \brief Function to get the number of nodes in the PbsPro node format
    * \param format The node format
    * \param nbCpu The minimum number of cpu per node
    * \param maxNbCpu The maximum number of cpu per node
@@ -148,7 +148,7 @@ private:
                          int& maxNbCpu);
   
   /**
-   * \brief Function to get the torque formated cpu per node
+   * \brief Function to get the PbsPro formated cpu per node
    * \param cpu The given cpu in string
    * \param scriptPath The path of the script that enventually contain the node format or the number of node
    * \return formated cpu per node
@@ -173,7 +173,7 @@ private:
                 std::string& src);
   
   /**
-   * \brief Function to compute the number of nodes and cpus in the torque format nodes
+   * \brief Function to compute the number of nodes and cpus in the PbsPro format nodes
    * \param nextNodeContent The node content to parse
    * \param ppn The syntaxe containing the number of processors per node
    * \param nbNodes The computed number of nodes
@@ -188,7 +188,7 @@ private:
                          int& maxNbCpu);
   
   /**
-   * \brief Function to get the torque number of nodes in cripy
+   * \brief Function to get the PbsPro number of nodes in cripy
    * \param scriptPath The path of the script that enventually contain the node format or the number of node
    * \param nbCpu The maximum number of cpus in the script
    * \return the number of nodes in the given script
@@ -198,7 +198,7 @@ private:
                            int& nbCpu);
   
   /**
-   * \brief Function to get the value of TORQUE resource (nodes, walltime, cpu) in the script
+   * \brief Function to get the value of PbsPro resource (nodes, walltime, cpu) in the script
    * \param file The file contain the script to scan
    * \param resourceName The name of the option (nodes, walltime, cpu) whose value will be returned
    * \return The value of the resource
@@ -216,7 +216,7 @@ private:
   queuesResourceMin(const std::string& optQueueName);
   
   /**
-   * \brief Function to convert torque memory into mb
+   * \brief Function to convert PbsPro memory into mb
    * \param memStr memory to convert
    * \return the converted memory
    */
