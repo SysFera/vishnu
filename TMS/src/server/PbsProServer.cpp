@@ -790,7 +790,7 @@ PbsProServer::listQueues(const std::string& optqueueName) {
     }
     else {
       errorMsg = "PBS: pbs_statque: getting status of server\n";
-l    }
+    }
 
     pbs_disconnect(connect);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, errorMsg);
