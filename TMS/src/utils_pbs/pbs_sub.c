@@ -2383,6 +2383,7 @@ int parse_file(
           /* NOTE:  did enforce alpha start previously - relax this constraint
                     allowing numeric job names (CRI - 6/26/07) */
           
+
           if (check_job_name(optarg, 0) == 0)
             {
             set_attr(&attrib, ATTR_N, optarg);
@@ -3159,6 +3160,7 @@ int pbs_prepare_script(
 
   char *submit_args_str = NULL;       /* buffer to hold args */
   int   argi, argslen = 0;
+
  
   initialize_pbs_error_msg(PBS_ERROR_MSG);
 
@@ -3319,6 +3321,7 @@ int pbs_prepare_script(
   }    /* END if (load_config(config_buf,sizeof(config_buf)) == 0) */
 
   /* NOTE:  load config before processing opts since config may modify how opts are handled */
+
   
   errflg = parse_file(argc, argv, 0);  /*get cmd-line options */
 
