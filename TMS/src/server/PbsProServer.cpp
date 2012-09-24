@@ -69,7 +69,6 @@ PbsProServer::PbsProServer():BatchServer() {
 }
 
 /**
-
  * \brief Function to submit PbsPro job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
@@ -430,6 +429,7 @@ PbsProServer::pbs_cancel(const char* jobId,
  */
 int
 PbsProServer::getJobState(const std::string& jobId) {
+
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
@@ -445,7 +445,6 @@ PbsProServer::getJobState(const std::string& jobId) {
   } else {
     serverOut[0] = '\0';
   }
-
 
   // Connect to the PbsPro server
   connect = cnt2server(serverOut);
@@ -478,6 +477,7 @@ return state;
  */
 time_t
 PbsProServer::getJobStartTime(const std::string& jobId) {
+
   int connect;
   struct batch_status *p_status = NULL;
   struct attrl *a;
