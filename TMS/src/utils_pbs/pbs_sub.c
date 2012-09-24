@@ -1853,7 +1853,7 @@ int parse_file(
 
       case 'c': //TODO: to check pbs version in this case
  
-      #if 0
+#if 0
         if_cmd_line(c_opt)
           {
           c_opt = passet;
@@ -3322,7 +3322,6 @@ int pbs_prepare_script(
 
   /* NOTE:  load config before processing opts since config may modify how opts are handled */
 
-  
   errflg = parse_file(argc, argv, 0);  /*get cmd-line options */
 
   if (errflg || ((optind + 1) < argc))
