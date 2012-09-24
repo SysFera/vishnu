@@ -126,6 +126,7 @@ PbsProServer::submit(const char* scriptPath,
   errMsg[0] = '\0';
   get_pbs_error_msg(errMsg);
 
+
   if(errMsg[0]!='\0') {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "PBS ERROR: "+std::string(errMsg));
   }
