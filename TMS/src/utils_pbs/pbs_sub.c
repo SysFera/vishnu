@@ -3160,7 +3160,6 @@ int pbs_prepare_script(
 
   char *submit_args_str = NULL;       /* buffer to hold args */
   int   argi, argslen = 0;
-
  
   initialize_pbs_error_msg(PBS_ERROR_MSG);
 
