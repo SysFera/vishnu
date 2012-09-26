@@ -340,6 +340,64 @@ PbsProServer::processOptions(const char* scriptPath,
 }
 
 /**
+* \brief Function to treat the script submission options
+* \param scriptPath The job script path
+* \param cmdsOptions The list of the option value
+* \return raises an exception on error
+*/
+void
+processScriptOptions(const char* scriptPath,
+                     std::vector<std::string>& cmdsOptions){
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  std::istringstream iss(scriptContent);
+  std::string line;
+  std::string value;
+  std::string key;
+  while(!iss.eof()) {
+    getline(iss, line);
+    size_t pos = line.find('#');
+    if(pos==string::npos) {
+      continue;
+    }
+    line = line.erase(0, pos);
+    if(boost::algorithm::starts_with(line, "#PBS")){
+      line = line.substr(std::string("#PBS").size());
+      pos = line.find("-");
+      if(pos!=std::string::npos){
+        key = line.substr(pos, 2);
+        cmdsOptions.push_back(key);
+        line = line.substr(pos+2);
+        boost::algorithm::trim(line);
+        
+        while((pos = line.find(","))!=std::string::npos){
+          value =
+        }
+        
+
+        
+      }
+    }
+  }
+  
+  
+}
+
+/**
+ * \brief Function to treat the default submission options
+ * \param scriptPath The job script path
+ * \param options the object which contains the SubmitOptions options values
+ * \param cmdsOptions The list of the option value
+ * \return raises an exception on error
+ */
+void
+processDefaultOptions(std::vector<std::string>& scriptOptions,
+                      std::vector<std::string>& cmdsOptions){
+
+
+  
+}
+
+/**
  * \brief Function to cancel job
  * \param jobId the identifier of the job to cancel
  * \return raises an exception on error

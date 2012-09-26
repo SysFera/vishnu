@@ -240,6 +240,9 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
 	case SGE:
 		value = "SGE";
 		break;
+        case PBSPRO:
+                value = "PBSPRO";
+                break;        
 	default:
 		value = "UNKNOWN_BATCH_TYPE";
 		break;
