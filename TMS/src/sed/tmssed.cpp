@@ -78,6 +78,18 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
 #endif
       batchType = TORQUE;
+    } else if (batchTypeStr == "PBS") {
+      std:cout << "********************************************************************" << std::endl;
+      std:cout << "*******************Here *************" << std::endl;
+      std:cout << "********************************************************************" << std::endl;
+#ifndef HAVE_PBSPRO_10_4
+      
+      std::cerr << std::endl;
+      std::cerr << "Error: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library" << std::endl;
+      std::cerr << std::endl;
+      exit(1);
+#endif
+      batchType = PBSPRO;
     } else if (batchTypeStr == "LOADLEVELER") {
 #ifndef HAVE_LOADLEVELER_3_5
       std::cerr << std::endl;
@@ -113,7 +125,7 @@ int main(int argc, char* argv[], char* envp[]) {
       batchType = SGE;
     } else {
       std::cerr << std::endl;
-      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')" << std::endl;
+      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS')" << std::endl;
       std::cerr << std::endl;
       exit(1);
     }

@@ -65,7 +65,28 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  } else if(mbatchType==SLURM) {
+  }else if(mbatchType==PBSPRO) {
+    
+    mconversionTable[group]                = "#PBS -W group_list=";
+    mconversionTable[workingDir]           = "#PBS -d ";
+    mconversionTable[jobName]              = "#PBS -N ";
+    mconversionTable[jobOutput]            = "#PBS -o ";
+    mconversionTable[jobError]             = "#PBS -e ";
+    mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
+    mconversionTable[cpuTime]              = "#PBS -l cput=";
+    mconversionTable[nbCpu]                = "## PBS -l "; //special case
+    mconversionTable[nbNodesAndCpuPerNode] = "#PBS -l "; //special case
+    mconversionTable[mem]                  = "#PBS -l mem=";
+    mconversionTable[mailNotification]     = "#PBS -m "; //special case
+    mconversionTable[mailNotifyUser]       = "#PBS -M ";
+    mconversionTable[queue]                = "#PBS -q ";
+    
+    mconversionTable[loadLevelerSec]       = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
+    
+  }else if(mbatchType==SLURM) {
 
     mconversionTable[group]                = "#SBATCH --gid=";
     mconversionTable[workingDir]           = "#SBATCH -D ";

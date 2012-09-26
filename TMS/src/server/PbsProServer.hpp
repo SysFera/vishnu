@@ -109,7 +109,26 @@ private:
   processOptions(const char* scriptPath,
                  const TMS_Data::SubmitOptions& options,
                  std::vector<std::string>& cmdsOptions);
+
+  /**
+   * \brief Function to treat the default submission options
+   * \param scriptOptions The list of the option value
+   * \param cmdsOptions The list of the option value
+   * \return raises an exception on error
+   */
+  void
+  processDefaultOptions(std::vector<std::string>& scriptOptions,
+                        std::vector<std::string>& cmdsOptions);
   
+  /**
+   * \brief Function to treat the script submission options
+   * \param scriptPath The job script path
+   * \param cmdsOptions The list of the option value
+   * \return raises an exception on error
+   */
+  void
+  processScriptOptions(const char* scriptPath,
+                       std::vector<std::string>& cmdsOptions);
   /**
    * \brief Function to convert the PbsPro state into VISHNU state
    * \param state the state to convert

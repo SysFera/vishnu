@@ -39,7 +39,8 @@ typedef enum {
 	SLURM = 2, /*!< For SLURM batch type */
 	LSF = 3, /*!< For LSF batch type */
 	SGE = 4, /*!< For SGE batch type */
-	UNDEFINED = 5 /*!< IF batch type is not defined*/
+        PBSPRO = 5, /*!< For PBS batch type */
+	UNDEFINED = 6 /*!< IF batch type is not defined*/
 } BatchType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";

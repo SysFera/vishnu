@@ -9,6 +9,9 @@
 #ifdef HAVE_TORQUE_2_3
 #include "TorqueServer.hpp"
 #endif
+#ifdef HAVE_PBSPRO_10_4
+#include "PbsProServer.hpp"
+#endif
 #ifdef HAVE_LOADLEVELER_3_5
 #include "LLServer.hpp"
 #endif
@@ -61,6 +64,8 @@ BatchFactory::getBatchServerInstance() {
   mbatchServer = new LSFServer();
 #elif HAVE_SGE_11
   mbatchServer = new SGEServer();
+#elifHAVE_PBSPRO_10_4
+  mbatchServer = new PbsProServer();
 #else
   mbatchServer = NULL;
 #endif

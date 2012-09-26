@@ -1774,14 +1774,7 @@ int parse_file(
 
   int nitems;
   char search_string[256];
-  FILE *logstream;
-  int count =0;
 
-  logstream = fopen("/tmp/log_pbs.clog", "a+");
-  for(count=0;count<argc;count++){
-    fprintf(logstream, "argv[%d] = %s\n",count, argv[count]);
-  }
-  fclose(logstream);
 #if !defined(PBS_NO_POSIX_VIOLATION)
 #define GETOPT_ARGS "a:A:b:c:C:d:D:e:fhj:k:l:m:M:N:o:p:P:q:r:S:t:T:u:v:Vw:W:Xxz:"
 #else
@@ -1812,7 +1805,6 @@ int parse_file(
     
     switch (c)
       {
-      fprintf(logstream, "%s\n", optarg);
       case 'a':
 
         if_cmd_line(a_opt)
@@ -2384,14 +2376,13 @@ int parse_file(
 
       case 'N':
         
-        fprintf(logstream, "Old N_opt= %d\n", N_opt);
         if_cmd_line(N_opt)
           {
           N_opt = passet;
-          fprintf(logstream, "New N_opt= %d\n", N_opt);
+          
           /* NOTE:  did enforce alpha start previously - relax this constraint
                     allowing numeric job names (CRI - 6/26/07) */
-          fprintf(logstream, "optarg= %s\n", optarg);
+          
           if (check_job_name(optarg, 0) == 0)
             {
             set_attr(&attrib, ATTR_N, optarg);
@@ -2401,7 +2392,6 @@ int parse_file(
             sprintf(tmp_err_msg, "pbs_submit: illegal -N value\n");
             strcat(PBS_ERROR_MSG, tmp_err_msg);
             errflg++;
-            fprintf(logstream, "errflg= %d\n", errflg);
             }
           }
 
@@ -3169,9 +3159,6 @@ int pbs_prepare_script(
 
   char *submit_args_str = NULL;       /* buffer to hold args */
   int   argi, argslen = 0;
-  FILE *logstream;
-  int i;
-  logstream = fopen("/tmp/log_pbs.log","w");
  
   initialize_pbs_error_msg(PBS_ERROR_MSG);
 
@@ -3332,9 +3319,6 @@ int pbs_prepare_script(
   }    /* END if (load_config(config_buf,sizeof(config_buf)) == 0) */
 
   /* NOTE:  load config before processing opts since config may modify how opts are handled */
-  for(i=0;i<argc;i++){
-    fprintf(logstream, "argv[%d] = %s\n",i, argv[i]);
-  }
   
   errflg = parse_file(argc, argv, 0);  /*get cmd-line options */
 
