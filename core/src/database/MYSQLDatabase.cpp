@@ -46,7 +46,7 @@ MYSQLDatabase::process(string request, int transacId){
 
 	res=mysql_real_query(conn, request.c_str (), request.length());
 	if (res) {
-		if(dbErrorNo(conn) != CR_SERVER_LOST) {
+          if((dbErrorNo(conn) != CR_SERVER_LOST) && (dbErrorNo(conn) != CR_SERVER_GONE_ERROR)) {
 			throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
 		}
 		// try to reinitialise the socket
@@ -171,7 +171,7 @@ MYSQLDatabase::getResult(string request, int transacId) {
 	// Execute the SQL query
 	if ((res=mysql_real_query(conn, request.c_str (), request.length())) != 0) {
 
-		if(dbErrorNo(conn) != CR_SERVER_LOST) {
+          if((dbErrorNo(conn) != CR_SERVER_LOST) && (dbErrorNo(conn) != CR_SERVER_GONE_ERROR)) {
 			throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
 		}
 		// try to reinitialise the socket
