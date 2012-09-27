@@ -108,10 +108,10 @@ solveSubmitJob(diet_profile_t* pb) {
 		}
 
 		if(submitOptions->getFileParams().size() != 0) {
-			std::string fParamsStr = submitOptions->getFileParams() ;
-			ListStrings fParamsVec ;
-			std::ostringstream fParamsBuf("") ;
-			boost::split(fParamsVec, fParamsStr, boost::is_any_of(" ")) ;
+			std::string fParamsStr = submitOptions->getFileParams();
+			ListStrings fParamsVec;
+			std::ostringstream fParamsBuf("");
+			boost::split(fParamsVec, fParamsStr, boost::is_any_of(" "));
 			std::string userHome = UserServer(sessionServer).getUserAccountProperty(machineId, "home");
 			std::string inputDir = userHome+"/INPUT"+vishnu::createSuffixFromCurTime()+"/";
 
@@ -130,20 +130,20 @@ solveSubmitJob(diet_profile_t* pb) {
 			}
 
 			// Now initializate the dagda container
-			char* IDContainer = NULL ;
+			char* IDContainer = NULL;
 			diet_container_t fileContainer;
-			IDContainer = (pb->parameters[5]).desc.id ;
+			IDContainer = (pb->parameters[5]).desc.id;
 			dagda_get_container(IDContainer);
 			dagda_get_container_elements(IDContainer, &fileContainer);
 
 			// Get the input files uploaded by dagda (see JobProxy)
-			for(unsigned int i = 0 ; i < fileContainer.size; i++) {// Get all files from the container
-				size_t pos = fParamsVec[i].find("=") ;
-				if(pos == std::string::npos) continue ;
+			for(unsigned int i = 0; i < fileContainer.size; i++) {// Get all files from the container
+				size_t pos = fParamsVec[i].find("=");
+				if(pos == std::string::npos) continue;
 
 				// Get the current file from the dagda container
-				char* srcFile = NULL ;
-				bfs::path fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos))+".upl%%%%%%") ;
+				char* srcFile = NULL;
+				bfs::path fPath =  bfs::unique_path(bfs::basename(fParamsVec[i].substr(pos+1, std::string::npos))+".upl%%%%%%");
 				dagda_get_file(fileContainer.elt_ids[i], &srcFile);
 				try {
 					// Copy the file using ssh so to allow the local account to have a right access on it
@@ -155,10 +155,10 @@ solveSubmitJob(diet_profile_t* pb) {
 					throw UserException(ERRCODE_SYSTEM, ex.what());
 				}
 				//vishnu::boostMoveFile(, inputDir, fPath.string());
-				fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string() ;
+				fParamsBuf << ((fParamsBuf.str().size() != 0)? " " : "")+fParamsVec[i].substr(0, pos)<<"="<<inputDir<< fPath.string();
 				dagda_delete_data(fileContainer.elt_ids[i]);
 			}
-			submitOptions->setFileParams(fParamsBuf.str()) ; //Update file parameters with the corresponding paths on the server
+			submitOptions->setFileParams(fParamsBuf.str()); //Update file parameters with the corresponding paths on the server
 		}
 
 		// Get a batch instance
@@ -490,7 +490,11 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 	diet_string_get(diet_parameter(pb,3), &moutDir, NULL);
 
 	SessionServer sessionServer = SessionServer(std::string(sessionKey));
-
+	std::string acLogin = UserServer(sessionServer).getUserAccountLogin(machineId);
+	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+	machine->setMachineId(machineId);
+	MachineServer machineServer(machine);
+	std::string machineName = machineServer.getMachineName();
 	try {
 		//MAPPER CREATION
 		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
@@ -513,35 +517,40 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
 		dagda_init_container(diet_parameter(pb,5));
 
-		ListStrings filePaths ;
-		std::ostringstream ossFileName("") ;
+		ListStrings filePaths;
+		std::ostringstream ossFileName("");
 		ossFileName << result.getJobId(); /* each line starts with the associated job id */
 		if( bfs::exists(result.getOutputPath())) {
-			filePaths.push_back(result.getOutputPath()) ;
-			ossFileName << " " << result.getJobId() << ".stdout" ;
+			filePaths.push_back(result.getOutputPath());
+			ossFileName << " " << result.getJobId() << ".stdout";
 		} else {
 			throw SystemException(ERRCODE_INVDATA, "The output file does not longer exist "+result.getErrorPath());
 		}
 		if( bfs::exists(result.getErrorPath())) {
-			filePaths.push_back(result.getErrorPath()) ;
-			ossFileName << " " << result.getJobId() << ".stderr" ;
+			filePaths.push_back(result.getErrorPath());
+			ossFileName << " " << result.getJobId() << ".stderr";
 		} else {
 			throw SystemException(ERRCODE_INVDATA, "The error file does not longer exist "+result.getErrorPath());
 		}
-		vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir()) ;
-		ossFileName << std::endl ;
+		vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir());
+		ossFileName << std::endl;
 
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
-		char* fid = NULL ;
-		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
+		char* fid = NULL;
+		vishnu::createTmpFile(fileNamesDescr, ossFileName.str());
 		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
-		if(fileNamesDescr)free(fileNamesDescr) ;
+		if(fileNamesDescr)free(fileNamesDescr);
 
-		size_t nbFiles = filePaths.size() ;
-		char *fileIds[nbFiles] ;
+		SSHJobExec sshJobExec(acLogin, machineName);
+		size_t nbFiles = filePaths.size();
+		char *fileIds[nbFiles];
 		for(int i = 0; i < nbFiles;  i++) {
-			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
+			bfs::path dest =  bfs::unique_path("/tmp/vishnu-f2dld%%%%%%") ;
+			if(sshJobExec.copyFile(filePaths[i], dest.string()) != 0) {
+				throw UserException(ERRCODE_SYSTEM, "Cannot copy the file: " + filePaths[i]);
+			}
+			dagda_put_file(const_cast<char*>(dest.string().c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
 		}
 
@@ -597,7 +606,11 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 	diet_string_get(diet_parameter(pb,2), &moutDir, NULL);
 
 	SessionServer sessionServer = SessionServer(std::string(sessionKey));
-
+	std::string acLogin = UserServer(sessionServer).getUserAccountLogin(machineId);
+	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+	machine->setMachineId(machineId);
+	MachineServer machineServer(machine);
+	std::string machineName = machineServer.getMachineName();
 	try {
 		//MAPPER CREATION
 		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
@@ -617,36 +630,41 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
 
 		dagda_init_container(diet_parameter(pb,5));
-		ListStrings filePaths ;
-		std::ostringstream ossFileName("") ;
+		ListStrings filePaths;
+		std::ostringstream ossFileName("");
 
 		for(size_t i = 0; i < completedJobsOutput->getResults().size(); i++) {
 
-			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i) ;
+			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i);
 			ossFileName << result->getJobId(); /* each line starts with the associated job id */
 			if( bfs::exists( result->getOutputPath() ) ) {
-				filePaths.push_back( result->getOutputPath() ) ;
-				ossFileName << " " << result->getJobId() << ".stdout" ;
+				filePaths.push_back( result->getOutputPath() );
+				ossFileName << " " << result->getJobId() << ".stdout";
 			}
 			if( bfs::exists( result->getErrorPath() ) ) {
-				filePaths.push_back( result->getErrorPath() ) ;
-				ossFileName << " " << result->getJobId() << ".stderr" ;
+				filePaths.push_back( result->getErrorPath() );
+				ossFileName << " " << result->getJobId() << ".stderr";
 			}
-			vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir()) ;
-			ossFileName << std::endl ;
+			vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir());
+			ossFileName << std::endl;
 		}
 
-		char* fid = NULL ;
+		char* fid = NULL;
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
-		vishnu::createTmpFile(fileNamesDescr, ossFileName.str()) ;
+		vishnu::createTmpFile(fileNamesDescr, ossFileName.str());
 		dagda_put_file(fileNamesDescr, DIET_PERSISTENT_RETURN, &fid); /* Send the description file first */
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fid, 0);
-		if(fileNamesDescr)free(fileNamesDescr) ;
+		if(fileNamesDescr)free(fileNamesDescr);
 
-		size_t nbFiles = filePaths.size() ;
-		char *fileIds[nbFiles] ;
+		SSHJobExec sshJobExec(acLogin, machineName);
+		size_t nbFiles = filePaths.size();
+		char *fileIds[nbFiles];
 		for(int i = 0; i < nbFiles;  i++) {
-			dagda_put_file(const_cast<char*>(vishnu::mklink(filePaths[i]).c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
+			bfs::path dest =  bfs::unique_path("/tmp/vishnu-f2dld%%%%%%") ;
+			if(sshJobExec.copyFile(filePaths[i], dest.string()) != 0) {
+				throw UserException(ERRCODE_SYSTEM, "Cannot copy the file: " + filePaths[i]);
+			}
+			dagda_put_file(const_cast<char*>(dest.string().c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
 		}
 
