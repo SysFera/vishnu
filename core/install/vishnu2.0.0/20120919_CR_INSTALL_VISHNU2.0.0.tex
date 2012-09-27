@@ -110,6 +110,7 @@
 \renewcommand{\SFrevhistory}{
 \begin{SFrevtable}
   \SFrevitem{1}{19/09/2012}{Premiere version}{K. Coulomb}
+  \SFrevitem{1}{26/09/2012}{Ajout des tests de validation du WebBoard}{Philippe Martinez} 
 \end{SFrevtable}
 }
 % \renewcommand{\SFrevhistory}{} % disable this table
@@ -411,6 +412,37 @@ Lister le tmp de clamart2 & OK \\
 \hline
 \end{tabular}
 
+\section{Installation du WebBoard}
+
+Dans cette section, nous allons décrire les différents tests qui ont été effectués pour valider le fonctionnement du WebBoard dans 
+les locaux d'EDF. Il est important de noter que cette installation s'est faite à distance via le VPN et que de nombreux problèmes de 
+connexion ont été rencontrés ce qui a rendu difficile non seulement la phase d'installation mais aussi de validation.
+
+\begin{tabular}{|c|c|}
+\hline 
+Fonctionnalités & Résultats \\
+\hline 
+Connexion au WebBoard via un compte administrateur & OK \\
+\hline
+Connexion au WebBoard via un compte utilisateur & OK \\
+\hline
+Création d'un utilisateur & OK \\
+\hline
+Création d'un work & OK \\
+\hline
+Création d'un projet & OK \\
+\hline
+Soumission d'un job sur ivanoe & OK \\
+\hline
+Configuration d'une application & OK \\
+\hline
+Utilisation du browser de FMS & OK \\
+\hline
+Vérification de l'envoi d'emails & A valider par EDF \\
+\hline
+Récupération de fichiers de sortie associés aux jobs & Pas OK \\
+\hline
+\end{tabular}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
