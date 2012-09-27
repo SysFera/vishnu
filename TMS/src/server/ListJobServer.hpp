@@ -116,25 +116,25 @@ public:
 			for(iter=beg; iter!=end; ++iter) {
 				switch(*iter) {
 				case 'S':case '1':
-					vec.push_back("status=1");
+					vec.push_back("job.status=1");
 					break;
 				case 'Q':case '2':
-					vec.push_back("status=2");
+					vec.push_back("job.status=2");
 					break;
 				case 'W':case '3':
-					vec.push_back("status=3");
+					vec.push_back("job.status=3");
 					break;
 				case 'R':case '4':
-					vec.push_back("status=4");
+					vec.push_back("job.status=4");
 					break;
 				case 'T':case '5':
-					vec.push_back("status=5");
+					vec.push_back("job.status=5");
 					break;
 				case 'C':case '6':
-					vec.push_back("status=6");
+					vec.push_back("job.status=6");
 					break;
 				case 'D':case '7':
-					vec.push_back("status=7");
+					vec.push_back("job.status=7");
 					break;
 				default:
 					error = true;
