@@ -279,6 +279,24 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 }
 
 /**
+ * \brief Function to copy files from remote machine
+ * \param path the path of the file
+ * \return raises an exception on error
+ */
+int
+SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
+
+	std::ostringstream cmd1;
+	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
+	cmd1 << muser << "@" << mhostname << ":" << path << " " << dest;
+	std::cout << cmd1.str()<< std::endl;
+	if(system((cmd1.str()).c_str())) {
+		return -1;
+	}
+	return 0;
+}
+
+/**
  * \brief Function to execute a command via ssh
  * \param cmd the command to execute
  */

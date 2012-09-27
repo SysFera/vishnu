@@ -60,6 +60,14 @@ class SSHJobExec {
               const char* copyOfErrorPath);
 
     /**
+     * \brief Function to copy files from remote machine
+     * \param path the path of the file
+     * \return raises an exception on error
+     */
+    int
+    copyFile(const std::string& path, const std::string& dest) ;
+
+    /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
      */
