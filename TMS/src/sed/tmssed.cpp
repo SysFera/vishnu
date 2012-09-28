@@ -79,9 +79,6 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = TORQUE;
     } else if (batchTypeStr == "PBS") {
-      std:cout << "********************************************************************" << std::endl;
-      std:cout << "*******************Here *************" << std::endl;
-      std:cout << "********************************************************************" << std::endl;
 #ifndef HAVE_PBSPRO_10_4
       
       std::cerr << std::endl;

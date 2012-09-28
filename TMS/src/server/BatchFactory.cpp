@@ -64,7 +64,7 @@ BatchFactory::getBatchServerInstance() {
   mbatchServer = new LSFServer();
 #elif HAVE_SGE_11
   mbatchServer = new SGEServer();
-#elifHAVE_PBSPRO_10_4
+#elif HAVE_PBSPRO_10_4
   mbatchServer = new PbsProServer();
 #else
   mbatchServer = NULL;
