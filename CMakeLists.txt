@@ -10,6 +10,7 @@ set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 
 set( VISHNU_VERSION "2.0.0" CACHE STRING " the version of the source ")
+set( VISHNU_VERSION_COMMENTS "beta-2" CACHE STRING " comments about the current version ")
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
