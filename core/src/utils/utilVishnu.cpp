@@ -303,7 +303,7 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
 			if(bfs::exists(completePath)){
 				bfs::remove(completePath);
 			}
-			boost::filesystem3::copy(filePath, completePath);
+			boost::filesystem::copy(filePath, completePath);
 			bfs::remove(filePath);
 		}
 		else {
@@ -311,7 +311,7 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
 			if(bfs::exists(completePath)){
 				bfs::remove(completePath);
 			}
-			boost::filesystem3::copy(filePath, completePath);
+			boost::filesystem::copy(filePath, completePath);
 			bfs::remove(filePath);
 		}
 	} catch (std::exception& e) {
