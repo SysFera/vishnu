@@ -3482,7 +3482,7 @@ int pbs_prepare_script(
 
   /* connect to the server */
 
-  if (cnt2server_retry != -100)
+  //if (cnt2server_retry != -100)
     //cnt2server_conf(cnt2server_retry); /* set number of seconds to retry */
 
   connect = cnt2server(server_out);
