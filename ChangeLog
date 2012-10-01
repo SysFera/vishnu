@@ -3,7 +3,7 @@
 +-----------------------------+
 
 * Fixed bugzilla #417 - compilation problems with LoadLeveler
-* Fixed bugzilla #410 - Solve restoreConfiguration problems when webBoard data have been saved
+* Fixed bugzilla #410 - solve restoreConfiguration service problems when webBoard data have been saved in the database
 * Fixed bugzilla #431 - vishnu_get_job_output renvoie une erreur Dagda
 * Fixed bugzilla #426 alias #433 - vishnu_list_jobs with a list of statuses failed (vishnu_list_job -S)
 * Fixed bugzilla #434 - vishnu_get_job_output throws core dump exception when the error path or the output do not longer exist
