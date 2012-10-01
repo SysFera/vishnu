@@ -211,13 +211,29 @@
         <revdescription>
         <para> Nouvelle compilation avec les batchs</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>23</revnumber>
+        <date>01/10/2012</date>
+        <authorinitials>R. Chakode</authorinitials>
+        <revdescription>
+        <para>Ajout des prérequis en termes de connaissances systèmes et raffinement de la procédure d'installation</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
     <title>Présentation du document</title>
     <section>
       <title>Objectifs du document</title>
-      <para>Ce document présente l'administration de la plateforme VISHNU.
+      <para>
+	Ce document décrit l'installation, la configuration et l'administration des différents composants de la suite logicielle VISHNU. 
+      </para>
+    </section>
+    <section>
+      <title>Prérequis</title>
+      <para>
+	Pour assurer un bon confort lors de la lecture de ce document, le lecteur doit au moins avoir des connaissances basiques en administration système 
+	en environnement GNU/Linux. En particulier et selon votre système d'exploitation, la maitrise d'un outil de gestion de paquets tels que apt-get, 
+	dpkg, rpm ou yum est vivement recommandée pour faciliter la recherche et l'installation des dépendances logicielles de VISHNU.
       </para>
     </section>
     <section>
@@ -260,32 +276,31 @@
       <title>Acronymes</title>
       <itemizedlist>
         <listitem>
-          <para>DB : Base de données: elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
-	    par les divers modules.</para>
+          <para>DB : Database ou base de données, est un point central fournissant des mécanismes pour stocker et récupérer les données de manière efficace par les applicatons</para>
         </listitem>
         <listitem>
-          <para>FMS : File Management Service</para>
+          <para>FMS : File Management Servic ou système de gestion de fichiers</para>
         </listitem>
         <listitem>
-          <para>IMS : Information Management Service</para>
+          <para>IMS : Information Management Service ou système de gestion d'information</para>
         </listitem>
         <listitem>
-          <para>LDAP : Lightweight Directory Access Protocol, protocole de gestion d'annuaires</para>
+          <para>LDAP : Lightweight Directory Access Protocol, est un protocole de gestion d'annuaires</para>
         </listitem>
         <listitem>
           <para> MA : &quot;Master Agent&quot;: élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
         </listitem>
         <listitem>
-          <para>SQL : Langage de requêtes sur les bases de données</para>
+          <para>SQL : Structured Query Language, est un langage avancée de requêtes sur les bases de données</para>
         </listitem>
         <listitem>
-          <para>TMS : Task Management Service</para>
+          <para>TMS : Task Management Service ou système de gestion de tâches</para>
         </listitem>
         <listitem>
-          <para>UMS : User Management Service</para>
+          <para>UMS : User Management Service ou système de gestion des utilisateurs</para>
         </listitem>
         <listitem>
-          <para>WS : Web Services</para>
+          <para>WS : Web Service ou service web</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -953,7 +968,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
               </listitem>
               <listitem>
                 <para>'vishnuMachineId=machine_1' : Optionnel, ce paramètre indique l'identifiant de la machine associée au SeD.</para>
-                <para><emphasis role="bold">IMPORTANT :</emphasis> Lors de la première initialialisation, c'est-à-dire lorsqu'il n'y a pas 
+                <para><emphasis role="bold">IMPORTANT : </emphasis>Lors de la première initialialisation, c'est-à-dire lorsqu'il n'y a pas 
                 encore de machine créée dans le système, vous devez laisser ce paramètre vide. 
                 En effet, lorsque définie, sa valeur doit correspondre à une machine VISHNU, sinon le démarrage du SeD échoue.</para>
               </listitem>
