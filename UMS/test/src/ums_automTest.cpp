@@ -940,6 +940,17 @@ try {
   BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);
   BOOST_CHECK	 (close               (sess.getSessionKey()                   )==0);
 
+   // Test restore configuration with webboard
+  BOOST_MESSAGE(" Testing restore conf with webboard data initialization"    );
+  BOOST_REQUIRE(restore             (sqlScript+"/cleanModelWithWebboard.sql"   )==0);
+  BOOST_REQUIRE(restore             (sqlScript+"/UMSinitWebboardData.sql"   )==0);
+  BOOST_CHECK  (connect             (root, pwdr  , sess  , cop)==0);
+  BOOST_MESSAGE("Configuration = "+conf.getFilePath());
+  BOOST_CHECK  (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
+  BOOST_CHECK    (changePassword(uid, pwd, pwd       )==0);
+  BOOST_CHECK    (changePassword(root, pwdr, pwdr       )==0);
+  BOOST_CHECK  (close               (sess.getSessionKey()                   )==0);
+
   // Test restore configuration bad path
   BOOST_MESSAGE(" Testing restore conf"    );
   BOOST_REQUIRE(restore      	      (sqlScript+"/clean_session.sql"   )==0);
