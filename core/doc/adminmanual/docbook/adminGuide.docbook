@@ -67,14 +67,14 @@
       <title>Acronymes</title> 
 	<itemizedlist>
 	  <listitem>
-	    <para>DB : Base de données. Elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
+	    <para>DB : Database ou Base de données. Elle est centralisée et utilisée pour sauvegarder toutes les données manipulées
 	      par le module UMS. Cette base de données sera considérée comme étant de type PostGreSQL dans ce document.</para>
 	  </listitem>
 	  <listitem>
 	    <para> MA : Le 'Master Agent', élément de Sysfera-DS servant à faire le lien entre le client et le service désiré.</para>
 	  </listitem>
 	  <listitem>
-	    <para>SQL : Language de requêtes sur les bases de données</para>
+	    <para>SQL : Structured Query Language est un language de requêtes sur les bases de données</para>
 	  </listitem>
 	</itemizedlist>
    </section> <!-- Accronymes -->

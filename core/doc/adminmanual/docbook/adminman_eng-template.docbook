@@ -202,13 +202,36 @@
         <para> Add new TMS compilation documentation</para></revdescription>
       </revision>
       
+      <revision>
+      <revnumber>23</revnumber>
+      <date>01/10/2012</date>
+      <authorinitials>K. Chakode</authorinitials>
+      <revdescription>
+        <para> Refining the installation process</para></revdescription>
+      </revision>
+
     </revhistory>
   </info>
   <chapter>
     <title>Presentation of the document</title>
     <section>
       <title>Aim</title>
-      <para>This document presents how to administrate the VISHNU platform.
+      <para>
+		This document presents the installation, the configuration and the management of the components of the VISHNU toolkit.
+		To ensure a good comfort during the reading of the document, the reader should have at least a basic experience 
+		in system administration on GNU/Linux environments. In particular and according to the operating system, a good knowledge 
+        of a package manager, such as dpkg, apt-get, rpm or yum, would be very helpful to ease the searching and the installation 
+        of VISHNU's dependencies.
+      </para>
+    </section>
+
+    <section>
+    <title>Prerequisites</title>
+      <para>
+		To ensure a good comfort during the reading of the document, the reader should have at least a basic experience 
+		in system administration on GNU/Linux environments. In particular and according to the operating system, a good knowledge 
+        of a package manager, such as dpkg, apt-get, rpm or yum, would be very helpful to ease the searching and the installation 
+        of VISHNU's dependencies.
       </para>
     </section>
 
@@ -254,8 +277,7 @@
       <title>Acronyms</title>
       <itemizedlist>
 	<listitem>
-	  <para>DB: Database: it is centralized and used to save all the data
-            manipulated by each module.</para>
+	  <para>DB: Database, a centralized point providing mechanisms to store and retrieve application data in a effective way</para>
 	</listitem>
 	<listitem>
 	  <para>FMS: File Management Service.</para>
