@@ -110,7 +110,7 @@ TMSMapper::code(const string& cmd, unsigned int code){
 
 string
 TMSMapper::decode (const string& msg){
-  vector<int> separatorPos;
+  vector<unsigned int> separatorPos;
   string      func;
   int         funcCode;
   string res;
@@ -165,7 +165,7 @@ TMSMapper::decode (const string& msg){
 
 
 string
-TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
+TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	long l;
@@ -304,7 +304,7 @@ TMSMapper::decodeSubmit(vector<int> separator, const string& msg){
 }
 
 string
-TMSMapper::decodeProg(vector<int> separator, const string& msg){
+TMSMapper::decodeProg(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_GETJOBPROG))->second;
@@ -332,7 +332,7 @@ TMSMapper::decodeProg(vector<int> separator, const string& msg){
 }
 
 string
-TMSMapper::decodeQueue(vector<int> separator, const string& msg){
+TMSMapper::decodeQueue(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_LISTQUEUES))->second;
@@ -349,7 +349,7 @@ TMSMapper::decodeQueue(vector<int> separator, const string& msg){
 }
 
 string
-TMSMapper::decodeListJob(vector<int> separator, const string& msg){
+TMSMapper::decodeListJob(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	long l;
@@ -428,7 +428,7 @@ TMSMapper::decodeListJob(vector<int> separator, const string& msg){
 	return res;
 }
 string
-TMSMapper::decodeOutput(vector<int> separator, const string& msg){
+TMSMapper::decodeOutput(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_GETJOBOUTPUT))->second;
@@ -457,7 +457,7 @@ TMSMapper::decodeOutput(vector<int> separator, const string& msg){
 	return res;
 }
 string
-TMSMapper::decodeCompletedJob(vector<int> separator, const string& msg){
+TMSMapper::decodeCompletedJob(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_GETCOMPLETEDJOB))->second;
@@ -474,7 +474,7 @@ TMSMapper::decodeCompletedJob(vector<int> separator, const string& msg){
 }
 
 string
-TMSMapper::decodeCancel(vector<int> separator, const string& msg){
+TMSMapper::decodeCancel(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_CANCEL))->second;
@@ -498,7 +498,7 @@ TMSMapper::decodeCancel(vector<int> separator, const string& msg){
 	return res;
 }
 string
-TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
+TMSMapper::decodeJobInfo(vector<unsigned int> separator, const string& msg){
 	string res = string("");
 	string u;
 	res += (mmap.find(VISHNU_GETJOBINFO))->second;
@@ -523,7 +523,7 @@ TMSMapper::decodeJobInfo(vector<int> separator, const string& msg){
 
 
 string
-TMSMapper::decodeAddWork(vector<int> separator, const string& msg){
+TMSMapper::decodeAddWork(vector<unsigned int> separator, const string& msg){
   string res = string("");
 // TODO FIX WHEN FUNCTIONNAL
   string a;

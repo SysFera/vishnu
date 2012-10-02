@@ -118,7 +118,7 @@ public :
    * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
-  virtual int 
+  virtual int
   unregisterMapper();
 
   /**
@@ -169,16 +169,16 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeCreateFile(vector<int> separator, const string& msg);
+    decodeCreateFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the create dir call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
-   */ 
+   */
   string
-    decodeCreateDir(vector<int> separator, const string& msg);
+    decodeCreateDir(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the remove file call sequence of the string returned by finalize
@@ -187,7 +187,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeRemoveFile(vector<int> separator, const string& msg);
+    decodeRemoveFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the remove dir call sequence of the string returned by finalize
@@ -196,7 +196,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeRemoveDir(vector<int> separator, const string& msg);
+    decodeRemoveDir(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the change group call sequence of the string returned by finalize
@@ -205,7 +205,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeChGrp(vector<int> separator, const string& msg);
+    decodeChGrp(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the change mode call sequence of the string returned by finalize
@@ -214,7 +214,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeChMod(vector<int> separator, const string& msg);
+    decodeChMod(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the head of file call sequence of the string returned by finalize
@@ -223,7 +223,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeHeadOfFile(vector<int> separator, const string& msg);
+    decodeHeadOfFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the tail of file call sequence of the string returned by finalize
@@ -232,7 +232,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeTailOfFile(vector<int> separator, const string& msg);
+    decodeTailOfFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the content of file call sequence of the string returned by finalize
@@ -241,7 +241,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeContentOfFile(vector<int> separator, const string& msg);
+    decodeContentOfFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the list dir call sequence of the string returned by finalize
@@ -250,7 +250,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeListDir(vector<int> separator, const string& msg);
+    decodeListDir(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the copy file call sequence of the string returned by finalize
@@ -259,7 +259,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeCopyFile(vector<int> separator, const string& msg);
+    decodeCopyFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the copy async file call sequence of the string returned by finalize
@@ -268,7 +268,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeCopyAsyncFile(vector<int> separator, const string& msg);
+    decodeCopyAsyncFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the move file call sequence of the string returned by finalize
@@ -277,7 +277,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeMoveFile(vector<int> separator, const string& msg);
+    decodeMoveFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the move async file call sequence of the string returned by finalize
@@ -286,7 +286,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeMoveAsyncFile(vector<int> separator, const string& msg);
+    decodeMoveAsyncFile(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the stop file transfer call sequence of the string returned by finalize
@@ -295,7 +295,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeStopFileTransfer(vector<int> separator, const string& msg);
+    decodeStopFileTransfer(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the list file transfers call sequence of the string returned by finalize
@@ -304,7 +304,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeListFileTransfers(vector<int> separator, const string& msg);
+    decodeListFileTransfers(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get file info call sequence of the string returned by finalize
@@ -313,7 +313,7 @@ protected:
    * \return The cli like close command
    */
   string
-    decodeGetFileInfo(vector<int> separator, const string& msg);
+    decodeGetFileInfo(vector<unsigned int> separator, const string& msg);
 
 private:
 };

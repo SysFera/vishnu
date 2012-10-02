@@ -34,7 +34,7 @@ Mapper::finalize(int key){
 }
 
 void
-Mapper::findSeparator(const string& s, vector<int>& vec){
+Mapper::findSeparator(const string& s, vector<unsigned int>& vec){
   size_t cpt = 0;
   do{
     cpt=s.find_first_of("#", cpt);

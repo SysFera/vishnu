@@ -134,13 +134,13 @@ public :
 protected:
   /**
    * \brief To decode the submit call sequence of the string returned by finalize
-   * \fn string decodeSubmit(vector<int> separator, const string& msg)
+   * \fn string decodeSubmit(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeSubmit(vector<int> separator, const string& msg);
+  decodeSubmit(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the add work call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -148,77 +148,77 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeAddWork(vector<int> separator, const string& msg);
+  decodeAddWork(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get progression call sequence of the string returned by finalize
-   * \fn string decodeProg(vector<int> separator, const string& msg)
+   * \fn string decodeProg(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeProg(vector<int> separator, const string& msg);
+  decodeProg(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get queue call sequence of the string returned by finalize
-   * \fn string decodeQueue(vector<int> separator, const string& msg)
+   * \fn string decodeQueue(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeQueue(vector<int> separator, const string& msg);
+  decodeQueue(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get list job call sequence of the string returned by finalize
-   * \fn string decodeListJob(vector<int> separator, const string& msg)
+   * \fn string decodeListJob(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeListJob(vector<int> separator, const string& msg);
+  decodeListJob(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get output call sequence of the string returned by finalize
-   * \fn string decodeOutput(vector<int> separator, const string& msg)
+   * \fn string decodeOutput(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeOutput(vector<int> separator, const string& msg);
+  decodeOutput(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get all output call sequence of the string returned by finalize
-   * \fn string decodeCompletedJob(vector<int> separator, const string& msg)
+   * \fn string decodeCompletedJob(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeCompletedJob(vector<int> separator, const string& msg);
+  decodeCompletedJob(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the cancel call sequence of the string returned by finalize
-   * \fn string decodeCancel(vector<int> separator, const string& msg)
+   * \fn string decodeCancel(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeCancel(vector<int> separator, const string& msg);
+  decodeCancel(vector<unsigned int> separator, const string& msg);
 
   /**
    * \brief To decode the get job info call sequence of the string returned by finalize
-   * \fn string decodeJobInfo(vector<int> separator, const string& msg)
+   * \fn string decodeJobInfo(vector<unsigned int> separator, const string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
   virtual string
-  decodeJobInfo(vector<int> separator, const string& msg);
+  decodeJobInfo(vector<unsigned int> separator, const string& msg);
 private:
 };
 

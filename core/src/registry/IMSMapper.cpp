@@ -114,7 +114,7 @@ IMSMapper::code(const string& cmd, unsigned int code){
 
 string
 IMSMapper::decode (const string& msg){
-  vector<int> separatorPos;
+  vector<unsigned int> separatorPos;
   string      func;
   int         funcCode;
   string res;
@@ -196,7 +196,7 @@ IMSMapper::decode (const string& msg){
 
 
 string
-IMSMapper::decodeExp(vector<int> separator, const string& msg) {
+IMSMapper::decodeExp(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_EXPORT))->second;
@@ -222,7 +222,7 @@ IMSMapper::decodeExp(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeCur(vector<int> separator, const string& msg) {
+IMSMapper::decodeCur(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GET_CUR))->second;
@@ -244,7 +244,7 @@ IMSMapper::decodeCur(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeHist(vector<int> separator, const string& msg) {
+IMSMapper::decodeHist(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   long l;
@@ -286,7 +286,7 @@ IMSMapper::decodeHist(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeProc(vector<int> separator, const string& msg) {
+IMSMapper::decodeProc(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GET_PROC))->second;
@@ -305,7 +305,7 @@ IMSMapper::decodeProc(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeSetSys(vector<int> separator, const string& msg) {
+IMSMapper::decodeSetSys(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_SET_SYSINF))->second;
@@ -334,7 +334,7 @@ IMSMapper::decodeSetSys(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeGetThre(vector<int> separator, const string& msg) {
+IMSMapper::decodeGetThre(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GET_THRESH))->second;
@@ -358,7 +358,7 @@ IMSMapper::decodeGetThre(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeSetThre(vector<int> separator, const string& msg) {
+IMSMapper::decodeSetThre(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_SET_THRESH))->second;
@@ -380,7 +380,7 @@ IMSMapper::decodeSetThre(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeFid(vector<int> separator, const string& msg) {
+IMSMapper::decodeFid(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_FID))->second;
@@ -391,7 +391,7 @@ IMSMapper::decodeFid(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeMid(vector<int> separator, const string& msg) {
+IMSMapper::decodeMid(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_MID))->second;
@@ -402,7 +402,7 @@ IMSMapper::decodeMid(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeAid(vector<int> separator, const string& msg) {
+IMSMapper::decodeAid(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_AID))->second;
@@ -413,7 +413,7 @@ IMSMapper::decodeAid(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeUid(vector<int> separator, const string& msg) {
+IMSMapper::decodeUid(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_UID))->second;
@@ -423,7 +423,7 @@ IMSMapper::decodeUid(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeTid(vector<int> separator, const string& msg) {
+IMSMapper::decodeTid(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DEFINE_TID))->second;
@@ -434,7 +434,7 @@ IMSMapper::decodeTid(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeLoad(vector<int> separator, const string& msg) {
+IMSMapper::decodeLoad(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_LOADSHED))->second;
@@ -448,13 +448,13 @@ IMSMapper::decodeLoad(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeGetF(vector<int> separator, const string& msg) {
+IMSMapper::decodeGetF(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   res += (mmap.find(VISHNU_GET_FREQ))->second;
   return res;
 }
 string
-IMSMapper::decodeSetF(vector<int> separator, const string& msg) {
+IMSMapper::decodeSetF(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_SET_FREQ))->second;
@@ -465,7 +465,7 @@ IMSMapper::decodeSetF(vector<int> separator, const string& msg) {
 }
 
 string
-IMSMapper::decodeStop(vector<int> separator, const string& msg) {
+IMSMapper::decodeStop(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_STOP))->second;
@@ -482,7 +482,7 @@ IMSMapper::decodeStop(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeRestart(vector<int> separator, const string& msg) {
+IMSMapper::decodeRestart(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_RESTART))->second;
@@ -501,7 +501,7 @@ IMSMapper::decodeRestart(vector<int> separator, const string& msg) {
   return res;
 }
 string
-IMSMapper::decodeGetSys(vector<int> separator, const string& msg) {
+IMSMapper::decodeGetSys(vector<unsigned int> separator, const string& msg) {
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_GET_SYSINF))->second;
