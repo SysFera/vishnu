@@ -3,8 +3,8 @@
   <info>
     <title>Vishnu Home Page</title>
     <productname>VISHNU</productname>
-    <releaseinfo>Version 1.3.0</releaseinfo>
-    <date>March 19, 2012</date>
+    <releaseinfo>Version 2.0.0-Beta 2</releaseinfo>
+    <date>October 2nd, 2012</date>
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
     </author>
@@ -19,6 +19,24 @@
     </author>
     <author>
       <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Amine</firstname><surname>Bsila</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Rodrigue</firstname><surname>Chakode</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Haikel</firstname><surname>Guemar</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Philippe</firstname><surname>Martinez</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Nicolas</firstname><surname>Bard</surname></personname>
     </author>
     <revhistory>
       <revision>
@@ -69,6 +87,7 @@
 	  <para>Late update for release 1.2.7</para>
         </revdescription>
       </revision>
+      
       <revision>
 	<revnumber>5</revnumber>
 	<date>30/03/2012</date>
@@ -77,10 +96,20 @@
 	  <para>Release 1.3.0</para>
         </revdescription>
       </revision>
+      
+      <revision>
+	<revnumber>6</revnumber>
+	<date>02/10/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Release 2.0.0 Beta-2</para>
+        </revdescription>
+      </revision>
+      
     </revhistory>
     
     <copyright>
-      <year>2011</year>
+      <year>2012</year>
       <holder>SysFera SAS</holder>
     </copyright>
     <legalnotice>
@@ -144,7 +173,10 @@
       <title>Change log</title>
       <itemizedlist>
 	<listitem>
-          <para>V1.3.0 (30/03/2012): LDAP support for authentication, LSF batch support, fixed bug 335, 343.</para>
+          <para>V2.0.0 Beta-2 (02/10/2012): SGE batch support, extension of jobs submission options, fixed bugs 369, 399, 410, 417, 426, 431, 434. </para>
+        </listitem>
+	<listitem>
+          <para>V1.3.0 (30/03/2012): LDAP support for authentication, LSF batch support, fixed bugs 335, 343.</para>
         </listitem>
 	<listitem>
           <para>V1.2.7 (19/03/2012): Fix bugs (337, 326), extend TMS options, TMS enhancement (autosubmit, list all as machine id, ...).</para>
@@ -221,17 +253,32 @@
               <para>Torque API v3.2.6</para>
             </listitem>
             <listitem>
-              <para>IBM LoadLeveler API</para>
+              <para>IBM LoadLeveler 3.5.1.14</para>
             </listitem>
             <listitem>
-              <para>OR SLURM API v2.2.1</para>
+              <para>SLURM v2.2.1 (ou 2.2.7)</para>
+            </listitem>
+	     <listitem>
+              <para>LSF 7.0.6.134609</para>
+            </listitem>
+	    <listitem>
+              <para>OR Grid Engine 2011.11</para>
             </listitem>
           </itemizedlist>
         </listitem>
       </itemizedlist>
     </section>
+    
     <section>
-      <title>Install from debian packages</title>
+      <title>Install from sources for version 2.0.0 Beta</title>
+      <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
+      <para>Only sources are available for VISHNU 2.0.0-Beta 2.</para>
+      <para>Source tarball: vishnu_v2.0.0-beta2.tgz <ulink url="vishnu_v2.0.0-beta2.tgz">[download]</ulink> (added on 2nd october 2012)</para>
+      <para>Documentation tarball: vishnu_v2.0.0-beta2-doc.tgz <ulink url="vishnu_v2.0.0-beta2-doc.tgz">[download]</ulink> (added on 2nd october 2012)</para>
+    </section>
+    
+    <section>
+      <title>Install from debian packages for stable version 1.3.0 </title>
       <para>The following archive contain the necessary binary packages: </para>
       <itemizedlist>
         <listitem>
@@ -251,7 +298,7 @@
       </itemizedlist>            
     </section>
     <section>
-      <title>Install from rpm packages</title>
+      <title>Install from rpm packages for stable version 1.3.0</title>
       <para>The following archive contain the necessary binary packages: </para>
       <itemizedlist>
         <listitem>
@@ -284,7 +331,7 @@
     </section>
 
     <section>
-      <title>Install from source</title>
+      <title>Install from sources for stable version 1.3.0</title>
       <para>VISHNU must be compiled with G++ (4.4.3 or greater) and CMake (2.8 or greater).</para>
       <para>Source tarball: vishnu_v1.3.0.tgz <ulink url="vishnu_v1.3.0.tgz">[download]</ulink> (added on 11th January 2012)</para>
     </section>
