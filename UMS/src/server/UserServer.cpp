@@ -561,9 +561,9 @@ UserServer::sendMailToUser(const UMS_Data::User& user,
   argv[tokens.size()]=strdup(subject.c_str());
   argv[tokens.size()+1]=strdup(content.c_str());
   //To execute the script on background
-  argv[tokens.size()+2]=strdup(std::string(" 1>/dev/null ").c_str());
-  argv[tokens.size()+3]=strdup(std::string(" 2>/dev/null ").c_str());
-  argv[tokens.size()+4]=strdup(std::string(" & ").c_str());
+  argv[tokens.size()+2]=strdup(" 1>/dev/null ");
+  argv[tokens.size()+3]=strdup(" 2>/dev/null ");
+  argv[tokens.size()+4]=strdup(" & ");
 
   pid = fork();
   if (pid == -1) {//if an error occurs during fork
