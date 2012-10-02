@@ -136,7 +136,7 @@ UMSMapper::code(const string& cmd, unsigned int code){
 
 string
 UMSMapper::decode (const string& msg){
-  vector<int> separatorPos;
+  vector<unsigned int> separatorPos;
   string      func;
   int         funcCode;
   string res;
@@ -260,12 +260,12 @@ UMSMapper::decode (const string& msg){
 
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
-UMSMapper::decodeClose(vector<int> separator, const string& msg){
+UMSMapper::decodeClose(vector<unsigned int> separator, const string& msg){
   return (mmap.find(VISHNU_CLOSE))->second;
 }
 
 string
-UMSMapper::decodeAddUser(vector<int> separator, const string& msg){
+UMSMapper::decodeAddUser(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_ADD_VISHNU_USER))->second;
@@ -275,7 +275,7 @@ UMSMapper::decodeAddUser(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeUpUser(vector<int> separator, const string& msg){
+UMSMapper::decodeUpUser(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_UPDATE_VISHNU_USER))->second;
@@ -285,7 +285,7 @@ UMSMapper::decodeUpUser(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
+UMSMapper::decodeDelUser(vector<unsigned int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_DELETE_VISHNU_USER))->second;
   if (!separator.empty()){
@@ -296,7 +296,7 @@ UMSMapper::decodeDelUser(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){
+UMSMapper::decodeChangePwd(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_CHANGE_PASSWORD))->second;
@@ -310,7 +310,7 @@ UMSMapper::decodeChangePwd(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){
+UMSMapper::decodeResetPwd(vector<unsigned int> separator, const string& msg){
   string res = string("");
   res += (mmap.find(VISHNU_RESET_PASSWORD))->second;
   res += " ";
@@ -319,7 +319,7 @@ UMSMapper::decodeResetPwd(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeAddAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
@@ -351,7 +351,7 @@ UMSMapper::decodeAddAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeAddAuthAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeAddAuthAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_ADD_AUTHACC))->second;
@@ -383,7 +383,7 @@ UMSMapper::decodeAddAuthAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
+UMSMapper::decodeAddAuthSys(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_ADD_AUTHSYS))->second;
@@ -424,7 +424,7 @@ UMSMapper::decodeAddAuthSys(vector<int> separator, const string& msg){
 
 
 string
-UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeUpAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
@@ -465,7 +465,7 @@ UMSMapper::decodeUpAcc(vector<int> separator, const string& msg){
 
 
 string
-UMSMapper::decodeUpAuthAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeUpAuthAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_UPDATE_AUTHACC))->second;
@@ -500,7 +500,7 @@ UMSMapper::decodeUpAuthAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
+UMSMapper::decodeUpAuthSys(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_UPDATE_AUTHSYS))->second;
@@ -567,7 +567,7 @@ UMSMapper::decodeUpAuthSys(vector<int> separator, const string& msg){
 
 
 string
-UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeDelAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
@@ -581,7 +581,7 @@ UMSMapper::decodeDelAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeDelAuthSys(vector<int> separator, const string& msg){
+UMSMapper::decodeDelAuthSys(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_AUTHSYS))->second;
@@ -592,7 +592,7 @@ UMSMapper::decodeDelAuthSys(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeDelAuthAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeDelAuthAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_LOCAL_ACCOUNT))->second;
@@ -610,7 +610,7 @@ UMSMapper::decodeDelAuthAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListAuthAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeListAuthAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_AUTHACC))->second;
@@ -645,7 +645,7 @@ UMSMapper::decodeListAuthAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListAuthSys(vector<int> separator, const string& msg){
+UMSMapper::decodeListAuthSys(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_AUTHSYS))->second;
@@ -687,12 +687,12 @@ UMSMapper::decodeListAuthSys(vector<int> separator, const string& msg){
 
 // %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
 string
-UMSMapper::decodeSaveConf(vector<int> separator, const string& msg){
+UMSMapper::decodeSaveConf(vector<unsigned int> separator, const string& msg){
   return (mmap.find(VISHNU_SAVE_CONFIGURATION))->second;
 }
 
 string
-UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
+UMSMapper::decodeRestoreConf(vector<unsigned int> separator, const string& msg){
   string a;
   string res = string("");
   res += (mmap.find(VISHNU_RESTORE_CONFIGURATION))->second;
@@ -717,7 +717,7 @@ UMSMapper::decodeRestoreConf(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeAddM(vector<int> separator, const string& msg){
+UMSMapper::decodeAddM(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_ADD_MACHINE))->second;
@@ -747,7 +747,7 @@ UMSMapper::decodeAddM(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeUpM(vector<int> separator, const string& msg){
+UMSMapper::decodeUpM(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_UPDATE_MACHINE))->second;
@@ -802,7 +802,7 @@ UMSMapper::decodeUpM(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeDelM(vector<int> separator, const string& msg){
+UMSMapper::decodeDelM(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_DELETE_MACHINE))->second;
@@ -813,7 +813,7 @@ UMSMapper::decodeDelM(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListAcc(vector<int> separator, const string& msg){
+UMSMapper::decodeListAcc(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
@@ -848,7 +848,7 @@ UMSMapper::decodeListAcc(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListM(vector<int> separator, const string& msg){
+UMSMapper::decodeListM(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_MACHINE))->second;
@@ -883,7 +883,7 @@ UMSMapper::decodeListM(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListH(vector<int> separator, const string& msg){
+UMSMapper::decodeListH(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   long date;
@@ -936,7 +936,7 @@ UMSMapper::decodeListH(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListOp(vector<int> separator, const string& msg){
+UMSMapper::decodeListOp(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   res += (mmap.find(VISHNU_LIST_OPTIONS))->second;
@@ -971,7 +971,7 @@ UMSMapper::decodeListOp(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListUser(vector<int> separator, const string& msg){
+UMSMapper::decodeListUser(vector<unsigned int> separator, const string& msg){
   string a;
   string res = string("");
   res += (mmap.find(VISHNU_LIST_USERS))->second;
@@ -1000,7 +1000,7 @@ UMSMapper::decodeListUser(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeListSession(vector<int> separator, const string& msg){
+UMSMapper::decodeListSession(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string a;
   long date;
@@ -1076,7 +1076,7 @@ UMSMapper::decodeListSession(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
+UMSMapper::decodeConfDefaultOp(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
@@ -1109,7 +1109,7 @@ UMSMapper::decodeConfDefaultOp(vector<int> separator, const string& msg){
 }
 
 string
-UMSMapper::decodeConfOp(vector<int> separator, const string& msg){
+UMSMapper::decodeConfOp(vector<unsigned int> separator, const string& msg){
   string res = string("");
   string u;
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
