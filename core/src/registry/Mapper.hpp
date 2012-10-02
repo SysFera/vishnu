@@ -118,7 +118,7 @@ protected:
    * \return The cli like close command
    */
   void
-  findSeparator(const string& s, vector<int>& vec);
+  findSeparator(const string& s, vector<unsigned int>& vec);
 
   /**
    * \brief The mapper registry

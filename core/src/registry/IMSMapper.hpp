@@ -168,7 +168,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeExp(vector<int> separator, const string& msg);
+  decodeExp(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -176,7 +176,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeCur(vector<int> separator, const string& msg);
+  decodeCur(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -184,7 +184,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeHist(vector<int> separator, const string& msg);
+  decodeHist(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -192,7 +192,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeProc(vector<int> separator, const string& msg);
+  decodeProc(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -200,7 +200,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeSetSys(vector<int> separator, const string& msg);
+  decodeSetSys(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -208,7 +208,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeGetThre(vector<int> separator, const string& msg);
+  decodeGetThre(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -216,7 +216,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeSetThre(vector<int> separator, const string& msg);
+  decodeSetThre(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -224,7 +224,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeFid(vector<int> separator, const string& msg);
+  decodeFid(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -232,7 +232,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeMid(vector<int> separator, const string& msg);
+  decodeMid(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -240,7 +240,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeUid(vector<int> separator, const string& msg);
+  decodeUid(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -248,7 +248,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeTid(vector<int> separator, const string& msg);
+  decodeTid(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -256,7 +256,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeAid(vector<int> separator, const string& msg);
+  decodeAid(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -264,7 +264,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeLoad(vector<int> separator, const string& msg);
+  decodeLoad(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -272,7 +272,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeGetF(vector<int> separator, const string& msg);
+  decodeGetF(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -280,7 +280,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeSetF(vector<int> separator, const string& msg);
+  decodeSetF(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -288,7 +288,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeStop(vector<int> separator, const string& msg);
+  decodeStop(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -296,7 +296,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeRestart(vector<int> separator, const string& msg);
+  decodeRestart(vector<unsigned int> separator, const string& msg);
   /**
    * \brief To decode the close call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
@@ -304,7 +304,7 @@ protected:
    * \return The cli like close command
    */
   virtual string
-  decodeGetSys(vector<int> separator, const string& msg);
+  decodeGetSys(vector<unsigned int> separator, const string& msg);
 
 private:
 };
