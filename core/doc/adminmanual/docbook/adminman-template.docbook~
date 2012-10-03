@@ -862,7 +862,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
       <title>Lancement sur un même réseau</title>
       <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.
 </para>
-    <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis> 
+      <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis> 
 	<itemizedlist>
           <listitem>
             <para> Il est préférable d'éviter de lancer le même SeD sur la même machine.</para>

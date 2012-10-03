@@ -231,10 +231,12 @@
     <section>
       <title>Prérequis</title>
       <para>
-	Pour assurer un bon confort lors de la lecture de ce document, le lecteur doit au moins avoir des connaissances basiques en administration système 
-	en environnement GNU/Linux. En particulier et selon votre système d'exploitation, la maitrise d'un outil de gestion de paquets tels que apt-get, 
-	dpkg, rpm ou yum est vivement recommandée pour faciliter la recherche et l'installation des dépendances logicielles de VISHNU.
+	Pour s'assurer un bon confort lors de la lecture de ce document, le lecteur doit au moins avoir des connaissances basiques en administration système 
+	en environnement GNU/Linux. En particulier et selon votre système d'exploitation, la maitrise d'un outil de gestion de paquets tels que 
+    <emphasis>apt-get</emphasis>, <emphasis>dpkg</emphasis>, <emphasis>rpm</emphasis>, <emphasis>yum</emphasis> ou <emphasis>zypper</emphasis>
+	est vivement recommandée pour faciliter la recherche et l'installation des dépendances logicielles de VISHNU.
       </para>
+      <para>Par ailleurs, vous devez avoir bien compris l'architecture de déploiement de VISHNU. Cf. chapitre 4 du document [ARCH].</para>
     </section>
     <section>
       <title>Structure du document</title>
@@ -288,7 +290,7 @@
           <para>LDAP : Lightweight Directory Access Protocol, est un protocole de gestion d'annuaires</para>
         </listitem>
         <listitem>
-          <para> MA : &quot;Master Agent&quot;: élément de Sysfera-DS distribuant les requêtes entre les clients et les services désirés.</para>
+          <para> MA : &quot;Master Agent&quot;: Élément de DIET distribuant les requêtes entre les clients et les services désirés.</para>
         </listitem>
         <listitem>
           <para>SQL : Structured Query Language, est un langage avancée de requêtes sur les bases de données</para>
@@ -311,7 +313,7 @@
           <para>[ARCH] D1.1g-VISHNU Technical Architecture : description de l'architecture de l'application VISHNU</para>
         </listitem>
         <listitem>
-          <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET (nom du projet OpenSource de l'application SysFera-DS)</para>
+          <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET</para>
         </listitem>
         <listitem>
           <para>[VISHNU_USERMANUAL] VISHNU User Manual : guide de l'utilisateur VISHNU.</para>
@@ -353,7 +355,7 @@
             <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS : Intergiciel open source développé par SysFera. </para>
+            <para>Sysfera-DS : Intergiciel open source développé par SysFera et composé d'un ensemble de logiciels qui inclut, entre autres, DIET et LOGSERVICE</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -374,10 +376,7 @@
     </section>
     <section>
       <title>Prérequis</title>
-      <para>La compilation des sources de Vishnu dépend d'un ensemble de bibliothèques présentées ci-dessous.
-      Sur la plupart des distributions GNU/Linux tels que Debian, Ubuntu, Redhat, Fedora ou SuSE Linux, ces bibliothèques peuvent 
-      être facilement installées à partir du gestionnaire de paquets (apt-get, yum ou zypper). Vous pouvez également les installer
-      à partir des sources téléchargeables sur leur site respectif. 
+      <para>Selon les modules sélectionnés, la compilation des sources de VISHNU nécessite les bibliothèques suivantes: 
       </para>
       <itemizedlist>
         <listitem>
@@ -409,6 +408,20 @@
               <para>DIET : version 2.8 ou ultérieure. Le module 
               <emphasis>LOG SERVICE</emphasis> doit être activé.</para>
             </listitem>
+            <listitem>
+              <para>Bibliothèques de connexion à la base de données:</para>
+              <para>VISHNU nécessite une base de données type MySQL ou PostGreSQL. 
+              Selon le type de base de données choisir, vous devez installer les API correspondantes en tenant 
+			  compte des versions supportées:</para>
+              <itemizedlist>
+                <listitem>
+                  <para>API PostGreSQL (PGSQL-API) : Version 8.0 minimum.</para>
+                </listitem>
+                <listitem>
+                  <para>API MySQL : Version 5.1 minimum.</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
@@ -423,7 +436,7 @@
           <para>En fonction du Batch Scheduler sous-jacent à TMS, vous devez installer les APIs correspondantes :</para>
           <itemizedlist>
             <listitem>
-              <para>Torque API : Version 2.3.6.</para>
+              <para>Torque API : Version 2.3.6</para>
             </listitem>
             <listitem>
               <para>IBM LoadLeveler API : Version 3.5.1.14</para>
@@ -450,17 +463,6 @@
             </listitem>
             <listitem>
               <para>Python : Version 2.x, x>=5.</para>
-            </listitem>
-            <listitem>
-              <para>Base de données, à mettre sur les machines avec des serveurs, au choix : </para>
-              <itemizedlist>
-                <listitem>
-                  <para>PGSQL-API (api PostGreSQL) : Version 8.0 minimum.</para>
-                </listitem>
-                <listitem>
-                  <para>MYSQL-API (api MySQL) : Version 5.1 minimum.</para>
-                </listitem>
-              </itemizedlist>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -655,19 +657,43 @@
   </chapter>
   <chapter>
     <title>Configuration de la base de données</title>
-    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU. Les seules bases de données actuellement supportées sont PostgreSQL et MySQL. Les bases de type Oracle ne sont pas supportées. Lors de l'installation toutes les machines doivent avoir soit PostgreSQL, soit MySQL, mais pas certaines machines une base et d'autres une autre, cela ne fonctionnerait pas.</para>
+    <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU. Seules des bases de données PostgreSQL ou MySQL sont actuellement supportées. Une seule base de données est nécessaire et suffisante pour l'ensemble des composants d'une infrastructure VISHNU (UMS, TMS, IMS et IMS).</para>
     <section>
       <title>Utilisation d'une base de données PostGreSQL</title>
       <para>Un guide pour installer une base PostGreSLQ peut être trouvé à cette addresse : <emphasis
             role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
-      <para>Pour une installation d'une nouvelle base de données, les scripts 'postgre_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
-      <para>Pour la mise à jour de la base de données lors d'un passage de la release VISHNU précédente à la nouvelle release VISHNU, les scripts 'postgre_update.sql' et 'database_update.sql' doivent être utilisés par l'administrateur de la DB. Le détail des numéros de release est indiqué dans les commentaires au début du script.</para>
+      <para>Pour une nouvelle installation de la base de données VISHNU, les scripts 'postgre_create.sql' et 'database_init.sql' doivent respectivement être utilisés pour créer et initialiser la base de données.</para>
+      <para>Pour la mise à jour de la base de données, notamment lors de la mise à jour vers une nouvelle version de VISHNU, utiliser plutôt les scripts 'postgre_update.sql' et 'database_update.sql' qui servent respectivement pour modifier le schéma de la base de données et pour mettre à jour les données. L'entête de chaque scripts indique le numéro de version à laquelle le script s'applique.</para>
     </section>
     <section>
       <title>Utilisation d'une base de données MySQL</title>
       <para>Un guide pour installer une base MySQL peut être trouvé à cette adresse : <emphasis
             role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
-      <para>Pour une installation d'une nouvelle base de données, les scripts 'mysql_create.sql' et 'database_init.sql' doivent être utilisés par l'administrateur de la DB.</para>
+      <para>Pour une nouvelle installation de la base de données VISHNU, les scripts 'mysql_create.sql' et 'database_init.sql' 
+			doivent respectivement être utilisés pour créer et initialiser la base de données. Pour ce faire, suivez les étapes suivantes :
+    	<itemizedlist>
+          <listitem>
+            <para>Se connecter au serveur MySQL en tant que root :</para>
+            <para># <emphasis>mysql -h mysql@server- -u root -p </emphasis> # replacer mysql@server par l'adresse de votre serveur MySql</para>
+          </listitem>
+          <listitem>
+            <para>Créer la base de données Vishnu</para>
+            <para># <emphasis>create database vishnu; </emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Se connecter sur la base de données</para>
+            <para># <emphasis>use vishnu; </emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Créer les tables</para>
+            <para># <emphasis>source /path/to/mysql_create.sql </emphasis></para>
+          </listitem>
+          <listitem>
+            <para>Initialiser la base de données</para>
+            <para># <emphasis>source /path/to/database_init.sql </emphasis></para>
+          </listitem>
+        </itemizedlist>
+	</para>
     </section>
     <section>
       <title>Utilisation de LDAP</title>
@@ -881,14 +907,32 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
     <section>
       <title>Lancement sur un même réseau</title>
       <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré &quot;dedicated to VISHNU&quot; vont être déployés sur la même machine que l'on va nommer <emphasis
-            role="bold">préfrontale</emphasis>.</para>
-      <para><emphasis role="bold">NOTE: Il est préférable d'éviter de lancer le même SeD sur la même machine.</emphasis></para>
-      <para><emphasis role="bold">NOTE: Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, faire un &quot;export LANG=C&quot; et cela devrait régler le problème.</emphasis></para>
-      <para><emphasis role="bold">NOTE: L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.</emphasis></para>
-      <para>Pour mieux comprendre l'architecture de déploiement, se référer au document [ARCH], le chapitre 4, 'Technical Architecture'.</para>
+            role="bold">préfrontale</emphasis>.
+</para>
+      <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis> 
+	<itemizedlist>
+          <listitem>
+            <para> Il est préférable d'éviter de lancer le même SeD sur la même machine.</para>
+          </listitem>
+          <listitem>
+            <para> Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU. 
+			Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688. 
+			Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid, 
+			faire un &quot;export LANG=C&quot; et cela devrait régler le problème.
+			</para>
+          </listitem>
+          <listitem>
+            <para> L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. 
+			Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.
+			</para>
+          </listitem>
+        </itemizedlist>
+    </para>
+      <para>Une fois ces mises en gardes précisées, passons au lancement de l'environnement. 
+		Pour démarrer avec succès votre environnement VISHNU, suivez rigoureusement les étapes suivantes:</para>
       <orderedlist>
         <listitem>
-          <para> Avoir une base de données PostGreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
+          <para> Vérifier que la base de données (PostGreSQL ou MySQL) a été bien configurée et initialisée comme décrit précédemment. De plus, vérifier vous pouvez vous connecter à la base de données depuis les différents serveurs où sont installés les modules de VISHNU.</para>
         </listitem>
         <listitem>
           <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est <emphasis
@@ -1657,13 +1701,15 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
 	  </para>
         </listitem>
         <listitem>
-          <para>
-	    Lancer la commande dans le shell 'vishnu_connect user', ou user représente un nom d'utilisateur dans la base de données vishnu
-	  </para>
+          <para>Ouvrir une session VISHNU</para>
+          <para>#<emphasis>vishnu_connect -u user</emphasis></para>
+          <para>Remplacer 'user' par un vrai identifiant utilisateur. 
+		Par défaut, VISHNU est installé avec un utilisateur 'root' ayant tous les droits sur la plateforme (ID: 'root', Mot de passe: 'vishnu_user').
+	</para>
         </listitem>
         <listitem>
           <para>
-	    Taper le mot de passe associé correspondant à l'utilisateur 'user'
+	    Entrer le mot de passe puis valider
 	  </para>
         </listitem>
         <listitem>
@@ -1673,9 +1719,9 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
 	  </para>
         </listitem>
         <listitem>
-          <para>
-	    Fermer la session avec 'vishnu_close'. Aucune erreur ne doit être remontée lors de ces tests.
-	  </para>
+          <para>Fermer la session.</para>
+          <para># <emphasis>vishnu_close</emphasis> </para>
+          <para>Aucune erreur ne doit être remontée.</para>
         </listitem>
       </orderedlist>
     </section>
