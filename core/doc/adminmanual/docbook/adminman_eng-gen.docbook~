@@ -216,7 +216,7 @@
         <date>01/10/2012</date>
         <authorinitials>K. Chakode</authorinitials>
         <revdescription>
-        <para> Adding a prerequisites section and refining of the installation process</para></revdescription>
+        <para> Refining the installation process</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -233,11 +233,9 @@
       <para>
 		To ensure a good comfort during the reading of the document, the reader should have at least a basic experience 
 		in system administration on GNU/Linux environments. In particular and according to the operating system, a good knowledge 
-        of a package manager, such as <emphasis>apt-get</emphasis>, <emphasis>dpkg</emphasis>, <emphasis>rpm</emphasis>, 
-		<emphasis>yum</emphasis> or <emphasis>zypper</emphasis>, would be very helpful to ease the searching and the installation 
+        of a package manager, such as dpkg, apt-get, rpm or yum, would be very helpful to ease the searching and the installation 
         of VISHNU's dependencies.
       </para>
-      <para>Furthermore, we assume that you have read and understood the technical architecture of VISHNU. If not, refer to the document [ARCH], and especially in the chapter 4.</para>
     </section>
     <section>
       <title>Structure of the document</title>
@@ -288,10 +286,10 @@
           <para>IMS: Information Management Service.</para>
         </listitem>
         <listitem>
-          <para>LDAP: Lightweight Directory Access Protocol, is a protocol enabling to manage distributed directory services.</para>
+          <para>LDAP: Lightweight Directory Access Protocol, protocole for accessing and maintaining distributed directory information services.</para>
         </listitem>
         <listitem>
-          <para> MA: &quot;Master Agent&quot;: Is a element of DIET allowing to distribute the requests between the clients and the servers.</para>
+          <para> MA: &quot;Master Agent&quot;: SysFera-DS element that distributes the requests between the clients and the desired servers.</para>
         </listitem>
         <listitem>
           <para>SQL: Language of request on the databases.</para>
@@ -356,7 +354,7 @@
             <para>UMS SeD: It represents the program containing and executing the services of the UMS module. </para>
           </listitem>
           <listitem>
-            <para>SysFera-DS: Is an open source middleware developed by SysFera. It is comprised of set of software that includes, among others, DIET and LOGSERVICE.</para>
+            <para>Sysfera-DS: Open source middleware developed by SysFera.</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -375,7 +373,7 @@
     </section>
     <section>
       <title>Prerequisite</title>
-      <para>According to the modules to install, you may need the following software dependencies:</para>
+      <para>The following software must be installed on the system, with the devel packages (packages -dev):</para>
       <itemizedlist>
         <listitem>
           <para>Dependency for all the modules VISHNU:</para>
@@ -402,19 +400,6 @@
             </listitem>
             <listitem>
               <para>DIET: Version 2.8 with LOG SERVICE enabled.</para>
-            </listitem>
-            <listitem>
-              <para>Library to access the database:</para>
-              <para>VISHNU requires a database; MySQL and PostGreSQL databases are supported. 
-              According to the type of the database engine, you need to install the appropriate API while taking care about the supported versions:</para>
-              <itemizedlist>
-                <listitem>
-                  <para>API PostGreSQL (PGSQL-API): Version 8.0 or higher.</para>
-                </listitem>
-                <listitem>
-                  <para>API MySQL: Version 5.1 or higher.</para>
-                </listitem>
-              </itemizedlist>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -457,6 +442,17 @@
             </listitem>
             <listitem>
               <para>Python: Version 2.x, x >= 5.</para>
+            </listitem>
+            <listitem>
+              <para>Database (one is mandatory), only on the server machines, can choose: </para>
+              <itemizedlist>
+                <listitem>
+                  <para>PGSQL-API (api PostGreSQL) version 8.0 minimum</para>
+                </listitem>
+                <listitem>
+                  <para>MYSQL-API (api MySQL) version 5.1 minimum</para>
+                </listitem>
+              </itemizedlist>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -649,43 +645,19 @@
   </chapter>
   <chapter>
     <title>Configuration of the database</title>
-    <para>The files to configure the DB are available in the core/database repository of the sources of VISHNU. Only postgresql and mysql are currently supported. 
-Only one database is necessary for all the components of a VISHNU infrastructure (UMS, IMS, FMS and TMS).</para>
+    <para>The files to configure the DB are available in the core/database repository of the sources of VISHNU. Only postgresql and mysql are currently supported. All the servers on the platform must use the same database.</para>
     <section>
       <title>Use of a PostGreSQL DB</title>
       <para>A guide (in French) to install a PostGreSLQ base can be found there: <emphasis
             role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
-      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for the first time.</para>
+      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for a first use.</para>
       <para>To update the DB after a new VISHNU version, there are update scripts that are available.</para>
     </section>
     <section>
       <title>Use of a MySQL DB</title>
       <para>A guide (in French) to install a MySQL base can be found there:<emphasis
             role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
-      <para>To install a new database, the script 'mysql_create.sql' and 'database_init.sql' must be respectively used for creating the database schema and for initializing the data. For achieving that, perform the following steps:
-    	<itemizedlist>
-          <listitem>
-            <para>Connect to the MySQL server as root:</para>
-            <para># <emphasis>mysql -h mysql@server -u root -p </emphasis>    #replace mysql@server with the address of your MySql server</para>
-          </listitem>
-          <listitem>
-            <para>Create the Vishnu's database</para>
-            <para># <emphasis>create database vishnu; </emphasis></para>
-          </listitem>
-          <listitem>
-            <para>Connect to the database</para>
-            <para># <emphasis>use vishnu; </emphasis></para>
-          </listitem>
-          <listitem>
-            <para>Create the database schema</para>
-            <para># <emphasis>source /path/to/mysql_create.sql </emphasis></para>
-          </listitem>
-          <listitem>
-            <para>Initialize the database</para>
-            <para># <emphasis>source /path/to/database_init.sql </emphasis></para>
-          </listitem>
-        </itemizedlist>
-</para>
+      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for a first use.</para>
     </section>
     <section>
       <title>Use of LDAP</title>
@@ -892,27 +864,10 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       <title>On a single network</title>
       <para>Modules can be deployed manually. Deployment will be described using the 4.1 figure of the [ARCH] document as an example. To simplify, we suppose the elements on the same area  &quot;dedicated to VISHNU&quot;  will be deployed on the same machine called <emphasis
             role="bold">pregateway</emphasis>.</para>
-      <para><emphasis role="bold">IMPORTANT NOTES:</emphasis> 
-		<itemizedlist>
-          <listitem>
-            <para> It is advised to avoid launching the same SeD on a machine more than once.</para>
-          </listitem>
-          <listitem>
-            <para> There is a known bug under debian with boost file system, used by VISHNU. 
-				The report can be found there: https://svn.boost.org/trac/boost/ticket/4688. 
-				If when launching a SeD the following error message appears: std::runtime_error: 
-				locale::facet::_S_create_c_locale name not valid, making &quot;export LANG=C&quot; should fix it.
-			</para>
-          </listitem>
-          <listitem>
-            <para> The VISHNU user 'root' must have a local account on each machine where there is an IMS server. 
-				The associated unix account will be used to relaunch the SeD.
-			</para>
-          </listitem>
-        </itemizedlist>
-    </para>
-      <para>Now that these points are clear, we can launch the environment. 
-	For starting your VISHNU environement successfully, you need to perform the following steps careful:</para>
+      <para><emphasis role="bold">NOTE: It is advised to avoid launching the same SeD on a machine more than once.</emphasis></para>
+      <para><emphasis role="bold">NOTE: There is a known bug under debian with boost file system, used by VISHNU. The report can be found there: https://svn.boost.org/trac/boost/ticket/4688. If when launching a SeD the following error message appears: std::runtime_error: locale::facet::_S_create_c_locale name not valid, making &quot;export LANG=C&quot; should fix it.</emphasis></para>
+      <para><emphasis role="bold">NOTE: The VISHNU user 'root' must have a local account on each machine where there is an IMS server. The associated unix account will be used to relaunch the SeD.</emphasis></para>
+      <para>To have a better understanding of the architecture, one can refer to the [ARCH] document, the chapter 4, 'Technical Architecture'.</para>
       <orderedlist>
         <listitem>
           <para> Check you have a database created and initialized.</para>
@@ -1683,10 +1638,11 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       </para>
         </listitem>
         <listitem>
-          <para>Open a VISHNU session</para>
-          <para>#<emphasis>vishnu_connect -u user</emphasis> </para>
-          <para>Replace 'user' by a real user identifier. By default, VISHNU comes with a user named 'root' having 
-		all rights on the system (ID: 'root', Password: 'vishnu_user').</para>
+          <para>
+        Type the shell command 'vishnu_connect -u root -w vishnu_user',
+        with root a user created in the database by our initialization script,
+        and vishnu_user its asociated password.
+      </para>
         </listitem>
         <listitem>
           <para>
@@ -1698,9 +1654,9 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       </para>
         </listitem>
         <listitem>
-          <para>Close the session</para>
-          <para>#<emphasis>vishnu_close</emphasis></para>
-          <para>No error should be raised.</para>
+          <para>
+        Close the session with the 'vishnu_close' command. No error should be raised during this test.
+      </para>
         </listitem>
       </orderedlist>
     </section>
