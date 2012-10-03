@@ -114,6 +114,8 @@ create_dir core/test
 create_dir core/test/cfgs
 create_dir core/test/src
 create_dir core/src/version
+create_dir core/src/version
+create_dir core/examples/confs/
 
 copy_file core/src/CMakeLists.txt core/src/
 copy_file core/test/CMakeLists.txt core/test/
@@ -133,6 +135,7 @@ copy_file core/test/src/\*h.in core/test/src/
 copy_file core/test/cfgs/\*cfg.in core/test/cfgs/
 copy_dir core/test/third-party core/test
 copy_file core/src/version/\*pp core/src/version/
+copy_file core/examples/confs/\* core/examples/confs/
 
 
 # dependency of emf
