@@ -10,7 +10,7 @@
 
 void
 usage(){
-  std::cout << "Usage: namer <uriAddr> <uriSubscriber> <config>" << std::endl;
+  std::cout << "Usage: namer <uriAddr> <uriSubscriber>" << std::endl;
 }
 
 //bool
@@ -33,7 +33,7 @@ public:
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
     socket.bind(muri.c_str());
-    std::cout << "binded " << muri << std::endl;
+    std::cout << "bound on " << muri << std::endl;
     while (true) {
 
       //Receive message from ZMQ
@@ -170,7 +170,7 @@ int main(int argc, char** argv){
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
 
-  if (argc < 4){
+  if (argc < 3){
     usage();
     return 0;
   }
