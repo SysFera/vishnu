@@ -189,7 +189,7 @@ int main(int argc, char** argv){
   boost::thread th2(boost::bind(&AddressSubscriber::run, &AS));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 //  boost::thread th3(boost::bind(&Heartbeat::run, &HB));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
-  // To avoid quitting to fast in case of problems
+  // To avoid quitting too fast in case of problems
   while(1){
     sleep(1000);
   }
