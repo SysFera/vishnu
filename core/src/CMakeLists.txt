@@ -260,7 +260,7 @@ set(IMS_Data_HEADERS
   emfdata/IMS_Data/Threshold.hpp
   emfdata/IMS_Data/SysInfoOp.hpp
   emfdata/IMS_Data/ListSysInfo.hpp
-  emfdata/IMS_Data/Supervisor.hpp
+  emfdata/IMS_Data/SupervisorOp.hpp
    )
 set(FMS_Data_SRCS
   emfdata/FMS_Data.cpp
