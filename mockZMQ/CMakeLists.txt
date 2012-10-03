@@ -35,7 +35,9 @@ target_link_libraries(namer
   vishnu-core
 )
 
-
+install(TARGETS namer DESTINATION ${SBIN_INSTALL_DIR})
+set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
+install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 # --------------------------------------------------------------------------
 #add_subdirectory(ZMQHelper)
 # --------------------------------------------------------------------------
