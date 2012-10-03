@@ -33,6 +33,8 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 typedef std::multimap<std::string, std::string> ConfigMap;
 static ConfigMap theConfig;
+const std::string NAMER_KEY = "namer";
+const std::string TIMEOUT_KEY = "retryTimeout";
 
 typedef std::map<std::string, std::string> ServiceMap;
 static ServiceMap sMap = boost::assign::map_list_of
@@ -142,7 +144,7 @@ fill(ConfigMap& cfg, const std::string& mfile) {
 	if (tfile) {
 		std::string line;
 		std::vector<std::string> buff;
-		int i(0);
+
 		while(std::getline(tfile, line)) {
 			if(boost::algorithm::starts_with("#", line)) {
 				continue;
@@ -153,18 +155,33 @@ fill(ConfigMap& cfg, const std::string& mfile) {
 
 			if (buff.size() != 2) {
 				// we skip faulty entries
-				std::cerr <<
-						boost::format("E: invalid line in config file %1%: %2%\n")	% mfile % line;
+				std::cerr <<boost::format("E: invalid line in config file %1%: %2%\n")	% mfile % line;
 				continue;
 			}
 
 			cfg.insert(std::make_pair(boost::algorithm::trim_copy(buff[0]), boost::algorithm::trim_copy(buff[1])));
-			++i;
 		}
 	} else {
 		std::cerr << boost::format("E: failed to open file %1% for initializing the client\n")%mfile;
 	}
 }
+
+
+int
+getTimeout() {
+
+	int timeout = DEFAULT_TIMEOUT;
+
+	ConfigMap::iterator iter = theConfig.find(TIMEOUT_KEY);
+	if(iter != theConfig.end()) {
+		timeout = vishnu::convertToInt(iter->second);
+		if (timeout <= 0) {
+			timeout = DEFAULT_TIMEOUT;
+		}
+	}
+	return timeout;
+}
+
 
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
@@ -198,7 +215,8 @@ void
 getServerAddresses(const std::string& uri, const std::string service,
 		std::vector<boost::shared_ptr<Server> > &serv) {
 	zmq::context_t ctx(1);
-	LazyPirateClient lpc(ctx, uri);
+
+	LazyPirateClient lpc(ctx, uri, getTimeout());
 
 	if (!lpc.send(service)) {
 		std::cerr << "E: request failed, exiting ...\n";
@@ -256,10 +274,10 @@ diet_call(diet_profile_t* prof) {
 
 	ConfigMap::iterator it = theConfig.find(module);
 	// if no entry in configuration, just ask naming service
-	if (theConfig.end() != it) {
+	if (it != theConfig.end()) {
 		uri = it->second;
 	} else {
-		it = theConfig.find("namer");
+		it = theConfig.find(NAMER_KEY);
 		if (theConfig.end() != it) {
 			uri = it->second;
 			getServerAddresses(uri, service, serv);
@@ -284,7 +302,7 @@ diet_call(diet_profile_t* prof) {
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 	zmq::context_t ctx(1);
-	LazyPirateClient lpc(ctx, uri);
+	LazyPirateClient lpc(ctx, uri, getTimeout());
 
 	std::string s1 = my_serialize(prof);
 
@@ -332,11 +350,14 @@ diet_parameter(diet_profile_t* prof, int pos) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
+
 	std::stringstream res;
+
 	res << prof->name <<  "$$$"
 			<< prof->IN << "$$$"
 			<< prof->INOUT << "$$$"
 			<< prof->OUT << "$$$";
+
 	for (int i = 0; i<(prof->OUT); ++i) {
 		res << prof->param[i] << "$$$";
 	}
@@ -370,7 +391,9 @@ my_deserialize(const std::string& prof) {
 
 int
 diet_initialize(const char* cfg, int argc, char** argv) {
+
 	fill(theConfig, std::string(cfg));
+
 	return 0;
 }
 
