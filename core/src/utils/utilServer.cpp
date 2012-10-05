@@ -49,6 +49,17 @@ vishnu::unregisterSeD(string type, ExecConfiguration config) {
   return 0;
 }
 
+
+void
+validateUri(const string & uri) {
+	size_t pos = uri.find("*");
+	if(pos != string::npos) {
+		std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
+		exit(-1);
+	}
+
+}
+
 int
 vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
   string uri;
@@ -57,6 +68,10 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
   config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
+
+  // Check that the uri does not contain *
+  validateUri(urinamer);
+
   zmq::context_t ctx(1);
   LazyPirateClient lpc(ctx, urinamer);
 

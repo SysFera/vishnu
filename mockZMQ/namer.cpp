@@ -33,7 +33,7 @@ public:
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
     socket.bind(muri.c_str());
-    std::cout << "bound on " << muri << std::endl;
+    std::cout << boost::format("I: bound on %1%\n") % muri;
     while (true) {
 
       //Receive message from ZMQ
@@ -42,10 +42,10 @@ public:
         if (!socket.recv(&message, 0)) {
         }
       } catch (zmq::error_t error) {
-        std::cout << "E: " << error.what() << std::endl;
+        std::cerr << boost::format("E: %1%\n")%error.what();
       }
       std::string data(static_cast<const char*>(message.data()), message.size());
-      std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
+      std::cout << boost::format("I: recv=> %1%, size %2%\n") % data % data.length();
 
       // Deserialize
       std::string servname = data;
@@ -84,7 +84,6 @@ public:
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
     socket.bind(muri.c_str());
-    std::cout << "binded subs " << muri << std::endl;
     while (true) {
 
       //Receive message from ZMQ
@@ -93,13 +92,12 @@ public:
         if (!socket.recv(&message, 0)) {
         }
       } catch (zmq::error_t error) {
-        std::cout << "E: " << error.what() << std::endl;
+        std::cerr << boost::format("E: %1%\n") % error.what();
       }
       std::string data(static_cast<const char*>(message.data()), message.size());
-      std::cerr << "recv: \"" << data << "\", size " << data.length() << "\n";
+      std::cout << boost::format("I: recv=> %1%, size %2%\n") % data % data.length();
 
       int mode = vishnu::convertToInt(data.substr(0,1));
-
 
       // Deserialize
       boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
@@ -112,7 +110,7 @@ public:
       std::string resultSerialized = "OK";
 
       // Send reply back to client
-      std::cout << " Serialized to send : " << resultSerialized << std::endl;
+      std::cout << boost::format("I: Serialized to send: %1%\n") % resultSerialized;
       s_send(socket, resultSerialized);
     }
   }
@@ -149,7 +147,7 @@ public:
         std::string p1 = my_serialize(hb);
 
         if (!lpc.send(p1)) {
-          std::cerr << "Deconnexion of "+uri;
+          std::cout << boost::format("I: Sed Disconnected %1%\n") % uri;
           mann->remove(it->get()->getName(), it->get()->getURI());
         }
       }
@@ -177,7 +175,6 @@ int main(int argc, char** argv){
 
   std::string uriAddr = std::string(argv[1]);
   std::string uriSubs = std::string(argv[2]);
-  std::string cfg = std::string(argv[3]);
 
 
 //  ann.get()->initFromFile(cfg);
