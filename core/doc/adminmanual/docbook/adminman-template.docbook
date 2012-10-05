@@ -387,6 +387,10 @@
             </listitem>
             <listitem>
               <para>CMAKE : Version 2.8 ou ultérieure.</para>
+			  <para>GNU Make ou Ninja: Générateurs exécutables. Comme alternative à Make, le générateur Ninja 
+					est plus rapide et est utile pour réduire la durée de compilation.Surtout quand vous avez besoin 
+					de compiler plusieurs modules de VISHNU sur la même machine.
+			  </para>
             </listitem>
             <listitem>
               <para>BOOST : Version 1.46.1 ou ultérieure. Au 
@@ -532,9 +536,8 @@
       </para>
     </listitem>
     <listitem>
-      <para>
-	VISHNU_BATCH, compile le SeD TMS avec le batch correspondant (TORQUE par défaut). Les variables (BATCHNAME)_INCLUDE_DIR et (BATCHNAME)_LIB doivent être renseignées.</para>
-      
+      <para>VISHNU_BATCH, compile le SeD TMS avec le batch correspondant (TORQUE par défaut).</para>
+	  <para>Les variables (BATCHNAME)_INCLUDE_DIR et (BATCHNAME)_LIB doivent être renseignées.</para>
       <itemizedlist>
         <listitem> 
           <para>
@@ -614,36 +617,57 @@
   </itemizedlist>
 </para>
 <para>
-  Par exemple, pour compiler VISHNU (clients et serveurs) avec UMS et TMS (torque) avec l'API
-  Python puis l'installer dans le répertoire /opt/vishnu sous *nix:
+Par exemple, les étapes suivantes permettent d'installer les clients et les serveurs d'UMS et TMS dans /opt/vishnu. 
+TORQUE est utilisé comme backend à TMS. L'API Python sera également activée.
 </para>
 <itemizedlist>
-  <listitem><para>1. créer un répertoire build à la racine du projet et se placer dedans</para>
-    <itemizedlist>
-      <listitem><para>$ <emphasis role="bold">mkdir build</emphasis></para></listitem>
-      <listitem><para>$ <emphasis role="bold">cd build</emphasis></para></listitem>
-    </itemizedlist>
+  <listitem>
+		<para>1. Créer un répertoire build à la racine du projet et se placer dedans</para>
+		<para>$ <emphasis>mkdir build</emphasis></para>
+		<para>$ <emphasis>cd build</emphasis></para>
   </listitem>
-  <listitem><para>2. générer le Makefile</para>
-    <itemizedlist>
-      <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
-        <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_BATCH=TORQUE -DVISHNU_BATCH_VERSION=2.3 -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
-    </itemizedlist>
+   <listitem><para>2. Générer le Makefile </para>
+	<itemizedlist>
+  		<listitem><para>En utilisant Make</para>
+			<para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
+			<para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
+   			<para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
+		</listitem>
+  		<listitem><para>En utilisant Ninja, changement du générateur via le flag CMAKE_GENERATOR</para>
+			<para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
+			<para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
+   			<para><emphasis>  -DTORQUE_DIR=/opt/torque \</emphasis></para>
+   			<para><emphasis role="bold">  -DCMAKE_GENERATOR=Ninja</emphasis></para>
+		</listitem>
+	</itemizedlist>
   </listitem>
-  <listitem><para>3. lancer la compilation avec 2 jobs</para>
-    <itemizedlist>
-      <listitem><para>$ <emphasis role="bold">make -j 2</emphasis></para></listitem>
-    </itemizedlist>
+  <listitem><para>3. Lancer la compilation</para>
+		<itemizedlist>
+  		  <listitem><para>En utilisant Make</para>
+			<para>$ <emphasis>make -j 2</emphasis></para>
+			<para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+		  </listitem>
+  		  <listitem><para>En utilisant Ninja</para>
+			<para>$ <emphasis>ninja -j 2</emphasis></para>
+			<para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+		  </listitem>
+		</itemizedlist>
   </listitem>	
-  <listitem><para>4. installation (en mode super-utilisateur)</para>
-    <itemizedlist>
-      <listitem><para># <emphasis role="bold">make install</emphasis></para>
-      </listitem>
-    </itemizedlist>
+  <listitem><para>4. Installer les binaires</para>
+		<para>$ <emphasis>make install</emphasis> # peut nécessiter des droits d'administrateur</para>
   </listitem>
 </itemizedlist>
-<para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH
-  utilisateur pour avoir accès à la commande.</para>
+<para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH.</para>
 
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
@@ -651,46 +675,73 @@
   <chapter>
     <title>Configuration de la base de données</title>
     <para>Les fichiers de configuration de la DB sont disponibles dans le répertoire core/database du package d'installation VISHNU. Seules des bases de données PostgreSQL ou MySQL sont actuellement supportées. Une seule base de données est nécessaire et suffisante pour l'ensemble des composants d'une infrastructure VISHNU (UMS, TMS, IMS et IMS).</para>
+
     <section>
-      <title>Utilisation d'une base de données PostGreSQL</title>
-      <para>Un guide pour installer une base PostGreSLQ peut être trouvé à cette addresse : <emphasis role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
-      <para>Pour une nouvelle installation de la base de données VISHNU, les scripts 'postgre_create.sql' et 'database_init.sql' doivent respectivement être utilisés pour créer et initialiser la base de données.</para>
-      <para>Pour la mise à jour de la base de données, notamment lors de la mise à jour vers une nouvelle version de VISHNU, utiliser plutôt les scripts 'postgre_update.sql' et 'database_update.sql' qui servent respectivement pour modifier le schéma de la base de données et pour mettre à jour les données. L'entête de chaque scripts indique le numéro de version à laquelle le script s'applique.</para>
-    </section>
-    <section>
-      <title>Utilisation d'une base de données MySQL</title>
-      <para>Un guide pour installer une base MySQL peut être trouvé à cette adresse : <emphasis role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
-      <para>Pour une nouvelle installation de la base de données VISHNU, les scripts 'mysql_create.sql' et 'database_init.sql' 
-			doivent respectivement être utilisés pour créer et initialiser la base de données. Pour ce faire, suivez les étapes suivantes :
+      <title>Utiliser une base de données MySQL</title>
+      <para>Nous supposons ici que vous avez déjà une installation de MySQL opérationnelle. Si ce n'est pas le cas, référer à la documentation officielle pour procéder à l'installation.</para>
+      <para>Vous devez également disposer des droits d'administration sur cette installation (connexion à MySQL en tant l'utilisateur 'root').</para>
+      <para>Vous aurez besoin des scripts <emphasis>mysql_create.sql</emphasis> et <emphasis>database_init.sql</emphasis> disponibles dans le dossier <emphasis>./core/database</emphasis> de l'arborescence des sources. Le premier script (<emphasis>mysql_create.sql</emphasis>) sert créer les tables de la base de données tandis que le second sert à initialiser les données.</para> 
+<para>Pour la création de la base de données VISHNU, suivez les étapes suivantes :
     	<itemizedlist>
       		<listitem>
 				<para>Se connecter au serveur MySQL en tant que root :</para>
-				<para># <emphasis>mysql -h mysql@server- -u root -p </emphasis> # replacer mysql@server par l'adresse de votre serveur MySql</para>
+				<para>$ <emphasis>mysql -h mysql@server- -u root -p </emphasis> # replacer mysql@server par l'adresse de votre serveur MySQL</para>
       		</listitem>
       		<listitem>
 				<para>Créer la base de données Vishnu</para>
-				<para># <emphasis>create database vishnu; </emphasis></para>
+				<para>$ <emphasis>create database vishnu ; </emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Se connecter sur la base de données</para>
-				<para># <emphasis>use vishnu; </emphasis></para>
+				<para>$ <emphasis>use vishnu ; </emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Créer les tables</para>
-				<para># <emphasis>source /path/to/mysql_create.sql </emphasis></para>
+				<para>$ <emphasis>source /path/to/mysql_create.sql</emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Initialiser la base de données</para>
-				<para># <emphasis>source /path/to/database_init.sql </emphasis></para>
+				<para>$ <emphasis>source /path/to/database_init.sql</emphasis></para>
       		</listitem>
    		 </itemizedlist>
 	</para>
     </section>
+
+    <section>
+      <title>Utiliser une base de données PostGreSQL</title>
+      <para>Nous supposons également que vous avez déjà une installation de PostGreSQL opérationnelle. Si ce n'est pas le cas, référer à la documentation officielle pour procéder à l'installation.</para>
+      <para>Vous devez également disposer des droits d'administration sur cette installation (accès en tant qu'utilisateur système 'postgres').</para>
+	  <para>Pour une nouvelle installation de la base de données, les scripts <emphasis>postgre_create.sql</emphasis> et <emphasis>database_init.sql</emphasis> doivent respectivement être utilisés pour créer et initialiser la base de données.</para>
+      <para>Pour créer et initialiser la base de données, exécuter les étapes suivantes à partir de votre serveur PostGreSQL :
+    	<itemizedlist>
+      		<listitem>
+				<para>Se connecter en tant que l'utilisateur 'postgres' (root):</para>
+				<para>$ <emphasis>su postgres</emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Créer la base de données vishnu</para>
+				<para>$ <emphasis>createdb vishnu ; </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Se connecter à la base de données</para>
+				<para>$ <emphasis>psql vishnu ; </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Créer le schéma de la base de données</para>
+				<para>$ <emphasis>\i /path/to/mysql_create.sql </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Initialiser la base de données</para>
+				<para>$ <emphasis>\i /path/to/database_init.sql</emphasis></para>
+      		</listitem>
+   		 </itemizedlist>
+    </para>
+    </section>
+
     <section>
       <title>Utilisation de LDAP</title>
-      <para>Un guide pour installer un serveur LDAP est disponible à cette adresse : <emphasis role="bold"> http://ferry.eof.eu.org/lesjournaux/jar/public_html/x5073.html</emphasis></para>
-      <para>Pour pouvoir utiliser l'authentification avec LDAP, le flag de compilation VISHNU_USE_LDAP doit avoir été activé. Sous debian, les paquets suivants sont
-nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU compilé, une option de configuration du serveur UMS doit être mise dans le fichier de configuration. Cette option est nommée 'authenticationType' et peut actuellement supporter 4 valeurs : 
+      <para>Nous supposons que vous avez déjà une installation de LDAP opérationnelle. Si ce n'est pas le cas, référer à la documentation officielle pour procéder à l'installation. Vous pouvez également installer ces dépendances à partir du gestionnaire de paquets de votre système.  Sur les systèmes basés sur Debian par exemple, vous devez installer les paquets suivants: <emphasis>slapd, libldap-2.4-2, libldap2-dev</emphasis> et <emphasis>ldap-utils</emphasis></para>
+      <para>Pour pouvoir utiliser l'authentification avec LDAP, le flag de compilation VISHNU_USE_LDAP doit être activé à la compilation. Une fois VISHNU compilé, une option de configuration du serveur UMS doit être mise dans le fichier de configuration. Cette option est nommée 'authenticationType' et peut actuellement supporter 4 valeurs : 
         <itemizedlist>
 	  <listitem>
             <para>
@@ -1577,7 +1628,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
 	</listitem>
 	<listitem>
 	  <para>Ouvrir une session VISHNU</para>
-	  <para>#<emphasis>vishnu_connect -u user</emphasis></para>
+	  <para>$ <emphasis>vishnu_connect -u user</emphasis></para>
 	  <para>Remplacer 'user' par un vrai identifiant utilisateur. 
 		Par défaut, VISHNU est installé avec un utilisateur 'root' ayant tous les droits sur la plateforme (ID: 'root', Mot de passe: 'vishnu_user').
 	</para>
@@ -1595,7 +1646,7 @@ nécessaires : slapd libldap-2.4-2 libldap2-dev ldap-utils. Une fois VISHNU comp
 	</listitem>
 	<listitem>
 	  <para>Fermer la session.</para>
-	  <para># <emphasis>vishnu_close</emphasis> </para>
+	  <para>$ <emphasis>vishnu_close</emphasis> </para>
 	  <para>Aucune erreur ne doit être remontée.</para>
 
 	</listitem>
