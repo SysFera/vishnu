@@ -1,2 +1,0 @@
-InitRef = NameService=corbaname::@TEST_OMNINAMES_CFG_IP@:@LOCAL_TEST_PORT@
-supportBootstrapAgent = 1
