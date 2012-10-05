@@ -338,7 +338,7 @@
 	    <para>UMS Client: It represents the programs allowing one to access the services of the UMS SeD. </para>
 	  </listitem>
 	  <listitem>
-	    <para>Pregateway: It represents a machine sets before the gateway of the clusters. </para>
+	    <para>gateway: It represents a machine sets before the gateway of the clusters. </para>
 	  </listitem>
 	  <listitem>
 	    <para>FMS SeD: It represents the program containing and executing the services of the FMS module. </para>
@@ -382,6 +382,11 @@
             </listitem>
             <listitem>
               <para>CMAKE: Version 2.8 or higher.</para>
+            </listitem>
+            <listitem>
+              <para>GNU Make or Ninja: Executable generators. Alternatively to Make, Ninja generator is more faster and 
+				is helpful for reducing the compilation duration. Especially when you need to compile several modules 
+				of VISHNU on the same machine.</para>
             </listitem>
             <listitem>
               <para>BOOST: Version 1.46.1 or higher. At least the following modules <emphasis>program_options, 
@@ -601,36 +606,56 @@
         </itemizedlist>
         </para>
         <para>
-        For instance, to compile VISHNU (clients and servers) with UMS and TMS (torque) with the
-        Python API and install it in /opt/vishnu:
+        For instance, the following steps allow to compile and install the client and the server sides of UMS and TMS in /opt/vishnu. There, we use TORQUE as backend to TMS while enabling the Python API.
       </para>
       <itemizedlist>
-        <listitem><para>1. create a build repository at the root of the vishnu project and go in</para>
-          <itemizedlist>
-            <listitem><para>$ <emphasis role="bold">mkdir build</emphasis></para></listitem>
-            <listitem><para>$ <emphasis role="bold">cd build</emphasis></para></listitem>
-          </itemizedlist>
+        <listitem><para>1. Create a build repository at the root of the vishnu project and go in</para>
+            <para>$ <emphasis>mkdir build</emphasis></para>
+            <para>$ <emphasis>cd build</emphasis></para>
         </listitem>
-        <listitem><para>2. generate the Makefile</para>
-          <itemizedlist>
-            <listitem><para>$ <emphasis role="bold">cmake -DENABLE_PYTHON=ON -DENABLE_SWIG=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu/ </emphasis></para>
-              <para> <emphasis role="bold">-DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DVISHNU_BATCH=TORQUE -DVISHNU_BATCH_VERSION=2.3 -DTORQUE_DIR=/opt/torque ..</emphasis></para></listitem>
-          </itemizedlist>
-        </listitem>
-        <listitem><para>3. Compile using 2 threads</para>
-          <itemizedlist>
-            <listitem><para>$ <emphasis role="bold">make -j 2</emphasis></para></listitem>
-          </itemizedlist>
+   		<listitem><para>2. Generate the Makefile</para>
+		<itemizedlist>
+  		  <listitem><para>Using Make</para>
+			<para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
+			<para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
+   			<para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
+		  </listitem>
+  		  <listitem><para>Using Ninja, see the flag CMAKE_GENERATOR</para>
+			<para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
+			<para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
+			<para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
+			<para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
+   			<para><emphasis>  -DTORQUE_DIR=/opt/torque \</emphasis></para>
+   			<para><emphasis role="bold">  -DCMAKE_GENERATOR=Ninja</emphasis></para>
+		  </listitem>
+		</itemizedlist>
+  		</listitem>
+        <listitem><para>3. Launch the compilation</para>
+		<itemizedlist>
+  		  <listitem><para>Using Make</para>
+			<para>$ <emphasis>make -j 2</emphasis></para>
+			<para>The option -j 2 allows to run the compilation with two processes.</para>
+		  </listitem>
+  		  <listitem><para>Using Ninja</para>
+			<para>$ <emphasis>ninja -j 2</emphasis></para>
+			<para>The option -j 2 allows to run the compilation with two processes.</para>
+		  </listitem>
+		</itemizedlist>
         </listitem>	
-        <listitem><para>4. installation (may be super-user depending on the install directory)</para>
-          <itemizedlist>
-            <listitem><para># <emphasis role="bold">make install</emphasis></para>
-            </listitem>
-          </itemizedlist>
+        <listitem><para>4. Installing the binaries</para>
+			<para>$ <emphasis>make install</emphasis>  # may require root privileges</para>
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: Do not forget to add the install 
-        directory/bin to the path to have access to the commands..</para>
+        directory/bin to PATH.</para>
 
     </section> <!-- End compilation des sources -->
   </chapter> <!-- End compilation -->
@@ -640,43 +665,70 @@
     <para>The files to configure the DB are available in the core/database repository of the sources of VISHNU. Only postgresql and mysql are currently supported. 
 Only one database is necessary for all the components of a VISHNU infrastructure (UMS, IMS, FMS and TMS).</para>
     <section>
-      <title>Use of a PostGreSQL DB</title>
-      <para>A guide (in French) to install a PostGreSLQ base can be found there: <emphasis role="bold">http://beuss.developpez.com/tutoriels/postgres/install/</emphasis></para>
-      <para>To install a new DB, the script 'postgre_create.sql' and 'database_init.sql' must be used by the admin to create and fill the database for the first time.</para>
-      <para>To update the DB after a new VISHNU version, there are update scripts that are available.</para>
-    </section>
-    <section>
-      <title>Use of a MySQL DB</title>
-      <para>A guide (in French) to install a MySQL base can be found there:<emphasis role="bold"> http://dev.mysql.com/doc/refman/5.0/fr/unix-post-installation.html</emphasis></para>
-      <para>To install a new database, the script 'mysql_create.sql' and 'database_init.sql' must be respectively used for creating the database schema and for initializing the data. For achieving that, perform the following steps:
+      <title>Use a MySQL Database</title>
+      <para>This section assumes that you already have a MySQL installation ready to use. Otherwise refer to the MySQL documentation to learn how to install it.</para>
+      <para>You also need to have a root access on your MySQL installation.</para>
+      <para>The setup of the Vishnu database requires the scripts <emphasis>mysql_create.sql</emphasis> and <emphasis>database_init.sql</emphasis> located in <emphasis>./core/database</emphasis> from the source tree. The first script (mysql_create.sql) allows to create the database schema while the second one allows to carry out the first data initialization.</para> 
+      <para>To create and initialize the database, perform the following steps:
     	<itemizedlist>
       		<listitem>
 				<para>Connect to the MySQL server as root:</para>
-				<para># <emphasis>mysql -h mysql@server -u root -p </emphasis>    #replace mysql@server with the address of your MySql server</para>
+				<para>$ <emphasis>mysql -h mysql@server -u root -p </emphasis>    #replace mysql@server with the address of your MySql server</para>
       		</listitem>
       		<listitem>
 				<para>Create the Vishnu's database</para>
-				<para># <emphasis>create database vishnu; </emphasis></para>
+				<para>$ <emphasis>create database vishnu ; </emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Connect to the database</para>
-				<para># <emphasis>use vishnu; </emphasis></para>
+				<para>$ <emphasis>use vishnu ; </emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Create the database schema</para>
-				<para># <emphasis>source /path/to/mysql_create.sql </emphasis></para>
+				<para>$ <emphasis>source /path/to/mysql_create.sql </emphasis></para>
       		</listitem>
       		<listitem>
 				<para>Initialize the database</para>
-				<para># <emphasis>source /path/to/database_init.sql </emphasis></para>
+				<para>$ <emphasis>source /path/to/database_init.sql</emphasis></para>
       		</listitem>
    		 </itemizedlist>
-</para>
+    </para>
     </section>
     <section>
-      <title>Use of LDAP</title>
-      <para>A guide (in French) to install a LDAP server can be found there: <emphasis role="bold"> http://ferry.eof.eu.org/lesjournaux/jar/public_html/x5073.html</emphasis></para>
-      <para>To use the LDAP authentication system, the flag VISHNU_USE_LDAP must be set at the compilation. Under debian, the required packages are: slapd libldap-2.4-2 libldap2-dev ldap-utils. Once VISHNU is installed, a runtime option must be set in the UMS server config file. The option is called 'authenticationType' and can have 4 values: 
+      <title>Use a PostGreSQL Database</title>
+      <para>In this section, we assume that you have a PostGreSQL installation ready to use. Otherwise refer to the PostGreSQL documentation to learn how to install it.</para>
+      <para>You also need to have a root access on your PostGreSQL installation.</para>
+      <para>The setup of the Vishnu database requires the scripts <emphasis>postgre_create.sql</emphasis> and <emphasis>database_init.sql</emphasis> located in <emphasis>./core/database</emphasis> from the source tree. The first script (<emphasis>postgre_create.sql</emphasis>) allows to create the database schema while the second one allows to carry out the first data initialization.</para> 
+
+      <para>To create and initialize the database, perform the following steps from the PostGreSQL server:
+    	<itemizedlist>
+      		<listitem>
+				<para>Log as 'postgres' user (root):</para>
+				<para>$ <emphasis>su postgres</emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Create the Vishnu's database</para>
+				<para>$ <emphasis>createdb vishnu ; </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Connect to the database</para>
+				<para>$ <emphasis>psql vishnu ; </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Create the database schema</para>
+				<para>$ <emphasis>\i /path/to/mysql_create.sql </emphasis></para>
+      		</listitem>
+      		<listitem>
+				<para>Initialize the database</para>
+				<para>$ <emphasis>\i /path/to/database_init.sql</emphasis></para>
+      		</listitem>
+   		 </itemizedlist>
+    </para>
+    </section>
+    <section>
+      <title>Use LDAP</title>
+      <para>We also assume here that you have a LDAP installation ready to use. Otherwise refer to the LDAP documentation to learn how to install it. On some GNU/Linux distribution, you may also install that from your package manager. On Debian systems, you need to install the following packages: <emphasis>slapd, libldap-2.4-2, libldap2-dev</emphasis> and <emphasis>ldap-utils</emphasis>.</para>
+      <para>To install with LDAP authentication support, the flag VISHNU_USE_LDAP must be enabled at the compilation time. Once the installation is completed, you need to set the parameter 'authenticationType' from the UMS configuration file accordingly. Possible values of this parameter are:
         <itemizedlist>
 	  <listitem>
             <para>
@@ -839,7 +891,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
     <title>Deploying VISHNU </title>
     <section>
       <title>On a single network</title>
-      <para>Modules can be deployed manually. Deployment will be described using the 4.1 figure of the [ARCH] document as an example. To simplify, we suppose the elements on the same area  "dedicated to VISHNU"  will be deployed on the same machine called <emphasis role="bold">pregateway</emphasis>.</para>
+      <para>Modules can be deployed manually. Deployment will be described using the 4.1 figure of the [ARCH] document as an example. To simplify, we suppose the elements on the same area  "dedicated to VISHNU"  will be deployed on the same machine called <emphasis role="bold">gateway</emphasis>.</para>
 
 
     <para><emphasis role="bold">IMPORTANT NOTES:</emphasis> 
@@ -863,19 +915,19 @@ Only one database is necessary for all the components of a VISHNU infrastructure
     </para>
 
   <para>Now that these points are clear, we can launch the environment. 
-	For starting your VISHNU environement successfully, you need to perform the following steps careful:</para>
+	For starting your VISHNU environment successfully, you need to perform the following steps careful:</para>
       <orderedlist>
 	<listitem>
           <para> Check you have a database created and initialized.</para>
 	</listitem>
 	<listitem>
-          <para> Start the CORBA naming service on the pregateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+          <para> Start the CORBA naming service on the gateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enough otherwise. Warning, in the omniNames configuration file, use the address of the host and not 'localhost' or '127.0.0.1'. </para>
 	</listitem>
 	<listitem>
-          <para> Start the log service of DIET on the pregateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. See the paragraphe 6.10 to have an example of configuration file.</para>
+          <para> Start the log service of DIET on the gateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. An example of configuration is provided at the section 6.10.</para>
 	</listitem>
 	<listitem>
-          <para> Start the MA with its configuration file on the pregateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+          <para> Start the MA with its configuration file on the gateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraph 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
             <itemizedlist>
 	      <listitem>
 		<para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
@@ -890,11 +942,11 @@ Only one database is necessary for all the components of a VISHNU infrastructure
           </para>
 	</listitem>
 	<listitem>
-          <para>Launch the UMS SeD on the pregateway with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters correspond to:
+          <para>Launch the UMS SeD on the gateway with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.5 to see an example of configuration file. The parameters correspond to:
             <itemizedlist>
 	      <listitem>
 		<para>
-                  'dietConfigFile=/usr/local/etc/SeD.cfg': the path until the DIET configuration file. See the paragraphe 6.4 for an example. The file can contains the two following lines:
+                  'dietConfigFile=/usr/local/etc/SeD.cfg': the path until the DIET configuration file. See the paragraph 6.4 for an example. The file can contains the two following lines:
                   <itemizedlist>
                     <listitem>
 		      <para>'traceLevel = 0':  The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details).</para>
@@ -953,7 +1005,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
 	  </para>
 	</listitem>
 	<listitem>
-          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.6 to have an example. The parameters are the same as the ones of UMS plus:
 	    <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
@@ -975,7 +1027,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
           </para>
         </listitem>
         <listitem>
-          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.6 to have an example. The parameters are the same as the ones of UMS plus:
             <itemizedlist>
 	      <listitem>
 		<para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
@@ -996,7 +1048,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
           </para>
         </listitem>
         <listitem>
-          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.6 to have an example. The parameters are the same as the ones of UMS plus:
             <itemizedlist>
 	      <listitem>
 	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
@@ -1016,7 +1068,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       </para>
         </listitem>
         <listitem>
-          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.6 to have an example. The parameters are the same as the ones of UMS plus:
+          <para>Start the TMS SeD on the Torque host machine. The command is: <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.6 to have an example. The parameters are the same as the ones of UMS plus:
             <itemizedlist>
 	      <listitem>
 	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the jobs states.</para>
@@ -1032,11 +1084,11 @@ Only one database is necessary for all the components of a VISHNU infrastructure
         </listitem> 
         
         <listitem>
-          <para>Start the IMS SeD on all the desired machines. The command is: <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to have an example. The parameters are the same as the ones of UMS. Please note that an IMS SeD must be launched on each machine to monitor.
+          <para>Start the IMS SeD on all the desired machines. The command is: <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.5 to have an example. The parameters are the same as the ones of UMS. Please note that an IMS SeD must be launched on each machine to monitor.
           </para>
         </listitem>
         <listitem>
-          <para>Start the FMS SeD on a machine. The command is: <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.7 to have an example. The parameters are the same as the ones of UMS plus:
+          <para>Start the FMS SeD on a machine. The command is: <emphasis role="bold">fmssed ~/fms_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.7 to have an example. The parameters are the same as the ones of UMS plus:
 	    <itemizedlist>
 	      <listitem>
 	        <para>'intervalMonitor = 1': The frequency (in second) when the database is updated with the file transfers.</para>
@@ -1060,7 +1112,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
           <para> Check you have a database created and initialized.</para>
         </listitem>
         <listitem>
-          <para> Start the CORBA naming service on the pregateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+          <para> Start the CORBA naming service on the gateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
         </listitem>
         <listitem>
           <para> Start a daemon forwarder on the network B:  </para>
@@ -1151,10 +1203,10 @@ Only one database is necessary for all the components of a VISHNU infrastructure
         passphrase, it is asked and the SSH connexion is established.</para>
     </listitem>
     <listitem>
-      <para>  Start the log service of DIET on the pregateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. See the paragraphe 6.10 to have an example of configuration file.</para>
+      <para>  Start the log service of DIET on the gateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. See the paragraph 6.10 to have an example of configuration file.</para>
     </listitem>
     <listitem>
-      <para> Start the MA with its configuration file on the pregateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+      <para> Start the MA with its configuration file on the gateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraph 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
 	<itemizedlist>
 	  <listitem>
 	    <para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
@@ -1169,7 +1221,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       </para>
     </listitem>
     <listitem>
-      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters are the same as for deploying on a single network.
+      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.5 to see an example of configuration file. The parameters are the same as for deploying on a single network.
       </para>
     </listitem>
     <listitem>
@@ -1187,7 +1239,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       <para>Having a database created and initialized.</para>
     </listitem>
     <listitem>
-      <para> Start the CORBA naming service on the pregateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
+      <para> Start the CORBA naming service on the gateway. The command is <emphasis role="bold">omniNames -start</emphasis> if starting for the first time, <emphasis role="bold">omniNames</emphasis> is enought otherwise. Warning, in the omninames configuration file, use the adress of the host and not 'localhost' or '127.0.0.1'. </para>
     </listitem>
     <listitem>
       <para> Start a daemon forwarder on the network B: </para>
@@ -1197,7 +1249,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
 	      forwarder2: Name that identifies the forwarder
 	  </para></listitem>
           <listitem><para>
-              forwarder2.cfg: Configuration file (see the paragraphe 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraphe 6.8, 
+              forwarder2.cfg: Configuration file (see the paragraph 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraph 6.8, 
               rules are:
               <itemizedlist>
                 <listitem>
@@ -1259,7 +1311,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
 	      logforwarder2: Name that identifies the forwarder
 	  </para></listitem>
           <listitem><para>
-              logforwarder2.cfg: Configuration file (see the paragraphe 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraphe 6.8, 
+              logforwarder2.cfg: Configuration file (see the paragraph 6.8) containing the rules applied to the connexions between the networks. There are 2 rules: 'accept:' or 'reject:'. In the example of the paragraph 6.8, 
               rules are:
               <itemizedlist>
                 <listitem>
@@ -1314,10 +1366,10 @@ Only one database is necessary for all the components of a VISHNU infrastructure
         passphrase, it is asked and the SSH connexion is established.</para>
     </listitem>
     <listitem>
-      <para> Start the log service of DIET on the pregateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. </para>
+      <para> Start the log service of DIET on the gateway. The command is <emphasis role="bold">LogCentral --config config.cfg</emphasis> with config.cfg a configuration file for the log central. </para>
     </listitem>
     <listitem>
-      <para>  Start the MA with its configuration file on the pregateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraphe 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
+      <para>  Start the MA with its configuration file on the gateway: <emphasis role="bold">dietAgent config.cfg</emphasis>. See the paragraph 6.3 to have an example of configuration file. This configuration file can contain the 3 following lines:
 	<itemizedlist>
 	  <listitem>
 	    <para> 'traceLevel = 0': The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details). </para>
@@ -1332,7 +1384,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       </para>
     </listitem>
     <listitem>
-      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraphe 6.5 to see an example of configuration file. The parameters correspond to:
+      <para>Launch the UMS SeD on the network C with the command <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. The parameter is a VISHNU configuration file. See the paragraph 6.5 to see an example of configuration file. The parameters correspond to:
       </para>
     </listitem>
     <listitem>
