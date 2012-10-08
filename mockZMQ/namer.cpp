@@ -168,7 +168,7 @@ int main(int argc, char** argv){
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
 
-  if (argc < 3){
+  if (argc != 3){
     usage();
     return 0;
   }
