@@ -289,35 +289,35 @@ vishnu::get_file_content(const std::string& filePath, const bool& rejectEmptyFil
 int
 vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std::string& filename) {
 
-  bfs::path filePath(src);
-  bfs::path fileDestPath(dest);
-  bfs::path fileNewPath(src);
-  if(filename.size()!=0) {
-    fileNewPath = bfs::path(filename);
-  }
+	bfs::path filePath(src);
+	bfs::path fileDestPath(dest);
+	bfs::path fileNewPath(src);
+	if(filename.size()!=0) {
+		fileNewPath = bfs::path(filename);
+	}
 
-  try {
-    //If the destination does not exist, the file is created in the current directory
-    if(!bfs::exists(fileDestPath)) {
-      bfs::path completePath(bfs::current_path().string() / fileNewPath.filename());
-      if(bfs::exists(completePath)){
-        bfs::remove(completePath);
-      }
-      boost::filesystem3::copy(filePath, completePath);
-      bfs::remove(filePath);
-    }
-    else {
-      bfs::path completePath(fileDestPath / fileNewPath.filename());
-      if(bfs::exists(completePath)){
-        bfs::remove(completePath);
-      }
-      boost::filesystem3::copy(filePath, completePath);
-      bfs::remove(filePath);
-    }
-  } catch (std::exception& e) {
-    throw UserException(ERRCODE_INVALID_PARAM, e.what());
-  }
-  return 0;
+	try {
+		//If the destination does not exist, the file is created in the current directory
+		if(!bfs::exists(fileDestPath)) {
+			bfs::path completePath(bfs::current_path().string() / fileNewPath.filename());
+			if(bfs::exists(completePath)){
+				bfs::remove(completePath);
+			}
+			boost::filesystem3::copy(filePath, completePath);
+			bfs::remove(filePath);
+		}
+		else {
+			bfs::path completePath(fileDestPath / fileNewPath.filename());
+			if(bfs::exists(completePath)){
+				bfs::remove(completePath);
+			}
+			boost::filesystem3::copy(filePath, completePath);
+			bfs::remove(filePath);
+		}
+	} catch (std::exception& e) {
+		throw UserException(ERRCODE_INVALID_PARAM, e.what());
+	}
+	return 0;
 }
 
 /**
