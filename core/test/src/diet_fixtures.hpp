@@ -120,8 +120,7 @@ public:
 #endif
 		// setup omniNames arguments
 		std::vector<std::string> args = ba::list_of(NAMER_URI_SRV)
-		(NAMER_URI_SUB)
-		("") ;
+		(NAMER_URI_SUB);
 		bp::child c = bp::create_child(exec, args, ctx);
 		processNamingService.reset(utils::copy_child(c));
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
