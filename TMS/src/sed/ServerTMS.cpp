@@ -10,10 +10,13 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>
+#include <boost/algorithm/string.hpp>
 #include "SystemException.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
 #include "UserServer.hpp"
+
+
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
@@ -100,7 +103,8 @@ ServerTMS::init(int vishnuId,
                 DbConfiguration dbConfig,
                 std::string machineId,
                 BatchType batchType,
-                std::string slaveBinDir
+                std::string slaveBinDir,
+                std::string batchDefaultConfigFile
                )
 {
 
@@ -112,6 +116,31 @@ ServerTMS::init(int vishnuId,
 
   //initialization of the slave directory
   mslaveBinDir = slaveBinDir;
+
+  //initialization of the default batch config file
+ // mdefaultBatchConfig = batchDefaultConfigFile;
+  switch(mbatchType) {
+    case TORQUE :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#PBS");
+      break;              
+    case LOADLEVELER :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "# @");
+      break;
+    case SLURM :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#SBATCH");
+      break;
+    case LSF :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#BSUB");
+      break;
+    case SGE :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#$");
+      break;
+    case PBSPRO :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#PBS");
+      break;
+    default :
+      break;
+  }
 
   // initialization of the service table
   diet_service_table_init(NB_SRV);
@@ -303,6 +332,64 @@ ServerTMS::init(int vishnuId,
   return 0;
 }
 
+/**
+ * \brief Function to get the default Batch submission options
+ * \param configPath The job script path
+ * \param defaultOptions The list of the option value
+ * \return raises an exception on error
+ */
+
+void
+ServerTMS::getConfigOptions(const char* configPath,
+                            std::vector<std::string>& defaultOptions, const char* batchKey){
+
+ try {
+    std::string scriptContent = vishnu::get_file_content(configPath);
+    std::istringstream iss(scriptContent);
+    std::string line;
+    std::string value;
+    std::string key;
+    while(!iss.eof()) {
+      getline(iss, line);
+      size_t pos = line.find('#');
+      if(pos==string::npos) {
+        continue;
+      }
+      line = line.erase(0, pos);
+      if(boost::algorithm::starts_with(line, batchKey)){
+        line = line.substr(std::string(batchKey).size());
+        pos = line.find("-");
+        if(pos!=std::string::npos){
+          line = line.erase(0, pos);
+          size_t pos1 = line.find_first_of(" ");
+          if(pos1!=std::string::npos) {
+            key = line.substr(0,pos1);
+            defaultOptions.push_back(key);
+            line = line.substr(pos1);
+
+            boost::algorithm::trim(line);
+            while((pos = line.find(","))!=std::string::npos){
+              value = line.substr(0,pos-1);
+              defaultOptions.push_back(value);
+              defaultOptions.push_back(key);
+              line = line.erase(0,pos);
+            }
+            value = line;
+            defaultOptions.push_back(value);
+
+
+          }
+
+
+
+        }
+      }
+    }
+  } catch (...){
+   
+  }  
+}  
+  
 /**
  * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
  * \param pb the resquest profile

@@ -100,7 +100,16 @@ class SGEServer : public BatchServer
                     const TMS_Data::SubmitOptions& options, 
                     std::vector<std::string>&cmdsOptions,
                     drmaa_job_template_t *jobt);
-    
+
+    /**
+    * \brief Function to get the script submission options
+    * \param scriptPath The job script path
+    * \param cmdsOptions The list of the option value
+    * \return raises an exception on error
+    */
+    void
+    getScriptOptions(const char* scriptPath,
+                     std::vector<std::string>& cmdsOptions);
     /**
      * \brief Function to get the value of SGE resource (nodes, walltime, cpu) in the script
      * \param file The file contain the script to scan

@@ -231,7 +231,7 @@ PbsProServer::processOptions(const char* scriptPath,
     if(!format.empty()) {
       cmdsOptions.push_back(format);
     } else {
-      cmdsOptions.push_back("nodes=1:ppn="+vishnu::convertToString(options.getNbCpu()));
+      cmdsOptions.push_back("select=1:ncpus="+vishnu::convertToString(options.getNbCpu()));
     }
 
   }
@@ -248,7 +248,7 @@ PbsProServer::processOptions(const char* scriptPath,
     if(posNbNodes!=std::string::npos) {
       std::string nbNodes = NbNodesAndCpuPerNode.substr(0, posNbNodes);
       std::string cpuPerNode = NbNodesAndCpuPerNode.substr(posNbNodes+1);
-      cmdsOptions.push_back("nodes="+nbNodes+":ppn="+cpuPerNode);
+      cmdsOptions.push_back("select="+nbNodes+":ncpus="+cpuPerNode);
     }
   }
 
@@ -343,8 +343,8 @@ PbsProServer::processOptions(const char* scriptPath,
 * \param cmdsOptions The list of the option value
 * \return raises an exception on error
 */
-/*void
-getScriptOptions(const char* scriptPath,
+void
+PbsProServer::getScriptOptions(const char* scriptPath,
                      std::vector<std::string>& cmdsOptions){
   std::string scriptContent = vishnu::get_file_content(scriptPath);
   std::istringstream iss(scriptContent);
@@ -363,7 +363,7 @@ getScriptOptions(const char* scriptPath,
       pos = line.find("-");
       if(pos!=std::string::npos){
         line = line.erase(0, pos);
-        size_t pos1 = line.find_first_of("");
+        size_t pos1 = line.find_first_of(" ");
         if(pos1!=std::string::npos) {
           key = line.substr(0,pos1-1);
           cmdsOptions.push_back(key);
@@ -371,8 +371,15 @@ getScriptOptions(const char* scriptPath,
         
           boost::algorithm::trim(line);        
           while((pos = line.find(","))!=std::string::npos){
-            value = ;
+            value = line.substr(0,pos-1);
+            cmdsOptions.push_back(value);
+            cmdsOptions.push_back(key);
+            line = line.erase(0,pos);
           }
+          value = line;
+          cmdsOptions.push_back(value);
+          
+          
         }
         
 
@@ -382,7 +389,7 @@ getScriptOptions(const char* scriptPath,
   }
   
   
-}*/
+}
 
 /**
  * \brief Function to treat the default submission options
