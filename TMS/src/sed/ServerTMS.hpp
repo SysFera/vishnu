@@ -131,8 +131,6 @@ private :
   getConfigOptions(const char* configPath,
                    std::vector<std::string>& defaultOptions, const char* batchKey);
 
-
-
   /**
    * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
    * \param pb the resquest profile
