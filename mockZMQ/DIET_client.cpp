@@ -212,13 +212,12 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
 }
 
 void
-getServerAddresses(const std::string& uri, const std::string service,
-		std::vector<boost::shared_ptr<Server> > &serv) {
+sendProfile(diet_profile_t* prof,const std::string& uri) {
 	zmq::context_t ctx(1);
 
 	LazyPirateClient lpc(ctx, uri, getTimeout());
 
-	if (!lpc.send(service)) {
+	if (!lpc.send(my_serialize(prof))) {
 		std::cerr << "E: request failed, exiting ...\n";
 		throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
 	}
@@ -228,40 +227,14 @@ getServerAddresses(const std::string& uri, const std::string service,
 	if (0 == response.length()) {
 		throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
 	}
-	int precDol = response.find("$");
-	std::string server;
-	int tmp;
-	while (precDol != std::string::npos) {
-		tmp = response.find("$", precDol+1);
-		if(tmp != std::string::npos){
-			server = response.substr(precDol+1, tmp-precDol-1);
-		} else {
-			server = response.substr(precDol+1, std::string::npos);
-		}
-		precDol = tmp;
-
-		std::string nameServ;
-		std::string addr;
-		int prec;
-		std::vector< std::string> vec;
-
-		tmp = server.find("#", 0);
-		prec = tmp;
-		nameServ = server.substr(0, tmp);
-		tmp = server.find("#", prec+1);
-		addr = server.substr(prec+1, tmp-prec-1);
-
-		boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr));
-		serv.push_back(s);
-	}
-}
-
-boost::shared_ptr<Server>
-electServer(std::vector<boost::shared_ptr<Server> > serv){
-	if (serv.size() <= 0){
-		throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
-	}
-	return serv.at(0);
+  //Update of profile
+	boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+  prof->IN = tmp->IN;
+  prof->OUT = tmp->OUT;
+  prof->INOUT = tmp->INOUT;
+  for(int i = 0; i <= prof->OUT; ++i){
+    prof->param[i] = strdup(tmp->param[i]);
+  }
 }
 
 int
@@ -276,15 +249,12 @@ diet_call(diet_profile_t* prof) {
 	// if no entry in configuration, just ask naming service
 	if (it != theConfig.end()) {
 		uri = it->second;
+    return diet_call_gen(prof, uri);
 	} else {
 		it = theConfig.find(NAMER_KEY);
 		if (theConfig.end() != it) {
 			uri = it->second;
-			getServerAddresses(uri, service, serv);
-			boost::shared_ptr<Server> elected = electServer(serv);
-			uri = boost::str(
-					boost::format("%1%")
-			% elected->getURI());
+			sendProfile(prof, uri);
 		} else {
 			// basically you're screwed here
 			throw SystemException(ERRCODE_SYSTEM,
@@ -294,9 +264,9 @@ diet_call(diet_profile_t* prof) {
 		}
 	}
 
-	return diet_call_gen(prof, uri);
+	//return diet_call_gen(prof, uri);
 
-	// return 0;
+	return 0;
 }
 
 int

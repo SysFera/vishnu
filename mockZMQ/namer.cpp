@@ -4,6 +4,7 @@
 #include "zhelpers.hpp"
 #include "DIET_client.h"
 #include <boost/thread.hpp>
+#include "SystemException.hpp"
 
 #define SEPARATOR "#"
 #define INIT "$"
@@ -13,13 +14,6 @@ usage(){
   std::cout << "Usage: namer <uriAddr> <uriSubscriber>" << std::endl;
 }
 
-//bool
-//isGoodAction(boost::shared_ptr<Message> msg) {
-//  return (msg.get()->getAction() == GEAD ||
-//          msg.get()->getAction() == ADSE ||
-//          msg.get()->getAction() == RESE);
-//}
-
 class AddressDealer{
 public:
   AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
@@ -28,10 +22,21 @@ public:
   ~AddressDealer(){
   }
 
+  //function to get the first element from the annuary
+  std::string
+  elect(std::vector<boost::shared_ptr<Server> >* serv){
+    if ((serv == NULL) || (serv->size() == 0)) {
+      return "";
+    }
+    return serv->at(0).get()->getURI();
+  }
+
   void
   run(){
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
+    std::string servname;
+
     socket.bind(muri.c_str());
     std::cout << boost::format("I: bound on %1%\n") % muri;
     while (true) {
@@ -44,24 +49,23 @@ public:
       } catch (zmq::error_t error) {
         std::cerr << boost::format("E: %1%\n")%error.what();
       }
-      std::string data(static_cast<const char*>(message.data()), message.size());
-      std::cout << boost::format("I: recv=> %1%, size %2%\n") % data % data.length();
 
-      // Deserialize
-      std::string servname = data;
+      // Deserialize and call UMS Method
+      if (message.size() != 0) {
+        boost::shared_ptr<diet_profile_t> profile(my_deserialize(static_cast<const char*>(message.data())));
+        servname = profile.get()->name;
+        std::vector<boost::shared_ptr<Server> >* serv = mann.get()->get(servname);
+        std::string uriServer= elect(serv);
 
-      std::vector<boost::shared_ptr<Server> >* serv = mann.get()->get(servname);
-      std::string resultSerialized;
+        if (uriServer.size() == 0) {
+          throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
+        }
+        diet_call_gen(profile.get(), uriServer);
 
-      for (int i = 0 ; i < serv->size() ; i++){
-        std::string uri = serv->at(i).get()->getURI();
-        resultSerialized += INIT + servname + SEPARATOR + uri ;
+        std::string resultSerialized = my_serialize(profile.get());
+        s_send(socket, resultSerialized);
       }
-      delete (serv);
 
-    // Send reply back to client
-      std::cout << " Serialized to send : " << resultSerialized << std::endl;
-      s_send(socket, resultSerialized) ;
     }
   }
 
