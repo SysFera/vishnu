@@ -242,7 +242,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	mdatabaseVishnu->process(sqlUpdate);
 
-
 	return 0;
 }
 
