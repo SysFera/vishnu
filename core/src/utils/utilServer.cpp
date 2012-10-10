@@ -357,7 +357,12 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
-  ret = databaseVishnu->generateId(table, fields, val, tid);
+  try{
+    ret = databaseVishnu->generateId(table, fields, val, tid);
+  } catch (exception const & e){
+    databaseVishnu->cancelTransaction(tid);
+    throw e;
+  }
   if(insert) {
 	  databaseVishnu->endTransaction(tid);
   }
