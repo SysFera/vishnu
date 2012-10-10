@@ -363,7 +363,7 @@ ServerTMS::getConfigOptions(const char* configPath,
       if(pos==string::npos) {
         continue;
       }
-      
+     
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line, batchKey)){
         line = line.substr(std::string(batchKey).size());

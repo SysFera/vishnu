@@ -101,7 +101,6 @@ class SGEServer : public BatchServer
                     std::vector<std::string>&cmdsOptions,
                     drmaa_job_template_t *jobt);
 
-
     /**
      * \brief Function to get the value of SGE resource (nodes, walltime, cpu) in the script
      * \param file The file contain the script to scan

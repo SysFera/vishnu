@@ -333,6 +333,60 @@ PbsProServer::processOptions(const char* scriptPath,
   }
 }
 
+/**
+* \brief Function to get the script submission options
+* \param scriptPath The job script path
+* \param cmdsOptions The list of the option value
+* \return raises an exception on error
+*/
+void
+PbsProServer::getScriptOptions(const char* scriptPath,
+                     std::vector<std::string>& cmdsOptions){
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  std::istringstream iss(scriptContent);
+  std::string line;
+  std::string value;
+  std::string key;
+  while(!iss.eof()) {
+    getline(iss, line);
+    size_t pos = line.find('#');
+    if(pos==string::npos) {
+      continue;
+    }
+    line = line.erase(0, pos);
+    if(boost::algorithm::starts_with(line, "#PBS")){
+      line = line.substr(std::string("#PBS").size());
+      pos = line.find("-");
+      if(pos!=std::string::npos){
+        line = line.erase(0, pos);
+        size_t pos1 = line.find_first_of(" ");
+        if(pos1!=std::string::npos) {
+          key = line.substr(0,pos1-1);
+          cmdsOptions.push_back(key);
+          line = line.substr(pos1);
+        
+          boost::algorithm::trim(line);        
+          while((pos = line.find(","))!=std::string::npos){
+            value = line.substr(0,pos-1);
+            cmdsOptions.push_back(value);
+            cmdsOptions.push_back(key);
+            line = line.erase(0,pos);
+          }
+          value = line;
+          cmdsOptions.push_back(value);
+          
+          
+        }
+        
+
+        
+      }
+    }
+  }
+  
+  
+}
+>>>>>>> default parameters
 
 
 /**
