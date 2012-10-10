@@ -52,6 +52,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string batchTypeStr;
   std::string machineId;
   std::string remoteBinDirectory;
+  std::string defaultBatchConfig;
   string TMSTYPE = "TMS";
   string cfg;
 
@@ -65,6 +66,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
+    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -168,7 +170,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
       //Initialize the TMS Server
       boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory);
+      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, defaultBatchConfig);
       registerSeD(TMSTYPE, config, cfg);
 
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();

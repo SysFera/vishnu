@@ -94,7 +94,8 @@ public :
        DbConfiguration dbConfig,
        std::string machineId,
        BatchType batchType,
-       std::string slaveBinDir);
+       std::string slaveBinDir,
+       std::string batchDefaultConfigFile);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -112,6 +113,16 @@ private :
    * \brief operator=
    */
   ServerTMS& operator=(const ServerTMS&);
+
+  /**
+  * \brief Function to get the default Batch submission options
+  * \param configPath The job script path
+  * \param defaultOptions The list of the option value
+  * \return raises an exception on error
+  */
+  void
+  getConfigOptions(const char* configPath,
+                   std::vector<std::string>& defaultOptions, const char* batchKey);
 
   /**
    * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
@@ -157,5 +168,9 @@ private :
    * \brief Directory containing the slave binary
    */
   std::string mslaveBinDir;
+  /**
+   * \brief Path to default batch File
+   */
+  std::vector<std::string> mdefaultBatchConfig;
 };
 #endif // SERVER

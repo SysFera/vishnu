@@ -36,7 +36,8 @@ namespace vishnu {
     REMOTEBINDIR,
     INTERVALMONITOR,
     DBPOOLSIZE,
-    AUTHENTYPE
+    AUTHENTYPE,
+    DEFAULTBATCHCONFIGFILE
   } param_type_t;
 
   /**
