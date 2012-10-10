@@ -144,14 +144,25 @@ void FileTransferServer::logIntoDatabase(int processId, const std::string& error
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-  std::string sqlInsert= "insert into filetransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
-    "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,errorMsg,startTime)"
-    "values ("+numsession+",'"+mfileTransfer.getUserId()+"','"+ mfileTransfer.getClientMachineId()+"','"+mfileTransfer.getSourceMachineId()+"','"+mfileTransfer.getDestinationMachineId()+"','"
-    +mfileTransfer.getSourceFilePath()+"','"+mfileTransfer.getDestinationFilePath() +"','"+mfileTransfer.getTransferId()+"',"+convertToString(mfileTransfer.getStatus())+","
-    +convertToString(mfileTransfer.getSize())+","+convertToString(mfileTransfer.getTrCommand())+","+convertToString(processId)+",'"+errorMsgCleaned+"'" +",CURRENT_TIMESTAMP)";
+
+  std::string sqlUpdate="UPDATE filetransfer set ";
+  sqlUpdate+="vsession_numsessionid="+numsession+",";
+  sqlUpdate+="userId='"+mfileTransfer.getUserId()+"',";
+  sqlUpdate+="clientMachineId='"+mfileTransfer.getClientMachineId()+"',";
+  sqlUpdate+="sourceMachineId='"+mfileTransfer.getSourceMachineId()+"',";
+  sqlUpdate+="destinationMachineId='"+mfileTransfer.getDestinationMachineId()+"',";
+  sqlUpdate+="sourceFilePath='"+mfileTransfer.getSourceFilePath()+"',";
+  sqlUpdate+="destinationFilePath='"+mfileTransfer.getDestinationFilePath()+"',";
+  sqlUpdate+="status="+convertToString(mfileTransfer.getStatus())+",";
+  sqlUpdate+="fileSize="+convertToString(mfileTransfer.getSize())+",";
+  sqlUpdate+="trCommand="+convertToString(mfileTransfer.getTrCommand())+",";
+  sqlUpdate+="processid="+convertToString(processId)+",";
+  sqlUpdate+="errorMsg='"+errorMsgCleaned+"',";
+  sqlUpdate+="startTime=CURRENT_TIMESTAMP ";
+  sqlUpdate+="WHERE transferid='"+mfileTransfer.getTransferId()+"';";
 
 
-  FileTransferServer::getDatabaseInstance()->process(sqlInsert);
+  FileTransferServer::getDatabaseInstance()->process(sqlUpdate);
 
 
 }
