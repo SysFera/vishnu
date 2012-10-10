@@ -42,6 +42,7 @@ mwork(work), msessionServer(session)
 int
 WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   std::string sqlInsert = "insert into work (date_created, date_started, description, done_ratio, due_date, estimated_hours, identifier, last_updated, machine_id, nbcpus, owner_id, priority, status, subject) values ";
+  std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;
   std::string formatidwork;
 
@@ -82,21 +83,30 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
       //if the work id is generated
       if (idWorkGenerated.size() != 0) {
         mwork->setWorkId(idWorkGenerated);
-
         //if the workId does not exist
-        if (getAttribut("where identifier='"+mwork->getWorkId()+"'").size() == 0) {
+        if (getAttribut("where identifier='"+mwork->getWorkId()+"'","count(*)") == "1") {
           //To inactive the work status
 //          mwork->setStatus(INACTIVE_STATUS);
 // TODO
           mwork->setStatus(0);
+          //FIXME : set ApplicationId of mwork currently null
+          //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
+          sqlUpdate+="date_created="+timestamp+", ";
+          sqlUpdate+="date_started="+timestamp+", ";
+          sqlUpdate+="description='"+mwork->getDescription()+"', ";
+          sqlUpdate+="done_ratio="+convertToString(mwork->getDoneRatio())+", ";
+          sqlUpdate+="due_date="+timestamp+", ";
+          sqlUpdate+="estimated_hours="+convertToString(mwork->getEstimatedHour())+", ";
+          sqlUpdate+="last_updated="+timestamp+", ";
+          sqlUpdate+="machine_id="+machineId+", ";
+          sqlUpdate+="nbcpus="+convertToString(mwork->getNbCPU())+", ";
+          sqlUpdate+="owner_id='"+owner+"', ";
+          sqlUpdate+="priority="+convertToString(mwork->getPriority())+", ";
+          sqlUpdate+="status="+convertToString(mwork->getStatus())+", ";
+          sqlUpdate+="subject='"+mwork->getSubject()+"' ";
+          sqlUpdate+="WHERE identifier='"+mwork->getWorkId()+"';";
 
-          mdatabaseVishnu->process(sqlInsert + "("+timestamp+"\
-            ,"+ timestamp+",'"+mwork->getDescription()+"',"+convertToString(mwork->getDoneRatio())+", \
-            "+timestamp+", '"+convertToString(mwork->getEstimatedHour())+"' \
-            , '"+idWorkGenerated+"', "+timestamp+", "+machineId+"\
-            , "+convertToString(mwork->getNbCPU())+", '"+owner+"', "+convertToString(mwork->getPriority())+" \
-            , "+convertToString(mwork->getStatus())+", '"+mwork->getSubject()+"')");
-
+          mdatabaseVishnu->process(sqlUpdate);
 
         }//if the machine id is generated
         else {
