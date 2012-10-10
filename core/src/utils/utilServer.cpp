@@ -321,7 +321,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  table="job";
 	  fields=" (vsession_numsessionid) ";
 	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-	  insert=false; //FIXME
 	  break;
   case FILETRANSFERT:
 	  table="filetransfer";
@@ -360,7 +359,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   int tid = databaseVishnu->startTransaction();
   ret = databaseVishnu->generateId(table, fields, val, tid);
   if(insert) {
-	  //TODO : replace cancel by flush or end -- insert must be commited
 	  databaseVishnu->endTransaction(tid);
   }
   else {
