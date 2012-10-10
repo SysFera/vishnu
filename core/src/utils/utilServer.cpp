@@ -295,7 +295,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 }
 
 int
-vishnu::getVishnuCounter(std::string vishnuIdString){
+vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   DbFactory factory;
   Database *databaseVishnu;
   int ret;
@@ -304,17 +304,135 @@ vishnu::getVishnuCounter(std::string vishnuIdString){
   std::string fields;
   std::string val;
 
-  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
-  val = " (1, 't', 't', 't', 't', 't') ";
-  table = "vishnu";
+
+  bool insert=true;
+  switch(type) {
+  case MACHINE:
+	  table="machine";
+	  fields=" (vishnu_vishnuid) ";
+	  val = " ("+vishnuIdString+") ";
+	  insert=false; //FIXME
+	  break;
+  case USER:
+	  table="users";
+	  fields=" (vishnu_vishnuid,pwd,userid) ";
+	  val = " ("+vishnuIdString+",'tata','titi') ";
+	  break;
+  case JOB:
+	  table="job";
+	  fields=" (vsession_numsessionid) ";
+	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  insert=false; //FIXME
+	  break;
+  case FILETRANSFERT:
+	  table="filetransfer";
+	  fields=" (vsession_numsessionid) ";
+	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  insert=false; //FIXME
+	  break;
+  case AUTH:
+	  table="authsystem";
+	  fields=" (vishnu_vishnuid) ";
+	  val = " ("+vishnuIdString+") ";
+	  insert=false; //FIXME
+	  break;
+  case WORK:
+	  //FIXME : no auto-increment field in work
+	  fields = " (application_id"
+			  ",date_created,done_ratio, estimated_hours,identifier,"
+			  "last_updated, nbcpus, owner_id, priority, "
+			  "project_id, "
+			  "start_date, status, subject) ";
+	  val = " ((select min(id) from application_version),"
+			  " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+			  " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+			  "(select min(id) from project), "
+			  "CURRENT_TIMESTAMP, 1,'toto') ";
+	  table = "work";
+	  insert=false; //FIXME improve default values for 'val', get foreign keys
+	  break;
+  default:
+	  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
+	  val = " (1, 't', 't', 't', 't', 't') ";
+	  table = "vishnu";
+	  insert=false;
+	  break;
+  }
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
   ret = databaseVishnu->generateId(table, fields, val, tid);
-  databaseVishnu->cancelTransaction(tid);
+  if(insert) {
+	  //TODO : replace cancel by flush or end -- insert must be commited
+	  databaseVishnu->endTransaction(tid);
+  }
+  else {
+	  databaseVishnu->cancelTransaction(tid);
+  }
   return ret;
 }
 
+/**
+ * \brief To set the objectId in the specified row in the database
+ * \param key : the key to identify the reserved row
+ * \param objectId : the objectId to set
+ * \param type : the type of the object
+ */
+void
+vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
+
+	std::string table;
+	std::string keyname;
+	std::string idname;
+	switch(type) {
+		case MACHINE:
+			table="machine";
+			keyname="nummachineid";
+			idname="machineid";
+			break;
+		case USER:
+			table="users";
+			keyname="numuserid";
+			idname="userid";
+			break;
+		case JOB:
+			table="job";
+			keyname="numjobid";
+			idname="jobid";
+			break;
+		case FILETRANSFERT:
+			table="filetransfer";
+			keyname="numfiletransferid";
+			idname="transferid";
+			break;
+		case AUTH:
+			table="authsystem";
+			keyname="numauthsystemid";
+			idname="authsystemid";
+			break;
+		case WORK:
+			table="work";
+			keyname="id";
+			idname="identifier";
+			break;
+		default:
+			throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
+			break;
+	}
+	std::string sqlReserve="UPDATE "+table+" ";
+	sqlReserve+="set "+idname+"='"+objectId+"' ";
+	sqlReserve+="where "+keyname+"="+convertToString(key)+";";
+
+	DbFactory factory;
+	try {
+		factory.getDatabaseInstance()->process(sqlReserve);
+	}
+	catch (exception const & e)
+	{
+		throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
+	}
+
+}
 
 /**
  * \brief Function to get information from the table vishnu
@@ -380,7 +498,7 @@ vishnu::getObjectId(int vishnuId,
 
   //To get the counter
   int counter;
-  counter = getVishnuCounter(vishnuIdString);
+  counter = getVishnuCounter(vishnuIdString,type);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
@@ -394,6 +512,8 @@ vishnu::getObjectId(int vishnuId,
       pthread_mutex_unlock(&(mutex));
       throw e;
     }
+    // To set the idGenerated in the related row
+    reserveObjectId(counter,idGenerated,type);
 
   } else {
     pthread_mutex_unlock(&(mutex));
@@ -425,10 +545,9 @@ std::string vishnu::parseErrorMessage (const std::string& errorMsg){
       result.erase(endOfLinePos);
     }
 
-    return result;
   }
 
-
+  return result;
 }
 
 
