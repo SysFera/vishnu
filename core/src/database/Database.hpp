@@ -88,7 +88,7 @@ virtual ~Database();
  * \return A new integer never returned by this function
  */
   virtual int
-  generateId(std::string table, std::string fields, std::string val, int tid) = 0;
+  generateId(std::string table, std::string fields, std::string val, int tid, std::string primary) = 0;
 
 protected :
   /**

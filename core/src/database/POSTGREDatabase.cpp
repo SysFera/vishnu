@@ -240,9 +240,9 @@ POSTGREDatabase::flush(int transactionID){
 }
 
 int
-POSTGREDatabase::generateId(string table, string fields, string val, int tid) {
+POSTGREDatabase::generateId(string table, string fields, string val, int tid, std::string primary) {
   std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
-  sqlCommand += ";SELECT currval(pg_get_serial_sequence('vishnu', 'vishnuid'))";
+  sqlCommand += ";SELECT currval(pg_get_serial_sequence('"+table+"', '"+primary+"'))";
   vector<string> results = vector<string>();
   vector<string>::iterator iter;
   try{

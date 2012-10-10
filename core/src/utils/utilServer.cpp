@@ -303,6 +303,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   std::string table;
   std::string fields;
   std::string val;
+  std::string primary;
 
 
   bool insert=true;
@@ -311,26 +312,31 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  table="machine";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
+	  primary="nummachineid";
 	  break;
   case USER:
 	  table="users";
 	  fields=" (vishnu_vishnuid,pwd,userid) ";
 	  val = " ("+vishnuIdString+",'tata','titi') ";
+	  primary="numuserid";
 	  break;
   case JOB:
 	  table="job";
 	  fields=" (vsession_numsessionid) ";
 	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  primary="numjobid";
 	  break;
   case FILETRANSFERT:
 	  table="filetransfer";
 	  fields=" (vsession_numsessionid) ";
 	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  primary=" numfiletransferid ";
 	  break;
   case AUTH:
 	  table="authsystem";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
+	  primary="numauthsystemid";
 	  break;
   case WORK:
 	  //FIXME : no auto-increment field in work
@@ -345,19 +351,21 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 			  "(select min(id) from project), "
 			  "CURRENT_TIMESTAMP, 1,'toto') ";
 	  table = "work";
+	  primary="id";
 	  break;
   default:
 	  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
 	  val = " (1, 't', 't', 't', 't', 't') ";
 	  table = "vishnu";
 	  insert=false;
+	  primary="vishnu_vishnuid";
 	  break;
   }
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
   try{
-    ret = databaseVishnu->generateId(table, fields, val, tid);
+    ret = databaseVishnu->generateId(table, fields, val, tid, primary);
   } catch (exception const & e){
     databaseVishnu->cancelTransaction(tid);
     throw e;

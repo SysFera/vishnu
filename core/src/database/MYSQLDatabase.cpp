@@ -325,9 +325,9 @@ MYSQLDatabase::flush(int transactionID){
 }
 
 int
-MYSQLDatabase::generateId(string table, string fields, string val, int tid) {
+MYSQLDatabase::generateId(string table, string fields, string val, int tid, std::string primary) {
 	std::string sqlCommand("INSERT INTO "+table+ fields + " values " +val);
-	std::string getcpt("SELECT LAST_INSERT_ID() FROM vishnu");
+	std::string getcpt("SELECT LAST_INSERT_ID() FROM "+table);
 	vector<string> results = vector<string>();
 	vector<string>::iterator iter;
 
