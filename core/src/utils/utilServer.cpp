@@ -333,7 +333,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 	  table="authsystem";
 	  fields=" (vishnu_vishnuid) ";
 	  val = " ("+vishnuIdString+") ";
-	  insert=false; //FIXME
 	  break;
   case WORK:
 	  //FIXME : no auto-increment field in work
