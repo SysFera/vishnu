@@ -56,15 +56,16 @@ public:
   operator()() {
     zmq::socket_t socket(*ctx_, ZMQ_REP);
     socket.connect("inproc://vishnu");
+    std::string data;
     while (true) {
-      std::string data = "";
+      data.clear();
       try {
     	data = s_recv(socket);
       } catch (zmq::error_t error) {
         std::cout << "E: " << error.what() << "\n";
         continue;
       }
-      std::cout << boost::str(boost::format("ZMQ Worker: %|1$02| |recv: %2% | size: %3%\n")% id_ % data % data.length());
+      std::cout << boost::str(boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length());
 
       // Deserialize and call UMS Method
       if (data.size() != 0) {
@@ -93,7 +94,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
 
   // bind the sockets
-  std::cerr << "Bound on " << uri << "\n";
+  std::cout << boost::format("I: listening... (%1%)\n") % uri;
   socket_server.bind(uri.c_str());
   socket_workers.bind("inproc://vishnu");
 

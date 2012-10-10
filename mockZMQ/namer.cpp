@@ -38,7 +38,7 @@ public:
     std::string servname;
 
     socket.bind(muri.c_str());
-    std::cout << boost::format("I: bound on %1%\n") % muri;
+    std::cout << boost::format("I: listening for clients (%1%)\n") % muri;
     while (true) {
 
       //Receive message from ZMQ
@@ -87,7 +87,9 @@ public:
   run(){
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
+
     socket.bind(muri.c_str());
+    std::cout << boost::format("I: listening for SeDs subscribers (%1%)\n") % muri;
     while (true) {
 
       //Receive message from ZMQ

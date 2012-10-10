@@ -64,6 +64,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
     Job jobInfo;
     SubmitOptions subOptions;
 
+    BOOST_TEST_MESSAGE("************ The script is " << scriptFilePath );
+
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
