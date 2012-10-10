@@ -60,8 +60,6 @@ UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServ
 int
 UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath) {
   std::string pwd;
-  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
-  "privilege, email, passwordstate, status) values ";
   std::string sqlUpdate = "update users set ";
 
   std::string idUserGenerated;
