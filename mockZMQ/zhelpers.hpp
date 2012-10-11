@@ -13,40 +13,6 @@ const int DEFAULT_TIMEOUT = 2; // seconds
 
 class Socket : public zmq::socket_t, public boost::noncopyable {
 public:
-<<<<<<< HEAD
-	Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
-
-	bool
-	setLinger(int linger = -1) {
-		try {
-			setsockopt(ZMQ_LINGER, &linger, sizeof(linger));
-			return true;
-		} catch (const zmq::error_t& e) {
-			return false;
-		}
-	}
-
-	bool
-	send(const std::string& data, int flags = 0) {
-		return send(data.c_str(), data.length(), flags);
-	}
-
-	bool
-	send(const char* data, int flags = 0) {
-		return send(data, strlen(data), flags);
-	}
-
-	std::string
-	get(int flags = 0) {
-		zmq::message_t message;
-		if (!recv(&message, flags)) {
-			throw error_t();
-		}
-
-		const char *dat = static_cast<const char*>(message.data());
-		return std::string(dat, dat + message.size());
-	}
-=======
   Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
 
   bool
@@ -79,7 +45,6 @@ public:
     const char *dat = static_cast<const char*>(message.data());
     return std::string(dat, dat + message.size());
   }
->>>>>>> 633bef9... zmq mocked, unit tests ready
 
 private:
 	bool
