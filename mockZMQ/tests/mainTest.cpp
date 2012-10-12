@@ -3,6 +3,7 @@
 #include "TestAnnuary.cpp"
 #include "TestServer.cpp"
 #include "TestLazyPirate.cpp"
+#include "TestDIET_client.cpp"
 
 BOOST_AUTO_TEST_SUITE( test_suite )
 
@@ -33,11 +34,28 @@ BOOST_AUTO_TEST_CASE( my_test )
   testSer.testGetServices();
   testSer.testGetURI();
 
-  LazyPirateClientTest test;
-  test.testSend();
-  test.testSendBadAddr();
-  test.testRecv();
-  test.testRecvBadAddr();
+  LazyPirateClientTest testlpc;
+  testlpc.testSend();
+  testlpc.testSendBadAddr();
+  testlpc.testRecv();
+  testlpc.testRecvBadAddr();
+
+  TestDIET_client testDIET;
+  testDIET.testGetModuleUMS();
+  testDIET.testGetModuleFMS();
+  testDIET.testGetModuleTMS();
+  testDIET.testGetModuleIMS();
+  testDIET.testGetBadModule();
+  testDIET.testDIETAlloc();
+  testDIET.testStringSet();
+  testDIET.testStringGet();
+  testDIET.testDIET_parameterBad();
+  testDIET.testDIET_parameter();
+  testDIET.testMySerialize();
+  testDIET.testMyDeSerialize();
+  testDIET.testMyDeSerializeEmpty();
+  testDIET.testInitNULL();
+  testDIET.testInitInvalid();
 
 } // boost auto test case
 
