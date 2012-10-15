@@ -88,6 +88,14 @@ ServerTMS::ServerTMS() {
   mdatabaseVishnu = NULL;
   mslaveBinDir = "";
 }
+/**
+ * \brief To get the Default Batch Options
+ * \return batch Default Options Vector
+ */
+std::vector<std::string>
+ServerTMS::getDefaultBatchOption(){
+  return mdefaultBatchOption;
+}
 
 /**
  * \brief To initialize the TMS Server class
@@ -121,22 +129,22 @@ ServerTMS::init(int vishnuId,
  // mdefaultBatchConfig = batchDefaultConfigFile;
   switch(mbatchType) {
     case TORQUE :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#PBS");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
       break;              
     case LOADLEVELER :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "# @");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
       break;
     case SLURM :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#SBATCH");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#SBATCH");
       break;
     case LSF :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#BSUB");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#BSUB");
       break;
     case SGE :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#$");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#$");
       break;
     case PBSPRO :
-      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchConfig, "#PBS");
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
       break;
     default :
       break;
@@ -355,33 +363,26 @@ ServerTMS::getConfigOptions(const char* configPath,
       if(pos==string::npos) {
         continue;
       }
+      
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line, batchKey)){
         line = line.substr(std::string(batchKey).size());
-        pos = line.find("-");
+        boost::algorithm::trim_left(line);
+        pos = line.find(" ");
         if(pos!=std::string::npos){
-          line = line.erase(0, pos);
-          size_t pos1 = line.find_first_of(" ");
-          if(pos1!=std::string::npos) {
-            key = line.substr(0,pos1);
-            defaultOptions.push_back(key);
-            line = line.substr(pos1);
-
-            boost::algorithm::trim(line);
-            while((pos = line.find(","))!=std::string::npos){
-              value = line.substr(0,pos-1);
-              defaultOptions.push_back(value);
-              defaultOptions.push_back(key);
-              line = line.erase(0,pos);
-            }
-            value = line;
+          key = line.substr(0,pos);
+          boost::algorithm::trim(key);
+          defaultOptions.push_back(key);
+          line = line.substr(pos);
+          boost::algorithm::trim(line);
+          while((pos = line.find(","))!=std::string::npos){
+            value = line.substr(0,pos-1);
             defaultOptions.push_back(value);
-
-
+            defaultOptions.push_back(key);
+            line = line.erase(0,pos);
           }
-
-
-
+          value = line;
+          defaultOptions.push_back(value);
         }
       }
     }

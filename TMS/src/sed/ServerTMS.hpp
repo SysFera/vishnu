@@ -80,6 +80,13 @@ public :
   std::string
   getSlaveDirectory();
 
+  /**
+   * \brief To get the Default Batch Options
+   * \return batch Default Options Vector
+   */
+  std::vector<std::string>
+  getDefaultBatchOption();
+
    /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
@@ -123,6 +130,8 @@ private :
   void
   getConfigOptions(const char* configPath,
                    std::vector<std::string>& defaultOptions, const char* batchKey);
+
+
 
   /**
    * \brief Function to compute the batch load performance (number of waiting jobs, running jobs and total jobs)
@@ -169,8 +178,8 @@ private :
    */
   std::string mslaveBinDir;
   /**
-   * \brief Path to default batch File
+   * \brief  Default batch submittion Options
    */
-  std::vector<std::string> mdefaultBatchConfig;
+  std::vector<std::string> mdefaultBatchOption;
 };
 #endif // SERVER

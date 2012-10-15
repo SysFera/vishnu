@@ -76,7 +76,6 @@ SGEServer::submit(const char* scriptPath,
   boost::filesystem3::path myPath(scriptPath);
 
   string Walltime;
-
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
 
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!=
@@ -92,12 +91,9 @@ SGEServer::submit(const char* scriptPath,
                              "SGE ERROR: "+std::string(diagnosis));
 
   }
-  std::vector<std::string> ScriptOptions;
-  std::vector<std::string> DefaultOptions;
-  getScriptOptions(scriptPath, ScriptOptions);
-  getScriptOptions(scriptPath, DefaultOptions);
-
-
+  
+  processDefaultOptions(scriptPath);
+  
   std::string scriptContent = vishnu::get_file_content(scriptPath);
 
   std::istringstream iss(scriptContent);
@@ -418,59 +414,87 @@ SGEServer::getJobState(const std::string& jobId) {
 }
 
 /**
- * \brief Function to get the script submission options
- * \param scriptPath The job script path
+ * \brief Function to treat the default submission options
+ * \param scriptOptions The list of the option value
  * \param cmdsOptions The list of the option value
  * \return raises an exception on error
  */
 void
-SGEServer::getScriptOptions(const char* scriptPath,
-                               std::vector<std::string>& cmdsOptions){
-  std::string scriptContent = vishnu::get_file_content(scriptPath);
-  std::istringstream iss(scriptContent);
-  std::string line;
-  std::string value;
-  std::string key;
-  while(!iss.eof()) {
-    getline(iss, line);
-    size_t pos = line.find('#');
-    if(pos==string::npos) {
-      continue;
-    }
-    line = line.erase(0, pos);
-    if(boost::algorithm::starts_with(line, "#$")){
-      line = line.substr(std::string("#$").size());
-      pos = line.find("-");
-      if(pos!=std::string::npos){
-        line = line.erase(0, pos);
-        size_t pos1 = line.find_first_of(" ");
-        if(pos1!=std::string::npos) {
-          key = line.substr(0,pos1);
-          cmdsOptions.push_back(key);
-          line = line.substr(pos1);
-          
-          boost::algorithm::trim(line);
-          while((pos = line.find(","))!=std::string::npos){
-            value = line.substr(0,pos-1);
-            cmdsOptions.push_back(value);
-            cmdsOptions.push_back(key);
-            line = line.erase(0,pos);
+SGEServer::processDefaultOptions(const char* scriptPath){
+  
+  std::string content = vishnu::get_file_content(scriptPath);
+  size_t pos = 0;
+  size_t position =0;
+  size_t posLastDirective = 0;
+  std::string key1, key2;
+  int replace=0;
+  
+  while(pos!=string::npos) {
+    
+    pos = content.find("#DEFAULT_VISHNU_OPTION", pos);
+    
+    if(pos!=string::npos) {
+      
+      std::string line = content.substr(pos, content.find("\n", pos)-pos);
+      line = line.substr(22);
+      boost::algorithm::trim_left(line);
+      position = line.find(" ");
+      if(position!=std::string::npos){
+        key1 = line.substr(0,position);
+      } else {
+        continue;
+        
+      }
+      position = 0;
+      int found =0;
+      while(position!=string::npos && !found){
+        position = content.find("#", position);
+        
+        if(position!=std::string::npos){
+          std::string line1 = content.substr(position, content.find("\n", position)-position);
+          size_t pos1 = line1.find("#");
+          size_t pos2 = line1.find("$");
+          position++;
+          if((pos1!=string::npos) && (pos2!=string::npos)) {
+            std::string space = line1.substr(pos1+1, pos2-pos1-1);
+            size_t spaceSize = space.size();
+            int i = 0;
+            while((i < spaceSize) && (space[i]==' ')) {
+              i++;
+            };
+            
+            if(i!=spaceSize) {
+              continue;
+            } else {
+              
+              size_t pos3 = line1.find(key1.c_str());
+              if(pos3!=std::string::npos){
+                found =1;
+                break;
+              }       
+            }
           }
-          value = line;
-          cmdsOptions.push_back(value);
-          
           
         }
-        
-        
-        
+      }
+      if(!found){
+        replace = 1;
+        content.replace(pos,22, "#$",2);
+      } else {
+        replace = 1;
+        content.erase(pos, content.find("\n", pos)-pos);
       }
     }
   }
   
+  if(replace) {
+    ofstream ofs(scriptPath);
+    ofs << content;
+    ofs.close();
+  }
   
-                               }
-
+}  
+  
 /**
  * \brief Function to get the start time of the job
  * \param jobId the identifier of the job

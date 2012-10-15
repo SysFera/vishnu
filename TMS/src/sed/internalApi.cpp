@@ -167,7 +167,7 @@ solveSubmitJob(diet_profile_t* pb) {
 		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
 
 		// Now submit the job
-		jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory);
+                jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory, ServerTMS::getInstance()->getDefaultBatchOption());
 		*job = jobServer.getData();
 
 		::ecorecpp::serializer::serializer _ser;
