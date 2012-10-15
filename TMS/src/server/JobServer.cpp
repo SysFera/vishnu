@@ -46,13 +46,15 @@ JobServer::JobServer(const SessionServer& sessionServer,
 int JobServer::submitJob(const std::string& scriptContent,
 		const TMS_Data::SubmitOptions& options,
 		const int& vishnuId,
-		const std::string& slaveDirectory)
+                const std::string& slaveDirectory,
+                const std::vector<std::string>& defaultBatchOption)
 {
 
 	msessionServer.check(); //To check the sessionKey
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
 	std::string ouputDir = "" ;
+        int count=0;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
@@ -98,8 +100,20 @@ int JobServer::submitJob(const std::string& scriptContent,
 	} else {
 		convertedScript = scriptContentRef;
 	}
-	vishnu::createTmpFile(scriptPath, convertedScript);
+	
+	     
+        while (count < defaultBatchOption.size()) {
 
+          std::string lineoption = "#DEFAULT_VISHNU_OPTION " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
+
+          //std::cout << lineoption << std::endl;
+          insertOptionLine(lineoption, convertedScript);
+          count +=2;
+          
+        }
+        std::cout << convertedScript << std::endl;
+	vishnu::createTmpFile(scriptPath, convertedScript);
+        
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
@@ -109,7 +123,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
-	vishnu::deleteFile(scriptPath);
+	//vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
@@ -186,6 +200,81 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 
 	return 0;
+}
+
+/**
+ * \brief Function to insert option into string
+ * \param optionLineToInsert the option to insert
+ * \param content The buffer containing the inserted option
+ * \return raises an exception on error
+ */
+void
+JobServer::insertOptionLine( std::string& optionLineToInsert,
+                           std::string& content) {
+  
+  size_t pos = 0;
+  int found=0;
+  size_t posLastDirective = 0;
+  std::string key;
+  switch(mbatchType) {
+    case TORQUE :
+      key = "PBS";
+      break;
+    case LOADLEVELER :
+      key = "@";
+      break;
+    case SLURM :
+      key = "SBATCH";
+      break;
+    case LSF :
+      key = "BSUB";
+      break;
+    case SGE :
+      key = "$";
+      break;
+    case PBSPRO :
+      key = "PBS";
+      break;
+    default :
+      break;
+  }
+  
+  while(pos!=string::npos) {
+    
+    pos = content.find("#", pos);
+    if(pos!=string::npos) {
+      
+      std::string line = content.substr(pos, content.find("\n", pos)-pos);
+      std::cout << line << std::endl;
+      pos++;
+      size_t pos1 = line.find("#");
+      size_t pos2 = line.find(key.c_str());
+      if((pos1!=string::npos) && (pos2!=string::npos)) {
+        std::string space = line.substr(pos1+1, pos2-pos1-1);
+        size_t spaceSize = space.size();
+        int i = 0;
+        while((i < spaceSize) && (space[i]==' ')) {
+          i++;
+        };
+        
+        if(i!=spaceSize) {
+          if (found){
+            break;
+          }
+        } else {
+          found = 1;          
+        }
+      } else {
+        
+        if (found){
+          break;
+        }
+      }
+   
+      posLastDirective = pos + line.size();
+    }
+  }
+  content.insert(posLastDirective, optionLineToInsert);
 }
 
 /**

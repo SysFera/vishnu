@@ -102,14 +102,14 @@ class SGEServer : public BatchServer
                     drmaa_job_template_t *jobt);
 
     /**
-    * \brief Function to get the script submission options
-    * \param scriptPath The job script path
-    * \param cmdsOptions The list of the option value
-    * \return raises an exception on error
-    */
+     * \brief Function to treat the default submission options
+     * \param scriptOptions The list of the option value
+     * \param cmdsOptions The list of the option value
+     * \return raises an exception on error
+     */
     void
-    getScriptOptions(const char* scriptPath,
-                     std::vector<std::string>& cmdsOptions);
+    processDefaultOptions(const char* scriptPath);
+
     /**
      * \brief Function to get the value of SGE resource (nodes, walltime, cpu) in the script
      * \param file The file contain the script to scan

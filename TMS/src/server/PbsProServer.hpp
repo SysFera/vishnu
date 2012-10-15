@@ -116,19 +116,9 @@ private:
    * \param cmdsOptions The list of the option value
    * \return raises an exception on error
    */
- /* void
-  processDefaultOptions(std::vector<std::string>& scriptOptions,
-                        std::vector<std::string>& cmdsOptions);*/
-  
-  /**
-   * \brief Function to get the script submission options
-   * \param scriptPath The job script path
-   * \param cmdsOptions The list of the option value
-   * \return raises an exception on error
-   */
   void
-  getScriptOptions(const char* scriptPath,
-                       std::vector<std::string>& cmdsOptions);
+  processDefaultOptions(const char* scriptPath);
+  
   /**
    * \brief Function to convert the PbsPro state into VISHNU state
    * \param state the state to convert

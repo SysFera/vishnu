@@ -41,7 +41,8 @@ public:
 	int submitJob(const std::string& scriptContent, 
                 const TMS_Data::SubmitOptions& options,
                 const int& vishnuId,
-                const std::string& slaveDirectory);
+                const std::string& slaveDirectory,
+                const std::vector<std::string>& defaultBatchOption);
 
   /**
    * \brief Function to cancel job
@@ -85,7 +86,16 @@ public:
    * \param date The date to convert
    * \return The converted value
    */
-  long long convertToTimeType(std::string date);  
+  long long convertToTimeType(std::string date);
+  
+  /**
+   * \brief Function to insert option line into string
+   * \param optionLineToInsert the option to insert
+   * \param content The buffer containing the inserted option
+   * \return raises an exception on error
+   */
+  void
+  insertOptionLine(std::string& optionLineToInsert, std::string& content);
 
   /**
    * \brief job data structure 

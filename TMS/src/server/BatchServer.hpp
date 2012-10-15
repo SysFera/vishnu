@@ -42,7 +42,7 @@ public:
   virtual int 
   submit(const char* scriptPath, 
          const TMS_Data::SubmitOptions& options, 
-         TMS_Data::Job& job, char** envp=NULL)=0;
+         TMS_Data::Job& job, char** envp=NULL)=0;//, std::vector<std::string>* defaultOptions=NULL)=0;
 
   /**
    * \brief Function to cancel job
