@@ -34,12 +34,14 @@ BOOST_AUTO_TEST_CASE( my_test )
   testSer.testGetServices();
   testSer.testGetURI();
 
+// Test the lazy pirate class
   LazyPirateClientTest testlpc;
   testlpc.testSend();
   testlpc.testSendBadAddr();
   testlpc.testRecv();
   testlpc.testRecvBadAddr();
 
+// Test the DIET client overload
   TestDIET_client testDIET;
   testDIET.testGetModuleUMS();
   testDIET.testGetModuleFMS();
