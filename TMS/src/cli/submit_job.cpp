@@ -61,9 +61,10 @@ makeSubJobOp(string pgName,
 		boost::function1<void, string>& fworkingDir,
 		boost::function1<void, string>& fcpuTime,
 		boost::function1<void, string>& ftextParams,
+                boost::function1<void, string>& fspecificParams,
 		boost::function1<void, string>& ffileParams,
 		vector<string>& textParamsVector,
-		vector<string>& fileParamsVector,
+                vector<string>& fileParamsVector,
 		boost::function1<void, long long>& fworkId,
 		string& loadCriterionStr,
 		string& walltime,
@@ -154,6 +155,11 @@ makeSubJobOp(string pgName,
 			"SEE ALSO --textParam.",
 			CONFIG,
 			ftextParams);
+        opt->add("specificParams,S",
+                 "Sets a list of space-separated textual parameters.\n"
+                 "E.g. --listParams=\"PARAM1=value1 PARAM2=value2.\n\n",
+                 CONFIG,
+                 fspecificParams);
 	opt->add("fileParam,f",
 			"Sets a local file as a file parameter for the script. This file will be uploaded onto the server "
 			"before computing the script.\n"
@@ -205,6 +211,7 @@ int main (int argc, char* argv[]){
 	boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
 	boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
 	boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
+        boost::function1<void,string> fspecificParams(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(subOp),_1));
 	boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
 	boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(subOp),_1));
 	vector<string> textParamsVector ;
@@ -217,7 +224,7 @@ int main (int argc, char* argv[]){
 	boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
 			fmemory, fnbCpu, fnbNodeAndCpu,
 			foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-			ftextParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
+                        ftextParams, fspecificParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
 			loadCriterionStr, walltime, dietConfig);
 
 	opt->add("selectQueueAutom,Q",

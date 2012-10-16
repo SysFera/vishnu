@@ -286,6 +286,12 @@
         <details key="content" value="Sets the identifier of the Work to which the job is related"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specificParams" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="shortOption" value="S"/>
+        <details key="content" value="Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.&#xA;E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. &#xA;&#xA;NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">

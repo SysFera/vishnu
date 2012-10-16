@@ -254,6 +254,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__WORKID);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__workId);
+    m_SubmitOptions__specificParams = new ::ecore::EAttribute();
+    m_SubmitOptions__specificParams->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SPECIFICPARAMS);
+    m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
+            m_SubmitOptions__specificParams);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -1349,6 +1354,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__workId->setUnique(true);
     m_SubmitOptions__workId->setDerived(false);
     m_SubmitOptions__workId->setOrdered(true);
+    m_SubmitOptions__specificParams->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SubmitOptions__specificParams->setName("specificParams");
+    m_SubmitOptions__specificParams->setDefaultValueLiteral("");
+    m_SubmitOptions__specificParams->setLowerBound(0);
+    m_SubmitOptions__specificParams->setUpperBound(1);
+    m_SubmitOptions__specificParams->setTransient(false);
+    m_SubmitOptions__specificParams->setVolatile(false);
+    m_SubmitOptions__specificParams->setChangeable(true);
+    m_SubmitOptions__specificParams->setUnsettable(false);
+    m_SubmitOptions__specificParams->setID(false);
+    m_SubmitOptions__specificParams->setUnique(true);
+    m_SubmitOptions__specificParams->setDerived(false);
+    m_SubmitOptions__specificParams->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -2960,6 +2979,10 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__workId()
 {
     return m_SubmitOptions__workId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__specificParams()
+{
+    return m_SubmitOptions__specificParams;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {

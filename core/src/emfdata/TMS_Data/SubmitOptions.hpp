@@ -257,6 +257,17 @@ namespace TMS_Data
          **/
         void setWorkId(::ecore::ELong _workId);
 
+        /**
+         * \brief To get the specificParams
+         * \return The specificParams attribute value
+         **/
+        ::ecore::EString const& getSpecificParams() const;
+        /**
+         * \brief To set the specificParams
+         * \param _specificParams The specificParams value
+         **/
+        void setSpecificParams(::ecore::EString const& _specificParams);
+
         // References
         /**
          * \brief To get the criterion
@@ -324,6 +335,8 @@ namespace TMS_Data
         ::ecore::EString m_textParams;
 
         ::ecore::ELong m_workId;
+
+        ::ecore::EString m_specificParams;
 
         // References
 
