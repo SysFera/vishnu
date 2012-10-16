@@ -88,6 +88,7 @@ PbsProServer::submit(const char* scriptPath,
   int argc = 0;
 
   std::vector<std::string> cmdsOptions;
+  //process Default Options
   processDefaultOptions(scriptPath);
   //processes the options
   processOptions(scriptPath, options, cmdsOptions);

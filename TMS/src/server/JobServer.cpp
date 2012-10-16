@@ -101,17 +101,65 @@ int JobServer::submitJob(const std::string& scriptContent,
 		convertedScript = scriptContentRef;
 	}
 	
+	if(options.getSpecificParams().size()){
+          std::string key;
+          switch(mbatchType) {
+            case TORQUE :
+              key = "#PBS";
+              break;
+            case LOADLEVELER :
+              key = "# @";
+              break;
+            case SLURM :
+              key = "#SBATCH";
+              break;
+            case LSF :
+              key = "#BSUB";
+              break;
+            case SGE :
+              key = "#$";
+              break;
+            case PBSPRO :
+              key = "#PBS";
+              break;
+            default :
+              break;
+          }
+          std::string specificParams = options.getSpecificParams();
+          
+          size_t pos1 =0;
+          size_t pos2=0;
+          pos2 = specificParams.find("=");
+          while (pos2!=std::string::npos){
+            size_t pos3=0;
+            pos3 = specificParams.find(" ");
+            if(pos3!=std::string::npos){
+                          
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, pos3-pos2) + "\n";
+              insertOptionLine(lineoption, convertedScript);
+              specificParams.erase(0,pos3);
+              boost::algorithm::trim_left(specificParams);
+                            
+            } else {
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, specificParams.size()-pos2) ;
+              insertOptionLine(lineoption, convertedScript);
+              break;
+            }
+            pos2 = specificParams.find("=");
+            
+            
+          }
+        
+        }
 	     
         while (count < defaultBatchOption.size()) {
 
           std::string lineoption = "#DEFAULT_VISHNU_OPTION " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
-
-          //std::cout << lineoption << std::endl;
           insertOptionLine(lineoption, convertedScript);
           count +=2;
           
         }
-        std::cout << convertedScript << std::endl;
+        
 	vishnu::createTmpFile(scriptPath, convertedScript);
         
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
@@ -123,7 +171,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
-	//vishnu::deleteFile(scriptPath);
+	vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
@@ -245,7 +293,6 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
     if(pos!=string::npos) {
       
       std::string line = content.substr(pos, content.find("\n", pos)-pos);
-      std::cout << line << std::endl;
       pos++;
       size_t pos1 = line.find("#");
       size_t pos2 = line.find(key.c_str());

@@ -501,6 +501,32 @@ void SubmitOptions::setWorkId(::ecore::ELong _workId)
 #endif
 }
 
+::ecore::EString const& SubmitOptions::getSpecificParams() const
+{
+    return m_specificParams;
+}
+
+void SubmitOptions::setSpecificParams(::ecore::EString const& _specificParams)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_specificParams = m_specificParams;
+#endif
+    m_specificParams = _specificParams;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__specificParams(),
+                _old_specificParams,
+                m_specificParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
 // References
 ::TMS_Data::LoadCriterion_ptr SubmitOptions::getCriterion()
 {
