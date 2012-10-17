@@ -615,7 +615,7 @@
 </para>
       <para>
 Par exemple, les étapes suivantes permettent d'installer les clients et les serveurs d'UMS et TMS dans /opt/vishnu. 
-TORQUE est utilisé comme backend à TMS. L'API Python sera également activée.
+TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
 </para>
       <itemizedlist>
         <listitem>
@@ -628,9 +628,9 @@ TORQUE est utilisé comme backend à TMS. L'API Python sera également activée.
           <itemizedlist>
             <listitem>
               <para>En utilisant Make</para>
-              <para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+              <para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
               <para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
-              <para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+              <para><emphasis>  -DENABLE_PYTHON=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
@@ -638,10 +638,10 @@ TORQUE est utilisé comme backend à TMS. L'API Python sera également activée.
               <para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
             </listitem>
             <listitem>
-              <para>En utilisant Ninja, changement du générateur via le flag CMAKE_GENERATOR</para>
-              <para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+              <para>En utilisant Ninja : changement du générateur via le flag CMAKE_GENERATOR.</para>
+              <para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
               <para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
-              <para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+              <para><emphasis>  -DENABLE_PYTHON=ON \</emphasis></para>
               <para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
@@ -668,7 +668,8 @@ TORQUE est utilisé comme backend à TMS. L'API Python sera également activée.
         </listitem>
         <listitem>
           <para>4. Installer les binaires</para>
-          <para>$ <emphasis>make install</emphasis> # peut nécessiter des droits d'administrateur</para>
+          <para>$ <emphasis>make install</emphasis></para>
+          <para>Cette étape peut nécessiter des droits d'administrateur.</para>
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH.</para>

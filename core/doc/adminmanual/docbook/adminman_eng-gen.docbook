@@ -620,9 +620,9 @@
           <itemizedlist>
             <listitem>
               <para>Using Make</para>
-              <para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+              <para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
               <para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
-              <para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+              <para><emphasis>  -DENABLE_PYTHON=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
@@ -630,10 +630,10 @@
               <para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
             </listitem>
             <listitem>
-              <para>Using Ninja, see the flag CMAKE_GENERATOR</para>
-              <para>$ <emphasis>cmake -DENABLE_PYTHON=ON  \</emphasis></para>
+              <para>Using Ninja: requires to set the generator to Ninja. See the flag CMAKE_GENERATOR.</para>
+              <para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
               <para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
-              <para><emphasis>  -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+              <para><emphasis>  -DENABLE_PYTHON=ON \</emphasis></para>
               <para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
               <para><emphasis>  -DCOMPILE_TMS=ON  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
@@ -660,7 +660,8 @@
         </listitem>
         <listitem>
           <para>4. Installing the binaries</para>
-          <para>$ <emphasis>make install</emphasis>  # may require root privileges</para>
+          <para>$ <emphasis>make install</emphasis></para>
+          <para>This step may require root privileges.</para>
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: Do not forget to add the install 
