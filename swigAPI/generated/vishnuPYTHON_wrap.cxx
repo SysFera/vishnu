@@ -147,6 +147,7 @@ template <typename T> T SwigValueInit() {
 
 /* Python.h has to appear first */
 #include <Python.h>
+#include <stddef.h>
 
 /* -----------------------------------------------------------------------------
  * swigrun.swg
@@ -2718,80 +2719,81 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_IMS_Data__ThresholdOp swig_types[30]
 #define SWIGTYPE_p_SystemException swig_types[31]
 #define SWIGTYPE_p_TMSVishnuException swig_types[32]
-#define SWIGTYPE_p_TMS_Data__Job swig_types[33]
-#define SWIGTYPE_p_TMS_Data__JobResult swig_types[34]
-#define SWIGTYPE_p_TMS_Data__ListJobResults swig_types[35]
-#define SWIGTYPE_p_TMS_Data__ListJobs swig_types[36]
-#define SWIGTYPE_p_TMS_Data__ListJobsOptions swig_types[37]
-#define SWIGTYPE_p_TMS_Data__ListProgression swig_types[38]
-#define SWIGTYPE_p_TMS_Data__ListQueues swig_types[39]
-#define SWIGTYPE_p_TMS_Data__LoadCriterion swig_types[40]
-#define SWIGTYPE_p_TMS_Data__ProgressOptions swig_types[41]
-#define SWIGTYPE_p_TMS_Data__Progression swig_types[42]
-#define SWIGTYPE_p_TMS_Data__Queue swig_types[43]
-#define SWIGTYPE_p_TMS_Data__SubmitOptions swig_types[44]
-#define SWIGTYPE_p_TMS_Data__Work swig_types[45]
-#define SWIGTYPE_p_UMSVishnuException swig_types[46]
-#define SWIGTYPE_p_UMS_Data__AuthAccount swig_types[47]
-#define SWIGTYPE_p_UMS_Data__AuthSystem swig_types[48]
-#define SWIGTYPE_p_UMS_Data__Command swig_types[49]
-#define SWIGTYPE_p_UMS_Data__Configuration swig_types[50]
-#define SWIGTYPE_p_UMS_Data__ConnectOptions swig_types[51]
-#define SWIGTYPE_p_UMS_Data__ListAuthAccOptions swig_types[52]
-#define SWIGTYPE_p_UMS_Data__ListAuthAccounts swig_types[53]
-#define SWIGTYPE_p_UMS_Data__ListAuthSysOptions swig_types[54]
-#define SWIGTYPE_p_UMS_Data__ListAuthSystems swig_types[55]
-#define SWIGTYPE_p_UMS_Data__ListCmdOptions swig_types[56]
-#define SWIGTYPE_p_UMS_Data__ListCommands swig_types[57]
-#define SWIGTYPE_p_UMS_Data__ListLocalAccOptions swig_types[58]
-#define SWIGTYPE_p_UMS_Data__ListLocalAccounts swig_types[59]
-#define SWIGTYPE_p_UMS_Data__ListMachineOptions swig_types[60]
-#define SWIGTYPE_p_UMS_Data__ListMachines swig_types[61]
-#define SWIGTYPE_p_UMS_Data__ListOptOptions swig_types[62]
-#define SWIGTYPE_p_UMS_Data__ListOptionsValues swig_types[63]
-#define SWIGTYPE_p_UMS_Data__ListSessionOptions swig_types[64]
-#define SWIGTYPE_p_UMS_Data__ListSessions swig_types[65]
-#define SWIGTYPE_p_UMS_Data__ListUsers swig_types[66]
-#define SWIGTYPE_p_UMS_Data__ListUsersOptions swig_types[67]
-#define SWIGTYPE_p_UMS_Data__LocalAccount swig_types[68]
-#define SWIGTYPE_p_UMS_Data__Machine swig_types[69]
-#define SWIGTYPE_p_UMS_Data__OptionValue swig_types[70]
-#define SWIGTYPE_p_UMS_Data__Session swig_types[71]
-#define SWIGTYPE_p_UMS_Data__User swig_types[72]
-#define SWIGTYPE_p_UserException swig_types[73]
-#define SWIGTYPE_p_VishnuException swig_types[74]
-#define SWIGTYPE_p___ecorecpp__mapping__any swig_types[75]
-#define SWIGTYPE_p_bool swig_types[76]
-#define SWIGTYPE_p_char swig_types[77]
-#define SWIGTYPE_p_double swig_types[78]
-#define SWIGTYPE_p_ecore__EClass swig_types[79]
-#define SWIGTYPE_p_ecore__EObject swig_types[80]
-#define SWIGTYPE_p_ecore__EOperation swig_types[81]
-#define SWIGTYPE_p_ecore__EReference swig_types[82]
-#define SWIGTYPE_p_ecore__EStructuralFeature swig_types[83]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__AuthAccount_t swig_types[84]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__AuthSystem_t swig_types[85]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__LocalAccount_t swig_types[86]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Machine_t swig_types[87]
-#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__User_t swig_types[88]
-#define SWIGTYPE_p_float swig_types[89]
-#define SWIGTYPE_p_int swig_types[90]
-#define SWIGTYPE_p_long_double swig_types[91]
-#define SWIGTYPE_p_long_long swig_types[92]
-#define SWIGTYPE_p_p_char swig_types[93]
-#define SWIGTYPE_p_short swig_types[94]
-#define SWIGTYPE_p_std__exception swig_types[95]
-#define SWIGTYPE_p_std__listT___ecorecpp__mapping__any_t swig_types[96]
-#define SWIGTYPE_p_std__listT_ecore__EObject_p_t swig_types[97]
-#define SWIGTYPE_p_std__string swig_types[98]
-#define SWIGTYPE_p_std__stringstream swig_types[99]
-#define SWIGTYPE_p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t swig_types[100]
-#define SWIGTYPE_p_swig__SwigPyIterator swig_types[101]
-#define SWIGTYPE_p_time_t swig_types[102]
-#define SWIGTYPE_p_unsigned_char swig_types[103]
-#define SWIGTYPE_p_unsigned_int swig_types[104]
-static swig_type_info *swig_types[106];
-static swig_module_info swig_module = {swig_types, 105, 0, 0, 0, 0};
+#define SWIGTYPE_p_TMS_Data__AddWorkOptions swig_types[33]
+#define SWIGTYPE_p_TMS_Data__Job swig_types[34]
+#define SWIGTYPE_p_TMS_Data__JobResult swig_types[35]
+#define SWIGTYPE_p_TMS_Data__ListJobResults swig_types[36]
+#define SWIGTYPE_p_TMS_Data__ListJobs swig_types[37]
+#define SWIGTYPE_p_TMS_Data__ListJobsOptions swig_types[38]
+#define SWIGTYPE_p_TMS_Data__ListProgression swig_types[39]
+#define SWIGTYPE_p_TMS_Data__ListQueues swig_types[40]
+#define SWIGTYPE_p_TMS_Data__LoadCriterion swig_types[41]
+#define SWIGTYPE_p_TMS_Data__ProgressOptions swig_types[42]
+#define SWIGTYPE_p_TMS_Data__Progression swig_types[43]
+#define SWIGTYPE_p_TMS_Data__Queue swig_types[44]
+#define SWIGTYPE_p_TMS_Data__SubmitOptions swig_types[45]
+#define SWIGTYPE_p_TMS_Data__Work swig_types[46]
+#define SWIGTYPE_p_UMSVishnuException swig_types[47]
+#define SWIGTYPE_p_UMS_Data__AuthAccount swig_types[48]
+#define SWIGTYPE_p_UMS_Data__AuthSystem swig_types[49]
+#define SWIGTYPE_p_UMS_Data__Command swig_types[50]
+#define SWIGTYPE_p_UMS_Data__Configuration swig_types[51]
+#define SWIGTYPE_p_UMS_Data__ConnectOptions swig_types[52]
+#define SWIGTYPE_p_UMS_Data__ListAuthAccOptions swig_types[53]
+#define SWIGTYPE_p_UMS_Data__ListAuthAccounts swig_types[54]
+#define SWIGTYPE_p_UMS_Data__ListAuthSysOptions swig_types[55]
+#define SWIGTYPE_p_UMS_Data__ListAuthSystems swig_types[56]
+#define SWIGTYPE_p_UMS_Data__ListCmdOptions swig_types[57]
+#define SWIGTYPE_p_UMS_Data__ListCommands swig_types[58]
+#define SWIGTYPE_p_UMS_Data__ListLocalAccOptions swig_types[59]
+#define SWIGTYPE_p_UMS_Data__ListLocalAccounts swig_types[60]
+#define SWIGTYPE_p_UMS_Data__ListMachineOptions swig_types[61]
+#define SWIGTYPE_p_UMS_Data__ListMachines swig_types[62]
+#define SWIGTYPE_p_UMS_Data__ListOptOptions swig_types[63]
+#define SWIGTYPE_p_UMS_Data__ListOptionsValues swig_types[64]
+#define SWIGTYPE_p_UMS_Data__ListSessionOptions swig_types[65]
+#define SWIGTYPE_p_UMS_Data__ListSessions swig_types[66]
+#define SWIGTYPE_p_UMS_Data__ListUsers swig_types[67]
+#define SWIGTYPE_p_UMS_Data__ListUsersOptions swig_types[68]
+#define SWIGTYPE_p_UMS_Data__LocalAccount swig_types[69]
+#define SWIGTYPE_p_UMS_Data__Machine swig_types[70]
+#define SWIGTYPE_p_UMS_Data__OptionValue swig_types[71]
+#define SWIGTYPE_p_UMS_Data__Session swig_types[72]
+#define SWIGTYPE_p_UMS_Data__User swig_types[73]
+#define SWIGTYPE_p_UserException swig_types[74]
+#define SWIGTYPE_p_VishnuException swig_types[75]
+#define SWIGTYPE_p___ecorecpp__mapping__any swig_types[76]
+#define SWIGTYPE_p_bool swig_types[77]
+#define SWIGTYPE_p_char swig_types[78]
+#define SWIGTYPE_p_double swig_types[79]
+#define SWIGTYPE_p_ecore__EClass swig_types[80]
+#define SWIGTYPE_p_ecore__EObject swig_types[81]
+#define SWIGTYPE_p_ecore__EOperation swig_types[82]
+#define SWIGTYPE_p_ecore__EReference swig_types[83]
+#define SWIGTYPE_p_ecore__EStructuralFeature swig_types[84]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__AuthAccount_t swig_types[85]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__AuthSystem_t swig_types[86]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__LocalAccount_t swig_types[87]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__Machine_t swig_types[88]
+#define SWIGTYPE_p_ecorecpp__mapping__EListT___UMS_Data__User_t swig_types[89]
+#define SWIGTYPE_p_float swig_types[90]
+#define SWIGTYPE_p_int swig_types[91]
+#define SWIGTYPE_p_long_double swig_types[92]
+#define SWIGTYPE_p_long_long swig_types[93]
+#define SWIGTYPE_p_p_char swig_types[94]
+#define SWIGTYPE_p_short swig_types[95]
+#define SWIGTYPE_p_std__exception swig_types[96]
+#define SWIGTYPE_p_std__listT___ecorecpp__mapping__any_t swig_types[97]
+#define SWIGTYPE_p_std__listT_ecore__EObject_p_t swig_types[98]
+#define SWIGTYPE_p_std__string swig_types[99]
+#define SWIGTYPE_p_std__stringstream swig_types[100]
+#define SWIGTYPE_p_std__vectorT_unsigned_char_std__allocatorT_unsigned_char_t_t swig_types[101]
+#define SWIGTYPE_p_swig__SwigPyIterator swig_types[102]
+#define SWIGTYPE_p_time_t swig_types[103]
+#define SWIGTYPE_p_unsigned_char swig_types[104]
+#define SWIGTYPE_p_unsigned_int swig_types[105]
+static swig_type_info *swig_types[107];
+static swig_module_info swig_module = {swig_types, 106, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -16295,6 +16297,68 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Job_getUserId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Job_getUserId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_getUserId" "', argument " "1"" of type '" "TMS_Data::Job const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Job const *)arg1)->getUserId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Job_setUserId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_userId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Job_setUserId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_setUserId" "', argument " "1"" of type '" "TMS_Data::Job *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Job_setUserId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Job_setUserId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setUserId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Job_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
@@ -17647,6 +17711,61 @@ SWIGINTERN PyObject *_wrap_ListJobsOptions_setWorkId(PyObject *SWIGUNUSEDPARM(se
   } 
   arg2 = static_cast< ::ecore::ELong >(val2);
   (arg1)->setWorkId(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListJobsOptions_isListAll(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::ListJobsOptions *arg1 = (TMS_Data::ListJobsOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:ListJobsOptions_isListAll",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__ListJobsOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListJobsOptions_isListAll" "', argument " "1"" of type '" "TMS_Data::ListJobsOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::ListJobsOptions * >(argp1);
+  result = (::ecore::EBoolean)((TMS_Data::ListJobsOptions const *)arg1)->isListAll();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_ListJobsOptions_setListAll(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::ListJobsOptions *arg1 = (TMS_Data::ListJobsOptions *) 0 ;
+  ::ecore::EBoolean arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_listAll", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:ListJobsOptions_setListAll",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__ListJobsOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ListJobsOptions_setListAll" "', argument " "1"" of type '" "TMS_Data::ListJobsOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::ListJobsOptions * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ListJobsOptions_setListAll" "', argument " "2"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg2 = static_cast< ::ecore::EBoolean >(val2);
+  (arg1)->setListAll(arg2);
   resultobj = SWIG_Py_Void();
   return resultobj;
 fail:
@@ -21301,6 +21420,2177 @@ SWIGINTERN PyObject *LoadCriterion_swigregister(PyObject *SWIGUNUSEDPARM(self), 
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_TMS_Data__LoadCriterion, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_Work(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_Work")) SWIG_fail;
+  result = (TMS_Data::Work *)new TMS_Data::Work();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_TMS_Data__Work, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_Work(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_Work",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_Work" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work__initialize" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getSessionId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getSessionId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getSessionId" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getSessionId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setSessionId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_sessionId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setSessionId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setSessionId" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setSessionId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setSessionId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setSessionId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getApplicationId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getApplicationId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getApplicationId" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getApplicationId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setApplicationId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_applicationId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setApplicationId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setApplicationId" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setApplicationId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setApplicationId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setApplicationId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getSubject(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getSubject",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getSubject" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getSubject();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setSubject(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_subject", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setSubject",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setSubject" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setSubject" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setSubject" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setSubject((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getPriority(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getPriority",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getPriority" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::Work const *)arg1)->getPriority();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setPriority(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_priority", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setPriority",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setPriority" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setPriority" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setPriority(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getStatus(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getStatus",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getStatus" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::Work const *)arg1)->getStatus();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setStatus(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_status", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setStatus",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setStatus" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setStatus" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setStatus(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getEndDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getEndDate",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getEndDate" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getEndDate();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setEndDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_endDate", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setEndDate",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setEndDate" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setEndDate" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setEndDate(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getOwner",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getOwner" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getOwner();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_owner", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setOwner",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setOwner" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setOwner((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getEstimatedHour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getEstimatedHour",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getEstimatedHour" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getEstimatedHour();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setEstimatedHour(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_estimatedHour", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setEstimatedHour",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setEstimatedHour" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setEstimatedHour" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setEstimatedHour(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDoneRatio(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDoneRatio",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDoneRatio" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::Work const *)arg1)->getDoneRatio();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDoneRatio(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_doneRatio", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDoneRatio",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDoneRatio" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setDoneRatio" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setDoneRatio(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDescription",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDescription" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getDescription();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_description", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDescription",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDescription" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setDescription" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setDescription" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setDescription((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDateCreated(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDateCreated",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDateCreated" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getDateCreated();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDateCreated(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_dateCreated", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDateCreated",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDateCreated" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setDateCreated" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setDateCreated(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDateEnded(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDateEnded",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDateEnded" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getDateEnded();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDateEnded(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_dateEnded", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDateEnded",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDateEnded" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setDateEnded" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setDateEnded(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDateStarted(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDateStarted",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDateStarted" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getDateStarted();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDateStarted(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_dateStarted", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDateStarted",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDateStarted" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setDateStarted" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setDateStarted(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getLastUpdated(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getLastUpdated",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getLastUpdated" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getLastUpdated();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setLastUpdated(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_lastUpdated", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setLastUpdated",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setLastUpdated" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setLastUpdated" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setLastUpdated(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getWorkId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getWorkId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getWorkId" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getWorkId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setWorkId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_workId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setWorkId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setWorkId" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setWorkId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setWorkId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setWorkId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getProjectId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getProjectId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getProjectId" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getProjectId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setProjectId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_projectId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setProjectId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setProjectId" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setProjectId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setProjectId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setProjectId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getSubmitDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getSubmitDate",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getSubmitDate" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getSubmitDate();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setSubmitDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_submitDate", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setSubmitDate",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setSubmitDate" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setSubmitDate" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setSubmitDate(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getMachineId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getMachineId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getMachineId" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Work const *)arg1)->getMachineId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setMachineId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_machineId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setMachineId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setMachineId" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Work_setMachineId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_setMachineId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setMachineId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getNbCPU(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getNbCPU",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getNbCPU" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::Work const *)arg1)->getNbCPU();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setNbCPU(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_nbCPU", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setNbCPU",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setNbCPU" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setNbCPU" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setNbCPU(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_getDueDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work_getDueDate",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_getDueDate" "', argument " "1"" of type '" "TMS_Data::Work const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::Work const *)arg1)->getDueDate();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_setDueDate(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_dueDate", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_setDueDate",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_setDueDate" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_setDueDate" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setDueDate(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_resolve", NULL 
+  };
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:Work_eGet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_eGet" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "Work_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_newValue", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:Work_eSet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_eSet" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "Work_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Work_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_eIsSet",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_eIsSet" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Work_eUnset",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work_eUnset" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "Work_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Work__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Work *arg1 = (TMS_Data::Work *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Work__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Work, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Work__eClass" "', argument " "1"" of type '" "TMS_Data::Work *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Work * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *Work_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_TMS_Data__Work, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_AddWorkOptions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_AddWorkOptions")) SWIG_fail;
+  result = (TMS_Data::AddWorkOptions *)new TMS_Data::AddWorkOptions();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_TMS_Data__AddWorkOptions, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_AddWorkOptions(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_AddWorkOptions",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_AddWorkOptions" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions__initialize" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getApplicationId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getApplicationId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getApplicationId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getApplicationId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setApplicationId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_applicationId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setApplicationId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setApplicationId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setApplicationId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setApplicationId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setApplicationId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getSubject(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getSubject",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getSubject" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getSubject();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setSubject(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_subject", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setSubject",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setSubject" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setSubject" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setSubject" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setSubject((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getPriority(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getPriority",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getPriority" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::AddWorkOptions const *)arg1)->getPriority();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setPriority(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_priority", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setPriority",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setPriority" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_setPriority" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setPriority(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getOwner",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getOwner" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getOwner();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setOwner(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_owner", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setOwner",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setOwner" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setOwner" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setOwner((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getEstimatedHour(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::ELong result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getEstimatedHour",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getEstimatedHour" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (::ecore::ELong)((TMS_Data::AddWorkOptions const *)arg1)->getEstimatedHour();
+  resultobj = SWIG_From_long_SS_long(static_cast< long long >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setEstimatedHour(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::ELong arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  long long val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_estimatedHour", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setEstimatedHour",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setEstimatedHour" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_long_SS_long(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_setEstimatedHour" "', argument " "2"" of type '" "::ecore::ELong""'");
+  } 
+  arg2 = static_cast< ::ecore::ELong >(val2);
+  (arg1)->setEstimatedHour(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getDescription",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getDescription" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getDescription();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setDescription(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_description", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setDescription",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setDescription" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setDescription" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setDescription" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setDescription((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getProjectId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getProjectId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getProjectId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getProjectId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setProjectId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_projectId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setProjectId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setProjectId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setProjectId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setProjectId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setProjectId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getMachineId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getMachineId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getMachineId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::AddWorkOptions const *)arg1)->getMachineId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setMachineId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_machineId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setMachineId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setMachineId" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "AddWorkOptions_setMachineId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_setMachineId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setMachineId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_getNbCPU(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EInt result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions_getNbCPU",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_getNbCPU" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (::ecore::EInt)((TMS_Data::AddWorkOptions const *)arg1)->getNbCPU();
+  resultobj = SWIG_From_int(static_cast< int >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_setNbCPU(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_nbCPU", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_setNbCPU",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_setNbCPU" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_setNbCPU" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->setNbCPU(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_resolve", NULL 
+  };
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:AddWorkOptions_eGet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_eGet" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "AddWorkOptions_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_newValue", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:AddWorkOptions_eSet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_eSet" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "AddWorkOptions_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "AddWorkOptions_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_eIsSet",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_eIsSet" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:AddWorkOptions_eUnset",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions_eUnset" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "AddWorkOptions_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_AddWorkOptions__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::AddWorkOptions *arg1 = (TMS_Data::AddWorkOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:AddWorkOptions__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__AddWorkOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "AddWorkOptions__eClass" "', argument " "1"" of type '" "TMS_Data::AddWorkOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *AddWorkOptions_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_TMS_Data__AddWorkOptions, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -35725,17 +38015,22 @@ SWIGINTERN PyObject *_wrap_addWork(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   TMS_Data::Work *arg2 = 0 ;
+  TMS_Data::AddWorkOptions const &arg3_defvalue = TMS_Data::AddWorkOptions() ;
+  TMS_Data::AddWorkOptions *arg3 = (TMS_Data::AddWorkOptions *) &arg3_defvalue ;
   int res1 = SWIG_OLDOBJ ;
   void *argp2 = 0 ;
   int res2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   char *  kwnames[] = {
-    (char *) "sessionKey",(char *) "newWork", NULL 
+    (char *) "sessionKey",(char *) "newWork",(char *) "options", NULL 
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:addWork",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:addWork",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -35755,8 +38050,18 @@ SWIGINTERN PyObject *_wrap_addWork(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "addWork" "', argument " "2"" of type '" "TMS_Data::Work &""'"); 
   }
   arg2 = reinterpret_cast< TMS_Data::Work * >(argp2);
+  if (obj2) {
+    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_TMS_Data__AddWorkOptions,  0  | 0);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "addWork" "', argument " "3"" of type '" "TMS_Data::AddWorkOptions const &""'"); 
+    }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "addWork" "', argument " "3"" of type '" "TMS_Data::AddWorkOptions const &""'"); 
+    }
+    arg3 = reinterpret_cast< TMS_Data::AddWorkOptions * >(argp3);
+  }
   try {
-    result = (int)vishnu::addWork((std::string const &)*arg1,*arg2);
+    result = (int)vishnu::addWork((std::string const &)*arg1,*arg2,(TMS_Data::AddWorkOptions const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39775,6 +42080,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Job_setOutputDir", (PyCFunction) _wrap_Job_setOutputDir, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setOutputDir(Job self, EString _outputDir)"},
 	 { (char *)"Job_getWorkId", _wrap_Job_getWorkId, METH_VARARGS, (char *)"Job_getWorkId(Job self) -> ELong"},
 	 { (char *)"Job_setWorkId", (PyCFunction) _wrap_Job_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setWorkId(Job self, ELong _workId)"},
+	 { (char *)"Job_getUserId", _wrap_Job_getUserId, METH_VARARGS, (char *)"Job_getUserId(Job self) -> EString"},
+	 { (char *)"Job_setUserId", (PyCFunction) _wrap_Job_setUserId, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setUserId(Job self, EString _userId)"},
 	 { (char *)"Job_eGet", (PyCFunction) _wrap_Job_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eGet(Job self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
 	 { (char *)"Job_eSet", (PyCFunction) _wrap_Job_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eSet(Job self, EInt _featureID, EJavaObject _newValue)"},
 	 { (char *)"Job_eIsSet", (PyCFunction) _wrap_Job_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eIsSet(Job self, EInt _featureID) -> EBoolean"},
@@ -39823,6 +42130,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ListJobsOptions_setBatchJob", (PyCFunction) _wrap_ListJobsOptions_setBatchJob, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_setBatchJob(ListJobsOptions self, EBoolean _batchJob)"},
 	 { (char *)"ListJobsOptions_getWorkId", _wrap_ListJobsOptions_getWorkId, METH_VARARGS, (char *)"ListJobsOptions_getWorkId(ListJobsOptions self) -> ELong"},
 	 { (char *)"ListJobsOptions_setWorkId", (PyCFunction) _wrap_ListJobsOptions_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_setWorkId(ListJobsOptions self, ELong _workId)"},
+	 { (char *)"ListJobsOptions_isListAll", _wrap_ListJobsOptions_isListAll, METH_VARARGS, (char *)"ListJobsOptions_isListAll(ListJobsOptions self) -> EBoolean"},
+	 { (char *)"ListJobsOptions_setListAll", (PyCFunction) _wrap_ListJobsOptions_setListAll, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_setListAll(ListJobsOptions self, EBoolean _listAll)"},
 	 { (char *)"ListJobsOptions_eGet", (PyCFunction) _wrap_ListJobsOptions_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_eGet(ListJobsOptions self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
 	 { (char *)"ListJobsOptions_eSet", (PyCFunction) _wrap_ListJobsOptions_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_eSet(ListJobsOptions self, EInt _featureID, EJavaObject _newValue)"},
 	 { (char *)"ListJobsOptions_eIsSet", (PyCFunction) _wrap_ListJobsOptions_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"ListJobsOptions_eIsSet(ListJobsOptions self, EInt _featureID) -> EBoolean"},
@@ -39952,6 +42261,82 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"LoadCriterion_eUnset", (PyCFunction) _wrap_LoadCriterion_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"LoadCriterion_eUnset(LoadCriterion self, EInt _featureID)"},
 	 { (char *)"LoadCriterion__eClass", _wrap_LoadCriterion__eClass, METH_VARARGS, (char *)"LoadCriterion__eClass(LoadCriterion self) -> EClass_ptr"},
 	 { (char *)"LoadCriterion_swigregister", LoadCriterion_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_Work", _wrap_new_Work, METH_VARARGS, (char *)"new_Work() -> Work"},
+	 { (char *)"delete_Work", _wrap_delete_Work, METH_VARARGS, (char *)"delete_Work(Work self)"},
+	 { (char *)"Work__initialize", _wrap_Work__initialize, METH_VARARGS, (char *)"Work__initialize(Work self)"},
+	 { (char *)"Work_getSessionId", _wrap_Work_getSessionId, METH_VARARGS, (char *)"Work_getSessionId(Work self) -> EString"},
+	 { (char *)"Work_setSessionId", (PyCFunction) _wrap_Work_setSessionId, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setSessionId(Work self, EString _sessionId)"},
+	 { (char *)"Work_getApplicationId", _wrap_Work_getApplicationId, METH_VARARGS, (char *)"Work_getApplicationId(Work self) -> EString"},
+	 { (char *)"Work_setApplicationId", (PyCFunction) _wrap_Work_setApplicationId, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setApplicationId(Work self, EString _applicationId)"},
+	 { (char *)"Work_getSubject", _wrap_Work_getSubject, METH_VARARGS, (char *)"Work_getSubject(Work self) -> EString"},
+	 { (char *)"Work_setSubject", (PyCFunction) _wrap_Work_setSubject, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setSubject(Work self, EString _subject)"},
+	 { (char *)"Work_getPriority", _wrap_Work_getPriority, METH_VARARGS, (char *)"Work_getPriority(Work self) -> EInt"},
+	 { (char *)"Work_setPriority", (PyCFunction) _wrap_Work_setPriority, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setPriority(Work self, EInt _priority)"},
+	 { (char *)"Work_getStatus", _wrap_Work_getStatus, METH_VARARGS, (char *)"Work_getStatus(Work self) -> EInt"},
+	 { (char *)"Work_setStatus", (PyCFunction) _wrap_Work_setStatus, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setStatus(Work self, EInt _status)"},
+	 { (char *)"Work_getEndDate", _wrap_Work_getEndDate, METH_VARARGS, (char *)"Work_getEndDate(Work self) -> ELong"},
+	 { (char *)"Work_setEndDate", (PyCFunction) _wrap_Work_setEndDate, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setEndDate(Work self, ELong _endDate)"},
+	 { (char *)"Work_getOwner", _wrap_Work_getOwner, METH_VARARGS, (char *)"Work_getOwner(Work self) -> EString"},
+	 { (char *)"Work_setOwner", (PyCFunction) _wrap_Work_setOwner, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setOwner(Work self, EString _owner)"},
+	 { (char *)"Work_getEstimatedHour", _wrap_Work_getEstimatedHour, METH_VARARGS, (char *)"Work_getEstimatedHour(Work self) -> ELong"},
+	 { (char *)"Work_setEstimatedHour", (PyCFunction) _wrap_Work_setEstimatedHour, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setEstimatedHour(Work self, ELong _estimatedHour)"},
+	 { (char *)"Work_getDoneRatio", _wrap_Work_getDoneRatio, METH_VARARGS, (char *)"Work_getDoneRatio(Work self) -> EInt"},
+	 { (char *)"Work_setDoneRatio", (PyCFunction) _wrap_Work_setDoneRatio, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDoneRatio(Work self, EInt _doneRatio)"},
+	 { (char *)"Work_getDescription", _wrap_Work_getDescription, METH_VARARGS, (char *)"Work_getDescription(Work self) -> EString"},
+	 { (char *)"Work_setDescription", (PyCFunction) _wrap_Work_setDescription, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDescription(Work self, EString _description)"},
+	 { (char *)"Work_getDateCreated", _wrap_Work_getDateCreated, METH_VARARGS, (char *)"Work_getDateCreated(Work self) -> ELong"},
+	 { (char *)"Work_setDateCreated", (PyCFunction) _wrap_Work_setDateCreated, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDateCreated(Work self, ELong _dateCreated)"},
+	 { (char *)"Work_getDateEnded", _wrap_Work_getDateEnded, METH_VARARGS, (char *)"Work_getDateEnded(Work self) -> ELong"},
+	 { (char *)"Work_setDateEnded", (PyCFunction) _wrap_Work_setDateEnded, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDateEnded(Work self, ELong _dateEnded)"},
+	 { (char *)"Work_getDateStarted", _wrap_Work_getDateStarted, METH_VARARGS, (char *)"Work_getDateStarted(Work self) -> ELong"},
+	 { (char *)"Work_setDateStarted", (PyCFunction) _wrap_Work_setDateStarted, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDateStarted(Work self, ELong _dateStarted)"},
+	 { (char *)"Work_getLastUpdated", _wrap_Work_getLastUpdated, METH_VARARGS, (char *)"Work_getLastUpdated(Work self) -> ELong"},
+	 { (char *)"Work_setLastUpdated", (PyCFunction) _wrap_Work_setLastUpdated, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setLastUpdated(Work self, ELong _lastUpdated)"},
+	 { (char *)"Work_getWorkId", _wrap_Work_getWorkId, METH_VARARGS, (char *)"Work_getWorkId(Work self) -> EString"},
+	 { (char *)"Work_setWorkId", (PyCFunction) _wrap_Work_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setWorkId(Work self, EString _workId)"},
+	 { (char *)"Work_getProjectId", _wrap_Work_getProjectId, METH_VARARGS, (char *)"Work_getProjectId(Work self) -> EString"},
+	 { (char *)"Work_setProjectId", (PyCFunction) _wrap_Work_setProjectId, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setProjectId(Work self, EString _projectId)"},
+	 { (char *)"Work_getSubmitDate", _wrap_Work_getSubmitDate, METH_VARARGS, (char *)"Work_getSubmitDate(Work self) -> ELong"},
+	 { (char *)"Work_setSubmitDate", (PyCFunction) _wrap_Work_setSubmitDate, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setSubmitDate(Work self, ELong _submitDate)"},
+	 { (char *)"Work_getMachineId", _wrap_Work_getMachineId, METH_VARARGS, (char *)"Work_getMachineId(Work self) -> EString"},
+	 { (char *)"Work_setMachineId", (PyCFunction) _wrap_Work_setMachineId, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setMachineId(Work self, EString _machineId)"},
+	 { (char *)"Work_getNbCPU", _wrap_Work_getNbCPU, METH_VARARGS, (char *)"Work_getNbCPU(Work self) -> EInt"},
+	 { (char *)"Work_setNbCPU", (PyCFunction) _wrap_Work_setNbCPU, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setNbCPU(Work self, EInt _nbCPU)"},
+	 { (char *)"Work_getDueDate", _wrap_Work_getDueDate, METH_VARARGS, (char *)"Work_getDueDate(Work self) -> ELong"},
+	 { (char *)"Work_setDueDate", (PyCFunction) _wrap_Work_setDueDate, METH_VARARGS | METH_KEYWORDS, (char *)"Work_setDueDate(Work self, ELong _dueDate)"},
+	 { (char *)"Work_eGet", (PyCFunction) _wrap_Work_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"Work_eGet(Work self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
+	 { (char *)"Work_eSet", (PyCFunction) _wrap_Work_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"Work_eSet(Work self, EInt _featureID, EJavaObject _newValue)"},
+	 { (char *)"Work_eIsSet", (PyCFunction) _wrap_Work_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"Work_eIsSet(Work self, EInt _featureID) -> EBoolean"},
+	 { (char *)"Work_eUnset", (PyCFunction) _wrap_Work_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"Work_eUnset(Work self, EInt _featureID)"},
+	 { (char *)"Work__eClass", _wrap_Work__eClass, METH_VARARGS, (char *)"Work__eClass(Work self) -> EClass_ptr"},
+	 { (char *)"Work_swigregister", Work_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_AddWorkOptions", _wrap_new_AddWorkOptions, METH_VARARGS, (char *)"new_AddWorkOptions() -> AddWorkOptions"},
+	 { (char *)"delete_AddWorkOptions", _wrap_delete_AddWorkOptions, METH_VARARGS, (char *)"delete_AddWorkOptions(AddWorkOptions self)"},
+	 { (char *)"AddWorkOptions__initialize", _wrap_AddWorkOptions__initialize, METH_VARARGS, (char *)"AddWorkOptions__initialize(AddWorkOptions self)"},
+	 { (char *)"AddWorkOptions_getApplicationId", _wrap_AddWorkOptions_getApplicationId, METH_VARARGS, (char *)"AddWorkOptions_getApplicationId(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setApplicationId", (PyCFunction) _wrap_AddWorkOptions_setApplicationId, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setApplicationId(AddWorkOptions self, EString _applicationId)"},
+	 { (char *)"AddWorkOptions_getSubject", _wrap_AddWorkOptions_getSubject, METH_VARARGS, (char *)"AddWorkOptions_getSubject(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setSubject", (PyCFunction) _wrap_AddWorkOptions_setSubject, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setSubject(AddWorkOptions self, EString _subject)"},
+	 { (char *)"AddWorkOptions_getPriority", _wrap_AddWorkOptions_getPriority, METH_VARARGS, (char *)"AddWorkOptions_getPriority(AddWorkOptions self) -> EInt"},
+	 { (char *)"AddWorkOptions_setPriority", (PyCFunction) _wrap_AddWorkOptions_setPriority, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setPriority(AddWorkOptions self, EInt _priority)"},
+	 { (char *)"AddWorkOptions_getOwner", _wrap_AddWorkOptions_getOwner, METH_VARARGS, (char *)"AddWorkOptions_getOwner(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setOwner", (PyCFunction) _wrap_AddWorkOptions_setOwner, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setOwner(AddWorkOptions self, EString _owner)"},
+	 { (char *)"AddWorkOptions_getEstimatedHour", _wrap_AddWorkOptions_getEstimatedHour, METH_VARARGS, (char *)"AddWorkOptions_getEstimatedHour(AddWorkOptions self) -> ELong"},
+	 { (char *)"AddWorkOptions_setEstimatedHour", (PyCFunction) _wrap_AddWorkOptions_setEstimatedHour, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setEstimatedHour(AddWorkOptions self, ELong _estimatedHour)"},
+	 { (char *)"AddWorkOptions_getDescription", _wrap_AddWorkOptions_getDescription, METH_VARARGS, (char *)"AddWorkOptions_getDescription(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setDescription", (PyCFunction) _wrap_AddWorkOptions_setDescription, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setDescription(AddWorkOptions self, EString _description)"},
+	 { (char *)"AddWorkOptions_getProjectId", _wrap_AddWorkOptions_getProjectId, METH_VARARGS, (char *)"AddWorkOptions_getProjectId(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setProjectId", (PyCFunction) _wrap_AddWorkOptions_setProjectId, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setProjectId(AddWorkOptions self, EString _projectId)"},
+	 { (char *)"AddWorkOptions_getMachineId", _wrap_AddWorkOptions_getMachineId, METH_VARARGS, (char *)"AddWorkOptions_getMachineId(AddWorkOptions self) -> EString"},
+	 { (char *)"AddWorkOptions_setMachineId", (PyCFunction) _wrap_AddWorkOptions_setMachineId, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setMachineId(AddWorkOptions self, EString _machineId)"},
+	 { (char *)"AddWorkOptions_getNbCPU", _wrap_AddWorkOptions_getNbCPU, METH_VARARGS, (char *)"AddWorkOptions_getNbCPU(AddWorkOptions self) -> EInt"},
+	 { (char *)"AddWorkOptions_setNbCPU", (PyCFunction) _wrap_AddWorkOptions_setNbCPU, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_setNbCPU(AddWorkOptions self, EInt _nbCPU)"},
+	 { (char *)"AddWorkOptions_eGet", (PyCFunction) _wrap_AddWorkOptions_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_eGet(AddWorkOptions self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
+	 { (char *)"AddWorkOptions_eSet", (PyCFunction) _wrap_AddWorkOptions_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_eSet(AddWorkOptions self, EInt _featureID, EJavaObject _newValue)"},
+	 { (char *)"AddWorkOptions_eIsSet", (PyCFunction) _wrap_AddWorkOptions_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_eIsSet(AddWorkOptions self, EInt _featureID) -> EBoolean"},
+	 { (char *)"AddWorkOptions_eUnset", (PyCFunction) _wrap_AddWorkOptions_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"AddWorkOptions_eUnset(AddWorkOptions self, EInt _featureID)"},
+	 { (char *)"AddWorkOptions__eClass", _wrap_AddWorkOptions__eClass, METH_VARARGS, (char *)"AddWorkOptions__eClass(AddWorkOptions self) -> EClass_ptr"},
+	 { (char *)"AddWorkOptions_swigregister", AddWorkOptions_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_ExportOp", _wrap_new_ExportOp, METH_VARARGS, (char *)"new_ExportOp() -> ExportOp"},
 	 { (char *)"delete_ExportOp", _wrap_delete_ExportOp, METH_VARARGS, (char *)"delete_ExportOp(ExportOp self)"},
 	 { (char *)"ExportOp__initialize", _wrap_ExportOp__initialize, METH_VARARGS, (char *)"ExportOp__initialize(ExportOp self)"},
@@ -40401,7 +42786,7 @@ static PyMethodDef SwigMethods[] = {
 		"submitJob(string sessionKey, string machineId, string scriptFilePath, \n"
 		"    Job jobInfo, SubmitOptions options = TMS_Data::SubmitOptions()) -> int\n"
 		""},
-	 { (char *)"addWork", (PyCFunction) _wrap_addWork, METH_VARARGS | METH_KEYWORDS, (char *)"addWork(string sessionKey, Work newWork) -> int"},
+	 { (char *)"addWork", (PyCFunction) _wrap_addWork, METH_VARARGS | METH_KEYWORDS, (char *)"addWork(string sessionKey, Work newWork, AddWorkOptions options = TMS_Data::AddWorkOptions()) -> int"},
 	 { (char *)"cancelJob", (PyCFunction) _wrap_cancelJob, METH_VARARGS | METH_KEYWORDS, (char *)"cancelJob(string sessionKey, string machineId, string jobId) -> int"},
 	 { (char *)"getJobInfo", (PyCFunction) _wrap_getJobInfo, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
 		"getJobInfo(string sessionKey, string machineId, string jobId, \n"
@@ -40499,6 +42884,9 @@ static void *_p_IMS_Data__ThresholdTo_p_ecore__EObject(void *x, int *SWIGUNUSEDP
 static void *_p_UMS_Data__AuthSystemTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((UMS_Data::AuthSystem *) x));
 }
+static void *_p_TMS_Data__WorkTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((TMS_Data::Work *) x));
+}
 static void *_p_IMS_Data__ProcessTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::Process *) x));
 }
@@ -40522,6 +42910,9 @@ static void *_p_IMS_Data__ExportOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPA
 }
 static void *_p_FMS_Data__FileStatTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((FMS_Data::FileStat *) x));
+}
+static void *_p_TMS_Data__AddWorkOptionsTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((TMS_Data::AddWorkOptions *) x));
 }
 static void *_p_TMS_Data__SubmitOptionsTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((TMS_Data::SubmitOptions *) x));
@@ -40694,6 +43085,7 @@ static swig_type_info _swigt__p_IMS_Data__Threshold = {"_p_IMS_Data__Threshold",
 static swig_type_info _swigt__p_IMS_Data__ThresholdOp = {"_p_IMS_Data__ThresholdOp", "IMS_Data::ThresholdOp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_SystemException = {"_p_SystemException", "SystemException *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_TMSVishnuException = {"_p_TMSVishnuException", "TMSVishnuException *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_TMS_Data__AddWorkOptions = {"_p_TMS_Data__AddWorkOptions", "TMS_Data::AddWorkOptions *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_TMS_Data__Job = {"_p_TMS_Data__Job", "TMS_Data::Job *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_TMS_Data__JobResult = {"_p_TMS_Data__JobResult", "TMS_Data::JobResult *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_TMS_Data__ListJobResults = {"_p_TMS_Data__ListJobResults", "TMS_Data::ListJobResults *", 0, 0, (void*)0, 0};
@@ -40801,6 +43193,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_IMS_Data__ThresholdOp,
   &_swigt__p_SystemException,
   &_swigt__p_TMSVishnuException,
+  &_swigt__p_TMS_Data__AddWorkOptions,
   &_swigt__p_TMS_Data__Job,
   &_swigt__p_TMS_Data__JobResult,
   &_swigt__p_TMS_Data__ListJobResults,
@@ -40908,6 +43301,7 @@ static swig_cast_info _swigc__p_IMS_Data__Threshold[] = {  {&_swigt__p_IMS_Data_
 static swig_cast_info _swigc__p_IMS_Data__ThresholdOp[] = {  {&_swigt__p_IMS_Data__ThresholdOp, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_SystemException[] = {  {&_swigt__p_SystemException, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_TMSVishnuException[] = {  {&_swigt__p_TMSVishnuException, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_TMS_Data__AddWorkOptions[] = {  {&_swigt__p_TMS_Data__AddWorkOptions, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_TMS_Data__Job[] = {  {&_swigt__p_TMS_Data__Job, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_TMS_Data__JobResult[] = {  {&_swigt__p_TMS_Data__JobResult, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_TMS_Data__ListJobResults[] = {  {&_swigt__p_TMS_Data__ListJobResults, 0, 0, 0},{0, 0, 0, 0}};
@@ -40955,7 +43349,7 @@ static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EClass[] = {  {&_swigt__p_ecore__EClass, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsersOptions, _p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsersOptions, _p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__AddWorkOptions, _p_TMS_Data__AddWorkOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__Work, _p_TMS_Data__WorkTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EOperation[] = {  {&_swigt__p_ecore__EOperation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EReference[] = {  {&_swigt__p_ecore__EReference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EStructuralFeature[] = {  {&_swigt__p_ecore__EStructuralFeature, 0, 0, 0},{0, 0, 0, 0}};
@@ -41015,6 +43409,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_IMS_Data__ThresholdOp,
   _swigc__p_SystemException,
   _swigc__p_TMSVishnuException,
+  _swigc__p_TMS_Data__AddWorkOptions,
   _swigc__p_TMS_Data__Job,
   _swigc__p_TMS_Data__JobResult,
   _swigc__p_TMS_Data__ListJobResults,
