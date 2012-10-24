@@ -324,7 +324,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   case JOB:
 	  table="job";
 	  fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
-	  val= " ((select max(numuserid) from users), (select max(nummachineid) from machine), , (select max(numworkid) from work), (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+	  val= " ((select max(numuserid) from users), (select max(nummachineid) from machine), NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
 	  primary="numjobid";
 	  break;
   case FILETRANSFERT:
