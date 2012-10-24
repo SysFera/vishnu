@@ -20890,6 +20890,68 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SubmitOptions_getSpecificParams(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SubmitOptions_getSpecificParams",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__SubmitOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SubmitOptions_getSpecificParams" "', argument " "1"" of type '" "TMS_Data::SubmitOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::SubmitOptions * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::SubmitOptions const *)arg1)->getSpecificParams();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SubmitOptions_setSpecificParams(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_specificParams", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SubmitOptions_setSpecificParams",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__SubmitOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SubmitOptions_setSpecificParams" "', argument " "1"" of type '" "TMS_Data::SubmitOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::SubmitOptions * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SubmitOptions_setSpecificParams" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SubmitOptions_setSpecificParams" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setSpecificParams((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SubmitOptions_getCriterion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
@@ -42242,6 +42304,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SubmitOptions_setTextParams", (PyCFunction) _wrap_SubmitOptions_setTextParams, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setTextParams(SubmitOptions self, EString _textParams)"},
 	 { (char *)"SubmitOptions_getWorkId", _wrap_SubmitOptions_getWorkId, METH_VARARGS, (char *)"SubmitOptions_getWorkId(SubmitOptions self) -> ELong"},
 	 { (char *)"SubmitOptions_setWorkId", (PyCFunction) _wrap_SubmitOptions_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setWorkId(SubmitOptions self, ELong _workId)"},
+	 { (char *)"SubmitOptions_getSpecificParams", _wrap_SubmitOptions_getSpecificParams, METH_VARARGS, (char *)"SubmitOptions_getSpecificParams(SubmitOptions self) -> EString"},
+	 { (char *)"SubmitOptions_setSpecificParams", (PyCFunction) _wrap_SubmitOptions_setSpecificParams, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setSpecificParams(SubmitOptions self, EString _specificParams)"},
 	 { (char *)"SubmitOptions_getCriterion", _wrap_SubmitOptions_getCriterion, METH_VARARGS, (char *)"SubmitOptions_getCriterion(SubmitOptions self) -> LoadCriterion_ptr"},
 	 { (char *)"SubmitOptions_setCriterion", (PyCFunction) _wrap_SubmitOptions_setCriterion, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setCriterion(SubmitOptions self, LoadCriterion_ptr _criterion)"},
 	 { (char *)"SubmitOptions_eGet", (PyCFunction) _wrap_SubmitOptions_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_eGet(SubmitOptions self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
