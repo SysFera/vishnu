@@ -941,7 +941,7 @@ vishnu::setIP(std::string& name, std::string IP){
 
 bool
 vishnu::isNotIP(std::string name){
-  unsigned int pos=0;
+  size_t pos=0;
   int cpt=0;
   while((pos=name.find(".", pos+1))!=std::string::npos) {
     cpt++;
