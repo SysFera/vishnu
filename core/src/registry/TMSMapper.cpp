@@ -299,6 +299,11 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
 		res += " -f ";
 		res += u.substr(lastPos, pos - lastPos);
 	}
+	u = ac->getSpecificParams();
+        if (u.compare("")){
+          res += " -S '";
+          res += u +"'";
+        }
 
 	return res;
 }
