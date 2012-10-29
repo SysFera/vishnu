@@ -46,10 +46,10 @@ void
 displayJob(TMS_Data::Job& j){
 
 
-//	size_t pos = j.getOutputPath().find(":");
-//	std::string prefixOutputPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
-//	pos = j.getErrorPath().find(":");
-//	std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
+	size_t pos = j.getOutputPath().find(":");
+	std::string prefixOutputPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
+	pos = j.getErrorPath().find(":");
+	std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
 
 	cout << " ------------------------ " << endl;
 	cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")"<< endl;
@@ -57,10 +57,8 @@ displayJob(TMS_Data::Job& j){
 	cout << " User                 : " << j.getUserId() << endl;
 	cout << " Session              : " << j.getSessionId() << endl;
 	cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
-	cout << " Job name             : " << j.getJobName() << endl;
-	cout << " Job path             : " << j.getJobPath() << endl;
-//	cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-//	cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
+	cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
+	cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
 	cout << " Output path (remote) : " << j.getOutputPath() << endl;
 	cout << " Error path  (remote) : " << j.getErrorPath() << endl;
 	cout << " Output dir (remote)  : " << j.getOutputDir() << endl;
