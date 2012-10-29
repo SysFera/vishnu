@@ -149,6 +149,11 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
 	std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
 
+	pos = mjob.getOutputPath().find(":");
+	std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
+	pos = mjob.getErrorPath().find(":");
+	std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
+
 	std::string sqlUpdate = "UPDATE job set ";
 	sqlUpdate+="vsession_numsessionid="+numsession+",";
 	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
@@ -157,8 +162,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sqlUpdate+="batchType="+convertToString(mbatchType)+",";
 	sqlUpdate+="jobName='"+mjob.getJobName()+"',";
 	sqlUpdate+="jobPath='"+mjob.getJobPath()+"',";
-	sqlUpdate+="outputPath='"+mjob.getOutputPath()+"',";
-	sqlUpdate+="errorPath='"+mjob.getErrorPath()+"',";
+	sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";
+	sqlUpdate+="errorPath='"+prefixErrorPath+mjob.getErrorPath()+"',";
 	sqlUpdate+="scriptContent='job',";
 	sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+",";
 	sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+",";

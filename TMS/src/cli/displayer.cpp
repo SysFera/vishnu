@@ -45,7 +45,11 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
 void
 displayJob(TMS_Data::Job& j){
 
-	boost::posix_time::ptime pt;
+
+//	size_t pos = j.getOutputPath().find(":");
+//	std::string prefixOutputPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
+//	pos = j.getErrorPath().find(":");
+//	std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
 
 	cout << " ------------------------ " << endl;
 	cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")"<< endl;
@@ -55,6 +59,8 @@ displayJob(TMS_Data::Job& j){
 	cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
 	cout << " Job name             : " << j.getJobName() << endl;
 	cout << " Job path             : " << j.getJobPath() << endl;
+//	cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
+//	cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
 	cout << " Output path (remote) : " << j.getOutputPath() << endl;
 	cout << " Error path  (remote) : " << j.getErrorPath() << endl;
 	cout << " Output dir (remote)  : " << j.getOutputDir() << endl;
@@ -62,6 +68,8 @@ displayJob(TMS_Data::Job& j){
 	cout << " CPU per Node         : " << j.getNbCpus() << endl;
 	cout << " Working dir (remote) : " << j.getJobWorkingDir() << endl;
 	cout << " Status               : " << convertJobStateToString(j.getStatus()) << endl;
+
+	boost::posix_time::ptime pt;
 	if(j.getSubmitDate() > 0) {
 		pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
 		cout << " Submit date          : " << boost::posix_time::to_simple_string(pt) << endl;
