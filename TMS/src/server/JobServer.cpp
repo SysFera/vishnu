@@ -100,31 +100,31 @@ int JobServer::submitJob(const std::string& scriptContent,
 	} else {
 		convertedScript = scriptContentRef;
 	}
-	
-	if(options.getSpecificParams().size()){
-          std::string key;
-          switch(mbatchType) {
-            case TORQUE :
-              key = "#PBS";
-              break;
-            case LOADLEVELER :
-              key = "# @";
-              break;
-            case SLURM :
-              key = "#SBATCH";
-              break;
-            case LSF :
-              key = "#BSUB";
-              break;
-            case SGE :
-              key = "#$";
-              break;
-            case PBSPRO :
-              key = "#PBS";
-              break;
-            default :
-              break;
-          }
+	std::string key;
+        switch(mbatchType) {
+          case TORQUE :
+            key = "#PBS";
+            break;
+          case LOADLEVELER :
+            key = "# @";
+            break;
+          case SLURM :
+            key = "#SBATCH";
+            break;
+          case LSF :
+            key = "#BSUB";
+            break;
+          case SGE :
+            key = "#$";
+            break;
+          case PBSPRO :
+            key = "#PBS";
+            break;
+          default :
+            break;
+        }
+        if(options.getSpecificParams().size()){
+
           std::string specificParams = options.getSpecificParams();
           
           size_t pos1 =0;
@@ -136,13 +136,13 @@ int JobServer::submitJob(const std::string& scriptContent,
             if(pos3!=std::string::npos){
                           
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, pos3-pos2) + "\n";
-              insertOptionLine(lineoption, convertedScript);
+              insertOptionLine(lineoption, convertedScript, key);
               specificParams.erase(0,pos3);
               boost::algorithm::trim_left(specificParams);
                             
             } else {
-              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, specificParams.size()-pos2) ;
-              insertOptionLine(lineoption, convertedScript);
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
+              insertOptionLine(lineoption, convertedScript, key);
               break;
             }
             pos2 = specificParams.find("=");
@@ -155,7 +155,7 @@ int JobServer::submitJob(const std::string& scriptContent,
         while (count < defaultBatchOption.size()) {
 
           std::string lineoption = "#DEFAULT_VISHNU_OPTION " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
-          insertOptionLine(lineoption, convertedScript);
+          insertOptionLine(lineoption, convertedScript, key);
           count +=2;
           
         }
@@ -171,7 +171,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
-	vishnu::deleteFile(scriptPath);
+	//vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
@@ -258,67 +258,33 @@ int JobServer::submitJob(const std::string& scriptContent,
  */
 void
 JobServer::insertOptionLine( std::string& optionLineToInsert,
-                           std::string& content) {
+                             std::string& content, std::string& key) {
   
   size_t pos = 0;
   int found=0;
   size_t posLastDirective = 0;
-  std::string key;
-  switch(mbatchType) {
-    case TORQUE :
-      key = "PBS";
-      break;
-    case LOADLEVELER :
-      key = "@";
-      break;
-    case SLURM :
-      key = "SBATCH";
-      break;
-    case LSF :
-      key = "BSUB";
-      break;
-    case SGE :
-      key = "$";
-      break;
-    case PBSPRO :
-      key = "PBS";
-      break;
-    default :
-      break;
-  }
   
   while(pos!=string::npos) {
     
-    pos = content.find("#", pos);
+    pos = content.find(key.c_str(), pos);
     if(pos!=string::npos) {
-      
-      std::string line = content.substr(pos, content.find("\n", pos)-pos);
-      pos++;
-      size_t pos1 = line.find("#");
-      size_t pos2 = line.find(key.c_str());
-      if((pos1!=string::npos) && (pos2!=string::npos)) {
-        std::string space = line.substr(pos1+1, pos2-pos1-1);
-        size_t spaceSize = space.size();
-        int i = 0;
-        while((i < spaceSize) && (space[i]==' ')) {
-          i++;
-        };
-        
-        if(i!=spaceSize) {
-          if (found){
+      size_t pos1 = 0;
+      pos1 = content.find("\n", pos);
+      while (content.compare(pos1-1,1,"\\") == 0){
+        pos1 = content.find("\n", pos1 + 1);
+      }
+      std::string line = content.substr(pos, pos1-pos);
+      if(content.compare(pos-1,1,"\n")==0){
+        if(mbatchType==LOADLEVELER){
+          std::string line_tolower(line);
+          std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
+          if(line_tolower.find("queue")!=string::npos) {
             break;
           }
-        } else {
-          found = 1;          
         }
-      } else {
-        
-        if (found){
-          break;
-        }
+        posLastDirective = pos + line.size() +1;         
       }
-   
-      posLastDirective = pos + line.size();
+      pos++;    
     }
   }
   content.insert(posLastDirective, optionLineToInsert);
