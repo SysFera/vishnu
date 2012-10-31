@@ -167,7 +167,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
-	vishnu::deleteFile(scriptPath);
+	//vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
