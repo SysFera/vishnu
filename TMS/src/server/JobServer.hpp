@@ -95,7 +95,7 @@ public:
    * \return raises an exception on error
    */
   void
-  insertOptionLine(std::string& optionLineToInsert, std::string& content);
+  insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
   /**
    * \brief job data structure 
