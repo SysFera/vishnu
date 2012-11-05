@@ -60,12 +60,12 @@ Annuary::remove(std::string name, std::string uri){
 
 std::vector<boost::shared_ptr<Server> >*
 Annuary::get(std::string service){
-  int i;
+
   std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
   if (service.compare("")==0){
     return &mservers;
   }
-  for (i=0;i<mservers.size();++i){
+  for (int i=0; i<mservers.size(); i++){
     if (mservers.at(i)->hasService(service)){
       res->push_back(mservers.at(i));
     }

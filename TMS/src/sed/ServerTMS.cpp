@@ -192,8 +192,6 @@ ServerTMS::init(int vishnuId,
       break;
   }
 
-  // initialization of the service table
-//  diet_service_table_init(NB_SRV);
 
   DbFactory factory;
 
@@ -219,12 +217,10 @@ ServerTMS::init(int vishnuId,
       throw e;
     }
 
-
   } catch (VishnuException& e) {
-      std::cout << e.what() << std::endl;
-      exit(0);
+    std::cout << e.what() << std::endl;
+	exit(0);
   }
-
 
   initMap(machineId);
   return 0;

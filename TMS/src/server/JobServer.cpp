@@ -180,6 +180,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string updateJobSerialized = sshJobExec.getJobSerialized();
 	TMS_Data::Job_ptr job = NULL;
 	if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
+		std::cerr << "EXCEPTION::::::::::jobSerialized" << updateJobSerialized <<std::endl;
 		throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
 	}
 	mjob = *job;

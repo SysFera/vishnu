@@ -25,6 +25,7 @@
 #include "zhelpers.hpp"
 #include "Server.hpp"
 #include "SystemException.hpp"
+#include "UserException.hpp"
 
 
 // private declarations
@@ -127,12 +128,15 @@ static ServiceMap sMap = boost::assign::map_list_of
 
 std::string
 get_module(const std::string& service) {
+
   std::size_t pos = service.find("@");
   if (std::string::npos == pos) {
     return sMap[service];
   } else {
     return sMap[service.substr(0, pos)];
   }
+
+  return sMap[service];
 }
 
 
@@ -213,20 +217,22 @@ diet_string_set(diet_arg_t* arg, char* value, int pers){
 }
 
 void
-sendProfile(diet_profile_t* prof,const std::string& uri) {
+sendProfile(diet_profile_t* prof, const std::string& uri) {
   zmq::context_t ctx(1);
 
   LazyPirateClient lpc(ctx, uri, getTimeout());
 
-  if (!lpc.send(my_serialize(prof))) {
+  std::string resultSerialized = my_serialize(prof);
+  if (!lpc.send(resultSerialized)) {
     std::cerr << "E: request failed, exiting ...\n";
     throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
   }
 
   // Receive response
   std::string response = lpc.recv();
-  if (0 == response.length()) {
-    throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
+
+  if (boost::starts_with(response, "error")) {
+    throw SystemException(ERRCODE_SYSTEM, response);
   }
   //Update of profile
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
@@ -243,11 +249,22 @@ diet_call(diet_profile_t* prof) {
   std::vector<boost::shared_ptr<Server> > serv;
   std::string uri;
 
+  // get the service and the related module
   std::string service(prof->name);
+
+  //FIXME: to be removed
+//  if(service.compare("jobSubmit@"+AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
+//	  if(selectMachine(prof) != 0) {
+//	      throw SystemException(ERRCODE_SYSTEM, "Unable to select a machine for submiting the job");
+//	  }
+//	  return 0;
+//  }
+
   std::string module = get_module(service);
 
+  // check if the module has been declared in configuration.
+  // otherwise, ask the naming service
   ConfigMap::iterator it = theConfig.find(module);
-  // if no entry in configuration, just ask naming service
   if (it != theConfig.end()) {
     uri = it->second;
     return diet_call_gen(prof, uri);
@@ -272,20 +289,19 @@ diet_call(diet_profile_t* prof) {
 
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri) {
-  zmq::context_t ctx(1);
+  zmq::context_t ctx(5);
   LazyPirateClient lpc(ctx, uri, getTimeout());
 
   std::string s1 = my_serialize(prof);
-
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
     return -1;
   }
 
   std::string response = lpc.recv();
+  std::cout << boost::format("I: Recv> %1%...\n")%response;
 
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
-
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
@@ -388,3 +404,4 @@ diet_finalize() {
 int
 diet_container_set(diet_arg_t* arg, int flag) {
 }
+

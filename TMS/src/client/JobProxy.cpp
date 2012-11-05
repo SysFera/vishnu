@@ -36,12 +36,20 @@ int
 JobProxy::submitJob(const std::string& scriptContent,
 		const TMS_Data::SubmitOptions& options) {
 
+	string sessionKey = msessionProxy.getSessionKey().c_str();
+	TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
+
+	// first check if it's an automatic submission
+	// if yes, select a machine according to the load criterion
+	if(mmachineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
+		mmachineId = findMachine(sessionKey, options_.getCriterion());
+	}
+
+	// now create and initialize the service profile
 	string serviceName = "jobSubmit@";
 	serviceName.append(mmachineId);
-	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-	string sessionKey = msessionProxy.getSessionKey().c_str();
-
 	diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
 	//IN Parameters
 	if (diet_string_set(diet_parameter(submitJobProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
@@ -57,15 +65,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	if (diet_string_set(diet_parameter(submitJobProfile,2), const_cast<char*>(scriptContent.c_str()), DIET_VOLATILE)) {
 		msgErrorDiet += "with optionsInString parameter "+scriptContent;
 		raiseDietMsgException(msgErrorDiet);
-	}
-
-	TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
-	if(mmachineId != AUTOMATIC_SUBMIT_JOB_KEYWORD) {
-		CpFileOptions copts;
-		copts.setIsRecursive(true) ;
-		copts.setTrCommand(0);
-		string inputFiles = sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
-		options_.setFileParams(inputFiles);
 	}
 
 	::ecorecpp::serializer::serializer _ser;
@@ -88,6 +87,13 @@ JobProxy::submitJob(const std::string& scriptContent,
 	diet_string_set(diet_parameter(submitJobProfile,5), NULL, DIET_VOLATILE);
 	diet_string_set(diet_parameter(submitJobProfile,6), NULL, DIET_VOLATILE);
 
+	// Send input files, if there is any one
+	CpFileOptions copts;
+	copts.setIsRecursive(true) ;
+	copts.setTrCommand(0);
+	string inputFiles = sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
+	options_.setFileParams(inputFiles);
+
 	char* cresultMsg = NULL;
 	char* errorInfo = NULL;
 	if(!diet_call(submitJobProfile)) {
@@ -99,31 +105,18 @@ JobProxy::submitJob(const std::string& scriptContent,
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
-	}
-	else {
+	} else {
 		raiseDietMsgException("DIET call failure");
-	}
-
-	if (diet_string_set(diet_parameter(submitJobProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
-		msgErrorDiet += "with machineId parameter "+mmachineId;
-		raiseDietMsgException(msgErrorDiet);
 	}
 
 	/*To raise a vishnu exception if the receiving message is not empty*/
 	raiseExceptionIfNotEmptyMsg(errorInfo);
 
-	string resultMsg = cresultMsg ;
-	if(boost::starts_with(resultMsg, AUTOMATIC_SUBMIT_JOB_KEYWORD+":")) {
-		size_t pos = AUTOMATIC_SUBMIT_JOB_KEYWORD.size() + 1 ;
-		mmachineId = resultMsg.substr(pos, string::npos) ;
-		submitJob(scriptContent, options) ;
-	} else {
-		TMS_Data::Job_ptr job_ptr = NULL;
-		string serializedJob = resultMsg ;
-		parseEmfObject(serializedJob, job_ptr);
-		mjob = *job_ptr;
-		delete job_ptr;
-	}
+	TMS_Data::Job_ptr job_ptr = NULL;
+	string serializedJob = string(cresultMsg) ;
+	parseEmfObject(serializedJob, job_ptr);
+	mjob = *job_ptr;
+	delete job_ptr;
 
 	diet_profile_free(submitJobProfile);
 	return 0;

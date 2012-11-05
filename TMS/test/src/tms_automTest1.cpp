@@ -301,7 +301,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_machineId)
   const std::string scriptFilePath=TMSSCRIPTPATH;
   Job jobInfo;
   SubmitOptions subOptions;
-  BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,subOptions),VishnuException );
+  BOOST_CHECK_THROW( submitJob(sessionKey, "bad machineId", scriptFilePath, jobInfo,subOptions), VishnuException);
 
   BOOST_TEST_MESSAGE("***********************  submit a job: bad machine ID ok!!!!*****************************");
 
