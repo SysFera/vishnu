@@ -25,18 +25,18 @@ add_library(zmq_helper
 target_link_libraries (zmq_helper
   ${ZMQ_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(namer
-  namer.cpp
+add_executable(dispatcher
+  dispatcher.cpp
   )
 
-target_link_libraries(namer
+target_link_libraries(dispatcher
   ${ZMQ_LIBRARIES} 
   ${Boost_LIBRARIES}
   zmq_helper
   vishnu-core
 )
 
-install(TARGETS namer DESTINATION ${SBIN_INSTALL_DIR})
+install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
 install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 # --------------------------------------------------------------------------

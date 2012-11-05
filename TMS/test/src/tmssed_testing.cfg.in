@@ -10,5 +10,5 @@ batchSchedulerType=@TEST_BATCH_TYPE@
 vishnuMachineId=machine_1
 intervalMonitor=1
 uri=@TEST_ZMQ_TMS_SED1_URI@
-uriNamerSub=@TEST_ZMQ_NAMER_URI_SUB@
-uriNamerSrv=@TEST_ZMQ_NAMER_URI_SRV@
+uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@
+uriDispatcherSrv=@TEST_ZMQ_DISPATCHER_URI_SRV@

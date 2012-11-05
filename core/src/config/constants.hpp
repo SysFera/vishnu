@@ -38,8 +38,8 @@ namespace vishnu {
     AUTHENTYPE,
     DEFAULTBATCHCONFIGFILE,
     URI,
-    URINAMERSUB,
-    URINAMERSRV
+    URIDISPATCHERSUB,
+    URIDISPATCHERSRV
   } param_type_t;
 
   /**

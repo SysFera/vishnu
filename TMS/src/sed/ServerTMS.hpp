@@ -93,12 +93,6 @@ public :
   getSlaveDirectory();
 
   /**
-   * \brief To get the Default Batch Options
-   * \return batch Default Options Vector
-   */
-  std::vector<std::string>
-  getDefaultBatchOption();
-  /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
@@ -109,11 +103,11 @@ public :
    */
   int
   init(int vishnuId,
-	   DbConfiguration dbConfig,
-	   const std::string& machineId,
-	   BatchType batchType,
-	   const std::string& slaveBinDir,
-	   const std::string& uriNamer);
+       DbConfiguration dbConfig,
+	   const std::string & machineId,
+       BatchType batchType,
+	   const std::string & slaveBinDir,
+	   const std::string & uriNamer);
 
   /**
    * \brief Destructor, raises an exception on error

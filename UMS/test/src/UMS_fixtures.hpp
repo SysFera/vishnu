@@ -30,7 +30,7 @@ char ConfigUMSSeD[] = UMSSEDCONF;
 char BinDirUMSSeD[] = UMSSEDBINDIR;
 
 template <const char *name, const char *binDir, const char *config>
-class UMSSEDFixtureTemplate : public NamerFixture
+class UMSSEDFixtureTemplate : public DispatcherFixture
 {
   boost::scoped_ptr<bp::child> UMSSeD;
 

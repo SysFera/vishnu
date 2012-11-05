@@ -15,9 +15,9 @@
 #define SLEEP_TIME 2000
 
 // omniNames specific options
-#define NAMER_URI_SRV "@TEST_ZMQ_NAMER_URI_SRV@"
-#define NAMER_URI_SUB "@TEST_ZMQ_NAMER_URI_SUB@"
-#define NAMER_COMMAND "namer"
+#define DISPATCHER_URI_SRV "@TEST_ZMQ_DISPATCHER_URI_SRV@"
+#define DISPATCHER_URI_SUB "@TEST_ZMQ_DISPATCHER_URI_SUB@"
+#define DISPATCHER_COMMAND "dispatcher"
 
 // LogService specific options
 #define LOGCENTRAL_PATH "@LOGCENTRAL_NATIVE_PATH@"

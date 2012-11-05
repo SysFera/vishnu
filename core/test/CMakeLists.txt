@@ -11,7 +11,7 @@ if (BUILD_TESTING)
 #    set(ZMQ_DIR "" CACHE PATH "Root of ZMQ install tree.")
 #  endif (ZMQ_FOUND)
 
-  set(NAMER_INSTALL_DIR ${PROJECT_BINARY_DIR}/bin CACHE PATH
+  set(DISPATCHER_INSTALL_DIR ${PROJECT_BINARY_DIR}/bin CACHE PATH
     "PATH to the ZeroMQ installation directory")
 
   #Boost::process is required

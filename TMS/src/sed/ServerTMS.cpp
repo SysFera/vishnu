@@ -26,9 +26,9 @@ ServerTMS *ServerTMS::minstance = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
 //}}RELAX<MISRA_0_1_3>
 /**
- * \brief Path to the file containing the namer uri
+ * \brief Path to the file containing the dispatcher uri
  */
-std::string ServerTMS::muriNamerCfg = "/tmp/vishnu-urinamer.cfg";
+std::string ServerTMS::muriDispatcherCfg = "/tmp/vishnu-uridispatcher.cfg";
 /**
  * \brief To get the unique instance of the server
  */
@@ -147,11 +147,11 @@ ServerTMS::getDefaultBatchOption(){
 int
 ServerTMS::init(int vishnuId,
                 DbConfiguration dbConfig,
-                std::string machineId,
+                const std::string machineId,
                 BatchType batchType,
-                std::string slaveBinDir,
-                std::string batchDefaultConfigFile,
-    			const std::string & uriNamer
+                const std::string& slaveBinDir,
+                const std::string& batchDefaultConfigFile,
+    			const std::string& uriDispatcher
                )
 {
 
@@ -164,8 +164,8 @@ ServerTMS::init(int vishnuId,
   //initialization of the slave directory
   mslaveBinDir = slaveBinDir;
 
-  //set the name uri
-  vishnu::saveInFile(muriNamerCfg, "namer "+uriNamer) ;
+	//set the name uri
+	vishnu::saveInFile(muriDispatcherCfg, "retryTimeout=10\ndispatcher="+uriDispatcher) ;
 
   //initialization of the default batch config file
   // mdefaultBatchConfig = batchDefaultConfigFile;

@@ -34,7 +34,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 typedef std::multimap<std::string, std::string> ConfigMap;
 static ConfigMap theConfig;
-const std::string NAMER_KEY = "namer";
+const std::string DISPATCHER_KEY = "dispatcher";
 const std::string TIMEOUT_KEY = "retryTimeout";
 
 typedef std::map<std::string, std::string> ServiceMap;
@@ -269,7 +269,7 @@ diet_call(diet_profile_t* prof) {
     uri = it->second;
     return diet_call_gen(prof, uri);
   } else {
-    it = theConfig.find(NAMER_KEY);
+    it = theConfig.find(DISPATCHER_KEY);
     if (theConfig.end() != it) {
       uri = it->second;
       sendProfile(prof, uri);
