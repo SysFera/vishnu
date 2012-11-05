@@ -52,15 +52,6 @@ public :
 	static ServerTMS*  getInstance();
 
 	/**
-	 * \brief Function to select a server for automatic selection
-	 * \param sessionKey The session key
-	 * \param criterion The selection criterion
-	 * \return the machine id
-	 */
-	static std::string
-	selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion);
-
-	/**
 	 * \brief To get the unique instance of the database
 	 */
 	Database* getDatabaseVishnu();
@@ -126,15 +117,6 @@ private :
 	 * \brief Constructor, private because class is singleton
 	 */
 	ServerTMS();
-
-	/**
-	 * \brief Function to compute the load performance of a given machine
-	 * \param sessionKey The session key
-	 * \param pb the request profile
-	 * \param the criteria of (number of waiting jobs, running jobs and total jobs)
-	 */
-	static long
-	getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr& machine, const TMS_Data::LoadCriterion_ptr & criterion);
 
 	/**
 	 * \brief operator=

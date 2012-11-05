@@ -312,7 +312,7 @@ int main (int argc, char* argv[]){
 
 		// initializing DIET
 		if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
-			errorUsage(argv[0],dietErrorMsg,EXECERROR);
+			errorUsage(argv[0], dietErrorMsg, EXECERROR);
 			return  CLI_ERROR_DIET ;
 		}
 
@@ -328,7 +328,7 @@ int main (int argc, char* argv[]){
 		printSuccessMessage();
 	} catch(VishnuException& except){// catch all Vishnu runtime error
 		std::string  submitErrmsg = except.getMsg()+" ["+except.getMsgComp()+"]";
-		errorUsage(argv[0], submitErrmsg,EXECERROR);
+		errorUsage(basename(argv[0]), submitErrmsg, EXECERROR);
 		//check the bad session key
 		if (checkBadSessionKeyError(except)){
 			removeBadSessionKeyFromFile(getppid());

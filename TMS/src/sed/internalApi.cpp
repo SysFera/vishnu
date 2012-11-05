@@ -98,34 +98,20 @@ solveSubmitJob(diet_profile_t* pb) {
 			throw SystemException(ERRCODE_INVDATA, "solve_submitJob: SubmitOptions object is not well built");
 		}
 
-		if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-			sessionServer.check();
+		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
+		int vishnuId = ServerTMS::getInstance()->getVishnuId();
+		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
+		jobServer.submitJob(cscriptContent, *submitOptions, vishnuId, slaveDirectory);
+		*job = jobServer.getData();
 
-			std::cerr << "I: selecting a machine for automatic submission\n";
-			machineId =  ServerTMS::selectMachine(sessionKey, submitOptions->getCriterion()) ;
-			std::cerr << "I: selected machine =>" << machineId << "\n";
+		::ecorecpp::serializer::serializer _ser;
+		string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
-			string msg = AUTOMATIC_SUBMIT_JOB_KEYWORD+":"+machineId ;
-			diet_string_set(diet_parameter(pb,5), const_cast<char*>(msg.c_str()), DIET_VOLATILE);
-			diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-			try {
-				UserServer(sessionServer).getUserAccountLogin(machineId);
-			} catch (VishnuException& e) {
-				throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on any of the machines.");
-			}
-		} else {
-			JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
-			int vishnuId = ServerTMS::getInstance()->getVishnuId();
-			std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
-			jobServer.submitJob(cscriptContent, *submitOptions, vishnuId, slaveDirectory);
-			*job = jobServer.getData();
+		diet_string_set(diet_parameter(pb,5), const_cast<char*>(updateJobSerialized.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
 
-			::ecorecpp::serializer::serializer _ser;
-			string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
-			diet_string_set(diet_parameter(pb,5), const_cast<char*>(updateJobSerialized.c_str()), DIET_VOLATILE);
-			diet_string_set(diet_parameter(pb,6), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-			sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
-		}
+		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
+
 	} catch (VishnuException& e) {
 		try {
 			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
@@ -419,7 +405,7 @@ solveGenerique(diet_profile_t* pb) {
 		if(!parseEmfObject(std::string(optionValueSerialized), options)) {
 			throw UMSVishnuException(ERRCODE_INVALID_PARAM);
 		}
-		QueryType query(options, sessionServer, std::string (machineId));
+		QueryType query(options, sessionServer, std::string(machineId));
 
 		//MAPPER CREATION
 		Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);

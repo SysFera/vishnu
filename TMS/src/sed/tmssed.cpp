@@ -159,12 +159,9 @@ int main(int argc, char* argv[], char* envp[]) {
 			UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
 			machine->setMachineId(machineId);
 
-
-			if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD) != 0) {
-				MachineServer machineServer(machine);
-				machineServer.checkMachine();
-				delete machine;
-			}
+			MachineServer machineServer(machine);
+			machineServer.checkMachine();
+			delete machine;
 
 			// Initialize the DIET SeD
 			if (!res) {

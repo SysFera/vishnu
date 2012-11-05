@@ -14,7 +14,7 @@ heartbeat(diet_profile_t* pb){
 
 SeD::SeD(){
   int (*functionPtr)(diet_profile_t*);
-  mcb.insert( std::pair<std::string, functionPtr_t> ("heartbeat",heartbeat));
+  mcb.insert( std::pair<std::string, functionPtr_t> ("heartbeat", heartbeat));
 }
 
 
@@ -23,7 +23,7 @@ SeD::call(diet_profile_t* profile) {
   std::map<std::string, functionPtr_t>::iterator it;
   it = mcb.find(profile->name);
   if (it == mcb.end()) {
-    std::cerr << "not found service : " << profile->name << "\n";
+    std::cerr << "E: service not found: " << profile->name << "\n";
     return UNKNOWN_SERVICE;
   }
   int (*functionPtr)(diet_profile_t*);
@@ -40,9 +40,6 @@ SeD::getServices(){
   }
   return res;
 }
-
-
-
 
 
 class ZMQWorker {
@@ -109,3 +106,4 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
 
   return 0;
 }
+

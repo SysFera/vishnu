@@ -43,9 +43,9 @@ Server::remove(std::string service){
 
 bool
 Server::hasService(std::string service){
-  int i;
-  for (i=0;i<mservices.size();++i){
-    if (service.find(mservices.at(i))==0){
+
+  for (int i=0; i<mservices.size(); i++){
+    if (mservices[i] == service) {
       return true;
     }
   }

@@ -8,6 +8,9 @@
 
 #include "api_ums.hpp"
 #include "api_fms.hpp"
+#include "api_tms.hpp"
+#include "TMS_Data.hpp"
+#include "SessionServer.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include "utilVishnu.hpp"
@@ -52,7 +55,7 @@ void copyFiles(const std::string & sessionKey,
 
 	int nbFiles = rfiles.size() ;
 	for(int i=startPos; i<nbFiles; i++) {
-	  genericFileCopier(sessionKey, srcMid, rfiles[i], "", ldestDir, copts);
+		genericFileCopier(sessionKey, srcMid, rfiles[i], "", ldestDir, copts);
 	}
 }
 
@@ -103,9 +106,9 @@ std::string genericFileCopier(const std::string & sessionKey,
  */
 std::string
 sendInputFiles(const std::string & sessionKey,
-                  const std::string & srcFiles,
-                  const std::string & destMachineId,
-                  const CpFileOptions& copts) {
+		const std::string & srcFiles,
+		const std::string & destMachineId,
+		const CpFileOptions& copts) {
 
 	ListStrings listFiles ;
 	boost::split(listFiles, srcFiles, boost::is_space()) ;
@@ -144,6 +147,90 @@ sendInputFiles(const std::string & sessionKey,
 	}
 
 	return paramsBuf.str() ;
+}
+
+/**
+ * \brief Function to select a machine for automatic submission
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param The selection criterion
+ * \return the selected machine or raises an exception on error
+ */
+std::string
+findMachine(const std::string& sessionKey,
+		const TMS_Data::LoadCriterion_ptr & criterion) {
+
+	// First list all active machines where we have a local account
+	// FIXME: Update the selection option so to ensure that we do not select an inactive machine
+	// or a machine where we don't have local account
+	UMS_Data::ListMachineOptions mopts;
+	mopts.setListAllMachine(false);
+	mopts.setMachineId("");
+	UMS_Data::ListMachines machines;
+	vishnu::listMachines(sessionKey, machines, mopts) ;
+
+	int machineCount = machines.getMachines().size() ;
+	if( machineCount == 0) {
+		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "You have no local account on available machines");
+	}
+
+	std::string selectedMachine = "" ;
+	long load = std::numeric_limits<long>::max();
+	for(int i=0; i< machineCount; i++) {
+		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+		try {
+			if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
+				selectedMachine = machine->getMachineId();
+			}
+		} catch(...) {
+			continue ;
+		}
+	}
+	return selectedMachine;
+}
+
+
+/**
+ * \brief Function to compute the load performance of a given machine
+ * \param sessionKey The session key
+ * \param pb the request profile
+ * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+ */
+long
+getMachineLoadPerformance(const string& sessionKey,
+		const UMS_Data::Machine_ptr& machine,
+		const TMS_Data::LoadCriterion_ptr& criterion) {
+
+	TMS_Data::ListJobs jobs ;
+	TMS_Data::ListJobsOptions jobOtions ;
+
+	try{
+		vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
+	} catch(SystemException ex){
+		throw SystemException (ERRCODE_RUNTIME_ERROR, ex.what());
+	}
+
+	long load = std::numeric_limits<long>::max();
+	int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
+	try {
+		switch(criterionType) {
+		case NBRUNNINGJOBS :
+			load = jobs.getNbRunningJobs();
+			break;
+		case NBJOBS :
+			load = jobs.getNbJobs();
+			break;
+		case NBWAITINGJOBS :
+		default :
+			load =jobs.getNbWaitingJobs();
+			break;
+		}
+	} catch (VishnuException& ex) {
+		std::cerr << ex.what() << std::endl;
+	} catch(...) {
+		std::cerr << "E: error while calculating the load performance of the machine "
+				<< machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
+	}
+	return load ;
 }
 
 

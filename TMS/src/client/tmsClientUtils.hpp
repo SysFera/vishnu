@@ -11,6 +11,7 @@
 
 #include <string>
 #include "utilVishnu.hpp"
+#include "DIET_client.h"
 
 /**
  * \brief Function to get the hostname of a machine id
@@ -64,5 +65,27 @@ sendInputFiles(const std::string & sessionKey,
                   const std::string & srcFiles,
                   const std::string & destMachineId,
                   const CpFileOptions & copts);
+
+/**
+ * \brief Function to select a machine for automatic submission
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \param The selection criterion
+ * \return the selected machine or raises an exception on error
+ */
+std::string
+findMachine(const std::string& sessionKey,
+		const TMS_Data::LoadCriterion_ptr & criterion);
+
+/**
+ * \brief Function to compute the load performance of a given machine
+ * \param sessionKey The session key
+ * \param pb the request profile
+ * \param the criteria of (number of waiting jobs, running jobs and total jobs)
+ */
+static long
+getMachineLoadPerformance(const std::string& sessionKey,
+		const UMS_Data::Machine_ptr& machine,
+		const TMS_Data::LoadCriterion_ptr & criterion);
+
 
 #endif /* TMSCLIENTUTILS_HPP_ */

@@ -123,7 +123,7 @@ ServerTMS::init(int vishnuId,
 	mslaveBinDir = slaveBinDir;
 
 	//set the name uri
-	vishnu::saveInFile(muriNamerCfg, "namer "+uriNamer) ;
+	vishnu::saveInFile(muriNamerCfg, "retryTimeout=10\nnamer="+uriNamer) ;
 
 	// initialization of the service table
 	//  diet_service_table_init(NB_SRV);
@@ -199,89 +199,5 @@ ServerTMS::initMap(std::string mid) {
   mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
   functionPtr = solveAddWork;
   mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
-}
-
-
-/**
- * \brief Function to select a server for automatic selection
- * \param sessionKey The session key
- * \param criterion The selection criterion
- * \return the machine id
- */
-std::string
-ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
-
-	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
-
-	SessionServer sessionServer = SessionServer(sessionKey); ;
-	UserServer userServer = UserServer(sessionServer);
-
-	userServer.init();
-
-	string userId = userServer.getData().getUserId();
-	if( userId.size() == 0 ) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
-	}
-
-	UMS_Data::ListMachineOptions mopts;
-	mopts.setListAllMachine(false);
-	mopts.setUserId(userId);
-	mopts.setMachineId("");
-
-	UMS_Data::ListMachines machines;
-	vishnu::listMachines(sessionKey, machines, mopts) ;
-
-	int machineCount = machines.getMachines().size() ;
-	if( machineCount == 0) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to this user: "+userId);
-	}
-
-	string machineId = "" ;
-	long load = std::numeric_limits<long>::max();
-	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
-	for(int i=0; i< machineCount; i++) {
-		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
-		if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
-			machineId = machine->getMachineId();
-		}
-	}
-	return machineId;
-}
-
-
-/**
- * \brief Function to compute the load performance of a given machine
- * \param sessionKey The session key
- * \param pb the request profile
- * \param the criteria of (number of waiting jobs, running jobs and total jobs)
- */
-long
-ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr& machine, const TMS_Data::LoadCriterion_ptr& criterion) {
-
-	TMS_Data::ListJobs jobs ;
-	TMS_Data::ListJobsOptions jobOtions ;
-	vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
-	long load = std::numeric_limits<long>::max();
-	int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
-	try {
-		switch(criterionType) {
-		case NBRUNNINGJOBS :
-			load = jobs.getNbRunningJobs();
-			break;
-		case NBJOBS :
-			load = jobs.getNbJobs();
-			break;
-		case NBWAITINGJOBS :
-		default :
-			load =jobs.getNbWaitingJobs();
-			break;
-		}
-	} catch (VishnuException& ex) {
-		std::cerr << ex.what() << std::endl;
-	} catch(...) {
-		std::cerr << "E: error while calculating the load performance of the machine "
-				<< machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
-	}
-	return load ;
 }
 

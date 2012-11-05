@@ -1,1 +1,2 @@
 namer=@TEST_ZMQ_NAMER_URI_SRV@
+retryTimeout=@TEST_ZMQ_LPC_TIMEOUT@

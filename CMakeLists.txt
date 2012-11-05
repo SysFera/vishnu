@@ -437,7 +437,8 @@ if (BUILD_TESTING)
   set(TEST_ZMQ_TMS_SCHED_URI "tcp://127.0.0.1:5530" CACHE STRING "Uri for binding the TMS's scheduler for automatic submission")
   set(TEST_ZMQ_TMS_SED1_URI "tcp://127.0.0.1:5531" CACHE STRING "Uri for binding the first TMS SeD")
   set(TEST_ZMQ_TMS_SED2_URI "tcp://127.0.0.1:5532" CACHE STRING "Uri for binding the second TMS SeD")  
-  
+  set(TEST_ZMQ_LPC_TIMEOUT "10" CACHE STRING "Timeout between two lazy pirate retries") 
+ 
   set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
 
   mark_as_advanced(TEST_DB_TYPE)
@@ -470,6 +471,7 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_ZMQ_TMS_SED1_URI)
   mark_as_advanced(TEST_ZMQ_TMS_SED2_URI)
   mark_as_advanced(TEST_ZMQ_TMS_SCHED_URI)
+  mark_as_advanced(TEST_ZMQ_LPC_TIMEOUT) 
 
   # Common directories for tests
   set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
