@@ -34,7 +34,7 @@ public :
 
   /**
    * \brief Add a server in the annuary
-   * \param name The name of the server (e.g. UMS, TMS, namer)
+   * \param name The name of the server (e.g. UMS, TMS, dispatcher)
    * \param services The services offered by the server
    * \param uri The uri the server is running
    * \return 0 on success, an error code otherwise
@@ -44,7 +44,7 @@ public :
 
   /**
    * \brief Remove the server called name listening on port at address of the annuary
-   * \param name The name of the server (e.g. UMS, TMS, namer)
+   * \param name The name of the server (e.g. UMS, TMS, dispatcher)
    * \param port The port the server is listening
    * \param port The address the server is running
    * \return 0 on success, an error code otherwise

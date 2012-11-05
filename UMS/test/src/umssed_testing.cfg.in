@@ -10,4 +10,4 @@ sendmailScriptPath=@SENDMAILPY@
 vishnuMachineId=machine_1
 authenticationType=@TEST_AUTHENTYPE@
 uri=@TEST_ZMQ_UMS_URI@
-uriNamerSub=@TEST_ZMQ_NAMER_URI_SUB@
+uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@

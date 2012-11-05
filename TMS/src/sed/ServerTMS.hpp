@@ -98,7 +98,7 @@ public :
 			const std::string & machineId,
 			BatchType batchType,
 			const std::string & slaveBinDir,
-			const std::string & uriNamer);
+			const std::string & uriDispatcher);
 
 	/**
 	 * \brief Destructor, raises an exception on error
@@ -135,9 +135,9 @@ private :
 	 */
 	static TMSMapper *mmapper;
 	/**
-	 * \brief Path to the file containing the namer uri
+	 * \brief Path to the file containing the dispatcher uri
 	 */
-	static std::string muriNamerCfg;
+	static std::string muriDispatcherCfg;
 	/**
 	 * \brief The vishnu id
 	 */

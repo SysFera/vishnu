@@ -24,13 +24,13 @@ using namespace std;
 int
 vishnu::unregisterSeD(string type, ExecConfiguration config) {
 //  string uri;
-//  string urinamer;
+//  string uridispatcher;
 //
 //  // Getting the machine id
 //  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-//  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
+//  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
 //  zmq::context_t ctx(1);
-//  LazyPirateClient lpc(ctx, urinamer);
+//  LazyPirateClient lpc(ctx, uridispatcher);
 //  std::vector<std::string> tmp;
 //  tmp.push_back("deleting");
 //
@@ -63,17 +63,17 @@ validateUri(const string & uri) {
 int
 vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
   string uri;
-  string urinamer;
+  string uridispatcher;
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  config.getRequiredConfigValue<std::string>(vishnu::URINAMERSUB, urinamer);
+  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
 
   // Check that the uri does not contain *
-  validateUri(urinamer);
+  validateUri(uridispatcher);
 
   zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, urinamer);
+  LazyPirateClient lpc(ctx, uridispatcher);
 
   boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
 // prefix with 1 to say registering the sed

@@ -12,7 +12,7 @@
 
 void
 usage(){
-  std::cout << "Usage: namer <uriAddr> <uriSubscriber>" << std::endl;
+  std::cout << "Usage: dispatcher <uriAddr> <uriSubscriber>" << std::endl;
 }
 
 class AddressDealer{

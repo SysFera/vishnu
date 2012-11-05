@@ -71,7 +71,7 @@ main(int argc, char* argv[], char* envp[]) {
   string mid;
   string cfg;
   string uri;
-  string urinamer;
+  string uridispatcher;
 
   if (argc != 2) {
     return usage(argv[0]);

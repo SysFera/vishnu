@@ -89,29 +89,29 @@ public:
  * basically setup the naming service before starting our test
  * and then cleanup after test has been executed
  */
-class NamerFixture : public createTmpDirsFixture {
+class DispatcherFixture : public createTmpDirsFixture {
 	boost::scoped_ptr<bp::child> processNamingService;
 
 public:
-	NamerFixture() : processNamingService(NULL) {
-		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching Namer ==" );
+	DispatcherFixture() : processNamingService(NULL) {
+		BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching Dispatcher ==" );
 
 		std::string exec;
 		try {
-			exec = bp::find_executable_in_path(NAMER_COMMAND, BIN_DIR);
+			exec = bp::find_executable_in_path(DISPATCHER_COMMAND, BIN_DIR);
 		} catch (bs::system_error& e) {
-			BOOST_TEST_MESSAGE( "can't find " << NAMER_COMMAND << ": " << e.what() );
+			BOOST_TEST_MESSAGE( "can't find " << DISPATCHER_COMMAND << ": " << e.what() );
 			return;
 		}
 
-		BOOST_TEST_MESSAGE( NAMER_COMMAND << " found: " << exec );
+		BOOST_TEST_MESSAGE( DISPATCHER_COMMAND << " found: " << exec );
 
 		// Clean OMNINAME_LOGDIR
 		bf::remove_all(MA_DAGDA_DIR);
 
 		// setup omniNames environment
 		bp::context ctx;
-		ctx.process_name = NAMER_COMMAND;
+		ctx.process_name = DISPATCHER_COMMAND;
 
 #ifndef DEBUG_TESTS
 		// redirect output to /dev/null
@@ -119,23 +119,23 @@ public:
 		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
 		// setup omniNames arguments
-		std::vector<std::string> args = ba::list_of(NAMER_URI_SRV)
-		(NAMER_URI_SUB);
+		std::vector<std::string> args = ba::list_of(DISPATCHER_URI_SRV)
+		(DISPATCHER_URI_SUB);
 		bp::child c = bp::create_child(exec, args, ctx);
 		processNamingService.reset(utils::copy_child(c));
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-		BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching Namer ==" );
+		BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching Dispatcher ==" );
 	}
 
-	~NamerFixture() {
-		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping Namer ==" );
+	~DispatcherFixture() {
+		BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping Dispatcher ==" );
 
 		if (processNamingService) {
 			processNamingService->terminate();
 			processNamingService->wait();
 		}
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping Namer ==" );
+		BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping Dispatcher ==" );
 	}
 };
 
@@ -331,7 +331,7 @@ public:
 
 #ifdef USE_LOG_SERVICE
 template <const char *config>
-class LogServiceFixture : public NamerFixture {
+class LogServiceFixture : public DispatcherFixture {
 	boost::scoped_ptr<bp::child> process;
 
 public:
@@ -424,7 +424,7 @@ public:
 char ConfigMasterAgent[] = MASTER_AGENT_CONFIG;
 char ConfigLocalAgent[]  = LOCAL_AGENT_CONFIG;
 char ConfigMADAG[]  = MADAG_CONFIG;
-typedef DietAgentFixture<ConfigMasterAgent, NamerFixture> DietMAFixture;
+typedef DietAgentFixture<ConfigMasterAgent, DispatcherFixture> DietMAFixture;
 typedef DietAgentFixture<ConfigLocalAgent, DietMAFixture> DietLAFixture;
 typedef DietMADAGFixture<ConfigMADAG, DietLAFixture> DietMADAGFixtureLA;
 

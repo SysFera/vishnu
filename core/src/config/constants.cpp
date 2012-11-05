@@ -21,8 +21,8 @@ namespace vishnu {
     /* [12] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
     /* [13] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
     /* [14] */ {URI, "uri", URI_PARAMETER},
-    /* [15] */ {URINAMERSUB, "uriNamerSub", URI_PARAMETER},
-    /* [16] */ {URINAMERSRV, "uriNamerSrv", URI_PARAMETER}
+    /* [15] */ {URIDISPATCHERSUB, "uriDispatcherSub", URI_PARAMETER},
+    /* [16] */ {URIDISPATCHERSRV, "uriDispatcherSrv", URI_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
