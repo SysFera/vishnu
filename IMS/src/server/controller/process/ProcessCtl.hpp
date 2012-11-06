@@ -55,6 +55,14 @@ public:
 protected:
 private:
   /**
+   * \brief Call the function methodName throught XMLRPC
+   * \param op Supervisor options
+   * \param methodName The name of the method to call
+   */
+  void
+  RPCCall(IMS_Data::SupervisorOp_ptr op, std::string methodName);
+
+  /**
    * \brief To stop all the vishnu processes on a machine
    */
   void

@@ -46,7 +46,7 @@ int main (int argc, char* argv[]){
   IMS_Data::SupervisorOp op;
 
   /**************** Describe options *************/
-  boost::function1<void,string> fsc(boost::bind(&IMS_Data::SupervisorOp::setScript,boost::ref(op),_1));
+  boost::function1<void,string> fsc(boost::bind(&IMS_Data::SupervisorOp::setURI,boost::ref(op),_1));
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option

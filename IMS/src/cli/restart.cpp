@@ -72,15 +72,15 @@ int main (int argc, char* argv[]){
            CONFIG,
 	   type,1);
 
-  restartOp.setScript(vishnu);
-  restartOp.setName(type);
+//  restartOp.setURI(vishnu);
+//  restartOp.setName(type);
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId vishnuConf sedType");
 
   restartOp.setName(type);
-  restartOp.setScript(vishnu);
+  restartOp.setURI(vishnu);
   //call of the api function
   RestartFunc restartFunc(machineId, restartOp);
   return GenericCli().run(restartFunc, dietConfig, argc, argv);

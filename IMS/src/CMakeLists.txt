@@ -13,6 +13,7 @@ include_directories(client api utils
   ${ZMQ_INCLUDE_DIR}
   ${MOCK_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  ${XMLRPC_INCLUDE_DIR}
 )
 
 
@@ -34,7 +35,8 @@ target_link_libraries(vishnu-ims-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
-  ${LIBCRYPT_LIB})
+  ${LIBCRYPT_LIB}
+)
 if(COMPILE_FMS)
   target_link_libraries(vishnu-ims-client vishnu-fms-client)
 endif()
@@ -83,7 +85,9 @@ if(NOT CLIENT_ONLY)
     ${LIBCRYPT_LIB}
     ${SIGAR_LIBRARIES}
     ${ZMQ_LIBRARIES}
-    zmq_helper)
+    zmq_helper
+    ${XMLRPC_LIBRARIES}
+)
 
   install(TARGETS imssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)  

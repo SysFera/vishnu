@@ -74,7 +74,7 @@ int main (int argc, char* argv[]){
   IMS_Data::SupervisorOp op;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fop(boost::bind(&IMS_Data::SupervisorOp::setScript,boost::ref(op),_1));
+  boost::function1<void,string> fop(boost::bind(&IMS_Data::SupervisorOp::setURI,boost::ref(op),_1));
   boost::function1<void,string> fname(boost::bind(&IMS_Data::SupervisorOp::setName,boost::ref(op),_1));
 
   /**************** Describe options *************/
