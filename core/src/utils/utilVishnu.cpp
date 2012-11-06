@@ -613,7 +613,7 @@ vishnu::recordMissingFiles(const std::string & fileName,
   int count = missingFiles.size();
   for(int i = 1; i < count; i++) {
     file << missingFiles[i] << "\n";
-    std::cout << missingFiles[i] << "\n";
+    //std::cout << missingFiles[i] << "\n";
   }
 
   file.close();
@@ -851,7 +851,7 @@ vishnu::getResultFiles(const TMS_Data::JobResult & result,
       std::cerr<< "W: the error file no longer exists : " << result.getErrorPath()<< "\n";
     }
   }
-  if( !appendFilesFromDir(existingFiles, result.getOutputDir())) {
+  if( !appendFilesFromDir(existingFiles, result.getOutputDir()) && result.getOutputDir().size() > 0) {
     missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputDir();
     std::cerr<< "W: the output directory no longer exists : " << result.getOutputDir() << "\n";
   }
