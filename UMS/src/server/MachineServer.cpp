@@ -81,6 +81,8 @@ MachineServer::add(int vishnuId) {
           sqlUpdate+="where machineid='"+mmachine->getMachineId()+"';";
           mdatabaseVishnu->process(sqlUpdate);
 
+          mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, description) values ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",'"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+
         }//if the machine id is generated
         else {
           SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidmachine");
