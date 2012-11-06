@@ -221,19 +221,18 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
   zmq::context_t ctx(1);
 
   LazyPirateClient lpc(ctx, uri, getTimeout());
-
   std::string resultSerialized = my_serialize(prof);
   if (!lpc.send(resultSerialized)) {
     std::cerr << "E: request failed, exiting ...\n";
     throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
   }
-
   // Receive response
   std::string response = lpc.recv();
 
   if (boost::starts_with(response, "error")) {
     throw SystemException(ERRCODE_SYSTEM, response);
   }
+
   //Update of profile
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
   prof->IN = tmp->IN;
@@ -251,15 +250,6 @@ diet_call(diet_profile_t* prof) {
 
   // get the service and the related module
   std::string service(prof->name);
-
-  //FIXME: to be removed
-//  if(service.compare("jobSubmit@"+AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-//	  if(selectMachine(prof) != 0) {
-//	      throw SystemException(ERRCODE_SYSTEM, "Unable to select a machine for submiting the job");
-//	  }
-//	  return 0;
-//  }
-
   std::string module = get_module(service);
 
   // check if the module has been declared in configuration.
@@ -340,12 +330,12 @@ diet_parameter(diet_profile_t* prof, int pos) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
+
   if (prof==NULL){
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
 
   std::stringstream res;
-
   res << prof->name <<  "$$$"
       << prof->IN << "$$$"
       << prof->INOUT << "$$$"

@@ -130,7 +130,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 	std::string serviceName = "jobOutputGetCompletedJobs@";
 	serviceName.append(mmachineId);
 
-	getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 5);
+	getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
 	sessionKey = msessionProxy.getSessionKey();
 
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -151,7 +151,8 @@ JobOutputProxy::getCompletedJobsOutput() {
 	}
 
 	//OUT Parameters
-	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,3), NULL, DIET_VOLATILE);
+	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,3), NULL, DIET_VOLATILE);	//OUT Parameters
+	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,4), NULL, DIET_VOLATILE);
 
 	//Call the Server
 	if( diet_call(getCompletedJobsOutputProfile)) {
@@ -183,16 +184,19 @@ JobOutputProxy::getCompletedJobsOutput() {
 	ListStrings lineVec;
 	istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
 	int numJob = 0;
-	while( getline(fdescStream, line) ) {
+	while(getline(fdescStream, line)) {
 		boost::trim(line);
 		boost::split(lineVec, line, boost::is_any_of(" "));
 		std::string baseDir = (moutDir.size()!=0)? bfs::absolute(moutDir).string() : bfs::path(bfs::current_path()).string();
 		std::string targetDir = baseDir + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
 		vishnu::createOutputDir(targetDir);
-		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
-		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 1);
-		if( !getline(fdescStream, line)) break;
+		copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, 1);
+		// Read the line related to missing files
+		if( !getline(fdescStream, line)) {
+		  break;
+		}
 		vishnu::recordMissingFiles(targetDir+"/MISSING", line);
+		listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
 	}
 
 	diet_profile_free(getCompletedJobsOutputProfile);
