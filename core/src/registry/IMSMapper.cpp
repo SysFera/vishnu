@@ -450,7 +450,7 @@ IMSMapper::decodeLoad(vector<unsigned int> separator, const string& msg) {
   if(!parseEmfObject(u, op)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  u = op->getScript();
+  u = op->getURI();
   if (u.compare("")){
     res += " -s ";
     res += u;
@@ -490,7 +490,7 @@ IMSMapper::decodeStop(vector<unsigned int> separator, const string& msg) {
   if(!parseEmfObject(u, op)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  u = op->getScript();
+  u = op->getURI();
   if (u.compare("")){
     res += " -s ";
     res += u;
@@ -516,7 +516,7 @@ IMSMapper::decodeRestart(vector<unsigned int> separator, const string& msg) {
   if(!parseEmfObject(u, ac)) {
     throw IMSVishnuException(ERRCODE_INVALID_PARAM);
   }
-  u = ac->getScript();
+  u = ac->getURI();
   if (u.compare("")){
     res += " -s ";
     res += u;

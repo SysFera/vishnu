@@ -1,6 +1,13 @@
 #include "ProcessCtl.hpp"
 #include "IMSVishnuException.hpp"
 
+#include <cstdlib>
+#include <string>
+#include <iostream>
+#include <xmlrpc-c/girerr.hpp>
+#include <xmlrpc-c/base.hpp>
+#include <xmlrpc-c/client_simple.hpp>
+
 ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
 						     mp(user),
                                                      muser(user){
@@ -24,21 +31,37 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI)
     }
   }
 
-  string dcmd = "supervisorctl -c "+ mop.getScript() + " restart " +mop.getName();
-  system(dcmd.c_str());
+// Don't care if unable to stop -> means already stopped
+  try{
+    stop(op);
+  } catch (SystemException e){
+  }
+  RPCCall(op, "supervisor.startProcess");
 }
 
 void
 ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
   int res;
   string name;
+  mop = *op;
   if (!muser.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");
   }
-  name = op->getName();
-  string dcmd = "supervisorctl -c "+ op->getScript() + " stop " +name;
-  system(dcmd.c_str());
+  RPCCall(op, "supervisor.stopProcessGroup");
 }
+
+void
+ProcessCtl::RPCCall( IMS_Data::SupervisorOp_ptr op, std::string methodName){
+  string const serverUrl(op->getURI()+"/RPC2");
+  xmlrpc_c::clientSimple myClient;
+  xmlrpc_c::value result;
+  try{
+    myClient.call(serverUrl, methodName, "s", &result, std::string(mop.getName()).c_str());
+  } catch (girerr::error e){
+    throw SystemException(ERRCODE_SYSTEM, std::string("Error in RPC call: ")+std::string(e.what()));
+  }
+}
+
 
 void
 ProcessCtl::loadShed(int type, IMS_Data::SupervisorOp_ptr op) {

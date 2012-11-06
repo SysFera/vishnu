@@ -289,9 +289,9 @@ namespace IMS_Data
         static const int LISTSYSINFO__SYSINFO = 28;
 
         /**
-         * \brief Constant for SUPERVISOROP__SCRIPT feature
+         * \brief Constant for SUPERVISOROP__URI feature
          */
-        static const int SUPERVISOROP__SCRIPT = 29;
+        static const int SUPERVISOROP__URI = 29;
 
         /**
          * \brief Constant for SUPERVISOROP__NAME feature
@@ -591,10 +591,10 @@ namespace IMS_Data
         virtual ::ecore::EReference_ptr getListSysInfo__sysInfo();
 
         /**
-         * \brief Returns the reflective object for feature script of class SupervisorOp
+         * \brief Returns the reflective object for feature URI of class SupervisorOp
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getSupervisorOp__script();
+        virtual ::ecore::EAttribute_ptr getSupervisorOp__URI();
 
         /**
          * \brief Returns the reflective object for feature name of class SupervisorOp
@@ -861,9 +861,9 @@ namespace IMS_Data
         ::ecore::EReference_ptr m_ListSysInfo__sysInfo;
 
         /**
-         * \brief The instance for the feature script of class SupervisorOp
+         * \brief The instance for the feature URI of class SupervisorOp
          */
-        ::ecore::EAttribute_ptr m_SupervisorOp__script;
+        ::ecore::EAttribute_ptr m_SupervisorOp__URI;
 
         /**
          * \brief The instance for the feature name of class SupervisorOp

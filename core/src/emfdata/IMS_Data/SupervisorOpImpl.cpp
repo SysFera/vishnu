@@ -55,10 +55,9 @@ void SupervisorOp::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__URI:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_script);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_URI);
     }
         return _any;
     case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
@@ -76,10 +75,10 @@ void SupervisorOp::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__URI:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_script);
+                m_URI);
     }
         return;
     case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
@@ -97,8 +96,8 @@ void SupervisorOp::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT:
-        return m_script != "";
+    case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__URI:
+        return m_URI != "";
     case ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME:
         return m_name != "";
 

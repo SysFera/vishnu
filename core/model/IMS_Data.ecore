@@ -254,10 +254,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SupervisorOp" instanceTypeName="SupervisorOp">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="script" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="URI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
-      <eAnnotations source="Description" references="#//SupervisorOp/script/%Description%">
-        <details key="content" value="The path to the supervisord script file on the machine"/>
+      <eAnnotations source="Description" references="#//SupervisorOp/URI/%Description%">
+        <details key="content" value="The URI of the supervisor to control the processes"/>
         <details key="shortOption" value="s"/>
       </eAnnotations>
     </eStructuralFeatures>

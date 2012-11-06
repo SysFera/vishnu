@@ -31,7 +31,7 @@ using namespace ::IMS_Data;
 
 // Default constructor
 SupervisorOp::SupervisorOp() :
-    m_script(""), m_name("")
+    m_URI(""), m_name("")
 {
 
     /*PROTECTED REGION ID(SupervisorOpImpl__SupervisorOpImpl) START*/
@@ -51,26 +51,26 @@ SupervisorOp::~SupervisorOp()
 
 // Attributes
 
-::ecore::EString const& SupervisorOp::getScript() const
+::ecore::EString const& SupervisorOp::getURI() const
 {
-    return m_script;
+    return m_URI;
 }
 
-void SupervisorOp::setScript(::ecore::EString const& _script)
+void SupervisorOp::setURI(::ecore::EString const& _URI)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_script = m_script;
+    ::ecore::EString _old_URI = m_URI;
 #endif
-    m_script = _script;
+    m_URI = _URI;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getSupervisorOp__script(),
-                _old_script,
-                m_script
+                (::ecore::EStructuralFeature_ptr) ::IMS_Data::IMS_DataPackage::_instance()->getSupervisorOp__URI(),
+                _old_URI,
+                m_URI
         );
         eNotify(&notification);
     }

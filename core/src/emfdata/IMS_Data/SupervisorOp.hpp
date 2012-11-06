@@ -69,15 +69,15 @@ namespace IMS_Data
 
         // Attributes
         /**
-         * \brief To get the script
-         * \return The script attribute value
+         * \brief To get the URI
+         * \return The URI attribute value
          **/
-        ::ecore::EString const& getScript() const;
+        ::ecore::EString const& getURI() const;
         /**
-         * \brief To set the script
-         * \param _script The script value
+         * \brief To set the URI
+         * \param _URI The URI value
          **/
-        void setScript(::ecore::EString const& _script);
+        void setURI(::ecore::EString const& _URI);
 
         /**
          * \brief To get the name
@@ -115,7 +115,7 @@ namespace IMS_Data
     protected:
         // Attributes
 
-        ::ecore::EString m_script;
+        ::ecore::EString m_URI;
 
         ::ecore::EString m_name;
 

@@ -262,11 +262,11 @@ IMS_DataPackage::IMS_DataPackage()
     m_SupervisorOpEClass->setClassifierID(SUPERVISOROP);
     m_SupervisorOpEClass->setEPackage(this);
     getEClassifiers().push_back(m_SupervisorOpEClass);
-    m_SupervisorOp__script = new ::ecore::EAttribute();
-    m_SupervisorOp__script->setFeatureID(
-            ::IMS_Data::IMS_DataPackage::SUPERVISOROP__SCRIPT);
+    m_SupervisorOp__URI = new ::ecore::EAttribute();
+    m_SupervisorOp__URI->setFeatureID(
+            ::IMS_Data::IMS_DataPackage::SUPERVISOROP__URI);
     m_SupervisorOpEClass->getEStructuralFeatures().push_back(
-            m_SupervisorOp__script);
+            m_SupervisorOp__URI);
     m_SupervisorOp__name = new ::ecore::EAttribute();
     m_SupervisorOp__name->setFeatureID(
             ::IMS_Data::IMS_DataPackage::SUPERVISOROP__NAME);
@@ -764,20 +764,20 @@ IMS_DataPackage::IMS_DataPackage()
     m_SupervisorOpEClass->setName("SupervisorOp");
     m_SupervisorOpEClass->setAbstract(false);
     m_SupervisorOpEClass->setInterface(false);
-    m_SupervisorOp__script->setEType(
+    m_SupervisorOp__URI->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SupervisorOp__script->setName("script");
-    m_SupervisorOp__script->setDefaultValueLiteral("" "");
-    m_SupervisorOp__script->setLowerBound(0);
-    m_SupervisorOp__script->setUpperBound(1);
-    m_SupervisorOp__script->setTransient(false);
-    m_SupervisorOp__script->setVolatile(false);
-    m_SupervisorOp__script->setChangeable(true);
-    m_SupervisorOp__script->setUnsettable(false);
-    m_SupervisorOp__script->setID(false);
-    m_SupervisorOp__script->setUnique(true);
-    m_SupervisorOp__script->setDerived(false);
-    m_SupervisorOp__script->setOrdered(true);
+    m_SupervisorOp__URI->setName("URI");
+    m_SupervisorOp__URI->setDefaultValueLiteral("" "");
+    m_SupervisorOp__URI->setLowerBound(0);
+    m_SupervisorOp__URI->setUpperBound(1);
+    m_SupervisorOp__URI->setTransient(false);
+    m_SupervisorOp__URI->setVolatile(false);
+    m_SupervisorOp__URI->setChangeable(true);
+    m_SupervisorOp__URI->setUnsettable(false);
+    m_SupervisorOp__URI->setID(false);
+    m_SupervisorOp__URI->setUnique(true);
+    m_SupervisorOp__URI->setDerived(false);
+    m_SupervisorOp__URI->setOrdered(true);
     m_SupervisorOp__name->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_SupervisorOp__name->setName("name");
@@ -1138,9 +1138,9 @@ IMS_DataPackage::IMS_DataPackage()
 {
     return m_ListSysInfo__sysInfo;
 }
-::ecore::EAttribute_ptr IMS_DataPackage::getSupervisorOp__script()
+::ecore::EAttribute_ptr IMS_DataPackage::getSupervisorOp__URI()
 {
-    return m_SupervisorOp__script;
+    return m_SupervisorOp__URI;
 }
 ::ecore::EAttribute_ptr IMS_DataPackage::getSupervisorOp__name()
 {
