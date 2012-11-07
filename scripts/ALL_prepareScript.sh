@@ -84,7 +84,7 @@ copy_file Doxyfile_API
 copy_dir doc
 
 # Copy the licence
-copy_dir Licence
+copy_dir License
 
 # Copy Cmake find files
 copy_dir Cmake

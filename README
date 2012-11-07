@@ -13,7 +13,7 @@ The root directory VISHNU_Vx.y
                       |
                       |---------- The doc directory that contains the doxygen documentation
                       |
-                      |---------- The Licence directory that contains the licence of VISHNU
+                      |---------- The License directory that contains the license of VISHNU
                       |
                       |---------- The UMS directory that contains the sources of the UMS module
                       |
