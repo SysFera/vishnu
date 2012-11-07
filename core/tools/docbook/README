@@ -1,5 +1,9 @@
 # VALIDATION DOCBOOK
+Voir jing: http://www.thaiopensource.com/relaxng/jing.html
 java -jar jing-20081028/bin/jing.jar schemas/docbook.rng <document.docbook>
+
+# Avoir le package docbook-xsl (chez debian)
+Attention pour docbook.rng, c'est installé avec le package docbook, s'il n'est pas présent il faut le récupérer avant (paquet docbook5-xml sous debian)
 
 Attention: si le document a été généré par EMF, il faut d'abord modifier les attributs
 de l'element 'book':
@@ -18,4 +22,3 @@ xsltproc fichier-man.docbook
 installer le package debian 'openoffice.org-common'
 ouvrir le document dans openoffice
 faire 'save as' et choisir docbook (.dob)
-
