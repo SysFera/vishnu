@@ -57,7 +57,7 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string machineId;
   std::string remoteBinDirectory;
   std::string defaultBatchConfig;
-  string TMSTYPE = "TMS";
+  string TMSTYPE = "tmssed";
   string cfg;
 
   string uri;

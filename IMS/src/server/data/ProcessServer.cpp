@@ -245,8 +245,5 @@ ProcessServer::getURI(){
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Unrecognized machine id");
   }
-  std::cout << "number of result : " << result->getNbTuples() << std::endl;
-  std::cout << "returning : " << result->getNbTuples() << std::endl;
-
   return result->get(0).at(0);
 }

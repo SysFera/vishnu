@@ -833,7 +833,6 @@ solveLoadShed(diet_profile_t* pb){
   char *sessionKey   = NULL;
   char* mid  = NULL;
   char* type = NULL;
-  char* op   = NULL;
   string error;
   string retErr = "";
   int mapperkey;
@@ -843,7 +842,6 @@ solveLoadShed(diet_profile_t* pb){
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
   diet_string_get(diet_parameter(pb,1), &mid,NULL);
   diet_string_get(diet_parameter(pb,2), &type,NULL);
-  diet_string_get(diet_parameter(pb,3), &op,NULL);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -856,20 +854,14 @@ solveLoadShed(diet_profile_t* pb){
     mapperkey = mapper->code("vishnu_load_shed");
     mapper->code(string(mid), mapperkey);
     mapper->code(string(type), mapperkey);
-    mapper->code(string(op), mapperkey);
     cmd = mapper->finalize(mapperkey);
     sessionServer.check();
-
-    // Getting options
-    if(!parseEmfObject(string(op), opObj)) {
-      throw UserException(ERRCODE_INVALID_PARAM, "solve_loadshed: stop option object is not well built");
-    }
 
     // Creating the process server with the options
     ProcessCtl proc(mid, userServer);
 
     // Load shedding
-    proc.loadShed(convertToInt(string(type)), opObj);
+    proc.loadShed(convertToInt(std::string(type)));
     // Setting out diet param
     diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
 

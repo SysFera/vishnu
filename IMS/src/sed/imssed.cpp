@@ -82,7 +82,7 @@ main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   string sendmailScriptPath;
   string dietConfigFile;
-  string IMSTYPE = "IMS";
+  string IMSTYPE = "imssed";
   struct sigaction action;
   string mid;
   string cfg;
