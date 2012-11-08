@@ -101,12 +101,14 @@ int JobServer::submitJob(const std::string& scriptContent,
 		convertedScript = scriptContentRef;
 	}
 	std::string key;
+        std::string sep = " ";
         switch(mbatchType) {
           case TORQUE :
             key = "#PBS";
             break;
           case LOADLEVELER :
             key = "# @";
+            sep = " = ";
             break;
           case SLURM :
             key = "#SBATCH";
@@ -135,13 +137,13 @@ int JobServer::submitJob(const std::string& scriptContent,
             pos3 = specificParams.find(" ");
             if(pos3!=std::string::npos){
                           
-              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, pos3-pos2) + "\n";
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key);
               specificParams.erase(0,pos3);
               boost::algorithm::trim_left(specificParams);
                             
             } else {
-              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+" "+  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key);
               break;
             }
@@ -151,15 +153,9 @@ int JobServer::submitJob(const std::string& scriptContent,
           }
         
         }
-	     
-        while (count < defaultBatchOption.size()) {
-
-          std::string lineoption = "#DEFAULT_VISHNU_OPTION " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
-          insertOptionLine(lineoption, convertedScript, key);
-          count +=2;
-          
+        if (defaultBatchOption.size()){
+          processDefaultOptions(defaultBatchOption, convertedScript, key);
         }
-        
 	vishnu::createTmpFile(scriptPath, convertedScript);
         
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
@@ -250,6 +246,46 @@ int JobServer::submitJob(const std::string& scriptContent,
 	return 0;
 }
 
+/**
+ * \brief Function to treat the default submission options
+ * \param scriptOptions The list of the option value
+ * \param cmdsOptions The list of the option value
+ * \return raises an exception on error
+ */
+void
+JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key){
+  
+  size_t pos = 0;
+  size_t position =0;
+  size_t posLastDirective = 0;
+  std::string key1, key2;
+    int count = 0;
+  while(count < defaultBatchOption.size()) {
+
+    key1 =  defaultBatchOption.at(count);
+    position = 0;
+    int found =0;
+    while(position!=string::npos && !found){
+      position = content.find(key.c_str(), position);
+      if(position!=std::string::npos){
+        size_t pos1 = content.find("\n", position);
+        std::string line = content.substr(position, pos1-position);
+        position++;
+        size_t pos2 = line.find(key1.c_str());
+        if(pos2 != std::string::npos){
+           found =1;
+           break;
+        }
+      }
+    }  
+    if(!found){
+      std::string lineoption = key + " " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
+      insertOptionLine(lineoption, content, key);
+    }
+    count +=2;
+  }
+  
+}
 /**
  * \brief Function to insert option into string
  * \param optionLineToInsert the option to insert

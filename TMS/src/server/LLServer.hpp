@@ -109,15 +109,6 @@ private:
                  const TMS_Data::SubmitOptions& options);
   
   /**
-   * \brief Function to treat the default submission options
-   * \param scriptOptions The list of the option value
-   * \param cmdsOptions The list of the option value
-   * \return raises an exception on error
-   */
-  void
-  processDefaultOptions(const char* scriptPath);
-
-  /**
    * \brief Function to convert the LL state into VISHNU state 
    * \param state the state to convert
    * \return VISHNU state 
