@@ -36,7 +36,19 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI)
     stop(op);
   } catch (SystemException e){
   }
-  RPCCall(op, "supervisor.startProcess");
+  IMS_Data::ProcessOp processOp;
+  processOp.setMachineId(mmid);
+  ProcessServer procs(&processOp, muser);
+  // Getting URI
+  mop.setURI(procs.getURI());
+
+  RPCCall("supervisor.startProcess");
+
+  // Updating BDD (case of success no exception thrown)
+  IMS_Data::Process proc;
+  proc.setProcessName(mop.getName());
+  proc.setMachineId(mmid);
+  procs.setRestarted(&proc);
 }
 
 void
@@ -47,15 +59,30 @@ ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
   if (!muser.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");
   }
-  RPCCall(op, "supervisor.stopProcessGroup");
+  IMS_Data::ProcessOp processOp;
+  processOp.setMachineId(mmid);
+  ProcessServer procs(&processOp, muser);
+  // Getting URI
+  mop.setURI(procs.getURI());
+
+  RPCCall("supervisor.stopProcessGroup");
+
+  // Updating BDD (case of success no exception thrown)
+  IMS_Data::Process proc;
+  proc.setProcessName(mop.getName());
+  proc.setMachineId(mmid);
+  procs.stopProcess(&proc);
 }
 
 void
-ProcessCtl::RPCCall( IMS_Data::SupervisorOp_ptr op, std::string methodName){
-  string const serverUrl(op->getURI()+"/RPC2");
+ProcessCtl::RPCCall(std::string methodName){
+  string const serverUrl(mop.getURI()+"/RPC2");
   xmlrpc_c::clientSimple myClient;
   xmlrpc_c::value result;
   try{
+    std::cout << "url =" << serverUrl << std::endl;
+    std::cout << "name =" << methodName << std::endl;
+
     myClient.call(serverUrl, methodName, "s", &result, std::string(mop.getName()).c_str());
   } catch (girerr::error e){
     throw SystemException(ERRCODE_SYSTEM, std::string("Error in RPC call: ")+std::string(e.what()));

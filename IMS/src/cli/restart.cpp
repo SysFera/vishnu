@@ -61,26 +61,17 @@ int main (int argc, char* argv[]){
 
   opt->setPosition("machineId",1);
 
-    // All cli options
-   opt->add("vishnu,s",
-            "The path to the supervisor configuration file",
-            CONFIG,
-            vishnu,1);
-
+  // All cli options
   opt->add("type,n",
            "The name of the element",
            CONFIG,
 	   type,1);
 
-//  restartOp.setURI(vishnu);
-//  restartOp.setName(type);
-
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId vishnuConf sedType");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId sedType");
 
   restartOp.setName(type);
-  restartOp.setURI(vishnu);
   //call of the api function
   RestartFunc restartFunc(machineId, restartOp);
   return GenericCli().run(restartFunc, dietConfig, argc, argv);

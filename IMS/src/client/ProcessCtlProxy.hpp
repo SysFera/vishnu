@@ -58,8 +58,7 @@ class ProcessCtlProxy {
   * \return raises an exception on error
   */
   int
-  loadShed(IMS_Data::LoadShedType loadShedType,
-           const IMS_Data::SupervisorOp& op);
+  loadShed(IMS_Data::LoadShedType loadShedType);
 
   /**
     * \brief Destructor, raises an exception on error

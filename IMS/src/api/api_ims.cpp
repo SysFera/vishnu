@@ -238,13 +238,12 @@ vishnu::defineWorkIdentifier(const string sessionKey,
 int
 vishnu::loadShed(const string sessionKey,
                  string machineId,
-                 IMS_Data::LoadShedType loadShedType,
-                 const IMS_Data::SupervisorOp& op)
+                 IMS_Data::LoadShedType loadShedType)
   throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
 
   SessionProxy sessionProxy(sessionKey);
   ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
-  processCtlProxy.loadShed(loadShedType, op);
+  processCtlProxy.loadShed(loadShedType);
 
   return IMS_SUCCESS;
 }

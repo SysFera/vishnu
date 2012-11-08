@@ -146,6 +146,12 @@ public:
    */
   string
   getElectedMid();
+  /**
+   * \brief Get the URI associated to the supervisor process for the server (located in dietname field in DB)
+   * \return The URI
+   */
+  std::string
+  getURI();
 
 protected:
 private:

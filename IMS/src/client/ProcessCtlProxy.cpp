@@ -150,8 +150,7 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
 * \return raises an exception on error
 */
 int
-ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType,
-                          const IMS_Data::SupervisorOp& op) {
+ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
 
   // Cancelling FMS transfer
   try {
@@ -176,7 +175,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType,
     char* errorInfo = NULL;
 
      std::string serviceName = "int_loadShed@"+mmachineId;
-    loadShedProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+    loadShedProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
     sessionKey = msessionProxy.getSessionKey();
 
     std::string msgErrorDiet = "call of function diet_string_set is rejected ";
@@ -195,18 +194,12 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType,
       msgErrorDiet += "with SystemInfo parameter ";
       raiseDietMsgException(msgErrorDiet);
     }
-    ::ecorecpp::serializer::serializer _ser;
-    std::string opToString =  _ser.serialize_str(const_cast<IMS_Data::SupervisorOp_ptr>(&op));
-    if (diet_string_set(diet_parameter(loadShedProfile,2), const_cast<char*>(opToString.c_str()),  DIET_VOLATILE)) {
-      msgErrorDiet += "with option stop parameter ";
-      raiseDietMsgException(msgErrorDiet);
-    }
 
     //OUT Parameters
-    diet_string_set(diet_parameter(loadShedProfile,4), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(loadShedProfile,3), NULL, DIET_VOLATILE);
 
     if(!diet_call(loadShedProfile)) {
-      if(diet_string_get(diet_parameter(loadShedProfile,4), &errorInfo, NULL)){
+      if(diet_string_get(diet_parameter(loadShedProfile,3), &errorInfo, NULL)){
 	msgErrorDiet += " by receiving errorInfo message";
 	raiseDietMsgException(msgErrorDiet);
       }

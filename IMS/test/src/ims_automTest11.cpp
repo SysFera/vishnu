@@ -77,7 +77,6 @@ BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
   //ListJobs
   ListJobs lsJobs;
   ListJobsOptions lsOptions;
-  IMS_Data::SupervisorOp supop;
 
   try {
     //To submit 2 jobs
@@ -88,7 +87,7 @@ BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
     //To check that the jobs are submitted
     BOOST_REQUIRE(lsJobs.getJobs().size() != 0);
     //Launch load schedding SOFT
-    BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType, supop), 0);
+    BOOST_CHECK_EQUAL(loadShed(sessionKey, machineId, loadShedType), 0);
     lsJobs.getJobs().clear();
     //time to get the correct update of the Batch scheduler
     sleep(5);

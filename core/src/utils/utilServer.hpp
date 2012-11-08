@@ -86,6 +86,16 @@ namespace vishnu {
   static const int PDOWN = 2;
 
   /**
+   * \brief Return if the server on the machine is already declared
+   * \param urlsup the url of the supervisor
+   * \param mid the machine id
+   * \param type the type of server
+   * \return if the server is already existant in the database on this machine
+   */
+  bool
+  isNew(std::string urlsup, std::string mid, std::string type);
+
+  /**
    * \brief To register the server in the database
    * \param type The type of the SeD
    * \param config The configuration of the executable

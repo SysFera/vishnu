@@ -194,8 +194,7 @@ namespace vishnu {
   int
   loadShed(const string sessionKey,
 	   string machineId,
-	   IMS_Data::LoadShedType loadShedType,
-           const IMS_Data::SupervisorOp& op)
+	   IMS_Data::LoadShedType loadShedType)
     throw (UMSVishnuException, IMSVishnuException, UserException, SystemException);
 
   /**
