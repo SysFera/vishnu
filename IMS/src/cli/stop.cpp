@@ -37,7 +37,6 @@ struct StopFunc {
 boost::shared_ptr<Options>
 makeStopOpt(string pgName,
             boost::function1<void, string>& fname,
-            boost::function1<void, string>& fop,
             string& dietConfig) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
@@ -47,12 +46,6 @@ makeStopOpt(string pgName,
            "The diet config file",
            ENV,
            dietConfig);
-
-    // All cli options
-  opt->add("script,s",
-	   "The supervisor script",
-	   CONFIG,
-	   fop);
 
   opt->add( "processName,n",
             "represents the name of the element",
@@ -74,11 +67,10 @@ int main (int argc, char* argv[]){
   IMS_Data::SupervisorOp op;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fop(boost::bind(&IMS_Data::SupervisorOp::setURI,boost::ref(op),_1));
   boost::function1<void,string> fname(boost::bind(&IMS_Data::SupervisorOp::setName,boost::ref(op),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fname, fop, dietConfig);
+  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fname, dietConfig);
 
 
 

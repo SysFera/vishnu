@@ -37,6 +37,8 @@ public:
     zmq::context_t context (1);
     zmq::socket_t socket (context, ZMQ_REP);
     std::string servname;
+    std::string resultSerialized;
+    std::vector<boost::shared_ptr<Server> >* serv = NULL;
 
     socket.bind(muri.c_str());
     std::cout << boost::format("I: listening for clients (%1%)\n") % muri;
@@ -55,12 +57,21 @@ public:
       if (message.size() != 0) {
         boost::shared_ptr<diet_profile_t> profile(my_deserialize(static_cast<const char*>(message.data())));
         servname = profile.get()->name;
-        std::vector<boost::shared_ptr<Server> >* serv = mann.get()->get(servname);
+        resultSerialized = (boost::format("error %1%: the service %2% is not available")%
+                                        vishnu::convertToString(ERRCODE_INVALID_PARAM)%
+                                        servname).str();
+        try{
+          serv = mann.get()->get(servname);
+        } catch (UserException& e){
+          diet_string_set(diet_parameter(profile.get(), profile.get()->OUT-1), strdup(e.what()), 1);
+          resultSerialized = my_serialize(profile.get());
+          std::cout << boost::format("IERR: Sending> %1%...\n") % resultSerialized;
+          s_send(socket, resultSerialized);
+          continue;
+        }
+
         std::string uriServer= elect(serv);
 
-        std::string resultSerialized = (boost::format("error %1%: the service %2% is not available")%
-        				vishnu::convertToString(ERRCODE_INVALID_PARAM)%
-        				servname).str();
         if (uriServer.size() != 0) {
             std::cout << my_serialize(profile.get());
             diet_call_gen(profile.get(), uriServer);

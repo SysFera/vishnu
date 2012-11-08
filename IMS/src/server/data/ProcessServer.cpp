@@ -121,7 +121,7 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::setRestarted(IMS_Data::Process_ptr proc){
-  string request = "UPDATE process SET pstatus='"+convertToString(PDELETED)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"' and pstatus="+convertToString(PDOWN);
+  string request = "UPDATE process SET pstatus='"+convertToString(PRUNNING)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -238,3 +238,15 @@ ProcessServer::getElectedMid() {
 }
 
 
+std::string
+ProcessServer::getURI(){
+  string req = "select dietname from process where machineid='"+mop->getMachineId()+"'";
+  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+  if(result->getNbTuples() == 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Unrecognized machine id");
+  }
+  std::cout << "number of result : " << result->getNbTuples() << std::endl;
+  std::cout << "returning : " << result->getNbTuples() << std::endl;
+
+  return result->get(0).at(0);
+}

@@ -14,9 +14,9 @@ displayListProc(IMS_Data::ListProcesses* li){
 void
 displayProc(IMS_Data::Process* p){
   cout << " ------------------------ " << endl;
-  cout << " Vishnu name : " << p->getProcessName() << endl;
-  cout << " Diet id     : " << p->getDietId() << endl;
-  cout << " Machine id  : " << p->getMachineId() << endl;
+  cout << " Vishnu name        : " << p->getProcessName() << endl;
+  cout << " Supervisor address : " << p->getDietId() << endl;
+  cout << " Machine id         : " << p->getMachineId() << endl;
 }
 
 void

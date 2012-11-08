@@ -60,17 +60,55 @@ validateUri(const string & uri) {
 
 }
 
+bool
+vishnu::isNew(std::string urlsup, std::string mid, std::string type){
+  std::string req = "select machineid from process where machineid='"+mid+"' and vishnuname='"+type+"' and dietname='"+urlsup+"'";
+  DbFactory factory;
+  Database *mdatabase;
+  mdatabase = factory.getDatabaseInstance();
+  try{
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+    if(result->getNbTuples() != 0) {
+      return false;
+    }
+  }catch(SystemException& e){
+    e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
+    throw(e);
+  }
+  return true;
+}
+
+
 int
 vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
   string uri;
+  string mid;
   string uridispatcher;
+  string urlsup;
 
   // Getting the machine id
+  config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
   config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
   config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
+  config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
 
   // Check that the uri does not contain *
   validateUri(uridispatcher);
+
+// Register in database
+  if (isNew(urlsup, mid, type)){
+    std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+convertToString(PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
+    std::cout << "Request : " << request << std::endl;
+    try {
+      DbFactory factory;
+      Database* database = factory.getDatabaseInstance();
+      database->process(request.c_str());
+    } catch (SystemException& e) {
+      if (type.compare("UMS")!=0){
+        throw (e);
+      }
+    }
+  }
 
   zmq::context_t ctx(1);
   LazyPirateClient lpc(ctx, uridispatcher);
