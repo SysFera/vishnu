@@ -218,6 +218,13 @@
         <revdescription>
         <para>Ajout des prérequis en termes de connaissances systèmes et raffinement de la procédure d'installation</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>24</revnumber>
+        <date>08/11/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+        <para>Ajout d'un paragraphe sur l'utilisation d'une base de données distante</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -764,6 +771,53 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
             </para>
           </listitem>
         </itemizedlist>
+      </para>
+    </section>
+    <section>
+      <title>Utilisation d'une base de données distante</title>
+      <para>
+        Vishnu repose sur une base de données. Les serveurs de Vishnu ont besoin de s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les ports accessibles entre différentes machines (cas fréquent dans un réseau local), il n'y a généralement pas de problème pour se connecter à une base de données distante en spécifiant correctement le databaseHost dans les fichiers de configuration des éléments de Vishnu.
+        Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas de réseaux complexes avec du NAT par exemple, il est souvent plus facile de passer par des tunnels ssh pour encapsuler les connexions vers la base de données.
+
+        Nous avons deux cas différents pour ouvrir le tunnel. Supposons que la base de donnée soit sur une machine A, et l'élément Vishnu sur une machine B. Nous pouvons ouvrir le tunnel depuis A ou depuis B (parfois seule une de ces deux configuration est possible dans le cas où le ssh ne passe que dans un sens). Nous supposons que le port d'écoute de la base de données est 3306.</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+            ouverture depuis la machine A vers la machine B, il faut ouvrir un tunnel &quot;reverse&quot; :
+          </para>
+          <para>
+            ssh -t -t -R 3306:localhost:3306 user@B
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            ouverture depuis la machine B vers la machine A, il faut ouvrir un tunnel &quot;forward&quot; :
+          </para>
+          <para>
+              ssh -t -t -L 3306:localhost:3306 user@A
+          </para>
+        </listitem>
+      </itemizedlist>
+      <para> Il convient maintenant de tester la connexion à la base de données. Sur la machine B, essayer de vous connecter avec la commande suivante :
+      </para>
+      <programlisting>
+        mysql -u vishnu_user -h 127.0.0.1 -p
+      </programlisting>
+      <para>
+        Après avoir tapé le mot de passe, vous devriez vous retrouver connecter sur la base de données sur la machine A.
+        
+        Il ne vous reste plus qu'à configurer le fichier de configuration de l'élément vishnu avec les éléments suivants (à adapter en fonction de votre configuration) : 
+      </para>
+      <programlisting>
+          databaseType=mysql
+          databaseHost=127.0.0.1
+          databaseName=vishnu
+          databaseUserName=vishnu_user
+          databaseUserPassword=vishnu_user
+          databaseConnectionsNb=5
+      </programlisting>
+      <para>
+        Attention : si vous utilisez localhost comme nom de machine pour vous connecter à la base de données, cela risque de ne pas marcher si jamais mysql est installé sur B. En effet, mysql tente de se connecter en utilisant une socket linux (généralement /var/run/mysqld/mysqld.sock), au lieu de tenter de se connecter à une machine distante. Utilisez bien 127.0.0.1 pour de databaseHost.
       </para>
     </section>
   </chapter>
@@ -5676,7 +5730,7 @@ have to add it to the authorized keys of their own account on the machine.</para
         <refpurpose>lists VISHNU users</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listuser=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listUsers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListUsers <parameter>listuser</parameter></paramdef><paramdef>ListUsersOptions <parameter>options = ListUsersOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8068,7 +8122,7 @@ $NAME: The name of the work</para>
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8250,7 +8304,7 @@ $NAME: The name of the work</para>
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
