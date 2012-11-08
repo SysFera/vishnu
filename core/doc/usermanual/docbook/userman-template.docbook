@@ -179,7 +179,17 @@
     <revdescription>
       <para>Add option -l on list job. </para>
     </revdescription>
-  </revision> 
+  </revision>
+  <revision>
+    <revnumber>18</revnumber>
+    <date>07/11/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Add option -S on vishnu_submit_job. </para>
+      <para>Add of PBSPro batch scheduler </para>
+      <para>Add default batch options. </para>
+    </revdescription>
+  </revision>
   
   </revhistory>
 
@@ -549,8 +559,8 @@
 	  <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
 	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
-	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for several batch schedulers: TORQUE, LoadLeveler, SLURM, LSF and
-	    Grid Engine.
+	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for several batch schedulers: TORQUE, LoadLeveler, SLURM, LSF,
+            Grid Engine and PBSPro.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
 	    The <emphasis role="bold">vishnu_submit_job</emphasis> command allows a user to submit a job in the shell terminal.
 	    To obtain information on a job, the user can use the <emphasis role="bold">vishnu_get_job_info</emphasis> or 

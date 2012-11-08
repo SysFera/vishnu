@@ -223,6 +223,13 @@
       </revision>
       
     </revhistory>
+    <revision>
+      <revnumber>25</revnumber>
+      <date>08/11/2012</date>
+      <authorinitials>A. BSILA</authorinitials>
+      <revdescription>
+        <para>Prise en compte du gestionnaire de resources PBSPro</para></revdescription>
+      </revision>
   </info>
   <chapter>
     <title>Présentation du document</title>
@@ -462,6 +469,9 @@
 	          <listitem>
               <para>Grid Engine API : Version 2011.11</para>
             </listitem>
+            <listitem>
+              <para>PBSPro API : Version 10.4</para>
+            </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
@@ -610,6 +620,16 @@
         <listitem> 
           <para>
             SGE_LIB indique le chemin absolu jusqu'à la librairie libdrmaa.so
+          </para>
+        </listitem>
+        <listitem> 
+          <para>
+            PBS_INCLUDE_DIR indique le chemin absolu vers le fichier pbs_ifl.h
+          </para>
+        </listitem>
+        <listitem> 
+          <para>
+            PBS_LIB indique le chemin absolu jusqu'à la librairie libpbs.so
           </para>
         </listitem>
         
@@ -1095,6 +1115,9 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
 	      <listitem>
 		<para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
 	      </listitem>
+              <listitem>
+		<para>'defaultBatchConfigFile= /usr/local/etc/tms_Torque.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
+	      </listitem>  
 	    </itemizedlist>
 	  </para>
 	</listitem>
@@ -1116,6 +1139,9 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
         <listitem>
     <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
         </listitem>
+        <listitem>
+	   <para>'defaultBatchConfigFile= /usr/local/etc/tms_Slurm.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
+	</listitem> 
       </itemizedlist>
     </para>
   </listitem> 
@@ -1137,6 +1163,9 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
         <listitem>
     <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
         </listitem>
+        <listitem>
+	  <para>'defaultBatchConfigFile= /usr/local/etc/tms_Lsf.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
+	</listitem> 
       </itemizedlist>
     </para>
   </listitem> 
@@ -1158,10 +1187,35 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
         <listitem>
     <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
         </listitem>
+        <listitem>
+		<para>'defaultBatchConfigFile= /usr/local/etc/tms_Sge.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
+	</listitem> 
       </itemizedlist>
     </para>
   </listitem> 
-
+  <listitem>
+	  <para>
+	    Sur la machine hôte de PBSPro, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de PBSPro.
+	  </para>
+	</listitem>
+	<listitem>
+          <para>Lancer le SeD TMS sur la machine hôte de PBSPro. La commande de lancement est : <emphasis role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
+	    <itemizedlist>
+	      <listitem>
+		<para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
+	      </listitem>
+	      <listitem>
+		<para>'batchSchedulerType=PBS' : Le type du batch scheduler utilisé.</para>
+	      </listitem>
+	      <listitem>
+		<para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
+	      </listitem>
+              <listitem>
+		<para>'defaultBatchConfigFile= /usr/local/etc/tms_PBSPro.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
+	      </listitem> 
+	    </itemizedlist>
+	  </para>
+	</listitem>
   <listitem>
     <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
     </para>
@@ -1534,6 +1588,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
 	# batchSchedulerType=SLURM si le batchScheduler est de type SLURM
 	# batchSchedulerType=LSF si le batchScheduler est de type LSF
 	# batchSchedulerType=SGE si le batchScheduler est de type Grid Engine
+    # batchSchedulerType=PBS si le batchScheduler est de type PBSPro
 	batchSchedulerType=TORQUE
 	intervalMonitor = 1
       </programlisting>
