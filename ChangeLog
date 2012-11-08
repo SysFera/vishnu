@@ -1,4 +1,17 @@
 +-----------------------------+
+| VISHNU 2.0.0 - Beta3        |
++-----------------------------+
+* Improve the generation of the ID for vishnu objects
+* Add documentation for admin with distant databases
+* Clean unused files
+* Fixed bug 440
+* Fix LSF bug for -N and -P options in submit
+* Fix bad types in comparison from unsigned int to size_t
+
+
+
+	
++-----------------------------+
 | VISHNU 2.0.0 - Beta2        |
 +-----------------------------+
 
