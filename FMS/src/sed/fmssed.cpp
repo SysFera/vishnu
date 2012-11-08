@@ -44,7 +44,7 @@ main(int argc, char* argv[], char* envp[]) {
   int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
-  string FMSTYPE = "FMS";
+  string FMSTYPE = "fmssed";
   string mid;
   string cfg;
   string uri;

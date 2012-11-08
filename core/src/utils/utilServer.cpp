@@ -98,13 +98,12 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
 // Register in database
   if (isNew(urlsup, mid, type)){
     std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+convertToString(PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
-    std::cout << "Request : " << request << std::endl;
     try {
       DbFactory factory;
       Database* database = factory.getDatabaseInstance();
       database->process(request.c_str());
     } catch (SystemException& e) {
-      if (type.compare("UMS")!=0){
+      if (type.compare("umssed")!=0){
         throw (e);
       }
     }

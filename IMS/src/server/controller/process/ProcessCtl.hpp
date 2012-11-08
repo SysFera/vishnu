@@ -43,6 +43,7 @@ public:
   restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
+   * \brief op The supervision options
    */
   void
   stop(IMS_Data::SupervisorOp_ptr op);
@@ -51,7 +52,7 @@ public:
    * \param type: The type of loadShedding
    */
   void
-  loadShed(int type, IMS_Data::SupervisorOp_ptr op);
+  loadShed(int type);
 protected:
 private:
   /**
@@ -65,7 +66,7 @@ private:
    * \brief To stop all the vishnu processes on a machine
    */
   void
-  stopAll(IMS_Data::SupervisorOp_ptr op);
+  stopAll();
   /**
    * \brief The process server
    */

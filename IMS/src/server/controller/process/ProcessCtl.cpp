@@ -1,5 +1,7 @@
 #include "ProcessCtl.hpp"
 #include "IMSVishnuException.hpp"
+#include "IMS_Data.hpp"
+#include "IMS_Data_forward.hpp"
 
 #include <cstdlib>
 #include <string>
@@ -82,6 +84,7 @@ ProcessCtl::RPCCall(std::string methodName){
   try{
     std::cout << "url =" << serverUrl << std::endl;
     std::cout << "name =" << methodName << std::endl;
+    std::cout << "param =" << mop.getName() << std::endl;
 
     myClient.call(serverUrl, methodName, "s", &result, std::string(mop.getName()).c_str());
   } catch (girerr::error e){
@@ -91,21 +94,23 @@ ProcessCtl::RPCCall(std::string methodName){
 
 
 void
-ProcessCtl::loadShed(int type, IMS_Data::SupervisorOp_ptr op) {
+ProcessCtl::loadShed(int type) {
   // Bad call type, 1 = HARD => STOP ALL
   if (type != 1) {
     return;
   }
   // Physically stopping them
-  stopAll(op);
+  stopAll();
 }
 
 void
-ProcessCtl::stopAll(IMS_Data::SupervisorOp_ptr op) {
+ProcessCtl::stopAll() {
   vector<IMS_Data::Process_ptr> ims;
   if (mmid.compare("")==0) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
   }
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+  IMS_Data::SupervisorOp_ptr op = ecoreFactory->createSupervisorOp();
   IMS_Data::ProcessOp processOp;
   processOp.setMachineId(mmid);
   // Creating the process server with the options
@@ -119,15 +124,19 @@ ProcessCtl::stopAll(IMS_Data::SupervisorOp_ptr op) {
     throw SystemException(ERRCODE_SYSTEM, "No process found on machine: "+mmid+". ");
   }
 
+  std::cout << "Number of process " << res->getProcess().size() << std::endl;
+
   // Closing each process gotten
   for (unsigned int i = 0; i < res->getProcess().size(); i++) {
     IMS_Data::Process_ptr p = res->getProcess().get(i);
-    op->setName(p->getProcessName());
     // If ims, close at the end
     if (p->getProcessName().compare("imssed")==0) {
+      std::cout << "Is IMS " << std::endl;
       ims.push_back(p);
     } else {
       try {
+        op->setName(p->getProcessName());
+        std::cout << "Not IMS, it is : " << op->getName() << std::endl;
 	stop(op);
       }catch(VishnuException& e) {
 	// Do nothing, keep on removing other sed
@@ -145,46 +154,3 @@ ProcessCtl::stopAll(IMS_Data::SupervisorOp_ptr op) {
   }
 
 }
-
-//void
-//ProcessCtl::list() {
-//  zmq::context_t ctx(1);
-//  LazyPirateClient lpc(ctx, uri);
-//
-//  if (!lpc.send("")) {
-//    std::cerr << "E: request failed, exiting ...\n";
-//    exit(-1);
-//  }
-//
-//  std::string response = lpc.recv();
-//  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
-//  if (0 == response.length()) {
-//      throw SystemException(ERRCODE_SYSTEM, "No corresponding server found");
-//  }
-//  int precDol = response.find("$");
-//  std::string server;
-//  int tmp;
-//  while (precDol != std::string::npos) {
-//    tmp = response.find("$", precDol+1);
-//    if(tmp != std::string::npos){
-//      server = response.substr(precDol+1, tmp-precDol-1);
-//    } else {
-//      server = response.substr(precDol+1, std::string::npos);
-//    }
-//    precDol = tmp;
-//
-//    std::string nameServ;
-//    std::string addr;
-//    int prec;
-//    std::vector< std::string> vec;
-//
-//    tmp = server.find("#", 0);
-//    prec = tmp;
-//    nameServ = server.substr(0, tmp);
-//    tmp = server.find("#", prec+1);
-//    addr = server.substr(prec+1, tmp-prec-1);
-//
-//    boost::shared_ptr<Server> s =boost::shared_ptr<Server>(new Server(nameServ, vec, addr));
-//    serv.push_back(s);
-//  }
-//}

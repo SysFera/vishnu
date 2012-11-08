@@ -67,7 +67,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   std::string sendmailScriptPath;
   struct sigaction action;
-  string UMSTYPE = "UMS";
+  string UMSTYPE = "umssed";
   string mid;
   string cfg;
   string uri;
