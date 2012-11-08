@@ -101,14 +101,6 @@ class SGEServer : public BatchServer
                     std::vector<std::string>&cmdsOptions,
                     drmaa_job_template_t *jobt);
 
-    /**
-     * \brief Function to treat the default submission options
-     * \param scriptOptions The list of the option value
-     * \param cmdsOptions The list of the option value
-     * \return raises an exception on error
-     */
-    void
-    processDefaultOptions(const char* scriptPath);
 
     /**
      * \brief Function to get the value of SGE resource (nodes, walltime, cpu) in the script

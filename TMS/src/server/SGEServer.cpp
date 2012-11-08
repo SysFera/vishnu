@@ -92,8 +92,6 @@ SGEServer::submit(const char* scriptPath,
 
   }
   
-  processDefaultOptions(scriptPath);
-  
   std::string scriptContent = vishnu::get_file_content(scriptPath);
 
   std::istringstream iss(scriptContent);
@@ -413,87 +411,6 @@ SGEServer::getJobState(const std::string& jobId) {
   return ret;
 }
 
-/**
- * \brief Function to treat the default submission options
- * \param scriptOptions The list of the option value
- * \param cmdsOptions The list of the option value
- * \return raises an exception on error
- */
-void
-SGEServer::processDefaultOptions(const char* scriptPath){
-  
-  std::string content = vishnu::get_file_content(scriptPath);
-  size_t pos = 0;
-  size_t position =0;
-  size_t posLastDirective = 0;
-  std::string key1, key2;
-  int replace=0;
-  
-  while(pos!=string::npos) {
-    
-    pos = content.find("#DEFAULT_VISHNU_OPTION", pos);
-    
-    if(pos!=string::npos) {
-      
-      std::string line = content.substr(pos, content.find("\n", pos)-pos);
-      line = line.substr(22);
-      boost::algorithm::trim_left(line);
-      position = line.find(" ");
-      if(position!=std::string::npos){
-        key1 = line.substr(0,position);
-      } else {
-        continue;
-        
-      }
-      position = 0;
-      int found =0;
-      while(position!=string::npos && !found){
-        position = content.find("#", position);
-        
-        if(position!=std::string::npos){
-          std::string line1 = content.substr(position, content.find("\n", position)-position);
-          size_t pos1 = line1.find("#");
-          size_t pos2 = line1.find("$");
-          position++;
-          if((pos1!=string::npos) && (pos2!=string::npos)) {
-            std::string space = line1.substr(pos1+1, pos2-pos1-1);
-            size_t spaceSize = space.size();
-            int i = 0;
-            while((i < spaceSize) && (space[i]==' ')) {
-              i++;
-            };
-            
-            if(i!=spaceSize) {
-              continue;
-            } else {
-              
-              size_t pos3 = line1.find(key1.c_str());
-              if(pos3!=std::string::npos){
-                found =1;
-                break;
-              }       
-            }
-          }
-          
-        }
-      }
-      if(!found){
-        replace = 1;
-        content.replace(pos,22, "#$",2);
-      } else {
-        replace = 1;
-        content.erase(pos, content.find("\n", pos)-pos);
-      }
-    }
-  }
-  
-  if(replace) {
-    ofstream ofs(scriptPath);
-    ofs << content;
-    ofs.close();
-  }
-  
-}  
   
 /**
  * \brief Function to get the start time of the job

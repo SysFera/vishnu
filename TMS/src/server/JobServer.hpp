@@ -87,6 +87,15 @@ public:
    * \return The converted value
    */
   long long convertToTimeType(std::string date);
+
+  /**
+   * \brief Function to treat the default submission options
+   * \param scriptOptions The list of the option value
+   * \param cmdsOptions The list of the option value
+   * \return raises an exception on error
+   */
+  void
+  processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key);
   
   /**
    * \brief Function to insert option line into string
