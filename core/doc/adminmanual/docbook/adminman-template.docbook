@@ -221,15 +221,15 @@
       <revdescription>
         <para>Ajout d'un paragraphe sur l'utilisation d'une base de données distante</para></revdescription>
       </revision>
-      
-    </revhistory>
-    <revision>
+      <revision>
       <revnumber>25</revnumber>
       <date>08/11/2012</date>
       <authorinitials>A. BSILA</authorinitials>
       <revdescription>
         <para>Prise en compte du gestionnaire de resources PBSPro</para></revdescription>
       </revision>
+
+    </revhistory>
   </info>
   <chapter>
     <title>Présentation du document</title>
