@@ -179,6 +179,14 @@ public class SubmitOptions extends EObject {
     VISHNUJNI.SubmitOptions_setWorkId(swigCPtr, this, _workId);
   }
 
+  public String getSpecificParams() {
+    return VISHNUJNI.SubmitOptions_getSpecificParams(swigCPtr, this);
+  }
+
+  public void setSpecificParams(String _specificParams) {
+    VISHNUJNI.SubmitOptions_setSpecificParams(swigCPtr, this, _specificParams);
+  }
+
   public LoadCriterion getCriterion() {
     long cPtr = VISHNUJNI.SubmitOptions_getCriterion(swigCPtr, this);
     return (cPtr == 0) ? null : new LoadCriterion(cPtr, false);

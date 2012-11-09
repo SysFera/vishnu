@@ -157,8 +157,8 @@ public class VISHNU {
     return VISHNUJNI.submitJob(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo, SubmitOptions.getCPtr(options), options);
   }
 
-  public static int addWork(String sessionKey, SWIGTYPE_p_TMS_Data__Work newWork) throws InternalTMSException {
-    return VISHNUJNI.addWork(sessionKey, SWIGTYPE_p_TMS_Data__Work.getCPtr(newWork));
+  public static int addWork(String sessionKey, Work newWork, AddWorkOptions options) throws InternalTMSException {
+    return VISHNUJNI.addWork(sessionKey, Work.getCPtr(newWork), newWork, AddWorkOptions.getCPtr(options), options);
   }
 
   public static int cancelJob(String sessionKey, String machineId, String jobId) throws InternalTMSException {

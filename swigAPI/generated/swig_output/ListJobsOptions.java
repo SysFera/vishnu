@@ -131,6 +131,14 @@ public class ListJobsOptions extends EObject {
     VISHNUJNI.ListJobsOptions_setWorkId(swigCPtr, this, _workId);
   }
 
+  public boolean isListAll() {
+    return VISHNUJNI.ListJobsOptions_isListAll(swigCPtr, this);
+  }
+
+  public void setListAll(boolean _listAll) {
+    VISHNUJNI.ListJobsOptions_setListAll(swigCPtr, this, _listAll);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.ListJobsOptions_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

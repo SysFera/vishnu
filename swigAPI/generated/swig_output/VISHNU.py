@@ -67,6 +67,7 @@ except AttributeError:
 
 
 class SwigPyIterator(_object):
+    """Proxy of C++ swig::SwigPyIterator class"""
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, SwigPyIterator, name, value)
     __swig_getmethods__ = {}
@@ -75,59 +76,177 @@ class SwigPyIterator(_object):
     __repr__ = _swig_repr
     __swig_destroy__ = _VISHNU.delete_SwigPyIterator
     __del__ = lambda self : None;
-    def value(self): return _VISHNU.SwigPyIterator_value(self)
-    def incr(self, n = 1): return _VISHNU.SwigPyIterator_incr(self, n)
-    def decr(self, n = 1): return _VISHNU.SwigPyIterator_decr(self, n)
-    def distance(self, *args): return _VISHNU.SwigPyIterator_distance(self, *args)
-    def equal(self, *args): return _VISHNU.SwigPyIterator_equal(self, *args)
-    def copy(self): return _VISHNU.SwigPyIterator_copy(self)
-    def next(self): return _VISHNU.SwigPyIterator_next(self)
-    def __next__(self): return _VISHNU.SwigPyIterator___next__(self)
-    def previous(self): return _VISHNU.SwigPyIterator_previous(self)
-    def advance(self, *args): return _VISHNU.SwigPyIterator_advance(self, *args)
-    def __eq__(self, *args): return _VISHNU.SwigPyIterator___eq__(self, *args)
-    def __ne__(self, *args): return _VISHNU.SwigPyIterator___ne__(self, *args)
-    def __iadd__(self, *args): return _VISHNU.SwigPyIterator___iadd__(self, *args)
-    def __isub__(self, *args): return _VISHNU.SwigPyIterator___isub__(self, *args)
-    def __add__(self, *args): return _VISHNU.SwigPyIterator___add__(self, *args)
-    def __sub__(self, *args): return _VISHNU.SwigPyIterator___sub__(self, *args)
+    def value(self, *args, **kwargs):
+        """value(self) -> PyObject"""
+        return _VISHNU.SwigPyIterator_value(self, *args, **kwargs)
+
+    def incr(self, *args, **kwargs):
+        """incr(self, size_t n = 1) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator_incr(self, *args, **kwargs)
+
+    def decr(self, *args, **kwargs):
+        """decr(self, size_t n = 1) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator_decr(self, *args, **kwargs)
+
+    def distance(self, *args, **kwargs):
+        """distance(self, SwigPyIterator x) -> ptrdiff_t"""
+        return _VISHNU.SwigPyIterator_distance(self, *args, **kwargs)
+
+    def equal(self, *args, **kwargs):
+        """equal(self, SwigPyIterator x) -> bool"""
+        return _VISHNU.SwigPyIterator_equal(self, *args, **kwargs)
+
+    def copy(self, *args, **kwargs):
+        """copy(self) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator_copy(self, *args, **kwargs)
+
+    def next(self, *args, **kwargs):
+        """next(self) -> PyObject"""
+        return _VISHNU.SwigPyIterator_next(self, *args, **kwargs)
+
+    def __next__(self, *args, **kwargs):
+        """__next__(self) -> PyObject"""
+        return _VISHNU.SwigPyIterator___next__(self, *args, **kwargs)
+
+    def previous(self, *args, **kwargs):
+        """previous(self) -> PyObject"""
+        return _VISHNU.SwigPyIterator_previous(self, *args, **kwargs)
+
+    def advance(self, *args, **kwargs):
+        """advance(self, ptrdiff_t n) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator_advance(self, *args, **kwargs)
+
+    def __eq__(self, *args, **kwargs):
+        """__eq__(self, SwigPyIterator x) -> bool"""
+        return _VISHNU.SwigPyIterator___eq__(self, *args, **kwargs)
+
+    def __ne__(self, *args, **kwargs):
+        """__ne__(self, SwigPyIterator x) -> bool"""
+        return _VISHNU.SwigPyIterator___ne__(self, *args, **kwargs)
+
+    def __iadd__(self, *args, **kwargs):
+        """__iadd__(self, ptrdiff_t n) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator___iadd__(self, *args, **kwargs)
+
+    def __isub__(self, *args, **kwargs):
+        """__isub__(self, ptrdiff_t n) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator___isub__(self, *args, **kwargs)
+
+    def __add__(self, *args, **kwargs):
+        """__add__(self, ptrdiff_t n) -> SwigPyIterator"""
+        return _VISHNU.SwigPyIterator___add__(self, *args, **kwargs)
+
+    def __sub__(self, *args):
+        """
+        __sub__(self, ptrdiff_t n) -> SwigPyIterator
+        __sub__(self, SwigPyIterator x) -> ptrdiff_t
+        """
+        return _VISHNU.SwigPyIterator___sub__(self, *args)
+
     def __iter__(self): return self
 SwigPyIterator_swigregister = _VISHNU.SwigPyIterator_swigregister
 SwigPyIterator_swigregister(SwigPyIterator)
 
 class EObject(_object):
+    """Proxy of C++ ecore::EObject class"""
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, EObject, name, value)
     __swig_getmethods__ = {}
     __getattr__ = lambda self, name: _swig_getattr(self, EObject, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_EObject()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> EObject"""
+        this = _VISHNU.new_EObject(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_EObject
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.EObject__initialize(self)
-    def eClass(self): return _VISHNU.EObject_eClass(self)
-    def eIsProxy(self): return _VISHNU.EObject_eIsProxy(self)
-    def eResource(self): return _VISHNU.EObject_eResource(self)
-    def eContainer(self): return _VISHNU.EObject_eContainer(self)
-    def eContainingFeature(self): return _VISHNU.EObject_eContainingFeature(self)
-    def eContainmentFeature(self): return _VISHNU.EObject_eContainmentFeature(self)
-    def eContents(self): return _VISHNU.EObject_eContents(self)
-    def eAllContents(self): return _VISHNU.EObject_eAllContents(self)
-    def eCrossReferences(self): return _VISHNU.EObject_eCrossReferences(self)
-    def eInvoke(self, *args): return _VISHNU.EObject_eInvoke(self, *args)
-    def eGet(self, *args): return _VISHNU.EObject_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.EObject_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.EObject_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.EObject_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.EObject__eClass(self)
-    def _setEContainer(self, *args): return _VISHNU.EObject__setEContainer(self, *args)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.EObject__initialize(self, *args, **kwargs)
+
+    def eClass(self, *args, **kwargs):
+        """eClass(self) -> EClass_ptr"""
+        return _VISHNU.EObject_eClass(self, *args, **kwargs)
+
+    def eIsProxy(self, *args, **kwargs):
+        """eIsProxy(self) -> EBoolean"""
+        return _VISHNU.EObject_eIsProxy(self, *args, **kwargs)
+
+    def eResource(self, *args, **kwargs):
+        """eResource(self) -> EResource"""
+        return _VISHNU.EObject_eResource(self, *args, **kwargs)
+
+    def eContainer(self, *args, **kwargs):
+        """eContainer(self) -> EObject_ptr"""
+        return _VISHNU.EObject_eContainer(self, *args, **kwargs)
+
+    def eContainingFeature(self, *args, **kwargs):
+        """eContainingFeature(self) -> EStructuralFeature_ptr"""
+        return _VISHNU.EObject_eContainingFeature(self, *args, **kwargs)
+
+    def eContainmentFeature(self, *args, **kwargs):
+        """eContainmentFeature(self) -> EReference_ptr"""
+        return _VISHNU.EObject_eContainmentFeature(self, *args, **kwargs)
+
+    def eContents(self, *args, **kwargs):
+        """eContents(self) -> std::list<(::ecore::EObject_ptr)>"""
+        return _VISHNU.EObject_eContents(self, *args, **kwargs)
+
+    def eAllContents(self, *args, **kwargs):
+        """eAllContents(self) -> int"""
+        return _VISHNU.EObject_eAllContents(self, *args, **kwargs)
+
+    def eCrossReferences(self, *args, **kwargs):
+        """eCrossReferences(self) -> std::list<(::ecore::EObject_ptr)>"""
+        return _VISHNU.EObject_eCrossReferences(self, *args, **kwargs)
+
+    def eInvoke(self, *args, **kwargs):
+        """eInvoke(self, EOperation_ptr _operation, std::list<(::ecorecpp::mapping::any)> _arguments) -> EJavaObject"""
+        return _VISHNU.EObject_eInvoke(self, *args, **kwargs)
+
+    def eGet(self, *args):
+        """
+        eGet(self, EStructuralFeature_ptr _feature) -> EJavaObject
+        eGet(self, EStructuralFeature_ptr _feature, EBoolean _resolve) -> EJavaObject
+        eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject
+        """
+        return _VISHNU.EObject_eGet(self, *args)
+
+    def eSet(self, *args):
+        """
+        eSet(self, EStructuralFeature_ptr _feature, EJavaObject _newValue)
+        eSet(self, EInt _featureID, EJavaObject _newValue)
+        """
+        return _VISHNU.EObject_eSet(self, *args)
+
+    def eIsSet(self, *args):
+        """
+        eIsSet(self, EStructuralFeature_ptr _feature) -> EBoolean
+        eIsSet(self, EInt _featureID) -> EBoolean
+        """
+        return _VISHNU.EObject_eIsSet(self, *args)
+
+    def eUnset(self, *args):
+        """
+        eUnset(self, EStructuralFeature_ptr _feature)
+        eUnset(self, EInt _featureID)
+        """
+        return _VISHNU.EObject_eUnset(self, *args)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.EObject__eClass(self, *args, **kwargs)
+
+    def _setEContainer(self, *args, **kwargs):
+        """_setEContainer(self, EObject_ptr _eContainer, EStructuralFeature_ptr _eContainingFeature)"""
+        return _VISHNU.EObject__setEContainer(self, *args, **kwargs)
+
 EObject_swigregister = _VISHNU.EObject_swigregister
 EObject_swigregister(EObject)
 
 class ConnectOptions(EObject):
+    """Proxy of C++ UMS_Data::ConnectOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ConnectOptions, name, value)
@@ -135,28 +254,66 @@ class ConnectOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ConnectOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ConnectOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ConnectOptions"""
+        this = _VISHNU.new_ConnectOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ConnectOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ConnectOptions__initialize(self)
-    def getClosePolicy(self): return _VISHNU.ConnectOptions_getClosePolicy(self)
-    def setClosePolicy(self, *args): return _VISHNU.ConnectOptions_setClosePolicy(self, *args)
-    def getSessionInactivityDelay(self): return _VISHNU.ConnectOptions_getSessionInactivityDelay(self)
-    def setSessionInactivityDelay(self, *args): return _VISHNU.ConnectOptions_setSessionInactivityDelay(self, *args)
-    def getSubstituteUserId(self): return _VISHNU.ConnectOptions_getSubstituteUserId(self)
-    def setSubstituteUserId(self, *args): return _VISHNU.ConnectOptions_setSubstituteUserId(self, *args)
-    def eGet(self, *args): return _VISHNU.ConnectOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ConnectOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ConnectOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ConnectOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ConnectOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ConnectOptions__initialize(self, *args, **kwargs)
+
+    def getClosePolicy(self, *args, **kwargs):
+        """getClosePolicy(self) -> SessionCloseType"""
+        return _VISHNU.ConnectOptions_getClosePolicy(self, *args, **kwargs)
+
+    def setClosePolicy(self, *args, **kwargs):
+        """setClosePolicy(self, SessionCloseType _closePolicy)"""
+        return _VISHNU.ConnectOptions_setClosePolicy(self, *args, **kwargs)
+
+    def getSessionInactivityDelay(self, *args, **kwargs):
+        """getSessionInactivityDelay(self) -> EInt"""
+        return _VISHNU.ConnectOptions_getSessionInactivityDelay(self, *args, **kwargs)
+
+    def setSessionInactivityDelay(self, *args, **kwargs):
+        """setSessionInactivityDelay(self, EInt _sessionInactivityDelay)"""
+        return _VISHNU.ConnectOptions_setSessionInactivityDelay(self, *args, **kwargs)
+
+    def getSubstituteUserId(self, *args, **kwargs):
+        """getSubstituteUserId(self) -> EString"""
+        return _VISHNU.ConnectOptions_getSubstituteUserId(self, *args, **kwargs)
+
+    def setSubstituteUserId(self, *args, **kwargs):
+        """setSubstituteUserId(self, EString _substituteUserId)"""
+        return _VISHNU.ConnectOptions_setSubstituteUserId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ConnectOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ConnectOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ConnectOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ConnectOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ConnectOptions__eClass(self, *args, **kwargs)
+
 ConnectOptions_swigregister = _VISHNU.ConnectOptions_swigregister
 ConnectOptions_swigregister(ConnectOptions)
 
 class Session(EObject):
+    """Proxy of C++ UMS_Data::Session class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Session, name, value)
@@ -164,64 +321,181 @@ class Session(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Session, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Session()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Session"""
+        this = _VISHNU.new_Session(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Session
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Session__initialize(self)
-    def getSessionId(self): return _VISHNU.Session_getSessionId(self)
-    def setSessionId(self, *args): return _VISHNU.Session_setSessionId(self, *args)
-    def getUserId(self): return _VISHNU.Session_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.Session_setUserId(self, *args)
-    def getSessionKey(self): return _VISHNU.Session_getSessionKey(self)
-    def setSessionKey(self, *args): return _VISHNU.Session_setSessionKey(self, *args)
-    def getDateLastConnect(self): return _VISHNU.Session_getDateLastConnect(self)
-    def setDateLastConnect(self, *args): return _VISHNU.Session_setDateLastConnect(self, *args)
-    def getDateCreation(self): return _VISHNU.Session_getDateCreation(self)
-    def setDateCreation(self, *args): return _VISHNU.Session_setDateCreation(self, *args)
-    def getDateClosure(self): return _VISHNU.Session_getDateClosure(self)
-    def setDateClosure(self, *args): return _VISHNU.Session_setDateClosure(self, *args)
-    def getStatus(self): return _VISHNU.Session_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.Session_setStatus(self, *args)
-    def getClosePolicy(self): return _VISHNU.Session_getClosePolicy(self)
-    def setClosePolicy(self, *args): return _VISHNU.Session_setClosePolicy(self, *args)
-    def getTimeout(self): return _VISHNU.Session_getTimeout(self)
-    def setTimeout(self, *args): return _VISHNU.Session_setTimeout(self, *args)
-    def eGet(self, *args): return _VISHNU.Session_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Session_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Session_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Session_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Session__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Session__initialize(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.Session_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.Session_setSessionId(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.Session_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.Session_setUserId(self, *args, **kwargs)
+
+    def getSessionKey(self, *args, **kwargs):
+        """getSessionKey(self) -> EString"""
+        return _VISHNU.Session_getSessionKey(self, *args, **kwargs)
+
+    def setSessionKey(self, *args, **kwargs):
+        """setSessionKey(self, EString _sessionKey)"""
+        return _VISHNU.Session_setSessionKey(self, *args, **kwargs)
+
+    def getDateLastConnect(self, *args, **kwargs):
+        """getDateLastConnect(self) -> ELong"""
+        return _VISHNU.Session_getDateLastConnect(self, *args, **kwargs)
+
+    def setDateLastConnect(self, *args, **kwargs):
+        """setDateLastConnect(self, ELong _dateLastConnect)"""
+        return _VISHNU.Session_setDateLastConnect(self, *args, **kwargs)
+
+    def getDateCreation(self, *args, **kwargs):
+        """getDateCreation(self) -> ELong"""
+        return _VISHNU.Session_getDateCreation(self, *args, **kwargs)
+
+    def setDateCreation(self, *args, **kwargs):
+        """setDateCreation(self, ELong _dateCreation)"""
+        return _VISHNU.Session_setDateCreation(self, *args, **kwargs)
+
+    def getDateClosure(self, *args, **kwargs):
+        """getDateClosure(self) -> ELong"""
+        return _VISHNU.Session_getDateClosure(self, *args, **kwargs)
+
+    def setDateClosure(self, *args, **kwargs):
+        """setDateClosure(self, ELong _dateClosure)"""
+        return _VISHNU.Session_setDateClosure(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> StatusType"""
+        return _VISHNU.Session_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, StatusType _status)"""
+        return _VISHNU.Session_setStatus(self, *args, **kwargs)
+
+    def getClosePolicy(self, *args, **kwargs):
+        """getClosePolicy(self) -> SessionCloseType"""
+        return _VISHNU.Session_getClosePolicy(self, *args, **kwargs)
+
+    def setClosePolicy(self, *args, **kwargs):
+        """setClosePolicy(self, SessionCloseType _closePolicy)"""
+        return _VISHNU.Session_setClosePolicy(self, *args, **kwargs)
+
+    def getTimeout(self, *args, **kwargs):
+        """getTimeout(self) -> ELong"""
+        return _VISHNU.Session_getTimeout(self, *args, **kwargs)
+
+    def setTimeout(self, *args, **kwargs):
+        """setTimeout(self, ELong _timeout)"""
+        return _VISHNU.Session_setTimeout(self, *args, **kwargs)
+
+    def getAuthenId(self, *args, **kwargs):
+        """getAuthenId(self) -> EString"""
+        return _VISHNU.Session_getAuthenId(self, *args, **kwargs)
+
+    def setAuthenId(self, *args, **kwargs):
+        """setAuthenId(self, EString _authenId)"""
+        return _VISHNU.Session_setAuthenId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Session_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Session_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Session_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Session_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Session__eClass(self, *args, **kwargs)
+
 Session_swigregister = _VISHNU.Session_swigregister
 Session_swigregister(Session)
 
-class ListSessions(EObject):
+class ListUsersOptions(EObject):
+    """Proxy of C++ UMS_Data::ListUsersOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListSessions, name, value)
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListUsersOptions, name, value)
     __swig_getmethods__ = {}
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListSessions, name)
+    __getattr__ = lambda self, name: _swig_getattr(self, ListUsersOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListSessions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListUsersOptions"""
+        this = _VISHNU.new_ListUsersOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListSessions
+    __swig_destroy__ = _VISHNU.delete_ListUsersOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListSessions__initialize(self)
-    def getSessions(self): return _VISHNU.ListSessions_getSessions(self)
-    def eGet(self, *args): return _VISHNU.ListSessions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListSessions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListSessions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListSessions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListSessions__eClass(self)
-ListSessions_swigregister = _VISHNU.ListSessions_swigregister
-ListSessions_swigregister(ListSessions)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListUsersOptions__initialize(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListUsersOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListUsersOptions_setUserId(self, *args, **kwargs)
+
+    def getAuthSystemId(self, *args, **kwargs):
+        """getAuthSystemId(self) -> EString"""
+        return _VISHNU.ListUsersOptions_getAuthSystemId(self, *args, **kwargs)
+
+    def setAuthSystemId(self, *args, **kwargs):
+        """setAuthSystemId(self, EString _authSystemId)"""
+        return _VISHNU.ListUsersOptions_setAuthSystemId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListUsersOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListUsersOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListUsersOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListUsersOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListUsersOptions__eClass(self, *args, **kwargs)
+
+ListUsersOptions_swigregister = _VISHNU.ListUsersOptions_swigregister
+ListUsersOptions_swigregister(ListUsersOptions)
 
 class ListSessionOptions(EObject):
+    """Proxy of C++ UMS_Data::ListSessionOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListSessionOptions, name, value)
@@ -229,40 +503,114 @@ class ListSessionOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListSessionOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListSessionOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListSessionOptions"""
+        this = _VISHNU.new_ListSessionOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListSessionOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListSessionOptions__initialize(self)
-    def getStatus(self): return _VISHNU.ListSessionOptions_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.ListSessionOptions_setStatus(self, *args)
-    def getSessionClosePolicy(self): return _VISHNU.ListSessionOptions_getSessionClosePolicy(self)
-    def setSessionClosePolicy(self, *args): return _VISHNU.ListSessionOptions_setSessionClosePolicy(self, *args)
-    def getSessionInactivityDelay(self): return _VISHNU.ListSessionOptions_getSessionInactivityDelay(self)
-    def setSessionInactivityDelay(self, *args): return _VISHNU.ListSessionOptions_setSessionInactivityDelay(self, *args)
-    def getMachineId(self): return _VISHNU.ListSessionOptions_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.ListSessionOptions_setMachineId(self, *args)
-    def isAdminListOption(self): return _VISHNU.ListSessionOptions_isAdminListOption(self)
-    def setAdminListOption(self, *args): return _VISHNU.ListSessionOptions_setAdminListOption(self, *args)
-    def getUserId(self): return _VISHNU.ListSessionOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.ListSessionOptions_setUserId(self, *args)
-    def getSessionId(self): return _VISHNU.ListSessionOptions_getSessionId(self)
-    def setSessionId(self, *args): return _VISHNU.ListSessionOptions_setSessionId(self, *args)
-    def getStartDateOption(self): return _VISHNU.ListSessionOptions_getStartDateOption(self)
-    def setStartDateOption(self, *args): return _VISHNU.ListSessionOptions_setStartDateOption(self, *args)
-    def getEndDateOption(self): return _VISHNU.ListSessionOptions_getEndDateOption(self)
-    def setEndDateOption(self, *args): return _VISHNU.ListSessionOptions_setEndDateOption(self, *args)
-    def eGet(self, *args): return _VISHNU.ListSessionOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListSessionOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListSessionOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListSessionOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListSessionOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListSessionOptions__initialize(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> StatusType"""
+        return _VISHNU.ListSessionOptions_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, StatusType _status)"""
+        return _VISHNU.ListSessionOptions_setStatus(self, *args, **kwargs)
+
+    def getSessionClosePolicy(self, *args, **kwargs):
+        """getSessionClosePolicy(self) -> SessionCloseType"""
+        return _VISHNU.ListSessionOptions_getSessionClosePolicy(self, *args, **kwargs)
+
+    def setSessionClosePolicy(self, *args, **kwargs):
+        """setSessionClosePolicy(self, SessionCloseType _sessionClosePolicy)"""
+        return _VISHNU.ListSessionOptions_setSessionClosePolicy(self, *args, **kwargs)
+
+    def getSessionInactivityDelay(self, *args, **kwargs):
+        """getSessionInactivityDelay(self) -> EInt"""
+        return _VISHNU.ListSessionOptions_getSessionInactivityDelay(self, *args, **kwargs)
+
+    def setSessionInactivityDelay(self, *args, **kwargs):
+        """setSessionInactivityDelay(self, EInt _sessionInactivityDelay)"""
+        return _VISHNU.ListSessionOptions_setSessionInactivityDelay(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ListSessionOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ListSessionOptions_setMachineId(self, *args, **kwargs)
+
+    def isAdminListOption(self, *args, **kwargs):
+        """isAdminListOption(self) -> EBoolean"""
+        return _VISHNU.ListSessionOptions_isAdminListOption(self, *args, **kwargs)
+
+    def setAdminListOption(self, *args, **kwargs):
+        """setAdminListOption(self, EBoolean _adminListOption)"""
+        return _VISHNU.ListSessionOptions_setAdminListOption(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListSessionOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListSessionOptions_setUserId(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.ListSessionOptions_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.ListSessionOptions_setSessionId(self, *args, **kwargs)
+
+    def getStartDateOption(self, *args, **kwargs):
+        """getStartDateOption(self) -> ELong"""
+        return _VISHNU.ListSessionOptions_getStartDateOption(self, *args, **kwargs)
+
+    def setStartDateOption(self, *args, **kwargs):
+        """setStartDateOption(self, ELong _startDateOption)"""
+        return _VISHNU.ListSessionOptions_setStartDateOption(self, *args, **kwargs)
+
+    def getEndDateOption(self, *args, **kwargs):
+        """getEndDateOption(self) -> ELong"""
+        return _VISHNU.ListSessionOptions_getEndDateOption(self, *args, **kwargs)
+
+    def setEndDateOption(self, *args, **kwargs):
+        """setEndDateOption(self, ELong _endDateOption)"""
+        return _VISHNU.ListSessionOptions_setEndDateOption(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListSessionOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListSessionOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListSessionOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListSessionOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListSessionOptions__eClass(self, *args, **kwargs)
+
 ListSessionOptions_swigregister = _VISHNU.ListSessionOptions_swigregister
 ListSessionOptions_swigregister(ListSessionOptions)
 
 class User(EObject):
+    """Proxy of C++ UMS_Data::User class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, User, name, value)
@@ -270,60 +618,98 @@ class User(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, User, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_User()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> User"""
+        this = _VISHNU.new_User(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_User
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.User__initialize(self)
-    def getUserId(self): return _VISHNU.User_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.User_setUserId(self, *args)
-    def getPassword(self): return _VISHNU.User_getPassword(self)
-    def setPassword(self, *args): return _VISHNU.User_setPassword(self, *args)
-    def getFirstname(self): return _VISHNU.User_getFirstname(self)
-    def setFirstname(self, *args): return _VISHNU.User_setFirstname(self, *args)
-    def getLastname(self): return _VISHNU.User_getLastname(self)
-    def setLastname(self, *args): return _VISHNU.User_setLastname(self, *args)
-    def getPrivilege(self): return _VISHNU.User_getPrivilege(self)
-    def setPrivilege(self, *args): return _VISHNU.User_setPrivilege(self, *args)
-    def getEmail(self): return _VISHNU.User_getEmail(self)
-    def setEmail(self, *args): return _VISHNU.User_setEmail(self, *args)
-    def getStatus(self): return _VISHNU.User_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.User_setStatus(self, *args)
-    def eGet(self, *args): return _VISHNU.User_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.User_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.User_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.User_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.User__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.User__initialize(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.User_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.User_setUserId(self, *args, **kwargs)
+
+    def getPassword(self, *args, **kwargs):
+        """getPassword(self) -> EString"""
+        return _VISHNU.User_getPassword(self, *args, **kwargs)
+
+    def setPassword(self, *args, **kwargs):
+        """setPassword(self, EString _password)"""
+        return _VISHNU.User_setPassword(self, *args, **kwargs)
+
+    def getFirstname(self, *args, **kwargs):
+        """getFirstname(self) -> EString"""
+        return _VISHNU.User_getFirstname(self, *args, **kwargs)
+
+    def setFirstname(self, *args, **kwargs):
+        """setFirstname(self, EString _firstname)"""
+        return _VISHNU.User_setFirstname(self, *args, **kwargs)
+
+    def getLastname(self, *args, **kwargs):
+        """getLastname(self) -> EString"""
+        return _VISHNU.User_getLastname(self, *args, **kwargs)
+
+    def setLastname(self, *args, **kwargs):
+        """setLastname(self, EString _lastname)"""
+        return _VISHNU.User_setLastname(self, *args, **kwargs)
+
+    def getPrivilege(self, *args, **kwargs):
+        """getPrivilege(self) -> PrivilegeType"""
+        return _VISHNU.User_getPrivilege(self, *args, **kwargs)
+
+    def setPrivilege(self, *args, **kwargs):
+        """setPrivilege(self, PrivilegeType _privilege)"""
+        return _VISHNU.User_setPrivilege(self, *args, **kwargs)
+
+    def getEmail(self, *args, **kwargs):
+        """getEmail(self) -> EString"""
+        return _VISHNU.User_getEmail(self, *args, **kwargs)
+
+    def setEmail(self, *args, **kwargs):
+        """setEmail(self, EString _email)"""
+        return _VISHNU.User_setEmail(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> StatusType"""
+        return _VISHNU.User_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, StatusType _status)"""
+        return _VISHNU.User_setStatus(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.User_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.User_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.User_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.User_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.User__eClass(self, *args, **kwargs)
+
 User_swigregister = _VISHNU.User_swigregister
 User_swigregister(User)
 
-class ListUsers(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListUsers, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListUsers, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListUsers()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListUsers
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListUsers__initialize(self)
-    def getUsers(self): return _VISHNU.ListUsers_getUsers(self)
-    def eGet(self, *args): return _VISHNU.ListUsers_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListUsers_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListUsers_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListUsers_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListUsers__eClass(self)
-ListUsers_swigregister = _VISHNU.ListUsers_swigregister
-ListUsers_swigregister(ListUsers)
-
 class Command(EObject):
+    """Proxy of C++ UMS_Data::Command class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Command, name, value)
@@ -331,60 +717,98 @@ class Command(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Command, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Command()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Command"""
+        this = _VISHNU.new_Command(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Command
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Command__initialize(self)
-    def getCommandId(self): return _VISHNU.Command_getCommandId(self)
-    def setCommandId(self, *args): return _VISHNU.Command_setCommandId(self, *args)
-    def getSessionId(self): return _VISHNU.Command_getSessionId(self)
-    def setSessionId(self, *args): return _VISHNU.Command_setSessionId(self, *args)
-    def getMachineId(self): return _VISHNU.Command_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.Command_setMachineId(self, *args)
-    def getCmdDescription(self): return _VISHNU.Command_getCmdDescription(self)
-    def setCmdDescription(self, *args): return _VISHNU.Command_setCmdDescription(self, *args)
-    def getCmdStartTime(self): return _VISHNU.Command_getCmdStartTime(self)
-    def setCmdStartTime(self, *args): return _VISHNU.Command_setCmdStartTime(self, *args)
-    def getCmdEndTime(self): return _VISHNU.Command_getCmdEndTime(self)
-    def setCmdEndTime(self, *args): return _VISHNU.Command_setCmdEndTime(self, *args)
-    def getStatus(self): return _VISHNU.Command_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.Command_setStatus(self, *args)
-    def eGet(self, *args): return _VISHNU.Command_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Command_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Command_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Command_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Command__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Command__initialize(self, *args, **kwargs)
+
+    def getCommandId(self, *args, **kwargs):
+        """getCommandId(self) -> EString"""
+        return _VISHNU.Command_getCommandId(self, *args, **kwargs)
+
+    def setCommandId(self, *args, **kwargs):
+        """setCommandId(self, EString _commandId)"""
+        return _VISHNU.Command_setCommandId(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.Command_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.Command_setSessionId(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.Command_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.Command_setMachineId(self, *args, **kwargs)
+
+    def getCmdDescription(self, *args, **kwargs):
+        """getCmdDescription(self) -> EString"""
+        return _VISHNU.Command_getCmdDescription(self, *args, **kwargs)
+
+    def setCmdDescription(self, *args, **kwargs):
+        """setCmdDescription(self, EString _cmdDescription)"""
+        return _VISHNU.Command_setCmdDescription(self, *args, **kwargs)
+
+    def getCmdStartTime(self, *args, **kwargs):
+        """getCmdStartTime(self) -> ELong"""
+        return _VISHNU.Command_getCmdStartTime(self, *args, **kwargs)
+
+    def setCmdStartTime(self, *args, **kwargs):
+        """setCmdStartTime(self, ELong _cmdStartTime)"""
+        return _VISHNU.Command_setCmdStartTime(self, *args, **kwargs)
+
+    def getCmdEndTime(self, *args, **kwargs):
+        """getCmdEndTime(self) -> ELong"""
+        return _VISHNU.Command_getCmdEndTime(self, *args, **kwargs)
+
+    def setCmdEndTime(self, *args, **kwargs):
+        """setCmdEndTime(self, ELong _cmdEndTime)"""
+        return _VISHNU.Command_setCmdEndTime(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> CommandStatusType"""
+        return _VISHNU.Command_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, CommandStatusType _status)"""
+        return _VISHNU.Command_setStatus(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Command_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Command_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Command_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Command_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Command__eClass(self, *args, **kwargs)
+
 Command_swigregister = _VISHNU.Command_swigregister
 Command_swigregister(Command)
 
-class ListCommands(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListCommands, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListCommands, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListCommands()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListCommands
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListCommands__initialize(self)
-    def getCommands(self): return _VISHNU.ListCommands_getCommands(self)
-    def eGet(self, *args): return _VISHNU.ListCommands_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListCommands_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListCommands_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListCommands_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListCommands__eClass(self)
-ListCommands_swigregister = _VISHNU.ListCommands_swigregister
-ListCommands_swigregister(ListCommands)
-
 class ListCmdOptions(EObject):
+    """Proxy of C++ UMS_Data::ListCmdOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListCmdOptions, name, value)
@@ -392,32 +816,82 @@ class ListCmdOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListCmdOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListCmdOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListCmdOptions"""
+        this = _VISHNU.new_ListCmdOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListCmdOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListCmdOptions__initialize(self)
-    def isAdminListOption(self): return _VISHNU.ListCmdOptions_isAdminListOption(self)
-    def setAdminListOption(self, *args): return _VISHNU.ListCmdOptions_setAdminListOption(self, *args)
-    def getUserId(self): return _VISHNU.ListCmdOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.ListCmdOptions_setUserId(self, *args)
-    def getSessionId(self): return _VISHNU.ListCmdOptions_getSessionId(self)
-    def setSessionId(self, *args): return _VISHNU.ListCmdOptions_setSessionId(self, *args)
-    def getStartDateOption(self): return _VISHNU.ListCmdOptions_getStartDateOption(self)
-    def setStartDateOption(self, *args): return _VISHNU.ListCmdOptions_setStartDateOption(self, *args)
-    def getEndDateOption(self): return _VISHNU.ListCmdOptions_getEndDateOption(self)
-    def setEndDateOption(self, *args): return _VISHNU.ListCmdOptions_setEndDateOption(self, *args)
-    def eGet(self, *args): return _VISHNU.ListCmdOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListCmdOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListCmdOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListCmdOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListCmdOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListCmdOptions__initialize(self, *args, **kwargs)
+
+    def isAdminListOption(self, *args, **kwargs):
+        """isAdminListOption(self) -> EBoolean"""
+        return _VISHNU.ListCmdOptions_isAdminListOption(self, *args, **kwargs)
+
+    def setAdminListOption(self, *args, **kwargs):
+        """setAdminListOption(self, EBoolean _adminListOption)"""
+        return _VISHNU.ListCmdOptions_setAdminListOption(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListCmdOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListCmdOptions_setUserId(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.ListCmdOptions_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.ListCmdOptions_setSessionId(self, *args, **kwargs)
+
+    def getStartDateOption(self, *args, **kwargs):
+        """getStartDateOption(self) -> ELong"""
+        return _VISHNU.ListCmdOptions_getStartDateOption(self, *args, **kwargs)
+
+    def setStartDateOption(self, *args, **kwargs):
+        """setStartDateOption(self, ELong _startDateOption)"""
+        return _VISHNU.ListCmdOptions_setStartDateOption(self, *args, **kwargs)
+
+    def getEndDateOption(self, *args, **kwargs):
+        """getEndDateOption(self) -> ELong"""
+        return _VISHNU.ListCmdOptions_getEndDateOption(self, *args, **kwargs)
+
+    def setEndDateOption(self, *args, **kwargs):
+        """setEndDateOption(self, ELong _endDateOption)"""
+        return _VISHNU.ListCmdOptions_setEndDateOption(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListCmdOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListCmdOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListCmdOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListCmdOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListCmdOptions__eClass(self, *args, **kwargs)
+
 ListCmdOptions_swigregister = _VISHNU.ListCmdOptions_swigregister
 ListCmdOptions_swigregister(ListCmdOptions)
 
 class LocalAccount(EObject):
+    """Proxy of C++ UMS_Data::LocalAccount class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, LocalAccount, name, value)
@@ -425,56 +899,82 @@ class LocalAccount(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, LocalAccount, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_LocalAccount()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> LocalAccount"""
+        this = _VISHNU.new_LocalAccount(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_LocalAccount
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.LocalAccount__initialize(self)
-    def getUserId(self): return _VISHNU.LocalAccount_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.LocalAccount_setUserId(self, *args)
-    def getMachineId(self): return _VISHNU.LocalAccount_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.LocalAccount_setMachineId(self, *args)
-    def getAcLogin(self): return _VISHNU.LocalAccount_getAcLogin(self)
-    def setAcLogin(self, *args): return _VISHNU.LocalAccount_setAcLogin(self, *args)
-    def getSshKeyPath(self): return _VISHNU.LocalAccount_getSshKeyPath(self)
-    def setSshKeyPath(self, *args): return _VISHNU.LocalAccount_setSshKeyPath(self, *args)
-    def getHomeDirectory(self): return _VISHNU.LocalAccount_getHomeDirectory(self)
-    def setHomeDirectory(self, *args): return _VISHNU.LocalAccount_setHomeDirectory(self, *args)
-    def eGet(self, *args): return _VISHNU.LocalAccount_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.LocalAccount_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.LocalAccount_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.LocalAccount_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.LocalAccount__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.LocalAccount__initialize(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.LocalAccount_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.LocalAccount_setUserId(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.LocalAccount_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.LocalAccount_setMachineId(self, *args, **kwargs)
+
+    def getAcLogin(self, *args, **kwargs):
+        """getAcLogin(self) -> EString"""
+        return _VISHNU.LocalAccount_getAcLogin(self, *args, **kwargs)
+
+    def setAcLogin(self, *args, **kwargs):
+        """setAcLogin(self, EString _acLogin)"""
+        return _VISHNU.LocalAccount_setAcLogin(self, *args, **kwargs)
+
+    def getSshKeyPath(self, *args, **kwargs):
+        """getSshKeyPath(self) -> EString"""
+        return _VISHNU.LocalAccount_getSshKeyPath(self, *args, **kwargs)
+
+    def setSshKeyPath(self, *args, **kwargs):
+        """setSshKeyPath(self, EString _sshKeyPath)"""
+        return _VISHNU.LocalAccount_setSshKeyPath(self, *args, **kwargs)
+
+    def getHomeDirectory(self, *args, **kwargs):
+        """getHomeDirectory(self) -> EString"""
+        return _VISHNU.LocalAccount_getHomeDirectory(self, *args, **kwargs)
+
+    def setHomeDirectory(self, *args, **kwargs):
+        """setHomeDirectory(self, EString _homeDirectory)"""
+        return _VISHNU.LocalAccount_setHomeDirectory(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.LocalAccount_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.LocalAccount_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.LocalAccount_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.LocalAccount_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.LocalAccount__eClass(self, *args, **kwargs)
+
 LocalAccount_swigregister = _VISHNU.LocalAccount_swigregister
 LocalAccount_swigregister(LocalAccount)
 
-class ListLocalAccounts(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListLocalAccounts, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListLocalAccounts, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListLocalAccounts()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListLocalAccounts
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListLocalAccounts__initialize(self)
-    def getAccounts(self): return _VISHNU.ListLocalAccounts_getAccounts(self)
-    def eGet(self, *args): return _VISHNU.ListLocalAccounts_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListLocalAccounts_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListLocalAccounts_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListLocalAccounts_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListLocalAccounts__eClass(self)
-ListLocalAccounts_swigregister = _VISHNU.ListLocalAccounts_swigregister
-ListLocalAccounts_swigregister(ListLocalAccounts)
-
 class ListLocalAccOptions(EObject):
+    """Proxy of C++ UMS_Data::ListLocalAccOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListLocalAccOptions, name, value)
@@ -482,28 +982,66 @@ class ListLocalAccOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListLocalAccOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListLocalAccOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListLocalAccOptions"""
+        this = _VISHNU.new_ListLocalAccOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListLocalAccOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListLocalAccOptions__initialize(self)
-    def isAdminListOption(self): return _VISHNU.ListLocalAccOptions_isAdminListOption(self)
-    def setAdminListOption(self, *args): return _VISHNU.ListLocalAccOptions_setAdminListOption(self, *args)
-    def getUserId(self): return _VISHNU.ListLocalAccOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.ListLocalAccOptions_setUserId(self, *args)
-    def getMachineId(self): return _VISHNU.ListLocalAccOptions_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.ListLocalAccOptions_setMachineId(self, *args)
-    def eGet(self, *args): return _VISHNU.ListLocalAccOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListLocalAccOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListLocalAccOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListLocalAccOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListLocalAccOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListLocalAccOptions__initialize(self, *args, **kwargs)
+
+    def isAdminListOption(self, *args, **kwargs):
+        """isAdminListOption(self) -> EBoolean"""
+        return _VISHNU.ListLocalAccOptions_isAdminListOption(self, *args, **kwargs)
+
+    def setAdminListOption(self, *args, **kwargs):
+        """setAdminListOption(self, EBoolean _adminListOption)"""
+        return _VISHNU.ListLocalAccOptions_setAdminListOption(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListLocalAccOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListLocalAccOptions_setUserId(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ListLocalAccOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ListLocalAccOptions_setMachineId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListLocalAccOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListLocalAccOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListLocalAccOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListLocalAccOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListLocalAccOptions__eClass(self, *args, **kwargs)
+
 ListLocalAccOptions_swigregister = _VISHNU.ListLocalAccOptions_swigregister
 ListLocalAccOptions_swigregister(ListLocalAccOptions)
 
 class Machine(EObject):
+    """Proxy of C++ UMS_Data::Machine class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Machine, name, value)
@@ -511,60 +1049,98 @@ class Machine(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Machine, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Machine()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Machine"""
+        this = _VISHNU.new_Machine(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Machine
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Machine__initialize(self)
-    def getMachineId(self): return _VISHNU.Machine_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.Machine_setMachineId(self, *args)
-    def getName(self): return _VISHNU.Machine_getName(self)
-    def setName(self, *args): return _VISHNU.Machine_setName(self, *args)
-    def getSite(self): return _VISHNU.Machine_getSite(self)
-    def setSite(self, *args): return _VISHNU.Machine_setSite(self, *args)
-    def getMachineDescription(self): return _VISHNU.Machine_getMachineDescription(self)
-    def setMachineDescription(self, *args): return _VISHNU.Machine_setMachineDescription(self, *args)
-    def getLanguage(self): return _VISHNU.Machine_getLanguage(self)
-    def setLanguage(self, *args): return _VISHNU.Machine_setLanguage(self, *args)
-    def getStatus(self): return _VISHNU.Machine_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.Machine_setStatus(self, *args)
-    def getSshPublicKey(self): return _VISHNU.Machine_getSshPublicKey(self)
-    def setSshPublicKey(self, *args): return _VISHNU.Machine_setSshPublicKey(self, *args)
-    def eGet(self, *args): return _VISHNU.Machine_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Machine_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Machine_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Machine_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Machine__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Machine__initialize(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.Machine_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.Machine_setMachineId(self, *args, **kwargs)
+
+    def getName(self, *args, **kwargs):
+        """getName(self) -> EString"""
+        return _VISHNU.Machine_getName(self, *args, **kwargs)
+
+    def setName(self, *args, **kwargs):
+        """setName(self, EString _name)"""
+        return _VISHNU.Machine_setName(self, *args, **kwargs)
+
+    def getSite(self, *args, **kwargs):
+        """getSite(self) -> EString"""
+        return _VISHNU.Machine_getSite(self, *args, **kwargs)
+
+    def setSite(self, *args, **kwargs):
+        """setSite(self, EString _site)"""
+        return _VISHNU.Machine_setSite(self, *args, **kwargs)
+
+    def getMachineDescription(self, *args, **kwargs):
+        """getMachineDescription(self) -> EString"""
+        return _VISHNU.Machine_getMachineDescription(self, *args, **kwargs)
+
+    def setMachineDescription(self, *args, **kwargs):
+        """setMachineDescription(self, EString _machineDescription)"""
+        return _VISHNU.Machine_setMachineDescription(self, *args, **kwargs)
+
+    def getLanguage(self, *args, **kwargs):
+        """getLanguage(self) -> EString"""
+        return _VISHNU.Machine_getLanguage(self, *args, **kwargs)
+
+    def setLanguage(self, *args, **kwargs):
+        """setLanguage(self, EString _language)"""
+        return _VISHNU.Machine_setLanguage(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> StatusType"""
+        return _VISHNU.Machine_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, StatusType _status)"""
+        return _VISHNU.Machine_setStatus(self, *args, **kwargs)
+
+    def getSshPublicKey(self, *args, **kwargs):
+        """getSshPublicKey(self) -> EString"""
+        return _VISHNU.Machine_getSshPublicKey(self, *args, **kwargs)
+
+    def setSshPublicKey(self, *args, **kwargs):
+        """setSshPublicKey(self, EString _sshPublicKey)"""
+        return _VISHNU.Machine_setSshPublicKey(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Machine_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Machine_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Machine_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Machine_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Machine__eClass(self, *args, **kwargs)
+
 Machine_swigregister = _VISHNU.Machine_swigregister
 Machine_swigregister(Machine)
 
-class ListMachines(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListMachines, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListMachines, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListMachines()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListMachines
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListMachines__initialize(self)
-    def getMachines(self): return _VISHNU.ListMachines_getMachines(self)
-    def eGet(self, *args): return _VISHNU.ListMachines_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListMachines_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListMachines_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListMachines_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListMachines__eClass(self)
-ListMachines_swigregister = _VISHNU.ListMachines_swigregister
-ListMachines_swigregister(ListMachines)
-
 class ListMachineOptions(EObject):
+    """Proxy of C++ UMS_Data::ListMachineOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListMachineOptions, name, value)
@@ -572,28 +1148,66 @@ class ListMachineOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListMachineOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListMachineOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListMachineOptions"""
+        this = _VISHNU.new_ListMachineOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListMachineOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListMachineOptions__initialize(self)
-    def getUserId(self): return _VISHNU.ListMachineOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.ListMachineOptions_setUserId(self, *args)
-    def isListAllmachine(self): return _VISHNU.ListMachineOptions_isListAllmachine(self)
-    def setListAllmachine(self, *args): return _VISHNU.ListMachineOptions_setListAllmachine(self, *args)
-    def getMachineId(self): return _VISHNU.ListMachineOptions_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.ListMachineOptions_setMachineId(self, *args)
-    def eGet(self, *args): return _VISHNU.ListMachineOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListMachineOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListMachineOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListMachineOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListMachineOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListMachineOptions__initialize(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListMachineOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListMachineOptions_setUserId(self, *args, **kwargs)
+
+    def isListAllMachine(self, *args, **kwargs):
+        """isListAllMachine(self) -> EBoolean"""
+        return _VISHNU.ListMachineOptions_isListAllMachine(self, *args, **kwargs)
+
+    def setListAllMachine(self, *args, **kwargs):
+        """setListAllMachine(self, EBoolean _listAllMachine)"""
+        return _VISHNU.ListMachineOptions_setListAllMachine(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ListMachineOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ListMachineOptions_setMachineId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListMachineOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListMachineOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListMachineOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListMachineOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListMachineOptions__eClass(self, *args, **kwargs)
+
 ListMachineOptions_swigregister = _VISHNU.ListMachineOptions_swigregister
 ListMachineOptions_swigregister(ListMachineOptions)
 
 class Configuration(EObject):
+    """Proxy of C++ UMS_Data::Configuration class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Configuration, name, value)
@@ -601,27 +1215,70 @@ class Configuration(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Configuration, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Configuration()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Configuration"""
+        this = _VISHNU.new_Configuration(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Configuration
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Configuration__initialize(self)
-    def getFilePath(self): return _VISHNU.Configuration_getFilePath(self)
-    def setFilePath(self, *args): return _VISHNU.Configuration_setFilePath(self, *args)
-    def getListConfUsers(self): return _VISHNU.Configuration_getListConfUsers(self)
-    def getListConfMachines(self): return _VISHNU.Configuration_getListConfMachines(self)
-    def getListConfLocalAccounts(self): return _VISHNU.Configuration_getListConfLocalAccounts(self)
-    def eGet(self, *args): return _VISHNU.Configuration_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Configuration_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Configuration_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Configuration_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Configuration__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Configuration__initialize(self, *args, **kwargs)
+
+    def getFilePath(self, *args, **kwargs):
+        """getFilePath(self) -> EString"""
+        return _VISHNU.Configuration_getFilePath(self, *args, **kwargs)
+
+    def setFilePath(self, *args, **kwargs):
+        """setFilePath(self, EString _filePath)"""
+        return _VISHNU.Configuration_setFilePath(self, *args, **kwargs)
+
+    def getListConfUsers(self, *args, **kwargs):
+        """getListConfUsers(self) -> ::ecorecpp::mapping::EList<(::UMS_Data::User)>"""
+        return _VISHNU.Configuration_getListConfUsers(self, *args, **kwargs)
+
+    def getListConfMachines(self, *args, **kwargs):
+        """getListConfMachines(self) -> ::ecorecpp::mapping::EList<(::UMS_Data::Machine)>"""
+        return _VISHNU.Configuration_getListConfMachines(self, *args, **kwargs)
+
+    def getListConfLocalAccounts(self, *args, **kwargs):
+        """getListConfLocalAccounts(self) -> ::ecorecpp::mapping::EList<(::UMS_Data::LocalAccount)>"""
+        return _VISHNU.Configuration_getListConfLocalAccounts(self, *args, **kwargs)
+
+    def getListConfAuthSystems(self, *args, **kwargs):
+        """getListConfAuthSystems(self) -> ::ecorecpp::mapping::EList<(::UMS_Data::AuthSystem)>"""
+        return _VISHNU.Configuration_getListConfAuthSystems(self, *args, **kwargs)
+
+    def getListConfAuthAccounts(self, *args, **kwargs):
+        """getListConfAuthAccounts(self) -> ::ecorecpp::mapping::EList<(::UMS_Data::AuthAccount)>"""
+        return _VISHNU.Configuration_getListConfAuthAccounts(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Configuration_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Configuration_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Configuration_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Configuration_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Configuration__eClass(self, *args, **kwargs)
+
 Configuration_swigregister = _VISHNU.Configuration_swigregister
 Configuration_swigregister(Configuration)
 
 class OptionValue(EObject):
+    """Proxy of C++ UMS_Data::OptionValue class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, OptionValue, name, value)
@@ -629,50 +1286,58 @@ class OptionValue(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, OptionValue, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_OptionValue()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> OptionValue"""
+        this = _VISHNU.new_OptionValue(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_OptionValue
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.OptionValue__initialize(self)
-    def getOptionName(self): return _VISHNU.OptionValue_getOptionName(self)
-    def setOptionName(self, *args): return _VISHNU.OptionValue_setOptionName(self, *args)
-    def getValue(self): return _VISHNU.OptionValue_getValue(self)
-    def setValue(self, *args): return _VISHNU.OptionValue_setValue(self, *args)
-    def eGet(self, *args): return _VISHNU.OptionValue_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.OptionValue_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.OptionValue_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.OptionValue_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.OptionValue__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.OptionValue__initialize(self, *args, **kwargs)
+
+    def getOptionName(self, *args, **kwargs):
+        """getOptionName(self) -> EString"""
+        return _VISHNU.OptionValue_getOptionName(self, *args, **kwargs)
+
+    def setOptionName(self, *args, **kwargs):
+        """setOptionName(self, EString _optionName)"""
+        return _VISHNU.OptionValue_setOptionName(self, *args, **kwargs)
+
+    def getValue(self, *args, **kwargs):
+        """getValue(self) -> EString"""
+        return _VISHNU.OptionValue_getValue(self, *args, **kwargs)
+
+    def setValue(self, *args, **kwargs):
+        """setValue(self, EString _value)"""
+        return _VISHNU.OptionValue_setValue(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.OptionValue_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.OptionValue_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.OptionValue_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.OptionValue_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.OptionValue__eClass(self, *args, **kwargs)
+
 OptionValue_swigregister = _VISHNU.OptionValue_swigregister
 OptionValue_swigregister(OptionValue)
 
-class ListOptionsValues(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListOptionsValues, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListOptionsValues, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListOptionsValues()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListOptionsValues
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListOptionsValues__initialize(self)
-    def getOptionValues(self): return _VISHNU.ListOptionsValues_getOptionValues(self)
-    def eGet(self, *args): return _VISHNU.ListOptionsValues_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListOptionsValues_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListOptionsValues_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListOptionsValues_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListOptionsValues__eClass(self)
-ListOptionsValues_swigregister = _VISHNU.ListOptionsValues_swigregister
-ListOptionsValues_swigregister(ListOptionsValues)
-
 class ListOptOptions(EObject):
+    """Proxy of C++ UMS_Data::ListOptOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListOptOptions, name, value)
@@ -680,28 +1345,390 @@ class ListOptOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListOptOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListOptOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListOptOptions"""
+        this = _VISHNU.new_ListOptOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListOptOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListOptOptions__initialize(self)
-    def isListAllDeftValue(self): return _VISHNU.ListOptOptions_isListAllDeftValue(self)
-    def setListAllDeftValue(self, *args): return _VISHNU.ListOptOptions_setListAllDeftValue(self, *args)
-    def getUserId(self): return _VISHNU.ListOptOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.ListOptOptions_setUserId(self, *args)
-    def getOptionName(self): return _VISHNU.ListOptOptions_getOptionName(self)
-    def setOptionName(self, *args): return _VISHNU.ListOptOptions_setOptionName(self, *args)
-    def eGet(self, *args): return _VISHNU.ListOptOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListOptOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListOptOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListOptOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListOptOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListOptOptions__initialize(self, *args, **kwargs)
+
+    def isListAllDeftValue(self, *args, **kwargs):
+        """isListAllDeftValue(self) -> EBoolean"""
+        return _VISHNU.ListOptOptions_isListAllDeftValue(self, *args, **kwargs)
+
+    def setListAllDeftValue(self, *args, **kwargs):
+        """setListAllDeftValue(self, EBoolean _listAllDeftValue)"""
+        return _VISHNU.ListOptOptions_setListAllDeftValue(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListOptOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListOptOptions_setUserId(self, *args, **kwargs)
+
+    def getOptionName(self, *args, **kwargs):
+        """getOptionName(self) -> EString"""
+        return _VISHNU.ListOptOptions_getOptionName(self, *args, **kwargs)
+
+    def setOptionName(self, *args, **kwargs):
+        """setOptionName(self, EString _optionName)"""
+        return _VISHNU.ListOptOptions_setOptionName(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListOptOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListOptOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListOptOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListOptOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListOptOptions__eClass(self, *args, **kwargs)
+
 ListOptOptions_swigregister = _VISHNU.ListOptOptions_swigregister
 ListOptOptions_swigregister(ListOptOptions)
 
+class AuthAccount(EObject):
+    """Proxy of C++ UMS_Data::AuthAccount class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AuthAccount, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AuthAccount, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> AuthAccount"""
+        this = _VISHNU.new_AuthAccount(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_AuthAccount
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.AuthAccount__initialize(self, *args, **kwargs)
+
+    def getAuthSystemId(self, *args, **kwargs):
+        """getAuthSystemId(self) -> EString"""
+        return _VISHNU.AuthAccount_getAuthSystemId(self, *args, **kwargs)
+
+    def setAuthSystemId(self, *args, **kwargs):
+        """setAuthSystemId(self, EString _authSystemId)"""
+        return _VISHNU.AuthAccount_setAuthSystemId(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.AuthAccount_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.AuthAccount_setUserId(self, *args, **kwargs)
+
+    def getAcLogin(self, *args, **kwargs):
+        """getAcLogin(self) -> EString"""
+        return _VISHNU.AuthAccount_getAcLogin(self, *args, **kwargs)
+
+    def setAcLogin(self, *args, **kwargs):
+        """setAcLogin(self, EString _acLogin)"""
+        return _VISHNU.AuthAccount_setAcLogin(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.AuthAccount_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.AuthAccount_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.AuthAccount_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.AuthAccount_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.AuthAccount__eClass(self, *args, **kwargs)
+
+AuthAccount_swigregister = _VISHNU.AuthAccount_swigregister
+AuthAccount_swigregister(AuthAccount)
+
+class AuthSystem(EObject):
+    """Proxy of C++ UMS_Data::AuthSystem class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AuthSystem, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AuthSystem, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> AuthSystem"""
+        this = _VISHNU.new_AuthSystem(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_AuthSystem
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.AuthSystem__initialize(self, *args, **kwargs)
+
+    def getAuthSystemId(self, *args, **kwargs):
+        """getAuthSystemId(self) -> EString"""
+        return _VISHNU.AuthSystem_getAuthSystemId(self, *args, **kwargs)
+
+    def setAuthSystemId(self, *args, **kwargs):
+        """setAuthSystemId(self, EString _authSystemId)"""
+        return _VISHNU.AuthSystem_setAuthSystemId(self, *args, **kwargs)
+
+    def getName(self, *args, **kwargs):
+        """getName(self) -> EString"""
+        return _VISHNU.AuthSystem_getName(self, *args, **kwargs)
+
+    def setName(self, *args, **kwargs):
+        """setName(self, EString _name)"""
+        return _VISHNU.AuthSystem_setName(self, *args, **kwargs)
+
+    def getURI(self, *args, **kwargs):
+        """getURI(self) -> EString"""
+        return _VISHNU.AuthSystem_getURI(self, *args, **kwargs)
+
+    def setURI(self, *args, **kwargs):
+        """setURI(self, EString _URI)"""
+        return _VISHNU.AuthSystem_setURI(self, *args, **kwargs)
+
+    def getAuthLogin(self, *args, **kwargs):
+        """getAuthLogin(self) -> EString"""
+        return _VISHNU.AuthSystem_getAuthLogin(self, *args, **kwargs)
+
+    def setAuthLogin(self, *args, **kwargs):
+        """setAuthLogin(self, EString _authLogin)"""
+        return _VISHNU.AuthSystem_setAuthLogin(self, *args, **kwargs)
+
+    def getAuthPassword(self, *args, **kwargs):
+        """getAuthPassword(self) -> EString"""
+        return _VISHNU.AuthSystem_getAuthPassword(self, *args, **kwargs)
+
+    def setAuthPassword(self, *args, **kwargs):
+        """setAuthPassword(self, EString _authPassword)"""
+        return _VISHNU.AuthSystem_setAuthPassword(self, *args, **kwargs)
+
+    def getUserPasswordEncryption(self, *args, **kwargs):
+        """getUserPasswordEncryption(self) -> EncryptionMethod"""
+        return _VISHNU.AuthSystem_getUserPasswordEncryption(self, *args, **kwargs)
+
+    def setUserPasswordEncryption(self, *args, **kwargs):
+        """setUserPasswordEncryption(self, EncryptionMethod _userPasswordEncryption)"""
+        return _VISHNU.AuthSystem_setUserPasswordEncryption(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> AuthType"""
+        return _VISHNU.AuthSystem_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, AuthType _type)"""
+        return _VISHNU.AuthSystem_setType(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> StatusType"""
+        return _VISHNU.AuthSystem_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, StatusType _status)"""
+        return _VISHNU.AuthSystem_setStatus(self, *args, **kwargs)
+
+    def getLdapBase(self, *args, **kwargs):
+        """getLdapBase(self) -> EString"""
+        return _VISHNU.AuthSystem_getLdapBase(self, *args, **kwargs)
+
+    def setLdapBase(self, *args, **kwargs):
+        """setLdapBase(self, EString _ldapBase)"""
+        return _VISHNU.AuthSystem_setLdapBase(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.AuthSystem_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.AuthSystem_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.AuthSystem_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.AuthSystem_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.AuthSystem__eClass(self, *args, **kwargs)
+
+AuthSystem_swigregister = _VISHNU.AuthSystem_swigregister
+AuthSystem_swigregister(AuthSystem)
+
+class ListAuthSysOptions(EObject):
+    """Proxy of C++ UMS_Data::ListAuthSysOptions class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthSysOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthSysOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListAuthSysOptions"""
+        this = _VISHNU.new_ListAuthSysOptions(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthSysOptions
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListAuthSysOptions__initialize(self, *args, **kwargs)
+
+    def isListAllAuthSystems(self, *args, **kwargs):
+        """isListAllAuthSystems(self) -> EBoolean"""
+        return _VISHNU.ListAuthSysOptions_isListAllAuthSystems(self, *args, **kwargs)
+
+    def setListAllAuthSystems(self, *args, **kwargs):
+        """setListAllAuthSystems(self, EBoolean _listAllAuthSystems)"""
+        return _VISHNU.ListAuthSysOptions_setListAllAuthSystems(self, *args, **kwargs)
+
+    def isListFullInfo(self, *args, **kwargs):
+        """isListFullInfo(self) -> EBoolean"""
+        return _VISHNU.ListAuthSysOptions_isListFullInfo(self, *args, **kwargs)
+
+    def setListFullInfo(self, *args, **kwargs):
+        """setListFullInfo(self, EBoolean _listFullInfo)"""
+        return _VISHNU.ListAuthSysOptions_setListFullInfo(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListAuthSysOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListAuthSysOptions_setUserId(self, *args, **kwargs)
+
+    def getAuthSystemId(self, *args, **kwargs):
+        """getAuthSystemId(self) -> EString"""
+        return _VISHNU.ListAuthSysOptions_getAuthSystemId(self, *args, **kwargs)
+
+    def setAuthSystemId(self, *args, **kwargs):
+        """setAuthSystemId(self, EString _authSystemId)"""
+        return _VISHNU.ListAuthSysOptions_setAuthSystemId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListAuthSysOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListAuthSysOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListAuthSysOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListAuthSysOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListAuthSysOptions__eClass(self, *args, **kwargs)
+
+ListAuthSysOptions_swigregister = _VISHNU.ListAuthSysOptions_swigregister
+ListAuthSysOptions_swigregister(ListAuthSysOptions)
+
+class ListAuthAccOptions(EObject):
+    """Proxy of C++ UMS_Data::ListAuthAccOptions class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, ListAuthAccOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, ListAuthAccOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListAuthAccOptions"""
+        this = _VISHNU.new_ListAuthAccOptions(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_ListAuthAccOptions
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListAuthAccOptions__initialize(self, *args, **kwargs)
+
+    def isListAll(self, *args, **kwargs):
+        """isListAll(self) -> EBoolean"""
+        return _VISHNU.ListAuthAccOptions_isListAll(self, *args, **kwargs)
+
+    def setListAll(self, *args, **kwargs):
+        """setListAll(self, EBoolean _listAll)"""
+        return _VISHNU.ListAuthAccOptions_setListAll(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.ListAuthAccOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.ListAuthAccOptions_setUserId(self, *args, **kwargs)
+
+    def getAuthSystemId(self, *args, **kwargs):
+        """getAuthSystemId(self) -> EString"""
+        return _VISHNU.ListAuthAccOptions_getAuthSystemId(self, *args, **kwargs)
+
+    def setAuthSystemId(self, *args, **kwargs):
+        """setAuthSystemId(self, EString _authSystemId)"""
+        return _VISHNU.ListAuthAccOptions_setAuthSystemId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListAuthAccOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListAuthAccOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListAuthAccOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListAuthAccOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListAuthAccOptions__eClass(self, *args, **kwargs)
+
+ListAuthAccOptions_swigregister = _VISHNU.ListAuthAccOptions_swigregister
+ListAuthAccOptions_swigregister(ListAuthAccOptions)
+
 class Job(EObject):
+    """Proxy of C++ TMS_Data::Job class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Job, name, value)
@@ -709,66 +1736,250 @@ class Job(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Job, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Job()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Job"""
+        this = _VISHNU.new_Job(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Job
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Job__initialize(self)
-    def getSessionId(self): return _VISHNU.Job_getSessionId(self)
-    def setSessionId(self, *args): return _VISHNU.Job_setSessionId(self, *args)
-    def getSubmitMachineId(self): return _VISHNU.Job_getSubmitMachineId(self)
-    def setSubmitMachineId(self, *args): return _VISHNU.Job_setSubmitMachineId(self, *args)
-    def getSubmitMachineName(self): return _VISHNU.Job_getSubmitMachineName(self)
-    def setSubmitMachineName(self, *args): return _VISHNU.Job_setSubmitMachineName(self, *args)
-    def getJobId(self): return _VISHNU.Job_getJobId(self)
-    def setJobId(self, *args): return _VISHNU.Job_setJobId(self, *args)
-    def getJobName(self): return _VISHNU.Job_getJobName(self)
-    def setJobName(self, *args): return _VISHNU.Job_setJobName(self, *args)
-    def getJobPath(self): return _VISHNU.Job_getJobPath(self)
-    def setJobPath(self, *args): return _VISHNU.Job_setJobPath(self, *args)
-    def getOutputPath(self): return _VISHNU.Job_getOutputPath(self)
-    def setOutputPath(self, *args): return _VISHNU.Job_setOutputPath(self, *args)
-    def getErrorPath(self): return _VISHNU.Job_getErrorPath(self)
-    def setErrorPath(self, *args): return _VISHNU.Job_setErrorPath(self, *args)
-    def getJobPrio(self): return _VISHNU.Job_getJobPrio(self)
-    def setJobPrio(self, *args): return _VISHNU.Job_setJobPrio(self, *args)
-    def getNbCpus(self): return _VISHNU.Job_getNbCpus(self)
-    def setNbCpus(self, *args): return _VISHNU.Job_setNbCpus(self, *args)
-    def getJobWorkingDir(self): return _VISHNU.Job_getJobWorkingDir(self)
-    def setJobWorkingDir(self, *args): return _VISHNU.Job_setJobWorkingDir(self, *args)
-    def getStatus(self): return _VISHNU.Job_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.Job_setStatus(self, *args)
-    def getSubmitDate(self): return _VISHNU.Job_getSubmitDate(self)
-    def setSubmitDate(self, *args): return _VISHNU.Job_setSubmitDate(self, *args)
-    def getEndDate(self): return _VISHNU.Job_getEndDate(self)
-    def setEndDate(self, *args): return _VISHNU.Job_setEndDate(self, *args)
-    def getOwner(self): return _VISHNU.Job_getOwner(self)
-    def setOwner(self, *args): return _VISHNU.Job_setOwner(self, *args)
-    def getJobQueue(self): return _VISHNU.Job_getJobQueue(self)
-    def setJobQueue(self, *args): return _VISHNU.Job_setJobQueue(self, *args)
-    def getWallClockLimit(self): return _VISHNU.Job_getWallClockLimit(self)
-    def setWallClockLimit(self, *args): return _VISHNU.Job_setWallClockLimit(self, *args)
-    def getGroupName(self): return _VISHNU.Job_getGroupName(self)
-    def setGroupName(self, *args): return _VISHNU.Job_setGroupName(self, *args)
-    def getJobDescription(self): return _VISHNU.Job_getJobDescription(self)
-    def setJobDescription(self, *args): return _VISHNU.Job_setJobDescription(self, *args)
-    def getMemLimit(self): return _VISHNU.Job_getMemLimit(self)
-    def setMemLimit(self, *args): return _VISHNU.Job_setMemLimit(self, *args)
-    def getNbNodes(self): return _VISHNU.Job_getNbNodes(self)
-    def setNbNodes(self, *args): return _VISHNU.Job_setNbNodes(self, *args)
-    def getNbNodesAndCpuPerNode(self): return _VISHNU.Job_getNbNodesAndCpuPerNode(self)
-    def setNbNodesAndCpuPerNode(self, *args): return _VISHNU.Job_setNbNodesAndCpuPerNode(self, *args)
-    def eGet(self, *args): return _VISHNU.Job_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Job_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Job_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Job_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Job__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Job__initialize(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.Job_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.Job_setSessionId(self, *args, **kwargs)
+
+    def getSubmitMachineId(self, *args, **kwargs):
+        """getSubmitMachineId(self) -> EString"""
+        return _VISHNU.Job_getSubmitMachineId(self, *args, **kwargs)
+
+    def setSubmitMachineId(self, *args, **kwargs):
+        """setSubmitMachineId(self, EString _submitMachineId)"""
+        return _VISHNU.Job_setSubmitMachineId(self, *args, **kwargs)
+
+    def getSubmitMachineName(self, *args, **kwargs):
+        """getSubmitMachineName(self) -> EString"""
+        return _VISHNU.Job_getSubmitMachineName(self, *args, **kwargs)
+
+    def setSubmitMachineName(self, *args, **kwargs):
+        """setSubmitMachineName(self, EString _submitMachineName)"""
+        return _VISHNU.Job_setSubmitMachineName(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.Job_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.Job_setJobId(self, *args, **kwargs)
+
+    def getJobName(self, *args, **kwargs):
+        """getJobName(self) -> EString"""
+        return _VISHNU.Job_getJobName(self, *args, **kwargs)
+
+    def setJobName(self, *args, **kwargs):
+        """setJobName(self, EString _jobName)"""
+        return _VISHNU.Job_setJobName(self, *args, **kwargs)
+
+    def getJobPath(self, *args, **kwargs):
+        """getJobPath(self) -> EString"""
+        return _VISHNU.Job_getJobPath(self, *args, **kwargs)
+
+    def setJobPath(self, *args, **kwargs):
+        """setJobPath(self, EString _jobPath)"""
+        return _VISHNU.Job_setJobPath(self, *args, **kwargs)
+
+    def getOutputPath(self, *args, **kwargs):
+        """getOutputPath(self) -> EString"""
+        return _VISHNU.Job_getOutputPath(self, *args, **kwargs)
+
+    def setOutputPath(self, *args, **kwargs):
+        """setOutputPath(self, EString _outputPath)"""
+        return _VISHNU.Job_setOutputPath(self, *args, **kwargs)
+
+    def getErrorPath(self, *args, **kwargs):
+        """getErrorPath(self) -> EString"""
+        return _VISHNU.Job_getErrorPath(self, *args, **kwargs)
+
+    def setErrorPath(self, *args, **kwargs):
+        """setErrorPath(self, EString _errorPath)"""
+        return _VISHNU.Job_setErrorPath(self, *args, **kwargs)
+
+    def getJobPrio(self, *args, **kwargs):
+        """getJobPrio(self) -> JobPriority"""
+        return _VISHNU.Job_getJobPrio(self, *args, **kwargs)
+
+    def setJobPrio(self, *args, **kwargs):
+        """setJobPrio(self, JobPriority _jobPrio)"""
+        return _VISHNU.Job_setJobPrio(self, *args, **kwargs)
+
+    def getNbCpus(self, *args, **kwargs):
+        """getNbCpus(self) -> EInt"""
+        return _VISHNU.Job_getNbCpus(self, *args, **kwargs)
+
+    def setNbCpus(self, *args, **kwargs):
+        """setNbCpus(self, EInt _nbCpus)"""
+        return _VISHNU.Job_setNbCpus(self, *args, **kwargs)
+
+    def getJobWorkingDir(self, *args, **kwargs):
+        """getJobWorkingDir(self) -> EString"""
+        return _VISHNU.Job_getJobWorkingDir(self, *args, **kwargs)
+
+    def setJobWorkingDir(self, *args, **kwargs):
+        """setJobWorkingDir(self, EString _jobWorkingDir)"""
+        return _VISHNU.Job_setJobWorkingDir(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> JobStatus"""
+        return _VISHNU.Job_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, JobStatus _status)"""
+        return _VISHNU.Job_setStatus(self, *args, **kwargs)
+
+    def getSubmitDate(self, *args, **kwargs):
+        """getSubmitDate(self) -> ELong"""
+        return _VISHNU.Job_getSubmitDate(self, *args, **kwargs)
+
+    def setSubmitDate(self, *args, **kwargs):
+        """setSubmitDate(self, ELong _submitDate)"""
+        return _VISHNU.Job_setSubmitDate(self, *args, **kwargs)
+
+    def getEndDate(self, *args, **kwargs):
+        """getEndDate(self) -> ELong"""
+        return _VISHNU.Job_getEndDate(self, *args, **kwargs)
+
+    def setEndDate(self, *args, **kwargs):
+        """setEndDate(self, ELong _endDate)"""
+        return _VISHNU.Job_setEndDate(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.Job_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.Job_setOwner(self, *args, **kwargs)
+
+    def getJobQueue(self, *args, **kwargs):
+        """getJobQueue(self) -> EString"""
+        return _VISHNU.Job_getJobQueue(self, *args, **kwargs)
+
+    def setJobQueue(self, *args, **kwargs):
+        """setJobQueue(self, EString _jobQueue)"""
+        return _VISHNU.Job_setJobQueue(self, *args, **kwargs)
+
+    def getWallClockLimit(self, *args, **kwargs):
+        """getWallClockLimit(self) -> ELong"""
+        return _VISHNU.Job_getWallClockLimit(self, *args, **kwargs)
+
+    def setWallClockLimit(self, *args, **kwargs):
+        """setWallClockLimit(self, ELong _wallClockLimit)"""
+        return _VISHNU.Job_setWallClockLimit(self, *args, **kwargs)
+
+    def getGroupName(self, *args, **kwargs):
+        """getGroupName(self) -> EString"""
+        return _VISHNU.Job_getGroupName(self, *args, **kwargs)
+
+    def setGroupName(self, *args, **kwargs):
+        """setGroupName(self, EString _groupName)"""
+        return _VISHNU.Job_setGroupName(self, *args, **kwargs)
+
+    def getJobDescription(self, *args, **kwargs):
+        """getJobDescription(self) -> EString"""
+        return _VISHNU.Job_getJobDescription(self, *args, **kwargs)
+
+    def setJobDescription(self, *args, **kwargs):
+        """setJobDescription(self, EString _jobDescription)"""
+        return _VISHNU.Job_setJobDescription(self, *args, **kwargs)
+
+    def getMemLimit(self, *args, **kwargs):
+        """getMemLimit(self) -> EInt"""
+        return _VISHNU.Job_getMemLimit(self, *args, **kwargs)
+
+    def setMemLimit(self, *args, **kwargs):
+        """setMemLimit(self, EInt _memLimit)"""
+        return _VISHNU.Job_setMemLimit(self, *args, **kwargs)
+
+    def getNbNodes(self, *args, **kwargs):
+        """getNbNodes(self) -> EInt"""
+        return _VISHNU.Job_getNbNodes(self, *args, **kwargs)
+
+    def setNbNodes(self, *args, **kwargs):
+        """setNbNodes(self, EInt _nbNodes)"""
+        return _VISHNU.Job_setNbNodes(self, *args, **kwargs)
+
+    def getNbNodesAndCpuPerNode(self, *args, **kwargs):
+        """getNbNodesAndCpuPerNode(self) -> EString"""
+        return _VISHNU.Job_getNbNodesAndCpuPerNode(self, *args, **kwargs)
+
+    def setNbNodesAndCpuPerNode(self, *args, **kwargs):
+        """setNbNodesAndCpuPerNode(self, EString _nbNodesAndCpuPerNode)"""
+        return _VISHNU.Job_setNbNodesAndCpuPerNode(self, *args, **kwargs)
+
+    def getBatchJobId(self, *args, **kwargs):
+        """getBatchJobId(self) -> EString"""
+        return _VISHNU.Job_getBatchJobId(self, *args, **kwargs)
+
+    def setBatchJobId(self, *args, **kwargs):
+        """setBatchJobId(self, EString _batchJobId)"""
+        return _VISHNU.Job_setBatchJobId(self, *args, **kwargs)
+
+    def getOutputDir(self, *args, **kwargs):
+        """getOutputDir(self) -> EString"""
+        return _VISHNU.Job_getOutputDir(self, *args, **kwargs)
+
+    def setOutputDir(self, *args, **kwargs):
+        """setOutputDir(self, EString _outputDir)"""
+        return _VISHNU.Job_setOutputDir(self, *args, **kwargs)
+
+    def getWorkId(self, *args, **kwargs):
+        """getWorkId(self) -> ELong"""
+        return _VISHNU.Job_getWorkId(self, *args, **kwargs)
+
+    def setWorkId(self, *args, **kwargs):
+        """setWorkId(self, ELong _workId)"""
+        return _VISHNU.Job_setWorkId(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.Job_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.Job_setUserId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Job_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Job_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Job_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Job_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Job__eClass(self, *args, **kwargs)
+
 Job_swigregister = _VISHNU.Job_swigregister
 Job_swigregister(Job)
 
 class JobResult(EObject):
+    """Proxy of C++ TMS_Data::JobResult class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, JobResult, name, value)
@@ -776,84 +1987,74 @@ class JobResult(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, JobResult, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_JobResult()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> JobResult"""
+        this = _VISHNU.new_JobResult(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_JobResult
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.JobResult__initialize(self)
-    def getJobId(self): return _VISHNU.JobResult_getJobId(self)
-    def setJobId(self, *args): return _VISHNU.JobResult_setJobId(self, *args)
-    def getOutputPath(self): return _VISHNU.JobResult_getOutputPath(self)
-    def setOutputPath(self, *args): return _VISHNU.JobResult_setOutputPath(self, *args)
-    def getErrorPath(self): return _VISHNU.JobResult_getErrorPath(self)
-    def setErrorPath(self, *args): return _VISHNU.JobResult_setErrorPath(self, *args)
-    def eGet(self, *args): return _VISHNU.JobResult_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.JobResult_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.JobResult_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.JobResult_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.JobResult__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.JobResult__initialize(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.JobResult_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.JobResult_setJobId(self, *args, **kwargs)
+
+    def getOutputPath(self, *args, **kwargs):
+        """getOutputPath(self) -> EString"""
+        return _VISHNU.JobResult_getOutputPath(self, *args, **kwargs)
+
+    def setOutputPath(self, *args, **kwargs):
+        """setOutputPath(self, EString _outputPath)"""
+        return _VISHNU.JobResult_setOutputPath(self, *args, **kwargs)
+
+    def getErrorPath(self, *args, **kwargs):
+        """getErrorPath(self) -> EString"""
+        return _VISHNU.JobResult_getErrorPath(self, *args, **kwargs)
+
+    def setErrorPath(self, *args, **kwargs):
+        """setErrorPath(self, EString _errorPath)"""
+        return _VISHNU.JobResult_setErrorPath(self, *args, **kwargs)
+
+    def getOutputDir(self, *args, **kwargs):
+        """getOutputDir(self) -> EString"""
+        return _VISHNU.JobResult_getOutputDir(self, *args, **kwargs)
+
+    def setOutputDir(self, *args, **kwargs):
+        """setOutputDir(self, EString _outputDir)"""
+        return _VISHNU.JobResult_setOutputDir(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.JobResult_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.JobResult_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.JobResult_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.JobResult_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.JobResult__eClass(self, *args, **kwargs)
+
 JobResult_swigregister = _VISHNU.JobResult_swigregister
 JobResult_swigregister(JobResult)
 
-class ListJobResults(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListJobResults, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListJobResults, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListJobResults()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListJobResults
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListJobResults__initialize(self)
-    def getNbJobs(self): return _VISHNU.ListJobResults_getNbJobs(self)
-    def setNbJobs(self, *args): return _VISHNU.ListJobResults_setNbJobs(self, *args)
-    def getResults(self): return _VISHNU.ListJobResults_getResults(self)
-    def eGet(self, *args): return _VISHNU.ListJobResults_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListJobResults_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListJobResults_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListJobResults_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListJobResults__eClass(self)
-ListJobResults_swigregister = _VISHNU.ListJobResults_swigregister
-ListJobResults_swigregister(ListJobResults)
-
-class ListJobs(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListJobs, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListJobs, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListJobs()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListJobs
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListJobs__initialize(self)
-    def getNbJobs(self): return _VISHNU.ListJobs_getNbJobs(self)
-    def setNbJobs(self, *args): return _VISHNU.ListJobs_setNbJobs(self, *args)
-    def getNbRunningJobs(self): return _VISHNU.ListJobs_getNbRunningJobs(self)
-    def setNbRunningJobs(self, *args): return _VISHNU.ListJobs_setNbRunningJobs(self, *args)
-    def getNbWaitingJobs(self): return _VISHNU.ListJobs_getNbWaitingJobs(self)
-    def setNbWaitingJobs(self, *args): return _VISHNU.ListJobs_setNbWaitingJobs(self, *args)
-    def getJobs(self): return _VISHNU.ListJobs_getJobs(self)
-    def eGet(self, *args): return _VISHNU.ListJobs_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListJobs_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListJobs_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListJobs_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListJobs__eClass(self)
-ListJobs_swigregister = _VISHNU.ListJobs_swigregister
-ListJobs_swigregister(ListJobs)
-
 class ListJobsOptions(EObject):
+    """Proxy of C++ TMS_Data::ListJobsOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ListJobsOptions, name, value)
@@ -861,90 +2062,138 @@ class ListJobsOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ListJobsOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListJobsOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ListJobsOptions"""
+        this = _VISHNU.new_ListJobsOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ListJobsOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListJobsOptions__initialize(self)
-    def getJobId(self): return _VISHNU.ListJobsOptions_getJobId(self)
-    def setJobId(self, *args): return _VISHNU.ListJobsOptions_setJobId(self, *args)
-    def getNbCpu(self): return _VISHNU.ListJobsOptions_getNbCpu(self)
-    def setNbCpu(self, *args): return _VISHNU.ListJobsOptions_setNbCpu(self, *args)
-    def getFromSubmitDate(self): return _VISHNU.ListJobsOptions_getFromSubmitDate(self)
-    def setFromSubmitDate(self, *args): return _VISHNU.ListJobsOptions_setFromSubmitDate(self, *args)
-    def getToSubmitDate(self): return _VISHNU.ListJobsOptions_getToSubmitDate(self)
-    def setToSubmitDate(self, *args): return _VISHNU.ListJobsOptions_setToSubmitDate(self, *args)
-    def getOwner(self): return _VISHNU.ListJobsOptions_getOwner(self)
-    def setOwner(self, *args): return _VISHNU.ListJobsOptions_setOwner(self, *args)
-    def getStatus(self): return _VISHNU.ListJobsOptions_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.ListJobsOptions_setStatus(self, *args)
-    def getPriority(self): return _VISHNU.ListJobsOptions_getPriority(self)
-    def setPriority(self, *args): return _VISHNU.ListJobsOptions_setPriority(self, *args)
-    def getQueue(self): return _VISHNU.ListJobsOptions_getQueue(self)
-    def setQueue(self, *args): return _VISHNU.ListJobsOptions_setQueue(self, *args)
-    def eGet(self, *args): return _VISHNU.ListJobsOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListJobsOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListJobsOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListJobsOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListJobsOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ListJobsOptions__initialize(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.ListJobsOptions_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.ListJobsOptions_setJobId(self, *args, **kwargs)
+
+    def getNbCpu(self, *args, **kwargs):
+        """getNbCpu(self) -> EInt"""
+        return _VISHNU.ListJobsOptions_getNbCpu(self, *args, **kwargs)
+
+    def setNbCpu(self, *args, **kwargs):
+        """setNbCpu(self, EInt _nbCpu)"""
+        return _VISHNU.ListJobsOptions_setNbCpu(self, *args, **kwargs)
+
+    def getFromSubmitDate(self, *args, **kwargs):
+        """getFromSubmitDate(self) -> ELong"""
+        return _VISHNU.ListJobsOptions_getFromSubmitDate(self, *args, **kwargs)
+
+    def setFromSubmitDate(self, *args, **kwargs):
+        """setFromSubmitDate(self, ELong _fromSubmitDate)"""
+        return _VISHNU.ListJobsOptions_setFromSubmitDate(self, *args, **kwargs)
+
+    def getToSubmitDate(self, *args, **kwargs):
+        """getToSubmitDate(self) -> ELong"""
+        return _VISHNU.ListJobsOptions_getToSubmitDate(self, *args, **kwargs)
+
+    def setToSubmitDate(self, *args, **kwargs):
+        """setToSubmitDate(self, ELong _toSubmitDate)"""
+        return _VISHNU.ListJobsOptions_setToSubmitDate(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.ListJobsOptions_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.ListJobsOptions_setOwner(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> JobStatus"""
+        return _VISHNU.ListJobsOptions_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, JobStatus _status)"""
+        return _VISHNU.ListJobsOptions_setStatus(self, *args, **kwargs)
+
+    def getPriority(self, *args, **kwargs):
+        """getPriority(self) -> JobPriority"""
+        return _VISHNU.ListJobsOptions_getPriority(self, *args, **kwargs)
+
+    def setPriority(self, *args, **kwargs):
+        """setPriority(self, JobPriority _priority)"""
+        return _VISHNU.ListJobsOptions_setPriority(self, *args, **kwargs)
+
+    def getQueue(self, *args, **kwargs):
+        """getQueue(self) -> EString"""
+        return _VISHNU.ListJobsOptions_getQueue(self, *args, **kwargs)
+
+    def setQueue(self, *args, **kwargs):
+        """setQueue(self, EString _queue)"""
+        return _VISHNU.ListJobsOptions_setQueue(self, *args, **kwargs)
+
+    def getMultipleStatus(self, *args, **kwargs):
+        """getMultipleStatus(self) -> EString"""
+        return _VISHNU.ListJobsOptions_getMultipleStatus(self, *args, **kwargs)
+
+    def setMultipleStatus(self, *args, **kwargs):
+        """setMultipleStatus(self, EString _multipleStatus)"""
+        return _VISHNU.ListJobsOptions_setMultipleStatus(self, *args, **kwargs)
+
+    def isBatchJob(self, *args, **kwargs):
+        """isBatchJob(self) -> EBoolean"""
+        return _VISHNU.ListJobsOptions_isBatchJob(self, *args, **kwargs)
+
+    def setBatchJob(self, *args, **kwargs):
+        """setBatchJob(self, EBoolean _batchJob)"""
+        return _VISHNU.ListJobsOptions_setBatchJob(self, *args, **kwargs)
+
+    def getWorkId(self, *args, **kwargs):
+        """getWorkId(self) -> ELong"""
+        return _VISHNU.ListJobsOptions_getWorkId(self, *args, **kwargs)
+
+    def setWorkId(self, *args, **kwargs):
+        """setWorkId(self, ELong _workId)"""
+        return _VISHNU.ListJobsOptions_setWorkId(self, *args, **kwargs)
+
+    def isListAll(self, *args, **kwargs):
+        """isListAll(self) -> EBoolean"""
+        return _VISHNU.ListJobsOptions_isListAll(self, *args, **kwargs)
+
+    def setListAll(self, *args, **kwargs):
+        """setListAll(self, EBoolean _listAll)"""
+        return _VISHNU.ListJobsOptions_setListAll(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ListJobsOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ListJobsOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ListJobsOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ListJobsOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ListJobsOptions__eClass(self, *args, **kwargs)
+
 ListJobsOptions_swigregister = _VISHNU.ListJobsOptions_swigregister
 ListJobsOptions_swigregister(ListJobsOptions)
 
-class ListProgression(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListProgression, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListProgression, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListProgression()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListProgression
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListProgression__initialize(self)
-    def getNbJobs(self): return _VISHNU.ListProgression_getNbJobs(self)
-    def setNbJobs(self, *args): return _VISHNU.ListProgression_setNbJobs(self, *args)
-    def getProgress(self): return _VISHNU.ListProgression_getProgress(self)
-    def eGet(self, *args): return _VISHNU.ListProgression_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListProgression_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListProgression_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListProgression_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListProgression__eClass(self)
-ListProgression_swigregister = _VISHNU.ListProgression_swigregister
-ListProgression_swigregister(ListProgression)
-
-class ListQueues(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListQueues, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListQueues, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListQueues()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListQueues
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListQueues__initialize(self)
-    def getNbQueues(self): return _VISHNU.ListQueues_getNbQueues(self)
-    def setNbQueues(self, *args): return _VISHNU.ListQueues_setNbQueues(self, *args)
-    def getQueues(self): return _VISHNU.ListQueues_getQueues(self)
-    def eGet(self, *args): return _VISHNU.ListQueues_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListQueues_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListQueues_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListQueues_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListQueues__eClass(self)
-ListQueues_swigregister = _VISHNU.ListQueues_swigregister
-ListQueues_swigregister(ListQueues)
-
 class ProgressOptions(EObject):
+    """Proxy of C++ TMS_Data::ProgressOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ProgressOptions, name, value)
@@ -952,26 +2201,58 @@ class ProgressOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ProgressOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ProgressOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ProgressOptions"""
+        this = _VISHNU.new_ProgressOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ProgressOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ProgressOptions__initialize(self)
-    def getJobId(self): return _VISHNU.ProgressOptions_getJobId(self)
-    def setJobId(self, *args): return _VISHNU.ProgressOptions_setJobId(self, *args)
-    def getJobOwner(self): return _VISHNU.ProgressOptions_getJobOwner(self)
-    def setJobOwner(self, *args): return _VISHNU.ProgressOptions_setJobOwner(self, *args)
-    def eGet(self, *args): return _VISHNU.ProgressOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ProgressOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ProgressOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ProgressOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ProgressOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ProgressOptions__initialize(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.ProgressOptions_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.ProgressOptions_setJobId(self, *args, **kwargs)
+
+    def getJobOwner(self, *args, **kwargs):
+        """getJobOwner(self) -> EString"""
+        return _VISHNU.ProgressOptions_getJobOwner(self, *args, **kwargs)
+
+    def setJobOwner(self, *args, **kwargs):
+        """setJobOwner(self, EString _jobOwner)"""
+        return _VISHNU.ProgressOptions_setJobOwner(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ProgressOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ProgressOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ProgressOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ProgressOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ProgressOptions__eClass(self, *args, **kwargs)
+
 ProgressOptions_swigregister = _VISHNU.ProgressOptions_swigregister
 ProgressOptions_swigregister(ProgressOptions)
 
 class Progression(EObject):
+    """Proxy of C++ TMS_Data::Progression class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Progression, name, value)
@@ -979,36 +2260,98 @@ class Progression(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Progression, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Progression()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Progression"""
+        this = _VISHNU.new_Progression(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Progression
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Progression__initialize(self)
-    def getJobId(self): return _VISHNU.Progression_getJobId(self)
-    def setJobId(self, *args): return _VISHNU.Progression_setJobId(self, *args)
-    def getJobName(self): return _VISHNU.Progression_getJobName(self)
-    def setJobName(self, *args): return _VISHNU.Progression_setJobName(self, *args)
-    def getWallTime(self): return _VISHNU.Progression_getWallTime(self)
-    def setWallTime(self, *args): return _VISHNU.Progression_setWallTime(self, *args)
-    def getStartTime(self): return _VISHNU.Progression_getStartTime(self)
-    def setStartTime(self, *args): return _VISHNU.Progression_setStartTime(self, *args)
-    def getEndTime(self): return _VISHNU.Progression_getEndTime(self)
-    def setEndTime(self, *args): return _VISHNU.Progression_setEndTime(self, *args)
-    def getPercent(self): return _VISHNU.Progression_getPercent(self)
-    def setPercent(self, *args): return _VISHNU.Progression_setPercent(self, *args)
-    def getStatus(self): return _VISHNU.Progression_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.Progression_setStatus(self, *args)
-    def eGet(self, *args): return _VISHNU.Progression_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Progression_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Progression_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Progression_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Progression__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Progression__initialize(self, *args, **kwargs)
+
+    def getJobId(self, *args, **kwargs):
+        """getJobId(self) -> EString"""
+        return _VISHNU.Progression_getJobId(self, *args, **kwargs)
+
+    def setJobId(self, *args, **kwargs):
+        """setJobId(self, EString _jobId)"""
+        return _VISHNU.Progression_setJobId(self, *args, **kwargs)
+
+    def getJobName(self, *args, **kwargs):
+        """getJobName(self) -> EString"""
+        return _VISHNU.Progression_getJobName(self, *args, **kwargs)
+
+    def setJobName(self, *args, **kwargs):
+        """setJobName(self, EString _jobName)"""
+        return _VISHNU.Progression_setJobName(self, *args, **kwargs)
+
+    def getWallTime(self, *args, **kwargs):
+        """getWallTime(self) -> EInt"""
+        return _VISHNU.Progression_getWallTime(self, *args, **kwargs)
+
+    def setWallTime(self, *args, **kwargs):
+        """setWallTime(self, EInt _wallTime)"""
+        return _VISHNU.Progression_setWallTime(self, *args, **kwargs)
+
+    def getStartTime(self, *args, **kwargs):
+        """getStartTime(self) -> ELong"""
+        return _VISHNU.Progression_getStartTime(self, *args, **kwargs)
+
+    def setStartTime(self, *args, **kwargs):
+        """setStartTime(self, ELong _startTime)"""
+        return _VISHNU.Progression_setStartTime(self, *args, **kwargs)
+
+    def getEndTime(self, *args, **kwargs):
+        """getEndTime(self) -> ELong"""
+        return _VISHNU.Progression_getEndTime(self, *args, **kwargs)
+
+    def setEndTime(self, *args, **kwargs):
+        """setEndTime(self, ELong _endTime)"""
+        return _VISHNU.Progression_setEndTime(self, *args, **kwargs)
+
+    def getPercent(self, *args, **kwargs):
+        """getPercent(self) -> EInt"""
+        return _VISHNU.Progression_getPercent(self, *args, **kwargs)
+
+    def setPercent(self, *args, **kwargs):
+        """setPercent(self, EInt _percent)"""
+        return _VISHNU.Progression_setPercent(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> JobStatus"""
+        return _VISHNU.Progression_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, JobStatus _status)"""
+        return _VISHNU.Progression_setStatus(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Progression_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Progression_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Progression_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Progression_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Progression__eClass(self, *args, **kwargs)
+
 Progression_swigregister = _VISHNU.Progression_swigregister
 Progression_swigregister(Progression)
 
 class Queue(EObject):
+    """Proxy of C++ TMS_Data::Queue class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Queue, name, value)
@@ -1016,44 +2359,130 @@ class Queue(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Queue, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Queue()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Queue"""
+        this = _VISHNU.new_Queue(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Queue
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Queue__initialize(self)
-    def getName(self): return _VISHNU.Queue_getName(self)
-    def setName(self, *args): return _VISHNU.Queue_setName(self, *args)
-    def getMaxJobCpu(self): return _VISHNU.Queue_getMaxJobCpu(self)
-    def setMaxJobCpu(self, *args): return _VISHNU.Queue_setMaxJobCpu(self, *args)
-    def getMaxProcCpu(self): return _VISHNU.Queue_getMaxProcCpu(self)
-    def setMaxProcCpu(self, *args): return _VISHNU.Queue_setMaxProcCpu(self, *args)
-    def getMemory(self): return _VISHNU.Queue_getMemory(self)
-    def setMemory(self, *args): return _VISHNU.Queue_setMemory(self, *args)
-    def getWallTime(self): return _VISHNU.Queue_getWallTime(self)
-    def setWallTime(self, *args): return _VISHNU.Queue_setWallTime(self, *args)
-    def getNode(self): return _VISHNU.Queue_getNode(self)
-    def setNode(self, *args): return _VISHNU.Queue_setNode(self, *args)
-    def getNbRunningJobs(self): return _VISHNU.Queue_getNbRunningJobs(self)
-    def setNbRunningJobs(self, *args): return _VISHNU.Queue_setNbRunningJobs(self, *args)
-    def getNbJobsInQueue(self): return _VISHNU.Queue_getNbJobsInQueue(self)
-    def setNbJobsInQueue(self, *args): return _VISHNU.Queue_setNbJobsInQueue(self, *args)
-    def getState(self): return _VISHNU.Queue_getState(self)
-    def setState(self, *args): return _VISHNU.Queue_setState(self, *args)
-    def getPriority(self): return _VISHNU.Queue_getPriority(self)
-    def setPriority(self, *args): return _VISHNU.Queue_setPriority(self, *args)
-    def getDescription(self): return _VISHNU.Queue_getDescription(self)
-    def setDescription(self, *args): return _VISHNU.Queue_setDescription(self, *args)
-    def eGet(self, *args): return _VISHNU.Queue_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Queue_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Queue_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Queue_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Queue__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Queue__initialize(self, *args, **kwargs)
+
+    def getName(self, *args, **kwargs):
+        """getName(self) -> EString"""
+        return _VISHNU.Queue_getName(self, *args, **kwargs)
+
+    def setName(self, *args, **kwargs):
+        """setName(self, EString _name)"""
+        return _VISHNU.Queue_setName(self, *args, **kwargs)
+
+    def getMaxJobCpu(self, *args, **kwargs):
+        """getMaxJobCpu(self) -> EInt"""
+        return _VISHNU.Queue_getMaxJobCpu(self, *args, **kwargs)
+
+    def setMaxJobCpu(self, *args, **kwargs):
+        """setMaxJobCpu(self, EInt _maxJobCpu)"""
+        return _VISHNU.Queue_setMaxJobCpu(self, *args, **kwargs)
+
+    def getMaxProcCpu(self, *args, **kwargs):
+        """getMaxProcCpu(self) -> EInt"""
+        return _VISHNU.Queue_getMaxProcCpu(self, *args, **kwargs)
+
+    def setMaxProcCpu(self, *args, **kwargs):
+        """setMaxProcCpu(self, EInt _maxProcCpu)"""
+        return _VISHNU.Queue_setMaxProcCpu(self, *args, **kwargs)
+
+    def getMemory(self, *args, **kwargs):
+        """getMemory(self) -> EInt"""
+        return _VISHNU.Queue_getMemory(self, *args, **kwargs)
+
+    def setMemory(self, *args, **kwargs):
+        """setMemory(self, EInt _memory)"""
+        return _VISHNU.Queue_setMemory(self, *args, **kwargs)
+
+    def getWallTime(self, *args, **kwargs):
+        """getWallTime(self) -> ELong"""
+        return _VISHNU.Queue_getWallTime(self, *args, **kwargs)
+
+    def setWallTime(self, *args, **kwargs):
+        """setWallTime(self, ELong _wallTime)"""
+        return _VISHNU.Queue_setWallTime(self, *args, **kwargs)
+
+    def getNode(self, *args, **kwargs):
+        """getNode(self) -> EInt"""
+        return _VISHNU.Queue_getNode(self, *args, **kwargs)
+
+    def setNode(self, *args, **kwargs):
+        """setNode(self, EInt _node)"""
+        return _VISHNU.Queue_setNode(self, *args, **kwargs)
+
+    def getNbRunningJobs(self, *args, **kwargs):
+        """getNbRunningJobs(self) -> EInt"""
+        return _VISHNU.Queue_getNbRunningJobs(self, *args, **kwargs)
+
+    def setNbRunningJobs(self, *args, **kwargs):
+        """setNbRunningJobs(self, EInt _nbRunningJobs)"""
+        return _VISHNU.Queue_setNbRunningJobs(self, *args, **kwargs)
+
+    def getNbJobsInQueue(self, *args, **kwargs):
+        """getNbJobsInQueue(self) -> EInt"""
+        return _VISHNU.Queue_getNbJobsInQueue(self, *args, **kwargs)
+
+    def setNbJobsInQueue(self, *args, **kwargs):
+        """setNbJobsInQueue(self, EInt _nbJobsInQueue)"""
+        return _VISHNU.Queue_setNbJobsInQueue(self, *args, **kwargs)
+
+    def getState(self, *args, **kwargs):
+        """getState(self) -> QueueStatus"""
+        return _VISHNU.Queue_getState(self, *args, **kwargs)
+
+    def setState(self, *args, **kwargs):
+        """setState(self, QueueStatus _state)"""
+        return _VISHNU.Queue_setState(self, *args, **kwargs)
+
+    def getPriority(self, *args, **kwargs):
+        """getPriority(self) -> QueuePriority"""
+        return _VISHNU.Queue_getPriority(self, *args, **kwargs)
+
+    def setPriority(self, *args, **kwargs):
+        """setPriority(self, QueuePriority _priority)"""
+        return _VISHNU.Queue_setPriority(self, *args, **kwargs)
+
+    def getDescription(self, *args, **kwargs):
+        """getDescription(self) -> EString"""
+        return _VISHNU.Queue_getDescription(self, *args, **kwargs)
+
+    def setDescription(self, *args, **kwargs):
+        """setDescription(self, EString _description)"""
+        return _VISHNU.Queue_setDescription(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Queue_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Queue_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Queue_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Queue_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Queue__eClass(self, *args, **kwargs)
+
 Queue_swigregister = _VISHNU.Queue_swigregister
 Queue_swigregister(Queue)
 
 class SubmitOptions(EObject):
+    """Proxy of C++ TMS_Data::SubmitOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SubmitOptions, name, value)
@@ -1061,38 +2490,563 @@ class SubmitOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, SubmitOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_SubmitOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> SubmitOptions"""
+        this = _VISHNU.new_SubmitOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_SubmitOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.SubmitOptions__initialize(self)
-    def getName(self): return _VISHNU.SubmitOptions_getName(self)
-    def setName(self, *args): return _VISHNU.SubmitOptions_setName(self, *args)
-    def getQueue(self): return _VISHNU.SubmitOptions_getQueue(self)
-    def setQueue(self, *args): return _VISHNU.SubmitOptions_setQueue(self, *args)
-    def getWallTime(self): return _VISHNU.SubmitOptions_getWallTime(self)
-    def setWallTime(self, *args): return _VISHNU.SubmitOptions_setWallTime(self, *args)
-    def getMemory(self): return _VISHNU.SubmitOptions_getMemory(self)
-    def setMemory(self, *args): return _VISHNU.SubmitOptions_setMemory(self, *args)
-    def getNbCpu(self): return _VISHNU.SubmitOptions_getNbCpu(self)
-    def setNbCpu(self, *args): return _VISHNU.SubmitOptions_setNbCpu(self, *args)
-    def getNbNodesAndCpuPerNode(self): return _VISHNU.SubmitOptions_getNbNodesAndCpuPerNode(self)
-    def setNbNodesAndCpuPerNode(self, *args): return _VISHNU.SubmitOptions_setNbNodesAndCpuPerNode(self, *args)
-    def getOutputPath(self): return _VISHNU.SubmitOptions_getOutputPath(self)
-    def setOutputPath(self, *args): return _VISHNU.SubmitOptions_setOutputPath(self, *args)
-    def getErrorPath(self): return _VISHNU.SubmitOptions_getErrorPath(self)
-    def setErrorPath(self, *args): return _VISHNU.SubmitOptions_setErrorPath(self, *args)
-    def eGet(self, *args): return _VISHNU.SubmitOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.SubmitOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.SubmitOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.SubmitOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.SubmitOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.SubmitOptions__initialize(self, *args, **kwargs)
+
+    def getName(self, *args, **kwargs):
+        """getName(self) -> EString"""
+        return _VISHNU.SubmitOptions_getName(self, *args, **kwargs)
+
+    def setName(self, *args, **kwargs):
+        """setName(self, EString _name)"""
+        return _VISHNU.SubmitOptions_setName(self, *args, **kwargs)
+
+    def getQueue(self, *args, **kwargs):
+        """getQueue(self) -> EString"""
+        return _VISHNU.SubmitOptions_getQueue(self, *args, **kwargs)
+
+    def setQueue(self, *args, **kwargs):
+        """setQueue(self, EString _queue)"""
+        return _VISHNU.SubmitOptions_setQueue(self, *args, **kwargs)
+
+    def getWallTime(self, *args, **kwargs):
+        """getWallTime(self) -> EInt"""
+        return _VISHNU.SubmitOptions_getWallTime(self, *args, **kwargs)
+
+    def setWallTime(self, *args, **kwargs):
+        """setWallTime(self, EInt _wallTime)"""
+        return _VISHNU.SubmitOptions_setWallTime(self, *args, **kwargs)
+
+    def getMemory(self, *args, **kwargs):
+        """getMemory(self) -> EInt"""
+        return _VISHNU.SubmitOptions_getMemory(self, *args, **kwargs)
+
+    def setMemory(self, *args, **kwargs):
+        """setMemory(self, EInt _memory)"""
+        return _VISHNU.SubmitOptions_setMemory(self, *args, **kwargs)
+
+    def getNbCpu(self, *args, **kwargs):
+        """getNbCpu(self) -> EInt"""
+        return _VISHNU.SubmitOptions_getNbCpu(self, *args, **kwargs)
+
+    def setNbCpu(self, *args, **kwargs):
+        """setNbCpu(self, EInt _nbCpu)"""
+        return _VISHNU.SubmitOptions_setNbCpu(self, *args, **kwargs)
+
+    def getNbNodesAndCpuPerNode(self, *args, **kwargs):
+        """getNbNodesAndCpuPerNode(self) -> EString"""
+        return _VISHNU.SubmitOptions_getNbNodesAndCpuPerNode(self, *args, **kwargs)
+
+    def setNbNodesAndCpuPerNode(self, *args, **kwargs):
+        """setNbNodesAndCpuPerNode(self, EString _nbNodesAndCpuPerNode)"""
+        return _VISHNU.SubmitOptions_setNbNodesAndCpuPerNode(self, *args, **kwargs)
+
+    def getOutputPath(self, *args, **kwargs):
+        """getOutputPath(self) -> EString"""
+        return _VISHNU.SubmitOptions_getOutputPath(self, *args, **kwargs)
+
+    def setOutputPath(self, *args, **kwargs):
+        """setOutputPath(self, EString _outputPath)"""
+        return _VISHNU.SubmitOptions_setOutputPath(self, *args, **kwargs)
+
+    def getErrorPath(self, *args, **kwargs):
+        """getErrorPath(self) -> EString"""
+        return _VISHNU.SubmitOptions_getErrorPath(self, *args, **kwargs)
+
+    def setErrorPath(self, *args, **kwargs):
+        """setErrorPath(self, EString _errorPath)"""
+        return _VISHNU.SubmitOptions_setErrorPath(self, *args, **kwargs)
+
+    def getMailNotification(self, *args, **kwargs):
+        """getMailNotification(self) -> EString"""
+        return _VISHNU.SubmitOptions_getMailNotification(self, *args, **kwargs)
+
+    def setMailNotification(self, *args, **kwargs):
+        """setMailNotification(self, EString _mailNotification)"""
+        return _VISHNU.SubmitOptions_setMailNotification(self, *args, **kwargs)
+
+    def getMailNotifyUser(self, *args, **kwargs):
+        """getMailNotifyUser(self) -> EString"""
+        return _VISHNU.SubmitOptions_getMailNotifyUser(self, *args, **kwargs)
+
+    def setMailNotifyUser(self, *args, **kwargs):
+        """setMailNotifyUser(self, EString _mailNotifyUser)"""
+        return _VISHNU.SubmitOptions_setMailNotifyUser(self, *args, **kwargs)
+
+    def getGroup(self, *args, **kwargs):
+        """getGroup(self) -> EString"""
+        return _VISHNU.SubmitOptions_getGroup(self, *args, **kwargs)
+
+    def setGroup(self, *args, **kwargs):
+        """setGroup(self, EString _group)"""
+        return _VISHNU.SubmitOptions_setGroup(self, *args, **kwargs)
+
+    def getWorkingDir(self, *args, **kwargs):
+        """getWorkingDir(self) -> EString"""
+        return _VISHNU.SubmitOptions_getWorkingDir(self, *args, **kwargs)
+
+    def setWorkingDir(self, *args, **kwargs):
+        """setWorkingDir(self, EString _workingDir)"""
+        return _VISHNU.SubmitOptions_setWorkingDir(self, *args, **kwargs)
+
+    def getCpuTime(self, *args, **kwargs):
+        """getCpuTime(self) -> EString"""
+        return _VISHNU.SubmitOptions_getCpuTime(self, *args, **kwargs)
+
+    def setCpuTime(self, *args, **kwargs):
+        """setCpuTime(self, EString _cpuTime)"""
+        return _VISHNU.SubmitOptions_setCpuTime(self, *args, **kwargs)
+
+    def isSelectQueueAutom(self, *args, **kwargs):
+        """isSelectQueueAutom(self) -> EBoolean"""
+        return _VISHNU.SubmitOptions_isSelectQueueAutom(self, *args, **kwargs)
+
+    def setSelectQueueAutom(self, *args, **kwargs):
+        """setSelectQueueAutom(self, EBoolean _selectQueueAutom)"""
+        return _VISHNU.SubmitOptions_setSelectQueueAutom(self, *args, **kwargs)
+
+    def getFileParams(self, *args, **kwargs):
+        """getFileParams(self) -> EString"""
+        return _VISHNU.SubmitOptions_getFileParams(self, *args, **kwargs)
+
+    def setFileParams(self, *args, **kwargs):
+        """setFileParams(self, EString _fileParams)"""
+        return _VISHNU.SubmitOptions_setFileParams(self, *args, **kwargs)
+
+    def getTextParams(self, *args, **kwargs):
+        """getTextParams(self) -> EString"""
+        return _VISHNU.SubmitOptions_getTextParams(self, *args, **kwargs)
+
+    def setTextParams(self, *args, **kwargs):
+        """setTextParams(self, EString _textParams)"""
+        return _VISHNU.SubmitOptions_setTextParams(self, *args, **kwargs)
+
+    def getWorkId(self, *args, **kwargs):
+        """getWorkId(self) -> ELong"""
+        return _VISHNU.SubmitOptions_getWorkId(self, *args, **kwargs)
+
+    def setWorkId(self, *args, **kwargs):
+        """setWorkId(self, ELong _workId)"""
+        return _VISHNU.SubmitOptions_setWorkId(self, *args, **kwargs)
+
+    def getSpecificParams(self, *args, **kwargs):
+        """getSpecificParams(self) -> EString"""
+        return _VISHNU.SubmitOptions_getSpecificParams(self, *args, **kwargs)
+
+    def setSpecificParams(self, *args, **kwargs):
+        """setSpecificParams(self, EString _specificParams)"""
+        return _VISHNU.SubmitOptions_setSpecificParams(self, *args, **kwargs)
+
+    def getCriterion(self, *args, **kwargs):
+        """getCriterion(self) -> LoadCriterion_ptr"""
+        return _VISHNU.SubmitOptions_getCriterion(self, *args, **kwargs)
+
+    def setCriterion(self, *args, **kwargs):
+        """setCriterion(self, LoadCriterion_ptr _criterion)"""
+        return _VISHNU.SubmitOptions_setCriterion(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.SubmitOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.SubmitOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.SubmitOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.SubmitOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.SubmitOptions__eClass(self, *args, **kwargs)
+
 SubmitOptions_swigregister = _VISHNU.SubmitOptions_swigregister
 SubmitOptions_swigregister(SubmitOptions)
 
+class LoadCriterion(EObject):
+    """Proxy of C++ TMS_Data::LoadCriterion class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, LoadCriterion, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, LoadCriterion, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> LoadCriterion"""
+        this = _VISHNU.new_LoadCriterion(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_LoadCriterion
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.LoadCriterion__initialize(self, *args, **kwargs)
+
+    def getLoadType(self, *args, **kwargs):
+        """getLoadType(self) -> LoadType"""
+        return _VISHNU.LoadCriterion_getLoadType(self, *args, **kwargs)
+
+    def setLoadType(self, *args, **kwargs):
+        """setLoadType(self, LoadType _loadType)"""
+        return _VISHNU.LoadCriterion_setLoadType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.LoadCriterion_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.LoadCriterion_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.LoadCriterion_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.LoadCriterion_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.LoadCriterion__eClass(self, *args, **kwargs)
+
+LoadCriterion_swigregister = _VISHNU.LoadCriterion_swigregister
+LoadCriterion_swigregister(LoadCriterion)
+
+class Work(EObject):
+    """Proxy of C++ TMS_Data::Work class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, Work, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, Work, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Work"""
+        this = _VISHNU.new_Work(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_Work
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Work__initialize(self, *args, **kwargs)
+
+    def getSessionId(self, *args, **kwargs):
+        """getSessionId(self) -> EString"""
+        return _VISHNU.Work_getSessionId(self, *args, **kwargs)
+
+    def setSessionId(self, *args, **kwargs):
+        """setSessionId(self, EString _sessionId)"""
+        return _VISHNU.Work_setSessionId(self, *args, **kwargs)
+
+    def getApplicationId(self, *args, **kwargs):
+        """getApplicationId(self) -> EString"""
+        return _VISHNU.Work_getApplicationId(self, *args, **kwargs)
+
+    def setApplicationId(self, *args, **kwargs):
+        """setApplicationId(self, EString _applicationId)"""
+        return _VISHNU.Work_setApplicationId(self, *args, **kwargs)
+
+    def getSubject(self, *args, **kwargs):
+        """getSubject(self) -> EString"""
+        return _VISHNU.Work_getSubject(self, *args, **kwargs)
+
+    def setSubject(self, *args, **kwargs):
+        """setSubject(self, EString _subject)"""
+        return _VISHNU.Work_setSubject(self, *args, **kwargs)
+
+    def getPriority(self, *args, **kwargs):
+        """getPriority(self) -> EInt"""
+        return _VISHNU.Work_getPriority(self, *args, **kwargs)
+
+    def setPriority(self, *args, **kwargs):
+        """setPriority(self, EInt _priority)"""
+        return _VISHNU.Work_setPriority(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> EInt"""
+        return _VISHNU.Work_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, EInt _status)"""
+        return _VISHNU.Work_setStatus(self, *args, **kwargs)
+
+    def getEndDate(self, *args, **kwargs):
+        """getEndDate(self) -> ELong"""
+        return _VISHNU.Work_getEndDate(self, *args, **kwargs)
+
+    def setEndDate(self, *args, **kwargs):
+        """setEndDate(self, ELong _endDate)"""
+        return _VISHNU.Work_setEndDate(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.Work_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.Work_setOwner(self, *args, **kwargs)
+
+    def getEstimatedHour(self, *args, **kwargs):
+        """getEstimatedHour(self) -> ELong"""
+        return _VISHNU.Work_getEstimatedHour(self, *args, **kwargs)
+
+    def setEstimatedHour(self, *args, **kwargs):
+        """setEstimatedHour(self, ELong _estimatedHour)"""
+        return _VISHNU.Work_setEstimatedHour(self, *args, **kwargs)
+
+    def getDoneRatio(self, *args, **kwargs):
+        """getDoneRatio(self) -> EInt"""
+        return _VISHNU.Work_getDoneRatio(self, *args, **kwargs)
+
+    def setDoneRatio(self, *args, **kwargs):
+        """setDoneRatio(self, EInt _doneRatio)"""
+        return _VISHNU.Work_setDoneRatio(self, *args, **kwargs)
+
+    def getDescription(self, *args, **kwargs):
+        """getDescription(self) -> EString"""
+        return _VISHNU.Work_getDescription(self, *args, **kwargs)
+
+    def setDescription(self, *args, **kwargs):
+        """setDescription(self, EString _description)"""
+        return _VISHNU.Work_setDescription(self, *args, **kwargs)
+
+    def getDateCreated(self, *args, **kwargs):
+        """getDateCreated(self) -> ELong"""
+        return _VISHNU.Work_getDateCreated(self, *args, **kwargs)
+
+    def setDateCreated(self, *args, **kwargs):
+        """setDateCreated(self, ELong _dateCreated)"""
+        return _VISHNU.Work_setDateCreated(self, *args, **kwargs)
+
+    def getDateEnded(self, *args, **kwargs):
+        """getDateEnded(self) -> ELong"""
+        return _VISHNU.Work_getDateEnded(self, *args, **kwargs)
+
+    def setDateEnded(self, *args, **kwargs):
+        """setDateEnded(self, ELong _dateEnded)"""
+        return _VISHNU.Work_setDateEnded(self, *args, **kwargs)
+
+    def getDateStarted(self, *args, **kwargs):
+        """getDateStarted(self) -> ELong"""
+        return _VISHNU.Work_getDateStarted(self, *args, **kwargs)
+
+    def setDateStarted(self, *args, **kwargs):
+        """setDateStarted(self, ELong _dateStarted)"""
+        return _VISHNU.Work_setDateStarted(self, *args, **kwargs)
+
+    def getLastUpdated(self, *args, **kwargs):
+        """getLastUpdated(self) -> ELong"""
+        return _VISHNU.Work_getLastUpdated(self, *args, **kwargs)
+
+    def setLastUpdated(self, *args, **kwargs):
+        """setLastUpdated(self, ELong _lastUpdated)"""
+        return _VISHNU.Work_setLastUpdated(self, *args, **kwargs)
+
+    def getWorkId(self, *args, **kwargs):
+        """getWorkId(self) -> EString"""
+        return _VISHNU.Work_getWorkId(self, *args, **kwargs)
+
+    def setWorkId(self, *args, **kwargs):
+        """setWorkId(self, EString _workId)"""
+        return _VISHNU.Work_setWorkId(self, *args, **kwargs)
+
+    def getProjectId(self, *args, **kwargs):
+        """getProjectId(self) -> EString"""
+        return _VISHNU.Work_getProjectId(self, *args, **kwargs)
+
+    def setProjectId(self, *args, **kwargs):
+        """setProjectId(self, EString _projectId)"""
+        return _VISHNU.Work_setProjectId(self, *args, **kwargs)
+
+    def getSubmitDate(self, *args, **kwargs):
+        """getSubmitDate(self) -> ELong"""
+        return _VISHNU.Work_getSubmitDate(self, *args, **kwargs)
+
+    def setSubmitDate(self, *args, **kwargs):
+        """setSubmitDate(self, ELong _submitDate)"""
+        return _VISHNU.Work_setSubmitDate(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.Work_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.Work_setMachineId(self, *args, **kwargs)
+
+    def getNbCPU(self, *args, **kwargs):
+        """getNbCPU(self) -> EInt"""
+        return _VISHNU.Work_getNbCPU(self, *args, **kwargs)
+
+    def setNbCPU(self, *args, **kwargs):
+        """setNbCPU(self, EInt _nbCPU)"""
+        return _VISHNU.Work_setNbCPU(self, *args, **kwargs)
+
+    def getDueDate(self, *args, **kwargs):
+        """getDueDate(self) -> ELong"""
+        return _VISHNU.Work_getDueDate(self, *args, **kwargs)
+
+    def setDueDate(self, *args, **kwargs):
+        """setDueDate(self, ELong _dueDate)"""
+        return _VISHNU.Work_setDueDate(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Work_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Work_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Work_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Work_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Work__eClass(self, *args, **kwargs)
+
+Work_swigregister = _VISHNU.Work_swigregister
+Work_swigregister(Work)
+
+class AddWorkOptions(EObject):
+    """Proxy of C++ TMS_Data::AddWorkOptions class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, AddWorkOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, AddWorkOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> AddWorkOptions"""
+        this = _VISHNU.new_AddWorkOptions(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_AddWorkOptions
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.AddWorkOptions__initialize(self, *args, **kwargs)
+
+    def getApplicationId(self, *args, **kwargs):
+        """getApplicationId(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getApplicationId(self, *args, **kwargs)
+
+    def setApplicationId(self, *args, **kwargs):
+        """setApplicationId(self, EString _applicationId)"""
+        return _VISHNU.AddWorkOptions_setApplicationId(self, *args, **kwargs)
+
+    def getSubject(self, *args, **kwargs):
+        """getSubject(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getSubject(self, *args, **kwargs)
+
+    def setSubject(self, *args, **kwargs):
+        """setSubject(self, EString _subject)"""
+        return _VISHNU.AddWorkOptions_setSubject(self, *args, **kwargs)
+
+    def getPriority(self, *args, **kwargs):
+        """getPriority(self) -> EInt"""
+        return _VISHNU.AddWorkOptions_getPriority(self, *args, **kwargs)
+
+    def setPriority(self, *args, **kwargs):
+        """setPriority(self, EInt _priority)"""
+        return _VISHNU.AddWorkOptions_setPriority(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.AddWorkOptions_setOwner(self, *args, **kwargs)
+
+    def getEstimatedHour(self, *args, **kwargs):
+        """getEstimatedHour(self) -> ELong"""
+        return _VISHNU.AddWorkOptions_getEstimatedHour(self, *args, **kwargs)
+
+    def setEstimatedHour(self, *args, **kwargs):
+        """setEstimatedHour(self, ELong _estimatedHour)"""
+        return _VISHNU.AddWorkOptions_setEstimatedHour(self, *args, **kwargs)
+
+    def getDescription(self, *args, **kwargs):
+        """getDescription(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getDescription(self, *args, **kwargs)
+
+    def setDescription(self, *args, **kwargs):
+        """setDescription(self, EString _description)"""
+        return _VISHNU.AddWorkOptions_setDescription(self, *args, **kwargs)
+
+    def getProjectId(self, *args, **kwargs):
+        """getProjectId(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getProjectId(self, *args, **kwargs)
+
+    def setProjectId(self, *args, **kwargs):
+        """setProjectId(self, EString _projectId)"""
+        return _VISHNU.AddWorkOptions_setProjectId(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.AddWorkOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.AddWorkOptions_setMachineId(self, *args, **kwargs)
+
+    def getNbCPU(self, *args, **kwargs):
+        """getNbCPU(self) -> EInt"""
+        return _VISHNU.AddWorkOptions_getNbCPU(self, *args, **kwargs)
+
+    def setNbCPU(self, *args, **kwargs):
+        """setNbCPU(self, EInt _nbCPU)"""
+        return _VISHNU.AddWorkOptions_setNbCPU(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.AddWorkOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.AddWorkOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.AddWorkOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.AddWorkOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.AddWorkOptions__eClass(self, *args, **kwargs)
+
+AddWorkOptions_swigregister = _VISHNU.AddWorkOptions_swigregister
+AddWorkOptions_swigregister(AddWorkOptions)
+
 class ExportOp(EObject):
+    """Proxy of C++ IMS_Data::ExportOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ExportOp, name, value)
@@ -1100,24 +3054,50 @@ class ExportOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ExportOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ExportOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ExportOp"""
+        this = _VISHNU.new_ExportOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ExportOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ExportOp__initialize(self)
-    def getExportType(self): return _VISHNU.ExportOp_getExportType(self)
-    def setExportType(self, *args): return _VISHNU.ExportOp_setExportType(self, *args)
-    def eGet(self, *args): return _VISHNU.ExportOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ExportOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ExportOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ExportOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ExportOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ExportOp__initialize(self, *args, **kwargs)
+
+    def getExportType(self, *args, **kwargs):
+        """getExportType(self) -> ExportType"""
+        return _VISHNU.ExportOp_getExportType(self, *args, **kwargs)
+
+    def setExportType(self, *args, **kwargs):
+        """setExportType(self, ExportType _exportType)"""
+        return _VISHNU.ExportOp_setExportType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ExportOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ExportOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ExportOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ExportOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ExportOp__eClass(self, *args, **kwargs)
+
 ExportOp_swigregister = _VISHNU.ExportOp_swigregister
 ExportOp_swigregister(ExportOp)
 
 class CurMetricOp(EObject):
+    """Proxy of C++ IMS_Data::CurMetricOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, CurMetricOp, name, value)
@@ -1125,24 +3105,50 @@ class CurMetricOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, CurMetricOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_CurMetricOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> CurMetricOp"""
+        this = _VISHNU.new_CurMetricOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_CurMetricOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.CurMetricOp__initialize(self)
-    def getMetricType(self): return _VISHNU.CurMetricOp_getMetricType(self)
-    def setMetricType(self, *args): return _VISHNU.CurMetricOp_setMetricType(self, *args)
-    def eGet(self, *args): return _VISHNU.CurMetricOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.CurMetricOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.CurMetricOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.CurMetricOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.CurMetricOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.CurMetricOp__initialize(self, *args, **kwargs)
+
+    def getMetricType(self, *args, **kwargs):
+        """getMetricType(self) -> MetricType"""
+        return _VISHNU.CurMetricOp_getMetricType(self, *args, **kwargs)
+
+    def setMetricType(self, *args, **kwargs):
+        """setMetricType(self, MetricType _metricType)"""
+        return _VISHNU.CurMetricOp_setMetricType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.CurMetricOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.CurMetricOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.CurMetricOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.CurMetricOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.CurMetricOp__eClass(self, *args, **kwargs)
+
 CurMetricOp_swigregister = _VISHNU.CurMetricOp_swigregister
 CurMetricOp_swigregister(CurMetricOp)
 
 class Metric(EObject):
+    """Proxy of C++ IMS_Data::Metric class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Metric, name, value)
@@ -1150,124 +3156,66 @@ class Metric(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Metric, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Metric()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Metric"""
+        this = _VISHNU.new_Metric(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Metric
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Metric__initialize(self)
-    def getType(self): return _VISHNU.Metric_getType(self)
-    def setType(self, *args): return _VISHNU.Metric_setType(self, *args)
-    def getValue(self): return _VISHNU.Metric_getValue(self)
-    def setValue(self, *args): return _VISHNU.Metric_setValue(self, *args)
-    def getTime(self): return _VISHNU.Metric_getTime(self)
-    def setTime(self, *args): return _VISHNU.Metric_setTime(self, *args)
-    def eGet(self, *args): return _VISHNU.Metric_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Metric_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Metric_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Metric_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Metric__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Metric__initialize(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> MetricType"""
+        return _VISHNU.Metric_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, MetricType _type)"""
+        return _VISHNU.Metric_setType(self, *args, **kwargs)
+
+    def getValue(self, *args, **kwargs):
+        """getValue(self) -> ELong"""
+        return _VISHNU.Metric_getValue(self, *args, **kwargs)
+
+    def setValue(self, *args, **kwargs):
+        """setValue(self, ELong _value)"""
+        return _VISHNU.Metric_setValue(self, *args, **kwargs)
+
+    def getTime(self, *args, **kwargs):
+        """getTime(self) -> ELong"""
+        return _VISHNU.Metric_getTime(self, *args, **kwargs)
+
+    def setTime(self, *args, **kwargs):
+        """setTime(self, ELong _time)"""
+        return _VISHNU.Metric_setTime(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Metric_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Metric_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Metric_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Metric_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Metric__eClass(self, *args, **kwargs)
+
 Metric_swigregister = _VISHNU.Metric_swigregister
 Metric_swigregister(Metric)
 
-class ListMetric(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListMetric, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListMetric, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListMetric()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListMetric
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListMetric__initialize(self)
-    def getMetric(self): return _VISHNU.ListMetric_getMetric(self)
-    def eGet(self, *args): return _VISHNU.ListMetric_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListMetric_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListMetric_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListMetric_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListMetric__eClass(self)
-ListMetric_swigregister = _VISHNU.ListMetric_swigregister
-ListMetric_swigregister(ListMetric)
-
-class ListProcesses(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListProcesses, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListProcesses, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListProcesses()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListProcesses
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListProcesses__initialize(self)
-    def getProcess(self): return _VISHNU.ListProcesses_getProcess(self)
-    def eGet(self, *args): return _VISHNU.ListProcesses_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListProcesses_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListProcesses_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListProcesses_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListProcesses__eClass(self)
-ListProcesses_swigregister = _VISHNU.ListProcesses_swigregister
-ListProcesses_swigregister(ListProcesses)
-
-class ListSysInfo(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListSysInfo, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListSysInfo, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListSysInfo()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListSysInfo
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListSysInfo__initialize(self)
-    def getSysInfo(self): return _VISHNU.ListSysInfo_getSysInfo(self)
-    def eGet(self, *args): return _VISHNU.ListSysInfo_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListSysInfo_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListSysInfo_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListSysInfo_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListSysInfo__eClass(self)
-ListSysInfo_swigregister = _VISHNU.ListSysInfo_swigregister
-ListSysInfo_swigregister(ListSysInfo)
-
-class ListThreshold(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ListThreshold, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, ListThreshold, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ListThreshold()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_ListThreshold
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ListThreshold__initialize(self)
-    def getThreshold(self): return _VISHNU.ListThreshold_getThreshold(self)
-    def eGet(self, *args): return _VISHNU.ListThreshold_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ListThreshold_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ListThreshold_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ListThreshold_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ListThreshold__eClass(self)
-ListThreshold_swigregister = _VISHNU.ListThreshold_swigregister
-ListThreshold_swigregister(ListThreshold)
-
 class MetricHistOp(EObject):
+    """Proxy of C++ IMS_Data::MetricHistOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, MetricHistOp, name, value)
@@ -1275,28 +3223,66 @@ class MetricHistOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, MetricHistOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_MetricHistOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> MetricHistOp"""
+        this = _VISHNU.new_MetricHistOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_MetricHistOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.MetricHistOp__initialize(self)
-    def getStartTime(self): return _VISHNU.MetricHistOp_getStartTime(self)
-    def setStartTime(self, *args): return _VISHNU.MetricHistOp_setStartTime(self, *args)
-    def getEndTime(self): return _VISHNU.MetricHistOp_getEndTime(self)
-    def setEndTime(self, *args): return _VISHNU.MetricHistOp_setEndTime(self, *args)
-    def getType(self): return _VISHNU.MetricHistOp_getType(self)
-    def setType(self, *args): return _VISHNU.MetricHistOp_setType(self, *args)
-    def eGet(self, *args): return _VISHNU.MetricHistOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.MetricHistOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.MetricHistOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.MetricHistOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.MetricHistOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.MetricHistOp__initialize(self, *args, **kwargs)
+
+    def getStartTime(self, *args, **kwargs):
+        """getStartTime(self) -> ELong"""
+        return _VISHNU.MetricHistOp_getStartTime(self, *args, **kwargs)
+
+    def setStartTime(self, *args, **kwargs):
+        """setStartTime(self, ELong _startTime)"""
+        return _VISHNU.MetricHistOp_setStartTime(self, *args, **kwargs)
+
+    def getEndTime(self, *args, **kwargs):
+        """getEndTime(self) -> ELong"""
+        return _VISHNU.MetricHistOp_getEndTime(self, *args, **kwargs)
+
+    def setEndTime(self, *args, **kwargs):
+        """setEndTime(self, ELong _endTime)"""
+        return _VISHNU.MetricHistOp_setEndTime(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> MetricType"""
+        return _VISHNU.MetricHistOp_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, MetricType _type)"""
+        return _VISHNU.MetricHistOp_setType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.MetricHistOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.MetricHistOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.MetricHistOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.MetricHistOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.MetricHistOp__eClass(self, *args, **kwargs)
+
 MetricHistOp_swigregister = _VISHNU.MetricHistOp_swigregister
 MetricHistOp_swigregister(MetricHistOp)
 
 class Process(EObject):
+    """Proxy of C++ IMS_Data::Process class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Process, name, value)
@@ -1304,34 +3290,90 @@ class Process(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Process, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Process()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Process"""
+        this = _VISHNU.new_Process(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Process
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Process__initialize(self)
-    def getProcessName(self): return _VISHNU.Process_getProcessName(self)
-    def setProcessName(self, *args): return _VISHNU.Process_setProcessName(self, *args)
-    def getMachineId(self): return _VISHNU.Process_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.Process_setMachineId(self, *args)
-    def getDietId(self): return _VISHNU.Process_getDietId(self)
-    def setDietId(self, *args): return _VISHNU.Process_setDietId(self, *args)
-    def getState(self): return _VISHNU.Process_getState(self)
-    def setState(self, *args): return _VISHNU.Process_setState(self, *args)
-    def getTimestamp(self): return _VISHNU.Process_getTimestamp(self)
-    def setTimestamp(self, *args): return _VISHNU.Process_setTimestamp(self, *args)
-    def getScript(self): return _VISHNU.Process_getScript(self)
-    def setScript(self, *args): return _VISHNU.Process_setScript(self, *args)
-    def eGet(self, *args): return _VISHNU.Process_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Process_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Process_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Process_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Process__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Process__initialize(self, *args, **kwargs)
+
+    def getProcessName(self, *args, **kwargs):
+        """getProcessName(self) -> EString"""
+        return _VISHNU.Process_getProcessName(self, *args, **kwargs)
+
+    def setProcessName(self, *args, **kwargs):
+        """setProcessName(self, EString _processName)"""
+        return _VISHNU.Process_setProcessName(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.Process_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.Process_setMachineId(self, *args, **kwargs)
+
+    def getDietId(self, *args, **kwargs):
+        """getDietId(self) -> EString"""
+        return _VISHNU.Process_getDietId(self, *args, **kwargs)
+
+    def setDietId(self, *args, **kwargs):
+        """setDietId(self, EString _dietId)"""
+        return _VISHNU.Process_setDietId(self, *args, **kwargs)
+
+    def getState(self, *args, **kwargs):
+        """getState(self) -> ProcessState"""
+        return _VISHNU.Process_getState(self, *args, **kwargs)
+
+    def setState(self, *args, **kwargs):
+        """setState(self, ProcessState _state)"""
+        return _VISHNU.Process_setState(self, *args, **kwargs)
+
+    def getTimestamp(self, *args, **kwargs):
+        """getTimestamp(self) -> ELong"""
+        return _VISHNU.Process_getTimestamp(self, *args, **kwargs)
+
+    def setTimestamp(self, *args, **kwargs):
+        """setTimestamp(self, ELong _timestamp)"""
+        return _VISHNU.Process_setTimestamp(self, *args, **kwargs)
+
+    def getScript(self, *args, **kwargs):
+        """getScript(self) -> EString"""
+        return _VISHNU.Process_getScript(self, *args, **kwargs)
+
+    def setScript(self, *args, **kwargs):
+        """setScript(self, EString _script)"""
+        return _VISHNU.Process_setScript(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Process_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Process_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Process_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Process_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Process__eClass(self, *args, **kwargs)
+
 Process_swigregister = _VISHNU.Process_swigregister
 Process_swigregister(Process)
 
 class ProcessOp(EObject):
+    """Proxy of C++ IMS_Data::ProcessOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ProcessOp, name, value)
@@ -1339,24 +3381,50 @@ class ProcessOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ProcessOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ProcessOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ProcessOp"""
+        this = _VISHNU.new_ProcessOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ProcessOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ProcessOp__initialize(self)
-    def getMachineId(self): return _VISHNU.ProcessOp_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.ProcessOp_setMachineId(self, *args)
-    def eGet(self, *args): return _VISHNU.ProcessOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ProcessOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ProcessOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ProcessOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ProcessOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ProcessOp__initialize(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ProcessOp_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ProcessOp_setMachineId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ProcessOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ProcessOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ProcessOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ProcessOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ProcessOp__eClass(self, *args, **kwargs)
+
 ProcessOp_swigregister = _VISHNU.ProcessOp_swigregister
 ProcessOp_swigregister(ProcessOp)
 
 class RestartOp(EObject):
+    """Proxy of C++ IMS_Data::RestartOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, RestartOp, name, value)
@@ -1364,26 +3432,58 @@ class RestartOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, RestartOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_RestartOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> RestartOp"""
+        this = _VISHNU.new_RestartOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_RestartOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.RestartOp__initialize(self)
-    def getVishnuConf(self): return _VISHNU.RestartOp_getVishnuConf(self)
-    def setVishnuConf(self, *args): return _VISHNU.RestartOp_setVishnuConf(self, *args)
-    def getSedType(self): return _VISHNU.RestartOp_getSedType(self)
-    def setSedType(self, *args): return _VISHNU.RestartOp_setSedType(self, *args)
-    def eGet(self, *args): return _VISHNU.RestartOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.RestartOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.RestartOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.RestartOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.RestartOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.RestartOp__initialize(self, *args, **kwargs)
+
+    def getVishnuConf(self, *args, **kwargs):
+        """getVishnuConf(self) -> EString"""
+        return _VISHNU.RestartOp_getVishnuConf(self, *args, **kwargs)
+
+    def setVishnuConf(self, *args, **kwargs):
+        """setVishnuConf(self, EString _vishnuConf)"""
+        return _VISHNU.RestartOp_setVishnuConf(self, *args, **kwargs)
+
+    def getSedType(self, *args, **kwargs):
+        """getSedType(self) -> SeDType"""
+        return _VISHNU.RestartOp_getSedType(self, *args, **kwargs)
+
+    def setSedType(self, *args, **kwargs):
+        """setSedType(self, SeDType _sedType)"""
+        return _VISHNU.RestartOp_setSedType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.RestartOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.RestartOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.RestartOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.RestartOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.RestartOp__eClass(self, *args, **kwargs)
+
 RestartOp_swigregister = _VISHNU.RestartOp_swigregister
 RestartOp_swigregister(RestartOp)
 
 class SysInfoOp(EObject):
+    """Proxy of C++ IMS_Data::SysInfoOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SysInfoOp, name, value)
@@ -1391,24 +3491,50 @@ class SysInfoOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, SysInfoOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_SysInfoOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> SysInfoOp"""
+        this = _VISHNU.new_SysInfoOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_SysInfoOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.SysInfoOp__initialize(self)
-    def getMachineId(self): return _VISHNU.SysInfoOp_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.SysInfoOp_setMachineId(self, *args)
-    def eGet(self, *args): return _VISHNU.SysInfoOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.SysInfoOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.SysInfoOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.SysInfoOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.SysInfoOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.SysInfoOp__initialize(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.SysInfoOp_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.SysInfoOp_setMachineId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.SysInfoOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.SysInfoOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.SysInfoOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.SysInfoOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.SysInfoOp__eClass(self, *args, **kwargs)
+
 SysInfoOp_swigregister = _VISHNU.SysInfoOp_swigregister
 SysInfoOp_swigregister(SysInfoOp)
 
 class SystemInfo(EObject):
+    """Proxy of C++ IMS_Data::SystemInfo class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SystemInfo, name, value)
@@ -1416,28 +3542,66 @@ class SystemInfo(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, SystemInfo, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_SystemInfo()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> SystemInfo"""
+        this = _VISHNU.new_SystemInfo(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_SystemInfo
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.SystemInfo__initialize(self)
-    def getMemory(self): return _VISHNU.SystemInfo_getMemory(self)
-    def setMemory(self, *args): return _VISHNU.SystemInfo_setMemory(self, *args)
-    def getDiskSpace(self): return _VISHNU.SystemInfo_getDiskSpace(self)
-    def setDiskSpace(self, *args): return _VISHNU.SystemInfo_setDiskSpace(self, *args)
-    def getMachineId(self): return _VISHNU.SystemInfo_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.SystemInfo_setMachineId(self, *args)
-    def eGet(self, *args): return _VISHNU.SystemInfo_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.SystemInfo_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.SystemInfo_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.SystemInfo_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.SystemInfo__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.SystemInfo__initialize(self, *args, **kwargs)
+
+    def getMemory(self, *args, **kwargs):
+        """getMemory(self) -> ELong"""
+        return _VISHNU.SystemInfo_getMemory(self, *args, **kwargs)
+
+    def setMemory(self, *args, **kwargs):
+        """setMemory(self, ELong _memory)"""
+        return _VISHNU.SystemInfo_setMemory(self, *args, **kwargs)
+
+    def getDiskSpace(self, *args, **kwargs):
+        """getDiskSpace(self) -> ELong"""
+        return _VISHNU.SystemInfo_getDiskSpace(self, *args, **kwargs)
+
+    def setDiskSpace(self, *args, **kwargs):
+        """setDiskSpace(self, ELong _diskSpace)"""
+        return _VISHNU.SystemInfo_setDiskSpace(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.SystemInfo_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.SystemInfo_setMachineId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.SystemInfo_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.SystemInfo_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.SystemInfo_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.SystemInfo_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.SystemInfo__eClass(self, *args, **kwargs)
+
 SystemInfo_swigregister = _VISHNU.SystemInfo_swigregister
 SystemInfo_swigregister(SystemInfo)
 
 class Threshold(EObject):
+    """Proxy of C++ IMS_Data::Threshold class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, Threshold, name, value)
@@ -1445,30 +3609,74 @@ class Threshold(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, Threshold, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_Threshold()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> Threshold"""
+        this = _VISHNU.new_Threshold(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_Threshold
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.Threshold__initialize(self)
-    def getValue(self): return _VISHNU.Threshold_getValue(self)
-    def setValue(self, *args): return _VISHNU.Threshold_setValue(self, *args)
-    def getMachineId(self): return _VISHNU.Threshold_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.Threshold_setMachineId(self, *args)
-    def getType(self): return _VISHNU.Threshold_getType(self)
-    def setType(self, *args): return _VISHNU.Threshold_setType(self, *args)
-    def getHandler(self): return _VISHNU.Threshold_getHandler(self)
-    def setHandler(self, *args): return _VISHNU.Threshold_setHandler(self, *args)
-    def eGet(self, *args): return _VISHNU.Threshold_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.Threshold_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.Threshold_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.Threshold_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.Threshold__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.Threshold__initialize(self, *args, **kwargs)
+
+    def getValue(self, *args, **kwargs):
+        """getValue(self) -> ELong"""
+        return _VISHNU.Threshold_getValue(self, *args, **kwargs)
+
+    def setValue(self, *args, **kwargs):
+        """setValue(self, ELong _value)"""
+        return _VISHNU.Threshold_setValue(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.Threshold_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.Threshold_setMachineId(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> MetricType"""
+        return _VISHNU.Threshold_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, MetricType _type)"""
+        return _VISHNU.Threshold_setType(self, *args, **kwargs)
+
+    def getHandler(self, *args, **kwargs):
+        """getHandler(self) -> EString"""
+        return _VISHNU.Threshold_getHandler(self, *args, **kwargs)
+
+    def setHandler(self, *args, **kwargs):
+        """setHandler(self, EString _handler)"""
+        return _VISHNU.Threshold_setHandler(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.Threshold_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.Threshold_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.Threshold_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.Threshold_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.Threshold__eClass(self, *args, **kwargs)
+
 Threshold_swigregister = _VISHNU.Threshold_swigregister
 Threshold_swigregister(Threshold)
 
 class ThresholdOp(EObject):
+    """Proxy of C++ IMS_Data::ThresholdOp class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, ThresholdOp, name, value)
@@ -1476,26 +3684,58 @@ class ThresholdOp(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, ThresholdOp, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_ThresholdOp()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> ThresholdOp"""
+        this = _VISHNU.new_ThresholdOp(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_ThresholdOp
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.ThresholdOp__initialize(self)
-    def getMachineId(self): return _VISHNU.ThresholdOp_getMachineId(self)
-    def setMachineId(self, *args): return _VISHNU.ThresholdOp_setMachineId(self, *args)
-    def getMetricType(self): return _VISHNU.ThresholdOp_getMetricType(self)
-    def setMetricType(self, *args): return _VISHNU.ThresholdOp_setMetricType(self, *args)
-    def eGet(self, *args): return _VISHNU.ThresholdOp_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.ThresholdOp_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.ThresholdOp_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.ThresholdOp_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.ThresholdOp__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.ThresholdOp__initialize(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ThresholdOp_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ThresholdOp_setMachineId(self, *args, **kwargs)
+
+    def getMetricType(self, *args, **kwargs):
+        """getMetricType(self) -> MetricType"""
+        return _VISHNU.ThresholdOp_getMetricType(self, *args, **kwargs)
+
+    def setMetricType(self, *args, **kwargs):
+        """setMetricType(self, MetricType _metricType)"""
+        return _VISHNU.ThresholdOp_setMetricType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.ThresholdOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.ThresholdOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.ThresholdOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.ThresholdOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.ThresholdOp__eClass(self, *args, **kwargs)
+
 ThresholdOp_swigregister = _VISHNU.ThresholdOp_swigregister
 ThresholdOp_swigregister(ThresholdOp)
 
 class CpFileOptions(EObject):
+    """Proxy of C++ FMS_Data::CpFileOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, CpFileOptions, name, value)
@@ -1503,26 +3743,58 @@ class CpFileOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, CpFileOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_CpFileOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> CpFileOptions"""
+        this = _VISHNU.new_CpFileOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_CpFileOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.CpFileOptions__initialize(self)
-    def isIsRecursive(self): return _VISHNU.CpFileOptions_isIsRecursive(self)
-    def setIsRecursive(self, *args): return _VISHNU.CpFileOptions_setIsRecursive(self, *args)
-    def getTrCommand(self): return _VISHNU.CpFileOptions_getTrCommand(self)
-    def setTrCommand(self, *args): return _VISHNU.CpFileOptions_setTrCommand(self, *args)
-    def eGet(self, *args): return _VISHNU.CpFileOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.CpFileOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.CpFileOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.CpFileOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.CpFileOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.CpFileOptions__initialize(self, *args, **kwargs)
+
+    def isIsRecursive(self, *args, **kwargs):
+        """isIsRecursive(self) -> EBoolean"""
+        return _VISHNU.CpFileOptions_isIsRecursive(self, *args, **kwargs)
+
+    def setIsRecursive(self, *args, **kwargs):
+        """setIsRecursive(self, EBoolean _isRecursive)"""
+        return _VISHNU.CpFileOptions_setIsRecursive(self, *args, **kwargs)
+
+    def getTrCommand(self, *args, **kwargs):
+        """getTrCommand(self) -> TransferCommand"""
+        return _VISHNU.CpFileOptions_getTrCommand(self, *args, **kwargs)
+
+    def setTrCommand(self, *args, **kwargs):
+        """setTrCommand(self, TransferCommand _trCommand)"""
+        return _VISHNU.CpFileOptions_setTrCommand(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.CpFileOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.CpFileOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.CpFileOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.CpFileOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.CpFileOptions__eClass(self, *args, **kwargs)
+
 CpFileOptions_swigregister = _VISHNU.CpFileOptions_swigregister
 CpFileOptions_swigregister(CpFileOptions)
 
 class FileStat(EObject):
+    """Proxy of C++ FMS_Data::FileStat class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, FileStat, name, value)
@@ -1530,68 +3802,130 @@ class FileStat(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, FileStat, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_FileStat()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> FileStat"""
+        this = _VISHNU.new_FileStat(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_FileStat
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.FileStat__initialize(self)
-    def getPath(self): return _VISHNU.FileStat_getPath(self)
-    def setPath(self, *args): return _VISHNU.FileStat_setPath(self, *args)
-    def getOwner(self): return _VISHNU.FileStat_getOwner(self)
-    def setOwner(self, *args): return _VISHNU.FileStat_setOwner(self, *args)
-    def getGroup(self): return _VISHNU.FileStat_getGroup(self)
-    def setGroup(self, *args): return _VISHNU.FileStat_setGroup(self, *args)
-    def getPerms(self): return _VISHNU.FileStat_getPerms(self)
-    def setPerms(self, *args): return _VISHNU.FileStat_setPerms(self, *args)
-    def getUid(self): return _VISHNU.FileStat_getUid(self)
-    def setUid(self, *args): return _VISHNU.FileStat_setUid(self, *args)
-    def getGid(self): return _VISHNU.FileStat_getGid(self)
-    def setGid(self, *args): return _VISHNU.FileStat_setGid(self, *args)
-    def getSize(self): return _VISHNU.FileStat_getSize(self)
-    def setSize(self, *args): return _VISHNU.FileStat_setSize(self, *args)
-    def getAtime(self): return _VISHNU.FileStat_getAtime(self)
-    def setAtime(self, *args): return _VISHNU.FileStat_setAtime(self, *args)
-    def getMtime(self): return _VISHNU.FileStat_getMtime(self)
-    def setMtime(self, *args): return _VISHNU.FileStat_setMtime(self, *args)
-    def getCtime(self): return _VISHNU.FileStat_getCtime(self)
-    def setCtime(self, *args): return _VISHNU.FileStat_setCtime(self, *args)
-    def getType(self): return _VISHNU.FileStat_getType(self)
-    def setType(self, *args): return _VISHNU.FileStat_setType(self, *args)
-    def eGet(self, *args): return _VISHNU.FileStat_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.FileStat_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.FileStat_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.FileStat_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.FileStat__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.FileStat__initialize(self, *args, **kwargs)
+
+    def getPath(self, *args, **kwargs):
+        """getPath(self) -> EString"""
+        return _VISHNU.FileStat_getPath(self, *args, **kwargs)
+
+    def setPath(self, *args, **kwargs):
+        """setPath(self, EString _path)"""
+        return _VISHNU.FileStat_setPath(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.FileStat_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.FileStat_setOwner(self, *args, **kwargs)
+
+    def getGroup(self, *args, **kwargs):
+        """getGroup(self) -> EString"""
+        return _VISHNU.FileStat_getGroup(self, *args, **kwargs)
+
+    def setGroup(self, *args, **kwargs):
+        """setGroup(self, EString _group)"""
+        return _VISHNU.FileStat_setGroup(self, *args, **kwargs)
+
+    def getPerms(self, *args, **kwargs):
+        """getPerms(self) -> EInt"""
+        return _VISHNU.FileStat_getPerms(self, *args, **kwargs)
+
+    def setPerms(self, *args, **kwargs):
+        """setPerms(self, EInt _perms)"""
+        return _VISHNU.FileStat_setPerms(self, *args, **kwargs)
+
+    def getUid(self, *args, **kwargs):
+        """getUid(self) -> ELong"""
+        return _VISHNU.FileStat_getUid(self, *args, **kwargs)
+
+    def setUid(self, *args, **kwargs):
+        """setUid(self, ELong _uid)"""
+        return _VISHNU.FileStat_setUid(self, *args, **kwargs)
+
+    def getGid(self, *args, **kwargs):
+        """getGid(self) -> ELong"""
+        return _VISHNU.FileStat_getGid(self, *args, **kwargs)
+
+    def setGid(self, *args, **kwargs):
+        """setGid(self, ELong _gid)"""
+        return _VISHNU.FileStat_setGid(self, *args, **kwargs)
+
+    def getSize(self, *args, **kwargs):
+        """getSize(self) -> EBigInteger"""
+        return _VISHNU.FileStat_getSize(self, *args, **kwargs)
+
+    def setSize(self, *args, **kwargs):
+        """setSize(self, EBigInteger _size)"""
+        return _VISHNU.FileStat_setSize(self, *args, **kwargs)
+
+    def getAtime(self, *args, **kwargs):
+        """getAtime(self) -> ELong"""
+        return _VISHNU.FileStat_getAtime(self, *args, **kwargs)
+
+    def setAtime(self, *args, **kwargs):
+        """setAtime(self, ELong _atime)"""
+        return _VISHNU.FileStat_setAtime(self, *args, **kwargs)
+
+    def getMtime(self, *args, **kwargs):
+        """getMtime(self) -> ELong"""
+        return _VISHNU.FileStat_getMtime(self, *args, **kwargs)
+
+    def setMtime(self, *args, **kwargs):
+        """setMtime(self, ELong _mtime)"""
+        return _VISHNU.FileStat_setMtime(self, *args, **kwargs)
+
+    def getCtime(self, *args, **kwargs):
+        """getCtime(self) -> ELong"""
+        return _VISHNU.FileStat_getCtime(self, *args, **kwargs)
+
+    def setCtime(self, *args, **kwargs):
+        """setCtime(self, ELong _ctime)"""
+        return _VISHNU.FileStat_setCtime(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> FileType"""
+        return _VISHNU.FileStat_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, FileType _type)"""
+        return _VISHNU.FileStat_setType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.FileStat_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.FileStat_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.FileStat_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.FileStat_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.FileStat__eClass(self, *args, **kwargs)
+
 FileStat_swigregister = _VISHNU.FileStat_swigregister
 FileStat_swigregister(FileStat)
 
-class FileStatList(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, FileStatList, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, FileStatList, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_FileStatList()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_FileStatList
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.FileStatList__initialize(self)
-    def getFileStats(self): return _VISHNU.FileStatList_getFileStats(self)
-    def eGet(self, *args): return _VISHNU.FileStatList_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.FileStatList_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.FileStatList_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.FileStatList_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.FileStatList__eClass(self)
-FileStatList_swigregister = _VISHNU.FileStatList_swigregister
-FileStatList_swigregister(FileStatList)
-
 class FileTransfer(EObject):
+    """Proxy of C++ FMS_Data::FileTransfer class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, FileTransfer, name, value)
@@ -1599,70 +3933,138 @@ class FileTransfer(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, FileTransfer, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_FileTransfer()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> FileTransfer"""
+        this = _VISHNU.new_FileTransfer(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_FileTransfer
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.FileTransfer__initialize(self)
-    def getTransferId(self): return _VISHNU.FileTransfer_getTransferId(self)
-    def setTransferId(self, *args): return _VISHNU.FileTransfer_setTransferId(self, *args)
-    def getStatus(self): return _VISHNU.FileTransfer_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.FileTransfer_setStatus(self, *args)
-    def getUserId(self): return _VISHNU.FileTransfer_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.FileTransfer_setUserId(self, *args)
-    def getClientMachineId(self): return _VISHNU.FileTransfer_getClientMachineId(self)
-    def setClientMachineId(self, *args): return _VISHNU.FileTransfer_setClientMachineId(self, *args)
-    def getSourceMachineId(self): return _VISHNU.FileTransfer_getSourceMachineId(self)
-    def setSourceMachineId(self, *args): return _VISHNU.FileTransfer_setSourceMachineId(self, *args)
-    def getDestinationMachineId(self): return _VISHNU.FileTransfer_getDestinationMachineId(self)
-    def setDestinationMachineId(self, *args): return _VISHNU.FileTransfer_setDestinationMachineId(self, *args)
-    def getSourceFilePath(self): return _VISHNU.FileTransfer_getSourceFilePath(self)
-    def setSourceFilePath(self, *args): return _VISHNU.FileTransfer_setSourceFilePath(self, *args)
-    def getDestinationFilePath(self): return _VISHNU.FileTransfer_getDestinationFilePath(self)
-    def setDestinationFilePath(self, *args): return _VISHNU.FileTransfer_setDestinationFilePath(self, *args)
-    def getSize(self): return _VISHNU.FileTransfer_getSize(self)
-    def setSize(self, *args): return _VISHNU.FileTransfer_setSize(self, *args)
-    def getStart_time(self): return _VISHNU.FileTransfer_getStart_time(self)
-    def setStart_time(self, *args): return _VISHNU.FileTransfer_setStart_time(self, *args)
-    def getTrCommand(self): return _VISHNU.FileTransfer_getTrCommand(self)
-    def setTrCommand(self, *args): return _VISHNU.FileTransfer_setTrCommand(self, *args)
-    def getErrorMsg(self): return _VISHNU.FileTransfer_getErrorMsg(self)
-    def setErrorMsg(self, *args): return _VISHNU.FileTransfer_setErrorMsg(self, *args)
-    def eGet(self, *args): return _VISHNU.FileTransfer_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.FileTransfer_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.FileTransfer_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.FileTransfer_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.FileTransfer__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.FileTransfer__initialize(self, *args, **kwargs)
+
+    def getTransferId(self, *args, **kwargs):
+        """getTransferId(self) -> EString"""
+        return _VISHNU.FileTransfer_getTransferId(self, *args, **kwargs)
+
+    def setTransferId(self, *args, **kwargs):
+        """setTransferId(self, EString _transferId)"""
+        return _VISHNU.FileTransfer_setTransferId(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> Status"""
+        return _VISHNU.FileTransfer_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, Status _status)"""
+        return _VISHNU.FileTransfer_setStatus(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.FileTransfer_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.FileTransfer_setUserId(self, *args, **kwargs)
+
+    def getClientMachineId(self, *args, **kwargs):
+        """getClientMachineId(self) -> EString"""
+        return _VISHNU.FileTransfer_getClientMachineId(self, *args, **kwargs)
+
+    def setClientMachineId(self, *args, **kwargs):
+        """setClientMachineId(self, EString _clientMachineId)"""
+        return _VISHNU.FileTransfer_setClientMachineId(self, *args, **kwargs)
+
+    def getSourceMachineId(self, *args, **kwargs):
+        """getSourceMachineId(self) -> EString"""
+        return _VISHNU.FileTransfer_getSourceMachineId(self, *args, **kwargs)
+
+    def setSourceMachineId(self, *args, **kwargs):
+        """setSourceMachineId(self, EString _sourceMachineId)"""
+        return _VISHNU.FileTransfer_setSourceMachineId(self, *args, **kwargs)
+
+    def getDestinationMachineId(self, *args, **kwargs):
+        """getDestinationMachineId(self) -> EString"""
+        return _VISHNU.FileTransfer_getDestinationMachineId(self, *args, **kwargs)
+
+    def setDestinationMachineId(self, *args, **kwargs):
+        """setDestinationMachineId(self, EString _destinationMachineId)"""
+        return _VISHNU.FileTransfer_setDestinationMachineId(self, *args, **kwargs)
+
+    def getSourceFilePath(self, *args, **kwargs):
+        """getSourceFilePath(self) -> EString"""
+        return _VISHNU.FileTransfer_getSourceFilePath(self, *args, **kwargs)
+
+    def setSourceFilePath(self, *args, **kwargs):
+        """setSourceFilePath(self, EString _sourceFilePath)"""
+        return _VISHNU.FileTransfer_setSourceFilePath(self, *args, **kwargs)
+
+    def getDestinationFilePath(self, *args, **kwargs):
+        """getDestinationFilePath(self) -> EString"""
+        return _VISHNU.FileTransfer_getDestinationFilePath(self, *args, **kwargs)
+
+    def setDestinationFilePath(self, *args, **kwargs):
+        """setDestinationFilePath(self, EString _destinationFilePath)"""
+        return _VISHNU.FileTransfer_setDestinationFilePath(self, *args, **kwargs)
+
+    def getSize(self, *args, **kwargs):
+        """getSize(self) -> EBigInteger"""
+        return _VISHNU.FileTransfer_getSize(self, *args, **kwargs)
+
+    def setSize(self, *args, **kwargs):
+        """setSize(self, EBigInteger _size)"""
+        return _VISHNU.FileTransfer_setSize(self, *args, **kwargs)
+
+    def getStart_time(self, *args, **kwargs):
+        """getStart_time(self) -> ELong"""
+        return _VISHNU.FileTransfer_getStart_time(self, *args, **kwargs)
+
+    def setStart_time(self, *args, **kwargs):
+        """setStart_time(self, ELong _start_time)"""
+        return _VISHNU.FileTransfer_setStart_time(self, *args, **kwargs)
+
+    def getTrCommand(self, *args, **kwargs):
+        """getTrCommand(self) -> TransferCommand"""
+        return _VISHNU.FileTransfer_getTrCommand(self, *args, **kwargs)
+
+    def setTrCommand(self, *args, **kwargs):
+        """setTrCommand(self, TransferCommand _trCommand)"""
+        return _VISHNU.FileTransfer_setTrCommand(self, *args, **kwargs)
+
+    def getErrorMsg(self, *args, **kwargs):
+        """getErrorMsg(self) -> EString"""
+        return _VISHNU.FileTransfer_getErrorMsg(self, *args, **kwargs)
+
+    def setErrorMsg(self, *args, **kwargs):
+        """setErrorMsg(self, EString _errorMsg)"""
+        return _VISHNU.FileTransfer_setErrorMsg(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.FileTransfer_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.FileTransfer_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.FileTransfer_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.FileTransfer_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.FileTransfer__eClass(self, *args, **kwargs)
+
 FileTransfer_swigregister = _VISHNU.FileTransfer_swigregister
 FileTransfer_swigregister(FileTransfer)
 
-class FileTransferList(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, FileTransferList, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, FileTransferList, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_FileTransferList()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_FileTransferList
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.FileTransferList__initialize(self)
-    def getFileTransfers(self): return _VISHNU.FileTransferList_getFileTransfers(self)
-    def eGet(self, *args): return _VISHNU.FileTransferList_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.FileTransferList_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.FileTransferList_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.FileTransferList_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.FileTransferList__eClass(self)
-FileTransferList_swigregister = _VISHNU.FileTransferList_swigregister
-FileTransferList_swigregister(FileTransferList)
-
 class HeadOfFileOptions(EObject):
+    """Proxy of C++ FMS_Data::HeadOfFileOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, HeadOfFileOptions, name, value)
@@ -1670,24 +4072,50 @@ class HeadOfFileOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, HeadOfFileOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_HeadOfFileOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> HeadOfFileOptions"""
+        this = _VISHNU.new_HeadOfFileOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_HeadOfFileOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.HeadOfFileOptions__initialize(self)
-    def getNline(self): return _VISHNU.HeadOfFileOptions_getNline(self)
-    def setNline(self, *args): return _VISHNU.HeadOfFileOptions_setNline(self, *args)
-    def eGet(self, *args): return _VISHNU.HeadOfFileOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.HeadOfFileOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.HeadOfFileOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.HeadOfFileOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.HeadOfFileOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.HeadOfFileOptions__initialize(self, *args, **kwargs)
+
+    def getNline(self, *args, **kwargs):
+        """getNline(self) -> EInt"""
+        return _VISHNU.HeadOfFileOptions_getNline(self, *args, **kwargs)
+
+    def setNline(self, *args, **kwargs):
+        """setNline(self, EInt _nline)"""
+        return _VISHNU.HeadOfFileOptions_setNline(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.HeadOfFileOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.HeadOfFileOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.HeadOfFileOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.HeadOfFileOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.HeadOfFileOptions__eClass(self, *args, **kwargs)
+
 HeadOfFileOptions_swigregister = _VISHNU.HeadOfFileOptions_swigregister
 HeadOfFileOptions_swigregister(HeadOfFileOptions)
 
 class LsDirOptions(EObject):
+    """Proxy of C++ FMS_Data::LsDirOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, LsDirOptions, name, value)
@@ -1695,26 +4123,58 @@ class LsDirOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, LsDirOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_LsDirOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> LsDirOptions"""
+        this = _VISHNU.new_LsDirOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_LsDirOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.LsDirOptions__initialize(self)
-    def isLongFormat(self): return _VISHNU.LsDirOptions_isLongFormat(self)
-    def setLongFormat(self, *args): return _VISHNU.LsDirOptions_setLongFormat(self, *args)
-    def isAllFiles(self): return _VISHNU.LsDirOptions_isAllFiles(self)
-    def setAllFiles(self, *args): return _VISHNU.LsDirOptions_setAllFiles(self, *args)
-    def eGet(self, *args): return _VISHNU.LsDirOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.LsDirOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.LsDirOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.LsDirOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.LsDirOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.LsDirOptions__initialize(self, *args, **kwargs)
+
+    def isLongFormat(self, *args, **kwargs):
+        """isLongFormat(self) -> EBoolean"""
+        return _VISHNU.LsDirOptions_isLongFormat(self, *args, **kwargs)
+
+    def setLongFormat(self, *args, **kwargs):
+        """setLongFormat(self, EBoolean _longFormat)"""
+        return _VISHNU.LsDirOptions_setLongFormat(self, *args, **kwargs)
+
+    def isAllFiles(self, *args, **kwargs):
+        """isAllFiles(self) -> EBoolean"""
+        return _VISHNU.LsDirOptions_isAllFiles(self, *args, **kwargs)
+
+    def setAllFiles(self, *args, **kwargs):
+        """setAllFiles(self, EBoolean _allFiles)"""
+        return _VISHNU.LsDirOptions_setAllFiles(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.LsDirOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.LsDirOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.LsDirOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.LsDirOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.LsDirOptions__eClass(self, *args, **kwargs)
+
 LsDirOptions_swigregister = _VISHNU.LsDirOptions_swigregister
 LsDirOptions_swigregister(LsDirOptions)
 
 class LsTransferOptions(EObject):
+    """Proxy of C++ FMS_Data::LsTransferOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, LsTransferOptions, name, value)
@@ -1722,30 +4182,74 @@ class LsTransferOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, LsTransferOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_LsTransferOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> LsTransferOptions"""
+        this = _VISHNU.new_LsTransferOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_LsTransferOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.LsTransferOptions__initialize(self)
-    def getTransferId(self): return _VISHNU.LsTransferOptions_getTransferId(self)
-    def setTransferId(self, *args): return _VISHNU.LsTransferOptions_setTransferId(self, *args)
-    def getFromMachineId(self): return _VISHNU.LsTransferOptions_getFromMachineId(self)
-    def setFromMachineId(self, *args): return _VISHNU.LsTransferOptions_setFromMachineId(self, *args)
-    def getUserId(self): return _VISHNU.LsTransferOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.LsTransferOptions_setUserId(self, *args)
-    def getStatus(self): return _VISHNU.LsTransferOptions_getStatus(self)
-    def setStatus(self, *args): return _VISHNU.LsTransferOptions_setStatus(self, *args)
-    def eGet(self, *args): return _VISHNU.LsTransferOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.LsTransferOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.LsTransferOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.LsTransferOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.LsTransferOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.LsTransferOptions__initialize(self, *args, **kwargs)
+
+    def getTransferId(self, *args, **kwargs):
+        """getTransferId(self) -> EString"""
+        return _VISHNU.LsTransferOptions_getTransferId(self, *args, **kwargs)
+
+    def setTransferId(self, *args, **kwargs):
+        """setTransferId(self, EString _transferId)"""
+        return _VISHNU.LsTransferOptions_setTransferId(self, *args, **kwargs)
+
+    def getFromMachineId(self, *args, **kwargs):
+        """getFromMachineId(self) -> EString"""
+        return _VISHNU.LsTransferOptions_getFromMachineId(self, *args, **kwargs)
+
+    def setFromMachineId(self, *args, **kwargs):
+        """setFromMachineId(self, EString _fromMachineId)"""
+        return _VISHNU.LsTransferOptions_setFromMachineId(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.LsTransferOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.LsTransferOptions_setUserId(self, *args, **kwargs)
+
+    def getStatus(self, *args, **kwargs):
+        """getStatus(self) -> Status"""
+        return _VISHNU.LsTransferOptions_getStatus(self, *args, **kwargs)
+
+    def setStatus(self, *args, **kwargs):
+        """setStatus(self, Status _status)"""
+        return _VISHNU.LsTransferOptions_setStatus(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.LsTransferOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.LsTransferOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.LsTransferOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.LsTransferOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.LsTransferOptions__eClass(self, *args, **kwargs)
+
 LsTransferOptions_swigregister = _VISHNU.LsTransferOptions_swigregister
 LsTransferOptions_swigregister(LsTransferOptions)
 
 class StopTransferOptions(EObject):
+    """Proxy of C++ FMS_Data::StopTransferOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, StopTransferOptions, name, value)
@@ -1753,28 +4257,66 @@ class StopTransferOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, StopTransferOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_StopTransferOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> StopTransferOptions"""
+        this = _VISHNU.new_StopTransferOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_StopTransferOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.StopTransferOptions__initialize(self)
-    def getTransferId(self): return _VISHNU.StopTransferOptions_getTransferId(self)
-    def setTransferId(self, *args): return _VISHNU.StopTransferOptions_setTransferId(self, *args)
-    def getFromMachineId(self): return _VISHNU.StopTransferOptions_getFromMachineId(self)
-    def setFromMachineId(self, *args): return _VISHNU.StopTransferOptions_setFromMachineId(self, *args)
-    def getUserId(self): return _VISHNU.StopTransferOptions_getUserId(self)
-    def setUserId(self, *args): return _VISHNU.StopTransferOptions_setUserId(self, *args)
-    def eGet(self, *args): return _VISHNU.StopTransferOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.StopTransferOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.StopTransferOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.StopTransferOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.StopTransferOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.StopTransferOptions__initialize(self, *args, **kwargs)
+
+    def getTransferId(self, *args, **kwargs):
+        """getTransferId(self) -> EString"""
+        return _VISHNU.StopTransferOptions_getTransferId(self, *args, **kwargs)
+
+    def setTransferId(self, *args, **kwargs):
+        """setTransferId(self, EString _transferId)"""
+        return _VISHNU.StopTransferOptions_setTransferId(self, *args, **kwargs)
+
+    def getFromMachineId(self, *args, **kwargs):
+        """getFromMachineId(self) -> EString"""
+        return _VISHNU.StopTransferOptions_getFromMachineId(self, *args, **kwargs)
+
+    def setFromMachineId(self, *args, **kwargs):
+        """setFromMachineId(self, EString _fromMachineId)"""
+        return _VISHNU.StopTransferOptions_setFromMachineId(self, *args, **kwargs)
+
+    def getUserId(self, *args, **kwargs):
+        """getUserId(self) -> EString"""
+        return _VISHNU.StopTransferOptions_getUserId(self, *args, **kwargs)
+
+    def setUserId(self, *args, **kwargs):
+        """setUserId(self, EString _userId)"""
+        return _VISHNU.StopTransferOptions_setUserId(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.StopTransferOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.StopTransferOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.StopTransferOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.StopTransferOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.StopTransferOptions__eClass(self, *args, **kwargs)
+
 StopTransferOptions_swigregister = _VISHNU.StopTransferOptions_swigregister
 StopTransferOptions_swigregister(StopTransferOptions)
 
 class TailOfFileOptions(EObject):
+    """Proxy of C++ FMS_Data::TailOfFileOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, TailOfFileOptions, name, value)
@@ -1782,24 +4324,50 @@ class TailOfFileOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, TailOfFileOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_TailOfFileOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> TailOfFileOptions"""
+        this = _VISHNU.new_TailOfFileOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_TailOfFileOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.TailOfFileOptions__initialize(self)
-    def getNline(self): return _VISHNU.TailOfFileOptions_getNline(self)
-    def setNline(self, *args): return _VISHNU.TailOfFileOptions_setNline(self, *args)
-    def eGet(self, *args): return _VISHNU.TailOfFileOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.TailOfFileOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.TailOfFileOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.TailOfFileOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.TailOfFileOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.TailOfFileOptions__initialize(self, *args, **kwargs)
+
+    def getNline(self, *args, **kwargs):
+        """getNline(self) -> EInt"""
+        return _VISHNU.TailOfFileOptions_getNline(self, *args, **kwargs)
+
+    def setNline(self, *args, **kwargs):
+        """setNline(self, EInt _nline)"""
+        return _VISHNU.TailOfFileOptions_setNline(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.TailOfFileOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.TailOfFileOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.TailOfFileOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.TailOfFileOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.TailOfFileOptions__eClass(self, *args, **kwargs)
+
 TailOfFileOptions_swigregister = _VISHNU.TailOfFileOptions_swigregister
 TailOfFileOptions_swigregister(TailOfFileOptions)
 
 class RmFileOptions(EObject):
+    """Proxy of C++ FMS_Data::RmFileOptions class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, RmFileOptions, name, value)
@@ -1807,24 +4375,101 @@ class RmFileOptions(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, RmFileOptions, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_RmFileOptions()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> RmFileOptions"""
+        this = _VISHNU.new_RmFileOptions(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_RmFileOptions
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.RmFileOptions__initialize(self)
-    def isIsRecursive(self): return _VISHNU.RmFileOptions_isIsRecursive(self)
-    def setIsRecursive(self, *args): return _VISHNU.RmFileOptions_setIsRecursive(self, *args)
-    def eGet(self, *args): return _VISHNU.RmFileOptions_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.RmFileOptions_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.RmFileOptions_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.RmFileOptions_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.RmFileOptions__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.RmFileOptions__initialize(self, *args, **kwargs)
+
+    def isIsRecursive(self, *args, **kwargs):
+        """isIsRecursive(self) -> EBoolean"""
+        return _VISHNU.RmFileOptions_isIsRecursive(self, *args, **kwargs)
+
+    def setIsRecursive(self, *args, **kwargs):
+        """setIsRecursive(self, EBoolean _isRecursive)"""
+        return _VISHNU.RmFileOptions_setIsRecursive(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.RmFileOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.RmFileOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.RmFileOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.RmFileOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.RmFileOptions__eClass(self, *args, **kwargs)
+
 RmFileOptions_swigregister = _VISHNU.RmFileOptions_swigregister
 RmFileOptions_swigregister(RmFileOptions)
 
+class CreateDirOptions(EObject):
+    """Proxy of C++ FMS_Data::CreateDirOptions class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, CreateDirOptions, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, CreateDirOptions, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> CreateDirOptions"""
+        this = _VISHNU.new_CreateDirOptions(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_CreateDirOptions
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.CreateDirOptions__initialize(self, *args, **kwargs)
+
+    def isIsRecursive(self, *args, **kwargs):
+        """isIsRecursive(self) -> EBoolean"""
+        return _VISHNU.CreateDirOptions_isIsRecursive(self, *args, **kwargs)
+
+    def setIsRecursive(self, *args, **kwargs):
+        """setIsRecursive(self, EBoolean _isRecursive)"""
+        return _VISHNU.CreateDirOptions_setIsRecursive(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.CreateDirOptions_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.CreateDirOptions_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.CreateDirOptions_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.CreateDirOptions_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.CreateDirOptions__eClass(self, *args, **kwargs)
+
+CreateDirOptions_swigregister = _VISHNU.CreateDirOptions_swigregister
+CreateDirOptions_swigregister(CreateDirOptions)
+
 class DirEntry(EObject):
+    """Proxy of C++ FMS_Data::DirEntry class"""
     __swig_setmethods__ = {}
     for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, DirEntry, name, value)
@@ -1832,484 +4477,234 @@ class DirEntry(EObject):
     for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
     __getattr__ = lambda self, name: _swig_getattr(self, DirEntry, name)
     __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_DirEntry()
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> DirEntry"""
+        this = _VISHNU.new_DirEntry(*args, **kwargs)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_DirEntry
     __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.DirEntry__initialize(self)
-    def getPath(self): return _VISHNU.DirEntry_getPath(self)
-    def setPath(self, *args): return _VISHNU.DirEntry_setPath(self, *args)
-    def getOwner(self): return _VISHNU.DirEntry_getOwner(self)
-    def setOwner(self, *args): return _VISHNU.DirEntry_setOwner(self, *args)
-    def getGroup(self): return _VISHNU.DirEntry_getGroup(self)
-    def setGroup(self, *args): return _VISHNU.DirEntry_setGroup(self, *args)
-    def getPerms(self): return _VISHNU.DirEntry_getPerms(self)
-    def setPerms(self, *args): return _VISHNU.DirEntry_setPerms(self, *args)
-    def getSize(self): return _VISHNU.DirEntry_getSize(self)
-    def setSize(self, *args): return _VISHNU.DirEntry_setSize(self, *args)
-    def getCreationTime(self): return _VISHNU.DirEntry_getCreationTime(self)
-    def setCreationTime(self, *args): return _VISHNU.DirEntry_setCreationTime(self, *args)
-    def getType(self): return _VISHNU.DirEntry_getType(self)
-    def setType(self, *args): return _VISHNU.DirEntry_setType(self, *args)
-    def eGet(self, *args): return _VISHNU.DirEntry_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.DirEntry_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.DirEntry_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.DirEntry_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.DirEntry__eClass(self)
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.DirEntry__initialize(self, *args, **kwargs)
+
+    def getPath(self, *args, **kwargs):
+        """getPath(self) -> EString"""
+        return _VISHNU.DirEntry_getPath(self, *args, **kwargs)
+
+    def setPath(self, *args, **kwargs):
+        """setPath(self, EString _path)"""
+        return _VISHNU.DirEntry_setPath(self, *args, **kwargs)
+
+    def getOwner(self, *args, **kwargs):
+        """getOwner(self) -> EString"""
+        return _VISHNU.DirEntry_getOwner(self, *args, **kwargs)
+
+    def setOwner(self, *args, **kwargs):
+        """setOwner(self, EString _owner)"""
+        return _VISHNU.DirEntry_setOwner(self, *args, **kwargs)
+
+    def getGroup(self, *args, **kwargs):
+        """getGroup(self) -> EString"""
+        return _VISHNU.DirEntry_getGroup(self, *args, **kwargs)
+
+    def setGroup(self, *args, **kwargs):
+        """setGroup(self, EString _group)"""
+        return _VISHNU.DirEntry_setGroup(self, *args, **kwargs)
+
+    def getPerms(self, *args, **kwargs):
+        """getPerms(self) -> EInt"""
+        return _VISHNU.DirEntry_getPerms(self, *args, **kwargs)
+
+    def setPerms(self, *args, **kwargs):
+        """setPerms(self, EInt _perms)"""
+        return _VISHNU.DirEntry_setPerms(self, *args, **kwargs)
+
+    def getSize(self, *args, **kwargs):
+        """getSize(self) -> EBigInteger"""
+        return _VISHNU.DirEntry_getSize(self, *args, **kwargs)
+
+    def setSize(self, *args, **kwargs):
+        """setSize(self, EBigInteger _size)"""
+        return _VISHNU.DirEntry_setSize(self, *args, **kwargs)
+
+    def getCreationTime(self, *args, **kwargs):
+        """getCreationTime(self) -> EString"""
+        return _VISHNU.DirEntry_getCreationTime(self, *args, **kwargs)
+
+    def setCreationTime(self, *args, **kwargs):
+        """setCreationTime(self, EString _creationTime)"""
+        return _VISHNU.DirEntry_setCreationTime(self, *args, **kwargs)
+
+    def getType(self, *args, **kwargs):
+        """getType(self) -> FileType"""
+        return _VISHNU.DirEntry_getType(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, FileType _type)"""
+        return _VISHNU.DirEntry_setType(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.DirEntry_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.DirEntry_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.DirEntry_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.DirEntry_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.DirEntry__eClass(self, *args, **kwargs)
+
 DirEntry_swigregister = _VISHNU.DirEntry_swigregister
 DirEntry_swigregister(DirEntry)
 
-class DirEntryList(EObject):
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, DirEntryList, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, DirEntryList, name)
-    __repr__ = _swig_repr
-    def __init__(self): 
-        this = _VISHNU.new_DirEntryList()
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_DirEntryList
-    __del__ = lambda self : None;
-    def _initialize(self): return _VISHNU.DirEntryList__initialize(self)
-    def getDirEntries(self): return _VISHNU.DirEntryList_getDirEntries(self)
-    def eGet(self, *args): return _VISHNU.DirEntryList_eGet(self, *args)
-    def eSet(self, *args): return _VISHNU.DirEntryList_eSet(self, *args)
-    def eIsSet(self, *args): return _VISHNU.DirEntryList_eIsSet(self, *args)
-    def eUnset(self, *args): return _VISHNU.DirEntryList_eUnset(self, *args)
-    def _eClass(self): return _VISHNU.DirEntryList__eClass(self)
-DirEntryList_swigregister = _VISHNU.DirEntryList_swigregister
-DirEntryList_swigregister(DirEntryList)
 
-class EListPtr(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EListPtr, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EListPtr, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args): 
-        this = _VISHNU.new_EListPtr(*args)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_EListPtr
-    __del__ = lambda self : None;
-    def get(self): return _VISHNU.EListPtr_get(self)
-    def __ref__(self): return _VISHNU.EListPtr___ref__(self)
-    def __deref__(self): return _VISHNU.EListPtr___deref__(self)
-    def release(self): return _VISHNU.EListPtr_release(self)
-    def reset(self, *args): return _VISHNU.EListPtr_reset(self, *args)
-    def __nonzero__(self):
-        return _VISHNU.EListPtr___nonzero__(self)
-    __bool__ = __nonzero__
+def connect(*args, **kwargs):
+  """connect(string userId, string password, Session session, ConnectOptions connectOpt = UMS_Data::ConnectOptions()) -> int"""
+  return _VISHNU.connect(*args, **kwargs)
 
+def connect_m(*args, **kwargs):
+  """connect_m(ListUsers users, Session session, ConnectOptions connectOpt = UMS_Data::ConnectOptions()) -> int"""
+  return _VISHNU.connect_m(*args, **kwargs)
 
-EListPtr_swigregister = _VISHNU.EListPtr_swigregister
-EListPtr_swigregister(EListPtr)
+def close(*args, **kwargs):
+  """close(string sessionKey) -> int"""
+  return _VISHNU.close(*args, **kwargs)
 
-class ESessionList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ESessionList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, ESessionList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.ESessionList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.ESessionList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.ESessionList_at(self, *args)
-    def get(self, *args): return _VISHNU.ESessionList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.ESessionList_push_back(self, *args)
-    def size(self): return _VISHNU.ESessionList_size(self)
-    def clear(self): return _VISHNU.ESessionList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_ESessionList
-    __del__ = lambda self : None;
-ESessionList_swigregister = _VISHNU.ESessionList_swigregister
-ESessionList_swigregister(ESessionList)
+def addUser(*args, **kwargs):
+  """addUser(string sessionKey, User newUser) -> int"""
+  return _VISHNU.addUser(*args, **kwargs)
 
-class EUserList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EUserList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EUserList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EUserList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EUserList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EUserList_at(self, *args)
-    def get(self, *args): return _VISHNU.EUserList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EUserList_push_back(self, *args)
-    def size(self): return _VISHNU.EUserList_size(self)
-    def clear(self): return _VISHNU.EUserList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EUserList
-    __del__ = lambda self : None;
-EUserList_swigregister = _VISHNU.EUserList_swigregister
-EUserList_swigregister(EUserList)
+def updateUser(*args, **kwargs):
+  """updateUser(string sessionKey, User user) -> int"""
+  return _VISHNU.updateUser(*args, **kwargs)
 
-class EMachineList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EMachineList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EMachineList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EMachineList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EMachineList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EMachineList_at(self, *args)
-    def get(self, *args): return _VISHNU.EMachineList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EMachineList_push_back(self, *args)
-    def size(self): return _VISHNU.EMachineList_size(self)
-    def clear(self): return _VISHNU.EMachineList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EMachineList
-    __del__ = lambda self : None;
-EMachineList_swigregister = _VISHNU.EMachineList_swigregister
-EMachineList_swigregister(EMachineList)
+def deleteUser(*args, **kwargs):
+  """deleteUser(string sessionKey, string userId) -> int"""
+  return _VISHNU.deleteUser(*args, **kwargs)
 
-class ELocalAccList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ELocalAccList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, ELocalAccList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.ELocalAccList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.ELocalAccList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.ELocalAccList_at(self, *args)
-    def get(self, *args): return _VISHNU.ELocalAccList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.ELocalAccList_push_back(self, *args)
-    def size(self): return _VISHNU.ELocalAccList_size(self)
-    def clear(self): return _VISHNU.ELocalAccList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_ELocalAccList
-    __del__ = lambda self : None;
-ELocalAccList_swigregister = _VISHNU.ELocalAccList_swigregister
-ELocalAccList_swigregister(ELocalAccList)
+def changePassword(*args, **kwargs):
+  """changePassword(string userId, string password, string passwordNew) -> int"""
+  return _VISHNU.changePassword(*args, **kwargs)
 
-class ECommandList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ECommandList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, ECommandList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.ECommandList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.ECommandList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.ECommandList_at(self, *args)
-    def get(self, *args): return _VISHNU.ECommandList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.ECommandList_push_back(self, *args)
-    def size(self): return _VISHNU.ECommandList_size(self)
-    def clear(self): return _VISHNU.ECommandList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_ECommandList
-    __del__ = lambda self : None;
-ECommandList_swigregister = _VISHNU.ECommandList_swigregister
-ECommandList_swigregister(ECommandList)
+def resetPassword(*args, **kwargs):
+  """resetPassword(string sessionKey, string userId, string tmpPassword) -> int"""
+  return _VISHNU.resetPassword(*args, **kwargs)
 
-class EOptionList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EOptionList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EOptionList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EOptionList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EOptionList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EOptionList_at(self, *args)
-    def get(self, *args): return _VISHNU.EOptionList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EOptionList_push_back(self, *args)
-    def size(self): return _VISHNU.EOptionList_size(self)
-    def clear(self): return _VISHNU.EOptionList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EOptionList
-    __del__ = lambda self : None;
-EOptionList_swigregister = _VISHNU.EOptionList_swigregister
-EOptionList_swigregister(EOptionList)
+def addMachine(*args, **kwargs):
+  """addMachine(string sessionKey, Machine newMachine) -> int"""
+  return _VISHNU.addMachine(*args, **kwargs)
 
-class EJobList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EJobList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EJobList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EJobList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EJobList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EJobList_at(self, *args)
-    def get(self, *args): return _VISHNU.EJobList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EJobList_push_back(self, *args)
-    def size(self): return _VISHNU.EJobList_size(self)
-    def clear(self): return _VISHNU.EJobList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EJobList
-    __del__ = lambda self : None;
-EJobList_swigregister = _VISHNU.EJobList_swigregister
-EJobList_swigregister(EJobList)
+def updateMachine(*args, **kwargs):
+  """updateMachine(string sessionKey, Machine machine) -> int"""
+  return _VISHNU.updateMachine(*args, **kwargs)
 
-class EProgressionList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EProgressionList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EProgressionList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EProgressionList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EProgressionList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EProgressionList_at(self, *args)
-    def get(self, *args): return _VISHNU.EProgressionList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EProgressionList_push_back(self, *args)
-    def size(self): return _VISHNU.EProgressionList_size(self)
-    def clear(self): return _VISHNU.EProgressionList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EProgressionList
-    __del__ = lambda self : None;
-EProgressionList_swigregister = _VISHNU.EProgressionList_swigregister
-EProgressionList_swigregister(EProgressionList)
+def deleteMachine(*args, **kwargs):
+  """deleteMachine(string sessionKey, string machineId) -> int"""
+  return _VISHNU.deleteMachine(*args, **kwargs)
 
-class EQueueList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EQueueList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EQueueList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EQueueList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EQueueList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EQueueList_at(self, *args)
-    def get(self, *args): return _VISHNU.EQueueList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EQueueList_push_back(self, *args)
-    def size(self): return _VISHNU.EQueueList_size(self)
-    def clear(self): return _VISHNU.EQueueList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EQueueList
-    __del__ = lambda self : None;
-EQueueList_swigregister = _VISHNU.EQueueList_swigregister
-EQueueList_swigregister(EQueueList)
+def addLocalAccount(*args, **kwargs):
+  """addLocalAccount(string sessionKey, LocalAccount newLocalAccount) -> int"""
+  return _VISHNU.addLocalAccount(*args, **kwargs)
 
-class EJobResultList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EJobResultList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EJobResultList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EJobResultList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EJobResultList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EJobResultList_at(self, *args)
-    def get(self, *args): return _VISHNU.EJobResultList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EJobResultList_push_back(self, *args)
-    def size(self): return _VISHNU.EJobResultList_size(self)
-    def clear(self): return _VISHNU.EJobResultList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EJobResultList
-    __del__ = lambda self : None;
-EJobResultList_swigregister = _VISHNU.EJobResultList_swigregister
-EJobResultList_swigregister(EJobResultList)
+def updateLocalAccount(*args, **kwargs):
+  """updateLocalAccount(string sessionKey, LocalAccount localAccount) -> int"""
+  return _VISHNU.updateLocalAccount(*args, **kwargs)
 
-class EMetricList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EMetricList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EMetricList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EMetricList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EMetricList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EMetricList_at(self, *args)
-    def get(self, *args): return _VISHNU.EMetricList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EMetricList_push_back(self, *args)
-    def size(self): return _VISHNU.EMetricList_size(self)
-    def clear(self): return _VISHNU.EMetricList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EMetricList
-    __del__ = lambda self : None;
-EMetricList_swigregister = _VISHNU.EMetricList_swigregister
-EMetricList_swigregister(EMetricList)
+def deleteLocalAccount(*args, **kwargs):
+  """deleteLocalAccount(string sessionKey, string userId, string machineId) -> int"""
+  return _VISHNU.deleteLocalAccount(*args, **kwargs)
 
-class EProcessesList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EProcessesList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EProcessesList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EProcessesList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EProcessesList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EProcessesList_at(self, *args)
-    def get(self, *args): return _VISHNU.EProcessesList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EProcessesList_push_back(self, *args)
-    def size(self): return _VISHNU.EProcessesList_size(self)
-    def clear(self): return _VISHNU.EProcessesList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EProcessesList
-    __del__ = lambda self : None;
-EProcessesList_swigregister = _VISHNU.EProcessesList_swigregister
-EProcessesList_swigregister(EProcessesList)
+def saveConfiguration(*args, **kwargs):
+  """saveConfiguration(string sessionKey, Configuration config) -> int"""
+  return _VISHNU.saveConfiguration(*args, **kwargs)
 
-class ESysInfoList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, ESysInfoList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, ESysInfoList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.ESysInfoList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.ESysInfoList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.ESysInfoList_at(self, *args)
-    def get(self, *args): return _VISHNU.ESysInfoList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.ESysInfoList_push_back(self, *args)
-    def size(self): return _VISHNU.ESysInfoList_size(self)
-    def clear(self): return _VISHNU.ESysInfoList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_ESysInfoList
-    __del__ = lambda self : None;
-ESysInfoList_swigregister = _VISHNU.ESysInfoList_swigregister
-ESysInfoList_swigregister(ESysInfoList)
+def restoreConfiguration(*args, **kwargs):
+  """restoreConfiguration(string sessionKey, string filePath) -> int"""
+  return _VISHNU.restoreConfiguration(*args, **kwargs)
 
-class EThresholdList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EThresholdList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EThresholdList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EThresholdList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EThresholdList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EThresholdList_at(self, *args)
-    def get(self, *args): return _VISHNU.EThresholdList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EThresholdList_push_back(self, *args)
-    def size(self): return _VISHNU.EThresholdList_size(self)
-    def clear(self): return _VISHNU.EThresholdList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EThresholdList
-    __del__ = lambda self : None;
-EThresholdList_swigregister = _VISHNU.EThresholdList_swigregister
-EThresholdList_swigregister(EThresholdList)
+def configureOption(*args, **kwargs):
+  """configureOption(string sessionKey, OptionValue optionValue) -> int"""
+  return _VISHNU.configureOption(*args, **kwargs)
 
-class EFileTransferList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EFileTransferList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EFileTransferList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EFileTransferList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EFileTransferList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EFileTransferList_at(self, *args)
-    def get(self, *args): return _VISHNU.EFileTransferList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EFileTransferList_push_back(self, *args)
-    def size(self): return _VISHNU.EFileTransferList_size(self)
-    def clear(self): return _VISHNU.EFileTransferList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EFileTransferList
-    __del__ = lambda self : None;
-EFileTransferList_swigregister = _VISHNU.EFileTransferList_swigregister
-EFileTransferList_swigregister(EFileTransferList)
+def configureDefaultOption(*args, **kwargs):
+  """configureDefaultOption(string sessionKey, OptionValue optionValue) -> int"""
+  return _VISHNU.configureDefaultOption(*args, **kwargs)
 
-class EFileStatList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EFileStatList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EFileStatList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EFileStatList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EFileStatList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EFileStatList_at(self, *args)
-    def get(self, *args): return _VISHNU.EFileStatList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EFileStatList_push_back(self, *args)
-    def size(self): return _VISHNU.EFileStatList_size(self)
-    def clear(self): return _VISHNU.EFileStatList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EFileStatList
-    __del__ = lambda self : None;
-EFileStatList_swigregister = _VISHNU.EFileStatList_swigregister
-EFileStatList_swigregister(EFileStatList)
+def listSessions(*args, **kwargs):
+  """listSessions(string sessionKey, ListSessionOptions options = UMS_Data::ListSessionOptions()) -> int"""
+  return _VISHNU.listSessions(*args, **kwargs)
 
-class EDirEntryList(_object):
-    __swig_setmethods__ = {}
-    __setattr__ = lambda self, name, value: _swig_setattr(self, EDirEntryList, name, value)
-    __swig_getmethods__ = {}
-    __getattr__ = lambda self, name: _swig_getattr(self, EDirEntryList, name)
-    def __init__(self, *args, **kwargs): raise AttributeError("No constructor defined - class is abstract")
-    __repr__ = _swig_repr
-    def insert_all(self, *args): return _VISHNU.EDirEntryList_insert_all(self, *args)
-    def insert_at(self, *args): return _VISHNU.EDirEntryList_insert_at(self, *args)
-    def at(self, *args): return _VISHNU.EDirEntryList_at(self, *args)
-    def get(self, *args): return _VISHNU.EDirEntryList_get(self, *args)
-    def push_back(self, *args): return _VISHNU.EDirEntryList_push_back(self, *args)
-    def size(self): return _VISHNU.EDirEntryList_size(self)
-    def clear(self): return _VISHNU.EDirEntryList_clear(self)
-    __swig_destroy__ = _VISHNU.delete_EDirEntryList
-    __del__ = lambda self : None;
-EDirEntryList_swigregister = _VISHNU.EDirEntryList_swigregister
-EDirEntryList_swigregister(EDirEntryList)
+def listLocalAccounts(*args, **kwargs):
+  """listLocalAccounts(string sessionKey, ListLocalAccOptions options = UMS_Data::ListLocalAccOptions()) -> int"""
+  return _VISHNU.listLocalAccounts(*args, **kwargs)
 
+def listMachines(*args, **kwargs):
+  """listMachines(string sessionKey, ListMachineOptions options = UMS_Data::ListMachineOptions()) -> int"""
+  return _VISHNU.listMachines(*args, **kwargs)
 
-def reconnect(*args):
-  return _VISHNU.reconnect(*args)
-reconnect = _VISHNU.reconnect
+def listHistoryCmd(*args, **kwargs):
+  """listHistoryCmd(string sessionKey, ListCmdOptions options = UMS_Data::ListCmdOptions()) -> int"""
+  return _VISHNU.listHistoryCmd(*args, **kwargs)
 
-def close(*args):
-  return _VISHNU.close(*args)
-close = _VISHNU.close
+def listOptions(*args, **kwargs):
+  """listOptions(string sessionKey, ListOptOptions options = UMS_Data::ListOptOptions()) -> int"""
+  return _VISHNU.listOptions(*args, **kwargs)
 
-def addUser(*args):
-  return _VISHNU.addUser(*args)
-addUser = _VISHNU.addUser
+def listUsers(*args, **kwargs):
+  """listUsers(string sessionKey, ListUsersOptions listOptions = UMS_Data::ListUsersOptions()) -> int"""
+  return _VISHNU.listUsers(*args, **kwargs)
 
-def updateUser(*args):
-  return _VISHNU.updateUser(*args)
-updateUser = _VISHNU.updateUser
+def addAuthSystem(*args, **kwargs):
+  """addAuthSystem(string sessionKey, AuthSystem newAuthSys) -> int"""
+  return _VISHNU.addAuthSystem(*args, **kwargs)
 
-def deleteUser(*args):
-  return _VISHNU.deleteUser(*args)
-deleteUser = _VISHNU.deleteUser
+def updateAuthSystem(*args, **kwargs):
+  """updateAuthSystem(string sessionKey, AuthSystem AuthSys) -> int"""
+  return _VISHNU.updateAuthSystem(*args, **kwargs)
 
-def changePassword(*args):
-  return _VISHNU.changePassword(*args)
-changePassword = _VISHNU.changePassword
+def deleteAuthSystem(*args, **kwargs):
+  """deleteAuthSystem(string sessionKey, string authSystemId) -> int"""
+  return _VISHNU.deleteAuthSystem(*args, **kwargs)
 
-def resetPassword(*args):
-  return _VISHNU.resetPassword(*args)
-resetPassword = _VISHNU.resetPassword
+def listAuthSystems(*args, **kwargs):
+  """listAuthSystems(string sessionKey, ListAuthSysOptions options = UMS_Data::ListAuthSysOptions()) -> int"""
+  return _VISHNU.listAuthSystems(*args, **kwargs)
 
-def addMachine(*args):
-  return _VISHNU.addMachine(*args)
-addMachine = _VISHNU.addMachine
+def addAuthAccount(*args, **kwargs):
+  """addAuthAccount(string sessionKey, AuthAccount authAccount) -> int"""
+  return _VISHNU.addAuthAccount(*args, **kwargs)
 
-def updateMachine(*args):
-  return _VISHNU.updateMachine(*args)
-updateMachine = _VISHNU.updateMachine
+def updateAuthAccount(*args, **kwargs):
+  """updateAuthAccount(string sessionKey, AuthAccount authenAccount) -> int"""
+  return _VISHNU.updateAuthAccount(*args, **kwargs)
 
-def deleteMachine(*args):
-  return _VISHNU.deleteMachine(*args)
-deleteMachine = _VISHNU.deleteMachine
+def deleteAuthAccount(*args, **kwargs):
+  """deleteAuthAccount(string sessionKey, string authSystemId, string userIdOption = "") -> int"""
+  return _VISHNU.deleteAuthAccount(*args, **kwargs)
 
-def addLocalAccount(*args):
-  return _VISHNU.addLocalAccount(*args)
-addLocalAccount = _VISHNU.addLocalAccount
+def listAuthAccounts(*args, **kwargs):
+  """listAuthAccounts(string sessionKey, ListAuthAccOptions options = UMS_Data::ListAuthAccOptions()) -> int"""
+  return _VISHNU.listAuthAccounts(*args, **kwargs)
 
-def updateLocalAccount(*args):
-  return _VISHNU.updateLocalAccount(*args)
-updateLocalAccount = _VISHNU.updateLocalAccount
+def vishnuInitialize(*args, **kwargs):
+  """vishnuInitialize(char cfg) -> int"""
+  return _VISHNU.vishnuInitialize(*args, **kwargs)
 
-def deleteLocalAccount(*args):
-  return _VISHNU.deleteLocalAccount(*args)
-deleteLocalAccount = _VISHNU.deleteLocalAccount
-
-def saveConfiguration(*args):
-  return _VISHNU.saveConfiguration(*args)
-saveConfiguration = _VISHNU.saveConfiguration
-
-def restoreConfiguration(*args):
-  return _VISHNU.restoreConfiguration(*args)
-restoreConfiguration = _VISHNU.restoreConfiguration
-
-def configureOption(*args):
-  return _VISHNU.configureOption(*args)
-configureOption = _VISHNU.configureOption
-
-def configureDefaultOption(*args):
-  return _VISHNU.configureDefaultOption(*args)
-configureDefaultOption = _VISHNU.configureDefaultOption
-
-def vishnuInitialize(*args):
-  return _VISHNU.vishnuInitialize(*args)
-vishnuInitialize = _VISHNU.vishnuInitialize
-
-def vishnuFinalize():
-  return _VISHNU.vishnuFinalize()
-vishnuFinalize = _VISHNU.vishnuFinalize
+def vishnuFinalize(*args):
+  """vishnuFinalize()"""
+  return _VISHNU.vishnuFinalize(*args)
 class VishnuException(Exception):
+    """Proxy of C++ VishnuException class"""
     __swig_setmethods__ = {}
     __setattr__ = lambda self, name, value: _swig_setattr(self, VishnuException, name, value)
     __swig_getmethods__ = {}
@@ -2324,50 +4719,68 @@ class VishnuException(Exception):
     NONE = _VISHNU.VishnuException_NONE
     __swig_destroy__ = _VISHNU.delete_VishnuException
     __del__ = lambda self : None;
-    def getTypeI(self): return _VISHNU.VishnuException_getTypeI(self)
-    def getTypeS(self): return _VISHNU.VishnuException_getTypeS(self)
-    def what(self): return _VISHNU.VishnuException_what(self)
-    def getMsg(self): return _VISHNU.VishnuException_getMsg(self)
-    def getMsgComp(self): return _VISHNU.VishnuException_getMsgComp(self)
-    def setType(self, *args): return _VISHNU.VishnuException_setType(self, *args)
-    def setMsgComp(self, *args): return _VISHNU.VishnuException_setMsgComp(self, *args)
-    def setMsg(self, *args): return _VISHNU.VishnuException_setMsg(self, *args)
-    def appendMsgComp(self, *args): return _VISHNU.VishnuException_appendMsgComp(self, *args)
-    def getMsgI(self): return _VISHNU.VishnuException_getMsgI(self)
-    def initMsg(self): return _VISHNU.VishnuException_initMsg(self)
-    def buildExceptionString(self): return _VISHNU.VishnuException_buildExceptionString(self)
+    def getTypeI(self, *args, **kwargs):
+        """getTypeI(self) -> ExceptionType"""
+        return _VISHNU.VishnuException_getTypeI(self, *args, **kwargs)
+
+    def getTypeS(self, *args, **kwargs):
+        """getTypeS(self) -> string"""
+        return _VISHNU.VishnuException_getTypeS(self, *args, **kwargs)
+
+    def what(self, *args, **kwargs):
+        """what(self) -> char"""
+        return _VISHNU.VishnuException_what(self, *args, **kwargs)
+
+    def getMsg(self, *args, **kwargs):
+        """getMsg(self) -> string"""
+        return _VISHNU.VishnuException_getMsg(self, *args, **kwargs)
+
+    def getMsgComp(self, *args, **kwargs):
+        """getMsgComp(self) -> string"""
+        return _VISHNU.VishnuException_getMsgComp(self, *args, **kwargs)
+
+    def setType(self, *args, **kwargs):
+        """setType(self, ExceptionType t)"""
+        return _VISHNU.VishnuException_setType(self, *args, **kwargs)
+
+    def setMsgComp(self, *args, **kwargs):
+        """setMsgComp(self, string m)"""
+        return _VISHNU.VishnuException_setMsgComp(self, *args, **kwargs)
+
+    def setMsg(self, *args, **kwargs):
+        """setMsg(self, int val)"""
+        return _VISHNU.VishnuException_setMsg(self, *args, **kwargs)
+
+    def appendMsgComp(self, *args, **kwargs):
+        """appendMsgComp(self, string s)"""
+        return _VISHNU.VishnuException_appendMsgComp(self, *args, **kwargs)
+
+    def getMsgI(self, *args, **kwargs):
+        """getMsgI(self) -> int"""
+        return _VISHNU.VishnuException_getMsgI(self, *args, **kwargs)
+
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.VishnuException_initMsg(self, *args, **kwargs)
+
+    def buildExceptionString(self, *args, **kwargs):
+        """buildExceptionString(self) -> string"""
+        return _VISHNU.VishnuException_buildExceptionString(self, *args, **kwargs)
+
 VishnuException_swigregister = _VISHNU.VishnuException_swigregister
 VishnuException_swigregister(VishnuException)
 
-def connect(*args):
-  return _VISHNU.connect(*args)
-connect = _VISHNU.connect
-
-def listSessions(*args):
-  return _VISHNU.listSessions(*args)
-listSessions = _VISHNU.listSessions
-
-def listLocalAccounts(*args):
-  return _VISHNU.listLocalAccounts(*args)
-listLocalAccounts = _VISHNU.listLocalAccounts
-
-def listMachines(*args):
-  return _VISHNU.listMachines(*args)
-listMachines = _VISHNU.listMachines
-
-def listHistoryCmd(*args):
-  return _VISHNU.listHistoryCmd(*args)
-listHistoryCmd = _VISHNU.listHistoryCmd
-
-def listOptions(*args):
-  return _VISHNU.listOptions(*args)
-listOptions = _VISHNU.listOptions
-
-def listUsers(*args):
-  return _VISHNU.listUsers(*args)
-listUsers = _VISHNU.listUsers
+def reconnect(*args):
+  """
+    reconnect(string userId, string password, string sessionId, Session session) -> int
+    reconnect(ListUsers users, string sessionId, Session session) -> int
+    """
+  return _VISHNU.reconnect(*args)
+cvar = _VISHNU.cvar
+VISHNU_OK = cvar.VISHNU_OK
 
 class UserException(VishnuException):
+    """Proxy of C++ UserException class"""
     __swig_setmethods__ = {}
     for _s in [VishnuException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, UserException, name, value)
@@ -2376,21 +4789,36 @@ class UserException(VishnuException):
     __getattr__ = lambda self, name: _swig_getattr(self, UserException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> UserException
+        __init__(self, UserException e) -> UserException
+        __init__(self, int msg, string msgComp = "") -> UserException
+        """
         this = _VISHNU.new_UserException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_UserException
     __del__ = lambda self : None;
-    def getTypeS(self): return _VISHNU.UserException_getTypeS(self)
-    def getMsg(self): return _VISHNU.UserException_getMsg(self)
+    def getTypeS(self, *args, **kwargs):
+        """getTypeS(self) -> string"""
+        return _VISHNU.UserException_getTypeS(self, *args, **kwargs)
+
+    def getMsg(self, *args, **kwargs):
+        """getMsg(self) -> string"""
+        return _VISHNU.UserException_getMsg(self, *args, **kwargs)
+
 UserException_swigregister = _VISHNU.UserException_swigregister
 UserException_swigregister(UserException)
-cvar = _VISHNU.cvar
 ERRCODE_INVALID_PARAM = cvar.ERRCODE_INVALID_PARAM
 ERRCODE_FILENOTFOUND = cvar.ERRCODE_FILENOTFOUND
 ERRCODE_CONFIGNOTFOUND = cvar.ERRCODE_CONFIGNOTFOUND
+ERRCODE_CLI_ERROR_NO_SESSION = cvar.ERRCODE_CLI_ERROR_NO_SESSION
+ERRCODE_CLI_ERROR_MISSING_PARAMETER = cvar.ERRCODE_CLI_ERROR_MISSING_PARAMETER
+ERRCODE_CLI_ERROR_DIET = cvar.ERRCODE_CLI_ERROR_DIET
+ERRCODE_CLI_ERROR_RUNTIME = cvar.ERRCODE_CLI_ERROR_RUNTIME
 
 class SystemException(VishnuException):
+    """Proxy of C++ SystemException class"""
     __swig_setmethods__ = {}
     for _s in [VishnuException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, SystemException, name, value)
@@ -2399,16 +4827,31 @@ class SystemException(VishnuException):
     __getattr__ = lambda self, name: _swig_getattr(self, SystemException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> SystemException
+        __init__(self, SystemException e) -> SystemException
+        __init__(self, int msg, string msgComp = "") -> SystemException
+        """
         this = _VISHNU.new_SystemException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_SystemException
     __del__ = lambda self : None;
-    def getMsg(self): return _VISHNU.SystemException_getMsg(self)
-    def getTypeS(self): return _VISHNU.SystemException_getTypeS(self)
-    def initMsg(self): return _VISHNU.SystemException_initMsg(self)
+    def getMsg(self, *args, **kwargs):
+        """getMsg(self) -> string"""
+        return _VISHNU.SystemException_getMsg(self, *args, **kwargs)
+
+    def getTypeS(self, *args, **kwargs):
+        """getTypeS(self) -> string"""
+        return _VISHNU.SystemException_getTypeS(self, *args, **kwargs)
+
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.SystemException_initMsg(self, *args, **kwargs)
+
 SystemException_swigregister = _VISHNU.SystemException_swigregister
 SystemException_swigregister(SystemException)
+ERRCODE_AUTHENTERR = cvar.ERRCODE_AUTHENTERR
 ERRCODE_DIET = cvar.ERRCODE_DIET
 ERRCODE_DBERR = cvar.ERRCODE_DBERR
 ERRCODE_DBCONN = cvar.ERRCODE_DBCONN
@@ -2420,6 +4863,7 @@ ERRCODE_INVDATA = cvar.ERRCODE_INVDATA
 ERRCODE_SSH = cvar.ERRCODE_SSH
 
 class UMSVishnuException(UserException):
+    """Proxy of C++ UMSVishnuException class"""
     __swig_setmethods__ = {}
     for _s in [UserException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, UMSVishnuException, name, value)
@@ -2428,12 +4872,20 @@ class UMSVishnuException(UserException):
     __getattr__ = lambda self, name: _swig_getattr(self, UMSVishnuException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> UMSVishnuException
+        __init__(self, UMSVishnuException e) -> UMSVishnuException
+        __init__(self, int msg, string msgComp = "") -> UMSVishnuException
+        """
         this = _VISHNU.new_UMSVishnuException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_UMSVishnuException
     __del__ = lambda self : None;
-    def initMsg(self): return _VISHNU.UMSVishnuException_initMsg(self)
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.UMSVishnuException_initMsg(self, *args, **kwargs)
+
 UMSVishnuException_swigregister = _VISHNU.UMSVishnuException_swigregister
 UMSVishnuException_swigregister(UMSVishnuException)
 ERRCODE_UNKNOWN_USER = cvar.ERRCODE_UNKNOWN_USER
@@ -2463,8 +4915,17 @@ ERRCODE_INCORRECT_TIMEOUT = cvar.ERRCODE_INCORRECT_TIMEOUT
 ERRCODE_INCORRECT_TRANSFER_CMD = cvar.ERRCODE_INCORRECT_TRANSFER_CMD
 ERRCODE_ROOT_USER_ONLY = cvar.ERRCODE_ROOT_USER_ONLY
 ERRCODE_LOGIN_ALREADY_USED = cvar.ERRCODE_LOGIN_ALREADY_USED
+ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE = cvar.ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE
+ERRCODE_UNKNOWN_AUTH_SYSTEM = cvar.ERRCODE_UNKNOWN_AUTH_SYSTEM
+ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED = cvar.ERRCODE_AUTH_SYSTEM_ALREADY_LOCKED
+ERRCODE_AUTH_SYSTEM_ALREADY_EXIST = cvar.ERRCODE_AUTH_SYSTEM_ALREADY_EXIST
+ERRCODE_AUTH_ACCOUNT_EXIST = cvar.ERRCODE_AUTH_ACCOUNT_EXIST
+ERRCODE_UNKNOWN_AUTH_ACCOUNT = cvar.ERRCODE_UNKNOWN_AUTH_ACCOUNT
+ERRCODE_UNKNOWN_ENCRYPTION_METHOD = cvar.ERRCODE_UNKNOWN_ENCRYPTION_METHOD
+ERRCODE_READONLY_ACCOUNT = cvar.ERRCODE_READONLY_ACCOUNT
 
 class TMSVishnuException(UserException):
+    """Proxy of C++ TMSVishnuException class"""
     __swig_setmethods__ = {}
     for _s in [UserException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, TMSVishnuException, name, value)
@@ -2473,12 +4934,20 @@ class TMSVishnuException(UserException):
     __getattr__ = lambda self, name: _swig_getattr(self, TMSVishnuException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> TMSVishnuException
+        __init__(self, TMSVishnuException e) -> TMSVishnuException
+        __init__(self, int msg, string msgComp = "") -> TMSVishnuException
+        """
         this = _VISHNU.new_TMSVishnuException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_TMSVishnuException
     __del__ = lambda self : None;
-    def initMsg(self): return _VISHNU.TMSVishnuException_initMsg(self)
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.TMSVishnuException_initMsg(self, *args, **kwargs)
+
 TMSVishnuException_swigregister = _VISHNU.TMSVishnuException_swigregister
 TMSVishnuException_swigregister(TMSVishnuException)
 ERRCODE_UNKNOWN_BATCH_SCHEDULER = cvar.ERRCODE_UNKNOWN_BATCH_SCHEDULER
@@ -2489,8 +4958,10 @@ ERRCODE_ALREADY_TERMINATED = cvar.ERRCODE_ALREADY_TERMINATED
 ERRCODE_ALREADY_CANCELED = cvar.ERRCODE_ALREADY_CANCELED
 ERRCODE_JOB_IS_NOT_TERMINATED = cvar.ERRCODE_JOB_IS_NOT_TERMINATED
 ERRCODE_ALREADY_DOWNLOADED = cvar.ERRCODE_ALREADY_DOWNLOADED
+ERRCODE_UNKNOWN_WORKID = cvar.ERRCODE_UNKNOWN_WORKID
 
 class IMSVishnuException(UserException):
+    """Proxy of C++ IMSVishnuException class"""
     __swig_setmethods__ = {}
     for _s in [UserException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, IMSVishnuException, name, value)
@@ -2499,12 +4970,20 @@ class IMSVishnuException(UserException):
     __getattr__ = lambda self, name: _swig_getattr(self, IMSVishnuException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> IMSVishnuException
+        __init__(self, IMSVishnuException e) -> IMSVishnuException
+        __init__(self, int msg, string msgComp = "") -> IMSVishnuException
+        """
         this = _VISHNU.new_IMSVishnuException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_IMSVishnuException
     __del__ = lambda self : None;
-    def initMsg(self): return _VISHNU.IMSVishnuException_initMsg(self)
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.IMSVishnuException_initMsg(self, *args, **kwargs)
+
 IMSVishnuException_swigregister = _VISHNU.IMSVishnuException_swigregister
 IMSVishnuException_swigregister(IMSVishnuException)
 ERRCODE_INVPROCESS = cvar.ERRCODE_INVPROCESS
@@ -2512,6 +4991,7 @@ ERRCODE_INVVISHNU = cvar.ERRCODE_INVVISHNU
 ERRCODE_INVEXPORT = cvar.ERRCODE_INVEXPORT
 
 class FMSVishnuException(UserException):
+    """Proxy of C++ FMSVishnuException class"""
     __swig_setmethods__ = {}
     for _s in [UserException]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
     __setattr__ = lambda self, name, value: _swig_setattr(self, FMSVishnuException, name, value)
@@ -2520,12 +5000,20 @@ class FMSVishnuException(UserException):
     __getattr__ = lambda self, name: _swig_getattr(self, FMSVishnuException, name)
     __repr__ = _swig_repr
     def __init__(self, *args): 
+        """
+        __init__(self) -> FMSVishnuException
+        __init__(self, FMSVishnuException e) -> FMSVishnuException
+        __init__(self, int msg, string msgComp = "") -> FMSVishnuException
+        """
         this = _VISHNU.new_FMSVishnuException(*args)
         try: self.this.append(this)
         except: self.this = this
     __swig_destroy__ = _VISHNU.delete_FMSVishnuException
     __del__ = lambda self : None;
-    def initMsg(self): return _VISHNU.FMSVishnuException_initMsg(self)
+    def initMsg(self, *args, **kwargs):
+        """initMsg(self)"""
+        return _VISHNU.FMSVishnuException_initMsg(self, *args, **kwargs)
+
 FMSVishnuException_swigregister = _VISHNU.FMSVishnuException_swigregister
 FMSVishnuException_swigregister(FMSVishnuException)
 ERRCODE_INVALID_PATH = cvar.ERRCODE_INVALID_PATH
@@ -2533,172 +5021,202 @@ ERRCODE_RUNTIME_ERROR = cvar.ERRCODE_RUNTIME_ERROR
 ERRCODE_UNKNOWN_FILETRANSFERID = cvar.ERRCODE_UNKNOWN_FILETRANSFERID
 
 
-def cancelJob(*args):
-  return _VISHNU.cancelJob(*args)
-cancelJob = _VISHNU.cancelJob
+def submitJob(*args, **kwargs):
+  """
+    submitJob(string sessionKey, string machineId, string scriptFilePath, 
+        Job jobInfo, SubmitOptions options = TMS_Data::SubmitOptions()) -> int
+    """
+  return _VISHNU.submitJob(*args, **kwargs)
 
-def getJobInfo(*args):
-  return _VISHNU.getJobInfo(*args)
-getJobInfo = _VISHNU.getJobInfo
+def addWork(*args, **kwargs):
+  """addWork(string sessionKey, Work newWork, AddWorkOptions options = TMS_Data::AddWorkOptions()) -> int"""
+  return _VISHNU.addWork(*args, **kwargs)
 
-def exportCommands(*args):
-  return _VISHNU.exportCommands(*args)
-exportCommands = _VISHNU.exportCommands
+def cancelJob(*args, **kwargs):
+  """cancelJob(string sessionKey, string machineId, string jobId) -> int"""
+  return _VISHNU.cancelJob(*args, **kwargs)
 
-def getMetricCurrentValue(*args):
-  return _VISHNU.getMetricCurrentValue(*args)
-getMetricCurrentValue = _VISHNU.getMetricCurrentValue
+def getJobInfo(*args, **kwargs):
+  """
+    getJobInfo(string sessionKey, string machineId, string jobId, 
+        Job jobInfos) -> int
+    """
+  return _VISHNU.getJobInfo(*args, **kwargs)
 
-def getMetricHistory(*args):
-  return _VISHNU.getMetricHistory(*args)
-getMetricHistory = _VISHNU.getMetricHistory
+def listJobs(*args, **kwargs):
+  """listJobs(string sessionKey, string machineId, ListJobsOptions options = TMS_Data::ListJobsOptions()) -> int"""
+  return _VISHNU.listJobs(*args, **kwargs)
 
-def getProcesses(*args):
-  return _VISHNU.getProcesses(*args)
-getProcesses = _VISHNU.getProcesses
+def getJobProgress(*args, **kwargs):
+  """getJobProgress(string sessionKey, string machineId, ProgressOptions options = TMS_Data::ProgressOptions()) -> int"""
+  return _VISHNU.getJobProgress(*args, **kwargs)
 
-def setSystemInfo(*args):
-  return _VISHNU.setSystemInfo(*args)
-setSystemInfo = _VISHNU.setSystemInfo
+def listQueues(*args, **kwargs):
+  """listQueues(string sessionKey, string machineId, string queueName = std::string()) -> int"""
+  return _VISHNU.listQueues(*args, **kwargs)
 
-def setSystemThreshold(*args):
-  return _VISHNU.setSystemThreshold(*args)
-setSystemThreshold = _VISHNU.setSystemThreshold
+def getJobOutput(*args, **kwargs):
+  """
+    getJobOutput(string sessionKey, string machineId, string jobId, 
+        JobResult outputInfo, string outDir = std::string()) -> int
+    """
+  return _VISHNU.getJobOutput(*args, **kwargs)
 
-def getSystemThreshold(*args):
-  return _VISHNU.getSystemThreshold(*args)
-getSystemThreshold = _VISHNU.getSystemThreshold
+def getCompletedJobsOutput(*args, **kwargs):
+  """getCompletedJobsOutput(string sessionKey, string machineId, string outDir = std::string()) -> int"""
+  return _VISHNU.getCompletedJobsOutput(*args, **kwargs)
 
-def defineUserIdentifier(*args):
-  return _VISHNU.defineUserIdentifier(*args)
-defineUserIdentifier = _VISHNU.defineUserIdentifier
+def exportCommands(*args, **kwargs):
+  """
+    exportCommands(string sessionKey, string oldSessionId, string filename, 
+        ExportOp op) -> int
+    """
+  return _VISHNU.exportCommands(*args, **kwargs)
 
-def defineMachineIdentifier(*args):
-  return _VISHNU.defineMachineIdentifier(*args)
-defineMachineIdentifier = _VISHNU.defineMachineIdentifier
+def getMetricCurrentValue(*args, **kwargs):
+  """getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op) -> int"""
+  return _VISHNU.getMetricCurrentValue(*args, **kwargs)
 
-def defineJobIdentifier(*args):
-  return _VISHNU.defineJobIdentifier(*args)
-defineJobIdentifier = _VISHNU.defineJobIdentifier
+def getMetricHistory(*args, **kwargs):
+  """getMetricHistory(string sessionKey, string machineId, MetricHistOp op) -> int"""
+  return _VISHNU.getMetricHistory(*args, **kwargs)
 
-def defineTransferIdentifier(*args):
-  return _VISHNU.defineTransferIdentifier(*args)
-defineTransferIdentifier = _VISHNU.defineTransferIdentifier
+def getProcesses(*args, **kwargs):
+  """getProcesses(string sessionKey, ProcessOp op) -> int"""
+  return _VISHNU.getProcesses(*args, **kwargs)
 
-def loadShed(*args):
-  return _VISHNU.loadShed(*args)
-loadShed = _VISHNU.loadShed
+def setSystemInfo(*args, **kwargs):
+  """setSystemInfo(string sessionKey, SystemInfo sys) -> int"""
+  return _VISHNU.setSystemInfo(*args, **kwargs)
 
-def setUpdateFrequency(*args):
-  return _VISHNU.setUpdateFrequency(*args)
-setUpdateFrequency = _VISHNU.setUpdateFrequency
+def setSystemThreshold(*args, **kwargs):
+  """setSystemThreshold(string sessionKey, Threshold threshold) -> int"""
+  return _VISHNU.setSystemThreshold(*args, **kwargs)
 
-def getUpdateFrequency(*args):
-  return _VISHNU.getUpdateFrequency(*args)
-getUpdateFrequency = _VISHNU.getUpdateFrequency
+def getSystemThreshold(*args, **kwargs):
+  """getSystemThreshold(string sessionKey, ThresholdOp op) -> int"""
+  return _VISHNU.getSystemThreshold(*args, **kwargs)
 
-def stop(*args):
-  return _VISHNU.stop(*args)
-stop = _VISHNU.stop
+def defineUserIdentifier(*args, **kwargs):
+  """defineUserIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineUserIdentifier(*args, **kwargs)
 
-def getSystemInfo(*args):
-  return _VISHNU.getSystemInfo(*args)
-getSystemInfo = _VISHNU.getSystemInfo
+def defineMachineIdentifier(*args, **kwargs):
+  """defineMachineIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineMachineIdentifier(*args, **kwargs)
 
-def restart(*args):
-  return _VISHNU.restart(*args)
-restart = _VISHNU.restart
+def defineJobIdentifier(*args, **kwargs):
+  """defineJobIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineJobIdentifier(*args, **kwargs)
 
-def createFile(*args):
-  return _VISHNU.createFile(*args)
-createFile = _VISHNU.createFile
+def defineTransferIdentifier(*args, **kwargs):
+  """defineTransferIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineTransferIdentifier(*args, **kwargs)
 
-def chGrp(*args):
-  return _VISHNU.chGrp(*args)
-chGrp = _VISHNU.chGrp
+def defineAuthIdentifier(*args, **kwargs):
+  """defineAuthIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineAuthIdentifier(*args, **kwargs)
 
-def chMod(*args):
-  return _VISHNU.chMod(*args)
-chMod = _VISHNU.chMod
+def defineWorkIdentifier(*args, **kwargs):
+  """defineWorkIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineWorkIdentifier(*args, **kwargs)
 
-def contentOfFile(*args):
-  return _VISHNU.contentOfFile(*args)
-contentOfFile = _VISHNU.contentOfFile
+def loadShed(*args, **kwargs):
+  """loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"""
+  return _VISHNU.loadShed(*args, **kwargs)
 
-def removeDir(*args):
-  return _VISHNU.removeDir(*args)
-removeDir = _VISHNU.removeDir
+def setUpdateFrequency(*args, **kwargs):
+  """setUpdateFrequency(string sessionKey, int freq) -> int"""
+  return _VISHNU.setUpdateFrequency(*args, **kwargs)
 
-def getFileInfo(*args):
-  return _VISHNU.getFileInfo(*args)
-getFileInfo = _VISHNU.getFileInfo
+def getUpdateFrequency(*args, **kwargs):
+  """getUpdateFrequency(string sessionKey) -> int"""
+  return _VISHNU.getUpdateFrequency(*args, **kwargs)
 
+def stop(*args, **kwargs):
+  """stop(string sessionKey, Process proc) -> int"""
+  return _VISHNU.stop(*args, **kwargs)
 
-def submitJob(*args):
-  return _VISHNU.submitJob(*args)
-submitJob = _VISHNU.submitJob
+def getSystemInfo(*args, **kwargs):
+  """getSystemInfo(string sessionKey, SysInfoOp op) -> int"""
+  return _VISHNU.getSystemInfo(*args, **kwargs)
 
-def listJobs(*args):
-  return _VISHNU.listJobs(*args)
-listJobs = _VISHNU.listJobs
+def restart(*args, **kwargs):
+  """restart(string sessionKey, string machineId, RestartOp op) -> int"""
+  return _VISHNU.restart(*args, **kwargs)
 
-def getJobProgress(*args):
-  return _VISHNU.getJobProgress(*args)
-getJobProgress = _VISHNU.getJobProgress
+def createFile(*args, **kwargs):
+  """createFile(string sessionKey, string path) -> int"""
+  return _VISHNU.createFile(*args, **kwargs)
 
-def listQueues(*args):
-  return _VISHNU.listQueues(*args)
-listQueues = _VISHNU.listQueues
+def chGrp(*args, **kwargs):
+  """chGrp(string sessionKey, string group, string path) -> int"""
+  return _VISHNU.chGrp(*args, **kwargs)
 
-def getJobOutput(*args):
-  return _VISHNU.getJobOutput(*args)
-getJobOutput = _VISHNU.getJobOutput
+def chMod(*args, **kwargs):
+  """chMod(string sessionKey, mode_t mode, string path) -> int"""
+  return _VISHNU.chMod(*args, **kwargs)
 
-def getCompletedJobsOutput(*args):
-  return _VISHNU.getCompletedJobsOutput(*args)
-getCompletedJobsOutput = _VISHNU.getCompletedJobsOutput
+def copyFile(*args, **kwargs):
+  """copyFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
+  return _VISHNU.copyFile(*args, **kwargs)
 
-def copyFile(*args):
-  return _VISHNU.copyFile(*args)
-copyFile = _VISHNU.copyFile
+def copyAsyncFile(*args, **kwargs):
+  """
+    copyAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, 
+        CpFileOptions options = FMS_Data::CpFileOptions()) -> int
+    """
+  return _VISHNU.copyAsyncFile(*args, **kwargs)
 
-def copyAsyncFile(*args):
-  return _VISHNU.copyAsyncFile(*args)
-copyAsyncFile = _VISHNU.copyAsyncFile
+def headOfFile(*args, **kwargs):
+  """headOfFile(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"""
+  return _VISHNU.headOfFile(*args, **kwargs)
 
-def headOfFile(*args):
-  return _VISHNU.headOfFile(*args)
-headOfFile = _VISHNU.headOfFile
+def contentOfFile(*args, **kwargs):
+  """contentOfFile(string sessionKey, string path) -> int"""
+  return _VISHNU.contentOfFile(*args, **kwargs)
 
-def listDir(*args):
-  return _VISHNU.listDir(*args)
-listDir = _VISHNU.listDir
+def listDir(*args, **kwargs):
+  """listDir(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"""
+  return _VISHNU.listDir(*args, **kwargs)
 
-def createDir(*args):
-  return _VISHNU.createDir(*args)
-createDir = _VISHNU.createDir
+def createDir(*args, **kwargs):
+  """createDir(string sessionKey, string path, CreateDirOptions options = FMS_Data::CreateDirOptions()) -> int"""
+  return _VISHNU.createDir(*args, **kwargs)
 
-def moveFile(*args):
-  return _VISHNU.moveFile(*args)
-moveFile = _VISHNU.moveFile
+def moveFile(*args, **kwargs):
+  """moveFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
+  return _VISHNU.moveFile(*args, **kwargs)
 
-def moveAsyncFile(*args):
-  return _VISHNU.moveAsyncFile(*args)
-moveAsyncFile = _VISHNU.moveAsyncFile
+def moveAsyncFile(*args, **kwargs):
+  """
+    moveAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, 
+        CpFileOptions options = FMS_Data::CpFileOptions()) -> int
+    """
+  return _VISHNU.moveAsyncFile(*args, **kwargs)
 
-def removeFile(*args):
-  return _VISHNU.removeFile(*args)
-removeFile = _VISHNU.removeFile
+def removeFile(*args, **kwargs):
+  """removeFile(string sessionKey, string path, RmFileOptions options = FMS_Data::RmFileOptions()) -> int"""
+  return _VISHNU.removeFile(*args, **kwargs)
 
-def tailOfFile(*args):
-  return _VISHNU.tailOfFile(*args)
-tailOfFile = _VISHNU.tailOfFile
+def removeDir(*args, **kwargs):
+  """removeDir(string sessionKey, string path) -> int"""
+  return _VISHNU.removeDir(*args, **kwargs)
 
-def stopFileTransfer(*args):
-  return _VISHNU.stopFileTransfer(*args)
-stopFileTransfer = _VISHNU.stopFileTransfer
+def tailOfFile(*args, **kwargs):
+  """tailOfFile(string sessionKey, string path, TailOfFileOptions options = FMS_Data::TailOfFileOptions()) -> int"""
+  return _VISHNU.tailOfFile(*args, **kwargs)
 
-def listFileTransfers(*args):
-  return _VISHNU.listFileTransfers(*args)
-listFileTransfers = _VISHNU.listFileTransfers
+def getFileInfo(*args, **kwargs):
+  """getFileInfo(string sessionKey, string path, FileStat filesInfo) -> int"""
+  return _VISHNU.getFileInfo(*args, **kwargs)
+
+def stopFileTransfer(*args, **kwargs):
+  """stopFileTransfer(string sessionKey, StopTransferOptions options = FMS_Data::StopTransferOptions()) -> int"""
+  return _VISHNU.stopFileTransfer(*args, **kwargs)
+
+def listFileTransfers(*args, **kwargs):
+  """listFileTransfers(string sessionKey, LsTransferOptions options = FMS_Data::LsTransferOptions()) -> int"""
+  return _VISHNU.listFileTransfers(*args, **kwargs)
+
 
