@@ -39,8 +39,6 @@ file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU TMS SeD configuration
 set(TEST_TMS_SED_CONFIG "${TEST_CONFIG_PATH}/tmssed_testing.cfg")
 file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG} TMSSEDCONF)
-set(TEST_TMS_SCHED_CONFIG "${TEST_CONFIG_PATH}/tmssched_testing.cfg")
-file(TO_NATIVE_PATH ${TEST_TMS_SCHED_CONFIG} TMSSCHEDCONF)
 set(TEST_TMS_SED_CONFIG2 "${TEST_CONFIG_PATH}/tmssed_testing2.cfg")
 file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG2} TMSSEDCONF2)
 
@@ -56,9 +54,6 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
 # Create configuration for the second TMS SeD
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg2.in
   ${TEST_CONFIG_PATH}/tmssed_testing2.cfg)
-# Create configuration for TMS Scheduler
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssched_testing.cfg.in
-  ${TEST_CONFIG_PATH}/tmssched_testing.cfg)
 
 include(TMSTestingMacros)
 tms_test_setup()
