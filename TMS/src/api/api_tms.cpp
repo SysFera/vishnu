@@ -154,7 +154,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 	UMS_Data::ListMachines machines;
 	UMS_Data::Machine_ptr machine;
-
 	if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) == 0) {
 		// First list all machines where we have a local account
 		UMS_Data::ListMachineOptions mopts;
@@ -169,6 +168,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	}
 
 	// Now iterate through all the machines to list jobs according to the query filter
+    listOfJobs.setNbJobs(0);
+    listOfJobs.setNbRunningJobs(0);
+    listOfJobs.setNbWaitingJobs(0);
 	for(int i=0; i< machines.getMachines().size(); i++) {
 	  machine = machines.getMachines().get(i) ;
 	  std::string serviceName = "getListOfJobs@";
@@ -181,7 +183,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	  checkJobPriority(options.getPriority());
 
 	  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-	  query(options, sessionProxy, serviceName,machine->getMachineId());
+	  query(options, sessionProxy, serviceName, machine->getMachineId());
 
 	  TMS_Data::ListJobs* listJobs_ptr = NULL;
 	  try {
@@ -189,20 +191,23 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	  } catch(...) {
 		// This means the machine is not active
 		// or we don't have a local account on it
-		continue ;
+		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
+			throw ;
+		} else {
+			continue ;
+		}
 	  }
-
 	  if(listJobs_ptr != NULL) {
 	    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-	    for(unsigned int i = 0; i < listJobs_ptr->getJobs().size(); i++) {
+	    for(unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
 	      TMS_Data::Job_ptr job = ecoreFactory->createJob();
           //To copy the content and not the pointer
-	      *job = *listJobs_ptr->getJobs().get(i);
+	      *job = *listJobs_ptr->getJobs().get(j);
 	      listOfJobs.getJobs().push_back(job);
 	    }
-	      listOfJobs.setNbJobs(listJobs_ptr->getJobs().size());
-	      listOfJobs.setNbRunningJobs(listJobs_ptr->getNbRunningJobs());
-	      listOfJobs.setNbWaitingJobs(listJobs_ptr->getNbWaitingJobs());
+	      listOfJobs.setNbJobs(listOfJobs.getNbJobs()+listJobs_ptr->getJobs().size());
+	      listOfJobs.setNbRunningJobs(listOfJobs.getNbRunningJobs()+listJobs_ptr->getNbRunningJobs());
+	      listOfJobs.setNbWaitingJobs(listOfJobs.getNbWaitingJobs()+listJobs_ptr->getNbWaitingJobs());
 	      delete listJobs_ptr;
 	  }
 	}
@@ -244,6 +249,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	}
 
 	// Now iterate through all the machines to list queues according to the query filter
+	listOfProgress.setNbJobs(0);
 	for(int i=0; i< machines.getMachines().size(); i++) {
 	  machine = machines.getMachines().get(i) ;
 	  std::string serviceName = "getJobsProgression@";
@@ -259,7 +265,11 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	  } catch(...) {
 		// This means the machine is not active
 		// or we don't have a local account on it
-		continue ;
+		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
+			throw ;
+		} else {
+			continue ;
+		}
 	  }
 
 	  if(listProgression_ptr != NULL) {
@@ -270,7 +280,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 			*progression = *listProgression_ptr->getProgress().get(i);
 			listOfProgress.getProgress().push_back(progression);
 		}
-		listOfProgress.setNbJobs(listProgression_ptr->getProgress().size());
+		listOfProgress.setNbJobs(listOfProgress.getNbJobs()+listProgression_ptr->getProgress().size());
 		delete listProgression_ptr;
 	  }
 	}
@@ -312,6 +322,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	}
 
 	// Now iterate through all the machines to list queues according to the query filter
+	listofQueues.setNbQueues(0);
 	for(int i=0; i< machines.getMachines().size(); i++) {
 	  machine = machines.getMachines().get(i) ;
 	  std::string serviceName = "getListOfQueues@";
@@ -327,7 +338,11 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 	  } catch(...) {
 		// This means the machine is not active
 		// or we don't have a local account on it
-		continue ;
+		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
+			throw ;
+		} else {
+			continue ;
+		}
 	  }
 
 	  if(listQueues_ptr != NULL) {
@@ -338,7 +353,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 		  *queue = *listQueues_ptr->getQueues().get(i);
 		  listofQueues.getQueues().push_back(queue);
 		}
-		listofQueues.setNbQueues(listQueues_ptr->getQueues().size());
+		listofQueues.setNbQueues(listofQueues.getNbQueues()+listQueues_ptr->getQueues().size());
 		delete listQueues_ptr;
 	  }
 	}

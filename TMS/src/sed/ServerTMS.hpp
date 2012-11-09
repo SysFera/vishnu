@@ -134,10 +134,7 @@ private :
 	 * \brief Instance of TMSMapper
 	 */
 	static TMSMapper *mmapper;
-	/**
-	 * \brief Path to the file containing the dispatcher uri
-	 */
-	static std::string muriDispatcherCfg;
+
 	/**
 	 * \brief The vishnu id
 	 */
