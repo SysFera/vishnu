@@ -637,7 +637,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
    <listitem><para>2. Générer le Makefile </para>
 	<itemizedlist>
   		<listitem><para>En utilisant Make</para>
-			<para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..  \</emphasis></para>
 			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
 			<para><emphasis>  -DENABLE_PYTHON=ON  \</emphasis></para>
 			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
@@ -647,7 +647,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
    			<para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
 		</listitem>
   		<listitem><para>En utilisant Ninja : changement du générateur via le flag CMAKE_GENERATOR.</para>
-			<para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu  \</emphasis></para>
+			<para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..  \</emphasis></para>
 			<para><emphasis>  -DENABLE_SWIG=ON  \</emphasis></para>
 			<para><emphasis>  -DENABLE_PYTHON=ON \</emphasis></para>
 			<para><emphasis>  -DCOMPILE_UMS=ON  \</emphasis></para>
@@ -893,7 +893,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
         <title>Fichiers à installer</title>
         <itemizedlist>
           <listitem>
-            <para>VISHNULib-1.0-SNAPSHOT.jar
+            <para>VishnuLib-1.0-SNAPSHOT.jar
               <itemizedlist>
                 <listitem><para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para></listitem>
                 <listitem><para>A copier dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
@@ -916,7 +916,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
                 <listitem><para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para></listitem>
                 <listitem><para>Compilation (si nécessaire)
                     <itemizedlist>
-                      <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VISHNULib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
+                      <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
                       <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
                       <listitem><para>Le fichier .jar produit se trouve dans le répertoire target</para></listitem>
                       <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
@@ -970,7 +970,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
     <title>Déploiement de VISHNU </title>
     <section>
       <title>Lancement sur un même réseau</title>
-      <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.
+      <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>. De plus, des exemples de fichiers de configuration sont disponibles dans la partie 10.
 </para>
     <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis> 
 	<itemizedlist>
