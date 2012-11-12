@@ -5,6 +5,7 @@
 #include "DIET_client.h"
 #include <boost/thread.hpp>
 #include "UserException.hpp"
+#include "utils.hpp"
 
 
 #define SEPARATOR "#"
@@ -15,35 +16,58 @@ usage(){
   std::cout << "Usage: dispatcher <uriAddr> <uriSubscriber>" << std::endl;
 }
 
-class AddressDealer{
+//function to get the first element from the annuary
+std::string
+elect(std::vector<boost::shared_ptr<Server> >* serv){
+  if ((serv == NULL) || (serv->size() == 0)) {
+    return "";
+  }
+  return serv->at(0).get()->getURI();
+}
+
+template<class Callable>
+int
+ZMQStartDevice(const std::string& uriExternal,
+		const std::string& uriInproc,
+		const int & nbWorker,
+		boost::shared_ptr<Annuary>& ann) {
+
+	// Prepare our context and the sockets for server
+  boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
+  zmq::socket_t socket_server(*context, ZMQ_ROUTER);
+  zmq::socket_t socket_workers(*context, ZMQ_DEALER);
+
+  // bind the sockets
+  std::cout << boost::format("I: listening... (%1%)\n") % uriExternal;
+  socket_server.bind(uriExternal.c_str());
+  socket_workers.bind(uriInproc.c_str());
+
+  // Create our threads pool
+  ThreadPool pool(nbWorker);
+  for (int i = 0; i < nbWorker; ++i) {
+    pool.submit(Callable(context, uriInproc, i, ann));
+  }
+
+  // connect our workers threads to our server via a queue
+  zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+
+  return 0;
+}
+
+class ServiceWorker {
 public:
-  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
-  }
-
-  ~AddressDealer(){
-  }
-
-  //function to get the first element from the annuary
-  std::string
-  elect(std::vector<boost::shared_ptr<Server> >* serv){
-    if ((serv == NULL) || (serv->size() == 0)) {
-      return "";
-    }
-    return serv->at(0).get()->getURI();
-  }
+  explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
+		  const std::string & uriInproc,
+		  int id,
+		  boost::shared_ptr<Annuary>& ann)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
-  run(){
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
-    std::string servname;
-    std::string resultSerialized;
-    std::vector<boost::shared_ptr<Server> >* serv = NULL;
+  operator()() {
+    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    socket.connect(uriInproc_.c_str());
 
-    socket.bind(muri.c_str());
-    std::cout << boost::format("I: listening for clients (%1%)\n") % muri;
     while (true) {
-
       //Receive message from ZMQ
       zmq::message_t message(0);
       try {
@@ -52,26 +76,16 @@ public:
       } catch (zmq::error_t error) {
         std::cerr << boost::format("E: %1%\n")%error.what();
       }
-
       // Deserialize and call UMS Method
       if (message.size() != 0) {
         boost::shared_ptr<diet_profile_t> profile(my_deserialize(static_cast<const char*>(message.data())));
-        servname = profile.get()->name;
-        resultSerialized = (boost::format("error %1%: the service %2% is not available")%
-                                        vishnu::convertToString(ERRCODE_INVALID_PARAM)%
-                                        servname).str();
-        try{
-          serv = mann.get()->get(servname);
-        } catch (UserException& e){
-          diet_string_set(diet_parameter(profile.get(), profile.get()->OUT-1), strdup(e.what()), 1);
-          resultSerialized = my_serialize(profile.get());
-          std::cout << boost::format("IERR: Sending> %1%...\n") % resultSerialized;
-          s_send(socket, resultSerialized);
-          continue;
-        }
-
+        std::string servname = profile.get()->name;
+        std::vector<boost::shared_ptr<Server> >* serv = mann.get()->get(servname);
         std::string uriServer= elect(serv);
 
+        std::string resultSerialized = (boost::format("error %1%: the service %2% is not available")%
+        				vishnu::convertToString(ERRCODE_INVALID_PARAM)%
+        				servname).str();
         if (uriServer.size() != 0) {
             std::cout << my_serialize(profile.get());
             diet_call_gen(profile.get(), uriServer);
@@ -83,27 +97,27 @@ public:
     }
   }
 
-
 private:
-  std::string muri;
+  boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
+  std::string uriInproc_; /**< worker id */
+  int id_; /**< worker id */
   boost::shared_ptr<Annuary>& mann;
 };
 
-class AddressSubscriber{
+//FIXME: clear unused parameters
+class SubscripionWorker {
 public:
-  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
-  }
-
-  ~AddressSubscriber(){
-  }
+  explicit SubscripionWorker(boost::shared_ptr<zmq::context_t> ctx,
+		  const std::string & uriInproc,
+		  int id,
+		  boost::shared_ptr<Annuary>& ann)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
-  run(){
-    zmq::context_t context (1);
-    zmq::socket_t socket (context, ZMQ_REP);
+  operator()() {
+    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    socket.connect(uriInproc_.c_str());
 
-    socket.bind(muri.c_str());
-    std::cout << boost::format("I: listening for SeDs subscribers (%1%)\n") % muri;
     while (true) {
 
       //Receive message from ZMQ
@@ -133,6 +147,55 @@ public:
       std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
       s_send(socket, resultSerialized);
     }
+  }
+
+private:
+  boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
+  std::string uriInproc_; /**< worker id */
+  int id_; /**< worker id */
+  boost::shared_ptr<Annuary>& mann;
+};
+
+
+class AddressDealer{
+public:
+  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
+  }
+
+  ~AddressDealer(){
+  }
+
+  //function to get the first element from the annuary
+  std::string
+  elect(std::vector<boost::shared_ptr<Server> >* serv){
+    if ((serv == NULL) || (serv->size() == 0)) {
+      return "";
+    }
+    return serv->at(0).get()->getURI();
+  }
+
+  void
+  run(){
+    ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker", 4, mann);
+  }
+
+
+private:
+  std::string muri;
+  boost::shared_ptr<Annuary>& mann;
+};
+
+class AddressSubscriber{
+public:
+  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
+  }
+
+  ~AddressSubscriber(){
+  }
+
+  void
+  run(){
+    ZMQStartDevice<SubscripionWorker>(muri, "inproc://vishnuSubcriberWorker", 4, mann);
   }
 
 
