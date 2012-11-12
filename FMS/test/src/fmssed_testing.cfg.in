@@ -10,3 +10,4 @@ intervalMonitor=1
 vishnuMachineId=machine_FMS
 uri=@TEST_ZMQ_FMS_URI@
 uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@
+urlSupervisor=@TEST_IMS_SUPERVISOR_URL@

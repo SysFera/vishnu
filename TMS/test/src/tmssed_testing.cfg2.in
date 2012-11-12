@@ -12,3 +12,4 @@ intervalMonitor=1
 uri=@TEST_ZMQ_TMS_SED2_URI@
 uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@
 uriDispatcherSrv=@TEST_ZMQ_DISPATCHER_URI_SRV@
+urlSupervisor=@TEST_IMS_SUPERVISOR_URL@

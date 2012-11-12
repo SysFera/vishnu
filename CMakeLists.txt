@@ -466,6 +466,7 @@ if (BUILD_TESTING)
   set(TEST_ZMQ_LPC_TIMEOUT "10" CACHE STRING "Timeout between two lazy pirate retries") 
  
   set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
+  set(TEST_IMS_SUPERVISOR_URL "http://127.0.0.1:9001" CACHE STRING "Web url of Supervisord")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -498,6 +499,7 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_ZMQ_TMS_SED2_URI)
   mark_as_advanced(TEST_ZMQ_TMS_SCHED_URI)
   mark_as_advanced(TEST_ZMQ_LPC_TIMEOUT) 
+  mark_as_advanced(TEST_IMS_SUPERVISOR_URL)
 
   # Common directories for tests
   set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")

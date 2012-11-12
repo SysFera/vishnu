@@ -11,3 +11,4 @@ vishnuMachineId=machine_1
 authenticationType=@TEST_AUTHENTYPE@
 uri=@TEST_ZMQ_UMS_URI@
 uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@
+urlSupervisor=@TEST_IMS_SUPERVISOR_URL@
