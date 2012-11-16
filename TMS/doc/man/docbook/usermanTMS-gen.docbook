@@ -85,6 +85,7 @@ same conditions as regards security.</para>
               choice="opt"><option>-F <replaceable>fileParams</replaceable></option></arg><arg
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
+              choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -221,6 +222,15 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             <term><option>-w <replaceable>workId</replaceable></option></term>
             <listitem>
               <para>Sets the identifier of the Work to which the job is related.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-S <replaceable>specificParams</replaceable></option></term>
+            <listitem>
+              <para>Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.
+E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. 
+
+NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive..</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2533,7 +2543,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets the progression status of jobs</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listProgress=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getJobProgress</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListProgression <parameter>listProgress</parameter></paramdef><paramdef>ProgressOptions <parameter>options = ProgressOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2625,7 +2635,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets queues information</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listofQueues=VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listQueues</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListQueues <parameter>listofQueues</parameter></paramdef><paramdef>string <parameter>queueName = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2729,7 +2739,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets a list of all submitted jobs on a machine.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfJobs=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listJobs</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobs <parameter>listOfJobs</parameter></paramdef><paramdef>ListJobsOptions <parameter>options = ListJobsOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2951,7 +2961,7 @@ If the machine identifier is equal to autom, the job will be automatically submi
         <refpurpose>gets standard output and error output files of completed jobs (applies only once for each job)</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, listOfResults=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getCompletedJobsOutput</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListJobResults <parameter>listOfResults</parameter></paramdef><paramdef>string <parameter>outDir = string()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

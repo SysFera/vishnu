@@ -1,7 +1,7 @@
 '\" t
 .\"     Title: vishnu_submit_job
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
 .\"      Date: September 2012
 .\"    Manual: TMS Command reference
 .\"    Source: VISHNU 2.0
@@ -31,7 +31,7 @@
 vishnu_submit_job \- Allows to submit a job consisting in running a given script on a machine\&.
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_submit_job\fR\ 'u
-\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] [\fB\-F\ \fR\fB\fIfileParams\fR\fR] [\fB\-V\ \fR\fB\fItextParams\fR\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
+\fBvishnu_submit_job\fR [\fB\-h\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] [\fB\-q\ \fR\fB\fIqueue\fR\fR] [\fB\-t\ \fR\fB\fIwallTime\fR\fR] [\fB\-m\ \fR\fB\fImemory\fR\fR] [\fB\-P\ \fR\fB\fInbCpu\fR\fR] [\fB\-N\ \fR\fB\fInbNodesAndCpuPerNode\fR\fR] [\fB\-o\ \fR\fB\fIoutputPath\fR\fR] [\fB\-e\ \fR\fB\fIerrorPath\fR\fR] [\fB\-M\ \fR\fB\fImailNotification\fR\fR] [\fB\-u\ \fR\fB\fImailNotifyUser\fR\fR] [\fB\-g\ \fR\fB\fIgroup\fR\fR] [\fB\-D\ \fR\fB\fIworkingDir\fR\fR] [\fB\-T\ \fR\fB\fIcpuTime\fR\fR] [\fB\-Q\fR] [\fB\-L\ \fR\fB\fIloadType\fR\fR] [\fB\-F\ \fR\fB\fIfileParams\fR\fR] [\fB\-V\ \fR\fB\fItextParams\fR\fR] [\fB\-w\ \fR\fB\fIworkId\fR\fR] [\fB\-S\ \fR\fB\fIspecificParams\fR\fR] \fImachineId\fR \fIscriptFilePath\fR
 .SH "DESCRIPTION"
 .PP
 This command is used to submit a job to the specific batch scheduler associated to a machine\&. It allows describing a job in a script, using either the batch scheduler\*(Aqs directives or VISHNU\*(Aqs generic directives for all batch schedulers\&. If the machine identifier is equal to autom, the job will be automatically submitted on a best machine (for now three criterions are used: minimum number of waiting jobs, minimum number of running jobs and the total number of jobs) through the use of a script (scriptFilePath) which must be generic script using VISHNU\*(Aqs generic directives for all batch schedulers
@@ -130,6 +130,11 @@ Sets a list of parameters for the script so at the execution, each of parameter 
 \fB\-w \fR\fB\fIworkId\fR\fR
 .RS 4
 Sets the identifier of the Work to which the job is related\&.
+.RE
+.PP
+\fB\-S \fR\fB\fIspecificParams\fR\fR
+.RS 4
+Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler\&. E\&.g\&. \-\-specificParams "PARAM1=value1 PARAM2=value2" or \-S "PARAM1=value1 PARAM2=value2", will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively\&. NOTE: The name of parameter as well as those of the corresponding environment are case\-insensitive\&.\&.
 .RE
 .SH "JOB OUTPUT ENVIRONMENT VARIABLES"
 .PP
