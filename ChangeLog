@@ -7,9 +7,10 @@
 * Fixed bug 440
 * Fix LSF bug for -N and -P options in submit
 * Fix bad types in comparison from unsigned int to size_t
-* Ajout du support de PBS_Pro
-* Ajout des paramètres spécifiques aux batchs schedulers (option -S de submit, pour tout batch)
-* Ajout de parametres par default dans un fichier de config (pour tout batch)
+* Add PBS_Pro support
+* Add specific parameters for batchs schedulers (option -S with vishnu_submit_job)
+* Add default parameters in config files for batchs
+* WS do not work
 
 
 
