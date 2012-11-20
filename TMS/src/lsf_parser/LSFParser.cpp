@@ -108,7 +108,7 @@ void verifyQuotaCharacter(const string& str, const char& quote) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
     }
 
-    //First character quote 
+    //First character quote
     pos = str.find(quote, pos+1);
     while(pos!=std::string::npos) {
       if(pos!=std::string::npos) {
@@ -139,7 +139,7 @@ getStreamTokens(const std::string& str) {
   return streamTokens;
 }
 
-std::vector<std::string> 
+std::vector<std::string>
 getTimeToKens(const std::string& timeFormat, const char& separator=':') {
 
   size_t beginPosToken = timeFormat.rfind(separator);
@@ -154,7 +154,7 @@ getTimeToKens(const std::string& timeFormat, const char& separator=':') {
     beginPosToken = timeFormat.rfind(separator, endPosToken);
     //last token
     if(beginPosToken==std::string::npos){
-      timeTokens.push_back(timeFormat.substr(0, endPosToken+1));  
+      timeTokens.push_back(timeFormat.substr(0, endPosToken+1));
     }
   }
 
@@ -167,7 +167,7 @@ getTimeToKens(const std::string& timeFormat, const char& separator=':') {
 LSFParser::LSFParser(){
 }
 
-time_t 
+time_t
 LSFParser::convertDateToTime(const std::string& date, const std::string& compErrMsg) {
 
   time_t totalTime;
@@ -194,22 +194,22 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
 
   if(tokens.size() < 2) {
     errMsg += " At least two fields must be specified.";
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);  
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
   } else {
 
-    //minute 
+    //minute
     minute = vishnu::convertToInt(tokens[0]);
     if(minute < 0 || minute > 59) {
       errMsg += " minute number range must be 0-59.";
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
-    } 
-    //hour 
+    }
+    //hour
     hour = vishnu::convertToInt(tokens[1]);
     if(hour < 0 || hour > 23) {
       errMsg += " hour number range must be 0-23.";
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, errMsg+" "+compErrMsg);
-    } 
-    //day 
+    }
+    //day
     if(tokens.size() >= 3) {
       day = vishnu::convertToInt(tokens[2]);
       if(day < 1 || day > 31) {
@@ -247,7 +247,7 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
   if(hasDayField) {
     totalTimeTm.tm_mday = day;
   } else {
-    if((hour < timeNowTm->tm_hour)|| (hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min)) 
+    if((hour < timeNowTm->tm_hour)|| (hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min))
     {
       totalTimeTm.tm_mday = timeNowTm->tm_mday+1;
     } else {
@@ -274,8 +274,8 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
     if((month!=-1 && ((month-1) < timeNowTm->tm_mon))
         ||((month-1)==timeNowTm->tm_mon && day < timeNowTm->tm_mday)
         || ((month-1)==timeNowTm->tm_mon && day==timeNowTm->tm_mday && hour < timeNowTm->tm_hour)
-        || ((month-1)==timeNowTm->tm_mon && day==timeNowTm->tm_mday 
-          && hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min)) 
+        || ((month-1)==timeNowTm->tm_mon && day==timeNowTm->tm_mday
+          && hour==timeNowTm->tm_hour && minute < timeNowTm->tm_min))
     {
       totalTimeTm.tm_year = timeNowTm->tm_year+1;
     } else {
@@ -285,16 +285,16 @@ LSFParser::convertDateToTime(const std::string& date, const std::string& compErr
 
   totalTimeTm.tm_sec = 0;
   totalTimeTm.tm_isdst = -1;
-  totalTime = std::mktime(&totalTimeTm); 
+  totalTime = std::mktime(&totalTimeTm);
 
   return totalTime;
 }
 
 
-int 
+int
 LSFParser::convertWallTimeToTime(const std::string& date, const std::string& compErrMsg) {
 
-  int wallTime; 
+  int wallTime;
   int minute = -1;
   int hour   = -1;
 
@@ -311,10 +311,10 @@ LSFParser::convertWallTimeToTime(const std::string& date, const std::string& com
     }
   }
 
-  //hour 
+  //hour
   minute = vishnu::convertToInt(tokens[0]);
   wallTime = minute;
-  //day 
+  //day
   if(tokens.size() >= 2) {
     hour = vishnu::convertToInt(tokens[1]);
     wallTime += hour*60;
@@ -336,8 +336,8 @@ bool LSFParser::isNumerical(const std::string& value) {
   return true;
 }
 
-std::vector<std::string> 
-LSFParser::convertScriptIntoArgv(const char* pathTofile, 
+std::vector<std::string>
+LSFParser::convertScriptIntoArgv(const char* pathTofile,
                                  const std::string& BATCH_PREFIX){
 
   ifstream fileStream;
@@ -379,7 +379,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
         line.erase(0,1);
       };
 
-      /*search # character*/ 
+      /*search # character*/
       size_t pos = line.find('#');
       if(pos == string::npos) {
         continue;
@@ -396,7 +396,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
            if(pos-1 >=0) {
               std::string tmp = line.substr(pos-1);
               if(boost::algorithm::starts_with(boost::algorithm::erase_all_copy(tmp, " "), "#")) {
-                line = line.substr(0, pos); 
+                line = line.substr(0, pos);
               }
            } else {
              line = line.substr(0, pos);
@@ -407,7 +407,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
         verifyQuotaCharacter(line, '\'');
         //add line to cmd
         cmd = cmd+" "+line;
-      }  
+      }
     }
     fileStream.close();
 
@@ -428,7 +428,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
     if(isStartByQuote(argvStr, '\"')) {
       quote = '\"';
     } else if(isStartByQuote(argvStr, '\'')){
-      quote = '\''; 
+      quote = '\'';
     }
     if(quote!='\0'){
       std::vector<std::string>::iterator found_iter;
@@ -456,11 +456,11 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
  return tokensArgs;
 }
 
-int 
+int
 LSFParser::parse_file(const char* pathTofile, struct submit* req) {
 
   std::vector<std::string>  tokensArgs=convertScriptIntoArgv(pathTofile);
-  int argc = tokensArgs.size()+1; 
+  int argc = tokensArgs.size()+1;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
   for(int i=0; i < tokensArgs.size(); ++i) {
@@ -490,15 +490,15 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
   std::vector<std::string> xFile_tokens;
   int oldNxf;
 
-  std::string errHead = "Error in your script: "; 
+  std::string errHead = "Error in your script: ";
   //set default values for jobName and job output and error path
   req->options |=SUB_JOB_NAME;
-  req->jobName = (char*) "NoName";  
+  req->jobName = (char*) "NoName";
   req->options |=SUB_OUT_FILE;
   req->outFile = (char*) "lsf-%J.out";
   req->options |=SUB_ERR_FILE;
   req->errFile = (char*) "lsf-%J.err";
-  
+
   //Parse options in script file
   while ((c = getopt_long_only(argc, argv, GETOPT_ARGS, long_options, &option_index)) != -1) {
     switch (c) {
@@ -542,7 +542,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           } else {
             throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(optarg)+" is an invalid"
                 " value for -n option. Correct format is -n min_processors[,max_processors]");
-          }   
+          }
         }
         req->numProcessors=min_proc;
         req->maxNumProcessors=max_proc;
@@ -578,7 +578,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
       case 'k':
         req->options |=SUB_CHKPNT_DIR;
         chkpnt = strdup(optarg);
-        chkpnt_tokens=getStreamTokens(chkpnt); 
+        chkpnt_tokens=getStreamTokens(chkpnt);
         req->chkpntDir = strdup(chkpnt_tokens[0].c_str());
         if(chkpnt_tokens.size() >=2) {
           if(boost::algorithm::starts_with(chkpnt_tokens[1], "init=")) {
@@ -607,7 +607,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
               throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+chkpnt_tokens[2]+" is an invalid"
                   " checkpoint period value for -k option.");
             }
-          } 
+          }
         }
         break;
       case 'r':
@@ -647,7 +647,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case 'K':
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" option -K is "
-                  " not treated by VISHNU.");   
+                  " not treated by VISHNU.");
         break;
       case 'W':
         //-W run_limit[/host_spec]
@@ -775,25 +775,25 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             req->xf = new xFile[req->nxf];
           }
 
-          req->xf[oldNxf].subFn = strdup(xFile_tokens[0].c_str()); 
+          req->xf[oldNxf].subFn = strdup(xFile_tokens[0].c_str());
           if(xFile_tokens[1]==">") {
-            req->xf[oldNxf].options = XF_OP_SUB2EXEC; 
-          } 
+            req->xf[oldNxf].options = XF_OP_SUB2EXEC;
+          }
           else if(xFile_tokens[1]=="<") {
             req->xf[oldNxf].options = XF_OP_EXEC2SUB;
-          } 
+          }
           else if(xFile_tokens[1]=="<<") {
             req->xf[oldNxf].options = XF_OP_EXEC2SUB_APPEND;
-          } 
+          }
           else if(xFile_tokens[1]=="><") {
             req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB);
-          } 
+          }
           else if(xFile_tokens[1]=="<>") {
-            req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB); 
+            req->xf[oldNxf].options = (XF_OP_SUB2EXEC | XF_OP_EXEC2SUB);
           } else {
             throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+xFile_tokens[1]+" is an invalid"
                 " file transfer operator for -f option. See LSF manual.");
-          } 
+          }
 
           if(xFile_tokens.size() >=3) {
             req->xf[oldNxf].execFn = strdup(xFile_tokens[2].c_str());
@@ -811,7 +811,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(strdup(optarg))+" is an invalid"
               " job migration threshold value for -s option.");
         }
-        break;  
+        break;
       case LONG_OPT_APP:
         req->options3 |= SUB3_APP;
         req->app= strdup(optarg);
@@ -834,7 +834,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
             req->hostSpec = strdup(wHostSpec.c_str());
           }
         } else {
-          req->runtimeEstimation = convertWallTimeToTime(timeStr);  
+          req->runtimeEstimation = convertWallTimeToTime(timeStr);
         }
         break;
       case LONG_OPT_RN:
@@ -940,24 +940,24 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
         break;
       case LONG_OPT_XF:
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" option -XF is "
-                  " not treated by VISHNU.");   
+                  " not treated by VISHNU.");
         break;
-      case LONG_OPT_I: case LONG_OPT_Ip: case LONG_OPT_Is: 
+      case LONG_OPT_I: case LONG_OPT_Ip: case LONG_OPT_Is:
       case LONG_OPT_IS2: case LONG_OPT_ISp: case LONG_OPT_ISs: case LONG_OPT_IX:
-        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" LSF batch interactive job " 
+        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+" LSF batch interactive job "
                                  "option "+std::string(argv[optind-1])+" is not supported by VISHNU");
        break;
-      default: 
+      default:
        throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid option: "
-                  +std::string(argv[optind-1])); 
-       break;             
+                  +std::string(argv[optind-1]));
+       break;
     }
 
   }
-  
+
   if(optind < argc) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+"Invalid argument: "
-                             +std::string(argv[optind]));  
+                             +std::string(argv[optind]));
   }
   //search vishnu generic syntaxes and convert them
   searchAndConvertVishnuScriptGenSyntax(pathTofile, &(*req));
@@ -966,7 +966,7 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
 }
 
 
-void 
+void
 LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct submit* req) {
 
   std::vector<std::string>  tokensArgs=convertScriptIntoArgv(pathTofile, "#%");
@@ -975,7 +975,7 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
   std::string mailNotificationSyntax="-vishnuMailNofication="; //Ref ScriptGenConvertor
   std::string wallTimeSyntax="-vishnuWaillClockLimit=";//Ref ScriptGenConvertor
   size_t pos;
- 
+
   std::vector<std::string>::iterator iter;
   for(iter=tokensArgs.begin(); iter!=tokensArgs.end(); ++iter) {
       //to treat #% -vishnuNbNodesAndCpuPerNode=x:y
@@ -984,12 +984,12 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
          cleanString(nbNodesAndCpuPerNode,'\"');
          cleanString(nbNodesAndCpuPerNode,'\'');
          vishnu::checkJobNbNodesAndNbCpuPerNode(nbNodesAndCpuPerNode);
-     
+
           size_t posNbNodes = nbNodesAndCpuPerNode.find(":");
           if(posNbNodes!=std::string::npos) {
               std::string nbNodesStr = nbNodesAndCpuPerNode.substr(0, posNbNodes);
               std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
-               
+
 
               struct hostInfoEnt *hostInfo;
               char **hosts = NULL;
@@ -1001,22 +1001,12 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
                  throw UserException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERRROR: "
                   "In your script: the number of nodes is greater than the number of total nodes.");
               }
-              if(req->numAskedHosts > 0) {
-                delete [] req->askedHosts;
-              }
-              req->options |=SUB_HOST;//Set LSF option
-              req->askedHosts = new char*[nbNodes];
-              req->numAskedHosts = nbNodes;
-              for (int i = 0; i < nbNodes; i++, hostInfo++) {
-                req->askedHosts[i] = hostInfo->host;
-              }
-              
-              //set the number of processor     
+              //set the number of processor
               req->numProcessors = vishnu::convertToInt(cpuPerNode);
               req->maxNumProcessors = req->numProcessors*nbNodes;
           }
       }
-      //To treat cpu syntax 
+      //To treat cpu syntax
       if((pos=(*iter).find(cpuSyntax))!=std::string::npos){
          std::string cpuStr = (*iter).substr(pos+cpuSyntax.size());
          int cpu;
@@ -1039,9 +1029,9 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
          int node = endTmp-tmpHosts.begin();
          if(node <=0) {
             node = 1;
-         } 
+         }
          req->numProcessors = req->maxNumProcessors= req->numProcessors*node;
- 
+
       }
       //To treat mail notification syntax
       if((pos=(*iter).find(mailNotificationSyntax))!=std::string::npos) {
@@ -1059,10 +1049,10 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
                  throw UserException(ERRCODE_INVALID_PARAM, "In your script: "+notification+" is an invalid notification"
                                " type:"+" consult the vishnu user manuel");
            }
-      }  
-      //To treat waill clock time limit 
+      }
+      //To treat waill clock time limit
       if((pos=(*iter).find(wallTimeSyntax))!=std::string::npos) {
-         std::string waillTime = (*iter).substr(pos+wallTimeSyntax.size()); 
+         std::string waillTime = (*iter).substr(pos+wallTimeSyntax.size());
          req->rLimits[LSF_RLIMIT_RUN] = vishnu::convertStringToWallTime(waillTime)/60;
       }
   }

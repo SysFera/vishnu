@@ -449,7 +449,8 @@ LSFServer::getJobState(const std::string& jobId) {
   int numJobs;
 
   if (lsb_init(NULL) < 0) {
-    return state;
+    std::string errorMsg = "LSFServer::getJobState: lsb_init() failed with error "+vishnu::convertToString(lsberrno);
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
 
   numJobs = lsb_openjobinfo(lsfJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
