@@ -38,7 +38,7 @@ ZMQStartDevice(const std::string& uriExternal,
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
 
   // bind the sockets
-  std::cout << boost::format("I: listening... (%1%)\n") % uriExternal;
+//  std::cout << boost::format("I: listening... (%1%)\n") % uriExternal;
   socket_server.bind(uriExternal.c_str());
   socket_workers.bind(uriInproc.c_str());
 
@@ -87,11 +87,11 @@ public:
         				vishnu::convertToString(ERRCODE_INVALID_PARAM)%
         				servname).str();
         if (uriServer.size() != 0) {
-            std::cout << my_serialize(profile.get());
+//            std::cout << my_serialize(profile.get());
             diet_call_gen(profile.get(), uriServer);
             resultSerialized = my_serialize(profile.get());
         }
-        std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
+//        std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
         s_send(socket, resultSerialized);
       }
     }
@@ -129,7 +129,7 @@ public:
         std::cerr << boost::format("E: %1%\n") % error.what();
       }
       std::string data(static_cast<const char*>(message.data()), message.size());
-      std::cout << boost::format("I: Recv> %1%, size %2%\n") % data % data.length();
+//      std::cout << boost::format("I: Recv> %1%, size %2%\n") % data % data.length();
 
       int mode = vishnu::convertToInt(data.substr(0,1));
 
@@ -144,7 +144,7 @@ public:
       std::string resultSerialized = "OK";
 
       // Send reply back to client
-      std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
+//      std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
       s_send(socket, resultSerialized);
     }
   }
@@ -229,9 +229,9 @@ public:
         diet_string_set(diet_parameter(hb,1), NULL, DIET_VOLATILE);
         std::string p1 = my_serialize(hb);
 
-        std::cout << boost::format("I: Sending> %1%...\n") % p1;
+//        std::cout << boost::format("I: Sending> %1%...\n") % p1;
         if (!lpc.send(p1)) {
-          std::cout << boost::format("I: Sed Disconnected %1%\n") % uri;
+//          std::cout << boost::format("I: Sed Disconnected %1%\n") % uri;
           mann->remove(it->get()->getName(), it->get()->getURI());
         }
       }
