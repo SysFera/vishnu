@@ -68,7 +68,7 @@ find_library(XMLRPC_CLIENT_LIBRARY
 )
 
 find_library(XMLRPC_PARSE_LIBRARY
-  NAMES xmlrpc_parse
+  NAMES xmlrpc_xmlparse
   PATHS ${XMLRPC_INSTALL_DIR}/lib
   ${XMLRPC_DIR}/lib
   $ENV{XMLRPC_DIR}/lib
@@ -97,9 +97,6 @@ find_library(XMLRPC_UTIL_LIBRARY
   /opt/local/lib
 )
 
-#find_library(LBER_LIBRARY
-#  NAMES lber
-#  PATHS ${XMLRPC_INSTALL_DIR}/lib)
 
 set(XMLRPC_LIBRARIES 
   ${XMLRPC_CLIENTPP_LIBRARY}
