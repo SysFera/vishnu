@@ -12,8 +12,9 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta" CACHE STRING " comments about the current version ")
 
-find_package(XMLRPC)
-
+if (COMPILE_IMS)
+  find_package(XMLRPC)
+endif()
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
