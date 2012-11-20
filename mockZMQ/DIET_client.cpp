@@ -289,7 +289,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 
   std::string response = lpc.recv();
-  std::cout << boost::format("I: Recv> %1%...\n")%response;
+//  std::cout << boost::format("I: Recv> %1%...\n")%response;
 
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
   prof->IN = tmp->IN;
