@@ -22,8 +22,7 @@ namespace vishnu {
     /* [13] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
     /* [14] */ {URI, "uri", URI_PARAMETER},
     /* [15] */ {URIDISPATCHERSUB, "uriDispatcherSub", URI_PARAMETER},
-    /* [16] */ {URIDISPATCHERSRV, "uriDispatcherSrv", URI_PARAMETER},
-    /* [17] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER}
+    /* [16] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
