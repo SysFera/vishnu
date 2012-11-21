@@ -39,7 +39,6 @@ namespace vishnu {
     DEFAULTBATCHCONFIGFILE,
     URI,
     URIDISPATCHERSUB,
-    URIDISPATCHERSRV,
     URLSUPERVISOR
   } param_type_t;
 

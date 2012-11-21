@@ -75,7 +75,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig); 
     config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-    config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSRV, uriDispatcherSrv);
+//    config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSRV, uriDispatcherSrv);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -167,7 +167,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, defaultBatchConfig, uriDispatcherSrv);
+                         batchType, remoteBinDirectory, defaultBatchConfig);
 
       std::vector<std::string> ls = server.get()->getServices();
       registerSeD(TMSTYPE, config, cfg, ls);
