@@ -180,6 +180,14 @@
       <para>Add option -l on list job. </para>
     </revdescription>
   </revision> 
+   <revision>
+    <revnumber>18</revnumber>
+    <date>21/11/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Update for ZMQ. </para>
+    </revdescription>
+  </revision> 
   
   </revhistory>
 
@@ -259,9 +267,6 @@
           <listitem>
             <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
           </listitem>
-          <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.8 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
-          </listitem>
         <listitem>
           <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
         </listitem>
@@ -310,7 +315,7 @@
 	  <para> OMNIORB 4.1.4 </para>
 	</listitem>
 	<listitem>
-	  <para> SYSFERA-DS V2.8 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
+	  <para> ZMQ </para>
 	</listitem>
 	<listitem>
 	  <para> BOOST V1.46.1 </para>
@@ -382,11 +387,20 @@
       
       <section>
 	<title> From binaries package </title>
-	<para>Assuming the dependencies are installed (omniorb, diet, boost).
-	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the DIET hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
+	<para>Assuming the dependencies are installed (zmq).
+	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the VISHNU hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
 	</para>
       </section>   
-      
+      <section>
+        <title>Client configuration file</title>
+        <programlisting>
+          dispatcher=tcp://127.0.0.1:5560 
+          UMS=tcp://127.0.0.1:5555
+          retryTimeout=10
+        </programlisting>
+        <para>If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher, an error is returned.
+        retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retry for a client command)</para>
+      </section>      
     </section>
     
     <section>
@@ -798,14 +812,6 @@
 	  <listitem>
 	    <para> If a message similar to <emphasis role = "italic">"warning input stream error"</emphasis> happens when calling vishnu_connect but the call is successful, try cleaning the .vishnu directory.
 	    </para>
-	  </listitem>
-	  
-	  <listitem>
-	    <para>
-		The <emphasis role = "italic">"DIET initialization failed"</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
-		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. It is also advisable to put the variable maxServerThreadPoolSize to 1000. 
-		The value 1000 is an example value.
-	      </para>
 	  </listitem>
 	  
 	  <listitem>
