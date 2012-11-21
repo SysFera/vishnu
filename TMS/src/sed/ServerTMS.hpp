@@ -97,8 +97,7 @@ public :
 			DbConfiguration dbConfig,
 			const std::string & machineId,
 			BatchType batchType,
-			const std::string & slaveBinDir,
-			const std::string & uriDispatcher);
+			const std::string & slaveBinDir);
 
 	/**
 	 * \brief Destructor, raises an exception on error
