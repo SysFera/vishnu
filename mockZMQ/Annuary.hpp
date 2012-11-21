@@ -73,9 +73,10 @@ private :
    * \brief Fill the services for a given server name. Function used to easily create services from given names
    * \param services OUT, the list of services for name
    * \param name The name of the server
+   * \param mid The vishnu machine id
    */
   void
-  fillServices(std::vector<std::string> & services, std::string name);
+  fillServices(std::vector<std::string> & services, std::string name, std::string mid);
 
   /**
    * \param The servers

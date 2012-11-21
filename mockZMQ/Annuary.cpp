@@ -85,12 +85,14 @@ Annuary::initFromFile(std::string infile){
       std::istringstream iss(line);
       std::string name;
       std::string uri;
+      std::string mid;
       boost::shared_ptr<Server> server;
       std::vector<std::string> ports;
       iss >> name;
       iss >> uri;
+      iss >> mid;
       std::vector<std::string> services;
-      fillServices(services, name);
+      fillServices(services, name, mid);
       server = boost::shared_ptr<Server>(new Server(name, services, uri));
       mservers.push_back(server);
     }
@@ -100,7 +102,7 @@ Annuary::initFromFile(std::string infile){
 }
 
 void
-Annuary::fillServices(std::vector< std::string> &services, std::string name){
+Annuary::fillServices(std::vector< std::string> &services, std::string name, std::string mid){
   if (name.compare("UMS") == 0){
     services.push_back("sessionConnect") ;
     services.push_back("sessionReconnect") ;
@@ -136,17 +138,20 @@ Annuary::fillServices(std::vector< std::string> &services, std::string name){
     services.push_back("authAccountDelete") ;
     services.push_back("authAccountList") ;
   } else if (name.compare("TMS") == 0) {
-    services.push_back("jobSubmit") ;
-    services.push_back("jobCancel") ;
-    services.push_back("jobInfo") ;
-    services.push_back("getListOfJobs") ;
-    services.push_back("getJobsProgression") ;
-    services.push_back("getListOfQueues") ;
-    services.push_back("jobOutputGetResult") ;
-    services.push_back("jobOutputGetCompletedJobs") ;
+    services.push_back("jobSubmit@"+mid) ;
+    services.push_back("jobCancel@"+mid) ;
+    services.push_back("jobInfo@"+mid) ;
+    services.push_back("getListOfJobs@"+mid) ;
+    services.push_back("getJobsProgression@"+mid) ;
+    services.push_back("getListOfQueues@"+mid) ;
+    services.push_back("jobOutputGetResult@"+mid) ;
+    services.push_back("jobOutputGetCompletedJobs@"+mid) ;
+    services.push_back("getListOfJobs_all") ;
+    services.push_back("jobSubmit_autom") ;
+    services.push_back("addwork") ;
   } else if (name.compare("IMS") == 0) {
     services.push_back("int_exportCommands") ;
-    services.push_back("int_getMetricCurentValue") ;
+    services.push_back("int_getMetricCurentValue@"+mid) ;
     services.push_back("int_getMetricHistory") ;
     services.push_back("int_getProcesses") ;
     services.push_back("int_setSystemInfo") ;
@@ -156,11 +161,11 @@ Annuary::fillServices(std::vector< std::string> &services, std::string name){
     services.push_back("int_defineJobIdentifier") ;
     services.push_back("int_defineTransferIdentifier") ;
     services.push_back("int_defineMachineIdentifier") ;
-    services.push_back("int_loadShed") ;
+    services.push_back("int_loadShed@"+mid) ;
     services.push_back("int_setUpdateFrequency") ;
     services.push_back("int_getUpdateFrequency") ;
-    services.push_back("int_restart") ;
-    services.push_back("int_stop") ;
+    services.push_back("int_restart@"+mid) ;
+    services.push_back("int_stop@"+mid) ;
     services.push_back("int_getSystemInfo") ;
     services.push_back("int_defineAuthIdentifier") ;
     services.push_back("int_defineWorkIdentifier") ;

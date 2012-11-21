@@ -13,7 +13,7 @@
 
 void
 usage(){
-  std::cout << "Usage: dispatcher <uriAddr> <uriSubscriber>" << std::endl;
+  std::cout << "Usage: dispatcher <uriAddr> <uriSubscriber> [-c configFile]" << std::endl;
 }
 
 //function to get the first element from the annuary
@@ -251,17 +251,25 @@ int main(int argc, char** argv){
   // Prepare our context and socket
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
-
-  if (argc != 3){
+// Strictly because optionnal argument now
+  if (argc < 3){
     usage();
     return 0;
   }
 
   std::string uriAddr = std::string(argv[1]);
   std::string uriSubs = std::string(argv[2]);
+  std::string optConf ;
+  std::string confFil ;
+  if (argc>=5){
+    optConf = std::string(argv[3]);
+    confFil = std::string(argv[4]);
+    if (optConf.compare("-c")==0){
+      ann.get()->initFromFile(confFil);
+    }
+  }
 
 
-//  ann.get()->initFromFile(cfg);
   AddressDealer AD = AddressDealer(uriAddr, ann);
   AddressSubscriber AS = AddressSubscriber(uriSubs, ann);
 //  Heartbeat HB = Heartbeat(20, ann);
