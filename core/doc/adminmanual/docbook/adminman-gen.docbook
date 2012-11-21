@@ -232,6 +232,13 @@
         <revdescription>
         <para>Prise en compte du gestionnaire de resources PBSPro</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>26</revnumber>
+        <date>21/11/2012</date>
+        <authorinitials>K. Coulomb</authorinitials>
+        <revdescription>
+        <para>Première MAJ pour ZMQ</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -304,9 +311,6 @@
           <para>LDAP : Lightweight Directory Access Protocol, est un protocole de gestion d'annuaires</para>
         </listitem>
         <listitem>
-          <para> MA : &quot;Master Agent&quot;: Élément de DIET distribuant les requêtes entre les clients et les services désirés.</para>
-        </listitem>
-        <listitem>
           <para>SQL : Structured Query Language, est un langage avancée de requêtes sur les bases de données</para>
         </listitem>
         <listitem>
@@ -318,6 +322,9 @@
         <listitem>
           <para>WS : Web Service ou service web</para>
         </listitem>
+        <listitem>
+          <para>ZMQ : Zero Message Queueing, une libraire de message</para>
+        </listitem>
       </itemizedlist>
     </section>
     <section>
@@ -325,9 +332,6 @@
       <itemizedlist>
         <listitem>
           <para>[ARCH] D1.1g-VISHNU Technical Architecture : description de l'architecture de l'application VISHNU</para>
-        </listitem>
-        <listitem>
-          <para>[DIET_USERGUIDE] DIET User Guide : guide de l'utilisateur DIET</para>
         </listitem>
         <listitem>
           <para>[VISHNU_USERMANUAL] VISHNU User Manual : guide de l'utilisateur VISHNU.</para>
@@ -369,7 +373,7 @@
             <para>SeD UMS : Cela désigne le programme contenant et exécutant les services du module UMS. </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS : Intergiciel open source développé par SysFera et composé d'un ensemble de logiciels qui inclut, entre autres, DIET et LOGSERVICE</para>
+            <para>Sysfera-DS : Intergiciel open source développé par SysFera et composé d'un ensemble de logiciels</para>
           </listitem>
         </itemizedlist>
       </para>
@@ -421,10 +425,6 @@
             </listitem>
             <listitem>
               <para>openSSH : Version 4.2 ou ultérieure.</para>
-            </listitem>
-            <listitem>
-              <para>DIET : version 2.8 ou ultérieure. Le module 
-              <emphasis>LOG SERVICE</emphasis> doit être activé.</para>
             </listitem>
             <listitem>
               <para>Bibliothèques de connexion à la base de données:</para>
@@ -483,7 +483,25 @@
               <para>JAVA SDK : Version 1.6.</para>
             </listitem>
             <listitem>
-              <para>Python : Version 2.x, x>=5.</para>
+              <para>Python : Version 2.6</para>
+            </listitem>
+          </itemizedlist>
+        </listitem>
+        <listitem>
+          <para>Dépendances liées à IMS:</para>
+          <itemizedlist>
+            <listitem>
+              <para>Sigar : Version 1.6.4, 
+                http://sourceforge.net/projects/sigar/files/sigar/1.6/</para>
+            </listitem>
+            <listitem>
+              <para>Supervisord : Version 3.0.a, 
+                pip install supervisord</para>
+            </listitem>
+            <listitem>
+              <para>XMLRPC : Version 2.1.19, 
+                apt-get install libxmlrpc
+                </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -1020,9 +1038,18 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
   <chapter>
     <title>Déploiement de VISHNU </title>
     <section>
+      <title>Les composants logiciels</title>
+      <para>
+        <itemizedlist>
+          <listitem/>
+          <listitem/>
+        </itemizedlist>
+      </para>
+    </section>
+    <section>
       <title>Lancement sur un même réseau</title>
       <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré &quot;dedicated to VISHNU&quot; vont être déployés sur la même machine que l'on va nommer <emphasis
-            role="bold">préfrontale</emphasis>. De plus, des exemples de fichiers de configuration sont disponibles dans la partie 10.
+            role="bold">préfrontale</emphasis>.
 </para>
       <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis> 
 	<itemizedlist>
@@ -1037,9 +1064,9 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
 			</para>
           </listitem>
           <listitem>
-            <para> L'utilisateur VISHNU 'root' doit avoir un compte local sur chaque machine ou il y a un serveur IMS. 
-			Le compte UNIX correspondant sera utilisé pour le redémarrage automatique des SeD.
-			</para>
+            <para>
+              Les fichiers de configuration de tout les éléments mentionnés ici sont présentés dans une section plus loin exemple avec les détails de chacun
+	    </para>
           </listitem>
         </itemizedlist>
     </para>
@@ -1050,224 +1077,41 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
           <para> Vérifier que la base de données (PostGreSQL ou MySQL) a été bien configurée et initialisée comme décrit précédemment. De plus, vérifier vous pouvez vous connecter à la base de données depuis les différents serveurs où sont installés les modules de VISHNU.</para>
         </listitem>
         <listitem>
-          <para> Lancer le service de nommage CORBA sur la machine préfrontale. La commande est <emphasis
-                role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis
-                role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer le log service de DIET sur la machine préfrontale. La commande est <emphasis
-                role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur la machine préfrontale : <emphasis
-                role="bold">dietAgent config.cfg</emphasis>. Voir le paragraphe 6.3 pour avoir un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
-            <itemizedlist>
-              <listitem>
-                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
-              </listitem>
-              <listitem>
-                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
-              </listitem>
-              <listitem>
-                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent, par exemple on le nomme MA0 ici.</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD UMS sur la préfrontale avec la commande <emphasis role="bold">umssed ~/ums_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à :
-            <itemizedlist>
-              <listitem>
-                <para>
-                  'dietConfigFile=/usr/local/etc/SeD.cfg' : le chemin jusqu'au fichier de configuration DIET du SeD. Voir le paragraphe 6.4 pour un exemple de configuration. Ce fichier peut par exemple contenir les 2 lignes suivantes :
-                  <itemizedlist>
-                    <listitem>
-                      <para>'traceLevel = 0' : Le niveau de verbosité du SeD UMS, ce niveau peut être entre 0 (minimum) et 10 compris.</para>
-                    </listitem>
-                    <listitem>
-                      <para> 'parentName = MA0' : Le nom du MA auquel le SeD UMS doit se lier. Ce doit être exactement le même nom que celui donné au même dans le champs 'name' du MA en question, sur cet exemple c'est MA0.</para>
-                    </listitem>
-                    <listitem>
-                      <para> 'useLogService = 1' : Pour utiliser le service de log dans DIET (sinon les SeD n'émettent aucun message).</para>
-                    </listitem>
-                  </itemizedlist>
-		</para>
-              </listitem>
-              <listitem>
-                <para> 'vishnuId=1' : L'id de VISHNU à utiliser dans la DB (valeur '1' par défaut) .</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseType=postgresql' : Pour utiliser une base postgreSQL. Pour utiliser une base MySQL, il faut mettre 'mysql' comme type.</para>
-              </listitem>
-              <listitem>
-                <para>
-                  'databaseHost=localhost' : Le nom DNS du serveur de bases de données, ou 'localhost' si la base est locale.
-		</para>
-              </listitem>
-              <listitem>
-                <para>'databaseName=vishnu' : Le nom de la base de données</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseUserName=vishnu_user' : Le nom d'utilisateur pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseUserPassword=vishnu_user' : Le mot de passe pour se connecter à la DB.</para>
-              </listitem>
-              <listitem>
-                <para> 'databaseConnectionsNb=5' : Le nombre de connexions ouvertes sur la base de données par le SeD afin de traiter des requêtes en parallèle.
-                  (le nombre par défaut est 10). Si le nombre d'utilisateurs simultané du SeD est grand, cette valeur doit être augmentée dans
-                  la limite du nombre de connections simultanées autorisées par le serveur de base de données.</para>
-              </listitem>
-              <listitem>
-                <para> 'sendmailScriptPath=/usr/local/vishnu/sbin/sendmail.py' : Le script à utiliser pour envoyer les mails. Il est installé avec le module UMS
-                  dans le sous-répertoire sbin/ du répertoire d'installation.</para>
-              </listitem>
-              <listitem>
-                <para>'authenticationType=LDAP' : Utilise uniquement LDAP pour authentifier un utilisateur.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_1' : Optionnel, ce paramètre indique l'identifiant de la machine associée au SeD.</para>
-                <para><emphasis role="bold">IMPORTANT : </emphasis>Lors de la première initialialisation, c'est-à-dire lorsqu'il n'y a pas 
-                encore de machine créée dans le système, vous devez laisser ce paramètre vide. 
-                En effet, lorsque définie, sa valeur doit correspondre à une machine VISHNU, sinon le démarrage du SeD échoue.</para>
-              </listitem>
-            </itemizedlist>
-          </para>
-        </listitem>
-        <listitem>
           <para>
 	    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque.
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Torque. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-	    <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
-              </listitem>
-              <listitem>
-                <para>'batchSchedulerType=TORQUE' : Le type du batch scheduler utilisé.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
-              </listitem>
-              <listitem>
-                <para>'defaultBatchConfigFile= /usr/local/etc/tms_Torque.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
-              </listitem>
-            </itemizedlist>
-	  </para>
+          </para>
         </listitem>
         <listitem>
           <para>
-      Sur la machine hôte de SLURM, lancer les serveurs <emphasis>slurmd, slurmctld</emphasis> et <emphasis>slurmdbd</emphasis>.
-    </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de SLURM. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-      <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
-              </listitem>
-              <listitem>
-                <para>'batchSchedulerType=SLURM' : Le type du batch scheduler utilisé.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
-              </listitem>
-              <listitem>
-                <para>'defaultBatchConfigFile= /usr/local/etc/tms_Slurm.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
-              </listitem>
-            </itemizedlist>
-    </para>
+            Sur la machine hôte de SLURM, lancer les serveurs <emphasis>slurmd, slurmctld</emphasis> et <emphasis>slurmdbd</emphasis>.
+          </para>
         </listitem>
         <listitem>
           <para>
-      Sur la machine hôte de LSF, lancer les exécutables <emphasis/>hostsetup <emphasis>lsfstartup</emphasis>.
-    </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de LSF. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-      <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
-              </listitem>
-              <listitem>
-                <para>'batchSchedulerType=LSF' : Le type du batch scheduler utilisé.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
-              </listitem>
-              <listitem>
-                <para>'defaultBatchConfigFile= /usr/local/etc/tms_Lsf.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
-              </listitem>
-            </itemizedlist>
-    </para>
+            Sur la machine hôte de LSF, lancer les exécutables <emphasis/>hostsetup <emphasis>lsfstartup</emphasis>.
+          </para>
         </listitem>
         <listitem>
           <para>
-      Sur la machine hôte de Grid Engine, lancer les exécutables <emphasis> sge_qmaster </emphasis> et <emphasis>sge_execd</emphasis>.
-    </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de Grid Engine. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-      <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
-              </listitem>
-              <listitem>
-                <para>'batchSchedulerType=SGE' : Le type du batch scheduler utilisé.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_2' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
-              </listitem>
-              <listitem>
-                <para>'defaultBatchConfigFile= /usr/local/etc/tms_Sge.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
-              </listitem>
-            </itemizedlist>
-    </para>
+            Sur la machine hôte de Grid Engine, lancer les exécutables <emphasis> sge_qmaster </emphasis> et <emphasis>sge_execd</emphasis>.
+          </para>
         </listitem>
         <listitem>
           <para>
-	    Sur la machine hôte de PBSPro, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de PBSPro.
-	  </para>
+          Optionnel: Sur une machine lancer le dispatcher, le fichier de configuration 'config' doit être à la fin et est optionnel.
+          </para>
+          <para>
+            dispatcher tcp://127.0.0.1:5560 tcp://127.0.0.1:5561 -c config
+          </para>
+          <para>
+            Dans cette commande, on demande au dispatcher de démarrer en recevant les requêtes clients sur l'URI tcp://127.0.0.1:5560, de recevoir les requêtes de contrôle sur l'URI tcp://127.0.0.1:5561, et de démarrer en utilisant les serveurs définis dans le fichier config.
+          </para>
         </listitem>
         <listitem>
-          <para>Lancer le SeD TMS sur la machine hôte de PBSPro. La commande de lancement est : <emphasis
-                role="bold">tmssed ~/tms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.6 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-	    <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des jobs.</para>
-              </listitem>
-              <listitem>
-                <para>'batchSchedulerType=PBS' : Le type du batch scheduler utilisé.</para>
-              </listitem>
-              <listitem>
-                <para>'vishnuMachineId=machine_1' : L'identifiant VISHNU de la machine ou le SeD TMS est lancé (obtenu en utilisant la commande vishnu_list_machines).</para>
-              </listitem>
-              <listitem>
-                <para>'defaultBatchConfigFile= /usr/local/etc/tms_PBSPro.cfg' : le chemin jusqu'au fichier d'options par défaut du batch scheduler.</para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD IMS sur toutes la machine préfrontale. La commande de lancement est : <emphasis
-                role="bold">imssed ~/ims_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.5 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS. Il faut noter que IMS doit être lancé sur toutes les machines à monitorer.
-    </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD FMS sur une machine (sur la figure exemple 4.1 elle est différente de la préfrontale et de la machine avec le batch, mais cela peut être n'importe laquelle). La commande de lancement est : <emphasis
-                role="bold">fmssed ~/fms_sed.cfg</emphasis>. Le paramètre est un fichier de configuration VISHNU. Voir le paragraphe 6.7 pour un exemple de fichier de configuration. Les paramètres à fournir correspondent à ceux de UMS avec de plus :
-	    <itemizedlist>
-              <listitem>
-                <para>'intervalMonitor = 1' : La fréquence (en secondes) de mise à jour des données dans la base concernant les états des transferts de fichiers.</para>
-              </listitem>
-            </itemizedlist>
-	  </para>
+          <para> Sur chaque machine serveur, lancer supervisord avec son fichier de configuration 'config' correspondant. Le fichier de configuration de supervisord contient le démarrage de chaque serveur vishnu sur la machine en question.</para>
+          <para>
+            supervisord -c config
+          </para>
         </listitem>
         <listitem>
           <para>
@@ -1277,474 +1121,111 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
       </orderedlist>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec une version de DIET supérieure ou égale à 2.8</emphasis></title>
-      <para>Un module VISHNU peut être lancé manuellement.
-	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
-      <orderedlist>
-        <listitem>
-          <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis
-                role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis
-                role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
-          <para><emphasis role="bold">dietForwarder --name forwarder2</emphasis>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">dietForwarder --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
-	    --remote-host localhost
-	    --ssh-login login</emphasis>
-	  </para>
-          <para>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-login : le login de connection sur la machine distante.
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-	    la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
-          <para><emphasis role="bold">logForwarder --name logforwarder2</emphasis>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">logForwarder --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
-	    --remote-host localhost
-	    --ssh-login login</emphasis>
-	  </para>
-          <para>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-login : le login de connection sur la machine distante.
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-	    la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le log service de DIET sur la machine du network B. La commande est <emphasis
-                role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur le réseau network B : <emphasis
-                role="bold">dietAgent config.cf</emphasis>. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
-	    <itemizedlist>
-              <listitem>
-                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
-              </listitem>
-              <listitem>
-                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
-              </listitem>
-              <listitem>
-                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent, dans notre exemple on va l'appeller MA0.</para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD, par exemple un UMS sur le réseau network C. Un exemple de commande de lancement est : <emphasis
-                role="bold">umssed ~/ums_sed.cfg</emphasis>. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
-	  </para>
-        </listitem>
-        <listitem>
-          <para>
-	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS. Si le client est encore sur un autre réseau il faudra mettre la paire de dietForwarder entre le réseau client et l'un des réseaux connecté à la hierarchie déployée.
-	  </para>
-        </listitem>
-      </orderedlist>
+      <title>Présenter le cas multi-réseaux</title>
     </section>
     <section>
-      <title>Lancement sur plusieurs réseaux <emphasis role="bold">avec une version de DIET inférieure à 2.8</emphasis></title>
-      <para>Un module VISHNU peut être lancé manuellement.
-	Pour le déploiement on se base sur le modèle de la figure 4.2 du document [ARCH] en supposant pour simplifier que sur un réseau tout est lancé sur la même machine et que les réseaux &quot;Network C&quot; et &quot;Network D&quot; sont confondus (pas de forwarder à mettre entre eux).</para>
-      <orderedlist>
-        <listitem>
-          <para> Avoir une base de données PostgreSQL accessible et initialisée (tables créées et premières données créées). Des scripts SQL sont fournis pour cela. Avoir la base PostGreSQL configurée pour qu'elle soit accessible par VISHNU (voir le fichier de configuration pg_hba.conf qui se situe dans un répertoire de la forme '/etc/postgresql/8.3/main' pour configurer la base).</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le service de nommage CORBA sur les différents réseaux. La commande est <emphasis
-                role="bold">omniNames -start</emphasis> pour la première fois, sinon <emphasis
-                role="bold">omniNames</emphasis> suffit. Attention, dans la configuration de l'omninames, bien utiliser l'adresse de l'hôte et non pas 'localhost' ou '127.0.0.1'. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 2 (Network B) :  </para>
-          <para><emphasis role="bold">dietForwarder --name forwarder2 --net-config forwarder2.cfg</emphasis>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  forwarder2 : nom qui identifie le démon forwarder sur ce réseau
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-                  forwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de configuration) contenant des règles appliquées aux
-                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-                  règles utilisées sont :
-                  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-                        de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-                        indiqué une règle pour chaque adresse.</para>
-                    </listitem>
-                  </itemizedlist>
-                </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">dietForwarder -C --peer-name forwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name forwarder
-	    --remote-host localhost --net-config forwarder1.cfg
-	    --ssh-login login</emphasis>
-	  </para>
-          <para>
-	    <itemizedlist>
-              <listitem>
-                <para>
-                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-              </para>
-              </listitem>
-              <listitem>
-                <para>
-	          --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-                  sur le même modèle que forwarder2.cfg.
-              </para>
-              </listitem>
-              <listitem>
-                <para>
-	          --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-login : le login de connection sur la machine distante.
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-	    la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon forwarder pour le log service sur le reseau 2 (network B) :  </para>
-          <para><emphasis role="bold">logForwarder --name logforwarder2 --net-config logforwarder2</emphasis>
-	    <itemizedlist>
-              <listitem>
-                <para>
-		  logforwarder2 : nom qui identifie le démon forwarder sur ce réseau
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-                  logforwarder2.cfg : fichier de configuration (voir le paragraphe 6.8 pour un exemple de fichier de configuration) contenant des règles appliquées aux
-                  connections entre agents de l'intergiciel. Les règles sont de deux sortes : 'accept:' ou 'reject:'. Dans l'exemple de le paragraphe 6.8, les
-                  règles utilisées sont :
-                  <itemizedlist>
-                    <listitem>
-                      <para> une règle 'accept' correspondant au filtre sur la source des connections acceptées. '.*' signifie les connections provenant
-                        de n'importe quelle adresse IP.</para>
-                    </listitem>
-                    <listitem>
-                      <para> deux règles 'reject' contenant les adresses destination à rejeter. Il est nécessaire que l'adresse IP du serveur sur lequel
-                        tourne le démon forwarder soit indiquée dans une règle de ce type. Dans l'exemple le serveur ayant deux adresses IP on a
-                        indiqué une règle pour chaque adresse.</para>
-                    </listitem>
-                  </itemizedlist>
-                </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para> Lancer un démon log forwarder sur le reseau 1 (network C) : </para>
-          <para><emphasis role="bold">logForwarder -C --peer-name logforwarder2 --ssh-host nom_DNS_machine_distante --remote-port 50005 --name logforwarder
-	    --remote-host localhost --net-config logforwarder1.cfg
-	    --ssh-login login</emphasis>
-	  </para>
-          <para>
-	    <itemizedlist>
-              <listitem>
-                <para>
-                  -C : indique que c'est ce démon forwarder qui crée le tunnel SSH.
-              </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --peer-name : le nom donné au forwarder de l'autre coté, ici forwarder2.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-                  --net-config : le fichier de configuration, ici forwarder1.cfg. Ce fichier doit contenir des règles 'reject' et 'accept' également,
-                  sur le même modèle que forwarder2.cfg.
-              </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-host : la nom DNS de la machine distante pour connecter le tunnel SSH.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-port : le port à utiliser pour le tunnel ssh, ici 50005.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --name : le nom identifiant ce démon forwarder, c'est-à-dire 'forwarder1'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --remote-host : le nom de l'adresse loopback, c'est-à-dire 'localhost'.
-	      </para>
-              </listitem>
-              <listitem>
-                <para>
-		  --ssh-login : le login de connection sur la machine distante.
-	      </para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Si la clé ssh est accessible (le chemin par défaut est le répertoire $HOME/.ssh/) et que la clé est protégée par une passphrase,
-	    la passphrase est demandée et la connexion ssh s'établit.</para>
-        </listitem>
-        <listitem>
-          <para> Lancer le log service de DIET sur la machine du network B. La commande est <emphasis
-                role="bold">LogCentral --config config.cfg</emphasis> avec config.cfg un fichier de configuration pour le log central. </para>
-        </listitem>
-        <listitem>
-          <para> Lancer le MA avec son fichier de configuration sur le réseau network B : <emphasis
-                role="bold">dietAgent config.cf</emphasis>. Voir le paragraphe 6.3 pour un exemple de configuration. Ce fichier de configuration peut contenir les 3 lignes suivantes :
-	    <itemizedlist>
-              <listitem>
-                <para> 'traceLevel = 0' : Le niveau de verbosité du master agent, cette valeur peut être entre 0 et 10 compris. </para>
-              </listitem>
-              <listitem>
-                <para> 'agentType = DIET_MASTER_AGENT' : Le type de l'agent, l'autre type disponible est DIET_LOCAL_AGENT mais dans notre cas il faut DIET_MASTER_AGENT.</para>
-              </listitem>
-              <listitem>
-                <para> 'name = MA0' : Le nom que l'on veut donner à l'agent, dans notre exemple on va l'appeller MA0.</para>
-              </listitem>
-            </itemizedlist>
-	  </para>
-        </listitem>
-        <listitem>
-          <para>Lancer le SeD, par exemple un UMS sur le réseau network C. Un exemple de commande de lancement est : <emphasis
-                role="bold">umssed ~/ums_sed.cfg</emphasis>. Se référer au chapitre de déploiement pour le contenu du fichier, c'est le même à utiliser que dans un déploiement sur un seul réseau.
-	  </para>
-        </listitem>
-        <listitem>
-          <para>
-	    Le module, ici UMS, de VISHNU est prêt à être utilisé. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen de clients UMS. Si le client est encore sur un autre réseau il faudra mettre la paire de dietForwarder entre le réseau client et l'un des réseaux connecté à la hierarchie déployée.
-	  </para>
-        </listitem>
-      </orderedlist>
-    </section>
-    <section>
-      <title>Exemple de fichier de configuration d'un MA</title>
+      <title>Exemple de fichier du dispatcher</title>
+      <para>Le fichier se compose de 3 colonnes, la première le serveur, la seconde son URI, la troisième l'identifiant de machine VISHNU. Dans l'exemple ci-dessous on a les 4 serveurs sur une URI pour une machine</para>
       <programlisting>
-	traceLevel = 0
-	name = MA0
-	agentType = DIET_MASTER_AGENT
+      TMS tcp://127.0.0.1:5557 machine_1
+      UMS tcp://127.0.0.1:5555 machine_1
+      FMS tcp://127.0.0.1:5556 machine_1
+      IMS tcp://127.0.0.1:5558 machine_1
       </programlisting>
     </section>
     <section>
-      <title>Exemple de fichier de configuration pour un SeD DIET</title>
+      <title>Exemple de fichier du dispatcher</title>
       <programlisting>
-	traceLevel = 0
-	parentName = MA0
-	useLogService = 1
+        [inet_http_server]         ; inet (TCP) server disabled by default
+        port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all if
+        [supervisord]
+        logfile=/tmp/supervisord.log ; (main log file;default $CWD/supervisord.log)
+        logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)
+        logfile_backups=10           ; (num of main logfile rotation backups;default 10)
+        loglevel=info                ; (log level;default info; others: debug,warn,trace)
+        pidfile=/tmp/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+        nodaemon=false               ; (start in foreground if true;default false)
+        minfds=1024                  ; (min. avail startup file descriptors;default 1024)
+        minprocs=200                 ; (min. avail process descriptors;default 200)
+        [rpcinterface:supervisor]
+        supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+        
+        [supervisorctl]
+        serverurl=http://127.0.0.1:9001 ; use an http:// url to specify an inet socket, same as inet_http_server
+
+        ; Attention bien respecter les nommages 'umssed', 'imssed', 'tmssed', 'fmssed' sinon ims ne pourra pas les gérer
+        [program:umssed] ; Définit un process à surveiller, son alias est umssed
+        command=umssed ~/conf/ums_config.cfg ; Commande comme on ferait dans un terminal
+        [program:fmssed] ; Définit un process à surveiller, son alias est fmssed
+        command=fmssed ~/conf/fms_config.cfg
+        [program:imssed] ; Définit un process à surveiller, son alias est imssed
+        command=imssed ~/conf/ims_config.cfg
+        [program:tmssed] ; Définit un process à surveiller, son alias est tmssed
+        command=tmssed ~/conf/tms_config.cfg
       </programlisting>
     </section>
     <section>
       <title>Exemple de fichier de configuration d'un SeD UMS</title>
       <programlisting>
 	# Configuration of the VISHNU UMS SeD
-	dietConfigFile=/usr/local/etc/SeD.cfg
 	vishnuId=1
-	databaseType=postgresql
-	databaseHost=localhost
-	databaseName=vishnu
-	databaseUserName=vishnu_user
-	databaseUserPassword=vishnu_user
-	databaseConnectionsNb=5
-	sendmailScriptPath=/usr/local/sbin/sendmail.py
-	vishnuMachineId=machine_1
-        authenticationType=LDAP
+	databaseType=postgresql # postgresql ou mysql selon la DB
+	databaseHost=localhost # Hote pour la DB
+	databaseName=vishnu # Nom de la base ou on se connecte
+	databaseUserName=vishnu_user # Nom d'utilisateur pour se connecter à la DB
+	databaseUserPassword=vishnu_user # Mot de passe pour se connecter à la DB
+	databaseConnectionsNb=5 # Nombre de connexions parallèles à la DB
+	sendmailScriptPath=/usr/local/sbin/sendmail.py # Script installé par VISHNU dans install_dir/sbin
+	vishnuMachineId=machine_1 # Optionnel pour UMS, le machine id de VISHNU ou le serveur tourne
+        authenticationType=LDAP # Le type d'authentification utilisé
+        uri=tcp://127.0.0.1:5555 # L'URI ou le serveur est accessible par les clients
+        uriDispatcherSub=tcp://127.0.0.1:5561 # Adresse d'inscription
+        urlSupervisor=http://127.0.0.1:9001 # URL ou se trouve le supervisor du serveur en question sur la machine
       </programlisting>
     </section>
     <section>
       <title>Exemple de fichier de configuration d'un SeD TMS </title>
       <programlisting>
 	# Configuration of the VISHNU TMS SeD
-	dietConfigFile=/usr/local/etc/SeD.cfg
 	vishnuId=1
-	databaseType=postgresql
-	databaseHost=localhost
-	databaseName=vishnu
-	databaseUserName=vishnu_user
-	databaseUserPassword=vishnu_user
-	databaseConnectionsNb=5
-	sendmailScriptPath=/usr/local/sbin/sendmail.py
-	vishnuMachineId=machine_1
+	databaseType=postgresql # postgresql ou mysql selon la DB
+	databaseHost=localhost # Hote pour la DB
+	databaseName=vishnu # Nom de la base ou on se connecte
+	databaseUserName=vishnu_user # Nom d'utilisateur pour se connecter à la DB
+	databaseUserPassword=vishnu_user # Mot de passe pour se connecter à la DB
+	databaseConnectionsNb=5 # Nombre de connexions parallèles à la DB
+	sendmailScriptPath=/usr/local/sbin/sendmail.py # Script installé par VISHNU dans install_dir/sbin
+	vishnuMachineId=machine_1 # Le machine id de VISHNU ou le serveur tourne
+        uri=tcp://127.0.0.1:5557 # L'URI ou le serveur est accessible par les clients
+        uriDispatcherSub=tcp://127.0.0.1:5561 # Adresse d'inscription
+        urlSupervisor=http://127.0.0.1:9001 # URL ou se trouve le supervisor du serveur en question sur la machine
 	# Configuration propres à TMS
 	# batchSchedulerType=SLURM si le batchScheduler est de type SLURM
 	# batchSchedulerType=LSF si le batchScheduler est de type LSF
 	# batchSchedulerType=SGE si le batchScheduler est de type Grid Engine
     # batchSchedulerType=PBS si le batchScheduler est de type PBSPro
 	batchSchedulerType=TORQUE
-	intervalMonitor = 1
+	intervalMonitor = 1 # Intervalle de temps en seconde pour mettre à jour les infos du batch scheduler
       </programlisting>
     </section>
     <section>
       <title>Exemple de fichier de configuration d'un SeD FMS </title>
       <programlisting>
 	# Configuration of the VISHNU FMS SeD
-	dietConfigFile=/usr/local/etc/SeD.cfg
 	vishnuId=1
-	databaseType=postgresql
-	databaseHost=localhost
-	databaseName=vishnu
-	databaseUserName=vishnu_user
-	databaseUserPassword=vishnu_user
-	databaseConnectionsNb=5
-	vishnuMachineId=machine_1
+	databaseType=postgresql # postgresql ou mysql selon la DB
+	databaseHost=localhost # Hote pour la DB
+	databaseName=vishnu # Nom de la base ou on se connecte
+	databaseUserName=vishnu_user # Nom d'utilisateur pour se connecter à la DB
+	databaseUserPassword=vishnu_user # Mot de passe pour se connecter à la DB
+	databaseConnectionsNb=5 # Nombre de connexions parallèles à la DB
+	sendmailScriptPath=/usr/local/sbin/sendmail.py # Script installé par VISHNU dans install_dir/sbin
+	vishnuMachineId=machine_1 # Le machine id de VISHNU ou le serveur tourne
+        uri=tcp://127.0.0.1:5556 # L'URI ou le serveur est accessible par les clients
+        uriDispatcherSub=tcp://127.0.0.1:5561 # Adresse d'inscription
+        urlSupervisor=http://127.0.0.1:9001 # URL ou se trouve le supervisor du serveur en question sur la machine
 	# Configuration propres à FMS
-	intervalMonitor = 1
-      </programlisting>
-    </section>
-    <section>
-      <title>Exemple de fichier d'un forwarder </title>
-      <programlisting>
-        # accept everything from everyone
-        accept:.*
-        
-        # reject its own ip
-        reject:192\.168\.1\.6
-      </programlisting>
-    </section>
-    <section>
-      <title>Exemple de fichier du LogCentral </title>
-      <programlisting>
-	# an empty configuration file for LogService
-	[General]
-	
-	[DynamicTagList]
-	[StaticTagList]
-	[UniqueTagList]
-	[VolatileTagList]
+	intervalMonitor = 1 # Intervalle de temps pour regarder l'état des transferts de fichiers en cours
       </programlisting>
     </section>
     <section>
@@ -7014,6 +6495,8 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -7030,6 +6513,18 @@ SOFT   = 2</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
+            <listitem>
+              <para>The URI of the supervisor to control the processes.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>name</replaceable></option></term>
+            <listitem>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -7171,7 +6666,9 @@ SOFT   = 2</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7187,6 +6684,18 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
+            <listitem>
+              <para>The URI of the supervisor to control the processes.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>name</replaceable></option></term>
+            <listitem>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -7249,8 +6758,8 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-v <replaceable>vishnuConf</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>sedType</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -7267,16 +6776,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-v <replaceable>vishnuConf</replaceable></option></term>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
             <listitem>
-              <para>The path to the vishnu configuration file.</para>
+              <para>The URI of the supervisor to control the processes.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-t <replaceable>sedType</replaceable></option></term>
+            <term><option>-n <replaceable>name</replaceable></option></term>
             <listitem>
-              <para>The type of the vishnu sed.
-The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (TMS), 3 (FMS), 4 (IMS).</para>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -7906,7 +7414,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -7934,6 +7442,12 @@ SOFT   = 2</para>
             <term><emphasis>loadShedType</emphasis></term>
             <listitem>
               <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -8015,7 +7529,7 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Process&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8034,9 +7548,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>process</emphasis></term>
+            <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -8066,7 +7586,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8088,7 +7608,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>options</emphasis></term>
+            <term><emphasis>op</emphasis></term>
             <listitem>
               <para>Input argument. The option for the restart.</para>
             </listitem>
@@ -8769,7 +8289,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef><paramdef>SupervisorOp <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8797,6 +8317,12 @@ SOFT   = 2</para>
             <term><emphasis>loadShedType</emphasis></term>
             <listitem>
               <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -8902,7 +8428,7 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>SupervisorOp <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8921,9 +8447,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>process</emphasis></term>
+            <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -8965,7 +8497,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>SupervisorOp <parameter>op</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -8987,7 +8519,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>options</emphasis></term>
+            <term><emphasis>op</emphasis></term>
             <listitem>
               <para>Input argument. The option for the restart.</para>
             </listitem>
