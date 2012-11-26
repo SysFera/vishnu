@@ -167,7 +167,7 @@ solveSubmitJob(diet_profile_t* pb) {
 		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
 
 		// Now submit the job
-                jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory, ServerTMS::getInstance()->getDefaultBatchOption());
+		jobServer.submitJob(script_content, *submitOptions, vishnuId, slaveDirectory, ServerTMS::getInstance()->getDefaultBatchOption());
 		*job = jobServer.getData();
 
 		::ecorecpp::serializer::serializer _ser;
@@ -519,20 +519,21 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 		ListStrings filePaths;
 		std::ostringstream ossFileName("");
+
 		ossFileName << result.getJobId(); /* each line starts with the associated job id */
-		if( bfs::exists(result.getOutputPath())) {
-			filePaths.push_back(result.getOutputPath());
-			ossFileName << " " << result.getJobId() << ".stdout";
-		} else {
-			throw SystemException(ERRCODE_INVDATA, "The output file does not longer exist "+result.getErrorPath());
+
+		filePaths.push_back(result.getOutputPath());
+		ossFileName << " " << result.getJobId() << ".stdout";
+
+		filePaths.push_back(result.getErrorPath());
+		ossFileName << " " << result.getJobId() << ".stderr";
+
+		try {
+			vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir());
+		} catch (...) {
+			throw UserException(ERRCODE_RUNTIME_ERROR, "Unable to read the output directory " + result.getOutputDir());
 		}
-		if( bfs::exists(result.getErrorPath())) {
-			filePaths.push_back(result.getErrorPath());
-			ossFileName << " " << result.getJobId() << ".stderr";
-		} else {
-			throw SystemException(ERRCODE_INVDATA, "The error file does not longer exist "+result.getErrorPath());
-		}
-		vishnu::appendFilesFromDir(filePaths, ossFileName, result.getOutputDir());
+
 		ossFileName << std::endl;
 
 		char* fileNamesDescr = strdup("/tmp/vishnu-fdescXXXXXX");
@@ -548,7 +549,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		for(int i = 0; i < nbFiles;  i++) {
 			bfs::path dest =  bfs::unique_path("/tmp/vishnu-f2dld%%%%%%") ;
 			if(sshJobExec.copyFile(filePaths[i], dest.string()) != 0) {
-				throw UserException(ERRCODE_SYSTEM, "Cannot copy the file: " + filePaths[i]);
+				throw UserException(ERRCODE_RUNTIME_ERROR, "Cannot copy the file " + filePaths[i]);
 			}
 			dagda_put_file(const_cast<char*>(dest.string().c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
@@ -637,15 +638,17 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 
 			TMS_Data::JobResult_ptr result = completedJobsOutput->getResults().get(i);
 			ossFileName << result->getJobId(); /* each line starts with the associated job id */
-			if( bfs::exists( result->getOutputPath() ) ) {
-				filePaths.push_back( result->getOutputPath() );
-				ossFileName << " " << result->getJobId() << ".stdout";
+
+			filePaths.push_back( result->getOutputPath() );
+			ossFileName << " " << result->getJobId() << ".stdout";
+
+			filePaths.push_back( result->getErrorPath() );
+			ossFileName << " " << result->getJobId() << ".stderr";
+			try {
+				vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir());
+			} catch (...) {
+				throw UserException(ERRCODE_RUNTIME_ERROR, "Unable to read the output directory " + result->getOutputDir());
 			}
-			if( bfs::exists( result->getErrorPath() ) ) {
-				filePaths.push_back( result->getErrorPath() );
-				ossFileName << " " << result->getJobId() << ".stderr";
-			}
-			vishnu::appendFilesFromDir(filePaths, ossFileName, result->getOutputDir());
 			ossFileName << std::endl;
 		}
 
@@ -662,14 +665,14 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		for(int i = 0; i < nbFiles;  i++) {
 			bfs::path dest =  bfs::unique_path("/tmp/vishnu-f2dld%%%%%%") ;
 			if(sshJobExec.copyFile(filePaths[i], dest.string()) != 0) {
-				throw UserException(ERRCODE_SYSTEM, "Cannot copy the file: " + filePaths[i]);
+				throw UserException(ERRCODE_RUNTIME_ERROR, "Cannot copy the file: " + filePaths[i]);
 			}
 			dagda_put_file(const_cast<char*>(dest.string().c_str()), DIET_PERSISTENT_RETURN, &fileIds[i]);
 			dagda_add_container_element((*diet_parameter(pb,5)).desc.id, fileIds[i], i+1);
 		}
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
-	} catch (VishnuException& e) {
+	} catch (VishnuException & e) {
 		try {
 			sessionServer.finish(cmd, TMS, vishnu::CMDFAILED);
 		} catch (VishnuException& fe) {
@@ -689,6 +692,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		dagda_put_file(strdup(outputPath.c_str()), DIET_PERSISTENT_RETURN, &ID);
 
 		dagda_add_container_element((*diet_parameter(pb,5)).desc.id, ID, 0);
+	} catch(...) {
+		throw;
 	}
 	return 0;
 }

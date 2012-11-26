@@ -809,7 +809,10 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 void
 vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath) {
 
-  if( ! bfs::exists( dirPath ) ) return ;
+  if(dirPath.size() == 0 ||
+		  ! bfs::exists(dirPath)) {
+	  return ;
+  }
   for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
 
     if ( bfs::is_directory( *it ) ) continue ;
