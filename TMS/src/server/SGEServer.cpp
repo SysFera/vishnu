@@ -74,7 +74,7 @@ SGEServer::submit(const char* scriptPath,
   char Directory[256];
   bool isjobname = false;
   std::string jobDIRECTORY;
-  boost::filesystem3::path myPath(scriptPath);
+  boost::filesystem::path myPath(scriptPath);
 
   string Walltime;
 
