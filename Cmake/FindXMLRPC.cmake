@@ -67,25 +67,6 @@ find_library(XMLRPC_CLIENT_LIBRARY
   /opt/local/lib
 )
 
-find_library(XMLRPC_PARSE_LIBRARY
-  NAMES xmlrpc_xmlparse
-  PATHS ${XMLRPC_INSTALL_DIR}/lib
-  ${XMLRPC_DIR}/lib
-  $ENV{XMLRPC_DIR}/lib
-  /usr/lib
-  /usr/local/lib
-  /opt/local/lib
-)
-
-find_library(XMLRPC_XMLTOK_LIBRARY
-  NAMES xmlrpc_xmltok
-  PATHS ${XMLRPC_INSTALL_DIR}/lib
-  ${XMLRPC_DIR}/lib
-  $ENV{XMLRPC_DIR}/lib
-  /usr/lib
-  /usr/local/lib
-  /opt/local/lib
-)
 
 find_library(XMLRPC_UTIL_LIBRARY
   NAMES xmlrpc_util
@@ -101,8 +82,6 @@ find_library(XMLRPC_UTIL_LIBRARY
 set(XMLRPC_LIBRARIES 
   ${XMLRPC_CLIENTPP_LIBRARY}
   ${XMLRPCPP_LIBRARY}
-  ${XMLRPC_PARSE_LIBRARY}
-  ${XMLRPC_XMLTOK_LIBRARY}
   ${XMLRPC_UTIL_LIBRARY}
   ${XMLRPC_PACKSO_LIBRARY}
   ${XMLRPC_CLIENT_LIBRARY}
