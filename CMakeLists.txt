@@ -324,6 +324,11 @@ set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
 add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
 
+if(APPLE)
+  add_definitions("-DBSD_LIKE_SYSTEM")  
+endif()
+
+
 # mock
 set(MOCK_INCLUDE_DIR
   ${VISHNU_SOURCE_DIR}/mockZMQ
