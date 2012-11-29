@@ -45,11 +45,11 @@ Annuary::add(std::string name, std::vector<std::string> services, std::string ur
 
 
 int
-Annuary::remove(std::string name, std::string uri){
-  int i;
-  for (i=0;i<mservers.size();++i){
+Annuary::remove(std::string name, std::string uri) {
+  unsigned int i;
+  for (i = 0; i < mservers.size(); ++i){
     if (name.compare(mservers.at(i)->getName()) == 0 &&
-        uri.compare(mservers.at(i).get()->getURI()) == 0){
+        uri.compare(mservers.at(i).get()->getURI()) == 0) {
       mservers.erase(mservers.begin()+i);
       break;
     }
@@ -59,14 +59,14 @@ Annuary::remove(std::string name, std::string uri){
 
 
 std::vector<boost::shared_ptr<Server> >*
-Annuary::get(std::string service){
+Annuary::get(std::string service) {
 
   std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
-  if (service.compare("")==0){
+  if (service.compare("") == 0){
     return &mservers;
   }
-  for (int i=0; i<mservers.size(); i++){
-    if (mservers.at(i)->hasService(service)){
+  for (unsigned int i = 0; i < mservers.size(); i++) {
+    if (mservers.at(i)->hasService(service)) {
       res->push_back(mservers.at(i));
     }
   }
@@ -194,4 +194,3 @@ Annuary::fillServices(std::vector< std::string> &services, std::string name, std
     services.push_back("routage");
   }
 }
-
