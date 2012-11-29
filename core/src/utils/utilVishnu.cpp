@@ -559,7 +559,7 @@ vishnu::diffLocaltimeUTCtime() {
 void
 vishnu::createTmpFile(char* fileName, const std::string& file_content) {
   int file_descriptor = mkstemp( fileName );
-  size_t file_size = file_content.size();
+  ssize_t file_size = file_content.size();
   if (file_descriptor == -1) {
     throw
       SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create the file "+ std::string(fileName));
@@ -1025,6 +1025,3 @@ vishnu::parseVersion(const std::string& version) {
 
   return vers;
 }
-
-
-
