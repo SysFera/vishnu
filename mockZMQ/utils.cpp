@@ -2,7 +2,7 @@
 
 
 ThreadPool::ThreadPool()
-  : finished_(false), nb_(boost::thread::hardware_concurrency() * 2) {
+  : nb_(boost::thread::hardware_concurrency() * 2), finished_(false) {
   setup();
 }
 
@@ -38,4 +38,3 @@ ThreadPool::WorkerThread() {
     task();
   }
 }
-
