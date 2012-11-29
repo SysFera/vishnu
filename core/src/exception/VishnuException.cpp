@@ -14,7 +14,7 @@ VishnuException::VishnuException(){
   mval = -1;
 }
 
-VishnuException::VishnuException(const VishnuException& e){
+VishnuException::VishnuException(const VishnuException& e): std::exception(e){
   mp = std::map<int, std::string>();
   mfullMsg = "";
   mmsgc = e.getMsgComp();
@@ -81,4 +81,3 @@ VishnuException::operator=(const VishnuException &e) {
   mp = e.mp;
   return (*this);
 }
-
