@@ -220,7 +220,7 @@ int vishnu::cp(const string& sessionKey,const string& src, const string& dest, c
 
       std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-        for (int i =0;i<list.size();i++){
+        for (unsigned int i = 0; i < list.size(); i++) {
           std::string tmp = src;
           setIP(tmp, list.at(i));
           try{
@@ -240,7 +240,7 @@ int vishnu::cp(const string& sessionKey,const string& src, const string& dest, c
       // Get all the IP for the machine
       std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-      for (int i =0;i<list.size();i++){
+      for (unsigned int i =0; i < list.size(); i++){
         std::string tmp = dest;
         setIP(tmp, list.at(i));
         try{
@@ -402,7 +402,7 @@ int vishnu::mv(const string& sessionKey,const string& src, const string& dest,co
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
+    for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = src;
       setIP(tmp, list.at(i));
       try{
@@ -422,7 +422,7 @@ int vishnu::mv(const string& sessionKey,const string& src, const string& dest,co
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
+    for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = dest;
       setIP(tmp, list.at(i));
       try{
