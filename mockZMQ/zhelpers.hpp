@@ -59,7 +59,7 @@ private:
 class LazyPirateClient {
 public:
 	LazyPirateClient(zmq::context_t& ctx, const std::string& addr, const int timeout = DEFAULT_TIMEOUT)
-	: ctx_(ctx), addr_(addr), timeout_(timeout * 1000000) {
+          : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000) {
 		reset();
 	}
 
