@@ -432,7 +432,6 @@ solveGetUpFreq(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  char *freqSer   = NULL;
 
   diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
 
@@ -845,7 +844,6 @@ solveLoadShed(diet_profile_t* pb){
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
-  IMS_Data::SupervisorOp_ptr opObj = NULL;
 
   try {
     userServer.init();
