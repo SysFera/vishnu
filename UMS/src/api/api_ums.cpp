@@ -123,7 +123,7 @@ vishnu::connect(UMS_Data::ListUsers& users,
                 UMS_Data::Session& session,
                 const UMS_Data::ConnectOptions& connectOpt)
   throw(UserException, SystemException){
-  int cpt;
+  unsigned int cpt;
   UMS_Data::User* user;
   bool connected = false;
   int ret;
@@ -181,7 +181,7 @@ vishnu::reconnect(UMS_Data::ListUsers& users,
 		UMS_Data::Session& session)
 throw(UserException, SystemException)
 {
-	int cpt;
+	unsigned int cpt;
 	UMS_Data::User* user;
 	bool reconnected = false;
 	int ret;
