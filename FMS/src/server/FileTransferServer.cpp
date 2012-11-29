@@ -75,7 +75,7 @@ void FileTransferServer::checkUserId(std::string userId) {
 // A constructor with parameters
 
 FileTransferServer::FileTransferServer(const SessionServer& sessionServer,const int& vishnuId):
-  msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
+  mvishnuId(vishnuId), mtransferType(File::undefined), msessionServer(sessionServer) {
 
   }
 
@@ -87,7 +87,7 @@ FileTransferServer::FileTransferServer(const SessionServer& sessionServer,
     const std::string& srcFilePath,
     const std::string& destFilePath,
     const int& vishnuId):
-  msessionServer(sessionServer),mvishnuId(vishnuId),mtransferType(File::undefined){
+  mvishnuId(vishnuId), mtransferType(File::undefined), msessionServer(sessionServer){
 
     mfileTransfer.setSourceMachineId(srcHost);
     mfileTransfer.setDestinationMachineId(destHost);
@@ -570,7 +570,7 @@ int FileTransferServer::stopThread(const std::string& transferid,const int& pid 
 
 if (pid!=-1){
 
-  if(result=kill(pid, SIGKILL)){
+  if((result = kill(pid, SIGKILL))) {
 
     updateStatus(3,transferid,strerror(errno));
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,strerror(errno));
@@ -637,15 +637,16 @@ TransferExec::TransferExec (const SessionServer& sessionServer,
     const std::string& destUser,
     const std::string& destMachineName,
     const std::string& destPath,
-    const std::string& transferId):msessionServer(sessionServer),
+    const std::string& transferId):
+  mtransferId(transferId),
+  msessionServer(sessionServer),
   msrcUser(srcUser),
   msrcMachineName(srcMachineName),
   msrcPath(srcPath),
   msrcUserKey(srcUserKey),
   mdestUser(destUser),
   mdestMachineName(destMachineName),
-  mdestPath(destPath),
-  mtransferId(transferId){
+  mdestPath(destPath) {
 
     mprocessId=-1;
     mlastExecStatus=0;
@@ -851,7 +852,3 @@ std::pair<std::string, std::string> TransferExec::exec(const std::string& cmd) c
   return result;
 
 }
-
-
-
-
