@@ -10,8 +10,8 @@
 #include <xmlrpc-c/base.hpp>
 #include <xmlrpc-c/client_simple.hpp>
 
-ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
-						     mp(user),
+ProcessCtl::ProcessCtl(string mid, UserServer user): mp(user),
+                                                     mmid(mid),
                                                      muser(user){
 }
 
@@ -55,7 +55,6 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI)
 
 void
 ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
-  int res;
   string name;
   mop = *op;
   if (!muser.isAdmin()){
