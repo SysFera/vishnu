@@ -16,26 +16,26 @@ Server::~Server(){
 
 
 int
-Server::add(std::string service){
+Server::add(std::string service) {
   bool found = false;
-  int i;
-  for (i=0;i<mservices.size();++i){
-    if (service.compare(mservices.at(i))==0){
+  unsigned int i;
+  for (i = 0; i < mservices.size(); ++i) {
+    if (service.compare(mservices.at(i)) == 0) {
       found = true;
     }
   }
-  if (!found){
+  if (!found) {
     mservices.push_back(service);
   }
   return 0;
 }
 
 int
-Server::remove(std::string service){
-  int i;
-  for (i=0;i<mservices.size();++i){
-    if (service.compare(mservices.at(i))==0){
-      mservices.erase(mservices.begin()+i);
+Server::remove(std::string service) {
+  unsigned int i;
+  for (i = 0; i < mservices.size(); ++i) {
+    if (service.compare(mservices.at(i)) == 0) {
+      mservices.erase(mservices.begin() + i);
     }
   }
   return 0;
@@ -43,8 +43,8 @@ Server::remove(std::string service){
 
 bool
 Server::hasService(std::string service){
-
-  for (int i=0; i<mservices.size(); i++){
+  unsigned int i;
+  for (i = 0; i < mservices.size(); i++){
     if (mservices[i] == service) {
       return true;
     }
@@ -71,12 +71,12 @@ Server::getServices(){
 
 
 std::string
-Server::toString(){
+Server::toString() {
   std::stringstream res;
-  int i;
+  unsigned int i;
   res << mname << "$$$"
       << muri << "$$$";
-  for (i=0 ; i<mservices.size()-1 ; ++i){
+  for (i = 0 ; i < mservices.size() - 1 ; ++i){
     res << mservices.at(i) << "$$$";
   }
   res << mservices.at(mservices.size()-1);
@@ -104,4 +104,3 @@ Server::fromString(std::string prof){
   }
   return res;
 }
-
