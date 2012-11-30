@@ -64,7 +64,7 @@ public:
 
   void
   operator()() {
-    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    Socket socket(*ctx_, ZMQ_REP);
     socket.connect(uriInproc_.c_str());
 
     while (true) {
@@ -92,7 +92,7 @@ public:
             resultSerialized = my_serialize(profile.get());
         }
 //        std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
-        s_send(socket, resultSerialized);
+        socket.send(resultSerialized);
       }
     }
   }
@@ -115,7 +115,7 @@ public:
 
   void
   operator()() {
-    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    Socket socket(*ctx_, ZMQ_REP);
     socket.connect(uriInproc_.c_str());
 
     while (true) {
@@ -136,7 +136,7 @@ public:
       // Deserialize
       boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
 
-      if(mode==1) { // If add a server
+      if (mode == 1) { // If add a server
         mann.get()->add(server.get()->getName(), server.get()->getServices(), server.get()->getURI());
       } else if (mode == 0) {
         mann.get()->remove(server.get()->getName(), server.get()->getURI());
@@ -145,7 +145,7 @@ public:
 
       // Send reply back to client
 //      std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
-      s_send(socket, resultSerialized);
+      socket.send(resultSerialized);
     }
   }
 
