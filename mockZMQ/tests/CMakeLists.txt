@@ -28,4 +28,4 @@ target_link_libraries (test_zmq_helper
 
 include(UnitTest)
 unit_test_setup()
-unit_test(mainTest)
+unit_test(mainZMQUnitTest)
