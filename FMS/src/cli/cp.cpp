@@ -1,5 +1,5 @@
 /**
- * \file copy_file.cpp
+ * \file cp.cpp
  * This file defines the VISHNU copy file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
