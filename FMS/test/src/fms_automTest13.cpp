@@ -67,8 +67,8 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath2) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

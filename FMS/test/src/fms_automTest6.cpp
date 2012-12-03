@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
     BOOST_CHECK( stat.getOwner() == userLogin);
     BOOST_CHECK( stat.getPerms() == 0644);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     vishnu::deleteFile(localFilePath.c_str());
 
   } catch (VishnuException& e) {

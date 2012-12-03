@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(ChangeGroup_Base)
     BOOST_REQUIRE( getFileInfo(sessionKey, fileFullPath1, stat) == 0);
     BOOST_CHECK( stat.getGroup() == groupTest);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     vishnu::deleteFile(localFilePath.c_str());
 
   } catch (VishnuException& e) {
