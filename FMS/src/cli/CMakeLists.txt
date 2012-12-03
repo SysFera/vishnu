@@ -27,7 +27,7 @@ set(ALLCLI
   get_file_info
   tail_of_file
   create_file
-  create_dir
+  mkdir
   remove_file
   remove_dir
   ch_grp

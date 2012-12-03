@@ -175,8 +175,8 @@ try :
   displayFileInfo(fileInfo)
   print "removeFile: ", fileFullPath1
   VISHNU.removeFile(k, fileFullPath1)
-  print "createDir: ", dirFullPath1
-  VISHNU.createDir(k, dirFullPath1)
+  print "mkDir: ", dirFullPath1
+  VISHNU.mkDir(k, dirFullPath1)
   print "removeDir: ", dirFullPath1
   VISHNU.removeDir(k, dirFullPath1)
   print "===================listDir====================:"

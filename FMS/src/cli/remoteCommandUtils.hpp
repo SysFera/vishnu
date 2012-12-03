@@ -139,7 +139,7 @@ struct FileApiCommand<CREATEDIR,FMS_Data::CreateDirOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::CreateDirOptions& options ){
 
-return  createDir(sessionKey,path,options);
+return  mkDir(sessionKey,path,options);
 
 }
 };

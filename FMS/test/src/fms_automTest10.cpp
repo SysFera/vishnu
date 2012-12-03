@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
       BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
     }
    
-    BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0); // setup
+    BOOST_REQUIRE( mkDir(sessionKey, dirFullPath1) == 0); // setup
     BOOST_REQUIRE( removeDir(sessionKey, dirFullPath1) == 0); // test
     // Check: list content of parent directory
     bool isRemovedDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);

@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
       BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
 
     }
-    BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
+    BOOST_REQUIRE( mkDir(sessionKey, dirFullPath1) == 0);
     // Check 1: list content of parent directory
     bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(isNewDirFound);
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     // check 3 :recursive directory creation 
     CreateDirOptions mkdirOptions;
     mkdirOptions.setIsRecursive (true);
-    BOOST_CHECK_EQUAL( createDir(sessionKey, recursiveDirFullPath1,mkdirOptions),0); 
+    BOOST_CHECK_EQUAL( mkDir(sessionKey, recursiveDirFullPath1,mkdirOptions),0); 
     // Check 4: list content of parent directory 
     isNewDirFound = isFoundInDir(sessionKey,dirFullPath1 , newSubDirName);
     BOOST_REQUIRE(isNewDirFound);
@@ -79,21 +79,21 @@ BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newDirName;
-    BOOST_CHECK_THROW( createDir(sessionKey, invalidFullPath), VishnuException);
+    BOOST_CHECK_THROW( mkDir(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( createDir(sessionKey, noAccessFullPath), VishnuException);
+    BOOST_CHECK_THROW( mkDir(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( createDir(sessionKey, invalidMachineFullPath), VishnuException);
+    BOOST_CHECK_THROW( mkDir(sessionKey, invalidMachineFullPath), VishnuException);
 
 // E4 case: recursive directories creation
 // assert dirFullPath1 is not in baseDirFullPath1 
     bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1,dirFullPath1);
     BOOST_REQUIRE(!isNewDirFound);
-BOOST_CHECK_THROW( createDir(sessionKey, recursiveDirFullPath1),VishnuException ); 
+BOOST_CHECK_THROW( mkDir(sessionKey, recursiveDirFullPath1),VishnuException ); 
 
 
   } catch (VishnuException& e) {
