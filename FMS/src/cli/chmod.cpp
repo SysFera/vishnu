@@ -1,6 +1,6 @@
 /**
- * \file ch_mod.cpp
- * This file defines the VISHNU ch_mod command 
+ * \file chmod.cpp
+ * This file defines the VISHNU chmod command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 

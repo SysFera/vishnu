@@ -195,23 +195,23 @@ try :
   VISHNU.rm(k,fileFullPath2)
   #To clean the list
   dirContent = []
-  print "=================== chGrp ====================:"
+  print "=================== chgrp ====================:"
   VISHNU.touch(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
 
-  print "chGrp: ",fileFullPath2, "to adm"
-  VISHNU.chGrp(k, "adm", fileFullPath2)
+  print "chgrp: ",fileFullPath2, "to adm"
+  VISHNU.chgrp(k, "adm", fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   VISHNU.rm(k,fileFullPath2)
-  print "=================== chMod ====================:"
+  print "=================== chmod ====================:"
   VISHNU.touch(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   
-  print "chMod: ",fileFullPath2, "to 754"
-  VISHNU.chMod(k, 754, fileFullPath2)
+  print "chmod: ",fileFullPath2, "to 754"
+  VISHNU.chmod(k, 754, fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   VISHNU.rm(k,fileFullPath2)

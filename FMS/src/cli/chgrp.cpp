@@ -1,6 +1,6 @@
 /**
- * \file ch_grp.cpp
- * This file defines the VISHNU ch_grp command 
+ * \file chgrp.cpp
+ * This file defines the VISHNU chgrp command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
