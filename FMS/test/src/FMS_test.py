@@ -186,8 +186,8 @@ try :
   dirContent = []
   print "touch : ",fileFullPath1
   VISHNU.touch(k, fileFullPath1)
-  print "copyFile: ",fileFullPath1, "to ", fileFullPath2
-  VISHNU.copyFile(k, fileFullPath1, baseDirFullPath2)
+  print "cp: ",fileFullPath1, "to ", fileFullPath2
+  VISHNU.cp(k, fileFullPath1, baseDirFullPath2)
   print "===================listDir - LongFormat====================:"
   lsOpt.setLongFormat(True)
   dirContent = VISHNU.listDir(k, baseDirFullPath2, lsOpt)

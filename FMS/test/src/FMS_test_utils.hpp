@@ -166,7 +166,7 @@ createRemoteFiles(const string& sessionKey,
     string errorMsg =  "Could not copy file ";
     errorMsg.append(localFilePath);
     errorMsg.append(" on remote host");
-    BOOST_REQUIRE_MESSAGE( copyFile(sessionKey, localFilePath, remoteFullPath) == 0,
+    BOOST_REQUIRE_MESSAGE( cp(sessionKey, localFilePath, remoteFullPath) == 0,
       errorMsg);
   }
 }
