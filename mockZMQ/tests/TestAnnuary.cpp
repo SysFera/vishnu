@@ -23,7 +23,7 @@ public:
     std::vector<std::string> servicesTmp;
     servicesTmp.push_back("toto");
     ann.add("titi", servicesTmp, "tutu");
-    BOOST_CHECK(ann.get("toto")->size() == 1);
+    BOOST_REQUIRE(ann.get("toto")->size() == 1);
   }
   void
   testAddTwice(){
@@ -32,43 +32,43 @@ public:
     servicesTmp.push_back("toto");
     ann.add("titi", servicesTmp, "tutu");
     ann.add("titi", servicesTmp, "tutu");
-    BOOST_CHECK(ann.get("")->size() == 2);
+    BOOST_REQUIRE(ann.get("")->size() == 2);
   }
   void
   testRemove(){
     Annuary ann(mservers);
     ann.remove(name, uri);
-    BOOST_CHECK(ann.get("")->size() == 0);
+    BOOST_REQUIRE(ann.get("")->size() == 0);
   }
   void
   testRemoveEmpty(){
     Annuary ann(mservers);
     ann.remove(name, uri);
     ann.remove(name, uri);
-    BOOST_CHECK(ann.get("")->size() == 0);
+    BOOST_REQUIRE(ann.get("")->size() == 0);
   }
   void
   testRemoveBadURI(){
     Annuary ann(mservers);
     ann.remove(name, uri+"1");
-    BOOST_CHECK(ann.get("loup")->size() == 1);
+    BOOST_REQUIRE(ann.get("loup")->size() == 1);
   }
   void
   testRemoveBadName(){
     Annuary ann(mservers);
     ann.remove(name+"1", uri);
-    BOOST_CHECK(ann.get("loup")->size() == 1);
+    BOOST_REQUIRE(ann.get("loup")->size() == 1);
   }
   void
   testGet(){
     Annuary ann(mservers);
-    BOOST_CHECK(ann.get("loup") &&
+    BOOST_REQUIRE(ann.get("loup") &&
                 ann.get("belette"));
   }
   void
   testGetBad(){
     Annuary ann(mservers);
-    BOOST_CHECK(ann.get("bad")->size() == 0);
+    BOOST_REQUIRE(ann.get("bad")->size() == 0);
   }
 
 private:
