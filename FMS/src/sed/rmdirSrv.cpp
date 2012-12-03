@@ -53,7 +53,7 @@ int solveRemoveDir(diet_profile_t* profile) {
   
      //MAPPER CREATION
      Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-     mapperkey = mapper->code("vishnu_remove_dir");
+     mapperkey = mapper->code("vishnu_rmdir");
      mapper->code(std::string(host)+":"+std::string(path), mapperkey);
      cmd = mapper->finalize(mapperkey);
   // check the sessionKey

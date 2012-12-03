@@ -165,7 +165,7 @@ namespace vishnu{
    * \param path    the directory path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int removeDir(const string& sessionKey,const string& path)
+  int rmdir(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
