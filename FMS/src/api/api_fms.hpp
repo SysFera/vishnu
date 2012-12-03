@@ -122,7 +122,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the recursive creation)
    * \return 0 if everything is OK, another value otherwise
    */
-  int mkDir(const string& sessionKey,const string& path,const CreateDirOptions& options= CreateDirOptions())
+  int mkdir(const string& sessionKey,const string& path,const CreateDirOptions& options= CreateDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
