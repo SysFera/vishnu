@@ -1,5 +1,5 @@
 /**
- * \file remove_file.cpp
+ * \file rm.cpp
  * This file defines the VISHNU remove file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */

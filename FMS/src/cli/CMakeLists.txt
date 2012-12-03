@@ -28,7 +28,7 @@ set(ALLCLI
   tail_of_file
   touch
   mkdir
-  remove_file
+  rm
   rmdir
   ch_grp
   ch_mod
@@ -36,7 +36,7 @@ set(ALLCLI
   list_dir
   copy_file
   copy_async_file
-  move_file
+  mv
   move_async_file
   stop_file_transfer
   list_file_transfers

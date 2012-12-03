@@ -158,7 +158,7 @@ struct FileApiCommand<REMOVEFILE,FMS_Data::RmFileOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::RmFileOptions& options ){
 
-return  removeFile(sessionKey,path,options);
+return  rm(sessionKey,path,options);
 
 }
 };

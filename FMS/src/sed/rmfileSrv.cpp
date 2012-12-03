@@ -57,7 +57,7 @@ int solveRemoveFile(diet_profile_t* profile) {
     
       //MAPPER CREATION
       Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-      mapperkey = mapper->code("vishnu_remove_file");
+      mapperkey = mapper->code("vishnu_rm");
       mapper->code(std::string(host)+":"+std::string(path), mapperkey);
       mapper->code(std::string(optionsSerialized), mapperkey);
       cmd = mapper->finalize(mapperkey);
@@ -85,7 +85,7 @@ int solveRemoveFile(diet_profile_t* profile) {
 
     RmFileOptions_ptr options_ptr= NULL;
  if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
-      throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
+      throw SystemException(ERRCODE_INVDATA, "solve_rm: RmFileOptions object is not well built");
     }
     file->rm(*options_ptr);
      //To register the command
