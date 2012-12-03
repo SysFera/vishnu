@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     BOOST_REQUIRE(isNewDirFound);
     // Check 2: create new file in new directory
     string fileFullPath = dirFullPath1 + slash + newFileName;
-    BOOST_REQUIRE( createFile(sessionKey, fileFullPath) == 0 );
+    BOOST_REQUIRE( touch(sessionKey, fileFullPath) == 0 );
     // Cleanup
     BOOST_REQUIRE( removeFile(sessionKey, fileFullPath) == 0);
     

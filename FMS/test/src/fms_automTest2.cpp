@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
     }
 
 
-    BOOST_REQUIRE( createFile(sessionKey, fileFullPath1) == 0); // setup
+    BOOST_REQUIRE( touch(sessionKey, fileFullPath1) == 0); // setup
     BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0); // test
     FileStat fileStat;
     BOOST_CHECK_THROW( getFileInfo(sessionKey, fileFullPath1, fileStat), VishnuException );

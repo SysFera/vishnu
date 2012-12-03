@@ -40,7 +40,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
       // create adn remove file
 
       std::string path(fileName.str());
-      createFile(sessionKey, path);
+      touch(sessionKey, path);
      removeFile(sessionKey, path);
 
     }
@@ -118,7 +118,7 @@ int main(int argc, char** argv){
 
     if (argc != 3) {
       std::cerr << "Usage: ./fms_stress Nbtests Type "<< std::endl;
-      std::cerr << "[1 for listfiletransfer and 2 for createFile]" << std::endl;
+      std::cerr << "[1 for listfiletransfer and 2 for touch]" << std::endl;
       return 1;
     }
     cpt = atoi (argv[1]);

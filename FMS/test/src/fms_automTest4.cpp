@@ -37,7 +37,7 @@ BOOST_AUTO_TEST_CASE(TailOfFile_Base)
 
   try {
     // Create a file 1Mb
-    createFile<1000>(localFilePath);
+    touch<1000>(localFilePath);
     // Copy file on remote host
     BOOST_MESSAGE( "REMOTE PATH: " + fileFullPath1 );
     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);

@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
         BOOST_CHECK_MESSAGE( removeFile(sessionKey, *iter) == 0,
           "Could not remove file " + *iter);
     }
-    BOOST_CHECK( removeDir(sessionKey, dirFullPath1) == 0);
+    BOOST_CHECK( rmdir(sessionKey, dirFullPath1) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
     }
    
     BOOST_REQUIRE( mkdir(sessionKey, dirFullPath1) == 0); // setup
-    BOOST_REQUIRE( removeDir(sessionKey, dirFullPath1) == 0); // test
+    BOOST_REQUIRE( rmdir(sessionKey, dirFullPath1) == 0); // test
     // Check: list content of parent directory
     bool isRemovedDirFound = isFoundInDir(sessionKey, baseDirFullPath1, newDirName);
     BOOST_REQUIRE(!isRemovedDirFound);
@@ -63,15 +63,15 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
-    BOOST_CHECK_THROW( removeDir(sessionKey, invalidFullPath), VishnuException);
+    BOOST_CHECK_THROW( rmdir(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( removeDir(sessionKey, noAccessFullPath), VishnuException);
+    BOOST_CHECK_THROW( rmdir(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( removeDir(sessionKey, invalidMachineFullPath), VishnuException);
+    BOOST_CHECK_THROW( rmdir(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
