@@ -59,7 +59,7 @@ int solveChangeMode (diet_profile_t* profile) {
 
    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_ch_mod");
+    mapperkey = mapper->code("vishnu_chmod");
     mapper->code(vishnu::convertToString(mode), mapperkey);
     mapper->code(std::string(host)+":"+std::string(path), mapperkey);
     cmd = mapper->finalize(mapperkey);

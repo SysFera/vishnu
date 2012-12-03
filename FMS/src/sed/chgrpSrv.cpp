@@ -56,7 +56,7 @@ int solveChangeGroup (diet_profile_t* profile) {
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_ch_grp");
+    mapperkey = mapper->code("vishnu_chgrp");
     mapper->code(group, mapperkey);
     mapper->code(std::string(host)+":"+std::string(path), mapperkey);
     cmd = mapper->finalize(mapperkey);

@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
     touch<10>(localFilePath);
     // Copy file on remote host
     BOOST_REQUIRE( cp(sessionKey, localFilePath, fileFullPath1) == 0);
-    BOOST_REQUIRE( chMod(sessionKey, 600, fileFullPath1) == 0);
+    BOOST_REQUIRE( chmod(sessionKey, 600, fileFullPath1) == 0);
     // To check the success
     FileStat stat;
     BOOST_REQUIRE( getFileInfo(sessionKey, fileFullPath1, stat) == 0);
@@ -65,15 +65,15 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidFullPath), VishnuException);
+    BOOST_CHECK_THROW( chmod(sessionKey, 600, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( chMod(sessionKey, 600, noAccessFullPath), VishnuException);
+    BOOST_CHECK_THROW( chmod(sessionKey, 600, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( chMod(sessionKey, 600, invalidMachineFullPath), VishnuException);
+    BOOST_CHECK_THROW( chmod(sessionKey, 600, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

@@ -30,8 +30,8 @@ set(ALLCLI
   mkdir
   rm
   rmdir
-  ch_grp
-  ch_mod
+  chgrp
+  chmod
   content_of_file
   list_dir
   cp
