@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE(ChangeFileRights_Base)
     // Create a file 10Kb
     touch<10>(localFilePath);
     // Copy file on remote host
-    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+    BOOST_REQUIRE( cp(sessionKey, localFilePath, fileFullPath1) == 0);
     BOOST_REQUIRE( chMod(sessionKey, 600, fileFullPath1) == 0);
     // To check the success
     FileStat stat;

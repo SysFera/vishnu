@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
     touch<1000>(localFilePath);
     // Copy file on remote host
     BOOST_MESSAGE( "REMOTE PATH: " + fileFullPath1 );
-    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, fileFullPath1) == 0);
+    BOOST_REQUIRE( cp(sessionKey, localFilePath, fileFullPath1) == 0);
     string content;
     BOOST_REQUIRE( headOfFile(sessionKey, fileFullPath1, content) == 0);
     // To check the success of headOfFile function

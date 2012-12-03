@@ -55,7 +55,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
       // create adn remove file
 
       std::string path(fileName.str());
-      copyFile(sessionKey,dietClientConfigPath,path);
+      cp(sessionKey,dietClientConfigPath,path);
 
     }
     std::cout << "5 iterations done \n";

@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
 //     BOOST_MESSAGE("Checking local to local copy");
 //     string backupFileName = newFileName + ".bak";
 //     string backupLocalPath = localDir + backupFileName;
-//     BOOST_REQUIRE( copyFile(sessionKey, localFilePath, backupLocalPath) == 0);
+//     BOOST_REQUIRE( cp(sessionKey, localFilePath, backupLocalPath) == 0);
     // Check
 //     bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(backupFileName));
 //     BOOST_CHECK(isLocalCopyFound);
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
 
     // local to remote
     BOOST_MESSAGE("Checking local to remote copy");
-    BOOST_REQUIRE( copyFile(sessionKey, localFilePath, baseDirFullPath1) == 0);
+    BOOST_REQUIRE( cp(sessionKey, localFilePath, baseDirFullPath1) == 0);
     // Check
     bool isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
@@ -63,7 +63,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     string localCopyName = newFileName + ".bak";
     string localCopyPath = localDir + slash + localCopyName;
     BOOST_CHECK( isFoundInDir(sessionKey, baseDirFullPath1, newFileName));
-    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, localCopyPath) == 0);
+    BOOST_REQUIRE( cp(sessionKey, fileFullPath1, localCopyPath) == 0);
     // Check
     bool isLocalCopyFound = isFoundInLocalDir(localDir,localCopyName);
     BOOST_CHECK(isLocalCopyFound);
@@ -72,7 +72,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
 
     // remote to remote
     BOOST_MESSAGE("Checking remote to remote copy");
-    BOOST_REQUIRE( copyFile(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
+    BOOST_REQUIRE( cp(sessionKey, fileFullPath1, baseDirFullPath2) == 0);
     // Check
     isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
@@ -98,21 +98,21 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Exceptions)
     // E1 case - wrong source path
     string invalidDir = "boifdo";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
-    BOOST_CHECK_THROW( copyFile(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
+    BOOST_CHECK_THROW( cp(sessionKey, invalidFullPath, baseDirFullPath1), VishnuException);
     // E2 case - wrong destination path
     string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
-    BOOST_CHECK_THROW( copyFile(sessionKey, localFilePath, invalidFullPath2), VishnuException);
+    BOOST_CHECK_THROW( cp(sessionKey, localFilePath, invalidFullPath2), VishnuException);
     // E3 case - no access to source path
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( copyFile(sessionKey, noAccessFullPath, baseDirFullPath1), VishnuException);
+    BOOST_CHECK_THROW( cp(sessionKey, noAccessFullPath, baseDirFullPath1), VishnuException);
     // E3 case - no access to remote path
     string noAccessRemotePath = machineId1 + sep + "/root";
-    BOOST_CHECK_THROW( copyFile(sessionKey, localFilePath, noAccessRemotePath), VishnuException);
+    BOOST_CHECK_THROW( cp(sessionKey, localFilePath, noAccessRemotePath), VishnuException);
     // E4 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( copyFile(sessionKey, invalidMachineFullPath, baseDirFullPath1), VishnuException);
+    BOOST_CHECK_THROW( cp(sessionKey, invalidMachineFullPath, baseDirFullPath1), VishnuException);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
   } catch (VishnuException& e) {
