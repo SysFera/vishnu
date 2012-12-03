@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
      if(isFoundInDir(sessionKey,baseDirFullPath1,newDirName)){
       RmFileOptions rmOptions;
       rmOptions.setIsRecursive (true);
-      BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
+      BOOST_REQUIRE( rm(sessionKey, dirFullPath1,rmOptions) == 0);
 
     }
     BOOST_REQUIRE( mkdir(sessionKey, dirFullPath1) == 0);
@@ -51,7 +51,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     string fileFullPath = dirFullPath1 + slash + newFileName;
     BOOST_REQUIRE( touch(sessionKey, fileFullPath) == 0 );
     // Cleanup
-    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath) == 0);
+    BOOST_REQUIRE( rm(sessionKey, fileFullPath) == 0);
     
     // check 3 :recursive directory creation 
     CreateDirOptions mkdirOptions;
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     BOOST_REQUIRE(isNewDirFound);
     RmFileOptions rmOptions;
     rmOptions.setIsRecursive (true);
-    BOOST_REQUIRE ( removeFile(sessionKey,dirFullPath1 ,rmOptions) == 0);
+    BOOST_REQUIRE ( rm(sessionKey,dirFullPath1 ,rmOptions) == 0);
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);

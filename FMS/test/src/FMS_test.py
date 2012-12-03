@@ -173,8 +173,8 @@ try :
   print "==================getFileInfo===============:"
   VISHNU.getFileInfo(k, fileFullPath1,  fileInfo)
   displayFileInfo(fileInfo)
-  print "removeFile: ", fileFullPath1
-  VISHNU.removeFile(k, fileFullPath1)
+  print "rm: ", fileFullPath1
+  VISHNU.rm(k, fileFullPath1)
   print "mkdir: ", dirFullPath1
   VISHNU.mkdir(k, dirFullPath1)
   print "rmdir: ", dirFullPath1
@@ -192,7 +192,7 @@ try :
   lsOpt.setLongFormat(True)
   dirContent = VISHNU.listDir(k, baseDirFullPath2, lsOpt)
   displayDirContent(dirContent)
-  VISHNU.removeFile(k,fileFullPath2)
+  VISHNU.rm(k,fileFullPath2)
   #To clean the list
   dirContent = []
   print "=================== chGrp ====================:"
@@ -204,7 +204,7 @@ try :
   VISHNU.chGrp(k, "adm", fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
-  VISHNU.removeFile(k,fileFullPath2)
+  VISHNU.rm(k,fileFullPath2)
   print "=================== chMod ====================:"
   VISHNU.touch(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
@@ -214,7 +214,7 @@ try :
   VISHNU.chMod(k, 754, fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
-  VISHNU.removeFile(k,fileFullPath2)
+  VISHNU.rm(k,fileFullPath2)
 
   print "===================headOfFile======:"
   command ="/bin/ls " + FMSWORKINGDIR + " > " + FMSDIR1 + "/" + newFileName
@@ -227,7 +227,7 @@ try :
   print "===================contentOfFile======:"
   r, contentOfFile = VISHNU.contentOfFile(k, fileFullPath1)
   print contentOfFile
-  VISHNU.removeFile(k,fileFullPath1)
+  VISHNU.rm(k,fileFullPath1)
   print contentOfFile
   print "=========================copyAsyncFile:"
   transferOpt.setIsRecursive(True)

@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(DeleteDir_Base)
     if(isFoundInDir(sessionKey,baseDirFullPath1,newDirName)){
       RmFileOptions rmOptions;
       rmOptions.setIsRecursive (true);
-      BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
+      BOOST_REQUIRE( rm(sessionKey, dirFullPath1,rmOptions) == 0);
     }
    
     BOOST_REQUIRE( mkdir(sessionKey, dirFullPath1) == 0); // setup

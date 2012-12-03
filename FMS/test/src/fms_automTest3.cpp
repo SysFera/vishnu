@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
     // To check the success of headOfFile function
     BOOST_CHECK( content.substr(0,8) == "abcdefgh" );
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     vishnu::deleteFile(localFilePath.c_str());
 
   } catch (VishnuException& e) {

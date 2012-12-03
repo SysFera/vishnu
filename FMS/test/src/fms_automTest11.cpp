@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
     if(isFoundInDir(sessionKey,baseDirFullPath1,newDirName)){
       RmFileOptions rmOptions;
       rmOptions.setIsRecursive (true);
-      BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
+      BOOST_REQUIRE( rm(sessionKey, dirFullPath1,rmOptions) == 0);
 
     }
     BOOST_REQUIRE( mkdir(sessionKey, dirFullPath1) == 0);
@@ -62,7 +62,7 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
     for (vector<string>::const_iterator iter = remoteFullPaths.begin();
       iter != remoteFullPaths.end();
       ++iter) {
-        BOOST_CHECK_MESSAGE( removeFile(sessionKey, *iter) == 0,
+        BOOST_CHECK_MESSAGE( rm(sessionKey, *iter) == 0,
           "Could not remove file " + *iter);
     }
     BOOST_CHECK( rmdir(sessionKey, dirFullPath1) == 0);

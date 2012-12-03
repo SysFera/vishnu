@@ -47,7 +47,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
 //     bool isLocalCopyFound = areFoundInDir(sessionKey, localDir, ba::list_of(backupFileName));
 //     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
-//     BOOST_CHECK( removeFile(sessionKey, backupLocalPath) == 0);
+//     BOOST_CHECK( rm(sessionKey, backupLocalPath) == 0);
 
     // local to remote
     BOOST_MESSAGE("Checking local to remote copy");
@@ -77,8 +77,8 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
     isRemoteCopyFound = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(isRemoteCopyFound);
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath2) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath2) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

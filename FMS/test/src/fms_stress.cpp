@@ -41,7 +41,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
 
       std::string path(fileName.str());
       touch(sessionKey, path);
-     removeFile(sessionKey, path);
+     rm(sessionKey, path);
 
     }
     std::cout << "5 iterations done \n";

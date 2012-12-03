@@ -40,13 +40,13 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
     if(isFoundInDir(sessionKey,baseDirFullPath1,newFileName)){
       RmFileOptions rmOptions;
       rmOptions.setIsRecursive (true);
-      BOOST_REQUIRE( removeFile(sessionKey,fileFullPath1 ,rmOptions) == 0);
+      BOOST_REQUIRE( rm(sessionKey,fileFullPath1 ,rmOptions) == 0);
 
     }
 
 
     BOOST_REQUIRE( touch(sessionKey, fileFullPath1) == 0); // setup
-    BOOST_REQUIRE( removeFile(sessionKey, fileFullPath1) == 0); // test
+    BOOST_REQUIRE( rm(sessionKey, fileFullPath1) == 0); // test
     FileStat fileStat;
     BOOST_CHECK_THROW( getFileInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
 
@@ -66,15 +66,15 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( removeFile(sessionKey, invalidFullPath), VishnuException);
+    BOOST_CHECK_THROW( rm(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( removeFile(sessionKey, noAccessFullPath), VishnuException);
+    BOOST_CHECK_THROW( rm(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( removeFile(sessionKey, invalidMachineFullPath), VishnuException);
+    BOOST_CHECK_THROW( rm(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
     if(isFoundInDir(sessionKey,baseDirFullPath1,newFileName)){
       RmFileOptions rmOptions;
       rmOptions.setIsRecursive (true);
-      BOOST_REQUIRE( removeFile(sessionKey,fileFullPath1 ,rmOptions) == 0);
+      BOOST_REQUIRE( rm(sessionKey,fileFullPath1 ,rmOptions) == 0);
 
     }
 
@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
     BOOST_CHECK( getFileInfo(sessionKey, fileFullPath1, fileStat) ==0  );
 
     // Cleanup
-    BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+    BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

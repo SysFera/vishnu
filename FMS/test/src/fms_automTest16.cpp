@@ -65,7 +65,7 @@ BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
     bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     // Cleanup
     if(isRemoteCopyFound1) {
-      BOOST_CHECK( removeFile(sessionKey, fileFullPath1) == 0);
+      BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     }
     vishnu::deleteFile(localFilePath.c_str());
 
