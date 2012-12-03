@@ -26,7 +26,7 @@ set(ALLCLI
   head_of_file
   get_file_info
   tail_of_file
-  create_file
+  touch
   mkdir
   remove_file
   remove_dir
