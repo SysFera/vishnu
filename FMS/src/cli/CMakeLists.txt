@@ -29,7 +29,7 @@ set(ALLCLI
   touch
   mkdir
   remove_file
-  remove_dir
+  rmdir
   ch_grp
   ch_mod
   content_of_file

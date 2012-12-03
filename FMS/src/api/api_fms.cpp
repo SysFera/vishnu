@@ -116,7 +116,7 @@ int vishnu::removeFile(const string& sessionKey,const string& path,const RmFileO
  * \param path    the directory path using host:path format
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::removeDir(const string& sessionKey,const string& path)
+int vishnu::rmdir(const string& sessionKey,const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path

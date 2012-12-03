@@ -177,7 +177,7 @@ struct FileApiCommand<REMOVEDIR,NoOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const NoOptions& options ){
 
-return  removeDir(sessionKey,path);
+return  rmdir(sessionKey,path);
 
 }
 };
