@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
       BOOST_REQUIRE( removeFile(sessionKey, dirFullPath1,rmOptions) == 0);
 
     }
-    BOOST_REQUIRE( createDir(sessionKey, dirFullPath1) == 0);
+    BOOST_REQUIRE( mkDir(sessionKey, dirFullPath1) == 0);
     // put some content into the directory
     const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!~-_#");
     vector<string> localFiles = fileSuffixes;
