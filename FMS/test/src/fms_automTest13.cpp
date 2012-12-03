@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
 
   try {
     FileTransfer transferInfo;
-    createFile<1000>(localFilePath);
+    touch<1000>(localFilePath);
 
     // local to remote
     BOOST_MESSAGE("Checking local to remote copy");
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
   try {
     DirEntryList dirContent;
     FileTransfer transferInfo;
-    createFile<10>(localFilePath);
+    touch<10>(localFilePath);
     // E1 case - wrong source path
     BOOST_MESSAGE("Check wrong source path");
     string invalidDir = "erli";

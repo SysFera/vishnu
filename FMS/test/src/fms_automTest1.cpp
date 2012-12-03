@@ -46,9 +46,9 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
     }
 
-    BOOST_REQUIRE( createFile(sessionKey, fileFullPath1) == 0);
+    BOOST_REQUIRE( touch(sessionKey, fileFullPath1) == 0);
 
-    // To check the success of createFile function
+    // To check the success of touch function
     FileStat fileStat;
     BOOST_CHECK( getFileInfo(sessionKey, fileFullPath1, fileStat) ==0  );
 
@@ -71,15 +71,15 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( createFile(sessionKey, invalidFullPath), VishnuException);
+    BOOST_CHECK_THROW( touch(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessDir = "/root";
     string noAccessFullPath = machineId1 + sep + noAccessDir;
-    BOOST_CHECK_THROW( createFile(sessionKey, noAccessFullPath), VishnuException);
+    BOOST_CHECK_THROW( touch(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( createFile(sessionKey, invalidMachineFullPath), VishnuException);
+    BOOST_CHECK_THROW( touch(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

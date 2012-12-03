@@ -167,8 +167,8 @@ try :
 
   r = VISHNU.connect(userId, userPwd,session)
   k = session.getSessionKey()
-  print "createFile:",fileFullPath1
-  VISHNU.createFile(k,  fileFullPath1)
+  print "touch:",fileFullPath1
+  VISHNU.touch(k,  fileFullPath1)
   print "sessionKey:", k
   print "==================getFileInfo===============:"
   VISHNU.getFileInfo(k, fileFullPath1,  fileInfo)
@@ -177,15 +177,15 @@ try :
   VISHNU.removeFile(k, fileFullPath1)
   print "mkdir: ", dirFullPath1
   VISHNU.mkdir(k, dirFullPath1)
-  print "removeDir: ", dirFullPath1
-  VISHNU.removeDir(k, dirFullPath1)
+  print "rmdir: ", dirFullPath1
+  VISHNU.rmdir(k, dirFullPath1)
   print "===================listDir====================:"
   dirContent = VISHNU.listDir(k,workingDirFullPath1)
   displayDirContent(dirContent)
   #To clean the list
   dirContent = []
-  print "createFile : ",fileFullPath1
-  VISHNU.createFile(k, fileFullPath1)
+  print "touch : ",fileFullPath1
+  VISHNU.touch(k, fileFullPath1)
   print "copyFile: ",fileFullPath1, "to ", fileFullPath2
   VISHNU.copyFile(k, fileFullPath1, baseDirFullPath2)
   print "===================listDir - LongFormat====================:"
@@ -196,7 +196,7 @@ try :
   #To clean the list
   dirContent = []
   print "=================== chGrp ====================:"
-  VISHNU.createFile(k,fileFullPath2)
+  VISHNU.touch(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
 
@@ -206,7 +206,7 @@ try :
   displayFileInfo(fileInfo)
   VISHNU.removeFile(k,fileFullPath2)
   print "=================== chMod ====================:"
-  VISHNU.createFile(k,fileFullPath2)
+  VISHNU.touch(k,fileFullPath2)
   VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   
@@ -248,7 +248,7 @@ try :
   displayFiletransferList(fileTransferList)
 
   print "=========================MvAsyncFile:"
-  VISHNU.createFile(k,fileFullPath1)
+  VISHNU.touch(k,fileFullPath1)
   VISHNU.moveAsyncFile(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
   displayFileTransfer(fileTransferInfo)
   print "===========listFileTransfers:============="

@@ -36,7 +36,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
-    createFile<10>(localFilePath);
+    touch<10>(localFilePath);
 
     // local to local (changing name)
 //     BOOST_MESSAGE("Checking local to local copy");
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE(SyncCopyFile_Exceptions)
 
   try {
     DirEntryList dirContent;
-    createFile<10>(localFilePath);
+    touch<10>(localFilePath);
     // E1 case - wrong source path
     string invalidDir = "boifdo";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;

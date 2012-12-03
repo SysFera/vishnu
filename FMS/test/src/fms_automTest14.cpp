@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Base)
   string sessionKey=vc.getSessionKey();
 
   try {
-    createFile<10>(localFilePath);
+    touch<10>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote move");
     BOOST_MESSAGE("SRC=" + localFilePath);
@@ -80,7 +80,7 @@ BOOST_AUTO_TEST_CASE(SyncMoveFile_Exceptions)
 
   try {
     DirEntryList dirContent;
-    createFile<10>(localFilePath);
+    touch<10>(localFilePath);
     // E1 case - wrong source path
     BOOST_MESSAGE("Check wrong source path");
     string invalidDir = "rtiui";
