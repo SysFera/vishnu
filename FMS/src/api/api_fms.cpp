@@ -94,7 +94,7 @@ int vishnu::mkdir(const string& sessionKey,const string& path,const CreateDirOpt
  * \param options contains options used to perform the remove file function
  \return 0 if everything is OK, another value otherwise
  */
-int vishnu::removeFile(const string& sessionKey,const string& path,const RmFileOptions& options)
+int vishnu::rm(const string& sessionKey,const string& path,const RmFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path

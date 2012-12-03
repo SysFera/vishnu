@@ -1,5 +1,5 @@
 /**
- * \file move_file.cpp
+ * \file mv.cpp
  * This file defines the VISHNU move file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
