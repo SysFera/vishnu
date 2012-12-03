@@ -69,7 +69,7 @@ vishnu::createFile(const string& sessionKey,const string& path)
  * \param path: the directory path using host:path format
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::mkDir(const string& sessionKey,const string& path,const CreateDirOptions& options)
+int vishnu::mkdir(const string& sessionKey,const string& path,const CreateDirOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
