@@ -34,7 +34,7 @@ set(ALLCLI
   ch_mod
   content_of_file
   list_dir
-  copy_file
+  cp
   copy_async_file
   mv
   move_async_file
