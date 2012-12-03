@@ -45,7 +45,7 @@ using namespace std;
  * \return 0 if everything is OK, another value otherwise
  */
   int
-vishnu::createFile(const string& sessionKey,const string& path)
+vishnu::touch(const string& sessionKey,const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path

@@ -118,7 +118,7 @@ struct FileApiCommand<CREATEFILE,NoOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path,const NoOptions& options ){
 
-return  createFile(sessionKey,path);
+return  touch(sessionKey,path);
 
 }
 };

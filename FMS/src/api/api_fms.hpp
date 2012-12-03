@@ -32,7 +32,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    createFile(const string& sessionKey,const string& path)
+    touch(const string& sessionKey,const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
