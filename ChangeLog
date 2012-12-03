@@ -1,4 +1,10 @@
 +-----------------------------+
+| VISHNU 3.0.0 - Beta version |
++-----------------------------+
+
+* Fixed bugzilla #341 - Rename of FMS commands using POSIX name
+
++-----------------------------+
 | VISHNU 2.0.0 - Beta3        |
 +-----------------------------+
 * Improve the generation of the ID for vishnu objects
