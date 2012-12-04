@@ -147,7 +147,7 @@ int vishnu::rmdir(const string& sessionKey,const string& path)
  * \return 0 if everything is OK, another value otherwise
  */
   int
-vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
+vishnu::chgrp(const string& sessionKey, const string& group, const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -173,7 +173,7 @@ vishnu::chGrp(const string& sessionKey, const string& group, const string& path)
  * \param options contains the options used to set the new the permission mode  for this file
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& path)
+int vishnu::chmod(const string& sessionKey, const mode_t& mode, const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -197,7 +197,7 @@ int vishnu::chMod(const string& sessionKey, const mode_t& mode, const string& pa
  * \param options contains the options
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
+int vishnu::cp(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
   int result = 0;
     if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
@@ -386,7 +386,7 @@ int vishnu::ls(const string& sessionKey,const string& path, DirEntryList& dirCon
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-int vishnu::moveFile(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
+int vishnu::mv(const string& sessionKey,const string& src, const string& dest,const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
   if((options.getTrCommand() < 0) || options.getTrCommand() > 2) {

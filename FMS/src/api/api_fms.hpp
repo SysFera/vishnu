@@ -43,7 +43,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int
-    chGrp(const string& sessionKey, const string& group, const string& path)
+    chgrp(const string& sessionKey, const string& group, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -53,7 +53,7 @@ namespace vishnu{
    * \param path  the file path using host:path format
    * \return 0 if everything is OK, another value otherwise
    */
-  int chMod(const string& sessionKey, const mode_t& mode, const string& path)
+  int chmod(const string& sessionKey, const mode_t& mode, const string& path)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -61,10 +61,10 @@ namespace vishnu{
    * \param sessionKey the session key
    * \param src  the "source" file path using host:path format
    * \param dest  the "destination" file path using host:path format
-   * \param options contains the options 
+   * \param options contains the options
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions())
+  int cp(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -81,7 +81,7 @@ namespace vishnu{
       FileTransfer& transferInfo, const CpFileOptions& options = CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
-  /** 
+  /**
    * \brief get the first lines of a file
    * \param sessionKey the session key
    * \param path   the file path using host:path format
@@ -91,8 +91,8 @@ namespace vishnu{
    */
   int head(const string& sessionKey,const string& path, string& more, const HeadOfFileOptions& options = HeadOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
-  
-  /** 
+
+  /**
    * \brief get the content of a file
    * \param sessionKey the session key
    * \param path   the file path using host:path format
@@ -111,7 +111,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the long format list)
    * \return 0 if everything is OK, another value otherwise
    */
- 
+
   int ls(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -133,7 +133,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveFile(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions() )
+  int mv(const string& sessionKey,const string& src, const string& dest, const CpFileOptions& options= CpFileOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -142,7 +142,7 @@ namespace vishnu{
    * \param src:   the "source" file path using host:path format
    * \param dest:  the "destination" file path using host:path format
    * \param transferInfo contains different information about the submitted file
-   * transfer (like the transfer identifier) 
+   * transfer (like the transfer identifier)
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
