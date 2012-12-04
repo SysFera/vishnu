@@ -96,7 +96,8 @@ DatabaseResult::get(size_t position) const{
 
   std::vector<std::string> tmp;
 
-  if ((position < 0) || position > getNbTuples()) {
+  // size_t always >= 0 since it's an unsigned (Cf. stddef.h)
+  if (position > getNbTuples()) {
     return std::vector<std::string>();
   }
   else {

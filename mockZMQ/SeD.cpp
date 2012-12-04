@@ -10,10 +10,10 @@ int
 heartbeat(diet_profile_t* pb){
   std::string ack("OK");
   diet_string_set(diet_parameter(pb,1), const_cast<char*>(ack.c_str()), DIET_VOLATILE);
+  return 0;
 }
 
 SeD::SeD(){
-  int (*functionPtr)(diet_profile_t*);
   mcb.insert( std::pair<std::string, functionPtr_t> ("heartbeat", heartbeat));
 }
 
@@ -51,13 +51,13 @@ public:
 
   void
   operator()() {
-    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    Socket socket(*ctx_, ZMQ_REP);
     socket.connect("inproc://vishnu");
     std::string data;
     while (true) {
       data.clear();
       try {
-    	data = s_recv(socket);
+        data = socket.get();
       } catch (zmq::error_t error) {
         std::cout << "E: " << error.what() << "\n";
         continue;
@@ -70,7 +70,7 @@ public:
         server_->call(profile.get());
         // Send reply back to client
         std::string resultSerialized = my_serialize(profile.get());
-        s_send(socket, resultSerialized);
+        socket.send(resultSerialized);
       }
     }
   }
@@ -107,4 +107,3 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
 
   return 0;
 }
-
