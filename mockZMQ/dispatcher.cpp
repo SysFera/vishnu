@@ -159,7 +159,7 @@ private:
 
 class AddressDealer{
 public:
-  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
+  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread):muri(uri), mann(ann), mnbThread(nbThread){
   }
 
   ~AddressDealer(){
@@ -176,18 +176,19 @@ public:
 
   void
   run(){
-    ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker", 4, mann);
+    ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker", mnbThread, mann);
   }
 
 
 private:
   std::string muri;
   boost::shared_ptr<Annuary>& mann;
+  int mnbThread;
 };
 
 class AddressSubscriber{
 public:
-  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann):muri(uri), mann(ann){
+  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread):muri(uri), mann(ann), mnbThread(nbThread){
   }
 
   ~AddressSubscriber(){
@@ -195,13 +196,14 @@ public:
 
   void
   run(){
-    ZMQStartDevice<SubscripionWorker>(muri, "inproc://vishnuSubcriberWorker", 4, mann);
+    ZMQStartDevice<SubscripionWorker>(muri, "inproc://vishnuSubcriberWorker", mnbThread, mann);
   }
 
 
 private:
   std::string muri;
   boost::shared_ptr<Annuary>& mann;
+  int mnbThread;
 };
 
 class Heartbeat{
@@ -252,7 +254,7 @@ int main(int argc, char** argv){
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
 // Strictly because optionnal argument now
-  if (argc < 3){
+  if (argc < 4){
     usage();
     return 0;
   }
@@ -261,17 +263,20 @@ int main(int argc, char** argv){
   std::string uriSubs = std::string(argv[2]);
   std::string optConf ;
   std::string confFil ;
-  if (argc>=5){
+  std::string nthread ;
+  if (argc>=6){
     optConf = std::string(argv[3]);
     confFil = std::string(argv[4]);
+    nthread = std::string(argv[5]);
+// Optionnal parameter
     if (optConf.compare("-c")==0){
       ann.get()->initFromFile(confFil);
     }
   }
 
 
-  AddressDealer AD = AddressDealer(uriAddr, ann);
-  AddressSubscriber AS = AddressSubscriber(uriSubs, ann);
+  AddressDealer AD = AddressDealer(uriAddr, ann, vishnu::convertToInt(nthread.c_str()));
+  AddressSubscriber AS = AddressSubscriber(uriSubs, ann, vishnu::convertToInt(nthread.c_str()));
 //  Heartbeat HB = Heartbeat(20, ann);
 
   boost::thread th1(boost::bind(&AddressDealer::run, &AD));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
