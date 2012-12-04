@@ -6,8 +6,8 @@
    <info>
       <title> VISHNU - FMS - Tests report</title>
       <productname>VISHNU</productname>
-      <releaseinfo>1.0</releaseinfo>
-      <date>May 2011</date>
+      <releaseinfo>3.0 Beta</releaseinfo>
+      <date>December 2012</date>
     
     <author>
       <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
@@ -34,6 +34,7 @@
           <para>Deliverable version</para>
         </revdescription>
       </revision>
+      
     <revision>
         <revnumber>2</revnumber>
         <date>11/01/2012</date>
@@ -42,11 +43,20 @@
           <para>Added test case F1.CR2-E4 corresponding to recursive directories creation</para>
         </revdescription>
       </revision>
+      
+      <revision>
+        <revnumber>3</revnumber>
+        <date>04/02/2012</date>
+        <authorinitials>  SYSFERA SAS</authorinitials>
+        <revdescription>
+          <para> Remame of FMS API functions according to POSIX names</para>
+        </revdescription>
+      </revision>
     
     </revhistory>
     
       <copyright>
-              <year>2011</year>
+              <year>2012</year>
               <holder>SysFera SAS</holder>
       </copyright>
       <legalnotice>
@@ -120,7 +130,7 @@ same conditions as regards security.</para>
       
      <section>
       <title> F1.CR1-B:Create New files  </title>
-      <para><emphasis role = "italic"> API command: createFile</emphasis></para>
+      <para><emphasis role = "italic"> API command: touch</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -140,7 +150,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.CR1-B</para></entry>
-              <entry><para>Normal execution of createFile</para></entry>
+              <entry><para>Normal execution of touch</para></entry>
               <entry><para>A file is created</para></entry>
               <entry><para>A file is created</para></entry>
               <entry><para>0</para></entry>
@@ -173,7 +183,7 @@ same conditions as regards security.</para>
     
         <section>
       <title> F1.DE1-B: Delete files  </title>
-      <para><emphasis role = "italic"> API command: removeFile</emphasis></para>
+      <para><emphasis role = "italic"> API command: rm</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -193,7 +203,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.DE1-B</para></entry>
-              <entry><para>Normal execution of removeFile</para></entry>
+              <entry><para>Normal execution of rm</para></entry>
               <entry><para>A file is removed</para></entry>
               <entry><para>A file is removed</para></entry>
               <entry><para>0</para></entry>
@@ -226,7 +236,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> F1.CR2-B:Create New directories </title>
-      <para><emphasis role = "italic"> API command: createDir</emphasis></para>
+      <para><emphasis role = "italic"> API command: mkdir</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -246,7 +256,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.CR2-B</para></entry>
-              <entry><para>Normal execution of createDir</para></entry>
+              <entry><para>Normal execution of mkdir</para></entry>
               <entry><para>A directory is created</para></entry>
               <entry><para>A directory is created</para></entry>
               <entry><para>0</para></entry>
@@ -287,7 +297,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> F1.DE2-B: Delete directories </title>
-      <para><emphasis role = "italic"> API command: removeDir</emphasis></para>
+      <para><emphasis role = "italic"> API command: rmdir</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -307,7 +317,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.DE2-B</para></entry>
-              <entry><para>Normal execution of removeDir</para></entry>
+              <entry><para>Normal execution of rmdir</para></entry>
               <entry><para>A file is removed</para></entry>
               <entry><para>A file is removed</para></entry>
               <entry><para>0</para></entry>
@@ -340,7 +350,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> F1.DI1-B: Display head of files </title>
-      <para><emphasis role = "italic"> API command: headOfFile</emphasis></para>
+      <para><emphasis role = "italic"> API command: head</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -360,7 +370,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.DI1-B</para></entry>
-              <entry><para>Normal execution of headOfFile</para></entry>
+              <entry><para>Normal execution of head</para></entry>
               <entry><para>The head of file is returned</para></entry>
               <entry><para>The head of file is returned</para></entry>
               <entry><para>0</para></entry>
@@ -393,7 +403,7 @@ same conditions as regards security.</para>
     
     <section>
       <title> F1.DI2-B: Display tail of files </title>
-      <para><emphasis role = "italic"> API command: tailOfFile</emphasis></para>
+      <para><emphasis role = "italic"> API command: tail</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -413,7 +423,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.DI2-B</para></entry>
-              <entry><para>Normal execution of tailOfFile</para></entry>
+              <entry><para>Normal execution of tail</para></entry>
               <entry><para>The tail of file is returned </para></entry>
               <entry><para>The tail of file is returned </para></entry>
               <entry><para>0</para></entry>
@@ -447,7 +457,7 @@ same conditions as regards security.</para>
     
   <section>
       <title> F1.DI3-B: Display content of files</title>
-      <para><emphasis role = "italic"> API command: contentOfFile</emphasis></para>
+      <para><emphasis role = "italic"> API command: more</emphasis></para>
      <informaltable>
         <tgroup cols="5">
           <colspec colwidth="2.0cm"/>
@@ -467,7 +477,7 @@ same conditions as regards security.</para>
           <tbody>
             <row>
               <entry><para>F1.DI3-B</para></entry>
-              <entry><para>Normal execution of contentOfFile</para></entry>
+              <entry><para>Normal execution of more</para></entry>
               <entry><para>The tail of file is returned removed</para></entry>
               <entry><para>The tail of file is returned removed</para></entry>
               <entry><para>0</para></entry>
@@ -500,7 +510,7 @@ same conditions as regards security.</para>
     
     <section>
     <title> F1.DI4-B: Display content of directories </title>
-    <para><emphasis role = "italic"> API command: listDir</emphasis></para>
+    <para><emphasis role = "italic"> API command: ls</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -520,7 +530,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F1.DI4-B</para></entry>
-	    <entry><para>Normal execution of listDir</para></entry>
+	    <entry><para>Normal execution of ls</para></entry>
 	    <entry><para>The directory content is returned</para></entry>
 	    <entry><para>The directory content is returned</para></entry>
 	    <entry><para>0</para></entry>
@@ -553,7 +563,7 @@ same conditions as regards security.</para>
   
   <section>
     <title> F1.DI5-B: Get information about remote files </title>
-    <para><emphasis role = "italic"> API command: getFilesInfo</emphasis></para>
+    <para><emphasis role = "italic"> API command: stat</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -573,7 +583,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F1.DI5-B</para></entry>
-	    <entry><para>Normal execution of getFilesInfo</para></entry>
+	    <entry><para>Normal execution of stat</para></entry>
 	    <entry><para>Information about a remote file is returned</para></entry>
 	    <entry><para>Information about a remote file is returned</para></entry>
 	    <entry><para>0</para></entry>
@@ -606,7 +616,7 @@ same conditions as regards security.</para>
   
   <section>
     <title> F1.CH1-B: Change access rights of files </title>
-    <para><emphasis role = "italic"> API command: chMod</emphasis></para>
+    <para><emphasis role = "italic"> API command: chmod</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -621,12 +631,12 @@ same conditions as regards security.</para>
 	    <entry>Output expected</entry>
 	    <entry>Output gotten</entry>
 	    <entry>Error</entry>
-	  </row>
+	  </row>	
 	</thead>
 	<tbody>
 	  <row>
 	    <entry><para>F1.CH1-B</para></entry>
-	    <entry><para>Normal execution of chMod</para></entry>
+	    <entry><para>Normal execution of chmod</para></entry>
 	    <entry><para>The access rights of files is changed</para></entry>
 	    <entry><para>The access rights of files is changed</para></entry>
 	    <entry><para>0</para></entry>
@@ -658,7 +668,7 @@ same conditions as regards security.</para>
   </section>
 <section>
     <title> F1.CH2-B: Change group owner of files </title>
-    <para><emphasis role = "italic"> API command: chGrp</emphasis></para>
+    <para><emphasis role = "italic"> API command: chgrp</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -678,7 +688,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F1.CH2-B</para></entry>
-	    <entry><para>Normal execution of chMod</para></entry>
+	    <entry><para>Normal execution of chmod</para></entry>
 	    <entry><para>The group owner of file is changed</para></entry>
 	    <entry><para>The group owner of file is changed</para></entry>
 	    <entry><para>0</para></entry>
@@ -710,7 +720,7 @@ same conditions as regards security.</para>
   </section>
 <section>
     <title> F2.CP1-B: Execute a synchronous copy of files </title>
-    <para><emphasis role = "italic"> API command: copyFile</emphasis></para>
+    <para><emphasis role = "italic"> API command: cp</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -730,7 +740,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F2.CP1-B</para></entry>
-	    <entry><para>Normal execution of copyFile</para></entry>
+	    <entry><para>Normal execution of cp</para></entry>
 	    <entry><para>The copy of source file is on the destination path.</para></entry>
 	    <entry><para>The copy of the source file is on the destination path.</para></entry>
 	    <entry><para>0</para></entry>
@@ -769,7 +779,7 @@ same conditions as regards security.</para>
   </section>
 <section>
     <title> F2.CP2-B: Execute an asynchronous copy of files </title>
-    <para><emphasis role = "italic"> API command: copyAsyncFile</emphasis></para>
+    <para><emphasis role = "italic"> API command: acp</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -789,7 +799,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F2.CP2-B</para></entry>
-	    <entry><para>Normal execution of copyAsyncFile</para></entry>
+	    <entry><para>Normal execution of acp</para></entry>
 	    <entry><para>The copy of source file is on the destination path.</para></entry>
 	    <entry><para>The copy of the source file is on the destination path.</para></entry>
 	    <entry><para>0</para></entry>
@@ -829,7 +839,7 @@ same conditions as regards security.</para>
 
 <section>
     <title> F2.MV1-B: Execute a synchronous move of files </title>
-    <para><emphasis role = "italic"> API command: moveFile</emphasis></para>
+    <para><emphasis role = "italic"> API command: mv</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -849,7 +859,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F2.MV1-B</para></entry>
-	    <entry><para>Normal execution of moveFile</para></entry>
+	    <entry><para>Normal execution of mv</para></entry>
 	    <entry><para>The copy of source file is on the destination path and the source file is deleted.</para></entry>
 	    <entry><para>The copy of the source file is on the destination path and the source file is deleted.</para></entry>
 	    <entry><para>0</para></entry>
@@ -889,7 +899,7 @@ same conditions as regards security.</para>
 
 <section>
     <title> F2.MV2-B: Execute an asynchronous move of files </title>
-    <para><emphasis role = "italic"> API command: moveAsyncFile</emphasis></para>
+    <para><emphasis role = "italic"> API command: amv</emphasis></para>
     <informaltable>
       <tgroup cols="5">
 	<colspec colwidth="2.0cm"/>
@@ -909,7 +919,7 @@ same conditions as regards security.</para>
 	<tbody>
 	  <row>
 	    <entry><para>F2.MV2-B</para></entry>
-	    <entry><para>Normal execution of moveAsyncFile</para></entry>
+	    <entry><para>Normal execution of amv</para></entry>
 	    <entry><para>The copy of source file is on the destination path and the source file is deleted.</para></entry>
 	    <entry><para>The copy of the source file is on the destination path and the source file is deleted.</para></entry>
 	    <entry><para>0</para></entry>
@@ -1147,7 +1157,7 @@ same conditions as regards security.</para>
                   <para>The fms sed is stopped and restarted</para>
                </entry>
                <entry>
-                  <para>copyFileAsync</para>
+                  <para>cpAsync</para>
                </entry>
                <entry>
                   <para>Success - normal update file transfer status setting</para>
@@ -1203,7 +1213,7 @@ same conditions as regards security.</para>
             </row>
             <row>
                <entry>
-                  <para>LOAD-2.1-createFile</para>
+                  <para>LOAD-2.1-touch</para>
                </entry>
                <entry>
                   <para>13/06/11</para>
@@ -1212,7 +1222,7 @@ same conditions as regards security.</para>
                   <para>Simultaneous launch of 100 commands</para>
                </entry>
                <entry>
-                  <para>createFile</para>
+                  <para>touch</para>
                </entry>
                <entry>
                   <para>Success - normal execution of all commands launched</para>
@@ -1265,13 +1275,13 @@ same conditions as regards security.</para>
           <tbody>
 	    <row>
                <entry>
-                  <para>CDP-3.1-vishnu_copy_file</para>
+                  <para>CDP-3.1-vishnu_cp</para>
                </entry>
                <entry>
                   <para>comparison with "scp" </para>
                </entry>
                <entry>
-                  <para> vishnu_copy_file     
+                  <para> vishnu_cp     
 		  </para>
                </entry>
                <entry>
@@ -1287,13 +1297,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.1-vishnu_get_file_info</para>
+                  <para>CDP-3.1-vishnu_stat</para>
                </entry>
                <entry>
                   <para>comparison with "ssh host stat " </para>
                </entry>
                <entry>
-                  <para> vishnu_get_file_info    
+                  <para> vishnu_stat    
 		  </para>
                </entry>
                <entry>
@@ -1334,13 +1344,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-vishnu_copy_file</para>
+                  <para>CDP-3.2.1-vishnu_cp</para>
                </entry>
                <entry>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>vishnu_copy_file</para>
+                  <para>vishnu_cp</para>
                </entry>
                <entry>
                   <para>1,3% of the RAM</para>
@@ -1352,13 +1362,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.1-vishnu_get_file_info</para>
+                  <para>CDP-3.2.1-vishnu_stat</para>
                </entry>
                <entry>
                   <para>memory consumption less than 500 Mb</para>
                </entry>
                <entry>
-                  <para>vishnu_get_file_info</para>
+                  <para>vishnu_stat</para>
                </entry>
                <entry>
                   <para>1,6% of the RAM</para>
@@ -1370,13 +1380,13 @@ same conditions as regards security.</para>
 	    
 	    <row>
                <entry>
-                  <para>CDP-3.2.2-vishnu_copy_file</para>
+                  <para>CDP-3.2.2-vishnu_cp</para>
                </entry>
                <entry>
                   <para>CPU consumption less than 10%</para>
                </entry>
                <entry>
-                  <para>vishnu_copy_file</para>
+                  <para>vishnu_cp</para>
                </entry>
                <entry>
                   <para>0,7% of the CPU</para>
