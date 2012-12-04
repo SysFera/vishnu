@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
     // To check the success of touch function
     FileStat fileStat;
-    BOOST_CHECK( getFileInfo(sessionKey, fileFullPath1, fileStat) ==0  );
+    BOOST_CHECK( stat(sessionKey, fileFullPath1, fileStat) ==0  );
 
     // Cleanup
     BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);

@@ -84,15 +84,15 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir;
-    BOOST_CHECK_THROW( listDir(sessionKey, invalidFullPath, dirContent), VishnuException);
+    BOOST_CHECK_THROW( ls(sessionKey, invalidFullPath, dirContent), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( listDir(sessionKey, noAccessFullPath, dirContent), VishnuException);
+    BOOST_CHECK_THROW( ls(sessionKey, noAccessFullPath, dirContent), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( listDir(sessionKey, invalidMachineFullPath, dirContent), VishnuException);
+    BOOST_CHECK_THROW( ls(sessionKey, invalidMachineFullPath, dirContent), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

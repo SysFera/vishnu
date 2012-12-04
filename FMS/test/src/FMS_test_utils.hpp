@@ -80,7 +80,7 @@ bool areFoundInDir(const string& sessionKey,
   DirEntryList dirContent;
   LsDirOptions lsOptions;
   lsOptions.setLongFormat(true);
-  BOOST_REQUIRE( listDir(sessionKey, dirFullPath, dirContent) ==0  );
+  BOOST_REQUIRE( ls(sessionKey, dirFullPath, dirContent) ==0  );
   bool areFound = true;
   unsigned int i;
   for (vector<string>::const_iterator iterNames = names.begin();
