@@ -345,4 +345,3 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid, std:
 	}
 	return convertToInt(*iter);
 }
-

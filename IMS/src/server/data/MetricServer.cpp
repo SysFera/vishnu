@@ -3,10 +3,39 @@
 #include "DbFactory.hpp"
 #include <vector>
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/math/special_functions/round.hpp>
+
 #include <sigar.h>
 #include "QueryServer.hpp"
 
 using namespace vishnu;
+
+
+namespace {
+
+/**
+ * @brief safe rounding, if there's an overflow, return 0
+ * @param value double value to be rounded
+ * @return unsigned integer
+ */
+unsigned int
+safe_round(double value) {
+  unsigned int rounded_value(0);
+  try {
+    rounded_value = boost::math::iround(value);
+  } catch (const boost::math::rounding_error& err) {
+    rounded_value = 0;
+  }
+
+  if (rounded_value < 0) {
+    rounded_value = 0;
+  }
+
+  return rounded_value;
+}
+
+}
+
 
 MetricServer::MetricServer(const UserServer session, std::string mail)
   : msession(session), msendmail(mail) {
@@ -188,7 +217,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, std::string mid){
   }
 
   // Inserting the value
-  std::string req = "insert into state(machine_nummachineid, memory, diskspace, cpuload, time) values('"+nmid+"', '"+convertToString(static_cast<int>(mem))+"', '"+convertToString(static_cast<int>(disk))+"', '"+convertToString(static_cast<int>(cpu))+"', CURRENT_TIMESTAMP) ";
+  std::string req = "insert into state(machine_nummachineid, memory, diskspace, cpuload, time) values('"+nmid+"', '"+convertToString(safe_round(mem))+"', '"+convertToString(safe_round(disk))+"', '"+convertToString(safe_round(cpu))+"', CURRENT_TIMESTAMP) ";
 
   try{
     mdatabase->process(req.c_str());
