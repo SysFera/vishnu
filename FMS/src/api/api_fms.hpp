@@ -85,21 +85,21 @@ namespace vishnu{
    * \brief get the first lines of a file
    * \param sessionKey the session key
    * \param path   the file path using host:path format
-   * \param contentOfFile  the first "nline" lines of the file
+   * \param more  the first "nline" lines of the file
    * \param options   contains the options used to perform the service (like the maximum number of lines to get)
    * \return 0 if everything is OK, another value otherwise
    */
-  int headOfFile(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options = HeadOfFileOptions())
+  int head(const string& sessionKey,const string& path, string& more, const HeadOfFileOptions& options = HeadOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
   
   /** 
    * \brief get the content of a file
    * \param sessionKey the session key
    * \param path   the file path using host:path format
-   * \param contentOfFile  the content of specified the file
+   * \param more  the content of specified the file
    * \return 0 if everything is OK, another value otherwise
    */
-  int contentOfFile(const string& sessionKey,const string& path, string& contentOfFile)
+  int more(const string& sessionKey,const string& path, string& more)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -172,12 +172,12 @@ namespace vishnu{
    * \brief get the last lines of a file
    * \param sessionKey the session key
    * \param path    the file path using host:path format
-   * \param contentOfFile  the last "nline" lines of the file
+   * \param more  the last "nline" lines of the file
    * \param options  the options used to perform the service
-   * \param contentOfFile  an user-allocated buffer to store the result
+   * \param more  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tailOfFile(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options = TailOfFileOptions())
+  int tail(const string& sessionKey,const string& path, string& more,const TailOfFileOptions& options = TailOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**

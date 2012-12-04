@@ -1,5 +1,5 @@
 /**
- * \file content_of_file.cpp
+ * \file more.cpp
  * This file defines the VISHNU  content of file command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -32,7 +32,7 @@ struct ContentOfFileFunc {
 
     string mfileContent;
 
-      int res=contentOfFile(sessionKey,mpath,mfileContent);
+      int res=more(sessionKey,mpath,mfileContent);
     cout <<mfileContent << "\n"; 
     return res;
   }

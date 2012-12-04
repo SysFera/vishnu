@@ -1,5 +1,5 @@
 /**
- * \file tail_of_file.cpp
+ * \file tail.cpp
  * This file defines the VISHNU  tail of file command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -33,7 +33,7 @@ struct TailOfFileFunc {
 
     string contentOfTailOfFile;
 
-    int res=tailOfFile(sessionKey,mpath,contentOfTailOfFile, mtofOptions);
+    int res=tail(sessionKey,mpath,contentOfTailOfFile, mtofOptions);
     cout << contentOfTailOfFile << "\n"; 
     return res;
   }

@@ -1,5 +1,5 @@
 /**
- * \file head_of_file.cpp
+ * \file head.cpp
  * This file defines the VISHNU  head of file command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -35,7 +35,7 @@ struct HeadOfFileFunc {
 
     string contentOfHeadOfFile;
 
-    int res=headOfFile(sessionKey,mpath,contentOfHeadOfFile, mhofOptions);
+    int res=head(sessionKey,mpath,contentOfHeadOfFile, mhofOptions);
     cout << contentOfHeadOfFile << "\n"; 
     return res;
   }
