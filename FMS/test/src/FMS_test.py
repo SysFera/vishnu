@@ -229,9 +229,9 @@ try :
   print more
   VISHNU.rm(k,fileFullPath1)
   print more
-  print "=========================copyAsyncFile:"
+  print "=========================acp:"
   transferOpt.setIsRecursive(True)
-  VISHNU.copyAsyncFile(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
+  VISHNU.acp(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
   displayFileTransfer(fileTransferInfo)
   print "===========listFileTransfers:============="
   fileTransferList = VISHNU.listFileTransfers(k)
@@ -249,7 +249,7 @@ try :
 
   print "=========================MvAsyncFile:"
   VISHNU.touch(k,fileFullPath1)
-  VISHNU.moveAsyncFile(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
+  VISHNU.amv(k, fileFullPath1,baseDirFullPath2, fileTransferInfo)
   displayFileTransfer(fileTransferInfo)
   print "===========listFileTransfers:============="
   fileTransferList = VISHNU.listFileTransfers(k)

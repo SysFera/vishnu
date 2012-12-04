@@ -275,7 +275,7 @@ int vishnu::copyFile(const string& sessionKey,const string& src, const string& d
  * \param options contains options used to perform the file transfer
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
+int vishnu::acp(const string& sessionKey,const string& src, const string& dest,
     FileTransfer& transferInfo, const CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
@@ -460,7 +460,7 @@ int vishnu::moveFile(const string& sessionKey,const string& src, const string& d
  * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
+int vishnu::amv(const string& sessionKey,const string& src, const string& dest,
     FileTransfer& transferInfo, const CpFileOptions& options)
 throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
@@ -531,8 +531,8 @@ int vishnu::stat(const string& sessionKey,const string& path, FileStat& fileInfo
 /**
  * \brief cancel a file transfer
  * \param sessionKey the session key
- * \param options   contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
- *          moveAsyncFile )
+ * \param options   contains the options used to perform the service (like the transfer id obtained after a call to acp or
+ *          amv )
  \return 0 if everything is OK, another value otherwise
  */
 int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions& options)
@@ -554,8 +554,8 @@ int vishnu::stopFileTransfer(const string& sessionKey,const StopTransferOptions&
  * \brief List  file transfers
  * \param sessionKey the session key
  * \param fileTransferList the file transfer list
- * \param options contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
- moveAsyncFile)
+ * \param options contains the options used to perform the service (like the transfer id obtained after a call to acp or
+ amv)
  \return 0 if everything is OK, another value otherwise
  */
 int vishnu::listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options)

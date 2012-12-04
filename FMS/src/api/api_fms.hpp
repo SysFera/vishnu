@@ -77,7 +77,7 @@ namespace vishnu{
    * \param options contains options used to perform the file transfer
    * \return 0 if everything is OK, another value otherwise
    */
-  int copyAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  int acp(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options = CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -146,7 +146,7 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int moveAsyncFile(const string& sessionKey,const string& src, const string& dest,
+  int amv(const string& sessionKey,const string& src, const string& dest,
       FileTransfer& transferInfo, const CpFileOptions& options= CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
@@ -194,8 +194,8 @@ namespace vishnu{
   /**
    * \brief cancel a file transfer
    * \param sessionKey the session key
-   * \param options   contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
-   *          moveAsyncFile )
+   * \param options   contains the options used to perform the service (like the transfer id obtained after a call to acp or
+   *          amv )
    \return 0 if everything is OK, another value otherwise
    */
   int stopFileTransfer(const string& sessionKey,const StopTransferOptions& options = StopTransferOptions() )
@@ -206,8 +206,8 @@ namespace vishnu{
    * \brief List  file transfers
    * \param sessionKey the session key
    * \param fileTransferList the file transfer list
-   * \param options contains the options used to perform the service (like the transfer id obtained after a call to copyAsyncFile or
-   moveAsyncFile)
+   * \param options contains the options used to perform the service (like the transfer id obtained after a call to acp or
+   amv)
    \return 0 if everything is OK, another value otherwise
    */
   int listFileTransfers(const string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options = LsTransferOptions())

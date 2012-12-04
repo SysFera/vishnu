@@ -38,7 +38,7 @@ BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
     touch<100000>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote cancel");
-    BOOST_REQUIRE( copyAsyncFile(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
+    BOOST_REQUIRE( acp(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
     // Wait two seconds
     bpt::seconds sleepTime(2);
     boost::this_thread::sleep(sleepTime);

@@ -1,5 +1,5 @@
 /**
- * \file move_async_file.cpp
+ * \file amv.cpp
  * This file defines the VISHNU move async file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */

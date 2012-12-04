@@ -35,9 +35,9 @@ set(ALLCLI
   more
   ls
   cp
-  copy_async_file
+  acp
   mv
-  move_async_file
+  amv
   stop_file_transfer
   list_file_transfers
   )
