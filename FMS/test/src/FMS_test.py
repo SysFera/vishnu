@@ -170,8 +170,8 @@ try :
   print "touch:",fileFullPath1
   VISHNU.touch(k,  fileFullPath1)
   print "sessionKey:", k
-  print "==================getFileInfo===============:"
-  VISHNU.getFileInfo(k, fileFullPath1,  fileInfo)
+  print "==================stat===============:"
+  VISHNU.stat(k, fileFullPath1,  fileInfo)
   displayFileInfo(fileInfo)
   print "rm: ", fileFullPath1
   VISHNU.rm(k, fileFullPath1)
@@ -179,8 +179,8 @@ try :
   VISHNU.mkdir(k, dirFullPath1)
   print "rmdir: ", dirFullPath1
   VISHNU.rmdir(k, dirFullPath1)
-  print "===================listDir====================:"
-  dirContent = VISHNU.listDir(k,workingDirFullPath1)
+  print "===================ls====================:"
+  dirContent = VISHNU.ls(k,workingDirFullPath1)
   displayDirContent(dirContent)
   #To clean the list
   dirContent = []
@@ -188,31 +188,31 @@ try :
   VISHNU.touch(k, fileFullPath1)
   print "cp: ",fileFullPath1, "to ", fileFullPath2
   VISHNU.cp(k, fileFullPath1, baseDirFullPath2)
-  print "===================listDir - LongFormat====================:"
+  print "===================ls - LongFormat====================:"
   lsOpt.setLongFormat(True)
-  dirContent = VISHNU.listDir(k, baseDirFullPath2, lsOpt)
+  dirContent = VISHNU.ls(k, baseDirFullPath2, lsOpt)
   displayDirContent(dirContent)
   VISHNU.rm(k,fileFullPath2)
   #To clean the list
   dirContent = []
   print "=================== chgrp ====================:"
   VISHNU.touch(k,fileFullPath2)
-  VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
+  VISHNU.stat(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
 
   print "chgrp: ",fileFullPath2, "to adm"
   VISHNU.chgrp(k, "adm", fileFullPath2)
-  VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
+  VISHNU.stat(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   VISHNU.rm(k,fileFullPath2)
   print "=================== chmod ====================:"
   VISHNU.touch(k,fileFullPath2)
-  VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
+  VISHNU.stat(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   
   print "chmod: ",fileFullPath2, "to 754"
   VISHNU.chmod(k, 754, fileFullPath2)
-  VISHNU.getFileInfo(k,fileFullPath2,fileInfo)
+  VISHNU.stat(k,fileFullPath2,fileInfo)
   displayFileInfo(fileInfo)
   VISHNU.rm(k,fileFullPath2)
 

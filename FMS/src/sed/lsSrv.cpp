@@ -61,7 +61,7 @@ int solveListDir(diet_profile_t* profile) {
 
       //MAPPER CREATION
       Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-      mapperkey = mapper->code("vishnu_list_dir");
+      mapperkey = mapper->code("vishnu_ls");
       mapper->code(std::string(host)+":"+std::string(path), mapperkey);
       mapper->code(optionsSerialized, mapperkey);
       cmd = mapper->finalize(mapperkey);

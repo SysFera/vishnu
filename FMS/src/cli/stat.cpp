@@ -1,5 +1,5 @@
 /**
- * \file get_file_info.cpp
+ * \file stat.cpp
  * This file defines the VISHNU  get file infos  command 
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -34,7 +34,7 @@ struct GetFileInfoFunc {
   
     FileStat fileStat;
   
-    int res = getFileInfo(sessionKey,mpath,fileStat);
+    int res = stat(sessionKey,mpath,fileStat);
       //To dispaly the file information
       std::cout << fileStat << std::endl;
     return res;

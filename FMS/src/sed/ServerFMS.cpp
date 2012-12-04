@@ -92,7 +92,7 @@ ServerFMS::init(int vishnuId,
   // initialization of the service table
   diet_service_table_init(NB_SRV);
 
-  // getFileInfos
+  // stats
 
   mprofile = getInfosProfile();
 

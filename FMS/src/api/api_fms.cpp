@@ -346,7 +346,7 @@ int vishnu::more(const string& sessionKey,const string& path, string& more)
  * \param dirContent  the directory content
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options)
+int vishnu::ls(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -510,7 +510,7 @@ int vishnu::tail(const string& sessionKey,const string& path, string& more,const
  * \param :  a buffer to store the informations
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::getFileInfo(const string& sessionKey,const string& path, FileStat& fileInfos)
+int vishnu::stat(const string& sessionKey,const string& path, FileStat& fileInfos)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path

@@ -24,7 +24,7 @@ include_directories(${Boost_INCLUDE_DIRS}
 
 set(ALLCLI 
   head
-  get_file_info
+  stat
   tail
   touch
   mkdir
@@ -33,7 +33,7 @@ set(ALLCLI
   chgrp
   chmod
   more
-  list_dir
+  ls
   cp
   copy_async_file
   mv

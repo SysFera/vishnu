@@ -112,7 +112,7 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
  
-  int listDir(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
+  int ls(const string& sessionKey,const string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -187,7 +187,7 @@ namespace vishnu{
    * \param filesInfo  the file informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int getFileInfo(const string& sessionKey,const string& path, FileStat& filesInfo)
+  int stat(const string& sessionKey,const string& path, FileStat& filesInfo)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

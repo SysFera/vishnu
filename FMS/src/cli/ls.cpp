@@ -1,5 +1,5 @@
 /**
- * \file list_dir.cpp
+ * \file ls.cpp
  * This file defines the VISHNU list dir command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
@@ -36,7 +36,7 @@ struct ListDirFunc {
 
     DirEntryList dirContent;
 
-    int res= listDir(sessionKey, mpath, dirContent, moptions);
+    int res= ls(sessionKey, mpath, dirContent, moptions);
 
     if (false ==moptions.isLongFormat()) {
 

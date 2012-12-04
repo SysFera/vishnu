@@ -64,7 +64,7 @@ int get_infos(diet_profile_t* profile) {
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_get_file_info");
+    mapperkey = mapper->code("vishnu_stat");
     mapper->code(std::string(host)+":"+std::string(path), mapperkey);
     cmd = mapper->finalize(mapperkey);
 

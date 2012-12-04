@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
     BOOST_REQUIRE( touch(sessionKey, fileFullPath1) == 0); // setup
     BOOST_REQUIRE( rm(sessionKey, fileFullPath1) == 0); // test
     FileStat fileStat;
-    BOOST_CHECK_THROW( getFileInfo(sessionKey, fileFullPath1, fileStat), VishnuException );
+    BOOST_CHECK_THROW( stat(sessionKey, fileFullPath1, fileStat), VishnuException );
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
