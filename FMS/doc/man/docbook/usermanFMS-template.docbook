@@ -6,12 +6,12 @@
    <info>
       <title>User Manual</title>
       <productname>VISHNU</productname>
-      <releaseinfo>1.2</releaseinfo>
-      <date>December 2011</date>
+      <releaseinfo>3.0 Beta</releaseinfo>
+      <date>December 2012</date>
       <author>
         <personname>
           <firstname></firstname>
-          <surname>SysFera SA</surname>
+          <surname>SysFera SAS</surname>
         </personname>
         <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
         <address>
@@ -19,8 +19,8 @@
         </address>
       </author>
       <copyright>
-              <year>2011</year>
-              <holder>SysFera SA</holder>
+              <year>2012</year>
+              <holder>SysFera SAS</holder>
       </copyright>
       <legalnotice>
               <para>These manual pages are provided under the following conditions:</para>

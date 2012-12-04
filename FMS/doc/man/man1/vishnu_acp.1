@@ -1,5 +1,5 @@
 '\" t
-.\"     Title: vishnu_stop_file_transfer
+.\"     Title: vishnu_acp
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: December 2012
@@ -7,7 +7,7 @@
 .\"    Source: VISHNU 3.0 Beta
 .\"  Language: English
 .\"
-.TH "VISHNU_STOP_FILE_TRA" "1" "December 2012" "VISHNU 3.0 Beta" "FMS Command reference"
+.TH "VISHNU_ACP" "1" "December 2012" "VISHNU 3.0 Beta" "FMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,13 +28,13 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_stop_file_transfer \- stops an execution of a set of file transfers\&.
+vishnu_acp \- executes an asynchronous copy of file\&.
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_stop_file_transfer\fR\ 'u
-\fBvishnu_stop_file_transfer\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fItransferId\fR\fR] [\fB\-m\ \fR\fB\fIfromMachineId\fR\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR]
+.HP \w'\fBvishnu_acp\fR\ 'u
+\fBvishnu_acp\fR [\fB\-h\fR] [\fB\-r\fR] [\fB\-t\ \fR\fB\fItrCommand\fR\fR] \fIsrc\fR \fIdest\fR
 .SH "DESCRIPTION"
 .PP
-Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command\&. The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier\&.
+Initiates a copy of a file or directory from the location given by the src parameter to the location given by the dest parameter\&. The src parameter must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command) or \*(Aqpath\*(Aq only if the file is on the local system\&. The dest parameter must be provided in a similar way\&. Note that one of the two locations at least must be a remote location, i\&.e\&. a local copy cannot be handled by this command\&. The command listFileTransfers can be used to check the status of the transfer after it is initiated, using the transfer id as the identifier\&.
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
@@ -42,21 +42,21 @@ Cancels a file or directory transfer that has been initiated using a vishnu asyn
 help about the command\&.
 .RE
 .PP
-\fB\-i \fR\fB\fItransferId\fR\fR
+\fB\-r \fR\fB\fIisRecursive\fR\fR
 .RS 4
-a given transfer id\&.
+It specifies when the copy is recursive (case of directory) or not\&.
 .RE
 .PP
-\fB\-m \fR\fB\fIfromMachineId\fR\fR
+\fB\-t \fR\fB\fItrCommand\fR\fR
 .RS 4
-the machine that is the source or destination of the file transfer\&.
-.RE
-.PP
-\fB\-u \fR\fB\fIuserId\fR\fR
-.RS 4
-allows an admin to stop file transfers of a specific user\&.
+the command to use to perform file transfer\&. The value must be an integer\&. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDEFINED)\&.
 .RE
 .SH "ENVIRONMENT"
+.PP
+\fBVISHNU_TRANSFER_CMD\fR
+.RS 4
+It specifies the command to use for all file transfers by default\&. It takes its values in the set {SCP,RSYNC}\&.\&. Overridden by the \-t option\&.
+.RE
 .PP
 \fBVISHNU_CONFIG_FILE\fR
 .RS 4
@@ -78,7 +78,19 @@ The following diagnostics may be issued on stderr and the command will return th
 .RS 4
 .RE
 .PP
-"The userId is unknown" [21]
+"There is no open session in this terminal" [13]
+.RS 4
+.RE
+.PP
+"Missing parameters" [14]
+.RS 4
+.RE
+.PP
+"Vishnu initialization failed" [15]
+.RS 4
+.RE
+.PP
+"Undefined error" [16]
 .RS 4
 .RE
 .PP
@@ -115,9 +127,9 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .SH "EXAMPLE"
 .PP
-To stop the file transfers on machine_1:
+To copy using an asynchrone method the file toto from machine_1 to machine_2 home directory:
 .PP
-vishnu_stop_file_transfer \-m machine_1
+vishnu_acp machine_1:/tmp/toto machine_2:/home/vishnu/
 .SH "AUTHOR"
 .PP
 \fB SysFera SAS\fR <\&info@sysfera.com\&>
