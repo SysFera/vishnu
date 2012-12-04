@@ -23,16 +23,16 @@ include_directories(${Boost_INCLUDE_DIRS}
 #declare all command lines provided
 
 set(ALLCLI 
-  head_of_file
+  head
   get_file_info
-  tail_of_file
+  tail
   touch
   mkdir
   rm
   rmdir
   chgrp
   chmod
-  content_of_file
+  more
   list_dir
   cp
   copy_async_file

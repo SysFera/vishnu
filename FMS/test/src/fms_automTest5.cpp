@@ -42,8 +42,8 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Base)
     BOOST_MESSAGE( "REMOTE PATH: " + fileFullPath1 );
     BOOST_REQUIRE( cp(sessionKey, localFilePath, fileFullPath1) == 0);
     string content;
-    BOOST_REQUIRE( contentOfFile(sessionKey, fileFullPath1, content) == 0);
-    // To check the success of contentOfFile function
+    BOOST_REQUIRE( more(sessionKey, fileFullPath1, content) == 0);
+    // To check the success of more function
     BOOST_CHECK( content.substr(8,8) == "abcdefgh" );
     // Cleanup
     BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
@@ -68,15 +68,15 @@ BOOST_AUTO_TEST_CASE(ContentOfFile_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidFullPath, content), VishnuException);
+    BOOST_CHECK_THROW( more(sessionKey, invalidFullPath, content), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( contentOfFile(sessionKey, noAccessFullPath, content), VishnuException);
+    BOOST_CHECK_THROW( more(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( contentOfFile(sessionKey, invalidMachineFullPath, content), VishnuException);
+    BOOST_CHECK_THROW( more(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
