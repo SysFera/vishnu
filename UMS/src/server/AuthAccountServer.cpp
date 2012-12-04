@@ -289,4 +289,6 @@ AuthAccountServer::checkAuthAccountUserId(UserServer& userServer) {
     else {
       mauthAccount->setUserId(userServer.getData().getUserId());
     }
+
+    return 0;
 }

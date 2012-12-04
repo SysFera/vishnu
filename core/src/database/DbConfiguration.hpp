@@ -30,7 +30,7 @@ public:
   /**
    * \brief Default value for the nb of db connections in the pool
    */
-  static const int defaultDbPoolSize;
+  static const unsigned defaultDbPoolSize;
 
   /**
    * \brief Constructor
@@ -59,7 +59,7 @@ public:
    * \brief Get the database port
    * \return database port
    */
-  int getDbPort() const { return mdbPort; }
+  unsigned getDbPort() const { return mdbPort; }
 
   /**
    * \brief Get the database name
@@ -90,7 +90,7 @@ public:
    * \brief in order to process parallel requests.
    * \return nb of connections in the connection pool
    */
-  int getDbPoolSize() { return mdbPoolSize; }
+  unsigned getDbPoolSize() { return mdbPoolSize; }
 
 protected:
 
