@@ -190,12 +190,20 @@
       <para>Add default batch options. </para>
     </revdescription>
   </revision>
+  <revision>
+    <revnumber>19</revnumber>
+    <date>04/12/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Rename of FMS functions according to Posix names. </para>
+    </revdescription>
+  </revision>
   
   </revhistory>
 
     <copyright>
       <year>2012</year>
-      <holder>SysFera SA</holder>
+      <holder>SysFera SAS</holder>
     </copyright>
     <legalnotice>
       <para>These manual pages are provided under the following conditions:</para>
@@ -752,25 +760,25 @@
 	<section>
 	  <title>Create and remove file or directories</title>
 	  <para>
-            The user can create (or remove) a regular file located in a remote host by using the command <emphasis role="bold">vishnu_create_file</emphasis> ( or <emphasis role="bold">vishnu_remove_file</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis role="bold">vishnu_create_dir</emphasis> ( or <emphasis role="bold">vishnu_remove_dir</emphasis>).
+            The user can create (or remove) a regular file located in a remote host by using the command <emphasis role="bold">vishnu_touch</emphasis> ( or <emphasis role="bold">vishnu_rm</emphasis>). He can also create (or remove) directory located in a remote host by using the command <emphasis role="bold">vishnu_mkdir</emphasis> ( or <emphasis role="bold">vishnu_rmdir</emphasis>).
 	  </para>
 	</section>
 	<section>
 	  <title>Get file information</title>
-	  <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis role="bold">vishnu_head_of_file</emphasis> ( or <emphasis role="bold">vishnu_tail_of_file</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis role="bold">vishnu_content_of_file</emphasis>  (or <emphasis role="bold">vishnu_list__dir</emphasis>).</para> 
+	  <para>Several services are available to get file information. The user can get the first ( or last lines) of a given remote file by using the command <emphasis role="bold">vishnu_head</emphasis> ( or <emphasis role="bold">vishnu_tail</emphasis>). He can also get the entire content of a remote file (or remote directory) with the command <emphasis role="bold">vishnu_more</emphasis>  (or <emphasis role="bold">vishnu_ls</emphasis>).</para> 
 	</section>
 	<section>
 	  <title>Modify files properties </title>
-	  <para> The commands <emphasis role="bold">vishnu_ch_grp</emphasis> and
-            <emphasis role="bold">vishnu_ch_mod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
+	  <para> The commands <emphasis role="bold">vishnu_chgrp</emphasis> and
+            <emphasis role="bold">vishnu_chmod</emphasis>  allow the user to change respectively the group and the access permissions of remote file.</para>
 	</section>
 	<section>
 	  <title>Perform file transfer </title>
 	  <para> The user can submit a file transfer in many ways:
             <itemizedlist>
-              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_copy_file</emphasis> (or <emphasis role="bold">vishnu_move_file</emphasis>). To use the copy/move commands from a client out of the DNS, one must use 'localhost' as a machine id for the local machine. </para>
+              <listitem><para> copy (or move) file between two hosts by the commands <emphasis role="bold">vishnu_cp</emphasis> (or <emphasis role="bold">vishnu_mv</emphasis>). To use the copy/move commands from a client out of the DNS, one must use 'localhost' as a machine id for the local machine. </para>
               </listitem>
-              <listitem><para> copy (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_copy_async_file</emphasis> (or <emphasis role="bold">vishnu_move_async_file</emphasis>) </para> </listitem>
+              <listitem><para> copy (or move) file between two hosts in asynchronous way by the commands <emphasis role="bold">vishnu_acp</emphasis> (or <emphasis role="bold">vishnu_amv</emphasis>) </para> </listitem>
 	      <listitem><para> list or (cancel) file transfers by the commands <emphasis role="bold">vishnu_list_file_transfers</emphasis> (<emphasis role="bold">vishnu_stop_file_transfers</emphasis>) </para>
               </listitem>
             </itemizedlist>
