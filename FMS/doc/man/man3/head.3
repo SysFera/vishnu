@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_stop_file_transfer
+.\"     Title: head
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: December 2012
-.\"    Manual: FMS Command reference
+.\"    Manual: FMS C++ API Reference
 .\"    Source: VISHNU 3.0 Beta
 .\"  Language: English
 .\"
-.TH "VISHNU_STOP_FILE_TRA" "1" "December 2012" "VISHNU 3.0 Beta" "FMS Command reference"
+.TH "HEAD" "3" "December 2012" "VISHNU 3.0 Beta" "FMS C++ API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,45 +28,47 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_stop_file_transfer \- stops an execution of a set of file transfers\&.
+head \- displays a few first lines of files located on remote machines\&.
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_stop_file_transfer\fR\ 'u
-\fBvishnu_stop_file_transfer\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fItransferId\fR\fR] [\fB\-m\ \fR\fB\fIfromMachineId\fR\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR]
+.HP \w'int\ vishnu::head('u
+.BI "int vishnu::head(const\ string&\ " "sessionKey" ", const\ string&\ " "path" ", string&\ " "fileContent" ", const\ HeadOfFileOptions&\ " "options\ =\ HeadOfFileOptions()" ");"
 .SH "DESCRIPTION"
 .PP
-Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command\&. The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier\&.
-.SH "OPTIONS"
+Displays the first lines of a file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
+.SH "ARGUMENTS"
 .PP
-\fB\-h \fR\fB\fIhelp\fR\fR
+\fIsessionKey\fR
 .RS 4
-help about the command\&.
+Input argument\&. The session key\&.
 .RE
 .PP
-\fB\-i \fR\fB\fItransferId\fR\fR
+\fIpath\fR
 .RS 4
-a given transfer id\&.
+Input argument\&. The file following the pattern [host:]file path\&.
 .RE
 .PP
-\fB\-m \fR\fB\fIfromMachineId\fR\fR
+\fIfileContent\fR
 .RS 4
-the machine that is the source or destination of the file transfer\&.
+Output argument\&. The first "nLine" lines of the file\&.
 .RE
 .PP
-\fB\-u \fR\fB\fIuserId\fR\fR
+\fIoptions\fR
 .RS 4
-allows an admin to stop file transfers of a specific user\&.
+Input argument\&. The head commandoptions\&.
 .RE
-.SH "ENVIRONMENT"
+.SH "EXCEPTIONS"
 .PP
-\fBVISHNU_CONFIG_FILE\fR
+The following exceptions may be thrown:
+.PP
+"Vishnu not available (Service bus failure)" [1]
 .RS 4
-Contains the path to the local configuration file for VISHNU\&.
 .RE
-.SH "DIAGNOSTICS"
-.PP
-The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
 .PP
 "Vishnu not available (Database error)" [2]
+.RS 4
+.RE
+.PP
+"Internal Error: Undefined exception" [9]
 .RS 4
 .RE
 .PP
@@ -75,10 +77,6 @@ The following diagnostics may be issued on stderr and the command will return th
 .RE
 .PP
 "Undefined configuration parameter" [12]
-.RS 4
-.RE
-.PP
-"The userId is unknown" [21]
 .RS 4
 .RE
 .PP
@@ -113,11 +111,6 @@ The following diagnostics may be issued on stderr and the command will return th
 "The transfer id is unknown" [203]
 .RS 4
 .RE
-.SH "EXAMPLE"
-.PP
-To stop the file transfers on machine_1:
-.PP
-vishnu_stop_file_transfer \-m machine_1
 .SH "AUTHOR"
 .PP
 \fB SysFera SAS\fR <\&info@sysfera.com\&>

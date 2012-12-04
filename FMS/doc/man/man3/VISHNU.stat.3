@@ -1,13 +1,13 @@
 '\" t
-.\"     Title: vishnu_stop_file_transfer
+.\"     Title: VISHNU.stat
 .\"    Author:  SysFera SAS <info@sysfera.com>
 .\" Generator: DocBook XSL Stylesheets v1.75.2 <http://docbook.sf.net/>
 .\"      Date: December 2012
-.\"    Manual: FMS Command reference
+.\"    Manual: FMS Python API Reference
 .\"    Source: VISHNU 3.0 Beta
 .\"  Language: English
 .\"
-.TH "VISHNU_STOP_FILE_TRA" "1" "December 2012" "VISHNU 3.0 Beta" "FMS Command reference"
+.TH "VISHNU\&.STAT" "3" "December 2012" "VISHNU 3.0 Beta" "FMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -28,96 +28,93 @@
 .\" * MAIN CONTENT STARTS HERE *
 .\" -----------------------------------------------------------------
 .SH "NAME"
-vishnu_stop_file_transfer \- stops an execution of a set of file transfers\&.
+VISHNU.stat \- displays the information of files\&.
 .SH "SYNOPSIS"
-.HP \w'\fBvishnu_stop_file_transfer\fR\ 'u
-\fBvishnu_stop_file_transfer\fR [\fB\-h\fR] [\fB\-i\ \fR\fB\fItransferId\fR\fR] [\fB\-m\ \fR\fB\fIfromMachineId\fR\fR] [\fB\-u\ \fR\fB\fIuserId\fR\fR]
+.HP \w'ret=VISHNU\&.stat('u
+.BI "ret=VISHNU\&.stat(string\ " "sessionKey" ", string\ " "path" ", FileStat\ " "filesinfo" ");"
 .SH "DESCRIPTION"
 .PP
-Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command\&. The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier\&.
-.SH "OPTIONS"
+Get the details of a remote file at the location given by the path parameter\&. The path must be provided in the form \*(Aqmachine_id:path\*(Aq (the machine_id values can be obtained using the vishnu_list_machine command)\&.
+.SH "ARGUMENTS"
 .PP
-\fB\-h \fR\fB\fIhelp\fR\fR
+\fIsessionKey\fR
 .RS 4
-help about the command\&.
+Input argument\&. The session key\&.
 .RE
 .PP
-\fB\-i \fR\fB\fItransferId\fR\fR
+\fIpath\fR
 .RS 4
-a given transfer id\&.
+Input argument\&. The file whose inode information will be displayed\&.
 .RE
 .PP
-\fB\-m \fR\fB\fIfromMachineId\fR\fR
+\fIfilesinfo\fR
 .RS 4
-the machine that is the source or destination of the file transfer\&.
+Output argument\&. The inode information\&.
+.RE
+.SH "RETURNED OBJECTS"
+.PP
+\fIerrorCode (integer)\fR
+.RS 4
+Output parameter\&. Contains 0 on success and the error code on failure\&.
 .RE
 .PP
-\fB\-u \fR\fB\fIuserId\fR\fR
 .RS 4
-allows an admin to stop file transfers of a specific user\&.
 .RE
-.SH "ENVIRONMENT"
+.SH "EXCEPTIONS"
 .PP
-\fBVISHNU_CONFIG_FILE\fR
-.RS 4
-Contains the path to the local configuration file for VISHNU\&.
-.RE
-.SH "DIAGNOSTICS"
+The following exceptions may be thrown:
 .PP
-The following diagnostics may be issued on stderr and the command will return the code provided within brackets:
-.PP
-"Vishnu not available (Database error)" [2]
+SystemException("Vishnu not available (Service bus failure)" [1])
 .RS 4
 .RE
 .PP
-"an option or a parameter provided is invalid for this service" [10]
+SystemException("Vishnu not available (Database error)" [2])
 .RS 4
 .RE
 .PP
-"Undefined configuration parameter" [12]
+SystemException("Internal Error: Undefined exception" [9])
 .RS 4
 .RE
 .PP
-"The userId is unknown" [21]
+UserException("an option or a parameter provided is invalid for this service" [10])
 .RS 4
 .RE
 .PP
-"The user is not an administrator" [25]
+UserException("Undefined configuration parameter" [12])
 .RS 4
 .RE
 .PP
-"The session key is unrecognized" [28]
+UMSVishnuException("The user is not an administrator" [25])
 .RS 4
 .RE
 .PP
-"The session key has expired\&. The session is closed\&." [29]
+UMSVishnuException("The session key is unrecognized" [28])
 .RS 4
 .RE
 .PP
-"The machine id is unknown" [32]
+UMSVishnuException("The session key has expired\&. The session is closed\&." [29])
 .RS 4
 .RE
 .PP
-"The local account is unknown" [38]
+UMSVishnuException("The machine id is unknown" [32])
 .RS 4
 .RE
 .PP
-"The path provided is invalid\&." [201]
+UMSVishnuException("The local account is unknown" [38])
 .RS 4
 .RE
 .PP
-"Runtime error" [202]
+FMSVishnuException("The path provided is invalid\&." [201])
 .RS 4
 .RE
 .PP
-"The transfer id is unknown" [203]
+FMSVishnuException("Runtime error" [202])
 .RS 4
 .RE
-.SH "EXAMPLE"
 .PP
-To stop the file transfers on machine_1:
-.PP
-vishnu_stop_file_transfer \-m machine_1
+FMSVishnuException("The transfer id is unknown" [203])
+.RS 4
+.RE
 .SH "AUTHOR"
 .PP
 \fB SysFera SAS\fR <\&info@sysfera.com\&>
