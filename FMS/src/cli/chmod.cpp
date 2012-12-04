@@ -1,6 +1,6 @@
 /**
  * \file chmod.cpp
- * This file defines the VISHNU chmod command 
+ * This file defines the VISHNU chmod command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -26,19 +26,19 @@ struct ChangeFileModeFunc {
 
   std::string mpath;
   mode_t  mmode;
-  
+
   ChangeFileModeFunc(const std::string& path,const mode_t&  mode):mpath(path),mmode(mode){}
 
   int operator()(std::string sessionKey) {
-    
-      int res =chMod(sessionKey, mmode, mpath);
+
+      int res =chmod(sessionKey, mmode, mpath);
     return res;
   }
 };
 
 
 int main (int argc, char* argv[]){
-  
+
 
   /******* Parsed value containers ****************/
   string dietConfig;
@@ -53,13 +53,13 @@ int main (int argc, char* argv[]){
       "The acces rights of file/directory in octal sytem",
       HIDDEN,
       mode,1);
-  opt->setPosition("mode",1); 
+  opt->setPosition("mode",1);
 
  opt->add("path,p",
       "The file/directory following the pattern [host:]file path",
       HIDDEN,
       path,1);
-  opt->setPosition("path",1); 
+  opt->setPosition("path",1);
 
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,argc,argv,"mode path");

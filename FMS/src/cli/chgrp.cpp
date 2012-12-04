@@ -1,6 +1,6 @@
 /**
  * \file chgrp.cpp
- * This file defines the VISHNU chgrp command 
+ * This file defines the VISHNU chgrp command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -29,8 +29,8 @@ struct ChangeFileGroupFunc {
   ChangeFileGroupFunc(const std::string& path,const std::string& group):mpath(path),mgroup(group){}
 
   int operator()(std::string sessionKey) {
-    
-      int res =chGrp(sessionKey, mgroup, mpath);
+
+      int res =chgrp(sessionKey, mgroup, mpath);
     return res;
   }
 };
