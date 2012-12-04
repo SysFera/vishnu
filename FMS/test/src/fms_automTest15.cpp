@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
 
   try {
     FileTransfer transferInfo;
-    touch<1000>(localFilePath);
+    createFile<1000>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote move");
     BOOST_REQUIRE( amv(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Exceptions)
   try {
     DirEntryList dirContent;
     FileTransfer transferInfo;
-    touch<10>(localFilePath);
+    createFile<10>(localFilePath);
     // E1 case - wrong source path
     BOOST_MESSAGE("Check wrong source path");
     string invalidDir = "dffoize";

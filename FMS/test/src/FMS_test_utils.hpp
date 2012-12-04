@@ -161,12 +161,12 @@ createRemoteFiles(const string& sessionKey,
     iter != localFilePaths.end();
     ++iter) {
     const string& localFilePath = *iter;
-    touch<1>(localFilePath);
+    createFile<1>(localFilePath);
     BOOST_MESSAGE("CreateRemoteFile: " << localFilePath);
     string errorMsg =  "Could not copy file ";
     errorMsg.append(localFilePath);
     errorMsg.append(" on remote host");
-    BOOST_REQUIRE_MESSAGE( cp(sessionKey, localFilePath, remoteFullPath) == 0,
+    BOOST_REQUIRE_MESSAGE(cp(sessionKey, localFilePath, remoteFullPath) == 0,
       errorMsg);
   }
 }

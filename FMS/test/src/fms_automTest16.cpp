@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
 
   try {
     FileTransfer transferInfo;
-    touch<100000>(localFilePath);
+    createFile<100000>(localFilePath);
     // local to remote
     BOOST_MESSAGE("Checking local to remote cancel");
     BOOST_REQUIRE( acp(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);

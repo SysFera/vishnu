@@ -38,11 +38,11 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
 
   try {
     // Create a file 10Kb
-    touch<10>(localFilePath);
+    createFile<10>(localFilePath);
     // Copy file on remote host
     BOOST_REQUIRE( cp(sessionKey, localFilePath, fileFullPath1) == 0);
     FileStat stat;
-    BOOST_REQUIRE( stat(sessionKey, fileFullPath1, stat) == 0);
+    BOOST_REQUIRE( vishnu::stat(sessionKey, fileFullPath1, stat) == 0);
     // To check the success
     BOOST_CHECK( stat.getSize() == 10240 );
     BOOST_CHECK( stat.getOwner() == userLogin);
@@ -68,15 +68,15 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
     // E1 case
     string invalidDir = "rkvh";
     string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
-    BOOST_CHECK_THROW( stat(sessionKey, invalidFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( vishnu::stat(sessionKey, invalidFullPath, stat), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
     string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
-    BOOST_CHECK_THROW( stat(sessionKey, noAccessFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( vishnu::stat(sessionKey, noAccessFullPath, stat), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
     string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
-    BOOST_CHECK_THROW( stat(sessionKey, invalidMachineFullPath, stat), VishnuException);
+    BOOST_CHECK_THROW( vishnu::stat(sessionKey, invalidMachineFullPath, stat), VishnuException);
 
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());

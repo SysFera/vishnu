@@ -307,11 +307,11 @@ struct TransferSyncFunc {
     int res;
     if (transferType==MV){
 
-      res=moveFile(sessionKey, msrc, mdest, mcpFileOptions);
+      res=mv(sessionKey, msrc, mdest, mcpFileOptions);
 
     }else {
 
-      res=copyFile(sessionKey, msrc, mdest, mcpFileOptions);
+      res=cp(sessionKey, msrc, mdest, mcpFileOptions);
     }
 
     return res;
