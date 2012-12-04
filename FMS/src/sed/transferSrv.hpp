@@ -130,10 +130,10 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     else{
 
       if(transferType==File::copy){
-        mapperkey = mapper->code("vishnu_copy_async_file");
+        mapperkey = mapper->code("vishnu_acp");
       }
       if(transferType==File::move){
-        mapperkey = mapper->code("vishnu_move_async_file");
+        mapperkey = mapper->code("vishnu_amv");
       }
 
     }
@@ -304,11 +304,11 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     else{
 
       if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_copy_async_file");
+      mapperkey = mapper->code("vishnu_acp");
     }
 
       if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_move_async_file");
+      mapperkey = mapper->code("vishnu_amv");
     }
 
     }

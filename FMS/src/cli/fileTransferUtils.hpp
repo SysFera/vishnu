@@ -252,12 +252,12 @@ struct TransferAsyncFunc {
     int res;
     if (transferType==MV){
 
-      res=moveAsyncFile(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+      res=amv(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
 
     }else {
 
 
-      res=copyAsyncFile(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+      res=acp(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
     }
 
     std::cout << "The transfer identifier is " << mtransferInfo.getTransferId() << std::endl;

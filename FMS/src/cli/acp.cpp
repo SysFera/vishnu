@@ -1,5 +1,5 @@
 /**
- * \file copy_async_file.cpp
+ * \file acp.cpp
  * This file defines the VISHNU copy async file command 
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
