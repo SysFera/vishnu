@@ -167,6 +167,14 @@
 	  
 	<para>Updates of TMS:</para><para>Extended vishnu_list_jobs options (added -l option for listing all information about jobs).</para><para>Extended vishnu_submit_job options (added -w option for associating a job at a work).</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>14</revnumber>
+        <date>04/12/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	  
+	<para>Rename of FMS commands according to Posix names. </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -2818,6 +2826,7 @@
               choice="opt"><option>-F <replaceable>fileParams</replaceable></option></arg><arg
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
+              choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -2980,6 +2989,13 @@
                 <entry><para>long</para></entry>
                 <entry><para>w</para></entry>
                 <entry><para>Sets the identifier of the Work to which the job is related</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>specificParams</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>S</para></entry>
+                <entry><para>Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.</para><para>E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4871,13 +4887,13 @@
     <section>
       <title>Command definitions</title>
       <section>
-        <title>vishnu_create_file</title>
+        <title>vishnu_touch</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_create_file command creates  files on  remote machines.</para>
+        <para>The vishnu_touch command creates  files on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_create_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_touch</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4916,13 +4932,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_create_dir</title>
+        <title>vishnu_mkdir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_create_dir command creates directories on remote machines.</para>
+        <para>The vishnu_mkdir command creates directories on remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_create_dir</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_mkdir</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4968,13 +4984,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_remove_file</title>
+        <title>vishnu_rm</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_remove_file command removes files from  remote hosts.</para>
+        <para>The vishnu_rm command removes files from  remote hosts.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_remove_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_rm</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-r</option></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5020,13 +5036,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_remove_dir</title>
+        <title>vishnu_rmdir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_remove_dir command removes  directories (and subdirectories) from  remote machines.</para>
+        <para>The vishnu_rmdir command removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_remove_dir</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_rmdir</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5065,13 +5081,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_ch_grp</title>
+        <title>vishnu_chgrp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_ch_grp command changes group owner of  remote files/directories. </para>
+        <para>The vishnu_chgrp command changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_ch_grp</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_chgrp</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>group</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5117,13 +5133,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_ch_mod</title>
+        <title>vishnu_chmod</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_ch_mod command changes  access rights of remote files/directories.</para>
+        <para>The vishnu_chmod command changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_ch_mod</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_chmod</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>mode</replaceable></arg><arg choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5169,13 +5185,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_head_of_file</title>
+        <title>vishnu_head</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_head_of_file command displays a few first lines of  files located on  remote machines.</para>
+        <para>The vishnu_head command displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_head_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_head</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>nline</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5222,13 +5238,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_tail_of_file</title>
+        <title>vishnu_tail</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_tail_of_file command displays a few last lines of  files located on remote machines</para>
+        <para>The vishnu_tail command displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_tail_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_tail</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-n <replaceable>nline</replaceable></option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5275,13 +5291,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_content_of_file</title>
+        <title>vishnu_more</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_content_of_file command displays content  of  files located on remote machines</para>
+        <para>The vishnu_more command displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_content_of_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_more</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -5320,13 +5336,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_list_dir</title>
+        <title>vishnu_ls</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_list_dir command displays  the content of a remote directory</para>
+        <para>The vishnu_ls command displays  the content of a remote directory</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_list_dir</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_ls</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-l</option></arg><arg choice="opt"><option>-a</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5380,13 +5396,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_copy_file</title>
+        <title>vishnu_cp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_copy_file command executes a synchronous copy of file.</para>
+        <para>The vishnu_cp command executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_copy_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_cp</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5482,13 +5498,13 @@
         </informaltable>
       </section>
       <section>
-        <title>vishnu_copy_async_file</title>
+        <title>vishnu_acp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_copy_async_file command executes an asynchronous copy of file.</para>
+        <para>The vishnu_acp command executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_copy_async_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_acp</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5584,13 +5600,13 @@
         </informaltable>
       </section>
       <section>
-        <title>vishnu_move_file</title>
+        <title>vishnu_mv</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_move_file command executes a synchronous move of file.</para>
+        <para>The vishnu_mv command executes a synchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_move_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_mv</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5686,13 +5702,13 @@
         </informaltable>
       </section>
       <section>
-        <title>vishnu_move_async_file</title>
+        <title>vishnu_amv</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_move_async_file command executes an asynchronous move of file.</para>
+        <para>The vishnu_amv command executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_move_async_file</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_amv</command><arg choice="opt"><option>-h</option></arg><arg
               choice="opt"><option>-r</option></arg><arg choice="opt"><option>-t <replaceable>trCommand</replaceable></option></arg><arg
               choice="plain"><replaceable>src</replaceable></arg><arg choice="plain"><replaceable>dest</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -5918,13 +5934,13 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_get_file_info</title>
+        <title>vishnu_stat</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by any VISHNU user</para>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_get_file_info command displays the information  of  files.</para>
+        <para>The vishnu_stat command displays the information  of  files.</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_get_file_info</command><arg choice="opt"><option>-h</option></arg><arg
+        <cmdsynopsis><command>vishnu_stat</command><arg choice="opt"><option>-h</option></arg><arg
               choice="plain"><replaceable>path</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>

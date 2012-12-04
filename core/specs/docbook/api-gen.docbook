@@ -225,6 +225,14 @@
             
         <para>Updates of TMS:</para><para>Added ERRCODE_UNKNOWN_WORKID on service TMS::submitJob.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>17</revnumber>
+        <date>04/12/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	  
+	<para>Rename of FMS functions according to Posix names. </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -7679,6 +7687,11 @@
               <entry><para>long</para></entry>
               <entry><para>Sets the identifier of the Work to which the job is related</para></entry>
             </row>
+            <row>
+              <entry><para>specificParams</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.</para><para>E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -10273,7 +10286,7 @@
     <section>
       <title>Definition of the functions of the package</title>
       <section>
-        <title>Function FMS::createFile</title>
+        <title>Function FMS::touch</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10317,7 +10330,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createFile() function creates  files on  remote machines.</para>
+        <para>The touch() function creates  files on  remote machines.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -10397,10 +10410,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::touch</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::createDir</title>
+        <title>Function FMS::mkdir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10451,7 +10464,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The createDir() function creates directories on remote machines.</para>
+        <para>The mkdir() function creates directories on remote machines.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -10527,10 +10540,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::createDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const CreateDirOptions&amp; <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::mkdir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const CreateDirOptions&amp; <parameter>options = CreateDirOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::removeFile</title>
+        <title>Function FMS::rm</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10581,7 +10594,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeFile() function removes files from  remote hosts.</para>
+        <para>The rm() function removes files from  remote hosts.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -10657,10 +10670,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::removeFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const RmFileOptions&amp; <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::rm</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>const RmFileOptions&amp; <parameter>options = RmFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::removeDir</title>
+        <title>Function FMS::rmdir</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10704,7 +10717,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The removeDir() function removes  directories (and subdirectories) from  remote machines.</para>
+        <para>The rmdir() function removes  directories (and subdirectories) from  remote machines.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -10784,10 +10797,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::removeDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::rmdir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::chGrp</title>
+        <title>Function FMS::chgrp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10838,7 +10851,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chGrp() function changes group owner of  remote files/directories. </para>
+        <para>The chgrp() function changes group owner of  remote files/directories. </para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -10914,10 +10927,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chGrp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chgrp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>group</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::chMod</title>
+        <title>Function FMS::chmod</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -10968,7 +10981,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The chMod() function changes  access rights of remote files/directories.</para>
+        <para>The chmod() function changes  access rights of remote files/directories.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11044,10 +11057,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chMod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::chmod</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const mode_t&amp; <parameter>mode</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::headOfFile</title>
+        <title>Function FMS::head</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11105,7 +11118,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The headOfFile() function displays a few first lines of  files located on  remote machines.</para>
+        <para>The head() function displays a few first lines of  files located on  remote machines.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11181,10 +11194,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::headOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const HeadOfFileOptions&amp; <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::head</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const HeadOfFileOptions&amp; <parameter>options = HeadOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::tailOfFile</title>
+        <title>Function FMS::tail</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11242,7 +11255,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The tailOfFile() function displays a few last lines of  files located on remote machines</para>
+        <para>The tail() function displays a few last lines of  files located on remote machines</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11318,10 +11331,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::tailOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const TailOfFileOptions&amp; <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::tail</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef><paramdef>const TailOfFileOptions&amp; <parameter>options = TailOfFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::contentOfFile</title>
+        <title>Function FMS::more</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11372,7 +11385,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The contentOfFile() function displays content  of  files located on remote machines</para>
+        <para>The more() function displays content  of  files located on remote machines</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11448,10 +11461,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::contentOfFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::more</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>string&amp; <parameter>fileContent</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::listDir</title>
+        <title>Function FMS::ls</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11501,7 +11514,7 @@
               <row>
                 <entry><para>options</para></entry>
                 <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
-                <entry><para>List of options for the listDir command</para></entry>
+                <entry><para>List of options for the ls command</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
@@ -11509,7 +11522,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The listDir() function displays  the content of a remote directory</para>
+        <para>The ls() function displays  the content of a remote directory</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11585,10 +11598,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>DirEntryList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::ls</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>DirEntryList&amp; <parameter>dirContent</parameter></paramdef><paramdef>const LsDirOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::copyFile</title>
+        <title>Function FMS::cp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11646,7 +11659,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyFile() function executes a synchronous copy of file.</para>
+        <para>The cp() function executes a synchronous copy of file.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11718,10 +11731,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::cp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::copyAsyncFile</title>
+        <title>Function FMS::acp</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11786,7 +11799,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The copyAsyncFile() function executes an asynchronous copy of file.</para>
+        <para>The acp() function executes an asynchronous copy of file.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11862,10 +11875,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::copyAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::acp</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::moveFile</title>
+        <title>Function FMS::mv</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -11923,7 +11936,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveFile() function executes a synchronous move of file.</para>
+        <para>The mv() function executes a synchronous move of file.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -11999,10 +12012,10 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::mv</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::moveAsyncFile</title>
+        <title>Function FMS::amv</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -12067,7 +12080,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The moveAsyncFile() function executes an asynchronous move of file.</para>
+        <para>The amv() function executes an asynchronous move of file.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -12143,7 +12156,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::moveAsyncFile</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::amv</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>src</parameter></paramdef><paramdef>const string&amp; <parameter>dest</parameter></paramdef><paramdef>FileTransfer&amp; <parameter>transferInfo</parameter></paramdef><paramdef>const CpFileOptions&amp; <parameter>options = CpFileOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function FMS::stopFileTransfer</title>
@@ -12407,7 +12420,7 @@
         <funcsynopsis><funcprototype><funcdef>int <function>vishnu::listFileTransfers</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList&amp; <parameter>fileTransferList</parameter></paramdef><paramdef>const LsTransferOptions&amp; <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
-        <title>Function FMS::getFileInfo</title>
+        <title>Function FMS::stat</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This function can be used by any VISHNU user</para>
         <para><emphasis role="bold">Parameters</emphasis></para>
@@ -12458,7 +12471,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The getFileInfo() function displays the information  of  files.</para>
+        <para>The stat() function displays the information  of  files.</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the function</para>
         <informaltable>
@@ -12534,7 +12547,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::getFileInfo</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stat</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef><paramdef>FileStat&amp; <parameter>filesinfo</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
     </section>
     <section>
