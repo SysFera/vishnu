@@ -215,7 +215,15 @@
             <para>Added ERRCODE_UNKNOWN_WORKID on service TMS::submitJob.</para>
         </revdescription>
       </revision>
-      
+    
+      <revision>
+	<revnumber>17</revnumber>
+	<date>04/12/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Rename of FMS functions according to Posix names. </para>
+	</revdescription>
+      </revision>
       </revhistory>
     </info>
     

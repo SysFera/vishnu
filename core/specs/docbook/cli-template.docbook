@@ -155,6 +155,15 @@
 	  <para>Extended vishnu_submit_job options (added -w option for associating a job at a work).</para>
 	</revdescription>
       </revision>
+      
+      <revision>
+	<revnumber>14</revnumber>
+	<date>04/12/2012</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Rename of FMS commands according to Posix names. </para>
+	</revdescription>
+      </revision>
 
       </revhistory>
     </info>
