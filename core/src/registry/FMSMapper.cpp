@@ -20,23 +20,23 @@ FMSMapper::FMSMapper(){
 
 FMSMapper::FMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mname = na;
-  mmap.insert (pair<int, string>(VISHNU_CREATE_FILE,  "vishnu_create_file"));
-  mmap.insert (pair<int, string>(VISHNU_CREATE_DIR,  "vishnu_create_dir"));
-  mmap.insert (pair<int, string>(VISHNU_REMOVE_FILE,  "vishnu_remove_file"));
-  mmap.insert (pair<int, string>(VISHNU_REMOVE_DIR,  "vishnu_remove_dir"));
-  mmap.insert (pair<int, string>(VISHNU_CH_GRP,  "vishnu_ch_grp"));
-  mmap.insert (pair<int, string>(VISHNU_CH_MOD,  "vishnu_ch_mod"));
-  mmap.insert (pair<int, string>(VISHNU_HEAD_OF_FILE,  "vishnu_head_of_file"));
-  mmap.insert (pair<int, string>(VISHNU_TAIL_OF_FILE,  "vishnu_tail_of_file"));
-  mmap.insert (pair<int, string>(VISHNU_CONTENT_OF_FILE,  "vishnu_content_of_file"));
-  mmap.insert (pair<int, string>(VISHNU_LIST_DIR, "vishnu_list_dir"));
-  mmap.insert (pair<int, string>(VISHNU_COPY_FILE, "vishnu_copy_file"));
-  mmap.insert (pair<int, string>(VISHNU_COPY_ASYNC_FILE, "vishnu_copy_async_file"));
-  mmap.insert (pair<int, string>(VISHNU_MOVE_FILE, "vishnu_move_file"));
-  mmap.insert (pair<int, string>(VISHNU_MOVE_ASYNC_FILE, "vishnu_move_async_file"));
+  mmap.insert (pair<int, string>(VISHNU_CREATE_FILE,  "vishnu_touch"));
+  mmap.insert (pair<int, string>(VISHNU_CREATE_DIR,  "vishnu_mkdir"));
+  mmap.insert (pair<int, string>(VISHNU_REMOVE_FILE,  "vishnu_rm"));
+  mmap.insert (pair<int, string>(VISHNU_REMOVE_DIR,  "vishnu_rmdir"));
+  mmap.insert (pair<int, string>(VISHNU_CH_GRP,  "vishnu_chgrp"));
+  mmap.insert (pair<int, string>(VISHNU_CH_MOD,  "vishnu_chmod"));
+  mmap.insert (pair<int, string>(VISHNU_HEAD_OF_FILE,  "vishnu_head"));
+  mmap.insert (pair<int, string>(VISHNU_TAIL_OF_FILE,  "vishnu_tail"));
+  mmap.insert (pair<int, string>(VISHNU_CONTENT_OF_FILE,  "vishnu_content"));
+  mmap.insert (pair<int, string>(VISHNU_LIST_DIR, "vishnu_ls"));
+  mmap.insert (pair<int, string>(VISHNU_COPY_FILE, "vishnu_cp"));
+  mmap.insert (pair<int, string>(VISHNU_COPY_ASYNC_FILE, "vishnu_acp"));
+  mmap.insert (pair<int, string>(VISHNU_MOVE_FILE, "vishnu_mv"));
+  mmap.insert (pair<int, string>(VISHNU_MOVE_ASYNC_FILE, "vishnu_amv"));
   mmap.insert (pair<int, string>(VISHNU_STOP_FILE_TRANSFER, "vishnu_stop_file_transfer"));
   mmap.insert (pair<int, string>(VISHNU_LIST_FILE_TRANSFERS, "vishnu_list_file_transfers"));
-  mmap.insert (pair<int, string>(VISHNU_GET_FILE_INFO, "vishnu_get_file_info"));
+  mmap.insert (pair<int, string>(VISHNU_GET_FILE_INFO, "vishnu_stat"));
 };
 
 int
