@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: vishnu_load_shed
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: March 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: IMS Command reference
-.\"    Source: VISHNU 1.3
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU_LOAD_SHED" "1" "March 2012" "VISHNU 1.3" "IMS Command reference"
+.TH "VISHNU_LOAD_SHED" "1" "December 2012" "VISHNU ZMQ_beta" "IMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 vishnu_load_shed \- sheds load on a machine
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_load_shed\fR\ 'u
-\fBvishnu_load_shed\fR [\fB\-h\fR] \fImachineId\fR \fIloadShedType\fR
+\fBvishnu_load_shed\fR [\fB\-h\fR] [\fB\-s\ \fR\fB\fIURI\fR\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] \fImachineId\fR \fIloadShedType\fR
 .SH "DESCRIPTION"
 .PP
 This function allows an administrator to shed load on a machine\&. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted)\&. HARD mode will additionally stop all the VISHNU processes on the machine\&. If a user without administrator rights uses this function, all the user\*(Aqs jobs and file transfers will be cancelled on the machine\&. In the HARD mode, the stopped processes will not be automatically restarted\&. Type values: HARD = 1 SOFT = 2
@@ -40,6 +40,16 @@ This function allows an administrator to shed load on a machine\&. Two modes are
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-s \fR\fB\fIURI\fR\fR
+.RS 4
+The URI of the supervisor to control the processes\&.
+.RE
+.PP
+\fB\-n \fR\fB\fIname\fR\fR
+.RS 4
+The path to the supervisord script file on the machine\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -91,7 +101,7 @@ Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SA
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:
