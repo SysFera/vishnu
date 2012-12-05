@@ -6,6 +6,7 @@
 #include <boost/thread.hpp>
 #include "UserException.hpp"
 #include "utils.hpp"
+#include "ExecConfiguration.hpp"
 
 
 #define SEPARATOR "#"
@@ -253,30 +254,44 @@ int main(int argc, char** argv){
   // Prepare our context and socket
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
+  std::string  uriAddr ;
+  std::string  uriSubs ;
+  std::string  confFil ;
+  unsigned int nthread ;
+  unsigned int timeout ;
+
+  ExecConfiguration config;
+  config.initFromFile(argv[1]);
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
+  config.getRequiredConfigValue<unsigned int>(vishnu::DISP_TIMEOUT, timeout);
+  config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+
 // Strictly because optionnal argument now
-  if (argc < 4){
-    usage();
-    return 0;
-  }
+//  if (argc < 4){
+//    usage();
+//    return 0;
+//  }
 
-  std::string uriAddr = std::string(argv[1]);
-  std::string uriSubs = std::string(argv[2]);
-  std::string optConf ;
-  std::string confFil ;
-  std::string nthread ;
-  if (argc>=6){
-    optConf = std::string(argv[3]);
-    confFil = std::string(argv[4]);
-    nthread = std::string(argv[5]);
-// Optionnal parameter
-    if (optConf.compare("-c")==0){
-      ann.get()->initFromFile(confFil);
-    }
-  }
+//  std::string uriAddr = std::string(argv[1]);
+//  std::string uriSubs = std::string(argv[2]);
+//  std::string optConf ;
+//  std::string confFil ;
+//  std::string nthread ;
+//  if (argc>=6){
+//    optConf = std::string(argv[3]);
+//    confFil = std::string(argv[4]);
+//    nthread = std::string(argv[5]);
+//// Optionnal parameter
+//    if (optConf.compare("-c")==0){
+//      ann.get()->initFromFile(confFil);
+//    }
+//  }
+//
 
-
-  AddressDealer AD = AddressDealer(uriAddr, ann, vishnu::convertToInt(nthread.c_str()));
-  AddressSubscriber AS = AddressSubscriber(uriSubs, ann, vishnu::convertToInt(nthread.c_str()));
+  AddressDealer AD = AddressDealer(uriAddr, ann, nthread);
+  AddressSubscriber AS = AddressSubscriber(uriSubs, ann, nthread);
 //  Heartbeat HB = Heartbeat(20, ann);
 
   boost::thread th1(boost::bind(&AddressDealer::run, &AD));//%RELAX<MISRA_0_1_3> Because it used to launch a thread

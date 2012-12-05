@@ -38,7 +38,12 @@ namespace vishnu {
     AUTHENTYPE,
     URI,
     URIDISPATCHERSUB,
-    URLSUPERVISOR
+    URLSUPERVISOR,
+    DISP_URIADDR,
+    DISP_URISUBS,
+    DISP_INITFILE,
+    DISP_TIMEOUT,
+    DISP_NBTHREAD
   } param_type_t;
 
   /**
