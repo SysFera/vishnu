@@ -1,0 +1,365 @@
+%%%% OPTION
+%% Change class according to your needs
+%%  - article (no chapter)
+%%  - report
+%%  - etc.
+\documentclass{article}
+
+
+\IfFileExists{ifxetex.sty}{%
+  \usepackage{ifxetex}%
+}{%
+  \newif\ifxetex
+  \xetexfalse
+}
+  \ifxetex
+
+\usepackage{fontspec}
+\usepackage{xltxtra}
+\setmainfont{DejaVu Serif}
+\setsansfont{DejaVu Sans}
+\setmonofont{DejaVu Sans Mono}
+\else
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\fi
+\usepackage{fancybox}
+\usepackage{makeidx}
+\usepackage{cmap}
+\usepackage{url}
+\usepackage{eurosym}
+
+\usepackage[hyperlink]{sysfera}
+
+
+
+%%%%
+%% TODO:
+%%  - ajouter une macro pour mettre l'objet du document
+%%  - faire les footers avec l'adresse et tels de SysFera
+%%  - enlever un max de paquets docbook
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use the following macros to configure your document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% Change language: fr/en
+%%  - for French: use french in babel, and fr in \setupsysferalocale
+%%  - for English: use english in babel, and en in \setupsysferalocale
+
+\usepackage[french]{babel}
+\setupsysferalocale{fr}
+\frenchbsetup{CompactItemize=false} % Fix itemize clash 
+\usepackage{enumitem}
+%%%% OPTION
+%% Title and author of the document
+\title{Rapport de release ZMQ beta}
+\author{K. Coulomb}
+
+%%%% OPTION
+%% Document reference
+%% Use command \SFdocumentreference to set the document reference.
+%% Latter on, you can use the \SFthisdocument macro to retrieve
+%% this reference.
+\SFdocumentreference{ZMQ beta}
+\SFprojectname{VISHNU}
+\SFprojectleader{E.P. Capo-Chichi}
+%\SFclient{}
+
+
+%%%% OPTION
+%% Release information. If the argument is not empty, then a box with
+%% the content of the argument will be visible at the top of the document
+%\SFreleaseinfo{Travail en cours} % will show "Travail en cours" at the
+                                 % top of the page
+\SFreleaseinfo{} % won't show anything
+
+%%%% OPTION
+%% Draft watermark. You can also show a grey watermak on all pages of
+%% your document using the following command.
+%\showwatermark{DRAFT}
+
+
+%%%% OPTION
+%% Add a logo into the header.
+%% First parameter sets the width of the image relatively to the
+%% \textwidth
+%% Second parameter is the path to the image
+% \SFsetheadlogo{.25}{fig/logosysfera.pdf}
+
+%%%% OPTION
+%% Collaborators:
+%% You can redefine the Indexation of the document using the following command:
+\renewcommand{\SFindexation}{
+  \begin{SFindtable}
+    \SFinditem{\writtenby}{K. Coulomb}{5 décembre 2012}
+%    \SFinditem{\verifiedby}{Quelqu'un d'autre que l'auteur}{30 septembre 2011}
+%    \SFinditem{}{Another Guy}{30 septembre 2011}
+%    \SFinditem{\approvedby}{Personne responsable du doc}{30 septembre 2011}
+  \end{SFindtable}
+}
+% \renewcommand{\SFindexation}{} % disable this table
+
+
+%%%% OPTION
+%% Revision History Table:
+%% Add a new \SFrevitem entry for adding a new entry in the revision
+%% history table.
+\renewcommand{\SFrevhistory}{
+\begin{SFrevtable}
+  \SFrevitem{1}{5/12/2012}{Premiere version de ce document}{K. Coulomb}
+\end{SFrevtable}
+}
+% \renewcommand{\SFrevhistory}{} % disable this table
+
+
+%%%% OPTION
+%% References Table
+%% Add a new \SFrefitem entry for adding a new entry in the list of
+%% reference documents.
+%\renewcommand{\SFreferenceTable}{
+%\begin{SFreftable}
+%  \SFrefitem{ref1}{techDocument}{Ce document}
+%  \SFrefitem{ref2}{techDocument}{Ce document}
+%\end{SFreftable}
+%}
+\renewcommand{\SFreferenceTable}{} % disable this table
+
+%%%% OPTION
+%% Authorization Table
+%% Add a new \SFauthviewitem entry for adding a new entry in the list of
+%% authorized users.
+%\renewcommand{\SFauthview}{
+%\begin{SFauthviewtable}
+%  \SFauthviewitem{SysFera}{Tous les membres de SysFera}
+%\end{SFauthviewtable}
+%}
+\renewcommand{\SFauthview}{} % disable this table
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /CONFIGURATION                           %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\makeindex
+\makeglossary
+
+
+\begin{document}
+
+\frontmatter % do not disable, this is used for page numbering
+\maketitle % do not disable, otherwise you won't have any title
+%%%% OPTION
+\tableofcontents % comment to disable the table of contents
+\mainmatter % do not disable, this is used for page numbering
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%              Write your document below this comment                %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Vocabulaire}
+
+\begin{tabular}{|l|l|}
+\hline
+dispatcher & Elément optionnel de la version ZMQ servant d'annuaire si le client ne connait pas tout les serveurs \\
+\hline
+ZMQ & Librairie de passage de message \\
+\hline
+DIET & Middleware en corba permettant de lier des clients à des serveurs \\
+\hline
+VISHNU & Logiciel open source permettant à des clients d'avoir des services prédéfinis d'effectués \\
+\hline
+\end{tabular}
+
+\section{Pr\'esentation}
+
+L'objectif de ce document est de présenter l'état de la branche
+ZMQ du projet VISHNU. Il contient des comparatifs de performance,
+des résultats de tests, des remarques sur l'état d'avancement.
+Les comparaisons se font principalement par rapport à la branche
+basée sur DIET.
+
+\section{Comparatif de performance}
+
+\subsection{Configuration}
+Les tests de performance suivant ont été réalisés sur une seule
+machine dual core hyperthreadé sous l'environnement ubtuntu 11.10
+entre la release VISHNU beta2 et l'état de la branche ZMQ en 
+décembre 2012. Sur ces tests, une seule machine contenait tout 
+les processus nécessaires. Les tests ont été effectués les uns
+à la suite des autres et non pas en parallèle pour éviter tout
+conflit. \\
+Le parallélisme a été simulé avec 4 scripts de 250 connexions séquentielles lancés en parallèle.
+
+\begin{tabular}{|c|c|}
+\hline
+OS & Ubuntu 11.10 \\
+\hline
+Compilateur & gcc 4.6 \\
+\hline
+DIET & 2.8.1 \\
+\hline
+ZMQ & 2 \\
+\hline
+\end{tabular}
+
+\subsection{R\'esultats}
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+ X & DIET & DISPATCHER & DIRECT \\
+\hline
+1000 connect seq & real : 14m8s & real : 13m26 & real : 13m44s \\
+ & user : 9m51s & user : 9min27s & user : 9m8s \\
+ & syst : 0m14s & syst : 0m7s & syst : 0m8s \\
+\hline
+1000 connect par & real : 10m04s & real : 7m33s & 7m48s \\
+\hline
+\end{tabular}
+
+\subsection{Analyse}
+De manière surprenante, la partie ZMQ avec dispatcher a été plus rapide que
+ la partie sans dispatcher. Les temps ont été mesuré avec \textit{time} 
+en séquentiel et en se basant sur la première et la dernière session 
+ouverte en parallèle. Les temps en eux mêmes ne sont pas significatifs,
+tout tournait sur la même machine ou d'autres processus prenaient des
+ressources, mais le nombre de process externe et leur impact était stable
+ lors des diverses expériences.
+
+\section{Test stabilité}
+La version ZMQ a tourné pendant plusieurs jours d'affilé sans aucun souci.
+Seul un cas potentiellement problématique s'est levé, lors d'un test tout
+un week end, le serveur UMS était passé en arrêt dans supervisord et ne 
+tournait plus alors qu'il aurait du rester à tourner.
+Lors de ce test, le serveur était chargé d'une quinzaine de requêtes
+simultanées en permanence suivant un scénario prédéfini 
+(connexion, service liste machine, service liste sessions, déconnexion).
+
+\section{Test de charge}
+\subsection{Tests}
+Le test de charge correspond à une centaine d'utilisateurs en simultané
+qui font des requêtes (référence bug 448 bugzilla).
+
+\begin{tabular}{|c|c|}
+\hline
+DIET & Voir Bug 448 \\
+\hline
+DISPATCHER & ralentissement \\
+\hline
+DIRECT & OK \\
+\hline
+\end{tabular}
+
+\subsection{Analyse}
+L'aspect lenteur était lié au fait que l'on ne pouvait pas traiter les 100
+requêtes à la fois et que les timeout étaient court (2 secondes), les premières
+ passaient bien, mais une fois que les messages n'avaient pas de réponse dans
+le délai, la procédure de renvoyer le message était mise en route, ce qui a 
+entretenu la surcharge du système et un nombre important de messages inutiles.
+L'augmentation du timeout a amélioré les choses (le timeout au niveau du client
+ET le timeout au niveau du dispatcher), mais cela n'empêche qu'il fallait un 
+certain temps entre certaines requêtes et le moment ou l'on avait la clé de
+session. \\
+Pour améliorer cela, un correctif permettant de modifier la taille du pool de 
+threads de communication a été mis en place.
+
+\section{Consommation}
+
+\subsection{Test}
+Ce test a pour but de rechercher des fuites mémoires. L'idée est de laisser
+tourner VISHNU et d'observer la consomation mémoire. Le serveur utilisé pour
+l'expérience est UMS. Dans une machine virtuelle sous kubuntu, on a lancé
+UMS dans un conteneur lxc et observé les consomation avec la commande 'top'. Dans le tableau, la colonne temps correspond au temps depuis lequel 
+le processus umssed a été lancé, en heure. La dernière colonne usage 
+correspond au fait que la plateforme était utilisée ou non lors de la
+période. Le reste des données correspond à la sortie de la commande top.
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+TEMPS & PID & USER & PR & NI & VIRT & RES & SHR & S & CPU & MEM & TIME+ & COMMAND & usage \\
+\hline
+0 & 363 & root & 20 & 0 & 37780 & 10m & 6668 & S & 0.0 & 2.1 & 0:00.12 & umssed & NON \\                      
+0 & 365 & root & 20 & 0 & 18732 & 4412 & 3004 & S & 0.0 & 0.9 & 0:00.01 & umssed  & NON \\
+\hline
+2 & 363 & root & 20 & 0 & 129m & 35m & 2128 & S & 0.0 & 7.2 & 2:16.22 & umssed & OUI\\
+2 & 365 & root & 20 & 0 & 18732 & 1496 & 884 & S & 0.0 & 0.3 & 0:02.02 & umssed & OUI \\
+\hline
+3 & 363 & root & 20 & 0 & 135m & 27m & 2568 & S & 0.0 & 5.6 & 2:52.71 & umssed & OUI \\
+3 & 365 & root & 20 & 0 & 18732 & 2556 & 1876 & S & 0.0 & 0.5 & 0:10.69 & umssed & OUI \\
+\hline
+4 & 363 & root & 20 & 0 & 135m & 27m & 2568 & S & 0.0 & 5.6 & 2:52.71 & umssed & NON \\
+4 & 365 & root & 20 & 0 & 18732 & 2556 & 1876 & S & 0.0 & 0.5 & 0:11.44 & umssed & NON \\
+\hline
+19 & 363 & root & 20 & 0 & 135m & 8496 & 1728 & S & 0.0 & 1.7 & 2:52.71 & umssed & NON \\
+19 & 365 & root & 20 & 0 & 18732 & 2396 & 1844 & S & 0.0 & 0.5 & 0:32.64 & umssed & NON\\
+\hline
+24 & 363 & root & 20 & 0 & 135m & 8496 & 1728 & S & 0.0 & 1.7 & 2:52.71 & umssed & NON \\
+24 & 365 & root & 20 & 0 & 18732 & 2396 & 1844 & S & 0.0 & 0.5 & 0:40.37 & umssed & NON \\
+\hline
+27 & 363 & root & 20 & 0 & 135m & 4220 & 0 & S & 0.0 & 0.8 & 2:52.71 & umssed & NON \\
+27 & 365 & root & 20 & 0 & 18732 & 1100 & 560 & S & 0.0 & 0.2 & 0:45.36 & umssed & NON \\
+\hline
+\end{tabular}
+
+\subsection{Analyse}
+Il existe toujours un problème de fuite mémoire dans VISHNU version ZMQ.
+En effet pendant la longue inactivité de la nuit, la mémoire physique
+utilisée est passée de 27m à 8496m avant de rebaisser un peu par la suite
+à 4220m.
+
+
+\section{Futures orientations}
+
+\subsection{Conteneur de service}
+Le but de cette amélioration sera de faire un conteneur
+de service, sur une machine il n'y aura plus divers binaires (FMS, UMS, ...) mais un
+seul binaire qui pourra charger comme des plugins les services de différents modules.
+Ce conteneur ne pourra charger que les plugins qui ont été compilés sur la machine. \\
+Les impacts sont la gestion des processuus (arrêt, démarage, lister).\\
+Avantages : Limitera la duplication des tunnels SSH entre les machines, limitera le
+nombre de processus, simplifiera le déploiement (moins d'éléments).
+
+\subsection{Protocole de communication}
+Le but sera d'ajouter des informations aux messages et de modifier ceux qui réceptionnent
+pour éviter que lorsqu'un message est renvoyé, le serveur ne le retraite (cas des timeout
+ou le service est effectué plusieurs fois à cause de cela). \\
+Les impacts sont sur la sérialisation/désérialisation et la manière de traiter les messages
+(les messages envoyés ne sont pas uniformes). \\
+Piste : Encapsuler dans un objet message, uniquement préfixer les messages, ... \\
+Avantages : Supprime un bug ou la même commande utilisateur peut donner plusieurs 
+exécutions de cette commande coté serveur
+
+\subsection{Robustifier/améliorer}
+Le but sera d'améliorer les cas d'erreur et la gestion des pannes (rejoint en partie
+le coté protocole de communication). Cela comprend également une partie nettoyage mémoire
+concernant les fuites qui ont été appercues dans les tests. Une partie amélioration des
+complexité cyclomatiques et amélioration des performances peut être incluse.\\
+Piste : valgrind, electric fence, gprof \\
+Avantage : Amélioration des performances, diminution de l'impact sur la machine
+
+\subsection{Unifier les fichiers de configuration}
+Le but sera de préfixer les variables des fichiers de configuration liées pour n'avoir
+qu'un seul fichier de configuration que l'on passera à tout le monde.\\
+Impact : Faible, renomer dans core et dans les binaires les variables, 
+modifier les exemples de fichier de configuration \\
+Avantage : Plus qu'un seul fichier pour toute la plateforme que l'on peut dupliquer.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                            BIBLIOGRAPHY                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% OPTION
+%% You can deactivate bibliography by commenting the following 3
+%% lines.
+%% If you wish to add a bibliography, you need to update the
+%% \biblography command. Its argument is the name of .bib file.
+\clearpage
+%\bibliography{techDocument}
+%\bibliographystyle{plain}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                           /BIBLIOGRAPHY                            %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+\end{document}
