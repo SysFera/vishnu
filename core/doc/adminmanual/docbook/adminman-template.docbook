@@ -500,7 +500,7 @@
             </listitem>
             <listitem>
               <para>XMLRPC : Version 2.1.19, 
-                apt-get install libxmlrpc
+                apt-get install libxmlrpc-c3-dev libxmlrpc-core-c3-dev
                 </para>
             </listitem>
           </itemizedlist>
@@ -1332,6 +1332,11 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
 
 	</listitem>
       </orderedlist>
+    </section>
+    <section>
+      <title>Les scripts de démarage automatique</title>
+      <para>Des scripts de démarage sont préparés pour pouvoir exécuter automatiquement les serveurs VISHNU.
+      Les scripts sont installés lors de l'installation des serveurs dans install/etc/ (ou dans /etc si c'est installé dans /usr).</para>
     </section>
   </chapter><!-- End lancement  -->
   <chapter>
