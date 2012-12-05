@@ -42,6 +42,14 @@
           
         <para>Deliverable version</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>05/12/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Rename of FMS API functions according to POSIX names</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -388,21 +396,21 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  file to create following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file to create following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
                 <entry><para>mode_t</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The file access permissions in octal numeral system.</para></entry>
+                <entry><para>The file access permissions in octal numeral system</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -437,38 +445,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::createFile</para>
+        <para>FMS::touch</para>
       </section>
       <section>
         <title>Service DirCreate</title>
@@ -496,21 +492,21 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  directory to create following the pattern  [host:]directory path.</para></entry>
+                <entry><para>The  directory to create following the pattern  [host:]directory path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>mode</para></entry>
                 <entry><para>mode_t</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>the new directories permission access in octal numeral system.</para></entry>
+                <entry><para>the new directories permission access in octal numeral system</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -545,38 +541,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::createDir</para>
+        <para>FMS::mkdir</para>
       </section>
       <section>
         <title>Service fileRemove</title>
@@ -604,14 +588,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  file to remove following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file to remove following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -646,38 +630,34 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry/>
+                <entry/>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry/>
+                <entry/>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::removeFile</para>
+        <para>FMS::rm</para>
       </section>
       <section>
         <title>Service DirRemove</title>
@@ -705,14 +685,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  directory to remove following the pattern  [host:]directory path.</para></entry>
+                <entry><para>The  directory to remove following the pattern  [host:]directory path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -747,38 +727,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::removeDir</para>
+        <para>FMS::rmdir</para>
       </section>
       <section>
         <title>Service grpChange</title>
@@ -813,14 +781,14 @@
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  file/directory following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file/directory following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>group</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>the new group owner of file/directory.</para></entry>
+                <entry><para>the new group owner of file/directory</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -855,38 +823,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::chGrp</para>
+        <para>FMS::chgrp</para>
       </section>
       <section>
         <title>Service modeChange</title>
@@ -928,7 +884,7 @@
                 <entry><para>mode</para></entry>
                 <entry><para>int</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para> the access rigths of file/directory in octal system.</para></entry>
+                <entry><para> the access rigths of file/directory in octal system</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -963,38 +919,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::chMod</para>
+        <para>FMS::chmod</para>
       </section>
       <section>
         <title>Service fileHead</title>
@@ -1078,38 +1022,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::headOfFile</para>
+        <para>FMS::head</para>
       </section>
       <section>
         <title>Service fileTail</title>
@@ -1137,14 +1069,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  file  following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file  following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1193,38 +1125,26 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::tailOfFile</para>
+        <para>FMS::tail</para>
       </section>
       <section>
         <title>Service fileContent</title>
@@ -1252,14 +1172,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  file to display following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  file to display following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1301,38 +1221,34 @@
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry/>
+                <entry/>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
+                <entry/>
+                <entry/>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::contentOfFile</para>
+        <para>FMS::more</para>
       </section>
       <section>
         <title>Service dirList</title>
@@ -1360,20 +1276,20 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>path</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  directory to list following the pattern  [host:]directory path.</para></entry>
+                <entry><para>The  directory to list following the pattern  [host:]directory path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>dirContent</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para><link linkend="FileStatList">FileStatList</link></para></entry>
+                <entry><para><link linkend="DirEntryList">DirEntryList</link></para></entry>
                 <entry><para>The content of the directory  (only files names with short format, all files informations with long format).</para></entry>
                 <entry><para>OUT</para></entry>
               </row>
@@ -1381,7 +1297,7 @@
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="LsDirOptions">LsDirOptions</link></para></entry>
-                <entry><para>List of options for the listDir command.</para></entry>
+                <entry><para>List of options for the ls command.</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1395,7 +1311,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Description </emphasis></para>
-        <para>The dirList() function displays  the content of a remote directory. </para>
+        <para>The dirList() function displays  the content of a remote directory</para>
         <para><emphasis role="bold">Return Value </emphasis></para>
         <para>An error code is returned when an error occurs during the execution of the service</para>
         <informaltable>
@@ -1412,42 +1328,30 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::listDir</para>
+        <para>FMS::ls</para>
       </section>
       <section>
         <title>Service fileCopy</title>
@@ -1475,14 +1379,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The  source file to copy following the pattern  [host:]file path.</para></entry>
+                <entry><para>The  source file to copy following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1527,28 +1431,24 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -1558,7 +1458,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::copyFile</para>
+        <para>FMS::cp</para>
       </section>
       <section>
         <title>Service fileAsyncCopy</title>
@@ -1645,28 +1545,24 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
+                <entry><para>ERRCODE_UNKNOWN_MACHINE</para></entry>
+                <entry><para>The machine id is unknown</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_NOT_FOUND</para></entry>
+                <entry><para>The session key is unrecognized</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
@@ -1676,7 +1572,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::copyAsyncFile</para>
+        <para>FMS::acp</para>
       </section>
       <section>
         <title>Service fileMove</title>
@@ -1756,42 +1652,30 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::moveFile</para>
+        <para>FMS::mv</para>
       </section>
       <section>
         <title>Service fileAsyncMove</title>
@@ -1819,14 +1703,14 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
                 <entry><para>src</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The source file to move following the pattern  [host:]file path.</para></entry>
+                <entry><para>The source file to move following the pattern  [host:]file path</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -1878,42 +1762,30 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::moveAsyncFile</para>
+        <para>FMS::amv</para>
       </section>
       <section>
         <title>Service FileTransferCancel</title>
@@ -1972,35 +1844,23 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
@@ -2035,7 +1895,7 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -2080,35 +1940,23 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
@@ -2143,7 +1991,7 @@
                 <entry><para>sessionKey</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para>n/a</para></entry>
-                <entry><para>The session key.</para></entry>
+                <entry><para>The session key</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>
@@ -2188,42 +2036,30 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>ERRCODE_DB_ERROR</para></entry>
-                <entry><para>A problem occurs with the database.</para></entry>
+                <entry><para>ERRCODE_DBERR</para></entry>
+                <entry><para>Vishnu not available (Database error)</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_INVALID_PARAMETER</para></entry>
-                <entry><para>an option or a parameter provided is invalid for this service.</para></entry>
+                <entry><para>ERRCODE_INVALID_PARAM</para></entry>
+                <entry><para>an option or a parameter provided is invalid for this service</para></entry>
               </row>
               <row>
                 <entry><para>ERRCODE_INVALID_PATH</para></entry>
-                <entry><para>The path provided is invalid.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_PERMISSION_DENIED</para></entry>
-                <entry><para>User does not have permission access.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_INVALID_MACHINE_ID</para></entry>
-                <entry><para>Invalid provided machine identifier.</para></entry>
-              </row>
-              <row>
-                <entry><para>ERRCODE_SESSION_KEY_NOT_FOUND</para></entry>
-                <entry><para>The session key is unrecognized.</para></entry>
+                <entry><para>The path provided is invalid</para></entry>
               </row>
               <row>
                 <entry><para>VISHNU_OK</para></entry>
                 <entry><para>The service has been performed succesfully.</para></entry>
               </row>
               <row>
-                <entry><para>ERRCODE_SESSION_KEY_EXPIRED</para></entry>
+                <entry><para>ERRCODE_SESSIONKEY_EXPIRED</para></entry>
                 <entry><para>The session key has expired. The session is closed.</para></entry>
               </row>
             </tbody>
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Used by this(these) API function(s): </emphasis></para>
-        <para>FMS::getFilesInfo</para>
+        <para>FMS::stat</para>
       </section>
     </section>
   </chapter>
