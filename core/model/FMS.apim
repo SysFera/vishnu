@@ -72,7 +72,6 @@
       <ports name="path" dataType="//@modules.0/@typeList/@types.0" description="The  file to display following the pattern  [host:]file path" longOptionName=""/>
       <ports name="fileContent" direction="OUT" dataType="//@modules.0/@typeList/@types.0" description="The content of the file" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.8"/>
-      <usedByServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a file at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To view the content of the file toto on machine_1:&#xA;vishnu_more machine_1:/tmp/toto"/>
     </services>
@@ -82,7 +81,6 @@
       <ports name="dirContent" direction="OUT" dataType="//@modules.0/@typeList/@types.20" description="The content of the directory" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.5" description="List of options for the ls command" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
-      <usedByServices href="FMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="Displays the content of a directory at the location given by the path parameter.&#xA;The path must be provided in the form 'machine_id:path' (the machine_id&#xA;values can be obtained using the vishnu_list_machine command).&#xA;"/>
       <details key="exCLI" value="To display the content of the toto repository on machine_1:&#xA; vishnu_ls machine_1:/tmp/toto"/>
     </services>
