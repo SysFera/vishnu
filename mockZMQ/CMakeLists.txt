@@ -3,6 +3,7 @@ if (BUILD_TESTING)
 endif()
 
 include_directories(
+  ${CONFIG_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}

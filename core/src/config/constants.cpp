@@ -23,7 +23,12 @@ namespace vishnu {
     /* [14] */ {DEFAULTBATCHCONFIGFILE, "defaultBatchConfigFile",STRING_PARAMETER},
     /* [15] */ {URI, "uri", URI_PARAMETER},
     /* [16] */ {URIDISPATCHERSUB, "uriDispatcherSub", URI_PARAMETER},
-    /* [17] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER}
+    /* [17] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER},
+    /* [18] */ {DISP_URIADDR, "disp_uriAddr", URI_PARAMETER},
+    /* [19] */ {DISP_URISUBS, "disp_uriSubs", URI_PARAMETER},
+    /* [20] */ {DISP_INITFILE, "disp_initFile", STRING_PARAMETER},
+    /* [21] */ {DISP_TIMEOUT, "disp_timeout", INT_PARAMETER},
+    /* [22] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER}
   };
 //}}RELAX<MISRA_0_1_3>
 }
