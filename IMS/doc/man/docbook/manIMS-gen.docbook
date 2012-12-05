@@ -15,9 +15,9 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>March 2012</date>
+    <date>December 2012</date>
     <copyright>
-      <year>2011</year>
+      <year>2012</year>
       <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
@@ -53,7 +53,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>1.3</releaseinfo>
+    <releaseinfo>ZMQ_beta</releaseinfo>
   </info>
   <reference>
     <title>IMS Command reference</title>
@@ -1122,6 +1122,8 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1138,6 +1140,18 @@ SOFT   = 2</para>
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
+            <listitem>
+              <para>The URI of the supervisor to control the processes.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>name</replaceable></option></term>
+            <listitem>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1365,7 +1379,9 @@ SOFT   = 2</para>
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -1381,6 +1397,18 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             <term><option>-h <replaceable>help</replaceable></option></term>
             <listitem>
               <para>help about the command.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
+            <listitem>
+              <para>The URI of the supervisor to control the processes.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-n <replaceable>name</replaceable></option></term>
+            <listitem>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -1536,8 +1564,8 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
       </refnamediv>
       <refsynopsisdiv>
         <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-v <replaceable>vishnuConf</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>sedType</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
@@ -1554,16 +1582,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-v <replaceable>vishnuConf</replaceable></option></term>
+            <term><option>-s <replaceable>URI</replaceable></option></term>
             <listitem>
-              <para>The path to the vishnu configuration file.</para>
+              <para>The URI of the supervisor to control the processes.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><option>-t <replaceable>sedType</replaceable></option></term>
+            <term><option>-n <replaceable>name</replaceable></option></term>
             <listitem>
-              <para>The type of the vishnu sed.
-The value must be an integer. Predefined values are: 0 (UNDEFINED), 1 (UMS), 2 (TMS), 3 (FMS), 4 (IMS).</para>
+              <para>The path to the supervisord script file on the machine.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2416,7 +2443,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2444,6 +2471,12 @@ SOFT   = 2</para>
             <term><emphasis>loadShedType</emphasis></term>
             <listitem>
               <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2585,7 +2618,7 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Process&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2604,9 +2637,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>process</emphasis></term>
+            <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -2702,7 +2741,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2724,7 +2763,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>options</emphasis></term>
+            <term><emphasis>op</emphasis></term>
             <listitem>
               <para>Input argument. The option for the restart.</para>
             </listitem>
@@ -2903,7 +2942,7 @@ The access to other user's sessions is only permitted to administrators.</para>
         <refpurpose>displays the current values of system metrics</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, metricValue=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricCurrentValue</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValue</parameter></paramdef><paramdef>CurMetricOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -2990,7 +3029,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>displays the history of values of a system metric</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, metricValues=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getMetricHistory</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>ListMetric <parameter>metricValues</parameter></paramdef><paramdef>MetricHistOp <parameter>options = MetricHistOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3074,7 +3113,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>displays the list of the VISHNU processes running on machines</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, process=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getProcesses</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListProcesses <parameter>process</parameter></paramdef><paramdef>ProcessOp <parameter>options = ProcessOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3256,7 +3295,7 @@ Please note that retrieving these values uses some valuable system ressources an
         <refpurpose>gets a system threshold on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, value=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemThreshold</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListThreshold <parameter>value</parameter></paramdef><paramdef>ThresholdOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3664,7 +3703,7 @@ $TYPE: The 'F' symb to remind it is a file transfer id</para>
         <refpurpose>sheds load on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.loadShed</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>LoadShedType <parameter>loadShedType</parameter></paramdef><paramdef>SupervisorOp <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3692,6 +3731,12 @@ SOFT   = 2</para>
             <term><emphasis>loadShedType</emphasis></term>
             <listitem>
               <para>Input argument. Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted).</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3874,7 +3919,7 @@ SOFT   = 2</para>
         <refpurpose>To stop (and do not try to relaunch) a SeD</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>Process <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.stop</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>SupervisorOp <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3893,9 +3938,15 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>process</emphasis></term>
+            <term><emphasis>machineId</emphasis></term>
             <listitem>
-              <para>Input argument. The process to stop and do not try to restart anymore.</para>
+              <para>Input argument. The id of the machine where to restart.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><emphasis>op</emphasis></term>
+            <listitem>
+              <para>Input argument. The option for the supervision.</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3937,7 +3988,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To get the system info on a machine</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret, res=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.getSystemInfo</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>ListSysInfo <parameter>res</parameter></paramdef><paramdef>SysInfoOp <parameter>options = SysInfoOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4015,7 +4066,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
         <refpurpose>To restart a SeD or a MA</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>RestartOp <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.restart</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>machineId</parameter></paramdef><paramdef>SupervisorOp <parameter>op</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -4037,7 +4088,7 @@ The processName must be UMS, TMS, IMS or FMS , in upper case.
             </listitem>
           </varlistentry>
           <varlistentry>
-            <term><emphasis>options</emphasis></term>
+            <term><emphasis>op</emphasis></term>
             <listitem>
               <para>Input argument. The option for the restart.</para>
             </listitem>

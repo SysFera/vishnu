@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.getCompletedJobsOutput
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: September 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 2.0
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.GETCOMPLETE" "3" "September 2012" "VISHNU 2.0" "TMS Python API Reference"
+.TH "VISHNU\&.GETCOMPLETE" "3" "December 2012" "VISHNU ZMQ_beta" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getCompletedJobsOutput \- gets standard output and error output files of completed jobs (applies only once for each job)
 .SH "SYNOPSIS"
-.HP \w'ret,\ listOfResults=VISHNU\&.getCompletedJobsOutput('u
-.BI "ret,\ listOfResults=VISHNU\&.getCompletedJobsOutput(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "outDir\ =\ string()" ");"
+.HP \w'ret=VISHNU\&.getCompletedJobsOutput('u
+.BI "ret=VISHNU\&.getCompletedJobsOutput(string\ " "sessionKey" ", string\ " "machineId" ", ListJobResults\ " "listOfResults" ", string\ " "outDir\ =\ string()" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows getting the output files of all the completed jobs\&.

@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.listQueues
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: September 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: TMS Python API Reference
-.\"    Source: VISHNU 2.0
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.LISTQUEUES" "3" "September 2012" "VISHNU 2.0" "TMS Python API Reference"
+.TH "VISHNU\&.LISTQUEUES" "3" "December 2012" "VISHNU ZMQ_beta" "TMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listQueues \- gets queues information
 .SH "SYNOPSIS"
-.HP \w'ret,\ listofQueues=VISHNU\&.listQueues('u
-.BI "ret,\ listofQueues=VISHNU\&.listQueues(string\ " "sessionKey" ", string\ " "machineId" ", string\ " "queueName\ =\ string()" ");"
+.HP \w'ret=VISHNU\&.listQueues('u
+.BI "ret=VISHNU\&.listQueues(string\ " "sessionKey" ", string\ " "machineId" ", ListQueues\ " "listofQueues" ", string\ " "queueName\ =\ string()" ");"
 .SH "DESCRIPTION"
 .PP
 This command displays the status of the queues of a specific machine\*(Aqs batch scheduler\&.

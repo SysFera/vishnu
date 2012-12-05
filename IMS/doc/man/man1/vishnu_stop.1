@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: vishnu_stop
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: March 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: IMS Command reference
-.\"    Source: VISHNU 1.3
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU_STOP" "1" "March 2012" "VISHNU 1.3" "IMS Command reference"
+.TH "VISHNU_STOP" "1" "December 2012" "VISHNU ZMQ_beta" "IMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 vishnu_stop \- To stop (and do not try to relaunch) a SeD
 .SH "SYNOPSIS"
 .HP \w'\fBvishnu_stop\fR\ 'u
-\fBvishnu_stop\fR [\fB\-h\fR] \fIprocessName\fR \fImachineId\fR
+\fBvishnu_stop\fR [\fB\-h\fR] [\fB\-s\ \fR\fB\fIURI\fR\fR] [\fB\-n\ \fR\fB\fIname\fR\fR] \fImachineId\fR
 .SH "DESCRIPTION"
 .PP
 This function allows an admin to stop a VISHNU server on a machine\&. The stopped process will not be restarted automatically\&. The important parameters in the process are the names and the machine\&. The processName must be UMS, TMS, IMS or FMS , in upper case\&.
@@ -40,6 +40,16 @@ This function allows an admin to stop a VISHNU server on a machine\&. The stoppe
 \fB\-h \fR\fB\fIhelp\fR\fR
 .RS 4
 help about the command\&.
+.RE
+.PP
+\fB\-s \fR\fB\fIURI\fR\fR
+.RS 4
+The URI of the supervisor to control the processes\&.
+.RE
+.PP
+\fB\-n \fR\fB\fIname\fR\fR
+.RS 4
+The path to the supervisord script file on the machine\&.
 .RE
 .SH "ENVIRONMENT"
 .PP
@@ -87,7 +97,7 @@ Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SA
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:
