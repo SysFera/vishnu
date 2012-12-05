@@ -26,6 +26,14 @@
           <para>Deliverable version</para>
         </revdescription>
         </revision>
+	  <revision>
+        <revnumber>2</revnumber>
+        <date>05/12/2012</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>Rename of FMS API functions according to POSIX names</para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
