@@ -46,7 +46,8 @@ namespace vishnu {
     FMS_URIADDR,
     IMS_URIADDR,
     TMS_URIADDR,
-    UMS_URIADDR
+    UMS_URIADDR,
+    CLOUDENDPOINT
   } param_type_t;
 
   /**

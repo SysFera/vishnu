@@ -70,6 +70,7 @@ main(int argc, char* argv[], char* envp[]) {
   char* slaveJobFile = NULL;
   char* slaveErrorPath = NULL;
   char* jobScriptPath = NULL;
+
   BatchType batchType;
   std::string batchVersion;
   std::string batchTypeStr;
@@ -80,44 +81,46 @@ main(int argc, char* argv[], char* envp[]) {
   action = std::string(argv[1]);
   if(action.compare("SUBMIT")==0) {
     if(argc < 9) {
+       // Too few arguments
        usage(argv[0]);
-     }
-    slaveJobFile = argv[6];
-    optionsPath = argv[7];
-    jobScriptPath = argv[8];
+    }
+
+    // Get batchtype
+    batchType = convertToBatchType(argv[2]);
+    jobSerializedPath = argv[3];
+    slaveErrorPath = argv[4];
+    slaveJobFile = argv[5];
+    optionsPath = argv[6];
+    jobScriptPath = argv[7];
   }
   else if(action.compare("CANCEL")==0) {
     if(argc < 6) {
+     // Too few arguments
      usage(argv[0]);
     }
   } else {
     usage(argv[0]);
   }
 
-  // Other command-line parameters
-  batchTypeStr = argv[2];
-  batchVersion = argv[3];
-  if (batchTypeStr == "TORQUE") {
-    batchType = TORQUE;
-  } else if (batchTypeStr == "LOADLEVELER") {
-    batchType = LOADLEVELER;
+  if(batchType == UNDEFINED) {
+	  std::string msg = "invalid value for batch type parameter (must be 'TORQUE', "
+	  			"'LOADLEVLER', 'SLURM', 'LSF', 'SGE' or 'DELTACLOUD')\n";
+	  std::cerr << "Error: "+ msg + "\n";
+	  throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Slave: "+ msg);
   } else if (batchTypeStr == "PBSPRO") {
     batchType = PBSPRO;
-  } else if (batchTypeStr == "SLURM") {
-    batchType = SLURM;
-  } else if (batchTypeStr == "LSF") {
-    batchType = LSF;
-  } else if (batchTypeStr == "SGE") {
-    batchType = SGE;
+    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE', 'LOADLEVLER', 'SLURM', 'LSF', 'SGE', 'PBS' or DELTACLOUD\n";
   } else if (batchTypeStr == "POSIX") {
     batchType = POSIX;
-  } else {
-    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS' or 'POSIX')" << std::endl;
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS' or 'POSIX')");
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBS, DELTACLOUD or POSIX)");
   }
 
-  jobSerializedPath = argv[4];
-  slaveErrorPath = argv[5];
+  char** cloudEnv = NULL;
+  if(batchType == DELTACLOUD) {
+	cloudEnv = new char*[2];
+	cloudEnv[0] =  argv[8];
+	cloudEnv[1] =  argv[9];
+  }
 
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
@@ -131,7 +134,6 @@ main(int argc, char* argv[], char* envp[]) {
     if(batchServer==NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
     }
-
     std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
     if(!parseEmfObject(std::string(jobSerialized), job)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: job object is not well built");
@@ -144,7 +146,7 @@ main(int argc, char* argv[], char* envp[]) {
       }
 
       //Submits the job
-      if(batchServer->submit(jobScriptPath, *submitOptions, *job, envp)==0){;
+      if(batchServer->submit(jobScriptPath, *submitOptions, *job, cloudEnv)==0){;
 
         //To serialize the job object
         ::ecorecpp::serializer::serializer _ser;
@@ -171,6 +173,7 @@ main(int argc, char* argv[], char* envp[]) {
     os_error.close();
   }
 
+  delete cloudEnv ;
   delete job;
   delete submitOptions;
   delete batchServer;

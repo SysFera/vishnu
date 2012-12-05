@@ -166,9 +166,10 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
     mendScript="";
-
+  } else if (mbatchType==DELTACLOUD) {
+    //NOTHING TODO
   } else {
-    std::cerr << "Unknown Batch type " << std::endl;
+    std::cerr << "Unknown Batch type\n";
   }
 
 }

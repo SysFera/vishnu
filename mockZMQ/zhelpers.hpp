@@ -9,7 +9,7 @@
 #include <string.h>
 
 
-const int DEFAULT_TIMEOUT = 2; // seconds
+const int DEFAULT_TIMEOUT = 60; // seconds
 
 /**
  * @class wraps zmq::socket_t to simplify its use

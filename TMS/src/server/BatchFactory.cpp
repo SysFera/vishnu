@@ -38,7 +38,6 @@ loadPluginBatch(const char *name) {
     void *factory = plugin->symbol("create_plugin_instance");
     reinterpret_cast<factory_function>(factory)(reinterpret_cast<void**>(&instance));
   }
-
   return instance;
 }
 
@@ -66,10 +65,11 @@ loadPluginBatch(const char *name) {
 //       instance = loadPluginBatch("vishnu-tms-sge11");
 // #elif HAVE_PBSPRO_10_4
 //       instance = loadPluginBatch("vishnu-tms-pbspro10.4");
+//#elif HAVE_DELTACLOUD
+//      instance = loadPluginBatch("vishnu-tms-deltacloud");
 // #elif HAVE_TMSPOSIX
 //       instance = loadPluginBatch("vishnu-tms-posix1.0");
 // #endif
-
 //   return static_cast<BatchServer *>(instance);
 // }
 

@@ -31,6 +31,8 @@ namespace vishnu {
   /* [21] */ {IMS_URIADDR, "ims_uriAddr", URI_PARAMETER},
   /* [22] */ {TMS_URIADDR, "tms_uriAddr", URI_PARAMETER},
   /* [23] */ {UMS_URIADDR, "ums_uriAddr", URI_PARAMETER}
+  /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER}
+
   };
   //}}RELAX<MISRA_0_1_3>
 }

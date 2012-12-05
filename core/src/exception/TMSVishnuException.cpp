@@ -19,8 +19,8 @@ TMSVishnuException::TMSVishnuException():UserException(){
 void
 TMSVishnuException::initMsg(){
 
-  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_BATCH_SCHEDULER, std::string("The batch scheduler type is unknown")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_BATCH_SCHEDULER_ERROR, std::string("The batch scheduler indicates an error")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_BATCH_SCHEDULER, std::string("The backend resource management system type is unknown")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_BATCH_SCHEDULER_ERROR, std::string("The backend resource management system indicates an error")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_JOBID, std::string("The job id is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_PERMISSION_DENIED, std::string("Permission denied")));
   mp.insert(std::pair<int, std::string>(ERRCODE_ALREADY_TERMINATED, std::string("The job is already terminated")));

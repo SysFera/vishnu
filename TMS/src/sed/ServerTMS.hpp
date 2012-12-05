@@ -47,6 +47,28 @@ class ServerTMS : public SeD {
 public :
 
   /**
+	 * \brief To initialize the TMS Server class
+	 * \param vishnuId The identifier of the vishnu instance
+	 * \param dbConfig  The configuration of the database
+	 * \param machineId the id of the machine
+	 * \param batchType the type of batch scheduler
+	 * \param slaveBinDir  the directory that contains the slave binary
+	 * \return raises an exception on error
+	 */
+	int
+	init(int & vishnuId,
+			DbConfiguration & dbConfig,
+			const std::string & machineId,
+			BatchType batchType,
+			const std::string & slaveBinDir,
+			const ExecConfiguration_Ptr sedConfig);
+
+	/**
+	 * \brief Destructor, raises an exception on error
+	 */
+	~ServerTMS();
+
+	/**
    * \brief To get the unique instance of the server
    */
   static ServerTMS*
@@ -99,7 +121,6 @@ public :
    */
   std::vector<std::string>
   getDefaultBatchOption() const;
-
   /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
@@ -122,9 +143,11 @@ public :
 
 
   /**
-   * \brief Destructor, raises an exception on error
+   * \brief To get the main configuration
+   * \return the pointer to configuration object
    */
-  ~ServerTMS();
+ ExecConfiguration_Ptr
+ getSedConfig() const;
 
 private :
   /**
@@ -203,14 +226,16 @@ private :
   /**
    * \brief Instance of Database
    */
-  Database *mdatabaseVishnu;
+   Database* mdatabaseVishnu;
+
   /**
    * \brief Directory containing the slave binary
    */
   std::string mslaveBinDir;
   /**
-   * \brief  Default batch submittion Options
-   */
-  std::vector<std::string> mdefaultBatchOption;
+/**
+* \brief The configuration of the SeD 
+*/
+	ExecConfiguration_Ptr msedConfig;
 };
 #endif // SERVER
