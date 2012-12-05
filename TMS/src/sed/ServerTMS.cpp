@@ -91,6 +91,15 @@ ServerTMS::getSlaveDirectory() const {
 }
 
 /**
+ * \brief To get the main configuration
+ * \return the pointer to configuration object
+ */
+ExecConfiguration_Ptr
+ServerTMS::getSedConfig() const {
+	return msedConfig;
+}
+
+/**
  * \brief Constructor (private)
  */
 ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
@@ -116,13 +125,13 @@ ServerTMS::getDefaultBatchOption() const {
  * \return raises an exception on error
  */
 int
-ServerTMS::init(int vishnuId,
-                DbConfiguration dbConfig,
+ServerTMS::init(int & vishnuId,
+		DbConfiguration & dbConfig,
                 const std::string& machineId,
                 BatchType batchType,
                 const std::string& batchVersion,
-                const std::string& slaveBinDir,
-                const std::string& batchDefaultConfigFile) {
+		const std::string & slaveBinDir,
+		const ExecConfiguration_Ptr sedConfig) {
 
   //initialization of the batchType
   mbatchType = batchType;
@@ -136,8 +145,9 @@ ServerTMS::init(int vishnuId,
   //initialization of the slave directory
   mslaveBinDir = slaveBinDir;
 
-  //initialization of the default batch config file
-  // mdefaultBatchConfig = batchDefaultConfigFile;
+  // initialize the SeD configuration object
+  msedConfig = sedConfig;
+  
   switch(mbatchType) {
     case TORQUE :
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");

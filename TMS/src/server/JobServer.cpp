@@ -29,12 +29,22 @@ using namespace std;
 JobServer::JobServer(const SessionServer& sessionServer,
                      const std::string& machineId,
                      const TMS_Data::Job& job,
-                     const BatchType& batchType,
-                     const std::string& batchVersion):
-  msessionServer(sessionServer), mmachineId(machineId), mjob(job),
-  mbatchType(batchType), mbatchVersion(batchVersion) {
+		const ExecConfiguration_Ptr sedConfig):
+	 	msessionServer(sessionServer), mmachineId(machineId), mjob(job), msedConfig(sedConfig) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
+	if(msedConfig) {
+		std::string batchName;
+		msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchName);
+		mbatchType =  convertToBatchType(batchName);
+	}
+}
+
+/**
+ * \brief Destructor
+ */
+JobServer::~JobServer() {
+
 }
 
 /**
@@ -170,9 +180,18 @@ int JobServer::submitJob(const std::string& scriptContent,
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
 
+	// Retrieve some additional information for submitting a in cloud
+	if(mbatchType == DELTACLOUD) {
+		std::string cloudEndpoint;
+		msedConfig->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpoint);
+		sshJobExec.setCloudEndpoint(cloudEndpoint);
+	}
+
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
+
+	// clean the temporary script once the job completed
 	vishnu::deleteFile(scriptPath);
-  free(scriptPath);
+        free(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
@@ -185,7 +204,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string updateJobSerialized = sshJobExec.getJobSerialized();
 	TMS_Data::Job_ptr job = NULL;
 	if (!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
-		std::cerr << "EXCEPTION::::::::::jobSerialized" << updateJobSerialized <<std::endl;
 		throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
 	}
 	mjob = *job;
@@ -465,40 +483,40 @@ TMS_Data::Job JobServer::getJobInfo() {
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
-	if (sqlResult->getNbTuples() != 0) {
-		results.clear();
-		results = sqlResult->get(0);
-		iter = results.begin();
-
-		mjob.setSessionId(*iter);
-		mjob.setSubmitMachineId(*(++iter));
-		mjob.setSubmitMachineName(*(++iter));
-		mjob.setJobId(*(++iter));
-		mjob.setJobName(*(++iter));
-		mjob.setJobPath(*(++iter));
-		mjob.setWorkId(convertToLong(*(++iter)));
-		mjob.setOutputPath(*(++iter));
-		mjob.setErrorPath(*(++iter));
-		mjob.setOutputDir(*(++iter));
-		mjob.setJobPrio(convertToInt(*(++iter)));
-		mjob.setNbCpus(convertToInt(*(++iter)));
-		mjob.setJobWorkingDir(*(++iter));
-		mjob.setStatus(convertToInt(*(++iter)));
-		mjob.setSubmitDate( convertLocaltimeINUTCtime(convertToTimeType(*(++iter))) ); //convert the submitDate into UTC date
-		mjob.setEndDate(convertLocaltimeINUTCtime(convertToTimeType(*(++iter)))); //convert the endDate into UTC date
-		mjob.setOwner(*(++iter));
-		mjob.setJobQueue(*(++iter));
-		mjob.setWallClockLimit(convertToInt(*(++iter)));
-		mjob.setGroupName(*(++iter));
-		mjob.setJobDescription(*(++iter));
-		mjob.setMemLimit(convertToInt(*(++iter)));
-		mjob.setNbNodes(convertToInt(*(++iter)));
-		mjob.setNbNodesAndCpuPerNode(*(++iter));
-		mjob.setBatchJobId(*(++iter));
-		mjob.setUserId(*(++iter));
-	} else {
+	if (sqlResult->getNbTuples() == 0){
 		throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
 	}
+
+	results.clear();
+	results = sqlResult->get(0);
+	iter = results.begin();
+
+	mjob.setSessionId(*iter);
+	mjob.setSubmitMachineId(*(++iter));
+	mjob.setSubmitMachineName(*(++iter));
+	mjob.setJobId(*(++iter));
+	mjob.setJobName(*(++iter));
+	mjob.setJobPath(*(++iter));
+	mjob.setWorkId(convertToLong(*(++iter)));
+	mjob.setOutputPath(*(++iter));
+	mjob.setErrorPath(*(++iter));
+	mjob.setOutputDir(*(++iter));
+	mjob.setJobPrio(convertToInt(*(++iter)));
+	mjob.setNbCpus(convertToInt(*(++iter)));
+	mjob.setJobWorkingDir(*(++iter));
+	mjob.setStatus(convertToInt(*(++iter)));
+	mjob.setSubmitDate( convertLocaltimeINUTCtime(convertToTimeType(*(++iter))) ); //convert the submitDate into UTC date
+	mjob.setEndDate(convertLocaltimeINUTCtime(convertToTimeType(*(++iter)))); //convert the endDate into UTC date
+	mjob.setOwner(*(++iter));
+	mjob.setJobQueue(*(++iter));
+	mjob.setWallClockLimit(convertToInt(*(++iter)));
+	mjob.setGroupName(*(++iter));
+	mjob.setJobDescription(*(++iter));
+	mjob.setMemLimit(convertToInt(*(++iter)));
+	mjob.setNbNodes(convertToInt(*(++iter)));
+	mjob.setNbNodesAndCpuPerNode(*(++iter));
+	mjob.setBatchJobId(*(++iter));
+	mjob.setUserId(*(++iter));
 
 	return mjob;
 }
@@ -555,8 +573,11 @@ long long JobServer::convertToTimeType(std::string date) {
 
 }
 
-
 /**
- * \brief Destructor
+ * \brief To get the main configuration
+ * \return the pointer to configuration object
  */
-JobServer::~JobServer() { }
+ExecConfiguration_Ptr
+JobServer::getSedConfig() const {
+	return msedConfig;
+}

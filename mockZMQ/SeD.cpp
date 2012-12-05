@@ -62,8 +62,8 @@ public:
 
   void
   operator()() {
-    Socket socket(*ctx_, ZMQ_REP);
-    socket.connect("inproc://vishnu");
+    zmq::socket_t socket(*ctx_, ZMQ_REP);
+    socket.connect(WORKER_INPROC_QUEUE.c_str());
     std::string data;
     while (true) {
         data.clear();
@@ -74,7 +74,6 @@ public:
           continue;
         }
         std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
-
         // Deserialize and call UMS Method
         if (!data.empty()) {
             boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
@@ -103,7 +102,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   // bind the sockets
   std::cout << boost::format("I: listening... (%1%)\n") % uri;
   socket_server.bind(uri.c_str());
-  socket_workers.bind("inproc://vishnu");
+  socket_workers.bind(WORKER_INPROC_QUEUE.c_str());
 
   // Create our threads pool
   const int NB_THREADS = 50;

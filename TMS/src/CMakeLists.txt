@@ -95,7 +95,8 @@ if (NOT CLIENT_ONLY)
     server/ScriptGenConvertor.cpp
     server/Env.cpp
     server/WorkServer.cpp
-    utils/SharedLibrary.cc)
+    utils/SharedLibrary.cc
+    )
  if(WIN32)
    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
  else()
@@ -104,7 +105,7 @@ if (NOT CLIENT_ONLY)
  
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server ${USED_BATCH_LIB} vishnu-ums-server vishnu-ums-client)
+  target_link_libraries(vishnu-tms-server vishnu-ums-server vishnu-ums-client)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed
@@ -119,7 +120,6 @@ if (NOT CLIENT_ONLY)
     vishnu-tms-client
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
-    ${USED_BATCH_LIB}
     ${ZMQ_LIBRARIES}
     zmq_helper)
 
@@ -153,7 +153,13 @@ if (NOT CLIENT_ONLY)
     target_link_libraries(vishnu-tms-pbspro${VISHNU_BATCH_VERSION} ${PBSPRO_LIB})
     install(TARGETS vishnu-tms-pbspro${VISHNU_BATCH_VERSION} DESTINATION ${LIB_INSTALL_DIR})
   endif()
-# always compile posix server
+  if(deltacloud)
+    add_library(vishnu-tms-deltacloud ${DELTACLOUDSERVER})
+    target_link_libraries(vishnu-tms-deltacloud ${LIBDELTACLOUD_LIB})
+    install(TARGETS vishnu-tms-deltacloud DESTINATION ${LIB_INSTALL_DIR})
+  endif()
+  
+  # always compile posix server
   add_library(vishnu-tms-posix1.0 ${POSIXSERVER})
   target_link_libraries(vishnu-tms-posix1.0 ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
   install(TARGETS vishnu-tms-posix1.0 DESTINATION ${LIB_INSTALL_DIR})

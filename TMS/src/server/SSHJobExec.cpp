@@ -43,7 +43,8 @@ SSHJobExec::SSHJobExec(const std::string& user,
                        const std::string& submitOptionsSerialized):
   muser(user), mhostname(hostname), mbatchType(batchType),
   mjobSerialized(jobSerialized),
-  msubmitOptionsSerialized(submitOptionsSerialized)
+  msubmitOptionsSerialized(submitOptionsSerialized),
+  mcloudEndpoint("")
 {
   if (batchVersion.empty()) {
     mbatchVersion = "-";  // mbatchVersion must never be empty
@@ -52,6 +53,12 @@ SSHJobExec::SSHJobExec(const std::string& user,
   }
 }
 
+/**
+ * \brief Destructor
+ */
+SSHJobExec::~SSHJobExec() {
+
+}
 /**
  * \brief Function to return the job serialized content
  * \return  job serialized content
@@ -120,21 +127,35 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 	errorPath = TMS_SERVER_FILES_DIR+"/errorPathXXXXXX";
 	vishnu::createTmpFile(const_cast<char*>(errorPath.c_str()));
 
+	std::ostringstream cmd;
 	cmdDetails = "" ;
 	if(serviceName.compare("SUBMIT")==0) {
-		cmdDetails+= jobUpdateSerializedPath
+		// set specific arguments for submit job
+		cmdDetails += jobUpdateSerializedPath
 				+ " " +  submitOptionsSerializedPath
 				+ " " + script_path;
+	}
+
+	if(mbatchType != DELTACLOUD) {
+		// For traditional batch scheduler we need to submit the job through ssh
+		cmd << "ssh -l " << muser << " " << mhostname << " "
+				<< " -o NoHostAuthenticationForLocalhost=yes "
+				<< " -o PasswordAuthentication=no ";
+	} else {
+
+		if(mcloudEndpoint.size() != 0 && muser.size() != 0) {
+		// set the information to authenticate against the cloud frontend
+		// the password is retrieved from the command option
+		cmdDetails += " " + mcloudEndpoint + " " + muser;
+		} else {
+			//TODO throw exception
+		}
 	}
 
 	stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
 	vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
 
-	std::ostringstream cmd;
-	cmd << "ssh -l " << muser << " " << mhostname << " "
-			<< " -o NoHostAuthenticationForLocalhost=yes "
-			<< " -o PasswordAuthentication=no "
-			<< slaveDirectory << "/tmsSlave "
+	cmd << slaveDirectory << "/tmsSlave "
 			<< serviceName << " "
 			<< convertBatchTypeToString(mbatchType) << " "
 			<< mbatchVersion << " "
@@ -252,6 +273,9 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
         case PBSPRO:
                 value = "PBSPRO";
                 break;
+	case DELTACLOUD:
+		value = "DELTACLOUD";
+		break;
         case POSIX:
                 value = "POSIX";
                 break;
@@ -328,10 +352,10 @@ SSHJobExec::execCmd(const std::string& cmd){
 	return 0;
 }
 
-
 /**
- * \brief Destructor
- */
-SSHJobExec::~SSHJobExec() {
-
+* \brief Set the value of the cloud endpoint
+*/
+void
+SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
+   mcloudEndpoint = cloupApiUrl;
 }

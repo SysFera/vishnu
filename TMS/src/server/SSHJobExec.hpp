@@ -35,6 +35,11 @@ class SSHJobExec {
                const std::string& jobSerialized = "",
                const std::string& submitOptionsSerialized="");
 
+    /**
+     * \brief Destructor
+     */
+    ~SSHJobExec();
+
      /**
      * \brief Function to execute command by using ssh
      * \param slaveDirectory the path to the command executable
@@ -91,9 +96,16 @@ class SSHJobExec {
     getErrorInfo();
 
     /**
-     * \brief Destructor
-     */
-    ~SSHJobExec();
+    * \brief Set the value of the cloud endpoint
+    */
+   void
+   setCloudEndpoint(const std::string & cloupApiUrl);
+
+   /**
+   * \brief Set the login to authenticate against the cloud
+   */
+   void
+   setCloudUser(const std::string & user);
 
   private:
 
@@ -144,6 +156,11 @@ class SSHJobExec {
      * \brief The hostname of the machine
      */
     std::string mhostname;
+
+    /**
+     * \brief The endpoint of deltacloud server
+     */
+    std::string mcloudEndpoint;
 
 };
 

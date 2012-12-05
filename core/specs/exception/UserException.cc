@@ -5,7 +5,7 @@ UserException::UserException():VishnuException(){ initMsg();}
 
 UserException::UserException(const UserException& e):VishnuException(e){ initMsg();}
 
-UserException::UserException(int msg, std::string msgComp):VishnuException(msg,msgComp){ initMsg();}
+UserException::UserException(int msg, std::string msgComp):VishnuException(msg, msgComp){ initMsg();}
 
 std::string
 UserException::getTypeS() const{

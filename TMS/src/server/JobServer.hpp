@@ -31,8 +31,7 @@ public:
   explicit JobServer(const SessionServer& sessionServer,
                      const std::string& machineId,
                      const TMS_Data::Job& job,
-                     const BatchType& batchType,
-                     const std::string& batchVersion);
+                     const ExecConfiguration_Ptr sedConfig);
 
 
   /**
@@ -48,6 +47,11 @@ public:
                 const int& vishnuId,
                 const std::string& slaveDirectory,
                 const std::vector<std::string>& defaultBatchOption);
+
+  /**
+   * \brief Destructor
+   */
+  ~JobServer();
 
   /**
    * \brief Function to cancel job
@@ -69,10 +73,16 @@ public:
   TMS_Data::Job getData();
 
   /**
-   * \brief Destructor
+   * \brief To set the main configuration
    */
-  ~JobServer();
+  void setSedConfig(ExecConfiguration_Ptr sedConfig);
 
+  /**
+   * \brief To get the main configuration
+   * \return the pointer to configuration object
+   */
+  ExecConfiguration_Ptr
+  getSedConfig() const;
 
   private:
 
@@ -142,6 +152,11 @@ public:
    * \brief An instance of vishnu database
    */
   Database *mdatabaseVishnu;
+
+  /**
+  * \brief The configuration of the SeD
+  */
+  ExecConfiguration_Ptr msedConfig;
 };
 
 #endif
