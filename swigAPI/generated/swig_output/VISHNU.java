@@ -265,64 +265,64 @@ public class VISHNU {
     return VISHNUJNI.restart(sessionKey, machineId, RestartOp.getCPtr(op), op);
   }
 
-  public static int createFile(String sessionKey, String path) throws InternalFMSException {
-    return VISHNUJNI.createFile(sessionKey, path);
+  public static int touch(String sessionKey, String path) throws InternalFMSException {
+    return VISHNUJNI.touch(sessionKey, path);
   }
 
-  public static int chGrp(String sessionKey, String group, String path) throws InternalFMSException {
-    return VISHNUJNI.chGrp(sessionKey, group, path);
+  public static int chgrp(String sessionKey, String group, String path) throws InternalFMSException {
+    return VISHNUJNI.chgrp(sessionKey, group, path);
   }
 
-  public static int chMod(String sessionKey, long mode, String path) throws InternalFMSException {
-    return VISHNUJNI.chMod(sessionKey, mode, path);
+  public static int chmod(String sessionKey, long mode, String path) throws InternalFMSException {
+    return VISHNUJNI.chmod(sessionKey, mode, path);
   }
 
-  public static int copyFile(String sessionKey, String src, String dest, CpFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.copyFile(sessionKey, src, dest, CpFileOptions.getCPtr(options), options);
+  public static int cp(String sessionKey, String src, String dest, CpFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.cp(sessionKey, src, dest, CpFileOptions.getCPtr(options), options);
   }
 
-  public static int copyAsyncFile(String sessionKey, String src, String dest, FileTransfer transferInfo, CpFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.copyAsyncFile(sessionKey, src, dest, FileTransfer.getCPtr(transferInfo), transferInfo, CpFileOptions.getCPtr(options), options);
+  public static int acp(String sessionKey, String src, String dest, FileTransfer transferInfo, CpFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.acp(sessionKey, src, dest, FileTransfer.getCPtr(transferInfo), transferInfo, CpFileOptions.getCPtr(options), options);
   }
 
-  public static int headOfFile(String sessionKey, String path, java.lang.String[] contentOfFile, HeadOfFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.headOfFile(sessionKey, path, contentOfFile, HeadOfFileOptions.getCPtr(options), options);
+  public static int head(String sessionKey, String path, java.lang.String[] contentOfFile, HeadOfFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.head(sessionKey, path, contentOfFile, HeadOfFileOptions.getCPtr(options), options);
   }
 
-  public static int contentOfFile(String sessionKey, String path, java.lang.String[] contentOfFile) throws InternalFMSException {
-    return VISHNUJNI.contentOfFile(sessionKey, path, contentOfFile);
+  public static int more(String sessionKey, String path, java.lang.String[] contentOfFile) throws InternalFMSException {
+    return VISHNUJNI.more(sessionKey, path, contentOfFile);
   }
 
-  public static int listDir(String sessionKey, String path, DirEntryList dirContent, LsDirOptions options) throws InternalFMSException {
-    return VISHNUJNI.listDir(sessionKey, path, DirEntryList.getCPtr(dirContent), dirContent, LsDirOptions.getCPtr(options), options);
+  public static int ls(String sessionKey, String path, DirEntryList dirContent, LsDirOptions options) throws InternalFMSException {
+    return VISHNUJNI.ls(sessionKey, path, DirEntryList.getCPtr(dirContent), dirContent, LsDirOptions.getCPtr(options), options);
   }
 
-  public static int createDir(String sessionKey, String path, CreateDirOptions options) throws InternalFMSException {
-    return VISHNUJNI.createDir(sessionKey, path, CreateDirOptions.getCPtr(options), options);
+  public static int mkdir(String sessionKey, String path, CreateDirOptions options) throws InternalFMSException {
+    return VISHNUJNI.mkdir(sessionKey, path, CreateDirOptions.getCPtr(options), options);
   }
 
-  public static int moveFile(String sessionKey, String src, String dest, CpFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.moveFile(sessionKey, src, dest, CpFileOptions.getCPtr(options), options);
+  public static int mv(String sessionKey, String src, String dest, CpFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.mv(sessionKey, src, dest, CpFileOptions.getCPtr(options), options);
   }
 
-  public static int moveAsyncFile(String sessionKey, String src, String dest, FileTransfer transferInfo, CpFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.moveAsyncFile(sessionKey, src, dest, FileTransfer.getCPtr(transferInfo), transferInfo, CpFileOptions.getCPtr(options), options);
+  public static int amv(String sessionKey, String src, String dest, FileTransfer transferInfo, CpFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.amv(sessionKey, src, dest, FileTransfer.getCPtr(transferInfo), transferInfo, CpFileOptions.getCPtr(options), options);
   }
 
-  public static int removeFile(String sessionKey, String path, RmFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.removeFile(sessionKey, path, RmFileOptions.getCPtr(options), options);
+  public static int rm(String sessionKey, String path, RmFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.rm(sessionKey, path, RmFileOptions.getCPtr(options), options);
   }
 
-  public static int removeDir(String sessionKey, String path) throws InternalFMSException {
-    return VISHNUJNI.removeDir(sessionKey, path);
+  public static int rmdir(String sessionKey, String path) throws InternalFMSException {
+    return VISHNUJNI.rmdir(sessionKey, path);
   }
 
-  public static int tailOfFile(String sessionKey, String path, java.lang.String[] contentOfFile, TailOfFileOptions options) throws InternalFMSException {
-    return VISHNUJNI.tailOfFile(sessionKey, path, contentOfFile, TailOfFileOptions.getCPtr(options), options);
+  public static int tail(String sessionKey, String path, java.lang.String[] contentOfFile, TailOfFileOptions options) throws InternalFMSException {
+    return VISHNUJNI.tail(sessionKey, path, contentOfFile, TailOfFileOptions.getCPtr(options), options);
   }
 
-  public static int getFileInfo(String sessionKey, String path, FileStat filesInfo) throws InternalFMSException {
-    return VISHNUJNI.getFileInfo(sessionKey, path, FileStat.getCPtr(filesInfo), filesInfo);
+  public static int stat(String sessionKey, String path, FileStat filesInfo) throws InternalFMSException {
+    return VISHNUJNI.stat(sessionKey, path, FileStat.getCPtr(filesInfo), filesInfo);
   }
 
   public static int stopFileTransfer(String sessionKey, StopTransferOptions options) throws InternalFMSException {
