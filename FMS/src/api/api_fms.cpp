@@ -292,11 +292,11 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
  * \brief get the first lines of a file
  * \param sessionKey the session key
  * \param path   the file path using host:path format
- * \param more  the first "nline" lines of the file
+ * \param contentOfFile  the first "nline" lines of the file
  * \param options   contains the options used to perform the service (like the maximum number of lines to get)
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::head(const string& sessionKey,const string& path, string& more, const HeadOfFileOptions& options)
+int vishnu::head(const string& sessionKey,const string& path, string& contentOfFile, const HeadOfFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -309,7 +309,7 @@ int vishnu::head(const string& sessionKey,const string& path, string& more, cons
 
     head = f->head(options);
 
-    more= strdup(head.c_str());
+    contentOfFile= strdup(head.c_str());
 
     return 0;
 
@@ -318,10 +318,10 @@ int vishnu::head(const string& sessionKey,const string& path, string& more, cons
  * \brief get the content of a file
  * \param sessionKey the session key
  * \param path   the file path using host:path format
- * \param more  the content of specified the file
+ * \param contentOfFile  the content of specified the file
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::more(const string& sessionKey,const string& path, string& more)
+int vishnu::more(const string& sessionKey,const string& path, string& contentOfFile)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -333,7 +333,7 @@ int vishnu::more(const string& sessionKey,const string& path, string& more)
 
     std::string content= f->getContent();
 
-    more= strdup(content.c_str());
+    contentOfFile= strdup(content.c_str());
 
     return 0;
 
@@ -478,12 +478,11 @@ throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
  * \brief get the last lines of a file
  * \param sessionKey the session key
  * \param path    the file path using host:path format
- * \param more  the last "nline" lines of the file
+ * \param contentOfFile  the last "nline" lines of the file
  * \param options  the options used to perform the service
- * \param more  an user-allocated buffer to store the result
  * \return 0 if everything is OK, another value otherwise
  */
-int vishnu::tail(const string& sessionKey,const string& path, string& more,const TailOfFileOptions& options)
+int vishnu::tail(const string& sessionKey,const string& path, string& contentOfFile,const TailOfFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException){
 
     //To check the remote path
@@ -497,7 +496,7 @@ int vishnu::tail(const string& sessionKey,const string& path, string& more,const
 
     tail= f->tail(options);
 
-    more= strdup(tail.c_str());
+    contentOfFile= strdup(tail.c_str());
 
     return 0;
 
