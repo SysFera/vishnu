@@ -28,7 +28,7 @@ FMSMapper::FMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_CH_MOD,  "vishnu_chmod"));
   mmap.insert (pair<int, string>(VISHNU_HEAD_OF_FILE,  "vishnu_head"));
   mmap.insert (pair<int, string>(VISHNU_TAIL_OF_FILE,  "vishnu_tail"));
-  mmap.insert (pair<int, string>(VISHNU_CONTENT_OF_FILE,  "vishnu_content"));
+  mmap.insert (pair<int, string>(VISHNU_CONTENT_OF_FILE,  "vishnu_more"));
   mmap.insert (pair<int, string>(VISHNU_LIST_DIR, "vishnu_ls"));
   mmap.insert (pair<int, string>(VISHNU_COPY_FILE, "vishnu_cp"));
   mmap.insert (pair<int, string>(VISHNU_COPY_ASYNC_FILE, "vishnu_acp"));
