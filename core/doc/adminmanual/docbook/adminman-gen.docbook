@@ -1027,7 +1027,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
           Optionnel: Sur une machine lancer le dispatcher, le fichier de configuration 'config' doit être à la fin et est optionnel.
           </para>
           <para>
-            dispatcher tcp://127.0.0.1:5560 tcp://127.0.0.1:5561 -c config
+            dispatcher dispatcher_config.cfg
           </para>
           <para>
             Dans cette commande, on demande au dispatcher de démarrer en recevant les requêtes clients sur l'URI tcp://127.0.0.1:5560, de recevoir les requêtes de contrôle sur l'URI tcp://127.0.0.1:5561, et de démarrer en utilisant les serveurs définis dans le fichier config.
@@ -1047,10 +1047,48 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
       </orderedlist>
     </section>
     <section>
-      <title>Présenter le cas multi-réseaux</title>
+      <title>Le cas multi-réseaux</title>
+      <para>
+        Le cas multi-réseaux ne change pas du cas précédent, les étapes sont toutes les mêmes. Le seul ajout à faire est d'ajouter des tunnels SSH entre les machines serveurs et la machine ou se trouve la base de données s'il n'y a pas d'accès direct sur le port correspondant au port de la base de données, et un second tunnel pour l'enregistrement des serveurs sur le dispatcher. Par la suite, il est conseillé d'utiliser le dispatcher pour que le client n'ait plus qu'à se connecter au dispatcher pour réaliser ses requêtes (le dispatcher jouant alors un rôle de proxy entre le client et les réseaux).</para>
+      <para>
+        Les tunnels SSH sont faits avec une commande similaire à l'une des suivantes:
+        <itemizedlist>
+          <listitem>
+            <para>
+              ssh -fN -L 8889:localhost:8889 machine_distance 
+            </para>
+            <para>
+              Etabli un tunnel entre la machine locale et la machine distante au travers du port 8889.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <para>
+              Etabli un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
+              ssh -R -fN 8889:localhost:8889 machine_distante
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
     <section>
-      <title>Exemple de fichier du dispatcher</title>
+      <title>Exemple de fichier de configuration du dispatcher</title>
+      <programlisting>
+        # URI pour les clients
+        disp_uriAddr=tcp://127.0.0.1:5560 
+        # URI pour que les serveurs s'inscrivent
+        disp_uriSubs=tcp://127.0.0.1:5561
+        # Fichier initial de configuration
+        disp_initFile=/home/Bureau/init_dispatcher.cfg
+        # Timeout avant de réessayer la requête
+        disp_timeout=60
+        # Nombre de threads en parallèle traitant les requêtes
+        disp_nbthread=5
+      </programlisting>
+    </section>
+    <section>
+      <title>Exemple de fichier d'initialisation du dispatcher</title>
       <para>Le fichier se compose de 3 colonnes, la première le serveur, la seconde son URI, la troisième l'identifiant de machine VISHNU. Dans l'exemple ci-dessous on a les 4 serveurs sur une URI pour une machine</para>
       <programlisting>
       TMS tcp://127.0.0.1:5557 machine_1
@@ -1060,7 +1098,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
       </programlisting>
     </section>
     <section>
-      <title>Exemple de fichier du dispatcher</title>
+      <title>Exemple de fichier de supervisord</title>
       <programlisting>
         [inet_http_server]         ; inet (TCP) server disabled by default
         port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all if
