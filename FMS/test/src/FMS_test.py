@@ -80,9 +80,9 @@ def displayDirContent(dirContent):
   for i in range(len(dirContent[1])):
     displayDirEntryInfo(dirContent[1][i])
 
-def dispalyContentOfFile(more):
+def displayContentOfFile(contentOfFile):
    print "---File content:"
-   print more
+   print contentOfFile
 
 def displayFileTransfer(filetransfer):
   print "TransferId:", filetransfer.getTransferId()
@@ -145,7 +145,7 @@ fileTransferList = []
 stopTransferOptions = VISHNU.StopTransferOptions()
 lsTransferOptions = VISHNU.LsTransferOptions()
 session=VISHNU.Session()
-more="";
+contentOfFile="";
 # preconditions
 if(os.path.exists (FMSDIR1)):
   shutil.rmtree(FMSDIR1)
@@ -219,16 +219,16 @@ try :
   print "===================head======:"
   command ="/bin/ls " + FMSWORKINGDIR + " > " + FMSDIR1 + "/" + newFileName
   os.system (command )
-  r,more =VISHNU.head(k,fileFullPath1)
-  print more
+  r,contentOfFile =VISHNU.head(k,fileFullPath1,headOpt)
+  print contentOfFile
   print "===================tail======:"
-  r, more = VISHNU.tail(k, fileFullPath1)
-  print more
+  r, contentOfFile = VISHNU.tail(k, fileFullPath1)
+  print contentOfFile
   print "===================more======:"
-  r, more = VISHNU.more(k, fileFullPath1)
-  print more
+  r, contentOfFile = VISHNU.more(k, fileFullPath1)
+  print contentOfFile
   VISHNU.rm(k,fileFullPath1)
-  print more
+  print contentOfFile
   print "=========================acp:"
   transferOpt.setIsRecursive(True)
   VISHNU.acp(k, workingDirFullPath1,baseDirFullPath2, fileTransferInfo,transferOpt)
