@@ -77,11 +77,14 @@ copy_file ChangeLog
 copy_file vishnu_version.hpp.in
 
 # Copy doxygen generator
+mkdir -p doc 
 copy_file Doxyfile
 copy_file Doxyfile_API
-
+doxygen Doxyfile
+doxygen Doxyfile_API
 # Copy doxygen documentation file
 copy_dir doc
+rm -Rf doc
 
 # Copy the licence
 copy_dir License
@@ -156,6 +159,15 @@ mkdir $pathrel/../doc/adminmanual/docbook
 mkdir $pathrel/../doc/usermanual
 mkdir $pathrel/../doc/usermanual/docbook
 
+#Usermanual and adminmanual pdfs generation
+cp core/process/doc/generation/update_doc.sh core/doc/adminmanual/docbook/
+core/doc/adminmanual/docbook/update_doc.sh core/doc/adminmanual/docbook/adminman-gen 
+rm core/doc/adminmanual/docbook/update_doc.sh
+
+cp core/process/doc/generation/update_doc.sh core/doc/usermanual/docbook/
+core/doc/usermanual/docbook/update_doc.sh core/doc/usermanual/docbook/userman-gen 
+rm core/doc/usermanual/docbook/update_doc.sh
+
 cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/docbook/vishnu-adminman.docbook
 cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $path/core/doc/adminmanual/docbook/vishnu-adminman.pdf
 cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/docbook/vishnu-adminman.html
@@ -172,7 +184,9 @@ cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/do
 cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $pathrel/../doc/usermanual/docbook/vishnu-userman.pdf
 cp core/doc/usermanual/docbook/userman-gen.html $pathrel/../doc/usermanual/docbook/vishnu-userman.html
 
-
+# Remove of usermanual and adminmanual pdfs
+rm core/doc/adminmanual/docbook/*.pdf
+rm core/doc/usermanual/docbook/*.pdf
 
 ###############################################################################
 #                                     W S                                     #
@@ -265,9 +279,19 @@ copy_dir UMS/doc/man/man3 UMS/doc/man/
 # Copy tests in release
 mkdir $pathrel/../tests/report
 
+# Script for pdfs generation tests
+cp core/process/doc/generation/update_doc.sh UMS/test/testReports/
+UMS/test/testReports/update_doc.sh UMS/test/testReports/reportTestFunctional
+UMS/test/testReports/update_doc.sh UMS/test/testReports/reportTestLoad
+UMS/test/testReports/update_doc.sh UMS/test/testReports/reportTestPerformance
+UMS/test/testReports/update_doc.sh UMS/test/testReports/reportTestStress
+UMS/test/testReports/update_doc.sh UMS/test/testReports/reportUMSTest
+
 copy_rel_file UMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
+rm UMS/test/testReports/update_doc.sh
+rm UMS/test/testReports/*.pdf
 
 ###############################################################################
 #                                    T M S                                    #
@@ -303,10 +327,18 @@ copy_file  TMS/doc/man/CMakeLists.txt TMS/doc/man/
 copy_dir  TMS/doc/man/man1 TMS/doc/man/
 copy_dir  TMS/doc/man/man3 TMS/doc/man/
 
+# Script for pdfs generation tests
+cp core/process/doc/generation/update_doc.sh TMS/test/testReports/
+TMS/test/testReports/update_doc.sh TMS/test/testReports/reportTMSTest
+
 # Copy tests in release
 copy_rel_file TMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.html ../tests/report/
+
+rm TMS/test/testReports/update_doc.sh
+rm TMS/test/testReports/*.pdf
+
 
 ###############################################################################
 #                                    F M S                                    #
@@ -336,10 +368,17 @@ copy_file  FMS/doc/man/CMakeLists.txt FMS/doc/man/
 copy_dir FMS/doc/man/man1 FMS/doc/man/
 copy_dir FMS/doc/man/man3 FMS/doc/man/
 
+# Script for pdfs generation tests
+cp core/process/doc/generation/update_doc.sh FMS/test/testReports/
+FMS/test/testReports/update_doc.sh FMS/test/testReports/reportFMSTest
+
 # Copy tests in release
 copy_rel_file FMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file FMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file FMS/test/testReports/\*\.html ../tests/report/
+
+rm FMS/test/testReports/update_doc.sh
+rm FMS/test/testReports/*.pdf
 
 ###############################################################################
 #                                    I M S                                    #
@@ -371,10 +410,18 @@ copy_file  IMS/doc/man/CMakeLists.txt IMS/doc/man/
 copy_dir IMS/doc/man/man1 IMS/doc/man/
 copy_dir IMS/doc/man/man3 IMS/doc/man/
 
+
+# Script for pdfs generation tests
+cp core/process/doc/generation/update_doc.sh IMS/test/testReports/
+IMS/test/testReports/update_doc.sh IMS/test/testReports/reportIMSTest
+
 # Copy tests in release
 copy_rel_file IMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.html ../tests/report/
+
+rm IMS/test/testReports/update_doc.sh
+rm IMS/test/testReports/*.pdf
 
 ###############################################################################
 #                                  SWIG API                                   #
