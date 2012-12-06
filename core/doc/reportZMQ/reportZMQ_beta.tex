@@ -192,7 +192,37 @@ décembre 2012. Sur ces tests, une seule machine contenait tout
 les processus nécessaires. Les tests ont été effectués les uns
 à la suite des autres et non pas en parallèle pour éviter tout
 conflit. \\
-Le parallélisme a été simulé avec 4 scripts de 250 connexions séquentielles lancés en parallèle.
+Le parallélisme a été simulé avec 4 scripts de 250 connexions séquentielles 
+lancés en parallèle. 
+Les script était basique et ne faisait que la commande \textit{vishnu\_connect} 
+uniquement.
+
+\begin{verbatim}
+#Script 1, séquentiel
+#!/bin/bash
+function tester () {
+    for (( i = 0 ; i < 1000; i += 1 ));
+        do $1/vishnu_connect ;
+    done;
+}
+
+tester $1
+
+
+#Script 2, parallèle simulé
+#!/bin/bash
+function tester () {
+    for (( i = 0 ; i < 250; i += 1 ));
+        do $1/vishnu_connect ;
+    done;
+}
+
+tester $1 &
+tester $1 &
+tester $1 &
+tester $1 &
+
+\end{verbatim}
 
 \begin{tabular}{|c|c|}
 \hline
@@ -228,15 +258,23 @@ ouverte en parallèle. Les temps en eux mêmes ne sont pas significatifs,
 tout tournait sur la même machine ou d'autres processus prenaient des
 ressources, mais le nombre de process externe et leur impact était stable
  lors des diverses expériences.
+On note que ce soit en séquentiel ou en parallèle, la version ZMQ était plus performante que la version DIET.
 
 \section{Test stabilité}
 La version ZMQ a tourné pendant plusieurs jours d'affilé sans aucun souci.
-Seul un cas potentiellement problématique s'est levé, lors d'un test tout
-un week end, le serveur UMS était passé en arrêt dans supervisord et ne 
-tournait plus alors qu'il aurait du rester à tourner.
 Lors de ce test, le serveur était chargé d'une quinzaine de requêtes
-simultanées en permanence suivant un scénario prédéfini 
-(connexion, service liste machine, service liste sessions, déconnexion).
+simultanées en permanence suivant un scénario prédéfini, toujours le même 
+pour les 15 scripts tournant en parallèle.
+\begin{verbatim}
+#!/bin/bash
+while(true){
+  vishnu_connect
+  vishnu_list_machines -a
+  vishnu_list_sessions
+  vishnu_close
+  sleep 1
+}
+\end{verbatim}
 
 \section{Test de charge}
 \subsection{Tests}
@@ -262,7 +300,7 @@ entretenu la surcharge du système et un nombre important de messages inutiles.
 L'augmentation du timeout a amélioré les choses (le timeout au niveau du client
 ET le timeout au niveau du dispatcher), mais cela n'empêche qu'il fallait un 
 certain temps entre certaines requêtes et le moment ou l'on avait la clé de
-session. \\
+session. Il faut noter qu'un timeout de 2 seconde est vraiment insuffisant  au vu des infrastructures visées (pour certaines commandes comme la copie, la soumission de job ou on se base sur SSH qui peut être lent) .\\
 Pour améliorer cela, un correctif permettant de modifier la taille du pool de 
 threads de communication a été mis en place.
 
@@ -336,11 +374,12 @@ exécutions de cette commande coté serveur
 Le but sera d'améliorer les cas d'erreur et la gestion des pannes (rejoint en partie
 le coté protocole de communication). Cela comprend également une partie nettoyage mémoire
 concernant les fuites qui ont été appercues dans les tests. Une partie amélioration des
-complexité cyclomatiques et amélioration des performances peut être incluse.\\
+complexité cyclomatiques et amélioration des performances peut être incluse.
+Cette partie n'est pas spécifique à ZMQ mais à VISHNU en général pour améliorer la qualité de service. \\
 Piste : valgrind, electric fence, gprof \\
 Avantage : Amélioration des performances, diminution de l'impact sur la machine
 
-\subsection{Unifier les fichiers de configuration}
+\subsection{Proposition possible : unifier les fichiers de configuration}
 Le but sera de préfixer les variables des fichiers de configuration liées pour n'avoir
 qu'un seul fichier de configuration que l'on passera à tout le monde.\\
 Impact : Faible, renomer dans core et dans les binaires les variables, 
