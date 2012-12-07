@@ -61,7 +61,6 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string machineId;
-  string processName;
 
    /********** EMF data ************/
   IMS_Data::SupervisorOp op;
@@ -90,4 +89,3 @@ int main (int argc, char* argv[]){
   return GenericCli().run(stopFunc, dietConfig, argc, argv);
 
 }
-

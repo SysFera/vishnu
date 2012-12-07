@@ -21,11 +21,11 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
   vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
 
   if (type == 1) { // list file transfers
-  
+
   FMS_Data::LsTransferOptions lsFileTransferOptions;
   lsFileTransferOptions.setStatus(1);
     FMS_Data::FileTransferList fileTransferList;
-    
+
     for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
     listFileTransfers(sessionKey,fileTransferList,lsFileTransferOptions);
@@ -33,7 +33,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     std::cout << "5 iterations done \n";
   }
   else if (type ==2){ // create an remove file
-  
+
     for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
 
@@ -48,7 +48,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     std::cout << "5 iterations done \n";
 
   } else if (type ==3){ //copy
-    
+
       for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
 
@@ -61,11 +61,11 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     }
     std::cout << "5 iterations done \n";
 
-  
+
   }
   else if (type ==4){// getFileInfo
-  
-    FileStat fileInfos; 
+
+    FileStat fileInfos;
       for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
       getFileInfo(sessionKey,machineId+":/proc",fileInfos);
@@ -73,7 +73,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     }
     std::cout << "5 iterations done \n";
 
-  
+
   }
   vishnuFinalize();
 }
@@ -100,7 +100,6 @@ void forker(int cpt,const string& sessionKey,const std::string& machineId, int t
 
 int main(int argc, char** argv){
   int cpt;
-  int i;
   int type;
   string key  = ""       ;
   string pwd  = "toto"  ;
@@ -148,5 +147,3 @@ int main(int argc, char** argv){
 
   return 0;
 }
-
-

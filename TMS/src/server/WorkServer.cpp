@@ -44,7 +44,6 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   std::string sqlInsert = "insert into work (date_created, date_started, description, done_ratio, due_date, estimated_hours, identifier, last_updated, machine_id, nbcpus, owner_id, priority, status, subject) values ";
   std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;
-  std::string formatidwork;
 
   mwork->setApplicationId(mworkop->getApplicationId());
   mwork->setSubject(mworkop->getSubject());
@@ -303,4 +302,3 @@ void WorkServer::checkWork() {
                              " work by VISHNU System");
   }
 }
-

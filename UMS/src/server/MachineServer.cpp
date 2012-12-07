@@ -45,7 +45,6 @@ int
 MachineServer::add(int vishnuId) {
   std::string sqlUpdate = "update machine set ";
   std::string idMachineGenerated;
-  std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -293,4 +292,3 @@ void MachineServer::checkMachine() {
     throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);
   }
 }
-

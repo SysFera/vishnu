@@ -346,7 +346,6 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 		//Start dealing with output
 		JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
 		TMS_Data::JobResult result = jobOutputServer.getJobOutput();
-		ostringstream missingFiles ;
 		string jobFiles =  vishnu::getResultFiles(result, false) ;
 		string outputInfo = "/tmp/vishnu-"+result.getJobId()+"-outdescrXXXXXX"; // extension by convention
 
