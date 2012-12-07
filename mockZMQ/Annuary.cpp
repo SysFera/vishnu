@@ -87,7 +87,6 @@ Annuary::initFromFile(std::string infile){
       std::string uri;
       std::string mid;
       boost::shared_ptr<Server> server;
-      std::vector<std::string> ports;
       iss >> name;
       iss >> uri;
       iss >> mid;

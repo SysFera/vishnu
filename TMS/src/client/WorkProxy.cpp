@@ -32,7 +32,6 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
   char* workInString;
   char* errorInfo;
   char* optionsToString = NULL;
-  std::string tmp;
 
   std::string msg = "call of function diet_string_set is rejected ";
 
@@ -221,4 +220,3 @@ TMS_Data::Work WorkProxy::getData()
 WorkProxy::~WorkProxy()
 {
 }
-

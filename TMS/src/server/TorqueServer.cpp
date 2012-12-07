@@ -866,8 +866,7 @@ TorqueServer::getNbNodesInNodeFormat(const std::string& format,
                                      int& maxNbCpu) {
 
   std::string nextNodeContent;
-  std::string nextNode;
-  std::string nbCpuStr;
+
   nbCpu = std::numeric_limits<int>::max();
   int nbNodes = 0;
   size_t beg = 0;
@@ -1153,22 +1152,19 @@ void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
    struct batch_status* p_status = pbs_selstat(connect, NULL, NULL);
    pbs_disconnect(connect);
 
-   if(p_status!=NULL)
-   {
-     std::string batchId;
+   if(p_status != NULL) {
      int jobStatus;
      long nbRunningJobs = 0;
      long nbWaitingJobs = 0;
      struct batch_status *p;
-     for(p = p_status; p!=NULL; p = p->next)
-     {
+     for(p = p_status; p != NULL; p = p->next) {
        // Getting job idx
        std::string batchId = p->name;
        size_t pos_found =  batchId.find(".");
-       if (pos_found!=std::string::npos) {
-         pos_found=batchId.find(".", pos_found+1);
+       if (pos_found != std::string::npos) {
+         pos_found = batchId.find(".", pos_found+1);
        }
-       batchId=batchId.substr(0, pos_found);
+       batchId = batchId.substr(0, pos_found);
        std::vector<std::string>::const_iterator iter;
        iter = std::find(ignoredIds.begin(), ignoredIds.end(), batchId);
        if(iter==ignoredIds.end()) {
