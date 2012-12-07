@@ -56,7 +56,6 @@ void forker(int cpt,const string& sessionKey, const string& machineId, int type)
 
 int main(int argc, char** argv){
   int cpt;
-  int i;
   int type;
   string key  = ""       ;
   string pwd  = "vishnu_user"  ;
@@ -103,5 +102,3 @@ int main(int argc, char** argv){
 
   return 0;
 }
-
-

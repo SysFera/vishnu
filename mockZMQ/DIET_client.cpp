@@ -245,7 +245,6 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
 
 int
 diet_call(diet_profile_t* prof) {
-  std::vector<boost::shared_ptr<Server> > serv;
   std::string uri;
 
   // get the service and the related module
@@ -351,7 +350,6 @@ my_serialize(diet_profile_t* prof) {
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
   boost::shared_ptr<diet_profile_t> res;
-  std::vector<int> vec;
 
   std::vector<std::string> vecString;
 

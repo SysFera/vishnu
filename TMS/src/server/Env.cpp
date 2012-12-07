@@ -40,8 +40,6 @@ void Env::replaceAllOccurences(std::string& scriptContent,
  */
 void Env::replaceEnvVariables(std::string& scriptContent) {
 
-	std::string numNodes;
-	std::string cpuPerNode;
 	size_t pos;
 	switch(mbatchType) {
 
@@ -157,10 +155,10 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
         		scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
         		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
         		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
-     		}		
+     		}
      		//To replace VISHNU_BATCHJOB_NUM_NODES
       		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
-     		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");	
+     		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
 		break;
 	default:
 		break;
@@ -175,10 +173,9 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
  */
 void Env::setParams(std::string& scriptContent, const std::string & params) {
 
-	std::string param ;
 	std::string paramName ;
 	std::string paramValue ;
-	size_t pos, pos1, pos2 ;
+	size_t pos;
 	ListStrings paramsVec ;
 
 	std::string& refParams = const_cast<std::string&>(params) ;
@@ -219,4 +216,3 @@ void Env::setParamsEnvVars(const std::string& params) {
 		setenv(param.substr(0, pos).c_str(), param.substr(pos+1, std::string::npos).c_str(), 1) ;
 	}
 }
-

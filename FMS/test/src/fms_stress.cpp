@@ -21,11 +21,11 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
   vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
 
   if (type == 1) { // list file transfers
-  
+
   FMS_Data::LsTransferOptions lsFileTransferOptions;
   lsFileTransferOptions.setStatus(1);
     FMS_Data::FileTransferList fileTransferList;
-    
+
     for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
     listFileTransfers(sessionKey,fileTransferList,lsFileTransferOptions);
@@ -33,7 +33,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     std::cout << "5 iterations done \n";
   }
   else if (type ==2){ // create an remove file
-  
+
     for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
 
@@ -42,13 +42,13 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
 
       std::string path(fileName.str());
       touch(sessionKey, path);
-     rm(sessionKey, path);
+      rm(sessionKey, path);
 
     }
     std::cout << "5 iterations done \n";
 
   } else if (type ==3){ //copy
-    
+
       for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
 
@@ -61,11 +61,11 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     }
     std::cout << "5 iterations done \n";
 
-  
+
   }
-  else if (type ==4){// stat
-  
-    FileStat fileInfos; 
+  else if (type ==4){  // stat
+
+    FileStat fileInfos;
       for (int i=0;i<5;i++) {
       cout << " In loop : " <<  i << endl;
       stat(sessionKey,machineId+":/proc",fileInfos);
@@ -73,7 +73,7 @@ void stress(int cpt,const string& sessionKey,const string& machineId,int type){
     }
     std::cout << "5 iterations done \n";
 
-  
+
   }
   vishnuFinalize();
 }
@@ -119,7 +119,7 @@ int main(int argc, char** argv){
 
     if (argc != 3) {
       std::cerr << "Usage: ./fms_stress Nbtests Type "<< std::endl;
-      std::cerr << "[1 for listfiletransfer and 2 for touch]" << std::endl;
+      std::cerr << "[1 for listfiletransfer and 2 for createFile]" << std::endl;
       return 1;
     }
     cpt = atoi (argv[1]);
@@ -148,5 +148,3 @@ int main(int argc, char** argv){
 
   return 0;
 }
-
-
