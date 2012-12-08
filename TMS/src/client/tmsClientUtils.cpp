@@ -122,7 +122,7 @@ sendInputFiles(const std::string & sessionKey,
 	}
 
 	std::ostringstream paramsBuf ;
-	for(ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); it++){
+	for(ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); ++it){
 
 		size_t pos = (*it).find("=") ; if(pos == std::string::npos) continue ; //*it would be in the form of param=path
 		string param = (*it).substr(0, pos) ;
@@ -232,5 +232,3 @@ getMachineLoadPerformance(const string& sessionKey,
 	}
 	return load ;
 }
-
-
