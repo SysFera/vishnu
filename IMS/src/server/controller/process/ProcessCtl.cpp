@@ -36,7 +36,7 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI)
 // Don't care if unable to stop -> means already stopped
   try{
     stop(op);
-  } catch (SystemException e){
+  } catch (SystemException& e){
   }
   IMS_Data::ProcessOp processOp;
   processOp.setMachineId(mmid);
@@ -86,7 +86,7 @@ ProcessCtl::RPCCall(std::string methodName){
     std::cout << "param =" << mop.getName() << std::endl;
 
     myClient.call(serverUrl, methodName, "s", &result, std::string(mop.getName()).c_str());
-  } catch (girerr::error e){
+  } catch (girerr::error& e){
     throw SystemException(ERRCODE_SYSTEM, std::string("Error in RPC call: ")+std::string(e.what()));
   }
 }
