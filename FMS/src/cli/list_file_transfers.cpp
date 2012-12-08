@@ -127,7 +127,7 @@ int main (int ac, char* av[]) {
 
 
   if (statusStr.size() != 0) {
-    int status;
+    int status = -1;
     size_t pos = statusStr.find_first_not_of("0123456789");
 
     if (pos != std::string::npos) {
