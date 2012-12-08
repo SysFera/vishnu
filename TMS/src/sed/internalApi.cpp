@@ -467,16 +467,12 @@ solveGetListOfJobsProgression(diet_profile_t* pb) {
  */
 int
 solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
-
 	char* sessionKey = NULL;
 	char* machineId = NULL;
 	char* moutDir = NULL;
-	std::string errorInfo = "";
 	std::string jobsOutputSerialized;
-	std::string empty = "";
 	int mapperkey;
 	std::string cmd;
-	std::string finishError ="";
 
 	diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
 	diet_string_get(diet_parameter(pb,1), &machineId, NULL);
