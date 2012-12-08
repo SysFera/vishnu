@@ -84,20 +84,20 @@ Server::toString() {
 }
 
 boost::shared_ptr<Server>
-Server::fromString(std::string prof){
+Server::fromString(std::string prof) {
   boost::shared_ptr<Server> res;
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
   std::string name;
   std::string uri;
   std::vector<std::string> services;
-  int i;
 
   if (!vecString.empty()) {
-    std::vector<std::string>::iterator it= vecString.begin();
+    std::vector<std::string>::iterator it = vecString.begin();
     name = std::string(strdup((it++)->c_str()));
     uri = std::string(strdup((it++)->c_str()));
-    for (i=0; it != vecString.end(); it++,i++){
+
+    for (int i = 0; it != vecString.end(); it++, i++) {
       services.push_back(std::string(strdup(it->c_str())));
     }
     res.reset(new Server(name, services, uri));
