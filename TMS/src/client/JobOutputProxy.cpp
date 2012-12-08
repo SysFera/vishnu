@@ -103,9 +103,10 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 		std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
 		jobResult.setOutputPath(moutDir+"/"+fileName);
 		if(nbFiles == 1) {
-			jobResult.setErrorPath(moutDir+"/"+fileName);
+                  jobResult.setErrorPath(moutDir+"/"+fileName);
 		} else {
-			jobResult.setErrorPath(moutDir+"/"+fileName);
+                  // TODO shouldn't the else branch be different from the if branch?
+                  jobResult.setErrorPath(moutDir+"/"+fileName);
 		}
 	}
 	//save missing files
