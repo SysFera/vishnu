@@ -274,8 +274,9 @@ namespace vishnu {
    * \return  true if success else false
    */
   template<class T>
-  bool parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
-
+  bool parseEmfObject(const std::string& objectSerialized,
+                      T*& object_ptr,
+                      const std::string& msgComp = std::string()) {
     object_ptr = NULL;
     try {
       //CREATE DATA MODEL
