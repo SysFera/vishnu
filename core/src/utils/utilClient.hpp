@@ -44,8 +44,9 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg);
  * \return raises an exception on error
  */
 template<class T>
-void parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
-
+void parseEmfObject(const std::string& objectSerialized,
+                    T*& object_ptr,
+                    const std::string& msgComp = std::string()) {
   object_ptr = NULL;
 //  std::cout << "object: ->" << objectSerialized << "<- " << std::endl;
   try {
