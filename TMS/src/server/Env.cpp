@@ -38,10 +38,25 @@ void Env::replaceAllOccurences(std::string& scriptContent,
  * \brief Function to replace some environment variables in a string
  * \param scriptContent The string content to modify
  */
-void Env::replaceEnvVariables(std::string& scriptContent) {
+void
+Env::replaceEnvVariables(std::string& scriptContent) {
+  size_t pos;
+  switch(mbatchType) {
 
-	size_t pos;
-	switch(mbatchType) {
+  case TORQUE:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    break;
 
 	case TORQUE:
 		//To replace VISHNU_BATCHJOB_ID
@@ -57,20 +72,20 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
 		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
 		break;
-        case PBSPRO:
-                //To replace VISHNU_BATCHJOB_ID
-                replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
-                replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
-                //To replace VISHNU_BATCHJOB_NAME
-                replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
-                replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
-                //To replace VISHNU_BATCHJOB_NODEFILE
-                replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
-                replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
-                //To replace VISHNU_BATCHJOB_NUM_NODES
-                replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
-                replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
-                break;        
+    case PBSPRO:
+        //To replace VISHNU_BATCHJOB_ID
+        replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
+        replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
+        //To replace VISHNU_BATCHJOB_NAME
+        replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
+        replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
+        //To replace VISHNU_BATCHJOB_NODEFILE
+        replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+        replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+        //To replace VISHNU_BATCHJOB_NUM_NODES
+        replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+        replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+        break;  
 	case LOADLEVELER:
 		//To replace VISHNU_BATCHJOB_ID
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LOADL_STEP_ID");
@@ -171,48 +186,51 @@ void Env::replaceEnvVariables(std::string& scriptContent) {
  * \param scriptContent The string to modify
  * \param \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
  */
-void Env::setParams(std::string& scriptContent, const std::string & params) {
+void
+Env::setParams(std::string& scriptContent,
+               const std::string & params) {
+  std::string paramName;
+  std::string paramValue;
+  size_t pos;
+  ListStrings paramsVec;
 
-	std::string paramName ;
-	std::string paramValue ;
-	size_t pos;
-	ListStrings paramsVec ;
-
-	std::string& refParams = const_cast<std::string&>(params) ;
-	boost::trim(refParams);
-	boost::split(paramsVec, refParams, boost::is_any_of(" ")) ;
-	for(ListStrings::iterator it = paramsVec.begin(); it != paramsVec.end() ; it++) {
-		pos = it->find("=");
-		if(pos != std::string::npos ) {
-			paramName = it->substr(0, pos) ;
-			paramValue = it->substr(pos+1, std::string::npos) ;
-			replaceAllOccurences(scriptContent, "$" + paramName, paramValue) ;
-			replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue) ;
-		}
-	}
+  std::string& refParams = const_cast<std::string&>(params);
+  boost::trim(refParams);
+  boost::split(paramsVec, refParams, boost::is_any_of(" "));
+  for (ListStrings::iterator it = paramsVec.begin(); it != paramsVec.end(); ++it) {
+    pos = it->find("=");
+    if (pos != std::string::npos) {
+      paramName = it->substr(0, pos);
+      paramValue = it->substr(pos+1, std::string::npos);
+      replaceAllOccurences(scriptContent, "$" + paramName, paramValue);
+      replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue);
+    }
+  }
 }
 
 /**
  * \brief Function to set environment variables accordinf to parameters
  * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
  */
-void Env::setParamsEnvVars(const std::string& params) {
+void
+Env::setParamsEnvVars(const std::string& params) {
+  std::string param;
+  size_t pos, pos1, pos2;
 
-	std::string param ;
-	size_t pos, pos1, pos2 ;
-
-	pos1 = 0;
-	while(pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
-		param = params.substr(pos1, pos2) ;
-		pos = param.find("=");
-		if(pos != std::string::npos ) {
-			setenv(param.substr(0, pos).c_str(), param.substr(pos+1, std::string::npos).c_str(), 1) ;
-		}
-		pos1 = pos2 + 1 ;
-	}
-	param = params.substr(pos1, std::string::npos) ; //last token
-	pos = param.find("=");
-	if(pos != std::string::npos ) {
-		setenv(param.substr(0, pos).c_str(), param.substr(pos+1, std::string::npos).c_str(), 1) ;
-	}
+  pos1 = 0;
+  while (pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
+    param = params.substr(pos1, pos2);
+    pos = param.find("=");
+    if (pos != std::string::npos) {
+      setenv(param.substr(0, pos).c_str(),
+             param.substr(pos + 1, std::string::npos).c_str(), 1);
+    }
+    pos1 = pos2 + 1;
+  }
+  param = params.substr(pos1, std::string::npos); //last token
+  pos = param.find("=");
+  if (pos != std::string::npos ) {
+    setenv(param.substr(0, pos).c_str(),
+           param.substr(pos+1, std::string::npos).c_str(), 1);
+  }
 }
