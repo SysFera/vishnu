@@ -150,6 +150,7 @@ int main (int ac, char* av[]) {
             break;
         }
       }
+
       if ((statusStr.size() > 1) || (status == -1)) {
         std::cerr << "Unknown file transfer status " << statusStr << std::endl;
         return 0;
