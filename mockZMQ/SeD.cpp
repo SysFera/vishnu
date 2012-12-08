@@ -58,7 +58,7 @@ public:
       data.clear();
       try {
         data = socket.get();
-      } catch (zmq::error_t error) {
+      } catch (zmq::error_t &error) {
         std::cout << "E: " << error.what() << "\n";
         continue;
       }
