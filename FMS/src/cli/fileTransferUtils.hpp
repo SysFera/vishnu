@@ -134,21 +134,21 @@ typedef enum{
  * \param transferType The file transfer type
  */
 
-void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
-    std::string& src, std::string& dest, FMS_Data::CpFileOptions& cpFileOptions, TransferType transferType){
-
+void
+copyParseOptions (int argc, char* argv[],std::string& dietConfig,
+                  std::string& src, std::string& dest,
+                  FMS_Data::CpFileOptions& cpFileOptions,
+                  TransferType transferType) {
   int ret; // Return value
-
   string trCmdStr;
 
-  int trCmd;
-
   // build transfer command options
+  boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0],
+                                                            dietConfig,
+                                                            trCmdStr,
+                                                            src, dest));
 
-  boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0], dietConfig, trCmdStr, src, dest));
-
-  if (transferType==CP){
-
+  if (transferType == CP) {
     opt->add("isRecursive,r",
         "It specifies when the copy is recursive (case of directory) or not.",
         CONFIG);
@@ -159,7 +159,7 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
   // Parse the cli and setting the options found
   ret = cmd.parse(FMS_env_name_mapper());
 
-  if ( opt->count("help")){
+  if (opt->count("help")) {
     helpUsage(*opt,"[options] src dest");
     exit(0);
   }
@@ -171,16 +171,20 @@ void copyParseOptions (int argc, char* argv[],std::string& dietConfig,
   checkVishnuConfig(*opt);
 
 
-  if(trCmdStr.size()!=0) {
+  if (trCmdStr.size() != 0) {
     size_t pos = trCmdStr.find_first_not_of("0123456789");
-    if(pos!=std::string::npos) {
-      if(trCmdStr.compare("scp")==0 || trCmdStr.compare("SCP")==0){
+    int trCmd;
+
+    if (pos != std::string::npos) {
+      if (trCmdStr.compare("scp") == 0 || trCmdStr.compare("SCP") == 0){
         trCmd = 0;
-      } else if(trCmdStr.compare("rsync")==0 || trCmdStr.compare("RSYNC")==0){
+      } else if (trCmdStr.compare("rsync") == 0 || trCmdStr.compare("RSYNC") == 0){
         trCmd = 1;
       } else {
 
-        errorUsage (argv[0],"Unknown file transfer command type "+trCmdStr,PARAMERROR);
+        errorUsage (argv[0],
+                    "Unknown file transfer command type " + trCmdStr,
+                    PARAMERROR);
         exit (CLI_ERROR_INVALID_PARAMETER);
       }
     } else {
@@ -320,6 +324,3 @@ struct TransferSyncFunc {
 
 
 #endif
-
-
-
