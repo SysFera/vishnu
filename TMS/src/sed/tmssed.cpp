@@ -51,7 +51,6 @@ int main(int argc, char* argv[], char* envp[]) {
   int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
-  std::string dietConfigFile;
   BatchType batchType ;
   std::string batchTypeStr;
   std::string machineId;
@@ -60,7 +59,6 @@ int main(int argc, char* argv[], char* envp[]) {
   string cfg;
 
   string uri;
-//  string uriDispatcherSrv;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -69,11 +67,10 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-//    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-//    config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSRV, uriDispatcherSrv);
+
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }

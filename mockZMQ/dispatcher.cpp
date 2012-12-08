@@ -74,7 +74,7 @@ public:
       try {
         if (!socket.recv(&message, 0)) {
         }
-      } catch (zmq::error_t error) {
+      } catch (zmq::error_t &error) {
         std::cerr << boost::format("E: %1%\n")%error.what();
       }
       // Deserialize and call UMS Method
@@ -126,7 +126,7 @@ public:
       try {
         if (!socket.recv(&message, 0)) {
         }
-      } catch (zmq::error_t error) {
+      } catch (zmq::error_t &error) {
         std::cerr << boost::format("E: %1%\n") % error.what();
       }
       std::string data(static_cast<const char*>(message.data()), message.size());
@@ -168,7 +168,7 @@ public:
 
   //function to get the first element from the annuary
   std::string
-  elect(std::vector<boost::shared_ptr<Server> >* serv){
+  elect(std::vector<boost::shared_ptr<Server> >* serv) {
     if ((serv == NULL) || (serv->size() == 0)) {
       return "";
     }
@@ -250,15 +250,16 @@ private:
 
 
 
-int main(int argc, char** argv){
+int
+main(int argc, char** argv) {
   // Prepare our context and socket
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
-  std::string  uriAddr ;
-  std::string  uriSubs ;
-  std::string  confFil ;
-  unsigned int nthread ;
-  unsigned int timeout ;
+  std::string  uriAddr;
+  std::string  uriSubs;
+  std::string  confFil;
+  unsigned int nthread;
+  unsigned int timeout;
 
   ExecConfiguration config;
   config.initFromFile(argv[1]);

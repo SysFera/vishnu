@@ -1,6 +1,6 @@
 /**
  * \file list_file_transfers.cpp
- * This file defines the VISHNU list file transfers command 
+ * This file defines the VISHNU list file transfers command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -33,7 +33,7 @@ using namespace FMS_Data;
  * \param fstatus: The file transfer status
  */
 boost::shared_ptr<Options>
-makeListFileTransferTrOpt(string pgName, 
+makeListFileTransferTrOpt(string pgName,
     string& dietConfig,
     boost::function1<void, string>& ftransferId,
     boost::function1<void, string>& ffromMachineId,
@@ -102,18 +102,16 @@ struct ListFileTransferFunc {
 
 
 
-int main (int ac, char* av[]){
-  
+int main (int ac, char* av[]) {
   int ret; // Return value
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string statusStr;
-  int status;
 
    /********** EMF data ************/
   FMS_Data::LsTransferOptions lsFileTransferOptions;
-  
+
   /******** Callback functions ******************/
   boost::function1<void, string> ftranferId(boost::bind(&FMS_Data::LsTransferOptions::setTransferId, boost::ref(lsFileTransferOptions),_1));
   boost::function1<void, string> ffromMachineId(boost::bind(&FMS_Data::LsTransferOptions::setFromMachineId, boost::ref(lsFileTransferOptions),_1));
@@ -128,10 +126,12 @@ int main (int ac, char* av[]){
     ret = cmd.parse(env_name_mapper());
 
 
-  if(statusStr.size()!=0) {
+  if (statusStr.size() != 0) {
+    int status = -1;
     size_t pos = statusStr.find_first_not_of("0123456789");
-    if(pos!=std::string::npos) {
-      if(statusStr.size()==1) {
+
+    if (pos != std::string::npos) {
+      if (statusStr.size() == 1) {
         switch(statusStr[0]) {
           case 'I' :
             status = 0;
@@ -150,7 +150,8 @@ int main (int ac, char* av[]){
             break;
         }
       }
-      if( ( statusStr.size() > 1 ) || ( status==-1) ){
+
+      if ((statusStr.size() > 1) || (status == -1)) {
         std::cerr << "Unknown file transfer status " << statusStr << std::endl;
         return 0;
       }
@@ -159,21 +160,21 @@ int main (int ac, char* av[]){
     }
     lsFileTransferOptions.setStatus(status);
   }
-  
+
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options]");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
   if ( opt->count("help")){
     helpUsage(*opt,"[options] ");
     return 0;
   }
 
   // Process command
- ListFileTransferFunc apiFunc( lsFileTransferOptions); 
+ ListFileTransferFunc apiFunc( lsFileTransferOptions);
  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
 }

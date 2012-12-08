@@ -234,7 +234,7 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
   }
 
   //Update of profile
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
@@ -245,7 +245,6 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
 
 int
 diet_call(diet_profile_t* prof) {
-  std::vector<boost::shared_ptr<Server> > serv;
   std::string uri;
 
   // get the service and the related module
@@ -291,7 +290,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   std::string response = lpc.recv();
 //  std::cout << boost::format("I: Recv> %1%...\n")%response;
 
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
@@ -351,7 +350,6 @@ my_serialize(diet_profile_t* prof) {
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
   boost::shared_ptr<diet_profile_t> res;
-  std::vector<int> vec;
 
   std::vector<std::string> vecString;
 
@@ -369,7 +367,7 @@ my_deserialize(const std::string& prof) {
     res->INOUT = boost::lexical_cast<int>(*(it++));
     res->OUT = boost::lexical_cast<int>(*(it++));
     res->param = (char**)malloc(sizeof(char*) * vecString.size() - 4);
-    for (int i = 0; it != vecString.end(); it++, i++) {
+    for (int i = 0; it != vecString.end(); ++it, i++) {
       res->param[i] = strdup(it->c_str());
     }
   }

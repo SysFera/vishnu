@@ -42,6 +42,6 @@ VersionManager::isCompatible() {
 }
 
 std::string
-VersionManager::getError() {
+VersionManager::getError() const {
   return merrormsg;
 }

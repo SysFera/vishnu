@@ -9,32 +9,32 @@
 #include <fstream>
 #include "utilVishnu.hpp"
 
-Annuary::Annuary(){
-  mservers = std::vector<boost::shared_ptr<Server> > ();
+Annuary::Annuary():
+  mservers(std::vector<boost::shared_ptr<Server> >()) {
 }
 
-Annuary::Annuary(std::vector<boost::shared_ptr<Server> >& serv){
-  mservers = serv;
+Annuary::Annuary(std::vector<boost::shared_ptr<Server> >& serv):
+  mservers(serv) {
 }
 
-Annuary::~Annuary(){
+Annuary::~Annuary() {
 //  int i;
-//  for (i=0;i<mservers.size();++i){
+//  for (i=0;i<mservers.size();++i) {
 //    delete(mservers.at(i));
 //  }
 }
 
 
 int
-Annuary::add(std::string name, std::vector<std::string> services, std::string uri){
+Annuary::add(std::string name, std::vector<std::string> services, std::string uri) {
   boost::shared_ptr<Server> s;
   std::vector<boost::shared_ptr<Server> >* tmp = Annuary::get(services.at(0));
   std::vector<boost::shared_ptr<Server> >::iterator it;
 
 // Do not add an already existing server
-  for (it = tmp->begin(); it != tmp->end() ; ++it){
+  for (it = tmp->begin(); it != tmp->end() ; ++it) {
     if (name.compare(it->get()->getName()) == 0 &&
-        uri.compare(it->get()->getURI()) == 0){
+        uri.compare(it->get()->getURI()) == 0) {
       return 0;
     }
   }
@@ -47,7 +47,7 @@ Annuary::add(std::string name, std::vector<std::string> services, std::string ur
 int
 Annuary::remove(std::string name, std::string uri) {
   unsigned int i;
-  for (i = 0; i < mservers.size(); ++i){
+  for (i = 0; i < mservers.size(); ++i) {
     if (name.compare(mservers.at(i)->getName()) == 0 &&
         uri.compare(mservers.at(i).get()->getURI()) == 0) {
       mservers.erase(mservers.begin()+i);
@@ -62,7 +62,7 @@ std::vector<boost::shared_ptr<Server> >*
 Annuary::get(std::string service) {
 
   std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
-  if (service.compare("") == 0){
+  if (service.compare("") == 0) {
     return &mservers;
   }
   for (unsigned int i = 0; i < mservers.size(); i++) {
@@ -76,18 +76,17 @@ Annuary::get(std::string service) {
 
 // Init the annuary from a file
 void
-Annuary::initFromFile(std::string infile){
+Annuary::initFromFile(std::string infile) {
   std::ifstream tfile(infile.c_str());
 
-  if (tfile){
+  if (tfile) {
     std::string line;
-    while(std::getline(tfile, line)){
+    while(std::getline(tfile, line)) {
       std::istringstream iss(line);
       std::string name;
       std::string uri;
       std::string mid;
       boost::shared_ptr<Server> server;
-      std::vector<std::string> ports;
       iss >> name;
       iss >> uri;
       iss >> mid;
@@ -102,8 +101,10 @@ Annuary::initFromFile(std::string infile){
 }
 
 void
-Annuary::fillServices(std::vector< std::string> &services, std::string name, std::string mid){
-  if (name.compare("UMS") == 0){
+Annuary::fillServices(std::vector< std::string> &services,
+                      std::string name,
+                      std::string mid) {
+  if (name.compare("UMS") == 0) {
     services.push_back("sessionConnect") ;
     services.push_back("sessionReconnect") ;
     services.push_back("sessionClose") ;

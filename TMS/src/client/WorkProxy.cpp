@@ -4,6 +4,7 @@
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  * \date February 2011
  */
+#include <boost/scoped_ptr.hpp>
 #include "TMSVishnuException.hpp"
 #include "WorkProxy.hpp"
 #include "utilsClient.hpp"
@@ -23,16 +24,14 @@ WorkProxy::WorkProxy(const TMS_Data::Work& work, const SessionProxy& session):
  * \brief Function to add a new work
  * \return raises an exception on error
  */
-int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
-{
+int
+WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
 
   diet_profile_t* addProfile = NULL;
   std::string sessionKey;
   std::string workToString;
   char* workInString;
   char* errorInfo;
-  char* optionsToString = NULL;
-  std::string tmp;
 
   std::string msg = "call of function diet_string_set is rejected ";
 
@@ -41,23 +40,24 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the work object in to workToString
-  workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
+  workToString = _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
 
   ::ecorecpp::serializer::serializer _ser2;
   //To serialize the options object in to optionsInString
-  optionsToString =  strdup(_ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop)).c_str());
+  boost::scoped_ptr<char> optionsToString(
+    strdup(_ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop)).c_str()));
   //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,2), strdup(optionsToString), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,2), strdup(optionsToString.get()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
@@ -66,12 +66,12 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
   diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(addProfile,4), NULL, DIET_VOLATILE);
 
-  if(!diet_call(addProfile)) {
-    if(diet_string_get(diet_parameter(addProfile,3), &workInString, NULL)){
+  if (!diet_call(addProfile)) {
+    if (diet_string_get(diet_parameter(addProfile,3), &workInString, NULL)){
       msg += "by receiving Work serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(addProfile,4), &errorInfo, NULL)){
+    if (diet_string_get(diet_parameter(addProfile,4), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -94,7 +94,6 @@ int WorkProxy::add(const TMS_Data::AddWorkOptions& addop)
   diet_profile_free(addProfile);
 
   return 0;
-
 }
 
 /**
@@ -117,11 +116,11 @@ int WorkProxy::update()
   workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(workToString.c_str()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
@@ -129,8 +128,8 @@ int WorkProxy::update()
   //OUT Parameters
   diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
 
-  if(!diet_call(updateProfile)) {
-    if(diet_string_get(diet_parameter(updateProfile,2), &errorInfo, NULL)){
+  if (!diet_call(updateProfile)) {
+    if (diet_string_get(diet_parameter(updateProfile,2), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -164,11 +163,11 @@ int WorkProxy::deleteWork()
   workId = mwork.getWorkId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(workId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(workId.c_str()), DIET_VOLATILE)) {
     msg += "with workId parameter "+workId;
     raiseDietMsgException(msg);
   }
@@ -176,8 +175,8 @@ int WorkProxy::deleteWork()
   //OUT Parameters
   diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
 
-  if(!diet_call(deleteProfile)) {
-    if(diet_string_get(diet_parameter(deleteProfile,2), &errorInfo, NULL)){
+  if (!diet_call(deleteProfile)) {
+    if (diet_string_get(diet_parameter(deleteProfile,2), &errorInfo, NULL)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -221,4 +220,3 @@ TMS_Data::Work WorkProxy::getData()
 WorkProxy::~WorkProxy()
 {
 }
-

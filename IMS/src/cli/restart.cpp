@@ -39,7 +39,6 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string dietConfig;
   string machineId;
-  string vishnu;
   string type;
 
    /********** EMF data ************/
@@ -77,4 +76,3 @@ int main (int argc, char* argv[]){
   return GenericCli().run(restartFunc, dietConfig, argc, argv);
 
 }
-

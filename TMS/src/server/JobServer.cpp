@@ -52,7 +52,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	msessionServer.check(); //To check the sessionKey
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
-	std::string ouputDir = "" ;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);

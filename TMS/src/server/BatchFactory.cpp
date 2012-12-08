@@ -24,7 +24,6 @@ BatchFactory::BatchFactory() {
 BatchServer*
 loadPluginBatch(const char *name) {
   dadi::SharedLibrary *plugin(NULL);
-  void *factory(NULL);
   BatchServer *instance(NULL);
 
   std::string libname = boost::str(boost::format("%1%%2%%3%")
@@ -34,7 +33,7 @@ loadPluginBatch(const char *name) {
 
   plugin = new dadi::SharedLibrary(libname);
   if (plugin->isLoaded()) {
-    factory = plugin->symbol("create_plugin_instance");
+    void *factory = plugin->symbol("create_plugin_instance");
     reinterpret_cast<factory_function>(factory)(reinterpret_cast<void**>(&instance));
   }
 

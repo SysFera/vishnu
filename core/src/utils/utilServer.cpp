@@ -301,7 +301,6 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   std::string res;
   res.clear ();
   res = std::string ("");
-  int  i;
   int  size;
   Format_t *keywords;
 
@@ -311,19 +310,19 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   // if there is no error with the getKeywords function
   if (ret != -1) {
     // Building the id using the format and the values of the var
-    if (size>0){
-      res.append (format, keywords[0].start);
+    if (size > 0){
+      res.append(format, keywords[0].start);
     } else {
       res = std::string (format);
     }
-    for (i=0;i<size;i++){
+    for (int i = 0; i < size; i++){
       res.append (keywords[i].value);
       // If other variables
-      if (*(format+keywords[i].end+1) != '\0' && i!=size-1) {
+      if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
         res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
       // If text after the variable
       }
-      else if (*(format+keywords[i].end+1) != '\0' ){
+      else if (*(format+keywords[i].end + 1) != '\0' ){
         res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
       }
     }
@@ -568,31 +567,27 @@ vishnu::getObjectId(int vishnuId,
   pthread_mutex_unlock(&(mutex));
   return idGenerated;
 }
+
 /**
  * \brief Function to parse a system error message
  * \param errorMsg the error message
  * \return the parsed message
  */
-std::string vishnu::parseErrorMessage (const std::string& errorMsg){
-
-  size_t commandPos, endOfLinePos;
-
+std::string
+vishnu::parseErrorMessage (const std::string& errorMsg) {
+  size_t commandPos;
   std::string result(errorMsg);
 
-  commandPos=result.find (":");
+  commandPos = result.find(":");
 
-  if(commandPos!=std::string::npos){
+  if (commandPos != std::string::npos) {
+    result = result.substr(commandPos + 1);
 
-    result=result.substr(commandPos+1);
-
-    if( (endOfLinePos=result.find_last_of("\n") )!= std::string::npos ){
-
+    size_t endOfLinePos = result.find_last_of("\n");
+    if (endOfLinePos != std::string::npos) {
       result.erase(endOfLinePos);
     }
-
   }
 
   return result;
 }
-
-

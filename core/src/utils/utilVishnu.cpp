@@ -751,7 +751,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
   // Append other parameters in paramStr
   for(ListStrings::const_iterator it = paramsVector.begin();
-      it != paramsVector.end(); it++) {
+      it != paramsVector.end(); ++it) {
     paramsStr += " " + *it;
   }
 
@@ -762,7 +762,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
   paramsStr = ""; // Reinitialization for outpout
   for(ListStrings::iterator it = paramsVecBuffer.begin();
-      it != paramsVecBuffer.end(); it++) {
+      it != paramsVecBuffer.end(); ++it) {
     size_t pos = (*it).find("=");
     if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
       std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
@@ -926,46 +926,47 @@ vishnu::mklink(const std::string& src) {
 // Cela fait une copie de la liste en retour, à modifier si cela gène
 std::vector<std::string>
 vishnu::getIPList(){
-	std::vector<std::string> addresses;
+  std::vector<std::string> addresses;
 
-	struct ifaddrs *ifa=NULL,*ifEntry=NULL;
-	void *addPtr = NULL;
-	int rc = 0;
-	char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
+  struct ifaddrs *ifa = NULL, *ifEntry = NULL;
+  int rc = 0;
 
-	// Recuperation of the interfaces
-	rc = getifaddrs(&ifa);
-	// If interfaces gotten without error
-	if (rc==0) {
-		// Browing the list of interface
-		for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
-			// If not address continue
-			if(ifEntry->ifa_addr->sa_data == NULL) {
-				continue;
-			}
-			// If IPV4
-			if(ifEntry->ifa_addr->sa_family==AF_INET) {
-				addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
-			} else {
-				//It isn't IPv4
-				continue;
-			}
-			// Converting address
-			const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
-					addPtr,
-					addressBuffer,
-					sizeof(addressBuffer));
-			std::string localhost = "127.0.0.1";
-			// Adding the found adress
-			if(a != NULL && localhost.compare(std::string(a)) != 0) {
-				addresses.push_back(std::string(a));
-			}
-		}
-	}
-	// Freeing memory
-	freeifaddrs(ifa);
+  // Recuperation of the interfaces
+  rc = getifaddrs(&ifa);
+  // If interfaces gotten without error
+  if (rc == 0) {
+    void *addPtr = NULL;
+    char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
 
-	return addresses;
+    // Browing the list of interface
+    for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
+      // If not address continue
+      if(ifEntry->ifa_addr->sa_data == NULL) {
+        continue;
+      }
+      // If IPV4
+      if(ifEntry->ifa_addr->sa_family==AF_INET) {
+        addPtr = &((struct sockaddr_in *)ifEntry->ifa_addr)->sin_addr;
+      } else {
+        //It isn't IPv4
+        continue;
+      }
+      // Converting address
+      const char *a = inet_ntop(ifEntry->ifa_addr->sa_family,
+                                addPtr,
+                                addressBuffer,
+                                sizeof(addressBuffer));
+      std::string localhost = "127.0.0.1";
+      // Adding the found adress
+      if(a != NULL && localhost.compare(std::string(a)) != 0) {
+        addresses.push_back(std::string(a));
+      }
+    }
+  }
+  // Freeing memory
+  freeifaddrs(ifa);
+
+  return addresses;
 }
 
 void
