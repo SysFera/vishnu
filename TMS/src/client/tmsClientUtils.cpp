@@ -206,9 +206,9 @@ getMachineLoadPerformance(const string& sessionKey,
   TMS_Data::ListJobs jobs ;
   TMS_Data::ListJobsOptions jobOtions ;
 
-  try{
+  try {
     vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
-  } catch(SystemException ex){
+  } catch (SystemException& ex){
     throw SystemException (ERRCODE_RUNTIME_ERROR, ex.what());
   }
 
