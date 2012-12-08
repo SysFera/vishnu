@@ -751,7 +751,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
   // Append other parameters in paramStr
   for(ListStrings::const_iterator it = paramsVector.begin();
-      it != paramsVector.end(); it++) {
+      it != paramsVector.end(); ++it) {
     paramsStr += " " + *it;
   }
 
@@ -762,7 +762,7 @@ vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
 
   paramsStr = ""; // Reinitialization for outpout
   for(ListStrings::iterator it = paramsVecBuffer.begin();
-      it != paramsVecBuffer.end(); it++) {
+      it != paramsVecBuffer.end(); ++it) {
     size_t pos = (*it).find("=");
     if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
       std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
