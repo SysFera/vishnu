@@ -123,6 +123,7 @@ Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat "+fileName+" | sort | uniq | wc -l)");
       scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
     }
+    break;
 
   case SGE:
     //To replace VISHNU_BATCHJOB_ID
