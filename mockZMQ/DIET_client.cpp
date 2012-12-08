@@ -234,7 +234,7 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
   }
 
   //Update of profile
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
@@ -290,7 +290,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   std::string response = lpc.recv();
 //  std::cout << boost::format("I: Recv> %1%...\n")%response;
 
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response.c_str()));
+  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
