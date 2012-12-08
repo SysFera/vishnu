@@ -79,7 +79,7 @@ NetrcReader::searchValueFromKey(const string& key,
   vector<string>::iterator end = tokens.end();
   size_t size = end-beg;
 
-  if(machine_pos < size ) {
+  if (machine_pos < size ) {
     vector<string>::iterator iter = find(beg+machine_pos, end, key);
     value = "";
 
@@ -87,7 +87,7 @@ NetrcReader::searchValueFromKey(const string& key,
       vector<string>::iterator keyIter = iter;
       size_t keyPos = keyIter-beg;
       ++iter;
-      if(iter!=end) {
+      if (iter!=end) {
         value = *iter;
       }
       tab[keyPos] = make_pair<string,string>(key, value);
@@ -108,12 +108,12 @@ NetrcReader::getIdentifiers(std::map<size_t, pair<string,string> >& tab, const s
   std::map<size_t, pair<string,string> >::iterator iter;
   std::map<size_t, pair<string,string> >::iterator end = tab.end();
   for(iter = tab.begin(); iter!=tab.end(); ++iter) {
-    if(iter->second == pair<string,string> ("machine", machineName)) {
+    if (iter->second == pair<string,string> ("machine", machineName)) {
       break;
     }
   }
   //if the machine name is not found
-  if(iter == end) {
+  if (iter == end) {
      throw UserException(ERRCODE_INVALID_PARAM, "The machine " + machineName + " is undefined");
   }
 
@@ -134,21 +134,21 @@ NetrcReader::getIdentifiers(std::map<size_t, pair<string,string> >& tab, const s
 
 
 /**
-  * \brief Function to analyze the couple key and value table 
+  * \brief Function to analyze the couple key and value table
   * \param tab a table in which the couple key and value are registered
   * \param machineName the machine name used for searching the couple
   * \return The analyszed tab
   */
 map<size_t, pair<string,string> >&
-NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab, const string& machineName) {
-
+NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab,
+                     const string& machineName) {
   static std::map<size_t, pair<string,string> > analyzedTab;
   std::map<size_t, pair<string,string> >::iterator iter;
   std::map<size_t, pair<string,string> >::iterator end = tab.end();
   bool machineNameIsNotFound = true;
   for(iter = tab.begin(); iter!=tab.end(); ++iter) {
-    if(iter->second == pair<string,string> ("machine", machineName)) {
-      if(machineNameIsNotFound) {
+    if (iter->second == pair<string,string> ("machine", machineName)) {
+      if (machineNameIsNotFound) {
         machineNameIsNotFound = false;
       }
       ++iter; //to go to the next element
@@ -167,7 +167,7 @@ NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab, const string& 
     }
   }
   //if the machine name is not found
-  if(machineNameIsNotFound) {
+  if (machineNameIsNotFound) {
      throw UserException(ERRCODE_INVALID_PARAM, "The machine " + machineName + " is undefined");
   }
 
@@ -260,7 +260,7 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
 
       machineTest = searchValueFromKey("machine", machineValue, tokens, tab, machinePos);
       iter = find(beg+machinePos, end, "machine");
-      if(machineValue.empty()) {
+      if (machineValue.empty()) {
         machinePos = (iter-beg)+1;
       } else {
         machinePos = (iter-beg)+2;
@@ -269,8 +269,8 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
       loginTest = searchValueFromKey("login", loginValue, tokens, tab, machinePos);
       iter = find(beg+machinePos, end, "login");
       size_t tmp = iter-beg;
-      if(tmp <= machinePos){
-        if(loginValue.empty()) {
+      if (tmp <= machinePos) {
+        if (loginValue.empty()) {
           machinePos +=1;
         } else {
           machinePos +=2;
@@ -278,7 +278,7 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
       }
 
       passwordTest = searchValueFromKey("password", passwordValue, tokens, tab, machinePos);
-      if(!machineTest && !loginTest && !passwordTest){
+      if (!machineTest && !loginTest && !passwordTest) {
         break;
       }
     }
@@ -291,4 +291,3 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
                         "The file: " + mpath + " can not be opened");
   }
 }
-
