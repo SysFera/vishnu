@@ -33,12 +33,10 @@ using namespace std;
 
 void
 setFill(int size, ostream& os) {
-
-  for(int i=0; i < size; i++) {
+  for(int i = 0; i < size; i++) {
     os << "-";
   }
   os << "  ";
-
 }
 
 
@@ -67,7 +65,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   std::string  authenId = session->getAuthenId();
 
   long dateLastConnect = session->getDateLastConnect();
-  if(dateLastConnect <= 0) {
+  if (dateLastConnect <= 0) {
     dateLastConnectStr = undefined;
   } else {
     pt =  boost::posix_time::from_time_t(dateLastConnect);
@@ -75,7 +73,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   }
 
   long  dateCreate = session->getDateCreation();
-  if(dateCreate <= 0) {
+  if (dateCreate <= 0) {
     dateCreateStr = undefined;
   } else {
     pt =  boost::posix_time::from_time_t(dateCreate);
@@ -83,7 +81,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   }
 
   long  dateClose = session->getDateClosure();
-  if(dateClose <= 0) {
+  if (dateClose <= 0) {
     dateCloseStr = undefined;
   } else {
     pt =  boost::posix_time::from_time_t(dateClose);
@@ -159,21 +157,21 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
      maxUserIdSize = max(maxUserIdSize, userId.size());
 
      dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
-     if(dateLastConnect > 0) {
+     if (dateLastConnect > 0) {
        pt =  boost::posix_time::from_time_t(dateLastConnect);
        dateLastConnectStr = boost::posix_time::to_simple_string(pt);
      }
      maxDateLastConnectSize = max(maxDateLastConnectSize, dateLastConnectStr.size());
 
      dateCreate = (listSession.getSessions().get(i))->getDateCreation();
-     if(dateCreate > 0) {
+     if (dateCreate > 0) {
        pt =  boost::posix_time::from_time_t(dateCreate);
        dateCreateStr = boost::posix_time::to_simple_string(pt);
      }
      maxDateCreateSize = max(maxDateCreateSize, dateCreateStr.size());
 
      dateClose = (listSession.getSessions().get(i))->getDateClosure();
-     if(dateClose > 0) {
+     if (dateClose > 0) {
        pt =  boost::posix_time::from_time_t(dateClose);
        dateCloseStr = boost::posix_time::to_simple_string(pt);
      }
@@ -207,14 +205,14 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
     authId = (listSession.getSessions().get(i))->getAuthenId();
 
     dateLastConnect = (listSession.getSessions().get(i))->getDateLastConnect();
-    if(dateLastConnect <= 0) {
+    if (dateLastConnect <= 0) {
       dateLastConnectStr = blank;
     } else {
       pt =  boost::posix_time::from_time_t(dateLastConnect);
       dateLastConnectStr = boost::posix_time::to_simple_string(pt);
     }
 
-    if(dateCreate <= 0) {
+    if (dateCreate <= 0) {
       dateCreateStr = blank;
     } else {
       dateCreate = (listSession.getSessions().get(i))->getDateCreation();
@@ -222,7 +220,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
       dateCreateStr = boost::posix_time::to_simple_string(pt);
     }
 
-    if(dateClose <= 0) {
+    if (dateClose <= 0) {
       dateCloseStr = blank;
     } else {
       dateClose = (listSession.getSessions().get(i))->getDateClosure();
@@ -403,15 +401,15 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
   os << setw(25) << right << "authSystemId: " << authSystemId<< endl;
   os << setw(25) << right << "name: " << name  << endl;
   os << setw(25) << right << "URI: "  << URI << endl;
-  os << setw(25) << right << "login: "  << authSystem->getAuthLogin() << endl;
-  os << setw(25) << right << "password: "  << authSystem->getAuthPassword() << endl;
+  os << setw(25) << right << "login: "  << authLogin << endl;
+  os << setw(25) << right << "password: "  << authPassword << endl;
   os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
   os << setw(25) << right << "type: " << type << " (" << typeStr << ")" << endl;
   os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")" << endl;
 
   std::string ldapBase=authSystem->getLdapBase();
-  if(false == ldapBase.empty() ){
-  os << setw(25) << right << "ldapBase: " << ldapBase  << endl;
+  if (false == ldapBase.empty()) {
+    os << setw(25) << right << "ldapBase: " << ldapBase  << endl;
   }
   return os;
 
@@ -689,13 +687,13 @@ operator<<(std::ostream& os, const UMS_Data::Command_ptr& command) {
   std::string endTimeStr = undefined;
 
   long startTime = command->getCmdStartTime();
-  if(startTime > 0) {
+  if (startTime > 0) {
     pt =  boost::posix_time::from_time_t(startTime);
     startTimeStr = boost::posix_time::to_simple_string(pt);
   }
 
   long endTime = command->getCmdEndTime();
-  if(endTime > 0) {
+  if (endTime > 0) {
     pt =  boost::posix_time::from_time_t(endTime);
     endTimeStr = boost::posix_time::to_simple_string(pt);
   }
@@ -923,4 +921,3 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
 
   return os;
 }
-
