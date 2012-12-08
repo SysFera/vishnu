@@ -54,7 +54,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
 	std::string ouputDir = "" ;
-        int count=0;
+    int count=0;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
@@ -157,7 +157,7 @@ int JobServer::submitJob(const std::string& scriptContent,
           processDefaultOptions(defaultBatchOption, convertedScript, key);
         }
 	vishnu::createTmpFile(scriptPath, convertedScript);
-        
+
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
