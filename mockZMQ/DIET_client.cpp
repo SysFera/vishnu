@@ -367,7 +367,7 @@ my_deserialize(const std::string& prof) {
     res->INOUT = boost::lexical_cast<int>(*(it++));
     res->OUT = boost::lexical_cast<int>(*(it++));
     res->param = (char**)malloc(sizeof(char*) * vecString.size() - 4);
-    for (int i = 0; it != vecString.end(); it++, i++) {
+    for (int i = 0; it != vecString.end(); ++it, i++) {
       res->param[i] = strdup(it->c_str());
     }
   }
