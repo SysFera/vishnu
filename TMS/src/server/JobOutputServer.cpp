@@ -14,7 +14,7 @@
 
 /**
  * \param session The object which encapsulates the session information
- * \param machineid The machine identifier 
+ * \param machineid The machine identifier
  * \brief Constructor
  */
 JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
@@ -35,7 +35,7 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 		const std::string& machineId,
 		const TMS_Data::JobResult& jobResult):
-		msessionServer(sessionServer), mmachineId(machineId), mjobResult(jobResult)
+  mjobResult(jobResult), msessionServer(sessionServer), mmachineId(machineId)
 {
 	mlistJobsResult = NULL;
 	DbFactory factory;
