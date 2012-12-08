@@ -27,10 +27,6 @@ safe_round(double value) {
     rounded_value = 0;
   }
 
-  if (rounded_value < 0) {
-    rounded_value = 0;
-  }
-
   return rounded_value;
 }
 
