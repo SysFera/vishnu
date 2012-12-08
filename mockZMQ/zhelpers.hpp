@@ -99,7 +99,7 @@ public:
 
 
   std::string
-  recv() {
+  recv() const {
     return buff_;
   }
 
