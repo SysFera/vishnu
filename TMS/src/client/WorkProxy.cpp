@@ -57,7 +57,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(addProfile,2), strdup(optionsToString), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,2), strdup(optionsToString.get()), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
