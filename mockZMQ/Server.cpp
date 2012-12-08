@@ -97,7 +97,7 @@ Server::fromString(std::string prof) {
     name = std::string(strdup((it++)->c_str()));
     uri = std::string(strdup((it++)->c_str()));
 
-    for (int i = 0; it != vecString.end(); it++, i++) {
+    for (int i = 0; it != vecString.end(); ++it, i++) {
       services.push_back(std::string(strdup(it->c_str())));
     }
     res.reset(new Server(name, services, uri));
