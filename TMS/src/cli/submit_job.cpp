@@ -294,7 +294,7 @@ int main (int argc, char* argv[]){
     //Validate textual parameters syntax, if any
     string paramOptName = "textParams" ;
 
-    if(opt->count(paramOptName) || textParamsVector.size() != 0) {
+    if(opt->count(paramOptName) || !textParamsVector.empty()) {
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
       if( ret != 0 ) return ret ;
@@ -303,7 +303,7 @@ int main (int argc, char* argv[]){
 
     //Validate file parameters syntax, if any
     paramOptName = "fileParams" ;
-    if(opt->count(paramOptName) || fileParamsVector.size() != 0 ) {
+    if(opt->count(paramOptName) || !fileParamsVector.empty()) {
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector) ;
       if( ret != 0 ) return ret ;
