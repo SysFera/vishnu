@@ -41,12 +41,9 @@ Options:: Options(const std::string& pgName )   : conf(new Configuration(pgName)
                                                   config_options("Configuration"),
                                                   hidden_options("Hidden Options"),
                                                   env_options("Environment variables") {
-
   generic_options.add_options()
-   ("help,h", "produce help message");
-
-
-  }
+    ("help,h", "produce help message");
+}
 
 /* Standard Options constructor. Get a pointer on a config object*/
 Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
@@ -54,21 +51,13 @@ Options::Options(boost::shared_ptr<Configuration> otherConf):conf(otherConf),
                                                              config_options("Configuration"),
                                                              hidden_options("Hidden Options"),
                                                              env_options("Environment variables") {
-
   generic_options.add_options()
-   ("help,h", "produce help message");
-
-
-
-  }
+    ("help,h", "produce help message");
+}
 
 boost::shared_ptr<Configuration>
-Options::getConfiguration()const{
-
+Options::getConfiguration() const {
   return this->conf;
-
-
-
 }
 
 /**
@@ -79,35 +68,26 @@ Options::getConfiguration()const{
 
 void
 Options::setGroup (const po::options_description& tmp_options,
-                   const Group_type& group){
-
-
-  switch(group){
-
+                   const Group_type& group) {
+  switch(group) {
     case GENERIC:// for options always allowed
-
       generic_options.add(tmp_options);
       break;
 
     case CONFIG: // for options use to configure the command
-
       config_options.add(tmp_options);
       break;
 
     case ENV: // for global options
-
       env_options.add(tmp_options);
       break;
 
     case HIDDEN: // for command parameters
-
       hidden_options.add(tmp_options);
       break;
 
     default:// for unknown option group
-
       break;
-
   }
 }
 
@@ -121,16 +101,11 @@ Options::setGroup (const po::options_description& tmp_options,
 
 void
 Options::add(const std::string& name,
-             const std::string& desc, const Group_type& group ){
-
-
+             const std::string& desc, const Group_type& group ) {
   po::options_description tmp_options;
 
   tmp_options.add_options()(name.c_str(), desc.c_str());
-
-
   setGroup(tmp_options,group);
-
 }
 
   /**
@@ -144,31 +119,24 @@ Options::add(const std::string& name,
       * \param required: for required option
       */
 
-      template<>
-      void Options::add(const std::string& name,
-              const std::string& desc,
-              const Group_type& group,
-              bool& value,
-              int required){
+template<>
+void Options::add(const std::string& name,
+                  const std::string& desc,
+                  const Group_type& group,
+                  bool& value,
+                  int required) {
+  po::options_description tmp_options;
+  po::typed_value<bool>* optionvalue=po::bool_switch(&value);
 
-          po::options_description tmp_options;
+  if (required) {
+    optionvalue=optionvalue->required();
+  }
 
-          po::typed_value<bool>* optionvalue=po::bool_switch(&value);
+  tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
 
-
-          if (required){
-
-            optionvalue=optionvalue->required();
-          }
-
-            tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
-
-
-          // Set the group
-
-          setGroup(tmp_options,group);
-
-        }
+  // Set the group
+  setGroup(tmp_options,group);
+}
 
 
 /**
@@ -187,24 +155,19 @@ void Options::add(const std::string& name,
     const std::string& desc,
     const Group_type& group,
     boost::function1<void, bool>& userFunc,
-    int required){
-
+    int required) {
   po::options_description tmp_options;
-
   po::typed_value<bool>* optionvalue=po::bool_switch()->notifier(userFunc);
 
 
-  if (required){
-
+  if (required) {
     optionvalue=optionvalue->required();
   }
 
   tmp_options.add_options()(name.c_str(),optionvalue,desc.c_str());
 
   // Set the group
-
   setGroup(tmp_options,group);
-
 }
 
 
@@ -220,7 +183,7 @@ void Options::add(const std::string& name,
  */
 
 void
-Options::setPosition(const std::string& name, int pos ){
+Options::setPosition(const std::string& name, int pos ) {
   this->position.add(name.c_str(),pos);
 }
 
@@ -233,7 +196,6 @@ Options::setPosition(const std::string& name, int pos ){
 
 void
 Options::parse_cli(int ac, char* av[]) {
-
   po::options_description cmdline_options;
 
   cmdline_options.add(generic_options)
@@ -252,7 +214,6 @@ Options::parse_cli(int ac, char* av[]) {
 
 void
 Options::parse_cfile() {
-
   po::options_description cfile_options;
 
   cfile_options.add(config_options)
@@ -262,7 +223,6 @@ Options::parse_cfile() {
   ifstream ifs(conf->getConfigFile().c_str());
 
   store(parse_config_file(ifs,cfile_options), vm);
-
 }
 
 /**
@@ -274,7 +234,6 @@ Options::parse_cfile() {
 
 void
 Options::parse_env(const func1& name_mapper) {
-
   store(parse_environment(env_options,name_mapper), vm);
 }
 
@@ -286,10 +245,8 @@ Options::parse_env(const func1& name_mapper) {
  */
 
 void
-Options::notify (){
-
+Options::notify () {
   po::notify(vm);
-
 }
 
 /**
@@ -299,8 +256,7 @@ Options::notify (){
  */
 
 int
-Options::count(const std::string& key)const{
-
+Options::count(const std::string& key) const {
   return (vm.count(key));
 }
 
@@ -314,9 +270,7 @@ Options::count(const std::string& key)const{
 
 
 std::ostream&
-operator<< (std::ostream & os, const Options & opt){
-
-
+operator<< (std::ostream & os, const Options & opt) {
   po::options_description visible("Allowed options");
 
   visible.add(opt.generic_options)
@@ -332,4 +286,4 @@ operator<< (std::ostream & os, const Options & opt){
  * \brief  The default destructor
  */
 
-Options::~Options(){}
+Options::~Options() {}
