@@ -100,7 +100,7 @@ public:
   * \return  The session data structure
   */
   UMS_Data::Session
-  getData();
+  getData() const;
   /**
   * \brief Function to get user information from the database vishnu
   * \fn getAttribut(std::string condition, std::string attrname);

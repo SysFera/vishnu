@@ -109,20 +109,19 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 * \return raises an exception on error
 */
 int
-SessionServer::reconnect(UserServer user, MachineClientServer host, std::string sessionId) {
-
-  int existSessionKey = 0;
-  int state;
-
+SessionServer::reconnect(UserServer user, MachineClientServer host,
+                         std::string sessionId) {
   msession.setSessionId(sessionId);
 
   //If the user exists
   if (user.isAuthenticate()) {
-    state = getState(true);
+    int state = getState(true);
     // -1 is an error code of getState when nohting has found
     if (state != -1) {
       //if the session is active
       if (state == 1) {
+        int existSessionKey = 0;
+
         //if user is an admin
         if (user.isAdmin()) {
           existSessionKey = getSessionkey("", "", true);
@@ -153,24 +152,26 @@ SessionServer::reconnect(UserServer user, MachineClientServer host, std::string 
   }
   return 0;
 }//END: reconnect(UserServer, MachineClientServer, string sessionId)
+
+
 /**
 * \brief Function to close the session
 * \fn int close()
 * \return raises an exception on error
 */
-int SessionServer::close() {
-
+int
+SessionServer::close() {
   std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
-  int state;
   std::string closePolicyStr = "";
 
   UserServer user = UserServer(SessionServer(msession.getSessionKey()));
   CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
   //The init function initializes login and password using the sessionKey
   user.init();
-    //If The user exist
+
+  //If The user exist
   if (user.exist()) {
-    state = getState();
+    int state = getState();
     //if the session is not already closed
     if (state != 0) {
       //if no running commands
@@ -215,7 +216,7 @@ SessionServer::~SessionServer() {
 * \return  The session data structure
 */
 UMS_Data::Session
-SessionServer::getData() {
+SessionServer::getData() const {
   return msession;
 }
 
@@ -587,4 +588,3 @@ SessionServer::disconnetToTimeout(UserServer user) {
 
   return 0;
 }
-
