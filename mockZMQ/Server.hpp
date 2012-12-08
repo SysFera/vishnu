@@ -66,14 +66,14 @@ public:
    * \return True if the server offers the service
    */
   bool
-  hasService(std::string service);
+  hasService(std::string service) const;
 
   /**
    * \brief Getter for the name
    * \return The name of the server
    */
   std::string
-  getName();
+  getName() const;
 
   /**
    * \brief Getter for the services
@@ -87,7 +87,7 @@ public:
    * \return The uri of the server
    */
   std::string
-  getURI();
+  getURI() const;
 
   /**
    * \brief DEPRECATED Serializer for the server object
