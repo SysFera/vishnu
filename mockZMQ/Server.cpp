@@ -42,7 +42,7 @@ Server::remove(std::string service) {
 }
 
 bool
-Server::hasService(std::string service){
+Server::hasService(std::string service) const {
   unsigned int i;
   for (i = 0; i < mservices.size(); i++){
     if (mservices[i] == service) {
@@ -53,18 +53,18 @@ Server::hasService(std::string service){
 }
 
 std::string
-Server::getName(){
+Server::getName() const {
   return mname;
 }
 
 
 std::string
-Server::getURI(){
+Server::getURI() const {
   return muri;
 }
 
 std::vector<std::string>&
-Server::getServices(){
+Server::getServices() {
   return mservices;
 }
 
