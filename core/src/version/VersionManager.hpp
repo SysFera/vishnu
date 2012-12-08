@@ -44,7 +44,7 @@ public :
   * \return the error message registered by the version manager
   */
   std::string
-  getError();
+  getError() const;
 
   private:
     /**
@@ -64,4 +64,3 @@ public :
 
 
 #endif // _VERSION_MANAGER_H_
-
