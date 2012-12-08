@@ -132,6 +132,9 @@ sendInputFiles(const std::string & sessionKey,
     std::string filerMachineId;
     if ((colonPos == string::npos) && !bfs::exists(path)) {
       throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
+      /* TODO : the following two lines will never be executed, and
+       * filerMachineId is used while not initialized in genericFileCopier
+       */
       filerMachineId = path.substr(0, colonPos);
       path = path.substr(++colonPos, string::npos);
     }
