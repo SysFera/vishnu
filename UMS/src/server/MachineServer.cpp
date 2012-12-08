@@ -49,15 +49,10 @@ MachineServer::add(int vishnuId) {
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
 
-  std::string vishnuid;
-
   //if the user exists
   if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
-
-      vishnuid = convertToString(vishnuId);
-
       //Generation of machineid
       idMachineGenerated = vishnu::getObjectId(vishnuId,
                                                "formatidmachine",
