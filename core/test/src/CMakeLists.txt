@@ -15,3 +15,8 @@ include_directories(${PROJECT_BINARY_DIR}/include/
 )
 
 add_library(vishnu-test utils.cpp)
+target_link_libraries(vishnu-test
+  ${Boost_LIBRARIES}
+)
+
+
