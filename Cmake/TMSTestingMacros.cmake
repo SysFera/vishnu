@@ -61,7 +61,7 @@ macro( tms_test NAME )
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core
-      crypt
+      ${LIBCRYPT_LIB}
       vishnu-tms-client
       vishnu-ums-client
       vishnu-test
