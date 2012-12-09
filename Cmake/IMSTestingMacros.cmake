@@ -63,7 +63,7 @@ macro( ims_test NAME )
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core
-      crypt
+      ${LIBCRYPT_LIB}
       vishnu-ims-client
       vishnu-tms-client
       vishnu-ums-client
