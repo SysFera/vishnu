@@ -23,7 +23,10 @@ add_library(fake_zmq
   )
 
 target_link_libraries (test_zmq_helper
-  fake_zmq ${Boost_LIBRARIES})
+  fake_zmq
+  ${Boost_LIBRARIES}
+  vishnu-core
+  )
 
 
 include(UnitTest)
