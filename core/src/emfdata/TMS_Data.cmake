@@ -95,6 +95,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobResult.hpp DESTINATION inc
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Work.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 

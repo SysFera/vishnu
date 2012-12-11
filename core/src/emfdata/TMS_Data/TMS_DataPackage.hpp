@@ -274,114 +274,124 @@ namespace TMS_Data
         static const int JOB__USERID = 25;
 
         /**
+         * \brief Constant for JOB__VMID feature
+         */
+        static const int JOB__VMID = 26;
+
+        /**
+         * \brief Constant for JOB__VMIP feature
+         */
+        static const int JOB__VMIP = 27;
+
+        /**
          * \brief Constant for LISTJOBS__NBJOBS feature
          */
-        static const int LISTJOBS__NBJOBS = 26;
+        static const int LISTJOBS__NBJOBS = 28;
 
         /**
          * \brief Constant for LISTJOBS__NBRUNNINGJOBS feature
          */
-        static const int LISTJOBS__NBRUNNINGJOBS = 27;
+        static const int LISTJOBS__NBRUNNINGJOBS = 29;
 
         /**
          * \brief Constant for LISTJOBS__NBWAITINGJOBS feature
          */
-        static const int LISTJOBS__NBWAITINGJOBS = 28;
+        static const int LISTJOBS__NBWAITINGJOBS = 30;
 
         /**
          * \brief Constant for LISTJOBS__JOBS feature
          */
-        static const int LISTJOBS__JOBS = 29;
+        static const int LISTJOBS__JOBS = 31;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NAME feature
          */
-        static const int SUBMITOPTIONS__NAME = 30;
+        static const int SUBMITOPTIONS__NAME = 32;
 
         /**
          * \brief Constant for SUBMITOPTIONS__QUEUE feature
          */
-        static const int SUBMITOPTIONS__QUEUE = 31;
+        static const int SUBMITOPTIONS__QUEUE = 33;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WALLTIME feature
          */
-        static const int SUBMITOPTIONS__WALLTIME = 32;
+        static const int SUBMITOPTIONS__WALLTIME = 34;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MEMORY feature
          */
-        static const int SUBMITOPTIONS__MEMORY = 33;
+        static const int SUBMITOPTIONS__MEMORY = 35;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBCPU feature
          */
-        static const int SUBMITOPTIONS__NBCPU = 34;
+        static const int SUBMITOPTIONS__NBCPU = 36;
 
         /**
          * \brief Constant for SUBMITOPTIONS__NBNODESANDCPUPERNODE feature
          */
-        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 35;
+        static const int SUBMITOPTIONS__NBNODESANDCPUPERNODE = 37;
 
         /**
          * \brief Constant for SUBMITOPTIONS__OUTPUTPATH feature
          */
-        static const int SUBMITOPTIONS__OUTPUTPATH = 36;
+        static const int SUBMITOPTIONS__OUTPUTPATH = 38;
 
         /**
          * \brief Constant for SUBMITOPTIONS__ERRORPATH feature
          */
-        static const int SUBMITOPTIONS__ERRORPATH = 37;
+        static const int SUBMITOPTIONS__ERRORPATH = 39;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFICATION feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFICATION = 38;
+        static const int SUBMITOPTIONS__MAILNOTIFICATION = 40;
 
         /**
          * \brief Constant for SUBMITOPTIONS__MAILNOTIFYUSER feature
          */
-        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 39;
+        static const int SUBMITOPTIONS__MAILNOTIFYUSER = 41;
 
         /**
          * \brief Constant for SUBMITOPTIONS__GROUP feature
          */
-        static const int SUBMITOPTIONS__GROUP = 40;
+        static const int SUBMITOPTIONS__GROUP = 42;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WORKINGDIR feature
          */
-        static const int SUBMITOPTIONS__WORKINGDIR = 41;
+        static const int SUBMITOPTIONS__WORKINGDIR = 43;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CPUTIME feature
          */
-        static const int SUBMITOPTIONS__CPUTIME = 42;
+        static const int SUBMITOPTIONS__CPUTIME = 44;
 
         /**
          * \brief Constant for SUBMITOPTIONS__SELECTQUEUEAUTOM feature
          */
-        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 43;
+        static const int SUBMITOPTIONS__SELECTQUEUEAUTOM = 45;
 
         /**
          * \brief Constant for SUBMITOPTIONS__CRITERION feature
          */
-        static const int SUBMITOPTIONS__CRITERION = 44;
+        static const int SUBMITOPTIONS__CRITERION = 46;
 
         /**
          * \brief Constant for SUBMITOPTIONS__FILEPARAMS feature
          */
-        static const int SUBMITOPTIONS__FILEPARAMS = 45;
+        static const int SUBMITOPTIONS__FILEPARAMS = 47;
 
         /**
          * \brief Constant for SUBMITOPTIONS__TEXTPARAMS feature
          */
-        static const int SUBMITOPTIONS__TEXTPARAMS = 46;
+        static const int SUBMITOPTIONS__TEXTPARAMS = 48;
 
         /**
          * \brief Constant for SUBMITOPTIONS__WORKID feature
          */
-        static const int SUBMITOPTIONS__WORKID = 47;
+        static const int SUBMITOPTIONS__WORKID = 49;
 
         /**
          * \brief Constant for SUBMITOPTIONS__SPECIFICPARAMS feature
@@ -1026,6 +1036,18 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getJob__userId();
+
+        /**
+         * \brief Returns the reflective object for feature vmId of class Job
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJob__vmId();
+
+        /**
+         * \brief Returns the reflective object for feature vmIp of class Job
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJob__vmIp();
 
         /**
          * \brief Returns the reflective object for feature nbJobs of class ListJobs
@@ -1846,6 +1868,16 @@ namespace TMS_Data
          * \brief The instance for the feature userId of class Job
          */
         ::ecore::EAttribute_ptr m_Job__userId;
+
+        /**
+         * \brief The instance for the feature vmId of class Job
+         */
+        ::ecore::EAttribute_ptr m_Job__vmId;
+
+        /**
+         * \brief The instance for the feature vmIp of class Job
+         */
+        ::ecore::EAttribute_ptr m_Job__vmIp;
 
         /**
          * \brief The instance for the feature nbJobs of class ListJobs

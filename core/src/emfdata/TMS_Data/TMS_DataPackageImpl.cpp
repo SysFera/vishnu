@@ -140,6 +140,12 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__userId = new ::ecore::EAttribute();
     m_Job__userId->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__USERID);
     m_JobEClass->getEStructuralFeatures().push_back(m_Job__userId);
+    m_Job__vmId = new ::ecore::EAttribute();
+    m_Job__vmId->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__VMID);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__vmId);
+    m_Job__vmIp = new ::ecore::EAttribute();
+    m_Job__vmIp->setFeatureID(::TMS_Data::TMS_DataPackage::JOB__VMIP);
+    m_JobEClass->getEStructuralFeatures().push_back(m_Job__vmIp);
 
     // ListJobs
     m_ListJobsEClass = new ::ecore::EClass();
@@ -1058,6 +1064,34 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__userId->setUnique(true);
     m_Job__userId->setDerived(false);
     m_Job__userId->setOrdered(true);
+    m_Job__vmId->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__vmId->setName("vmId");
+    m_Job__vmId->setDefaultValueLiteral("");
+    m_Job__vmId->setLowerBound(0);
+    m_Job__vmId->setUpperBound(1);
+    m_Job__vmId->setTransient(false);
+    m_Job__vmId->setVolatile(false);
+    m_Job__vmId->setChangeable(true);
+    m_Job__vmId->setUnsettable(false);
+    m_Job__vmId->setID(false);
+    m_Job__vmId->setUnique(true);
+    m_Job__vmId->setDerived(false);
+    m_Job__vmId->setOrdered(true);
+    m_Job__vmIp->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_Job__vmIp->setName("vmIp");
+    m_Job__vmIp->setDefaultValueLiteral("");
+    m_Job__vmIp->setLowerBound(0);
+    m_Job__vmIp->setUpperBound(1);
+    m_Job__vmIp->setTransient(false);
+    m_Job__vmIp->setVolatile(false);
+    m_Job__vmIp->setChangeable(true);
+    m_Job__vmIp->setUnsettable(false);
+    m_Job__vmIp->setID(false);
+    m_Job__vmIp->setUnique(false);
+    m_Job__vmIp->setDerived(false);
+    m_Job__vmIp->setOrdered(true);
     // ListJobs
     m_ListJobsEClass->setName("ListJobs");
     m_ListJobsEClass->setAbstract(false);
@@ -2910,6 +2944,14 @@ TMS_DataPackage::TMS_DataPackage()
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__userId()
 {
     return m_Job__userId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__vmId()
+{
+    return m_Job__vmId;
+}
+::ecore::EAttribute_ptr TMS_DataPackage::getJob__vmIp()
+{
+    return m_Job__vmIp;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobs__nbJobs()
 {
