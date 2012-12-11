@@ -18,6 +18,11 @@
 -- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
 -- Revision comment     : Adds support for advanced IO and merging with the WebBoard database
 
+-- Revision nb          : 1.5
+-- Revision date        : 12/07/12
+-- Revision author      : Amine Bsila <amine.bsila@sysfera.com>
+-- Revision comment     : Adds the columns vmId and vmIp in the table job
+
 
 USE vishnu;
 
@@ -418,6 +423,8 @@ CREATE TABLE `job` (
   `vsession_numsessionid` bigint(20) NOT NULL,
   `wallclocklimit` int(11) DEFAULT NULL,
   `workId` bigint(20) DEFAULT NULL,
+  `vmId` varchar(255) DEFAULT NULL,
+  `vmIp` varchar(255) DEFAULT NULL,   
   PRIMARY KEY (`numjobid`),
   KEY `FK19BBDF381DC90` (`workId`),
   KEY `FK19BBDF58538BC` (`vsession_numsessionid`),

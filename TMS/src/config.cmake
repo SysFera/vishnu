@@ -78,8 +78,13 @@ if (sge)
 endif(sge)
 
 if (deltacloud)
-  set(DELTACLOUDSERVER server/DeltaCloudServer.cpp )
-  set(DELTACLOUD_ALL_INCLUDE_DIR ${LIBDELTACLOUD_INCLUDE_DIR})
+  set(DELTACLOUDSERVER 
+  server/DeltaCloudServer.cpp 
+  deltacloudcommon/common.c 
+  deltacloudcommon/curl_action.c 
+  )
+
+  set(DELTACLOUD_ALL_INCLUDE_DIR ${LIBDELTACLOUD_INCLUDE_DIR} ${COMMON_DELTACLOUD_DIR} ${CURL_INCLUDE_DIR} ${XML_INCLUDE_DIR})
   set(DELTACLOUD_ALL_LIB_DIR ${LIBDELTACLOUD_LIB})
 endif(deltacloud)
 

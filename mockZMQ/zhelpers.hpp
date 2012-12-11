@@ -9,7 +9,7 @@
 #include <string.h>
 
 
-const int DEFAULT_TIMEOUT = 60; // seconds
+const int DEFAULT_TIMEOUT = 120; // seconds
 
 /**
  * @class wraps zmq::socket_t to simplify its use
@@ -158,8 +158,7 @@ public:
             expect_reply = false;
             break;
           } else {
-            std::cerr << boost::format(
-              "W: no response from %1%, retrying ...\n") % addr_;
+            std::cerr << boost::format("W: no response from %1%, retrying ...\n") % addr_;
             reset();
             sock_->send(data);
           }

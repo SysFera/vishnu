@@ -356,6 +356,28 @@ namespace TMS_Data
          **/
         void setUserId(::ecore::EString const& _userId);
 
+        /**
+         * \brief To get the vmId
+         * \return The vmId attribute value
+         **/
+        ::ecore::EString const& getVmId() const;
+        /**
+         * \brief To set the vmId
+         * \param _vmId The vmId value
+         **/
+        void setVmId(::ecore::EString const& _vmId);
+
+        /**
+         * \brief To get the vmIp
+         * \return The vmIp attribute value
+         **/
+        ::ecore::EString const& getVmIp() const;
+        /**
+         * \brief To set the vmIp
+         * \param _vmIp The vmIp value
+         **/
+        void setVmIp(::ecore::EString const& _vmIp);
+
         // References
 
 
@@ -432,6 +454,10 @@ namespace TMS_Data
         ::ecore::ELong m_workId;
 
         ::ecore::EString m_userId;
+
+        ::ecore::EString m_vmId;
+
+        ::ecore::EString m_vmIp;
 
         // References
 

@@ -393,13 +393,20 @@ SGEServer::getJobState(const std::string& jobId) {
     case DRMAA_PS_UNDETERMINED:
      ret = -1;
      break;
-    case DRMAA_PS_QUEUED_ACTIVE:case DRMAA_PS_SYSTEM_ON_HOLD:case DRMAA_PS_USER_ON_HOLD:case DRMAA_PS_USER_SYSTEM_ON_HOLD:case DRMAA_PS_SYSTEM_SUSPENDED:case DRMAA_PS_USER_SUSPENDED:case DRMAA_PS_USER_SYSTEM_SUSPENDED:
+    case DRMAA_PS_QUEUED_ACTIVE:
+    case DRMAA_PS_SYSTEM_ON_HOLD:
+    case DRMAA_PS_USER_ON_HOLD:
+    case DRMAA_PS_USER_SYSTEM_ON_HOLD:
+    case DRMAA_PS_SYSTEM_SUSPENDED:
+    case DRMAA_PS_USER_SUSPENDED:
+    case DRMAA_PS_USER_SYSTEM_SUSPENDED:
      ret = 3;
      break;
    case DRMAA_PS_RUNNING:
      ret = 4;//RUNNING
      break;
-   case DRMAA_PS_DONE:case DRMAA_PS_FAILED:
+   case DRMAA_PS_DONE:
+   case DRMAA_PS_FAILED:
      ret = 5;
      break;
    default:

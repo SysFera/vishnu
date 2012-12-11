@@ -507,7 +507,9 @@ CREATE TABLE job (
     submitmachinename character varying(255),
     vsession_numsessionid bigint NOT NULL,
     wallclocklimit integer,
-    workid bigint
+    workid bigint,
+    vmId character varying(255),
+    vmIp character varying(255)
 );
 
 

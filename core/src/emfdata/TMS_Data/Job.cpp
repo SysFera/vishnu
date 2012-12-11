@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 Job::Job() :
     m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
             m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    ""), m_workId(0)
+                    ""), m_workId(0), m_vmIp()
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/
@@ -723,6 +723,58 @@ void Job::setUserId(::ecore::EString const& _userId)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__userId(),
                 _old_userId,
                 m_userId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& Job::getVmId() const
+{
+    return m_vmId;
+}
+
+void Job::setVmId(::ecore::EString const& _vmId)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_vmId = m_vmId;
+#endif
+    m_vmId = _vmId;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__vmId(),
+                _old_vmId,
+                m_vmId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& Job::getVmIp() const
+{
+    return m_vmIp;
+}
+
+void Job::setVmIp(::ecore::EString const& _vmIp)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_vmIp = m_vmIp;
+#endif
+    m_vmIp = _vmIp;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJob__vmIp(),
+                _old_vmIp,
+                m_vmIp
         );
         eNotify(&notification);
     }
