@@ -99,15 +99,10 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	boost::split(lineVec, line, boost::is_any_of(" "));
 	int nbFiles = lineVec.size();
 	if( nbFiles > 0 && line.size() >0 ) {
-		copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0);
-		std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
-		jobResult.setOutputPath(moutDir+"/"+fileName);
-		if(nbFiles == 1) {
-                  jobResult.setErrorPath(moutDir+"/"+fileName);
-		} else {
-                  // TODO shouldn't the else branch be different from the if branch?
-                  jobResult.setErrorPath(moutDir+"/"+fileName);
-		}
+          copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, 0);
+          std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
+          jobResult.setOutputPath(moutDir+"/"+fileName);
+          jobResult.setErrorPath(moutDir+"/"+fileName);
 	}
 	//save missing files
 	if( !getline(fdescStream, line)) line = "";
