@@ -86,26 +86,20 @@ int contentFile(diet_profile_t* profile) {
 
 	result = file->getContent();
 
-      //To register the command
-      sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
-    } catch (VishnuException& err) {
-      try {
-        sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      err.appendMsgComp(finishError);
-      result = strdup("");
-      errMsg = strdup(err.buildExceptionString().c_str());
-    }
-    if (errMsg==NULL) {
-      errMsg = strdup("");
-    }
-    else {
-     result = strdup("");
-    }
-    diet_string_set(diet_parameter(profile, 4), result, DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 5), errMsg, DIET_VOLATILE);
-    return 0;
+	//To register the command
+	sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+  } catch (VishnuException& err) {
+	try {
+	  sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+	} catch (VishnuException& fe) {
+	  finishError =  fe.what();
+	  finishError +="\n";
+	}
+	err.appendMsgComp(finishError);
+	result = "";
+	errMsg = err.buildExceptionString();
+  }
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(result.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  return 0;
 }

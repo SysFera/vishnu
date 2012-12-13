@@ -52,15 +52,6 @@ public :
   static ServerTMS*  getInstance();
 
   /**
-   * \brief Function to select a server for automatic selection
-   * \param sessionKey The session key
-   * \param criterion The selection criterion
-   * \return the machine id
-   */
-  static std::string
-  selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion);
-
-  /**
    * \brief To get the unique instance of the database
    */
   Database* getDatabaseVishnu();
@@ -91,6 +82,12 @@ public :
    */
   std::string
   getSlaveDirectory();
+  /**
+   * \brief To get the Default Batch Options
+   * \return batch Default Options Vector
+   */
+  std::vector<std::string>
+  getDefaultBatchOption();
 
   /**
    * \brief To initialize the TMS Server class
@@ -104,11 +101,10 @@ public :
   int
   init(int vishnuId,
        DbConfiguration dbConfig,
-	   const std::string & machineId,
+       const std::string & machineId,
        BatchType batchType,
-	   const std::string & slaveBinDir,
-	   const std::string & uriNamer);
-
+       const std::string & slaveBinDir,
+       std::string batchDefaultConfigFile);
   /**
    * \brief Destructor, raises an exception on error
    */
@@ -140,6 +136,18 @@ private :
    * \brief operator=
    */
   ServerTMS& operator=(const ServerTMS&);
+
+  /**
+   * \brief Function to get the default Batch submission options
+   * \param configPath The job script path
+   * \param defaultOptions The list of the option value
+   * \return raises an exception on error
+   */
+  void
+  getConfigOptions(const char* configPath,
+                   std::vector<std::string>& defaultOptions,
+                   const char* batchKey);
+
 
   /////////////////////////////////
   // Attributes

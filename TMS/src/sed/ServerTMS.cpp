@@ -19,7 +19,8 @@
 #include "api_tms.hpp"
 #include "UserServer.hpp"
 #include "SessionServer.hpp"
-
+#include <string>
+#include <vector>
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
@@ -34,38 +35,6 @@ ServerTMS::getInstance() {
     minstance = new ServerTMS();
   }
   return minstance;
-}
-
-/**
- * \brief Function to select a server for automatic selection
- * \param sessionKey The session key
- * \param criterion The selection criterion
- * \return the machine id
- */
-std::string
-ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
-
-	std::cout << muriNamerCfg << std::endl;
-	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
-	UserServer userServer = UserServer(SessionServer(sessionKey));
-	userServer.init();
-	string userId = userServer.getData().getUserId();
-
-	if( userId.size() == 0 ) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
-	}
-
-	UMS_Data::ListMachines machines;
-	UMS_Data::ListMachineOptions mopts;
-	mopts.setListAllMachine(false);
-	mopts.setUserId(userId);
-	mopts.setMachineId("");
-	vishnu::listMachines(sessionKey, machines, mopts) ;
-	if(machines.getMachines().size() == 0) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to the user "+userId);
-	}
-	return machines.getMachines().get(0)->getMachineId();
-
 }
 
 /**
@@ -127,7 +96,7 @@ ServerTMS::ServerTMS() {
  * \return batch Default Options Vector
  */
 std::vector<std::string>
-ServerTMS::getDefaultBatchOption(){
+ServerTMS::getDefaultBatchOption() {
   return mdefaultBatchOption;
 }
 
@@ -143,9 +112,10 @@ ServerTMS::getDefaultBatchOption(){
 int
 ServerTMS::init(int vishnuId,
                 DbConfiguration dbConfig,
-                const std::string machineId,
+                const std::string& machineId,
                 BatchType batchType,
-                const std::string& slaveBinDir)              )
+                const std::string& slaveBinDir,
+                std::string batchDefaultConfigFile)
 {
 
   //initialization of the batchType
@@ -157,15 +127,12 @@ ServerTMS::init(int vishnuId,
   //initialization of the slave directory
   mslaveBinDir = slaveBinDir;
 
-  //set the name uri
-  vishnu::saveInFile(muriDispatcherCfg, "retryTimeout=10\ndispatcher="+uriDispatcher) ;
-
   //initialization of the default batch config file
   // mdefaultBatchConfig = batchDefaultConfigFile;
   switch(mbatchType) {
     case TORQUE :
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
-      break;              
+      break;
     case LOADLEVELER :
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
       break;
@@ -243,7 +210,7 @@ ServerTMS::getConfigOptions(const char* configPath,
       if(pos==string::npos) {
         continue;
       }
-     
+
       line = line.erase(0, pos);
       if(boost::algorithm::starts_with(line, batchKey)){
         line = line.substr(std::string(batchKey).size());
@@ -267,8 +234,8 @@ ServerTMS::getConfigOptions(const char* configPath,
       }
     }
   } catch (...){
-   
-  }  
+
+  }
 }
 
 
@@ -315,53 +282,6 @@ ServerTMS::initMap(std::string mid) {
 
 
 /**
- * \brief Function to select a server for automatic selection
- * \param sessionKey The session key
- * \param criterion The selection criterion
- * \return the machine id
- */
-std::string
-ServerTMS::selectMachine(const string& sessionKey, const TMS_Data::LoadCriterion_ptr & criterion) {
-
-	vishnu::vishnuInitialize(const_cast<char*>(muriNamerCfg.c_str()), 0, NULL) ;
-
-	SessionServer sessionServer = SessionServer(sessionKey); ;
-	UserServer userServer = UserServer(sessionServer);
-
-	userServer.init();
-
-	string userId = userServer.getData().getUserId();
-	if( userId.size() == 0 ) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "unable to assign a user to the session. May be the session is no longer valid.");
-	}
-
-	UMS_Data::ListMachineOptions mopts;
-	mopts.setListAllMachine(false);
-	mopts.setUserId(userId);
-	mopts.setMachineId("");
-
-	UMS_Data::ListMachines machines;
-	vishnu::listMachines(sessionKey, machines, mopts) ;
-
-	int machineCount = machines.getMachines().size() ;
-	if( machineCount == 0) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "there is no machine assigned to this user: "+userId);
-	}
-
-	string machineId = "" ;
-	long load = std::numeric_limits<long>::max();
-	UMS_Data::Machine_ptr machine = machines.getMachines().get(0) ;
-	for(int i=0; i< machineCount; i++) {
-		UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
-		if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
-			machineId = machine->getMachineId();
-		}
-	}
-	return machineId;
-}
-
-
-/**
  * \brief Function to compute the load performance of a given machine
  * \param sessionKey The session key
  * \param pb the request profile
@@ -396,4 +316,3 @@ ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::M
 	}
 	return load ;
 }
-

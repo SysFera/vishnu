@@ -92,8 +92,7 @@ boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath
       throw SystemException(ERRCODE_INVDATA, "solve_Tail: TailOfFileOptions object is not well built");
   }
 
-  tail = file->tail(*options_ptr);
-  result = strdup(tail.c_str());
+		result = file->tail(*options_ptr);
 
   //To register the command
   sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);

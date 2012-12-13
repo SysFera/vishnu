@@ -92,6 +92,6 @@ int solveRemoveDir(diet_profile_t* profile) {
 	errMsg = err.buildExceptionString();
   }
 
-diet_string_set(diet_parameter(profile, 4), errMsg, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   return 0;
 }

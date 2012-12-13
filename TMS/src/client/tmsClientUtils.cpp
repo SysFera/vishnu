@@ -86,7 +86,7 @@ std::string genericFileCopier(const std::string & sessionKey,
     dest = destMachineId + ":" + dest;
   }
 
-  if( vishnu::copyFile(sessionKey, src, dest, copts)!=0 ) {
+  if( vishnu::cp(sessionKey, src, dest, copts)!=0 ) {
     string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost" ;
     string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost" ;
     string msg = boost::str(boost::format("error while copying the file %1 (machine: %2) to %3 (machine: %4)") % src % dest % srcMachine % destMachine);
@@ -116,7 +116,7 @@ sendInputFiles(const std::string & sessionKey,
 
   if (listFiles.size() > 0 && srcFiles.size() != 0) {
     string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%rdestDir).str();
-    if(vishnu::createDir(sessionKey, fqdnDestDir)){
+    if(vishnu::mkdir(sessionKey, fqdnDestDir)){
       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the remote directory for input files: "+fqdnDestDir);
     }
   }
