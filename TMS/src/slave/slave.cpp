@@ -64,6 +64,7 @@ void usage(char* cmd) {
  */
 int
 main(int argc, char* argv[], char* envp[]) {
+
   std::string action;
   char* jobSerializedPath = NULL;
   char* optionsPath = NULL;
@@ -115,16 +116,12 @@ main(int argc, char* argv[], char* envp[]) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBS, DELTACLOUD or POSIX)");
   }
 
-  char** cloudEnv = NULL;
-  if(batchType == DELTACLOUD) {
-	cloudEnv = new char*[2];
-	cloudEnv[0] =  argv[8];
-	cloudEnv[1] =  argv[9];
-  }
-
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   BatchServer* batchServer;
+
+  // First source the rc file
+  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc");
 
   try {
 
@@ -146,7 +143,7 @@ main(int argc, char* argv[], char* envp[]) {
       }
 
       //Submits the job
-      if(batchServer->submit(jobScriptPath, *submitOptions, *job, cloudEnv)==0){;
+      if(batchServer->submit(jobScriptPath, *submitOptions, *job)==0){;
 
         //To serialize the job object
         ::ecorecpp::serializer::serializer _ser;
@@ -173,7 +170,6 @@ main(int argc, char* argv[], char* envp[]) {
     os_error.close();
   }
 
-  delete cloudEnv ;
   delete job;
   delete submitOptions;
   delete batchServer;

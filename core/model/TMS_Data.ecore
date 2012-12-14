@@ -408,7 +408,7 @@
     <eLiterals name="QUEUED" value="2"/>
     <eLiterals name="WAITING" value="3"/>
     <eLiterals name="RUNNING" value="4"/>
-    <eLiterals name="TERMINATED" value="5" literal="TERMINATED"/>
+    <eLiterals name="COMPLETED" value="5" literal="COMPLETED"/>
     <eLiterals name="CANCELLED" value="6" literal="CANCELLED"/>
     <eLiterals name="ALREADY_DOWNLOADED" value="7" literal="ALREADY_DOWNLOADED"/>
   </eClassifiers>

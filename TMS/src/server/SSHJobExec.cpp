@@ -11,12 +11,11 @@
 #include <string>
 #include <vector>
 #include <sys/stat.h>
+#include <stdlib.h>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem.hpp>
-//EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
-
 #include "TMS_Data.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
@@ -26,6 +25,12 @@
 #include "SSHJobExec.hpp"
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
+const int SSH_CONNECT_RETRY_INTERVAL = 5;
+const int SSH_CONNECT_MAX_RETRY = 20;
+const std::string DEFAULT_SSH_OPTIONS =
+		" -o UserKnownHostsFile=/dev/null"
+		" -o StrictHostKeyChecking=no"
+		" -o PasswordAuthentication=no";
 
 /**
  * \brief Constructor
@@ -142,13 +147,12 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 				<< " -o NoHostAuthenticationForLocalhost=yes "
 				<< " -o PasswordAuthentication=no ";
 	} else {
-
-		if(mcloudEndpoint.size() != 0 && muser.size() != 0) {
 		// set the information to authenticate against the cloud frontend
-		// the password is retrieved from the command option
-		cmdDetails += " " + mcloudEndpoint + " " + muser;
-		} else {
-			//TODO throw exception
+		if(muser.size() >0) {
+			setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER].c_str(), muser.c_str(), 1);
+		}
+		if(mcloudEndpoint.size() > 0) {
+			setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(), mcloudEndpoint.c_str(), 1);
 		}
 	}
 
@@ -248,6 +252,57 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 }
 
 /**
+ * \brief Function to execute a script remotely
+ * \param scriptPath the path to script to submit
+ * \return raises an exception on error
+ */
+int
+SSHJobExec::execRemoteScript(const std::string& scriptPath) {
+
+	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
+	std::ostringstream sshCmd;
+
+	sshCmd << "ssh -q -o ConnectTimeout=2 " << DEFAULT_SSH_OPTIONS << " "
+			<< muser << "@" << mhostname
+			<< " exit;"
+			<< " echo $? >" << machineStatusFile;
+
+	int retry = SSH_CONNECT_MAX_RETRY;
+	while(retry >0) {
+		system(sshCmd.str().c_str());
+		std::string content = vishnu::get_file_content(machineStatusFile);
+		size_t pos = content.find("\n");
+		int ret = -1;
+		if(pos != std::string::npos) {
+			ret = vishnu::convertToInt(content.substr(0, pos));
+		}
+		if(ret == 0) {
+			break;
+		}
+		sleep(SSH_CONNECT_RETRY_INTERVAL);
+		retry--;
+	}
+
+	// If not succeed throw exception
+	if(retry == 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"execRemoteScript:: can't log into the machine "+mhostname+" after "
+				+ vishnu::convertToString(SSH_CONNECT_MAX_RETRY*SSH_CONNECT_RETRY_INTERVAL)+" seconds");
+	}
+
+	// If succeed execute the script to the virtual machine
+	// This assumes that the script is located on a shared DFS
+	int pid = -1;
+	if(execCmd(scriptPath, true, &pid)){
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"execRemoteScript:: failed when executing the script " + scriptPath + " in the virtual machine "+mhostname);
+	}
+
+	return pid;
+}
+
+
+/**
  * \brief Function to convert the batch type to string
  * \param BatchType the batch type to convert
  * \return the converted batch type
@@ -301,15 +356,16 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 		const char* copyOfErrorPath) {
 
 	std::ostringstream cmd1;
-	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-	cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
+	cmd1 << "scp " << DEFAULT_SSH_OPTIONS << " "
+			<< muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
+
 	if (system((cmd1.str()).c_str())) {
 		return -1;
 	}
 
 	std::ostringstream cmd2;
-	cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-	cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
+	cmd2 << "scp "<< DEFAULT_SSH_OPTIONS << " "
+			<< muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
 	if (system((cmd2.str()).c_str())) {
 		return -1;
 	}
@@ -326,8 +382,8 @@ int
 SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 
 	std::ostringstream cmd1;
-	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
-	cmd1 << muser << "@" << mhostname << ":" << path << " " << dest;
+	cmd1 << "scp " << DEFAULT_SSH_OPTIONS << " "
+			<< muser << "@" << mhostname << ":" << path << " " << dest;
 	if (system((cmd1.str()).c_str())) {
 		return -1;
 	}
@@ -337,25 +393,52 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 /**
  * \brief Function to execute a command via ssh
  * \param cmd the command to execute
+ * \param background: Tell whether launch the script is background
+ * \param pidFile: The path of the file containing the process pid
  */
 int
-SSHJobExec::execCmd(const std::string& cmd){
+SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 
+	std::string pidFile = "vishnu.pid";
 	std::ostringstream sshCmd;
-	sshCmd << "ssh -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no "
-			<< muser << "@" << mhostname << " "
+	sshCmd << "ssh " << DEFAULT_SSH_OPTIONS << " "
+			<< muser << "@" << mhostname << " '"
 			<< cmd ;
+
+	if( ! background) {
+		sshCmd << "'";
+	} else {
+		try {
+			pidFile =  bfs::unique_path("/tmp/vishnu.pid%%%%%%").string();
+		} catch(...) {
+			// The pid file will be created in $HOME/vishnu.pid
+		}
+		sshCmd << "& exit $!'; echo $? > " << pidFile;
+	}
+
+	std::cout << sshCmd.str() << std::endl;
 	if(system((sshCmd.str()).c_str())) {
-		return 1;
+		return -1;
+	}
+
+	std::string content = vishnu::get_file_content(pidFile);
+	size_t pos = content.find("\n");
+
+	if(pid != NULL) {
+		if(pos != std::string::npos) {
+			*pid = vishnu::convertToInt(content.substr(0, pos));
+		} else {
+			*pid = -1;
+		}
 	}
 
 	return 0;
 }
 
 /**
-* \brief Set the value of the cloud endpoint
-*/
+ * \brief Set the value of the cloud endpoint
+ */
 void
 SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
-   mcloudEndpoint = cloupApiUrl;
+	mcloudEndpoint = cloupApiUrl;
 }

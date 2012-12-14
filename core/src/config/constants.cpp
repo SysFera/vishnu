@@ -1,4 +1,5 @@
 #include "constants.hpp"
+#include "boost/assign.hpp"
 
 namespace vishnu {
 
@@ -34,5 +35,16 @@ namespace vishnu {
   /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER}
 
   };
+
+
+std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of
+		  (CLOUD_ENDPOINT, "VISHNU_CLOUD_ENDPOINT")
+		  (CLOUD_USER, "VISHNU_CLOUD_USER")
+  		  (CLOUD_USER_PASSWORD, "VISHNU_CLOUD_USER_PASSWORD")
+  		  (CLOUD_TENANT, "VISHNU_CLOUD_TENANT")
+  		  (CLOUD_VM_IMAGE, "VISHNU_CLOUD_VM_IMAGE")
+  		  (CLOUD_VM_USER, "VISHNU_CLOUD_VM_USER")
+  		  (CLOUD_VM_USER_KEY, "VISHNU_CLOUD_VM_USER_KEY")
+  		  (CLOUD_DEFAULT_FLAVOR, "VISHNU_CLOUD_DEFAULT_FLAVOR");
   //}}RELAX<MISRA_0_1_3>
 }

@@ -53,6 +53,14 @@ class SSHJobExec {
             const std::string& script_path="");
 
     /**
+    * \brief Function to execute a script remotely
+    * \param scriptPath the path to script to submit
+    * \return the pid of the process. Throw exception on error
+    */
+   int
+   execRemoteScript(const std::string& scriptPath="");
+
+    /**
      * \brief Function to copy files from remote machine
      * \param outputPath the output path to get
      * \param errorPath the error path to get
@@ -77,9 +85,11 @@ class SSHJobExec {
     /**
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
+     * \param background: Tell whether launch the script is background
+     * \param pidFile: The path of the file containing the process pid
      */
     int
-    execCmd(const std::string& cmd);
+    execCmd(const std::string& cmd, const bool & background=false, int* pid=NULL);
 
     /**
      * \brief Function to return the job serialized content

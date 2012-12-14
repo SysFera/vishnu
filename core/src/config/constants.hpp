@@ -3,6 +3,7 @@
 #define _CONSTANTS_HPP_
 
 #include <string>
+#include <map>
 
 namespace vishnu {
   /**
@@ -50,6 +51,30 @@ namespace vishnu {
     CLOUDENDPOINT
   } param_type_t;
 
+  typedef enum {
+	  CLOUD_ENDPOINT,
+	  CLOUD_USER,
+	  CLOUD_USER_PASSWORD,
+	  CLOUD_TENANT,
+	  CLOUD_VM_IMAGE,
+	  CLOUD_VM_USER,
+	  CLOUD_VM_USER_KEY,
+	  CLOUD_DEFAULT_FLAVOR
+  } cloud_env_vars_t;
+
+  typedef enum {
+	  JOB_UNDEFINED=0,
+	  JOB_SUBMITTED=1,
+	  JOB_QUEUED=2,
+	  JOB_WAITING=3,
+	  JOB_RUNNING=4,
+	  JOB_COMPLETED=5,
+	  JOB_CANCELLED=6,
+	  JOB_ALREADY_DOWNLOADED=7
+  } job_status_t;
+
+
+
   /**
    * \brief A convenient data type to store a parameter
    */
@@ -72,6 +97,8 @@ namespace vishnu {
    * \brief An arry to store all paraeters
    */
   extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
+
+  extern std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS;
 }
 
 #endif /* _CONSTANTS_HPP_ */

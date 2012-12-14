@@ -93,7 +93,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
 	string line;
 	istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
-	if(! getline(fdescStream, line)) line = "";
+	if(! getline(fdescStream, line)) {
+		line = "";
+	}
 	boost::trim(line);
 	ListStrings lineVec;
 	boost::split(lineVec, line, boost::is_any_of(" "));
@@ -105,7 +107,10 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
           jobResult.setErrorPath(moutDir+"/"+fileName);
 	}
 	//save missing files
-	if( !getline(fdescStream, line)) line = "";
+	if( !getline(fdescStream, line)) {
+		line = "";
+	}
+
 	vishnu::recordMissingFiles(moutDir+"/MISSING", line);
 
 	diet_profile_free(getJobOutPutProfile);

@@ -67,6 +67,9 @@ int main(int argc, char* argv[], char* envp[]) {
       return usage(argv[0]);
     }
 
+  // First set the rc file if it don't exists
+  system("touch -f $HOME/.vishnurc");
+
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
