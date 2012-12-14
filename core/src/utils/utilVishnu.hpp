@@ -443,6 +443,14 @@ mklink(const std::string& src) ;
   UMS_Data::Version_ptr
   parseVersion(const std::string& version);
 
+
+/**
+ * \brief Source an configuration file
+ * \param filePath: the path to the file
+ */
+void
+sourceFile(const std::string& filePath);
+
 } //END NAMESPACE
 
 

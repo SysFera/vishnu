@@ -251,7 +251,7 @@ SGEServer::submit(const char* scriptPath,
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
       drmaa_exit(NULL, 0);
       throw UserException(ERRCODE_INVALID_PARAM,
-                          "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
+                          "Conflict: You can't use another environment variable than $JOB_ID.\n");
 
     }
     size_t pos = jobErrorPathStr.find_last_of(':');
@@ -292,7 +292,7 @@ SGEServer::submit(const char* scriptPath,
     Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
       drmaa_exit(NULL, 0);
-      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another envirnment variable than $JOB_ID.\n");
+      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another environment variable than $JOB_ID.\n");
 
     }
     size_t pos = jobOutputPathStr.find_last_of(':');
@@ -391,7 +391,7 @@ SGEServer::getJobState(const std::string& jobId) {
 
   switch (state) {
     case DRMAA_PS_UNDETERMINED:
-     ret = -1;
+     ret = vishnu::JOB_UNDEFINED;
      break;
     case DRMAA_PS_QUEUED_ACTIVE:
     case DRMAA_PS_SYSTEM_ON_HOLD:
@@ -400,17 +400,17 @@ SGEServer::getJobState(const std::string& jobId) {
     case DRMAA_PS_SYSTEM_SUSPENDED:
     case DRMAA_PS_USER_SUSPENDED:
     case DRMAA_PS_USER_SYSTEM_SUSPENDED:
-     ret = 3;
+     ret = vishnu::JOB_WAITING;
      break;
    case DRMAA_PS_RUNNING:
-     ret = 4;//RUNNING
+     ret = vishnu::JOB_RUNNING;
      break;
    case DRMAA_PS_DONE:
    case DRMAA_PS_FAILED:
-     ret = 5;
+     ret = vishnu::JOB_COMPLETED;
      break;
    default:
-     ret = 5;
+     ret = vishnu::JOB_COMPLETED;
      break;
 
   } /* switch */

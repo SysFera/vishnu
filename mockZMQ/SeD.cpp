@@ -102,7 +102,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   // bind the sockets
   socket_server.bind(uri.c_str());
   socket_workers.bind(WORKER_INPROC_QUEUE.c_str());
-  std::cout << boost::format("I: Listening... (%1%)\n") % uri;
+  std::cout << boost::format("I: listening... (%1%)\n") % uri;
 
   // Create our threads pool
   const int NB_THREADS = 50;

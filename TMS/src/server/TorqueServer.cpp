@@ -492,19 +492,19 @@ int
 TorqueServer::convertTorqueStateToVishnuState(std::string state) {
 
   if(state.compare("T")==0) {
-    return 1; //SUBMITTED
+    return vishnu::JOB_SUBMITTED;
   }
   if(state.compare("Q")==0) {
-    return 2; //QUEUED
+    return vishnu::JOB_QUEUED;
   }
   if(state.compare("W")==0 || state.compare("H")==0 || state.compare("S")==0) {
-    return 3; //WAITING
+    return vishnu::JOB_WAITING;
   }
   if(state.compare("R")==0 || state.compare("E")==0) {
-    return 4; //RUNNING
+    return vishnu::JOB_RUNNING;
   }
 
-  return 5; //TERMINATED
+  return vishnu::JOB_COMPLETED;
 
 }
 

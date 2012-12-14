@@ -237,33 +237,36 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
 
 	std::string sqlUpdate = "UPDATE job set ";
-	sqlUpdate+="vsession_numsessionid="+numsession+",";
-	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
-	sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"',";
-	sqlUpdate+="batchJobId='"+BatchJobId+"',";
-    sqlUpdate+="batchType="+convertToString(batchType)+",";
-	sqlUpdate+="jobName='"+mjob.getJobName()+"',";
-	sqlUpdate+="jobPath='"+mjob.getJobPath()+"',";
+	sqlUpdate+="vsession_numsessionid="+numsession+", ";
+	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"', ";
+	sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
+	sqlUpdate+="batchJobId='"+BatchJobId+"', ";
+	sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
+	sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
+	sqlUpdate+="jobPath='"+mjob.getJobPath()+"', ";
 	sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";
 	sqlUpdate+="errorPath='"+prefixErrorPath+mjob.getErrorPath()+"',";
-	sqlUpdate+="scriptContent='job',";
-	sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+",";
-	sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+",";
-	sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"',";
-	sqlUpdate+="status="+convertToString(mjob.getStatus())+",";
-	sqlUpdate+="submitDate=CURRENT_TIMESTAMP,";
-	sqlUpdate+="owner='"+mjob.getOwner()+"',";
-	sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"',";
-	sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+",";
+	sqlUpdate+="scriptContent='job', ";
+	sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+", ";
+	sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+", ";
+	sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"', ";
+	sqlUpdate+="status="+convertToString(mjob.getStatus())+", ";
+	sqlUpdate+="submitDate=CURRENT_TIMESTAMP, ";
+	sqlUpdate+="owner='"+mjob.getOwner()+"', ";
+	sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"', ";
+	sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
 	sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
-	sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"',";
-	sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+",";
-	sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+",";
-	sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"',";
-	sqlUpdate+="outputDir='"+mjob.getOutputDir()+"' ";
-	sqlUpdate+=",workId="+workId+" ";
+	sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"', ";
+	sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+", ";
+	sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
+	sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
+	sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
+	sqlUpdate+="workId="+workId+", ";
+	sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
+	sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
 	sqlUpdate+="WHERE jobid='"+vishnuJobId+"';";
 
+	std::cout << sqlUpdate << std::endl;
 	mdatabaseVishnu->process(sqlUpdate);
 
 	return 0;
@@ -474,11 +477,12 @@ TMS_Data::Job JobServer::getJobInfo() {
 			"SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, jobPath, workId, "
 			"  outputPath, errorPath, outputDir, jobPrio, nbCpus, jobWorkingDir, job.status, "
 			"  submitDate, endDate, owner, jobQueue,wallClockLimit, groupName, jobDescription, "
-			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid"
+			"  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid, vmId, vmIp"
 			" FROM job, vsession, users "
 			" WHERE vsession.numsessionid=job.vsession_numsessionid "
 			" AND vsession.users_numuserid=users.numuserid"
-			" AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
+			" AND job.status >= 0"
+			" AND job.submitMachineId='"+mmachineId+"'"
 			" AND job.jobId='"+mjob.getJobId()+"'";
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
@@ -517,6 +521,8 @@ TMS_Data::Job JobServer::getJobInfo() {
 	mjob.setNbNodesAndCpuPerNode(*(++iter));
 	mjob.setBatchJobId(*(++iter));
 	mjob.setUserId(*(++iter));
+	mjob.setVmId(*(++iter));
+	mjob.setVmIp(*(++iter));
 
 	return mjob;
 }
