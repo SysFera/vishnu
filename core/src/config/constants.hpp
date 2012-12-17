@@ -59,7 +59,9 @@ namespace vishnu {
 	  CLOUD_VM_IMAGE,
 	  CLOUD_VM_USER,
 	  CLOUD_VM_USER_KEY,
-	  CLOUD_DEFAULT_FLAVOR
+	  CLOUD_DEFAULT_FLAVOR,
+	  CLOUD_NFS_SERVER,
+	  CLOUD_NFS_MOUNT_POINT
   } cloud_env_vars_t;
 
   typedef enum {

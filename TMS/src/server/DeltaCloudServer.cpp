@@ -151,11 +151,35 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	std::cout << ">>Virtual machine started"
 			  << "\n  ID: "<< std::string(instance.id)
-		      << "\n  Name: " << std::string(instance.name)
+		      << "\n  NAME: " << std::string(instance.name)
 	          << "\n  IP: "<< std::string(instance.private_addresses->address)
 	          << "\n";
 
+	// Get the NFS Server
+	char* nfsServer = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER].c_str());
+	if(nfsServer == NULL ||
+			strlen(nfsServer) == 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"No nfs set has been set. "
+				"You may need to set the environment variable VISHNU_CLOUD_NFS_SERVER" );
+	}
+
+	// Get the NFS mount point
+	char* nfsMountPoint = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT].c_str());
+	if(nfsMountPoint == NULL ||
+			strlen(nfsMountPoint) == 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"No nfs mount point has been set. "
+				"You may need to set the environment variable VISHNU_CLOUD_NFS_MOUNT_POINT");
+	}
+
+	// Create an ssh engine for the virtual machine
 	SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
+
+	// Mount the NFS repository
+	sshEngine.mountNfsDir(nfsServer, nfsMountPoint);
+
+	// Execute the script
 	int jobPid = -1;
 	try{
 		jobPid = sshEngine.execRemoteScript(scriptPath);
