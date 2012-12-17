@@ -416,7 +416,6 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 		sshCmd << "& exit $!'; echo $? > " << pidFile;
 	}
 
-	std::cout << sshCmd.str() << std::endl;
 	if(system((sshCmd.str()).c_str())) {
 		return -1;
 	}

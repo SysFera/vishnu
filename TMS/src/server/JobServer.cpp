@@ -265,8 +265,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
 	sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
 	sqlUpdate+="WHERE jobid='"+vishnuJobId+"';";
-
-	std::cout << sqlUpdate << std::endl;
 	mdatabaseVishnu->process(sqlUpdate);
 
 	return 0;
