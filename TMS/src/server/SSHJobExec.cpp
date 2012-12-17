@@ -416,6 +416,7 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 		sshCmd << "& exit $!'; echo $? > " << pidFile;
 	}
 
+	std::cout << "SSH CMD:::" << sshCmd.str() << std::endl;
 	if(system((sshCmd.str()).c_str())) {
 		return -1;
 	}
@@ -440,4 +441,15 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 void
 SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
 	mcloudEndpoint = cloupApiUrl;
+}
+
+/**
+* \brief To mount a NFS directory to a remote server
+* \param host: The NFS server
+* \param point the mount point on the NFS server
+*/
+void
+SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
+	execCmd("mkdir "+point+" 2>vishnu.log", false); // run in foreground
+	execCmd("mount -t nfs -o rw "+host+":"+point+" "+point+" 2>>vishnu.log", false);
 }

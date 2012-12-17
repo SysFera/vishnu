@@ -103,6 +103,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 	::ecorecpp::serializer::serializer optSer;
 	::ecorecpp::serializer::serializer jobSer;
 
+	// Set the script path
+	if(mbatchType == DELTACLOUD) {
+		scriptPath = strdup("/mnt/cloud/job_scriptXXXXXX"); //TODO: make it dynamically
+	} else {
+		scriptPath = strdup("/tmp/job_scriptXXXXXX");
+	}
+
 	std::string convertedScript;
 	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(batchType, scriptContentRef));
 	if(scriptConvertor->scriptIsGeneric()) {

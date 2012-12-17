@@ -117,6 +117,15 @@ class SSHJobExec {
    void
    setCloudUser(const std::string & user);
 
+
+   /**
+   * \brief To mount a NFS directory to a remote server
+   * \param host: The NFS server
+   * \param point the mount point on the NFS server
+   */
+   void
+   mountNfsDir(const std::string & host, const std::string point);
+
   private:
 
     /**
