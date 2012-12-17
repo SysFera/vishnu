@@ -14,6 +14,7 @@
 #include "common.h"
 #include <vector>
 #include "constants.hpp"
+#include <ctime>
 
 
 DeltaCloudServer::DeltaCloudServer(){}
@@ -113,13 +114,6 @@ DeltaCloudServer::submit(const char* scriptPath,
 	// NOW, Initialize the Delatacloud API
 	initialize(cloudEndpoint, cloudUser, cloudUserPassword);
 
-	// Check that the virtual machine image is valid
-//	deltacloud_image image;
-//	struct deltacloud_image *images = NULL;
-//	if (deltacloud_get_image_by_id(mcloudApi, imageId, &image) < 0) {
-//		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "The image id is not valid. " + std::string(deltacloud_get_last_error_string()));
-//	}
-
 	// Set the parameters of the virtual machine instance
 	std::vector<deltacloud_create_parameter> params;
 	deltacloud_create_parameter param;
@@ -129,6 +123,12 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	param.name = strdup("keyname");
 	param.value = strdup(vmUserKey);
+	params.push_back(param);
+
+
+	std::string vmName = "vishnu-"+vishnu::convertToString(time(NULL));
+	param.name = strdup("name");
+	param.value = strdup(vmName.c_str());
 	params.push_back(param);
 
 	char *instid = NULL;
