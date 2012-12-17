@@ -125,7 +125,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	params.push_back(param);
 
 
-	std::string vmName = "vishnu-vm"+vishnu::createSuffixFromCurTime();
+	std::string vmName = "vishnu.vm"+vishnu::createSuffixFromCurTime();
 	param.name = strdup("name");
 	param.value = strdup(vmName.c_str());
 	params.push_back(param);
