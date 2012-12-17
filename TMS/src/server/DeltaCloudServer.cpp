@@ -132,7 +132,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	params.push_back(param);
 
 	char *instid = NULL;
-	if (deltacloud_create_instance(mcloudApi, imageId, &params[0], 2, &instid) < 0){
+	if (deltacloud_create_instance(mcloudApi, imageId, &params[0], params.size(), &instid) < 0){
 		cleanUpParams(params);
 		if (instid == NULL){
 			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string())+". Symptom: deltacloud_create_instance return NULL " );
