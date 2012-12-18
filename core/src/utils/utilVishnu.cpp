@@ -8,6 +8,7 @@
 
 #include "utilVishnu.hpp"
 #include <stdexcept>
+#include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
@@ -979,12 +980,18 @@ vishnu::setIP(std::string& name, std::string IP){
 
 bool
 vishnu::isNotIP(std::string name) {
-  size_t pos = 0;
-  int cpt = 0;
-  while((pos = name.find(".", pos + 1)) != std::string::npos) {
-    cpt++;
+  boost::asio::ip::address ad;
+
+  try {
+    /* We use boost asio to check whether "name" is an IP address
+     * It will throw an exception if "name" is not an IP"
+     */
+    ad.from_string(name);
+  } catch (boost::exception & e) {
+    return true;
   }
-  return (cpt != 3);
+
+  return false;
 }
 
 /**
