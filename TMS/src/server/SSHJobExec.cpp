@@ -271,8 +271,9 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 			<< " exit;"
 			<< " echo $? >" << machineStatusFile;
 
-	int retry = SSH_CONNECT_MAX_RETRY;
-	while(retry >0) {
+	int attempt = 1;
+	std::cerr << "Checking ssh connection... attempt " << attempt << "/" << SSH_CONNECT_MAX_RETRY;
+	while(attempt <= SSH_CONNECT_MAX_RETRY) {
 		system(sshCmd.str().c_str());
 		std::string content = vishnu::get_file_content(machineStatusFile);
 		size_t pos = content.find("\n");
@@ -284,11 +285,12 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 			break;
 		}
 		sleep(SSH_CONNECT_RETRY_INTERVAL);
-		retry--;
+		attempt++;
+		std::cerr << "\rChecking ssh connection... attempt " << attempt << "/" << SSH_CONNECT_MAX_RETRY;
 	}
 
 	// If not succeed throw exception
-	if(retry == 0) {
+	if(attempt > SSH_CONNECT_MAX_RETRY) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: can't log into the machine "+mhostname+" after "
 				+ vishnu::convertToString(SSH_CONNECT_MAX_RETRY*SSH_CONNECT_RETRY_INTERVAL)+" seconds");
@@ -468,7 +470,7 @@ SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
 	}
 
 	// Mount the directory
-	if(execCmd("mount -t nfs -o rw "+host+":"+point+" "+point+" 2>>vishnu.log", false)) { // run in foreground
+	if(execCmd("mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+" 2>>vishnu.log", false)) { // run in foreground
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"mountNfsDir:: mount the directory: "+point);
 	}
