@@ -1,5 +1,6 @@
 #include "daemon_cleaner.hpp"
 #include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 #include "api_ums.hpp"
 #include <fstream>
 
@@ -26,11 +27,6 @@ bfs::path vishnu_dir;
  */
 
 bfs::path daemon_file;
-/**
- * \brief The processus information directory
- */
-
-bfs::path proc_dir("/proc");
 
 //}}RELAX<MISRA_0_1_3>
 
@@ -43,14 +39,9 @@ using namespace vishnu;
  * \param pid The given pid
  * \return True if the pid exists
  */
-
-
 bool
-pid_exists(const std::string& pid){
-  extern bfs::path proc_dir;
-  bfs::path token(proc_dir);
-  token /= pid;
-  return bfs::exists(token);
+pid_exists(int pid){
+  return !kill(pid, 0);
 }
 
 
@@ -60,8 +51,6 @@ pid_exists(const std::string& pid){
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
-
-
 void
 deleter(char* dietConfig,int ac,char* av[]){
 
@@ -87,10 +76,8 @@ deleter(char* dietConfig,int ac,char* av[]){
 
         const bfs::path current_path = it->path();
 
-        std::string pid = (current_path.filename()).string();
 
-
-        if (!pid_exists(pid)) {
+        if (!pid_exists(convertToInt(it->path().native()))) {
 
           // close all sessions opened by disconnect mode before deleting file
 
@@ -179,26 +166,10 @@ cleaner(char* dietConfig,int ac,char* av[]){
   session_dir /= vishnu_dir;   // set the directory in which will be stored all session files
 
   daemon_file/="daemon.pid";
-
-
   session_dir /= "sessions";
 
-
-  if (false==bfs::exists(session_dir)){ // make sure session_dir exists
-
+  if (false == bfs::exists(session_dir)) { // make sure session_dir exists
     bfs::create_directories(session_dir);
-
-  }
-
-
-  if (false==bfs::exists(daemon_file)){ // make sure daemon_file exists
-
-    bfs::ofstream f (daemon_file);
-
-    f<<getpid();    // record daemon pid
-
-    f.close();
-
   }
 
   pid_t pid = fork();// create a process resident to delete and close  all sessions corresponding on close terminal
@@ -206,9 +177,14 @@ cleaner(char* dietConfig,int ac,char* av[]){
   if (pid < 0) {
     std::cerr << "cleaning process: fork() failed" << std::endl;
   } else if (0 == pid) {
+    if (false == bfs::exists(daemon_file)) { // make sure daemon_file exists
+      bfs::ofstream f(daemon_file);
+      f << getpid();    // record daemon pid
+      f.close();
+    }
+
     deleter(dietConfig,ac,av);
   }
 
   return;
 }
-
