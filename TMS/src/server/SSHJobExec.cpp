@@ -409,7 +409,7 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 int
 SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 
-	std::string pidFile = "vishnu.pid";
+	std::string pidFile = "$HOME/vishnu.pid";
 	std::ostringstream sshCmd;
 	sshCmd << "ssh " << DEFAULT_SSH_OPTIONS << " "
 			<< muser << "@" << mhostname << " '"
@@ -423,7 +423,7 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 		} catch(...) {
 			// The pid file will be created in $HOME/vishnu.pid
 		}
-		sshCmd << "& exit $!'; echo $? > " << pidFile;
+		sshCmd << " & exit $!'; echo $? >" << pidFile;
 	}
 
 	std::cout << "SSH CMD:::" << sshCmd.str() << std::endl;
@@ -431,10 +431,10 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 		return -1;
 	}
 
-	std::string content = vishnu::get_file_content(pidFile);
-	size_t pos = content.find("\n");
-
-	if(pid != NULL) {
+	// Retrieve the pid if the process was launched in background
+	if(background && pid != NULL) {
+		std::string content = vishnu::get_file_content(pidFile);
+		size_t pos = content.find("\n");
 		if(pos != std::string::npos) {
 			*pid = vishnu::convertToInt(content.substr(0, pos));
 		} else {
@@ -460,6 +460,16 @@ SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
 */
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
-	execCmd("mkdir "+point+" 2>vishnu.log", false); // run in foreground
-	execCmd("mount -t nfs -o rw "+host+":"+point+" "+point+" 2>>vishnu.log", false);
+
+	// Create the local mounting directory
+	if(execCmd("mkdir "+point+" 2>vishnu.log", false)){ // run in foreground
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"mountNfsDir:: can not create the mounting point: "+point);
+	}
+
+	// Mount the directory
+	if(execCmd("mount -t nfs -o rw "+host+":"+point+" "+point+" 2>>vishnu.log", false)) { // run in foreground
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"mountNfsDir:: mount the directory: "+point);
+	}
 }
