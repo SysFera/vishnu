@@ -58,7 +58,9 @@ class SSHJobExec {
     * \return the pid of the process. Throw exception on error
     */
    int
-   execRemoteScript(const std::string& scriptPath="");
+   execRemoteScript(const std::string& scriptPath,
+		   		const std::string & nfsServer="",
+		   		const std::string nfsMountPoint="");
 
     /**
      * \brief Function to copy files from remote machine

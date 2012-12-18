@@ -254,10 +254,14 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 /**
  * \brief Function to execute a script remotely
  * \param scriptPath the path to script to submit
+ * \param nfsServer: The NFS server
+*  \param nfsMountPointthe mount point on the NFS server
  * \return raises an exception on error
  */
 int
-SSHJobExec::execRemoteScript(const std::string& scriptPath) {
+SSHJobExec::execRemoteScript(const std::string& scriptPath,
+		const std::string & nfsServer,
+		const std::string nfsMountPoint) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
 	std::ostringstream sshCmd;
@@ -288,6 +292,12 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: can't log into the machine "+mhostname+" after "
 				+ vishnu::convertToString(SSH_CONNECT_MAX_RETRY*SSH_CONNECT_RETRY_INTERVAL)+" seconds");
+	}
+
+	// Mount the NFS repository
+	if(nfsServer.size()>0 &&
+			nfsMountPoint.size()> 0) {
+		mountNfsDir(nfsServer, nfsMountPoint);
 	}
 
 	// If succeed execute the script to the virtual machine
