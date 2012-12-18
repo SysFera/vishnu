@@ -425,10 +425,9 @@ SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
 		} catch(...) {
 			// The pid file will be created in $HOME/vishnu.pid
 		}
-		sshCmd << " & exit $!'; echo $? >" << pidFile;
+		sshCmd << " 1>vishnu.stdout 2>vishnu.stderr & echo $!' >" << pidFile;
 	}
 
-	std::cout << "SSH CMD:::" << sshCmd.str() << std::endl;
 	if(system((sshCmd.str()).c_str())) {
 		return -1;
 	}
