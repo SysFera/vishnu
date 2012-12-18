@@ -124,6 +124,9 @@ DeltaCloudServer::submit(const char* scriptPath,
 	param.value = strdup(vmUserKey);
 	params.push_back(param);
 
+	param.name = strdup("user_data");
+	param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
+	params.push_back(param);
 
 	std::string vmName = "vishnu.vm"+vishnu::createSuffixFromCurTime();
 	param.name = strdup("name");
@@ -175,14 +178,10 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	// Create an ssh engine for the virtual machine
 	SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
-
-	// Mount the NFS repository
-	sshEngine.mountNfsDir(nfsServer, nfsMountPoint);
-
 	// Execute the script
 	int jobPid = -1;
 	try{
-		jobPid = sshEngine.execRemoteScript(scriptPath);
+		jobPid = sshEngine.execRemoteScript(scriptPath, nfsServer, nfsMountPoint);
 	} catch(...) {
 		throw;
 	}
