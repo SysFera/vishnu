@@ -28,7 +28,13 @@ struct ChgPassWordFunc {
   int operator()() {
    std::string oldPassword=vishnu::takePassword("old password: ");
    std::string newPassword=vishnu::takePassword("new password: ");
-   return changePassword(muserId,oldPassword, newPassword);
+   std::string confirmation=vishnu::takePassword("confirm new password: ");
+   if (newPassword == confirmation) {
+     return changePassword(muserId, oldPassword, newPassword);
+   } else {
+     std::cout << "Password doesn't match the confirmation" << std::endl;
+     return CLI_ERROR_INVALID_PARAMETER;
+   }
   }
 };
 
@@ -72,11 +78,9 @@ int main (int ac, char* av[]){
     helpUsage(*opt,"[options] userId");
     return 0;
   }
- 
-  ChgPassWordFunc chPwdFunc(userId);  
+
+  ChgPassWordFunc chPwdFunc(userId);
   return GenericCli().runWithoutSessionKey(chPwdFunc, dietConfig, ac, av);
 
 
 }// end of main
-
-
