@@ -1,6 +1,6 @@
 /**
  * \file content_of_file.cpp
- * This file defines the VISHNU  content of file command 
+ * This file defines the VISHNU  content of file command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -33,7 +33,7 @@ struct ContentOfFileFunc {
     string mfileContent;
 
       int res=contentOfFile(sessionKey,mpath,mfileContent);
-    cout <<mfileContent << "\n"; 
+    cout <<mfileContent;
     return res;
   }
 };
@@ -41,15 +41,15 @@ struct ContentOfFileFunc {
 
 
 int main (int ac, char* av[]){
-  
+
 
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
 
-  
+
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
-  
+
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,ac,av," path");
   ContentOfFileFunc apiFunc(path);
