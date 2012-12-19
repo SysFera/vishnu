@@ -3,6 +3,8 @@
 #include "utilVishnu.hpp"
 #include "zhelpers.hpp"
 #include "DIET_client.h"
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <boost/thread.hpp>
 #include "UserException.hpp"
 #include "utils.hpp"
@@ -11,6 +13,8 @@
 
 #define SEPARATOR "#"
 #define INIT "$"
+
+namespace bfs = boost::filesystem;
 
 void
 usage(){
@@ -267,7 +271,22 @@ main(int argc, char** argv) {
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
   config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
   config.getRequiredConfigValue<unsigned int>(vishnu::DISP_TIMEOUT, timeout);
-  config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+ config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+
+  bfs::path file(confFil);
+  bfs::ifstream conf(file);
+
+  if (conf) {
+    std::string line;
+    std::cerr << "==== Initial startup services ====\n\n";
+    while (std::getline(conf, line)) {
+      std::cerr << line << "\n";
+    }
+    std::cerr << "==================================\n";
+  } else {
+    std::cerr << "No initial services at startup\n";
+  }
+
 
 // Strictly because optionnal argument now
 //  if (argc < 4){
