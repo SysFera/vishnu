@@ -81,6 +81,14 @@ function generate_man () {
 ######################################################################
 
 
+echo "Generate doc"
+# generate doxygen documentation
+mkdir doc
+rm -rf doc/*
+doxygen Doxyfile
+doxygen Doxyfile_API
+exit 0
+
 # generate adminman, userman and quickstart
 generate_doc core/doc/adminmanual/docbook adminman-gen
 generate_doc core/doc/adminmanual/docbook adminman_eng-gen
