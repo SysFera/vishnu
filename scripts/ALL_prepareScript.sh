@@ -24,26 +24,25 @@ fi
 
 eclipse=$2
 
-# Create temporary directory
-rm -rf /tmp/prepaRel
-mkdir /tmp/prepaRel
-path=/tmp/prepaRel/VISHNU_$NO_VERSION
-mkdir $path
 
-pathrel=deliverables/src
+######################################################################
+#                            VARIABLES                               #
+######################################################################
+# get complete path to script dir
+vishnuDir=`pwd`
+scriptDir=$vishnuDir/scripts
 
-mkdir -p deliverables/src
-mkdir -p deliverables/doc
-mkdir -p deliverables/debs
-mkdir -p deliverables/tests
+# script to generate all docs
+gen_doc_sh=${scriptDir}/generateAllDocumentation.sh
 
-
-rm -rf deliverables/src/*
-rm -rf deliverables/doc/*
-rm -rf deliverables/debs/*
-rm -rf deliverables/tests/*
+######################################################################
+#                           /VARIABLES                               #
+######################################################################
 
 
+######################################################################
+#                            FUNCTIONS                               #
+######################################################################
 # Function that copy the dir in the archive and the depot copy
 function copy_dir () {
     cp -r $1 $path/$2;
@@ -68,6 +67,35 @@ function copy_rel_file () {
 function copy_ar_file () {
     cp $1 $path/$2;
 }
+######################################################################
+#                           /FUNCTIONS                               #
+######################################################################
+
+
+
+# Create temporary directory
+rm -rf /tmp/prepaRel
+mkdir /tmp/prepaRel
+path=/tmp/prepaRel/VISHNU_$NO_VERSION
+mkdir $path
+
+pathrel=deliverables/src
+
+mkdir -p deliverables/src
+mkdir -p deliverables/doc
+mkdir -p deliverables/debs
+mkdir -p deliverables/tests
+
+
+rm -rf deliverables/src/*
+rm -rf deliverables/doc/*
+rm -rf deliverables/debs/*
+rm -rf deliverables/tests/*
+
+
+
+# Generate all documentation
+sh -c $gen_doc_sh
 
 # Copy root cmake list, copyright, README, version
 copy_file CMakeLists.txt
@@ -153,45 +181,45 @@ mkdir $pathrel/../doc/adminmanual
 mkdir $pathrel/../doc/usermanual
 
 cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
+cp core/doc/adminmanual/docbook/adminman-gen.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
 cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/vishnu-adminman.html
 
 cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/usermanual/vishnu-userman.docbook
-cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $path/core/doc/usermanual/vishnu-userman.pdf
+cp core/doc/usermanual/docbook/userman-gen.pdf $path/core/doc/usermanual/vishnu-userman.pdf
 cp core/doc/usermanual/docbook/userman-gen.html $path/core/doc/usermanual/vishnu-userman.html
 
 cp core/doc/adminmanual/docbook/adminman-gen.docbook $pathrel/../doc/adminmanual/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $pathrel/../doc/adminmanual/vishnu-adminman.pdf
+cp core/doc/adminmanual/docbook/adminman-gen.pdf $pathrel/../doc/adminmanual/vishnu-adminman.pdf
 cp core/doc/adminmanual/docbook/adminman-gen.html $pathrel/../doc/adminmanual/vishnu-adminman.html
 
-cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/docbook/vishnu-userman.docbook
-cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $pathrel/../doc/usermanual/docbook/vishnu-userman.pdf
-cp core/doc/usermanual/docbook/userman-gen.html $pathrel/../doc/usermanual/docbook/vishnu-userman.html
+cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/vishnu-userman.docbook
+cp core/doc/usermanual/docbook/userman-gen.pdf $pathrel/../doc/usermanual/vishnu-userman.pdf
+cp core/doc/usermanual/docbook/userman-gen.html $pathrel/../doc/usermanual/vishnu-userman.html
 
 
 
 ###############################################################################
-#                                     W S                                     #
+#                                     Java API                                #
 ###############################################################################
 create_dir WS
 create_dir WS/impl
 create_dir WS/impl/VishnuLib
-create_dir WS/impl/WSAPI
-create_dir WS/WSDL
+# create_dir WS/impl/WSAPI
+# create_dir WS/WSDL
 
 # Getting vishnu jar
 copy_dir $eclipse/VishnuLib/src WS/impl/VishnuLib/
 copy_file $eclipse/VishnuLib/pom.xml WS/impl/VishnuLib/
 
 # Getting WSAPI jar
-copy_dir $eclipse/WSAPI/src WS/impl/WSAPI/
-copy_file $eclipse/WSAPI/pom.xml WS/impl/WSAPI/
+# copy_dir $eclipse/WSAPI/src WS/impl/WSAPI/
+# copy_file $eclipse/WSAPI/pom.xml WS/impl/WSAPI/
 
 # Copying wsdl
-copy_file $eclipse/WSAPI/wsdl/UMS.wsdl WS/WSDL/
-copy_file $eclipse/WSAPI/wsdl/TMS.wsdl WS/WSDL/
-copy_file $eclipse/WSAPI/wsdl/FMS.wsdl WS/WSDL/
-copy_file $eclipse/WSAPI/wsdl/IMS.wsdl WS/WSDL/
+# copy_file $eclipse/WSAPI/wsdl/UMS.wsdl WS/WSDL/
+# copy_file $eclipse/WSAPI/wsdl/TMS.wsdl WS/WSDL/
+# copy_file $eclipse/WSAPI/wsdl/FMS.wsdl WS/WSDL/
+# copy_file $eclipse/WSAPI/wsdl/IMS.wsdl WS/WSDL/
 
 # Regenerating the jar files
 
@@ -209,14 +237,14 @@ mvn install
 cp target/VishnuLib-1.0-SNAPSHOT.jar ..
 cp target/VishnuLib-1.0-SNAPSHOT.jar $cur/$pathrel/WS/impl/
 
-cd ../WSAPI
+# cd ../WSAPI
 
-mvn clean
+# mvn clean
 
-mvn assembly:assembly
+# mvn assembly:assembly
 
-cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar ../WSAPI.jar
-cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar $cur/$pathrel/WS/impl/WSAPI.jar
+# cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar ../WSAPI.jar
+# cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar $cur/$pathrel/WS/impl/WSAPI.jar
 
 cd $cur
 
