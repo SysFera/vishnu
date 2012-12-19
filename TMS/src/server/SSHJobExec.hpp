@@ -91,7 +91,9 @@ class SSHJobExec {
      * \param pidFile: The path of the file containing the process pid
      */
     int
-    execCmd(const std::string& cmd, const bool & background=false, int* pid=NULL);
+    execCmd(const std::string& cmd,
+    		const bool & background=false,
+    		int* pid=NULL);
 
     /**
      * \brief Function to return the job serialized content

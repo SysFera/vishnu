@@ -203,19 +203,20 @@ DeltaCloudServer::submit(const char* scriptPath,
 int
 DeltaCloudServer::cancel(const char* jobId) {
 	//TODO
-
 	return 0;
 }
 
 /**
  * \brief Function to get the status of the job
- * \param jobId the identifier of the job
- * \return -1 if the job is unknown or server not  unavailable
+ * \param pid the process id within the virtual machine
+ * \return -1 if the job is unknown or server not unavailable
  */
 int
-DeltaCloudServer::getJobState(const std::string& jobId){
-	//TODO
+DeltaCloudServer::getJobState(const std::string& pid){
 
+	//TODO ps -o pid= -o comm= -p jobId
+	//SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
+	//sshEngine.execCmd("ps -o pid= -o comm= -p "+pid);
 	return 1;
 }
 
