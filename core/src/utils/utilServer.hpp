@@ -301,5 +301,16 @@ namespace vishnu {
  */
 std::string parseErrorMessage (const std::string& errorMsg);
 
+/**
+ * \brief Return the status value from file
+ * \param file The status file
+ * \return the int value
+ */
+int getStatusValue (const std::string& file);
+
+/**
+ *  \rief Function to return base dir
+ */
+
 }
 #endif //_UTILSERVER_H_

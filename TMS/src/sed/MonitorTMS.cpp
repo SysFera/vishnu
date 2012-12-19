@@ -14,6 +14,7 @@
 #include "utilVishnu.hpp"
 #include "MonitorTMS.hpp"
 #include <signal.h>
+#include "Env.hpp"
 #include <boost/format.hpp>
 
 /**
@@ -85,9 +86,10 @@ MonitorTMS::run() {
   std::vector<std::string> tmp;
   std::string batchJobId;
   std::string jobId;
+  std::string vmIp;
   int state;
   std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT jobId, batchJobId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
+  std::string sqlRequest = "SELECT jobId, batchJobId, vmIp from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
     " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(mbatchType);
 
   while(kill(getppid(), 0) == 0) {
@@ -100,11 +102,15 @@ MonitorTMS::run() {
 
                 iter = tmp.begin();
                 jobId = *iter;
-                ++iter;
-                batchJobId = *iter;
+        ++iter; batchJobId = *iter;
+        ++iter; vmIp = *iter;
                 BatchFactory factory;
                 boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType, mbatchVersion));
                 try {
+        if(mbatchType == DELTACLOUD) {
+        	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+        	batchJobId+="@"+vmUser+"@"+vmIp;
+        }
                   state = batchServer->getJobState(batchJobId);
                   if (state!=-1) {
                       sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";

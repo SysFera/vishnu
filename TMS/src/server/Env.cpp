@@ -7,6 +7,7 @@
 
 #include <boost/algorithm/string.hpp>
 #include "Env.hpp"
+#include "TMSVishnuException.hpp"
 
 /**
  * \param batchType The batch scheduler type
@@ -154,7 +155,7 @@ Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
     }
-     		//To replace VISHNU_BATCHJOB_NUM_NODES
+		//To replace VISHNU_BATCHJOB_NUM_NODES
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
     replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
     break;
@@ -215,4 +216,28 @@ Env::setParamsEnvVars(const std::string& params) {
     setenv(param.substr(0, pos).c_str(),
            param.substr(pos+1, std::string::npos).c_str(), 1);
   }
+}
+
+
+/**
+ * \brief Function to retrieve an environment variable
+ * \param name The name of the variable
+ * \param optional tell whether the parameter is optional or not
+ * \param defaultValue give the default value return when the variable is optional
+ * \return the value of the environment variable or throw exception is the variable is set and is not optional
+ */
+std::string
+Env::getVar(const std::string& name,
+		const bool & optional,
+		const std::string defaultValue) {
+
+	std::string value = defaultValue;
+	char* cvalue = getenv(name.c_str());
+	if(cvalue != NULL) {
+		value = std::string(cvalue);
+	} else if(! optional) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"You may need to set "+name);
+	}
+
 }

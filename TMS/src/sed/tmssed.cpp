@@ -67,8 +67,9 @@ int main(int argc, char* argv[], char* envp[]) {
       return usage(argv[0]);
     }
 
-  // First set the rc file if it don't exists
-  system("touch -f $HOME/.vishnurc");
+  // Source the rc file
+  system("touch -f $HOME/.vishnurc");  // Create if it does'nt exist to avoir error at the next step
+  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc");
 
   // Read the configuration
   try {
