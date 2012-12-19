@@ -4,6 +4,7 @@
 # Author Benjamin Depardon (benjamin.depardon@sysfera.com)
 # Date 19/12/12
 # It generates the following documents:
+# - doxygen documentation
 # - adminman, userman and quickstart
 # - STB, general specifications, API doc, and CLI doc
 # - UMS, IMS, FMS and TMS design doc
@@ -81,13 +82,11 @@ function generate_man () {
 ######################################################################
 
 
-echo "Generate doc"
 # generate doxygen documentation
 mkdir doc
 rm -rf doc/*
 doxygen Doxyfile
 doxygen Doxyfile_API
-exit 0
 
 # generate adminman, userman and quickstart
 generate_doc core/doc/adminmanual/docbook adminman-gen
@@ -122,5 +121,6 @@ generate_doc UMS/test/testReports reportTestStress
 # generate manpages
 generate_man UMS/doc/man adminman-gen
 generate_man UMS/doc/man userman-gen
+generate_man IMS/doc/man manIMS-gen
 generate_man TMS/doc/man usermanTMS-gen
 generate_man FMS/doc/man usermanFMS-gen
