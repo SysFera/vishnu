@@ -264,17 +264,20 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		const std::string nfsMountPoint) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
-	std::ostringstream sshCmd;
 
-	sshCmd << "ssh -q -o ConnectTimeout=2 " << DEFAULT_SSH_OPTIONS << " "
-			<< muser << "@" << mhostname
-			<< " exit;"
-			<< " echo $? >" << machineStatusFile;
+	std::ostringstream cmd;
+//	cmd << "ssh -q -o ConnectTimeout=2 " << DEFAULT_SSH_OPTIONS << " "
+//			<< muser << "@" << mhostname
+//			<< " exit;"
+//			<< " echo $? >" << machineStatusFile;
+
+	cmd << "exit; echo $? >" << machineStatusFile;
 
 	int attempt = 1;
 	std::cerr << "Checking ssh connection... attempt " << attempt << "/" << SSH_CONNECT_MAX_RETRY;
 	while(attempt <= SSH_CONNECT_MAX_RETRY) {
-		system(sshCmd.str().c_str());
+		//system(sshCmd.str().c_str());
+		execCmd(cmd.str());
 		std::string content = vishnu::get_file_content(machineStatusFile);
 		size_t pos = content.find("\n");
 		int ret = -1;
@@ -409,23 +412,23 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
  * \param pidFile: The path of the file containing the process pid
  */
 int
-SSHJobExec::execCmd(const std::string& cmd, const bool & background, int* pid){
+SSHJobExec::execCmd(const std::string& cmd,
+		const bool & background,
+		int* pid){
 
 	std::string pidFile = "$HOME/vishnu.pid";
 	std::ostringstream sshCmd;
 	sshCmd << "ssh " << DEFAULT_SSH_OPTIONS << " "
-			<< muser << "@" << mhostname << " '"
-			<< cmd ;
+			<< muser << "@" << mhostname << " ";
 
 	if( ! background) {
-		sshCmd << "'";
+		sshCmd << cmd;
 	} else {
 		try {
 			pidFile =  bfs::unique_path("/tmp/vishnu.pid%%%%%%").string();
-		} catch(...) {
-			// The pid file will be created in $HOME/vishnu.pid
-		}
-		sshCmd << " 1>vishnu.stdout 2>vishnu.stderr & echo $!' >" << pidFile;
+		} catch(...) {} // The pid file will be created in $HOME/vishnu.pid
+
+		sshCmd << "'" << cmd << " 1>vishnu.stdout 2>vishnu.stderr & echo $!' >" << pidFile;
 	}
 
 	if(system((sshCmd.str()).c_str())) {
