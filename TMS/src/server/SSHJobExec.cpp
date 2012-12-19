@@ -266,17 +266,11 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
 
 	std::ostringstream cmd;
-//	cmd << "ssh -q -o ConnectTimeout=2 " << DEFAULT_SSH_OPTIONS << " "
-//			<< muser << "@" << mhostname
-//			<< " exit;"
-//			<< " echo $? >" << machineStatusFile;
-
 	cmd << "exit; echo $? >" << machineStatusFile;
 
 	int attempt = 1;
-	std::cerr << "Checking ssh connection... attempt " << attempt << "/" << SSH_CONNECT_MAX_RETRY;
+	std::cout << "Checking ssh connection...\n" ;
 	while(attempt <= SSH_CONNECT_MAX_RETRY) {
-		//system(sshCmd.str().c_str());
 		execCmd(cmd.str());
 		std::string content = vishnu::get_file_content(machineStatusFile);
 		size_t pos = content.find("\n");
@@ -289,7 +283,6 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		}
 		sleep(SSH_CONNECT_RETRY_INTERVAL);
 		attempt++;
-		std::cerr << "\rChecking ssh connection... attempt " << attempt << "/" << SSH_CONNECT_MAX_RETRY;
 	}
 
 	// If not succeed throw exception
@@ -300,6 +293,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	}
 
 	// Mount the NFS repository
+	std::cout << "Mounting the nfs directory...\n" ;
 	if(nfsServer.size()>0 &&
 			nfsMountPoint.size()> 0) {
 		mountNfsDir(nfsServer, nfsMountPoint);
@@ -307,6 +301,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
 	// If succeed execute the script to the virtual machine
 	// This assumes that the script is located on a shared DFS
+	std::cout << "Executing the script...\n" ;
 	int pid = -1;
 	if(execCmd(scriptPath, true, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
@@ -465,14 +460,12 @@ SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
 
-	// Create the local mounting directory
-	if(execCmd("mkdir "+point+" 2>vishnu.log", false)){ // run in foreground
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"mountNfsDir:: can not create the mounting point: "+point);
-	}
+	// Create the command mkdir + mount
+	std::ostringstream cmd;
+	cmd << "'mkdir "+point+" 2>vishnu.log && "
+		<< "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+" 2>>vishnu.log'";
 
-	// Mount the directory
-	if(execCmd("mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+" 2>>vishnu.log", false)) { // run in foreground
+	if(execCmd(cmd.str(), false)){ // run in foreground
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"mountNfsDir:: mount the directory: "+point);
 	}
