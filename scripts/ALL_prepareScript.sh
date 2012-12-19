@@ -147,26 +147,22 @@ copy_dir core/deps/emf4cpp core/deps/
 
 ### Documentation html/pdf/docbook
 mkdir $path/core/doc/adminmanual
-mkdir $path/core/doc/adminmanual/docbook
 mkdir $path/core/doc/usermanual
-mkdir $path/core/doc/usermanual/docbook
 
 mkdir $pathrel/../doc/adminmanual
-mkdir $pathrel/../doc/adminmanual/docbook
 mkdir $pathrel/../doc/usermanual
-mkdir $pathrel/../doc/usermanual/docbook
 
-cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/docbook/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $path/core/doc/adminmanual/docbook/vishnu-adminman.pdf
-cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/docbook/vishnu-adminman.html
+cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/vishnu-adminman.docbook
+cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
+cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/vishnu-adminman.html
 
-cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/usermanual/docbook/vishnu-userman.docbook
-cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $path/core/doc/usermanual/docbook/vishnu-userman.pdf
-cp core/doc/usermanual/docbook/userman-gen.html $path/core/doc/usermanual/docbook/vishnu-userman.html
+cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/usermanual/vishnu-userman.docbook
+cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $path/core/doc/usermanual/vishnu-userman.pdf
+cp core/doc/usermanual/docbook/userman-gen.html $path/core/doc/usermanual/vishnu-userman.html
 
-cp core/doc/adminmanual/docbook/adminman-gen.docbook $pathrel/../doc/adminmanual/docbook/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $pathrel/../doc/adminmanual/docbook/vishnu-adminman.pdf
-cp core/doc/adminmanual/docbook/adminman-gen.html $pathrel/../doc/adminmanual/docbook/vishnu-adminman.html
+cp core/doc/adminmanual/docbook/adminman-gen.docbook $pathrel/../doc/adminmanual/vishnu-adminman.docbook
+cp core/doc/adminmanual/docbook/adminman-gen.docbook.pdf $pathrel/../doc/adminmanual/vishnu-adminman.pdf
+cp core/doc/adminmanual/docbook/adminman-gen.html $pathrel/../doc/adminmanual/vishnu-adminman.html
 
 cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/docbook/vishnu-userman.docbook
 cp core/doc/usermanual/docbook/userman-gen.docbook.pdf $pathrel/../doc/usermanual/docbook/vishnu-userman.pdf
