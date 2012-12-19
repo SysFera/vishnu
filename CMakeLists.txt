@@ -8,6 +8,13 @@ cmake_minimum_required(VERSION 2.6)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
+# set default build type to debug
+## set default build type to Debug
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING
+    "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+    FORCE)
+endif()
 
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta" CACHE STRING " comments about the current version ")
