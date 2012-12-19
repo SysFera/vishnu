@@ -9,8 +9,8 @@
 # - STB, general specifications, API doc, and CLI doc
 # - UMS, IMS, FMS and TMS design doc
 # - UMS, IMS, FMS and TMS test reports
-# - general Vishnu tests reports
-
+# - UMS, IMS, FMS and TMS test plan
+# - manpages
 
 if [ ! -f copyright ]; then
   echo "Missing copyright file - please start the script in VISHNU root directory"
@@ -112,11 +112,11 @@ generate_doc IMS/test/testReports reportIMSTest
 generate_doc TMS/test/testReports reportTMSTest
 generate_doc FMS/test/testReports reportFMSTest
 
-# generate general Vishnu test reports
-generate_doc UMS/test/testReports reportTestFunctional
-generate_doc UMS/test/testReports reportTestLoad
-generate_doc UMS/test/testReports reportTestPerformance
-generate_doc UMS/test/testReports reportTestStress
+# generate UMS, IMS, FMS and TMS test plan
+generate_doc UMS/test/testPlan VISHNU_D2_1b-UMS-PlanTests
+generate_doc IMS/test/testPlan VISHNU_D5_1b-IMS-PlanTests
+generate_doc TMS/test/testPlan VISHNU_D4_1b-TMS-PlanTests
+generate_doc FMS/test/testPlan VISHNU_D3_1b-FMS-PlanTests
 
 # generate manpages
 generate_man UMS/doc/man adminman-gen
