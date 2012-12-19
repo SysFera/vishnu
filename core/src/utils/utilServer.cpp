@@ -588,3 +588,31 @@ int vishnu::getStatusValue (const std::string& file) {
 	size_t pos = content.find("\n");
 	return vishnu::convertToInt(content.substr(0, pos));
 }
+
+/**
+ *  \brief Function that create a symbolic link on a directory
+ *  \param fileparam a list of key=value
+ *  \param dir the directory where we create
+ *  \return the string of the directory to which the link was created
+ */
+std::string vishnu::createSymbolicLink (const std::string& fileparam, std::string dir){
+	std::string directory;
+	std::string file;
+	size_t pos = fileparam.find("=");
+	if(pos!=std::string::npos) {
+	      size_t pos1 = fileparam.find(" ", pos);
+	      if(pos1!=std::string::npos){
+	    	  file = fileparam.substr(pos+1, pos1-pos);
+	      } else {
+	    	  file = fileparam.substr(pos+1);
+	      }
+	      size_t pos2 = file.rfind("/");
+	      if(pos2 != std::string::npos){
+	    	  directory = file.substr(0,pos2);
+	    	  boost::filesystem::create_symlink(directory, dir);
+	      }
+
+	}
+	return directory;
+
+}
