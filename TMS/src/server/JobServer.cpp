@@ -78,6 +78,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	Env env(batchType);
 
 	std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
+	TMS_Data::SubmitOptions& optionsref = const_cast<TMS_Data::SubmitOptions&>(options);
 	env.replaceEnvVariables(scriptContentRef);
 	env.replaceAllOccurences(scriptContentRef, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
 	env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
@@ -88,24 +89,30 @@ int JobServer::submitJob(const std::string& scriptContent,
     if(mbatchType == DELTACLOUD) {
     	scriptPath = strdup("/mnt/cloud/job_scriptXXXXXX"); //TODO: make it dynamically
     	workingDir = "/mnt/cloud";
-    	//boost::filesystem::create_symlink();
+        string directory = vishnu::createSymbolicLink(optionsref.getFileParams(), workingDir);
+        if(directory.length()){
+        	std::string fileparam = strdup(optionsref.getFileParams().c_str());
+        	env.replaceAllOccurences(fileparam, directory, "/mnt/cloud");
+        	optionsref.setFileParams(fileparam);
+
+        }
 
     } else {
     	scriptPath = strdup("/tmp/job_scriptXXXXXX");
    		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
-   		workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
+   		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
    	}
 
 
 	if(options.getTextParams().size()) {
-		env.setParams(scriptContentRef, options.getTextParams()) ;
+		env.setParams(scriptContentRef, optionsref.getTextParams()) ;
 	}
 
 	if(options.getFileParams().size()) {
-		env.setParams(scriptContentRef, options.getFileParams()) ;
+		env.setParams(scriptContentRef, optionsref.getFileParams()) ;
 	}
 
-	mjob.setWorkId(options.getWorkId()) ;
+	mjob.setWorkId(optionsref.getWorkId()) ;
 
 
 	bool needOutputDir = false ;

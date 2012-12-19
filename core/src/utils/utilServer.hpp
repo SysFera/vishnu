@@ -294,23 +294,27 @@ namespace vishnu {
     return true;
   }
 
-/**
- * \brief Function to parse a system error message
- * \param errorMsg the error message
- * \return the parsed message
- */
-std::string parseErrorMessage (const std::string& errorMsg);
+	/**
+	 * \brief Function to parse a system error message
+	 * \param errorMsg the error message
+	 * \return the parsed message
+	 */
+	std::string parseErrorMessage (const std::string& errorMsg);
 
-/**
- * \brief Return the status value from file
- * \param file The status file
- * \return the int value
- */
-int getStatusValue (const std::string& file);
+	/**
+	 * \brief Return the status value from file
+	 * \param file The status file
+	 * \return the int value
+	 */
+	int getStatusValue (const std::string& file);
 
-/**
- *  \rief Function to return base dir
- */
+	/**
+	 *  \brief Function that create a symbolic link on a directory
+	 *  \param fileparam a list of key=value
+	 *  \param dir the directory where we create
+	 */
+
+	std::string createSymbolicLink (const std::string& fileparam, std::string dir);
 
 }
 #endif //_UTILSERVER_H_
