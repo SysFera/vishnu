@@ -576,3 +576,15 @@ vishnu::parseErrorMessage (const std::string& errorMsg) {
 
   return result;
 }
+
+/**
+ * \brief Return the status value from file
+ * \param file The status file
+ * \return the int value
+ */
+int vishnu::getStatusValue (const std::string& file) {
+
+	std::string content = vishnu::get_file_content(file);
+	size_t pos = content.find("\n");
+	return vishnu::convertToInt(content.substr(0, pos));
+}

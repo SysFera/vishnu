@@ -272,18 +272,14 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	std::cout << "Checking ssh connection...\n" ;
 	while(attempt <= SSH_CONNECT_MAX_RETRY) {
 		execCmd(cmd.str());
-		std::string content = vishnu::get_file_content(machineStatusFile);
-		size_t pos = content.find("\n");
-		int ret = -1;
-		if(pos != std::string::npos) {
-			ret = vishnu::convertToInt(content.substr(0, pos));
-		}
+		int ret =  vishnu::getStatusValue(machineStatusFile);
 		if(ret == 0) {
 			break;
 		}
 		sleep(SSH_CONNECT_RETRY_INTERVAL);
 		attempt++;
 	}
+	vishnu::deleteFile(machineStatusFile.c_str());
 
 	// If not succeed throw exception
 	if(attempt > SSH_CONNECT_MAX_RETRY) {
@@ -432,13 +428,8 @@ SSHJobExec::execCmd(const std::string& cmd,
 
 	// Retrieve the pid if the process was launched in background
 	if(background && pid != NULL) {
-		std::string content = vishnu::get_file_content(pidFile);
-		size_t pos = content.find("\n");
-		if(pos != std::string::npos) {
-			*pid = vishnu::convertToInt(content.substr(0, pos));
-		} else {
-			*pid = -1;
-		}
+		*pid = vishnu::getStatusValue (pidFile);
+		vishnu::deleteFile(pidFile.c_str());
 	}
 
 	return 0;

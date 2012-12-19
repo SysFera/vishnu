@@ -120,9 +120,6 @@ main(int argc, char* argv[], char* envp[]) {
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   BatchServer* batchServer;
 
-  // First source the rc file
-  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc");
-
   try {
 
     //To create batchServer Factory

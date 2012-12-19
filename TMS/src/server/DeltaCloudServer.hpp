@@ -42,11 +42,11 @@ public:
 
 	/**
 	 * \brief Function to get the status of the job
-	 * \param pid the process id within the virtual machine
+	 * \param jobId the process id within the virtual machine
 	 * \return -1 if the job is unknown or server not  unavailable
 	 */
 	int
-	getJobState(const std::string& pid);
+	getJobState(const std::string& jobPid);
 
 	/**
 	 * \brief Function to get the start time of the job

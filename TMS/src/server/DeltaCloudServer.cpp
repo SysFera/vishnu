@@ -14,6 +14,8 @@
 #include "common.h"
 #include <vector>
 #include "constants.hpp"
+#include "Env.hpp"
+#include "utilServer.hpp"
 
 
 DeltaCloudServer::DeltaCloudServer(){}
@@ -53,75 +55,29 @@ DeltaCloudServer::submit(const char* scriptPath,
 		TMS_Data::Job& job,
 		char** envp) {
 
-
-	// Get the cloud endpoint from environment variables
-	char* cloudEndpoint = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str());
-	if(cloudEndpoint  == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No cloud user set. "
-				"You may need to set the environment variable VISHNU_CLOUD_ENDPOINT" );
-	}
-
-	// Get the cloud user from environement variables
-	char* cloudUser= getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER].c_str());
-	if(cloudUser  == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No cloud user set. "
-				"You may need to set the environment variable VISHNU_CLOUD_USER" );
-	}
-
-	// Get the virtual machine default user's password from environment variables
-	char* cloudUserPassword = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD].c_str());
-	if(cloudUserPassword == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No password set for the cloud user."
-				"You may need to set the environment variable VISHNU_CLOUD_USER_PASSWORD" );
-	}
-
-	// Get the virtual machine image from environment variables
-	char* imageId = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE].c_str());
-	if(imageId == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No virtual machine image has been set. "
-				"You may need to set the environment variable VISHNU_CLOUD_VM_IMAGE" );
-	}
-
-	// Get the default flavor of creating instances
-	char* flavor = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR].c_str());
-	if(flavor  == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No default flavor set. "
-				"You may need to set the environment variable VISHNU_CLOUD_DEFAULT_FLAVOR");
-	}
-
-	// Get the virtual machine default user from environment variables
-	char* vmUser = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER].c_str());
-	if(vmUser == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No user has been set for accessing virtual machines. "
-				"You may need to set the environment variable VISHNU_CLOUD_VM_USER" );
-	}
-
-	// Get the virtual machine default user's key from environment variables
-	char* vmUserKey = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY].c_str());
-	if(vmUserKey == NULL) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No key has been set for accessing virtual machines. "
-				"You may need to set the environment variable VISHNU_CLOUD_VM_USER_KEY" );
-	}
+	// Get configuration parameters
+	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+	std::string imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+	std::string flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+	std::string vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
 
 	// NOW, Initialize the Delatacloud API
-	initialize(cloudEndpoint, cloudUser, cloudUserPassword);
+	initialize(const_cast<char*>(cloudEndpoint.c_str()),
+			const_cast<char*>(cloudUser.c_str()),
+			const_cast<char*>(cloudUserPassword.c_str()));
 
 	// Set the parameters of the virtual machine instance
 	std::vector<deltacloud_create_parameter> params;
 	deltacloud_create_parameter param;
 	param.name = strdup("hwp_id");
-	param.value = strdup(flavor);
+	param.value = strdup(flavor.c_str());
 	params.push_back(param);
 
 	param.name = strdup("keyname");
-	param.value = strdup(vmUserKey);
+	param.value = strdup(vmUserKey.c_str());
 	params.push_back(param);
 
 	param.name = strdup("user_data");
@@ -134,29 +90,33 @@ DeltaCloudServer::submit(const char* scriptPath,
 	params.push_back(param);
 
 	char *instid = NULL;
-	if (deltacloud_create_instance(mcloudApi, imageId, &params[0], params.size(), &instid) < 0){
+	if (deltacloud_create_instance(mcloudApi, imageId.c_str(), &params[0], params.size(), &instid) < 0){
 		cleanUpParams(params);
 		if (instid == NULL){
-			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string())+". Symptom: deltacloud_create_instance return NULL " );
+			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+					std::string(deltacloud_get_last_error_string())+". Symptom: deltacloud_create_instance return NULL " );
 		}
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()) + "::deltacloud_create_instance");
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				std::string(deltacloud_get_last_error_string())+"::deltacloud_create_instance");
 	}
 	cleanUpParams(params);
 
 	struct deltacloud_instance instance;
 	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 1) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()) + "::wait_for_instance_boot");
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				std::string(deltacloud_get_last_error_string())+"::wait_for_instance_boot");
 	}
 
 	if (deltacloud_get_instance_by_id(mcloudApi, instid, &instance) < 0){
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()) + "::deltacloud_get_instance_by_id");
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
 	}
 
 	std::cout << ">>Virtual machine started"
-			  << "\n  ID: "<< std::string(instance.id)
-		      << "\n  NAME: " << std::string(instance.name)
-	          << "\n  IP: "<< std::string(instance.private_addresses->address)
-	          << "\n";
+			<< "\n  ID: "<< std::string(instance.id)
+	<< "\n  NAME: " << std::string(instance.name)
+	<< "\n  IP: "<< std::string(instance.private_addresses->address)
+	<< "\n";
 
 	// Get the NFS Server
 	char* nfsServer = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER].c_str());
@@ -208,16 +168,50 @@ DeltaCloudServer::cancel(const char* jobId) {
 
 /**
  * \brief Function to get the status of the job
- * \param pid the process id within the virtual machine
+ * \param jobPid the process id within the virtual machine
  * \return -1 if the job is unknown or server not unavailable
  */
 int
-DeltaCloudServer::getJobState(const std::string& pid){
+DeltaCloudServer::getJobState(const std::string& jobPid){
 
-	//TODO ps -o pid= -o comm= -p jobId
-	//SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
-	//sshEngine.execCmd("ps -o pid= -o comm= -p "+pid);
-	return 1;
+	std::string realPid = "-1";
+	std::string vmUser = "user";
+	std::string vmIp = "0.0.0.0";
+
+	size_t pos1 = 0;
+	size_t pos2 =  jobPid.find("@");
+	if(pos2 == std::string::npos) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"Bad job identifier: "+ jobPid
+				+".\n This would be pid@user@vmaddress");
+	}
+	realPid = jobPid.substr(pos1, pos2);
+
+	pos1 = pos2 + 1;
+	pos2 =  jobPid.find("@", pos1);
+	if(pos2 == std::string::npos) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"Bad job identifier: "+ jobPid
+				+".\nThis would be pid@user@vmaddress");
+	}
+	vmUser = jobPid.substr(pos1, pos2);
+
+	vmIp = jobPid.substr(pos2, std::string::npos);
+	if(vmIp.size() == 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				"Bad job identifier: "+ jobPid
+				+".\nThis would be pid@user@vmaddress");
+	}
+
+	SSHJobExec sshEngine(vmUser, vmIp);
+
+	//ps -o pid= -o comm= -p jobId
+	std::string pidFile = "/tmp/"+jobPid;
+	sshEngine.execCmd("ps -o pid= -o comm= -p " + realPid +" | awk '{print $1}' >"+pidFile, false);
+	if(vishnu::convertToInt(realPid) != vishnu::getStatusValue(pidFile)) {
+		return vishnu::JOB_COMPLETED;
+	}
+	return vishnu::JOB_RUNNING;
 }
 
 /**
