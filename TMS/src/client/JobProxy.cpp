@@ -92,9 +92,10 @@ JobProxy::submitJob(const std::string& scriptContent,
 	CpFileOptions copts;
 	copts.setIsRecursive(true) ;
 	copts.setTrCommand(0);
+	std::cout << "I am HERE " << std::endl;
 	string inputFiles = sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
 	options_.setFileParams(inputFiles);
-
+    std::cout << "I am HERE2 " << inputFiles << std::endl;
         std::string cresultMsg;
         std::string errorInfo;
 	if(!diet_call(submitJobProfile)) {

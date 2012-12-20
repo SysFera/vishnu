@@ -147,10 +147,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 				<< " -o NoHostAuthenticationForLocalhost=yes "
 				<< " -o PasswordAuthentication=no ";
 	} else {
-		// set the information to authenticate against the cloud frontend
-		if(muser.size() >0) {
-			setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER].c_str(), muser.c_str(), 1);
-		}
+		// set the information the cloud endpoint
 		if(mcloudEndpoint.size() > 0) {
 			setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(), mcloudEndpoint.c_str(), 1);
 		}

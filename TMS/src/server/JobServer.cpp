@@ -203,7 +203,6 @@ int JobServer::submitJob(const std::string& scriptContent,
                               batchType,
                               mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                               jobSerialized, submitOptionsSerialized);
-	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
 
