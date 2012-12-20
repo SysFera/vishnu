@@ -84,21 +84,27 @@ int JobServer::submitJob(const std::string& scriptContent,
 	env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
 
-    char* scriptPath = NULL;
+	string suffix = bfs::unique_path("job%%%%%%").string();
+    string scriptPath = bfs::unique_path("job_script%%%%%%").string();
     // Set the script path
     if(mbatchType == DELTACLOUD) {
-    	scriptPath = strdup("/mnt/cloud/job_scriptXXXXXX"); //TODO: make it dynamically
-    	workingDir = "/mnt/cloud";
-        string directory = vishnu::createSymbolicLink(optionsref.getFileParams(), workingDir);
+    	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+    	scriptPath = nfsMountPoint + "script_" +suffix;
+    	workingDir = nfsMountPoint + "data_" + suffix;
+        string directory = "";
+        try {
+        	vishnu::createSymbolicLink(optionsref.getFileParams(), workingDir);
+        } catch(bfs::filesystem_error ex){
+        	throw (ERRCODE_INVDATA, ex.what());
+        }
         if(directory.length()){
         	std::string fileparam = strdup(optionsref.getFileParams().c_str());
         	env.replaceAllOccurences(fileparam, directory, "/mnt/cloud");
         	optionsref.setFileParams(fileparam);
 
         }
-
     } else {
-    	scriptPath = strdup("/tmp/job_scriptXXXXXX");
+    	scriptPath = "/tmp/" + scriptPath;
    		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
    		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
    	}
@@ -113,7 +119,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 
 	mjob.setWorkId(optionsref.getWorkId()) ;
-
 
 	bool needOutputDir = false ;
 	if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
@@ -194,7 +199,6 @@ int JobServer::submitJob(const std::string& scriptContent,
         }
 
 	char* scriptPath = strdup("/tmp/job_scriptXXXXXX");
-	vishnu::createTmpFile(scriptPath, convertedScript);
 
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
@@ -203,7 +207,7 @@ int JobServer::submitJob(const std::string& scriptContent,
                               batchType,
                               mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                               jobSerialized, submitOptionsSerialized);
-		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
+		throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
 
 	// Retrieve some additional information for submitting a in cloud
@@ -216,7 +220,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
 	// clean the temporary script once the job completed
-	vishnu::deleteFile(scriptPath);
+	vishnu::deleteFile(scriptPath.c_str());
         free(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();

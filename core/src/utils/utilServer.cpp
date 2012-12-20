@@ -609,7 +609,11 @@ std::string vishnu::createSymbolicLink (const std::string& fileparam, std::strin
 	      size_t pos2 = file.rfind("/");
 	      if(pos2 != std::string::npos){
 	    	  directory = file.substr(0,pos2);
-	    	  boost::filesystem::create_symlink(directory, dir);
+	          try {
+	        	bfs::create_symlink(directory, dir);
+	          } catch(bfs::filesystem_error ex){
+	          	throw;
+	          }
 	      }
 
 	}
