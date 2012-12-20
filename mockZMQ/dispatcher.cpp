@@ -18,7 +18,7 @@ namespace bfs = boost::filesystem;
 
 void
 usage(){
-  std::cout << "Usage: dispatcher <uriAddr> <uriSubscriber> [-c configFile]" << std::endl;
+  std::cout << "Usage: dispatcher [configFile]" << std::endl;
 }
 
 //function to get the first element from the annuary
@@ -259,32 +259,44 @@ main(int argc, char** argv) {
   // Prepare our context and socket
   boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
 
-  std::string  uriAddr;
-  std::string  uriSubs;
-  std::string  confFil;
-  unsigned int nthread;
-  unsigned int timeout;
+  // Set default values
+  std::string  uriAddr = "tcp://127.0.0.1:5560";  // localhost and 5560
+  std::string  uriSubs = "tcp://127.0.0.1:5561";  // localhost and 5561
+  std::string  confFil = "";  // no init configuration file
+  unsigned int nthread = 5;  // 5 threads to manage requests
+  unsigned int timeout = 10; // wait 10s before retrying
 
   ExecConfiguration config;
-  config.initFromFile(argv[1]);
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
-  config.getRequiredConfigValue<unsigned int>(vishnu::DISP_TIMEOUT, timeout);
- config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+  if (argc == 2) {
+    config.initFromFile(argv[1]);
+    config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
+    config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
+    config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
+    config.getRequiredConfigValue<unsigned int>(vishnu::DISP_TIMEOUT, timeout);
+    config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+  }
+
+  std::cerr << "====== Initial configuration =====\n"
+            << "disp_uriAddr=" << uriAddr << "\n"
+            << "disp_uriSubs=" << uriSubs << "\n"
+            << "disp_initFile=" << confFil << "\n"
+            << "disp_timeout=" << timeout << "\n"
+            << "disp_nbthread=" << nthread << "\n"
+            << "==================================\n";
+
 
   bfs::path file(confFil);
   bfs::ifstream conf(file);
 
   if (conf) {
     std::string line;
-    std::cerr << "==== Initial startup services ====\n\n";
+    std::cerr << "\n==== Initial startup services ====\n\n";
     while (std::getline(conf, line)) {
       std::cerr << line << "\n";
     }
     std::cerr << "==================================\n";
   } else {
-    std::cerr << "No initial services at startup\n";
+    std::cerr << "\nNo initial services at startup\n";
   }
 
 
