@@ -63,6 +63,8 @@ DeltaCloudServer::submit(const char* scriptPath,
 	std::string flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
 	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
 	std::string vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+	std::string nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
 
 	// NOW, Initialize the Delatacloud API
 	initialize(const_cast<char*>(cloudEndpoint.c_str()),
@@ -117,24 +119,6 @@ DeltaCloudServer::submit(const char* scriptPath,
 	<< "\n  NAME: " << std::string(instance.name)
 	<< "\n  IP: "<< std::string(instance.private_addresses->address)
 	<< "\n";
-
-	// Get the NFS Server
-	char* nfsServer = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER].c_str());
-	if(nfsServer == NULL ||
-			strlen(nfsServer) == 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No nfs set has been set. "
-				"You may need to set the environment variable VISHNU_CLOUD_NFS_SERVER" );
-	}
-
-	// Get the NFS mount point
-	char* nfsMountPoint = getenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT].c_str());
-	if(nfsMountPoint == NULL ||
-			strlen(nfsMountPoint) == 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"No nfs mount point has been set. "
-				"You may need to set the environment variable VISHNU_CLOUD_NFS_MOUNT_POINT");
-	}
 
 	// Create an ssh engine for the virtual machine
 	SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
