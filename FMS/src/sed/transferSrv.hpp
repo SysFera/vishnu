@@ -14,7 +14,7 @@
 
 #include "FileFactory.hpp"
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 #include "UserServer.hpp"
 #include "MachineServer.hpp"
 #include <boost/scoped_ptr.hpp>
@@ -50,41 +50,41 @@ solveFileTransferStop(diet_profile_t* pb);
  * \return the service profile
  */
 
-diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the asynchronous File transfer (local to remote) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer (remote to local) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer (remote to local) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
-
-/**
- * \brief Function to build the File transfer list service profile
- * \return the service profile
- */
-
-diet_profile_desc_t* getFileTransfersListProfile();
-
-/**
- * \brief Function to build the File transfer stop service profile
- * \return the service profile description
- */
-diet_profile_desc_t* getFileTransferStopProfile();
+//diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the asynchronous File transfer (local to remote) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer (remote to local) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer (remote to local) service profile
+// * \param serviceName the name of the service
+// * \return the service profile
+// */
+//diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
+//
+///**
+// * \brief Function to build the File transfer list service profile
+// * \return the service profile
+// */
+//
+//diet_profile_desc_t* getFileTransfersListProfile();
+//
+///**
+// * \brief Function to build the File transfer stop service profile
+// * \return the service profile description
+// */
+//diet_profile_desc_t* getFileTransferStopProfile();
 
 
 /**
@@ -94,9 +94,13 @@ diet_profile_desc_t* getFileTransferStopProfile();
  */
 template < File::TransferType transferType, File::TransferMode transferMode> int solveTransferFile(diet_profile_t* profile){
 
-  string  srcUserKey, destUser, destMachineName,fileTransferSerialized;
-  char* srcPath, *srcUser, *srcHost,*sessionKey, *dest, *errMsg = NULL, *optionsSerialized=NULL;
-  std::string finishError ="";
+  std::string srcUserKey="";
+  std::string destUser="";
+  std::string destMachineName="";
+  std::string fileTransferSerialized="";
+  std::string errMsg="";
+  std::string finishError="";
+  char* srcPath, *srcUser, *srcHost,*sessionKey, *dest, *optionsSerialized=NULL;
 
   int mapperkey;
   std::string cmd = "";
@@ -104,7 +108,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &srcPath, NULL);
   diet_string_get(diet_parameter(profile, 2), &srcUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 3), &srcHost, NULL);
+  diet_string_get(diet_parameter(profile, 3), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 4), &dest, NULL);
   diet_string_get(diet_parameter(profile, 5), &optionsSerialized, NULL);
 
@@ -174,7 +178,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId();
+    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
@@ -182,7 +186,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     if (transferMode==File::sync){
 
      if(transferType==File::copy){
-        fileTransferServer->addCpThread(srcUser,srcHost,srcUserKey,destUser,destMachineName,*options_ptr);
+        fileTransferServer->addCpThread(srcUser, srcHost, srcUserKey, destUser, destMachineName,*options_ptr);
       }
 
       if (transferType==File::move){
@@ -228,21 +232,17 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     }
     err.appendMsgComp(finishError);
 
-    errMsg = strdup(err.buildExceptionString().c_str());
-  }
-
-  if (errMsg==NULL) {
-    errMsg = strdup("");
+    errMsg = err.buildExceptionString();
   }
 
   if (transferMode==File::sync){
 
-    diet_string_set(diet_parameter(profile, 6), errMsg, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 6), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   }
   else{
 
-    diet_string_set(diet_parameter(profile, 6), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 6), const_cast<char*>(fileTransferSerialized.c_str()),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
   }
 
   return 0;
@@ -257,18 +257,22 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
 template <File::TransferType transferType, File::TransferMode transferMode> int solveTransferRemoteFile(diet_profile_t* profile){
 
-  string  srcUserKey, srcUserLogin,srcMachineName;
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *errMsg = NULL, *optionsSerialized=NULL;
-  std::string finishError ="";
-  std::string fileTransferSerialized="";
+
+  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *optionsSerialized=NULL;
+  std::string srcUserKey = "";
+  std::string srcUserLogin = "";
+  std::string srcMachineName = "";
+  std::string errMsg = "";
+  std::string finishError = "";
+  std::string fileTransferSerialized = "";
   int mapperkey;
   std::string cmd = "";
 
   diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
   diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
-  diet_paramstring_get(diet_parameter(profile, 2), &srcHost, NULL);
+  diet_string_get(diet_parameter(profile, 2), &srcHost, NULL);
   diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
-  diet_paramstring_get(diet_parameter(profile, 4), &destHost, NULL);
+  diet_string_get(diet_parameter(profile, 4), &destHost, NULL);
   diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
   diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
 
@@ -433,20 +437,17 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     }
     err.appendMsgComp(finishError);
 
-    errMsg = strdup(err.buildExceptionString().c_str());
-  }
-  if (errMsg==NULL) {
-    errMsg = strdup("");
+    errMsg = err.buildExceptionString().c_str();
   }
 
   if (transferMode==File::sync){
 
-    diet_string_set(diet_parameter(profile, 7), errMsg, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
 
   }
   else{
-    diet_string_set(diet_parameter(profile, 7), strdup(fileTransferSerialized.c_str()),DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 8), errMsg, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(fileTransferSerialized.c_str()),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 8), const_cast<char*>(errMsg.c_str()),  DIET_VOLATILE);
 
   }
   return 0;
@@ -509,8 +510,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(const_cast<List*>(list));
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -522,8 +523,8 @@ solveGenerique(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete options;
   delete list;

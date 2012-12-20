@@ -34,7 +34,8 @@ public:
    * \brief Constructor, raises an exception on error
    */
   explicit
-  QueryServer(const SessionServer& session):msessionServer(session)
+  QueryServer(const SessionServer& session):
+    mparameters(NULL), msessionServer(session)
   {
     mlistObject = NULL;
     DbFactory factory;

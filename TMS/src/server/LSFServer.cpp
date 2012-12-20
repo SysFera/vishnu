@@ -204,7 +204,7 @@ LSFServer::processOptions(const char* scriptPath,
     std::vector<std::string> tmpHosts;
     for(int i=0; i < req->numAskedHosts; i++) {
       if(req->askedHosts[i]!=NULL) {
-        tmpHosts.push_back(req->askedHosts[i]);
+       tmpHosts.push_back(req->askedHosts[i]);
       }
     }
     std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
@@ -758,3 +758,13 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 LSFServer::~LSFServer() {
 }
 
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new LSFServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
+}

@@ -6,33 +6,9 @@
  */
 
 #include "BatchFactory.hpp"
-#ifdef HAVE_TORQUE_2_3
-#include "TorqueServer.hpp"
-#endif
-#ifdef HAVE_PBSPRO_10_4
-#include "PbsProServer.hpp"
-#endif
-#ifdef HAVE_LOADLEVELER_3_5
-#include "LLServer.hpp"
-#endif
-#ifdef HAVE_SLURM_2_2
-#include "SlurmServer.hpp"
-#endif
-#ifdef HAVE_SLURM_2_3
-#include "SlurmServer.hpp"
-#endif
-#ifdef HAVE_LSF_7_0
-#include "LSFServer.hpp"
-#endif
-#ifdef HAVE_SGE_11
-#include "SGEServer.hpp"
-#include "SGEConfig.hpp"
-#include <iostream>
+#include "SharedLibrary.hh"
 
-extern "C" {
-#include "drmaa.h"
-}
-#endif
+#include <boost/format.hpp>
 #include <iostream>
 
 static int created=0;
@@ -44,6 +20,28 @@ BatchFactory::BatchFactory() {
   mbatchServer = NULL;
 }
 
+
+BatchServer*
+loadPluginBatch(const char *name) {
+  dadi::SharedLibrary *plugin(NULL);
+  BatchServer *instance(NULL);
+
+  std::string libname = boost::str(boost::format("%1%%2%%3%")
+                                   % dadi::SharedLibrary::prefix()
+                                   % name
+                                   % dadi::SharedLibrary::suffix());
+
+  plugin = new dadi::SharedLibrary(libname);
+  if (plugin->isLoaded()) {
+    void *factory = plugin->symbol("create_plugin_instance");
+    reinterpret_cast<factory_function>(factory)(reinterpret_cast<void**>(&instance));
+  }
+
+  return instance;
+}
+
+
+
 /**
  * \brief Function to create a batchServer.
  * \param batchType The type of batchServer to create
@@ -51,26 +49,24 @@ BatchFactory::BatchFactory() {
  */
 BatchServer*
 BatchFactory::getBatchServerInstance() {
-
+  BatchServer *instance(NULL);
 #ifdef HAVE_TORQUE_2_3
-  mbatchServer = new TorqueServer();
-#elif HAVE_LOADLEVELER_3_5
-  mbatchServer = new LLServer();
+    instance = loadPluginBatch("vishnu-tms-torque2.3");
+#elif HAVE_LOADLEVELER_2_5
+    instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
 #elif HAVE_SLURM_2_2
-  mbatchServer = new SlurmServer();
+      instance = loadPluginBatch("vishnu-tms-slurm2.2");
 #elif HAVE_SLURM_2_3
-  mbatchServer = new SlurmServer();
+      instance = loadPluginBatch("vishnu-tms-slurm2.3");
 #elif HAVE_LSF_7_0
-  mbatchServer = new LSFServer();
+      instance = loadPluginBatch("vishnu-tms-lsf7.0");
 #elif HAVE_SGE_11
-  mbatchServer = new SGEServer();
+      instance = loadPluginBatch("vishnu-tms-sge11");
 #elif HAVE_PBSPRO_10_4
-  mbatchServer = new PbsProServer();
-#else
-  mbatchServer = NULL;
+      instance = loadPluginBatch("vishnu-tms-pbspro10.4");
 #endif
 
-  return mbatchServer;
+  return static_cast<BatchServer *>(instance);
 }
 
 /**

@@ -59,7 +59,7 @@ BOOST_FIXTURE_TEST_SUITE(load_schedding_soft, IMSSeDFixture)
 //Test category 2
 //IA4.1-B : Soft load schedding normal call
 //Soft load schedding: normal call
-BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call) 
+BOOST_AUTO_TEST_CASE(load_schedding_soft_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA4.1-B: Soft load schedding normal call");

@@ -60,7 +60,7 @@ macro( fms_test NAME )
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core
-      crypt
+      ${LIBCRYPT_LIB}
       vishnu-fms-client
       vishnu-ums-client
       vishnu-test

@@ -8,9 +8,20 @@ cmake_minimum_required(VERSION 2.6)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
+# set default build type to debug
+## set default build type to Debug
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Debug CACHE STRING
+    "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel."
+    FORCE)
+endif()
 
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta" CACHE STRING " comments about the current version ")
+
+if (COMPILE_IMS)
+  find_package(XMLRPC)
+endif()
 
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
@@ -29,6 +40,10 @@ else (POSTGRESQL_FOUND)
 endif(POSTGRESQL_FOUND)
 # COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
+# INSTALL_SYSV option set to OFF by default
+option(INSTALL_SYSV "install systemV init scripts" OFF)
+# INSTALL_SYSTEMD option set to OFF by default
+option(INSTALL_SYSTEMD "install systemd services" OFF)
 
 # Options set to OFF by default
 option(CLIENT_ONLY "only compile the client side")
@@ -60,32 +75,7 @@ include(CMakeDependentOption)
 cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
 option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
 
-find_package(DIET)
-if (DIET_FOUND)
-else (DIET_FOUND)
-  message("DIET installation was not found. Define the DIET_DIR variable to continue.")
-  message(" - You can define a DIET_DIR environment variable")
-  message(" - You can pass it as argument to cmake:")
-  message("   $ cmake <source root directory> -DDIET_DIR:PATH=/path/to/DIET")
-  message(" - You can use the ccmake GUI")
-  set(DIET_DIR "" cache path "DIET installation path")
-endif(DIET_FOUND)
-
-find_package(OmniORB)
-if (OMNIORB4_FOUND)
-else (OMNIORB4_FOUND)
-  message("OMNIORB4 installation was not found. Define the OMNIORB4_DIR variable to continue.")
-  message(" - You can define a OMNIORB4_DIR environment variable")
-  message(" - You can pass it as argument to cmake:")
-  message("   $ cmake <source root directory> -DOMNIORB4_DIR:PATH=/path/to/OMNIORB4")
-  message(" - You can use the ccmake GUI")
-  set(OMNIORB4_DIR "" cache path "OMNIORB4 installation path")
-endif(OMNIORB4_FOUND)
-
-set(DIET_CLIENT_LIBRARIES ${DIET_CLIENT_LIBRARIES} ${OMNIORB4_LIBRARIES})
-set(DIET_SERVER_LIBRARIES ${DIET_SERVER_LIBRARIES}
-  ${DIET_ADMIN_LIBRARIES}
-  ${OMNIORB4_LIBRARIES})
+find_package(ZMQ)
 
 find_package(LIBCRYPT)
 if (LIBCRYPT_FOUND)
@@ -169,6 +159,7 @@ endif()
 
 if (COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)
+  set (COMPILE_FMS 1)
   string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
 endif(COMPILE_TMS)
 
@@ -328,10 +319,8 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-find_package(LOGSERVICE REQUIRED)
-
 find_package(Boost 1.45
-  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random)
+  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
 find_package(Threads)
 if(THREADS_FOUND)
@@ -341,6 +330,16 @@ endif()
 set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
 
 add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
+
+if(APPLE)
+  add_definitions("-DBSD_LIKE_SYSTEM")  
+endif()
+
+
+# mock
+set(MOCK_INCLUDE_DIR
+  ${VISHNU_SOURCE_DIR}/mockZMQ
+)
 
 #Core
 set(EMF4CPP_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp)
@@ -434,7 +433,7 @@ if (BUILD_TESTING)
   add_definitions(-DBUILD_TESTING)
 
   set(TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
-  set(TEST_DB_HOST "localhost" CACHE STRING "Hostname of the test database server")
+  set(TEST_DB_HOST "127.0.0.1" CACHE STRING "Hostname of the test database server")
   set(TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
   set(TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
   set(TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
@@ -447,13 +446,12 @@ if (BUILD_TESTING)
   set(TEST_USER_HOME "$HOME" CACHE STRING "Vishnu user home directory for local account used for tests")
   set(TEST_ROOT_HOME "$HOME" CACHE STRING "Vishnu root home directory for local account used for tests")
   set(TEST_ADMIN_HOME "$HOME" CACHE STRING "Vishnu admin home directory for local account used for tests")
-  set(TEST_BATCH_SERVER_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
+  set(TEST_BATCH_SERVER_HOSTNAME "127.0.0.1" CACHE STRING " local hostname used for tests")
   set(TEST_BATCH_TYPE "TORQUE" CACHE STRING " batch scheduler type")
   set(TEST_BATCH_TYPE2 "SLURM" CACHE STRING " batch scheduler type")
   set(TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
-  set(TEST_LOCAL_HOSTNAME "localhost" CACHE STRING " local hostname used for tests")
+  set(TEST_LOCAL_HOSTNAME "127.0.0.1" CACHE STRING " local hostname used for tests")
   set(TEST_REMOTE_HOSTNAME "remoteHostname" CACHE STRING " remote hostname used for tests")
-  set(TEST_OMNINAMES_CFG_IP "127.0.0.1" CACHE STRING " The omniorb cfg ip for tests")
   set(TEST_TMS_FAST_SCRIPT_NAME fast_torque_script CACHE STRING " The name of the fast script to submit")
   set(TEST_TMS_FAST_SCRIPT_OUTPUTDIR_NAME fast_torque_outputdir_script CACHE STRING " The name of the fast script containing the VISHNU_OUTPUTDIR variable to submit")
   set(TMS_FAST_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the fast script to submit")
@@ -471,7 +469,17 @@ if (BUILD_TESTING)
   set(TEST_ADMIN_UMS_PWD "admin" CACHE STRING "Vishnu admin password registered on the user-authentication system and used for tests")
   set(TEST_USER_UMS_LOGIN "user_1" CACHE STRING "Vishnu user login registered on the user-authentication system and used for tests")
   set(TEST_USER_UMS_PWD "toto" CACHE STRING "Vishnu user password registered on the user-authentication system and used for tests")
-
+  set(TEST_ZMQ_DISPATCHER_URI_SRV "tcp://127.0.0.1:5500" CACHE STRING "Uri for binding the Dispatcher for the clients (where the clients connect to request the addresses of SeDs)")
+  set(TEST_ZMQ_DISPATCHER_URI_SUB "tcp://127.0.0.1:5501" CACHE STRING "Uri for binding the Dispatcher's registry service (where each SeD connects to registry itself)")
+  set(TEST_ZMQ_UMS_URI "tcp://127.0.0.1:5510" CACHE STRING "Uri for binding UMS")
+  set(TEST_ZMQ_FMS_URI "tcp://127.0.0.1:5520" CACHE STRING "Uri for binding FMS")
+  set(TEST_ZMQ_TMS_SCHED_URI "tcp://127.0.0.1:5530" CACHE STRING "Uri for binding the TMS's scheduler for automatic submission")
+  set(TEST_ZMQ_TMS_SED1_URI "tcp://127.0.0.1:5531" CACHE STRING "Uri for binding the first TMS SeD")
+  set(TEST_ZMQ_TMS_SED2_URI "tcp://127.0.0.1:5532" CACHE STRING "Uri for binding the second TMS SeD")  
+  set(TEST_ZMQ_LPC_TIMEOUT "10" CACHE STRING "Timeout between two lazy pirate retries") 
+ 
+  set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
+  set(TEST_IMS_SUPERVISOR_URL "http://127.0.0.1:9001" CACHE STRING "Web url of Supervisord")
 
   mark_as_advanced(TEST_DB_TYPE)
   mark_as_advanced(TEST_DB_HOST)
@@ -488,7 +496,6 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_BATCH_SERVER_HOSTNAME)
   mark_as_advanced(TEST_LOCAL_HOSTNAME)
   mark_as_advanced(TEST_REMOTE_HOSTNAME)
-  mark_as_advanced(TEST_OMNINAMES_CFG_IP)
   mark_as_advanced(TEST_ROOT_UMS_LOGIN)
   mark_as_advanced(TEST_ROOT_UMS_PWD)
   mark_as_advanced(TEST_AUTHSYTEM_URI)
@@ -497,7 +504,15 @@ if (BUILD_TESTING)
   mark_as_advanced(TEST_ADMIN_UMS_PWD)
   mark_as_advanced(TEST_USER_UMS_LOGIN)
   mark_as_advanced(TEST_USER_UMS_PWD)
-
+  mark_as_advanced(TEST_ZMQ_DISPATCHER_URI_SRV)
+  mark_as_advanced(TEST_ZMQ_DISPATCHER_URI_SUB)
+  mark_as_advanced(TEST_ZMQ_UMS_URI)
+  mark_as_advanced(TEST_ZMQ_FMS_URI)
+  mark_as_advanced(TEST_ZMQ_TMS_SED1_URI)
+  mark_as_advanced(TEST_ZMQ_TMS_SED2_URI)
+  mark_as_advanced(TEST_ZMQ_TMS_SCHED_URI)
+  mark_as_advanced(TEST_ZMQ_LPC_TIMEOUT) 
+  mark_as_advanced(TEST_IMS_SUPERVISOR_URL)
 
   # Common directories for tests
   set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
@@ -517,6 +532,9 @@ if (ENABLE_PYTHON OR ENABLE_JAVA)
   set (COMPILE_IMS 1 )
   add_subdirectory(swigAPI)
 endif(ENABLE_PYTHON OR ENABLE_JAVA)
+
+add_subdirectory(mockZMQ)
+
 
 if(COMPILE_UMS)
   add_subdirectory(UMS/src)
@@ -538,6 +556,7 @@ if(COMPILE_TMS)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
+  find_package(Sigar REQUIRED)
   add_definitions(-DCOMPILE_IMS)
   add_definitions(-DUSE_LOG_SERVICE)
   add_definitions(-DHAVE_ALT_BATCH)
@@ -558,6 +577,6 @@ if(COMPILE_FMS)
   endif (BUILD_TESTING)
 endif (COMPILE_FMS)
 
-
 # module that adds an uninstall target
 include(CMakeUninstall)
+add_subdirectory(contrib)

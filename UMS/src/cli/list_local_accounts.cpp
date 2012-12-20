@@ -67,26 +67,21 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
 
-
   opt->add("adminListOption,a",
-           "is an admin option for listing all local configurations of all users	",
+           "is an admin option for listing all local configurations of all users",
            CONFIG);
-
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
-
   if (opt->count("adminListOption")){
     listOptions.setAdminListOption(true);
   }
-
   bool full = false;
   // Display the list
   if(isEmpty|| (opt->count("adminListOption"))) {
     full = true;
   }
-  
-  ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
+   ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
   return GenericCli().run(listAccountFunc, dietConfig, ac, av);
 }// end of main
 

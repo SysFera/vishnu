@@ -14,7 +14,7 @@ namespace vishnu {
     INT_PARAMETER,
     ULONG_PARAMETER,
     STRING_PARAMETER,
-    ADDRESS_PARAMETER
+    URI_PARAMETER
   } c_type_t ;
 
 /**
@@ -22,8 +22,7 @@ namespace vishnu {
  */
 
   typedef enum {
-    DIETCONFIGFILE=0,
-    VISHNUID,
+    VISHNUID=0,
     DBTYPE,
     DBHOST,
     DBPORT,
@@ -37,31 +36,33 @@ namespace vishnu {
     INTERVALMONITOR,
     DBPOOLSIZE,
     AUTHENTYPE,
-    DEFAULTBATCHCONFIGFILE
+    DEFAULTBATCHCONFIGFILE,
+    URI,
+    URIDISPATCHERSUB,
+    URLSUPERVISOR,
+    DISP_URIADDR,
+    DISP_URISUBS,
+    DISP_INITFILE,
+    DISP_TIMEOUT,
+    DISP_NBTHREAD
   } param_type_t;
 
   /**
    * \brief A convenient data type to store a parameter
    */
-  struct param_t
-  {
+  struct param_t {
     /**
      * \brief key to retrieve the parameter
      */
     param_type_t key;
-
-
     /**
      * \brief the value of the parameter
      */
     const std::string value;
-
    /**
     * \brief the type of the parameter
     */
-
     c_type_t type;
-
   };
 
   /**

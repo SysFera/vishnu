@@ -86,22 +86,33 @@ namespace vishnu {
   static const int PDOWN = 2;
 
   /**
+   * \brief Return if the server on the machine is already declared
+   * \param urlsup the url of the supervisor
+   * \param mid the machine id
+   * \param type the type of server
+   * \return if the server is already existant in the database on this machine
+   */
+  bool
+  isNew(std::string urlsup, std::string mid, std::string type);
+
+  /**
    * \brief To register the server in the database
-   * \param type: The type of the SeD
-   * \param config: The configuration of the executable
-   * \param cfg: The created path to the config file
+   * \param type The type of the SeD
+   * \param config The configuration of the executable
+   * \param cfg The created path to the config file
+   * \param services The list of services
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  registerSeD(std::string type, ExecConfiguration config, std::string &cfg);
+  registerSeD(std::string type, ExecConfiguration config, std::string &cfg, std::vector<std::string>& services);
   /**
    * \brief To unregister the server in the database (set as stopped)
-   * \param type: The type of the SeD
-   * \param mid: The machine id
+   * \param type The type of the SeD
+   * \param mid The machine id
    * \return 0 if the function succeeds or another value otherwise
    */
   int
-  unregisterSeD(std::string type, std::string mid);
+  unregisterSeD(std::string type, ExecConfiguration config);
 
   /**
    * \brief Return true if the string starts with 'MONTH'
@@ -263,8 +274,9 @@ namespace vishnu {
    * \return  true if success else false
    */
   template<class T>
-  bool parseEmfObject(const std::string& objectSerialized, T*& object_ptr, const std::string msgComp=std::string()) {
-
+  bool parseEmfObject(const std::string& objectSerialized,
+                      T*& object_ptr,
+                      const std::string& msgComp = std::string()) {
     object_ptr = NULL;
     try {
       //CREATE DATA MODEL

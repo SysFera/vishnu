@@ -10,4 +10,6 @@ databaseUserPassword=@TEST_DB_PASSWORD@
 sendmailScriptPath=@SENDMAILPY@
 intervalMonitor=1
 vishnuMachineId=machine_1
+uri=@TEST_ZMQ_UMS_URI@
+uriDispatcherSub=@TEST_ZMQ_DISPATCHER_URI_SUB@
 

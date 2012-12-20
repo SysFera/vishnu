@@ -7,13 +7,13 @@
 #ifndef LSSRV_HPP
 #define LSSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The list directory service profile description
  * \return the list directory service profile
  */
-diet_profile_desc_t* getListDirProfile();
+//diet_profile_desc_t* getListDirProfile();
 
 /**
  * \brief the list directory solve function

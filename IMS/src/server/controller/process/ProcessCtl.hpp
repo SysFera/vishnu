@@ -40,12 +40,13 @@ public:
    * \param isAPI: If called with the external API or not
    */
   void
-  restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI = true);
+  restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
+   * \brief op The supervision options
    */
   void
-  stop(IMS_Data::Process_ptr p);
+  stop(IMS_Data::SupervisorOp_ptr op);
   /**
    * To perform load schedding operations
    * \param type: The type of loadShedding
@@ -54,6 +55,13 @@ public:
   loadShed(int type);
 protected:
 private:
+  /**
+   * \brief Call the function methodName throught XMLRPC
+   * \param methodName The name of the method to call
+   */
+  void
+  RPCCall(std::string methodName);
+
   /**
    * \brief To stop all the vishnu processes on a machine
    */
@@ -66,7 +74,7 @@ private:
   /**
    * \brief The option to restart
    */
-  IMS_Data::RestartOp mop;
+  IMS_Data::SupervisorOp mop;
   /**
    * \brief The machine id
    */

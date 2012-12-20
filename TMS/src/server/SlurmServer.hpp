@@ -76,7 +76,7 @@ class SlurmServer : public BatchServer
      * \param ignoredIds the list of job ids to ignore
      */
     void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-        const std::vector<string>& ignoredIds=std::vector<string>());
+                        const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
     /**
      * \brief Destructor

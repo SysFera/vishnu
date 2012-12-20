@@ -23,9 +23,10 @@ struct LoadShedFunc {
 
  IMS_Data::LoadShedType mloadShedType;
  std::string mmachineId;
+// IMS_Data::SupervisorOp mop;
 
   LoadShedFunc(const IMS_Data::LoadShedType& loadShedType, const std::string& machineId):
-   mloadShedType(loadShedType), mmachineId(machineId)
+    mloadShedType(loadShedType), mmachineId(machineId)
   {};
 
   int operator()(std::string sessionKey) {
@@ -42,8 +43,10 @@ int main (int argc, char* argv[]){
 
    /********** EMF data ************/
   IMS_Data::LoadShedType loadShedType;
+//  IMS_Data::SupervisorOp op;
 
   /**************** Describe options *************/
+//  boost::function1<void,string> fsc(boost::bind(&IMS_Data::SupervisorOp::setURI,boost::ref(op),_1));
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
@@ -67,6 +70,11 @@ int main (int argc, char* argv[]){
             loadShedType,1);
 
   opt->setPosition("loadShedType",1);
+
+//  opt->add("script,s",
+//	   "The supervisor script",
+//	   CONFIG,
+//	   fsc);
 
   bool isEmpty;
   //To process list options

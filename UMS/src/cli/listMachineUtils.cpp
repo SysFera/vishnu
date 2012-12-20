@@ -49,11 +49,7 @@ makeListMachineOptions(std::string pgName,StringcallBackType& fUserId,
            CONFIG,
            fMachineId);
 
-
   return opt;
-
-
-
 }
 
 

@@ -1,13 +1,15 @@
 #include <iostream>
 #include <sys/wait.h>
+#include <unistd.h>
 
 #include "UMS_Data_forward.hpp"
 #include "TMS_Data_forward.hpp"
 
 #include "api_ums.hpp"
 #include "api_tms.hpp"
-#include  "TMS_testconfig.h"
+#include "TMS_testconfig.h"
 #include "diet_config_tests.h"
+
 using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
@@ -50,8 +52,8 @@ void stress(int cpt,const string& sessionKey, const string& machineId, const Fun
     ListJobs listOfJobs;
     ListQueues listOfQueues;
     cout << " In loop : " <<  i << endl;
-  
-    switch(functNameType){ 
+
+    switch(functNameType){
       case SUBMITJOB:
         submitJob(sessionKey, machineId, scriptFilePath,  jobInfo);
         std::cout << "jobInfo.getJobId()=" << jobInfo.getJobId() << std::endl;
@@ -86,9 +88,9 @@ void forker(int cpt,const string& sessionKey, const string& machineId, const Fun
   pid_t pid=fork();
   switch(pid){
     case 0 :
-      
+
       //vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
-     
+
       stress(cpt,sessionKey,machineId, functNameType) ;
 
      // vishnuFinalize();
@@ -109,7 +111,6 @@ void forker(int cpt,const string& sessionKey, const string& machineId, const Fun
 
 int main(int argc, char** argv){
   int cpt;
-  int i;
   string             	  key  = ""       ;
   string 	     	  pwd  = "vishnu_user"  ;
   string 	     	  uid  = "root";
@@ -118,7 +119,7 @@ int main(int argc, char** argv){
 
   string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
 
-  cop.setClosePolicy(2);  
+  cop.setClosePolicy(2);
 
   try{
 
@@ -135,7 +136,7 @@ int main(int argc, char** argv){
 
   if(argc < 3) {
     std::cerr << "Usage: " << argv[0] << " <machineId> <SUBMITJOB|LISTJOBS|LISTQUEUES> " << "[cpt]" << std::endl;
-    exit(EXIT_FAILURE); 
+    exit(EXIT_FAILURE);
   }
 
   const std::string machineId = argv[1];
@@ -144,10 +145,10 @@ int main(int argc, char** argv){
     std::cerr << "Unknown name of function  to call .........." << std::endl;
     std::cerr << "Usage: " << argv[0] << " <machineId> <SUBMITJOB|LISTJOBS|LISTQUEUES> <machineId>" << "[cpt]" << std::endl;
     exit(EXIT_FAILURE);
-  } 
+  }
 
   const FunctionNameType functNameType = convertToFunctionNameType(functionToCallName);
-  
+
   if (argc > 3){
     cpt = atoi (argv[3]);
   }
@@ -166,5 +167,3 @@ int main(int argc, char** argv){
 
   return 0;
 }
-
-

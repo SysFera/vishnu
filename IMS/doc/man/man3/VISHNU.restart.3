@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.restart
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: March 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: IMS Python API Reference
-.\"    Source: VISHNU 1.3
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.RESTART" "3" "March 2012" "VISHNU 1.3" "IMS Python API Reference"
+.TH "VISHNU\&.RESTART" "3" "December 2012" "VISHNU ZMQ_beta" "IMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -31,7 +31,7 @@
 VISHNU.restart \- To restart a SeD or a MA
 .SH "SYNOPSIS"
 .HP \w'ret=VISHNU\&.restart('u
-.BI "ret=VISHNU\&.restart(string\ " "sessionKey" ", string\ " "machineId" ", RestartOp\ " "options" ");"
+.BI "ret=VISHNU\&.restart(string\ " "sessionKey" ", string\ " "machineId" ", SupervisorOp\ " "op" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows an admin to restart a VISHNU server on a machine\&. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted\&.
@@ -47,7 +47,7 @@ Input argument\&. The session key\&.
 Input argument\&. The id of the machine where to restart\&.
 .RE
 .PP
-\fIoptions\fR
+\fIop\fR
 .RS 4
 Input argument\&. The option for the restart\&.
 .RE
@@ -79,7 +79,7 @@ Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SA
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:

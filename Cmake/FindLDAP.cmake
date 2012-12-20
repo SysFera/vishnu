@@ -1,18 +1,25 @@
-#
-# Try to find the LDAP installation
-#
+# Find OpenLDAP libraries
 
-FIND_PATH(LDAP_INCLUDE_DIR ldap.h)
-FIND_LIBRARY(LDAP_LIBRARIES NAMES ldap)
-FIND_LIBRARY(LBER_LIBRARIES NAMES lber)
+# This module defines:
+# LDAP_FOUND             - whether libraries were found
+# LDAP_INCLUDE_DIR       - include path
+# LDAP_LIBRARIES         - libraries to link against
 
-if(LDAP_INCLUDE_DIR AND LDAP_LIBRARIES)
-   set(LDAP_FOUND TRUE)
-   if(LBER_LIBRARIES)
-     set(LDAP_LIBRARIES ${LDAP_LIBRARIES} ${LBER_LIBRARIES})
-   endif(LBER_LIBRARIES)
-endif(LDAP_INCLUDE_DIR AND LDAP_LIBRARIES)
+find_path(LDAP_INCLUDE_DIR ldap.h
+  PATHS ${LDAP_INSTALL_DIR}/include)
 
+find_library(LDAP_LIBRARY
+  NAMES ldap
+  PATHS ${LDAP_INSTALL_DIR}/lib)
+find_library(LBER_LIBRARY
+  NAMES lber
+  PATHS ${LDAP_INSTALL_DIR}/lib)
 
-MARK_AS_ADVANCED(LDAP_INCLUDE_DIR LDAP_LIBRARIES LBER_LIBRARIES)
+set(LDAP_LIBRARIES LDAP_LIBRARY LBER_LIBRARY)
+
+# defines our variable
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(LDAP DEFAULT_MSG
+  LDAP_LIBRARIES LDAP_LIBRARY LBER_LIBRARY LDAP_INCLUDE_DIR)
+
 

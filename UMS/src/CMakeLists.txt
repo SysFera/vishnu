@@ -1,5 +1,4 @@
 include_directories(client api
-  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_EMF_DATA_DIR}
@@ -8,7 +7,10 @@ include_directories(client api
   ${Boost_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
-)
+  ${ZMQ_INCLUDE_DIR}
+  ${MOCK_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  )
 
 set(client_SRCS client/SessionProxy.cpp
   client/AuthAccountProxy.cpp
@@ -39,11 +41,13 @@ set(api_HEADERS api/api_ums.hpp)
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ums-client
-  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
-  ${CMAKE_DL_LIBS})
+  ${CMAKE_DL_LIBS}
+  ${ZMQ_LIBRARIES}
+  zmq_helper
+)
 
 install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
@@ -85,16 +89,19 @@ if(NOT CLIENT_ONLY)
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
 
   add_executable(umssed ${sed_SRCS})
-  target_link_libraries(umssed ${DIET_SERVER_LIBRARIES}
+  target_link_libraries(umssed 
+#${DIET_SERVER_LIBRARIES}
     ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
     ${LIBCRYPT_LIB}
     ${LDAP_LIBRARIES}
     ${CMAKE_DL_LIBS}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
 )
 
 
-  install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
+install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif()
 

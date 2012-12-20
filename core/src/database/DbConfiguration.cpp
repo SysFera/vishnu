@@ -9,14 +9,15 @@
 
 using namespace std;
 
-const int DbConfiguration::defaultDbPoolSize = 10;  //%RELAX<MISRA_0_1_3> Used in this file
+const unsigned DbConfiguration::defaultDbPoolSize = 10;  //%RELAX<MISRA_0_1_3> Used in this file
 
 /**
  * \brief Constructor
  * \param execConfig  the configuration of the program
  */
 DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) : mexecConfig(execConfig),
-mdbPort(0), mdbPoolSize(defaultDbPoolSize), mdbType(POSTGRESQL)
+                                                                        mdbType(POSTGRESQL), mdbPort(0),
+                                                                        mdbPoolSize(defaultDbPoolSize)
 {
 }
 
@@ -44,4 +45,3 @@ void DbConfiguration::check() throw (UserException)
   mexecConfig.getConfigValue<unsigned>(vishnu::DBPOOLSIZE, mdbPoolSize);
 
 }
-

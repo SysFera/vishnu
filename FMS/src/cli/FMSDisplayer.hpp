@@ -65,6 +65,6 @@ operator<<(std::ostream& os, FileTransferList& fileTransferlist);
  * \param mode The mode value to convert
  * \return converted mode value
  */
-string ConvertModeToString(const mode_t& mode);
+std::string ConvertModeToString(const mode_t& mode);
 
 #endif

@@ -6,13 +6,13 @@
 #ifndef MKFILESRV_HPP
 #define MKFILESRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The mkfile service profile description
  * \return the mkfile service profile
  */
-diet_profile_desc_t* getCreateFileProfile();
+//diet_profile_desc_t* getCreateFileProfile();
 /**
  * \brief the mkfile solve function
  * \param profile the service profile

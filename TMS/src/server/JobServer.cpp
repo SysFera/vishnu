@@ -54,7 +54,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
 	std::string ouputDir = "" ;
-        int count=0;
+    int count=0;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
@@ -77,7 +77,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		std::string workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
 		std::string prefix = (boost::algorithm::ends_with(workingDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
-		std::string dir = workingDir + prefix + vishnuJobId + vishnu::createSuffixFromCurTime(); ;
+		std::string dir = workingDir + prefix + vishnuJobId + vishnu::createSuffixFromCurTime() ;
 		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
 		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
 		mjob.setOutputDir(dir) ;
@@ -157,7 +157,7 @@ int JobServer::submitJob(const std::string& scriptContent,
           processDefaultOptions(defaultBatchOption, convertedScript, key);
         }
 	vishnu::createTmpFile(scriptPath, convertedScript);
-        
+
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
@@ -180,6 +180,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string updateJobSerialized = sshJobExec.getJobSerialized();
 	TMS_Data::Job_ptr job = NULL;
 	if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
+		std::cerr << "EXCEPTION::::::::::jobSerialized" << updateJobSerialized <<std::endl;
 		throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
 	}
 	mjob = *job;
@@ -241,7 +242,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sqlUpdate+="WHERE jobid='"+vishnuJobId+"';";
 
 	mdatabaseVishnu->process(sqlUpdate);
-
 
 	return 0;
 }

@@ -44,26 +44,26 @@ typedef std::map<std::string, std::string> OptionMap;
  * @brief functor used to find short/long options
  * @internal
  */
-class StartsWith : public std::unary_function<std::string, bool>
-{
-  private:
-    /**
-     * \brief the to compare with
-     */
-    std::string s1;
+class StartsWith : public std::unary_function<std::string, bool> {
 public:
-    /**
-     * \brief A constructor with parameters
-     * \param str the string to compare with
-     */
-    StartsWith(const std::string& str) : s1(str) {}
+  /**
+   * \brief A constructor with parameters
+   * \param str the string to compare with
+   */
+  StartsWith(const std::string& str) : s1(str) {}
 
-    /**
-     * \brief An overloaded () operator to check if a given string sart with s1
-     * \param s2  a second string to perform the comparison
-     * \return true if s2 starts with s1, false otherwise
-     */
-    bool operator() (const std::string& s2) const;
+  /**
+   * \brief An overloaded () operator to check if a given string sart with s1
+   * \param s2  a second string to perform the comparison
+   * \return true if s2 starts with s1, false otherwise
+   */
+  bool
+  operator() (const std::string& s2) const;
+private:
+  /**
+   * \brief the to compare with
+   */
+  std::string s1;
 };
 
 /**
@@ -71,81 +71,78 @@ public:
  * @brief functor working as token generator
  * @internal
  */
-class Splitter
-{
+class Splitter {
+public:
+  /**
+   * \brief Default constructor
+   */
+  Splitter();
+
+  /**
+   * \brief constructor with parameters
+   * \param c A delimiter
+   */
+  Splitter(const char c);
+
+  /**
+   * \brief Another  constructor with parameters
+   * \param str a string to split
+   * \param c A delimiter
+   */
+  Splitter(const std::string& str, const char c);
+
+  /**
+   * \brief To check if there is a next token
+   * \return true if there is a next token in the string or false otherwise
+   */
+  bool
+  hasNext() const { return hasNext_; }
+
+  /**
+   * \brief To take a new string to split
+   * \param str  a string to split
+   */
+  void
+  reset(const std::string& str);
+  /**
+   * \brief To take a new string to split
+   * \param str  a string to split
+   * \param c   a delimiter
+   */
+  void
+  reset(const std::string& str, const char c);
+
+  /**
+   * \brief An overloaded operator () to get the token
+   * \return the token
+   */
+  std::string&
+  operator() ();
 private:
   /**
    * \brief The delimiter
    */
-    char delim_;
-    /**
-     * \brief Is equal to yes if there is a nex token
-     */
-    bool hasNext_;
-
-    /**
-     * \brief the size of the previous token
-     */
-    std::string::size_type previous_;
-
-    /**
-     * \brief the size of the current token
-     */
-    std::string::size_type current_;
-
-    /**
-     * \brief the current token
-     */
-    std::string token_;
-
-    /**
-     * \brief the string to split
-     */
-    std::string str_;
-public:
-
-    /**
-     * \brief Default constructor
-     */
-    Splitter();
-
-    /**
-     * \brief constructor with parameters
-     * \param c A delimiter
-     */
-    Splitter(const char c);
-
-    /**
-     * \brief Another  constructor with parameters
-     * \param str a string to split
-     * \param c A delimiter
-     */
-
-    Splitter(const std::string& str, const char c);
-
-    /**
-     * \brief To check if there is a next token
-     * \return true if there is a next token in the string or false otherwise
-     */
-    bool hasNext() const { return hasNext_; }
-
-    /**
-     * \brief To take a new string to split
-     * \param str  a string to split
-     */
-    void reset(const std::string& str);
-    /**
-     * \brief To take a new string to split
-     * \param str  a string to split
-     * \param c   a delimiter
-     */
-    void reset(const std::string& str, const char c);
-
-    /**
-     * \brief An overloaded operator () to get the token
-     * \return the token
-     */
-    std::string& operator() ();
+  char delim_;
+  /**
+   * \brief Is equal to yes if there is a nex token
+   */
+  bool hasNext_;
+  /**
+   * \brief the size of the previous token
+   */
+  std::string::size_type previous_;
+  /**
+   * \brief the size of the current token
+   */
+  std::string::size_type current_;
+  /**
+   * \brief the current token
+   */
+  std::string token_;
+  /**
+   * \brief the string to split
+   */
+  std::string str_;
 };
 
 #endif /* _COMMON_PARSER_HPP_ */

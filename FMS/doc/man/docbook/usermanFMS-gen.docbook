@@ -7,7 +7,7 @@
     <author>
       <personname>
         <firstname/>
-        <surname>SysFera SAS</surname>
+        <surname>SysFera SA</surname>
       </personname>
       <contrib>Developed the first version of these man pages as part of the VISHNU project.</contrib>
       <address>
@@ -18,7 +18,7 @@
     <date>December 2012</date>
     <copyright>
       <year>2012</year>
-      <holder>SysFera SAS</holder>
+      <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
       <para>These manual pages are provided under the following conditions:</para>
@@ -2280,7 +2280,7 @@ values can be obtained using the vishnu_list_machine command)</para>
         <refpurpose>removes  directories (and subdirectories) from  remote machines.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::rmdir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::removeDir</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>path</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

@@ -2,45 +2,86 @@
 #include "IMSVishnuException.hpp"
 #include "DbFactory.hpp"
 #include <vector>
-#include "DIET_data.h"
-#include "DIET_server.h"
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/math/special_functions/round.hpp>
+
+#include <sigar.h>
 #include "QueryServer.hpp"
 
 using namespace vishnu;
 
-MetricServer::MetricServer(const UserServer session, string mail):msession(session), msendmail(mail) {
-  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+
+namespace {
+
+/**
+ * @brief safe rounding, if there's an overflow, return 0
+ * @param value double value to be rounded
+ * @return unsigned integer
+ */
+unsigned int
+safe_round(double value) {
+  unsigned int rounded_value(0);
+  try {
+    rounded_value = boost::math::iround(value);
+  } catch (const boost::math::rounding_error& err) {
+    rounded_value = 0;
+  }
+
+  return rounded_value;
+}
+
+}
+
+
+MetricServer::MetricServer(const UserServer session, std::string mail)
+  : msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+    IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mvishnuId = 1;
   mfreq = 0;
   mcop = ecoreFactory->createCurMetricOp();
   mhop = ecoreFactory->createMetricHistOp();
+  sigar_open(&sigar);
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::MetricHistOp_ptr op, string mail):msession(session), msendmail(mail) {
-  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+
+MetricServer::MetricServer(const UserServer session,
+                           IMS_Data::MetricHistOp_ptr op,
+                           std::string mail)
+  : msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+    IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mhop = op;
   mvishnuId = 1;
   mfreq = 0;
   mcop = ecoreFactory->createCurMetricOp();
+  sigar_open(&sigar);
 }
-MetricServer::MetricServer(const UserServer session, IMS_Data::CurMetricOp_ptr op, string mail):msession(session), msendmail(mail) {
-  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+
+MetricServer::MetricServer(const UserServer session,
+                           IMS_Data::CurMetricOp_ptr op,
+                           std::string mail)
+  : msession(session), msendmail(mail) {
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+    IMS_Data::IMS_DataFactory::_instance();
   DbFactory factory;
   mdatabase = factory.getDatabaseInstance();
   mcop = op;
   mvishnuId = 1;
   mfreq = 0;
   mhop = ecoreFactory->createMetricHistOp();
+  sigar_open(&sigar);
 }
-MetricServer::~MetricServer(){
+
+MetricServer::~MetricServer() {
+  sigar_close(sigar);
 }
 
 void
-MetricServer::setUpFreq(int freq){
+MetricServer::setUpFreq(int freq) {
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "set update frequency is an admin function. A user cannot call it");
   }
@@ -49,24 +90,25 @@ MetricServer::setUpFreq(int freq){
     throw UserException(ERRCODE_INVALID_PARAM, "Error invalid frequency.");
   }
 
-  string request = "update vishnu set updatefreq ='"+convertToString(freq)+"' where  vishnuid ='";
+  std::string request =
+  "update vishnu set updatefreq ='" + convertToString(freq) + "' where  vishnuid ='";
   request += convertToString(mvishnuId);
   request += "'";
   try {
     mdatabase->process(request.c_str());
-  }catch(SystemException& e) {
-    e.appendMsgComp("Failed to set frequency to "+convertToString(freq));
+  } catch(SystemException& e) {
+    e.appendMsgComp("Failed to set frequency to " + convertToString(freq));
     throw(e);
   }
 }
 
 
 void
-MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
-  string nmid;
+MetricServer::addMetricSet(IMS_Data::ListMetric* set, std::string mid){
+  std::string nmid;
   double cpu;
   double mem;
-  double disk; 
+  double disk;
 
   // The thresholds
   IMS_Data::Threshold cpu_thre;
@@ -77,48 +119,52 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   UMS_Data::User mem_user;
   UMS_Data::User disk_user;
 
-  vector<string> results = vector<string>();
-  vector<string>::iterator iter;
+  std::vector<std::string> results;
+  std::vector<std::string>::iterator iter;
 
   // Getting the num machine id to insert
-  string reqThre = "SELECT typet, value, userid, email from threshold, users, machine where machine.machineid='" + mid + "' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
+  std::string reqThre =
+  "SELECT typet, value, userid, email from threshold, users, machine where machine.machineid='" + mid + "' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqThre.c_str()));
     for (size_t i = 0; i < result->getNbTuples(); i++){
       results.clear();
       results = result->get(i);
       iter = results.begin();
+      // FIXME: use an enum ou constants
       switch (convertToInt(*(iter))) {
-      case 1://cpu
+      case 1:  // cpu
 	cpu_thre.setType(convertToInt(*(iter)));
-        cpu_thre.setValue(convertToInt(*(iter+1)));
-        cpu_user.setUserId(*(iter+2));
-        cpu_user.setEmail(*(iter+3));
+	cpu_thre.setValue(convertToInt(*(iter+1)));
+	cpu_user.setUserId(*(iter+2));
+	cpu_user.setEmail(*(iter+3));
 	break;
-      case 2://disk
+      case 2:  // disk
 	disk_thre.setType(convertToInt(*(iter)));
-        disk_thre.setValue(convertToInt(*(iter+1)));
-        disk_user.setUserId(*(iter+2));
-        disk_user.setEmail(*(iter+3));
+	disk_thre.setValue(convertToInt(*(iter+1)));
+	disk_user.setUserId(*(iter+2));
+	disk_user.setEmail(*(iter+3));
 	break;
-      case 3://memory
+      case 3:  // memory
 	mem_thre.setType(convertToInt(*(iter)));
-        mem_thre.setValue(convertToInt(*(iter+1)));
-        mem_user.setUserId(*(iter+2));
-        mem_user.setEmail(*(iter+3));
+	mem_thre.setValue(convertToInt(*(iter+1)));
+	mem_user.setUserId(*(iter+2));
+	mem_user.setEmail(*(iter+3));
 	break;
       default :
 	break;
-      }	
+      }
     }
   } catch (SystemException &e) {
     throw (e);
   }
-  
+
 
   // Getting the num machine id to insert
-  string reqnmid = "SELECT nummachineid from machine where  machineid ='" + mid + "'";
-  boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
+  std::string reqnmid =
+  "SELECT nummachineid from machine where  machineid ='" + mid + "'";
+  boost::scoped_ptr<DatabaseResult> result(
+    mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
@@ -127,33 +173,36 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   // Filling values (If various in list, the latest is kept
   for (unsigned int i = 0 ; i < set->getMetric().size() ; i++){
     switch (set->getMetric().get(i)->getType()) {
-    case 1 : //cpu
+    case 1 :  // cpu
       cpu = set->getMetric().get(i)->getValue();
       if (static_cast<int>(cpu)<cpu_thre.getValue()) {
 	try {
-	  sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1, cpu_user.getEmail(), cpu_user.getUserId(), mid);
+	  sendMail(static_cast<int>(cpu), cpu_thre.getValue(), 1,
+                   cpu_user.getEmail(), cpu_user.getUserId(), mid);
 	} catch (SystemException& e) {
-	  cerr << e.what() << endl;
+	  std::cerr << e.what() << "\n";
 	}
       }
       break;
-    case 2 : //disk
+    case 2 :  // disk
       disk = set->getMetric().get(i)->getValue();
       if (static_cast<int>(disk)<disk_thre.getValue()) {
 	try {
-	  sendMail(static_cast<int>(disk), disk_thre.getValue(), 2, disk_user.getEmail(), disk_user.getUserId(), mid);
+	  sendMail(static_cast<int>(disk), disk_thre.getValue(), 2,
+                   disk_user.getEmail(), disk_user.getUserId(), mid);
 	} catch (SystemException& e) {
-	  cerr << e.what() << endl;
+	  std::cerr << e.what() << "\n";
 	}
       }
       break;
-    case 3: //mem
+    case 3:  // mem
       mem = set->getMetric().get(i)->getValue();
       if (static_cast<int>(mem)<mem_thre.getValue()) {
 	try {
-	  sendMail(static_cast<int>(mem), mem_thre.getValue(), 3, mem_user.getEmail(), mem_user.getUserId(), mid);
+	  sendMail(static_cast<int>(mem), mem_thre.getValue(), 3,
+                   mem_user.getEmail(), mem_user.getUserId(), mid);
 	} catch (SystemException& e) {
-	  cerr << e.what() << endl;
+	  std::cerr << e.what() << "\n";
 	}
       }
       break;
@@ -164,8 +213,8 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
   }
 
   // Inserting the value
-  string req = "insert into state(machine_nummachineid, memory, diskspace, cpuload, time) values('"+nmid+"', '"+convertToString(static_cast<int>(mem))+"', '"+convertToString(static_cast<int>(disk))+"', '"+convertToString(static_cast<int>(cpu))+"', CURRENT_TIMESTAMP) ";
-  
+  std::string req = "insert into state(machine_nummachineid, memory, diskspace, cpuload, time) values('"+nmid+"', '"+convertToString(safe_round(mem))+"', '"+convertToString(safe_round(disk))+"', '"+convertToString(safe_round(cpu))+"', CURRENT_TIMESTAMP) ";
+
   try{
     mdatabase->process(req.c_str());
   }catch(SystemException& e){
@@ -177,14 +226,14 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, string mid){
 unsigned int
 MetricServer::checkUpFreq(){
   // Get the corresponding frequency
-  string request = "select updatefreq from vishnu where vishnuid='";
+  std::string request = "select updatefreq from vishnu where vishnuid='";
   request += convertToString(mvishnuId);
   request += "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVVISHNU, "Unknown VISHNU id");
   }
-  vector<string> res;
+  std::vector<std::string> res;
   res = result->get(0);
   // Updating the frequency value
   mfreq = convertToInt(res.at(0));
@@ -197,17 +246,15 @@ IMS_Data::ListMetric*
 MetricServer::getCurMet(){
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
-  estVector_t vec = diet_new_estVect();
   IMS_Data::Metric_ptr met;
   double disk = 0.0;
   double cpu  = 0.0;
   double mem  = 0.0;
   ptime p =  second_clock::local_time();
 
-  diet_estimate_cori_add_collector(EST_COLL_EASY,NULL);
-
-  diet_estimate_cori (vec, EST_FREESIZEDISK, EST_COLL_EASY, "./");
-  disk = diet_est_get_system(vec, EST_FREESIZEDISK, -1); 
+  sigar_file_system_usage_t fsu;
+  sigar_file_system_usage_get(sigar, "/", &fsu);
+  disk = fsu.avail / (1024.0 * 1024.0);
   met = ecoreFactory->createMetric();
   met->setType(2);
   met->setValue(static_cast<int>(disk));
@@ -216,8 +263,9 @@ MetricServer::getCurMet(){
     mlistObject->getMetric().push_back(met);
   }
 
-  diet_estimate_cori (vec, EST_FREEMEM, EST_COLL_EASY, NULL);
-  mem = diet_est_get_system(vec, EST_FREEMEM, -1); 
+  sigar_mem_t memory;
+  sigar_mem_get(sigar, &memory);
+  mem = memory.free / (1024.0 * 1024.0);
   met = ecoreFactory->createMetric();
   met->setType(3);
   met->setValue(static_cast<int>(mem));
@@ -226,9 +274,13 @@ MetricServer::getCurMet(){
     mlistObject->getMetric().push_back(met);
   }
 
-  diet_estimate_cori (vec, EST_FREECPU, EST_COLL_EASY, NULL);
-  cpu = diet_est_get_system(vec, EST_FREECPU, -1); 
-  cpu *= 100; // Set in percentage
+
+  sigar_cpu_info_list_t cpuinfo_list;
+  sigar_loadavg_t loadavg;
+  sigar_cpu_info_list_get(sigar, &cpuinfo_list);
+  sigar_loadavg_get(sigar, &loadavg);
+  // Set in percentage
+  cpu = 100 * (1 - loadavg.loadavg[0] / cpuinfo_list.number);
   met = ecoreFactory->createMetric();
   met->setType(1);
   met->setValue(static_cast<int>(cpu));
@@ -237,16 +289,14 @@ MetricServer::getCurMet(){
     mlistObject->getMetric().push_back(met);
   }
 
-  diet_destroy_estVect(vec) ;
-
   return mlistObject;
 }
 
 IMS_Data::ListMetric*
-MetricServer::getHistMet(string machineId){
+MetricServer::getHistMet(std::string machineId){
   std::string request = "select cpuload, state.diskspace, state.memory, time from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
-  vector<string>::iterator iter;
-  vector<string> results = vector<string>();
+  std::vector<std::string>::iterator iter;
+  std::vector<std::string> results;
 
   IMS_Data::MetricType type = mhop->getType();
 
@@ -260,22 +310,24 @@ MetricServer::getHistMet(string machineId){
     time_t start = static_cast<time_t>(mhop->getStartTime());
     if (start != -1) {
       start = convertUTCtimeINLocaltime(start);
-      string startStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(start));
+      std::string startStr =
+        boost::posix_time::to_simple_string(boost::posix_time::from_time_t(start));
       std::ostringstream osValue;
       osValue << startStr;
       request.append(" and time >= ");
-      request.append("'"+osValue.str()+"'");
+      request.append("'" + osValue.str() + "'");
     }
   }
   if (mhop->getEndTime()>0) {
     time_t end = static_cast<time_t>(mhop->getEndTime());
     if (end != -1) {
       end = convertUTCtimeINLocaltime(end);
-      string endStr = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(end));
+      std::string endStr = boost::posix_time::to_simple_string(
+        boost::posix_time::from_time_t(end));
       std::ostringstream osValue;
       osValue << endStr;
       request.append(" and time <= ");
-      request.append("'"+osValue.str()+"'");
+      request.append("'" + osValue.str() + "'");
     }
   }
   // To avoid having too much result if no date is given
@@ -285,8 +337,10 @@ MetricServer::getHistMet(string machineId){
     request.append(" order by time asc");
   }
 
-  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
-  IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+    IMS_Data::IMS_DataFactory::_instance();
+  IMS_Data::ListMetric_ptr mlistObject =
+    ecoreFactory->createListMetric();
   try {
     boost::scoped_ptr<DatabaseResult> listOfMetric (mdatabase->getResult(request.c_str()));
     // Do not factorize the code to avoid repeating the 'if' tests in the for
@@ -298,8 +352,8 @@ MetricServer::getHistMet(string machineId){
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(1);
-        met->setValue(convertToInt(*(iter)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setValue(convertToInt(*(iter)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -310,8 +364,8 @@ MetricServer::getHistMet(string machineId){
 	iter = results.begin();
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(2);
-        met->setValue(convertToInt(*(iter+1)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setValue(convertToInt(*(iter+1)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -323,7 +377,7 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -335,17 +389,17 @@ MetricServer::getHistMet(string machineId){
 	IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
 	met->setType(3);
 	met->setValue(convertToInt(*(iter+2)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(2);
-        met->setValue(convertToInt(*(iter+1)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setValue(convertToInt(*(iter+1)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
 	met = ecoreFactory->createMetric();
 	met->setType(1);
-        met->setValue(convertToInt(*(iter)));
-        met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
+	met->setValue(convertToInt(*(iter)));
+	met->setTime(convertLocaltimeINUTCtime(convertToTimeType(*(iter+3))));
 	mlistObject->getMetric().push_back(met);
       }
       break;
@@ -358,10 +412,12 @@ MetricServer::getHistMet(string machineId){
 
 
 void
-MetricServer::sendMail(int val, int threshold, int type, string email, string uid, string machine){
+MetricServer::sendMail(int val, int threshold, int type,
+                       std::string email, std::string uid,
+                       std::string machine){
   std::ostringstream command;
   std::vector<std::string> tokens;
-  string stype;
+  std::string stype;
   int pid;
 
   // If no email script given, to not try to send, because in some occasions there may be a threshold reached but the object does not know about the script (a user call throught the api)
@@ -382,8 +438,11 @@ MetricServer::sendMail(int val, int threshold, int type, string email, string ui
   default:
     throw SystemException(ERRCODE_SYSTEM, "Error during the creation of the process for sending mail to the user with the userId:" +uid);
   }
-  string subject = "[VISHNU] Threshold reached";
-  string content = "WARNING: The threshold of type "+stype+" and with the value of "+convertToString(threshold)+" has been reached with the value "+convertToString(val)+" on the machine "+machine;
+  std::string subject = "[VISHNU] Threshold reached";
+  std::string content = "WARNING: The threshold of type " + stype +
+    " and with the value of " + convertToString(threshold) +
+    " has been reached with the value " + convertToString(val) +
+    " on the machine " + machine;
   // To build the script command
   command << msendmail << " --to " << email << " -s ";
 

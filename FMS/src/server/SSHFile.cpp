@@ -11,9 +11,9 @@
 #include <sys/wait.h>
 #include <sys/types.h>
 
-#include "DIET_data.h"
+//#include "DIET_data.h"
 #include "DIET_client.h"
-#include "DIET_Dagda.h"
+//#include "DIET_Dagda.h"
 
 #include "SSHFile.hpp"
 #include "File.hpp"

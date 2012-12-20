@@ -27,7 +27,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   char* errorInfo = NULL;
-  std::string systemInfoToString;
+
 
   std::string serviceName = "int_setSystemInfo";
 
@@ -36,16 +36,16 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  systemInfoToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo)).c_str());
+  std::string systemInfoToString =  _ser.serialize_str(const_cast<IMS_Data::SystemInfo_ptr>(&systemInfo));
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(systemInfoToString.c_str()),  DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(systemInfoToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
     raiseDietMsgException(msgErrorDiet);
   }

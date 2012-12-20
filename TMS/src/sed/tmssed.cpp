@@ -11,13 +11,19 @@
 #include <boost/filesystem/fstream.hpp>
 #include <sys/types.h>
 #include <signal.h>
-#include <boost/scoped_ptr.hpp>
+#include <boost/shared_ptr.hpp>
 
 #include "MachineServer.hpp"
 #include "ServerTMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
 #include "MonitorTMS.hpp"
+
+//For ZMQ
+#include "zmq.hpp"
+#include "DIET_client.h"
+#include "Server.hpp"
+
 
 /**
  * \brief To show how to use the sed
@@ -27,9 +33,7 @@
  */
 int
 usage(char* cmd) {
-  std::cerr << std::endl;
-  std::cout << "Usage: " << cmd << " vishnu_config.cfg" << std::endl;
-  std::cerr << std::endl;
+  std::cout << "\nUsage: " << cmd << " vishnu_config.cfg\n\n";
   return 1;
 }
 
@@ -47,14 +51,15 @@ int main(int argc, char* argv[], char* envp[]) {
   int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
-  std::string dietConfigFile;
   BatchType batchType ;
   std::string batchTypeStr;
   std::string machineId;
   std::string remoteBinDirectory;
   std::string defaultBatchConfig;
-  string TMSTYPE = "TMS";
+  string TMSTYPE = "tmssed";
   string cfg;
+
+  string uri;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -63,10 +68,11 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   try {
     config.initFromFile(argv[1]);
-    config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, dietConfigFile);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
-    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
+    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig); 
+    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -74,9 +80,8 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE_2_3
-      std::cerr << std::endl;
-      std::cerr << "Error: can't initialize TORQUE batch type because this server has not been compiled with TORQUE library" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: can't initialize TORQUE batch type because "
+                << "this server has not compiled with TORQUE library\n\n";
       exit(1);
 #endif
       batchType = TORQUE;
@@ -90,42 +95,36 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = PBSPRO;
     } else if (batchTypeStr == "LOADLEVELER") {
-#ifndef HAVE_LOADLEVELER_3_5
-      std::cerr << std::endl;
-      std::cerr << "Error: can't initialize LOADLEVELER batch type because this server has not been compiled with LOADLEVELER library" << std::endl;
-      std::cerr << std::endl;
+#ifndef HAVE_LOADLEVELER_2_5
+      std::cerr << "\nError: can't initialize LOADLEVELER batch type because "
+                << "this server has not compiled with LOADLEVELER library\n\n";
       exit(1);
 #endif
       batchType = LOADLEVELER;
     } else if (batchTypeStr == "SLURM") {
 #if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
-      std::cerr << std::endl;
-      std::cerr << "Error: can't initialize SLURM batch type because this server has not been compiled with SLURM library" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: can't initialize SLURM batch type because "
+                << "this server has not compiled with SLURM library\n\n";
       exit(1);
 #endif
       batchType = SLURM;
 
     } else if (batchTypeStr == "LSF") {
 #ifndef HAVE_LSF_7_0
-      std::cerr << std::endl;
-      std::cerr << "Error: can't initialize LSF batch type because this server has not been compiled with LSF library" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: can't initialize LSF batch type because "
+                << "this server has not compiled with LSF library\n\n";
       exit(1);
 #endif
       batchType = LSF;
     } else if (batchTypeStr == "SGE") {
 #ifndef HAVE_SGE_11
-      std::cerr << std::endl;
-      std::cerr << "Error: can't initialize SGE batch type because this server has not been compiled with SGE library" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: can't initialize SGE batch type because "
+                << "this server has not compiled with SGE library\n\n";
       exit(1);
 #endif
       batchType = SGE;
     } else {
-      std::cerr << std::endl;
-      std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS')" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')\n\n";
       exit(1);
     }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
@@ -133,14 +132,10 @@ int main(int argc, char* argv[], char* envp[]) {
       remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
     }
   } catch (UserException& e) {
-    std::cerr << std::endl;
-    std::cerr << e.what() << std::endl;
-    std::cerr << std::endl;
+    std::cerr << "\n" << e.what() << "\n\n";
     exit(1);
   }catch (std::exception& e) {
-    std::cerr << std::endl;
-    std::cerr << argv[0] << " : "<< e.what() << std::endl;
-    std::cerr << std::endl;
+    std::cerr << "\n" << argv[0] << " : "<< e.what() << "\n\n";
     exit(1);
   }
 
@@ -153,27 +148,29 @@ int main(int argc, char* argv[], char* envp[]) {
 
     try {
       //Check if machineId is authorized
-      if(machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0){
-        std::cerr << std::endl;
-        std::cerr << AUTOMATIC_SUBMIT_JOB_KEYWORD;
-        std::cerr << " is not authorized as machine identifier. It is a TMS keyword." << std::endl;
-        std::cerr << std::endl;
+      if (0 == machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)){
+        std::cerr << "\n" << AUTOMATIC_SUBMIT_JOB_KEYWORD
+                  << " is not authorized as machine identifier. "
+                  << "It is a TMS keyword.\n\n";
         exit(1);
       }
-      if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)==0) {
-        std::cerr << std::endl;
-        std::cerr << LIST_JOBS_ON_MACHINES_KEYWORD;
-        std::cerr << " is not authorized as machine identifier. It is a TMS keyword." << std::endl;
-        std::cerr << std::endl;
+      if (0 == machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)) {
+        std::cerr << "\n" << LIST_JOBS_ON_MACHINES_KEYWORD
+                  << " is not authorized as machine identifier. "
+                  << "It is a TMS keyword.\n\n";
         exit(1);
       }
 
       //Initialize the TMS Server
-      boost::scoped_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, defaultBatchConfig);
-      registerSeD(TMSTYPE, config, cfg);
+      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
+      res = server->init(vishnuId, dbConfig, machineId,
+                         batchType, remoteBinDirectory, defaultBatchConfig);
 
-      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+      std::vector<std::string> ls = server.get()->getServices();
+      registerSeD(TMSTYPE, config, cfg, ls);
+
+      UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+        UMS_Data::UMS_DataFactory::_instance();
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
       machine->setMachineId(machineId);
 
@@ -183,17 +180,14 @@ int main(int argc, char* argv[], char* envp[]) {
 
       // Initialize the DIET SeD
       if (!res) {
-        diet_print_service_table();
-        res = diet_SeD(cfg.c_str(), argc, argv);
-        unregisterSeD(TMSTYPE, machineId);
+        ZMQServerStart(server, uri);
+        unregisterSeD(TMSTYPE, config);
       } else {
-        std::cerr << std::endl;
-        std::cerr << "There was a problem during services initialization" << std::endl;
-        std::cerr << std::endl;
+        std::cerr << "\nThere was a problem during services initialization\n\n";
         exit(1);
       }
     } catch (VishnuException& e) {
-      std::cerr << e.what() << std::endl;
+      std::cerr << e.what() << "\n";
       exit(1);
     }
 
@@ -208,9 +202,7 @@ int main(int argc, char* argv[], char* envp[]) {
       monitor.run();
     }
   } else {
-    std::cerr << std::endl;
-    std::cerr << "There was a problem to initialize the server" << std::endl;
-    std::cerr << std::endl;
+    std::cerr << "\nThere was a problem to initialize the server\n\n";
     exit(1);
   }
   return res;

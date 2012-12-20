@@ -34,35 +34,34 @@ ProcessCtlProxy::ProcessCtlProxy( const SessionProxy& session,
 * \return raises an exception on error
 */
 int
-ProcessCtlProxy::restart(const IMS_Data::RestartOp& options) {
+ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
 
   diet_profile_t* restartProfile = NULL;
   std::string sessionKey;
-  std::string restartOpToString;
   char* errorInfo = NULL;
 
-  std::string serviceName = "int_restart";
+  std::string serviceName = "int_restart@"+mmachineId;
 
   restartProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(restartProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(restartProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(restartProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(restartProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object in to optionsInString
-  restartOpToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::RestartOp_ptr>(&options)).c_str());
+  std::string restartOpToString =  _ser.serialize_str(const_cast<IMS_Data::SupervisorOp_ptr>(&options));
 
-  if (diet_string_set(diet_parameter(restartProfile,2), strdup(restartOpToString.c_str()),  DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(restartProfile,2), const_cast<char*>(restartOpToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -93,39 +92,42 @@ ProcessCtlProxy::restart(const IMS_Data::RestartOp& options) {
 * \return raises an exception on error
 */
 int
-ProcessCtlProxy::stop(IMS_Data::Process process) {
+ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
 
    diet_profile_t* stopProfile = NULL;
   std::string sessionKey;
   char* errorInfo = NULL;
-  std::string processToString;
 
-  std::string serviceName = "int_stop";
+  std::string serviceName = "int_stop@"+mmachineId;
 
-  stopProfile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
+  stopProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(stopProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(stopProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  ::ecorecpp::serializer::serializer _ser;
-  //To serialize the options object in to optionsInString
-  processToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::Process_ptr>(&process)).c_str());
+  ::ecorecpp::serializer::serializer _ser2;
+  std::string opToString =  _ser2.serialize_str(const_cast<IMS_Data::SupervisorOp_ptr>(&op));
 
-  if (diet_string_set(diet_parameter(stopProfile,1), strdup(processToString.c_str()),  DIET_VOLATILE)) {
-    msgErrorDiet += "with SystemInfo parameter ";
+  if (diet_string_set(diet_parameter(stopProfile,1), const_cast<char*>(mmachineId.c_str()),  DIET_VOLATILE)) {
+    msgErrorDiet += "with process parameter ";
+    raiseDietMsgException(msgErrorDiet);
+  }
+
+  if (diet_string_set(diet_parameter(stopProfile,2), const_cast<char*>(opToString.c_str()),  DIET_VOLATILE)) {
+    msgErrorDiet += "with option stop parameter ";
     raiseDietMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(stopProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(stopProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(stopProfile)) {
-    if(diet_string_get(diet_parameter(stopProfile,2), &errorInfo, NULL)){
+    if(diet_string_get(diet_parameter(stopProfile,3), &errorInfo, NULL)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -164,7 +166,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     // If no TMS sed, catching exception and do nothing
     cancelTMS();
   } catch (VishnuException& e) {
-  } 
+  }
 
   // If hard load shedding
   if (loadShedType == 1) {
@@ -172,23 +174,23 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     std::string sessionKey;
     char* errorInfo = NULL;
 
-     std::string serviceName = "int_loadShed";
+     std::string serviceName = "int_loadShed@"+mmachineId;
     loadShedProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
     sessionKey = msessionProxy.getSessionKey();
 
     std::string msgErrorDiet = "call of function diet_string_set is rejected ";
     //IN Parameters
-    if (diet_string_set(diet_parameter(loadShedProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+    if (diet_string_set(diet_parameter(loadShedProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
       msgErrorDiet += "with sessionKey parameter "+sessionKey;
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if (diet_string_set(diet_parameter(loadShedProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+    if (diet_string_set(diet_parameter(loadShedProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
       msgErrorDiet += "with machineId parameter "+mmachineId;
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if (diet_string_set(diet_parameter(loadShedProfile,2), strdup(convertToString(loadShedType).c_str()), DIET_VOLATILE)) {
+    if (diet_string_set(diet_parameter(loadShedProfile,2), const_cast<char*>(convertToString(loadShedType).c_str()), DIET_VOLATILE)) {
       msgErrorDiet += "with SystemInfo parameter ";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -237,7 +239,6 @@ ProcessCtlProxy::cancelTMS() {
 #ifdef COMPILE_TMS
   diet_profile_t* cancelTMSProfile = NULL;
   std::string sessionKey;
-  char* jobToString = NULL;
   char* errorInfo = NULL;
   std::string serviceName = "jobCancel_";
   TMS_Data::Job job;
@@ -250,21 +251,21 @@ ProcessCtlProxy::cancelTMS() {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(cancelTMSProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelTMSProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(cancelTMSProfile,1), strdup(mmachineId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelTMSProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseDietMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the job object in to optionsInString
-  jobToString =  strdup(_ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&job)).c_str());
+  std::string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&job));
 
-  if (diet_string_set(diet_parameter(cancelTMSProfile,2), jobToString, DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(cancelTMSProfile,2), const_cast<char*>(jobToString.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseDietMsgException(msgErrorDiet);
   }

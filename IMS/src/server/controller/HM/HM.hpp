@@ -21,7 +21,7 @@ public:
    * \param mail: The script to send mails
    * \param mid: The machine id
    */
-  HM(string mail, string mid);
+  HM(std::string mail, std::string mid);
   /**
    * \brief Destructor
    */
@@ -40,7 +40,7 @@ private:
   /**
    * \brief The machine id
    */
-  string mmid;
+  std::string mmid;
 };
 
 #endif

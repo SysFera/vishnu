@@ -1,6 +1,6 @@
 /**
  * \file list_machines.cpp
- * This file defines the VISHNU list machine command 
+ * This file defines the VISHNU list machine command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -46,23 +46,16 @@ struct ListMachineFunc {
   }
 };
 
-int main (int ac, char* av[]){
-
-
+int main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-
   string dietConfig;
 
-  std::string sessionKey;
-
   /********** EMF data ************/
-
   UMS_Data::ListMachines lsMachine;
 
   UMS_Data::ListMachineOptions listOptions;
 
   /******** Callback functions ******************/
-
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::ListMachineOptions::setUserId,boost::ref(listOptions),_1));
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
 
@@ -93,5 +86,3 @@ int main (int ac, char* av[]){
   ListMachineFunc listFunc(lsMachine,listOptions, full);
   return GenericCli().run(listFunc, dietConfig, ac, av);
 }// end of main
-
-

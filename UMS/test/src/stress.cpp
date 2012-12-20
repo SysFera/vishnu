@@ -1,5 +1,6 @@
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
+#include <unistd.h>
 #include <iostream>
 #include "api_ums.hpp"
 
@@ -60,5 +61,3 @@ int main(int argc, char** argv){
   forker(cpt);
   return 0;
 }
-
-

@@ -8,6 +8,7 @@ include_directories(
   ${TMS_DATA_DIR}
   ${UMS_API_SOURCE_DIR}
   ${TMS_API_SOURCE_DIR}
+  ${FMS_API_SOURCE_DIR}
   ${UMS_CLIENT_PROXY_SOURCE_DIR}
   ${TMS_CLIENT_PROXY_SOURCE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
@@ -17,6 +18,8 @@ include_directories(
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
   ${UMS_TEST_SOURCE_DIR}
+  ${FMS_TEST_SOURCE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
 # Standard VISHNU TESTS variables
@@ -36,7 +39,6 @@ file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU TMS SeD configuration
 set(TEST_TMS_SED_CONFIG "${TEST_CONFIG_PATH}/tmssed_testing.cfg")
 file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG} TMSSEDCONF)
-
 set(TEST_TMS_SED_CONFIG2 "${TEST_CONFIG_PATH}/tmssed_testing2.cfg")
 file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG2} TMSSEDCONF2)
 
@@ -46,14 +48,12 @@ file(TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/bin" TMSSEDBINDIR)
 # Create header for VISHNU TMS tests
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TMS_testconfig.h.in
   ${PROJECT_BINARY_DIR}/include/TMS_testconfig.h)
-# Create configuration for VISHNU TMS SeD
+# Create configuration for the first TMS SeD
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
-  ${TEST_CONFIG_PATH}/tmssed_testing.cfg
-)
-# Create configuration for VISHNU the second TMS SeD
+  ${TEST_CONFIG_PATH}/tmssed_testing.cfg)
+# Create configuration for the second TMS SeD
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg2.in
-  ${TEST_CONFIG_PATH}/tmssed_testing2.cfg
-)
+  ${TEST_CONFIG_PATH}/tmssed_testing2.cfg)
 
 include(TMSTestingMacros)
 tms_test_setup()

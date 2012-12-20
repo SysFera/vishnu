@@ -56,11 +56,6 @@ namespace IMS_Data
     // To do this, add the keyword ENABLED before START.
     typedef int ProcessState;
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(IMS_Data_SeDType) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    typedef int SeDType;
-    /*PROTECTED REGION END*/
 
     // EClass
 
@@ -92,10 +87,6 @@ namespace IMS_Data
     class MetricHistOp;
     typedef MetricHistOp* MetricHistOp_ptr;
 
-    // RestartOp
-    class RestartOp;
-    typedef RestartOp* RestartOp_ptr;
-
     // CurMetricOp
     class CurMetricOp;
     typedef CurMetricOp* CurMetricOp_ptr;
@@ -123,6 +114,10 @@ namespace IMS_Data
     // ListSysInfo
     class ListSysInfo;
     typedef ListSysInfo* ListSysInfo_ptr;
+
+    // SupervisorOp
+    class SupervisorOp;
+    typedef SupervisorOp* SupervisorOp_ptr;
 
     // Package & Factory
     class IMS_DataFactory;

@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.listAuthSystems
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: September 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: UMS Python API Reference
-.\"    Source: VISHNU 2.0
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.LISTAUTHSYS" "3" "September 2012" "VISHNU 2.0" "UMS Python API Reference"
+.TH "VISHNU\&.LISTAUTHSYS" "3" "December 2012" "VISHNU ZMQ_beta" "UMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listAuthSystems \- lists VISHNU user\-authentification systems
 .SH "SYNOPSIS"
-.HP \w'ret,\ listAuthSys=VISHNU\&.listAuthSystems('u
-.BI "ret,\ listAuthSys=VISHNU\&.listAuthSystems(string\ " "sessionKey" ", ListAuthSysOptions\ " "options\ =\ ListAuthSysOptions()" ");"
+.HP \w'ret=VISHNU\&.listAuthSystems('u
+.BI "ret=VISHNU\&.listAuthSystems(string\ " "sessionKey" ", ListAuthSystems\ " "listAuthSys" ", ListAuthSysOptions\ " "options\ =\ ListAuthSysOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command allows to display all user\-authentication systems\&. By default, the user\-authentication systems where the user has a local user\-authentication config are listed\&.

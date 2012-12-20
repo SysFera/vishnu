@@ -187,7 +187,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,1), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -200,7 +200,7 @@ solveSessionClose(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT parameter
-      diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,1), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -252,8 +252,8 @@ solveUserCreate(diet_profile_t* pb) {
     std::string userSerializedUpdate = _ser.serialize_str(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(userSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(userSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, user->getUserId());
 
@@ -267,8 +267,8 @@ solveUserCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete user;
   return 0;
@@ -316,7 +316,7 @@ solveUserUpdate(diet_profile_t* pb) {
     userServer.update(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -330,7 +330,7 @@ solveUserUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete user;
   return 0;
@@ -372,7 +372,7 @@ solveUserDelete(diet_profile_t* pb) {
     userServer.deleteUser(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -385,7 +385,7 @@ solveUserDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       //OUT parameter
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -477,8 +477,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
     userServer.resetPassword(user, ServerUMS::getInstance()->getSendmailScriptPath());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup((user.getPassword()).c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>((user.getPassword()).c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -491,8 +491,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -543,8 +543,8 @@ solveMachineCreate(diet_profile_t* pb) {
     std::string machineSerializedUpdate = _ser.serialize_str(machine);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(machineSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(machineSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, machine->getMachineId());
   } catch (VishnuException& e) {
@@ -557,8 +557,8 @@ solveMachineCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -604,7 +604,7 @@ solveMachineUpdate(diet_profile_t* pb) {
     machineServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -618,7 +618,7 @@ solveMachineUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -660,7 +660,7 @@ solveMachineDelete(diet_profile_t* pb) {
     machineServer.deleteMachine();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -674,7 +674,7 @@ solveMachineDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -720,8 +720,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     localAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), strdup(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -735,8 +735,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete localAccount;
   return 0;
@@ -782,7 +782,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     localAccountServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -795,7 +795,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete localAccount;
   return 0;
@@ -842,7 +842,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
     localAccountServer.deleteLocalAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -856,7 +856,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
 
   delete localAccount;
@@ -898,8 +898,8 @@ solveConfigurationSave(diet_profile_t* pb) {
     configurationSerialized =  _ser.serialize_str(configurationServer.getData());
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), const_cast<char*>(configurationSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -912,8 +912,8 @@ solveConfigurationSave(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,1), strdup(configurationSerialized.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,1), const_cast<char*>(configurationSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -960,7 +960,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     configurationServer.restore(ServerUMS::getInstance()->getVishnuId());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -973,7 +973,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   return 0;
 }
@@ -1019,7 +1019,7 @@ solveOptionValueSet(diet_profile_t* pb) {
     optionValueServer.configureOption();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1032,7 +1032,7 @@ solveOptionValueSet(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete optionValue;
   return 0;
@@ -1077,7 +1077,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     optionValueServer.configureOption(true);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1090,7 +1090,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete optionValue;
   return 0;
@@ -1144,8 +1144,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1158,8 +1158,8 @@ solveGenerique(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(listSerialized.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete options;
   delete list;
@@ -1257,7 +1257,7 @@ solveRestore(diet_profile_t* pb) {
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
   }
-  diet_string_set(diet_parameter(pb,1), strdup(errorInfo.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(pb,1), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   return 0;
 }
 
@@ -1305,8 +1305,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), strdup(authSystemSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(authSystemSerializedUpdate.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1320,8 +1320,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1367,7 +1367,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
     authSystemServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1380,7 +1380,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1422,7 +1422,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
     authSystemServer.deleteAuthSystem();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1436,7 +1436,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1494,7 +1494,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
     authAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1508,7 +1508,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete authAccount;
   return 0;
@@ -1554,7 +1554,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
     authAccountServer.update();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1568,7 +1568,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
   delete authAccount;
   return 0;
@@ -1614,7 +1614,7 @@ solveAccountAuthDelete(diet_profile_t* pb) {
     authAccountServer.deleteAuthAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1628,7 +1628,7 @@ solveAccountAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
   }
 
   delete authAccount;

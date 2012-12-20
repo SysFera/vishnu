@@ -17,11 +17,11 @@
  */
 class JobServer
 {
- 
+
 public:
 	/**
   * \param sessionServer The object which encapsulates the session information
-  * \param machineId The machine identifier 
+  * \param machineId The machine identifier
   * \param job The job data structure
   * \param batchType The batch scheduler type
   * \brief Constructor
@@ -38,7 +38,7 @@ public:
    * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
-	int submitJob(const std::string& scriptContent, 
+  int submitJob(const std::string& scriptContent,
                 const TMS_Data::SubmitOptions& options,
                 const int& vishnuId,
                 const std::string& slaveDirectory,
@@ -55,10 +55,10 @@ public:
    * \brief Function to get job information
    * \return The job data structure
    */
-  TMS_Data::Job getJobInfo(); 
+  TMS_Data::Job getJobInfo();
 
   /**
-   * \brief Function to get job data 
+   * \brief Function to get job data
    * \return The job data structure
    */
   TMS_Data::Job getData();
@@ -66,20 +66,20 @@ public:
   /**
    * \brief Destructor
    */
-  ~JobServer(); 
-  
+  ~JobServer();
+
 
   private:
 
   /**
-   * \brief Function to scan VISHNU error message 
+   * \brief Function to scan VISHNU error message
    * \param errorInfo the error information to scan
    * \param code The code The code of the error
    * \param message The message associeted to the error code
    * \return raises an exception on erroor
    */
   void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
-  
+
   /**
    * \brief Function to convert a given date into correspondant long value
    * \fn long long convertToTimeType(std::string date)
@@ -96,7 +96,7 @@ public:
    */
   void
   processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key);
-  
+
   /**
    * \brief Function to insert option line into string
    * \param optionLineToInsert the option to insert
@@ -107,25 +107,25 @@ public:
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
   /**
-   * \brief job data structure 
-   */ 
+   * \brief job data structure
+   */
   TMS_Data::Job mjob;
 
   /**
-   * \brief The object which encapsulates the session information 
+   * \brief The object which encapsulates the session information
    */
   SessionServer msessionServer;
 
   /**
-   * \brief The machine identifier 
-   */   
+   * \brief The machine identifier
+   */
   std::string mmachineId;
-  
+
   /**
-   * \brief The type of the batch scheduler 
+   * \brief The type of the batch scheduler
    */
   BatchType mbatchType;
-  
+
   /**
    * \brief An instance of vishnu database
    */

@@ -198,12 +198,20 @@
       <para>Rename of FMS functions according to Posix names. </para>
     </revdescription>
   </revision>
+   <revision>
+    <revnumber>20</revnumber>
+    <date>21/11/2012</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Update for ZMQ. </para>
+    </revdescription>
+  </revision>
   
   </revhistory>
 
     <copyright>
       <year>2012</year>
-      <holder>SysFera SAS</holder>
+      <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
       <para>These manual pages are provided under the following conditions:</para>
@@ -277,9 +285,6 @@
           <listitem>
             <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
           </listitem>
-          <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.8 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
-          </listitem>
         <listitem>
           <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
         </listitem>
@@ -328,7 +333,7 @@
 	  <para> OMNIORB 4.1.4 </para>
 	</listitem>
 	<listitem>
-	  <para> SYSFERA-DS V2.8 (available at: <ulink url="http://graal.ens-lyon.fr/DIET/"> http://graal.ens-lyon.fr/DIET/ </ulink>)</para>
+	  <para> ZMQ </para>
 	</listitem>
 	<listitem>
 	  <para> BOOST V1.46.1 </para>
@@ -400,11 +405,20 @@
       
       <section>
 	<title> From binaries package </title>
-	<para>Assuming the dependencies are installed (omniorb, diet, boost).
-	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the DIET hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
+	<para>Assuming the dependencies are installed (zmq).
+	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the VISHNU hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
 	</para>
       </section>   
-      
+      <section>
+        <title>Client configuration file</title>
+        <programlisting>
+          dispatcher=tcp://127.0.0.1:5560 
+          UMS=tcp://127.0.0.1:5555
+          retryTimeout=10
+        </programlisting>
+        <para>If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher, an error is returned.
+        retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retry for a client command)</para>
+      </section>      
     </section>
     
     <section>

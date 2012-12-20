@@ -142,7 +142,7 @@ class GenericCli {
      * \param signature The signature of the command
      */
     void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[], 
-        const std::string& signature=std::string()) {
+        const std::string& signature="") {
 
       CLICmd cmd = CLICmd (ac, av, opt);
       try {
@@ -163,7 +163,6 @@ class GenericCli {
           helpUsage(*opt,"[option] "+signature);
           exit(VISHNU_OK);
         }
-
       }
       catch(po::error& e){ // catch all other bad parameter errors
         helpUsage(*opt,"[option] "+signature);

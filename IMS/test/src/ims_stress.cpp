@@ -1,10 +1,12 @@
 #include "UMS_Data_forward.hpp"
 #include "IMS_Data_forward.hpp"
 #include <iostream>
+#include <unistd.h>
 #include "api_ums.hpp"
 #include "api_ims.hpp"
-#include  "IMS_testconfig.h"
+#include "IMS_testconfig.h"
 #include "diet_config_tests.h"
+
 using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
@@ -54,7 +56,6 @@ void forker(int cpt,const string& sessionKey, const string& machineId, int type)
 
 int main(int argc, char** argv){
   int cpt;
-  int i;
   int type;
   string key  = ""       ;
   string pwd  = "vishnu_user"  ;
@@ -101,5 +102,3 @@ int main(int argc, char** argv){
 
   return 0;
 }
-
-

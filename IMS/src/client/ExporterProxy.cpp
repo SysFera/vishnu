@@ -29,7 +29,6 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  std::string exportOptToString;
   char* errorInfo = NULL;
   char* fileContent = NULL;
 
@@ -40,26 +39,26 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 //
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), strdup(oldSessionId.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(oldSessionId.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with oldSessionId parameter "+oldSessionId;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,2), strdup(filename.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,2), const_cast<char*>(filename.c_str()), DIET_VOLATILE)) {
     msgErrorDiet += "with filename parameter "+filename;
     raiseDietMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the options object
-  exportOptToString =  strdup(_ser.serialize_str(const_cast<IMS_Data::ExportOp_ptr>(&options)).c_str());
+  std::string exportOptToString =  _ser.serialize_str(const_cast<IMS_Data::ExportOp_ptr>(&options));
 
-  if (diet_string_set(diet_parameter(profile,3), strdup(exportOptToString.c_str()),  DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,3), const_cast<char*>(exportOptToString.c_str()),  DIET_VOLATILE)) {
     msgErrorDiet += "with Export options parameter ";
     raiseDietMsgException(msgErrorDiet);
   }

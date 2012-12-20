@@ -45,20 +45,14 @@ int
 MachineServer::add(int vishnuId) {
   std::string sqlUpdate = "update machine set ";
   std::string idMachineGenerated;
-  std::string formatidmachine;
 
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
-
-  std::string vishnuid;
 
   //if the user exists
   if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
-
-      vishnuid = convertToString(vishnuId);
-
       //Generation of machineid
       idMachineGenerated = vishnu::getObjectId(vishnuId,
                                                "formatidmachine",
@@ -293,4 +287,3 @@ void MachineServer::checkMachine() {
     throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);
   }
 }
-

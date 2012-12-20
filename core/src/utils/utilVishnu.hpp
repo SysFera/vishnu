@@ -19,6 +19,7 @@
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
 #include "Options.hpp"
+#include "TMS_Data.hpp"
 
 #include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
@@ -34,14 +35,24 @@ namespace bfs=boost::filesystem;
  * \brief The type of the Batch
  */
 typedef enum {
-	TORQUE = 0,/*!< For TORQUE batch type */
-	LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
-	SLURM = 2, /*!< For SLURM batch type */
-	LSF = 3, /*!< For LSF batch type */
-	SGE = 4, /*!< For SGE batch type */
-        PBSPRO = 5, /*!< For PBS batch type */
-	UNDEFINED = 6 /*!< IF batch type is not defined*/
+  TORQUE = 0,/*!< For TORQUE batch type */
+  LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
+  SLURM = 2, /*!< For SLURM batch type */
+  LSF = 3, /*!< For LSF batch type */
+  SGE = 4, /*!< For SGE batch type */
+  PBSPRO = 5, /*!< For PBS batch type */
+  UNDEFINED = 6 /*!< IF batch type is not defined*/
 } BatchType;
+
+/**
+ * \enum LoadType
+ * \brief The type of the scheduling criteria
+ */
+typedef enum {
+	NBWAITINGJOBS = 0,
+	NBJOBS = 1,
+	NBRUNNINGJOBS =2
+} LoadType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
 static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
@@ -56,13 +67,13 @@ static const int ACTIVE_STATUS=1;
  * \param salt This string is used to perturb the algorithm
  * \return the string encrypted
  */
-char* crypt(const char* clef, const char* salt);
+char*
+crypt(const char* clef, const char* salt);
 /**
  * \namespace vishnu
  * \brief This naspace contains utils functions of the vishnu system
  */
 namespace vishnu {
-
 static const std::string ROOTUSERNAME = "root";
 static const std::string UMSMAPPERNAME = "UMS";
 static const std::string TMSMAPPERNAME = "TMS";
@@ -77,10 +88,11 @@ static boost::shared_mutex mutex;
  * \return the string version of val
  */
 template <class T>
-std::string convertToString(T val) {
-	std::ostringstream out;
-	out << val;
-	return out.str();
+std::string
+convertToString(T val) {
+  std::ostringstream out;
+  out << val;
+  return out.str();
 }
 
 /**
@@ -89,28 +101,16 @@ std::string convertToString(T val) {
  * \param date The date to convert
  * \return The converted value
  */
-long long convertToTimeType(std::string date);
+long long
+convertToTimeType(const std::string& date);
 
-/**
- * \brief generic Function to convert a string to int
- * \param  val a value to convert to int
- * \return int value of the corresponding string
- */
-template<typename Target>
-Target
-lexical_convertor (const std::string& source){
-	Target intValue;
-	std::istringstream str(source);
-	str >> intValue;
-	return intValue;
-}
 /**
  * \brief Function to convert a string to int
  * \param  val a value to convert to int
  * \return int value of the corresponding string
  */
 int
-convertToInt(std::string val);
+convertToInt(const std::string& val);
 
 /**
  * \brief Function to convert a string to long int
@@ -118,7 +118,7 @@ convertToInt(std::string val);
  * \return int value of the corresponding string
  */
 long
-convertToLong(std::string val) ;
+convertToLong(const std::string& val) ;
 
 /**
  * \brief To crypt a password
@@ -291,6 +291,20 @@ void createTmpFile(char* fileName, const std::string& file_content);
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
+ * \param content The content of the file
+ */
+void saveInFile(const std::string & fileName, const std::string& content);
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ * \param missingDesc The content of the file
+ */
+void recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
  */
 void createTmpFile(char* fileName);
 
@@ -376,13 +390,25 @@ validateParameters(const boost::shared_ptr<Options> & opt,
 
 /**
  * \brief Function to list file containing in a directory
- * \param lFiles a vector containing the set of files
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
+ * \return true on success and false if not
+ * */
+bool
+appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath);
+
+
+/**
+ * \brief Function to get the list of output files related to a job
+ * \param result : The Job Result
+ * \param appendJobId : Determine whether or not append the job id before the files lists
+ * \return The list of files
  * Throw exception on error
  * */
-void
-appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath);
+std::string
+getResultFiles(const TMS_Data::JobResult & result,
+		const bool & appendJobId);
+
 
 
 /**
@@ -417,7 +443,6 @@ mklink(const std::string& src) ;
   parseVersion(const std::string& version);
 
 } //END NAMESPACE
-
 
 
 #endif // _UTILVISHNU_H_

@@ -6,13 +6,13 @@
 #ifndef RMFILESRV_HPP
 #define RMFILESRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The remove file service profile description
  * \return the remove file service profile
  */
-diet_profile_desc_t* getRemoveFileProfile();
+//diet_profile_desc_t* getRemoveFileProfile();
 /**
  * \brief the remove file solve function
  * \param profile the service profile

@@ -135,26 +135,23 @@ POSTGREDatabase::disconnect(){
  */
 DatabaseResult*
 POSTGREDatabase::getResult(std::string request, int transacId) {
-
-  PGresult* res;
   std::vector<std::vector<std::string> > results;
   std::vector<std::string> attributesNames;
   std::vector<std::string> tmp;
-  int nFields;
-  int i;
-  int j;
   int reqPos;
   PGconn* lconn = getConnection(reqPos);
 
   if (PQstatus(lconn) == CONNECTION_OK) {
-    res = PQexec(lconn, request.c_str());
+    PGresult* res = PQexec(lconn, request.c_str());
+    int i;
+    int j;
 
     if (PQresultStatus(res) != PGRES_TUPLES_OK) {
       PQclear(res);
       releaseConnection(reqPos);
       throw SystemException(ERRCODE_DBERR, std::string(PQerrorMessage(lconn)));
     }
-    nFields = PQnfields(res);
+    int nFields = PQnfields(res);
     for (i = 0; i < nFields; i++) {
       attributesNames.push_back(std::string(PQfname(res, i)));
     }
@@ -168,8 +165,7 @@ POSTGREDatabase::getResult(std::string request, int transacId) {
     }
     releaseConnection(reqPos);
     PQclear(res);
-  }
-  else {
+  } else {
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, "The database is not connected");
   }

@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
     BOOST_CHECK_EQUAL(close (sess.getSessionKey()), 0);
     //To create a locate file for the test
     std::ofstream file(filename.c_str());
-    filePath = boost::filesystem3::current_path().string() +"/"+ filename;
+    filePath = boost::filesystem::current_path().string() +"/"+ filename;
     //To create the file in which the command will be saved
     if (!file.is_open()) {
       throw UserException(ERRCODE_INVALID_PARAM, "Error opening file: " + filename);
@@ -157,7 +157,7 @@ BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {
   string badSessionId = "badSessionId";
   //To create a locate file for the test
   std::ofstream file(filename.c_str());
-  filePath = boost::filesystem3::current_path().string() +"/"+ filename;
+  filePath = boost::filesystem::current_path().string() +"/"+ filename;
   //To create the file in which the command will be saved
   if (!file.is_open()) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error opening file: " + filename);

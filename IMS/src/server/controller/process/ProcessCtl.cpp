@@ -1,10 +1,17 @@
 #include "ProcessCtl.hpp"
-#include <omniORB4/CORBA.h>
-#include "DIET_admin.h"
 #include "IMSVishnuException.hpp"
+#include "IMS_Data.hpp"
+#include "IMS_Data_forward.hpp"
 
-ProcessCtl::ProcessCtl(string mid, UserServer user): mmid(mid),
-						     mp(user),
+#include <cstdlib>
+#include <string>
+#include <iostream>
+#include <xmlrpc-c/girerr.hpp>
+#include <xmlrpc-c/base.hpp>
+#include <xmlrpc-c/client_simple.hpp>
+
+ProcessCtl::ProcessCtl(string mid, UserServer user): mp(user),
+                                                     mmid(mid),
                                                      muser(user){
 }
 
@@ -17,122 +24,73 @@ ProcessCtl::isIMSSeD(string Pname) {
 }
 
 void
-ProcessCtl::restart(IMS_Data::RestartOp_ptr op, string machineTo, bool isAPI) {
+ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI) {
   string type;
-  string cmd ;
   mop = *op;
-  IMS_Data::Process proc;
-  string login;
-  string hostname;
-
-  // If call made by the api check admin
   if (isAPI) {
     if (!muser.isAdmin()) {
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "restart is an admin function. A user cannot call it");
     }
   }
 
-  // Getting the distants parameters (host and login)
-  try  {
-    mp.getHost(machineTo, hostname, login);
-  } catch (VishnuException &e) {
-    cerr << e.what() << endl;
-    return;
+// Don't care if unable to stop -> means already stopped
+  try{
+    stop(op);
+  } catch (SystemException& e){
   }
+  IMS_Data::ProcessOp processOp;
+  processOp.setMachineId(mmid);
+  ProcessServer procs(&processOp, muser);
+  // Getting URI
+  mop.setURI(procs.getURI());
 
-  // Converting to the stringified type of sed
-  switch(mop.getSedType()) {
-  case 1 : // UMS
-    type = "UMS";
-    break;
-  case 2 : // TMS
-    type = "TMS";
-    break;
-  case 3 : // FMS
-    type = "FMS";
-    break;
-  case 4 : // IMS
-    type = "IMS";
-    break;
-  default:
-    throw SystemException(ERRCODE_SYSTEM, "Unknown component to restart, type "+string(convertToString(mop.getSedType()))+" is unknown");
-    break;
-  }
+  RPCCall("supervisor.startProcess");
 
-  // Creating the process
-  proc.setProcessName(type);
-  proc.setMachineId(machineTo);
-  proc.setScript(mop.getVishnuConf());
-
-  // If process not to be restarted (when stopped vith a vishnu_stop vall before)
-  if (mp.checkStopped(machineTo, type)) {
-    throw SystemException(ERRCODE_SYSTEM, "No sed of type "+type+" running or down on machine "+machineTo+", cannot restart it ");
-  }
-
-
-  // Keep blocks separated because no catch error when try to stop
-  try {
-    // Make sure the process is really not running on the machine
-    stop(&proc);
-  } catch (VishnuException &e) {
-    // Do nothing, stop just to make sure the process is not running anymore    
-  }
-
-  boost::to_lower(type);
-  type += "sed";
-
-  // The sequence of commands :
-  // * Create vishnu conf script locally
-  // * Set the rights to 777
-  // * Copy on the machine to restart
-  // * Create the script to launch the sed
-  // * Set the rights to 777
-  // * Copy on the machine to restart
-  // * SSH and exec the script launching the sed with the generated conf file
-  
-  // This complicated scheme is used because a fork duplicate the sockets, and a fork exec would kill the database connexions of the sed
-  
-  // This part of the code is dirty but functionnal, make it better when it will be possible
-  // TODO clean the code using the diet syntax with the | ssh -q
-  string tmp = "";
-  tmp = " echo \" ";
-  tmp += proc.getScript();
-  tmp += "\" > /tmp/vishnu_restart ; ";
-  tmp += " chmod 777 /tmp/vishnu_restart; ";
-  tmp += " scp /tmp/vishnu_restart "+login+"@"+hostname+":/tmp ;";
-  tmp += " echo \"#!/bin/sh \\nsource ~/.bashrc ; \\nnohup "+type+" /tmp/vishnu_restart 1>/dev/null 2>/dev/null </dev/null  & \" > /tmp/script.sh; ";
-  tmp += " chmod 777 /tmp/script.sh; ";
-  tmp += " scp /tmp/script.sh "+login+"@"+hostname+":/tmp ;";
-  tmp += " ssh "+login+"@"+hostname+" \"/tmp/script.sh \";";
-
-  string dcmd = tmp;
-  system(dcmd.c_str());
+  // Updating BDD (case of success no exception thrown)
+  IMS_Data::Process proc;
+  proc.setProcessName(mop.getName());
+  proc.setMachineId(mmid);
+  procs.setRestarted(&proc);
 }
 
 void
-ProcessCtl::stop(IMS_Data::Process_ptr p) {
-  int res;
+ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
   string name;
+  mop = *op;
   if (!muser.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");
   }
-  // If deleting a specific process
-  if (p->getProcessName().compare("")!=0) {
-    name = p->getProcessName();
-    try {
-      // Setting to off in DB
-      mp.stopProcess(p);
-      mp.fillContent(p);
-    } catch (SystemException& e) {
-      throw (e);
-    }
-  } 
-  // Diet admin api, remove a sed from hierarchy and stop it
-  res = diet_remove_from_hierarchy(SED, p->getDietId().c_str(), false);
-  if (res != DIET_NO_ERROR) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid remove with error code: "+convertToString(res));
+  IMS_Data::ProcessOp processOp;
+  processOp.setMachineId(mmid);
+  ProcessServer procs(&processOp, muser);
+  // Getting URI
+  mop.setURI(procs.getURI());
+
+  RPCCall("supervisor.stopProcessGroup");
+
+  // Updating BDD (case of success no exception thrown)
+  IMS_Data::Process proc;
+  proc.setProcessName(mop.getName());
+  proc.setMachineId(mmid);
+  procs.stopProcess(&proc);
+}
+
+void
+ProcessCtl::RPCCall(std::string methodName){
+  string const serverUrl(mop.getURI()+"/RPC2");
+  xmlrpc_c::clientSimple myClient;
+  xmlrpc_c::value result;
+  try{
+    std::cout << "url =" << serverUrl << std::endl;
+    std::cout << "name =" << methodName << std::endl;
+    std::cout << "param =" << mop.getName() << std::endl;
+
+    myClient.call(serverUrl, methodName, "s", &result, std::string(mop.getName()).c_str());
+  } catch (girerr::error& e){
+    throw SystemException(ERRCODE_SYSTEM, std::string("Error in RPC call: ")+std::string(e.what()));
   }
 }
+
 
 void
 ProcessCtl::loadShed(int type) {
@@ -140,12 +98,8 @@ ProcessCtl::loadShed(int type) {
   if (type != 1) {
     return;
   }
-  // Setting processes as stopped in the database
-  IMS_Data::Process_ptr p = new IMS_Data::Process();
-  p->setMachineId(mmid);
   // Physically stopping them
   stopAll();
-  mp.stopAllProcesses(p);
 }
 
 void
@@ -154,6 +108,8 @@ ProcessCtl::stopAll() {
   if (mmid.compare("")==0) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
   }
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+  IMS_Data::SupervisorOp_ptr op = ecoreFactory->createSupervisorOp();
   IMS_Data::ProcessOp processOp;
   processOp.setMachineId(mmid);
   // Creating the process server with the options
@@ -167,15 +123,20 @@ ProcessCtl::stopAll() {
     throw SystemException(ERRCODE_SYSTEM, "No process found on machine: "+mmid+". ");
   }
 
+  std::cout << "Number of process " << res->getProcess().size() << std::endl;
+
   // Closing each process gotten
   for (unsigned int i = 0; i < res->getProcess().size(); i++) {
     IMS_Data::Process_ptr p = res->getProcess().get(i);
     // If ims, close at the end
-    if (p->getProcessName().compare("IMS")==0) {
+    if (p->getProcessName().compare("imssed")==0) {
+      std::cout << "Is IMS " << std::endl;
       ims.push_back(p);
     } else {
       try {
-	stop(p);
+        op->setName(p->getProcessName());
+        std::cout << "Not IMS, it is : " << op->getName() << std::endl;
+	stop(op);
       }catch(VishnuException& e) {
 	// Do nothing, keep on removing other sed
       }
@@ -184,11 +145,11 @@ ProcessCtl::stopAll() {
   // Closing all ims sed
   for (unsigned int i = 0 ; i < ims.size() ; i++) {
     try {
-      stop(ims.at(i));
+      op->setName("imssed");
+      stop(op);
     } catch (VishnuException &e) {
 	// Do nothing, keep on removing other sed
     }
   }
 
 }
-

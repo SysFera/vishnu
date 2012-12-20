@@ -13,12 +13,14 @@
  * \brief Number of services in FMS
  */
 #define NB_SRV 22
-#include "DIET_server.h"
+
+#include "DIET_client.h"
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 #include "TMSMapper.hpp"
 #include "MapperRegistry.hpp"
+#include "SeD.hpp"
 
 class Database;
 
@@ -26,7 +28,7 @@ class Database;
  * \class ServerFMS
  * \brief This class describes the FMS server
  */
-class ServerFMS {
+class ServerFMS  : public SeD {
 public :
 
   /**
@@ -57,6 +59,11 @@ public :
   ~ServerFMS();
 
 private :
+/**
+ * \brief Init the ptr function map
+ */
+  void
+  initMap();
 
   /**
    * \brief Constructor, private because class is singleton
@@ -75,7 +82,7 @@ private :
    * \brief The singleton reference
    */
   static ServerFMS *minstance;
-  
+
   /**
   * \brief The vishnu id
   */
@@ -83,7 +90,7 @@ private :
   /**
   * \brief Structure representing a profile description
   */
-  diet_profile_desc_t* mprofile;
+//  diet_profile_desc_t* mprofile;
   /**
   * \brief Instance of Database
   */

@@ -6,8 +6,8 @@
    <info>
       <title>User Manual</title>
       <productname>VISHNU</productname>
-      <releaseinfo>1.3</releaseinfo>
-      <date>March 2012</date>
+      <releaseinfo>ZMQ_beta</releaseinfo>
+      <date>December 2012</date>
       <author>
         <personname>
           <firstname></firstname>
@@ -19,7 +19,7 @@
         </address>
       </author>
       <copyright>
-              <year>2011</year>
+              <year>2012</year>
               <holder>SysFera SA</holder>
       </copyright>
       <legalnotice>

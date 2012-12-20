@@ -64,7 +64,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
   std::string idUserGenerated;
   std::string passwordCrypted;
-  std::string formatiduser;
 
   if (exist()) {
     if (isAdmin()) {

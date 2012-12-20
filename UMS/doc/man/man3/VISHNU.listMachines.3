@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.listMachines
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: September 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: UMS Python API Reference
-.\"    Source: VISHNU 2.0
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.LISTMACHINE" "3" "September 2012" "VISHNU 2.0" "UMS Python API Reference"
+.TH "VISHNU\&.LISTMACHINE" "3" "December 2012" "VISHNU ZMQ_beta" "UMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.listMachines \- lists the machines that are accessible through VISHNU
 .SH "SYNOPSIS"
-.HP \w'ret,\ listMachine=VISHNU\&.listMachines('u
-.BI "ret,\ listMachine=VISHNU\&.listMachines(string\ " "sessionKey" ", ListMachineOptions\ " "options\ =\ ListMachineOptions()" ");"
+.HP \w'ret=VISHNU\&.listMachines('u
+.BI "ret=VISHNU\&.listMachines(string\ " "sessionKey" ", ListMachines\ " "listMachine" ", ListMachineOptions\ " "options\ =\ ListMachineOptions()" ");"
 .SH "DESCRIPTION"
 .PP
 This command is used to display the machines that you can use for VISHNU services\&. The machines you can access through VISHNU are those that are configured in VISHNU by the VISHNU administrator, and that have been added to your personal VISHNU configuration using the vishnu_add_local_account command\&. The results contain, for each machine, a machine identifier that you can use as a parameter for other VISHNU commands\&.

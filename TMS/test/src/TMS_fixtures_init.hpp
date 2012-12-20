@@ -3,8 +3,8 @@
  *
  * Author : bisnard
  */
-
-#include "UMS_fixtures.hpp"
+#include "diet_fixtures.hpp"
+#include "FMS_fixtures.hpp"
 #include "TMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
@@ -16,7 +16,7 @@ char TMSSeDInit[] = "tmssed";
 char ConfigTMSSeDInit[] = TMSSEDCONF;
 char BinDirTMSSeDInit[] = TMSSEDBINDIR;
 
-class TMSFixtureInit : public UMSSeDFixture {
+class TMSFixtureInit : public FMSSeDFixture {
 
 public:
   TMSFixtureInit():mac(2){
@@ -58,4 +58,4 @@ public:
   char* mav[2];
 };
 
-typedef DietSeDFixture<TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;
+typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;

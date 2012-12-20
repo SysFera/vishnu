@@ -8,6 +8,7 @@
 
 #include "utilVishnu.hpp"
 #include <stdexcept>
+#include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
@@ -15,6 +16,7 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
+#include <boost/lexical_cast.hpp>
 #include <sstream>
 #include <time.h>
 
@@ -56,15 +58,16 @@ namespace bs=boost::system;
  * \return The converted value
  */
 long long
-vishnu::convertToTimeType(std::string date) {
-  if(date.size()==0 ||
-     // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
-     date.find("0000-00-00")!=std::string::npos) {
+vishnu::convertToTimeType(const std::string& date) {
+  /* For mysql, the empty date is 0000-00-00, not empty,
+     need this test to avoid problem in ptime */
+  if ((date.size() == 0) ||
+     date.find("0000-00-00") != std::string::npos) {
     return 0;
   }
 
   boost::posix_time::ptime pt(time_from_string(date));
-  boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
+  boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
   time_duration::sec_type time = (pt - epoch).total_seconds();
 
   return (long long) time_t(time);
@@ -76,20 +79,13 @@ vishnu::convertToTimeType(std::string date) {
  * \return int value of the corresponding string
  */
 int
-vishnu::convertToInt(std::string val) {
-#if 0
-  int intValue;
-  std::istringstream str(val);
-  str >> intValue;
-  return intValue;
-#endif
-  int value = -1 ;
-  if(! val.empty()) {
-    value = vishnu::lexical_convertor<int>(val);
-  } else {
-    value = -1 ;
-  }
-  return value ;
+vishnu::convertToInt(const std::string& sval) {
+	int value = -1;
+	try{
+		value = boost::lexical_cast<int>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 
@@ -99,20 +95,13 @@ vishnu::convertToInt(std::string val) {
  * \return int value of the corresponding string
  */
 long
-vishnu::convertToLong(std::string val) {
-#if 0
-  int intValue;
-  std::istringstream str(val);
-  str >> intValue;
-  return intValue;
-#endif
-  int value = -1 ;
-  if(! val.empty()) {
-    value = vishnu::lexical_convertor<long>(val);
-  } else {
-    value = -1 ;
-  }
-  return value ;
+vishnu::convertToLong(const std::string& sval) {
+	long value = -1;
+	try{
+		value = boost::lexical_cast<long>(sval);
+	}catch(...){}
+
+	return value;
 }
 
 /**
@@ -126,13 +115,11 @@ vishnu::convertToLong(std::string val) {
 
 std::string
 vishnu::cryptPassword(const std::string& salt, const std::string& password, bool encrypted) {
-
   if (!encrypted) {
     return password;
-  }
-  else {
-    std::string saltTmp="$6$"+salt+"$";
-    std::string encryptedPassword=crypt(password.c_str(),saltTmp.c_str());
+  } else {
+    std::string saltTmp = "$6$" + salt + "$";
+    std::string encryptedPassword = crypt(password.c_str(), saltTmp.c_str());
     return encryptedPassword.substr(saltTmp.size());
   }
 }
@@ -144,7 +131,6 @@ vishnu::cryptPassword(const std::string& salt, const std::string& password, bool
  */
 int
 vishnu::generateNumbers() {
-
   boost::mt19937 gen;
   gen.seed(static_cast<boost::uint32_t>(std::time(0)));
   boost::uniform_int<> dist(1, 100000);
@@ -158,10 +144,9 @@ vishnu::generateNumbers() {
  * \return The password entered.
  */
 std::string
-vishnu::takePassword(const std::string& prompt){
-  std::string password=getpass(prompt.c_str());
+vishnu::takePassword(const std::string& prompt) {
+  std::string password = getpass(prompt.c_str());
   return password;
-
 }
 
 /**
@@ -172,31 +157,22 @@ vishnu::takePassword(const std::string& prompt){
  * \return the time in long integer format in seconds
  */
 std::time_t
-vishnu::string_to_time_t(const std::string& ts){
-
+vishnu::string_to_time_t(const std::string& ts) {
   // two aliases for convenience
-
   namespace bps= boost::posix_time;
   namespace bg=boost::gregorian;
 
   bps::ptime t;
 
-  if (std::string::npos==ts.find(":")){
-    t=bps::ptime(bg::from_string(ts));
-
-  }
-  else{
-    t= bps::ptime (bps::time_from_string(ts));
+  if (std::string::npos == ts.find(":")) {
+    t = bps::ptime(bg::from_string(ts));
+  } else {
+    t = bps::ptime (bps::time_from_string(ts));
   }
 
   bps::ptime epoch(bg::date(1970,1,1));
-
-
   bps::time_duration::sec_type x = (t - epoch).total_seconds();
-
   return std::time_t(x);
-
-
 }
 
 /**
@@ -207,11 +183,9 @@ vishnu::string_to_time_t(const std::string& ts){
  * \param utcOffset: time zone in string format
  * \return the time in long integer format in seconds
  */
-
-
 std::time_t
-vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffset) {
-
+vishnu::string_lc_to_utc_time_t(const std::string& ts,
+                                const std::string& utcOffset) {
   // two aliases for convenience
   namespace bps= boost::posix_time;
   namespace bg=boost::gregorian;
@@ -223,60 +197,42 @@ vishnu::string_lc_to_utc_time_t(const std::string& ts,const std::string& utcOffs
 
   bps::ptime t;
 
-  if (std::string::npos==ts.find(":")){
-    t=bps::ptime(bg::from_string(ts));
-
-  }
-  else{
-    t= bps::ptime (bps::time_from_string(ts));
+  if (std::string::npos == ts.find(":")) {
+    t = bps::ptime(bg::from_string(ts));
+  } else {
+    t = bps::ptime (bps::time_from_string(ts));
   }
 
   bps::ptime epoch(bg::date(1970,1,1));
-
-  blt::local_date_time ldt(t.date(), t.time_of_day(),tz,blt::local_date_time::NOT_DATE_TIME_ON_ERROR);
-
+  blt::local_date_time ldt(t.date(), t.time_of_day(), tz,
+                           blt::local_date_time::NOT_DATE_TIME_ON_ERROR);
   bps::time_duration::sec_type x = (ldt.utc_time() - epoch).total_seconds();
-
   return std::time_t(x);
-
 }
-
-
-
-
-
-
-
-
-
-
 
 /**
  * \brief Simple function to read the content of the regular file
  * \param filePath: the path to the file
+ * \param rejectEmptyFile: tell whether empty file will be rejected
  * \return The content of the file
  */
 std::string
-vishnu::get_file_content(const std::string& filePath, const bool& rejectEmptyFile){
-
+vishnu::get_file_content(const std::string& filePath,
+                         const bool& rejectEmptyFile) {
   bfs::path file (filePath);
 
   // Check the existence of file
-  if ( ! bfs::exists(file) ||
-       ! bfs::is_regular_file(file) ||
-       ( bfs::is_empty(file) && rejectEmptyFile) ) {
+  if (! bfs::exists(file) ||
+      ! bfs::is_regular_file(file) ||
+      ( bfs::is_empty(file) && rejectEmptyFile) ) {
     throw UserException(ERRCODE_INVALID_PARAM, "can not read the file: " + filePath);
   }
 
-  bfs::ifstream ifs (file);
-
+  bfs::ifstream ifs(file);
   // Read the whole file into string
-
   std::stringstream ss;
   ss << ifs.rdbuf();
-
   return ss.str();
-
 }
 
 /**
@@ -287,37 +243,36 @@ vishnu::get_file_content(const std::string& filePath, const bool& rejectEmptyFil
  * \return raises an exception on error
  */
 int
-vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std::string& filename) {
+vishnu::boostMoveFile(const std::string& src, const std::string& dest,
+                      const std::string& filename) {
+  bfs::path filePath(src);
+  bfs::path fileDestPath(dest);
+  bfs::path fileNewPath(src);
+  if(filename.size()!=0) {
+    fileNewPath = bfs::path(filename);
+  }
 
-	bfs::path filePath(src);
-	bfs::path fileDestPath(dest);
-	bfs::path fileNewPath(src);
-	if(filename.size()!=0) {
-		fileNewPath = bfs::path(filename);
-	}
-
-	try {
-		//If the destination does not exist, the file is created in the current directory
-		if(!bfs::exists(fileDestPath)) {
-			bfs::path completePath(bfs::current_path().string() / fileNewPath.filename());
-			if(bfs::exists(completePath)){
-				bfs::remove(completePath);
-			}
-			boost::filesystem3::copy(filePath, completePath);
-			bfs::remove(filePath);
-		}
-		else {
-			bfs::path completePath(fileDestPath / fileNewPath.filename());
-			if(bfs::exists(completePath)){
-				bfs::remove(completePath);
-			}
-			boost::filesystem3::copy(filePath, completePath);
-			bfs::remove(filePath);
-		}
-	} catch (std::exception& e) {
-		throw UserException(ERRCODE_INVALID_PARAM, e.what());
-	}
-	return 0;
+  try {
+    //If the destination does not exist, the file is created in the current directory
+    if(!bfs::exists(fileDestPath)) {
+      bfs::path completePath(bfs::current_path().string() / fileNewPath.filename());
+      if(bfs::exists(completePath)) {
+        bfs::remove(completePath);
+      }
+      bfs::copy_file(filePath, completePath);
+      bfs::remove(filePath);
+    } else {
+      bfs::path completePath(fileDestPath / fileNewPath.filename());
+      if(bfs::exists(completePath)){
+        bfs::remove(completePath);
+      }
+      bfs::copy_file(filePath, completePath);
+      bfs::remove(filePath);
+    }
+  } catch (std::exception& e) {
+    throw UserException(ERRCODE_INVALID_PARAM, e.what());
+  }
+  return 0;
 }
 
 /**
@@ -325,13 +280,16 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest, const std
  * \param value The value to check
  * \return raises an exception on error
  */
-bool vishnu::isNumericalValue(const std::string& value) {
-  if(value.size()==0) {
-    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: The given value is empty"));
+bool
+vishnu::isNumericalValue(const std::string& value) {
+  if (0 == value.size()) {
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        ("Invalid numerical value: The given value is empty"));
   }
-  bool ret = (value.find_first_not_of("0123456789")==std::string::npos);
-  if(! ret) {
-    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid numerical value: "+value));
+  bool ret(value.find_first_not_of("0123456789") == std::string::npos);
+  if (!ret) {
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        ("Invalid numerical value: " + value));
   }
   return ret;
 }
@@ -342,8 +300,8 @@ bool vishnu::isNumericalValue(const std::string& value) {
  * \param walltime The walltime to convert
  * \return the walltime converted to string
  */
-std::string vishnu::convertWallTimeToString(const long& walltime) {
-
+std::string
+vishnu::convertWallTimeToString(const long& walltime) {
   long totalTime = walltime;
   long j = totalTime/86400;
   totalTime = walltime-j*86400;
@@ -353,21 +311,21 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
   long s =  totalTime-m*60;
 
   std::ostringstream StrWallTime;
-  if(j > 0) {
-    if(j < 10) {
+  if (j > 0) {
+    if (j < 10) {
       StrWallTime << "0" << j << ":";
     } else {
       StrWallTime <<  j << ":";
     }
   }
 
-  if(h < 10) {
+  if (h < 10) {
     StrWallTime << "0" << h << ":";
   } else {
     StrWallTime <<  h << ":";
   }
 
-  if(m < 10) {
+  if (m < 10) {
     StrWallTime << "0" << m << ":";
   } else {
     StrWallTime << m << ":";
@@ -376,7 +334,7 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
   if(s < 10) {
     StrWallTime << "0" << s;
   } else {
-    StrWallTime << s ;
+    StrWallTime << s;
   }
 
   return StrWallTime.str();
@@ -387,20 +345,20 @@ std::string vishnu::convertWallTimeToString(const long& walltime) {
  * \param walltime The walltime to convert
  * \return the walltime converted to seconds
  */
-long vishnu::convertStringToWallTime(const std::string& walltime_) {
-
+long
+vishnu::convertStringToWallTime(const std::string& walltime_) {
   std::string walltime(walltime_);
 
-  if(!walltime.empty()){
-    if(*(walltime.begin())=='\"'){
+  if (!walltime.empty()){
+    if (*(walltime.begin()) == '\"'){
       walltime.replace(walltime.begin(), walltime.begin()+1, "");
     }
-    if(*(walltime.end()-1)=='\"'){
+    if (*(walltime.end()-1) == '\"'){
       walltime.replace(walltime.end()-1, walltime.end(), "");
     }
   }
 
-  if(walltime.size()!=0) {
+  if(walltime.size()) {
     int seconds = 0;
     int minute = 0;
     int heure = 0;
@@ -425,29 +383,29 @@ long vishnu::convertStringToWallTime(const std::string& walltime_) {
       }
     }
 
-    if((pos!=std::string::npos) && (pos > 0)) {
+    if ((pos!=std::string::npos) && (pos > 0)) {
       size = pos;
       pos =  walltime.rfind(":", size-1);
-      if(pos!=std::string::npos) {
-        if((size-pos > 1)) {
+      if (pos!=std::string::npos) {
+        if ((size-pos > 1)) {
           value = walltime.substr(pos+1, size-pos-1);
-          if(isNumericalValue(value)) {
+          if (isNumericalValue(value)) {
             minute = convertToInt(value);
           }
         }
       } else {
         value = walltime.substr(0, size);
-        if(isNumericalValue(value)) {
+        if (isNumericalValue(value)) {
           minute = convertToInt(value);
         }
       }
     }
 
-    if((pos!=std::string::npos) && (pos > 0)) {
+    if ((pos!=std::string::npos) && (pos > 0)) {
       size = pos;
       pos =  walltime.rfind(":", size-1);
-      if(pos!=std::string::npos) {
-        if((size-pos > 1)) {
+      if (pos!=std::string::npos) {
+        if ((size-pos > 1)) {
           value = walltime.substr(pos+1, size-pos-1);
           if(isNumericalValue(value)) {
             heure = convertToInt(value);
@@ -466,7 +424,7 @@ long vishnu::convertStringToWallTime(const std::string& walltime_) {
       pos =  walltime.rfind(":", size-1);
       if(pos!=std::string::npos) {
         if((size-pos > 1)) {
-          throw std::runtime_error("Invalid wallltime value: "+walltime);
+          throw std::runtime_error("Invalid walltime value: " + walltime);
         }
       } else {
         value = walltime.substr(0, size);
@@ -477,13 +435,10 @@ long vishnu::convertStringToWallTime(const std::string& walltime_) {
     }
 
     long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
-
     return walltimeInSeconds;
-
   } else {
     throw UserException(ERRCODE_INVALID_PARAM, ("Invalid walltime value: The given value is empty"));
   }
-
 }
 
 /**
@@ -493,7 +448,6 @@ long vishnu::convertStringToWallTime(const std::string& walltime_) {
  */
 void
 vishnu::checkJobStatus(const int& status) {
-
   if ((status < -1) || (status > 8)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
   }
@@ -506,11 +460,10 @@ vishnu::checkJobStatus(const int& status) {
  */
 void
 vishnu::checkJobPriority(const int& priority) {
-
   if ((priority < -1) || (priority > 5)) {
-    throw UserException(ERRCODE_INVALID_PARAM, "The priority value is incorrect");
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        "The priority value is incorrect");
   }
-
 }
 
 /**
@@ -520,8 +473,7 @@ vishnu::checkJobPriority(const int& priority) {
  */
 void
 vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) {
-
-  if(nbNodesAndCpuPerNode.size()!=0) {
+  if(nbNodesAndCpuPerNode.size()) {
     size_t posNbNodes;
     try {
       posNbNodes = nbNodesAndCpuPerNode.find(":");
@@ -533,10 +485,12 @@ vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) 
         std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
         isNumericalValue(cpuPerNode);
       } else {
-        throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
+        throw UserException(ERRCODE_INVALID_PARAM,
+                            ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
       }
     } catch(UserException& ue) {
-      throw UserException(ERRCODE_INVALID_PARAM, ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
+      throw UserException(ERRCODE_INVALID_PARAM,
+                          ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
     }
   }
 }
@@ -554,10 +508,11 @@ time_t vishnu::getCurrentTimeInUTC() {
  * \brief Function to convert UTC time into localtime (seconds)
  * \return the correspondant localtime (seconds)
  */
-time_t vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
-
+time_t
+vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
   //the current time
-  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+  boost::posix_time::ptime now =
+    boost::posix_time::microsec_clock::local_time();
 
   time_t currentTime = string_to_time_t(to_simple_string(now));
 
@@ -569,29 +524,31 @@ time_t vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
  * \brief Function to localtime into UTC (seconds)
  * \return the diffence time (seconds)
  */
-time_t vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
-
+time_t
+vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
   //the current time
-  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+  boost::posix_time::ptime now =
+    boost::posix_time::microsec_clock::local_time();
 
   time_t currentTime = string_to_time_t(to_simple_string(now));
 
-  long diff = currentTime-std::time(0);
-  return (localtime-diff);
+  long diff = currentTime - std::time(0);
+  return (localtime - diff);
 }
 
 /**
  * \brief Function to return the difference between localtime and UTC time (seconds)
  * \return the difference time (seconds)
  */
-long vishnu::diffLocaltimeUTCtime() {
-
+long
+vishnu::diffLocaltimeUTCtime() {
   //the current time
-  boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+  boost::posix_time::ptime now =
+    boost::posix_time::microsec_clock::local_time();
 
   time_t currentTime = string_to_time_t(to_simple_string(now));
 
-  long diff = currentTime-std::time(0);
+  long diff = currentTime - std::time(0);
   return diff;
 }
 
@@ -600,24 +557,26 @@ long vishnu::diffLocaltimeUTCtime() {
  * \param fileName The name of the file to create
  * \param file_content The content of the file
  */
-void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
-
-  int  file_descriptor = mkstemp( fileName ) ;
-  size_t file_size = file_content.size();
-  if( file_descriptor == -1 ) {
-    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
+void
+vishnu::createTmpFile(char* fileName, const std::string& file_content) {
+  int file_descriptor = mkstemp( fileName );
+  ssize_t file_size = file_content.size();
+  if (file_descriptor == -1) {
+    throw
+      SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create the file "+ std::string(fileName));
   }
 
-  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)!=0) {
+  if (fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH)) {
     close(file_descriptor);
     throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have"
                           " not been change on the path. This can lead to an error");
   }
 
-  if( write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
+  if (write(file_descriptor, file_content.c_str(), file_size) != file_size ) {
     close(file_descriptor);
-    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot write the content int to"
-                          "  new created file");
+    throw SystemException(ERRCODE_SYSTEM,
+                          "vishnu::createTmpFile: Cannot write the content int "
+                          "to new created file");
   }
 
   close(file_descriptor);
@@ -626,18 +585,58 @@ void vishnu::createTmpFile(char* fileName, const std::string& file_content) {
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
+ * \param content The content of the file
  */
-void vishnu::createTmpFile(char* fileName) {
+void
+vishnu::saveInFile(const std::string & fileName,
+                         const std::string& content) {
 
-  int  file_descriptor = mkstemp( fileName ) ;
-  if( file_descriptor == -1 ) {
-    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: Cannot create new tmp file");
+  bfs::ofstream file(fileName);
+
+  file << content << "\n";
+
+  file.close();
+}
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ * \param missingDesc The content of the file
+ */
+void
+vishnu::recordMissingFiles(const std::string & fileName,
+                         const std::string& missingDesc) {
+
+  bfs::ofstream file(fileName);
+
+  ListStrings missingFiles;
+  boost::split(missingFiles, missingDesc, boost::is_space());
+  int count = missingFiles.size();
+  for(int i = 1; i < count; i++) {
+    file << missingFiles[i] << "\n";
+    //std::cout << missingFiles[i] << "\n";
   }
 
-  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH ) !=0) {
+  file.close();
+}
+
+/**
+ * \brief Function to create temporary file
+ * \param fileName The name of the file to create
+ */
+void
+vishnu::createTmpFile(char* fileName) {
+  int  file_descriptor = mkstemp(fileName);
+  if( file_descriptor == -1 ) {
+    throw SystemException(ERRCODE_SYSTEM,
+                          "vishnu::createTmpFile: Cannot create new tmp file");
+  }
+
+  if(fchmod(file_descriptor, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH )) {
     close(file_descriptor);
-    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or writing rights have not been"
-                          "  change on the path. This can lead to an error");
+    throw SystemException(ERRCODE_SYSTEM, "vishnu::createTmpFile: reading or "
+                          "writing rights have not been on the path. "
+                          "This can lead to an error");
   }
 
   close(file_descriptor);
@@ -647,7 +646,8 @@ void vishnu::createTmpFile(char* fileName) {
  * \brief Function to delete file
  * \param fileName The name of the file to create
  */
-int vishnu::deleteFile(const char* fileName) {
+int
+vishnu::deleteFile(const char* fileName) {
   return unlink(fileName);
 }
 
@@ -670,7 +670,7 @@ vishnu::checkMetricHistoryValue(const int& metric) {
  */
 void
 vishnu::checkRemotePath(const std::string& path){
-  if (path.find(":")==std::string::npos){
+  if (path.find(":") == std::string::npos){
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The path must be a remote file and in the form machineId:path");
   }
 }
@@ -684,8 +684,7 @@ vishnu::checkRemotePath(const std::string& path){
 
 
 bool
-vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir){
-
+vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir) {
   bfs::path token(proc_dir);
   token /= pid;
   return bfs::exists(token);
@@ -697,16 +696,11 @@ vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir){
  * \param port the port
  * \return the fully qualified name for the current system
  */
-
-
-std::string vishnu::getLocalMachineName(const std::string& port ){
-
+std::string
+vishnu::getLocalMachineName(const std::string& port ) {
   char hostname[MAXHOSTNAMELEN];
-
   gethostname(hostname, MAXHOSTNAMELEN);
-
   struct addrinfo hints, *servinfo;
-
   int rv;
 
   memset(&hints, 0, sizeof(hints));
@@ -714,15 +708,14 @@ std::string vishnu::getLocalMachineName(const std::string& port ){
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_CANONNAME;
 
-  if ((rv = getaddrinfo(hostname,port.c_str(), &hints, &servinfo)) != 0) {
-    SystemException(ERRCODE_SYSTEM,gai_strerror(rv));
+  if ((rv = getaddrinfo(hostname,port.c_str(), &hints, &servinfo))) {
+    throw SystemException(ERRCODE_SYSTEM, gai_strerror(rv));
   }
-  if(servinfo->ai_canonname==NULL){
-    throw SystemException(ERRCODE_SYSTEM,"can not resolve the machine name");
+  if(!servinfo->ai_canonname) {
+    throw SystemException(ERRCODE_SYSTEM, "can not resolve the machine name");
   }
 
   return servinfo->ai_canonname;
-
 }
 
 /**
@@ -734,11 +727,9 @@ std::string vishnu::getLocalMachineName(const std::string& port ){
 void
 vishnu::checkEmptyString(const std::string& str,
                          const std::string& compMsg) {
-
   if(str.empty()) {
-    throw UserException(ERRCODE_INVALID_PARAM, compMsg+" must be not empty");
+    throw UserException(ERRCODE_INVALID_PARAM, compMsg + " must be not empty");
   }
-
 }
 
 /**
@@ -753,74 +744,122 @@ int
 vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
                            std::string & paramsStr,
                            const std::string & paramOptName,
-                           const ListStrings & paramsVector){
+                           const ListStrings & paramsVector) {
 
-  if( opt->count(paramOptName) ){
-    paramsStr = opt->get< std::string >(paramOptName) ;
+  if (opt->count(paramOptName)) {
+    paramsStr = opt->get<std::string>(paramOptName);
   }
 
   // Append other parameters in paramStr
-  for(ListStrings::const_iterator it = paramsVector.begin(); it != paramsVector.end() ; it++) {
-    paramsStr += " " + *it ;
+  for(ListStrings::const_iterator it = paramsVector.begin();
+      it != paramsVector.end(); ++it) {
+    paramsStr += " " + *it;
   }
 
   //Now check the syntax of parameters and set them suitable for VISHNU
-  ListStrings paramsVecBuffer ;
-  boost::trim(paramsStr) ; boost::split(paramsVecBuffer, paramsStr, boost::is_any_of(" "), boost::token_compress_on);
+  ListStrings paramsVecBuffer;
+  boost::trim(paramsStr);
+  boost::split(paramsVecBuffer, paramsStr, boost::is_space(), boost::token_compress_on);
 
-  paramsStr = "" ; // Reinitialization for outpout
-  for(ListStrings::iterator it = paramsVecBuffer.begin(); it != paramsVecBuffer.end() ; it++) {
-
-    size_t pos = (*it).find("=") ;
-    if( pos == 0 || pos == std::string::npos || pos == (*it).size() - 1 ){
-      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'"<< std::endl ;
+  paramsStr = ""; // Reinitialization for outpout
+  for(ListStrings::iterator it = paramsVecBuffer.begin();
+      it != paramsVecBuffer.end(); ++it) {
+    size_t pos = (*it).find("=");
+    if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
+      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
       return CLI_ERROR_INVALID_PARAMETER;
     }
 
-    std::string paramName = (*it).substr(0, pos) ; // Keep the parameter name in upper case
-    std::string paramValue = (*it).substr(pos+1, std::string::npos) ;
+    std::string paramName = (*it).substr(0, pos); // Keep the parameter name in upper case
+    std::string paramValue = (*it).substr(pos+1, std::string::npos);
 
     // Check whether the parameter is duplicate
-    if( paramsStr.size() != 0) {
-      size_t start = 0 ;
-      while( pos = paramsStr.find(paramName+"=", start), pos != std::string::npos ){
-        if( pos == 0 || paramsStr[pos-1] == char(' ') ) {
-          std::cerr << "Duplicate parameter : '" << paramName << "'"<< std::endl ;
-          return CLI_ERROR_INVALID_PARAMETER ;
+    if (paramsStr.size()) {
+      size_t start(0);
+      while (pos = paramsStr.find(paramName + "=", start),
+             pos != std::string::npos) {
+        if (pos == 0 || paramsStr[pos-1] == char(' ')) {
+          std::cerr << "Duplicate parameter : '" << paramName << "'\n";
+          return CLI_ERROR_INVALID_PARAMETER;
         }
-        start = pos + paramName.size() ;
+        start = pos + paramName.size();
       }
-      paramsStr += " " ;
+      paramsStr += " ";
     }
     // Append the parameter
-    paramsStr += paramName + "=" + paramValue ;
+    paramsStr += paramName + "=" + paramValue;
   }
-  return 0 ;
+  return 0;
 }
 
 
 /**
  * \brief Function to list file containing in a directory. Recursivity is not taken into account
- * \param lFiles a vector containing the set of files
  * \param fileNames the names of files containing in the directory
  * \param dirPath The path of the directory
- * Throw exception on error
+ * \return true on success and false if not
  * */
-void
-vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, const std::string & dirPath) {
-
-  if(dirPath.size() == 0 ||
-		  ! bfs::exists(dirPath)) {
-	  return ;
+bool
+vishnu::appendFilesFromDir(std::ostringstream& fileNames,
+                           const std::string & dirPath) {
+  if (! bfs::exists(dirPath)) {
+    return false;
   }
-  for( bfs::directory_iterator it(dirPath) ; it != bfs::directory_iterator() ; ++it ) {
 
-    if ( bfs::is_directory( *it ) ) continue ;
-    lFiles.push_back( it->path().string() ) ;
-    fileNames << ((fileNames.str().size() != 0)? " " : "") + it->path().string() ;   //TODO Check if it's a absolute or a relative path
+  for (bfs::directory_iterator it(dirPath);
+       it != bfs::directory_iterator(); ++it) {
+    if ( bfs::is_directory( *it )) {
+      continue;
+    }
+
+    //TODO Check if it's a absolute or a relative path
+    fileNames << ((fileNames.str().size())? " " : "") + it->path().string();
   }
+
+  return true;
 }
 
+/**
+ * \brief Function to get the list of output files related to a job
+ * \param result : The Job Result
+ * \param appendJobId : Determine whether or not append the job id before the files lists
+ * \return The list of files
+ * Throw exception on error
+ * */
+std::string
+vishnu::getResultFiles(const TMS_Data::JobResult & result,
+                       const bool & appendJobId) {
+  std::ostringstream existingFiles; /* starts with the job id */
+  std::ostringstream  missingFiles;
+  if(appendJobId) {
+    existingFiles << result.getJobId();
+  }
+  missingFiles << "***MISSING";
+  existingFiles << ((appendJobId)? result.getJobId() : "");
+  if( bfs::exists(result.getOutputPath()) ) {
+    existingFiles << (existingFiles.str().size()? " " : "") << result.getOutputPath();
+  } else {
+    missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputPath();
+    std::cerr<< "W: the output file no longer exists : " << result.getOutputPath()<< "\n";
+  }
+
+  if( bfs::exists(result.getErrorPath()) && (result.getErrorPath() !=
+                                             result.getOutputPath())) {
+    existingFiles << (existingFiles.str().size()? " " : "") << result.getErrorPath();
+  } else {
+    if (!bfs::exists(result.getErrorPath())) {
+      missingFiles << (missingFiles.str().size()? " " : "") << result.getErrorPath();
+      std::cerr<< "W: the error file no longer exists : " << result.getErrorPath()<< "\n";
+    }
+  }
+  if( !appendFilesFromDir(existingFiles, result.getOutputDir()) && result.getOutputDir().size() > 0) {
+    missingFiles << (missingFiles.str().size()? " " : "") << result.getOutputDir();
+    std::cerr<< "W: the output directory no longer exists : " << result.getOutputDir() << "\n";
+  }
+
+  existingFiles << "\n" << missingFiles.str() << "\n";
+  return existingFiles.str();
+}
 
 /**
  * \brief Function to create a directory
@@ -829,18 +868,17 @@ vishnu::appendFilesFromDir(ListStrings& lFiles, std::ostringstream & fileNames, 
  * */
 void
 vishnu::createOutputDir(std::string& dirPath) {
+	if(bfs::exists(dirPath) && bfs::is_directory(dirPath)) {
+		return ;
+	}
 
-  if(bfs::exists(dirPath) && bfs::is_directory(dirPath)) {
-    return ;
-  }
-
-  try{
-    if(! bfs::create_directory(bfs::path(dirPath))) {
-      throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create the directory: " + dirPath) ;
-    }
-  } catch(...) {
-    throw SystemException(ERRCODE_SYSTEM, "Directory creation failed") ;
-  }
+	try{
+		if(! bfs::create_directory(bfs::path(dirPath))) {
+			throw SystemException(ERRCODE_SYSTEM, "vishnu::createDir: Cannot create the directory: " + dirPath) ;
+		}
+	} catch(...) {
+		throw SystemException(ERRCODE_SYSTEM, "Directory creation failed") ;
+	}
 }
 
 /**
@@ -849,21 +887,19 @@ vishnu::createOutputDir(std::string& dirPath) {
  * */
 std::string
 vishnu::createSuffixFromCurTime() {
-
-  std::ostringstream ossBuf ;
+  std::ostringstream ossBuf;
   time_t rawtime;
-  time ( &rawtime );
+  time(&rawtime);
   struct tm * tinfo;
-  tinfo = localtime ( &rawtime );
+  tinfo = localtime(&rawtime);
 
   ossBuf << "_" << (1900 + tinfo->tm_year)
          << ( tinfo->tm_mon < 9? "0": "")<< tinfo->tm_mon + 1
          << ( tinfo->tm_mday < 10? "0": "" )<< tinfo->tm_mday
          << ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour
          << ( tinfo->tm_min < 10? "0": "" )<< tinfo->tm_min
-         << ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec ;
-
-  return ossBuf.str() ;
+         << ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec;
+  return ossBuf.str();
 }
 
 /**
@@ -874,21 +910,20 @@ vishnu::createSuffixFromCurTime() {
  */
 std::string
 vishnu::mklink(const std::string& src) {
-
-  if( ! bfs::exists(src) )  {
+  if (! bfs::exists(src)) {
     throw UserException(ERRCODE_FILENOTFOUND, "SSHJobExec::mklink : "
                         "the file "+ src + " doesnot exist.");
   }
-  bfs::path dest ;
+  bfs::path dest;
 
   try {
-    dest = bfs::unique_path("/tmp/vishnulink%%%%%%") ;
-    bfs::create_symlink(src, dest) ;
-  }catch (...) {
+    dest = bfs::unique_path("/tmp/vishnulink%%%%%%");
+    bfs::create_symlink(src, dest);
+  } catch (...) {
     throw SystemException(ERRCODE_SYSTEM, "SSHJobExec::mklink : "
                           "error while making a link on the file " + src + " from " + dest.string());
   }
-  return dest.string() ;
+  return dest.string();
 }
 
 // Cela fait une copie de la liste en retour, à modifier si cela gène
@@ -896,15 +931,16 @@ std::vector<std::string>
 vishnu::getIPList(){
   std::vector<std::string> addresses;
 
-  struct ifaddrs *ifa=NULL,*ifEntry=NULL;
-  void *addPtr = NULL;
+  struct ifaddrs *ifa = NULL, *ifEntry = NULL;
   int rc = 0;
-  char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
 
   // Recuperation of the interfaces
   rc = getifaddrs(&ifa);
   // If interfaces gotten without error
-  if (rc==0) {
+  if (rc == 0) {
+    void *addPtr = NULL;
+    char addressBuffer[INET6_ADDRSTRLEN]; // Max size for ipv6 in case
+
     // Browing the list of interface
     for(ifEntry=ifa; ifEntry!=NULL; ifEntry=ifEntry->ifa_next) {
       // If not address continue
@@ -938,18 +974,24 @@ vishnu::getIPList(){
 
 void
 vishnu::setIP(std::string& name, std::string IP){
-  std::string tmp = std::string("localhost");
-  name.replace(name.find(tmp), tmp.length(), IP);
+	std::string tmp = std::string("localhost");
+	name.replace(name.find(tmp), tmp.length(), IP);
 }
 
 bool
-vishnu::isNotIP(std::string name){
-  size_t pos=0;
-  int cpt=0;
-  while((pos=name.find(".", pos+1))!=std::string::npos) {
-    cpt++;
+vishnu::isNotIP(std::string name) {
+  boost::asio::ip::address ad;
+
+  try {
+    /* We use boost asio to check whether "name" is an IP address
+     * It will throw an exception if "name" is not an IP"
+     */
+    ad.from_string(name);
+  } catch (boost::exception & e) {
+    return true;
   }
-  return (cpt!=3);
+
+  return false;
 }
 
 /**
@@ -959,10 +1001,10 @@ vishnu::isNotIP(std::string name){
  */
 UMS_Data::Version_ptr
 vishnu::parseVersion(const std::string& version) {
-  UMS_Data::Version_ptr vers = NULL;
-  std::string major;
-  std::string minor;
-  std::string patch;
+	UMS_Data::Version_ptr vers = NULL;
+	std::string major;
+	std::string minor;
+	std::string patch;
 
   size_t found = version.find_first_of(".");
   if (found != std::string::npos) {
@@ -991,6 +1033,3 @@ vishnu::parseVersion(const std::string& version) {
 
   return vers;
 }
-
-
-

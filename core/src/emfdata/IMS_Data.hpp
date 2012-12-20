@@ -34,7 +34,6 @@
 #include "IMS_Data/Process.hpp"
 #include "IMS_Data/ExportOp.hpp"
 #include "IMS_Data/MetricHistOp.hpp"
-#include "IMS_Data/RestartOp.hpp"
 #include "IMS_Data/CurMetricOp.hpp"
 #include "IMS_Data/ProcessOp.hpp"
 #include "IMS_Data/ThresholdOp.hpp"
@@ -42,6 +41,7 @@
 #include "IMS_Data/Threshold.hpp"
 #include "IMS_Data/SysInfoOp.hpp"
 #include "IMS_Data/ListSysInfo.hpp"
+#include "IMS_Data/SupervisorOp.hpp"
 
 // Package & Factory
 #include "IMS_Data/IMS_DataPackage.hpp"

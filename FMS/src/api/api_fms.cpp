@@ -220,7 +220,7 @@ int vishnu::cp(const string& sessionKey,const string& src, const string& dest, c
 
       std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-        for (int i =0;i<list.size();i++){
+        for (unsigned int i = 0; i < list.size(); i++) {
           std::string tmp = src;
           setIP(tmp, list.at(i));
           try{
@@ -240,7 +240,7 @@ int vishnu::cp(const string& sessionKey,const string& src, const string& dest, c
       // Get all the IP for the machine
       std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-      for (int i =0;i<list.size();i++){
+      for (unsigned int i =0; i < list.size(); i++){
         std::string tmp = dest;
         setIP(tmp, list.at(i));
         try{
@@ -305,11 +305,7 @@ int vishnu::head(const string& sessionKey,const string& path, string& contentOfF
     SessionProxy sessionProxy(sessionKey);
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string head;
-
-    head = f->head(options);
-
-    contentOfFile= strdup(head.c_str());
+    contentOfFile = f->head(options);
 
     return 0;
 
@@ -331,9 +327,7 @@ int vishnu::more(const string& sessionKey,const string& path, string& contentOfF
 
     boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string content= f->getContent();
-
-    contentOfFile= strdup(content.c_str());
+    contentOfFile= f->getContent();
 
     return 0;
 
@@ -408,7 +402,7 @@ int vishnu::mv(const string& sessionKey,const string& src, const string& dest,co
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
+    for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = src;
       setIP(tmp, list.at(i));
       try{
@@ -428,7 +422,7 @@ int vishnu::mv(const string& sessionKey,const string& src, const string& dest,co
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
 // Try the transfert for each IP
-    for (int i =0;i<list.size();i++){
+    for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = dest;
       setIP(tmp, list.at(i));
       try{
@@ -492,11 +486,7 @@ int vishnu::tail(const string& sessionKey,const string& path, string& contentOfF
 
     boost::scoped_ptr<FileProxy> f(FileProxyFactory::getFileProxy(sessionProxy,path));
 
-    std::string tail;
-
-    tail= f->tail(options);
-
-    contentOfFile= strdup(tail.c_str());
+    contentOfFile= f->tail(options);
 
     return 0;
 

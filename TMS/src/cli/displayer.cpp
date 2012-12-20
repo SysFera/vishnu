@@ -18,8 +18,8 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
 			<< endl << setw(75) << setfill('-') << "" << setfill(' ') << endl ;
 
 	for (size_t i = 0 ; i < listJobs.getResults().size() ; i++) {
-		cout << setw(10) << left << (" " + listJobs.getResults().get(i)->getJobId())
-    																<< " | " << listJobs.getResults().get(i)->getOutputDir() << endl;
+		cout << setw(10) << left << (" " + listJobs.getResults().get(i)->getJobId()) ;
+		cout << " | " << listJobs.getResults().get(i)->getOutputDir() << endl;
 	}
 	cout << "Number of downloaded jobs : " << listJobs.getNbJobs() << endl;
 }

@@ -6,13 +6,13 @@
 #ifndef MKDIRSRV_HPP
 #define MKDIRSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 
 /**
  * \brief The mkdir service profile description
  * \return the mkdir service profile
  */
-diet_profile_desc_t* getCreateDirProfile();
+//diet_profile_desc_t* getCreateDirProfile();
 /**
  * \brief the mkdir solve function
  * \param profile the service profile

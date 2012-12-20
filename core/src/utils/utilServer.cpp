@@ -12,6 +12,8 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 #include "DbFactory.hpp"
+#include "zhelpers.hpp"
+#include "Server.hpp"
 
 // To get the hostname
 #include <unistd.h>
@@ -20,72 +22,108 @@ using namespace std;
 
 
 int
-vishnu::unregisterSeD(string type, string mid) {
-  string req = "update process set pstatus='";
-  req += convertToString(PDOWN);
-  req += "', uptime=CURRENT_TIMESTAMP where machineid='";
-  req += mid;
-  req += "' and vishnuname='";
-  req += type;
-  req += "' and pstatus='";
-  req += convertToString(PRUNNING);
-  req += "'";
-  // Database execution
-  try {
-    DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
-    database->process(req.c_str());
-  } catch (SystemException& e) {
-    // Do nothing in case of error to delete the own proc of the database
-  }
+vishnu::unregisterSeD(string type, ExecConfiguration config) {
+//  string uri;
+//  string uridispatcher;
+//
+//  // Getting the machine id
+//  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+//  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
+//  zmq::context_t ctx(1);
+//  LazyPirateClient lpc(ctx, uridispatcher);
+//  std::vector<std::string> tmp;
+//  tmp.push_back("deleting");
+//
+//  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
+//
+//  std::string req = "0"+s.get()->toString();
+//  std::cout << "sending " << req << std::endl;
+//
+//  if (!lpc.send(req)) {
+//    std::cerr << "E: request failed, exiting ...\n";
+//    exit(-1);
+//  }
+//  std::string response = lpc.recv();
+//  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+//
   return 0;
 }
 
+
+void
+validateUri(const string & uri) {
+	size_t pos = uri.find("*");
+	if(pos != string::npos) {
+		std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
+		exit(-1);
+	}
+
+}
+
+bool
+vishnu::isNew(std::string urlsup, std::string mid, std::string type){
+  std::string req = "select machineid from process where machineid='"+mid+"' and vishnuname='"+type+"' and dietname='"+urlsup+"'";
+  DbFactory factory;
+  Database *mdatabase;
+  mdatabase = factory.getDatabaseInstance();
+  try{
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
+    if(result->getNbTuples() != 0) {
+      return false;
+    }
+  }catch(SystemException& e){
+    e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
+    throw(e);
+  }
+  return true;
+}
+
+
 int
-vishnu::registerSeD(string type, ExecConfiguration config, string& cfg){
-  string s = config.scriptToString();
+vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
+  string uri;
   string mid;
-  string path;
-  int res;
-  // The temporary file that will be used to launch diet
-  cfg = "/tmp/sed.cfg";
+  string uridispatcher;
+  string urlsup;
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-  // Insert sed statement
-  string req = "insert into process(pstatus, vishnuname, machineid, uptime, launchscript) values ('";
-  req += convertToString(PUNDEF);
-  req += "', '";
-  req += type;
-  req += "', '";
-  req += mid;
-  req += "', CURRENT_TIMESTAMP, '"+s+"')";
-  // Database execution
-  try {
-    DbFactory factory;
-    Database* database = factory.getDatabaseInstance();
-    database->process(req.c_str());
-  } catch (SystemException& e) {
-    throw (e);
+  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
+  config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
+
+  // Check that the uri does not contain *
+  validateUri(uridispatcher);
+
+// Register in database
+  if (isNew(urlsup, mid, type)){
+    std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+convertToString(PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
+    try {
+      DbFactory factory;
+      Database* database = factory.getDatabaseInstance();
+      database->process(request.c_str());
+    } catch (SystemException& e) {
+      if (type.compare("umssed")!=0){
+        throw (e);
+      }
+    }
   }
-  config.getRequiredConfigValue<std::string>(vishnu::DIETCONFIGFILE, path);
-  string cmd;
-  cmd = "cp "+path+" "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
+
+  zmq::context_t ctx(1);
+  LazyPirateClient lpc(ctx, uridispatcher);
+
+  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
+// prefix with 1 to say registering the sed
+  std::string req = "1"+s.get()->toString();
+
+  std::cout << "sending " << req << std::endl;
+  if (!lpc.send(req)) {
+	std::cerr << "W: failed to register in the naming service\n";
+    return -1; //instead of exiting
   }
-  cmd = "chmod 777 "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-  }
-  srand(std::time(NULL));
-  cmd = "echo \"\\\nname="+mid+"@"+type+"_"+convertToString(rand())+"\" >> "+cfg;
-  res = system(cmd.c_str());
-  if (res == -1) {
-    throw SystemException(ERRCODE_SYSTEM, "Failed to create the DIET sed script");
-  }
+  std::string response = lpc.recv();
+  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+
   return 0;
 }
 
@@ -263,7 +301,6 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   std::string res;
   res.clear ();
   res = std::string ("");
-  int  i;
   int  size;
   Format_t *keywords;
 
@@ -273,19 +310,19 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   // if there is no error with the getKeywords function
   if (ret != -1) {
     // Building the id using the format and the values of the var
-    if (size>0){
-      res.append (format, keywords[0].start);
+    if (size > 0){
+      res.append(format, keywords[0].start);
     } else {
       res = std::string (format);
     }
-    for (i=0;i<size;i++){
+    for (int i = 0; i < size; i++){
       res.append (keywords[i].value);
       // If other variables
-      if (*(format+keywords[i].end+1) != '\0' && i!=size-1) {
+      if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
         res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
       // If text after the variable
       }
-      else if (*(format+keywords[i].end+1) != '\0' ){
+      else if (*(format+keywords[i].end + 1) != '\0' ){
         res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
       }
     }
@@ -530,31 +567,27 @@ vishnu::getObjectId(int vishnuId,
   pthread_mutex_unlock(&(mutex));
   return idGenerated;
 }
+
 /**
  * \brief Function to parse a system error message
  * \param errorMsg the error message
  * \return the parsed message
  */
-std::string vishnu::parseErrorMessage (const std::string& errorMsg){
-
-  size_t commandPos, endOfLinePos;
-
+std::string
+vishnu::parseErrorMessage (const std::string& errorMsg) {
+  size_t commandPos;
   std::string result(errorMsg);
 
-  commandPos=result.find (":");
+  commandPos = result.find(":");
 
-  if(commandPos!=std::string::npos){
+  if (commandPos != std::string::npos) {
+    result = result.substr(commandPos + 1);
 
-    result=result.substr(commandPos+1);
-
-    if( (endOfLinePos=result.find_last_of("\n") )!= std::string::npos ){
-
+    size_t endOfLinePos = result.find_last_of("\n");
+    if (endOfLinePos != std::string::npos) {
       result.erase(endOfLinePos);
     }
-
   }
 
   return result;
 }
-
-

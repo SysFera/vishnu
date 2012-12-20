@@ -5,12 +5,12 @@
 #ifndef CHGRPSRV_HPP
 #define CHGRPSRV_HPP
 
-#include "DIET_server.h"
+#include "DIET_client.h"
 /**
  * \brief The Change group service profile description
  * \return the change group service profile
  */
-diet_profile_desc_t* getChangeGroupProfile();
+//diet_profile_desc_t* getChangeGroupProfile();
 
 /**
  * \brief the change group solve function

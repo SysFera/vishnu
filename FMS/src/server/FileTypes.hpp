@@ -21,31 +21,31 @@ static const mode_t defaultDirectoryAccessMode=493;
  */
 typedef enum {
   /**
-   * \brief a block 
+   * \brief a block
    */
   block,
   /**
-   * \brief a character 
+   * \brief a character
    */
   character,
   /**
-   * \brief a directory 
+   * \brief a directory
    */
   directory,
   /**
-   * \brief a symbolic link 
+   * \brief a symbolic link
    */
   symboliclink,
   /**
-   * \brief a socket 
+   * \brief a socket
    */
   sckt,
   /**
-   * \brief a fifo 
+   * \brief a fifo
    */
   fifo,
   /**
-   * \brief a regular file 
+   * \brief a regular file
    */
   regular
 } file_type_t;
@@ -55,17 +55,17 @@ typedef enum {
  */
 typedef enum {
   /**
-   * \brief a local file 
+   * \brief a local file
    */
   local,
   /**
-   * \brief a remote file 
+   * \brief a remote file
    */
   remote
 } file_host_t;
 
 /**
- * \brief  The stat structure differs depending on the system type. 
+ * \brief  The stat structure differs depending on the system type.
  * BSD file systems used the same structure for large and small
  * partition type.
  */

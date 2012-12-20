@@ -4,7 +4,8 @@
 
 #include "utilServer.hpp"
 
-HM::HM(string mail, string mid):mms(UserServer(SessionServer("")), mail), mmid(mid){
+HM::HM(std::string mail, std::string mid)
+  : mms(UserServer(SessionServer("")), mail), mmid(mid){
 
 }
 
@@ -15,7 +16,8 @@ void
 HM::run(){
   int freq;
 
-  IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
+  IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+    IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr li = ecoreFactory->createListMetric();
   while(true){
     try {
@@ -30,5 +32,3 @@ HM::run(){
     }
   }
 }
-
-

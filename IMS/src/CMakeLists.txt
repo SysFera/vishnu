@@ -1,7 +1,4 @@
 include_directories(client api utils
-  ${DIET_INCLUDE_DIR}
-  ${OMNIORB4_INCLUDE_DIR}
-  ${LOG_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -12,6 +9,11 @@ include_directories(client api utils
   ${UTILVISHNU_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
+  ${SIGAR_INCLUDE_DIR}
+  ${ZMQ_INCLUDE_DIR}
+  ${MOCK_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  ${XMLRPC_INCLUDE_DIR}
 )
 
 
@@ -30,11 +32,11 @@ set(api_HEADERS api/api_ims.hpp)
 add_library(vishnu-ims-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ims-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-ims-client
-  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
-  ${LIBCRYPT_LIB})
+  ${LIBCRYPT_LIB}
+)
 if(COMPILE_FMS)
   target_link_libraries(vishnu-ims-client vishnu-fms-client)
 endif()
@@ -55,10 +57,7 @@ if(NOT CLIENT_ONLY)
   set(sed_SRCS sed/imssed.cpp
     sed/ServerIMS.cpp
     sed/internalApiIMS.cpp)
-  set(server_SRCS server/controller/logTool/LogTool.cpp
-    server/controller/logTool/IMSVishnuTool.cpp
-    server/controller/logTool/Watcher.cpp
-    server/controller/logTool/ToolFactory.cpp
+  set(server_SRCS 
     server/controller/HM/HM.cpp
     server/controller/process/ProcessCtl.cpp
     server/data/ProcessServer.cpp
@@ -75,8 +74,7 @@ if(NOT CLIENT_ONLY)
     server/data/ThresholdServer.cpp)
 
   add_executable(imssed ${sed_SRCS} ${server_SRCS})
-  target_link_libraries(imssed ${DIET_SERVER_LIBRARIES}
-    ${LOG_LIBRARY}
+  target_link_libraries(imssed
     ${DATABASE_LIBS}
     ${Boost_LIBRARIES}
     vishnu-core
@@ -84,7 +82,12 @@ if(NOT CLIENT_ONLY)
     vishnu-ums-server
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
-    ${LIBCRYPT_LIB})
+    ${LIBCRYPT_LIB}
+    ${SIGAR_LIBRARIES}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+    ${XMLRPC_LIBRARIES}
+)
 
   install(TARGETS imssed DESTINATION ${SBIN_INSTALL_DIR})
 endif (NOT CLIENT_ONLY)  

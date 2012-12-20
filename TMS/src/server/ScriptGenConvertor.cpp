@@ -1,7 +1,7 @@
 /**
  * \file ScriptGenConvertor.cpp
  * \brief This file contains the VISHNU ScriptGenConvertor class.
- * \authors Ibrahima Cisse (ibrahima.cisse@sysfera.com) and 
+ * \authors Ibrahima Cisse (ibrahima.cisse@sysfera.com) and
  * Daouda Traore (daouda.traore@sysfera.com)
  * \date May 2011
  */
@@ -15,14 +15,14 @@
 namespace ba=boost::algorithm;
 
 /**
- * \brief Constructor 
+ * \brief Constructor
  * \param batchType the type of the batch scheduler
  * \param scriptGenContent the generic script to convert
  */
-ScriptGenConvertor::ScriptGenConvertor(const int batchType, 
-                                       const std::string& scriptGenContent): 
-  mbatchType(batchType), mscriptGenContent(scriptGenContent) 
-{ 
+ScriptGenConvertor::ScriptGenConvertor(const int batchType,
+                                       const std::string& scriptGenContent):
+  mbatchType(batchType), mscriptGenContent(scriptGenContent)
+{
   if(mbatchType==LOADLEVELER) {
 
     mconversionTable[group]                = "# @ group=";
@@ -37,8 +37,8 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[mem]                  = "# @ data_limit=";//a voir
     mconversionTable[mailNotification]     = "# @ notification=";//special case
     mconversionTable[mailNotifyUser]       = "# @ notify_user=";
-    mconversionTable[queue]                = "# @ class="; 
-   
+    mconversionTable[queue]                = "# @ class=";
+
     mconversionTable[loadLevelerSec]       = "";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
@@ -59,7 +59,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[mailNotification]     = "#PBS -m "; //special case
     mconversionTable[mailNotifyUser]       = "#PBS -M ";
     mconversionTable[queue]                = "#PBS -q ";
-    
+
     mconversionTable[loadLevelerSec]       = "";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
@@ -98,17 +98,17 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
     mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
     mconversionTable[mem]                  = "#SBATCH --mem=";
-    mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case; 
+    mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case;
     mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
     mconversionTable[queue]                = "#SBATCH -p ";
-    
+
     mconversionTable[slurmSec]             = "";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
   } else if(mbatchType==LSF) {
-     
+
     mconversionTable[group]                = "#BSUB -G ";
     mconversionTable[workingDir]           = "#BSUB -cwd ";
     mconversionTable[jobName]              = "#BSUB -J ";
@@ -119,10 +119,10 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
     mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
     mconversionTable[mem]                  = "#BSUB -M ";
-    mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser 
+    mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser
     mconversionTable[mailNotifyUser]       = "#BSUB -u ";
     mconversionTable[queue]                = "#BSUB -q ";
-    
+
     mconversionTable[lsfSec]             = "";
     mconversionTable[commandSec]           = "";
     mendScript="";
@@ -136,13 +136,13 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobError]             = "#$ -e ";
     mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
     mconversionTable[cpuTime]              = "#$ -l s_cpu=";
-    mconversionTable[nbCpu]                = ""; 
-    mconversionTable[nbNodesAndCpuPerNode] = ""; 
+    mconversionTable[nbCpu]                = "";
+    mconversionTable[nbNodesAndCpuPerNode] = "";
     mconversionTable[mem]                  = "#$ -l s_vmem=";
     mconversionTable[mailNotification]     = "#$ -m "; //special case
     mconversionTable[mailNotifyUser]       = "#$ -M ";
     mconversionTable[queue]                = "#$ -q ";
-    
+
     mconversionTable[sgeSec]               = "";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
@@ -154,11 +154,11 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 }
 
 /**
- * \brief Function to return the converted script 
+ * \brief Function to return the converted script
  */
-void 
+void
 ScriptGenConvertor::initializeTableOfSymbols() {
-  
+
   mtableOfSymbols.push_back(group);
   mtableOfSymbols.push_back(workingDir);
   mtableOfSymbols.push_back(jobName);
@@ -169,21 +169,21 @@ ScriptGenConvertor::initializeTableOfSymbols() {
   mtableOfSymbols.push_back(nbCpu);
   mtableOfSymbols.push_back(nbNodesAndCpuPerNode);
   mtableOfSymbols.push_back(mem);
-  mtableOfSymbols.push_back(mailNotification);  
+  mtableOfSymbols.push_back(mailNotification);
   mtableOfSymbols.push_back(mailNotifyUser);
   mtableOfSymbols.push_back(queue);
-  
+
   mtableOfSymbols.push_back(loadLevelerSec);
   mtableOfSymbols.push_back(torqueSec);
   mtableOfSymbols.push_back(commandSec);
 }
 
 /**
- * \brief Function to parse the generic script 
+ * \brief Function to parse the generic script
  * \param errorMessage is the message of the errors occured during the parsing
- * \return 0 if success, -1 if if failure 
+ * \return 0 if success, -1 if if failure
  */
-int 
+int
 ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
   /*To initialize the table of symbols*/
@@ -197,7 +197,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
   std::string linebuf;
   size_t pos;
 
-  std::vector<std::string>::iterator iter; 
+  std::vector<std::string>::iterator iter;
   int numline = 0;
   std::string tmpLine="";
   size_t escapePos;
@@ -244,12 +244,12 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     // LOADLEVELER
     if(ba::starts_with( ba::erase_all_copy(line," "),"#@")){
       if (mbatchType==LOADLEVELER){
-        key=loadLevelerSec;; 
+        key=loadLevelerSec;;
         mjobDescriptor.push_back (make_pair(key,line));
       } else{
         continue;
       }
-    } 
+    }
     // TORQUE
     if(ba::starts_with(line,"#PBS")){
       if (mbatchType==TORQUE){
@@ -267,18 +267,18 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       } else {
         continue;
       }
-    } 
+    }
 
     // treats the specific directives here
-    //LSF 
+    //LSF
     if(ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
       if (mbatchType==LSF){
-        key=lsfSec;; 
+        key=lsfSec;;
         mjobDescriptor.push_back (make_pair(key,line));
       } else{
         continue;
       }
-    } 
+    }
     // SHEBANG
     if(ba::starts_with(line,"#!")){
       key=commandSec;
@@ -327,7 +327,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     /*transform to lower case */
     std::string key_tolower(key);
     std::transform(key.begin(), key.end(), key_tolower.begin(), ::tolower);
-    
+
     iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
     if(iter==mtableOfSymbols.end()) {
       ostringstream os_error;
@@ -353,9 +353,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 }
 
 /**
- * \brief Function to return the converted script 
+ * \brief Function to return the converted script
  */
-std::string 
+std::string
 ScriptGenConvertor::getConvertedScript() {
 
   std::string result ;
@@ -377,7 +377,7 @@ ScriptGenConvertor::getConvertedScript() {
         }
         if(*(value.end()-1)=='\"'){
           value.replace(value.end()-1, value.end(), "");
-        } 
+        }
       }
 
       size_t posNbNodes = value.find(":");
@@ -393,7 +393,7 @@ ScriptGenConvertor::getConvertedScript() {
         } else if(mbatchType==TORQUE) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
         } else if(mbatchType==SLURM) {
-          value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode; 
+          value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode;
         }
       }
     }
@@ -509,10 +509,10 @@ ScriptGenConvertor::getConvertedScript() {
  * \param str The string to modify
  */
 void
-ScriptGenConvertor::findAndReplace(const std::string& ppn, 
-                                   const std::string& nbCpuStr, 
+ScriptGenConvertor::findAndReplace(const std::string& ppn,
+                                   const std::string& nbCpuStr,
                                    std::string& str){
-  
+
   size_t pos = str.find(ppn);
   while(pos!=std::string::npos) {
     std::string oldPPNValue;
@@ -529,7 +529,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
   char delim = '+';
   size_t begin = 0;
   size_t end = str.find(delim);
-  std::string tmp;
+
   if(end==std::string::npos) {
     findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
   }
@@ -546,7 +546,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
 
 /**
  * \brief Function to insert some additional content (newValue)
- * \param oldValue oldValue to replace 
+ * \param oldValue oldValue to replace
  * \param newValue new value to insert
  * \param begin The begin position of the substring in str
  * \param end The end position of the substring in str
@@ -581,11 +581,11 @@ bool
 ScriptGenConvertor::scriptIsGeneric() {
 
   std::string modifiedScript(mscriptGenContent);
-  std::transform(mscriptGenContent.begin(), mscriptGenContent.end(), modifiedScript.begin(), ::tolower);  
+  std::transform(mscriptGenContent.begin(), mscriptGenContent.end(), modifiedScript.begin(), ::tolower);
   modifiedScript = ba::erase_all_copy(modifiedScript," ");
   if(modifiedScript.find("#%"+prefix)!=std::string::npos){
     return true;
-  } 
+  }
   return false;
 }
 
@@ -596,13 +596,13 @@ ScriptGenConvertor::~ScriptGenConvertor() {
 }
 
 /**
- * \brief Function to return the generic script convertor 
+ * \brief Function to return the generic script convertor
  * \param batchType The type of the batch scheduler
  * \param scriptGenContent The content of the script to convert
  * \return The generic script convertor
  */
-boost::shared_ptr<ScriptGenConvertor>  
-vishnuScriptGenConvertor(const int batchType, 
+boost::shared_ptr<ScriptGenConvertor>
+vishnuScriptGenConvertor(const int batchType,
                          const std::string& scriptGenContent) {
 
   boost::shared_ptr< ScriptGenConvertor> scriptGenConvertor(new ScriptGenConvertor(batchType, scriptGenContent));
@@ -613,4 +613,3 @@ vishnuScriptGenConvertor(const int batchType,
   } ;
   return scriptGenConvertor;
 }
-

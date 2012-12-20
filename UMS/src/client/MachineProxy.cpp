@@ -48,11 +48,11 @@ int MachineProxy::add()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(addProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
@@ -118,11 +118,11 @@ int MachineProxy::update()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(updateProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(updateProfile,1), strdup(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(machineToString.c_str()), DIET_VOLATILE)) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
@@ -166,11 +166,11 @@ int MachineProxy::deleteMachine()
   machineId = mmachine.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(deleteProfile,0), strdup(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(deleteProfile,1), strdup(machineId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(machineId.c_str()), DIET_VOLATILE)) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }

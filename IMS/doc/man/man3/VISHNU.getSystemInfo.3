@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: VISHNU.getSystemInfo
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
-.\"      Date: March 2012
+.\" Generator: DocBook XSL Stylesheets v1.77.1 <http://docbook.sf.net/>
+.\"      Date: December 2012
 .\"    Manual: IMS Python API Reference
-.\"    Source: VISHNU 1.3
+.\"    Source: VISHNU ZMQ_beta
 .\"  Language: English
 .\"
-.TH "VISHNU\&.GETSYSTEMIN" "3" "March 2012" "VISHNU 1.3" "IMS Python API Reference"
+.TH "VISHNU\&.GETSYSTEMIN" "3" "December 2012" "VISHNU ZMQ_beta" "IMS Python API Reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -30,8 +30,8 @@
 .SH "NAME"
 VISHNU.getSystemInfo \- To get the system info on a machine
 .SH "SYNOPSIS"
-.HP \w'ret,\ res=VISHNU\&.getSystemInfo('u
-.BI "ret,\ res=VISHNU\&.getSystemInfo(string\ " "sessionKey" ", SysInfoOp\ " "options\ =\ SysInfoOp()" ");"
+.HP \w'ret=VISHNU\&.getSystemInfo('u
+.BI "ret=VISHNU\&.getSystemInfo(string\ " "sessionKey" ", ListSysInfo\ " "res" ", SysInfoOp\ " "options\ =\ SysInfoOp()" ");"
 .SH "DESCRIPTION"
 .PP
 This function allows a user to get system information about a machine\&. A system information describes a machine\&. The option is the machine id (if no machine id, the information for all the machines are given)
@@ -91,7 +91,7 @@ Developed the first version of these man pages as part of the VISHNU project.
 .RE
 .SH "COPYRIGHT"
 .br
-Copyright \(co 2011 SysFera SA
+Copyright \(co 2012 SysFera SA
 .br
 .PP
 These manual pages are provided under the following conditions:
