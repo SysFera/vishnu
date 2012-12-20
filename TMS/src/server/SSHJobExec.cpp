@@ -262,7 +262,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		const std::string nfsMountPoint) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
-
+    const std::string logfile = nfsMountPoint+"/"+mhostname+".vishnu.log";
 	std::ostringstream cmd;
 	cmd << "exit; echo $? >" << machineStatusFile;
 
@@ -296,13 +296,16 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	// If succeed execute the script to the virtual machine
 	// This assumes that the script is located on a shared DFS
 	std::cout << "Executing the script...\n" ;
-	int pid = -1;
+
 	const std::string outputDir = Env::getVar("VISHNU_OUTPUT_DIR");
-	if(execCmd(scriptPath, true, outputDir, &pid)){
+	execCmd("'mkdir -p "+outputDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
+
+	int pid = -1;
+	if(execCmd("sh "+scriptPath, true, outputDir, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: failed when executing the script " + scriptPath + " in the virtual machine "+mhostname);
 	}
-
+	std::cout << "Submission completed. PID: "<< pid << "\n" ;
 	return pid;
 }
 

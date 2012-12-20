@@ -310,11 +310,11 @@ namespace vishnu {
 
 	/**
 	 *  \brief Function that create a symbolic link on a directory
-	 *  \param fileparam a list of key=value
+	 *  \param fileparams a list of key=value
 	 *  \param dir the directory where we create
 	 */
 
-	std::string createSymbolicLink (const std::string& fileparam, std::string dir);
+	std::string createSymbolicLinks(const std::string& fileparams, std::string dir);
 
 }
 #endif //_UTILSERVER_H_
