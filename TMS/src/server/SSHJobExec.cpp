@@ -23,6 +23,7 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
+#include "Env.hpp"
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
@@ -296,7 +297,8 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	// This assumes that the script is located on a shared DFS
 	std::cout << "Executing the script...\n" ;
 	int pid = -1;
-	if(execCmd(scriptPath, true, nfsMountPoint, &pid)){
+	const std::string outputDir = Env::getVar("VISHNU_OUTPUT_DIR");
+	if(execCmd(scriptPath, true, outputDir, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: failed when executing the script " + scriptPath + " in the virtual machine "+mhostname);
 	}
