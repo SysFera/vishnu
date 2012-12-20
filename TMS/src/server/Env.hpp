@@ -50,6 +50,15 @@ public:
    */
   void
   setParams(std::string& scriptContent, const std::string& params) ;
+	/**
+	 * \brief Function to replace all occurences in a string
+	 * \param scriptContent The string to modify
+	 * \param oldValue The value to replace
+	 * \param newValue The new value
+	 */
+	static void replaceAllOccurences(std::string& scriptContent,
+			const std::string& oldValue,
+			const std::string& newValue);
 
   /**
    * \brief Function to set environment variables accordinf to parameters

@@ -296,7 +296,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	// This assumes that the script is located on a shared DFS
 	std::cout << "Executing the script...\n" ;
 	int pid = -1;
-	if(execCmd(scriptPath, true, &pid)){
+	if(execCmd(scriptPath, true, nfsMountPoint, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: failed when executing the script " + scriptPath + " in the virtual machine "+mhostname);
 	}
@@ -397,11 +397,13 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
  * \brief Function to execute a command via ssh
  * \param cmd the command to execute
  * \param background: Tell whether launch the script is background
- * \param pidFile: The path of the file containing the process pid
+ * \param outDir the directory when the output will be stored
+ * \param pid: return value containing the pid of the of the running background process
  */
 int
 SSHJobExec::execCmd(const std::string& cmd,
 		const bool & background,
+		const std::string& outDir,
 		int* pid){
 
 	std::string pidFile = "$HOME/vishnu.pid";
@@ -416,7 +418,7 @@ SSHJobExec::execCmd(const std::string& cmd,
 			pidFile =  bfs::unique_path("/tmp/vishnu.pid%%%%%%").string();
 		} catch(...) {} // The pid file will be created in $HOME/vishnu.pid
 
-		sshCmd << "'" << cmd << " 1>vishnu.stdout 2>vishnu.stderr & echo $!' >" << pidFile;
+		sshCmd << "'" << cmd << " 1>"+outDir+"/stdout 2>"+outDir+"/stderr & echo $!' >" << pidFile;
 	}
 
 	if(system((sshCmd.str()).c_str())) {
@@ -450,11 +452,11 @@ SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
 
 	// Create the command mkdir + mount
 	std::ostringstream cmd;
-	cmd << "'mkdir "+point+" 2>vishnu.log && "
-		<< "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+" 2>>vishnu.log'";
+	cmd << "'mkdir "+point+" && "
+		<< "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+"'";
 
 	if(execCmd(cmd.str(), false)){ // run in foreground
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"mountNfsDir:: mount the directory: "+point);
+				"mountNfsDir:: failed to mount the directory "+point);
 	}
 }

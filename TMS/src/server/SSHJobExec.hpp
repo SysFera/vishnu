@@ -88,11 +88,13 @@ class SSHJobExec {
      * \brief Function to execute a command via ssh
      * \param cmd the command to execute
      * \param background: Tell whether launch the script is background
-     * \param pidFile: The path of the file containing the process pid
+     * \param outDir the directory when the output will be stored
+     * \param pid: return value containing the pid of the of the running background process
      */
     int
     execCmd(const std::string& cmd,
     		const bool & background=false,
+    		const std::string& outDir="$HOME",
     		int* pid=NULL);
 
     /**

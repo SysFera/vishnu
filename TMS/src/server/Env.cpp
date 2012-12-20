@@ -17,25 +17,6 @@ Env::Env(const BatchType& batchType): mbatchType(batchType) {
 }
 
 /**
- * \brief Function to replace all occurences in a string
- * \param scriptContent The string to modify
- * \param oldValue The value to replace
- * \param newValue The new value
- */
-
-void Env::replaceAllOccurences(std::string& scriptContent,
-		const std::string& oldValue,
-		const std::string& newValue) {
-
-	size_t pos = scriptContent.find(oldValue);
-	while(pos!=std::string::npos) {
-		scriptContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
-		pos = scriptContent.find(oldValue, pos+newValue.size());
-	}
-
-}
-
-/**
  * \brief Function to replace some environment variables in a string
  * \param scriptContent The string content to modify
  */
@@ -162,6 +143,26 @@ Env::replaceEnvVariables(std::string& scriptContent) {
   default:
     break;
   }
+}
+
+
+/**
+ * \brief Function to replace all occurences in a string
+ * \param scriptContent The string to modify
+ * \param oldValue The value to replace
+ * \param newValue The new value
+ */
+
+void Env::replaceAllOccurences(std::string& scriptContent,
+		const std::string& oldValue,
+		const std::string& newValue) {
+
+	size_t pos = scriptContent.find(oldValue);
+	while(pos!=std::string::npos) {
+		scriptContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
+		pos = scriptContent.find(oldValue, pos+newValue.size());
+	}
+
 }
 
 /**
