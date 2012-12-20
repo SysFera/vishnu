@@ -157,6 +157,18 @@ public:
   * \brief The configuration of the SeD
   */
   ExecConfiguration_Ptr msedConfig;
+
+  private:
+
+  /**
+  * \brief Function to set the path of output directory
+  * \param parentDir The directory in which to create the output dir
+  * \param jobId the Id of the job (used to suffixed the generated directory name)
+  * \param content the script content to be update which the generated path
+  */
+  void setOutputDirPath(const std::string& parentDir,
+		const std::string & jobId,
+		  std::string & content);
 };
 
 #endif

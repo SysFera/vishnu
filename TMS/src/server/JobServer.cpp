@@ -14,7 +14,6 @@
 #include "DbFactory.hpp"
 #include "ScriptGenConvertor.hpp"
 #include <boost/algorithm/string.hpp>
-
 #include "Env.hpp"
 
 using namespace std;
@@ -84,13 +83,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 	env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
 
+	bool needOutputDir = false ;
 	string suffix = bfs::unique_path("job%%%%%%").string();
     string scriptPath = bfs::unique_path("job_script%%%%%%").string();
-    // Set the script path
     if(mbatchType == DELTACLOUD) {
     	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-    	scriptPath = nfsMountPoint + "script_" +suffix;
-    	workingDir = nfsMountPoint + "data_" + suffix;
+    	scriptPath = nfsMountPoint + "/script_" +suffix;
+    	workingDir = nfsMountPoint + "/data_" + suffix;
         string directory = "";
         try {
         	vishnu::createSymbolicLink(optionsref.getFileParams(), workingDir);
@@ -101,12 +100,17 @@ int JobServer::submitJob(const std::string& scriptContent,
         	std::string fileparam = strdup(optionsref.getFileParams().c_str());
         	env.replaceAllOccurences(fileparam, directory, "/mnt/cloud");
         	optionsref.setFileParams(fileparam);
-
         }
+		setOutputDirPath(workingDir, vishnuJobId, scriptContentRef);
     } else {
     	scriptPath = "/tmp/" + scriptPath;
    		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
    		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
+
+   		if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
+   			setOutputDirPath(workingDir, vishnuJobId, scriptContentRef);
+   			needOutputDir = true ;
+   		}
    	}
 
 
@@ -119,16 +123,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 
 	mjob.setWorkId(optionsref.getWorkId()) ;
-
-	bool needOutputDir = false ;
-	if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
-		std::string prefix = (boost::algorithm::ends_with(workingDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
-		std::string dir = workingDir + prefix + vishnuJobId + vishnu::createSuffixFromCurTime() ;
-		env.replaceAllOccurences(scriptContentRef, "$VISHNU_OUTPUT_DIR", dir);
-		env.replaceAllOccurences(scriptContentRef, "${VISHNU_OUTPUT_DIR}", dir);
-		mjob.setOutputDir(dir) ;
-		needOutputDir = true ;
-	}
 
 	std::string jobSerialized ;
 	std::string submitOptionsSerialized;
@@ -180,13 +174,15 @@ int JobServer::submitJob(const std::string& scriptContent,
             size_t pos3=0;
             pos3 = specificParams.find(" ");
             if (pos3!=std::string::npos) {
-              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep
+                                       +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key, batchType);
               specificParams.erase(0,pos3);
               boost::algorithm::trim_left(specificParams);
 
             } else {
-              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
+              std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)
+                                       + sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key, batchType);
               break;
             }
@@ -614,4 +610,23 @@ long long JobServer::convertToTimeType(std::string date) {
 ExecConfiguration_Ptr
 JobServer::getSedConfig() const {
 	return msedConfig;
+}
+
+
+/**
+* \brief Function to set the path of output directory
+* \param parentDir The directory in which to create the output dir
+* \param jobId the Id of the job (used to suffixed the generated directory name)
+* \param content the script content to be update which the generated path
+*/
+void JobServer::setOutputDirPath(const std::string& parentDir,
+		const std::string & jobId,
+		std::string & content) {
+
+		std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
+		std::string outdir = parentDir + prefix + jobId + vishnu::createSuffixFromCurTime() ;
+		Env::replaceAllOccurences(content, "$VISHNU_OUTPUT_DIR", outdir);
+		Env::replaceAllOccurences(content, "${VISHNU_OUTPUT_DIR}", outdir);
+		mjob.setOutputDir(outdir) ;
+		setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
 }
