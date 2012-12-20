@@ -118,9 +118,10 @@ public:
 		ctx.streams[bp::stdout_id] = bp::behavior::null();
 		ctx.streams[bp::stderr_id] = bp::behavior::null();
 #endif
-		// setup omniNames arguments
-		std::vector<std::string> args = ba::list_of(DISPATCHER_URI_SRV)
-		(DISPATCHER_URI_SUB);
+		// setup dispatcher arguments
+		std::vector<std::string> args;
+		// std::vector<std::string> args = ba::list_of(DISPATCHER_URI_SRV)
+		// (DISPATCHER_URI_SUB);
 		bp::child c = bp::create_child(exec, args, ctx);
 		processNamingService.reset(utils::copy_child(c));
 		boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
