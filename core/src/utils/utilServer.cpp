@@ -591,11 +591,11 @@ int vishnu::getStatusValue (const std::string& file) {
 
 /**
  *  \brief Function that create a symbolic link on a directory
- *  \param fileparam a list of key=value
- *  \param dir the directory where we create
+ *  \param fileparams a list of key=value
+ *  \param dir the directory where we create the links
  *  \return the string of the directory to which the link was created
  */
-std::string vishnu::createSymbolicLink (const std::string& fileparam, std::string dir){
+std::string vishnu::createSymbolicLinks (const std::string& fileparam, std::string dir){
 	std::string directory;
 	std::string file;
 	size_t pos = fileparam.find("=");
@@ -608,7 +608,7 @@ std::string vishnu::createSymbolicLink (const std::string& fileparam, std::strin
 	      }
 	      size_t pos2 = file.rfind("/");
 	      if(pos2 != std::string::npos){
-	    	  directory = file.substr(0,pos2);
+	    	  directory = file.substr(0, pos2);
 	          try {
 	        	bfs::create_symlink(directory, dir);
 	          } catch(bfs::filesystem_error ex){

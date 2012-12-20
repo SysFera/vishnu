@@ -92,14 +92,14 @@ int JobServer::submitJob(const std::string& scriptContent,
     	workingDir = nfsMountPoint + "/data_" + suffix;
         string directory = "";
         try {
-        	vishnu::createSymbolicLink(optionsref.getFileParams(), workingDir);
+        	directory = vishnu::createSymbolicLinks(optionsref.getFileParams(), workingDir);
         } catch(bfs::filesystem_error ex){
         	throw (ERRCODE_INVDATA, ex.what());
         }
-        if(directory.length()){
-        	std::string fileparam = strdup(optionsref.getFileParams().c_str());
-        	env.replaceAllOccurences(fileparam, directory, "/mnt/cloud");
-        	optionsref.setFileParams(fileparam);
+        if(directory.length() > 0){
+        	std::string fileparams = strdup(optionsref.getFileParams().c_str());
+        	env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
+        	optionsref.setFileParams(fileparams);
         }
 		setOutputDirPath(workingDir, vishnuJobId, scriptContentRef);
     } else {
