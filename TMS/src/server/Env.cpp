@@ -240,4 +240,5 @@ Env::getVar(const std::string& name,
 				"You may need to set "+name);
 	}
 
+	return value;
 }
