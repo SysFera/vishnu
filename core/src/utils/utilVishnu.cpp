@@ -715,7 +715,7 @@ std::string vishnu::getLocalMachineName(const std::string& port ){
   hints.ai_flags = AI_CANONNAME;
 
   if ((rv = getaddrinfo(hostname,port.c_str(), &hints, &servinfo)) != 0) {
-    SystemException(ERRCODE_SYSTEM,gai_strerror(rv));
+    throw SystemException(ERRCODE_SYSTEM,gai_strerror(rv));
   }
   if(servinfo->ai_canonname==NULL){
     throw SystemException(ERRCODE_SYSTEM,"can not resolve the machine name");
