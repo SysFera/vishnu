@@ -28,7 +28,18 @@ SeD::call(diet_profile_t* profile) {
   }
   int (*functionPtr)(diet_profile_t*);
   functionPtr = it->second;
-  return (*functionPtr)(profile);
+
+  /* we need to catch all exceptions to prevent the SeD from
+   * crashing in case the function raises an exception
+   */
+  int rv;
+  try {
+    rv = (*functionPtr)(profile);
+  } catch (std::exception &e) {
+    rv = INTERNAL_ERROR;
+    std::cerr << e.what() << std::endl;
+  }
+  return rv;
 }
 
 std::vector<std::string>

@@ -7,6 +7,7 @@
 #include <vector>
 
 #define UNKNOWN_SERVICE 1;
+#define INTERNAL_ERROR 2;
 
 typedef int (*functionPtr_t)(diet_profile_t*);
 /**
