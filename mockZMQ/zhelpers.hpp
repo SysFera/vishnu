@@ -27,12 +27,12 @@ public:
 
   bool
   send(const std::string& data, int flags = 0) {
-    return send(data.c_str(), data.length(), flags);
+    return send(data.c_str(), data.length()+1, flags);
   }
 
   bool
   send(const char* data, int flags = 0) {
-    return send(data, strlen(data), flags);
+    return send(data, strlen(data)+1, flags);
   }
 
   std::string
