@@ -35,17 +35,20 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */
 int solveRemoveDir(diet_profile_t* profile) {
-  string localPath, localUser, userKey, acLogin, machineName;
-  char* path, *user, *host, *sessionKey;
+  std::string localPath, localUser, userKey, acLogin, machineName;
+  std::string path = "";
+  std::string user = "";
+  std::string host = "";
+  std::string sessionKey = "";
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
   int mapperkey;
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &path, NULL);
-  diet_string_get(diet_parameter(profile, 2), &user, NULL);
-  diet_string_get(diet_parameter(profile, 3), &host, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), path);
+  diet_string_get2(diet_parameter(profile, 2), user);
+  diet_string_get2(diet_parameter(profile, 3), host);
 
   localUser = user;
   localPath = path;
@@ -55,7 +58,7 @@ int solveRemoveDir(diet_profile_t* profile) {
      //MAPPER CREATION
      Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
      mapperkey = mapper->code("vishnu_remove_dir");
-     mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+     mapper->code(host + ":" + path, mapperkey);
      cmd = mapper->finalize(mapperkey);
      // check the sessionKey
 
@@ -93,6 +96,6 @@ int solveRemoveDir(diet_profile_t* profile) {
 	errMsg = err.buildExceptionString();
   }
 
-  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), errMsg.c_str(), DIET_VOLATILE);
   return 0;
 }
