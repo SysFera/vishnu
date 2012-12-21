@@ -45,18 +45,21 @@ namespace ba=boost::algorithm;
  */
 int get_infos(diet_profile_t* profile) {
 
-  char* path, * user, * host, *sessionKey;
-  string localPath, localUser, userKey, machineName;
+  std::string path = "";
+  std::string user = "";
+  std::string host = "";
+  std::string sessionKey = "";
+  std::string localPath, localUser, userKey, machineName;
   std::string finishError ="";
   std::string cmd = "";
   std::string fileStatSerialized = "";
   std::string errMsg = "";
   int mapperkey;
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &path, NULL);
-  diet_string_get(diet_parameter(profile, 2), &user, NULL);
-  diet_string_get(diet_parameter(profile, 3), &host, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), path);
+  diet_string_get2(diet_parameter(profile, 2), user);
+  diet_string_get2(diet_parameter(profile, 3), host);
 
   localUser = user;
   localPath = path;
@@ -66,7 +69,7 @@ int get_infos(diet_profile_t* profile) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_stat");
-    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+    mapper->code(host + ":" + path, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // check the sessionKey
@@ -120,7 +123,7 @@ int get_infos(diet_profile_t* profile) {
     fileStatSerialized="";
   }
 
-  diet_string_set(diet_parameter(profile, 4), const_cast<char*>(fileStatSerialized.c_str()), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), fileStatSerialized.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), errMsg.c_str(), DIET_VOLATILE);
   return 0;
 }
