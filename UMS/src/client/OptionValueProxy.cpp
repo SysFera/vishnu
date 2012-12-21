@@ -31,7 +31,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string optionValueToString;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   if(defaultValue) {
@@ -60,7 +60,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
