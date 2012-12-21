@@ -29,7 +29,7 @@ struct SerializeAdaptor {
 		return  _ser.serialize_str(const_cast<Object*>(&object));
 	}
 
-}; 
+};
 
 /**
  * \brief Specialization in std::string of the SerializeAdaptor
@@ -212,8 +212,8 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	diet_profile_t* profile = NULL;
 	std::string sessionKey;
 	std::string queryParmetersToString;
-	char* listObjectInString;
-	char* errorInfo;
+        std::string listObjectInString;
+        std::string errorInfo;
 	std::string msg = "call of function diet_string_set is rejected ";
 
 
@@ -252,11 +252,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 		diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
 		if(!diet_call(profile)) {
-			if(diet_string_get(diet_parameter(profile,3), &listObjectInString, NULL)){
+			if(diet_string_get2(diet_parameter(profile,3), listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+			if(diet_string_get2(diet_parameter(profile,4), errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}
@@ -279,11 +279,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
 		if(!diet_call(profile)) {
 
-			if(diet_string_get(diet_parameter(profile,2), &listObjectInString, NULL)){
+			if(diet_string_get2(diet_parameter(profile,2), listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+			if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}
@@ -297,7 +297,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	raiseExceptionIfNotEmptyMsg(errorInfo);
 
 	//To parse List object serialized
-	parseEmfObject(std::string(listObjectInString), mlistObject, "Error by receiving List object serialized");
+	parseEmfObject(listObjectInString, mlistObject, "Error by receiving List object serialized");
 
 	return mlistObject;
 }
