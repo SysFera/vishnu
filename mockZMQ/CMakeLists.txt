@@ -21,6 +21,7 @@ add_library(zmq_helper
   Server.cpp
   SeD.cpp
   utils.cpp
+  ${utils_server_SRCS}
 )
 
 target_link_libraries (zmq_helper
