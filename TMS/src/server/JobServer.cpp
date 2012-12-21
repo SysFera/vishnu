@@ -107,7 +107,8 @@ int JobServer::submitJob(const std::string& scriptContent,
    		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
    	}
     // Set the output dir
-	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
+	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
+			mbatchType == DELTACLOUD ) {
 		setOutputDir(workingDir, suffix, scriptContentRef);
 	    needOutputDir = true ;
 	}

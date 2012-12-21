@@ -53,14 +53,18 @@ class SSHJobExec {
             const std::string& script_path="");
 
     /**
-    * \brief Function to execute a script remotely
-    * \param scriptPath the path to script to submit
-    * \return the pid of the process. Throw exception on error
-    */
+     * \brief Function to execute a script remotely
+     * \param scriptPath the path to script to submit
+     * \param nfsServer: The NFS server
+     * \param nfsMountPointthe mount point on the NFS server
+     * \param workDir The wordking directory of the job
+     * \return raises an exception on error
+     */
    int
    execRemoteScript(const std::string& scriptPath,
 		   		const std::string & nfsServer="",
-		   		const std::string nfsMountPoint="");
+		   		const std::string nfsMountPoint="",
+				const std::string & workDir="");
 
     /**
      * \brief Function to copy files from remote machine
