@@ -75,8 +75,9 @@ int solveRemoveDir(diet_profile_t* profile) {
     // get the acLogin
     acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
-    FileFactory::setSSHServer(machineName);
-    boost::scoped_ptr<File> file (FileFactory::getFileServer(sessionServer,localPath, acLogin, userKey));
+    FileFactory ff;
+    ff.setSSHServer(machineName);
+    boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
 	file->rmdir();
 	//To register the command
