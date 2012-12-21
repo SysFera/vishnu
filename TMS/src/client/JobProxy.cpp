@@ -67,6 +67,13 @@ JobProxy::submitJob(const std::string& scriptContent,
 		raiseDietMsgException(msgErrorDiet);
 	}
 
+	// Send input files, if there is any one
+	CpFileOptions copts;
+	copts.setIsRecursive(true) ;
+	copts.setTrCommand(0);
+	string inputFiles = sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
+	options_.setFileParams(inputFiles);
+
 	::ecorecpp::serializer::serializer _ser;
 	string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
 
@@ -88,12 +95,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 	diet_string_set(submitJobProfile,6);
 
         // FIXME: do it before setting parameter 3
-	// Send input files, if there is any one
-	CpFileOptions copts;
-	copts.setIsRecursive(true) ;
-	copts.setTrCommand(0);
-	string inputFiles = sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
-	options_.setFileParams(inputFiles);
         std::string cresultMsg;
         std::string errorInfo;
 	if(!diet_call(submitJobProfile)) {
