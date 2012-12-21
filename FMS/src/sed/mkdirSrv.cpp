@@ -36,19 +36,23 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */
 int solveCreateDir(diet_profile_t* profile) {
-  string localPath, localUser, userKey, acLogin, machineName;
-  char* path, *user, *host, *sessionKey, *optionsSerialized= NULL;
+  std::string localPath, localUser, userKey, acLogin, machineName;
+  std::string path = "";
+  std::string user = "";
+  std::string host = "";
+  std::string sessionKey = "";
+  std::string optionsSerialized = "";
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
   int mapperkey;
 
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &path, NULL);
-  diet_string_get(diet_parameter(profile, 2), &user, NULL);
-  diet_string_get(diet_parameter(profile, 3), &host, NULL);
-  diet_string_get(diet_parameter(profile, 4),&optionsSerialized, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), path);
+  diet_string_get2(diet_parameter(profile, 2), user);
+  diet_string_get2(diet_parameter(profile, 3), host);
+  diet_string_get2(diet_parameter(profile, 4), optionsSerialized);
 
       localUser = user;
       localPath = path;
@@ -58,8 +62,8 @@ int solveCreateDir(diet_profile_t* profile) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_create_dir");
-    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
-    mapper->code(std::string(optionsSerialized), mapperkey);
+    mapper->code(host + ":" + path, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
   // check the sessionKey
@@ -85,7 +89,7 @@ int solveCreateDir(diet_profile_t* profile) {
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
     CreateDirOptions_ptr options_ptr= NULL;
- if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr )) {
+ if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_create_dir: CreateDirOptions object is not well built");
     }
     file->mkdir(*options_ptr);
@@ -104,6 +108,6 @@ int solveCreateDir(diet_profile_t* profile) {
       errMsg = err.buildExceptionString();
     }
 
-diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+diet_string_set(diet_parameter(profile, 5), errMsg.c_str(), DIET_VOLATILE);
   return 0;
 }
