@@ -54,8 +54,8 @@ int UserProxy::add(UMS_Data::User& user)
 {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo;
-  char* userInString;
+  std::string errorInfo;
+  std::string userInString;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("userCreate", 1, 1, 3);
@@ -79,11 +79,11 @@ int UserProxy::add(UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &userInString, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), userInString)){
       msg += " by receiving User serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
       msg += " by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -98,7 +98,7 @@ int UserProxy::add(UMS_Data::User& user)
   UMS_Data::User_ptr user_ptr;
 
   //To parse User object serialized
-  parseEmfObject(std::string(userInString), user_ptr, "Error by receiving User object serialized");
+  parseEmfObject(userInString, user_ptr, "Error by receiving User object serialized");
   user = *user_ptr;
   muser = user;
   delete user_ptr;
@@ -119,7 +119,7 @@ int UserProxy::update(const UMS_Data::User& user)
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userToString;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("userUpdate", 1, 1, 2);
@@ -144,7 +144,7 @@ int UserProxy::update(const UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -173,7 +173,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userId;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("userDelete", 1, 1, 2);
@@ -194,7 +194,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -221,7 +221,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
 {
 
   diet_profile_t* profile = NULL;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
   std::string versionToString;
 
@@ -261,7 +261,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,4), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,4), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -288,8 +288,8 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 {
 
   diet_profile_t* profile = NULL;
-  char* tmpPassword;
-  char* errorInfo;
+  std::string tmpPassword;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
@@ -310,11 +310,11 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &tmpPassword, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), tmpPassword)){
       msg += "by receiving tmpPassWord message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -327,7 +327,7 @@ int UserProxy::resetPassword(UMS_Data::User& user)
 
   /*To set the temporary password*/
   muser.setUserId(user.getUserId());
-  muser.setPassword(std::string(tmpPassword));
+  muser.setPassword(tmpPassword);
 
   diet_profile_free(profile);
 
