@@ -36,19 +36,23 @@ using namespace std;
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int headFile(diet_profile_t* profile) {
-  string localPath, localUser, userKey, acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *optionsSerialized=NULL;
+  std::string localPath, localUser, userKey, acLogin, machineName;
+  std::string path = "";
+  std::string user = "";
+  std::string host = "";
+  std::string sessionKey = "";
+  std::string optionsSerialized = "";
   std::string finishError = "";
   std::string result = "";
   std::string errMsg = "";
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &path, NULL);
-  diet_string_get(diet_parameter(profile, 2), &user, NULL);
-  diet_string_get(diet_parameter(profile, 3), &host, NULL);
-  diet_string_get(diet_parameter(profile, 4), &optionsSerialized, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), path);
+  diet_string_get2(diet_parameter(profile, 2), user);
+  diet_string_get2(diet_parameter(profile, 3), host);
+  diet_string_get2(diet_parameter(profile, 4), optionsSerialized);
 
 
   localUser = user;
@@ -60,7 +64,7 @@ int headFile(diet_profile_t* profile) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_head_of_file");
-    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+    mapper->code(host + ":" + path, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
@@ -88,7 +92,7 @@ int headFile(diet_profile_t* profile) {
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
     HeadOfFileOptions_ptr options_ptr= NULL;
-    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
+    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
     }
 
@@ -108,7 +112,7 @@ int headFile(diet_profile_t* profile) {
 	result = "";
 	errMsg = err.buildExceptionString().c_str();
   }
-  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(result.c_str()), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), result.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 6), errMsg.c_str(), DIET_VOLATILE);
   return 0;
 }
