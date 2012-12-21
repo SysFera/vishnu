@@ -44,7 +44,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
 
   ::ecorecpp::serializer::serializer _ser2;
   //To serialize the options object in to optionsInString
-  string optionsToString =
+  std::string optionsToString =
     _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop)).c_str();
   //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
@@ -57,7 +57,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(addProfile,2), optionsToString.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,2), optionsToString.c_str(), DIET_VOLATILE)) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
