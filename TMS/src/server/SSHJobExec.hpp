@@ -186,11 +186,6 @@ class SSHJobExec {
      */
     std::string mhostname;
 
-    /**
-     * \brief The endpoint of deltacloud server
-     */
-    std::string mcloudEndpoint;
-
 };
 
 #endif
