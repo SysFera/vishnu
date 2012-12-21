@@ -24,20 +24,20 @@ using namespace vishnu;
 int
 solveExport(diet_profile_t* pb){
 
-  char* sessionKey = NULL;
-  char* oldSessionId = NULL;
-  char* filename  = NULL;
-  char* options  = NULL;
+  string sessionKey;
+  string oldSessionId;
+  string filename ;
+  string options ;
   string content;
   int mapperkey;
   string cmd;
   string error;
   string retErr = "";
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &oldSessionId, NULL);
-  diet_string_get(diet_parameter(pb,2), &filename, NULL);
-  diet_string_get(diet_parameter(pb,3), &options, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), oldSessionId);
+  diet_string_get2(diet_parameter(pb,2), filename);
+  diet_string_get2(diet_parameter(pb,3), options);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -65,8 +65,8 @@ solveExport(diet_profile_t* pb){
     exp->exporte(oldSessionId, content);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(content.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,5), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), content.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -80,8 +80,8 @@ solveExport(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,5), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,5), retErr.c_str(), DIET_VOLATILE);
   }
   if (expOp) {
     delete expOp;
@@ -91,18 +91,18 @@ solveExport(diet_profile_t* pb){
 
 int
 solveCurMetric(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char *curOpSer = NULL;
-  char *mid = NULL;
+  string sessionKey  ;
+  string curOpSer;
+  string mid;
   string curSer;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &mid,NULL);
-  diet_string_get(diet_parameter(pb,2), &curOpSer,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), mid);
+  diet_string_get2(diet_parameter(pb,2), curOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -133,8 +133,8 @@ solveCurMetric(diet_profile_t* pb){
     curSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(curSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), curSer.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -148,8 +148,8 @@ solveCurMetric(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), retErr.c_str(), DIET_VOLATILE);
 
   }
   if (curOp) {
@@ -160,18 +160,18 @@ solveCurMetric(diet_profile_t* pb){
 
 int
 solveOldMetric(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char *histOpSer = NULL;
-  char *mid = NULL;
+  string sessionKey  ;
+  string histOpSer;
+  string mid;
   string histSer;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &mid,NULL);
-  diet_string_get(diet_parameter(pb,2), &histOpSer,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), mid);
+  diet_string_get2(diet_parameter(pb,2), histOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -203,8 +203,8 @@ solveOldMetric(diet_profile_t* pb){
     histSer = _ser.serialize_str(const_cast<IMS_Data::ListMetric_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(histSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), histSer.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -219,8 +219,8 @@ solveOldMetric(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,4), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), retErr.c_str(), DIET_VOLATILE);
 
   }
   if (histOp) {
@@ -231,16 +231,16 @@ solveOldMetric(diet_profile_t* pb){
 
 int
 solvePS(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char *processOpSer = NULL;
+  string sessionKey  ;
+  string processOpSer;
   string processSer;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &processOpSer,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), processOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -272,8 +272,8 @@ solvePS(diet_profile_t* pb){
     processSer = _ser.serialize_str(const_cast<IMS_Data::ListProcesses_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(processSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), processSer.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -288,8 +288,8 @@ solvePS(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   if (processOp) {
     delete processOp;
@@ -299,16 +299,16 @@ solvePS(diet_profile_t* pb){
 
 int
 solveSetSysInfo(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* sys = NULL;
+  string sessionKey  ;
+  string sys;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &sys,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), sys);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -332,7 +332,7 @@ solveSetSysInfo(diet_profile_t* pb){
     // Listing the old metric
     sysser.setSysInfo(sysinf);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -347,7 +347,7 @@ solveSetSysInfo(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   if (sysinf) {
     delete sysinf;
@@ -357,8 +357,8 @@ solveSetSysInfo(diet_profile_t* pb){
 
 int
 solveGetThreshold(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char *treeOpSer = NULL;
+  string sessionKey  ;
+  string treeOpSer;
   string treeSer;
   string error;
   string retErr = "";
@@ -366,8 +366,8 @@ solveGetThreshold(diet_profile_t* pb){
   string cmd;
   std::string empty("");
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &treeOpSer,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), treeOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -399,8 +399,8 @@ solveGetThreshold(diet_profile_t* pb){
     treeSer = _ser.serialize_str(const_cast<IMS_Data::ListThreshold_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(treeSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), treeSer.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -416,8 +416,8 @@ solveGetThreshold(diet_profile_t* pb){
     retErr = e.buildExceptionString();
     // Setting diet output parameters
 
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   if (treeOp) {
     delete treeOp;
@@ -427,13 +427,13 @@ solveGetThreshold(diet_profile_t* pb){
 
 int
 solveGetUpFreq(diet_profile_t* pb){
-  char *sessionKey   = NULL;
+  string sessionKey  ;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -454,8 +454,8 @@ solveGetUpFreq(diet_profile_t* pb){
     res = met.checkUpFreq();
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,1), const_cast<char*>(convertToString(res).c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), convertToString(res).c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -469,24 +469,24 @@ solveGetUpFreq(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,1), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetThreshold(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* tree = NULL;
+  string sessionKey  ;
+  string tree;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &tree,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), tree);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -510,7 +510,7 @@ solveSetThreshold(diet_profile_t* pb){
     // Listing the old metric
     treeser.setThreshold(treeinf);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -525,7 +525,7 @@ solveSetThreshold(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   if (treeinf) {
     delete treeinf;
@@ -535,15 +535,15 @@ solveSetThreshold(diet_profile_t* pb){
 
 int
 solveSetUID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -562,7 +562,7 @@ solveSetUID(diet_profile_t* pb){
     // Listing the old metric
     ob.setUID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -577,22 +577,22 @@ solveSetUID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetJID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -611,7 +611,7 @@ solveSetJID(diet_profile_t* pb){
     // Listing the old metric
     ob.setTID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -626,22 +626,22 @@ solveSetJID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetTID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -660,7 +660,7 @@ solveSetTID(diet_profile_t* pb){
     // Listing the old metric
     ob.setFID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -675,22 +675,22 @@ solveSetTID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetMID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -709,7 +709,7 @@ solveSetMID(diet_profile_t* pb){
     // Listing the old metric
     ob.setMID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -724,22 +724,22 @@ solveSetMID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetAID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -758,7 +758,7 @@ solveSetAID(diet_profile_t* pb){
     // Listing the old metric
     ob.setAID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -773,22 +773,22 @@ solveSetAID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetWID(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* fmt = NULL;
+  string sessionKey  ;
+  string fmt;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &fmt,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -807,7 +807,7 @@ solveSetWID(diet_profile_t* pb){
     // Listing the old metric
     ob.setWID(fmt);
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -822,25 +822,25 @@ solveSetWID(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveLoadShed(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* mid  = NULL;
-  char* type = NULL;
+  string sessionKey  ;
+  string mid ;
+  string type;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &mid,NULL);
-  diet_string_get(diet_parameter(pb,2), &type,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), mid);
+  diet_string_get2(diet_parameter(pb,2), type);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -861,7 +861,7 @@ solveLoadShed(diet_profile_t* pb){
     // Load shedding
     proc.loadShed(convertToInt(std::string(type)));
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -876,23 +876,23 @@ solveLoadShed(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
 
 int
 solveSetUpFreq(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char* freq = NULL;
+  string sessionKey  ;
+  string freq;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &freq,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), freq);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -911,7 +911,7 @@ solveSetUpFreq(diet_profile_t* pb){
     // Listing the old metric
     met.setUpFreq(convertToInt(string(freq)));
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -926,7 +926,7 @@ solveSetUpFreq(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), retErr.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -934,17 +934,17 @@ solveSetUpFreq(diet_profile_t* pb){
 
 int
 solveRestart(diet_profile_t* pb){
-  char *sessionKey = NULL;
-  char *mid        = NULL;
-  char *op         = NULL;
+  string sessionKey;
+  string mid       ;
+  string op        ;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &mid,NULL);
-  diet_string_get(diet_parameter(pb,2), &op,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), mid);
+  diet_string_get2(diet_parameter(pb,2), op);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -972,7 +972,7 @@ solveRestart(diet_profile_t* pb){
     ctl.restart(reOp, mid);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -986,7 +986,7 @@ solveRestart(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   if (reOp) {
     delete reOp;
@@ -996,17 +996,17 @@ solveRestart(diet_profile_t* pb){
 
 int
 solveStop(diet_profile_t* pb){
-  char *sessionKey = NULL;
-  char *mid        = NULL;
-  char *op         = NULL;
+  string sessionKey;
+  string mid       ;
+  string op        ;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &mid,NULL);
-  diet_string_get(diet_parameter(pb,2), &op,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), mid);
+  diet_string_get2(diet_parameter(pb,2), op);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -1034,7 +1034,7 @@ solveStop(diet_profile_t* pb){
     ctl.stop(opObj);
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -1048,7 +1048,7 @@ solveStop(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   if (opObj) {
     delete opObj;
@@ -1058,16 +1058,16 @@ solveStop(diet_profile_t* pb){
 
 int
 solveGetSysInfo(diet_profile_t* pb){
-  char *sessionKey   = NULL;
-  char *sysOpSer = NULL;
+  string sessionKey  ;
+  string sysOpSer;
   string sysSer;
   string error;
   string retErr = "";
   int mapperkey;
   string cmd;
 
-  diet_string_get(diet_parameter(pb,0), &sessionKey,NULL);
-  diet_string_get(diet_parameter(pb,1), &sysOpSer,NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), sysOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -1099,8 +1099,8 @@ solveGetSysInfo(diet_profile_t* pb){
     sysSer = _ser.serialize_str(const_cast<IMS_Data::ListSysInfo_ptr>(res));
 
     // Setting out diet param
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(sysSer.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), sysSer.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
 
     // Finishing the command as a success
     sessionServer.finish(cmd, IMS, CMDSUCCESS);
@@ -1115,8 +1115,8 @@ solveGetSysInfo(diet_profile_t* pb){
     e.appendMsgComp(error);
     retErr = e.buildExceptionString();
     // Setting diet output parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(""), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(retErr.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), "", DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), retErr.c_str(), DIET_VOLATILE);
   }
   if (sysOp) {
     delete sysOp;
