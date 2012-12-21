@@ -36,17 +36,21 @@ using namespace std;
 /* Returns the n first line of the file to the client application. */
 int solveChangeGroup (diet_profile_t* profile) {
   string localPath, localUser,userKey="", acLogin, machineName;
-  char* path, *user, *host,*sessionKey, *group;
+  std::string path = "";
+  std::string user = "";
+  std::string host = "";
+  std::string sessionKey = "";
+  std::string group = "";
   std::string finishError ="";
   std::string errMsg ="";
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &path, NULL);
-  diet_string_get(diet_parameter(profile, 2), &user, NULL);
-  diet_string_get(diet_parameter(profile, 3), &host, NULL);
-  diet_string_get(diet_parameter(profile, 4), &group, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), path);
+  diet_string_get2(diet_parameter(profile, 2), user);
+  diet_string_get2(diet_parameter(profile, 3), host);
+  diet_string_get2(diet_parameter(profile, 4), group);
 
 
   localUser = user;
@@ -59,7 +63,7 @@ int solveChangeGroup (diet_profile_t* profile) {
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_chgrp");
     mapper->code(group, mapperkey);
-    mapper->code(std::string(host)+":"+std::string(path), mapperkey);
+    mapper->code(host + ":" + path, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     // check the sessionKey
@@ -100,6 +104,6 @@ int solveChangeGroup (diet_profile_t* profile) {
     err.appendMsgComp(finishError);
     errMsg = err.buildExceptionString().c_str();
   }
-  diet_string_set(diet_parameter(profile, 5), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), errMsg.c_str(), DIET_VOLATILE);
   return 0;
 }
