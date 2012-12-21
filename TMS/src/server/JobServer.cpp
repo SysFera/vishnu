@@ -212,23 +212,17 @@ int JobServer::submitJob(const std::string& scriptContent,
 			throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 		}
 
-		if(0 != chmod(mjob.getOutputDir().c_str(),
-				S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
-				|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
-				|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
-				|S_ISVTX) ) {       // Striclky bit
+		if(mbatchType == DELTACLOUD) {
+			// Set the permissions so to enable writing the directory from the virtual machines
+			if(0 != chmod(mjob.getOutputDir().c_str(),
+					S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
+					|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
+					|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
+					|S_ISVTX) ) {       // Striclky bit
 
-			throw SystemException(ERRCODE_INVDATA, "Unable to the suitable rights on the output dir : " + mjob.getOutputDir()) ;
+				throw SystemException(ERRCODE_INVDATA, "Unable to the suitable rights on the output dir : " + mjob.getOutputDir()) ;
+			}
 		}
-	}
-
-
-
-	// Retrieve some additional information for submitting a in cloud
-	if(mbatchType == DELTACLOUD) {
-		std::string cloudEndpoint;
-		msedConfig->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpoint);
-		sshJobExec.setCloudEndpoint(cloudEndpoint);
 	}
 
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));

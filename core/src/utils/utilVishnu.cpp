@@ -610,9 +610,11 @@ vishnu::saveInFile(const std::string & fileName,
 		const std::string& content) {
 
 	bfs::ofstream file(fileName);
-
+	if(! file.good()) {
+		throw SystemException(ERRCODE_SYSTEM,
+				"vishnu::saveInFile: Cannot create the file "+fileName);
+	}
 	file << content << "\n";
-
 	file.close();
 }
 

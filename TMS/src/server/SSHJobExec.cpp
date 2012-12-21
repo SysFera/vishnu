@@ -142,16 +142,11 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 				+ " " + script_path;
 	}
 
+	// For traditional batch scheduler we need to submit the job through ssh
 	if(mbatchType != DELTACLOUD) {
-		// For traditional batch scheduler we need to submit the job through ssh
 		cmd << "ssh -l " << muser << " " << mhostname << " "
 				<< " -o NoHostAuthenticationForLocalhost=yes "
 				<< " -o PasswordAuthentication=no ";
-	} else {
-		// set the information the cloud endpoint
-		if(mcloudEndpoint.size() > 0) {
-			setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(), mcloudEndpoint.c_str(), 1);
-		}
 	}
 
 	stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
@@ -264,7 +259,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		const std::string & workDir) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
-    const std::string logfile = nfsMountPoint+"/"+mhostname+".vishnu.log";
+	const std::string logfile = nfsMountPoint+"/"+mhostname+".vishnu.log";
 	std::ostringstream cmd;
 	cmd << "exit; echo $? >" << machineStatusFile;
 
@@ -440,25 +435,17 @@ SSHJobExec::execCmd(const std::string& cmd,
 }
 
 /**
- * \brief Set the value of the cloud endpoint
+ * \brief To mount a NFS directory to a remote server
+ * \param host: The NFS server
+ * \param point the mount point on the NFS server
  */
-void
-SSHJobExec::setCloudEndpoint(const std::string & cloupApiUrl) {
-	mcloudEndpoint = cloupApiUrl;
-}
-
-/**
-* \brief To mount a NFS directory to a remote server
-* \param host: The NFS server
-* \param point the mount point on the NFS server
-*/
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
 
 	// Create the command mkdir + mount
 	std::ostringstream cmd;
 	cmd << "'mkdir "+point+" && "
-		<< "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+"'";
+			<< "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+"'";
 
 	if(execCmd(cmd.str(), false)){ // run in foreground
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
