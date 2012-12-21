@@ -43,22 +43,22 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
 	//IN Parameters
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,0), sessionKey.c_str(), DIET_VOLATILE) ) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,1), mmachineId.c_str(), DIET_VOLATILE) ) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
 	TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
 	::ecorecpp::serializer::serializer _ser;
 	string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,2), const_cast<char*>(jobResultToString.c_str()), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,2), jobResultToString.c_str(), DIET_VOLATILE) ) {
 		msgErrorDiet += "with the job result parameter " + jobResultToString;
 		raiseDietMsgException(msgErrorDiet);
 	}
-	if (diet_string_set(diet_parameter(getJobOutPutProfile,3), const_cast<char*>(moutDir.c_str()), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getJobOutPutProfile,3), moutDir.c_str(), DIET_VOLATILE)) {
 		msgErrorDiet += "with outDir parameter "+moutDir;
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -71,8 +71,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 		raiseDietMsgException("DIET call failure");
 	}
 
-	char* routputInfo=NULL;
-	if( diet_string_get(diet_parameter(getJobOutPutProfile,4), &routputInfo, NULL) ){
+        std::string routputInfo;
+	if( diet_string_get2(diet_parameter(getJobOutPutProfile,4), routputInfo) ){
 		msgErrorDiet += " by receiving outputInfo";
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -131,17 +131,17 @@ JobOutputProxy::getCompletedJobsOutput() {
 
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	//IN Parameters
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,0), sessionKey.c_str(), DIET_VOLATILE)) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,1), mmachineId.c_str(), DIET_VOLATILE)) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,2), const_cast<char*>(moutDir.c_str()), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,2), moutDir.c_str(), DIET_VOLATILE)) {
 		msgErrorDiet += "with outDir parameter "+moutDir;
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -155,8 +155,8 @@ JobOutputProxy::getCompletedJobsOutput() {
 		raiseDietMsgException("DIET call failure");
 	}
 
-	char* routputInfo=NULL;
-	if( diet_string_get(diet_parameter(getCompletedJobsOutputProfile,3), &routputInfo, NULL) ){
+        std::string routputInfo;
+	if( diet_string_get2(diet_parameter(getCompletedJobsOutputProfile,3), routputInfo) ){
 		msgErrorDiet += " by receiving outputInfo";
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -164,12 +164,12 @@ JobOutputProxy::getCompletedJobsOutput() {
 		raiseExceptionIfNotEmptyMsg(routputInfo);
 	}
 
-	char* listJobResultInString = NULL;
-	if(diet_string_get(diet_parameter(getCompletedJobsOutputProfile,4), &listJobResultInString, NULL)){
+        std::string listJobResultInString;
+	if(diet_string_get2(diet_parameter(getCompletedJobsOutputProfile,4), listJobResultInString)){
 		msgErrorDiet += " by receiving User serialized  message";
 		raiseDietMsgException(msgErrorDiet);
 	}
-	parseEmfObject(std::string(listJobResultInString), listJobResults_ptr); /*To build the listJobResults_ptr */
+	parseEmfObject(listJobResultInString, listJobResults_ptr); /*To build the listJobResults_ptr */
 
 
 	CpFileOptions copts;
