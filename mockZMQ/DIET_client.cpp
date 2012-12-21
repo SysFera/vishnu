@@ -388,8 +388,3 @@ int
 diet_finalize() {
   return 0;
 }
-
-int
-diet_container_set(diet_arg_t* arg, int flag) {
-  return 0;
-}

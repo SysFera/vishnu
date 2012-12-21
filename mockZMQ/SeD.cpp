@@ -95,8 +95,7 @@ private:
 
 int
 ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
-
-	// Prepare our context and the sockets for server
+  // Prepare our context and the sockets for server
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
@@ -114,7 +113,13 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   }
 
   // connect our workers threads to our server via a queue
-  zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+  try {
+    zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+  } catch (zmq::error_t & e) {
+    std::cerr << boost::format("An error occured while creating the device (%1%)\n") % e.what();
+    return 1;
+  }
+
 
   return 0;
 }
