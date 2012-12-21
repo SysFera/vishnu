@@ -425,7 +425,8 @@ if(NOT CLIENT_ONLY)
     database/DbFactory.cpp
     database/Database.cpp
     database/DatabaseResult.cpp)
-  set(utils_server_SRCS utils/utilServer.cpp)
+  set(utils_server_SRCS utils/utilServer.cpp 
+  utils/Logger.cpp)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
