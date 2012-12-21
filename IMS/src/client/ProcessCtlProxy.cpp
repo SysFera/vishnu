@@ -70,7 +70,7 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
   diet_string_set(diet_parameter(restartProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(restartProfile)) {
-    if(diet_string_get2(diet_parameter(restartProfile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(restartProfile,3), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -127,7 +127,7 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
   diet_string_set(diet_parameter(stopProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(stopProfile)) {
-    if(diet_string_get2(diet_parameter(stopProfile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(stopProfile,3), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -199,7 +199,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     diet_string_set(diet_parameter(loadShedProfile,3), NULL, DIET_VOLATILE);
 
     if(!diet_call(loadShedProfile)) {
-      if(diet_string_get2(diet_parameter(loadShedProfile,3), errorInfo)){
+      if(diet_string_get(diet_parameter(loadShedProfile,3), errorInfo)){
 	msgErrorDiet += " by receiving errorInfo message";
 	raiseDietMsgException(msgErrorDiet);
       }
@@ -274,7 +274,7 @@ ProcessCtlProxy::cancelTMS() {
   diet_string_set(diet_parameter(cancelTMSProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(cancelTMSProfile)) {
-    if(diet_string_get2(diet_parameter(cancelTMSProfile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(cancelTMSProfile,3), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }

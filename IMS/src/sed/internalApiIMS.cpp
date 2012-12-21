@@ -34,10 +34,10 @@ solveExport(diet_profile_t* pb){
   string error;
   string retErr = "";
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), oldSessionId);
-  diet_string_get2(diet_parameter(pb,2), filename);
-  diet_string_get2(diet_parameter(pb,3), options);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), oldSessionId);
+  diet_string_get(diet_parameter(pb,2), filename);
+  diet_string_get(diet_parameter(pb,3), options);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -100,9 +100,9 @@ solveCurMetric(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), mid);
-  diet_string_get2(diet_parameter(pb,2), curOpSer);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), mid);
+  diet_string_get(diet_parameter(pb,2), curOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -169,9 +169,9 @@ solveOldMetric(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), mid);
-  diet_string_get2(diet_parameter(pb,2), histOpSer);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), mid);
+  diet_string_get(diet_parameter(pb,2), histOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -239,8 +239,8 @@ solvePS(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), processOpSer);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), processOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -307,8 +307,8 @@ solveSetSysInfo(diet_profile_t* pb){
   string cmd;
 
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), sys);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), sys);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -366,8 +366,8 @@ solveGetThreshold(diet_profile_t* pb){
   string cmd;
   std::string empty("");
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), treeOpSer);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), treeOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -433,7 +433,7 @@ solveGetUpFreq(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -485,8 +485,8 @@ solveSetThreshold(diet_profile_t* pb){
   string cmd;
 
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), tree);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), tree);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -542,8 +542,8 @@ solveSetUID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -591,8 +591,8 @@ solveSetJID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -640,8 +640,8 @@ solveSetTID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -689,8 +689,8 @@ solveSetMID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -738,8 +738,8 @@ solveSetAID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -787,8 +787,8 @@ solveSetWID(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), fmt);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), fmt);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -838,9 +838,9 @@ solveLoadShed(diet_profile_t* pb){
   string cmd;
 
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), mid);
-  diet_string_get2(diet_parameter(pb,2), type);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), mid);
+  diet_string_get(diet_parameter(pb,2), type);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -891,8 +891,8 @@ solveSetUpFreq(diet_profile_t* pb){
   string cmd;
 
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), freq);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), freq);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -942,9 +942,9 @@ solveRestart(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), mid);
-  diet_string_get2(diet_parameter(pb,2), op);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), mid);
+  diet_string_get(diet_parameter(pb,2), op);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -1004,9 +1004,9 @@ solveStop(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), mid);
-  diet_string_get2(diet_parameter(pb,2), op);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), mid);
+  diet_string_get(diet_parameter(pb,2), op);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);
@@ -1066,8 +1066,8 @@ solveGetSysInfo(diet_profile_t* pb){
   int mapperkey;
   string cmd;
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), sysOpSer);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), sysOpSer);
 
   SessionServer sessionServer = SessionServer(string(sessionKey));
   UserServer userServer = UserServer(sessionServer);

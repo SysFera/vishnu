@@ -252,11 +252,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 		diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
 		if(!diet_call(profile)) {
-			if(diet_string_get2(diet_parameter(profile,3), listObjectInString)){
+			if(diet_string_get(diet_parameter(profile,3), listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get2(diet_parameter(profile,4), errorInfo)){
+			if(diet_string_get(diet_parameter(profile,4), errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}
@@ -279,11 +279,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 
 		if(!diet_call(profile)) {
 
-			if(diet_string_get2(diet_parameter(profile,2), listObjectInString)){
+			if(diet_string_get(diet_parameter(profile,2), listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
+			if(diet_string_get(diet_parameter(profile,3), errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}

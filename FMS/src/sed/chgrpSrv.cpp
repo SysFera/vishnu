@@ -46,11 +46,11 @@ int solveChangeGroup (diet_profile_t* profile) {
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get2(diet_parameter(profile, 0), sessionKey);
-  diet_string_get2(diet_parameter(profile, 1), path);
-  diet_string_get2(diet_parameter(profile, 2), user);
-  diet_string_get2(diet_parameter(profile, 3), host);
-  diet_string_get2(diet_parameter(profile, 4), group);
+  diet_string_get(diet_parameter(profile, 0), sessionKey);
+  diet_string_get(diet_parameter(profile, 1), path);
+  diet_string_get(diet_parameter(profile, 2), user);
+  diet_string_get(diet_parameter(profile, 3), host);
+  diet_string_get(diet_parameter(profile, 4), group);
 
 
   localUser = user;

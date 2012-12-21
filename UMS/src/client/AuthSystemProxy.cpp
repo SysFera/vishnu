@@ -56,12 +56,12 @@ AuthSystemProxy::add() {
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get2(diet_parameter(profile,2), authSystemInString)) {
+    if(diet_string_get(diet_parameter(profile,2), authSystemInString)) {
       msg += "with authSystemInString parameter " + authSystemInString;
       raiseDietMsgException(msg);
     }
 
-    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -122,7 +122,7 @@ AuthSystemProxy::update() {
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -170,7 +170,7 @@ AuthSystemProxy::deleteAuthSystem()
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

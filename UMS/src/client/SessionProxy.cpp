@@ -203,11 +203,11 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   diet_string_set(diet_parameter(profile,7), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,6), sessionInString)){
+    if(diet_string_get(diet_parameter(profile,6), sessionInString)){
       msg += "by receiving sessionInString value";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get2(diet_parameter(profile,7), errorInfo)) {
+    if(diet_string_get(diet_parameter(profile,7), errorInfo)) {
       msg += "to receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -285,7 +285,7 @@ int SessionProxy::close()
   diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,1), errorInfo)) {
+    if(diet_string_get(diet_parameter(profile,1), errorInfo)) {
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

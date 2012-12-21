@@ -146,15 +146,15 @@ int LocalFileProxy::transferFile(const string& dest,
 	}
 
 	if(!isAsyncTransfer) {
-		diet_string_get2(diet_parameter(profile, 6), errMsg);
+		diet_string_get(diet_parameter(profile, 6), errMsg);
 
 		/*To raise a vishnu exception if the received message is not empty*/
 		raiseExceptionIfNotEmptyMsg(errMsg);
 	} else {
 
           std::string fileTransferInString = "";
-          diet_string_get2(diet_parameter(profile, 6), fileTransferInString);
-          diet_string_get2(diet_parameter(profile, 7), errMsg);
+          diet_string_get(diet_parameter(profile, 6), fileTransferInString);
+          diet_string_get(diet_parameter(profile, 7), errMsg);
 
           /*To raise a vishnu exception if the received message is not empty*/
           raiseExceptionIfNotEmptyMsg(errMsg);

@@ -64,11 +64,11 @@ int ConfigurationProxy::save()
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,1), configurationInString)){
+    if(diet_string_get(diet_parameter(profile,1), configurationInString)){
       msg += "by receiving configurationInString message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -138,7 +138,7 @@ int ConfigurationProxy::restore(bool fromFile)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

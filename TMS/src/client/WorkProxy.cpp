@@ -67,11 +67,11 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
   diet_string_set(diet_parameter(addProfile,4), NULL, DIET_VOLATILE);
 
   if (!diet_call(addProfile)) {
-    if (diet_string_get2(diet_parameter(addProfile,3), workInString)){
+    if (diet_string_get(diet_parameter(addProfile,3), workInString)){
       msg += "by receiving Work serialized  message";
       raiseDietMsgException(msg);
     }
-    if (diet_string_get2(diet_parameter(addProfile,4), errorInfo)){
+    if (diet_string_get(diet_parameter(addProfile,4), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -129,7 +129,7 @@ int WorkProxy::update()
   diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
 
   if (!diet_call(updateProfile)) {
-    if (diet_string_get2(diet_parameter(updateProfile,2), errorInfo)){
+    if (diet_string_get(diet_parameter(updateProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -176,7 +176,7 @@ int WorkProxy::deleteWork()
   diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
 
   if (!diet_call(deleteProfile)) {
-    if (diet_string_get2(diet_parameter(deleteProfile,2), errorInfo)){
+    if (diet_string_get(diet_parameter(deleteProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

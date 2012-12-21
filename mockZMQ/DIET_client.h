@@ -114,17 +114,13 @@ int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 /**
- * \brief Overload of DIET function, get the value of a string(char *) in the profile
+ * \brief Overload of DIET function, get the value of a string in the profile
  * \param arg Structure containing the argument
- * \param value OUT the value gotten
- * \param ptr DEPRECATED, kept for compatibility
+ * \param value the output value
  * \return 0 on success, an error code otherwise
  */
 int
-diet_string_get(diet_arg_t* arg, char** value, void* ptr);
-
-int
-diet_string_get2(diet_arg_t* arg, std::string & value);
+diet_string_get(diet_arg_t* arg, std::string & value);
 
 /**
  * \brief Overload of DIET function, free an allocated profile

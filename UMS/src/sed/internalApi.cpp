@@ -34,12 +34,12 @@ solveSessionConnect(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), userId);
-  diet_string_get2(diet_parameter(pb,1), password);
-  diet_string_get2(diet_parameter(pb,2), clientKey);
-  diet_string_get2(diet_parameter(pb,3), clientHostname);
-  diet_string_get2(diet_parameter(pb,4), options);
-  diet_string_get2(diet_parameter(pb,5), version);
+  diet_string_get(diet_parameter(pb,0), userId);
+  diet_string_get(diet_parameter(pb,1), password);
+  diet_string_get(diet_parameter(pb,2), clientKey);
+  diet_string_get(diet_parameter(pb,3), clientHostname);
+  diet_string_get(diet_parameter(pb,4), options);
+  diet_string_get(diet_parameter(pb,5), version);
 
   UserServer userServer = UserServer(userId, password);
   MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
@@ -110,12 +110,12 @@ solveSessionReconnect(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), userId);
-  diet_string_get2(diet_parameter(pb,1), password);
-  diet_string_get2(diet_parameter(pb,2), clientKey);
-  diet_string_get2(diet_parameter(pb,3), clientHostname);
-  diet_string_get2(diet_parameter(pb,4), sessionId);
-  diet_string_get2(diet_parameter(pb,5), version);
+  diet_string_get(diet_parameter(pb,0), userId);
+  diet_string_get(diet_parameter(pb,1), password);
+  diet_string_get(diet_parameter(pb,2), clientKey);
+  diet_string_get(diet_parameter(pb,3), clientHostname);
+  diet_string_get(diet_parameter(pb,4), sessionId);
+  diet_string_get(diet_parameter(pb,5), version);
 
   UserServer userServer = UserServer(userId, password);
   MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
@@ -175,7 +175,7 @@ solveSessionClose(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
   SessionServer sessionServer = SessionServer(sessionKey);
 
   try {
@@ -222,8 +222,8 @@ solveUserCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), userSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), userSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -292,8 +292,8 @@ solveUserUpdate(diet_profile_t* pb) {
 
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), userSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), userSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -352,8 +352,8 @@ solveUserDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), userId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -406,10 +406,10 @@ solveUserPasswordChange(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), userId);
-  diet_string_get2(diet_parameter(pb,1), password);
-  diet_string_get2(diet_parameter(pb,2), newPassword);
-  diet_string_get2(diet_parameter(pb,3), version);
+  diet_string_get(diet_parameter(pb,0), userId);
+  diet_string_get(diet_parameter(pb,1), password);
+  diet_string_get(diet_parameter(pb,2), newPassword);
+  diet_string_get(diet_parameter(pb,3), version);
 
   UserServer userServer = UserServer(userId, password);
   Version_ptr versionClient = NULL;
@@ -457,8 +457,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), userId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -514,8 +514,8 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), machineSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), machineSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -581,8 +581,8 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), machineSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), machineSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -641,8 +641,8 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), machineId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), machineId);
 
   UMS_Data::Machine* machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
@@ -697,8 +697,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), laccountSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), laccountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -759,8 +759,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), laccountSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), laccountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   LocalAccount_ptr localAccount = NULL;
@@ -820,9 +820,9 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), userId);
-  diet_string_get2(diet_parameter(pb,2), machineId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), userId);
+  diet_string_get(diet_parameter(pb,2), machineId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::LocalAccount *localAccount = new UMS_Data::LocalAccount();
@@ -882,7 +882,7 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
@@ -936,8 +936,8 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), configurationSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), configurationSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   Configuration_ptr configuration = NULL;
@@ -996,8 +996,8 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1055,8 +1055,8 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::OptionValue_ptr optionValue = NULL;
@@ -1116,8 +1116,8 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
 
   SessionServer sessionServer  = SessionServer(sessionKey);
 
@@ -1247,7 +1247,7 @@ solveRestore(diet_profile_t* pb) {
 
   std::string sqlcode;
   std::string errorInfo;
-  diet_string_get2(diet_parameter(pb,0), sqlcode);
+  diet_string_get(diet_parameter(pb,0), sqlcode);
 
   DbFactory factory;
   try {
@@ -1278,8 +1278,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), authSystemSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), authSystemSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1344,8 +1344,8 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), authSystemSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), authSystemSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   AuthSystem_ptr authSystem = NULL;
@@ -1403,8 +1403,8 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), authSystemId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), authSystemId);
 
   UMS_Data::AuthSystem_ptr authSystem = new UMS_Data::AuthSystem();
   authSystem->setAuthSystemId(authSystemId);
@@ -1471,8 +1471,8 @@ solveAccountAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), accountSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), accountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1531,8 +1531,8 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), accountSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), accountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1592,9 +1592,9 @@ solveAccountAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), authSystemId);
-  diet_string_get2(diet_parameter(pb,2), userId);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), authSystemId);
+  diet_string_get(diet_parameter(pb,2), userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::AuthAccount *authAccount = new UMS_Data::AuthAccount();

@@ -69,12 +69,12 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 //
   if(!diet_call(profile)) {
 
-    if(diet_string_get2(diet_parameter(profile,4), fileContent)){
+    if(diet_string_get(diet_parameter(profile,4), fileContent)){
       msgErrorDiet += " by receiving the file content";
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if(diet_string_get2(diet_parameter(profile,5), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,5), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }

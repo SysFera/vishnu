@@ -72,7 +72,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	}
 
         std::string routputInfo;
-	if( diet_string_get2(diet_parameter(getJobOutPutProfile,4), routputInfo) ){
+	if( diet_string_get(diet_parameter(getJobOutPutProfile,4), routputInfo) ){
 		msgErrorDiet += " by receiving outputInfo";
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -156,7 +156,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 	}
 
         std::string routputInfo;
-	if( diet_string_get2(diet_parameter(getCompletedJobsOutputProfile,3), routputInfo) ){
+	if( diet_string_get(diet_parameter(getCompletedJobsOutputProfile,3), routputInfo) ){
 		msgErrorDiet += " by receiving outputInfo";
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -165,7 +165,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 	}
 
         std::string listJobResultInString;
-	if(diet_string_get2(diet_parameter(getCompletedJobsOutputProfile,4), listJobResultInString)){
+	if(diet_string_get(diet_parameter(getCompletedJobsOutputProfile,4), listJobResultInString)){
 		msgErrorDiet += " by receiving User serialized  message";
 		raiseDietMsgException(msgErrorDiet);
 	}

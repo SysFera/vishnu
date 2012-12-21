@@ -98,11 +98,11 @@ JobProxy::submitJob(const std::string& scriptContent,
         std::string cresultMsg;
         std::string errorInfo;
 	if(!diet_call(submitJobProfile)) {
-		if(diet_string_get2(diet_parameter(submitJobProfile,5), cresultMsg)){
+		if(diet_string_get(diet_parameter(submitJobProfile,5), cresultMsg)){
 			msgErrorDiet += " by receiving User serialized  message";
 			raiseDietMsgException(msgErrorDiet);
 		}
-		if(diet_string_get2(diet_parameter(submitJobProfile,6), errorInfo)){
+		if(diet_string_get(diet_parameter(submitJobProfile,6), errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
@@ -164,7 +164,7 @@ JobProxy::cancelJob() {
 	diet_string_set(diet_parameter(cancelJobProfile,3), NULL, DIET_VOLATILE);
 
 	if(!diet_call(cancelJobProfile)) {
-		if(diet_string_get2(diet_parameter(cancelJobProfile,3), errorInfo)){
+		if(diet_string_get(diet_parameter(cancelJobProfile,3), errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
@@ -226,11 +226,11 @@ JobProxy::getJobInfo() {
 	diet_string_set(diet_parameter(getJobInfoProfile,4), NULL, DIET_VOLATILE);
 
 	if(!diet_call(getJobInfoProfile)) {
-		if(diet_string_get2(diet_parameter(getJobInfoProfile,3), jobInString)){
+		if(diet_string_get(diet_parameter(getJobInfoProfile,3), jobInString)){
 			msgErrorDiet += " by receiving User serialized  message";
 			raiseDietMsgException(msgErrorDiet);
 		}
-		if(diet_string_get2(diet_parameter(getJobInfoProfile,4), errorInfo)){
+		if(diet_string_get(diet_parameter(getJobInfoProfile,4), errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
