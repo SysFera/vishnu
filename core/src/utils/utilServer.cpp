@@ -609,6 +609,7 @@ std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
 	      size_t pos2 = file.rfind("/");
 	      if(pos2 != std::string::npos){
 	    	  directory = file.substr(0, pos2);
+
 	    	  std::ostringstream oss;
 	    	  oss << "mv " << directory << " " << dir;
 	    	  if(system(oss.str().c_str())){
