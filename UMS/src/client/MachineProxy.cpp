@@ -31,8 +31,8 @@ int MachineProxy::add()
   diet_profile_t* addProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
-  char* machineInString;
-  char* errorInfo;
+  std::string machineInString;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   addProfile = diet_profile_alloc("machineCreate", 1, 1, 3);
@@ -62,11 +62,11 @@ int MachineProxy::add()
   diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(addProfile)) {
-    if(diet_string_get(diet_parameter(addProfile,2), &machineInString, NULL)){
+    if(diet_string_get2(diet_parameter(addProfile,2), machineInString)){
       msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(addProfile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(addProfile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -81,7 +81,7 @@ int MachineProxy::add()
   UMS_Data::Machine_ptr machine_ptr;
 
   //To parse machine object serialized
-  parseEmfObject(std::string(machineInString), machine_ptr, "Error by receiving Machine object serialized");
+  parseEmfObject(machineInString, machine_ptr, "Error by receiving Machine object serialized");
 
   mmachine = *machine_ptr;
   delete machine_ptr;
@@ -102,7 +102,7 @@ int MachineProxy::update()
   diet_profile_t* updateProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   updateProfile = diet_profile_alloc("machineUpdate", 1, 1, 2);
@@ -131,7 +131,7 @@ int MachineProxy::update()
   diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(updateProfile)) {
-    if(diet_string_get(diet_parameter(updateProfile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(updateProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -158,7 +158,7 @@ int MachineProxy::deleteMachine()
   diet_profile_t* deleteProfile = NULL;
   std::string sessionKey;
   std::string machineId;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   deleteProfile = diet_profile_alloc("machineDelete", 1, 1, 2);
@@ -179,7 +179,7 @@ int MachineProxy::deleteMachine()
   diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(deleteProfile)) {
-    if(diet_string_get(diet_parameter(deleteProfile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(deleteProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -190,7 +190,7 @@ int MachineProxy::deleteMachine()
 
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
-  
+
   diet_profile_free(deleteProfile);
 
   return 0;
@@ -225,4 +225,3 @@ UMS_Data::Machine MachineProxy::getData()
 MachineProxy::~MachineProxy()
 {
 }
-
