@@ -67,8 +67,8 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   std::string sshKey4;
   std::string optionsToString;
   std::string versionToString;
-  char* sessionInString;
-  char* errorInfo;
+  std::string sessionInString;
+  std::string errorInfo;
   size_t length;
   char* key;
   char* encryptedKey;
@@ -203,11 +203,11 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   diet_string_set(diet_parameter(profile,7), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,6), &sessionInString, NULL)){
+    if(diet_string_get2(diet_parameter(profile,6), sessionInString)){
       msg += "by receiving sessionInString value";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,7), &errorInfo, NULL)) {
+    if(diet_string_get2(diet_parameter(profile,7), errorInfo)) {
       msg += "to receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -221,7 +221,7 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   UMS_Data::Session_ptr session_ptr;
 
   //To parse Session object serialized
-  parseEmfObject(std::string(sessionInString), session_ptr, "Error by receiving Session object serialized");
+  parseEmfObject(sessionInString, session_ptr, "Error by receiving Session object serialized");
   msession = *session_ptr;
   delete session_ptr;
 
@@ -269,7 +269,7 @@ int SessionProxy::reconnect(const UserProxy& user)
 int SessionProxy::close()
 {
 
-  char* errorInfo = NULL;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   std::string sessionKey =  msessionKey;
@@ -285,7 +285,7 @@ int SessionProxy::close()
   diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+    if(diet_string_get2(diet_parameter(profile,1), errorInfo)) {
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
