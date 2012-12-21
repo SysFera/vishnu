@@ -163,11 +163,11 @@ public:
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
-  * \param jobId the Id of the job (used to suffixed the generated directory name)
+* \param dirSuffix the suffix of the output dir
   * \param content the script content to be update which the generated path
   */
   void setOutputDirPath(const std::string& parentDir,
-		const std::string & jobId,
+		const std::string & dirSuffix,
 		  std::string & content);
 };
 

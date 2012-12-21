@@ -84,8 +84,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 
 	bool needOutputDir = false ;
-	string suffix = bfs::unique_path("job%%%%%%").string();
-    string scriptPath = bfs::unique_path("job_script%%%%%%").string();
+	string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
+    string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
     if(mbatchType == DELTACLOUD) {
     	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     	scriptPath = nfsMountPoint + "/script_" +suffix;
@@ -101,14 +101,14 @@ int JobServer::submitJob(const std::string& scriptContent,
         	env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
         	optionsref.setFileParams(fileparams);
         }
-		setOutputDirPath(workingDir, vishnuJobId, scriptContentRef);
+		setOutputDirPath(workingDir, "", scriptContentRef);
     } else {
     	scriptPath = "/tmp/" + scriptPath;
    		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
    		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
 
    		if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
-   			setOutputDirPath(workingDir, vishnuJobId, scriptContentRef);
+   			setOutputDirPath(workingDir, suffix, scriptContentRef);
    			needOutputDir = true ;
    		}
    	}
@@ -616,15 +616,15 @@ JobServer::getSedConfig() const {
 /**
 * \brief Function to set the path of output directory
 * \param parentDir The directory in which to create the output dir
-* \param jobId the Id of the job (used to suffixed the generated directory name)
+* \param dirSuffix the suffix of the output dir
 * \param content the script content to be update which the generated path
 */
 void JobServer::setOutputDirPath(const std::string& parentDir,
-		const std::string & jobId,
+		const std::string & dirSuffix,
 		std::string & content) {
 
 		std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
-		std::string outdir = parentDir + prefix + jobId + vishnu::createSuffixFromCurTime() ;
+		std::string outdir = parentDir + prefix + dirSuffix ;
 		Env::replaceAllOccurences(content, "$VISHNU_OUTPUT_DIR", outdir);
 		Env::replaceAllOccurences(content, "${VISHNU_OUTPUT_DIR}", outdir);
 		mjob.setOutputDir(outdir) ;
