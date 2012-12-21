@@ -237,22 +237,22 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   profile = diet_profile_alloc("userPasswordChange", 3, 3, 4);
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>((muser.getUserId()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), muser.getUserId().c_str(), DIET_VOLATILE)) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(password.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), password.c_str(), DIET_VOLATILE)) {
     msg += "with password parameter "+password;
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(newPassword.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,2), newPassword.c_str(), DIET_VOLATILE)) {
     msg += "with newPassword parameter "+newPassword;
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,3), strdup(versionToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,3), versionToString.c_str(), DIET_VOLATILE)) {
       msg += "with version parameter "+versionToString;
       raiseDietMsgException(msg);
   }

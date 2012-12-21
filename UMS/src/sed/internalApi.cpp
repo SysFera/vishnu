@@ -76,14 +76,14 @@ solveSessionConnect(diet_profile_t* pb) {
     std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,6), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,7), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,6), sessionSerializedUpdate.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,7), empty.c_str(), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete connectOpt;
   delete versionClient;
@@ -146,13 +146,13 @@ solveSessionReconnect(diet_profile_t* pb) {
       std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,6), strdup(sessionSerializedUpdate.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,7), strdup(empty.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), sessionSerializedUpdate.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), empty.c_str(), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,6), strdup(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,7), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,6), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,7), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete versionClient;
   delete versionServer;
@@ -430,12 +430,12 @@ solveUserPasswordChange(diet_profile_t* pb) {
     }
     userServer.changePassword(std::string(newPassword));
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
