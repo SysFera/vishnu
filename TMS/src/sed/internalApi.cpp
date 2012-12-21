@@ -576,8 +576,8 @@ solveAddWork(diet_profile_t* pb) {
 		std::string workSerializedUpdate = _ser.serialize_str(work);
 
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), strdup(workSerializedUpdate.c_str()), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), strdup(empty.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), workSerializedUpdate.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
 		//To save the connection
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
 	} catch (VishnuException& e) {
@@ -590,8 +590,8 @@ solveAddWork(diet_profile_t* pb) {
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), strdup(empty.c_str()), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), strdup(errorInfo.c_str()), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
 	}
 	delete work;
 	return 0;

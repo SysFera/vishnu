@@ -165,11 +165,11 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>((user.getData().getUserId()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), user.getData().getUserId().c_str(), DIET_VOLATILE)) {
     msg += "with userId parameter "+user.getData().getUserId();
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>((user.getData().getPassword()).c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), user.getData().getPassword().c_str(), DIET_VOLATILE)) {
     msg += "with password parameter";
     raiseDietMsgException(msg);
   }
@@ -182,18 +182,18 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
     raiseDietMsgException(msg);
   }
   if(connect) {
-    if(diet_string_set(diet_parameter(profile,4), const_cast<char*>(optionsToString.c_str()), DIET_VOLATILE)){
+    if(diet_string_set(diet_parameter(profile,4), optionsToString.c_str(), DIET_VOLATILE)){
       msg += "with optionsToString parameter ";
       raiseDietMsgException(msg);
     }
   } else {
-    if(diet_string_set(diet_parameter(profile,4), const_cast<char*>((msession.getSessionId()).c_str()), DIET_VOLATILE)) {
+    if(diet_string_set(diet_parameter(profile,4), msession.getSessionId().c_str(), DIET_VOLATILE)) {
       msg += "with sessionId parameter "+msession.getSessionId();
       raiseDietMsgException(msg);
     }
   }
 
-  if(diet_string_set(diet_parameter(profile,5), strdup(versionToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,5), versionToString.c_str(), DIET_VOLATILE)) {
       msg += "with version parameter "+versionToString;
       raiseDietMsgException(msg);
   }

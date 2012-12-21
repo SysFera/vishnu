@@ -203,7 +203,7 @@ diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
 }
 
 int
-diet_string_set(diet_arg_t* arg, char* value, int pers){
+diet_string_set(diet_arg_t* arg, const char* value, int pers){
   if (value) {
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));

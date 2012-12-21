@@ -143,7 +143,7 @@ main(int argc, char* argv[], char* envp[])
 
         //To serialize the job object
         ::ecorecpp::serializer::serializer _ser;
-        std::string slaveJob = strdup(_ser.serialize_str(job).c_str());
+        std::string slaveJob = _ser.serialize_str(job);
 
         std::ofstream os_slaveJobFile(slaveJobFile);
         os_slaveJobFile << slaveJob;
@@ -172,4 +172,3 @@ main(int argc, char* argv[], char* envp[])
 
   return 0;
 }
-

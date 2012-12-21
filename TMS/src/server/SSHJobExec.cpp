@@ -180,7 +180,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 			throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
 		}
 		::ecorecpp::serializer::serializer _ser;//("job");
-		mjobSerialized = strdup(_ser.serialize_str(job).c_str());
+		mjobSerialized = _ser.serialize_str(job);
 		wellSubmitted = true;
 		delete job;
 	}
@@ -242,7 +242,7 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
 		break;
         case PBSPRO:
                 value = "PBSPRO";
-                break;        
+                break;
 	default:
 		value = "UNKNOWN_BATCH_TYPE";
 		break;

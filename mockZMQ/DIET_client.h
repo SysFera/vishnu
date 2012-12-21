@@ -97,7 +97,7 @@ diet_profile_alloc(const char* name, int IN, int INOUT, int OUT);
  * \return 0 on success, an error code otherwise
  */
 int
-diet_string_set(diet_arg_t* arg, char* value, int pers);
+diet_string_set(diet_arg_t* arg, const char* value, int pers);
 
 /**
  * \brief Overload of DIET function, call to a DIET service
