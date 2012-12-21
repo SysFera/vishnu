@@ -92,7 +92,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     	workingDir = nfsMountPoint + "/data_" + suffix;
         string directory = "";
         try {
-        	directory = vishnu::moveData(optionsref.getFileParams(), workingDir);
+        	directory = vishnu::moveFileData(optionsref.getFileParams(), workingDir);
         } catch(bfs::filesystem_error ex){
         	throw (ERRCODE_INVDATA, ex.what());
         }
