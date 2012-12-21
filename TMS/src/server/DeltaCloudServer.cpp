@@ -135,8 +135,8 @@ DeltaCloudServer::submit(const char* scriptPath,
 	job.setVmId(instance.id);
 	job.setStatus(vishnu::JOB_COMPLETED);
 	job.setVmIp(instance.private_addresses->address);
-	job.setOutputPath(nfsMountPoint+"/stdout");
-	job.setErrorPath(nfsMountPoint+"/stderr");
+	job.setOutputPath(job.getOutputDir()+"/stdout");
+	job.setErrorPath(job.getOutputDir()+"/stderr");
 	cleanup();
 	return 0;
 }

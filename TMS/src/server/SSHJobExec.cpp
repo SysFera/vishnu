@@ -253,13 +253,15 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
  * \brief Function to execute a script remotely
  * \param scriptPath the path to script to submit
  * \param nfsServer: The NFS server
-*  \param nfsMountPointthe mount point on the NFS server
+ * \param nfsMountPointthe mount point on the NFS server
+ * \param workDir The wordking directory of the job
  * \return raises an exception on error
  */
 int
 SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		const std::string & nfsServer,
-		const std::string nfsMountPoint) {
+		const std::string nfsMountPoint,
+		const std::string & workDir) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
     const std::string logfile = nfsMountPoint+"/"+mhostname+".vishnu.log";
@@ -267,7 +269,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	cmd << "exit; echo $? >" << machineStatusFile;
 
 	int attempt = 1;
-	std::cout << "Checking ssh connection...\n" ;
+	std::clog << "Checking ssh connection...\n" ;
 	while(attempt <= SSH_CONNECT_MAX_RETRY) {
 		execCmd(cmd.str());
 		int ret =  vishnu::getStatusValue(machineStatusFile);
@@ -287,7 +289,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	}
 
 	// Mount the NFS repository
-	std::cout << "Mounting the nfs directory...\n" ;
+	std::clog << "Mounting the nfs directory...\n" ;
 	if(nfsServer.size()>0 &&
 			nfsMountPoint.size()> 0) {
 		mountNfsDir(nfsServer, nfsMountPoint);
@@ -295,17 +297,16 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
 	// If succeed execute the script to the virtual machine
 	// This assumes that the script is located on a shared DFS
-	std::cout << "Executing the script...\n" ;
-
-	const std::string outputDir = Env::getVar("VISHNU_OUTPUT_DIR");
-	execCmd("'mkdir -p "+outputDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
+	std::clog << "Executing the script...\n" ;
+	execCmd("'mkdir -p "+workDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
 
 	int pid = -1;
-	if(execCmd("sh "+scriptPath, true, outputDir, &pid)){
+	if(execCmd("sh "+scriptPath, true, workDir, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"execRemoteScript:: failed when executing the script " + scriptPath + " in the virtual machine "+mhostname);
+				"execRemoteScript:: failed when executing the script "
+				+ scriptPath + " in the virtual machine "+mhostname);
 	}
-	std::cout << "Submission completed. PID: "<< pid << "\n" ;
+	std::clog << "Submission completed. PID: "<< pid << "\n" ;
 	return pid;
 }
 
