@@ -74,18 +74,18 @@ void
 ObjectIdProxy::defineCall(string name, string fmt) {
   diet_profile_t* profile = NULL;
   string sessionKey;
-  char* errorInfo = NULL;
+  string errorInfo;
   string serviceName = name;
   string msgErrorDiet;
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), sessionKey.c_str(), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
-  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(fmt.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), fmt.c_str(), DIET_VOLATILE)) {
     msgErrorDiet += "with format parameter "+fmt;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -93,7 +93,7 @@ ObjectIdProxy::defineCall(string name, string fmt) {
   //OUT Parameters
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
