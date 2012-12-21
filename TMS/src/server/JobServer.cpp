@@ -92,7 +92,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     	scriptPath = inputDir + "/script.sh";
         string directory = "";
         try {
-        	directory = vishnu::moveFileData(optionsref.getFileParams(),);
+        	directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
         } catch(bfs::filesystem_error ex){
         	throw (ERRCODE_INVDATA, ex.what());
         }
