@@ -28,8 +28,8 @@ AuthSystemProxy::add() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string authSystemToString;
-  char* authSystemInString;
-  char* errorInfo;
+  std::string authSystemInString;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("authSystemCreate", 1, 1, 3);
@@ -56,12 +56,12 @@ AuthSystemProxy::add() {
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,2), &authSystemInString, NULL)) {
-      msg += "with authSystemInString parameter "+std::string(authSystemInString);
+    if(diet_string_get2(diet_parameter(profile,2), authSystemInString)) {
+      msg += "with authSystemInString parameter " + authSystemInString;
       raiseDietMsgException(msg);
     }
 
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -76,7 +76,7 @@ AuthSystemProxy::add() {
   UMS_Data::AuthSystem_ptr authSystem_ptr;
 
   //To parse User object serialized
-  parseEmfObject(std::string(authSystemInString), authSystem_ptr,
+  parseEmfObject(authSystemInString, authSystem_ptr,
                  "Error by receiving AuthSystem object serialized");
 
   mauthSystem = *authSystem_ptr;
@@ -96,7 +96,7 @@ AuthSystemProxy::update() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string authSystemToString;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("authSystemUpdate", 1, 1, 2);
@@ -122,7 +122,7 @@ AuthSystemProxy::update() {
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -149,7 +149,7 @@ AuthSystemProxy::deleteAuthSystem()
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string sysId;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("authSystemDelete", 1, 1, 2);
@@ -170,7 +170,7 @@ AuthSystemProxy::deleteAuthSystem()
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
