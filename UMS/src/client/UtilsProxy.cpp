@@ -91,7 +91,7 @@ UtilsProxy::restore() {
   int READSIZE = 1000;
   diet_profile_t* profile = NULL;
   std::ifstream file(mfilePath.c_str(), std::ios::in);
-  char* errorInfo;
+  std::string errorInfo;
   if(!file) {
     return -1;
   }
@@ -108,7 +108,7 @@ UtilsProxy::restore() {
     //OUT Parameters
     diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
     if(!diet_call(profile)){
-      if(diet_string_get(diet_parameter(profile,1), &errorInfo, NULL)) {
+      if(diet_string_get2(diet_parameter(profile,1), errorInfo)) {
         raiseDietMsgException("DIET call failure");
       }
     } else {
@@ -127,4 +127,3 @@ UtilsProxy::restore() {
 UtilsProxy::~UtilsProxy()
 {
 }
-
