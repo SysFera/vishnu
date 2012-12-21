@@ -68,20 +68,6 @@ typedef struct diet_profile_t {
 } diet_profile_t;
 
 
-/**
- * \brief Overload of DIET structure
- */
-typedef struct diet_container_t {
-  /**
-   * \brief Overload of DIET param, size of the container
-   */
-  int size;
-  /**
-   * \brief Overload of DIET param, id of elements in the container
-   */
-  char* elt_ids[2];
-} diet_container_t;
-
 
 /**
  * \brief Overload of DIET constant
