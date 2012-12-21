@@ -166,7 +166,7 @@ public:
 * \param dirSuffix the suffix of the output dir
   * \param content the script content to be update which the generated path
   */
-  void setOutputDirPath(const std::string& parentDir,
+  void setOutputDir(const std::string& parentDir,
 		const std::string & dirSuffix,
 		  std::string & content);
 };

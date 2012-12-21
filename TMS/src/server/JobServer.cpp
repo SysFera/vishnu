@@ -89,7 +89,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     if(mbatchType == DELTACLOUD) {
     	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     	scriptPath = nfsMountPoint + "/script_" +suffix;
-    	workingDir = nfsMountPoint + "/data_" + suffix;
+    	workingDir = nfsMountPoint + "/INPUT_" + suffix;
         string directory = "";
         try {
         	directory = vishnu::moveFileData(optionsref.getFileParams(), workingDir);
@@ -101,18 +101,16 @@ int JobServer::submitJob(const std::string& scriptContent,
         	env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
         	optionsref.setFileParams(fileparams);
         }
-		setOutputDirPath(workingDir, "", scriptContentRef);
     } else {
     	scriptPath = "/tmp/" + scriptPath;
    		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
    		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
-
-   		if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
-   			setOutputDirPath(workingDir, suffix, scriptContentRef);
-   			needOutputDir = true ;
-   		}
    	}
-
+    // Set the output dir
+	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
+		setOutputDir(workingDir, suffix, scriptContentRef);
+	    needOutputDir = true ;
+	}
 
 	if(options.getTextParams().size()) {
 		env.setParams(scriptContentRef, optionsref.getTextParams()) ;
@@ -619,7 +617,7 @@ JobServer::getSedConfig() const {
 * \param dirSuffix the suffix of the output dir
 * \param content the script content to be update which the generated path
 */
-void JobServer::setOutputDirPath(const std::string& parentDir,
+void JobServer::setOutputDir(const std::string& parentDir,
 		const std::string & dirSuffix,
 		std::string & content) {
 
