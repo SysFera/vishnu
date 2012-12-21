@@ -187,14 +187,4 @@ diet_initialize(const char* cfg, int argc, char** argv);
 int
 diet_finalize();
 
-/**
- * \brief Overload of DIET function
- * \param arg ?
- * \param flag ?
- * \return 0 on success, an error code otherwise
- */
-int
-diet_container_set(diet_arg_t* arg, int flag);
-
-
 #endif // __DIETMOCK__
