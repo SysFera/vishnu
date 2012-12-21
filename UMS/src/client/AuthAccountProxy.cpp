@@ -29,7 +29,7 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string authAccountToString;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc(name.c_str(), 1, 1, 2);
@@ -54,7 +54,7 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -102,7 +102,7 @@ AuthAccountProxy::deleteAuthAccount()
   std::string sessionKey;
   std::string userId;
   std::string sysId;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("authAccountDelete", 2, 2, 3);
@@ -128,7 +128,7 @@ AuthAccountProxy::deleteAuthAccount()
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
