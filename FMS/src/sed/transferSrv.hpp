@@ -110,12 +110,12 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get2(diet_parameter(profile, 0), sessionKey);
-  diet_string_get2(diet_parameter(profile, 1), srcPath);
-  diet_string_get2(diet_parameter(profile, 2), srcUser);
-  diet_string_get2(diet_parameter(profile, 3), srcHost);
-  diet_string_get2(diet_parameter(profile, 4), dest);
-  diet_string_get2(diet_parameter(profile, 5), optionsSerialized);
+  diet_string_get(diet_parameter(profile, 0), sessionKey);
+  diet_string_get(diet_parameter(profile, 1), srcPath);
+  diet_string_get(diet_parameter(profile, 2), srcUser);
+  diet_string_get(diet_parameter(profile, 3), srcHost);
+  diet_string_get(diet_parameter(profile, 4), dest);
+  diet_string_get(diet_parameter(profile, 5), optionsSerialized);
 
 
   std:: string destPath=File::extName(dest);
@@ -276,13 +276,13 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get2(diet_parameter(profile, 0), sessionKey);
-  diet_string_get2(diet_parameter(profile, 1), destUser);
-  diet_string_get2(diet_parameter(profile, 2), srcHost);
-  diet_string_get2(diet_parameter(profile, 3), srcPath);
-  diet_string_get2(diet_parameter(profile, 4), destHost);
-  diet_string_get2(diet_parameter(profile, 5), destPath);
-  diet_string_get2(diet_parameter(profile, 6), optionsSerialized);
+  diet_string_get(diet_parameter(profile, 0), sessionKey);
+  diet_string_get(diet_parameter(profile, 1), destUser);
+  diet_string_get(diet_parameter(profile, 2), srcHost);
+  diet_string_get(diet_parameter(profile, 3), srcPath);
+  diet_string_get(diet_parameter(profile, 4), destHost);
+  diet_string_get(diet_parameter(profile, 5), destPath);
+  diet_string_get(diet_parameter(profile, 6), optionsSerialized);
 
   SessionServer sessionServer (sessionKey);
 
@@ -483,8 +483,8 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
 
   SessionServer sessionServer  = SessionServer(sessionKey);
 

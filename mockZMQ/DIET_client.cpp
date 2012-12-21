@@ -303,15 +303,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 
 
 int
-diet_string_get(diet_arg_t* arg, char** value, void* ptr) {
-  *value = (char *)malloc((strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])+1)*sizeof (char));
-  memcpy(*value, ((diet_profile_t*)(arg->prof))->param[arg->pos], strlen(((diet_profile_t*)(arg->prof))->param[arg->pos]));
-  (*value)[strlen(((diet_profile_t*)(arg->prof))->param[arg->pos])]='\0';
-  return 0;
-}
-
-int
-diet_string_get2(diet_arg_t* arg, std::string & value) {
+diet_string_get(diet_arg_t* arg, std::string & value) {
   value = ((diet_profile_t*)(arg->prof))->param[arg->pos];
   return 0;
 }

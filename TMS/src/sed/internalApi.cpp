@@ -67,11 +67,11 @@ solveSubmitJob(diet_profile_t* pb) {
 	int mapperkey;
 	std::string cmd = "";
 
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), scriptContent);
-	diet_string_get2(diet_parameter(pb,3), submitOptionsSerialized);
-	diet_string_get2(diet_parameter(pb,4), jobSerialized);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), scriptContent);
+	diet_string_get(diet_parameter(pb,3), submitOptionsSerialized);
+	diet_string_get(diet_parameter(pb,4), jobSerialized);
 
 
 	SessionServer sessionServer = SessionServer(sessionKey);
@@ -142,9 +142,9 @@ solveCancelJob(diet_profile_t* pb) {
 	std::string cmd = "";
 	std::string errorInfo ="";
 
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), jobSerialized);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), jobSerialized);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 	TMS_Data::Job_ptr job = NULL;
@@ -198,9 +198,9 @@ solveJobInfo(diet_profile_t* pb) {
 	std::string cmd = "";
 
 	//IN Parameters
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), jobSerialized);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), jobSerialized);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -261,9 +261,9 @@ solveListOfQueues(diet_profile_t* pb) {
 	int mapperkey;
 	std::string cmd = "";
 
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), option);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), option);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 	TMS_Data::ListQueues_ptr listQueues = NULL;
@@ -319,10 +319,10 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 	std::string cmd = "";
 
 	//IN Parameters
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), jobResultSerialized);
-	diet_string_get2(diet_parameter(pb,3), moutDir);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), jobResultSerialized);
+	diet_string_get(diet_parameter(pb,3), moutDir);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -387,9 +387,9 @@ solveGenerique(diet_profile_t* pb) {
 	std::string finishError ="";
 
 	//IN Parameters
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), optionValueSerialized);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), optionValueSerialized);
 
 	SessionServer sessionServer  = SessionServer(sessionKey);
 
@@ -472,9 +472,9 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 	int mapperkey;
 	std::string cmd;
 
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), machineId);
-	diet_string_get2(diet_parameter(pb,2), moutDir);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), machineId);
+	diet_string_get(diet_parameter(pb,2), moutDir);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -537,9 +537,9 @@ solveAddWork(diet_profile_t* pb) {
 	std::string finishError ="";
 
 	//IN Parameters
-	diet_string_get2(diet_parameter(pb,0), sessionKey);
-	diet_string_get2(diet_parameter(pb,1), workSerialized);
-	diet_string_get2(diet_parameter(pb,2), opSerialized);
+	diet_string_get(diet_parameter(pb,0), sessionKey);
+	diet_string_get(diet_parameter(pb,1), workSerialized);
+	diet_string_get(diet_parameter(pb,2), opSerialized);
 
 	SessionServer sessionServer = SessionServer(sessionKey);
 

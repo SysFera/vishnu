@@ -101,13 +101,13 @@ void RemoteFileProxy::getInfos() const {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(getInfosProfile, 4), fileStatInString)){
+  if(diet_string_get(diet_parameter(getInfosProfile, 4), fileStatInString)){
     msgErrorDiet += " by receiving FileStat serialized  content";
     raiseDietMsgException(msgErrorDiet);
   }
 
 
-  if(diet_string_get2(diet_parameter(getInfosProfile, 5), errMsg)){
+  if(diet_string_get(diet_parameter(getInfosProfile, 5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -186,7 +186,7 @@ int RemoteFileProxy::chgrp(const string& group) {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(chgrpProfile, 5), errMsg)){
+  if(diet_string_get(diet_parameter(chgrpProfile, 5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -254,7 +254,7 @@ int RemoteFileProxy::chmod(const mode_t mode) {
   }
 
   //Output parameter
-  if(diet_string_get2(diet_parameter(chmodProfile, 5), errMsg)){
+  if(diet_string_get(diet_parameter(chmodProfile, 5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -324,12 +324,12 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
   }
 
   //Output parameter
-  if(diet_string_get2(diet_parameter(headProfile, 5), fileHead)){
+  if(diet_string_get(diet_parameter(headProfile, 5), fileHead)){
     msgErrorDiet += " by receiving fileHead message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get2(diet_parameter(headProfile, 6), errMsg)){
+  if(diet_string_get(diet_parameter(headProfile, 6), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -387,12 +387,12 @@ string RemoteFileProxy::getContent() {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(getContentProfile, 4), fileContent)){
+  if(diet_string_get(diet_parameter(getContentProfile, 4), fileContent)){
     msgErrorDiet += " by receiving fileContent message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get2(diet_parameter(getContentProfile, 5), errMsg)){
+  if(diet_string_get(diet_parameter(getContentProfile, 5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -450,7 +450,7 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(mkfileProfile, 4), errMsg)){
+  if(diet_string_get(diet_parameter(mkfileProfile, 4), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -515,7 +515,7 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(mkdirProfile, 5), errMsg)){
+  if(diet_string_get(diet_parameter(mkdirProfile, 5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -581,7 +581,7 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(rmProfile,5), errMsg)){
+  if(diet_string_get(diet_parameter(rmProfile,5), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -638,7 +638,7 @@ int RemoteFileProxy::rmdir() {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(rmdirProfile, 4), errMsg)){
+  if(diet_string_get(diet_parameter(rmdirProfile, 4), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -710,12 +710,12 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
     raiseDietMsgException("error while contacting the file management service");
   }
 
-  if(diet_string_get2(diet_parameter(tailProfile, 5), fileTail)){
+  if(diet_string_get(diet_parameter(tailProfile, 5), fileTail)){
      msgErrorDiet += " by receiving fileTail message";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get2(diet_parameter(tailProfile, 6), errMsg)){
+  if(diet_string_get(diet_parameter(tailProfile, 6), errMsg)){
       msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -788,12 +788,12 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
   }
 
   //Output parameters
-  if(diet_string_get2(diet_parameter(lsProfile, 5), ls)){
+  if(diet_string_get(diet_parameter(lsProfile, 5), ls)){
     msgErrorDiet += " by receiving directory content information";
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if(diet_string_get2(diet_parameter(lsProfile, 6), errMsg)){
+  if(diet_string_get(diet_parameter(lsProfile, 6), errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -888,12 +888,12 @@ int RemoteFileProxy::transferFile(const std::string& dest,
   }
 
   if(!isAsyncTransfer) {
-    diet_string_get2(diet_parameter(transferFileProfile, 7), errMsg);
+    diet_string_get(diet_parameter(transferFileProfile, 7), errMsg);
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);
   } else {
-    diet_string_get2(diet_parameter(transferFileProfile, 7), fileTransferInString);
-    diet_string_get2(diet_parameter(transferFileProfile, 8), errMsg);
+    diet_string_get(diet_parameter(transferFileProfile, 7), fileTransferInString);
+    diet_string_get(diet_parameter(transferFileProfile, 8), errMsg);
 
     /*To raise a vishnu exception if the received message is not empty*/
     raiseExceptionIfNotEmptyMsg(errMsg);

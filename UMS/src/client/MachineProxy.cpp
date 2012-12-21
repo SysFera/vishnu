@@ -62,11 +62,11 @@ int MachineProxy::add()
   diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(addProfile)) {
-    if(diet_string_get2(diet_parameter(addProfile,2), machineInString)){
+    if(diet_string_get(diet_parameter(addProfile,2), machineInString)){
       msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get2(diet_parameter(addProfile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(addProfile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -131,7 +131,7 @@ int MachineProxy::update()
   diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(updateProfile)) {
-    if(diet_string_get2(diet_parameter(updateProfile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(updateProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -179,7 +179,7 @@ int MachineProxy::deleteMachine()
   diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(deleteProfile)) {
-    if(diet_string_get2(diet_parameter(deleteProfile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(deleteProfile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

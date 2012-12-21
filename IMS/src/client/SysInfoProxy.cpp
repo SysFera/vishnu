@@ -54,7 +54,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }

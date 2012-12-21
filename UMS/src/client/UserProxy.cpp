@@ -79,11 +79,11 @@ int UserProxy::add(UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), userInString)){
+    if(diet_string_get(diet_parameter(profile,2), userInString)){
       msg += " by receiving User serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
       msg += " by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -144,7 +144,7 @@ int UserProxy::update(const UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -194,7 +194,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -261,7 +261,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,4), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,4), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -310,11 +310,11 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), tmpPassword)){
+    if(diet_string_get(diet_parameter(profile,2), tmpPassword)){
       msg += "by receiving tmpPassWord message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

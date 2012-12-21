@@ -56,10 +56,10 @@ int get_infos(diet_profile_t* profile) {
   std::string errMsg = "";
   int mapperkey;
 
-  diet_string_get2(diet_parameter(profile, 0), sessionKey);
-  diet_string_get2(diet_parameter(profile, 1), path);
-  diet_string_get2(diet_parameter(profile, 2), user);
-  diet_string_get2(diet_parameter(profile, 3), host);
+  diet_string_get(diet_parameter(profile, 0), sessionKey);
+  diet_string_get(diet_parameter(profile, 1), path);
+  diet_string_get(diet_parameter(profile, 2), user);
+  diet_string_get(diet_parameter(profile, 3), host);
 
   localUser = user;
   localPath = path;

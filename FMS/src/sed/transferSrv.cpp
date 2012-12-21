@@ -42,8 +42,8 @@ solveFileTransferStop(diet_profile_t* pb) {
   std::string cmd = "";
   std::string errorInfo ="";
 
-  diet_string_get2(diet_parameter(pb,0), sessionKey);
-  diet_string_get2(diet_parameter(pb,1), optionsSerialized);
+  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(diet_parameter(pb,1), optionsSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   FMS_Data::StopTransferOptions_ptr options_ptr = NULL;

@@ -63,7 +63,7 @@ public:
     std::string userId = "";
     diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
     diet_string_set(diet_parameter(prof,0), const_cast<char *>("toto"), DIET_VOLATILE);
-    diet_string_get2(diet_parameter(prof,0), userId);
+    diet_string_get(diet_parameter(prof,0), userId);
     BOOST_REQUIRE(userId.compare("toto") == 0);
   }
   void

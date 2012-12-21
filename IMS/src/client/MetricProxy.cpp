@@ -34,7 +34,7 @@ MetricProxy::setUpFreq(int freq) {
    //OUT Parameters
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -67,11 +67,11 @@ MetricProxy::getUpFreq() {
   diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
   if(!diet_call(profile)) {
-    if(diet_string_get2(diet_parameter(profile,1), str)){
+    if(diet_string_get(diet_parameter(profile,1), str)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
