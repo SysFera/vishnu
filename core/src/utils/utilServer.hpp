@@ -309,12 +309,12 @@ namespace vishnu {
 	int getStatusValue (const std::string& file);
 
 	/**
-	 *  \brief Function that create a symbolic link on a directory
-	 *  \param fileparams a list of key=value
+	 *  \brief Function to move the file parameters to a given directory
+	 *  \param fileparam a list of key=value
 	 *  \param dir the directory where we create
 	 */
 
-	std::string createSymbolicLinks(const std::string& fileparams, std::string dir);
+	std::string moveFileData(const std::string& fileparams, std::string dir);
 
 }
 #endif //_UTILSERVER_H_
