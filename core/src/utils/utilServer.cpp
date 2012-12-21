@@ -590,12 +590,12 @@ int vishnu::getStatusValue (const std::string& file) {
 }
 
 /**
- *  \brief Function that create a symbolic link on a directory
+ *  \brief Function to move the file parameters to a given directory
  *  \param fileparams a list of key=value
  *  \param dir the directory where we create the links
  *  \return the string of the directory to which the link was created
  */
-std::string vishnu::createSymbolicLinks (const std::string& fileparam, std::string dir){
+std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
 	std::string directory="";
 	std::string file="";
 	size_t pos = fileparam.find("=");
@@ -609,11 +609,11 @@ std::string vishnu::createSymbolicLinks (const std::string& fileparam, std::stri
 	      size_t pos2 = file.rfind("/");
 	      if(pos2 != std::string::npos){
 	    	  directory = file.substr(0, pos2);
-	          try {
-	        	bfs::rename(directory, dir);
-	          } catch(bfs::filesystem_error ex){
-	          	throw;
-	          }
+	    	  std::ostringstream oss;
+	    	  oss << "mv " << directory << " " << dir;
+	    	  if(system(oss.str().c_str())){
+	    		  throw "Can  not move the input files";
+	    	  }
 	      }
 
 	}
