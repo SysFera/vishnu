@@ -15,6 +15,9 @@
 #include "ScriptGenConvertor.hpp"
 #include <boost/algorithm/string.hpp>
 #include "Env.hpp"
+#include <fcntl.h>
+#include "api_fms.hpp"
+#include "sys/stat.h"
 
 using namespace std;
 /**
@@ -63,6 +66,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	msessionServer.check(); //To check the sessionKey
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
+	std::string sessionId = msessionServer.getAttribut("where sessionkey='"
+			+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
 	std::string workingDir ;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
@@ -85,32 +90,32 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	bool needOutputDir = false ;
 	string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
-    string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
-    if(mbatchType == DELTACLOUD) {
-    	workingDir = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-    	string inputDir =  workingDir + "/INPUT_" + suffix;
-    	scriptPath = inputDir + "/script.xsh";
-        string directory = "";
-        try {
-        	directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
-        } catch(bfs::filesystem_error ex){
-        	throw (ERRCODE_INVDATA, ex.what());
-        }
-        if(directory.length() > 0){
-        	std::string fileparams = strdup(optionsref.getFileParams().c_str());
-        	env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
-        	optionsref.setFileParams(fileparams);
-        }
-    } else {
-    	scriptPath = "/tmp/" + scriptPath;
-   		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
-   		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
-   	}
-    // Set the output dir
+	string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
+	if(mbatchType == DELTACLOUD) {
+		workingDir = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+		string inputDir =  workingDir + "/INPUT_" + suffix;
+		scriptPath = inputDir + "/script.xsh";
+		string directory = "";
+		try {
+			directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
+		} catch(bfs::filesystem_error ex){
+			throw (ERRCODE_INVDATA, ex.what());
+		}
+		if(directory.length() > 0){
+			std::string fileparams = strdup(optionsref.getFileParams().c_str());
+			env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
+			optionsref.setFileParams(fileparams);
+		}
+	} else {
+		scriptPath = "/tmp/" + scriptPath;
+		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
+		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
+	}
+	// Set the output dir
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
 			mbatchType == DELTACLOUD ) {
 		setOutputDir(workingDir, suffix, scriptContentRef);
-	    needOutputDir = true ;
+		needOutputDir = true ;
 	}
 
 	if(options.getTextParams().size()) {
@@ -202,8 +207,22 @@ int JobServer::submitJob(const std::string& scriptContent,
                               batchType,
                               mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                               jobSerialized, submitOptionsSerialized);
-		throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
+	if( needOutputDir &&
+			sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
+			throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
+		}
+
+		if(0 != chmod(mjob.getOutputDir().c_str(),
+				S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
+				|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
+				|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
+				|S_ISVTX) ) {       // Striclky bit
+
+			throw SystemException(ERRCODE_INVDATA, "Unable to the suitable rights on the output dir : " + mjob.getOutputDir()) ;
+		}
 	}
+
+
 
 	// Retrieve some additional information for submitting a in cloud
 	if(mbatchType == DELTACLOUD) {
@@ -236,9 +255,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	mjob.setSubmitMachineId(mmachineId);
 	mjob.setSubmitMachineName(machineName);
-	std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
 	mjob.setSessionId(sessionId);
-
 	std::string BatchJobId=mjob.getJobId();
 	mjob.setJobId(vishnuJobId);
 
@@ -613,19 +630,19 @@ JobServer::getSedConfig() const {
 
 
 /**
-* \brief Function to set the path of output directory
-* \param parentDir The directory in which to create the output dir
-* \param dirSuffix the suffix of the output dir
-* \param content the script content to be update which the generated path
-*/
+ * \brief Function to set the path of output directory
+ * \param parentDir The directory in which to create the output dir
+ * \param dirSuffix the suffix of the output dir
+ * \param content the script content to be update which the generated path
+ */
 void JobServer::setOutputDir(const std::string& parentDir,
 		const std::string & dirSuffix,
 		std::string & content) {
 
-		std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
-		std::string outdir = parentDir + prefix + dirSuffix ;
-		Env::replaceAllOccurences(content, "$VISHNU_OUTPUT_DIR", outdir);
-		Env::replaceAllOccurences(content, "${VISHNU_OUTPUT_DIR}", outdir);
-		mjob.setOutputDir(outdir) ;
-		setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
+	std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
+	std::string outdir = parentDir + prefix + dirSuffix ;
+	Env::replaceAllOccurences(content, "$VISHNU_OUTPUT_DIR", outdir);
+	Env::replaceAllOccurences(content, "${VISHNU_OUTPUT_DIR}", outdir);
+	mjob.setOutputDir(outdir) ;
+	setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
 }

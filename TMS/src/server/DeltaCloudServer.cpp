@@ -125,7 +125,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	// Execute the script
 	int jobPid = -1;
 	try{
-		jobPid = sshEngine.execRemoteScript(scriptPath, nfsServer, nfsMountPoint);
+		jobPid = sshEngine.execRemoteScript(scriptPath, nfsServer, nfsMountPoint, job.getOutputDir());
 	} catch(...) {
 		throw;
 	}
