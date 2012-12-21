@@ -209,28 +209,36 @@ int JobServer::submitJob(const std::string& scriptContent,
                               jobSerialized, submitOptionsSerialized);
 	if( needOutputDir &&
 			sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
-			throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
+			throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
 		}
 
+		// Set the permissions so to enable writing the directory from the virtual machines
 		if(mbatchType == DELTACLOUD) {
-			// Set the permissions so to enable writing the directory from the virtual machines
 			if(0 != chmod(mjob.getOutputDir().c_str(),
 					S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
 					|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
 					|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
 					|S_ISVTX) ) {       // Striclky bit
 
-				throw SystemException(ERRCODE_INVDATA, "Unable to the suitable rights on the output dir : " + mjob.getOutputDir()) ;
+				throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the directory "
+						+ mjob.getOutputDir()) ;
 			}
 		}
 	}
 
+	// Submit the job
+	// This is achieved by the slave launched in the method sshJobExec.sshexec
 	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
-	// clean the temporary script once the job completed
-	vishnu::deleteFile(scriptPath.c_str());
-        free(scriptPath);
+	// Submission with deltacloud doesn't make copy of the script
+	// So the script needs to be kept until the end of the execution
+	// Clean the temporary script if not deltacloud
+	if(mbatchType != DELTACLOUD) {
+		vishnu::deleteFile(scriptPath.c_str());
+	}		
+	free(scriptPath);
 
+	// Check if some errors occured during the submission
 	std::string errorInfo = sshJobExec.getErrorInfo();
 	if(errorInfo.size()!=0) {
 		int code;
@@ -239,6 +247,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		throw TMSVishnuException(code, message);
 	}
 
+	//  Get the serialized job
 	std::string updateJobSerialized = sshJobExec.getJobSerialized();
 	TMS_Data::Job_ptr job = NULL;
 	if (!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
