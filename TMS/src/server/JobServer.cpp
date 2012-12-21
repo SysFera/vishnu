@@ -87,12 +87,12 @@ int JobServer::submitJob(const std::string& scriptContent,
 	string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
     string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
     if(mbatchType == DELTACLOUD) {
-    	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-    	scriptPath = nfsMountPoint + "/script_" +suffix;
-    	workingDir = nfsMountPoint + "/INPUT_" + suffix;
+    	workingDir = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+    	string inputDir =  workingDir + "/INPUT_" + suffix;
+    	scriptPath = inputDir + "/script.sh";
         string directory = "";
         try {
-        	directory = vishnu::moveFileData(optionsref.getFileParams(), workingDir);
+        	directory = vishnu::moveFileData(optionsref.getFileParams(),);
         } catch(bfs::filesystem_error ex){
         	throw (ERRCODE_INVDATA, ex.what());
         }
