@@ -10,37 +10,38 @@
 
 using namespace std;
 
+// FIXME: ssh/scp commands paths are hardcoded
+FileFactory::FileFactory() : sshServer_("localhost"),
+                             sshPort_(22),
+                             sshCommand_("/usr/bin/ssh"),
+                             scpCommand_("/usr/bin/scp") {}
 
-
-void FileFactory::setSSHServer(const string& sshServer) {
-  FileFactory::sshServer = sshServer;
+void
+FileFactory::setSSHServer(const string& sshServer) {
+  sshServer_ = sshServer;
 }
 
-void FileFactory::setSSHPort(const unsigned int sshPort) {
-  FileFactory::sshPort = sshPort;
+void
+FileFactory::setSSHPort(const unsigned int sshPort) {
+  sshPort_ = sshPort;
 }
 
-void FileFactory::setSSHCommand(const string& sshCommand) {
-  FileFactory::sshCommand = sshCommand;
+void
+FileFactory::setSSHCommand(const string& sshCommand) {
+  sshCommand_ = sshCommand;
 }
 
-void FileFactory::setSCPCommand(const string& scpCommand) {
-  FileFactory::scpCommand = scpCommand;
+void
+FileFactory::setSCPCommand(const string& scpCommand) {
+  scpCommand_ = scpCommand;
 }
 
 
-File* FileFactory::getFileServer(const SessionServer& sessionServer,
-                                 const string& path,
-                                 const string& user,
-                                 const string& key) {
-  
-    return new SSHFile(sessionServer,path, sshServer, user, "", key, "",
-                       sshPort, sshCommand, scpCommand);
+File*
+FileFactory::getFileServer(const SessionServer& sessionServer,
+                           const string& path,
+                           const string& user,
+                           const string& key) {
+  return new SSHFile(sessionServer,path, sshServer_, user, "", key, "",
+                     sshPort_, sshCommand_, scpCommand_);
 }
-
-//{{RELAX<MISRA_0_1_3> Because these variables are used this class
-string FileFactory::sshServer = "localhost";
-unsigned int FileFactory::sshPort = 22;
-string FileFactory::sshCommand = "/usr/bin/ssh";
-string FileFactory::scpCommand = "/usr/bin/scp";
-//}}RELAX<MISRA_0_1_3>
