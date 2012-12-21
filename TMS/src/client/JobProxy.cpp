@@ -87,6 +87,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 	diet_string_set(diet_parameter(submitJobProfile,5), NULL, DIET_VOLATILE);
 	diet_string_set(diet_parameter(submitJobProfile,6), NULL, DIET_VOLATILE);
 
+        // FIXME: do it before setting parameter 3
 	// Send input files, if there is any one
 	CpFileOptions copts;
 	copts.setIsRecursive(true) ;

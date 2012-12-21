@@ -315,8 +315,9 @@ FileTransferServer::move(const TransferExec& transferExec,
   if (lastExecStatus == 0) {
 
     // remove the source file
-    FileFactory::setSSHServer(transferExec.getSrcMachineName());
-    boost::scoped_ptr<File> file (FileFactory::getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
+    FileFactory ff;
+    ff.setSSHServer(transferExec.getSrcMachineName());
+    boost::scoped_ptr<File> file (ff.getFileServer( transferExec.getSessionServer(),transferExec.getSrcPath(),
           transferExec.getSrcUser(),transferExec.getSrcUserKey() ) ) ;
     try {
       FMS_Data::RmFileOptions options;
