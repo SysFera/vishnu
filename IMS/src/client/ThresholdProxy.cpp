@@ -26,7 +26,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo = NULL;
+  std::string errorInfo;
 
   std::string serviceName = "int_setSystemThreshold";
 
@@ -35,7 +35,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), sessionKey.c_str(), DIET_VOLATILE)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -44,7 +44,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
   //To serialize the options object in to optionsInString
   std::string objectToString =  _ser.serialize_str(const_cast<IMS_Data::Threshold_ptr>(&systemThreshold));
 
-  if (diet_string_set(diet_parameter(profile,1), const_cast<char*>(objectToString.c_str()),  DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), objectToString.c_str(),  DIET_VOLATILE)) {
     msgErrorDiet += "with SystemInfo parameter ";
     raiseDietMsgException(msgErrorDiet);
   }
@@ -53,7 +53,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }
