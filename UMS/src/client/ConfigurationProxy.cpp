@@ -44,8 +44,8 @@ int ConfigurationProxy::save()
 {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo;
-  char* configurationInString;
+  std::string errorInfo;
+  std::string configurationInString;
   std::string msg = "call of function diet_string_set is rejected ";
 
 
@@ -64,11 +64,11 @@ int ConfigurationProxy::save()
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,1), &configurationInString, NULL)){
+    if(diet_string_get2(diet_parameter(profile,1), configurationInString)){
       msg += "by receiving configurationInString message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -81,7 +81,7 @@ int ConfigurationProxy::save()
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse the Configuration object serialized
-  parseEmfObject(std::string(configurationInString), mconfiguration, "Error by receiving Configuration object serialized");
+  parseEmfObject(configurationInString, mconfiguration, "Error by receiving Configuration object serialized");
 
   mconfiguration->setFilePath(mfilePath);
 
@@ -109,7 +109,7 @@ int ConfigurationProxy::restore(bool fromFile)
 {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   std::string configurationInString = "";
@@ -131,14 +131,14 @@ int ConfigurationProxy::restore(bool fromFile)
     raiseDietMsgException(msg);
   }
   if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(configurationInString.c_str()), DIET_VOLATILE)) {
-    msg += "with configurationInString parameter "+std::string(configurationInString);
+    msg += "with configurationInString parameter " + configurationInString;
     raiseDietMsgException(msg);
   }
   //OUT Parameters
   diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
