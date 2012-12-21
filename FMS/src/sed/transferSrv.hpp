@@ -94,23 +94,28 @@ solveFileTransferStop(diet_profile_t* pb);
  */
 template < File::TransferType transferType, File::TransferMode transferMode> int solveTransferFile(diet_profile_t* profile){
 
-  std::string srcUserKey="";
-  std::string destUser="";
-  std::string destMachineName="";
-  std::string fileTransferSerialized="";
-  std::string errMsg="";
-  std::string finishError="";
-  char* srcPath, *srcUser, *srcHost,*sessionKey, *dest, *optionsSerialized=NULL;
+  std::string srcUserKey = "";
+  std::string destUser = "";
+  std::string destMachineName = "";
+  std::string fileTransferSerialized = "";
+  std::string errMsg = "";
+  std::string finishError = "";
+  std::string srcPath = "";
+  std::string srcUser = "";
+  std::string srcHost = "";
+  std::string sessionKey = "";
+  std::string dest = "";
+  std::string optionsSerialized = "";
 
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &srcPath, NULL);
-  diet_string_get(diet_parameter(profile, 2), &srcUser, NULL);
-  diet_string_get(diet_parameter(profile, 3), &srcHost, NULL);
-  diet_string_get(diet_parameter(profile, 4), &dest, NULL);
-  diet_string_get(diet_parameter(profile, 5), &optionsSerialized, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), srcPath);
+  diet_string_get2(diet_parameter(profile, 2), srcUser);
+  diet_string_get2(diet_parameter(profile, 3), srcHost);
+  diet_string_get2(diet_parameter(profile, 4), dest);
+  diet_string_get2(diet_parameter(profile, 5), optionsSerialized);
 
 
   std:: string destPath=File::extName(dest);
@@ -174,11 +179,11 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
 
     CpFileOptions* options_ptr= NULL;
-    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
+    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId(); 
+    int vishnuId=ServerFMS::getInstance()->getVishnuId();
 
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer, srcHost, destHost, srcPath, destPath,vishnuId));
 
@@ -235,14 +240,11 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     errMsg = err.buildExceptionString();
   }
 
-  if (transferMode==File::sync){
-
-    diet_string_set(diet_parameter(profile, 6), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
-  }
-  else{
-
-    diet_string_set(diet_parameter(profile, 6), const_cast<char*>(fileTransferSerialized.c_str()),DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+  if (transferMode==File::sync) {
+    diet_string_set(diet_parameter(profile, 6), errMsg.c_str(), DIET_VOLATILE);
+  } else {
+    diet_string_set(diet_parameter(profile, 6), fileTransferSerialized.c_str(),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), errMsg.c_str(), DIET_VOLATILE);
   }
 
   return 0;
@@ -258,7 +260,13 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 template <File::TransferType transferType, File::TransferMode transferMode> int solveTransferRemoteFile(diet_profile_t* profile){
 
 
-  char* srcPath, *destUser, *srcHost,*sessionKey, *destHost,*destPath, *optionsSerialized=NULL;
+  std::string srcPath = "";
+  std::string destUser = "";
+  std::string srcHost = "";
+  std::string sessionKey = "";
+  std::string destHost = "";
+  std::string destPath = "";
+  std::string optionsSerialized = "";
   std::string srcUserKey = "";
   std::string srcUserLogin = "";
   std::string srcMachineName = "";
@@ -268,13 +276,13 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(profile, 0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(profile, 1), &destUser, NULL);
-  diet_string_get(diet_parameter(profile, 2), &srcHost, NULL);
-  diet_string_get(diet_parameter(profile, 3), &srcPath, NULL);
-  diet_string_get(diet_parameter(profile, 4), &destHost, NULL);
-  diet_string_get(diet_parameter(profile, 5), &destPath, NULL);
-  diet_string_get(diet_parameter(profile, 6), &optionsSerialized, NULL);
+  diet_string_get2(diet_parameter(profile, 0), sessionKey);
+  diet_string_get2(diet_parameter(profile, 1), destUser);
+  diet_string_get2(diet_parameter(profile, 2), srcHost);
+  diet_string_get2(diet_parameter(profile, 3), srcPath);
+  diet_string_get2(diet_parameter(profile, 4), destHost);
+  diet_string_get2(diet_parameter(profile, 5), destPath);
+  diet_string_get2(diet_parameter(profile, 6), optionsSerialized);
 
   SessionServer sessionServer (sessionKey);
 
@@ -286,8 +294,8 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
     //MAPPER CREATION
     string destCpltPath = destPath;
-    if(std::string(destUser).size()==0){
-      destCpltPath = std::string(destHost)+":"+std::string(destPath);
+    if(destUser.size()==0){
+      destCpltPath = destHost + ":" + destPath;
     }
 
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
@@ -316,7 +324,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     }
 
     }
-    mapper->code(std::string(srcHost)+":"+std::string(srcPath), mapperkey);
+    mapper->code(srcHost + ":" + srcPath, mapperkey);
     mapper->code(destCpltPath, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -351,34 +359,32 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     }
 
 
-    if(strcmp(destUser,"")==0) {
-
+    if (destUser.compare("") == 0) {
       // get the destination Vishnu machine
       machine = new UMS_Data::Machine();
       machine->setMachineId(destHost);
       MachineServer destMachineServer(machine);
 
       // check the destination machine
-    if (isNotIP(destHost)){
-      destMachineServer.checkMachine();
-    }
+      if (isNotIP(destHost)){
+        destMachineServer.checkMachine();
+      }
 
       // get the destination machineName
       destMachineName = destMachineServer.getMachineName();
       delete machine;
 
       // get the destination  machine user login
-    if (isNotIP(destHost)){
-      destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
-    } else {
-      destUserLogin = std::string(destUser);
-    }
-
+      if (isNotIP(destHost)){
+        destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
+      } else {
+        destUserLogin = destUser;
+      }
     }
 
 
     CpFileOptions_ptr options_ptr= NULL;
-    if(!vishnu::parseEmfObject(std::string(optionsSerialized), options_ptr) ) {
+    if (!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
 
@@ -442,12 +448,12 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
   if (transferMode==File::sync){
 
-    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(errMsg.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), errMsg.c_str(), DIET_VOLATILE);
 
   }
   else{
-    diet_string_set(diet_parameter(profile, 7), const_cast<char*>(fileTransferSerialized.c_str()),DIET_VOLATILE);
-    diet_string_set(diet_parameter(profile, 8), const_cast<char*>(errMsg.c_str()),  DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 7), fileTransferSerialized.c_str(),DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile, 8), errMsg.c_str(),  DIET_VOLATILE);
 
   }
   return 0;
@@ -467,8 +473,8 @@ template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb) {
 
-  char* sessionKey = NULL;
-  char* optionValueSerialized = NULL;
+  std::string sessionKey = "";
+  std::string optionValueSerialized = "";
   std::string listSerialized = "";
   std::string empty = "";
   std::string errorInfo;
@@ -477,10 +483,10 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
 
-  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer  = SessionServer(sessionKey);
 
   QueryParameters* options = NULL;
   List* list = NULL;
@@ -488,7 +494,7 @@ solveGenerique(diet_profile_t* pb) {
 
   try {
     //To parse the object serialized
-    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+    if(!parseEmfObject(optionValueSerialized, options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -498,7 +504,7 @@ solveGenerique(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
-    mapper->code(std::string(optionValueSerialized), mapperkey);
+    mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //  perform the query
@@ -510,8 +516,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(const_cast<List*>(list));
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), listSerialized.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -523,8 +529,8 @@ solveGenerique(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), listSerialized.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete options;
   delete list;
