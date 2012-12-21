@@ -6,6 +6,7 @@
 */
 
 #include "internalApi.hpp"
+#include <string>
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "ServerUMS.hpp"
@@ -23,25 +24,25 @@ using namespace vishnu;
 int
 solveSessionConnect(diet_profile_t* pb) {
 
-  char *userId = NULL;
-  char *password = NULL;
-  char *clientKey = NULL;
-  char *clientHostname = NULL;
-  char *options = NULL;
-  char *version = NULL;
+  std::string userId;
+  std::string password;
+  std::string clientKey;
+  std::string clientHostname;
+  std::string options;
+  std::string version;
   std::string empty("");
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  diet_string_get(diet_parameter(pb,1), &password, NULL);
-  diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
-  diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
-  diet_string_get(diet_parameter(pb,4), &options, NULL);
-  diet_string_get(diet_parameter(pb,5), &version, NULL);
+  diet_string_get2(diet_parameter(pb,0), userId);
+  diet_string_get2(diet_parameter(pb,1), password);
+  diet_string_get2(diet_parameter(pb,2), clientKey);
+  diet_string_get2(diet_parameter(pb,3), clientHostname);
+  diet_string_get2(diet_parameter(pb,4), options);
+  diet_string_get2(diet_parameter(pb,5), version);
 
-  UserServer userServer = UserServer(std::string(userId), std::string(password));
-  MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
+  UserServer userServer = UserServer(userId, password);
+  MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
   SessionServer sessionServer("");
 
   ConnectOptions_ptr connectOpt = NULL;
@@ -51,7 +52,7 @@ solveSessionConnect(diet_profile_t* pb) {
   try {
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(version), versionClient)) {
+    if(!parseEmfObject(version, versionClient)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -64,7 +65,7 @@ solveSessionConnect(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
     }
     //To parse the object serialized
-    if(!parseEmfObject(std::string(options), connectOpt)) {
+    if(!parseEmfObject(options, connectOpt)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -99,35 +100,35 @@ solveSessionConnect(diet_profile_t* pb) {
 int
 solveSessionReconnect(diet_profile_t* pb) {
 
-  char *userId = NULL;
-  char *password = NULL;
-  char *clientKey = NULL;
-  char *clientHostname = NULL;
-  char *sessionId = NULL;
-  char *version = NULL;
+  std::string userId;
+  std::string password;
+  std::string clientKey;
+  std::string clientHostname;
+  std::string sessionId;
+  std::string version;
   std::string empty("");
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  diet_string_get(diet_parameter(pb,1), &password, NULL);
-  diet_string_get(diet_parameter(pb,2), &clientKey, NULL);
-  diet_string_get(diet_parameter(pb,3), &clientHostname, NULL);
-  diet_string_get(diet_parameter(pb,4), &sessionId, NULL);
-  diet_string_get(diet_parameter(pb,5), &version, NULL);
+  diet_string_get2(diet_parameter(pb,0), userId);
+  diet_string_get2(diet_parameter(pb,1), password);
+  diet_string_get2(diet_parameter(pb,2), clientKey);
+  diet_string_get2(diet_parameter(pb,3), clientHostname);
+  diet_string_get2(diet_parameter(pb,4), sessionId);
+  diet_string_get2(diet_parameter(pb,5), version);
 
-  UserServer userServer = UserServer(std::string(userId), std::string(password));
-  MachineClientServer machineClientServer =  MachineClientServer(std::string(clientKey), std::string(clientHostname));
+  UserServer userServer = UserServer(userId, password);
+  MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
 
 
-  SessionServer sessionServer = SessionServer(std::string(""));
-  sessionServer.getData().setSessionId(std::string(sessionId));
+  SessionServer sessionServer = SessionServer(empty);
+  sessionServer.getData().setSessionId(sessionId);
   Version_ptr versionClient = NULL;
   UMS_Data::Version_ptr versionServer = NULL;
 
   try {
       //To parse the object serialized
-      if(!parseEmfObject(std::string(version), versionClient)) {
+      if(!parseEmfObject(version, versionClient)) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM);
       }
       versionServer = vishnu::parseVersion(VISHNU_VERSION);
@@ -139,7 +140,7 @@ solveSessionReconnect(diet_profile_t* pb) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
       }
 
-      sessionServer.reconnect(userServer, machineClientServer, std::string(sessionId));
+      sessionServer.reconnect(userServer, machineClientServer, sessionId);
       //To serialize the user object
       ::ecorecpp::serializer::serializer _ser;
       UMS_Data::Session session = sessionServer.getData();
@@ -166,8 +167,7 @@ solveSessionReconnect(diet_profile_t* pb) {
 */
 int
 solveSessionClose(diet_profile_t* pb) {
-
-  char *sessionKey = NULL;
+  std::string sessionKey;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -175,8 +175,8 @@ solveSessionClose(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   try {
      //MAPPER CREATION
@@ -187,7 +187,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,1), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -200,7 +200,7 @@ solveSessionClose(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT parameter
-      diet_string_set(diet_parameter(pb,1), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,1), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -213,8 +213,8 @@ solveSessionClose(diet_profile_t* pb) {
 */
 int
 solveUserCreate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *userSerialized = NULL;
+  std::string sessionKey;
+  std::string userSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -222,10 +222,10 @@ solveUserCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), userSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
   User_ptr user = NULL;
@@ -234,11 +234,11 @@ solveUserCreate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
-    mapper->code(std::string(userSerialized), mapperkey);
+    mapper->code(userSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(userSerialized), user)) {
+    if(!parseEmfObject(userSerialized, user)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -252,8 +252,8 @@ solveUserCreate(diet_profile_t* pb) {
     std::string userSerializedUpdate = _ser.serialize_str(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(userSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), userSerializedUpdate.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, user->getUserId());
 
@@ -267,8 +267,8 @@ solveUserCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete user;
   return 0;
@@ -282,8 +282,8 @@ solveUserCreate(diet_profile_t* pb) {
 */
 int
 solveUserUpdate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *userSerialized = NULL;
+  std::string sessionKey;
+  std::string userSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -292,10 +292,10 @@ solveUserUpdate(diet_profile_t* pb) {
 
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &userSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), userSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
   User_ptr user = NULL;
@@ -304,11 +304,11 @@ solveUserUpdate(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_user");
-    mapper->code(std::string(userSerialized), mapperkey);
+    mapper->code(userSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(userSerialized), user)) {
+    if(!parseEmfObject(userSerialized, user)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     };
 
@@ -316,7 +316,7 @@ solveUserUpdate(diet_profile_t* pb) {
     userServer.update(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -330,7 +330,7 @@ solveUserUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete user;
   return 0;
@@ -343,8 +343,8 @@ solveUserUpdate(diet_profile_t* pb) {
 */
 int
 solveUserDelete(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *userId = NULL;
+  std::string sessionKey;
+  std::string userId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -352,10 +352,10 @@ solveUserDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &userId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), userId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
   UMS_Data::User user;
@@ -365,14 +365,14 @@ solveUserDelete(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_user");
-    mapper->code(std::string(userId), mapperkey);
+    mapper->code(userId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     userServer.init();
     userServer.deleteUser(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -385,7 +385,7 @@ solveUserDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       //OUT parameter
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -398,26 +398,26 @@ solveUserDelete(diet_profile_t* pb) {
 int
 solveUserPasswordChange(diet_profile_t* pb) {
 
-  char *userId = NULL;
-  char *password = NULL;
-  char *newPassword = NULL;
-  char *version = NULL;
+  std::string userId;
+  std::string password;
+  std::string newPassword;
+  std::string version;
   std::string empty("");
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &userId, NULL);
-  diet_string_get(diet_parameter(pb,1), &password, NULL);
-  diet_string_get(diet_parameter(pb,2), &newPassword, NULL);
-  diet_string_get(diet_parameter(pb,3), &version, NULL);
+  diet_string_get2(diet_parameter(pb,0), userId);
+  diet_string_get2(diet_parameter(pb,1), password);
+  diet_string_get2(diet_parameter(pb,2), newPassword);
+  diet_string_get2(diet_parameter(pb,3), version);
 
-  UserServer userServer = UserServer(std::string(userId), std::string(password));
+  UserServer userServer = UserServer(userId, password);
   Version_ptr versionClient = NULL;
   UMS_Data::Version_ptr versionServer = NULL;
 
   try {
     //To parse the object serialized
-    if(!parseEmfObject(std::string(version), versionClient)) {
+    if(!parseEmfObject(version, versionClient)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
     versionServer = vishnu::parseVersion(VISHNU_VERSION);
@@ -428,7 +428,7 @@ solveUserPasswordChange(diet_profile_t* pb) {
     if (!versionManager.isCompatible()) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, versionManager.getError());
     }
-    userServer.changePassword(std::string(newPassword));
+    userServer.changePassword(newPassword);
     //OUT Parameter
     diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
 
@@ -448,8 +448,8 @@ solveUserPasswordChange(diet_profile_t* pb) {
 */
 int
 solveUserPasswordReset(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *userId = NULL;
+  std::string sessionKey;
+  std::string userId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -457,10 +457,10 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &userId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), userId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
   UMS_Data::User user;
@@ -470,15 +470,15 @@ solveUserPasswordReset(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_reset_password");
-    mapper->code(std::string(userId), mapperkey);
+    mapper->code(userId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     userServer.init();
     userServer.resetPassword(user, ServerUMS::getInstance()->getSendmailScriptPath());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>((user.getPassword()).c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), (user.getPassword()).c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -491,8 +491,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -505,8 +505,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
 */
 int
 solveMachineCreate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *machineSerialized = NULL;
+  std::string sessionKey;
+  std::string machineSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -514,10 +514,10 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), machineSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   Machine_ptr machine = NULL;
 
@@ -527,11 +527,11 @@ solveMachineCreate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_machine");
-    mapper->code(std::string(machineSerialized), mapperkey);
+    mapper->code(machineSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(machineSerialized), machine, msgComp)) {
+    if(!parseEmfObject(machineSerialized, machine, msgComp)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
     }
 
@@ -543,8 +543,8 @@ solveMachineCreate(diet_profile_t* pb) {
     std::string machineSerializedUpdate = _ser.serialize_str(machine);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(machineSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), machineSerializedUpdate.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, machine->getMachineId());
   } catch (VishnuException& e) {
@@ -557,8 +557,8 @@ solveMachineCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -572,8 +572,8 @@ solveMachineCreate(diet_profile_t* pb) {
 int
 solveMachineUpdate(diet_profile_t* pb) {
 
-  char *sessionKey = NULL;
-  char *machineSerialized = NULL;
+  std::string sessionKey;
+  std::string machineSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -581,10 +581,10 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &machineSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), machineSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   Machine_ptr machine = NULL;
 
@@ -592,11 +592,11 @@ solveMachineUpdate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_machine");
-    mapper->code(std::string(machineSerialized), mapperkey);
+    mapper->code(machineSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(machineSerialized), machine)) {
+    if(!parseEmfObject(machineSerialized, machine)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -604,7 +604,7 @@ solveMachineUpdate(diet_profile_t* pb) {
     machineServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -618,7 +618,7 @@ solveMachineUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -632,8 +632,8 @@ solveMachineUpdate(diet_profile_t* pb) {
 int
 solveMachineDelete(diet_profile_t* pb) {
 
-  char *sessionKey = NULL;
-  char *machineId = NULL;
+  std::string sessionKey;
+  std::string machineId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -641,26 +641,26 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &machineId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), machineId);
 
   UMS_Data::Machine* machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   MachineServer machineServer = MachineServer(machine, sessionServer);
 
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_machine");
-    mapper->code(std::string(machineId), mapperkey);
+    mapper->code(machineId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     machineServer.deleteMachine();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -674,7 +674,7 @@ solveMachineDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete machine;
   return 0;
@@ -688,8 +688,8 @@ solveMachineDelete(diet_profile_t* pb) {
 */
 int
 solveLocalAccountCreate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *laccountSerialized = NULL;
+  std::string sessionKey;
+  std::string laccountSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -697,10 +697,10 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), laccountSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   LocalAccount_ptr localAccount = NULL;
 
@@ -708,11 +708,11 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_local_account");
-    mapper->code(std::string(laccountSerialized), mapperkey);
+    mapper->code(laccountSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
+    if(!parseEmfObject(laccountSerialized, localAccount)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -720,8 +720,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     localAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(localAccountServer.getPublicKey().c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), localAccountServer.getPublicKey().c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -735,8 +735,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete localAccount;
   return 0;
@@ -750,8 +750,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 */
 int
 solveLocalAccountUpdate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *laccountSerialized = NULL;
+  std::string sessionKey;
+  std::string laccountSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -759,10 +759,10 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &laccountSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), laccountSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   LocalAccount_ptr localAccount = NULL;
 
   try {
@@ -770,11 +770,11 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_local_account");
-    mapper->code(std::string(laccountSerialized), mapperkey);
+    mapper->code(laccountSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(laccountSerialized), localAccount)) {
+    if(!parseEmfObject(laccountSerialized, localAccount)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -782,7 +782,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     localAccountServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -795,7 +795,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete localAccount;
   return 0;
@@ -810,9 +810,9 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
 int
 solveLocalAccountDelete(diet_profile_t* pb) {
 
-  char *sessionKey = NULL;
-  char *userId = NULL;
-  char *machineId = NULL;
+  std::string sessionKey;
+  std::string userId;
+  std::string machineId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -820,11 +820,11 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &userId, NULL);
-  diet_string_get(diet_parameter(pb,2), &machineId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), userId);
+  diet_string_get2(diet_parameter(pb,2), machineId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::LocalAccount *localAccount = new UMS_Data::LocalAccount();
   localAccount->setUserId(userId);
   localAccount->setMachineId(machineId);
@@ -835,14 +835,14 @@ solveLocalAccountDelete(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_local_account");
-    mapper->code(std::string(userId), mapperkey);
-    mapper->code(std::string(machineId), mapperkey);
+    mapper->code(userId, mapperkey);
+    mapper->code(machineId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     localAccountServer.deleteLocalAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -856,7 +856,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
 
   delete localAccount;
@@ -873,7 +873,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 int
 solveConfigurationSave(diet_profile_t* pb) {
 
-  char *sessionKey = NULL;
+  std::string sessionKey;
   std::string empty("");
   std::string configurationSerialized("");
   std::string errorInfo;
@@ -882,9 +882,9 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
 
   try {
@@ -898,8 +898,8 @@ solveConfigurationSave(diet_profile_t* pb) {
     configurationSerialized =  _ser.serialize_str(configurationServer.getData());
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,1), const_cast<char*>(configurationSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,1), configurationSerialized.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -912,8 +912,8 @@ solveConfigurationSave(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,1), const_cast<char*>(configurationSerialized.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,1), configurationSerialized.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -927,8 +927,8 @@ solveConfigurationSave(diet_profile_t* pb) {
 int
 solveConfigurationRestore(diet_profile_t* pb) {
 
-  char *sessionKey = NULL;
-  char *configurationSerialized = NULL;
+  std::string sessionKey;
+  std::string configurationSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -936,10 +936,10 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &configurationSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), configurationSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   Configuration_ptr configuration = NULL;
 
   try {
@@ -949,10 +949,10 @@ solveConfigurationRestore(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_restore_configuration");
-    mapper->code(std::string(configurationSerialized), mapperkey);
+    mapper->code(configurationSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    if(!parseEmfObject(std::string(configurationSerialized), configuration, msgComp)) {
+    if(!parseEmfObject(configurationSerialized, configuration, msgComp)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
     }
 
@@ -960,7 +960,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     configurationServer.restore(ServerUMS::getInstance()->getVishnuId());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -973,7 +973,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   return 0;
 }
@@ -987,8 +987,8 @@ solveConfigurationRestore(diet_profile_t* pb) {
 */
 int
 solveOptionValueSet(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *optionValueSerialized = NULL;
+  std::string sessionKey;
+  std::string optionValueSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -996,10 +996,10 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   UMS_Data::OptionValue_ptr optionValue = NULL;
 
@@ -1007,11 +1007,11 @@ solveOptionValueSet(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_option");
-    mapper->code(std::string(optionValueSerialized), mapperkey);
+    mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
+    if(!parseEmfObject(optionValueSerialized, optionValue)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1019,7 +1019,7 @@ solveOptionValueSet(diet_profile_t* pb) {
     optionValueServer.configureOption();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1032,7 +1032,7 @@ solveOptionValueSet(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete optionValue;
   return 0;
@@ -1046,8 +1046,8 @@ solveOptionValueSet(diet_profile_t* pb) {
 */
 int
 solveOptionValueSetDefault(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *optionValueSerialized = NULL;
+  std::string sessionKey;
+  std::string optionValueSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1055,21 +1055,21 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::OptionValue_ptr optionValue = NULL;
 
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_default_option");
-    mapper->code(std::string(optionValueSerialized), mapperkey);
+    mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(optionValueSerialized), optionValue)) {
+    if(!parseEmfObject(optionValueSerialized, optionValue)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1077,7 +1077,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     optionValueServer.configureOption(true);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1090,7 +1090,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete optionValue;
   return 0;
@@ -1106,8 +1106,8 @@ template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb) {
 
-  char* sessionKey = NULL;
-  char* optionValueSerialized = NULL;
+  std::string sessionKey;
+  std::string optionValueSerialized;
   std::string listSerialized = "";
   std::string empty = "";
   std::string errorInfo;
@@ -1116,17 +1116,17 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &optionValueSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), optionValueSerialized);
 
-  SessionServer sessionServer  = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer  = SessionServer(sessionKey);
 
   QueryParameters* options = NULL;
   List* list = NULL;
 
   try {
     //To parse the object serialized
-    if(!parseEmfObject(std::string(optionValueSerialized), options)) {
+    if(!parseEmfObject(optionValueSerialized, options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1135,7 +1135,7 @@ solveGenerique(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
-    mapper->code(std::string(optionValueSerialized), mapperkey);
+    mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     list = query.list();
@@ -1144,8 +1144,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), listSerialized.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1158,8 +1158,8 @@ solveGenerique(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(listSerialized.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), listSerialized.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete options;
   delete list;
@@ -1245,9 +1245,9 @@ solveListSessions(diet_profile_t* pb) {
 int
 solveRestore(diet_profile_t* pb) {
 
-  char *sqlcode = NULL;
+  std::string sqlcode;
   std::string errorInfo;
-  diet_string_get(diet_parameter(pb,0), &sqlcode, NULL);
+  diet_string_get2(diet_parameter(pb,0), sqlcode);
 
   DbFactory factory;
   try {
@@ -1257,7 +1257,7 @@ solveRestore(diet_profile_t* pb) {
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
   }
-  diet_string_set(diet_parameter(pb,1), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+  diet_string_set(diet_parameter(pb,1), errorInfo.c_str(), DIET_VOLATILE);
   return 0;
 }
 
@@ -1269,8 +1269,8 @@ solveRestore(diet_profile_t* pb) {
 */
 int
 solveSystemAuthCreate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *authSystemSerialized = NULL;
+  std::string sessionKey;
+  std::string authSystemSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1278,10 +1278,10 @@ solveSystemAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &authSystemSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), authSystemSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   AuthSystem_ptr authSystem = NULL;
 
@@ -1289,11 +1289,11 @@ solveSystemAuthCreate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_auth_system");
-    mapper->code(std::string(authSystemSerialized), mapperkey);
+    mapper->code(authSystemSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(authSystemSerialized), authSystem)) {
+    if(!parseEmfObject(authSystemSerialized, authSystem)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1305,8 +1305,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(authSystemSerializedUpdate.c_str()), DIET_VOLATILE);
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), authSystemSerializedUpdate.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1320,8 +1320,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1335,8 +1335,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
 */
 int
 solveSystemAuthUpdate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *authSystemSerialized = NULL;
+  std::string sessionKey;
+  std::string authSystemSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1344,10 +1344,10 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &authSystemSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), authSystemSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   AuthSystem_ptr authSystem = NULL;
 
   try {
@@ -1355,11 +1355,11 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_auth_system");
-    mapper->code(std::string(authSystemSerialized), mapperkey);
+    mapper->code(authSystemSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(authSystemSerialized), authSystem)) {
+    if(!parseEmfObject(authSystemSerialized, authSystem)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1367,7 +1367,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
     authSystemServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1380,7 +1380,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1394,8 +1394,8 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
 */
 int
 solveSystemAuthDelete(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *authSystemId = NULL;
+  std::string sessionKey;
+  std::string authSystemId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1403,26 +1403,26 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &authSystemId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), authSystemId);
 
   UMS_Data::AuthSystem_ptr authSystem = new UMS_Data::AuthSystem();
   authSystem->setAuthSystemId(authSystemId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   AuthSystemServer authSystemServer (authSystem, sessionServer);
 
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_auth_system");
-    mapper->code(std::string(authSystemId), mapperkey);
+    mapper->code(authSystemId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     authSystemServer.deleteAuthSystem();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1436,7 +1436,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete authSystem;
   return 0;
@@ -1462,8 +1462,8 @@ solveSystemAuthList(diet_profile_t* pb) {
 */
 int
 solveAccountAuthCreate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *accountSerialized = NULL;
+  std::string sessionKey;
+  std::string accountSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1471,10 +1471,10 @@ solveAccountAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &accountSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), accountSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   AuthAccount_ptr authAccount = NULL;
 
@@ -1482,11 +1482,11 @@ solveAccountAuthCreate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_auth_account");
-    mapper->code(std::string(accountSerialized), mapperkey);
+    mapper->code(accountSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(accountSerialized), authAccount)) {
+    if(!parseEmfObject(accountSerialized, authAccount)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1494,7 +1494,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
     authAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1508,7 +1508,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete authAccount;
   return 0;
@@ -1522,8 +1522,8 @@ solveAccountAuthCreate(diet_profile_t* pb) {
 */
 int
 solveAccountAuthUpdate(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *accountSerialized = NULL;
+  std::string sessionKey;
+  std::string accountSerialized;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1531,10 +1531,10 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &accountSerialized, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), accountSerialized);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
 
   AuthAccount_ptr authAccount = NULL;
 
@@ -1542,11 +1542,11 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_auth_account");
-    mapper->code(std::string(accountSerialized), mapperkey);
+    mapper->code(accountSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
-    if(!parseEmfObject(std::string(accountSerialized), authAccount)) {
+    if(!parseEmfObject(accountSerialized, authAccount)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -1554,7 +1554,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
     authAccountServer.update();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1568,7 +1568,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
   }
   delete authAccount;
   return 0;
@@ -1582,9 +1582,9 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
 */
 int
 solveAccountAuthDelete(diet_profile_t* pb) {
-  char *sessionKey = NULL;
-  char *userId = NULL;
-  char *authSystemId = NULL;
+  std::string sessionKey;
+  std::string userId;
+  std::string authSystemId;
   std::string empty("");
   std::string errorInfo;
   int mapperkey;
@@ -1592,11 +1592,11 @@ solveAccountAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), &sessionKey, NULL);
-  diet_string_get(diet_parameter(pb,1), &authSystemId, NULL);
-  diet_string_get(diet_parameter(pb,2), &userId, NULL);
+  diet_string_get2(diet_parameter(pb,0), sessionKey);
+  diet_string_get2(diet_parameter(pb,1), authSystemId);
+  diet_string_get2(diet_parameter(pb,2), userId);
 
-  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::AuthAccount *authAccount = new UMS_Data::AuthAccount();
   authAccount->setUserId(userId);
   authAccount->setAuthSystemId(authSystemId);
@@ -1607,14 +1607,14 @@ solveAccountAuthDelete(diet_profile_t* pb) {
      //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_auth_account");
-    mapper->code(std::string(userId), mapperkey);
-    mapper->code(std::string(authSystemId), mapperkey);
+    mapper->code(userId, mapperkey);
+    mapper->code(authSystemId, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
     authAccountServer.deleteAuthAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), const_cast<char*>(empty.c_str()), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1628,7 +1628,7 @@ solveAccountAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), const_cast<char*>(errorInfo.c_str()), DIET_VOLATILE);
+      diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
   }
 
   delete authAccount;
