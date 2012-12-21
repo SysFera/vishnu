@@ -311,6 +311,12 @@ diet_string_get(diet_arg_t* arg, char** value, void* ptr) {
 }
 
 int
+diet_string_get2(diet_arg_t* arg, std::string & value) {
+  value = ((diet_profile_t*)(arg->prof))->param[arg->pos];
+  return 0;
+}
+
+int
 diet_profile_free(diet_profile_t* prof){
   return 0;
 }

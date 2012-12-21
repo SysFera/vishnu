@@ -123,6 +123,9 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri);
 int
 diet_string_get(diet_arg_t* arg, char** value, void* ptr);
 
+int
+diet_string_get2(diet_arg_t* arg, std::string & value);
+
 /**
  * \brief Overload of DIET function, free an allocated profile
  * \param prof The profile to free
