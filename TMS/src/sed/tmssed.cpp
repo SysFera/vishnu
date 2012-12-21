@@ -17,6 +17,7 @@
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
 #include "MonitorTMS.hpp"
+#include "Logger.hpp"
 
 //For ZMQ
 #include "zmq.hpp"
@@ -66,6 +67,9 @@ int main(int argc, char* argv[], char* envp[]) {
   if (argc != 2) {
       return usage(argv[0]);
     }
+
+  // First initialize the logger
+  std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
 
   // Source the rc file
   system("touch -f $HOME/.vishnurc");  // Create if it does'nt exist to avoir error at the next step

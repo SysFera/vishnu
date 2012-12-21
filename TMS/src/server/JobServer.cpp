@@ -89,7 +89,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     if(mbatchType == DELTACLOUD) {
     	workingDir = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     	string inputDir =  workingDir + "/INPUT_" + suffix;
-    	scriptPath = inputDir + "/script.sh";
+    	scriptPath = inputDir + "/script.xsh";
         string directory = "";
         try {
         	directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
