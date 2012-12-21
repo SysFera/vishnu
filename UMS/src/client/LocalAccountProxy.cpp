@@ -32,8 +32,8 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string localAccountToString;
-  char* sshPublicKey;
-  char* errorInfo;
+  std::string sshPublicKey;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   if(isNewLocalAccount) {
@@ -67,18 +67,18 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
   if(!diet_call(profile)) {
     if(isNewLocalAccount) {
-      if(diet_string_get(diet_parameter(profile,2), &sshPublicKey, NULL)){
+      if(diet_string_get2(diet_parameter(profile,2), sshPublicKey)){
         msg += "by receiving sshPluciKey content";
         raiseDietMsgException(msg);
       }
-      if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+      if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
       msshPublicKey = sshPublicKey;
     }
     else {
-      if(diet_string_get(diet_parameter(profile,2), &errorInfo, NULL)){
+      if(diet_string_get2(diet_parameter(profile,2), errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
@@ -127,7 +127,7 @@ int LocalAccountProxy::deleteLocalAccount()
   std::string sessionKey;
   std::string userId;
   std::string machineId;
-  char* errorInfo;
+  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
   profile = diet_profile_alloc("localAccountDelete", 2, 2, 3);
@@ -153,7 +153,7 @@ int LocalAccountProxy::deleteLocalAccount()
   diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), &errorInfo, NULL)){
+    if(diet_string_get2(diet_parameter(profile,3), errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
