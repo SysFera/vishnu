@@ -100,7 +100,7 @@ int LocalFileProxy::transferFile(const string& dest,
 	}
 
 	diet_profile_t* profile;
-	char* errMsg;
+        std::string errMsg = "";
 
 	std::string sessionKey=this->getSession().getSessionKey();
 
@@ -116,23 +116,23 @@ int LocalFileProxy::transferFile(const string& dest,
 
 	//IN Parameters
 
-	diet_string_set(diet_parameter(profile, 0), const_cast<char*>(sessionKey.c_str()),
+	diet_string_set(diet_parameter(profile, 0), sessionKey.c_str(),
 			DIET_VOLATILE);
-	diet_string_set(diet_parameter(profile, 1), const_cast<char*>(localFullPath.string().c_str()),
+	diet_string_set(diet_parameter(profile, 1), localFullPath.string().c_str(),
 			DIET_VOLATILE); // local source file
 	diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
 
-	diet_string_set(diet_parameter(profile, 3), const_cast<char*>(srcHost.c_str()),
+	diet_string_set(diet_parameter(profile, 3), srcHost.c_str(),
 			DIET_VOLATILE);
 
 
-	diet_string_set(diet_parameter(profile, 4), const_cast<char*>(dest.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile, 4), dest.c_str(), DIET_VOLATILE);
 
 	::ecorecpp::serializer::serializer _ser;
 	//To serialize the options object in to optionsInString
 	string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
 
-	diet_string_set(diet_parameter(profile,5 ), const_cast<char*>(optionsToString.c_str()), DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile,5 ), optionsToString.c_str(), DIET_VOLATILE);
 
 	if(!isAsyncTransfer) {
 		diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
@@ -146,25 +146,24 @@ int LocalFileProxy::transferFile(const string& dest,
 	}
 
 	if(!isAsyncTransfer) {
-		diet_string_get(diet_parameter(profile, 6), &errMsg, NULL);
+		diet_string_get2(diet_parameter(profile, 6), errMsg);
 
 		/*To raise a vishnu exception if the received message is not empty*/
 		raiseExceptionIfNotEmptyMsg(errMsg);
 	} else {
 
-		char *fileTransferInString = NULL;
-		diet_string_get(diet_parameter(profile, 6), &fileTransferInString, NULL);
-		diet_string_get(diet_parameter(profile, 7), &errMsg, NULL);
+          std::string fileTransferInString = "";
+          diet_string_get2(diet_parameter(profile, 6), fileTransferInString);
+          diet_string_get2(diet_parameter(profile, 7), errMsg);
 
-		/*To raise a vishnu exception if the received message is not empty*/
-		raiseExceptionIfNotEmptyMsg(errMsg);
+          /*To raise a vishnu exception if the received message is not empty*/
+          raiseExceptionIfNotEmptyMsg(errMsg);
 
-		FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
+          FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
 
-		parseEmfObject(std::string(fileTransferInString), fileTransfer_ptr);
+          parseEmfObject(fileTransferInString, fileTransfer_ptr);
 
-		fileTransfer = *fileTransfer_ptr;
-
+          fileTransfer = *fileTransfer_ptr;
 	}
 
 	return 0;
@@ -189,4 +188,3 @@ int LocalFileProxy::cpAsync(const std::string& dest, const CpFileOptions& option
 int LocalFileProxy::mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer) {
 	return transferFile(dest, options, "FileMoveAsync", fileTransfer);
 }
-
