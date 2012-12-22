@@ -40,7 +40,7 @@ using namespace vishnu;
  * \return True if the pid exists
  */
 bool
-pid_exists(int pid){
+pid_exists(int pid) {
   return !kill(pid, 0);
 }
 
@@ -52,11 +52,9 @@ pid_exists(int pid){
  * \param av: The names of parameters
  */
 void
-deleter(char* dietConfig,int ac,char* av[]){
-
+deleter(char* dietConfig,int ac,char* av[]) {
   extern bfs::path daemon_file;
   extern bfs::path session_dir;
-
 
   bi::file_lock f_lock(daemon_file.string().c_str());
 
@@ -67,75 +65,52 @@ deleter(char* dietConfig,int ac,char* av[]){
       exit(EXIT_SUCCESS);
     }
 
-
     while(true) {
-
       bfs::directory_iterator it = bfs::directory_iterator(session_dir);
 
       for (; it != bfs::directory_iterator(); ++it) {// loop over session directory
-
         const bfs::path current_path = it->path();
 
-
         if (!pid_exists(convertToInt(it->path().native()))) {
-
           // close all sessions opened by disconnect mode before deleting file
-
           SessionContainer allSessions=getAllSessions(current_path.string());// get all sessions stored in file
 
-          if (false==allSessions.empty()){ // is there a session?
-
-            BOOST_FOREACH (SessionEntry session, allSessions){
-
-
-              if(session.getClosePolicy()==2) {//that session is open by disconnect mode
-
-
+          if (false == allSessions.empty()) { // is there a session?
+            BOOST_FOREACH (SessionEntry session, allSessions) {
+              if (session.getClosePolicy() == 2) {//that session is open by disconnect mode
+                // TODO : a loop to handle that
                 if (vishnuInitialize(dietConfig, ac, av)) {
                   if (vishnuInitialize(dietConfig, ac, av)) {
                     if (vishnuInitialize(dietConfig, ac, av)) {
-
-                  syslog(LOG_ERR,"DIET initialization failed !");
-
-                  exit (EXIT_FAILURE);
+                      syslog(LOG_ERR,"DIET initialization failed !");
+                      exit (EXIT_FAILURE);
                     }
                   }
-
                 }
 
-                try{
-
-                close (session.getSessionKey()); // and need to be closed
-
-                }
-                catch(VishnuException & e ){// if the close command fails
-
-                  if (false==checkBadSessionKeyError(e)){// check if we need to stop the daemon
-
-                     syslog(LOG_ERR, "The file is corrupted");
-
-                     exit(e.getMsgI());
-
+                try {
+                  close (session.getSessionKey()); // and need to be closed
+                } catch(VishnuException & e) {  // if the close command fails
+                  if (false == checkBadSessionKeyError(e)) {  // check if we need to stop the daemon
+                    syslog(LOG_ERR, "The file is corrupted");
+                    exit(e.getMsgI());
                   }
-
                 }
+
                 vishnuFinalize();
-              }
-
-            }// end of looping over the file
-
-          }
+              }  // end of if (session.getClosePolicy() == 2)
+            }  // end of looping over the file
+          }  // end of if (false == allSessions.empty())
 
           bfs::remove(current_path);// remove the file
+        }  // end of if (!pid_exists(convertToInt(it->path().native())))
+      }  // end of for
 
-        }
-      }
       // take a pause
       btt::sleep(bpt::seconds(5));//%RELAX<MISRA_0_1_3> Because it used to take a pause
     }
 
     exit(EXIT_SUCCESS);
-
   }
 }
 
@@ -150,13 +125,12 @@ deleter(char* dietConfig,int ac,char* av[]){
 
 
 void
-cleaner(char* dietConfig,int ac,char* av[]){
+cleaner(char* dietConfig,int ac,char* av[]) {
   // declare all global variables
   extern bfs::path home_dir;
   extern bfs::path session_dir;
   extern bfs::path vishnu_dir;
   extern bfs::path daemon_file;
-
 
   home_dir = getenv("HOME"); // set the user home directory
   vishnu_dir = home_dir ;  // set the directory in which will be stored the daemon lock file
