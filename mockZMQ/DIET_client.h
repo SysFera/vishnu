@@ -12,12 +12,6 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-/**
- * \brief Overload of DIET internal structure
- */
-typedef struct toto {
-  char* id;
-} toto;
 
 /**
  * \brief Overload of DIET structure
@@ -31,10 +25,6 @@ typedef struct diet_arg_t {
    * \brief Overload of DIET param, profile
    */
   void* prof;
-  /**
-   * \brief Overload of DIET param, description of the argument
-   */
-  toto desc;
 } diet_arg_t;
 
 /**
