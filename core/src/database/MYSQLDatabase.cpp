@@ -136,7 +136,8 @@ MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
  * \brief Destructor, raises an exception on error
  */
 MYSQLDatabase::~MYSQLDatabase(){
-	disconnect ();
+  disconnect();
+  delete [] mpool;
 }
 /**
  * \brief To disconnect from the database
