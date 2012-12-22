@@ -35,7 +35,7 @@ ProcessServer::list(){
 
   if (mop->getMachineId().compare("") != 0){
     string machine = "SELECT machineid from machine where machineid='"+mop->getMachineId()+"'";
-    DatabaseResult *res = mdatabase->getResult(machine.c_str());
+    boost::scoped_ptr<DatabaseResult> res(mdatabase->getResult(machine.c_str()));
     if(res->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
     }
