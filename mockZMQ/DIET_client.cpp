@@ -190,15 +190,14 @@ getTimeout() {
 diet_profile_t*
 diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
 // TODO : Do not handle -1 for input (no input param)
-  diet_profile_t* res = (diet_profile_t*) malloc(sizeof(diet_profile_t)*1);
+  diet_profile_t* res(NULL);
+  res = new diet_profile_t;
   res->IN = IN;
   res->INOUT = INOUT;
   res->OUT = OUT;
-  res->param = (char **)malloc(sizeof (char *)*(IN+INOUT+OUT+1));
+  res->param = new char *[OUT+1];
   memset(res->param,0,(IN+INOUT+OUT));
-  res->name = (char *)malloc (sizeof(char) * (strlen(name)+1));
-  memcpy(res->name, name, strlen(name));
-  res->name[strlen(name)]='\0';
+  res->name = strdup(name);
   return res;
 }
 
@@ -309,7 +308,16 @@ diet_string_get(diet_arg_t* arg, std::string & value) {
 }
 
 int
-diet_profile_free(diet_profile_t* prof){
+diet_profile_free(diet_profile_t* prof) {
+  for (unsigned int i = 0; i < prof->OUT; ++i) {
+    free(prof->param[i]);
+  }
+
+  free(prof->name);
+  delete [] prof->param;
+  delete prof;
+  prof = NULL;
+
   return 0;
 }
 
