@@ -110,9 +110,9 @@ private:
 };
 
 //FIXME: clear unused parameters
-class SubscripionWorker {
+class SubscriptionWorker {
 public:
-  explicit SubscripionWorker(boost::shared_ptr<zmq::context_t> ctx,
+  explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
 		  const std::string & uriInproc,
 		  int id,
 		  boost::shared_ptr<Annuary>& ann)
@@ -201,7 +201,7 @@ public:
 
   void
   run(){
-    ZMQStartDevice<SubscripionWorker>(muri, "inproc://vishnuSubcriberWorker", mnbThread, mann);
+    ZMQStartDevice<SubscriptionWorker>(muri, "inproc://vishnuSubcriberWorker", mnbThread, mann);
   }
 
 
