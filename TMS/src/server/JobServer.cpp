@@ -138,7 +138,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	if(options.getFileParams().size()) {
 		env.setParams(scriptContentRef, optionsref.getFileParams()) ;
 	}
-
 	mjob.setWorkId(optionsref.getWorkId()) ;
 
 	std::string jobSerialized ;
@@ -288,6 +287,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	mjob.setSubmitMachineName(machineName);
 	mjob.setSessionId(sessionId);
 	std::string BatchJobId=mjob.getJobId();
+	mjob.setJobId(vishnuJobId);
 
 	string scriptContentStr = std::string(convertedScript);
 	size_t pos = scriptContentStr.find("'");
