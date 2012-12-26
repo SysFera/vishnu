@@ -66,6 +66,7 @@ Env::replaceEnvVariables(std::string& scriptContent) {
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
     replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
     break;
+
   case SLURM:
     //To replace VISHNU_BATCHJOB_ID
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$SLURM_JOB_ID");
@@ -91,6 +92,7 @@ Env::replaceEnvVariables(std::string& scriptContent) {
       scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
     }
     break;
+
   case LSF:
     //To replace VISHNU_BATCHJOB_ID
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LSB_JOBID");
@@ -140,6 +142,23 @@ Env::replaceEnvVariables(std::string& scriptContent) {
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
     replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
     break;
+
+	case DELTACLOUD:
+		//To replace VISHNU_BATCHJOB_ID
+		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
+		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");
+		//To replace VISHNU_BATCHJOB_NAME
+		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
+		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
+		//To replace VISHNU_BATCHJOB_NUM_NODES. Depend on the number of node in VISHNU_BATCHJOB_NODEFILE
+		//Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
+		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+
+
+
+		break;
+
   default:
     break;
   }
