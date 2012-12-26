@@ -129,23 +129,23 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 
 	} else if (mbatchType==SGE){
 
-		mconversionTable[group]                = "#";
+		mconversionTable[group]                = "";
 		mconversionTable[workingDir]           = "#$ -wd ";
 		mconversionTable[jobName]              = "#$ -N ";
 		mconversionTable[jobOutput]            = "#$ -o ";
 		mconversionTable[jobError]             = "#$ -e ";
 		mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
 		mconversionTable[cpuTime]              = "#$ -l s_cpu=";
-		mconversionTable[nbCpu]                = "#";
-		mconversionTable[nbNodesAndCpuPerNode] = "#";
+		mconversionTable[nbCpu]                = "";
+		mconversionTable[nbNodesAndCpuPerNode] = "";
 		mconversionTable[mem]                  = "#$ -l s_vmem=";
 		mconversionTable[mailNotification]     = "#$ -m "; //special case
 		mconversionTable[mailNotifyUser]       = "#$ -M ";
 		mconversionTable[queue]                = "#$ -q ";
 
-		mconversionTable[sgeSec]               = "#";
-		mconversionTable[commandSec]           = "#";
-		mconversionTable[torqueSec]            = "#";
+		mconversionTable[sgeSec]               = "";
+		mconversionTable[commandSec]           = "";
+		mconversionTable[torqueSec]            = "";
 		mendScript="";
   } else if (mbatchType==POSIX) {
     mconversionTable[group]                = "#% vishnu_group=";
@@ -182,7 +182,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 		mconversionTable[queue]                = "#";
 
 		mconversionTable[sgeSec]               = "#";
-		mconversionTable[commandSec]           = "#";
+		mconversionTable[commandSec]           = "";
 		mconversionTable[torqueSec]            = "#";
 		mendScript="";
 	} else {
