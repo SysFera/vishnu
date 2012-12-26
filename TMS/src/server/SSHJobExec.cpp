@@ -259,7 +259,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 		const std::string & workDir) {
 
 	const std::string machineStatusFile = "/tmp/"+mhostname+".status";
-	const std::string logfile = nfsMountPoint+"/"+mhostname+".vishnu.log";
+	const std::string logfile = workDir+"/"+mhostname+".vishnu.log";
 	std::ostringstream cmd;
 	cmd << "exit; echo $? >" << machineStatusFile;
 

@@ -115,10 +115,13 @@ DeltaCloudServer::submit(const char* scriptPath,
 	}
 
 	std::cout << ">>Virtual machine started"
-			<< "\n  ID: "<< std::string(instance.id)
-	<< "\n  NAME: " << std::string(instance.name)
-	<< "\n  IP: "<< std::string(instance.private_addresses->address)
-	<< "\n";
+			<< "\n  ID: "<< std::string(instance.id)<<"\n"
+			<< " NAME: " << std::string(instance.name)<<"\n"
+			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
+
+	//Create the nodefile
+	// The path should correspond with the value set for the environment variable ISHNU_BATCHJOB_NODEFILE in JobServer.cpp
+	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address);
 
 	// Create an ssh engine for the virtual machine
 	SSHJobExec sshEngine(vmUser, instance.private_addresses->address);

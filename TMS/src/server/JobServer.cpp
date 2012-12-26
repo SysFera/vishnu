@@ -106,6 +106,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 			env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
 			optionsref.setFileParams(fileparams);
 		}
+
 	} else {
 		scriptPath = "/tmp/" + scriptPath;
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
@@ -219,10 +220,13 @@ int JobServer::submitJob(const std::string& scriptContent,
 					|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
 					|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
 					|S_ISVTX) ) {       // Striclky bit
-
 				throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the directory "
 						+ mjob.getOutputDir()) ;
 			}
+
+			// Set nodefile from the working directory
+			env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
+			env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
 		}
 	}
 
