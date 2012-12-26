@@ -96,7 +96,7 @@ Annuary::initFromFile(std::string infile) {
       mservers.push_back(server);
     }
   } else {
-    std::cout << "failed to open file " << tfile << " for initialisation of annuary " << std::endl;
+    std::cout << "failed to open file " << tfile << " for initialisation of annuary\n";
   }
 }
 

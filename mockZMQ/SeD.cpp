@@ -23,7 +23,7 @@ SeD::call(diet_profile_t* profile) {
   std::map<std::string, functionPtr_t>::iterator it;
   it = mcb.find(profile->name);
   if (it == mcb.end()) {
-    std::cerr << "E: service not found: " << profile->name << "\n";
+    std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
     return UNKNOWN_SERVICE;
   }
   int (*functionPtr)(diet_profile_t*);
@@ -37,7 +37,7 @@ SeD::call(diet_profile_t* profile) {
     rv = (*functionPtr)(profile);
   } catch (std::exception &e) {
     rv = INTERNAL_ERROR;
-    std::cerr << e.what() << std::endl;
+    std::cerr << boost::format("%1%\n") % e.what();
   }
   return rv;
 }
@@ -70,10 +70,10 @@ public:
       try {
         data = socket.get();
       } catch (zmq::error_t &error) {
-        std::cout << "E: " << error.what() << "\n";
+        std::cout << boost::format("E: %1%\n") % error.what();
         continue;
       }
-      std::cout << boost::str(boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length());
+      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
 
       // Deserialize and call UMS Method
       if (data.size() != 0) {

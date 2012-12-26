@@ -18,7 +18,7 @@ namespace bfs = boost::filesystem;
 
 void
 usage(){
-  std::cout << "Usage: dispatcher [configFile]" << std::endl;
+  std::cout << "Usage: dispatcher [configFile]\n";
 }
 
 //function to get the first element from the annuary
