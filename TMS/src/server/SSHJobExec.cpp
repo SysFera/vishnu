@@ -295,7 +295,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	std::clog << "Executing the script...\n" ;
 	execCmd("'mkdir -p "+workDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
 	int pid = -1;
-	if(execCmd("sh "+scriptPath + " &>>"+logfile, true, workDir, &pid)){
+	if(execCmd(scriptPath + " &>>"+logfile, true, workDir, &pid)){
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"execRemoteScript:: failed when executing the script "
 				+ scriptPath + " in the virtual machine "+mhostname);

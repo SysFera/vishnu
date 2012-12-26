@@ -207,9 +207,15 @@ int JobServer::submitJob(const std::string& scriptContent,
         if (!defaultBatchOption.empty()){
           processDefaultOptions(defaultBatchOption, convertedScript, key, batchType);
         }
+        
+        // Create the script and make it executable
+	vishnu::saveInFile(scriptPath, convertedScript);
+	if(0 != chmod(scriptPath.c_str(), S_IXUSR|S_IXGRP|S_IXOTH)) {
+		throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable"
+				+ scriptPath) ;
+	}
 
-	char* scriptPath = strdup("/tmp/job_scriptXXXXXX");
-
+	
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
@@ -233,6 +239,15 @@ int JobServer::submitJob(const std::string& scriptContent,
 				throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
 			}
 		}
+	}
+
+	// Create the script and make it executable
+	vishnu::saveInFile(scriptPath, convertedScript);
+	if(0 != chmod(scriptPath.c_str(),
+			S_IRUSR|S_IXUSR|
+			S_IRGRP|S_IXGRP|
+			S_IROTH|S_IXOTH)) {
+		throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
 	}
 
 	// Submit the job
