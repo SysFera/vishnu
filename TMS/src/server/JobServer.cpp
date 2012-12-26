@@ -68,7 +68,10 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
 	std::string sessionId = msessionServer.getAttribut("where sessionkey='"
 			+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
-	std::string workingDir ;
+
+	std::string workingDir ="/tmp" ;
+	bool needOutputDir = false ;
+
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
@@ -88,13 +91,28 @@ int JobServer::submitJob(const std::string& scriptContent,
 	env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
 
-	bool needOutputDir = false ;
 	string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
 	string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
 	if(mbatchType == DELTACLOUD) {
-		workingDir = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-		string inputDir =  workingDir + "/INPUT_" + suffix;
+		string mountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+		workingDir = mountPoint + "/" + suffix;
+		string inputDir =  workingDir + "/INPUT";
 		scriptPath = inputDir + "/script.xsh";
+
+		// create the working directory
+		try{
+			bfs::create_directories(workingDir);
+		} catch(bfs::filesystem_error ex){
+			throw (ERRCODE_INVDATA, ex.what());
+		}
+
+		// create the input directory directory
+		try{
+			bfs::create_directories(inputDir);
+		} catch(bfs::filesystem_error ex){
+			throw (ERRCODE_INVDATA, ex.what());
+		}
+
 		string directory = "";
 		try {
 			directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
@@ -102,8 +120,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 			throw (ERRCODE_INVDATA, ex.what());
 		}
 		if(directory.length() > 0){
-			std::string fileparams = strdup(optionsref.getFileParams().c_str());
-			env.replaceAllOccurences(fileparams, directory, "/mnt/cloud");
+			std::string fileparams = optionsref.getFileParams();
+			env.replaceAllOccurences(fileparams, directory, inputDir);
 			optionsref.setFileParams(fileparams);
 		}
 
@@ -112,7 +130,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
 	}
-	// Set the output dir
+	// Set the output dir if necessary
 	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
 			mbatchType == DELTACLOUD ) {
 		setOutputDir(workingDir, suffix, scriptContentRef);
