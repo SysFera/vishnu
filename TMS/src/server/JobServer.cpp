@@ -100,18 +100,10 @@ int JobServer::submitJob(const std::string& scriptContent,
 		scriptPath = inputDir + "/script.xsh";
 
 		// create the working directory
-		try{
-			bfs::create_directories(workingDir);
-		} catch(bfs::filesystem_error ex){
-			throw (ERRCODE_INVDATA, ex.what());
-		}
+		vishnu::createWorkingDir(workingDir);
 
-		// create the input directory directory
-		try{
-			bfs::create_directories(inputDir);
-		} catch(bfs::filesystem_error ex){
-			throw (ERRCODE_INVDATA, ex.what());
-		}
+		// create the working directory
+		vishnu::createWorkingDir(inputDir);
 
 		string directory = "";
 		try {
@@ -212,7 +204,6 @@ int JobServer::submitJob(const std::string& scriptContent,
             pos2 = specificParams.find("=");
           }
 
-        }
         if (!defaultBatchOption.empty()){
           processDefaultOptions(defaultBatchOption, convertedScript, key, batchType);
         }
@@ -233,18 +224,14 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 		// Set the permissions so to enable writing the directory from the virtual machines
 		if(mbatchType == DELTACLOUD) {
-			if(0 != chmod(mjob.getOutputDir().c_str(),
-					S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
-					|S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
-					|S_IROTH|S_IWOTH|S_IXOTH // RWX for other
-					|S_ISVTX) ) {       // Striclky bit
-				throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the directory "
-						+ mjob.getOutputDir()) ;
-			}
-
-			// Set nodefile from the working directory
+			vishnu::createWorkingDir(mjob.getOutputDir());
+			// Set the nodefile from the output directory
 			env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
 			env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
+		} else {
+			if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
+				throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
+			}
 		}
 	}
 

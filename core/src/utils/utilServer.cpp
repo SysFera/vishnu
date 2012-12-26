@@ -14,9 +14,9 @@
 #include "DbFactory.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
-
-// To get the hostname
+#include <fcntl.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 using namespace std;
 
@@ -345,7 +345,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
     table="job";
     fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
     val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
-      "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+         "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
     primary="numjobid";
     break;
   case FILETRANSFERT:
@@ -363,15 +363,15 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   case WORK:
     //FIXME : no auto-increment field in work
     fields = " (application_id"
-      ",date_created,done_ratio, estimated_hours,identifier,"
-      "last_updated, nbcpus, owner_id, priority, "
-      "project_id, "
-      "start_date, status, subject) ";
+             ",date_created,done_ratio, estimated_hours,identifier,"
+             "last_updated, nbcpus, owner_id, priority, "
+             "project_id, "
+             "start_date, status, subject) ";
     val = " ((select min(id) from application_version),"
-      " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-      " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
-      "(select min(id) from project), "
-      "CURRENT_TIMESTAMP, 1,'toto') ";
+          " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+          "(select min(id) from project), "
+          "CURRENT_TIMESTAMP, 1,'toto') ";
     table = "work";
     primary="id";
     break;
@@ -533,7 +533,7 @@ vishnu::getObjectId(int vishnuId,
 
   if (format.size() != 0) {
     idGenerated =
-      getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+        getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
     } else {
@@ -584,9 +584,9 @@ vishnu::parseErrorMessage (const std::string& errorMsg) {
  */
 int vishnu::getStatusValue (const std::string& file) {
 
-	std::string content = vishnu::get_file_content(file);
-	size_t pos = content.find("\n");
-	return vishnu::convertToInt(content.substr(0, pos));
+  std::string content = vishnu::get_file_content(file);
+  size_t pos = content.find("\n");
+  return vishnu::convertToInt(content.substr(0, pos));
 }
 
 /**
@@ -596,28 +596,52 @@ int vishnu::getStatusValue (const std::string& file) {
  *  \return the string of the directory to which the link was created
  */
 std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
-	std::string directory="";
-	std::string file="";
-	size_t pos = fileparam.find("=");
-	if(pos!=std::string::npos) {
-	      size_t pos1 = fileparam.find(" ", pos);
-	      if(pos1!=std::string::npos){
-	    	  file = fileparam.substr(pos+1, pos1-pos);
-	      } else {
-	    	  file = fileparam.substr(pos+1);
-	      }
-	      size_t pos2 = file.rfind("/");
-	      if(pos2 != std::string::npos){
-	    	  directory = file.substr(0, pos2);
+  std::string directory="";
+  std::string file="";
+  size_t pos = fileparam.find("=");
+  if(pos!=std::string::npos) {
+    size_t pos1 = fileparam.find(" ", pos);
+    if(pos1!=std::string::npos){
+      file = fileparam.substr(pos+1, pos1-pos);
+    } else {
+      file = fileparam.substr(pos+1);
+    }
+    size_t pos2 = file.rfind("/");
+    if(pos2 != std::string::npos){
+      directory = file.substr(0, pos2);
 
-	    	  std::ostringstream oss;
-	    	  oss << "mv " << directory << "/* " << dir;
-	    	  if(system(oss.str().c_str())){
-	    		  throw "Can  not move the input files";
-	    	  }
-	      }
+      std::ostringstream oss;
+      oss << "mv " << directory << "/* " << dir;
+      if(system(oss.str().c_str())){
+        throw "Can  not move the input files";
+      }
+    }
 
-	}
-	return directory;
+  }
+  return directory;
 
 }
+
+
+/**
+ *  \brief Function to create a working directory. The working directory needs rwxt permissions
+ *  \param path the path of the working directory
+ */
+void vishnu::createWorkingDir(const std::string& path) {
+
+  try {
+    bfs::create_directories(path);
+    // The working directory needs rwxt permissions
+    if(0 != chmod(path.c_str(),
+                  S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
+                  |S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
+                  |S_IROTH|S_IWOTH|S_IXOTH // RWX for other
+                  |S_ISVTX) ) {       // Striclky bit
+      throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the working directory "
+                            + path) ;
+    }
+  } catch(bfs::filesystem_error ex){
+    throw (ERRCODE_INVDATA, ex.what());
+  }
+}
+
