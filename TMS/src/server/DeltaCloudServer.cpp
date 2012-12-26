@@ -86,7 +86,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
 	params.push_back(param);
 
-	std::string vmName = "vishnu.vm"+vishnu::createSuffixFromCurTime();
+	std::string vmName = "vishnu.vm_"+job.getJobId();
 	param.name = strdup("name");
 	param.value = strdup(vmName.c_str());
 	params.push_back(param);
@@ -114,9 +114,9 @@ DeltaCloudServer::submit(const char* scriptPath,
 				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
 	}
 
-	std::cout << ">>Virtual machine started"
-			<< "\n  ID: "<< std::string(instance.id)<<"\n"
-			<< " NAME: " << std::string(instance.name)<<"\n"
+	std::cout << ">>Virtual machine started\n"
+			<< "  ID: "<< std::string(instance.id)<<"\n"
+			<< "  NAME: " << std::string(instance.name)<<"\n"
 			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
 
 	//Create the nodefile
