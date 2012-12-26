@@ -65,9 +65,11 @@ int JobServer::submitJob(const std::string& scriptContent,
 {
 	msessionServer.check(); //To check the sessionKey
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
 	std::string sessionId = msessionServer.getAttribut("where sessionkey='"
 			+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+
+	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
+	mjob.setJobId(vishnuJobId);
 
 	std::string workingDir ="/tmp" ;
 	bool needOutputDir = false ;
@@ -144,14 +146,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	::ecorecpp::serializer::serializer optSer;
 	::ecorecpp::serializer::serializer jobSer;
 
-	std::string convertedScript;
-	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(batchType, scriptContentRef));
-	if(scriptConvertor->scriptIsGeneric()) {
-		std::string genScript = scriptConvertor->getConvertedScript();
-		convertedScript = genScript;
-	} else {
-		convertedScript = scriptContentRef;
-	}
 	std::string key;
         std::string sep = " ";
         switch (mbatchType) {
@@ -241,7 +235,17 @@ int JobServer::submitJob(const std::string& scriptContent,
 		}
 	}
 
-	// Create the script and make it executable
+	// Convert the script
+	std::string convertedScript;
+	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
+	if(scriptConvertor->scriptIsGeneric()) {
+		std::string genScript = scriptConvertor->getConvertedScript();
+		convertedScript = genScript;
+	} else {
+		convertedScript = scriptContentRef;
+	}
+
+	// Create the script file and make it executable
 	vishnu::saveInFile(scriptPath, convertedScript);
 	if(0 != chmod(scriptPath.c_str(),
 			S_IRUSR|S_IXUSR|
@@ -284,7 +288,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	mjob.setSubmitMachineName(machineName);
 	mjob.setSessionId(sessionId);
 	std::string BatchJobId=mjob.getJobId();
-	mjob.setJobId(vishnuJobId);
 
 	string scriptContentStr = std::string(convertedScript);
 	size_t pos = scriptContentStr.find("'");
