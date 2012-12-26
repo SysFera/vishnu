@@ -86,7 +86,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
 	params.push_back(param);
 
-	std::string vmName = "vishnu.vm_"+job.getJobId();
+	std::string vmName = "vishnu.vm."+job.getJobId();
 	param.name = strdup("name");
 	param.value = strdup(vmName.c_str());
 	params.push_back(param);
