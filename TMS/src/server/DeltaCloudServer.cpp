@@ -136,10 +136,11 @@ DeltaCloudServer::submit(const char* scriptPath,
 	job.setBatchJobId(vishnu::convertToString(jobPid));
 	job.setJobId(vishnu::convertToString(jobPid));
 	job.setVmId(instance.id);
-	job.setStatus(vishnu::JOB_COMPLETED);
+	job.setStatus(vishnu::JOB_SUBMITTED);
 	job.setVmIp(instance.private_addresses->address);
 	job.setOutputPath(job.getOutputDir()+"/stdout");
 	job.setErrorPath(job.getOutputDir()+"/stderr");
+	job.setNbNodes(1);
 	cleanup();
 	return 0;
 }
@@ -172,7 +173,7 @@ DeltaCloudServer::getJobState(const std::string& jobPid){
 	if(pos2 == std::string::npos) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"Bad job identifier: "+ jobPid
-				+".\n This would be pid@user@vmaddress");
+				+".\nThis would be in the form pid@user@vmaddress");
 	}
 	realPid = jobPid.substr(pos1, pos2);
 
@@ -181,26 +182,25 @@ DeltaCloudServer::getJobState(const std::string& jobPid){
 	if(pos2 == std::string::npos) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"Bad job identifier: "+ jobPid
-				+".\nThis would be pid@user@vmaddress");
+				+".This would be in the form pid@user@vmaddress");
 	}
-	vmUser = jobPid.substr(pos1, pos2);
+	vmUser = jobPid.substr(pos1, pos2-pos1);
 
-	vmIp = jobPid.substr(pos2, std::string::npos);
+	vmIp = jobPid.substr(pos2+1, std::string::npos);
 	if(vmIp.size() == 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				"Bad job identifier: "+ jobPid
-				+".\nThis would be pid@user@vmaddress");
+				+".This would be in the form pid@user@vmaddress");
 	}
 
 	SSHJobExec sshEngine(vmUser, vmIp);
-
-	//ps -o pid= -o comm= -p jobId
-	std::string pidFile = "/tmp/"+jobPid;
-	sshEngine.execCmd("ps -o pid= -o comm= -p " + realPid +" | awk '{print $1}' >"+pidFile, false);
-	if(vishnu::convertToInt(realPid) != vishnu::getStatusValue(pidFile)) {
-		return vishnu::JOB_COMPLETED;
+	//ps -o pid= -p jobId
+	std::string statusFile = "/tmp/"+jobPid;
+	sshEngine.execCmd("ps -o pid= -p " + realPid +" | wl -l >"+statusFile, false);
+	if(vishnu::getStatusValue(statusFile) > 0) {
+		return vishnu::JOB_RUNNING;
 	}
-	return vishnu::JOB_RUNNING;
+	return vishnu::JOB_COMPLETED;
 }
 
 /**
