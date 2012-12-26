@@ -313,8 +313,12 @@ namespace vishnu {
 	 *  \param fileparam a list of key=value
 	 *  \param dir the directory where we create
 	 */
-
 	std::string moveFileData(const std::string& fileparams, std::string dir);
 
+	/**
+	 *  \brief Function to create a working directory. The working directory needs rwxt permissions
+	 *  \param path the path of the working directory
+	 */
+	void createWorkingDir(const std::string& path);
 }
 #endif //_UTILSERVER_H_
