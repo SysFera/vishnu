@@ -42,11 +42,11 @@ public:
 
 	/**
 	 * \brief Function to get the status of the job
-	 * \param jobId the process id within the virtual machine
+	 * \param jobDescr the job description along with the descritpion of the associated virtual machine
 	 * \return -1 if the job is unknown or server not  unavailable
 	 */
 	int
-	getJobState(const std::string& jobPid);
+	getJobState(const std::string& jobDescr);
 
 	/**
 	 * \brief Function to get the start time of the job
@@ -86,6 +86,12 @@ private:
 			char* password);
 
 	/**
+	 * \brief Function for cleaning up virtual machine
+	 * \param vmid The id of the virtual machine
+	 */
+	void releaseResources(const std::string & vmid);
+
+	/**
 	 * \brief Function for cleaning up a deltacloud params list
 	 * \param: params The list of params
 	 */
@@ -95,7 +101,7 @@ private:
 	 * \brief Function for cleaning up the allocated dynamic data structure
 	 */
 	void cleanup();
-	
+
 	/**
 	 * \brief pointer to the deltacloud api
 	 */	
