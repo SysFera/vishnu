@@ -219,7 +219,6 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Fork a child for UMS monitoring
   pid_t pid = fork();
-  pid_t ppid;
   if (pid > 0) {
 
     try {
@@ -267,7 +266,6 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
   }  else if (pid == 0) {
-    ppid = getppid();
     if (batchType != POSIX){
       pid_t pidp;
       pidp = fork();
