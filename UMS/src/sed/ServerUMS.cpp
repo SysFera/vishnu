@@ -33,40 +33,41 @@ ServerUMS::getInstance() {
 }
 
 /**
-* \brief To get the vishnuId
-* \fn int getVishnuId()
-* \return the path of the configuration file
-*/
+ * \brief To get the vishnuId
+ * \fn int getVishnuId()
+ * \return the path of the configuration file
+ */
 int
 ServerUMS::getVishnuId() const {
   return mvishnuId;
 }
 
 /**
-* \brief To get the path to the sendmail script
-* \fn std::string getSendmailScriptPath()
-* \return the path of the configuration file
-*/
+ * \brief To get the path to the sendmail script
+ * \fn std::string getSendmailScriptPath()
+ * \return the path of the configuration file
+ */
 std::string
 ServerUMS::getSendmailScriptPath() const {
   return msendmailScriptPath;
 }
+
 /**
-* \brief Constructor (private)
-* \fn ServerUMS()
-*/
+ * \brief Constructor (private)
+ * \fn ServerUMS()
+ */
 ServerUMS::ServerUMS() {
 }
 
 /**
-* \brief To initialize the UMS server with individual parameters
-* \fn int init(std::string vishnuid)
-* \param vishnuId The id of the vishnu configuration registered in the database
-* \param dbConfig  The configuration of the database
-* \param sendmailScriptPath The path to the script for sending emails
-* \param authenticatorConfig The configuration of the authenticator
-* \return an error code (0 if success and 1 if an error occurs)
-*/
+ * \brief To initialize the UMS server with individual parameters
+ * \fn int init(std::string vishnuid)
+ * \param vishnuId The id of the vishnu configuration registered in the database
+ * \param dbConfig  The configuration of the database
+ * \param sendmailScriptPath The path to the script for sending emails
+ * \param authenticatorConfig The configuration of the authenticator
+ * \return an error code (0 if success and 1 if an error occurs)
+ */
 int
 ServerUMS::init(int vishnuId,
                 DbConfiguration dbConfig,
@@ -116,9 +117,9 @@ ServerUMS::init(int vishnuId,
 }
 
 /**
-* \fn ~ServerUMS()
-* \brief Destructor, raises an exception on error
-*/
+ * \fn ~ServerUMS()
+ * \brief Destructor, raises an exception on error
+ */
 ServerUMS::~ServerUMS() {
   if (mmapper != NULL) {
     delete mmapper;
@@ -201,5 +202,4 @@ ServerUMS::initMap() {
   mcb.insert( pair<string, functionPtr_t> (string(SRV[31]),functionPtr));
   functionPtr = solveAccountAuthList;
   mcb.insert( pair<string, functionPtr_t> (string(SRV[32]),functionPtr));
-
 }

@@ -77,29 +77,29 @@ public :
   static ServerUMS*  getInstance();
 
   /**
-  * \brief To get the vishnuId
-  * \fn int getVishnuId()const
-  * \return the path of the configuration file
-  */
+   * \brief To get the vishnuId
+   * \fn int getVishnuId()const
+   * \return the path of the configuration file
+   */
   int
   getVishnuId() const;
 
   /**
-  * \brief To get the path to the sendmail script
-  * \fn std::string getSendmailScriptPath() const
-  * \return the path of the configuration file
-  */
+   * \brief To get the path to the sendmail script
+   * \fn std::string getSendmailScriptPath() const
+   * \return the path of the configuration file
+   */
   std::string
   getSendmailScriptPath() const;
 
    /**
-   * \brief To initialize the UMS server
-   * \param vishnuId  The identifier of the vishnu instance
-   * \param dbConfig  The configuration of the database
-   * \param sendmailScriptPath The path to the script for sending emails
-   * \param authenticatorConfig The configuration of the authenticator
-   * \return an error code (0 if success and 1 if an error occurs)
-   */
+    * \brief To initialize the UMS server
+    * \param vishnuId  The identifier of the vishnu instance
+    * \param dbConfig  The configuration of the database
+    * \param sendmailScriptPath The path to the script for sending emails
+    * \param authenticatorConfig The configuration of the authenticator
+    * \return an error code (0 if success and 1 if an error occurs)
+    */
   int
   init(int vishnuId,
        DbConfiguration dbConfig,
