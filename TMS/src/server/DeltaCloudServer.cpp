@@ -136,8 +136,9 @@ DeltaCloudServer::submit(const char* scriptPath,
 int
 DeltaCloudServer::cancel(const char* jobDescr) {
 
-	std::vector<std::string> jobInfos=  getJobInfos(jobDescr, 2);
+	std::vector<std::string> jobInfos = getJobInfos(jobDescr, 2);
 	try {
+		// Stop the virtual machine to release resources
 		releaseResources(jobInfos[1]);
 	} catch(const VishnuException & ex) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "[ERROR] Can not cancel the job " + jobInfos[0]);
@@ -168,7 +169,7 @@ DeltaCloudServer::getJobState(const std::string& jobDescr){
 	int status = vishnu::JOB_RUNNING;
 	int count = vishnu::getStatusValue(statusFile);
 	if( count == 0) {
-		//release the resources allocated to the vm and mark the job completed
+		// stop the virtual machine to release the resources
 		releaseResources(vmId);
 		status = vishnu::JOB_COMPLETED;
 	}
@@ -266,15 +267,18 @@ void DeltaCloudServer::initialize(void) {
  */
 void DeltaCloudServer::releaseResources(const std::string & vmid) {
 
-	// Initialize the Cloud API
+	// Initialize delta cloud
 	initialize();
 
+	// Get the instance
 	deltacloud_instance instance;
 	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 
+	// Stop the instance
 	std::clog << "[INFO] The instance "<< instance.id << " (NAME: "<< instance.name<<") will be stopped\n";
+
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
