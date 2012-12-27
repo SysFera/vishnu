@@ -103,7 +103,7 @@ MonitorTMS::run() {
       boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
       if (result->getNbTuples() == 0) {
         sleep(minterval);
-        break;
+        continue;
       }
 
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
