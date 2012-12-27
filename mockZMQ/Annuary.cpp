@@ -24,6 +24,23 @@ Annuary::~Annuary() {
 //  }
 }
 
+// anonymous namespace
+namespace {
+  class is_server : std::unary_function<Server, bool> {
+  public:
+    is_server(const std::string& name, const std::string& uri) :
+      name_(name), uri_(uri) {}
+
+    bool operator() (boost::shared_ptr<Server> serv) {
+      return ((serv->getName() == name_) &&
+              (serv->getURI() == uri_));
+    }
+
+  private:
+    std::string name_;
+    std::string uri_;
+  };
+}
 
 int
 Annuary::add(std::string name, std::vector<std::string> services, std::string uri) {
@@ -43,17 +60,11 @@ Annuary::add(std::string name, std::vector<std::string> services, std::string ur
   return 0;
 }
 
-
 int
-Annuary::remove(std::string name, std::string uri) {
-  unsigned int i;
-  for (i = 0; i < mservers.size(); ++i) {
-    if (name.compare(mservers.at(i)->getName()) == 0 &&
-        uri.compare(mservers.at(i).get()->getURI()) == 0) {
-      mservers.erase(mservers.begin()+i);
-      break;
-    }
-  }
+Annuary::remove(const std::string& name, const std::string& uri) {
+  is_server helper(name, uri);
+  mservers.erase(std::remove_if(mservers.begin(), mservers.end(), helper),
+                 mservers.end());
   return 0;
 }
 

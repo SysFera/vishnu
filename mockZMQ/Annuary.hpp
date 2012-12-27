@@ -50,7 +50,7 @@ public :
    * \return 0 on success, an error code otherwise
    */
   int
-  remove(std::string name, std::string uri);
+  remove(const std::string& name, const std::string& uri);
 
   /**
    * \brief Return all the servers offering the service called service
