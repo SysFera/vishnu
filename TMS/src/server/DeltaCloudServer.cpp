@@ -40,21 +40,20 @@ DeltaCloudServer::submit(const char* scriptPath,
 		TMS_Data::Job& job,
 		char** envp) {
 
+	// Initialize the Delatacloud API
+	try {
+		initialize();
+	} catch (...) {
+		throw;
+	}
+
 	// Get configuration parameters
-	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
-	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
-	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
 	std::string imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
 	std::string flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
 	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
 	std::string vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
 	std::string nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
 	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-
-	// NOW, Initialize the Delatacloud API
-	initialize(const_cast<char*>(cloudEndpoint.c_str()),
-			const_cast<char*>(cloudUser.c_str()),
-			const_cast<char*>(cloudUserPassword.c_str()));
 
 	// Set the parameters of the virtual machine instance
 	std::vector<deltacloud_create_parameter> params;
@@ -239,16 +238,18 @@ create_plugin_instance(void **instance) {
 
 /**
  * \brief Function for initializing the deltacloud API
- * \param url: The Url to access the API of the cloud provider
- * \param user: The user login to the cloud provider. Note: For OpenStack this needs to be in the form of "login+tenant"
- * param password: The user password
  */
-void DeltaCloudServer::initialize(char* cloudEndpoint,
-		char* user,
-		char* password) {
+void DeltaCloudServer::initialize(void) {
+
+	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
 
 	mcloudApi =  new deltacloud_api;
-	if (deltacloud_initialize(mcloudApi, cloudEndpoint, user, password) < 0) {
+	if (deltacloud_initialize(mcloudApi,
+			const_cast<char*>(cloudEndpoint.c_str()),
+			const_cast<char*>(cloudUser.c_str()),
+			const_cast<char*>(cloudUserPassword.c_str())) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 }
@@ -260,15 +261,12 @@ void DeltaCloudServer::initialize(char* cloudEndpoint,
  */
 void DeltaCloudServer::releaseResources(const std::string & vmid) {
 
-	// Get the credentials to authenticate against the cloud
-	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
-	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
-	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
-
 	// Initialize the Cloud API
-	initialize(const_cast<char*>(cloudEndpoint.c_str()),
-			const_cast<char*>(cloudUser.c_str()),
-			const_cast<char*>(cloudUserPassword.c_str()));
+	try {
+		initialize();
+	} catch(...) {
+		throw ;
+	}
 
 	deltacloud_instance instance;
 	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
