@@ -195,12 +195,11 @@ ServerTMS::init(int & vishnuId,
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
 
     if (result->getResults().size() == 0) {
-      SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      throw e;
+      throw SystemException (ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
 
-  } catch (VishnuException& e) {
-    std::cout << e.what() << std::endl;
+  } catch (VishnuException& e) {	
+        std::clog << "[TMS][ERROR] " << e.what() << " \n";
 	exit(0);
   }
 

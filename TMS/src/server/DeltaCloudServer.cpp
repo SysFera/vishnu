@@ -99,7 +99,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
 	}
 
-	std::cout << ">>Virtual machine started\n"
+	std::clog << "[TMS][INFO] Virtual machine started\n"
 			<< "  ID: "<< std::string(instance.id)<<"\n"
 			<< "  NAME: " << std::string(instance.name)<<"\n"
 			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
@@ -132,12 +132,24 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 /**
  * \brief Function to cancel job
- * \param jobId the identifier of the job to cancel
+ * \param jobDescr the description of the job in the form of jobId@vmId
  * \return raises an exception on error
  */
 int
-DeltaCloudServer::cancel(const char* jobId) {
-	//TODO
+DeltaCloudServer::cancel(const char* jobDescr) {
+	std::vector<std::string> jobInfos;
+	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
+	if(jobInfos.size() != 2) {
+		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr));
+	}
+
+	int ret = -1;
+	try {
+		releaseResources(jobInfos[1]);
+	} catch(const VishnuException & ex) {
+		std::clog << "[TMS][ERROR] Can not cancel the job " <<  jobInfos[0] << "\n";
+	}
+
 	return 0;
 }
 
@@ -263,7 +275,8 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 
-	if (deltacloud_instance_destroy(mcloudApi, &instance) < 0) {
+	std::clog << "[TMS][INFO] The instance "<< instance.id << " (NAME: "<< instance.name<<") will be stopped\n";
+	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 

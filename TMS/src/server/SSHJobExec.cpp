@@ -264,7 +264,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	cmd << "exit; echo $? >" << machineStatusFile;
 
 	int attempt = 1;
-	std::clog << "Checking ssh connection...\n" ;
+	std::clog << "[TMS][INFO] Checking ssh connection...\n" ;
 	while(attempt <= SSH_CONNECT_MAX_RETRY) {
 		execCmd(cmd.str());
 		int ret =  vishnu::getStatusValue(machineStatusFile);
@@ -284,7 +284,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 	}
 
 	// Mount the NFS repository
-	std::clog << "Mounting the nfs directory...\n" ;
+	std::clog << "[TMS][INFO] Mounting the nfs directory...\n" ;
 	if(nfsServer.size()>0 &&
 			nfsMountPoint.size()> 0) {
 		mountNfsDir(nfsServer, nfsMountPoint);
@@ -292,7 +292,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
 	// If succeed execute the script to the virtual machine
 	// This assumes that the script is located on a shared DFS
-	std::clog << "Executing the script...\n" ;
+	std::clog << "[TMS][INFO] Executing the script...\n" ;
 	execCmd("'mkdir -p "+workDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
 	int pid = -1;
 	if(execCmd(scriptPath + " &>>"+logfile, true, workDir, &pid)){
@@ -300,7 +300,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 				"execRemoteScript:: failed when executing the script "
 				+ scriptPath + " in the virtual machine "+mhostname);
 	}
-	std::clog << "Submission completed. PID: "<< pid << "\n" ;
+	std::clog << "[TMS][INFO] Submission completed. PID: "<< pid << "\n" ;
 	return pid;
 }
 
