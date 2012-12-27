@@ -76,14 +76,9 @@ public:
 private:
 	/**
 	 * \brief Function for initializing the deltacloud API
-	 * \param url: The Url to access the API of the cloud provider
-	 * \param user: The user login to the cloud provider. Note: For OpenStack this needs to be in the form of "login+tenant"
-	 * param password: The user password
 	 * return: throw exception on error
 	 */
-	void initialize(char* cloudEndpoint,
-			char* user,
-			char* password);
+	void initialize(void);
 
 	/**
 	 * \brief Function for cleaning up virtual machine
