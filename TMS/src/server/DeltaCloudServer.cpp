@@ -99,7 +99,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 			<< "  NAME: " << std::string(instance.name)<<"\n"
 			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
 
-	//Create the nodefile
+	// Create the nodefile
 	// The path should correspond with the value set for the environment variable ISHNU_BATCHJOB_NODEFILE in JobServer.cpp
 	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address);
 
@@ -114,6 +114,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	}
 
 	job.setBatchJobId(vishnu::convertToString(jobPid));
+	job.setJobName(job.getBatchJobId());
 	job.setJobId(vishnu::convertToString(jobPid));
 	job.setVmId(instance.id);
 	job.setStatus(vishnu::JOB_SUBMITTED);
@@ -121,6 +122,8 @@ DeltaCloudServer::submit(const char* scriptPath,
 	job.setOutputPath(job.getOutputDir()+"/stdout");
 	job.setErrorPath(job.getOutputDir()+"/stderr");
 	job.setNbNodes(1);
+
+	deltacloud_free_instance(&instance);
 	cleanup();
 	return 0;
 }
@@ -183,11 +186,11 @@ DeltaCloudServer::getJobState(const std::string& jobDescr){
 time_t
 DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 
-	// Get the job description
-	std::vector<std::string> jobInfos = getJobInfos(jobDescr, 2);
-
 	// Initialize the Cloud API
 	initialize();
+
+	// Get the job information
+	std::vector<std::string> jobInfos = getJobInfos(jobDescr, 2);
 
 	// Get the instance
 	deltacloud_instance instance;
@@ -196,6 +199,9 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 	}
 
 	vishnu::convertToTimeType(instance.launch_time);
+
+	deltacloud_free_instance(&instance);
+	cleanup();
 }
 
 
@@ -207,8 +213,7 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 TMS_Data::ListQueues*
 DeltaCloudServer::listQueues(const std::string& optQueueName) {
 
-	//Queue system is not yet implemented
-
+	//TODO: Queue system is not yet implemented
 	return NULL;
 }
 
@@ -262,11 +267,7 @@ void DeltaCloudServer::initialize(void) {
 void DeltaCloudServer::releaseResources(const std::string & vmid) {
 
 	// Initialize the Cloud API
-	try {
-		initialize();
-	} catch(...) {
-		throw ;
-	}
+	initialize();
 
 	deltacloud_instance instance;
 	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
@@ -278,6 +279,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 
+	deltacloud_free_instance(&instance);
 	cleanup();
 }
 
@@ -293,7 +295,7 @@ ListStrings DeltaCloudServer::getJobInfos(const std::string jobDescr, const int 
 
 	if(jobInfos.size() != numParams) {
 		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
-						"Expects "+vishnu::convertToString(numParams)+" parameters in the form of param1@param2...");
+				"Expects "+vishnu::convertToString(numParams)+" parameters in the form of param1@param2...");
 	}
 
 	return jobInfos;

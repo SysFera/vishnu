@@ -67,7 +67,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   // First initialize the logger
-  std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
+	//std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
 
   // Source the rc file
   system("touch -f $HOME/.vishnurc");  // Create if it does'nt exist to avoir error at the next step
