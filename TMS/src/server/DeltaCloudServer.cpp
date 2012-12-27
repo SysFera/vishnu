@@ -194,13 +194,18 @@ DeltaCloudServer::getJobState(const std::string& jobPid){
 	}
 
 	SSHJobExec sshEngine(vmUser, vmIp);
-	//ps -o pid= -p jobId
 	std::string statusFile = "/tmp/"+jobPid;
-	sshEngine.execCmd("ps -o pid= -p " + realPid +" | wl -l >"+statusFile, false);
-	if(vishnu::getStatusValue(statusFile) > 0) {
-		return vishnu::JOB_RUNNING;
+	sshEngine.execCmd("ps -o pid= -p " + realPid +" | wc -l >"+statusFile, false);
+
+	int status = vishnu::JOB_RUNNING;
+	int count = vishnu::getStatusValue(statusFile);
+	if( count == 0) {
+		status = vishnu::JOB_COMPLETED;
 	}
-	return vishnu::JOB_COMPLETED;
+
+	vishnu::deleteFile(statusFile.c_str());
+
+	return status;
 }
 
 /**

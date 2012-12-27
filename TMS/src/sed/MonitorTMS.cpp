@@ -33,8 +33,8 @@ MonitorTMS::MonitorTMS(int interval) {
 
 MonitorTMS::~MonitorTMS() {
   if (mdatabaseVishnu != NULL) {
-      delete mdatabaseVishnu;
-    }
+    delete mdatabaseVishnu;
+  }
 }
 
 
@@ -67,8 +67,8 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
     /* Checking of vishnuid on the database */
     boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
     if (result->getResults().size() == 0) {
-        throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
-      }
+      throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
+    }
   } catch (VishnuException& e) {
     exit(0);
   }
@@ -77,9 +77,9 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
 
 /**
  * \brief To launch the TMS Monitor
- * \return raises an exception
+ * \return raises exception on erro
  */
-int
+void
 MonitorTMS::run() {
 
   std::vector<std::string>::iterator iter;
@@ -93,42 +93,43 @@ MonitorTMS::run() {
     " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(mbatchType);
 
   while(kill(getppid(), 0) == 0) {
-      try {
-        boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
-        if (result->getNbTuples() != 0) {
-            for (size_t i = 0; i < result->getNbTuples(); ++i) {
-                tmp.clear();
-                tmp = result->get(i);
+    try {
+      boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+      if (result->getNbTuples() == 0) {
+        return ; // End try block
+      }
 
-                iter = tmp.begin();
-                jobId = *iter;
+      for (size_t i = 0; i < result->getNbTuples(); ++i) {
+        tmp.clear();
+        tmp = result->get(i);
+
+        iter = tmp.begin();
+        jobId = *iter;
         ++iter; batchJobId = *iter;
         ++iter; vmIp = *iter;
-                BatchFactory factory;
+        BatchFactory factory;
                 boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType, mbatchVersion));
-                try {
-        if(mbatchType == DELTACLOUD) {
-        	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
-        	batchJobId+="@"+vmUser+"@"+vmIp;
-        }
-                  state = batchServer->getJobState(batchJobId);
-                  if (state!=-1) {
-                      sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
-                      mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-                      if (state==5) {
-                          sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
-                          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-                        }
-                    }
-                } catch (VishnuException& ex) {
-                  std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
-                }
+        try {
+          if(mbatchType == DELTACLOUD) {
+            std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+            batchJobId+="@"+vmUser+"@"+vmIp;
+          }
+          state = batchServer->getJobState(batchJobId);
+          if(state != vishnu::JOB_UNDEFINED) {
+            sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
+            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+            if(state == vishnu::JOB_COMPLETED) {
+              sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
+              mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
             }
+          }
+        } catch (VishnuException& ex) {
+          std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
         }
-      } catch (VishnuException& ex) {
-        std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
       }
-      sleep(minterval);
+    } catch (VishnuException& ex) {
+      std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
     }
-  return 0;
+  }
+  sleep(minterval);
 }
