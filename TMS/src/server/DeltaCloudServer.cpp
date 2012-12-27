@@ -6,6 +6,8 @@
  */
 
 #include <boost/format.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 #include "DeltaCloudServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
@@ -23,23 +25,6 @@ DeltaCloudServer::DeltaCloudServer(){}
 DeltaCloudServer::~DeltaCloudServer() {
 	deltacloud_free(mcloudApi);
 }
-
-/**
- * \brief Function for initializing the deltacloud API
- * \param url: The Url to access the API of the cloud provider
- * \param user: The user login to the cloud provider. Note: For OpenStack this needs to be in the form of "login+tenant"
- * param password: The user password
- */
-void DeltaCloudServer::initialize(char* cloudEndpoint,
-		char* user,
-		char* password) {
-
-	mcloudApi =  new deltacloud_api;
-	if (deltacloud_initialize(mcloudApi, cloudEndpoint, user, password) < 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
-	}
-}
-
 
 /**
  * \brief Function to submit a job
@@ -158,48 +143,35 @@ DeltaCloudServer::cancel(const char* jobId) {
 
 /**
  * \brief Function to get the status of the job
- * \param jobPid the process id within the virtual machine
+ * \param jobDescr the job description in the form of pid@user@vmaddress@vmId
  * \return -1 if the job is unknown or server not unavailable
  */
 int
-DeltaCloudServer::getJobState(const std::string& jobPid){
+DeltaCloudServer::getJobState(const std::string& jobDescr){
 
-	std::string realPid = "-1";
-	std::string vmUser = "user";
-	std::string vmIp = "0.0.0.0";
+	std::vector<std::string> jobInfos;
+	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
 
-	size_t pos1 = 0;
-	size_t pos2 =  jobPid.find("@");
-	if(pos2 == std::string::npos) {
+	if(jobInfos.size() != 4) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"Bad job identifier: "+ jobPid
-				+".\nThis would be in the form pid@user@vmaddress");
+				"Bad job identifier: "+ jobDescr
+				+".This would be in the form pid@user@vmaddress@vmId");
 	}
-	realPid = jobPid.substr(pos1, pos2);
 
-	pos1 = pos2 + 1;
-	pos2 =  jobPid.find("@", pos1);
-	if(pos2 == std::string::npos) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"Bad job identifier: "+ jobPid
-				+".This would be in the form pid@user@vmaddress");
-	}
-	vmUser = jobPid.substr(pos1, pos2-pos1);
-
-	vmIp = jobPid.substr(pos2+1, std::string::npos);
-	if(vmIp.size() == 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"Bad job identifier: "+ jobPid
-				+".This would be in the form pid@user@vmaddress");
-	}
+	std::string pid = jobInfos[0];
+	std::string vmUser = jobInfos[1];
+	std::string vmIp = jobInfos[2];
+	std::string vmId = jobInfos[3];
 
 	SSHJobExec sshEngine(vmUser, vmIp);
-	std::string statusFile = "/tmp/"+jobPid;
-	sshEngine.execCmd("ps -o pid= -p " + realPid +" | wc -l >"+statusFile, false);
+	std::string statusFile = "/tmp/"+jobDescr;
+	sshEngine.execCmd("ps -o pid= -p " + pid +" | wc -l >"+statusFile, false);
 
 	int status = vishnu::JOB_RUNNING;
 	int count = vishnu::getStatusValue(statusFile);
 	if( count == 0) {
+		//release the resources allocated to the vm and mark the job completed
+		releaseResources(vmId);
 		status = vishnu::JOB_COMPLETED;
 	}
 
@@ -240,6 +212,7 @@ void DeltaCloudServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 	//TODO
 }
 
+
 int
 create_plugin_instance(void **instance) {
 	try {
@@ -250,6 +223,53 @@ create_plugin_instance(void **instance) {
 
 	return PLUGIN_OK;
 }
+
+
+/**
+ * \brief Function for initializing the deltacloud API
+ * \param url: The Url to access the API of the cloud provider
+ * \param user: The user login to the cloud provider. Note: For OpenStack this needs to be in the form of "login+tenant"
+ * param password: The user password
+ */
+void DeltaCloudServer::initialize(char* cloudEndpoint,
+		char* user,
+		char* password) {
+
+	mcloudApi =  new deltacloud_api;
+	if (deltacloud_initialize(mcloudApi, cloudEndpoint, user, password) < 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+	}
+}
+
+
+/**
+ * \brief Function for cleaning up virtual machine
+ * \param vmid The id of the virtual machine
+ */
+void DeltaCloudServer::releaseResources(const std::string & vmid) {
+
+	// Get the credentials to authenticate against the cloud
+	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+
+	// Initialize the Cloud API
+	initialize(const_cast<char*>(cloudEndpoint.c_str()),
+			const_cast<char*>(cloudUser.c_str()),
+			const_cast<char*>(cloudUserPassword.c_str()));
+
+	deltacloud_instance instance;
+	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+	}
+
+	if (deltacloud_instance_destroy(mcloudApi, &instance) < 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+	}
+
+	cleanup();
+}
+
 
 /**
  * \brief Function for cleaning up the allocated dynamic data structure
