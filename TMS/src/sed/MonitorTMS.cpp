@@ -92,11 +92,18 @@ MonitorTMS::run() {
   std::string sqlRequest = "SELECT jobId, batchJobId, vmIp from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
     " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(mbatchType);
 
+  std::string vmUser = "root";
+  if(mbatchType == DELTACLOUD) {
+    vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root");
+  }
+  BatchFactory factory;
+  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
   while(kill(getppid(), 0) == 0) {
     try {
       boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
       if (result->getNbTuples() == 0) {
-        return ; // End try block
+        sleep(minterval);
+        break;
       }
 
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
@@ -107,13 +114,11 @@ MonitorTMS::run() {
         jobId = *iter;
         ++iter; batchJobId = *iter;
         ++iter; vmIp = *iter;
-        BatchFactory factory;
-                boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType, mbatchVersion));
         try {
           if(mbatchType == DELTACLOUD) {
-            std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
             batchJobId+="@"+vmUser+"@"+vmIp;
           }
+
           state = batchServer->getJobState(batchJobId);
           if(state != vishnu::JOB_UNDEFINED) {
             sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
@@ -130,6 +135,6 @@ MonitorTMS::run() {
     } catch (VishnuException& ex) {
       std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
     }
+    sleep(minterval);
   }
-  sleep(minterval);
 }
