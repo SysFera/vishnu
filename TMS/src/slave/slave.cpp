@@ -76,12 +76,12 @@ main(int argc, char* argv[], char* envp[]) {
   std::string batchVersion;
   std::string batchTypeStr;
 
-  if(argc < 2) {
+  if(argc < 5) { // Too few arguments
     usage(argv[0]);
   }
   action = std::string(argv[1]);
   if(action.compare("SUBMIT")==0) {
-    if(argc < 9) {
+    if(argc < 8) {
        // Too few arguments
        usage(argv[0]);
     }
@@ -93,14 +93,8 @@ main(int argc, char* argv[], char* envp[]) {
     slaveJobFile = argv[5];
     optionsPath = argv[6];
     jobScriptPath = argv[7];
-  }
-  else if(action.compare("CANCEL")==0) {
-    if(argc < 6) {
-     // Too few arguments
+  } else if(action.compare("CANCEL")!=0) {
      usage(argv[0]);
-    }
-  } else {
-    usage(argv[0]);
   }
 
   if(batchType == UNDEFINED) {
