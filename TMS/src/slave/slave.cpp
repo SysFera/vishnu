@@ -152,7 +152,10 @@ main(int argc, char* argv[], char* envp[]) {
       }
     } else if(action.compare("CANCEL")==0) {
       //To cancel the job
-      std::string jobdDescr = job->getJobId()+"@"+job->getVmId();
+    	std::string jobdDescr = job->getJobId();
+    	if(batchType == DELTACLOUD) {
+    	      jobdDescr += "@"+job->getVmId();
+    	}
       batchServer->cancel(jobdDescr.c_str());
     }
   } catch (VishnuException& ve) {
