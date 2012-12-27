@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include "BatchServer.hpp"
+#include "utilVishnu.hpp"
 #include "libdeltacloud/libdeltacloud.h"
 
 
@@ -85,6 +86,14 @@ private:
 	 * \param vmid The id of the virtual machine
 	 */
 	void releaseResources(const std::string & vmid);
+
+	/**
+	 * \brief Function for cleaning up a deltacloud params list
+	 * \param jobDescr The description of the job in the form of param1@param2@...
+	 * \param numParams The number of expected parameters
+	 * return ListStrings aka a vector of string parameters or throw exception on error
+	 */
+	ListStrings getJobInfos(const std::string jobDescr, const int & numParams);
 
 	/**
 	 * \brief Function for cleaning up a deltacloud params list
