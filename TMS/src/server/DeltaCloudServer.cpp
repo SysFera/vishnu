@@ -41,11 +41,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 		char** envp) {
 
 	// Initialize the Delatacloud API
-	try {
-		initialize();
-	} catch (...) {
-		throw;
-	}
+	initialize();
 
 	// Get configuration parameters
 	std::string imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
@@ -136,17 +132,12 @@ DeltaCloudServer::submit(const char* scriptPath,
  */
 int
 DeltaCloudServer::cancel(const char* jobDescr) {
-	std::vector<std::string> jobInfos;
-	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
-	if(jobInfos.size() != 2) {
-		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr));
-	}
 
-	int ret = -1;
+	std::vector<std::string> jobInfos=  getJobInfos(jobDescr, 2);
 	try {
 		releaseResources(jobInfos[1]);
 	} catch(const VishnuException & ex) {
-		std::clog << "[ERROR] Can not cancel the job " <<  jobInfos[0] << "\n";
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "[ERROR] Can not cancel the job " + jobInfos[0]);
 	}
 
 	return 0;
@@ -160,15 +151,8 @@ DeltaCloudServer::cancel(const char* jobDescr) {
 int
 DeltaCloudServer::getJobState(const std::string& jobDescr){
 
-	std::vector<std::string> jobInfos;
-	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
-
-	if(jobInfos.size() != 4) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"Bad job identifier: "+ jobDescr
-				+".This would be in the form pid@user@vmaddress@vmId");
-	}
-
+	// Get job infos
+	std::vector<std::string> jobInfos = getJobInfos(jobDescr, 4);
 	std::string pid = jobInfos[0];
 	std::string vmUser = jobInfos[1];
 	std::string vmIp = jobInfos[2];
@@ -193,12 +177,25 @@ DeltaCloudServer::getJobState(const std::string& jobDescr){
 
 /**
  * \brief Function to get the start time of the job
- * \param jobId the identifier of the job
+ * \param jobDescr the description of the job in the form of jobId@vmId
  * \return 0 if the job is unknown
  */
 time_t
-DeltaCloudServer::getJobStartTime(const std::string& jobId) {
-	//TODO
+DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
+
+	// Get the job description
+	std::vector<std::string> jobInfos = getJobInfos(jobDescr, 2);
+
+	// Initialize the Cloud API
+	initialize();
+
+	// Get the instance
+	deltacloud_instance instance;
+	if (deltacloud_get_instance_by_id(mcloudApi, jobInfos[1].c_str(), &instance) < 0) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+	}
+
+	vishnu::convertToTimeType(instance.launch_time);
 }
 
 
@@ -209,7 +206,10 @@ DeltaCloudServer::getJobStartTime(const std::string& jobId) {
  */
 TMS_Data::ListQueues*
 DeltaCloudServer::listQueues(const std::string& optQueueName) {
-	//TODO
+
+	//Queue system is not yet implemented
+
+	return NULL;
 }
 
 
@@ -281,6 +281,23 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	cleanup();
 }
 
+/**
+ * \brief Function for cleaning up a deltacloud params list
+ * \param: jobDescr The description of the job in the form of param1@param2@...
+ * \param: numParams The number of expected parameters
+ */
+ListStrings DeltaCloudServer::getJobInfos(const std::string jobDescr, const int & numParams) {
+
+	ListStrings jobInfos;
+	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
+
+	if(jobInfos.size() != numParams) {
+		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
+						"Expects "+vishnu::convertToString(numParams)+" parameters in the form of param1@param2...");
+	}
+
+	return jobInfos;
+}
 
 /**
  * \brief Function for cleaning up the allocated dynamic data structure

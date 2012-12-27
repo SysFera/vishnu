@@ -580,7 +580,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 	mjob.setNbCpus(convertToInt(*(++iter)));
 	mjob.setJobWorkingDir(*(++iter));
 	mjob.setStatus(convertToInt(*(++iter)));
-	mjob.setSubmitDate( convertLocaltimeINUTCtime(convertToTimeType(*(++iter))) ); //convert the submitDate into UTC date
+	mjob.setSubmitDate(convertLocaltimeINUTCtime(convertToTimeType(*(++iter)))); //convert the submitDate into UTC date
 	mjob.setEndDate(convertLocaltimeINUTCtime(convertToTimeType(*(++iter)))); //convert the endDate into UTC date
 	mjob.setOwner(*(++iter));
 	mjob.setJobQueue(*(++iter));
