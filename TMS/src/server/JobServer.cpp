@@ -431,7 +431,6 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 	std::string acLogin;
 	std::string machineName;
 	std::string jobSerialized;
-	std::string batchJobId;
 	BatchType   batchType;
 	std::string initialJobId;
 	std::string jobId;
@@ -452,19 +451,27 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 	std::string sqlCancelRequest;
 	initialJobId = mjob.getJobId();
-	if (initialJobId.compare("all") !=0 && initialJobId.compare("ALL")!=0) {
-		sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
-				"where vsession.numsessionid=job.vsession_numsessionid "
-				" and jobId='"+mjob.getJobId()+"'";
+	if(initialJobId.compare("all") != 0 &&
+			initialJobId.compare("ALL") != 0) {
+
+		sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+				" FROM job, vsession"
+				" WHERE vsession.numsessionid=job.vsession_numsessionid"
+				" AND jobId='"+mjob.getJobId()+"'";
 	} else {
-		if(!userServer.isAdmin()) {
-			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
-					"where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"
-					" and submitMachineId='"+mmachineId+"'" ;
+		if(userServer.isAdmin()) {
+			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+					" FROM job, vsession "
+					" WHERE vsession.numsessionid=job.vsession_numsessionid"
+					" AND status < 5"
+					" AND submitMachineId='"+mmachineId+"'" ;
 		} else {
-			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
-					"where vsession.numsessionid=job.vsession_numsessionid and status < 5"
-					" and submitMachineId='"+mmachineId+"'" ;
+			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+					" FROM job, vsession"
+					" WHERE vsession.numsessionid=job.vsession_numsessionid"
+					" AND status < 5"
+					" AND owner='"+acLogin+"'"
+					" AND submitMachineId='"+mmachineId+"'" ;
 		}
 	}
 
@@ -483,7 +490,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			}
 
 			++iter; status = convertToInt(*iter);
-			if(status==vishnu::JOB_COMPLETED) {
+			if(status == vishnu::JOB_COMPLETED) {
 				throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, mjob.getJobId());
 			}
 
@@ -492,9 +499,8 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			}
 
 			++iter; jobId = *iter;
-			++iter; batchJobId = *iter;
-
-			mjob.setJobId(batchJobId); //To reset the jobId
+			++iter; mjob.setJobId(*iter); //To reset the jobId
+			++iter; mjob.setVmId(*iter);
 // Type of batch submitted
 			++iter;
 			batchType = static_cast<BatchType>(convertToInt(*iter));
