@@ -44,9 +44,9 @@ public :
 
    /**
    * \brief To launch the TMS Monitor
-   * \return raises an exception
+   * \return raises exception on error
    */
-  int
+  void
   run();
 
 private :
