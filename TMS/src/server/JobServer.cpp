@@ -296,7 +296,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 		pos = scriptContentStr.find("'");
 	}
 
-	if(batchType == SGE || batchType == POSIX){
+	// For other batch schedulers this information is known
+	if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX){
 		mjob.setOwner(acLogin);
 	}
 
@@ -473,22 +474,21 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 		for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
 			results.clear();
 			results = sqlCancelResult->get(i);
-			iter = results.begin();
 
-			owner = *iter;
+			iter = results.begin(); owner = *iter;
 			if (userServer.isAdmin()) {
 				acLogin = owner;
 			} else if(owner.compare(acLogin)!=0) {
 				throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
 			}
 
-			++iter;
-			status = convertToInt(*iter);
+			++iter; status = convertToInt(*iter);
 			if(status==vishnu::JOB_COMPLETED) {
-				throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
+				throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, mjob.getJobId());
 			}
+
 			if(status == vishnu::JOB_CANCELLED) {
-				throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
+				throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, mjob.getJobId());
 			}
 
 			++iter; jobId = *iter;

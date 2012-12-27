@@ -136,7 +136,7 @@ MonitorTMS::run() {
         }
       }
     } catch (VishnuException& ex) {
-			std::clog << "[TMS][ERROR] "<< ex.buildExceptionString() << "\n";
+			std::clog << "[ERROR] "<< ex.buildExceptionString() << "\n";
     }
     sleep(minterval);
   }
