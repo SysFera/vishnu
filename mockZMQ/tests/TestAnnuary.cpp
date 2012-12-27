@@ -22,7 +22,7 @@ public:
     Annuary ann(mservers);
     std::vector<std::string> servicesTmp;
     servicesTmp.push_back("toto");
-    ann.add("titi", servicesTmp, "tutu");
+    ann.add("titi", "tutu", servicesTmp);
     BOOST_REQUIRE(ann.get("toto")->size() == 1);
   }
   void
@@ -30,8 +30,8 @@ public:
     Annuary ann(mservers);
     std::vector<std::string> servicesTmp;
     servicesTmp.push_back("toto");
-    ann.add("titi", servicesTmp, "tutu");
-    ann.add("titi", servicesTmp, "tutu");
+    ann.add("titi", "tutu", servicesTmp);
+    ann.add("titi", "tutu", servicesTmp);
     BOOST_REQUIRE(ann.get("")->size() == 2);
   }
   void

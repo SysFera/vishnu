@@ -29,11 +29,11 @@ public:
 
   /**
    * \brief DEPRECATED deserialize a server from a string
-   * \param string The serialized server
+   * \param prof The serialized server
    * \return The server object deserialized
    */
   static boost::shared_ptr<Server>
-  fromString(std::string);
+  fromString(const std::string& prof);
 
   /**
    * \brief Constructor
@@ -41,7 +41,8 @@ public:
    * \param serv The services offered by the server
    * \param uri The uri the server is running
    */
-  Server(std::string name, std::vector<std::string> &serv, std::string uri);
+  Server(const std::string& name, const std::vector<std::string>& serv,
+         const std::string& uri);
 
   /**
    * \brief Destructor
@@ -52,13 +53,13 @@ public:
    * \brief Add a service to the server
    */
   int
-  add(std::string service);
+  add(const std::string& service);
 
   /**
    * \brief Remove a service to the server
    */
   int
-  remove(std::string service);
+  remove(const std::string& service);
 
   /**
    * \brief Return true if the server has a service whose name contains the string service
@@ -66,7 +67,7 @@ public:
    * \return True if the server offers the service
    */
   bool
-  hasService(std::string service) const;
+  hasService(const std::string& service) const;
 
   /**
    * \brief Getter for the name

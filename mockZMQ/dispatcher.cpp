@@ -142,7 +142,8 @@ public:
       boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
 
       if (mode == 1) { // If add a server
-        mann.get()->add(server.get()->getName(), server.get()->getServices(), server.get()->getURI());
+        mann.get()->add(server->getName(), server->getURI(),
+                        server->getServices());
       } else if (mode == 0) {
         mann.get()->remove(server.get()->getName(), server.get()->getURI());
       }

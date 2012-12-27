@@ -1,6 +1,7 @@
 #include "Annuary.hpp"
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include <boost/make_shared.hpp>
 #include <cstdio>
 #include <cstring>
 #include <iostream>
@@ -43,13 +44,13 @@ namespace {
 }
 
 int
-Annuary::add(const std::string& name, cont std::string& uri,
+Annuary::add(const std::string& name, const std::string& uri,
              const std::vector<std::string>& services) {
   is_server helper(name, uri);
   std::vector<boost::shared_ptr<Server> >::iterator it =
     std::find_if(mservers.begin(), mservers.end(), helper);
-  if (it != mservers.end()) {
-    mservers.push_back(new Server(name, services, uri));
+  if (it == mservers.end()) {
+    mservers.push_back(boost::make_shared<Server>(name, services, uri));
   }
 
   return 0;

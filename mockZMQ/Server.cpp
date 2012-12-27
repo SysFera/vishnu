@@ -7,7 +7,8 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
-Server::Server(std::string name, std::vector<std::string> &serv, std::string uri) :
+Server::Server(const std::string& name, const std::vector<std::string> &serv,
+               const std::string& uri) :
     mname(name), mservices(serv), muri(uri){
 }
 
@@ -16,7 +17,7 @@ Server::~Server(){
 
 
 int
-Server::add(std::string service) {
+Server::add(const std::string& service) {
   bool found = false;
   unsigned int i;
   for (i = 0; i < mservices.size(); ++i) {
@@ -31,7 +32,7 @@ Server::add(std::string service) {
 }
 
 int
-Server::remove(std::string service) {
+Server::remove(const std::string& service) {
   unsigned int i;
   for (i = 0; i < mservices.size(); ++i) {
     if (service.compare(mservices.at(i)) == 0) {
@@ -42,7 +43,7 @@ Server::remove(std::string service) {
 }
 
 bool
-Server::hasService(std::string service) const {
+Server::hasService(const std::string& service) const {
   unsigned int i;
   for (i = 0; i < mservices.size(); i++){
     if (mservices[i] == service) {
@@ -84,7 +85,7 @@ Server::toString() {
 }
 
 boost::shared_ptr<Server>
-Server::fromString(std::string prof) {
+Server::fromString(const std::string& prof) {
   boost::shared_ptr<Server> res;
   std::vector<std::string> vecString;
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
