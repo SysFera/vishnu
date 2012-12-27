@@ -3,7 +3,7 @@
  * \brief This file presents the implementation of the FMS server.
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  * \date 16/05/2011
-*/
+ */
 
 #ifndef _SERVERFMS_H_
 #define _SERVERFMS_H_
@@ -37,14 +37,14 @@ public :
   static ServerFMS*  getInstance();
 
   /**
-  * \brief To get the vishnuId
-  * \return the path of the configuration file
-  */
+   * \brief To get the vishnuId
+   * \return the path of the configuration file
+   */
   int
   getVishnuId() const;
 
 
-   /**
+  /**
    * \brief To initialize the FMS server
    * \param vishnuId  The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
@@ -59,9 +59,9 @@ public :
   ~ServerFMS();
 
 private :
-/**
- * \brief Init the ptr function map
- */
+  /**
+   * \brief Init the ptr function map
+   */
   void
   initMap();
 
@@ -84,20 +84,17 @@ private :
   static ServerFMS *minstance;
 
   /**
-  * \brief The vishnu id
-  */
+   * \brief The vishnu id
+   */
   int mvishnuId;
   /**
-  * \brief Structure representing a profile description
-  */
-//  diet_profile_desc_t* mprofile;
-  /**
-  * \brief Instance of Database
-  */
+   * \brief Instance of Database
+   */
   static Database *mdatabaseVishnu;
   /**
-  * \brief Instance of FMSMapper
-  */
+   * \brief Instance of FMSMapper
+   */
   static FMSMapper *mmapper;
 };
+
 #endif // SERVERFMS
