@@ -34,11 +34,11 @@ public:
 
 	/**
 	 * \brief Function to cancel job
-	 * \param jobId the identifier of the job to cancel
+	 * \param jobDescr the description of the job in the form of jobId@vmId
 	 * \return raises an exception on error
 	 */
 	int
-	cancel(const char* jobId) ;
+	cancel(const char* jobDescr) ;
 
 	/**
 	 * \brief Function to get the status of the job

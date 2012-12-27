@@ -484,18 +484,16 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 			++iter;
 			status = convertToInt(*iter);
-			if (status==5) {
+			if(status==vishnu::JOB_COMPLETED) {
 				throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
 			}
-			if (status==6) {
+			if(status == vishnu::JOB_CANCELLED) {
 				throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
 			}
 
-			++iter;
-			jobId = *iter;
+			++iter; jobId = *iter;
+			++iter; batchJobId = *iter;
 
-			++iter;
-			batchJobId = *iter;
 			mjob.setJobId(batchJobId); //To reset the jobId
 // Type of batch submitted
 			++iter;
@@ -512,14 +510,17 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 			std::string errorInfo = sshJobExec.getErrorInfo();
 
-			if(errorInfo.size()!=0 && (initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0)) {
+			if(errorInfo.size() !=0 &&
+					(initialJobId.compare("all")!=0 &&
+							initialJobId.compare("ALL")!=0)) {
 				int code;
 				std::string message;
 				scanErrorMessage(errorInfo, code, message);
 				throw TMSVishnuException(code, message);
 			} else if(errorInfo.size()==0) {
-
-				std::string sqlUpdatedRequest = "UPDATE job SET status=6 where jobId='"+jobId+"'";
+				std::string sqlUpdatedRequest = ""
+						"UPDATE job SET status="+vishnu::convertToString(vishnu::JOB_CANCELLED)+""
+								" WHERE jobId='"+jobId+"'";
 				mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
 			}
 		}

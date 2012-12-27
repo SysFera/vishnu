@@ -152,8 +152,8 @@ main(int argc, char* argv[], char* envp[]) {
       }
     } else if(action.compare("CANCEL")==0) {
       //To cancel the job
-      batchServer->cancel((*job).getJobId().c_str());
-
+      std::string jobdDescr = job->getJobId()+"@"+job->getVmId();
+      batchServer->cancel(jobdDescr.c_str());
     }
   } catch (VishnuException& ve) {
     std::string errorInfo =  ve.buildExceptionString();
