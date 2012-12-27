@@ -43,20 +43,15 @@ namespace {
 }
 
 int
-Annuary::add(std::string name, std::vector<std::string> services, std::string uri) {
-  boost::shared_ptr<Server> s;
-  std::vector<boost::shared_ptr<Server> >* tmp = Annuary::get(services.at(0));
-  std::vector<boost::shared_ptr<Server> >::iterator it;
-
-// Do not add an already existing server
-  for (it = tmp->begin(); it != tmp->end() ; ++it) {
-    if (name.compare(it->get()->getName()) == 0 &&
-        uri.compare(it->get()->getURI()) == 0) {
-      return 0;
-    }
+Annuary::add(const std::string& name, cont std::string& uri,
+             const std::vector<std::string>& services) {
+  is_server helper(name, uri);
+  std::vector<boost::shared_ptr<Server> >::iterator it =
+    std::find_if(mservers.begin(), mservers.end(), helper);
+  if (it != mservers.end()) {
+    mservers.push_back(new Server(name, services, uri));
   }
-  s.reset (new Server(name, services, uri));
-  mservers.push_back(s);
+
   return 0;
 }
 

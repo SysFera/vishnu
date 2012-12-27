@@ -35,12 +35,12 @@ public :
   /**
    * \brief Add a server in the annuary
    * \param name The name of the server (e.g. UMS, TMS, dispatcher)
-   * \param services The services offered by the server
    * \param uri The uri the server is running
+   * \param services The services offered by the server
    * \return 0 on success, an error code otherwise
    */
   int
-  add(std::string name, std::vector<std::string> services, std::string uri);
+  add(const std::string& name, const std::string& uri, const std::vector<std::string>& services);
 
   /**
    * \brief Remove the server called name listening on port at address of the annuary
