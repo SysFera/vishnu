@@ -1,8 +1,9 @@
 #include <iostream>
 #include <vector>
+#include <boost/make_shared.hpp>
 #include "Annuary.hpp"
 
-class TestAnnuary{
+class TestAnnuary {
 public:
   TestAnnuary(){
     name = "pierre";
@@ -10,65 +11,63 @@ public:
     services.push_back("loup");
     services.push_back("belette");
 
-    boost::shared_ptr<Server> s = boost::shared_ptr<Server>(new Server(name, services, uri));
-    mservers.push_back(s);
+    mservers.push_back(boost::make_shared<Server>(name, services, uri));
   }
 
-  ~TestAnnuary(){
-  }
+  ~TestAnnuary() {}
 
   void
-  testAdd(){
+  testAdd() {
     Annuary ann(mservers);
     std::vector<std::string> servicesTmp;
     servicesTmp.push_back("toto");
     ann.add("titi", "tutu", servicesTmp);
-    BOOST_REQUIRE(ann.get("toto")->size() == 1);
+    BOOST_REQUIRE(ann.get("toto").size() == 1);
   }
   void
-  testAddTwice(){
+  testAddTwice() {
     Annuary ann(mservers);
     std::vector<std::string> servicesTmp;
     servicesTmp.push_back("toto");
     ann.add("titi", "tutu", servicesTmp);
     ann.add("titi", "tutu", servicesTmp);
-    BOOST_REQUIRE(ann.get("")->size() == 2);
+    BOOST_REQUIRE(ann.get().size() == 2);
   }
   void
-  testRemove(){
+  testRemove() {
     Annuary ann(mservers);
     ann.remove(name, uri);
-    BOOST_REQUIRE(ann.get("")->size() == 0);
+    BOOST_REQUIRE(ann.get().empty());
   }
   void
-  testRemoveEmpty(){
+  testRemoveEmpty() {
     Annuary ann(mservers);
     ann.remove(name, uri);
     ann.remove(name, uri);
-    BOOST_REQUIRE(ann.get("")->size() == 0);
+    BOOST_REQUIRE(ann.get().empty());
   }
   void
-  testRemoveBadURI(){
+  testRemoveBadURI() {
     Annuary ann(mservers);
     ann.remove(name, uri+"1");
-    BOOST_REQUIRE(ann.get("loup")->size() == 1);
+    BOOST_REQUIRE(ann.get("loup").size() == 1);
   }
   void
-  testRemoveBadName(){
+  testRemoveBadName() {
     Annuary ann(mservers);
     ann.remove(name+"1", uri);
-    BOOST_REQUIRE(ann.get("loup")->size() == 1);
+    BOOST_REQUIRE(ann.get("loup").size() == 1);
   }
   void
-  testGet(){
+  testGet() {
     Annuary ann(mservers);
-    BOOST_REQUIRE(ann.get("loup") &&
-                ann.get("belette"));
+    BOOST_REQUIRE(!ann.get("loup").empty() &&
+                  !ann.get("belette").empty());
   }
   void
-  testGetBad(){
+  testGetBad() {
     Annuary ann(mservers);
-    BOOST_REQUIRE(ann.get("bad")->size() == 0);
+    BOOST_REQUIRE(ann.get("bad").empty());
   }
 
 private:

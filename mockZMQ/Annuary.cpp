@@ -1,9 +1,12 @@
 #include "Annuary.hpp"
+#include <algorithm>
 #include <string>
+#include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <cstdio>
 #include <cstring>
+#include <iterator>
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -55,18 +58,19 @@ Annuary::remove(const std::string& name, const std::string& uri) {
 }
 
 
-std::vector<boost::shared_ptr<Server> >*
-Annuary::get(std::string service) {
+// Note: we're using copy elision optimization here, no useless copy
+std::vector<boost::shared_ptr<Server> >
+Annuary::get(const std::string& service) {
+  std::vector<boost::shared_ptr<Server> > res;
 
-  std::vector<boost::shared_ptr<Server> >* res= new std::vector<boost::shared_ptr<Server> >();
-  if (service.compare("") == 0) {
-    return &mservers;
+  if (service.empty()) {
+    res.assign(mservers.begin(), mservers.end());
+  } else {
+    std::remove_copy_if(mservers.begin(), mservers.end(),
+                        std::back_inserter(res),
+                        !boost::bind(&Server::hasService, _1, service));
   }
-  for (unsigned int i = 0; i < mservers.size(); i++) {
-    if (mservers.at(i)->hasService(service)) {
-      res->push_back(mservers.at(i));
-    }
-  }
+
   return res;
 }
 

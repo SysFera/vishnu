@@ -56,8 +56,8 @@ public:
    * \param service The name of the desired service
    * \return A vector containing all the servers offering service
    */
-  std::vector<boost::shared_ptr<Server> >*
-  get(std::string service);
+  std::vector<boost::shared_ptr<Server> >
+  get(const std::string& service = "");
 
   /**
    * \brief Init the annuary from a file

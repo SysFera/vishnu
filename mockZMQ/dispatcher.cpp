@@ -5,6 +5,7 @@
 #include "DIET_client.h"
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/foreach.hpp>
 #include <boost/thread.hpp>
 #include "UserException.hpp"
 #include "utils.hpp"
@@ -23,11 +24,11 @@ usage(){
 
 //function to get the first element from the annuary
 std::string
-elect(std::vector<boost::shared_ptr<Server> >* serv){
-  if ((serv == NULL) || (serv->size() == 0)) {
+elect(const std::vector<boost::shared_ptr<Server> >& serv){
+  if (serv.empty()) {
     return "";
   }
-  return serv->at(0).get()->getURI();
+  return serv.at(0)->getURI();
 }
 
 template<class Callable>
@@ -84,9 +85,9 @@ public:
       // Deserialize and call UMS Method
       if (message.size() != 0) {
         boost::shared_ptr<diet_profile_t> profile(my_deserialize(static_cast<const char*>(message.data())));
-        std::string servname = profile.get()->name;
-        std::vector<boost::shared_ptr<Server> >* serv = mann.get()->get(servname);
-        std::string uriServer= elect(serv);
+        std::string servname = profile->name;
+        std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
+        std::string uriServer = elect(serv);
 
         std::string resultSerialized = (boost::format("error %1%: the service %2% is not available")%
         				vishnu::convertToString(ERRCODE_INVALID_PARAM)%
@@ -142,10 +143,10 @@ public:
       boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
 
       if (mode == 1) { // If add a server
-        mann.get()->add(server->getName(), server->getURI(),
+        mann->add(server->getName(), server->getURI(),
                         server->getServices());
       } else if (mode == 0) {
-        mann.get()->remove(server.get()->getName(), server.get()->getURI());
+        mann->remove(server->getName(), server->getURI());
       }
       std::string resultSerialized = "OK";
 
@@ -205,21 +206,18 @@ private:
 
 class Heartbeat{
 public:
-  Heartbeat(int freq, boost::shared_ptr<Annuary>& ann):mfreq(freq), mann(ann){
-  }
+  Heartbeat(int freq, boost::shared_ptr<Annuary> ann)
+    : mfreq(freq), mann(ann) {}
 
-  ~Heartbeat(){
-  }
-
+  ~Heartbeat(){}
 
   void
-  run(){
+  run() {
     zmq::context_t ctxt (1);
-    std::vector<boost::shared_ptr<Server> >::iterator it;
     while (true) {
-      std::vector<boost::shared_ptr<Server> >* serv = mann->get("");
-      for(it = serv->begin(); it != serv->end() ; ++it){
-        std::string uri = it->get()->getURI();
+      std::vector<boost::shared_ptr<Server> > serv = mann->get();
+      BOOST_FOREACH(boost::shared_ptr<Server> it,  serv) {
+        std::string uri = it->getURI();
         LazyPirateClient lpc(ctxt, uri);
         diet_profile_t* hb = NULL;
         hb = diet_profile_alloc("heartbeat", 0, 0, 1);
@@ -231,7 +229,7 @@ public:
 //        std::cout << boost::format("I: Sending> %1%...\n") % p1;
         if (!lpc.send(p1)) {
 //          std::cout << boost::format("I: Sed Disconnected %1%\n") % uri;
-          mann->remove(it->get()->getName(), it->get()->getURI());
+          mann->remove(it->getName(), it->getURI());
         }
       }
       sleep(mfreq);
