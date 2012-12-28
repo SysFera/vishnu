@@ -171,15 +171,6 @@ public:
   ~AddressDealer(){
   }
 
-  //function to get the first element from the annuary
-  std::string
-  elect(std::vector<boost::shared_ptr<Server> >* serv) {
-    if ((serv == NULL) || (serv->size() == 0)) {
-      return "";
-    }
-    return serv->at(0).get()->getURI();
-  }
-
   void
   run(){
     ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker", mnbThread, mann);
