@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 Job::Job() :
     m_jobPrio(-1), m_nbCpus(-1), m_status(-1), m_submitDate(-1), m_endDate(-1),
             m_wallClockLimit(-1), m_memLimit(-1), m_nbNodes(-1), m_batchJobId(
-                    ""), m_workId(0), m_vmIp()
+                    ""), m_workId(0), m_userId(), m_vmIp()
 {
 
     /*PROTECTED REGION ID(JobImpl__JobImpl) START*/

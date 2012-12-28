@@ -67,7 +67,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   // First initialize the logger
-	//std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
+  //std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
 
   // Source the rc file
   system("touch -f $HOME/.vishnurc");  // Create if it does'nt exist to avoir error at the next step
@@ -75,13 +75,13 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Read the configuration
   ExecConfiguration_Ptr config(new ExecConfiguration);
-  DbConfiguration dbConfig(config);
+  DbConfiguration dbConfig(*config);
   try {
     config->initFromFile(argv[1]);
     config->getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config->getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
-    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
-    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
+    config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
+    config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
 
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
@@ -97,9 +97,7 @@ int main(int argc, char* argv[], char* envp[]) {
       batchType = TORQUE;
     } else if (batchTypeStr == "PBS") {
 #ifndef HAVE_PBSPRO_10_4
-      std::cerr << std::endl;
-      std::cerr << "Warning: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library" << std::endl;
-      std::cerr << std::endl;
+      std::cerr << "\nError: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library\n";
       exit(1);
 #endif
       batchType = PBSPRO;
@@ -143,7 +141,7 @@ int main(int argc, char* argv[], char* envp[]) {
                 << "the config file whereas TMS may have been compiled for another batch\n\n";
 #endif			
     } else {
-      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')\n\n";
+      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE', 'LOADLEVELER', 'SLURM', 'LSF', 'SGE', 'PBS' or DELTACLOUD)\n\n";
       exit(1);
     }
 
@@ -204,15 +202,11 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
 
-
-    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
-    if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
-      remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
-    }
+    remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
   } catch (UserException& e) {
     std::cerr << "\n" << e.what() << "\n\n";
     exit(1);
-  }catch (std::exception& e) {
+  } catch (std::exception& e) {
     std::cerr << "\n" << argv[0] << " : "<< e.what() << "\n\n";
     exit(1);
   }
@@ -223,7 +217,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
     try {
       //Check if machineId is authorized
-      if (0 == machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)){
+      if (0 == machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)) {
         std::cerr << "\n" << AUTOMATIC_SUBMIT_JOB_KEYWORD
                   << " is not authorized as machine identifier. "
                   << "It is a TMS keyword.\n\n";
@@ -239,10 +233,10 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, defaultBatchConfig);
+                         batchType, remoteBinDirectory, config);
 
       std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(TMSTYPE, config, cfg, ls);
+      registerSeD(TMSTYPE, *config, cfg, ls);
 
       UMS_Data::UMS_DataFactory_ptr ecoreFactory =
           UMS_Data::UMS_DataFactory::_instance();
@@ -256,7 +250,7 @@ int main(int argc, char* argv[], char* envp[]) {
       // Initialize the DIET SeD
       if (!res) {
         ZMQServerStart(server, uri);
-        unregisterSeD(TMSTYPE, config);
+        unregisterSeD(TMSTYPE, *config);
       } else {
         std::cerr << "\nThere was a problem during services initialization\n\n";
         exit(1);

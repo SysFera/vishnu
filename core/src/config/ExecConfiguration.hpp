@@ -135,4 +135,5 @@ protected:
   ConfigMap mconfig;
 };
 
+typedef ExecConfiguration* ExecConfiguration_Ptr;
 #endif /* _EXECCONFIGURATION_HPP_ */

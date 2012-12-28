@@ -106,23 +106,6 @@ vishnu::convertToLong(const std::string& sval) {
 }
 
 /**
-	BatchType batchType = UNDEFINED;
-	if (batchName == "TORQUE") {
-		batchType = TORQUE;
-	} else if (batchName == "LOADLEVELER") {
-		batchType = LOADLEVELER;
-	} else if (batchName == "SLURM") {
-		batchType = SLURM;
-	} else if (batchName == "LSF") {
-		batchType = LSF;
-	} else if (batchName == "SGE") {
-		batchType = SGE;
-	} else if (batchName == "PBS") {
-		batchType = PBS;
-	} else if (batchName == "DELTACLOUD") {
-		batchType = DELTACLOUD;
-	}
-	return batchType;
  * \brief To crypt a password
  * \fn std::string cryptPassword(const std::string& salt, const std::string password)
  * \param salt The salt to use to crypt
@@ -1078,4 +1061,31 @@ vishnu::sourceFile(const std::string& filePath) {
 			setenv(variable.c_str(), value.c_str(), 0);
 		}
 	}
+}
+
+
+/**
+ * \brief Function to convert a string to a batch type
+ * \param  batchName the name of the batch type
+ * \return BatchType value of the corresponding string.
+ */
+BatchType
+vishnu::convertToBatchType(const std::string& batchName) {
+
+	BatchType batchType = UNDEFINED;
+	if (batchName == "TORQUE") {
+		batchType = TORQUE;
+	} else if (batchName == "LOADLEVELER") {
+		batchType = LOADLEVELER;
+	} else if (batchName == "SLURM") {
+		batchType = SLURM;
+	} else if (batchName == "LSF") {
+		batchType = LSF;
+	} else if (batchName == "SGE") {
+		batchType = SGE;
+	} else if (batchName == "DELTACLOUD") {
+		batchType = DELTACLOUD;
+	}
+
+	return batchType;
 }

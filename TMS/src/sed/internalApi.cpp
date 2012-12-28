@@ -54,7 +54,7 @@ using namespace vishnu;
 int
 solveSubmitJob(diet_profile_t* pb) {
 
-  std::string scriptContent;
+	std::string scriptContent;
 	string machineId;
 	string submitOptionsSerialized;
 	string jobSerialized;

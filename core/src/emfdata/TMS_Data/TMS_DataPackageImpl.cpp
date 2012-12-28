@@ -2601,10 +2601,10 @@ TMS_DataPackage::TMS_DataPackage()
 
     {
         ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
-        // TERMINATED
-        _el->setName("TERMINATED");
+        // COMPLETED
+        _el->setName("COMPLETED");
         _el->setValue(5);
-        _el->setLiteral("TERMINATED");
+        _el->setLiteral("COMPLETED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }

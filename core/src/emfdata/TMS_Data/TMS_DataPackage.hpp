@@ -396,7 +396,7 @@ namespace TMS_Data
         /**
          * \brief Constant for SUBMITOPTIONS__SPECIFICPARAMS feature
          */
-        static const int SUBMITOPTIONS__SPECIFICPARAMS = 48;
+        static const int SUBMITOPTIONS__SPECIFICPARAMS = 50;
 
         /**
          * \brief Constant for SUBMITOPTIONS__POSIX feature
