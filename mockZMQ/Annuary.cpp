@@ -77,7 +77,7 @@ Annuary::get(const std::string& service) {
 
 // Init the annuary from a file
 void
-Annuary::initFromFile(std::string infile) {
+Annuary::initFromFile(const std::string& infile) {
   std::ifstream tfile(infile.c_str());
 
   if (tfile) {
@@ -87,14 +87,12 @@ Annuary::initFromFile(std::string infile) {
       std::string name;
       std::string uri;
       std::string mid;
-      boost::shared_ptr<Server> server;
       iss >> name;
       iss >> uri;
       iss >> mid;
       std::vector<std::string> services;
       fillServices(services, name, mid);
-      server = boost::shared_ptr<Server>(new Server(name, services, uri));
-      mservers.push_back(server);
+      mservers.push_back(boost::make_shared<Server>(name, services, uri));
     }
   } else {
     std::cout << "failed to open file " << tfile << " for initialisation of annuary\n";
@@ -103,8 +101,8 @@ Annuary::initFromFile(std::string infile) {
 
 void
 Annuary::fillServices(std::vector< std::string> &services,
-                      std::string name,
-                      std::string mid) {
+                      const std::string& name,
+                      const std::string& mid) {
   if (name.compare("UMS") == 0) {
     services.push_back("sessionConnect") ;
     services.push_back("sessionReconnect") ;

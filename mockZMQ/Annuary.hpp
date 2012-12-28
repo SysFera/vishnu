@@ -64,7 +64,7 @@ public:
    * \param file The file to init from
    */
   void
-  initFromFile(std::string file);
+  initFromFile(const std::string& file);
 
 
 private :
@@ -75,7 +75,8 @@ private :
    * \param mid The vishnu machine id
    */
   void
-  fillServices(std::vector<std::string> & services, std::string name, std::string mid);
+  fillServices(std::vector<std::string> & services, const std::string& name,
+               const std::string& mid);
 
   /**
    * \param The servers
