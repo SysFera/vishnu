@@ -470,8 +470,7 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__WORKID:
         return m_workId != 0;
     case ::TMS_Data::TMS_DataPackage::JOB__USERID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_userId);
+    return m_userId != "";
     case ::TMS_Data::TMS_DataPackage::JOB__VMID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_vmId);

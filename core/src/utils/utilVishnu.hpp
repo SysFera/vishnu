@@ -40,9 +40,10 @@ typedef enum {
   SLURM = 2, /*!< For SLURM batch type */
   LSF = 3, /*!< For LSF batch type */
   SGE = 4, /*!< For SGE batch type */
-  PBSPRO = 5, /*!< For PBS batch type */
-  POSIX = 6, /*!< For PBS batch type */
-  UNDEFINED = 7 /*!< IF batch type is not defined*/
+  PBSPRO = 5, /*!< For PBS Pro batch type */
+  DELTACLOUD = 6, /*!< For DELTACLOUD batch type */  
+  POSIX = 7, /*!< For POSIX batch type */
+  UNDEFINED = 8 /*!< IF batch type is not defined*/
 } BatchType;
 
 /**
@@ -450,6 +451,15 @@ mklink(const std::string& src) ;
  */
 void
 sourceFile(const std::string& filePath);
+
+
+/**
+ * \brief Function to convert a string to a batch type
+ * \param  batchName the name of the batch type
+ * \return BatchType value of the corresponding string.
+ */
+BatchType
+convertToBatchType(const std::string& batchName);
 
 } //END NAMESPACE
 

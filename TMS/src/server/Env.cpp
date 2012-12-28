@@ -154,9 +154,6 @@ Env::replaceEnvVariables(std::string& scriptContent) {
 		//Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
 		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
-
-
-
 		break;
 
   default:
