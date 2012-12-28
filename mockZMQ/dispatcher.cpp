@@ -241,7 +241,7 @@ public:
 
 private:
   int mfreq;
-  boost::shared_ptr<Annuary>& mann;
+  boost::shared_ptr<Annuary> mann;
 };
 
 
