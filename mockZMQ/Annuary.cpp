@@ -10,20 +10,10 @@
 #include <fstream>
 #include "utilVishnu.hpp"
 
-Annuary::Annuary():
-  mservers(std::vector<boost::shared_ptr<Server> >()) {
-}
 
-Annuary::Annuary(std::vector<boost::shared_ptr<Server> >& serv):
-  mservers(serv) {
-}
+Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
+  : mservers(serv) {}
 
-Annuary::~Annuary() {
-//  int i;
-//  for (i=0;i<mservers.size();++i) {
-//    delete(mservers.at(i));
-//  }
-}
 
 // anonymous namespace
 namespace {

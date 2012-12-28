@@ -16,21 +16,20 @@
  * \class Annuary
  */
 class Annuary {
-
-public :
-
+public:
   /**
    * \brief Default constructor
    */
-  Annuary();
-  /**
-   * \brief Copy constructor
-   */
-  ~Annuary();
+  Annuary() {}
   /**
    * \brief Constructor
+   * \param serv
    */
-  Annuary(std::vector<boost::shared_ptr<Server> >& serv);
+  Annuary(const std::vector<boost::shared_ptr<Server> >& serv);
+  /**
+   * \brief destructor
+   */
+  ~Annuary() {}
 
   /**
    * \brief Add a server in the annuary
