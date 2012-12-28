@@ -94,7 +94,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
 	}
 
-	std::clog << "[INFO] Virtual machine started\n"
+	std::clog << "[TMS][INFO] Virtual machine started\n"
 			<< "  ID: "<< std::string(instance.id)<<"\n"
 			<< "  NAME: " << std::string(instance.name)<<"\n"
 			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
@@ -214,8 +214,8 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 TMS_Data::ListQueues*
 DeltaCloudServer::listQueues(const std::string& optQueueName) {
 
-	//TODO: Queue system is not yet implemented
-	return NULL;
+	//TODO The semantic is no yet defined
+	return new TMS_Data::ListQueues();
 }
 
 
@@ -226,7 +226,7 @@ DeltaCloudServer::listQueues(const std::string& optQueueName) {
  */
 void DeltaCloudServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 		const std::vector<std::string>& ignoredIds) {
-	//TODO
+	//TODO The semantic is no yet defined
 }
 
 
@@ -277,7 +277,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	}
 
 	// Stop the instance
-	std::clog << "[INFO] The instance "<< instance.id << " (NAME: "<< instance.name<<") will be stopped\n";
+	std::clog << "[TMS][INFO] The instance "<< instance.id << " (NAME: "<< instance.name<<") will be stopped\n";
 
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
