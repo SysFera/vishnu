@@ -6,6 +6,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/foreach.hpp>
+#include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
 #include "UserException.hpp"
 #include "utils.hpp"
@@ -247,7 +248,7 @@ private:
 int
 main(int argc, char** argv) {
   // Prepare our context and socket
-  boost::shared_ptr<Annuary> ann = boost::shared_ptr<Annuary>(new Annuary());
+  boost::shared_ptr<Annuary> ann = boost::make_shared<Annuary>();
 
   // Set default values
   std::string  uriAddr = "tcp://127.0.0.1:5560";  // localhost and 5560
