@@ -86,17 +86,16 @@ public:
             expect_reply = false;
             break;
           } else {
-            std::cerr << "W: no response from "+addr_+", retrying ...\n";
+            std::cerr << boost::format(
+              "W: no response from %1%, retrying ...\n") % addr_;
             reset();
             sock_->send(data);
           }
         }
       }
     }
-
     return false;
   }
-
 
   std::string
   recv() const {

@@ -64,9 +64,8 @@ ZMQStartDevice(const std::string& uriExternal,
 class ServiceWorker {
 public:
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
-		  const std::string & uriInproc,
-		  int id,
-		  boost::shared_ptr<Annuary>& ann)
+                         const std::string & uriInproc, int id,
+                         boost::shared_ptr<Annuary>& ann)
     : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
@@ -81,7 +80,7 @@ public:
         if (!socket.recv(&message, 0)) {
         }
       } catch (zmq::error_t &error) {
-        std::cerr << boost::format("E: %1%\n")%error.what();
+        std::cerr << boost::format("E: %1%\n") % error.what();
       }
       // Deserialize and call UMS Method
       if (message.size() != 0) {
@@ -90,10 +89,11 @@ public:
         std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
         std::string uriServer = elect(serv);
 
-        std::string resultSerialized = (boost::format("error %1%: the service %2% is not available")%
-        				vishnu::convertToString(ERRCODE_INVALID_PARAM)%
-        				servname).str();
-        if (uriServer.size() != 0) {
+        std::string resultSerialized =
+          (boost::format("error %1%: the service %2% is not available")
+           % vishnu::convertToString(ERRCODE_INVALID_PARAM)
+           % servname).str();
+        if (!uriServer.empty()) {
 //            std::cout << my_serialize(profile.get());
             diet_call_gen(profile.get(), uriServer);
             resultSerialized = my_serialize(profile.get());
@@ -115,9 +115,8 @@ private:
 class SubscriptionWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
-		  const std::string & uriInproc,
-		  int id,
-		  boost::shared_ptr<Annuary>& ann)
+                              const std::string & uriInproc, int id,
+                              boost::shared_ptr<Annuary>& ann)
     : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
@@ -126,7 +125,6 @@ public:
     socket.connect(uriInproc_.c_str());
 
     while (true) {
-
       //Receive message from ZMQ
       zmq::message_t message(0);
       try {
@@ -167,15 +165,15 @@ private:
 
 class AddressDealer{
 public:
-  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread):muri(uri), mann(ann), mnbThread(nbThread){
-  }
+  AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread)
+    : muri(uri), mann(ann), mnbThread(nbThread) {}
 
-  ~AddressDealer(){
-  }
+  ~AddressDealer() {}
 
   void
-  run(){
-    ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker", mnbThread, mann);
+  run() {
+    ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker",
+                                  mnbThread, mann);
   }
 
 
@@ -187,15 +185,15 @@ private:
 
 class AddressSubscriber{
 public:
-  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread):muri(uri), mann(ann), mnbThread(nbThread){
-  }
+  AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread)
+    : muri(uri), mann(ann), mnbThread(nbThread) {}
 
-  ~AddressSubscriber(){
-  }
+  ~AddressSubscriber() {}
 
   void
   run(){
-    ZMQStartDevice<SubscriptionWorker>(muri, "inproc://vishnuSubcriberWorker", mnbThread, mann);
+    ZMQStartDevice<SubscriptionWorker>(muri, "inproc://vishnuSubcriberWorker",
+                                       mnbThread, mann);
   }
 
 
@@ -210,11 +208,11 @@ public:
   Heartbeat(int freq, boost::shared_ptr<Annuary> ann)
     : mfreq(freq), mann(ann) {}
 
-  ~Heartbeat(){}
+  ~Heartbeat() {}
 
   void
   run() {
-    zmq::context_t ctxt (1);
+    zmq::context_t ctxt(1);
     while (true) {
       std::vector<boost::shared_ptr<Server> > serv = mann->get();
       BOOST_FOREACH(boost::shared_ptr<Server> it,  serv) {
@@ -253,7 +251,7 @@ main(int argc, char** argv) {
   // Set default values
   std::string  uriAddr = "tcp://127.0.0.1:5560";  // localhost and 5560
   std::string  uriSubs = "tcp://127.0.0.1:5561";  // localhost and 5561
-  std::string  confFil = "";  // no init configuration file
+  std::string  confFil;  // no init configuration file
   unsigned int nthread = 5;  // 5 threads to manage requests
   unsigned int timeout = 10; // wait 10s before retrying
 
@@ -290,39 +288,15 @@ main(int argc, char** argv) {
     std::cerr << "\nNo initial services at startup\n";
   }
 
-
-// Strictly because optionnal argument now
-//  if (argc < 4){
-//    usage();
-//    return 0;
-//  }
-
-//  std::string uriAddr = std::string(argv[1]);
-//  std::string uriSubs = std::string(argv[2]);
-//  std::string optConf ;
-//  std::string confFil ;
-//  std::string nthread ;
-//  if (argc>=6){
-//    optConf = std::string(argv[3]);
-//    confFil = std::string(argv[4]);
-//    nthread = std::string(argv[5]);
-//// Optionnal parameter
-//    if (optConf.compare("-c")==0){
-//      ann.get()->initFromFile(confFil);
-//    }
-//  }
-//
-
   AddressDealer AD = AddressDealer(uriAddr, ann, nthread);
   AddressSubscriber AS = AddressSubscriber(uriSubs, ann, nthread);
-//  Heartbeat HB = Heartbeat(20, ann);
 
   boost::thread th1(boost::bind(&AddressDealer::run, &AD));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
   boost::thread th2(boost::bind(&AddressSubscriber::run, &AS));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 //  boost::thread th3(boost::bind(&Heartbeat::run, &HB));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   // To avoid quitting too fast in case of problems
-  while(1){
+  while(1) {
     sleep(1000);
   }
   return 0;
