@@ -106,7 +106,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   socket_workers.bind("inproc://vishnu");
 
   // Create our threads pool
-  const int NB_THREADS = 5;
+  const int NB_THREADS = 50;
   ThreadPool pool(NB_THREADS);
   for (int i = 0; i < NB_THREADS; ++i) {
     pool.submit(ZMQWorker(context, server, i));
