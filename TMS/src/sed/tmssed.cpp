@@ -127,9 +127,9 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = SGE;
     } else if (batchTypeStr == "DELTACLOUD") {
-      std::cerr << "\nError: can't initialize the engine for Deltacloud. "
-                << "This server was not compiled with Deltacloud support\n\n";
+      std::cerr << "\nError: The support of DELTACLOUD is not enabled in this server!\n";
       exit(1);
+#endif
       batchType = DELTACLOUD;
       std::string cloudEndpoint;
       config->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpoint);
@@ -141,7 +141,7 @@ int main(int argc, char* argv[], char* envp[]) {
                 << "the config file whereas TMS may have been compiled for another batch\n\n";
 #endif			
     } else {
-      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE', 'LOADLEVELER', 'SLURM', 'LSF', 'SGE', 'PBS' or DELTACLOUD)\n\n";
+      std::cerr << "\nError: invalid batch type parameter. Supported batch type are TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS or DELTACLOUD)\n";
       exit(1);
     }
 
