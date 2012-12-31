@@ -159,7 +159,7 @@ private:
   boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
   std::string uriInproc_; /**< worker id */
   int id_; /**< worker id */
-  boost::shared_ptr<Annuary>& mann;
+  boost::shared_ptr<Annuary> mann;
 };
 
 
@@ -199,7 +199,7 @@ public:
 
 private:
   std::string muri;
-  boost::shared_ptr<Annuary>& mann;
+  boost::shared_ptr<Annuary> mann;
   int mnbThread;
 };
 
