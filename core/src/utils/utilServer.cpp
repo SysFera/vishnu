@@ -612,8 +612,8 @@ std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
 
       std::ostringstream oss;
       oss << "mv " << directory << "/* " << dir;
-      if(system(oss.str().c_str())){
-        throw "Can  not move the input files";
+      if (system(oss.str().c_str())) {
+        throw SystemException(ERRCODE_INVDATA, "Can  not move the input files");
       }
     }
 
@@ -641,7 +641,7 @@ void vishnu::createWorkingDir(const std::string& path) {
                             + path) ;
     }
   } catch(bfs::filesystem_error ex){
-    throw (ERRCODE_INVDATA, ex.what());
+    throw SystemException(ERRCODE_INVDATA, ex.what());
   }
 }
 

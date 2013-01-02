@@ -92,9 +92,8 @@ int JobServer::submitJob(const std::string& scriptContent,
   env.replaceAllOccurences(scriptContentRef, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
   env.replaceAllOccurences(scriptContentRef, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
-
   string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
-  string scriptPath = ""; //bfs::unique_path("job_script%%%%%%").string();
+  string scriptPath = "";
   if(mbatchType == DELTACLOUD) {
     string mountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     workingDir = mountPoint + "/" + suffix;
@@ -120,7 +119,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     }
 
   } else {
-    scriptPath = "/tmp/" + scriptPath;
+    scriptPath = "/tmp/" + bfs::unique_path("job_script%%%%%%").string();
     std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
   }
@@ -685,3 +684,5 @@ void JobServer::setOutputDir(const std::string& parentDir,
   mjob.setOutputDir(outdir) ;
   setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
 }
+
+

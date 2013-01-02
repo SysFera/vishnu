@@ -14,7 +14,7 @@ using namespace std;
 using namespace vishnu;
 
 char TMSSeD[] = "tmssed";
-char ConfigTMSSeD[] = TMSSEDCONF2;
+char ConfigTMSSeD2[] = TMSSEDCONF2;
 char BinDirTMSSeD[] = TMSSEDBINDIR;
 
-typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, TMSSeDFixtureInit> TMSSeDFixture;
+typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD2, TMSSeDFixtureInit> TMSSeDFixture;
