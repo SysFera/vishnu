@@ -31,10 +31,10 @@ TMSMapper *ServerTMS::mmapper = NULL;
  */
 ServerTMS*
 ServerTMS::getInstance() {
-    if (minstance == NULL) {
-        minstance = new ServerTMS();
-    }
-    return minstance;
+  if (minstance == NULL) {
+    minstance = new ServerTMS();
+  }
+  return minstance;
 }
 
 /**
@@ -42,7 +42,7 @@ ServerTMS::getInstance() {
  */
 Database*
 ServerTMS::getDatabaseVishnu() {
-    return mdatabaseVishnu;
+  return mdatabaseVishnu;
 }
 
 /**
@@ -51,7 +51,7 @@ ServerTMS::getDatabaseVishnu() {
  */
 int
 ServerTMS::getVishnuId() const {
-    return mvishnuId;
+  return mvishnuId;
 }
 
 /**
@@ -60,7 +60,7 @@ ServerTMS::getVishnuId() const {
  */
 BatchType
 ServerTMS::getBatchType() const {
-    return mbatchType;
+  return mbatchType;
 }
 
 /**
@@ -78,7 +78,7 @@ ServerTMS::getBatchVersion() const {
  */
 std::string
 ServerTMS::getMachineId() const {
-    return mmachineId;
+  return mmachineId;
 }
 
 /**
@@ -87,7 +87,7 @@ ServerTMS::getMachineId() const {
  */
 string
 ServerTMS::getSlaveDirectory() const {
-    return mslaveBinDir;
+  return mslaveBinDir;
 }
 
 /**
@@ -96,7 +96,7 @@ ServerTMS::getSlaveDirectory() const {
  */
 ExecConfiguration_Ptr
 ServerTMS::getSedConfig() const {
-    return msedConfig;
+  return msedConfig;
 }
 
 /**
@@ -110,7 +110,7 @@ ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
  */
 std::vector<std::string>
 ServerTMS::getDefaultBatchOption() const {
-    return mdefaultBatchOption;
+  return mdefaultBatchOption;
 }
 
 /**
@@ -133,52 +133,83 @@ ServerTMS::init(int & vishnuId,
                 const std::string & slaveBinDir,
                 const ExecConfiguration_Ptr sedConfig) {
 
-    //initialization of the batchType
-    mbatchType = batchType;
+  //initialization of the batchType
+  mbatchType = batchType;
 
  //initialization of the batchVersion
   mbatchVersion = batchVersion;
 
-    //initialization of the machineId
-    mmachineId = machineId;
+  //initialization of the machineId
+  mmachineId = machineId;
 
-    //initialization of the slave directory
-    mslaveBinDir = slaveBinDir;
+  //initialization of the slave directory
+  mslaveBinDir = slaveBinDir;
 
-    // initialize the SeD configuration object
-    msedConfig = sedConfig;
+  // initialize the SeD configuration object
+  msedConfig = sedConfig;
 
+  std::string batchDefaultConfigFile;
+  if(msedConfig->getConfigValue(vishnu::DEFAULTBATCHCONFIGFILE, batchDefaultConfigFile)) {
+    switch(mbatchType) {
+    case TORQUE :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
+      break;
+    case LOADLEVELER :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
+      break;
+    case SLURM :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#SBATCH");
+      break;
+    case LSF :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#BSUB");
+      break;
+    case SGE :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#$");
+      break;
+    case PBSPRO :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
+      break;
+    case DELTACLOUD :
+      //No yet supported
+      break;
+    case POSIX :
+      //TODO: implemented POSIX Specific config
+      break;
+    default :
+      break;
+    }
+  }
 
-    DbFactory factory;
+  DbFactory factory;
 
-    try {
-        mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
+  try {
+    mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
-        //initialization of vishnuId
-        mvishnuId = vishnuId;
+    //initialization of vishnuId
+    mvishnuId = vishnuId;
 
-        /*connection to the database*/
-        mdatabaseVishnu->connect();
+    /*connection to the database*/
+    mdatabaseVishnu->connect();
 
-        mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
-        mmapper->registerMapper();
+    mmapper = new TMSMapper(MapperRegistry::getInstance(), vishnu::TMSMAPPERNAME);
+    mmapper->registerMapper();
 
-        std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
+    std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
-        /* Checking of vishnuid on the database */
-        boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+    /* Checking of vishnuid on the database */
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
 
-        if (result->getResults().size() == 0) {
-            throw SystemException (ERRCODE_DBERR, "The vishnuid is unrecognized");
-        }
-
-    } catch (VishnuException& e) {
-        std::clog << "[TMS][ERROR] " << e.what() << " \n";
-        exit(0);
+    if (result->getResults().size() == 0) {
+      throw SystemException (ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
 
-    initMap(machineId);
-    return 0;
+  } catch (VishnuException& e) {
+    std::clog << "[TMS][ERROR] " << e.what() << " \n";
+    exit(0);
+  }
+
+  initMap(machineId);
+  return 0;
 }
 
 
@@ -193,44 +224,44 @@ void
 ServerTMS::getConfigOptions(const char* configPath,
                             std::vector<std::string>& defaultOptions, const char* batchKey) {
 
-    try {
-        std::string scriptContent = vishnu::get_file_content(configPath);
-        std::istringstream iss(scriptContent);
-        std::string line;
-        std::string value;
-        std::string key;
-        while(!iss.eof()) {
-            getline(iss, line);
-            size_t pos = line.find('#');
-            if(pos==string::npos) {
-                continue;
-            }
+  try {
+    std::string scriptContent = vishnu::get_file_content(configPath);
+    std::istringstream iss(scriptContent);
+    std::string line;
+    std::string value;
+    std::string key;
+    while(!iss.eof()) {
+      getline(iss, line);
+      size_t pos = line.find('#');
+      if(pos==string::npos) {
+        continue;
+      }
 
-            line = line.erase(0, pos);
-            if(boost::algorithm::starts_with(line, batchKey)) {
-                line = line.substr(std::string(batchKey).size());
-                boost::algorithm::trim_left(line);
-                pos = line.find(" ");
-                if(pos!=std::string::npos) {
-                    key = line.substr(0,pos);
-                    boost::algorithm::trim(key);
-                    defaultOptions.push_back(key);
-                    line = line.substr(pos);
-                    boost::algorithm::trim(line);
-                    while((pos = line.find(","))!=std::string::npos) {
-                        value = line.substr(0,pos-1);
-                        defaultOptions.push_back(value);
-                        defaultOptions.push_back(key);
-                        line = line.erase(0,pos);
-                    }
-                    value = line;
-                    defaultOptions.push_back(value);
-                }
-            }
+      line = line.erase(0, pos);
+      if(boost::algorithm::starts_with(line, batchKey)) {
+        line = line.substr(std::string(batchKey).size());
+        boost::algorithm::trim_left(line);
+        pos = line.find(" ");
+        if(pos!=std::string::npos) {
+          key = line.substr(0,pos);
+          boost::algorithm::trim(key);
+          defaultOptions.push_back(key);
+          line = line.substr(pos);
+          boost::algorithm::trim(line);
+          while((pos = line.find(","))!=std::string::npos) {
+            value = line.substr(0,pos-1);
+            defaultOptions.push_back(value);
+            defaultOptions.push_back(key);
+            line = line.erase(0,pos);
+          }
+          value = line;
+          defaultOptions.push_back(value);
         }
-    } catch (...) {
-
+      }
     }
+  } catch (...) {
+
+  }
 }
 
 
@@ -238,40 +269,40 @@ ServerTMS::getConfigOptions(const char* configPath,
  * \brief Destructor, raises an exception on error
  */
 ServerTMS::~ServerTMS() {
-    if (mmapper != NULL) {
-        delete mmapper;
-    }
-    if (mdatabaseVishnu != NULL) {
-        delete mdatabaseVishnu;
-    }
+  if (mmapper != NULL) {
+    delete mmapper;
+  }
+  if (mdatabaseVishnu != NULL) {
+    delete mdatabaseVishnu;
+  }
 }
 
 void
 ServerTMS::initMap(std::string mid) {
-    int (*functionPtr)(diet_profile_t*);
+  int (*functionPtr)(diet_profile_t*);
 
-    functionPtr = solveSubmitJob;
+  functionPtr = solveSubmitJob;
   mcb[string(SERVICES[0])+"@"+mid] = functionPtr;
-    functionPtr = solveCancelJob;
+  functionPtr = solveCancelJob;
   mcb[string(SERVICES[1])+"@"+mid] = functionPtr;
-    functionPtr = solveJobInfo;
+  functionPtr = solveJobInfo;
   mcb[string(SERVICES[2])+"@"+mid] = functionPtr;
-    functionPtr = solveGetListOfJobs;
+  functionPtr = solveGetListOfJobs;
   mcb[string(SERVICES[3])+"@"+mid] = functionPtr;
-    functionPtr = solveGetListOfJobsProgression;
+  functionPtr = solveGetListOfJobsProgression;
   mcb[string(SERVICES[4])+"@"+mid] = functionPtr;
-    functionPtr = solveListOfQueues;
+  functionPtr = solveListOfQueues;
   mcb[string(SERVICES[5])+"@"+mid] = functionPtr;
-    functionPtr = solveJobOutPutGetResult;
+  functionPtr = solveJobOutPutGetResult;
   mcb[string(SERVICES[6])+"@"+mid] = functionPtr;
-    functionPtr = solveJobOutPutGetCompletedJobs;
+  functionPtr = solveJobOutPutGetCompletedJobs;
   mcb[string(SERVICES[7])+"@"+mid] = functionPtr;
-    // Remove ?
-    functionPtr = solveGetListOfJobs;
+  // Remove ?
+  functionPtr = solveGetListOfJobs;
   mcb[SERVICES[8]] = functionPtr;
-    functionPtr = solveSubmitJob;
+  functionPtr = solveSubmitJob;
   mcb[SERVICES[9]] = functionPtr;
-    functionPtr = solveAddWork;
+  functionPtr = solveAddWork;
   mcb[SERVICES[10]] = functionPtr;
 }
 
@@ -285,30 +316,30 @@ ServerTMS::initMap(std::string mid) {
 long
 ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::Machine_ptr& machine, const TMS_Data::LoadCriterion_ptr& criterion) {
 
-    TMS_Data::ListJobs jobs ;
-    TMS_Data::ListJobsOptions jobOtions ;
-    vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
-    long load = std::numeric_limits<long>::max();
-    int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
-    try {
-        switch(criterionType) {
-        case NBRUNNINGJOBS :
-            load = jobs.getNbRunningJobs();
-            break;
-        case NBJOBS :
-            load = jobs.getNbJobs();
-            break;
-        case NBWAITINGJOBS :
-        default :
-            load =jobs.getNbWaitingJobs();
-            break;
-        }
-    } catch (VishnuException& ex) {
-        std::cerr << ex.what() << std::endl;
-    } catch(...) {
-        std::cerr << "E: error while calculating the load performance of the machine "
-                  << machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
+  TMS_Data::ListJobs jobs ;
+  TMS_Data::ListJobsOptions jobOtions ;
+  vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
+  long load = std::numeric_limits<long>::max();
+  int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
+  try {
+    switch(criterionType) {
+    case NBRUNNINGJOBS :
+      load = jobs.getNbRunningJobs();
+      break;
+    case NBJOBS :
+      load = jobs.getNbJobs();
+      break;
+    case NBWAITINGJOBS :
+    default :
+      load =jobs.getNbWaitingJobs();
+      break;
     }
-    return load ;
+  } catch (VishnuException& ex) {
+    std::cerr << ex.what() << std::endl;
+  } catch(...) {
+    std::cerr << "E: error while calculating the load performance of the machine "
+              << machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
+  }
+  return load ;
 }
 

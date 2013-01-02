@@ -22,7 +22,6 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   ${IMS_UTIL_DIR}
   )
-
 # Standard VISHNU TESTS variables
 file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
 file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
