@@ -4,7 +4,7 @@
  * Author : Eugène PAMBA CAPO-CHICHI
  */
 
-#include "UMSAndLogService_fixtures.hpp"
+#include "UMS_fixtures4ims.hpp"
 #include "TMS_testconfig.h"
 #include "api_ums.hpp"
 
@@ -15,4 +15,4 @@ char TMSSeD[] = "tmssed";
 char ConfigTMSSeD[] = TMSSEDCONF;
 char BinDirTMSSeD[] = TMSSEDBINDIR;
 
-typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, UMSAndLogServicefixture> TMSSeDForIMSFixture;
+typedef DietSeDFixture<TMSSeD, BinDirTMSSeD, ConfigTMSSeD, UMSFixture4IMS> TMSSeDForIMSFixture;

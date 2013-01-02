@@ -13,4 +13,4 @@ char UMSSeD[] = "umssed";
 char ConfigUMSSeD[] = UMSSEDCONF;
 char BinDirUMSSeD[] = UMSSEDBINDIR;
 
-typedef DietSeDFixture<UMSSeD, BinDirUMSSeD, ConfigUMSSeD, DispatcherFixture> UMSAndLogServicefixture;
+typedef DietSeDFixture<UMSSeD, BinDirUMSSeD, ConfigUMSSeD, DispatcherFixture> UMSFixture4IMS;
