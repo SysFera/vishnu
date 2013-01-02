@@ -37,15 +37,15 @@ SystemException::getTypeS() const{
 
 void
 SystemException::initMsg(){
-  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Vishnu not available (Service bus failure)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Vishnu not available (Database error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Vishnu not available (Database connection)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu not available (System)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Vishnu not available (Component)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Vishnu not available (Mapper)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVDATA, std::string("Vishnu not available (Data error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SSH, std::string("Vishnu not available (SSH error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_AUTHENTERR, std::string("Vishnu not available (Authenticator error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Vishnu encountered problems (Service bus failure)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Vishnu encountered problems (Database error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Vishnu encountered problems (Database connection)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu encountered problems (System)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Vishnu encountered problems (Component)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Vishnu encountered problems (Mapper)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVDATA, std::string("Vishnu encountered problems (Data error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SSH, std::string("Vishnu encountered problems (SSH error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_AUTHENTERR, std::string("Vishnu encountered problems (Authenticator error)")));
 }
 
 std::string
