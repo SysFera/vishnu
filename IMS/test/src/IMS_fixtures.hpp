@@ -5,7 +5,7 @@
  */
 
 #include "diet_fixtures.hpp"
-#include "TMSAndLogService_fixtures.hpp"
+#include "TMS_fixtures4ims.hpp"
 #include "IMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
 #include "api_tms.hpp"
