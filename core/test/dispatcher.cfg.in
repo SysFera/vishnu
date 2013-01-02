@@ -1,0 +1,5 @@
+disp_uriAddr=@TEST_ZMQ_DISPATCHER_URI_SRV@
+disp_uriSubs=@TEST_ZMQ_DISPATCHER_URI_SUB@
+disp_initFile=@TEST_ZMQ_DISPATCHER_INIT_CFG@
+disp_timeout=120
+disp_nbthread=5

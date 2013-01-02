@@ -1,0 +1,3 @@
+TMS @TEST_ZMQ_TMS_SED1_URI@ machine_1
+UMS @TEST_ZMQ_UMS_URI@ machine_1
+FMS @TEST_ZMQ_FMS_URI@ machine_1
