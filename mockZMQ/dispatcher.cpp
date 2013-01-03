@@ -11,6 +11,8 @@
 #include "UserException.hpp"
 #include "utils.hpp"
 #include "ExecConfiguration.hpp"
+#include "CommonParser.hpp"
+#include "FileParser.hpp"
 
 
 #define SEPARATOR "#"
@@ -274,19 +276,32 @@ main(int argc, char** argv) {
             << "==================================\n";
 
 
-  bfs::path file(confFil);
-  bfs::ifstream conf(file);
+  // Get initial configuration
+  FileParser initConfigParser(confFil);
+  std::map<std::string, std::string> initConfig = initConfigParser.getConfiguration();
 
-  if (conf) {
+  if (!initConfig.empty()) {
+    Splitter split(';');
     std::string line;
+    std::string value;
     std::cerr << "\n==== Initial startup services ====\n\n";
-    while (std::getline(conf, line)) {
-      std::cerr << line << "\n";
+    for (std::map<std::string, std::string>::const_iterator it = initConfig.begin();
+         it != initConfig.end(); ++it) {
+      std::cerr << "" << it->first << ":\n";
+
+      line = it->second;
+      split.reset(line);
+
+      while (split.hasNext()) {
+        value = split();
+        std::cerr << "   - " << value << "\n";
+      }
     }
     std::cerr << "==================================\n";
   } else {
     std::cerr << "\nNo initial services at startup\n";
   }
+
 
   AddressDealer AD = AddressDealer(uriAddr, ann, nthread);
   AddressSubscriber AS = AddressSubscriber(uriSubs, ann, nthread);
