@@ -47,7 +47,11 @@ FileParser::parseFile(const std::string& path) {
       line = line.substr(0, pos);
     }
 
-    // Remove leading and trailing white spaces.
+    /* Remove leading and trailing white spaces.
+     * Caution: do not remove all whitespaces on the line, as we want
+     * to allow values containing whitespaces.
+     * e.g., tcp://192.168.0.1 machine_1
+     */
     boost::algorithm::trim(line);
 
 
