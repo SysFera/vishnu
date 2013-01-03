@@ -66,6 +66,11 @@ public:
   void
   initFromFile(const std::string& file);
 
+  /**
+   * \brief Prints the content of the annuary
+   */
+  void
+  print();
 
 private :
   /**

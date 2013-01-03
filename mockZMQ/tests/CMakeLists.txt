@@ -1,5 +1,6 @@
 
-include_directories( ${Boost_INCLUDE_DIRS}
+include_directories(${CONFIG_SOURCE_DIR}
+  ${Boost_INCLUDE_DIRS}
   ${VISHNU_SOURCE_DIR}/mockZMQ
   ${VISHNU_SOURCE_DIR}/mockZMQ/tests
   ${UTILVISHNU_SOURCE_DIR}

@@ -12,6 +12,8 @@
 #include <sstream>
 #include <fstream>
 #include "utilVishnu.hpp"
+#include "CommonParser.hpp"
+#include "FileParser.hpp"
 
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
@@ -74,28 +76,49 @@ Annuary::get(const std::string& service) {
   return res;
 }
 
+void
+Annuary::print() {
+  if (!mservers.empty()) {
+    std::cerr << "\n==== Initial startup services ====\n";
+    std::vector<boost::shared_ptr<Server> >::const_iterator it;
+    for (it = mservers.begin(); it != mservers.end(); ++it) {
+      std::cerr << "" << it->get()->getName() << ": " << it->get()->getURI() << "\n";
+    }
+    std::cerr << "==================================\n";
+  } else {
+    std::cerr << "\nNo initial services at startup\n";
+  }
+}
+
 
 // Init the annuary from a file
 void
 Annuary::initFromFile(const std::string& infile) {
-  std::ifstream tfile(infile.c_str());
+  FileParser initConfigParser(infile);
+  std::map<std::string, std::string> initConfig = initConfigParser.getConfiguration();
 
-  if (tfile) {
+  if (!initConfig.empty()) {
+    Splitter split(';');  // URIs are separated by a ';'
     std::string line;
-    while(std::getline(tfile, line)) {
-      std::istringstream iss(line);
-      std::string name;
-      std::string uri;
-      std::string mid;
-      iss >> name;
-      iss >> uri;
-      iss >> mid;
-      std::vector<std::string> services;
-      fillServices(services, name, mid);
-      mservers.push_back(boost::make_shared<Server>(name, services, uri));
+    std::string value;
+    std::map<std::string, std::string>::const_iterator it;
+    for (it = initConfig.begin(); it != initConfig.end(); ++it) {
+      std::string name = it->first;
+      line = it->second;
+      split.reset(line);
+
+      while (split.hasNext()) {
+        value = split();
+        std::istringstream iss(value);
+        std::string uri;
+        std::string mid;
+        iss >> uri;
+        iss >> mid;
+        std::vector<std::string> services;
+        fillServices(services, name, mid);
+        mservers.push_back(boost::make_shared<Server>(name, services, uri));
+      }
     }
-  } else {
-    std::cout << "failed to open file " << tfile << " for initialisation of annuary\n";
   }
 }
 
