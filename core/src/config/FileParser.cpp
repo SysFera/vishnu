@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <fstream>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 
 #include "CommonParser.hpp"
 #include "FileParser.hpp"
@@ -46,12 +47,9 @@ FileParser::parseFile(const std::string& path) {
       line = line.substr(0, pos);
     }
 
-    /* Remove white spaces.
-       use remove then erase idiom
-       use ::isspace so we don't get the std::locale plagued C++ variant*/
-    line.erase(
-               std::remove_if(line.begin(), line.end(), ::isspace),
-               line.end());
+    // Remove leading and trailing white spaces.
+    boost::algorithm::trim(line);
+
 
     /* Empty line => continue. */
     if (line.empty()) {
@@ -109,4 +107,3 @@ const std::map<std::string, std::string>&
 FileParser::getConfiguration() const {
   return options_;
 }
-

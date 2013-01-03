@@ -1,4 +1,5 @@
 
+#include <boost/algorithm/string.hpp>
 #include "CommonParser.hpp"
 
 #ifdef DEBUG
@@ -58,6 +59,10 @@ Splitter::operator()() {
   std::string::size_type current_ = str_.find(delim_, previous_);
 
   std::string sub = str_.substr(previous_, current_);
+  /* Remove leading and trailing white spaces.
+   * This is important as delim_ can be surrounded by whitespaces
+   */
+  boost::algorithm::trim(sub);
   token_.swap(sub);
   previous_ = (std::string::npos == current_) ?
     (str_.length() + 1) : (current_ + 1);
