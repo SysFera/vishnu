@@ -212,6 +212,8 @@ diet_string_set(diet_arg_t* arg, const char* value, int pers){
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
     (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen("")] = '\0';
   }
+
+  delete arg;
   return 0;
 }
 
@@ -304,6 +306,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 int
 diet_string_get(diet_arg_t* arg, std::string & value) {
   value = ((diet_profile_t*)(arg->prof))->param[arg->pos];
+  delete arg;
   return 0;
 }
 
@@ -326,7 +329,7 @@ diet_parameter(diet_profile_t* prof, int pos) {
   if (pos>prof->OUT){
     throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
-  diet_arg_t* res = (diet_arg_t*) malloc(sizeof(diet_arg_t)*1);
+  diet_arg_t* res = new diet_arg_t;
   res->prof = prof;
   res->pos = pos;
   return res;
