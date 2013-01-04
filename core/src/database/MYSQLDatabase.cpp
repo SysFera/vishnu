@@ -123,12 +123,13 @@ MYSQLDatabase::connect(){
  */
 MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
 : Database(), mconfig(dbConfig) {
-	mpool = new pool_t[mconfig.getDbPoolSize()];
-	for (unsigned int i=0;i<mconfig.getDbPoolSize();i++) {
-		pthread_mutex_init(&(mpool[i].mmutex), NULL);
-		mpool[i].mused = false;
-		mysql_init(&(mpool[i].mmysql));
-	}
+  mysql_library_init(0, NULL, NULL);
+  mpool = new pool_t[mconfig.getDbPoolSize()];
+  for (unsigned int i=0;i<mconfig.getDbPoolSize();i++) {
+    pthread_mutex_init(&(mpool[i].mmutex), NULL);
+    mpool[i].mused = false;
+    mysql_init(&(mpool[i].mmysql));
+  }
 }
 
 /**
@@ -137,6 +138,7 @@ MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
  */
 MYSQLDatabase::~MYSQLDatabase(){
   disconnect();
+  mysql_library_end();
   delete [] mpool;
 }
 /**
