@@ -198,7 +198,7 @@ MYSQLDatabase::getResult(string request, int transacId) {
 
 	// Get the result handle (does not fetch data from the server)
 	MYSQL_RES *result = mysql_use_result(conn);
-	if (result == 0) {
+	if (!result) {
 		releaseConnection(reqPos);
 		throw SystemException(ERRCODE_DBERR, "Cannot get query results" + dbErrorMsg(conn));
 	}
@@ -220,6 +220,10 @@ MYSQLDatabase::getResult(string request, int transacId) {
 	while((field = mysql_fetch_field( result))) {
 		attributesNames.push_back(string(field->name));
 	}
+
+        // Free the result
+        mysql_free_result(result);
+
 	// Finalize
 	releaseConnection(reqPos);
 	return new DatabaseResult(results, attributesNames);
