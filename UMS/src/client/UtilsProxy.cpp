@@ -107,6 +107,7 @@ UtilsProxy::restore() {
     diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
     //OUT Parameters
     diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+    delete [] tmp;
     if(!diet_call(profile)){
       if(diet_string_get(diet_parameter(profile,1), errorInfo)) {
         raiseDietMsgException("DIET call failure");
