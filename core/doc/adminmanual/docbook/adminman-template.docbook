@@ -18,6 +18,9 @@
     <author>
       <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
     </author>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
+    </author>
     <revhistory>
       <revision>
         <revnumber>1</revnumber>
@@ -234,6 +237,13 @@
       <authorinitials>K. Coulomb</authorinitials>
       <revdescription>
         <para>Première MAJ pour ZMQ</para></revdescription>
+      </revision>
+      <revision>
+      <revnumber>27</revnumber>
+      <date>04/01/2013</date>
+      <authorinitials>B. Depardon</authorinitials>
+      <revdescription>
+        <para>Maj documentation du dispatcher</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -1069,13 +1079,23 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
         </listitem>
         <listitem>
           <para>
-          Optionnel: Sur une machine lancer le dispatcher, le fichier de configuration 'config' doit être à la fin et est optionnel.
+          Optionnel: Sur une machine lancer le dispatcher, le fichier de
+          configuration 'config' doit être à la fin et est optionnel.
           </para>
           <para>
             dispatcher dispatcher_config.cfg
           </para>
           <para>
-            Dans cette commande, on demande au dispatcher de démarrer en recevant les requêtes clients sur l'URI tcp://127.0.0.1:5560, de recevoir les requêtes de contrôle sur l'URI tcp://127.0.0.1:5561, et de démarrer en utilisant les serveurs définis dans le fichier config.
+            Dans cette commande, on demande au dispatcher de démarrer en
+            utilisant les serveurs définis dans le fichier config.  Si le
+          fichier de configuration n'est pas fourni, des options par défaut sont utilisées.
+            <programlisting>
+              disp_uriAddr=tcp://127.0.0.1:5560
+              disp_uriSubs=tcp://127.0.0.1:5561
+              disp_initFile=
+              disp_timeout=10
+              disp_nbthread=5
+            </programlisting>
           </para>
         </listitem>
 	<listitem>
@@ -1134,12 +1154,23 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
     </section>
     <section>
       <title>Exemple de fichier d'initialisation du dispatcher</title>
-      <para>Le fichier se compose de 3 colonnes, la première le serveur, la seconde son URI, la troisième l'identifiant de machine VISHNU. Dans l'exemple ci-dessous on a les 4 serveurs sur une URI pour une machine</para>
+      <para>
+        Le fichier se compose de 3 éléments: le nom du module (UMS, TMS,
+        FMS, IMS) suivit du signe '=', le second l'URI du serveur, le troisième
+        l'identifiant de machine VISHNU. Différents couples "URI et  nom de la machine" peuvent
+        être présents sur une même ligne pour déclarer plusieurs serveurs sur
+        différentes machines; dans ce cas, ces couples sont séparés par le
+        caractère ';'.
+        Dans l'exemple ci-dessous nous avons les 4 serveurs sur une URI unique
+        (tcp://127.0.0.1), mais sur différents ports, déclarés sur une machine
+        (machine_1). De plus, il y a un serveur TMS également sur la machine
+        machine_2 à l'URI tcp://192.168.0.11:5555.
+      </para>
       <programlisting>
-      TMS tcp://127.0.0.1:5557 machine_1
-      UMS tcp://127.0.0.1:5555 machine_1
-      FMS tcp://127.0.0.1:5556 machine_1
-      IMS tcp://127.0.0.1:5558 machine_1
+      UMS = tcp://127.0.0.1:5555 machine_1
+      TMS = tcp://127.0.0.1:5557 machine_1; tcp://192.168.0.11:5555 machine_2
+      FMS = tcp://127.0.0.1:5556 machine_1
+      IMS = tcp://127.0.0.1:5558 machine_1
       </programlisting>
     </section>
     <section>
