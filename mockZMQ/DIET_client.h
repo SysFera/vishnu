@@ -50,7 +50,7 @@ typedef struct diet_profile_t {
   /**
    * \brief Overload of DIET param, name of the service
    */
-  char* name;
+  std::string name;
   /**
    * \brief Overload of DIET param
    */
@@ -77,7 +77,7 @@ typedef struct diet_profile_t {
  * \return The allocated profile
  */
 diet_profile_t*
-diet_profile_alloc(const char* name, int IN, int INOUT, int OUT);
+diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT);
 
 /**
  * \brief Overload of DIET function, set a param value in a profile to a string(char *)

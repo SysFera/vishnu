@@ -188,7 +188,7 @@ getTimeout() {
 
 
 diet_profile_t*
-diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
+diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
 // TODO : Do not handle -1 for input (no input param)
   diet_profile_t* res(NULL);
   res = new diet_profile_t;
@@ -197,7 +197,7 @@ diet_profile_alloc(const char* name, int IN, int INOUT, int OUT) {
   res->OUT = OUT;
   res->param = new char *[OUT+1];
   memset(res->param,0,(IN+INOUT+OUT));
-  res->name = strdup(name);
+  res->name = name;
   return res;
 }
 
@@ -316,7 +316,6 @@ diet_profile_free(diet_profile_t* prof) {
     free(prof->param[i]);
   }
 
-  free(prof->name);
   delete [] prof->param;
   delete prof;
   prof = NULL;
@@ -371,7 +370,7 @@ my_deserialize(const std::string& prof) {
   if (!vecString.empty() && vecString.at(0).compare("") != 0) {
     res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
-    res->name = strdup((it++)->c_str());
+    res->name = *(it++);
     res->IN = boost::lexical_cast<int>(*(it++));
     res->INOUT = boost::lexical_cast<int>(*(it++));
     res->OUT = boost::lexical_cast<int>(*(it++));
