@@ -25,8 +25,8 @@ public:
     // Name of the test executable
     mav[0]= (char*)"./tms_automTest";
     // Client configuration file
-    string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
-    mav[1]= (char*) dietClientConfigPath.c_str();
+    string clientConfig = CONFIG_DIR + string("/client_testing.cfg");
+    mav[1]= (char*) clientConfig.c_str();
 
     if (vishnu::vishnuInitialize(mav[1], mac, mav)) {
       BOOST_TEST_MESSAGE( "Error in VishnuInitialize..." );
