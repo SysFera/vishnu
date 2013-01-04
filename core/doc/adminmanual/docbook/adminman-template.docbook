@@ -1088,14 +1088,7 @@ TORQUE est utilisé comme backend à TMS. L'API Python est également activée.
           <para>
             Dans cette commande, on demande au dispatcher de démarrer en
             utilisant les serveurs définis dans le fichier config.  Si le
-          fichier de configuration n'est pas fourni, des options par défaut sont utilisées.
-            <programlisting>
-              disp_uriAddr=tcp://127.0.0.1:5560
-              disp_uriSubs=tcp://127.0.0.1:5561
-              disp_initFile=
-              disp_timeout=10
-              disp_nbthread=5
-            </programlisting>
+          fichier de configuration n'est pas fourni, des options par défaut sont utilisées. Les différents options de configurations et leur valeur par défaut sont décrites deux sections plus loin.
           </para>
         </listitem>
 	<listitem>
