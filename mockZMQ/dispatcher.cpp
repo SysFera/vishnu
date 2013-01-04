@@ -275,7 +275,9 @@ main(int argc, char** argv) {
 
 
   // Get initial configuration
-  ann->initFromFile(confFil);
+  if (confFil != "") {
+    ann->initFromFile(confFil);
+  }
   ann->print();
 
 
