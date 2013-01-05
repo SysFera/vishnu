@@ -389,7 +389,7 @@ my_deserialize(const std::string& prof) {
 
 int
 diet_initialize(const char* cfg, int argc, char** argv) {
-  if (cfg==NULL){
+  if (!cfg){
     throw SystemException(ERRCODE_SYSTEM, "Invalid NULL initialization file");
   }
   fill(theConfig, std::string(cfg));
