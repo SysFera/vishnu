@@ -395,8 +395,3 @@ diet_initialize(const char* cfg, int argc, char** argv) {
   fill(theConfig, std::string(cfg));
   return 0;
 }
-
-int
-diet_finalize() {
-  return 0;
-}

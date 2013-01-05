@@ -155,11 +155,5 @@ my_serialize(diet_profile_t* prof);
 int
 diet_initialize(const char* cfg, int argc, char** argv);
 
-/**
- * \brief Overload of DIET function, to finalize the call
- * \return 0 on success, an error code otherwise
- */
-int
-diet_finalize();
 
 #endif // __DIETMOCK__

@@ -28,7 +28,6 @@ void stress(){
     }
     close(sess.getSessionKey());
   }
-  vishnuFinalize();
 }
 
 

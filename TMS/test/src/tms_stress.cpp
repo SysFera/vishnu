@@ -75,7 +75,7 @@ void stress(int cpt,const string& sessionKey, const string& machineId, const Fun
       break;
     }
   }
-  vishnuFinalize();
+
   exit(EXIT_SUCCESS);
 }
 
@@ -92,8 +92,6 @@ void forker(int cpt,const string& sessionKey, const string& machineId, const Fun
       //vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
 
       stress(cpt,sessionKey,machineId, functNameType) ;
-
-     // vishnuFinalize();
 
       break;
     case -1 :
@@ -132,7 +130,6 @@ int main(int argc, char** argv){
 
     return 1;
   }
-  vishnuFinalize();
 
   if(argc < 3) {
     std::cerr << "Usage: " << argv[0] << " <machineId> <SUBMITJOB|LISTJOBS|LISTQUEUES> " << "[cpt]" << std::endl;
@@ -162,8 +159,6 @@ int main(int argc, char** argv){
   vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
 
   close(sess.getSessionKey());
-
-  vishnuFinalize();
 
   return 0;
 }

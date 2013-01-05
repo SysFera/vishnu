@@ -19,7 +19,7 @@ class UtilsProxy
   public:
 
     /**
-     * \fn  UtilsProxy() 
+     * \fn  UtilsProxy()
      * \brief Constructor, default constructor
      */
     UtilsProxy();
@@ -37,7 +37,7 @@ class UtilsProxy
 
     /**
      * \fn UtilsProxy(const std::string& filePath)
-     * \param filePath The file used by the restore function 
+     * \param filePath The file used by the restore function
      * \brief Constructor
      */
     UtilsProxy(const std::string& filePath);
@@ -49,13 +49,6 @@ class UtilsProxy
      */
     int
       initialize();
-    /**
-     * \brief Function to finalize
-     * \fn  void finalize()
-     * \return raises an exception on error
-     */
-    void
-      finalize();
 
 #ifdef BUILD_TESTING
     /**
@@ -76,19 +69,19 @@ class UtilsProxy
     /////////////////////////////////
 
     /**
-     * \brief The name of the Sysfera-DS configuration file 
+     * \brief The name of the Sysfera-DS configuration file
      */
     char* mcfg;
     /**
-     * \brief The number of arguments used Sysfera-DS  
+     * \brief The number of arguments used Sysfera-DS
      */
     int margc;
     /**
-     * \brief The list of arguments used Sysfera-DS  
+     * \brief The list of arguments used Sysfera-DS
      */
     char** margv;
     /**
-     * \brief The file used by the restore function  
+     * \brief The file used by the restore function
      */
     std::string mfilePath;
 

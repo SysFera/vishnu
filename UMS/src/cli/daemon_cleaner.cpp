@@ -91,13 +91,12 @@ deleter(char* dietConfig,int ac,char* av[]) {
                 try {
                   close (session.getSessionKey()); // and need to be closed
                 } catch(VishnuException & e) {  // if the close command fails
-                  if (false == checkBadSessionKeyError(e)) {  // check if we need to stop the daemon
+                  if (!checkBadSessionKeyError(e)) {  // check if we need to stop the daemon
                     syslog(LOG_ERR, "The file is corrupted");
                     exit(e.getMsgI());
                   }
                 }
 
-                vishnuFinalize();
               }  // end of if (session.getClosePolicy() == 2)
             }  // end of looping over the file
           }  // end of if (false == allSessions.empty())

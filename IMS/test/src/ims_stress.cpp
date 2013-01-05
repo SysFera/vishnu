@@ -31,7 +31,6 @@ void stress(int cpt,const string& sessionKey, const string& machineId, int type)
       getMetricHistory(sessionKey, machineId, list, histOp);
     }
   }
-  vishnuFinalize();
 }
 
 
@@ -69,7 +68,6 @@ int main(int argc, char** argv){
   try{
     vishnuInitialize((char*) dietClientConfigPath.c_str(), 0, NULL);
     connect    (uid, pwd, sess, cop );
-    vishnuFinalize();
 
     if (argc != 3) {
       std::cerr << "Usage: ./ims_stress Nbtests Type "<< std::endl;

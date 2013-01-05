@@ -53,7 +53,6 @@ public:
 
   ~IMSFixture() {
     BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Finalizing client ==" );
-    vishnu::vishnuFinalize();
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
   }
 
