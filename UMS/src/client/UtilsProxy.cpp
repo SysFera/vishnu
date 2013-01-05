@@ -70,15 +70,6 @@ UtilsProxy::initialize() {
   return res;
 }
 
-/**
- * \brief Function to finalize
- * \fn  void finalize()
- * \return raises an exception on error
- */
-void
-UtilsProxy::finalize() {
-  diet_finalize();
-}
 #ifdef BUILD_TESTING
 /**
  * \brief Function to initialize the database

@@ -486,12 +486,6 @@ listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& list
   int
   vishnuInitialize(char* cfg, int argc, char** argv);
 
-  /**
-   * \brief Function to finalize
-   */
-  void
-  vishnuFinalize();
-
 #ifdef BUILD_TESTING
   /**
    * \brief Function to initialize the data base

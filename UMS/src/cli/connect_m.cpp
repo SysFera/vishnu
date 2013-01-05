@@ -148,8 +148,6 @@ int main (int ac, char* av[]){
 
     connect(listUsers, session, connectOpt);// call the api extern connect service to get a session key
 
-    vishnuFinalize();
-
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
     std::cout << "sessionId: " << session.getSessionId() << "\n";
 
@@ -204,5 +202,3 @@ int main (int ac, char* av[]){
 // }}RELAX<CODEREDUCER>
 
 }// end of main
-
-
