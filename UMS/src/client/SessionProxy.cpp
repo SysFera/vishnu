@@ -165,42 +165,42 @@ int SessionProxy::_connect(const UserProxy& user, bool connect, const UMS_Data::
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), user.getData().getUserId().c_str(), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), user.getData().getUserId().c_str())) {
     msg += "with userId parameter "+user.getData().getUserId();
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), user.getData().getPassword().c_str(), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), user.getData().getPassword().c_str())) {
     msg += "with password parameter";
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length(), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,2), encryptedKey+salt.length())) {
     msg += "with sshKey parameter sshKey path";
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,3), hostname, DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,3), hostname)) {
     msg += "with hostname parameter "+std::string(hostname);
     raiseDietMsgException(msg);
   }
   if(connect) {
-    if(diet_string_set(diet_parameter(profile,4), optionsToString.c_str(), DIET_VOLATILE)){
+    if(diet_string_set(diet_parameter(profile,4), optionsToString.c_str())){
       msg += "with optionsToString parameter ";
       raiseDietMsgException(msg);
     }
   } else {
-    if(diet_string_set(diet_parameter(profile,4), msession.getSessionId().c_str(), DIET_VOLATILE)) {
+    if(diet_string_set(diet_parameter(profile,4), msession.getSessionId().c_str())) {
       msg += "with sessionId parameter "+msession.getSessionId();
       raiseDietMsgException(msg);
     }
   }
 
-  if(diet_string_set(diet_parameter(profile,5), versionToString.c_str(), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,5), versionToString.c_str())) {
       msg += "with version parameter "+versionToString;
       raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,6), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,7), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,6), NULL);
+  diet_string_set(diet_parameter(profile,7), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,6), sessionInString)){
@@ -276,13 +276,13 @@ int SessionProxy::close()
 
   diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1);
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,1), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,1), errorInfo)) {

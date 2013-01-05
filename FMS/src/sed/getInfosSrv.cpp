@@ -123,7 +123,7 @@ int get_infos(diet_profile_t* profile) {
     fileStatSerialized="";
   }
 
-  diet_string_set(diet_parameter(profile, 4), fileStatSerialized.c_str(), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), errMsg.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), fileStatSerialized.c_str());
+  diet_string_set(diet_parameter(profile, 5), errMsg.c_str());
   return 0;
 }

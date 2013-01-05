@@ -54,14 +54,14 @@ int ConfigurationProxy::save()
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,1), NULL);
+  diet_string_set(diet_parameter(profile,2), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,1), configurationInString)){
@@ -126,16 +126,16 @@ int ConfigurationProxy::restore(bool fromFile)
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(configurationInString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(configurationInString.c_str()))) {
     msg += "with configurationInString parameter " + configurationInString;
     raiseDietMsgException(msg);
   }
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), errorInfo)){

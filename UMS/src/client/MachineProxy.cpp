@@ -48,18 +48,18 @@ int MachineProxy::add()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(machineToString.c_str()))) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(addProfile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(addProfile,2), NULL);
+  diet_string_set(diet_parameter(addProfile,3), NULL);
 
   if(!diet_call(addProfile)) {
     if(diet_string_get(diet_parameter(addProfile,2), machineInString)){
@@ -118,17 +118,17 @@ int MachineProxy::update()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(machineToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(machineToString.c_str()))) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(updateProfile,2), NULL);
 
   if(!diet_call(updateProfile)) {
     if(diet_string_get(diet_parameter(updateProfile,2), errorInfo)){
@@ -166,17 +166,17 @@ int MachineProxy::deleteMachine()
   machineId = mmachine.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(machineId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(machineId.c_str()))) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(deleteProfile,2), NULL);
 
   if(!diet_call(deleteProfile)) {
     if(diet_string_get(diet_parameter(deleteProfile,2), errorInfo)){

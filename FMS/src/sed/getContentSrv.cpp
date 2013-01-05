@@ -103,7 +103,7 @@ int contentFile(diet_profile_t* profile) {
 	result = "";
 	errMsg = err.buildExceptionString();
   }
-  diet_string_set(diet_parameter(profile, 4), result.c_str(), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 5), errMsg.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 4), result.c_str());
+  diet_string_set(diet_parameter(profile, 5), errMsg.c_str());
   return 0;
 }

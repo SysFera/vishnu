@@ -49,22 +49,22 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
   //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
   //IN Parameters
-  if (diet_string_set(diet_parameter(addProfile,0), sessionKey.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,0), sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(addProfile,1), workToString.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,1), workToString.c_str())) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(addProfile,2), optionsToString.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(addProfile,2), optionsToString.c_str())) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(addProfile,3), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(addProfile,4), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(addProfile,3), NULL);
+  diet_string_set(diet_parameter(addProfile,4), NULL);
 
   if (!diet_call(addProfile)) {
     if (diet_string_get(diet_parameter(addProfile,3), workInString)){
@@ -116,17 +116,17 @@ int WorkProxy::update()
   workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
 
   //IN Parameters
-  if (diet_string_set(diet_parameter(updateProfile,0), sessionKey.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(updateProfile,0), sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(updateProfile,1), workToString.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(updateProfile,1), workToString.c_str())) {
     msg += "with workToString parameter "+workToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(updateProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(updateProfile,2), NULL);
 
   if (!diet_call(updateProfile)) {
     if (diet_string_get(diet_parameter(updateProfile,2), errorInfo)){
@@ -163,17 +163,17 @@ int WorkProxy::deleteWork()
   workId = mwork.getWorkId();
 
   //IN Parameters
-  if (diet_string_set(diet_parameter(deleteProfile,0), sessionKey.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(deleteProfile,0), sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if (diet_string_set(diet_parameter(deleteProfile,1), workId.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(deleteProfile,1), workId.c_str())) {
     msg += "with workId parameter "+workId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(deleteProfile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(deleteProfile,2), NULL);
 
   if (!diet_call(deleteProfile)) {
     if (diet_string_get(diet_parameter(deleteProfile,2), errorInfo)){

@@ -101,7 +101,7 @@ boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin,
 	errMsg = err.buildExceptionString();
   }
 
-  diet_string_set(diet_parameter(profile, 5), result.c_str(), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), errMsg.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), result.c_str());
+  diet_string_set(diet_parameter(profile, 6), errMsg.c_str());
   return 0;
 }

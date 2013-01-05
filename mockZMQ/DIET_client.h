@@ -60,15 +60,6 @@ typedef struct diet_profile_t {
 
 
 /**
- * \brief Overload of DIET constant
- */
-#define DIET_VOLATILE 1
-/**
- * \brief Overload of DIET constant
- */
-#define DIET_PERSISTENT_RETURN 1
-
-/**
  * \brief Overload of DIET function, allocate the profile of a service
  * \param name The name of the service
  * \param IN number of IN parameters
@@ -83,11 +74,10 @@ diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT);
  * \brief Overload of DIET function, set a param value in a profile to a string(char *)
  * \param arg Structure containing the string param to set and its position
  * \param value The value to set
- * \param pers The persistency of the data (DEPRECATED, kept for compatibility)
  * \return 0 on success, an error code otherwise
  */
 int
-diet_string_set(diet_arg_t* arg, const char* value, int pers);
+diet_string_set(diet_arg_t* arg, const char* value);
 
 /**
  * \brief Overload of DIET function, call to a DIET service

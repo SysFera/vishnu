@@ -112,7 +112,7 @@ int headFile(diet_profile_t* profile) {
 	result = "";
 	errMsg = err.buildExceptionString().c_str();
   }
-  diet_string_set(diet_parameter(profile, 5), result.c_str(), DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile, 6), errMsg.c_str(), DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile, 5), result.c_str());
+  diet_string_set(diet_parameter(profile, 6), errMsg.c_str());
   return 0;
 }
