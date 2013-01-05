@@ -116,29 +116,26 @@ int LocalFileProxy::transferFile(const string& dest,
 
 	//IN Parameters
 
-	diet_string_set(diet_parameter(profile, 0), sessionKey.c_str(),
-			DIET_VOLATILE);
-	diet_string_set(diet_parameter(profile, 1), localFullPath.string().c_str(),
-			DIET_VOLATILE); // local source file
-	diet_string_set(diet_parameter(profile, 2), localUser, DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile, 0), sessionKey.c_str());
+	diet_string_set(diet_parameter(profile, 1), localFullPath.string().c_str()); // local source file
+	diet_string_set(diet_parameter(profile, 2), localUser);
 
-	diet_string_set(diet_parameter(profile, 3), srcHost.c_str(),
-			DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile, 3), srcHost.c_str());
 
 
-	diet_string_set(diet_parameter(profile, 4), dest.c_str(), DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile, 4), dest.c_str());
 
 	::ecorecpp::serializer::serializer _ser;
 	//To serialize the options object in to optionsInString
 	string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
 
-	diet_string_set(diet_parameter(profile,5 ), optionsToString.c_str(), DIET_VOLATILE);
+	diet_string_set(diet_parameter(profile,5 ), optionsToString.c_str());
 
 	if(!isAsyncTransfer) {
-		diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
+		diet_string_set(diet_parameter(profile, 6), NULL);
 	} else {
-		diet_string_set(diet_parameter(profile, 6), NULL, DIET_VOLATILE);
-		diet_string_set(diet_parameter(profile, 7), NULL, DIET_VOLATILE);
+		diet_string_set(diet_parameter(profile, 6), NULL);
+		diet_string_set(diet_parameter(profile, 7), NULL);
 	}
 
 	if (diet_call(profile)) {

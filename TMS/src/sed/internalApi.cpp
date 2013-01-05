@@ -105,8 +105,8 @@ solveSubmitJob(diet_profile_t* pb) {
 		::ecorecpp::serializer::serializer _ser;
 		string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
-		diet_string_set(diet_parameter(pb,5), updateJobSerialized.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,6), empty.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,5), updateJobSerialized.c_str());
+		diet_string_set(diet_parameter(pb,6), empty.c_str());
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
 
@@ -119,8 +119,8 @@ solveSubmitJob(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(diet_parameter(pb,5), empty.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,6), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,5), empty.c_str());
+		diet_string_set(diet_parameter(pb,6), errorInfo.c_str());
 	}
 
 	return 0;
@@ -164,7 +164,7 @@ solveCancelJob(diet_profile_t* pb) {
 		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
 		jobServer.cancelJob(ServerTMS::getInstance()->getSlaveDirectory());
 
-		diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -175,7 +175,7 @@ solveCancelJob(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(diet_parameter(pb,3), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
 	}
 	return 0;
 }
@@ -224,8 +224,8 @@ solveJobInfo(diet_profile_t* pb) {
 		string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), updateJobSerialized.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), updateJobSerialized.c_str());
+		diet_string_set(diet_parameter(pb,4), empty.c_str());
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -236,8 +236,8 @@ solveJobInfo(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), empty.c_str());
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
 	}
 
 	return 0;
@@ -285,8 +285,8 @@ solveListOfQueues(diet_profile_t* pb) {
 		::ecorecpp::serializer::serializer _ser;
 		listQueuesSerialized =  _ser.serialize_str(listQueues);
 
-		diet_string_set(diet_parameter(pb,3), listQueuesSerialized.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), listQueuesSerialized.c_str());
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -297,8 +297,8 @@ solveListOfQueues(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), empty.c_str());
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
 	}
 
 	return 0;
@@ -349,7 +349,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 		vishnu::createTmpFile(const_cast<char*>(outputInfo.c_str()), jobFiles) ;
 
-		diet_string_set(diet_parameter(pb,4), outputInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), outputInfo.c_str());
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
@@ -361,7 +361,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 			finishError +="\n";
 		}
 		e.appendMsgComp(finishError);
-		diet_string_set(diet_parameter(pb,4), e.buildExceptionString().c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,4), e.buildExceptionString().c_str());
 
 	}
 	return 0;
@@ -417,8 +417,8 @@ solveGenerique(diet_profile_t* pb) {
 		listSerialized =  _ser.serialize_str(list);
 
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), listSerialized.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), listSerialized.c_str());
+		diet_string_set(diet_parameter(pb,4), empty.c_str());
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -430,8 +430,8 @@ solveGenerique(diet_profile_t* pb) {
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
 		//Send error
-		diet_string_set(diet_parameter(pb,3), listSerialized.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), listSerialized.c_str());
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
 	}
 	delete options;
 	delete list;
@@ -501,8 +501,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 		string outputInfo = "/tmp/vishnu-outdescrXXXXXX"; // extension by convention
 		vishnu::createTmpFile(const_cast<char*>(outputInfo.c_str()), ossFileName.str()) ;
 
-		diet_string_set(diet_parameter(pb,3), outputInfo.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), jobsOutputSerialized.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), outputInfo.c_str());
+		diet_string_set(diet_parameter(pb,4), jobsOutputSerialized.c_str());
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
@@ -514,7 +514,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
 			finishError +="\n";
 		}
 		e.appendMsgComp(finishError);
-		diet_string_set(diet_parameter(pb,3), e.buildExceptionString().c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), e.buildExceptionString().c_str());
 	}
 	return 0;
 }
@@ -573,8 +573,8 @@ solveAddWork(diet_profile_t* pb) {
 		std::string workSerializedUpdate = _ser.serialize_str(work);
 
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), workSerializedUpdate.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), empty.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), workSerializedUpdate.c_str());
+		diet_string_set(diet_parameter(pb,4), empty.c_str());
 		//To save the connection
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
 	} catch (VishnuException& e) {
@@ -587,8 +587,8 @@ solveAddWork(diet_profile_t* pb) {
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
 		//OUT Parameter
-		diet_string_set(diet_parameter(pb,3), empty.c_str(), DIET_VOLATILE);
-		diet_string_set(diet_parameter(pb,4), errorInfo.c_str(), DIET_VOLATILE);
+		diet_string_set(diet_parameter(pb,3), empty.c_str());
+		diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
 	}
 	delete work;
 	return 0;

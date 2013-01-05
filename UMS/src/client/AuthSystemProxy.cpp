@@ -41,18 +41,18 @@ AuthSystemProxy::add() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()))) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(diet_parameter(profile,3), NULL);
 
   if(!diet_call(profile)) {
 
@@ -108,17 +108,17 @@ AuthSystemProxy::update() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()))) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
 
   if(!diet_call(profile)) {
 
@@ -157,17 +157,17 @@ AuthSystemProxy::deleteAuthSystem()
   sysId = mauthSystem.getAuthSystemId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(sysId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(sysId.c_str()))) {
     msg += "with systemId parameter "+sysId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), errorInfo)){

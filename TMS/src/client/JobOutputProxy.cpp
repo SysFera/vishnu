@@ -43,28 +43,28 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
 	//IN Parameters
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,0), sessionKey.c_str(), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,0), sessionKey.c_str()) ) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,1), mmachineId.c_str(), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,1), mmachineId.c_str()) ) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
 	TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
 	::ecorecpp::serializer::serializer _ser;
 	string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
-	if ( diet_string_set(diet_parameter(getJobOutPutProfile,2), jobResultToString.c_str(), DIET_VOLATILE) ) {
+	if ( diet_string_set(diet_parameter(getJobOutPutProfile,2), jobResultToString.c_str()) ) {
 		msgErrorDiet += "with the job result parameter " + jobResultToString;
 		raiseDietMsgException(msgErrorDiet);
 	}
-	if (diet_string_set(diet_parameter(getJobOutPutProfile,3), moutDir.c_str(), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getJobOutPutProfile,3), moutDir.c_str())) {
 		msgErrorDiet += "with outDir parameter "+moutDir;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
 	//OUT Parameter
-	diet_string_set(diet_parameter(getJobOutPutProfile,4), NULL, DIET_PERSISTENT_RETURN);
+	diet_string_set(diet_parameter(getJobOutPutProfile,4), NULL);
 
 	//Call the Server
 	if( diet_call(getJobOutPutProfile) ) {
@@ -131,24 +131,24 @@ JobOutputProxy::getCompletedJobsOutput() {
 
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	//IN Parameters
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,0), sessionKey.c_str(), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,0), sessionKey.c_str())) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,1), mmachineId.c_str(), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,1), mmachineId.c_str())) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,2), moutDir.c_str(), DIET_VOLATILE)) {
+	if (diet_string_set(diet_parameter(getCompletedJobsOutputProfile,2), moutDir.c_str())) {
 		msgErrorDiet += "with outDir parameter "+moutDir;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
 	//OUT Parameters
-	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,3), NULL, DIET_VOLATILE);	//OUT Parameters
-	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,4), NULL, DIET_VOLATILE);
+	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,3), NULL);	//OUT Parameters
+	diet_string_set(diet_parameter(getCompletedJobsOutputProfile,4), NULL);
 
 	//Call the Server
 	if( diet_call(getCompletedJobsOutputProfile)) {

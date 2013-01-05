@@ -229,7 +229,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
 
 	//IN Parameters
-	if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+	if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
 		msg += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msg);
 	}
@@ -237,19 +237,19 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	//If the query uses the machineId (machineId not null)
 	if (mmachineId.size() != 0) {
 
-		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(mmachineId.c_str()), DIET_VOLATILE)) {
+		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(mmachineId.c_str()))) {
 			msg += "with machineId parameter "+mmachineId;
 			raiseDietMsgException(msg);
 		}
 
-		if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(queryParmetersToString.c_str()), DIET_VOLATILE)) {
+		if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(queryParmetersToString.c_str()))) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}
 
 		//OUT Parameters
-		diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
-		diet_string_set(diet_parameter(profile,4), NULL, DIET_VOLATILE);
+		diet_string_set(diet_parameter(profile,3), NULL);
+		diet_string_set(diet_parameter(profile,4), NULL);
 
 		if(!diet_call(profile)) {
 			if(diet_string_get(diet_parameter(profile,3), listObjectInString)){
@@ -267,15 +267,15 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	}
 	else {
 
-		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(queryParmetersToString.c_str()), DIET_VOLATILE)) {
+		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(queryParmetersToString.c_str()))) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}
 
 		//OUT Parameters
 
-		diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
-		diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+		diet_string_set(diet_parameter(profile,2), NULL);
+		diet_string_set(diet_parameter(profile,3), NULL);
 
 		if(!diet_call(profile)) {
 

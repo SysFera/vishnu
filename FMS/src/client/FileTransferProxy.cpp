@@ -77,7 +77,7 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), msessionKey.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,0), msessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+msessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -87,13 +87,13 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
   //To serialize the option object in to optionsInString
   string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options));
 
-  if (diet_string_set(diet_parameter(profile,1), optionsToString.c_str(), DIET_VOLATILE)) {
+  if (diet_string_set(diet_parameter(profile,1), optionsToString.c_str())) {
     msgErrorDiet += "with jobInString parameter " + optionsToString;
     raiseDietMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,2), errorInfo)){

@@ -50,19 +50,19 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   localAccountToString =  _ser.serialize_str(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(localAccountToString.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(localAccountToString.c_str()))) {
     msg += "with localAccountToString parameter "+localAccountToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,2), NULL);
   if(isNewLocalAccount) {
-    diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,3), NULL);
   }
 
   if(!diet_call(profile)) {
@@ -136,21 +136,21 @@ int LocalAccountProxy::deleteLocalAccount()
   machineId = mlocalAccount.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()))) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(machineId.c_str()), DIET_VOLATILE)) {
+  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(machineId.c_str()))) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL, DIET_VOLATILE);
+  diet_string_set(diet_parameter(profile,3), NULL);
 
   if(!diet_call(profile)) {
     if(diet_string_get(diet_parameter(profile,3), errorInfo)){

@@ -95,9 +95,9 @@ UtilsProxy::restore() {
     }
     profile = diet_profile_alloc("restore", 0, 0, 1);
     //IN Parameters
-    diet_string_set(diet_parameter(profile,0), tmp, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,0), tmp);
     //OUT Parameters
-    diet_string_set(diet_parameter(profile,1), NULL, DIET_VOLATILE);
+    diet_string_set(diet_parameter(profile,1), NULL);
     delete [] tmp;
     if(!diet_call(profile)){
       if(diet_string_get(diet_parameter(profile,1), errorInfo)) {

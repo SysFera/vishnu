@@ -65,7 +65,7 @@ solveFileTransferStop(diet_profile_t* pb) {
 
     fileTransferServer->stopThread(*options_ptr);
 
-    diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -76,7 +76,7 @@ solveFileTransferStop(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    diet_string_set(diet_parameter(pb,2), errorInfo.c_str(), DIET_VOLATILE);
+    diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
   }
   return 0;
 }
