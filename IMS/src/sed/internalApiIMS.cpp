@@ -416,7 +416,7 @@ solveGetThreshold(diet_profile_t* pb){
     retErr = e.buildExceptionString();
     // Setting diet output parameters
 
-    diet_string_set(pb,2, empty.c_str());
+    diet_string_set(pb,2);
     diet_string_set(pb,3, retErr.c_str());
   }
   if (treeOp) {

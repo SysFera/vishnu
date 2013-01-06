@@ -61,7 +61,6 @@ solveSubmitJob(diet_profile_t* pb) {
 	string jobSerialized;
 	string sessionKey;
 
-	std::string empty("");
 	std::string errorInfo ="";
 	std::string finishError ="";
 	int mapperkey;
@@ -106,7 +105,7 @@ solveSubmitJob(diet_profile_t* pb) {
 		string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
 		diet_string_set(pb,5, updateJobSerialized.c_str());
-		diet_string_set(pb,6, empty.c_str());
+		diet_string_set(pb,6);
 
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
 
@@ -119,7 +118,7 @@ solveSubmitJob(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(pb,5, empty.c_str());
+		diet_string_set(pb,5);
 		diet_string_set(pb,6, errorInfo.c_str());
 	}
 
@@ -191,7 +190,6 @@ solveJobInfo(diet_profile_t* pb) {
 	std::string sessionKey;
 	std::string machineId;
 	std::string jobSerialized;
-	std::string empty = "";
 	std::string errorInfo;
 	std::string finishError ="";
 	int mapperkey;
@@ -225,7 +223,7 @@ solveJobInfo(diet_profile_t* pb) {
 
 		//OUT Parameter
 		diet_string_set(pb,3, updateJobSerialized.c_str());
-		diet_string_set(pb,4, empty.c_str());
+		diet_string_set(pb,4);
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -236,7 +234,7 @@ solveJobInfo(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(pb,3, empty.c_str());
+		diet_string_set(pb,3);
 		diet_string_set(pb,4, errorInfo.c_str());
 	}
 
@@ -254,7 +252,6 @@ solveListOfQueues(diet_profile_t* pb) {
 	std::string sessionKey;
 	std::string machineId;
 	std::string option;
-	std::string empty("");
 	std::string errorInfo ="";
 	std::string listQueuesSerialized;
 	std::string finishError ="";
@@ -297,7 +294,7 @@ solveListOfQueues(diet_profile_t* pb) {
 		}
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
-		diet_string_set(pb,3, empty.c_str());
+		diet_string_set(pb,3);
 		diet_string_set(pb,4, errorInfo.c_str());
 	}
 
@@ -380,7 +377,6 @@ solveGenerique(diet_profile_t* pb) {
 	std::string machineId;
 	std::string optionValueSerialized;
 	std::string listSerialized = "";
-	std::string empty = "";
 	std::string errorInfo;
 	int mapperkey;
 	std::string cmd;
@@ -418,7 +414,7 @@ solveGenerique(diet_profile_t* pb) {
 
 		//OUT Parameter
 		diet_string_set(pb,3, listSerialized.c_str());
-		diet_string_set(pb,4, empty.c_str());
+		diet_string_set(pb,4);
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
 	} catch (VishnuException& e) {
 		try {
@@ -530,7 +526,6 @@ solveAddWork(diet_profile_t* pb) {
 	std::string sessionKey;
 	std::string workSerialized;
 	std::string opSerialized;
-	std::string empty("");
 	std::string errorInfo;
 	int mapperkey;
 	std::string cmd;
@@ -574,7 +569,7 @@ solveAddWork(diet_profile_t* pb) {
 
 		//OUT Parameter
 		diet_string_set(pb,3, workSerializedUpdate.c_str());
-		diet_string_set(pb,4, empty.c_str());
+		diet_string_set(pb,4);
 		//To save the connection
 		sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
 	} catch (VishnuException& e) {
@@ -587,7 +582,7 @@ solveAddWork(diet_profile_t* pb) {
 		e.appendMsgComp(finishError);
 		errorInfo =  e.buildExceptionString();
 		//OUT Parameter
-		diet_string_set(pb,3, empty.c_str());
+		diet_string_set(pb,3);
 		diet_string_set(pb,4, errorInfo.c_str());
 	}
 	delete work;

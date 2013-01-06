@@ -476,7 +476,6 @@ solveGenerique(diet_profile_t* pb) {
   std::string sessionKey = "";
   std::string optionValueSerialized = "";
   std::string listSerialized = "";
-  std::string empty = "";
   std::string errorInfo;
   int mapperkey;
   std::string cmd;
@@ -517,7 +516,7 @@ solveGenerique(diet_profile_t* pb) {
 
     //OUT Parameter
     diet_string_set(pb,2, listSerialized.c_str());
-    diet_string_set(pb,3, empty.c_str());
+    diet_string_set(pb,3);
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
