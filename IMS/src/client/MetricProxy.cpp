@@ -22,19 +22,19 @@ MetricProxy::setUpFreq(int freq) {
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), sessionKey.c_str())) {
+  if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
-  if (diet_string_set(diet_parameter(profile,1), convertToString(freq).c_str())) {
+  if (diet_string_set(profile,1, convertToString(freq).c_str())) {
     msgErrorDiet += "with frequency parameter "+freq;
     raiseDietMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
@@ -58,20 +58,20 @@ MetricProxy::getUpFreq() {
   profile = diet_profile_alloc(serviceName.c_str(), 0, 0, 2);
   sessionKey = msessionProxy.getSessionKey();
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), sessionKey.c_str())) {
+  if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,1), NULL);
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,1);
+  diet_string_set(profile,2);
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,1), str)){
+    if(diet_string_get(profile,1, str)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
       raiseDietMsgException(msgErrorDiet);
     }

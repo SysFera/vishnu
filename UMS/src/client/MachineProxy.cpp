@@ -48,25 +48,25 @@ int MachineProxy::add()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(addProfile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(addProfile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(addProfile,1), const_cast<char*>(machineToString.c_str()))) {
+  if(diet_string_set(addProfile,1, const_cast<char*>(machineToString.c_str()))) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(addProfile,2), NULL);
-  diet_string_set(diet_parameter(addProfile,3), NULL);
+  diet_string_set(addProfile,2);
+  diet_string_set(addProfile,3);
 
   if(!diet_call(addProfile)) {
-    if(diet_string_get(diet_parameter(addProfile,2), machineInString)){
+    if(diet_string_get(addProfile,2, machineInString)){
       msg += "by receiving Machine serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(addProfile,3), errorInfo)){
+    if(diet_string_get(addProfile,3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -118,20 +118,20 @@ int MachineProxy::update()
   }
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(updateProfile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(updateProfile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(updateProfile,1), const_cast<char*>(machineToString.c_str()))) {
+  if(diet_string_set(updateProfile,1, const_cast<char*>(machineToString.c_str()))) {
     msg += "with machineToString parameter "+machineToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(updateProfile,2), NULL);
+  diet_string_set(updateProfile,2);
 
   if(!diet_call(updateProfile)) {
-    if(diet_string_get(diet_parameter(updateProfile,2), errorInfo)){
+    if(diet_string_get(updateProfile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -166,20 +166,20 @@ int MachineProxy::deleteMachine()
   machineId = mmachine.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(deleteProfile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(deleteProfile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(deleteProfile,1), const_cast<char*>(machineId.c_str()))) {
+  if(diet_string_set(deleteProfile,1, const_cast<char*>(machineId.c_str()))) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(deleteProfile,2), NULL);
+  diet_string_set(deleteProfile,2);
 
   if(!diet_call(deleteProfile)) {
-    if(diet_string_get(diet_parameter(deleteProfile,2), errorInfo)){
+    if(diet_string_get(deleteProfile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

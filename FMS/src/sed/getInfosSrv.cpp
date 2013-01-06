@@ -56,10 +56,10 @@ int get_infos(diet_profile_t* profile) {
   std::string errMsg = "";
   int mapperkey;
 
-  diet_string_get(diet_parameter(profile, 0), sessionKey);
-  diet_string_get(diet_parameter(profile, 1), path);
-  diet_string_get(diet_parameter(profile, 2), user);
-  diet_string_get(diet_parameter(profile, 3), host);
+  diet_string_get(profile, 0, sessionKey);
+  diet_string_get(profile, 1, path);
+  diet_string_get(profile, 2, user);
+  diet_string_get(profile, 3, host);
 
   localUser = user;
   localPath = path;
@@ -123,7 +123,7 @@ int get_infos(diet_profile_t* profile) {
     fileStatSerialized="";
   }
 
-  diet_string_set(diet_parameter(profile, 4), fileStatSerialized.c_str());
-  diet_string_set(diet_parameter(profile, 5), errMsg.c_str());
+  diet_string_set(profile, 4, fileStatSerialized.c_str());
+  diet_string_set(profile, 5, errMsg.c_str());
   return 0;
 }

@@ -48,11 +48,11 @@ int headFile(diet_profile_t* profile) {
   int mapperkey;
   std::string cmd = "";
 
-  diet_string_get(diet_parameter(profile, 0), sessionKey);
-  diet_string_get(diet_parameter(profile, 1), path);
-  diet_string_get(diet_parameter(profile, 2), user);
-  diet_string_get(diet_parameter(profile, 3), host);
-  diet_string_get(diet_parameter(profile, 4), optionsSerialized);
+  diet_string_get(profile, 0, sessionKey);
+  diet_string_get(profile, 1, path);
+  diet_string_get(profile, 2, user);
+  diet_string_get(profile, 3, host);
+  diet_string_get(profile, 4, optionsSerialized);
 
 
   localUser = user;
@@ -112,7 +112,7 @@ int headFile(diet_profile_t* profile) {
 	result = "";
 	errMsg = err.buildExceptionString().c_str();
   }
-  diet_string_set(diet_parameter(profile, 5), result.c_str());
-  diet_string_set(diet_parameter(profile, 6), errMsg.c_str());
+  diet_string_set(profile, 5, result.c_str());
+  diet_string_set(profile, 6, errMsg.c_str());
   return 0;
 }

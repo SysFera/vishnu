@@ -42,8 +42,8 @@ solveFileTransferStop(diet_profile_t* pb) {
   std::string cmd = "";
   std::string errorInfo ="";
 
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), optionsSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, optionsSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   FMS_Data::StopTransferOptions_ptr options_ptr = NULL;
@@ -65,7 +65,7 @@ solveFileTransferStop(diet_profile_t* pb) {
 
     fileTransferServer->stopThread(*options_ptr);
 
-    diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+    diet_string_set(pb,2, errorInfo.c_str());
     sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -76,7 +76,7 @@ solveFileTransferStop(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+    diet_string_set(pb,2, errorInfo.c_str());
   }
   return 0;
 }

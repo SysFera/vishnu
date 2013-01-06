@@ -54,21 +54,21 @@ int ConfigurationProxy::save()
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,1), NULL);
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,1);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,1), configurationInString)){
+    if(diet_string_get(profile,1, configurationInString)){
       msg += "by receiving configurationInString message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -126,19 +126,19 @@ int ConfigurationProxy::restore(bool fromFile)
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(configurationInString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(configurationInString.c_str()))) {
     msg += "with configurationInString parameter " + configurationInString;
     raiseDietMsgException(msg);
   }
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

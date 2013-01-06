@@ -50,35 +50,35 @@ int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   localAccountToString =  _ser.serialize_str(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(localAccountToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(localAccountToString.c_str()))) {
     msg += "with localAccountToString parameter "+localAccountToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
   if(isNewLocalAccount) {
-    diet_string_set(diet_parameter(profile,3), NULL);
+    diet_string_set(profile,3);
   }
 
   if(!diet_call(profile)) {
     if(isNewLocalAccount) {
-      if(diet_string_get(diet_parameter(profile,2), sshPublicKey)){
+      if(diet_string_get(profile,2, sshPublicKey)){
         msg += "by receiving sshPluciKey content";
         raiseDietMsgException(msg);
       }
-      if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+      if(diet_string_get(profile,3, errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
       msshPublicKey = sshPublicKey;
     }
     else {
-      if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+      if(diet_string_get(profile,2, errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
@@ -136,24 +136,24 @@ int LocalAccountProxy::deleteLocalAccount()
   machineId = mlocalAccount.getMachineId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(userId.c_str()))) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(machineId.c_str()))) {
+  if(diet_string_set(profile,2, const_cast<char*>(machineId.c_str()))) {
     msg += "with machineId parameter "+machineId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL);
+  diet_string_set(profile,3);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

@@ -229,7 +229,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
 
 	//IN Parameters
-	if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+	if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
 		msg += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msg);
 	}
@@ -237,26 +237,26 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	//If the query uses the machineId (machineId not null)
 	if (mmachineId.size() != 0) {
 
-		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(mmachineId.c_str()))) {
+		if(diet_string_set(profile,1, const_cast<char*>(mmachineId.c_str()))) {
 			msg += "with machineId parameter "+mmachineId;
 			raiseDietMsgException(msg);
 		}
 
-		if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(queryParmetersToString.c_str()))) {
+		if(diet_string_set(profile,2, const_cast<char*>(queryParmetersToString.c_str()))) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}
 
 		//OUT Parameters
-		diet_string_set(diet_parameter(profile,3), NULL);
-		diet_string_set(diet_parameter(profile,4), NULL);
+		diet_string_set(profile,3);
+		diet_string_set(profile,4);
 
 		if(!diet_call(profile)) {
-			if(diet_string_get(diet_parameter(profile,3), listObjectInString)){
+			if(diet_string_get(profile,3, listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get(diet_parameter(profile,4), errorInfo)){
+			if(diet_string_get(profile,4, errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}
@@ -267,23 +267,23 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	}
 	else {
 
-		if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(queryParmetersToString.c_str()))) {
+		if(diet_string_set(profile,1, const_cast<char*>(queryParmetersToString.c_str()))) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}
 
 		//OUT Parameters
 
-		diet_string_set(diet_parameter(profile,2), NULL);
-		diet_string_set(diet_parameter(profile,3), NULL);
+		diet_string_set(profile,2);
+		diet_string_set(profile,3);
 
 		if(!diet_call(profile)) {
 
-			if(diet_string_get(diet_parameter(profile,2), listObjectInString)){
+			if(diet_string_get(profile,2, listObjectInString)){
 				msg += "by receiving listObjectInString message";
 				raiseDietMsgException(msg);
 			}
-			if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+			if(diet_string_get(profile,3, errorInfo)){
 				msg += "by receiving errorInfo message";
 				raiseDietMsgException(msg);
 			}

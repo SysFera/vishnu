@@ -101,11 +101,11 @@ throw(UserException, SystemException)
 
 	UserProxy userProxy(connectLogin, encryptedPassword);
 	SessionProxy sessionProxy;
-	int res = sessionProxy.connect(userProxy, connectOpt);
+        int res = sessionProxy.connect(userProxy, connectOpt);
 
 	session = sessionProxy.getData();
 
-	return res;
+	return 0;
 
 }
 

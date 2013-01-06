@@ -221,8 +221,8 @@ public:
         diet_profile_t* hb = NULL;
         hb = diet_profile_alloc("heartbeat", 0, 0, 1);
         //OUT Parameters
-        diet_string_set(diet_parameter(hb,0), const_cast<char *>("hb"));
-        diet_string_set(diet_parameter(hb,1), NULL);
+        diet_string_set(hb,0, const_cast<char *>("hb"));
+        diet_string_set(hb,1);
         std::string p1 = my_serialize(hb);
 
 //        std::cout << boost::format("I: Sending> %1%...\n") % p1;

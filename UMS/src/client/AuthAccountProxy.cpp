@@ -41,20 +41,20 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   authAccountToString =  _ser.serialize_str(const_cast<UMS_Data::AuthAccount_ptr>(&mauthAccount));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authAccountToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(authAccountToString.c_str()))) {
     msg += "with authAccountToString parameter "+authAccountToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -111,24 +111,24 @@ AuthAccountProxy::deleteAuthAccount()
   sysId = mauthAccount.getAuthSystemId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(sysId.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(sysId.c_str()))) {
     msg += "with systemId parameter "+sysId;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,2), const_cast<char*>(userId.c_str()))) {
+  if(diet_string_set(profile,2, const_cast<char*>(userId.c_str()))) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,3), NULL);
+  diet_string_set(profile,3);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

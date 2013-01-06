@@ -95,12 +95,12 @@ UtilsProxy::restore() {
     }
     profile = diet_profile_alloc("restore", 0, 0, 1);
     //IN Parameters
-    diet_string_set(diet_parameter(profile,0), tmp);
+    diet_string_set(profile,0, tmp);
     //OUT Parameters
-    diet_string_set(diet_parameter(profile,1), NULL);
+    diet_string_set(profile,1);
     delete [] tmp;
     if(!diet_call(profile)){
-      if(diet_string_get(diet_parameter(profile,1), errorInfo)) {
+      if(diet_string_get(profile,1, errorInfo)) {
         raiseDietMsgException("DIET call failure");
       }
     } else {
