@@ -43,7 +43,14 @@ public:
     }
 
     const char *dat = static_cast<const char*>(message.data());
-    return std::string(dat, dat + message.size());
+    // check that we receive or not a null-terminated string aka C strings
+    size_t sz = message.size();
+    const char* pos = dat + sz;
+    if (dat[sz] == '\0') {
+      pos--;
+    }
+
+    return std::string(dat, pos);
   }
 
 private:
