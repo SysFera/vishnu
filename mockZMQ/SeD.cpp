@@ -9,7 +9,7 @@
 int
 heartbeat(diet_profile_t* pb){
   std::string ack("OK");
-  diet_string_set(diet_parameter(pb,1), const_cast<char*>(ack.c_str()));
+  diet_string_set(pb,1, const_cast<char*>(ack.c_str()));
   return 0;
 }
 

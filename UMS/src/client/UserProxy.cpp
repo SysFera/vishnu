@@ -65,25 +65,25 @@ int UserProxy::add(UMS_Data::User& user)
   //To serialize the user object in to userToString
   std::string userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(userToString.c_str()))) {
     msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
-  diet_string_set(diet_parameter(profile,3), NULL);
+  diet_string_set(profile,2);
+  diet_string_set(profile,3);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), userInString)){
+    if(diet_string_get(profile,2, userInString)){
       msg += " by receiving User serialized  message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(profile,3, errorInfo)){
       msg += " by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -131,20 +131,20 @@ int UserProxy::update(const UMS_Data::User& user)
   userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(userToString.c_str()))) {
     msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -181,20 +181,20 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   userId = user.getUserId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(userId.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(userId.c_str()))) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -237,31 +237,31 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
   profile = diet_profile_alloc("userPasswordChange", 3, 3, 4);
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), muser.getUserId().c_str())) {
+  if(diet_string_set(profile,0, muser.getUserId().c_str())) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,1), password.c_str())) {
+  if(diet_string_set(profile,1, password.c_str())) {
     msg += "with password parameter "+password;
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,2), newPassword.c_str())) {
+  if(diet_string_set(profile,2, newPassword.c_str())) {
     msg += "with newPassword parameter "+newPassword;
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,3), versionToString.c_str())) {
+  if(diet_string_set(profile,3, versionToString.c_str())) {
       msg += "with version parameter "+versionToString;
       raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,4), NULL);
+  diet_string_set(profile,4);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,4), errorInfo)){
+    if(diet_string_get(profile,4, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -295,26 +295,26 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>((msessionProxy->getSessionKey()).c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>((msessionProxy->getSessionKey()).c_str()))) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>((user.getUserId()).c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>((user.getUserId()).c_str()))) {
     msg += "with userId parameter "+user.getUserId();
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
-  diet_string_set(diet_parameter(profile,3), NULL);
+  diet_string_set(profile,2);
+  diet_string_set(profile,3);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), tmpPassword)){
+    if(diet_string_get(profile,2, tmpPassword)){
       msg += "by receiving tmpPassWord message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

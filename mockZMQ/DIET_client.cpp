@@ -9,6 +9,7 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
+#include <iterator>
 #include <map>
 #include <string>
 #include <sstream>
@@ -196,25 +197,21 @@ diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
   res->IN = IN;
   res->INOUT = INOUT;
   res->OUT = OUT;
-  res->param = new char *[OUT+1];
-  memset(res->param,0,(IN+INOUT+OUT));
+  (res->params).resize(OUT+1, "");
   res->name = name;
   return res;
 }
 
 int
-diet_string_set(diet_arg_t* arg, const char* value){
-  if (value) {
-    ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
-    memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));
-    (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen(value)] = '\0';
-  } else {
-    ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen("")+1));
-    memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
-    (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen("")] = '\0';
+diet_string_set(diet_profile_t* prof, int pos,
+                const std::string& value) {
+  try {
+    (prof->params).at(pos) = value;
+  } catch (const std::out_of_range& err) {
+    throw
+      SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
 
-  delete arg;
   return 0;
 }
 
@@ -240,9 +237,7 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i = 0; i <= prof->OUT; ++i){
-    prof->param[i] = strdup(tmp->param[i]);
-  }
+  prof->params = tmp->params;
 }
 
 int
@@ -296,53 +291,29 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i = 0; i <= prof->OUT; ++i){
-    prof->param[i] = strdup(tmp->param[i]);
-  }
+  prof->params = tmp->params;
 
   return 0;
 }
 
 
 int
-diet_string_get(diet_arg_t* arg, std::string & value) {
-  value = ((diet_profile_t*)(arg->prof))->param[arg->pos];
-  delete arg;
+diet_string_get(diet_profile_t* prof, int pos, std::string& value) {
+  value = (prof->params).at(pos);
   return 0;
 }
 
 int
 diet_profile_free(diet_profile_t* prof) {
-  for (unsigned int i = 0; i < prof->OUT; ++i) {
-    if (prof->param[i]) {
-      free(prof->param[i]);
-      prof->param[i] = NULL;
-    }
-  }
-
-  delete [] prof->param;
   delete prof;
-  prof = NULL;
-
   return 0;
-}
-
-diet_arg_t*
-diet_parameter(diet_profile_t* prof, int pos) {
-  if (pos>prof->OUT){
-    throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
-  }
-  diet_arg_t* res = new diet_arg_t;
-  res->prof = prof;
-  res->pos = pos;
-  return res;
 }
 
 
 std::string
 my_serialize(diet_profile_t* prof) {
 
-  if (prof==NULL){
+  if (!prof){
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
 
@@ -353,9 +324,9 @@ my_serialize(diet_profile_t* prof) {
       << prof->OUT << "$$$";
 
   for (int i = 0; i<(prof->OUT); ++i) {
-    res << prof->param[i] << "$$$";
+    res << prof->params[i] << "$$$";
   }
-  res << prof->param[(prof->OUT)];
+  res << prof->params[(prof->OUT)];
   return res.str();
 }
 
@@ -365,23 +336,21 @@ my_deserialize(const std::string& prof) {
 
   std::vector<std::string> vecString;
 
-  if (prof.compare("")==0){
+  if (prof.empty()){
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string ");
   }
 
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
 
-  if (!vecString.empty() && vecString.at(0).compare("") != 0) {
+  if (!vecString.empty() && (vecString.at(0) != "")) {
     res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
     res->name = *(it++);
     res->IN = boost::lexical_cast<int>(*(it++));
     res->INOUT = boost::lexical_cast<int>(*(it++));
     res->OUT = boost::lexical_cast<int>(*(it++));
-    res->param = (char**)malloc(sizeof(char*) * vecString.size() - 4);
-    for (int i = 0; it != vecString.end(); ++it, i++) {
-      res->param[i] = strdup(it->c_str());
-    }
+
+    std::copy(it, vecString.end(), std::back_inserter(res->params));
   }
 
   return res;

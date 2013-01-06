@@ -52,17 +52,17 @@ JobProxy::submitJob(const std::string& scriptContent,
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
 	//IN Parameters
-	if (diet_string_set(diet_parameter(submitJobProfile,0), sessionKey.c_str())) {
+	if (diet_string_set(submitJobProfile,0, sessionKey.c_str())) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(submitJobProfile,1), mmachineId.c_str())) {
+	if (diet_string_set(submitJobProfile,1, mmachineId.c_str())) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(submitJobProfile,2), scriptContent.c_str())) {
+	if (diet_string_set(submitJobProfile,2, scriptContent.c_str())) {
 		msgErrorDiet += "with optionsInString parameter "+scriptContent;
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -70,7 +70,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 	::ecorecpp::serializer::serializer _ser;
 	string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
 
-	if (diet_string_set(diet_parameter(submitJobProfile,3), optionsToString.c_str())) {
+	if (diet_string_set(submitJobProfile,3, optionsToString.c_str())) {
 		msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -78,14 +78,14 @@ JobProxy::submitJob(const std::string& scriptContent,
 	_ser.resetSerializer();
 	string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str();
 
-	if (diet_string_set(diet_parameter(submitJobProfile,4), jobToString.c_str())) {
+	if (diet_string_set(submitJobProfile,4, jobToString.c_str())) {
 		msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
 		raiseDietMsgException(msgErrorDiet);
 	}
 
 	//OUT Parameters
-	diet_string_set(diet_parameter(submitJobProfile,5), NULL);
-	diet_string_set(diet_parameter(submitJobProfile,6), NULL);
+	diet_string_set(submitJobProfile,5);
+	diet_string_set(submitJobProfile,6);
 
         // FIXME: do it before setting parameter 3
 	// Send input files, if there is any one
@@ -98,11 +98,11 @@ JobProxy::submitJob(const std::string& scriptContent,
         std::string cresultMsg;
         std::string errorInfo;
 	if(!diet_call(submitJobProfile)) {
-		if(diet_string_get(diet_parameter(submitJobProfile,5), cresultMsg)){
+		if(diet_string_get(submitJobProfile,5, cresultMsg)){
 			msgErrorDiet += " by receiving User serialized  message";
 			raiseDietMsgException(msgErrorDiet);
 		}
-		if(diet_string_get(diet_parameter(submitJobProfile,6), errorInfo)){
+		if(diet_string_get(submitJobProfile,6, errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
@@ -141,12 +141,12 @@ JobProxy::cancelJob() {
 
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	//IN Parameters
-	if (diet_string_set(diet_parameter(cancelJobProfile,0), sessionKey.c_str())) {
+	if (diet_string_set(cancelJobProfile,0, sessionKey.c_str())) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(cancelJobProfile,1), mmachineId.c_str())) {
+	if (diet_string_set(cancelJobProfile,1, mmachineId.c_str())) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -155,16 +155,16 @@ JobProxy::cancelJob() {
 	//To serialize the job object in to optionsInString
 	string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-	if (diet_string_set(diet_parameter(cancelJobProfile,2), jobToString.c_str())) {
+	if (diet_string_set(cancelJobProfile,2, jobToString.c_str())) {
 		msgErrorDiet += "with jobInString parameter "+jobToString;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
 	//OUT Parameters
-	diet_string_set(diet_parameter(cancelJobProfile,3), NULL);
+	diet_string_set(cancelJobProfile,3);
 
 	if(!diet_call(cancelJobProfile)) {
-		if(diet_string_get(diet_parameter(cancelJobProfile,3), errorInfo)){
+		if(diet_string_get(cancelJobProfile,3, errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}
@@ -201,12 +201,12 @@ JobProxy::getJobInfo() {
 
 	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 	//IN Parameters
-	if (diet_string_set(diet_parameter(getJobInfoProfile,0), sessionKey.c_str())) {
+	if (diet_string_set(getJobInfoProfile,0, sessionKey.c_str())) {
 		msgErrorDiet += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msgErrorDiet);
 	}
 
-	if (diet_string_set(diet_parameter(getJobInfoProfile,1), mmachineId.c_str())) {
+	if (diet_string_set(getJobInfoProfile,1, mmachineId.c_str())) {
 		msgErrorDiet += "with machineId parameter "+mmachineId;
 		raiseDietMsgException(msgErrorDiet);
 	}
@@ -216,21 +216,21 @@ JobProxy::getJobInfo() {
 	//To serialize the options object in to optionsInString
 	std::string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-	if (diet_string_set(diet_parameter(getJobInfoProfile,2), jobToString.c_str())) {
+	if (diet_string_set(getJobInfoProfile,2, jobToString.c_str())) {
 		msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
 		raiseDietMsgException(msgErrorDiet);
 	}
 
 	//OUT Parameters
-	diet_string_set(diet_parameter(getJobInfoProfile,3), NULL);
-	diet_string_set(diet_parameter(getJobInfoProfile,4), NULL);
+	diet_string_set(getJobInfoProfile,3);
+	diet_string_set(getJobInfoProfile,4);
 
 	if(!diet_call(getJobInfoProfile)) {
-		if(diet_string_get(diet_parameter(getJobInfoProfile,3), jobInString)){
+		if(diet_string_get(getJobInfoProfile,3, jobInString)){
 			msgErrorDiet += " by receiving User serialized  message";
 			raiseDietMsgException(msgErrorDiet);
 		}
-		if(diet_string_get(diet_parameter(getJobInfoProfile,4), errorInfo)){
+		if(diet_string_get(getJobInfoProfile,4, errorInfo)){
 			msgErrorDiet += " by receiving errorInfo message";
 			raiseDietMsgException(msgErrorDiet);
 		}

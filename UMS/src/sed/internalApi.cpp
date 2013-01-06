@@ -34,12 +34,12 @@ solveSessionConnect(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), userId);
-  diet_string_get(diet_parameter(pb,1), password);
-  diet_string_get(diet_parameter(pb,2), clientKey);
-  diet_string_get(diet_parameter(pb,3), clientHostname);
-  diet_string_get(diet_parameter(pb,4), options);
-  diet_string_get(diet_parameter(pb,5), version);
+  diet_string_get(pb,0, userId);
+  diet_string_get(pb,1, password);
+  diet_string_get(pb,2, clientKey);
+  diet_string_get(pb,3, clientHostname);
+  diet_string_get(pb,4, options);
+  diet_string_get(pb,5, version);
 
   UserServer userServer = UserServer(userId, password);
   MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
@@ -77,14 +77,14 @@ solveSessionConnect(diet_profile_t* pb) {
     std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,6), sessionSerializedUpdate.c_str());
-    diet_string_set(diet_parameter(pb,7), empty.c_str());
+    diet_string_set(pb,6, sessionSerializedUpdate.c_str());
+    diet_string_set(pb,7, empty.c_str());
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,6), empty.c_str());
-      diet_string_set(diet_parameter(pb,7), errorInfo.c_str());
+      diet_string_set(pb,6, empty.c_str());
+      diet_string_set(pb,7, errorInfo.c_str());
   }
   delete connectOpt;
   delete versionClient;
@@ -110,12 +110,12 @@ solveSessionReconnect(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), userId);
-  diet_string_get(diet_parameter(pb,1), password);
-  diet_string_get(diet_parameter(pb,2), clientKey);
-  diet_string_get(diet_parameter(pb,3), clientHostname);
-  diet_string_get(diet_parameter(pb,4), sessionId);
-  diet_string_get(diet_parameter(pb,5), version);
+  diet_string_get(pb,0, userId);
+  diet_string_get(pb,1, password);
+  diet_string_get(pb,2, clientKey);
+  diet_string_get(pb,3, clientHostname);
+  diet_string_get(pb,4, sessionId);
+  diet_string_get(pb,5, version);
 
   UserServer userServer = UserServer(userId, password);
   MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
@@ -147,13 +147,13 @@ solveSessionReconnect(diet_profile_t* pb) {
       std::string sessionSerializedUpdate = _ser.serialize_str(const_cast<UMS_Data::Session_ptr>(&session));
 
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,6), sessionSerializedUpdate.c_str());
-      diet_string_set(diet_parameter(pb,7), empty.c_str());
+      diet_string_set(pb,6, sessionSerializedUpdate.c_str());
+      diet_string_set(pb,7, empty.c_str());
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,6), empty.c_str());
-      diet_string_set(diet_parameter(pb,7), errorInfo.c_str());
+      diet_string_set(pb,6, empty.c_str());
+      diet_string_set(pb,7, errorInfo.c_str());
   }
   delete versionClient;
   delete versionServer;
@@ -175,7 +175,7 @@ solveSessionClose(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(pb,0, sessionKey);
   SessionServer sessionServer = SessionServer(sessionKey);
 
   try {
@@ -187,7 +187,7 @@ solveSessionClose(diet_profile_t* pb) {
     sessionServer.close();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,1), empty.c_str());
+    diet_string_set(pb,1, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -200,7 +200,7 @@ solveSessionClose(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT parameter
-      diet_string_set(diet_parameter(pb,1), errorInfo.c_str());
+      diet_string_set(pb,1, errorInfo.c_str());
   }
   return 0;
 }
@@ -222,8 +222,8 @@ solveUserCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), userSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, userSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -252,8 +252,8 @@ solveUserCreate(diet_profile_t* pb) {
     std::string userSerializedUpdate = _ser.serialize_str(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), userSerializedUpdate.c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, userSerializedUpdate.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, user->getUserId());
 
@@ -267,8 +267,8 @@ solveUserCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), empty.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, empty.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   delete user;
   return 0;
@@ -292,8 +292,8 @@ solveUserUpdate(diet_profile_t* pb) {
 
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), userSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, userSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -316,7 +316,7 @@ solveUserUpdate(diet_profile_t* pb) {
     userServer.update(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -330,7 +330,7 @@ solveUserUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete user;
   return 0;
@@ -352,8 +352,8 @@ solveUserDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), userId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -372,7 +372,7 @@ solveUserDelete(diet_profile_t* pb) {
     userServer.deleteUser(user);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -385,7 +385,7 @@ solveUserDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       //OUT parameter
       errorInfo =  e.buildExceptionString();
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   return 0;
 }
@@ -406,10 +406,10 @@ solveUserPasswordChange(diet_profile_t* pb) {
   std::string errorInfo;
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), userId);
-  diet_string_get(diet_parameter(pb,1), password);
-  diet_string_get(diet_parameter(pb,2), newPassword);
-  diet_string_get(diet_parameter(pb,3), version);
+  diet_string_get(pb,0, userId);
+  diet_string_get(pb,1, password);
+  diet_string_get(pb,2, newPassword);
+  diet_string_get(pb,3, version);
 
   UserServer userServer = UserServer(userId, password);
   Version_ptr versionClient = NULL;
@@ -430,12 +430,12 @@ solveUserPasswordChange(diet_profile_t* pb) {
     }
     userServer.changePassword(newPassword);
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,4), empty.c_str());
+    diet_string_set(pb,4, empty.c_str());
 
   } catch (VishnuException& e) {
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,4), errorInfo.c_str());
+      diet_string_set(pb,4, errorInfo.c_str());
   }
   return 0;
 }
@@ -457,8 +457,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), userId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
@@ -477,8 +477,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
     userServer.resetPassword(user, ServerUMS::getInstance()->getSendmailScriptPath());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), (user.getPassword()).c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, (user.getPassword()).c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -491,8 +491,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), empty.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, empty.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   return 0;
 }
@@ -514,8 +514,8 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), machineSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, machineSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -543,8 +543,8 @@ solveMachineCreate(diet_profile_t* pb) {
     std::string machineSerializedUpdate = _ser.serialize_str(machine);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), machineSerializedUpdate.c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, machineSerializedUpdate.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, machine->getMachineId());
   } catch (VishnuException& e) {
@@ -557,8 +557,8 @@ solveMachineCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), empty.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, empty.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   delete machine;
   return 0;
@@ -581,8 +581,8 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), machineSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, machineSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -604,7 +604,7 @@ solveMachineUpdate(diet_profile_t* pb) {
     machineServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -618,7 +618,7 @@ solveMachineUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete machine;
   return 0;
@@ -641,8 +641,8 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), machineId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, machineId);
 
   UMS_Data::Machine* machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
@@ -660,7 +660,7 @@ solveMachineDelete(diet_profile_t* pb) {
     machineServer.deleteMachine();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -674,7 +674,7 @@ solveMachineDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete machine;
   return 0;
@@ -697,8 +697,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), laccountSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, laccountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -720,8 +720,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     localAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), localAccountServer.getPublicKey().c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, localAccountServer.getPublicKey().c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -735,8 +735,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), empty.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, empty.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   delete localAccount;
   return 0;
@@ -759,8 +759,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), laccountSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, laccountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   LocalAccount_ptr localAccount = NULL;
@@ -782,7 +782,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
     localAccountServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -795,7 +795,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete localAccount;
   return 0;
@@ -820,9 +820,9 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), userId);
-  diet_string_get(diet_parameter(pb,2), machineId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, userId);
+  diet_string_get(pb,2, machineId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::LocalAccount *localAccount = new UMS_Data::LocalAccount();
@@ -842,7 +842,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
     localAccountServer.deleteLocalAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -856,7 +856,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
 
   delete localAccount;
@@ -882,7 +882,7 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameter
-  diet_string_get(diet_parameter(pb,0), sessionKey);
+  diet_string_get(pb,0, sessionKey);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
@@ -898,8 +898,8 @@ solveConfigurationSave(diet_profile_t* pb) {
     configurationSerialized =  _ser.serialize_str(configurationServer.getData());
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,1), configurationSerialized.c_str());
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,1, configurationSerialized.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -912,8 +912,8 @@ solveConfigurationSave(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,1), configurationSerialized.c_str());
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,1, configurationSerialized.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   return 0;
 }
@@ -936,8 +936,8 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), configurationSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, configurationSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   Configuration_ptr configuration = NULL;
@@ -960,7 +960,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
     configurationServer.restore(ServerUMS::getInstance()->getVishnuId());
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -973,7 +973,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   return 0;
 }
@@ -996,8 +996,8 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, optionValueSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1019,7 +1019,7 @@ solveOptionValueSet(diet_profile_t* pb) {
     optionValueServer.configureOption();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1032,7 +1032,7 @@ solveOptionValueSet(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete optionValue;
   return 0;
@@ -1055,8 +1055,8 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, optionValueSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::OptionValue_ptr optionValue = NULL;
@@ -1077,7 +1077,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
     optionValueServer.configureOption(true);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1090,7 +1090,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete optionValue;
   return 0;
@@ -1116,8 +1116,8 @@ solveGenerique(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), optionValueSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, optionValueSerialized);
 
   SessionServer sessionServer  = SessionServer(sessionKey);
 
@@ -1144,8 +1144,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), listSerialized.c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, listSerialized.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1158,8 +1158,8 @@ solveGenerique(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), listSerialized.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, listSerialized.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   delete options;
   delete list;
@@ -1247,7 +1247,7 @@ solveRestore(diet_profile_t* pb) {
 
   std::string sqlcode;
   std::string errorInfo;
-  diet_string_get(diet_parameter(pb,0), sqlcode);
+  diet_string_get(pb,0, sqlcode);
 
   DbFactory factory;
   try {
@@ -1257,7 +1257,7 @@ solveRestore(diet_profile_t* pb) {
   catch (VishnuException& e) {
     errorInfo =  e.buildExceptionString();
   }
-  diet_string_set(diet_parameter(pb,1), errorInfo.c_str());
+  diet_string_set(pb,1, errorInfo.c_str());
   return 0;
 }
 
@@ -1278,8 +1278,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), authSystemSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, authSystemSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1305,8 +1305,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
     std::string authSystemSerializedUpdate = _ser.serialize_str(authSystem);
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), authSystemSerializedUpdate.c_str());
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,2, authSystemSerializedUpdate.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1320,8 +1320,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), empty.c_str());
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,2, empty.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
   delete authSystem;
   return 0;
@@ -1344,8 +1344,8 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), authSystemSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, authSystemSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   AuthSystem_ptr authSystem = NULL;
@@ -1367,7 +1367,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
     authSystemServer.update();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -1380,7 +1380,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete authSystem;
   return 0;
@@ -1403,8 +1403,8 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), authSystemId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, authSystemId);
 
   UMS_Data::AuthSystem_ptr authSystem = new UMS_Data::AuthSystem();
   authSystem->setAuthSystemId(authSystemId);
@@ -1422,7 +1422,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
     authSystemServer.deleteAuthSystem();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1436,7 +1436,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete authSystem;
   return 0;
@@ -1471,8 +1471,8 @@ solveAccountAuthCreate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), accountSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, accountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1494,7 +1494,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
     authAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1508,7 +1508,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete authAccount;
   return 0;
@@ -1531,8 +1531,8 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), accountSerialized);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, accountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -1554,7 +1554,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
     authAccountServer.update();
 
     //OUT Parameters
-    diet_string_set(diet_parameter(pb,2), empty.c_str());
+    diet_string_set(pb,2, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1568,7 +1568,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameters
-      diet_string_set(diet_parameter(pb,2), errorInfo.c_str());
+      diet_string_set(pb,2, errorInfo.c_str());
   }
   delete authAccount;
   return 0;
@@ -1592,9 +1592,9 @@ solveAccountAuthDelete(diet_profile_t* pb) {
   std::string finishError ="";
 
   //IN Parameters
-  diet_string_get(diet_parameter(pb,0), sessionKey);
-  diet_string_get(diet_parameter(pb,1), authSystemId);
-  diet_string_get(diet_parameter(pb,2), userId);
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, authSystemId);
+  diet_string_get(pb,2, userId);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   UMS_Data::AuthAccount *authAccount = new UMS_Data::AuthAccount();
@@ -1614,7 +1614,7 @@ solveAccountAuthDelete(diet_profile_t* pb) {
     authAccountServer.deleteAuthAccount();
 
     //OUT Parameter
-    diet_string_set(diet_parameter(pb,3), empty.c_str());
+    diet_string_set(pb,3, empty.c_str());
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
 
@@ -1628,7 +1628,7 @@ solveAccountAuthDelete(diet_profile_t* pb) {
       e.appendMsgComp(finishError);
       errorInfo =  e.buildExceptionString();
       //OUT Parameter
-      diet_string_set(diet_parameter(pb,3), errorInfo.c_str());
+      diet_string_set(pb,3, errorInfo.c_str());
   }
 
   delete authAccount;

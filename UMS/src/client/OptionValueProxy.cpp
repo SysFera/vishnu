@@ -47,20 +47,20 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   optionValueToString =  _ser.serialize_str(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(optionValueToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(optionValueToString.c_str()))) {
     msg += "with optionValueToString parameter "+optionValueToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

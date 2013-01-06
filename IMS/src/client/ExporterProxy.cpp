@@ -39,17 +39,17 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 //
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(diet_parameter(profile,0), sessionKey.c_str())) {
+  if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,1), oldSessionId.c_str())) {
+  if (diet_string_set(profile,1, oldSessionId.c_str())) {
     msgErrorDiet += "with oldSessionId parameter "+oldSessionId;
     raiseDietMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(diet_parameter(profile,2), filename.c_str())) {
+  if (diet_string_set(profile,2, filename.c_str())) {
     msgErrorDiet += "with filename parameter "+filename;
     raiseDietMsgException(msgErrorDiet);
   }
@@ -58,23 +58,23 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
   //To serialize the options object
   std::string exportOptToString =  _ser.serialize_str(const_cast<IMS_Data::ExportOp_ptr>(&options));
 
-  if (diet_string_set(diet_parameter(profile,3), exportOptToString.c_str())) {
+  if (diet_string_set(profile,3, exportOptToString.c_str())) {
     msgErrorDiet += "with Export options parameter ";
     raiseDietMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
-  diet_string_set(diet_parameter(profile,4), NULL);
-  diet_string_set(diet_parameter(profile,5), NULL);
+  diet_string_set(profile,4);
+  diet_string_set(profile,5);
 //
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,4), fileContent)){
+    if(diet_string_get(profile,4, fileContent)){
       msgErrorDiet += " by receiving the file content";
       raiseDietMsgException(msgErrorDiet);
     }
 
-    if(diet_string_get(diet_parameter(profile,5), errorInfo)){
+    if(diet_string_get(profile,5, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseDietMsgException(msgErrorDiet);
     }

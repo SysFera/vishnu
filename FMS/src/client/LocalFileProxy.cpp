@@ -116,26 +116,26 @@ int LocalFileProxy::transferFile(const string& dest,
 
 	//IN Parameters
 
-	diet_string_set(diet_parameter(profile, 0), sessionKey.c_str());
-	diet_string_set(diet_parameter(profile, 1), localFullPath.string().c_str()); // local source file
-	diet_string_set(diet_parameter(profile, 2), localUser);
+	diet_string_set(profile, 0, sessionKey.c_str());
+	diet_string_set(profile, 1, localFullPath.string().c_str()); // local source file
+	diet_string_set(profile, 2, localUser);
 
-	diet_string_set(diet_parameter(profile, 3), srcHost.c_str());
+	diet_string_set(profile, 3, srcHost.c_str());
 
 
-	diet_string_set(diet_parameter(profile, 4), dest.c_str());
+	diet_string_set(profile, 4, dest.c_str());
 
 	::ecorecpp::serializer::serializer _ser;
 	//To serialize the options object in to optionsInString
 	string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
 
-	diet_string_set(diet_parameter(profile,5 ), optionsToString.c_str());
+	diet_string_set(profile,5 , optionsToString.c_str());
 
 	if(!isAsyncTransfer) {
-		diet_string_set(diet_parameter(profile, 6), NULL);
+		diet_string_set(profile, 6);
 	} else {
-		diet_string_set(diet_parameter(profile, 6), NULL);
-		diet_string_set(diet_parameter(profile, 7), NULL);
+		diet_string_set(profile, 6);
+		diet_string_set(profile, 7);
 	}
 
 	if (diet_call(profile)) {
@@ -143,15 +143,15 @@ int LocalFileProxy::transferFile(const string& dest,
 	}
 
 	if(!isAsyncTransfer) {
-		diet_string_get(diet_parameter(profile, 6), errMsg);
+		diet_string_get(profile, 6, errMsg);
 
 		/*To raise a vishnu exception if the received message is not empty*/
 		raiseExceptionIfNotEmptyMsg(errMsg);
 	} else {
 
           std::string fileTransferInString = "";
-          diet_string_get(diet_parameter(profile, 6), fileTransferInString);
-          diet_string_get(diet_parameter(profile, 7), errMsg);
+          diet_string_get(profile, 6, fileTransferInString);
+          diet_string_get(profile, 7, errMsg);
 
           /*To raise a vishnu exception if the received message is not empty*/
           raiseExceptionIfNotEmptyMsg(errMsg);

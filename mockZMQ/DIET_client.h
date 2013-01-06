@@ -9,31 +9,14 @@
 #define __DIETMOCK__
 
 #include <string>
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
 
 /**
  * \brief Overload of DIET structure
  */
-typedef struct diet_arg_t {
-  /**
-   * \brief Overload of DIET param, position of the argument
-   */
-  int pos;
-  /**
-   * \brief Overload of DIET param, profile
-   */
-  void* prof;
-} diet_arg_t;
-
-/**
- * \brief Overload of DIET structure
- */
 typedef struct diet_profile_t {
-  /**
-   * \brief Overload of DIET param, array of parameters
-   */
-  char ** param;
   /**
    * \brief Overload of DIET param, last IN param in the array
    */
@@ -53,7 +36,7 @@ typedef struct diet_profile_t {
   /**
    * \brief Overload of DIET param
    */
-  diet_arg_t* parameters;
+  std::vector<std::string> params;
 } diet_profile_t;
 
 
@@ -71,12 +54,13 @@ diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT);
 
 /**
  * \brief Overload of DIET function, set a param value in a profile to a string(char *)
- * \param arg Structure containing the string param to set and its position
+ * \param prof The profile
+ * \param pos The position of the desired parameter
  * \param value The value to set
  * \return 0 on success, an error code otherwise
  */
 int
-diet_string_set(diet_arg_t* arg, const char* value);
+diet_string_set(diet_profile_t* prof, int pos, const std::string& value = "");
 
 /**
  * \brief Overload of DIET function, call to a DIET service
@@ -94,12 +78,13 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 /**
  * \brief Overload of DIET function, get the value of a string in the profile
- * \param arg Structure containing the argument
+ * \param prof profile
  * \param value the output value
+ * \param pos
  * \return 0 on success, an error code otherwise
  */
 int
-diet_string_get(diet_arg_t* arg, std::string & value);
+diet_string_get(diet_profile_t* prof, int pos, std::string& value);
 
 /**
  * \brief Overload of DIET function, free an allocated profile
@@ -108,15 +93,6 @@ diet_string_get(diet_arg_t* arg, std::string & value);
  */
 int
 diet_profile_free(diet_profile_t* prof);
-
-/**
- * \brief Overload of DIET function, to get the arg in position pos in the profile prof
- * \param prof The profile
- * \param pos The position of the desired parameter
- * \return Structure describing the argument
- */
-diet_arg_t*
-diet_parameter(diet_profile_t* prof, int pos);
 
 /**
  * \brief To deserialize a profile

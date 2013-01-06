@@ -41,27 +41,27 @@ AuthSystemProxy::add() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(authSystemToString.c_str()))) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
-  diet_string_set(diet_parameter(profile,3), NULL);
+  diet_string_set(profile,2);
+  diet_string_set(profile,3);
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,2), authSystemInString)) {
+    if(diet_string_get(profile,2, authSystemInString)) {
       msg += "with authSystemInString parameter " + authSystemInString;
       raiseDietMsgException(msg);
     }
 
-    if(diet_string_get(diet_parameter(profile,3), errorInfo)){
+    if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -108,21 +108,21 @@ AuthSystemProxy::update() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(authSystemToString.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(authSystemToString.c_str()))) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
 
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
@@ -157,20 +157,20 @@ AuthSystemProxy::deleteAuthSystem()
   sysId = mauthSystem.getAuthSystemId();
 
   //IN Parameters
-  if(diet_string_set(diet_parameter(profile,0), const_cast<char*>(sessionKey.c_str()))) {
+  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(diet_parameter(profile,1), const_cast<char*>(sysId.c_str()))) {
+  if(diet_string_set(profile,1, const_cast<char*>(sysId.c_str()))) {
     msg += "with systemId parameter "+sysId;
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(diet_parameter(profile,2), NULL);
+  diet_string_set(profile,2);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(diet_parameter(profile,2), errorInfo)){
+    if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }
