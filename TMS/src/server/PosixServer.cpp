@@ -18,10 +18,19 @@
 #include <limits.h>
 #include <fcntl.h>
 #include <boost/asio.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 
 #include <stdio.h>
 
 using namespace std;
+using namespace boost::system;
+
+class Definition {
+  public:
+    string key;
+    string value;
+};
 
 
 /**
@@ -44,7 +53,7 @@ usage(char* cmd)
 static int
 Daemonize(void)
 {
-  int maxfd;
+  long maxfd;
   int fd;
   
   switch (fork())
@@ -102,28 +111,27 @@ static int
 buildEnvironment(void)
 {
   //int i;
-  //char hostname[HOST_NAME_MAX];
   static const char* libHostname="VISHNU_SUBMIT_MACHINE_NAME";
   static const char* libNodefile="VISHNU_BATCHJOB_NODEFILE";
   static const char* libNumNodes="VISHNU_BATCHJOB_NUM_NODES";
-  static const char templateHostname[]="/tmp/NODELIST_XXXXXX";
-  char fileHostname[sizeof(templateHostname)];
   int fdHostname;
-  boost::system::error_code ec;
+    boost::system::error_code ec;
   const string hostname = boost::asio::ip::host_name(ec);
-  //static const path templateHostname("/tmp/NODELIST_%%%%%%");
+  static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
 
-   // variable VISHNU_SUBMIT_MACHINE_NAME  
-  //(void)gethostname(hostname,sizeof(hostname));
+  // variable VISHNU_SUBMIT_MACHINE_NAME  
   (void)setenv(libHostname, hostname.c_str(), true);
   
   // variable VISHNU_BATCHJOB_NODEFILE
-  strncpy(fileHostname,templateHostname,sizeof(fileHostname));
-  //fileHostname = unique_path(templateHostname,ec);
-  fdHostname = mkstemp(fileHostname);
+  boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
+  cout << "filename:" << fileHostname << endl;
+  // permissions non dispo en boost 1.46
+  // boost::filesystem::permissions(tfileHostname,boost::filesystem::owner_read|boost::filesystem::owner_write,ec);
+  // Donc, on reste POSIX
+  fdHostname = open(fileHostname.c_str(),O_CREAT|O_EXCL|O_WRONLY,S_IRUSR|S_IWUSR);
   (void)write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   (void)close(fdHostname);
-  (void)setenv(libNodefile,fileHostname,true);
+  (void)setenv(libNodefile,fileHostname.c_str(),true);
   
   // variable VISHNU_BATCHJOB_NUM_NODES
   (void)setenv(libNumNodes, "1", true);
@@ -137,20 +145,74 @@ buildEnvironment(void)
 }
 
 static bool
-GetNextToken(ifstream& file)
+GetNextValeur(istream& file,string& valeur)
 {
-  string keyname;
+  char nextchar;
+
+  while (file.get(nextchar))
+  {
+    if (nextchar=='\n')
+      return false;
+
+    if (!isspace(nextchar))
+      break;
+  }
+  
+  if (file.eof())
+    return false;
+
+  valeur.push_back(nextchar);
+  
+  while (file.get(nextchar))
+  {
+    if (nextchar=='\n')
+      return true;
+    
+    if (isspace(nextchar))
+      break;
+    
+    valeur.push_back(nextchar);
+  }
+  return true;
+}
+
+static bool
+GetNextEqualSign(istream& file)
+{
+  char nextchar;
+  
+  while (file.get(nextchar))
+  {
+    if ((nextchar=='=') || (nextchar=='\n'))
+      break;
+  }
+  if (nextchar=='\n')
+    return false;
+
+  if (file.eof())
+    return false;
+
+  return true;
+}
+
+static bool
+GetNextToken(istream& file,string& keyname)
+{
+//  string keyname;
   char nextchar;
 
   // Look for the first char of directive name  
   while (file.get(nextchar))
   {
-    if (isalnum(nextchar))
+    if (isalnum(nextchar) || (nextchar=='_'))
     {
       keyname.push_back(nextchar);
       break;
     }
   }
+
+  if (nextchar=='\n')
+    return true;
 
   if (file.eof())
     return false;
@@ -158,61 +220,97 @@ GetNextToken(ifstream& file)
   // Scan the directive name
   while (file.get(nextchar))
   {
-    if (!isalnum(nextchar))
+    if (!isalnum(nextchar) && (nextchar!='_'))
     {
       break;
     }
     keyname.push_back(nextchar);
   }
 
-  cout << "Directive:" << keyname << endl;
+  file.unget();
+
+  if (file.eof())
+    return false;
 
   return true;
 }
 
 static bool
-GetNextDefinition(ifstream& file)
+GetNextLine(istream& file, Definition& current,bool& valide)
 {
   char nextchar;
   
+  valide=false;
   if (!file.get(nextchar))
     return false;
-cout<<nextchar;
+
+  if (nextchar == '\n')
+    return true;
+
   if (nextchar == '#')
   {
-    cout<<"COMMENTS"<<endl;
     if (!file.get(nextchar))
       return false;
-cout<<nextchar;
+
     if (nextchar == '@')
     {
-    
-      GetNextToken(file);
+      if (!GetNextToken(file,current.key))
+        return false;
+//      cout << "Directive:" << current.key << endl;
+
+      if (!GetNextEqualSign(file))
+        return false;
+//      cout << "signe équal" << endl;
       
+      if (!GetNextValeur(file,current.value))
+        return false;
+//      cout << "Valeur:" << current.value << endl;
+      valide=true;
     }
     else file.unget();
   }
   
   while (file.get(nextchar))
   {
-cout<<nextchar;
     if (nextchar == '\n')
     {
-    cout<<"NEWLINE";
       break;
     }
   }
+  if (file.eof())
+    return false;
+
   return true;
+}
+
+static bool
+GetNextDefinition(istream& file, Definition& current)
+{
+  bool valide;
+  
+  while (GetNextLine(file,current,valide))
+  {
+    if (valide)
+      return true;
+  }
+  return false;
 }
 
 static bool
 ParseCommand(char* Command)
 {
   ifstream file;
+  Definition def;
+  bool valide;
   
   file.open(Command);
 
-  while (GetNextDefinition(file));
+//  while (GetNextLine(file,def,valide))
+  while (GetNextDefinition(file,def))
+  {
+//    if (valide)
+    cout << "[" << def.key << "]:" << def.value << endl;
+  };
 /***  
   char c;
   while (file.get(c))
@@ -225,6 +323,23 @@ ParseCommand(char* Command)
   return true;
 }
 
+static bool
+ParseString()
+{
+  string Test="Une ligne\nDeux ligne\n#@vishnu_workingdir    = /tmp/toto\n\n";
+  stringstream FluxTest(Test);
+  Definition def;
+  bool valide;
+  
+  while (GetNextLine(FluxTest,def,valide))
+  {
+    if (valide)
+    cout << "[" << def.key << "]:" << def.value << endl;   
+  };
+  
+  return true;
+}
+
 static int
 execCommand(char* command,char* fstderr)
 {
@@ -233,7 +348,7 @@ execCommand(char* command,char* fstderr)
   pid_t pid;
   ostringstream temp;
   static const char* libBatchId="VISHNU_BATCHJOB_ID";
-  static const char* libBatchName="VISHNU_BATCHJOB_NAME";
+//  static const char* libBatchName="VISHNU_BATCHJOB_NAME";
   int fd;
   
   args[1]=(char *)"/bin/sh";
@@ -243,6 +358,8 @@ execCommand(char* command,char* fstderr)
   args[3]=commandLine;
   args[4]=NULL;
   args[0]=args[1];
+
+  ParseString();
   
   if ((pid=fork()) == 0)
   {
