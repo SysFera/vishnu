@@ -1196,7 +1196,7 @@ in the Vishnu Database.
                 <entry><para>options</para></entry>
                 <entry><para>string</para></entry>
                 <entry><para><link linkend="ProgressOptions">ProgressOptions</link></para></entry>
-                <entry><para>Is an object containing the available options jobs for progression .</para></entry>
+                <entry><para>Is an object containing the available options jobs for progression</para></entry>
                 <entry><para>IN</para></entry>
               </row>
               <row>

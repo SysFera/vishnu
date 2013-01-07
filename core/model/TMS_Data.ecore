@@ -292,6 +292,13 @@
         <details key="content" value="Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.&#xA;E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. &#xA;&#xA;NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="posix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false">
+      <eAnnotations source="Description">
+        <details key="content" value="allows to submit on the shell instead of using the batch scheduler"/>
+        <details key="shortOption" value="p"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">

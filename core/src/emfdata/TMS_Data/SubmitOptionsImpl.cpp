@@ -172,6 +172,12 @@ void SubmitOptions::_initialize()
                 m_specificParams);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__POSIX:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::toAny(_any,
+                m_posix);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -299,6 +305,12 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_specificParams);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__POSIX:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EBoolean >::fromAny(
+                _newValue, m_posix);
+    }
+        return;
 
     }
     throw "Error";
@@ -359,6 +371,8 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__SPECIFICPARAMS:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_specificParams);
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__POSIX:
+        return m_posix != false;
 
     }
     throw "Error";

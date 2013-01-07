@@ -33,7 +33,7 @@ using namespace ::TMS_Data;
 // Default constructor
 SubmitOptions::SubmitOptions() :
     m_wallTime(-1), m_memory(-1), m_nbCpu(-1), m_selectQueueAutom(false),
-            m_workId(0), m_criterion(0)
+            m_workId(0), m_posix(false), m_criterion(0)
 {
 
     /*PROTECTED REGION ID(SubmitOptionsImpl__SubmitOptionsImpl) START*/
@@ -521,6 +521,32 @@ void SubmitOptions::setSpecificParams(::ecore::EString const& _specificParams)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__specificParams(),
                 _old_specificParams,
                 m_specificParams
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EBoolean SubmitOptions::isPosix() const
+{
+    return m_posix;
+}
+
+void SubmitOptions::setPosix(::ecore::EBoolean _posix)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EBoolean _old_posix = m_posix;
+#endif
+    m_posix = _posix;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getSubmitOptions__posix(),
+                _old_posix,
+                m_posix
         );
         eNotify(&notification);
     }

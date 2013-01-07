@@ -268,6 +268,17 @@ namespace TMS_Data
          **/
         void setSpecificParams(::ecore::EString const& _specificParams);
 
+        /**
+         * \brief To get the posix
+         * \return The posix attribute value
+         **/
+        ::ecore::EBoolean isPosix() const;
+        /**
+         * \brief To set the posix
+         * \param _posix The posix value
+         **/
+        void setPosix(::ecore::EBoolean _posix);
+
         // References
         /**
          * \brief To get the criterion
@@ -337,6 +348,8 @@ namespace TMS_Data
         ::ecore::ELong m_workId;
 
         ::ecore::EString m_specificParams;
+
+        ::ecore::EBoolean m_posix;
 
         // References
 
