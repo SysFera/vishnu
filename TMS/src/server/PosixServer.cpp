@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <boost/asio.hpp>
 
 #include <stdio.h>
 
@@ -101,22 +102,26 @@ static int
 buildEnvironment(void)
 {
   //int i;
-  char hostname[HOST_NAME_MAX];
+  //char hostname[HOST_NAME_MAX];
   static const char* libHostname="VISHNU_SUBMIT_MACHINE_NAME";
   static const char* libNodefile="VISHNU_BATCHJOB_NODEFILE";
   static const char* libNumNodes="VISHNU_BATCHJOB_NUM_NODES";
   static const char templateHostname[]="/tmp/NODELIST_XXXXXX";
   char fileHostname[sizeof(templateHostname)];
   int fdHostname;
+  boost::system::error_code ec;
+  const string hostname = boost::asio::ip::host_name(ec);
+  //static const path templateHostname("/tmp/NODELIST_%%%%%%");
 
    // variable VISHNU_SUBMIT_MACHINE_NAME  
-  (void)gethostname(hostname,sizeof(hostname));
-  (void)setenv(libHostname, hostname, true);
+  //(void)gethostname(hostname,sizeof(hostname));
+  (void)setenv(libHostname, hostname.c_str(), true);
   
   // variable VISHNU_BATCHJOB_NODEFILE
   strncpy(fileHostname,templateHostname,sizeof(fileHostname));
+  //fileHostname = unique_path(templateHostname,ec);
   fdHostname = mkstemp(fileHostname);
-  (void)write(fdHostname,hostname,strlen(hostname));
+  (void)write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   (void)close(fdHostname);
   (void)setenv(libNodefile,fileHostname,true);
   
