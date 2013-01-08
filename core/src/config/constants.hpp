@@ -99,7 +99,6 @@ namespace vishnu {
    * \brief An arry to store all paraeters
    */
   extern param_t params[]; //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
-
   extern std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS;
 }
 

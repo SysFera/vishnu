@@ -14,6 +14,8 @@
 #include "DbFactory.hpp"
 #include "ScriptGenConvertor.hpp"
 #include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/format/format_class.hpp>
 #include "Env.hpp"
 #include <fcntl.h>
 #include "api_fms.hpp"
@@ -45,9 +47,7 @@ JobServer::JobServer(const SessionServer& sessionServer,
 /**
  * \brief Destructor
  */
-JobServer::~JobServer() {
-
-}
+JobServer::~JobServer() { }
 
 /**
  * \brief Function to submit job
@@ -99,13 +99,8 @@ int JobServer::submitJob(const std::string& scriptContent,
     workingDir = mountPoint + "/" + suffix;
     string inputDir =  workingDir + "/INPUT";
     scriptPath = inputDir + "/script.xsh";
-
-    // create the working directory
-    vishnu::createWorkingDir(workingDir);
-
-    // create the working directory
-    vishnu::createWorkingDir(inputDir);
-
+    vishnu::createWorkingDir(workingDir); // create the working directory
+    vishnu::createWorkingDir(inputDir); // create the working directory
     string directory = "";
     try {
       directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
@@ -117,23 +112,19 @@ int JobServer::submitJob(const std::string& scriptContent,
       env.replaceAllOccurences(fileparams, directory, inputDir);
       optionsref.setFileParams(fileparams);
     }
-
   } else {
     scriptPath = "/tmp/" + bfs::unique_path("job_script%%%%%%").string();
     std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
   }
-  // Set the output dir if necessary
-  if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
-     mbatchType == DELTACLOUD ) {
+  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
+      mbatchType == DELTACLOUD ) {
     setOutputDir(workingDir, suffix, scriptContentRef);
     needOutputDir = true ;
   }
-
   if(options.getTextParams().size()) {
     env.setParams(scriptContentRef, optionsref.getTextParams()) ;
   }
-
   if(options.getFileParams().size()) {
     env.setParams(scriptContentRef, optionsref.getFileParams()) ;
   }
@@ -173,65 +164,15 @@ int JobServer::submitJob(const std::string& scriptContent,
     convertedScript = scriptContentRef;
   }
 
-  std::string key;
   std::string sep = " ";
-  switch (mbatchType) {
-  case TORQUE :
-    key = "#PBS";
-    break;
-  case LOADLEVELER :
-    key = "# @";
-    sep = " = ";
-    break;
-  case SLURM :
-    key = "#SBATCH";
-    break;
-  case LSF :
-    key = "#BSUB";
-    break;
-  case SGE :
-    key = "#$";
-    break;
-  case PBSPRO :
-    key = "#PBS";
-    break;
-  case POSIX :
-    key = "#%";
-    break;
-  case DELTACLOUD : //TODO to be tested
-    key = "";
-    break;
-  default :
-    break;
-  }
-
+  std::string directive = getBatchDirective(sep);
   if (options.getSpecificParams().size()) {
-    std::string specificParams = options.getSpecificParams();
-    size_t pos1 =0;
-    size_t pos2=0;
-    pos2 = specificParams.find("=");
-    while (pos2!=std::string::npos) {
-      size_t pos3=0;
-      pos3 = specificParams.find(" ");
-      if (pos3!=std::string::npos) {
-        std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep
-                                 +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
-        insertOptionLine(lineoption, convertedScript, key, batchType);
-        specificParams.erase(0,pos3);
-        boost::algorithm::trim_left(specificParams);
+    treatSpecificParams(options.getSpecificParams(), convertedScript);
 
-      } else {
-        std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)
-                                 + sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
-        insertOptionLine(lineoption, convertedScript, key, batchType);
-        break;
-      }
-      pos2 = specificParams.find("=");
-    }
   }
 
         if (!defaultBatchOption.empty()){
-    processDefaultOptions(defaultBatchOption, convertedScript, key, batchType);
+    processDefaultOptions(defaultBatchOption, convertedScript, directive);
   }
 
 	SSHJobExec sshJobExec(acLogin, machineName,
@@ -674,8 +615,8 @@ JobServer::getSedConfig() const {
  * \param content the script content to be update which the generated path
  */
 void JobServer::setOutputDir(const std::string& parentDir,
-                             const std::string & dirSuffix,
-                             std::string & content) {
+                             const std::string& dirSuffix,
+                             std::string& content) {
 
   std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
   std::string outdir = parentDir + prefix + dirSuffix ;
@@ -685,4 +626,113 @@ void JobServer::setOutputDir(const std::string& parentDir,
   setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
 }
 
+/*
+ * \brief Return the directive associated to the batch scheduler
+ * \param seperator Hold the seperator used to define parameter
+ */
+std::string JobServer::getBatchDirective(std::string& seperator) const {
+
+  seperator =  " ";
+  std::string directive = "";
+  switch(mbatchType) {
+  case TORQUE :
+    directive = "#PBS";
+    break;
+  case LOADLEVELER :
+    directive = "# @";
+    seperator = " = ";
+    break;
+  case SLURM :
+    directive = "#SBATCH";
+    break;
+  case LSF :
+    directive = "#BSUB";
+    break;
+  case SGE :
+    directive = "#$";
+    break;
+  case PBSPRO :
+    directive = "#PBS";
+    break;
+  case POSIX :
+    directive = "#%";
+    break;
+  case DELTACLOUD : // return default ""
+  default :
+    break;
+  }
+  return directive;
+}
+
+/**
+ * \brief Set specific parameters for job submission
+ * \param params The string containing the list of parameters
+ * \param scriptContent The content of the script when required
+ */
+void JobServer::treatSpecificParams(const std::string& specificParams,
+                                    std::string& scriptContent) {
+
+  std::string sep = " ";
+  std::string directive = getBatchDirective(sep);
+  switch (mbatchType) {
+  case SGE: {
+    size_t pos1 = 0;
+    size_t pos2 = 0;
+    std::string& params = const_cast<std::string&>(specificParams);
+    pos2 = params.find("=");
+    while (pos2 != std::string::npos) {
+      size_t pos3 = 0;
+      pos3 = params.find(sep);
+      if(pos3 != std::string::npos) {
+        std::string lineoption = directive +sep+ params.substr(pos1, pos2-pos1) + sep +  params.substr(pos2+1, pos3-pos2) + "\n";
+        insertOptionLine(lineoption, scriptContent, directive);
+        params.erase(0, pos3);
+        boost::algorithm::trim_left(params);
+      } else {
+        std::string lineoption = directive +sep+ params.substr(pos1, pos2-pos1)+ sep +  params.substr(pos2+1, params.size()-pos2) + "\n";
+        insertOptionLine(lineoption, scriptContent, directive);
+        break;
+      }
+      pos2 = params.find("=");
+    }
+  }
+    break;
+  case DELTACLOUD: {
+    ListStrings listParams;
+    boost::split(listParams, specificParams, boost::is_any_of(sep));
+    for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); it++) {
+      size_t pos = it->find("=");
+      if (pos != std::string::npos) {
+        std::string param = it->substr(0, pos);
+        std::string value = it->substr(pos+1, std::string::npos);
+        if(param == "cloud-endpoint") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_ENDPOINT].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-user") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_USER].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-password") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_USER_PASSWORD].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-tenant") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_TENANT].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-image") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_IMAGE].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-user") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-user-key") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER_KEY].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-flavor") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_DEFAULT_FLAVOR].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-nfs-server") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_NFS_SERVER].c_str(), value.c_str(), 1);
+        } else if (param == "cloud-nfs-mountpoint") {
+          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_NFS_MOUNT_POINT].c_str(), value.c_str(), 1);
+        } else {
+          throw TMSVishnuException(ERRCODE_INVALID_PARAM, (boost::format("Unknown parameter %1%")%param).str());
+        }
+      }
+    }
+  }
+    break;
+  default: break;
+  }
+}
 
