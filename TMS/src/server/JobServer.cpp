@@ -168,13 +168,11 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string directive = getBatchDirective(sep);
   if (options.getSpecificParams().size()) {
     treatSpecificParams(options.getSpecificParams(), convertedScript);
-
   }
 
         if (!defaultBatchOption.empty()){
     processDefaultOptions(defaultBatchOption, convertedScript, directive);
   }
-
 	SSHJobExec sshJobExec(acLogin, machineName,
                               batchType,
                               mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
@@ -191,7 +189,6 @@ int JobServer::submitJob(const std::string& scriptContent,
                 S_IROTH|S_IXOTH)) {
     throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
   }
-
   // Submit the job
   // This is achieved by the slave launched in the method sshJobExec.sshexec
   sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
@@ -234,16 +231,13 @@ int JobServer::submitJob(const std::string& scriptContent,
     scriptContentStr.replace(pos, 1, " ");
     pos = scriptContentStr.find("'");
   }
-
   // Set the job owner for SGE and Deltacloud
   // For other batch schedulers this information is known
   if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
     mjob.setOwner(acLogin);
   }
-
   std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
   std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
-
   pos = mjob.getOutputPath().find(":");
   std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
   pos = mjob.getErrorPath().find(":");
@@ -732,7 +726,8 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
     }
   }
     break;
-  default: break;
+  default:
+    break;
   }
 }
 
