@@ -150,7 +150,7 @@ Env::replaceEnvVariables(std::string& scriptContent) {
 		//To replace VISHNU_BATCHJOB_NAME
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
 		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
-		//To replace VISHNU_BATCHJOB_NUM_NODES. Depend on the number of node in VISHNU_BATCHJOB_NODEFILE
+		//To replace VISHNU_BATCHJOB_NUM_NODES. Depends on the number of nodes in VISHNU_BATCHJOB_NODEFILE
 		//Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
 		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
 		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");

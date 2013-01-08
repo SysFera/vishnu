@@ -93,14 +93,13 @@ DeltaCloudServer::submit(const char* scriptPath,
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
 	}
-
-	std::clog << "[TMS][INFO] Virtual machine started\n"
-			<< "  ID: "<< std::string(instance.id)<<"\n"
-			<< "  NAME: " << std::string(instance.name)<<"\n"
-			<< "  IP: "<< std::string(instance.private_addresses->address)<<"\n";
-
+	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
+			" ID: %1%\n"
+			" NAME: %2%\n"
+			" IP: %3%\n")%instance.id%instance.name%instance.private_addresses->address;
 	// Create the NODEFILE
-	// The path must correspond with the value set for the environment variable VISHNU_BATCHJOB_NODEFILE in JobServer.cpp
+	// The path must correspond with the value set for the
+	// environment variable VISHNU_BATCHJOB_NODEFILE in JobServer.cpp
 	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address);
 
 	// Create an ssh engine for the virtual machine
@@ -193,7 +192,7 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 	}
 	vishnu::convertToTimeType(instance.launch_time);
 	deltacloud_free_instance(&instance);
-	cleanup();
+	finalize();
 }
 
 
@@ -258,24 +257,18 @@ void DeltaCloudServer::initialize(void) {
  */
 void DeltaCloudServer::releaseResources(const std::string & vmid) {
 
-	// Initialize delta cloud
-	initialize();
-
-	// Get the instance
-	deltacloud_instance instance;
+	initialize(); // Initialize delta cloud
+	deltacloud_instance instance; // Get the instance
 	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
-
-	// Stop the instance
-	std::clog << "[TMS][INFO] The instance "<< instance.id << " (NAME: "<< instance.name<<") will be stopped\n";
-
-	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) {
+	std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
+	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 
 	deltacloud_free_instance(&instance);
-	cleanup();
+	finalize();
 }
 
 /**
