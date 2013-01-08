@@ -66,7 +66,6 @@ vishnu::convertToTimeType(const std::string& date) {
 			date.find("0000-00-00") != std::string::npos) {
 		return 0;
 	}
-
 	boost::posix_time::ptime pt(time_from_string(date));
 	boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
 	time_duration::sec_type time = (pt - epoch).total_seconds();

@@ -104,7 +104,7 @@ private:
     /**
      * \brief Function for cleaning up the allocated dynamic data structure
      */
-    void cleanup();
+    void finalize();
 
     /**
      * \brief pointer to the deltacloud api

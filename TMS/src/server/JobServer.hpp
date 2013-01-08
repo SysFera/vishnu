@@ -163,12 +163,25 @@ public:
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
-* \param dirSuffix the suffix of the output dir
+  * \param dirSuffix the suffix of the output dir
   * \param content the script content to be update which the generated path
   */
   void setOutputDir(const std::string& parentDir,
 		const std::string & dirSuffix,
 		  std::string & content);
+
+  /*
+   * \brief Return the directive associated to the batch scheduler
+   * \param seperator Hold the seperator used to define parameter
+   */
+  std::string getBatchDirective(std::string& seperator) const;
+
+  /**
+   * \brief Set specific parameters for job submission
+   * \param specificParams The string containing the list of parameters
+   * \param scriptContent The content of the script when required
+   */
+  void treatSpecificParams(const std::string& specificParams, std::string& scriptContent);
 };
 
 #endif
