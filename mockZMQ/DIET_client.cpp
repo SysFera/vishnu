@@ -124,6 +124,7 @@ static ServiceMap sMap = boost::assign::map_list_of
   ("RemoteFileCopy", "FMS")
   ("RemoteFileMove", "FMS")
   ("FileTransfersList", "FMS")
+  ("FileTransferStop", "FMS")
   ;
 
 std::string
