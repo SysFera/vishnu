@@ -11,7 +11,7 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 		struct deltacloud_instance *instance)
 {
 	int timeout = 300;
-	int found = 0;
+	int found = 1;
 
 	/* wait for up to 5 minutes for the instance to show up */
 	while (1) {
@@ -28,11 +28,10 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 
 		/* if the instance went to running, we are done */
 		if (strcmp(instance->state, "RUNNING") == 0) {
-			found = 1;
+			found = 0;
 			break;
 		} else if (strcmp(instance->state, "PENDING") != 0) {
 			fprintf(stderr, "Instance gone to a unexpected state %s, failing\n", instance->state);
-			//deltacloud_instance_destroy(api, instance);
 			break;
 		} else {
 			/* otherwise, see if we exceeded the timeout.  If so, destroy
@@ -41,7 +40,6 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 			timeout--;
 			if (timeout == 0) {
 				fprintf(stderr, "Instance never went running, failing\n");
-				//deltacloud_instance_destroy(api, instance);
 				break;
 			}
 			deltacloud_free_instance(instance);
