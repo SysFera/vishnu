@@ -118,6 +118,29 @@ BOOST_AUTO_TEST_CASE( my_test_alloc_n )
   BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
 }
 
+BOOST_AUTO_TEST_CASE( my_test_free_n )
+{
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
+  BOOST_REQUIRE_EQUAL(prof->IN, 1);
+  BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
+  BOOST_REQUIRE_EQUAL(prof->OUT, 3);
+  BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
+
+  BOOST_REQUIRE_EQUAL(diet_profile_free(prof), 0);
+}
+
+
+BOOST_AUTO_TEST_CASE( my_test_diet_finalize_n )
+{
+  BOOST_REQUIRE_EQUAL(diet_finalize(), 0);
+}
+
+BOOST_AUTO_TEST_CASE( my_test_diet_finalize_no_throw_n )
+{
+  BOOST_REQUIRE_NO_THROW(diet_finalize());
+}
+
+
 BOOST_AUTO_TEST_CASE( my_test_setStr_n )
 {
   diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
@@ -163,6 +186,12 @@ BOOST_AUTO_TEST_CASE( my_test_serial_n )
 
   BOOST_REQUIRE_EQUAL(res, "alloc$$$0$$$0$$$1$$$param1$$$");
 }
+
+BOOST_AUTO_TEST_CASE( my_test_serial_b )
+{
+  BOOST_REQUIRE_THROW(my_serialize(NULL), SystemException);
+}
+
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
