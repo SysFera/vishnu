@@ -49,11 +49,11 @@ DeltaCloudServer::submit(const char* scriptPath,
 		TMS_Data::Job& job,
 		char** envp) {
 
+	retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
 	initialize(); // Initialize Delatacloud API
 
 	// Get configuration parameters
 	// We first try to get parameters set specifically for the job
-	retrieveSpecificParams(options.getSpecificParams());
 	if (mvmImageId.empty()) {
 		mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
 	}
@@ -258,15 +258,20 @@ create_plugin_instance(void **instance) {
  */
 void DeltaCloudServer::initialize(void) {
 
-	std::string cloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
-	std::string cloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
-	std::string cloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
-
+	if(mcloudEndpoint.empty()) {
+		mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+	}
+	if(mcloudUser.empty()) {
+		mcloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+	}
+	if(mcloudUserPassword.empty()) {
+		mcloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+	}
 	mcloudApi =  new deltacloud_api;
 	if (deltacloud_initialize(mcloudApi,
-			const_cast<char*>(cloudEndpoint.c_str()),
-			const_cast<char*>(cloudUser.c_str()),
-			const_cast<char*>(cloudUserPassword.c_str())) < 0) {
+			const_cast<char*>(mcloudEndpoint.c_str()),
+			const_cast<char*>(mcloudUser.c_str()),
+			const_cast<char*>(mcloudUserPassword.c_str())) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
 }
@@ -358,7 +363,7 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
 			} else if (param == "nfs-mountpoint") {
 				mnfsMountPoint = value;
 			} else {
-				throw TMSVishnuException(ERRCODE_INVALID_PARAM, (boost::format("Unknown parameter %1%")%param).str());
+				throw TMSVishnuException(ERRCODE_INVALID_PARAM, param);
 			}
 		}
 	}
