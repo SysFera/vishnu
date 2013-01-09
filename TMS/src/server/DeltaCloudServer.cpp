@@ -94,7 +94,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	char *instid = NULL;
 	if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
-		cleanUpParams(params);
+		cleanUpParams(params); // cleanup allocated parameters
 		finalize();
 		if (instid == NULL) {
 			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
@@ -103,19 +103,17 @@ DeltaCloudServer::submit(const char* scriptPath,
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				std::string(deltacloud_get_last_error_string())+"::deltacloud_create_instance");
 	}
-	cleanUpParams(params);
+	cleanUpParams(params);  // cleanup allocated parameters
 
 	struct deltacloud_instance instance;
 	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
-		std::string msg = (boost::format("Instance never went RUNNING "
-				"or went to a unexpected state %1%, failing")%instance.state).str();
+		std::string msg = (boost::format("Instance never went RUNNING. "
+				"Unexpected state %1%, failing")%instance.state).str();
 		deltacloud_instance_destroy(mcloudApi, &instance);
-		cleanUpParams(params);
 		finalize();
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
 	}
 	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
-
 	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
 			" ID: %1%\n"
 			" NAME: %2%\n"
