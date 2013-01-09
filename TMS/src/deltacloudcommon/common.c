@@ -18,10 +18,6 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 		fprintf(stderr, "Waiting for instance to go RUNNING, %d/300\n", timeout);
 
 		if (deltacloud_get_instance_by_id(api, instid, instance) < 0) {
-			/* FIXME: yuck.  If we got here, then we created an instance, but
-			 * we couldn't look it up.  That means we can't destroy it either.
-			 */
-			fprintf(stderr, "Failed to lookup instance by id: %s\n", deltacloud_get_last_error_string());
 			break;
 		}
 
@@ -30,12 +26,10 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 			found = 0;
 			break;
 		} else if (strcmp(instance->state, "PENDING") != 0) {
-			fprintf(stderr, "Instance went to a unexpected state %s, failing\n", instance->state);
 			break;
 		} else {
 			timeout--;
 			if (timeout == 0) {
-				fprintf(stderr, "Instance never went running, failing\n");
 				break;
 			}
 			deltacloud_free_instance(instance);
