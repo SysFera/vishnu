@@ -20,7 +20,16 @@
 #include "utilServer.hpp"
 
 
-DeltaCloudServer::DeltaCloudServer() {}
+DeltaCloudServer::DeltaCloudServer()
+: mcloudUser(""),
+  mcloudUserPassword(""),
+  mcloudTenant(""),
+  mvmImageId(""),
+  mvmFlavor(""),
+  mvmUser(""),
+  mvmUserKey(""),
+  mnfsServer(""),
+  mnfsMountPoint("") {}
 
 DeltaCloudServer::~DeltaCloudServer() {
 	deltacloud_free(mcloudApi);
@@ -43,41 +52,35 @@ DeltaCloudServer::submit(const char* scriptPath,
 	initialize(); // Initialize Delatacloud API
 
 	// Get configuration parameters
-	// At each time, we first try to get parameters set specifically for the job
-	std::string envVarPrefix = job.getJobId()+"_";
-	std::string imageId = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], true);
-	if (imageId.empty()) {
-		imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+	// We first try to get parameters set specifically for the job
+	retrieveSpecificParams(options.getSpecificParams());
+	if (mvmImageId.empty()) {
+		mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
 	}
-	std::string flavor = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], true);
-	if (flavor.empty()) {
-		flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+	if (mvmFlavor.empty()) {
+		mvmFlavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
 	}
-	std::string vmUser = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true);
-	if (vmUser.empty()) {
-		vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+	if (mvmUser.empty()) {
+		mvmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
 	}
-	std::string vmUserKey = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], true);
-	if (vmUserKey.empty()) {
-		vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+	if (mvmUserKey.empty()) {
+		mvmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
 	}
-	std::string nfsServer = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
-	if (nfsServer.empty()) {
-		nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	if (mnfsServer.empty()) {
+		mnfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
 	}
-	std::string nfsMountPoint = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
-    if(nfsMountPoint.empty()) {
-    	Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-    }
+	if(mnfsMountPoint.empty()) {
+		mnfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+	}
 	// Set the parameters of the virtual machine instance
 	std::vector<deltacloud_create_parameter> params;
 	deltacloud_create_parameter param;
 	param.name = strdup("hwp_id");
-	param.value = strdup(flavor.c_str());
+	param.value = strdup(mvmFlavor.c_str());
 	params.push_back(param);
 
 	param.name = strdup("keyname");
-	param.value = strdup(vmUserKey.c_str());
+	param.value = strdup(mvmUserKey.c_str());
 	params.push_back(param);
 
 	param.name = strdup("user_data");
@@ -90,7 +93,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	params.push_back(param);
 
 	char *instid = NULL;
-	if (deltacloud_create_instance(mcloudApi, imageId.c_str(), &params[0], params.size(), &instid) < 0) {
+	if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
 		cleanUpParams(params);
 		if (instid == NULL) {
 			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
@@ -122,10 +125,10 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	// Create an ssh engine for the virtual machine
 	// And submit the script
-	SSHJobExec sshEngine(vmUser, instance.private_addresses->address);
+	SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
 	int jobPid = -1;
 	try {
-		jobPid = sshEngine.execRemoteScript(scriptPath, nfsServer, nfsMountPoint, job.getOutputDir());
+		jobPid = sshEngine.execRemoteScript(scriptPath, mnfsServer, mnfsMountPoint, job.getOutputDir());
 	} catch(...) {
 		throw;
 	}
@@ -321,5 +324,42 @@ void DeltaCloudServer::cleanUpParams(std::vector<deltacloud_create_parameter>& p
 	for(int i=0; i< params.size(); i++) {
 		free(params[i].name);
 		free(params[i].value);
+	}
+}
+
+/**
+ * \brief To retrieve specific submission parameters
+ * \param specificParamss The string containing the list of parameters
+ */
+void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams) {
+	ListStrings listParams;
+	boost::split(listParams, specificParams, boost::is_any_of(" "));
+	for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); it++) {
+		size_t pos = it->find("=");
+		if (pos != std::string::npos) {
+			std::string param = it->substr(0, pos);
+			std::string value = it->substr(pos+1, std::string::npos);
+			if (param == "user") {
+				mcloudUser = value;
+			} else if (param == "user-password") {
+				mcloudUserPassword = value;
+			} else if (param == "user-tenant") {
+				mcloudTenant = value;
+			} else if (param == "vm-image") {
+				mvmImageId = value;
+			} else if (param == "vm-user") {
+				mvmUser = value;
+			} else if (param == "vm-key") {
+				mvmUserKey = value;
+			} else if (param == "vm-flavor") {
+				mvmFlavor = value;
+			} else if (param == "nfs-server") {
+				mnfsServer = value;
+			} else if (param == "nfs-mountpoint") {
+				mnfsMountPoint = value;
+			} else {
+				throw TMSVishnuException(ERRCODE_INVALID_PARAM, (boost::format("Unknown parameter %1%")%param).str());
+			}
+		}
 	}
 }

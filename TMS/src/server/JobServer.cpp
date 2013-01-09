@@ -646,7 +646,7 @@ std::string JobServer::getBatchDirective(std::string& seperator) const {
 
 /**
  * \brief Set specific parameters for job submission
- * \param params The string containing the list of parameters
+ * \param specificParamss The string containing the list of parameters
  * \param scriptContent The content of the script when required
  */
 void JobServer::treatSpecificParams(const std::string& specificParams,
@@ -674,43 +674,6 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
         break;
       }
       pos2 = params.find("=");
-    }
-  }
-    break;
-  case DELTACLOUD: {
-    ListStrings listParams;
-    boost::split(listParams, specificParams, boost::is_any_of(sep));
-    //		std::string user = UserServer(msessionServer).getData().getUserId();
-    std::string envVarPrefix = mjob.getJobId()+"_";
-    for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); it++) {
-      size_t pos = it->find("=");
-      if (pos != std::string::npos) {
-        std::string param = it->substr(0, pos);
-        std::string value = it->substr(pos+1, std::string::npos);
-        if(param == "cloud-endpoint") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_ENDPOINT]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-user") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_USER]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-password") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_USER_PASSWORD]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-tenant") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_TENANT]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-image") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_IMAGE]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-user") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-user-key") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER_KEY]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-flavor") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_DEFAULT_FLAVOR]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-nfs-server") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_NFS_SERVER]).c_str(), value.c_str(), 1);
-        } else if (param == "cloud-nfs-mountpoint") {
-          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_NFS_MOUNT_POINT]).c_str(), value.c_str(), 1);
-        } else {
-          throw TMSVishnuException(ERRCODE_INVALID_PARAM, (boost::format("Unknown parameter %1%")%param).str());
-        }
-      }
     }
   }
     break;
