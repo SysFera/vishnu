@@ -314,7 +314,10 @@ diet_string_get(diet_arg_t* arg, std::string & value) {
 int
 diet_profile_free(diet_profile_t* prof) {
   for (unsigned int i = 0; i < prof->OUT; ++i) {
-    free(prof->param[i]);
+    if (prof->param[i]) {
+      free(prof->param[i]);
+      prof->param[i] = NULL;
+    }
   }
 
   delete [] prof->param;
