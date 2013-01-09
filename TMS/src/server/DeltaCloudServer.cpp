@@ -57,15 +57,15 @@ DeltaCloudServer::submit(const char* scriptPath,
 	if (vmUser.empty()) {
 		vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
 	}
-	std::string vmUserKey = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+	std::string vmUserKey = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], true);
 	if (vmUserKey.empty()) {
 		vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
 	}
-	std::string nfsServer = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	std::string nfsServer = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
 	if (nfsServer.empty()) {
 		nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
 	}
-	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     if(nfsMountPoint.empty()) {
     	Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     }
