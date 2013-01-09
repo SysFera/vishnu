@@ -65,7 +65,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	if (nfsServer.empty()) {
 		nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
 	}
-	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
+	std::string nfsMountPoint = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     if(nfsMountPoint.empty()) {
     	Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
     }
