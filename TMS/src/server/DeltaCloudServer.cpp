@@ -40,17 +40,35 @@ DeltaCloudServer::submit(const char* scriptPath,
 		TMS_Data::Job& job,
 		char** envp) {
 
-	// Initialize the Delatacloud API
-	initialize();
+	initialize(); // Initialize Delatacloud API
 
 	// Get configuration parameters
-	std::string imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
-	std::string flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
-	std::string vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
-	std::string vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
-	std::string nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	// At each time, we first try to get parameters set specifically for the job
+	std::string envVarPrefix = job.getJobId()+"_";
+	std::string imageId = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], true);
+	if (imageId.empty()) {
+		imageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+	}
+	std::string flavor = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], true);
+	if (flavor.empty()) {
+		flavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+	}
+	std::string vmUser = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true);
+	if (vmUser.empty()) {
+		vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+	}
+	std::string vmUserKey = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+	if (vmUserKey.empty()) {
+		vmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+	}
+	std::string nfsServer = Env::getVar(envVarPrefix+vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	if (nfsServer.empty()) {
+		nfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+	}
 	std::string nfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-
+    if(nfsMountPoint.empty()) {
+    	Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+    }
 	// Set the parameters of the virtual machine instance
 	std::vector<deltacloud_create_parameter> params;
 	deltacloud_create_parameter param;

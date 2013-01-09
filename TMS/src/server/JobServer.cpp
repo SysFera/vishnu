@@ -129,31 +129,24 @@ int JobServer::submitJob(const std::string& scriptContent,
     env.setParams(scriptContentRef, optionsref.getFileParams()) ;
   }
   mjob.setWorkId(optionsref.getWorkId()) ;
-
   ::ecorecpp::serializer::serializer optSer;
   ::ecorecpp::serializer::serializer jobSer;
-
   std::string submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
   std::string jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
   //Initialize a ssh engine to submit the job to the underlying batch system
   SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
-
   // Create the output directory if necessary
-  if( needOutputDir ) {
-    // Set the permissions so to enable writing the directory from the virtual machines
+  if (needOutputDir) {
     if(mbatchType == DELTACLOUD) {
+      // Create the output directory if necessary and set NODEFILE
       vishnu::createWorkingDir(mjob.getOutputDir());
-      // Set the nodefile from the output directory
       env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
       env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
-    } else {
-      if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
-        throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
-      }
+    } else if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) { // Create the output directory through ssh
+      throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
     }
   }
-
   // Convert the script
   std::string convertedScript;
   boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
@@ -163,13 +156,11 @@ int JobServer::submitJob(const std::string& scriptContent,
   } else {
     convertedScript = scriptContentRef;
   }
-
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
   if (options.getSpecificParams().size()) {
     treatSpecificParams(options.getSpecificParams(), convertedScript);
   }
-
         if (!defaultBatchOption.empty()){
     processDefaultOptions(defaultBatchOption, convertedScript, directive);
   }
@@ -199,19 +190,14 @@ int JobServer::submitJob(const std::string& scriptContent,
   if(mbatchType != DELTACLOUD) {
     vishnu::deleteFile(scriptPath.c_str());
   }
-  free(scriptPath);
-
-  // Check if some errors occured during the submission
-  std::string errorInfo = sshJobExec.getErrorInfo();
+  std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
   if(errorInfo.size()!=0) {
     int code;
     std::string message;
     scanErrorMessage(errorInfo, code, message);
     throw TMSVishnuException(code, message);
   }
-
-  //  Get the serialized job
-  std::string updateJobSerialized = sshJobExec.getJobSerialized();
+  std::string updateJobSerialized = sshJobExec.getJobSerialized(); //  Get the serialized job
   TMS_Data::Job_ptr job = NULL;
   if (!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
     throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
@@ -694,31 +680,33 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
   case DELTACLOUD: {
     ListStrings listParams;
     boost::split(listParams, specificParams, boost::is_any_of(sep));
+    //		std::string user = UserServer(msessionServer).getData().getUserId();
+    std::string envVarPrefix = mjob.getJobId()+"_";
     for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); it++) {
       size_t pos = it->find("=");
       if (pos != std::string::npos) {
         std::string param = it->substr(0, pos);
         std::string value = it->substr(pos+1, std::string::npos);
         if(param == "cloud-endpoint") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_ENDPOINT].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_ENDPOINT]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-user") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_USER].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_USER]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-password") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_USER_PASSWORD].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_USER_PASSWORD]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-tenant") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_TENANT].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_TENANT]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-image") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_IMAGE].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_IMAGE]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-user") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-user-key") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER_KEY].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_VM_USER_KEY]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-flavor") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_DEFAULT_FLAVOR].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_DEFAULT_FLAVOR]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-nfs-server") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_NFS_SERVER].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_NFS_SERVER]).c_str(), value.c_str(), 1);
         } else if (param == "cloud-nfs-mountpoint") {
-          setenv(vishnu::CLOUD_ENV_VARS[CLOUD_NFS_MOUNT_POINT].c_str(), value.c_str(), 1);
+          setenv((envVarPrefix+vishnu::CLOUD_ENV_VARS[CLOUD_NFS_MOUNT_POINT]).c_str(), value.c_str(), 1);
         } else {
           throw TMSVishnuException(ERRCODE_INVALID_PARAM, (boost::format("Unknown parameter %1%")%param).str());
         }
