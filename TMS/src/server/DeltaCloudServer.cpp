@@ -53,6 +53,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	// Get configuration parameters
 	// We first try to get parameters set specifically for the job
+	//FIXME: possibly memory leak if Env::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
 	if (mvmImageId.empty()) {
 		mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
 	}
@@ -94,6 +95,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	char *instid = NULL;
 	if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
 		cleanUpParams(params);
+		finalize();
 		if (instid == NULL) {
 			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 					std::string(deltacloud_get_last_error_string())+". Symptom: deltacloud_create_instance return NULL " );
@@ -105,15 +107,21 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	struct deltacloud_instance instance;
 	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 1) {
-		releaseResources(instid);
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				std::string(deltacloud_get_last_error_string())+"::wait_for_instance_boot");
+		std::string msg = (boost::format("Instance never went RUNNING or went "
+				"to a unexpected state %1%, failing")%instance.state).str();
+		deltacloud_instance_destroy(mcloudApi, &instance);
+		cleanUpParams(params);
+		finalize();
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
 	}
 
-	if (deltacloud_get_instance_by_id(mcloudApi, instid, &instance) < 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
-	}
+	//No Longer require
+//	if (deltacloud_get_instance_by_id(mcloudApi, instid, &instance) < 0) {
+//		cleanUpParams(params);
+//		finalize();
+//		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+//				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
+//	}
 	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
 			" ID: %1%\n"
 			" NAME: %2%\n"
