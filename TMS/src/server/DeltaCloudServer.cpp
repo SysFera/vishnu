@@ -343,7 +343,9 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
 		if (pos != std::string::npos) {
 			std::string param = it->substr(0, pos);
 			std::string value = it->substr(pos+1, std::string::npos);
-			if (param == "user") {
+			if (param == "endpoint") {
+				mcloudEndpoint = value;
+			} else if (param == "user") {
 				mcloudUser = value;
 			} else if (param == "user-password") {
 				mcloudUserPassword = value;
