@@ -35,6 +35,13 @@ public:
 BOOST_FIXTURE_TEST_SUITE( annuary_unit_tests, AnnuaryFixture )
 
 
+BOOST_AUTO_TEST_CASE( test_default_constructor_n )
+{
+  Annuary ann;
+  BOOST_REQUIRE_EQUAL(ann.get().size(), 0);
+}
+
+
 BOOST_AUTO_TEST_CASE( test_add_n )
 {
 // Test the annuary class
@@ -42,8 +49,8 @@ BOOST_AUTO_TEST_CASE( test_add_n )
   std::vector<std::string> servicesTmp;
   servicesTmp.push_back("toto");
   ann.add("titi", "tutu", servicesTmp);
-  BOOST_REQUIRE(ann.get("toto").size() == 1);
-} // boost auto test case
+  BOOST_REQUIRE_EQUAL(ann.get("toto").size(), 1);
+}
 
 
 BOOST_AUTO_TEST_CASE( test_remove_n )
@@ -52,7 +59,7 @@ BOOST_AUTO_TEST_CASE( test_remove_n )
   Annuary ann(mservers);
   ann.remove(name, uri);
   BOOST_REQUIRE(ann.get().empty());
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_get_n )
 {
@@ -60,14 +67,14 @@ BOOST_AUTO_TEST_CASE( test_get_n )
   Annuary ann(mservers);
   BOOST_REQUIRE(!ann.get("loup").empty());
   BOOST_REQUIRE(!ann.get("belette").empty());
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_get_bad )
 {
 // Test the annuary class
   Annuary ann(mservers);
   BOOST_REQUIRE(ann.get("bad").empty());
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_remove_bad_name )
 {
@@ -75,7 +82,7 @@ BOOST_AUTO_TEST_CASE( test_remove_bad_name )
   Annuary ann(mservers);
   ann.remove(name+"1", uri);
   BOOST_REQUIRE(ann.get("loup").size() == 1);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_remove_bad_uri )
 {
@@ -83,7 +90,7 @@ BOOST_AUTO_TEST_CASE( test_remove_bad_uri )
   Annuary ann(mservers);
   ann.remove(name, uri+"1");
   BOOST_REQUIRE(ann.get("loup").size() == 1);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_add_bad_twice )
 {
@@ -94,7 +101,7 @@ BOOST_AUTO_TEST_CASE( test_add_bad_twice )
   ann.add("titi", "tutu", servicesTmp);
   ann.add("titi", "tutu", servicesTmp);
   BOOST_REQUIRE(ann.get().size() == 2);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_remove_bad_empty )
 {
@@ -103,6 +110,6 @@ BOOST_AUTO_TEST_CASE( test_remove_bad_empty )
   ann.remove(name, uri);
   ann.remove(name, uri);
   BOOST_REQUIRE(ann.get().empty());
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_SUITE_END()

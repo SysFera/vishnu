@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE( test_fromStr_n )
   BOOST_REQUIRE_EQUAL(s.getName().compare(mname), 0);
   BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
   BOOST_REQUIRE_EQUAL(s.getServices().size(), mservices.size());
-} // boost auto test case
+}
 
 
 BOOST_AUTO_TEST_CASE( test_toStr_n )
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( test_toStr_n )
   std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" + mservices.at(1);
 
   BOOST_REQUIRE_EQUAL(res.compare(s.toString()), 0);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_add_n_serv )
 {
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( test_add_n_serv )
 
   BOOST_REQUIRE_EQUAL(s.getServices().size(), 3);
   BOOST_REQUIRE(s.hasService(str));
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_remove_n_serv )
 {
@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( test_remove_n_serv )
 
   BOOST_REQUIRE_EQUAL(s.getServices().size(), 1);
   BOOST_REQUIRE(!s.hasService(rem));
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_remove_b_invalid )
 {
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( test_remove_b_invalid )
   res = s.getServices().size();
 
   BOOST_REQUIRE_EQUAL(res, size);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_haz_n_ser )
 {
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( test_haz_n_ser )
 
   BOOST_REQUIRE(s.hasService(mservices.at(0)));
   BOOST_REQUIRE(s.hasService(mservices.at(1)));
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_haz_b )
 {
@@ -98,7 +98,7 @@ BOOST_AUTO_TEST_CASE( test_haz_b )
   Server s(mname, mservices, muri);
 
   BOOST_REQUIRE(!s.hasService("bad"));
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_getname_n )
 {
@@ -106,7 +106,7 @@ BOOST_AUTO_TEST_CASE( test_getname_n )
   Server s(mname, mservices, muri);
 
   BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_getserv_n )
 {
@@ -115,7 +115,7 @@ BOOST_AUTO_TEST_CASE( test_getserv_n )
 
   BOOST_REQUIRE_EQUAL(s.getServices().at(0).compare(mservices.at(0)), 0);
   BOOST_REQUIRE_EQUAL(s.getServices().at(1).compare(mservices.at(1)), 0);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( test_geturi_n )
 {
@@ -123,7 +123,7 @@ BOOST_AUTO_TEST_CASE( test_geturi_n )
   Server s(mname, mservices, muri);
 
   BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
-} // boost auto test case
+}
 
 
 BOOST_AUTO_TEST_SUITE_END()

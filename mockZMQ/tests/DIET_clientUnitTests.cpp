@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_ums )
   BOOST_REQUIRE_EQUAL(get_module("authAccountUpdate"), "UMS");
   BOOST_REQUIRE_EQUAL(get_module("authAccountDelete"), "UMS");
   BOOST_REQUIRE_EQUAL(get_module("authAccountList"), "UMS");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_fms )
 {
@@ -66,7 +66,7 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_fms )
   BOOST_REQUIRE_EQUAL(get_module("RemoteFileCopyAsync"), "FMS");
   BOOST_REQUIRE_EQUAL(get_module("RemoteFileMove"), "FMS");
   BOOST_REQUIRE_EQUAL(get_module("RemoteFileMoveAsync"), "FMS");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_tms )
 {
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms )
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetResult"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetCompletedJobs"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("addWork"), "TMS");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
 {
@@ -102,12 +102,12 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
   BOOST_REQUIRE_EQUAL(get_module("int_getSystemInfo"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_defineAuthIdentifier"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_defineWorkIdentifier"), "IMS");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_get_b_mod )
 {
   BOOST_REQUIRE_EQUAL(get_module("bad"), "");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_alloc_n )
 {
@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( my_test_alloc_n )
   BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
   BOOST_REQUIRE_EQUAL(prof->OUT, 3);
   BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_setStr_n )
 {
@@ -125,7 +125,7 @@ BOOST_AUTO_TEST_CASE( my_test_setStr_n )
 
   BOOST_REQUIRE_EQUAL(prof->param[0], "toto");
   // TODO
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_getStr_n )
 {
@@ -135,13 +135,13 @@ BOOST_AUTO_TEST_CASE( my_test_getStr_n )
   diet_string_get(diet_parameter(prof,0), userId);
 
   BOOST_REQUIRE_EQUAL(userId, "toto");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_param_b )
 {
   diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
   BOOST_REQUIRE_THROW(diet_parameter(prof, 10), SystemException);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_parameter_n )
 {
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE( my_test_parameter_n )
   BOOST_REQUIRE_EQUAL(((diet_profile_t *)res->prof)->OUT, 3);
   BOOST_REQUIRE_EQUAL(((diet_profile_t *)res->prof)->name, "alloc");
   BOOST_REQUIRE_EQUAL(res->pos, 1);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_serial_n )
 {
@@ -162,7 +162,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_n )
   std::string res = my_serialize(prof);
 
   BOOST_REQUIRE_EQUAL(res, "alloc$$$0$$$0$$$1$$$param1$$$");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
@@ -173,22 +173,22 @@ BOOST_AUTO_TEST_CASE( my_test_deser_n )
   BOOST_REQUIRE_EQUAL(prof.get()->INOUT, 0);
   BOOST_REQUIRE_EQUAL(prof.get()->OUT, 1);
   BOOST_REQUIRE_EQUAL(prof.get()->param[0], "param1");
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_deser_b_emp )
 {
   std::string profSer = "";
   BOOST_REQUIRE_THROW(my_deserialize(profSer), SystemException);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_init_b_nul )
 {
   BOOST_REQUIRE_THROW(diet_initialize(NULL, 0, NULL), SystemException);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_CASE( my_test_init_b_invalid )
 {
   BOOST_REQUIRE_THROW(diet_initialize("/tmp/toto", 0, NULL), SystemException);
-} // boost auto test case
+}
 
 BOOST_AUTO_TEST_SUITE_END()
