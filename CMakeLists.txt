@@ -316,7 +316,7 @@ if (sge)
 endif (sge)
 
 if (posix)
-  add_definitions(-DHAVE_POSIX)
+  add_definitions(-DHAVE_TMSPOSIX)
 endif(posix)
 
 if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)

@@ -118,7 +118,7 @@ int main(int argc, char* argv[], char* envp[]) {
         batchType = SGE;
     } else if (batchTypeStr == "POSIX") {
       batchType = POSIX;
-#ifndef HAVE_POSIX
+#ifndef HAVE_TMSPOSIX
       std::cerr << "\nWarning: only posix submission have been enabled in "
                 << "the config file whereas TMS may have been compiled for another batch\n\n";
 #endif
