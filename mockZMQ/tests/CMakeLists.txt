@@ -29,7 +29,10 @@ target_link_libraries (test_zmq_helper
   vishnu-core
   )
 
-
+# register tests
 include(UnitTest)
 unit_test_setup()
-unit_test(mainZMQUnitTest)
+unit_test(LazyPirateUnitTests)
+unit_test(AnnuaryUnitTests)
+unit_test(ZMQServerUnitTests)
+unit_test(DIET_clientUnitTests)
