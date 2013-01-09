@@ -96,11 +96,6 @@ private:
 	std::string mcloudUserPassword;
 
 	/**
-	 * \brief Holds the tenant in which the cloud user belongs to
-	 */
-	std::string mcloudTenant;
-
-	/**
 	 * \brief Holds the image id
 	 */
 	std::string mvmImageId;
