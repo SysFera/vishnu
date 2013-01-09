@@ -81,6 +81,11 @@ private:
 	deltacloud_api *mcloudApi;
 
 	/**
+	 * \brief Holds the endpoint of the cloud infrastructure
+	 */
+	std::string mcloudEndpoint;
+
+	/**
 	 * \brief Holds the cloud user
 	 */
 	std::string mcloudUser;
