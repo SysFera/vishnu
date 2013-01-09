@@ -30,6 +30,10 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 		if (strcmp(instance->state, "RUNNING") == 0) {
 			found = 1;
 			break;
+		} else if (strcmp(instance->state, "PENDING") != 0) {
+			fprintf(stderr, "Instance gone to a unexpected state %s, failing\n", instance->state);
+			deltacloud_instance_destroy(api, instance);
+			break;
 		} else {
 			/* otherwise, see if we exceeded the timeout.  If so, destroy
 			 * the instance and fail
