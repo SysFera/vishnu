@@ -58,6 +58,18 @@ BOOST_AUTO_TEST_CASE( test_add_n_serv )
   BOOST_REQUIRE(s.hasService(str));
 }
 
+BOOST_AUTO_TEST_CASE( test_add_twice_n_serv )
+{
+// Test the server class
+  std::string str = "lapin";
+  Server s(mname, mservices, muri);
+  s.add(str);
+  s.add(str);
+
+  BOOST_REQUIRE_EQUAL(s.getServices().size(), 3);
+  BOOST_REQUIRE(s.hasService(str));
+}
+
 BOOST_AUTO_TEST_CASE( test_remove_n_serv )
 {
 // Test the server class
