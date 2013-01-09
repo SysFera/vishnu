@@ -23,7 +23,6 @@
 DeltaCloudServer::DeltaCloudServer()
 : mcloudUser(""),
   mcloudUserPassword(""),
-  mcloudTenant(""),
   mvmImageId(""),
   mvmFlavor(""),
   mvmUser(""),
@@ -348,8 +347,6 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
 				mcloudUser = value;
 			} else if (param == "user-password") {
 				mcloudUserPassword = value;
-			} else if (param == "user-tenant") {
-				mcloudTenant = value;
 			} else if (param == "vm-image") {
 				mvmImageId = value;
 			} else if (param == "vm-user") {
