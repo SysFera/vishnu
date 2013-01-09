@@ -84,8 +84,9 @@ MonitorTMS::run() {
   std::string jobId;
   int state;
   std::string sqlUpdatedRequest;
+  int batchType = mbatchType;
   std::string sqlRequest = "SELECT jobId, batchJobId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
-    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType=";
+    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(batchType);
 
   while(kill(getppid(), 0) == 0) {
       try {
