@@ -106,30 +106,20 @@ DeltaCloudServer::submit(const char* scriptPath,
 	cleanUpParams(params);
 
 	struct deltacloud_instance instance;
-	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 1) {
-		std::string msg = (boost::format("Instance never went RUNNING or went "
-				"to a unexpected state %1%, failing")%instance.state).str();
+	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
+		std::string msg = (boost::format("Instance never went RUNNING "
+				"or went to a unexpected state %1%, failing")%instance.state).str();
 		deltacloud_instance_destroy(mcloudApi, &instance);
 		cleanUpParams(params);
 		finalize();
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
 	}
+	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
 
-	//No Longer require
-//	if (deltacloud_get_instance_by_id(mcloudApi, instid, &instance) < 0) {
-//		cleanUpParams(params);
-//		finalize();
-//		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-//				std::string(deltacloud_get_last_error_string())+"::deltacloud_get_instance_by_id");
-//	}
 	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
 			" ID: %1%\n"
 			" NAME: %2%\n"
 			" IP: %3%\n")%instance.id%instance.name%instance.private_addresses->address;
-	// Create the NODEFILE
-	// The path must correspond with the value set for the
-	// environment variable VISHNU_BATCHJOB_NODEFILE in JobServer.cpp
-	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address);
 
 	// Create an ssh engine for the virtual machine
 	// And submit the script
