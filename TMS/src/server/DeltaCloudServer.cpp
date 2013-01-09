@@ -105,6 +105,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 
 	struct deltacloud_instance instance;
 	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 1) {
+		releaseResources(instid);
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
 				std::string(deltacloud_get_last_error_string())+"::wait_for_instance_boot");
 	}
