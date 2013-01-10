@@ -11,6 +11,7 @@ include_directories(
   ${TMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/mockZMQ/
+  ${Boost_INCLUDE_DIR}
 )
 
 
