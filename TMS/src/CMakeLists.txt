@@ -36,7 +36,6 @@ target_link_libraries(vishnu-tms-client
   vishnu-core
   vishnu-ums-client
   vishnu-fms-client
-  vishnu-ums-server
   ${LIBCRYPT_LIB}
   ${ZMQ_LIBRARIES}
   zmq_helper
