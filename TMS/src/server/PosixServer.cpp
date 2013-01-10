@@ -57,3 +57,13 @@ PosixServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 PosixServer::~PosixServer(){
 }
 
+int
+create_plugin_instance(void **instance) {
+  try {
+    *instance = new PosixServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+
+  return PLUGIN_OK;
+}

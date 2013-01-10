@@ -65,7 +65,7 @@ BatchFactory::getBatchServerInstance() {
 #elif HAVE_PBSPRO_10_4
       instance = loadPluginBatch("vishnu-tms-pbspro10.4");
 #elif HAVE_TMSPOSIX
-      instance = loadPluginBatch("vishnu-tms-posix");
+      instance = loadPluginBatch("vishnu-tms-posix1.0");
 #endif
 
   return static_cast<BatchServer *>(instance);

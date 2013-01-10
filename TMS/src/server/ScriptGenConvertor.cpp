@@ -66,7 +66,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mendScript="";
 
   }else if(mbatchType==PBSPRO) {
-    
+
     mconversionTable[group]                = "#PBS -W group_list=";
     mconversionTable[workingDir]           = "#PBS -d ";
     mconversionTable[jobName]              = "#PBS -N ";
@@ -80,12 +80,12 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[mailNotification]     = "#PBS -m "; //special case
     mconversionTable[mailNotifyUser]       = "#PBS -M ";
     mconversionTable[queue]                = "#PBS -q ";
-    
+
     mconversionTable[loadLevelerSec]       = "";
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
     mendScript="";
-    
+
   }else if(mbatchType==SLURM) {
 
     mconversionTable[group]                = "#SBATCH --gid=";
@@ -147,6 +147,26 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[commandSec]           = "";
     mconversionTable[torqueSec]            = "";
     mendScript="";
+  } else if (mbatchType==POSIX) {
+    mconversionTable[group]                = "";
+    mconversionTable[workingDir]           = "";
+    mconversionTable[jobName]              = "";
+    mconversionTable[jobOutput]            = "";
+    mconversionTable[jobError]             = "";
+    mconversionTable[jobWallClockLimit]    = "";
+    mconversionTable[cpuTime]              = "";
+    mconversionTable[nbCpu]                = "";
+    mconversionTable[nbNodesAndCpuPerNode] = "";
+    mconversionTable[mem]                  = "";
+    mconversionTable[mailNotification]     = ""; //special case
+    mconversionTable[mailNotifyUser]       = "";
+    mconversionTable[queue]                = "";
+
+    mconversionTable[sgeSec]               = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
+
   } else {
     std::cerr << "Unknown Batch type " << std::endl;
   }

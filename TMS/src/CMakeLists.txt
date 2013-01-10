@@ -148,9 +148,9 @@ if (NOT CLIENT_ONLY)
     install(TARGETS vishnu-tms-sge${VISHNU_BATCH_VERSION} DESTINATION ${LIB_INSTALL_DIR})
   endif()
 # always compile posix server
-  add_library(vishnu-tms-posix ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix ${POSIX_LIB})
-  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
+  add_library(vishnu-tms-posix1.0 ${POSIXSERVER})
+  target_link_libraries(vishnu-tms-posix1.0 ${POSIX_LIB})
+  install(TARGETS vishnu-tms-posix1.0 DESTINATION ${LIB_INSTALL_DIR})
 
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})

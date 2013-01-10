@@ -40,10 +40,6 @@
     </author>
     <author>
       <personname>
-        <firstname>Benjamin</firstname>
-        <surname>Depardon</surname>
-      </personname>
-    </author>
     <author>
       <personname>
         <firstname>Haïkel</firstname>
@@ -287,6 +283,13 @@
       
       <para>Mise à jour des dépendences d'installation avec ZeroMQ et
       suppression du chapite lié aux web services</para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>27</revnumber>
+        <date>04/01/2013</date>
+        <authorinitials>B. Depardon</authorinitials>
+        <revdescription>
+        <para>Maj documentation du dispatcher</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -1430,10 +1433,10 @@ urlSupervisor=http://127.0.0.1:9001
     configuration 'config' doit être à la fin et est optionnel.</para>
           <para>$ <emphasis>dispatcher dispatcher_config.cfg</emphasis></para>
           <para>
-    Dans cette commande, on demande au dispatcher de démarrer en
-    utilisant les serveurs définis dans le fichier config.  Si le
-    fichier de configuration n'est pas fourni, des options par défaut sont utilisées. Les différents options de configurations et leur valeur par défaut sont décrites deux sections plus loin.
-    </para>
+            Dans cette commande, on demande au dispatcher de démarrer en
+            utilisant les serveurs définis dans le fichier config.  Si le
+          fichier de configuration n'est pas fourni, des options par défaut sont utilisées. Les différents options de configurations et leur valeur par défaut sont décrites deux sections plus loin.
+          </para>
         </listitem>
         <listitem>
           <para> Sur chaque machine serveur, lancer supervisord avec son fichier de configuration 'config' correspondant. Le fichier de configuration de supervisord contient le démarrage de chaque serveur vishnu sur la machine en question.</para>
