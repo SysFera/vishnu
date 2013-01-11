@@ -48,11 +48,10 @@ DeltaCloudServer::submit(const char* scriptPath,
 		TMS_Data::Job& job,
 		char** envp) {
 
-	retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
 	initialize(); // Initialize Delatacloud API
+	retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
 
 	// Get configuration parameters
-	// We first try to get parameters set specifically for the job
 	//FIXME: possibly memory leak if Env::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
 	if (mvmImageId.empty()) {
 		mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
