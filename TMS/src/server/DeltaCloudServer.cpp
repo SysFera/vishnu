@@ -248,7 +248,6 @@ create_plugin_instance(void **instance) {
  */
 void DeltaCloudServer::initialize(void) {
 
-    vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
 	if(mcloudEndpoint.empty()) {
 		mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
 	}
