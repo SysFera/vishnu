@@ -66,7 +66,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   system("touch -f $HOME/.vishnurc"); // Create empty file it don't exist
-  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc");
+  vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
 
   // Read the configuration
   ExecConfiguration_Ptr config(new ExecConfiguration);

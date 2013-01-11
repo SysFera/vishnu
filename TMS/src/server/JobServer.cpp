@@ -63,7 +63,6 @@ int JobServer::submitJob(const std::string& scriptContent,
                          const std::string& slaveDirectory,
                          const std::vector<std::string>& defaultBatchOption)
 {
-    vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
   msessionServer.check(); //To check the sessionKey
   std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
   std::string sessionId = msessionServer.getAttribut("where sessionkey='"
