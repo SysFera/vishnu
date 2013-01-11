@@ -24,7 +24,7 @@ public:
 
   /**
    * \brief Constructor
-   */ 
+   */
   LLServer();
 
   /**
@@ -32,54 +32,54 @@ public:
    * \param scriptPath the path to the script containing the job characteristique
    * \param options the options to submit job
    * \param job The job data structure
-   * \param envp The list of environment variables used by LL submission function 
+   * \param envp The list of environment variables used by LL submission function
    * \return raises an exception on error
    */
-  int 
-  submit(const char* scriptPath, 
-         const TMS_Data::SubmitOptions& options, 
-         TMS_Data::Job& job, 
+  int
+  submit(const char* scriptPath,
+         const TMS_Data::SubmitOptions& options,
+         TMS_Data::Job& job,
          char** envp=NULL);
- 
+
   /**
    * \brief Function to cancel job
    * \param jobId the identifier of the job to cancel
    * \return raises an exception on error
    */
-  int 
+  int
   cancel(const char* jobId);
-  
+
   /**
    * \brief Function to get the status of the job
-   * \param jobId the identifier of the job 
-   * \return -1 if the job is unknown or server not  unavailable 
+   * \param jobId the identifier of the job
+   * \return -1 if the job is unknown or server not  unavailable
    */
-  int 
+  int
   getJobState(const std::string& jobId);
-  
+
   /**
    * \brief Function to get the start time of the job
-   * \param jobId the identifier of the job 
+   * \param jobId the identifier of the job
    * \return 0 if the job is unknown or server not  unavailable
    */
-  time_t 
+  time_t
   getJobStartTime(const std::string& jobId);
- 
+
   /**
-   * \brief Function to request the status of queues 
-   * \param optQueueName (optional) the name of the queue to request 
-   * \return The requested status in to ListQueues data structure 
+   * \brief Function to request the status of queues
+   * \param optQueueName (optional) the name of the queue to request
+   * \return The requested status in to ListQueues data structure
    */
-  TMS_Data::ListQueues* 
-  listQueues(const std::string& optQueueName=std::string()); 
+  TMS_Data::ListQueues*
+  listQueues(const std::string& optQueueName=std::string());
 
   /**
    * \brief Function to get a list of submitted jobs
    * \param listOfJobs the ListJobs structure to fill
-   * \param ignoredIds the list of job ids to ignore 
+   * \param ignoredIds the list of job ids to ignore
    */
   void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-            const std::vector<string>& ignoredIds=std::vector<string>());
+                      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
   /**
    * \brief Destructor
@@ -89,13 +89,13 @@ public:
 private:
 
   /**
-   * \brief Function to insert option into string 
-   * \param optionLineToInsert the option to insert 
+   * \brief Function to insert option into string
+   * \param optionLineToInsert the option to insert
    * \param content The buffer containing the inserted option
    * \return raises an exception on error
    */
   void
-  insertOptionLine(const std::string& optionLineToInsert, 
+  insertOptionLine(const std::string& optionLineToInsert,
                        std::string& content);
 
   /**
@@ -105,37 +105,37 @@ private:
    * \return raises an exception on error
    */
   void
-  processOptions(const char* scriptPath, 
+  processOptions(const char* scriptPath,
                  const TMS_Data::SubmitOptions& options);
-  
+
   /**
-   * \brief Function to convert the LL state into VISHNU state 
+   * \brief Function to convert the LL state into VISHNU state
    * \param state the state to convert
-   * \return VISHNU state 
+   * \return VISHNU state
    */
-  int 
+  int
   convertLLStateToVishnuState(int state);
 
   /**
    * \brief Function to convert the LL priority into VISHNU priority
    * \param prio the priority to convert
-   * \return VISHNU state 
+   * \return VISHNU state
    */
-  int 
+  int
   convertLLPrioToVishnuPrio(const int& prio);
 
   /**
-   * \brief Function to compute the number of running and waiting jobs of each queue 
-   * \param run contains the number of running jobs of each queue 
+   * \brief Function to compute the number of running and waiting jobs of each queue
+   * \param run contains the number of running jobs of each queue
    * \param que contains the number of waiting jobs of each queue
    * \return raises an exception on error
    */
-  int 
-  computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run, 
+  int
+  computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
                                std::map<std::string, size_t>& que);
   /**
    * \brief Function to get the number of nodes of the job
-   * \param jobId the identifier of the job 
+   * \param jobId the identifier of the job
    * \return -1 if the job is unknown or server not  unavailable
    */
   int
@@ -149,8 +149,8 @@ private:
    */
   std::string
   getLLResourceValue(const char* file,
-                     const std::string& optionLetterSyntax);   
-  
+                     const std::string& optionLetterSyntax);
+
   /**
    * \brief ListQueues returned
    */
