@@ -87,7 +87,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
 	params.push_back(param);
 
-	std::string vmName = "vishnu.vm."+job.getJobId();
+	std::string vmName = "vishnu-job.vm."+job.getJobId();
 	param.name = strdup("name");
 	param.value = strdup(vmName.c_str());
 	params.push_back(param);
@@ -96,31 +96,26 @@ DeltaCloudServer::submit(const char* scriptPath,
 	if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
 		cleanUpParams(params); // cleanup allocated parameters
 		finalize();
-		if (instid == NULL) {
-			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-					std::string(deltacloud_get_last_error_string())+". Symptom: deltacloud_create_instance return NULL " );
-		}
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				std::string(deltacloud_get_last_error_string())+"::deltacloud_create_instance");
+		std::string msg = (boost::format("Unable to create instance=>%1%")%deltacloud_get_last_error_string()).str();
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
 	}
 	cleanUpParams(params);  // cleanup allocated parameters
 
 	struct deltacloud_instance instance;
 	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
-		std::string msg = (boost::format("Instance never went RUNNING. "
-				"Unexpected state %1%, failed")%instance.state).str();
+		std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%")%instance.state).str();
 		deltacloud_instance_destroy(mcloudApi, &instance);
 		finalize();
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
 	}
 	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
+
 	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
 			" ID: %1%\n"
 			" NAME: %2%\n"
 			" IP: %3%\n")%instance.id%instance.name%instance.private_addresses->address;
 
-	// Create an ssh engine for the virtual machine
-	// And submit the script
+	// Create an ssh engine for the virtual machine & submit the script
 	SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
 	int jobPid = -1;
 	try {
@@ -156,7 +151,7 @@ DeltaCloudServer::cancel(const char* jobDescr) {
 	try {
 		releaseResources(jobInfos[1]); // Stop the virtual machine to release resources
 	} catch(const VishnuException & ex) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "[ERROR] Can not cancel the job " + jobInfos[0]);
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, (boost::format("Can not cancel the job. %1%")%ex.what()).str());
 	}
 	return 0;
 }
@@ -254,6 +249,7 @@ create_plugin_instance(void **instance) {
  */
 void DeltaCloudServer::initialize(void) {
 
+    vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
 	if(mcloudEndpoint.empty()) {
 		mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
 	}
@@ -288,7 +284,6 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
-
 	deltacloud_free_instance(&instance);
 	finalize();
 }

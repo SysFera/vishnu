@@ -59,18 +59,13 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string defaultBatchConfig;
   string TMSTYPE = "tmssed";
   string cfg;
-
   string uri;
 
   if (argc != 2) {
     return usage(argv[0]);
   }
 
-  // First initialize the logger
-  //std::clog.rdbuf(new Logger("vishnu[TMS]", LOG_LOCAL0));
-
-  // Source the rc file
-  system("touch -f $HOME/.vishnurc");  // Create if it does'nt exist to avoir error at the next step
+  system("touch -f $HOME/.vishnurc"); // Create empty file it don't exist
   vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc");
 
   // Read the configuration
