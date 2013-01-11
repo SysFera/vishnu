@@ -575,6 +575,8 @@ if (BUILD_TESTING)
   add_subdirectory(core/test)
 endif (BUILD_TESTING)
 
+# It's required to enable all the modules when SWIG is enabled. Otherwise you'll have linking problems
+# To avoid dealing with IMS dependencies when you only need API, you may need to set CLIENT_ONLY at ON
 if (ENABLE_PYTHON OR ENABLE_JAVA)
   set (COMPILE_UMS 1 )
   set (COMPILE_FMS 1 )
