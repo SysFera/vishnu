@@ -252,9 +252,8 @@ Env::getVar(const std::string& name,
 	char* cvalue = getenv(name.c_str());
 	if(cvalue != NULL) {
 		value = std::string(cvalue);
-	} else if(! optional) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				"You may need to set "+name);
+	} else if(!optional) {
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Missing parameter "+name);
 	}
 
 	return value;
