@@ -70,7 +70,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
-    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig); 
+    config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
 
     if (interval < 0) {
@@ -81,13 +81,13 @@ int main(int argc, char* argv[], char* envp[]) {
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE_2_3
       std::cerr << "\nError: can't initialize TORQUE batch type because "
-                << "this server has not compiled with TORQUE library\n\n";
+                << "this server has not been compiled with TORQUE library\n\n";
       exit(1);
 #endif
       batchType = TORQUE;
     } else if (batchTypeStr == "PBS") {
 #ifndef HAVE_PBSPRO_10_4
-      
+
       std::cerr << std::endl;
       std::cerr << "Error: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library" << std::endl;
       std::cerr << std::endl;
@@ -97,14 +97,14 @@ int main(int argc, char* argv[], char* envp[]) {
     } else if (batchTypeStr == "LOADLEVELER") {
 #ifndef HAVE_LOADLEVELER_2_5
       std::cerr << "\nError: can't initialize LOADLEVELER batch type because "
-                << "this server has not compiled with LOADLEVELER library\n\n";
+                << "this server has not been compiled with LOADLEVELER library\n\n";
       exit(1);
 #endif
       batchType = LOADLEVELER;
     } else if (batchTypeStr == "SLURM") {
 #if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
       std::cerr << "\nError: can't initialize SLURM batch type because "
-                << "this server has not compiled with SLURM library\n\n";
+                << "this server has not been compiled with SLURM library\n\n";
       exit(1);
 #endif
       batchType = SLURM;
@@ -112,14 +112,14 @@ int main(int argc, char* argv[], char* envp[]) {
     } else if (batchTypeStr == "LSF") {
 #ifndef HAVE_LSF_7_0
       std::cerr << "\nError: can't initialize LSF batch type because "
-                << "this server has not compiled with LSF library\n\n";
+                << "this server has not been compiled with LSF library\n\n";
       exit(1);
 #endif
       batchType = LSF;
     } else if (batchTypeStr == "SGE") {
 #ifndef HAVE_SGE_11
       std::cerr << "\nError: can't initialize SGE batch type because "
-                << "this server has not compiled with SGE library\n\n";
+                << "this server has not been compiled with SGE library\n\n";
       exit(1);
 #endif
       batchType = SGE;
