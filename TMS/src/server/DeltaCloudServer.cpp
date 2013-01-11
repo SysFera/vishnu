@@ -277,7 +277,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	deltacloud_instance instance; // Get the instance
 	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				(boost::format("Get instance with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
+				(boost::format("Get instance failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
 	}
 	std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
