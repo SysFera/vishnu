@@ -116,11 +116,9 @@ MonitorTMS::run() {
         ++item; jobDescr = *item;
         ++item; vmIp = *item;
         ++item; vmId = *item;
-
         if(mbatchType == DELTACLOUD) {
           jobDescr += "@"+vmUser+"@"+vmIp+"@"+vmId;
         }
-
         try {
           state = batchServer->getJobState(jobDescr);
           if(state != vishnu::JOB_UNDEFINED) {
@@ -136,7 +134,7 @@ MonitorTMS::run() {
         }
       }
     } catch (VishnuException& ex) {
-			std::clog << "[ERROR] "<< ex.buildExceptionString() << "\n";
+      std::clog << "[TMSMONITOR][ERROR] "<< ex.buildExceptionString() << "\n";
     }
     sleep(minterval);
   }

@@ -226,9 +226,7 @@ DeltaCloudServer::listQueues(const std::string& optQueueName) {
  * \param ignoredIds the list of job ids to ignore
  */
 void DeltaCloudServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-		const std::vector<std::string>& ignoredIds) {
-	//TODO The semantic is no yet defined
-}
+		const std::vector<std::string>& ignoredIds) { }
 
 
 int
@@ -238,7 +236,6 @@ create_plugin_instance(void **instance) {
 	} catch (const std::bad_alloc& e) {
 		return 1;
 	}
-
 	return PLUGIN_OK;
 }
 
@@ -281,7 +278,8 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	}
 	std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+				(boost::format("Deleting the virtual machine failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
 	}
 	deltacloud_free_instance(&instance);
 	finalize();
