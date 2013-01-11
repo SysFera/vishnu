@@ -10,7 +10,6 @@
 #include "api_fms.hpp"
 #include "api_tms.hpp"
 #include "TMS_Data.hpp"
-#include "SessionServer.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 #include "utilVishnu.hpp"
