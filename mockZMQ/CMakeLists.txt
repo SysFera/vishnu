@@ -21,7 +21,6 @@ add_library(zmq_helper
   Server.cpp
   SeD.cpp
   utils.cpp
-#  ZMQHelper/mdclient.cpp
 )
 
 target_link_libraries (zmq_helper
