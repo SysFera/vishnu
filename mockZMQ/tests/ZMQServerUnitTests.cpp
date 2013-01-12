@@ -30,11 +30,11 @@ BOOST_AUTO_TEST_CASE( test_fromStr_n )
 {
 // Test the server class
   std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" + mservices.at(1);
-  Server s = *(Server::fromString(res).get());
+  boost::shared_ptr<Server> s = Server::fromString(res);
 
-  BOOST_REQUIRE_EQUAL(s.getName().compare(mname), 0);
-  BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
-  BOOST_REQUIRE_EQUAL(s.getServices().size(), mservices.size());
+  BOOST_REQUIRE_EQUAL(s->getName(), mname);
+  BOOST_REQUIRE_EQUAL(s->getURI(), muri);
+  BOOST_REQUIRE_EQUAL((s->getServices()).size(), mservices.size());
 }
 
 
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( test_toStr_n )
   Server s(mname, mservices, muri);
   std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" + mservices.at(1);
 
-  BOOST_REQUIRE_EQUAL(res.compare(s.toString()), 0);
+  BOOST_REQUIRE_EQUAL(res, s.toString());
 }
 
 BOOST_AUTO_TEST_CASE( test_add_n_serv )
@@ -117,7 +117,7 @@ BOOST_AUTO_TEST_CASE( test_getname_n )
 // Test the server class
   Server s(mname, mservices, muri);
 
-  BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
+  BOOST_REQUIRE_EQUAL(s.getURI(), muri);
 }
 
 BOOST_AUTO_TEST_CASE( test_getserv_n )
@@ -125,8 +125,8 @@ BOOST_AUTO_TEST_CASE( test_getserv_n )
 // Test the server class
   Server s(mname, mservices, muri);
 
-  BOOST_REQUIRE_EQUAL(s.getServices().at(0).compare(mservices.at(0)), 0);
-  BOOST_REQUIRE_EQUAL(s.getServices().at(1).compare(mservices.at(1)), 0);
+  BOOST_REQUIRE_EQUAL(s.getServices().at(0), mservices.at(0));
+  BOOST_REQUIRE_EQUAL(s.getServices().at(1), mservices.at(1));
 }
 
 BOOST_AUTO_TEST_CASE( test_geturi_n )
@@ -134,7 +134,7 @@ BOOST_AUTO_TEST_CASE( test_geturi_n )
 // Test the server class
   Server s(mname, mservices, muri);
 
-  BOOST_REQUIRE_EQUAL(s.getURI().compare(muri), 0);
+  BOOST_REQUIRE_EQUAL(s.getURI(), muri);
 }
 
 
