@@ -65,11 +65,11 @@ int UserProxy::add(UMS_Data::User& user)
   //To serialize the user object in to userToString
   std::string userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(userToString.c_str()))) {
+  if (diet_string_set(profile, 1, userToString)) {
     msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
@@ -131,11 +131,11 @@ int UserProxy::update(const UMS_Data::User& user)
   userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(userToString.c_str()))) {
+  if (diet_string_set(profile, 1, userToString)) {
     msg += "with userToString parameter "+userToString;
     raiseDietMsgException(msg);
   }
@@ -181,11 +181,11 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
   userId = user.getUserId();
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(userId.c_str()))) {
+  if (diet_string_set(profile, 1, userId)) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }
@@ -295,26 +295,26 @@ int UserProxy::resetPassword(UMS_Data::User& user)
   profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>((msessionProxy->getSessionKey()).c_str()))) {
+  if (diet_string_set(profile, 0, msessionProxy->getSessionKey())) {
     msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
     raiseDietMsgException(msg);
   }
 
-  if(diet_string_set(profile,1, const_cast<char*>((user.getUserId()).c_str()))) {
+  if (diet_string_set(profile, 1, user.getUserId())) {
     msg += "with userId parameter "+user.getUserId();
     raiseDietMsgException(msg);
   }
 
   //OUT Parameters
-  diet_string_set(profile,2);
-  diet_string_set(profile,3);
+  diet_string_set(profile, 2);
+  diet_string_set(profile, 3);
 
   if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, tmpPassword)){
+    if(diet_string_get(profile, 2, tmpPassword)){
       msg += "by receiving tmpPassWord message";
       raiseDietMsgException(msg);
     }
-    if(diet_string_get(profile,3, errorInfo)){
+    if(diet_string_get(profile, 3, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseDietMsgException(msg);
     }

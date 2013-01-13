@@ -229,7 +229,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
 
 	//IN Parameters
-	if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+	if (diet_string_set(profile, 0, sessionKey)) {
 		msg += "with sessionKey parameter "+sessionKey;
 		raiseDietMsgException(msg);
 	}
@@ -237,12 +237,12 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	//If the query uses the machineId (machineId not null)
 	if (mmachineId.size() != 0) {
 
-		if(diet_string_set(profile,1, const_cast<char*>(mmachineId.c_str()))) {
+		if (diet_string_set(profile, 1, mmachineId)) {
 			msg += "with machineId parameter "+mmachineId;
 			raiseDietMsgException(msg);
 		}
 
-		if(diet_string_set(profile,2, const_cast<char*>(queryParmetersToString.c_str()))) {
+		if (diet_string_set(profile, 2, queryParmetersToString)) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}
@@ -267,7 +267,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
 	}
 	else {
 
-		if(diet_string_set(profile,1, const_cast<char*>(queryParmetersToString.c_str()))) {
+		if (diet_string_set(profile, 1, queryParmetersToString)) {
 			msg += "with queryParmetersToString parameter "+queryParmetersToString;
 			raiseDietMsgException(msg);
 		}

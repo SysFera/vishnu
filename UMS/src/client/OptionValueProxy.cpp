@@ -47,11 +47,11 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   optionValueToString =  _ser.serialize_str(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(optionValueToString.c_str()))) {
+  if (diet_string_set(profile, 1, optionValueToString)) {
     msg += "with optionValueToString parameter "+optionValueToString;
     raiseDietMsgException(msg);
   }
