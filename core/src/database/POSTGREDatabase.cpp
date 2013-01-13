@@ -58,9 +58,7 @@ POSTGREDatabase::connect(){
   for (i=0;i<mconfig.getDbPoolSize();i++) {
     if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
       std::ostringstream out;
-      if (mconfig.getDbPort() < 0) {
-        throw SystemException(ERRCODE_DBCONN, "The port value is incorrect");
-      } else if (mconfig.getDbPort() != 0) {
+      if (mconfig.getDbPort() != 0) {
         out << mconfig.getDbPort();
       }
       // Make a connection to the database
