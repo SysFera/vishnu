@@ -50,21 +50,11 @@ public :
   ~POSTGREDatabase();
 
   /**
-   * FIXME obsolete
-   * \brief To set the db to use
-   * \fn int setDatabase(std::string db)
-   * \param db The name of the database to use
-   * \return 0 raises an exception on error
-   */
-  int
-  setDatabase(std::string db) {}
-
-  /**
-  * \brief To get the result of a select request
-  * \param request The request to process
+   * \brief To get the result of a select request
+   * \param request The request to process
    * \param transacId the id of the transaction if one is used
-  * \return An object which encapsulates the database results
-  */
+   * \return An object which encapsulates the database results
+   */
   DatabaseResult*
   getResult(std::string request, int transacId = -1);
 
