@@ -1,15 +1,21 @@
 #include "Server.hpp"
+#include <algorithm>
 #include <vector>
 #include <string>
 #include <sstream>
+#include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/algorithm/string/regex.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
+// typedef for readability and less typing
+typedef std::vector<std::string> Services;
+
+
 Server::Server(const std::string& name, const std::vector<std::string> &serv,
                const std::string& uri) :
-    mname(name), mservices(serv), muri(uri){
+    mname(name), mservices(serv), muri(uri) {
 }
 
 Server::~Server(){
@@ -18,39 +24,33 @@ Server::~Server(){
 
 int
 Server::add(const std::string& service) {
-  bool found = false;
-  unsigned int i;
-  for (i = 0; i < mservices.size(); ++i) {
-    if (service.compare(mservices.at(i)) == 0) {
-      found = true;
-    }
-  }
-  if (!found) {
+  Services::iterator it =
+    std::find(mservices.begin(), mservices.end(), service);
+
+  if (it != mservices.end()) {
     mservices.push_back(service);
   }
+
   return 0;
 }
 
 int
 Server::remove(const std::string& service) {
-  unsigned int i;
-  for (i = 0; i < mservices.size(); ++i) {
-    if (service.compare(mservices.at(i)) == 0) {
-      mservices.erase(mservices.begin() + i);
-    }
-  }
+  // using erase/remove idiom
+  Services::iterator it =
+    std::remove(mservices.begin(), mservices.end(), service);
+
+  mservices.erase(it, mservices.end());
+
   return 0;
 }
 
 bool
 Server::hasService(const std::string& service) const {
-  unsigned int i;
-  for (i = 0; i < mservices.size(); i++){
-    if (mservices[i] == service) {
-      return true;
-    }
-  }
-  return false;
+  Services::const_iterator it  =
+    std::find(mservices.begin(), mservices.end(), service);
+
+  return (it != mservices.end());
 }
 
 std::string
@@ -64,11 +64,10 @@ Server::getURI() const {
   return muri;
 }
 
-std::vector<std::string>&
+Services&
 Server::getServices() {
   return mservices;
 }
-
 
 
 std::string
@@ -86,22 +85,24 @@ Server::toString() {
 
 boost::shared_ptr<Server>
 Server::fromString(const std::string& prof) {
+  using boost::algorithm::split_regex;
+
   boost::shared_ptr<Server> res;
   std::vector<std::string> vecString;
-  boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
+  split_regex(vecString, prof, boost::regex("\\${3}"));
   std::string name;
   std::string uri;
-  std::vector<std::string> services;
+  Services services;
 
   if (!vecString.empty()) {
-    std::vector<std::string>::iterator it = vecString.begin();
-    name = std::string(strdup((it++)->c_str()));
-    uri = std::string(strdup((it++)->c_str()));
+    Services::iterator it = vecString.begin();
+    name = *(it++);
+    uri = *(it++);
 
-    for (int i = 0; it != vecString.end(); ++it, i++) {
-      services.push_back(std::string(strdup(it->c_str())));
+    for (; it != vecString.end(); ++it) {
+      services.push_back(*it);
     }
-    res.reset(new Server(name, services, uri));
+    res = boost::make_shared<Server>(name, services, uri);
   }
   return res;
 }
