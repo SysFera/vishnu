@@ -54,7 +54,7 @@ int ConfigurationProxy::save()
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
@@ -126,11 +126,11 @@ int ConfigurationProxy::restore(bool fromFile)
   sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(configurationInString.c_str()))) {
+  if (diet_string_set(profile, 1, configurationInString)) {
     msg += "with configurationInString parameter " + configurationInString;
     raiseDietMsgException(msg);
   }

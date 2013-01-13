@@ -41,11 +41,11 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   authAccountToString =  _ser.serialize_str(const_cast<UMS_Data::AuthAccount_ptr>(&mauthAccount));
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(authAccountToString.c_str()))) {
+  if (diet_string_set(profile, 1, authAccountToString)) {
     msg += "with authAccountToString parameter "+authAccountToString;
     raiseDietMsgException(msg);
   }
@@ -111,15 +111,15 @@ AuthAccountProxy::deleteAuthAccount()
   sysId = mauthAccount.getAuthSystemId();
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(sysId.c_str()))) {
+  if (diet_string_set(profile, 1, sysId)) {
     msg += "with systemId parameter "+sysId;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,2, const_cast<char*>(userId.c_str()))) {
+  if (diet_string_set(profile, 2, userId)) {
     msg += "with userId parameter "+userId;
     raiseDietMsgException(msg);
   }

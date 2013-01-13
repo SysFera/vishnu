@@ -276,7 +276,7 @@ int SessionProxy::close()
 
   diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1);
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }

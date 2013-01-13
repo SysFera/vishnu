@@ -41,11 +41,11 @@ AuthSystemProxy::add() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(authSystemToString.c_str()))) {
+  if (diet_string_set(profile, 1, authSystemToString)) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
@@ -108,11 +108,11 @@ AuthSystemProxy::update() {
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(authSystemToString.c_str()))) {
+  if (diet_string_set(profile, 1, authSystemToString)) {
     msg += "with authSystemToString parameter "+authSystemToString;
     raiseDietMsgException(msg);
   }
@@ -157,11 +157,11 @@ AuthSystemProxy::deleteAuthSystem()
   sysId = mauthSystem.getAuthSystemId();
 
   //IN Parameters
-  if(diet_string_set(profile,0, const_cast<char*>(sessionKey.c_str()))) {
+  if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-  if(diet_string_set(profile,1, const_cast<char*>(sysId.c_str()))) {
+  if (diet_string_set(profile, 1, sysId)) {
     msg += "with systemId parameter "+sysId;
     raiseDietMsgException(msg);
   }
