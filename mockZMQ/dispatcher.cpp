@@ -13,9 +13,6 @@
 #include "ExecConfiguration.hpp"
 
 
-#define SEPARATOR "#"
-#define INIT "$"
-
 namespace bfs = boost::filesystem;
 
 void
