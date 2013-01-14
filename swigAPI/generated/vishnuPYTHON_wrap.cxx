@@ -2712,7 +2712,7 @@ SWIG_Python_MustGetPtr(PyObject *obj, swig_type_info *ty, int argnum, int flags)
 #define SWIGTYPE_p_IMS_Data__MetricHistOp swig_types[23]
 #define SWIGTYPE_p_IMS_Data__Process swig_types[24]
 #define SWIGTYPE_p_IMS_Data__ProcessOp swig_types[25]
-#define SWIGTYPE_p_IMS_Data__RestartOp swig_types[26]
+#define SWIGTYPE_p_IMS_Data__SupervisorOp swig_types[26]
 #define SWIGTYPE_p_IMS_Data__SysInfoOp swig_types[27]
 #define SWIGTYPE_p_IMS_Data__SystemInfo swig_types[28]
 #define SWIGTYPE_p_IMS_Data__Threshold swig_types[29]
@@ -25950,362 +25950,6 @@ SWIGINTERN PyObject *ProcessOp_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   return SWIG_Py_Void();
 }
 
-SWIGINTERN PyObject *_wrap_new_RestartOp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)":new_RestartOp")) SWIG_fail;
-  result = (IMS_Data::RestartOp *)new IMS_Data::RestartOp();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_IMS_Data__RestartOp, SWIG_POINTER_NEW |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_delete_RestartOp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:delete_RestartOp",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, SWIG_POINTER_DISOWN |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_RestartOp" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  delete arg1;
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:RestartOp__initialize",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp__initialize" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  (arg1)->_initialize();
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_getVishnuConf(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  ecore::EString *result = 0 ;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:RestartOp_getVishnuConf",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_getVishnuConf" "', argument " "1"" of type '" "IMS_Data::RestartOp const *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  result = (ecore::EString *) &((IMS_Data::RestartOp const *)arg1)->getVishnuConf();
-  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_setVishnuConf(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ecore::EString *arg2 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int res2 = SWIG_OLDOBJ ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_vishnuConf", NULL 
-  };
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:RestartOp_setVishnuConf",kwnames,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_setVishnuConf" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  {
-    std::string *ptr = (std::string *)0;
-    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "RestartOp_setVishnuConf" "', argument " "2"" of type '" "ecore::EString const &""'"); 
-    }
-    if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RestartOp_setVishnuConf" "', argument " "2"" of type '" "ecore::EString const &""'"); 
-    }
-    arg2 = ptr;
-  }
-  (arg1)->setVishnuConf((ecore::EString const &)*arg2);
-  resultobj = SWIG_Py_Void();
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return resultobj;
-fail:
-  if (SWIG_IsNewObj(res2)) delete arg2;
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_getSedType(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  ::IMS_Data::SeDType result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:RestartOp_getSedType",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_getSedType" "', argument " "1"" of type '" "IMS_Data::RestartOp const *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  result = (::IMS_Data::SeDType)((IMS_Data::RestartOp const *)arg1)->getSedType();
-  resultobj = SWIG_From_int(static_cast< int >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_setSedType(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ::IMS_Data::SeDType arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_sedType", NULL 
-  };
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:RestartOp_setSedType",kwnames,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_setSedType" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RestartOp_setSedType" "', argument " "2"" of type '" "::IMS_Data::SeDType""'");
-  } 
-  arg2 = static_cast< ::IMS_Data::SeDType >(val2);
-  (arg1)->setSedType(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ::ecore::EInt arg2 ;
-  ::ecore::EBoolean arg3 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  bool val3 ;
-  int ecode3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_featureID",(char *) "_resolve", NULL 
-  };
-  ::ecore::EJavaObject result;
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:RestartOp_eGet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_eGet" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RestartOp_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  ecode3 = SWIG_AsVal_bool(obj2, &val3);
-  if (!SWIG_IsOK(ecode3)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "RestartOp_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
-  } 
-  arg3 = static_cast< ::ecore::EBoolean >(val3);
-  result = (arg1)->eGet(arg2,arg3);
-  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ::ecore::EInt arg2 ;
-  ecore::EJavaObject *arg3 = 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  void *argp3 = 0 ;
-  int res3 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  PyObject * obj2 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_featureID",(char *) "_newValue", NULL 
-  };
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:RestartOp_eSet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_eSet" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RestartOp_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
-  if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "RestartOp_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
-  }
-  if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "RestartOp_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
-  }
-  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
-  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ::ecore::EInt arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_featureID", NULL 
-  };
-  ::ecore::EBoolean result;
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:RestartOp_eIsSet",kwnames,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_eIsSet" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RestartOp_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
-  resultobj = SWIG_From_bool(static_cast< bool >(result));
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  ::ecore::EInt arg2 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  int val2 ;
-  int ecode2 = 0 ;
-  PyObject * obj0 = 0 ;
-  PyObject * obj1 = 0 ;
-  char *  kwnames[] = {
-    (char *) "self",(char *) "_featureID", NULL 
-  };
-  
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:RestartOp_eUnset",kwnames,&obj0,&obj1)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp_eUnset" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  ecode2 = SWIG_AsVal_int(obj1, &val2);
-  if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "RestartOp_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
-  } 
-  arg2 = static_cast< ::ecore::EInt >(val2);
-  (arg1)->eUnset(arg2);
-  resultobj = SWIG_Py_Void();
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *_wrap_RestartOp__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *resultobj = 0;
-  IMS_Data::RestartOp *arg1 = (IMS_Data::RestartOp *) 0 ;
-  void *argp1 = 0 ;
-  int res1 = 0 ;
-  PyObject * obj0 = 0 ;
-  ::ecore::EClass_ptr result;
-  
-  if (!PyArg_ParseTuple(args,(char *)"O:RestartOp__eClass",&obj0)) SWIG_fail;
-  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__RestartOp, 0 |  0 );
-  if (!SWIG_IsOK(res1)) {
-    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "RestartOp__eClass" "', argument " "1"" of type '" "IMS_Data::RestartOp *""'"); 
-  }
-  arg1 = reinterpret_cast< IMS_Data::RestartOp * >(argp1);
-  result = (::ecore::EClass_ptr)(arg1)->_eClass();
-  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
-  return resultobj;
-fail:
-  return NULL;
-}
-
-
-SWIGINTERN PyObject *RestartOp_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
-  PyObject *obj;
-  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
-  SWIG_TypeNewClientData(SWIGTYPE_p_IMS_Data__RestartOp, SWIG_NewClientData(obj));
-  return SWIG_Py_Void();
-}
-
 SWIGINTERN PyObject *_wrap_new_SysInfoOp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   IMS_Data::SysInfoOp *result = 0 ;
@@ -26604,6 +26248,369 @@ SWIGINTERN PyObject *SysInfoOp_swigregister(PyObject *SWIGUNUSEDPARM(self), PyOb
   PyObject *obj;
   if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
   SWIG_TypeNewClientData(SWIGTYPE_p_IMS_Data__SysInfoOp, SWIG_NewClientData(obj));
+  return SWIG_Py_Void();
+}
+
+SWIGINTERN PyObject *_wrap_new_SupervisorOp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)":new_SupervisorOp")) SWIG_fail;
+  result = (IMS_Data::SupervisorOp *)new IMS_Data::SupervisorOp();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_IMS_Data__SupervisorOp, SWIG_POINTER_NEW |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_delete_SupervisorOp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:delete_SupervisorOp",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, SWIG_POINTER_DISOWN |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "delete_SupervisorOp" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  delete arg1;
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp__initialize(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SupervisorOp__initialize",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp__initialize" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  (arg1)->_initialize();
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_getURI(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SupervisorOp_getURI",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_getURI" "', argument " "1"" of type '" "IMS_Data::SupervisorOp const *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  result = (ecore::EString *) &((IMS_Data::SupervisorOp const *)arg1)->getURI();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_setURI(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_URI", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SupervisorOp_setURI",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_setURI" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SupervisorOp_setURI" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SupervisorOp_setURI" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setURI((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_getName(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SupervisorOp_getName",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_getName" "', argument " "1"" of type '" "IMS_Data::SupervisorOp const *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  result = (ecore::EString *) &((IMS_Data::SupervisorOp const *)arg1)->getName();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_setName(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_name", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SupervisorOp_setName",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_setName" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "SupervisorOp_setName" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SupervisorOp_setName" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setName((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ::ecore::EInt arg2 ;
+  ::ecore::EBoolean arg3 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  bool val3 ;
+  int ecode3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_resolve", NULL 
+  };
+  ::ecore::EJavaObject result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:SupervisorOp_eGet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_eGet" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SupervisorOp_eGet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  ecode3 = SWIG_AsVal_bool(obj2, &val3);
+  if (!SWIG_IsOK(ecode3)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "SupervisorOp_eGet" "', argument " "3"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg3 = static_cast< ::ecore::EBoolean >(val3);
+  result = (arg1)->eGet(arg2,arg3);
+  resultobj = SWIG_NewPointerObj((new ::ecore::EJavaObject(static_cast< const ::ecore::EJavaObject& >(result))), SWIGTYPE_p___ecorecpp__mapping__any, SWIG_POINTER_OWN |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_eSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ::ecore::EInt arg2 ;
+  ecore::EJavaObject *arg3 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID",(char *) "_newValue", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:SupervisorOp_eSet",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_eSet" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SupervisorOp_eSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p___ecorecpp__mapping__any,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "SupervisorOp_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "SupervisorOp_eSet" "', argument " "3"" of type '" "ecore::EJavaObject const &""'"); 
+  }
+  arg3 = reinterpret_cast< ecore::EJavaObject * >(argp3);
+  (arg1)->eSet(arg2,(ecore::EJavaObject const &)*arg3);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_eIsSet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SupervisorOp_eIsSet",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_eIsSet" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SupervisorOp_eIsSet" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  result = (::ecore::EBoolean)(arg1)->eIsSet(arg2);
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp_eUnset(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  ::ecore::EInt arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_featureID", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SupervisorOp_eUnset",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp_eUnset" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SupervisorOp_eUnset" "', argument " "2"" of type '" "::ecore::EInt""'");
+  } 
+  arg2 = static_cast< ::ecore::EInt >(val2);
+  (arg1)->eUnset(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SupervisorOp__eClass(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  IMS_Data::SupervisorOp *arg1 = (IMS_Data::SupervisorOp *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EClass_ptr result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SupervisorOp__eClass",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_IMS_Data__SupervisorOp, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SupervisorOp__eClass" "', argument " "1"" of type '" "IMS_Data::SupervisorOp *""'"); 
+  }
+  arg1 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp1);
+  result = (::ecore::EClass_ptr)(arg1)->_eClass();
+  resultobj = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_ecore__EClass, 0 |  0 );
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *SupervisorOp_swigregister(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *obj;
+  if (!PyArg_ParseTuple(args,(char*)"O:swigregister", &obj)) return NULL;
+  SWIG_TypeNewClientData(SWIGTYPE_p_IMS_Data__SupervisorOp, SWIG_NewClientData(obj));
   return SWIG_Py_Void();
 }
 
@@ -38904,8 +38911,9 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
   std::string arg1 ;
   std::string arg2 ;
   std::string arg3 ;
-  IMS_Data::ExportOp arg4 ;
-  void *argp4 ;
+  IMS_Data::ExportOp const &arg4_defvalue = IMS_Data::ExportOp() ;
+  IMS_Data::ExportOp *arg4 = (IMS_Data::ExportOp *) &arg4_defvalue ;
+  void *argp4 = 0 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -38916,7 +38924,7 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO:exportCommands",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:exportCommands",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -38944,21 +38952,18 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
     arg3 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj3) {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_IMS_Data__ExportOp,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "exportCommands" "', argument " "4"" of type '" "IMS_Data::ExportOp""'"); 
-    }  
-    if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "exportCommands" "', argument " "4"" of type '" "IMS_Data::ExportOp""'");
-    } else {
-      IMS_Data::ExportOp * temp = reinterpret_cast< IMS_Data::ExportOp * >(argp4);
-      arg4 = *temp;
-      if (SWIG_IsNewObj(res4)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "exportCommands" "', argument " "4"" of type '" "IMS_Data::ExportOp const &""'"); 
     }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "exportCommands" "', argument " "4"" of type '" "IMS_Data::ExportOp const &""'"); 
+    }
+    arg4 = reinterpret_cast< IMS_Data::ExportOp * >(argp4);
   }
   try {
-    result = (int)vishnu::exportCommands(arg1,arg2,arg3,arg4);
+    result = (int)vishnu::exportCommands(arg1,arg2,arg3,(IMS_Data::ExportOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -38987,9 +38992,10 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
   std::string arg1 ;
   std::string arg2 ;
   IMS_Data::ListMetric *arg3 = 0 ;
-  IMS_Data::CurMetricOp arg4 ;
+  IMS_Data::CurMetricOp const &arg4_defvalue = IMS_Data::CurMetricOp() ;
+  IMS_Data::CurMetricOp *arg4 = (IMS_Data::CurMetricOp *) &arg4_defvalue ;
   IMS_Data::ListMetric temp3 ;
-  void *argp4 ;
+  void *argp4 = 0 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -39002,7 +39008,7 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:getMetricCurrentValue",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:getMetricCurrentValue",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -39021,21 +39027,18 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_IMS_Data__CurMetricOp,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getMetricCurrentValue" "', argument " "4"" of type '" "IMS_Data::CurMetricOp""'"); 
-    }  
-    if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricCurrentValue" "', argument " "4"" of type '" "IMS_Data::CurMetricOp""'");
-    } else {
-      IMS_Data::CurMetricOp * temp = reinterpret_cast< IMS_Data::CurMetricOp * >(argp4);
-      arg4 = *temp;
-      if (SWIG_IsNewObj(res4)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getMetricCurrentValue" "', argument " "4"" of type '" "IMS_Data::CurMetricOp const &""'"); 
     }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricCurrentValue" "', argument " "4"" of type '" "IMS_Data::CurMetricOp const &""'"); 
+    }
+    arg4 = reinterpret_cast< IMS_Data::CurMetricOp * >(argp4);
   }
   try {
-    result = (int)vishnu::getMetricCurrentValue(arg1,arg2,*arg3,arg4);
+    result = (int)vishnu::getMetricCurrentValue(arg1,arg2,*arg3,(IMS_Data::CurMetricOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39093,9 +39096,10 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
   std::string arg1 ;
   std::string arg2 ;
   IMS_Data::ListMetric *arg3 = 0 ;
-  IMS_Data::MetricHistOp arg4 ;
+  IMS_Data::MetricHistOp const &arg4_defvalue = IMS_Data::MetricHistOp() ;
+  IMS_Data::MetricHistOp *arg4 = (IMS_Data::MetricHistOp *) &arg4_defvalue ;
   IMS_Data::ListMetric temp3 ;
-  void *argp4 ;
+  void *argp4 = 0 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -39108,7 +39112,7 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:getMetricHistory",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:getMetricHistory",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -39127,21 +39131,18 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_IMS_Data__MetricHistOp,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getMetricHistory" "', argument " "4"" of type '" "IMS_Data::MetricHistOp""'"); 
-    }  
-    if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricHistory" "', argument " "4"" of type '" "IMS_Data::MetricHistOp""'");
-    } else {
-      IMS_Data::MetricHistOp * temp = reinterpret_cast< IMS_Data::MetricHistOp * >(argp4);
-      arg4 = *temp;
-      if (SWIG_IsNewObj(res4)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "getMetricHistory" "', argument " "4"" of type '" "IMS_Data::MetricHistOp const &""'"); 
     }
+    if (!argp4) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricHistory" "', argument " "4"" of type '" "IMS_Data::MetricHistOp const &""'"); 
+    }
+    arg4 = reinterpret_cast< IMS_Data::MetricHistOp * >(argp4);
   }
   try {
-    result = (int)vishnu::getMetricHistory(arg1,arg2,*arg3,arg4);
+    result = (int)vishnu::getMetricHistory(arg1,arg2,*arg3,(IMS_Data::MetricHistOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39198,9 +39199,10 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
   PyObject *resultobj = 0;
   std::string arg1 ;
   IMS_Data::ListProcesses *arg2 = 0 ;
-  IMS_Data::ProcessOp arg3 ;
+  IMS_Data::ProcessOp const &arg3_defvalue = IMS_Data::ProcessOp() ;
+  IMS_Data::ProcessOp *arg3 = (IMS_Data::ProcessOp *) &arg3_defvalue ;
   IMS_Data::ListProcesses temp2 ;
-  void *argp3 ;
+  void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -39212,7 +39214,7 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
   {
     arg2 = &temp2;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:getProcesses",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getProcesses",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -39222,21 +39224,18 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__ProcessOp,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getProcesses" "', argument " "3"" of type '" "IMS_Data::ProcessOp""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getProcesses" "', argument " "3"" of type '" "IMS_Data::ProcessOp""'");
-    } else {
-      IMS_Data::ProcessOp * temp = reinterpret_cast< IMS_Data::ProcessOp * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getProcesses" "', argument " "3"" of type '" "IMS_Data::ProcessOp const &""'"); 
     }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getProcesses" "', argument " "3"" of type '" "IMS_Data::ProcessOp const &""'"); 
+    }
+    arg3 = reinterpret_cast< IMS_Data::ProcessOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getProcesses(arg1,*arg2,arg3);
+    result = (int)vishnu::getProcesses(arg1,*arg2,(IMS_Data::ProcessOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39415,9 +39414,10 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
   PyObject *resultobj = 0;
   std::string arg1 ;
   IMS_Data::ListThreshold *arg2 = 0 ;
-  IMS_Data::ThresholdOp arg3 ;
+  IMS_Data::ThresholdOp const &arg3_defvalue = IMS_Data::ThresholdOp() ;
+  IMS_Data::ThresholdOp *arg3 = (IMS_Data::ThresholdOp *) &arg3_defvalue ;
   IMS_Data::ListThreshold temp2 ;
-  void *argp3 ;
+  void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -39429,7 +39429,7 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
   {
     arg2 = &temp2;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:getSystemThreshold",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getSystemThreshold",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -39439,21 +39439,18 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__ThresholdOp,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getSystemThreshold" "', argument " "3"" of type '" "IMS_Data::ThresholdOp""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemThreshold" "', argument " "3"" of type '" "IMS_Data::ThresholdOp""'");
-    } else {
-      IMS_Data::ThresholdOp * temp = reinterpret_cast< IMS_Data::ThresholdOp * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getSystemThreshold" "', argument " "3"" of type '" "IMS_Data::ThresholdOp const &""'"); 
     }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemThreshold" "', argument " "3"" of type '" "IMS_Data::ThresholdOp const &""'"); 
+    }
+    arg3 = reinterpret_cast< IMS_Data::ThresholdOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getSystemThreshold(arg1,*arg2,arg3);
+    result = (int)vishnu::getSystemThreshold(arg1,*arg2,(IMS_Data::ThresholdOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40009,17 +40006,19 @@ fail:
 SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string arg1 ;
-  IMS_Data::Process arg2 ;
-  void *argp2 ;
-  int res2 = 0 ;
+  std::string arg2 ;
+  IMS_Data::SupervisorOp *arg3 = 0 ;
+  void *argp3 = 0 ;
+  int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
+  PyObject * obj2 = 0 ;
   char *  kwnames[] = {
-    (char *) "sessionKey",(char *) "proc", NULL 
+    (char *) "sessionKey",(char *) "machineId",(char *) "op", NULL 
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:stop",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:stop",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -40030,20 +40029,24 @@ SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, 
     if (SWIG_IsNewObj(res)) delete ptr;
   }
   {
-    res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_IMS_Data__Process,  0  | 0);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "stop" "', argument " "2"" of type '" "IMS_Data::Process""'"); 
-    }  
-    if (!argp2) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stop" "', argument " "2"" of type '" "IMS_Data::Process""'");
-    } else {
-      IMS_Data::Process * temp = reinterpret_cast< IMS_Data::Process * >(argp2);
-      arg2 = *temp;
-      if (SWIG_IsNewObj(res2)) delete temp;
+    std::string *ptr = (std::string *)0;
+    int res = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res) || !ptr) {
+      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "stop" "', argument " "2"" of type '" "std::string""'"); 
     }
+    arg2 = *ptr;
+    if (SWIG_IsNewObj(res)) delete ptr;
   }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_IMS_Data__SupervisorOp,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "stop" "', argument " "3"" of type '" "IMS_Data::SupervisorOp const &""'"); 
+  }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stop" "', argument " "3"" of type '" "IMS_Data::SupervisorOp const &""'"); 
+  }
+  arg3 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp3);
   try {
-    result = (int)vishnu::stop(arg1,arg2);
+    result = (int)vishnu::stop(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40071,9 +40074,10 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
   PyObject *resultobj = 0;
   std::string arg1 ;
   IMS_Data::ListSysInfo *arg2 = 0 ;
-  IMS_Data::SysInfoOp arg3 ;
+  IMS_Data::SysInfoOp const &arg3_defvalue = IMS_Data::SysInfoOp() ;
+  IMS_Data::SysInfoOp *arg3 = (IMS_Data::SysInfoOp *) &arg3_defvalue ;
   IMS_Data::ListSysInfo temp2 ;
-  void *argp3 ;
+  void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -40085,7 +40089,7 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
   {
     arg2 = &temp2;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:getSystemInfo",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getSystemInfo",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     int res = SWIG_AsPtr_std_string(obj0, &ptr);
@@ -40095,21 +40099,18 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
     arg1 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
+  if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__SysInfoOp,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getSystemInfo" "', argument " "3"" of type '" "IMS_Data::SysInfoOp""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemInfo" "', argument " "3"" of type '" "IMS_Data::SysInfoOp""'");
-    } else {
-      IMS_Data::SysInfoOp * temp = reinterpret_cast< IMS_Data::SysInfoOp * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getSystemInfo" "', argument " "3"" of type '" "IMS_Data::SysInfoOp const &""'"); 
     }
+    if (!argp3) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemInfo" "', argument " "3"" of type '" "IMS_Data::SysInfoOp const &""'"); 
+    }
+    arg3 = reinterpret_cast< IMS_Data::SysInfoOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getSystemInfo(arg1,*arg2,arg3);
+    result = (int)vishnu::getSystemInfo(arg1,*arg2,(IMS_Data::SysInfoOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40166,8 +40167,8 @@ SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   PyObject *resultobj = 0;
   std::string arg1 ;
   std::string arg2 ;
-  IMS_Data::RestartOp arg3 ;
-  void *argp3 ;
+  IMS_Data::SupervisorOp *arg3 = 0 ;
+  void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
@@ -40196,21 +40197,16 @@ SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     arg2 = *ptr;
     if (SWIG_IsNewObj(res)) delete ptr;
   }
-  {
-    res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_IMS_Data__RestartOp,  0  | 0);
-    if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "restart" "', argument " "3"" of type '" "IMS_Data::RestartOp""'"); 
-    }  
-    if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "restart" "', argument " "3"" of type '" "IMS_Data::RestartOp""'");
-    } else {
-      IMS_Data::RestartOp * temp = reinterpret_cast< IMS_Data::RestartOp * >(argp3);
-      arg3 = *temp;
-      if (SWIG_IsNewObj(res3)) delete temp;
-    }
+  res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_IMS_Data__SupervisorOp,  0  | 0);
+  if (!SWIG_IsOK(res3)) {
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "restart" "', argument " "3"" of type '" "IMS_Data::SupervisorOp const &""'"); 
   }
+  if (!argp3) {
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "restart" "', argument " "3"" of type '" "IMS_Data::SupervisorOp const &""'"); 
+  }
+  arg3 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp3);
   try {
-    result = (int)vishnu::restart(arg1,arg2,arg3);
+    result = (int)vishnu::restart(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40234,7 +40230,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_createFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_touch(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40247,15 +40243,15 @@ SWIGINTERN PyObject *_wrap_createFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:createFile",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:touch",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "createFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "touch" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "touch" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40263,15 +40259,15 @@ SWIGINTERN PyObject *_wrap_createFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "createFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "touch" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "touch" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   try {
-    result = (int)vishnu::createFile((std::string const &)*arg1,(std::string const &)*arg2);
+    result = (int)vishnu::touch((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40299,7 +40295,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_chGrp(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_chgrp(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40315,15 +40311,15 @@ SWIGINTERN PyObject *_wrap_chGrp(PyObject *SWIGUNUSEDPARM(self), PyObject *args,
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:chGrp",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:chgrp",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "chGrp" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "chgrp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chGrp" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chgrp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40331,10 +40327,10 @@ SWIGINTERN PyObject *_wrap_chGrp(PyObject *SWIGUNUSEDPARM(self), PyObject *args,
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "chGrp" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "chgrp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chGrp" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chgrp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -40342,15 +40338,15 @@ SWIGINTERN PyObject *_wrap_chGrp(PyObject *SWIGUNUSEDPARM(self), PyObject *args,
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "chGrp" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "chgrp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chGrp" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chgrp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   try {
-    result = (int)vishnu::chGrp((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
+    result = (int)vishnu::chgrp((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40380,7 +40376,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_chMod(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_chmod(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   mode_t *arg2 = 0 ;
@@ -40398,21 +40394,21 @@ SWIGINTERN PyObject *_wrap_chMod(PyObject *SWIGUNUSEDPARM(self), PyObject *args,
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:chMod",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:chmod",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "chMod" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "chmod" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chMod" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chmod" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
   ecode2 = SWIG_AsVal_unsigned_SS_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
-    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "chMod" "', argument " "2"" of type '" "mode_t""'");
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "chmod" "', argument " "2"" of type '" "mode_t""'");
   } 
   temp2 = static_cast< mode_t >(val2);
   arg2 = &temp2;
@@ -40420,15 +40416,15 @@ SWIGINTERN PyObject *_wrap_chMod(PyObject *SWIGUNUSEDPARM(self), PyObject *args,
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "chMod" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "chmod" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chMod" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "chmod" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   try {
-    result = (int)vishnu::chMod((std::string const &)*arg1,(unsigned int const &)*arg2,(std::string const &)*arg3);
+    result = (int)vishnu::chmod((std::string const &)*arg1,(unsigned int const &)*arg2,(std::string const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40456,7 +40452,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_copyFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_cp(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40477,15 +40473,15 @@ SWIGINTERN PyObject *_wrap_copyFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:copyFile",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:cp",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "copyFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "cp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40493,10 +40489,10 @@ SWIGINTERN PyObject *_wrap_copyFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "copyFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "cp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -40504,25 +40500,25 @@ SWIGINTERN PyObject *_wrap_copyFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "copyFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "cp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   if (obj3) {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_FMS_Data__CpFileOptions,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "copyFile" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "cp" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyFile" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "cp" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     arg4 = reinterpret_cast< FMS_Data::CpFileOptions * >(argp4);
   }
   try {
-    result = (int)vishnu::copyFile((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(FMS_Data::CpFileOptions const &)*arg4);
+    result = (int)vishnu::cp((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(FMS_Data::CpFileOptions const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40552,7 +40548,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_copyAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_acp(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40577,15 +40573,15 @@ SWIGINTERN PyObject *_wrap_copyAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO|O:copyAsyncFile",kwnames,&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO|O:acp",kwnames,&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "copyAsyncFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "acp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyAsyncFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "acp" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40593,10 +40589,10 @@ SWIGINTERN PyObject *_wrap_copyAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "copyAsyncFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "acp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyAsyncFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "acp" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -40604,33 +40600,33 @@ SWIGINTERN PyObject *_wrap_copyAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "copyAsyncFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "acp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyAsyncFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "acp" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_FMS_Data__FileTransfer,  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "copyAsyncFile" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "acp" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
   }
   if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyAsyncFile" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "acp" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
   }
   arg4 = reinterpret_cast< FMS_Data::FileTransfer * >(argp4);
   if (obj4) {
     res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_FMS_Data__CpFileOptions,  0  | 0);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "copyAsyncFile" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "acp" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "copyAsyncFile" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "acp" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     arg5 = reinterpret_cast< FMS_Data::CpFileOptions * >(argp5);
   }
   try {
-    result = (int)vishnu::copyAsyncFile((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(FMS_Data::CpFileOptions const &)*arg5);
+    result = (int)vishnu::acp((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(FMS_Data::CpFileOptions const &)*arg5);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40660,7 +40656,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_headOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_head(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40683,15 +40679,15 @@ SWIGINTERN PyObject *_wrap_headOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:headOfFile",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:head",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "headOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "head" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "headOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "head" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40699,25 +40695,25 @@ SWIGINTERN PyObject *_wrap_headOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "headOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "head" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "headOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "head" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_FMS_Data__HeadOfFileOptions,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "headOfFile" "', argument " "4"" of type '" "FMS_Data::HeadOfFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "head" "', argument " "4"" of type '" "FMS_Data::HeadOfFileOptions const &""'"); 
     }
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "headOfFile" "', argument " "4"" of type '" "FMS_Data::HeadOfFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "head" "', argument " "4"" of type '" "FMS_Data::HeadOfFileOptions const &""'"); 
     }
     arg4 = reinterpret_cast< FMS_Data::HeadOfFileOptions * >(argp4);
   }
   try {
-    result = (int)vishnu::headOfFile((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::HeadOfFileOptions const &)*arg4);
+    result = (int)vishnu::head((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::HeadOfFileOptions const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40749,7 +40745,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_contentOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_more(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40767,15 +40763,15 @@ SWIGINTERN PyObject *_wrap_contentOfFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:contentOfFile",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:more",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "contentOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "more" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "contentOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "more" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40783,15 +40779,15 @@ SWIGINTERN PyObject *_wrap_contentOfFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "contentOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "more" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "contentOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "more" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   try {
-    result = (int)vishnu::contentOfFile((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    result = (int)vishnu::more((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40823,7 +40819,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_listDir(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_ls(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40846,15 +40842,15 @@ SWIGINTERN PyObject *_wrap_listDir(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:listDir",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:ls",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "listDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "ls" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ls" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40862,25 +40858,25 @@ SWIGINTERN PyObject *_wrap_listDir(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "listDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "ls" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ls" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_FMS_Data__LsDirOptions,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "listDir" "', argument " "4"" of type '" "FMS_Data::LsDirOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "ls" "', argument " "4"" of type '" "FMS_Data::LsDirOptions const &""'"); 
     }
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "listDir" "', argument " "4"" of type '" "FMS_Data::LsDirOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "ls" "', argument " "4"" of type '" "FMS_Data::LsDirOptions const &""'"); 
     }
     arg4 = reinterpret_cast< FMS_Data::LsDirOptions * >(argp4);
   }
   try {
-    result = (int)vishnu::listDir((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::LsDirOptions const &)*arg4);
+    result = (int)vishnu::ls((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::LsDirOptions const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40937,7 +40933,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_createDir(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_mkdir(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -40955,15 +40951,15 @@ SWIGINTERN PyObject *_wrap_createDir(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:createDir",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:mkdir",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "createDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mkdir" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mkdir" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -40971,25 +40967,25 @@ SWIGINTERN PyObject *_wrap_createDir(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "createDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "mkdir" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mkdir" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   if (obj2) {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__CreateDirOptions,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "createDir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "mkdir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
     }
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "createDir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mkdir" "', argument " "3"" of type '" "FMS_Data::CreateDirOptions const &""'"); 
     }
     arg3 = reinterpret_cast< FMS_Data::CreateDirOptions * >(argp3);
   }
   try {
-    result = (int)vishnu::createDir((std::string const &)*arg1,(std::string const &)*arg2,(FMS_Data::CreateDirOptions const &)*arg3);
+    result = (int)vishnu::mkdir((std::string const &)*arg1,(std::string const &)*arg2,(FMS_Data::CreateDirOptions const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41017,7 +41013,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_moveFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_mv(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41038,15 +41034,15 @@ SWIGINTERN PyObject *_wrap_moveFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:moveFile",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:mv",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "moveFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "mv" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mv" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41054,10 +41050,10 @@ SWIGINTERN PyObject *_wrap_moveFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "moveFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "mv" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mv" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -41065,25 +41061,25 @@ SWIGINTERN PyObject *_wrap_moveFile(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "moveFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "mv" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mv" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   if (obj3) {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_FMS_Data__CpFileOptions,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "moveFile" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "mv" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveFile" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "mv" "', argument " "4"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     arg4 = reinterpret_cast< FMS_Data::CpFileOptions * >(argp4);
   }
   try {
-    result = (int)vishnu::moveFile((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(FMS_Data::CpFileOptions const &)*arg4);
+    result = (int)vishnu::mv((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(FMS_Data::CpFileOptions const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41113,7 +41109,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_moveAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_amv(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41138,15 +41134,15 @@ SWIGINTERN PyObject *_wrap_moveAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO|O:moveAsyncFile",kwnames,&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOOO|O:amv",kwnames,&obj0,&obj1,&obj2,&obj3,&obj4)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "moveAsyncFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "amv" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveAsyncFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "amv" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41154,10 +41150,10 @@ SWIGINTERN PyObject *_wrap_moveAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "moveAsyncFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "amv" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveAsyncFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "amv" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
@@ -41165,33 +41161,33 @@ SWIGINTERN PyObject *_wrap_moveAsyncFile(PyObject *SWIGUNUSEDPARM(self), PyObjec
     std::string *ptr = (std::string *)0;
     res3 = SWIG_AsPtr_std_string(obj2, &ptr);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "moveAsyncFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "amv" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveAsyncFile" "', argument " "3"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "amv" "', argument " "3"" of type '" "std::string const &""'"); 
     }
     arg3 = ptr;
   }
   res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_FMS_Data__FileTransfer,  0 );
   if (!SWIG_IsOK(res4)) {
-    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "moveAsyncFile" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "amv" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
   }
   if (!argp4) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveAsyncFile" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "amv" "', argument " "4"" of type '" "FMS_Data::FileTransfer &""'"); 
   }
   arg4 = reinterpret_cast< FMS_Data::FileTransfer * >(argp4);
   if (obj4) {
     res5 = SWIG_ConvertPtr(obj4, &argp5, SWIGTYPE_p_FMS_Data__CpFileOptions,  0  | 0);
     if (!SWIG_IsOK(res5)) {
-      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "moveAsyncFile" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res5), "in method '" "amv" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     if (!argp5) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "moveAsyncFile" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "amv" "', argument " "5"" of type '" "FMS_Data::CpFileOptions const &""'"); 
     }
     arg5 = reinterpret_cast< FMS_Data::CpFileOptions * >(argp5);
   }
   try {
-    result = (int)vishnu::moveAsyncFile((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(FMS_Data::CpFileOptions const &)*arg5);
+    result = (int)vishnu::amv((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,*arg4,(FMS_Data::CpFileOptions const &)*arg5);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41221,7 +41217,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_removeFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_rm(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41239,15 +41235,15 @@ SWIGINTERN PyObject *_wrap_removeFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:removeFile",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:rm",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "removeFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "rm" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "removeFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "rm" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41255,25 +41251,25 @@ SWIGINTERN PyObject *_wrap_removeFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "removeFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "rm" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "removeFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "rm" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   if (obj2) {
     res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__RmFileOptions,  0  | 0);
     if (!SWIG_IsOK(res3)) {
-      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "removeFile" "', argument " "3"" of type '" "FMS_Data::RmFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "rm" "', argument " "3"" of type '" "FMS_Data::RmFileOptions const &""'"); 
     }
     if (!argp3) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "removeFile" "', argument " "3"" of type '" "FMS_Data::RmFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "rm" "', argument " "3"" of type '" "FMS_Data::RmFileOptions const &""'"); 
     }
     arg3 = reinterpret_cast< FMS_Data::RmFileOptions * >(argp3);
   }
   try {
-    result = (int)vishnu::removeFile((std::string const &)*arg1,(std::string const &)*arg2,(FMS_Data::RmFileOptions const &)*arg3);
+    result = (int)vishnu::rm((std::string const &)*arg1,(std::string const &)*arg2,(FMS_Data::RmFileOptions const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41301,7 +41297,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_removeDir(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_rmdir(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41314,15 +41310,15 @@ SWIGINTERN PyObject *_wrap_removeDir(PyObject *SWIGUNUSEDPARM(self), PyObject *a
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:removeDir",kwnames,&obj0,&obj1)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:rmdir",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "removeDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "rmdir" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "removeDir" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "rmdir" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41330,15 +41326,15 @@ SWIGINTERN PyObject *_wrap_removeDir(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "removeDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "rmdir" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "removeDir" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "rmdir" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   try {
-    result = (int)vishnu::removeDir((std::string const &)*arg1,(std::string const &)*arg2);
+    result = (int)vishnu::rmdir((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41366,7 +41362,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_tailOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_tail(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41389,15 +41385,15 @@ SWIGINTERN PyObject *_wrap_tailOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
   {
     arg3 = &temp3;
   }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:tailOfFile",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:tail",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "tailOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "tail" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tailOfFile" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tail" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41405,25 +41401,25 @@ SWIGINTERN PyObject *_wrap_tailOfFile(PyObject *SWIGUNUSEDPARM(self), PyObject *
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "tailOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "tail" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tailOfFile" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tail" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_FMS_Data__TailOfFileOptions,  0  | 0);
     if (!SWIG_IsOK(res4)) {
-      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "tailOfFile" "', argument " "4"" of type '" "FMS_Data::TailOfFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res4), "in method '" "tail" "', argument " "4"" of type '" "FMS_Data::TailOfFileOptions const &""'"); 
     }
     if (!argp4) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tailOfFile" "', argument " "4"" of type '" "FMS_Data::TailOfFileOptions const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "tail" "', argument " "4"" of type '" "FMS_Data::TailOfFileOptions const &""'"); 
     }
     arg4 = reinterpret_cast< FMS_Data::TailOfFileOptions * >(argp4);
   }
   try {
-    result = (int)vishnu::tailOfFile((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::TailOfFileOptions const &)*arg4);
+    result = (int)vishnu::tail((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(FMS_Data::TailOfFileOptions const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -41455,7 +41451,7 @@ fail:
 }
 
 
-SWIGINTERN PyObject *_wrap_getFileInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+SWIGINTERN PyObject *_wrap_stat(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   std::string *arg1 = 0 ;
   std::string *arg2 = 0 ;
@@ -41472,15 +41468,15 @@ SWIGINTERN PyObject *_wrap_getFileInfo(PyObject *SWIGUNUSEDPARM(self), PyObject 
   };
   int result;
   
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:getFileInfo",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:stat",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
     res1 = SWIG_AsPtr_std_string(obj0, &ptr);
     if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getFileInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "stat" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getFileInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stat" "', argument " "1"" of type '" "std::string const &""'"); 
     }
     arg1 = ptr;
   }
@@ -41488,23 +41484,23 @@ SWIGINTERN PyObject *_wrap_getFileInfo(PyObject *SWIGUNUSEDPARM(self), PyObject 
     std::string *ptr = (std::string *)0;
     res2 = SWIG_AsPtr_std_string(obj1, &ptr);
     if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getFileInfo" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "stat" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     if (!ptr) {
-      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getFileInfo" "', argument " "2"" of type '" "std::string const &""'"); 
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stat" "', argument " "2"" of type '" "std::string const &""'"); 
     }
     arg2 = ptr;
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_FMS_Data__FileStat,  0 );
   if (!SWIG_IsOK(res3)) {
-    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "getFileInfo" "', argument " "3"" of type '" "FMS_Data::FileStat &""'"); 
+    SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "stat" "', argument " "3"" of type '" "FMS_Data::FileStat &""'"); 
   }
   if (!argp3) {
-    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getFileInfo" "', argument " "3"" of type '" "FMS_Data::FileStat &""'"); 
+    SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stat" "', argument " "3"" of type '" "FMS_Data::FileStat &""'"); 
   }
   arg3 = reinterpret_cast< FMS_Data::FileStat * >(argp3);
   try {
-    result = (int)vishnu::getFileInfo((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
+    result = (int)vishnu::stat((std::string const &)*arg1,(std::string const &)*arg2,*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -42485,19 +42481,6 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"ProcessOp_eUnset", (PyCFunction) _wrap_ProcessOp_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"ProcessOp_eUnset(ProcessOp self, EInt _featureID)"},
 	 { (char *)"ProcessOp__eClass", _wrap_ProcessOp__eClass, METH_VARARGS, (char *)"ProcessOp__eClass(ProcessOp self) -> EClass_ptr"},
 	 { (char *)"ProcessOp_swigregister", ProcessOp_swigregister, METH_VARARGS, NULL},
-	 { (char *)"new_RestartOp", _wrap_new_RestartOp, METH_VARARGS, (char *)"new_RestartOp() -> RestartOp"},
-	 { (char *)"delete_RestartOp", _wrap_delete_RestartOp, METH_VARARGS, (char *)"delete_RestartOp(RestartOp self)"},
-	 { (char *)"RestartOp__initialize", _wrap_RestartOp__initialize, METH_VARARGS, (char *)"RestartOp__initialize(RestartOp self)"},
-	 { (char *)"RestartOp_getVishnuConf", _wrap_RestartOp_getVishnuConf, METH_VARARGS, (char *)"RestartOp_getVishnuConf(RestartOp self) -> EString"},
-	 { (char *)"RestartOp_setVishnuConf", (PyCFunction) _wrap_RestartOp_setVishnuConf, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_setVishnuConf(RestartOp self, EString _vishnuConf)"},
-	 { (char *)"RestartOp_getSedType", _wrap_RestartOp_getSedType, METH_VARARGS, (char *)"RestartOp_getSedType(RestartOp self) -> SeDType"},
-	 { (char *)"RestartOp_setSedType", (PyCFunction) _wrap_RestartOp_setSedType, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_setSedType(RestartOp self, SeDType _sedType)"},
-	 { (char *)"RestartOp_eGet", (PyCFunction) _wrap_RestartOp_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_eGet(RestartOp self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
-	 { (char *)"RestartOp_eSet", (PyCFunction) _wrap_RestartOp_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_eSet(RestartOp self, EInt _featureID, EJavaObject _newValue)"},
-	 { (char *)"RestartOp_eIsSet", (PyCFunction) _wrap_RestartOp_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_eIsSet(RestartOp self, EInt _featureID) -> EBoolean"},
-	 { (char *)"RestartOp_eUnset", (PyCFunction) _wrap_RestartOp_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"RestartOp_eUnset(RestartOp self, EInt _featureID)"},
-	 { (char *)"RestartOp__eClass", _wrap_RestartOp__eClass, METH_VARARGS, (char *)"RestartOp__eClass(RestartOp self) -> EClass_ptr"},
-	 { (char *)"RestartOp_swigregister", RestartOp_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_SysInfoOp", _wrap_new_SysInfoOp, METH_VARARGS, (char *)"new_SysInfoOp() -> SysInfoOp"},
 	 { (char *)"delete_SysInfoOp", _wrap_delete_SysInfoOp, METH_VARARGS, (char *)"delete_SysInfoOp(SysInfoOp self)"},
 	 { (char *)"SysInfoOp__initialize", _wrap_SysInfoOp__initialize, METH_VARARGS, (char *)"SysInfoOp__initialize(SysInfoOp self)"},
@@ -42509,6 +42492,19 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SysInfoOp_eUnset", (PyCFunction) _wrap_SysInfoOp_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"SysInfoOp_eUnset(SysInfoOp self, EInt _featureID)"},
 	 { (char *)"SysInfoOp__eClass", _wrap_SysInfoOp__eClass, METH_VARARGS, (char *)"SysInfoOp__eClass(SysInfoOp self) -> EClass_ptr"},
 	 { (char *)"SysInfoOp_swigregister", SysInfoOp_swigregister, METH_VARARGS, NULL},
+	 { (char *)"new_SupervisorOp", _wrap_new_SupervisorOp, METH_VARARGS, (char *)"new_SupervisorOp() -> SupervisorOp"},
+	 { (char *)"delete_SupervisorOp", _wrap_delete_SupervisorOp, METH_VARARGS, (char *)"delete_SupervisorOp(SupervisorOp self)"},
+	 { (char *)"SupervisorOp__initialize", _wrap_SupervisorOp__initialize, METH_VARARGS, (char *)"SupervisorOp__initialize(SupervisorOp self)"},
+	 { (char *)"SupervisorOp_getURI", _wrap_SupervisorOp_getURI, METH_VARARGS, (char *)"SupervisorOp_getURI(SupervisorOp self) -> EString"},
+	 { (char *)"SupervisorOp_setURI", (PyCFunction) _wrap_SupervisorOp_setURI, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_setURI(SupervisorOp self, EString _URI)"},
+	 { (char *)"SupervisorOp_getName", _wrap_SupervisorOp_getName, METH_VARARGS, (char *)"SupervisorOp_getName(SupervisorOp self) -> EString"},
+	 { (char *)"SupervisorOp_setName", (PyCFunction) _wrap_SupervisorOp_setName, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_setName(SupervisorOp self, EString _name)"},
+	 { (char *)"SupervisorOp_eGet", (PyCFunction) _wrap_SupervisorOp_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_eGet(SupervisorOp self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
+	 { (char *)"SupervisorOp_eSet", (PyCFunction) _wrap_SupervisorOp_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_eSet(SupervisorOp self, EInt _featureID, EJavaObject _newValue)"},
+	 { (char *)"SupervisorOp_eIsSet", (PyCFunction) _wrap_SupervisorOp_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_eIsSet(SupervisorOp self, EInt _featureID) -> EBoolean"},
+	 { (char *)"SupervisorOp_eUnset", (PyCFunction) _wrap_SupervisorOp_eUnset, METH_VARARGS | METH_KEYWORDS, (char *)"SupervisorOp_eUnset(SupervisorOp self, EInt _featureID)"},
+	 { (char *)"SupervisorOp__eClass", _wrap_SupervisorOp__eClass, METH_VARARGS, (char *)"SupervisorOp__eClass(SupervisorOp self) -> EClass_ptr"},
+	 { (char *)"SupervisorOp_swigregister", SupervisorOp_swigregister, METH_VARARGS, NULL},
 	 { (char *)"new_SystemInfo", _wrap_new_SystemInfo, METH_VARARGS, (char *)"new_SystemInfo() -> SystemInfo"},
 	 { (char *)"delete_SystemInfo", _wrap_delete_SystemInfo, METH_VARARGS, (char *)"delete_SystemInfo(SystemInfo self)"},
 	 { (char *)"SystemInfo__initialize", _wrap_SystemInfo__initialize, METH_VARARGS, (char *)"SystemInfo__initialize(SystemInfo self)"},
@@ -42866,14 +42862,14 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"getCompletedJobsOutput", (PyCFunction) _wrap_getCompletedJobsOutput, METH_VARARGS | METH_KEYWORDS, (char *)"getCompletedJobsOutput(string sessionKey, string machineId, string outDir = std::string()) -> int"},
 	 { (char *)"exportCommands", (PyCFunction) _wrap_exportCommands, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
 		"exportCommands(string sessionKey, string oldSessionId, string filename, \n"
-		"    ExportOp op) -> int\n"
+		"    ExportOp op = IMS_Data::ExportOp()) -> int\n"
 		""},
-	 { (char *)"getMetricCurrentValue", (PyCFunction) _wrap_getMetricCurrentValue, METH_VARARGS | METH_KEYWORDS, (char *)"getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op) -> int"},
-	 { (char *)"getMetricHistory", (PyCFunction) _wrap_getMetricHistory, METH_VARARGS | METH_KEYWORDS, (char *)"getMetricHistory(string sessionKey, string machineId, MetricHistOp op) -> int"},
-	 { (char *)"getProcesses", (PyCFunction) _wrap_getProcesses, METH_VARARGS | METH_KEYWORDS, (char *)"getProcesses(string sessionKey, ProcessOp op) -> int"},
+	 { (char *)"getMetricCurrentValue", (PyCFunction) _wrap_getMetricCurrentValue, METH_VARARGS | METH_KEYWORDS, (char *)"getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op = IMS_Data::CurMetricOp()) -> int"},
+	 { (char *)"getMetricHistory", (PyCFunction) _wrap_getMetricHistory, METH_VARARGS | METH_KEYWORDS, (char *)"getMetricHistory(string sessionKey, string machineId, MetricHistOp op = IMS_Data::MetricHistOp()) -> int"},
+	 { (char *)"getProcesses", (PyCFunction) _wrap_getProcesses, METH_VARARGS | METH_KEYWORDS, (char *)"getProcesses(string sessionKey, ProcessOp op = IMS_Data::ProcessOp()) -> int"},
 	 { (char *)"setSystemInfo", (PyCFunction) _wrap_setSystemInfo, METH_VARARGS | METH_KEYWORDS, (char *)"setSystemInfo(string sessionKey, SystemInfo sys) -> int"},
 	 { (char *)"setSystemThreshold", (PyCFunction) _wrap_setSystemThreshold, METH_VARARGS | METH_KEYWORDS, (char *)"setSystemThreshold(string sessionKey, Threshold threshold) -> int"},
-	 { (char *)"getSystemThreshold", (PyCFunction) _wrap_getSystemThreshold, METH_VARARGS | METH_KEYWORDS, (char *)"getSystemThreshold(string sessionKey, ThresholdOp op) -> int"},
+	 { (char *)"getSystemThreshold", (PyCFunction) _wrap_getSystemThreshold, METH_VARARGS | METH_KEYWORDS, (char *)"getSystemThreshold(string sessionKey, ThresholdOp op = IMS_Data::ThresholdOp()) -> int"},
 	 { (char *)"defineUserIdentifier", (PyCFunction) _wrap_defineUserIdentifier, METH_VARARGS | METH_KEYWORDS, (char *)"defineUserIdentifier(string sessionKey, string fmt) -> int"},
 	 { (char *)"defineMachineIdentifier", (PyCFunction) _wrap_defineMachineIdentifier, METH_VARARGS | METH_KEYWORDS, (char *)"defineMachineIdentifier(string sessionKey, string fmt) -> int"},
 	 { (char *)"defineJobIdentifier", (PyCFunction) _wrap_defineJobIdentifier, METH_VARARGS | METH_KEYWORDS, (char *)"defineJobIdentifier(string sessionKey, string fmt) -> int"},
@@ -42883,30 +42879,30 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"loadShed", (PyCFunction) _wrap_loadShed, METH_VARARGS | METH_KEYWORDS, (char *)"loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"},
 	 { (char *)"setUpdateFrequency", (PyCFunction) _wrap_setUpdateFrequency, METH_VARARGS | METH_KEYWORDS, (char *)"setUpdateFrequency(string sessionKey, int freq) -> int"},
 	 { (char *)"getUpdateFrequency", (PyCFunction) _wrap_getUpdateFrequency, METH_VARARGS | METH_KEYWORDS, (char *)"getUpdateFrequency(string sessionKey) -> int"},
-	 { (char *)"stop", (PyCFunction) _wrap_stop, METH_VARARGS | METH_KEYWORDS, (char *)"stop(string sessionKey, Process proc) -> int"},
-	 { (char *)"getSystemInfo", (PyCFunction) _wrap_getSystemInfo, METH_VARARGS | METH_KEYWORDS, (char *)"getSystemInfo(string sessionKey, SysInfoOp op) -> int"},
-	 { (char *)"restart", (PyCFunction) _wrap_restart, METH_VARARGS | METH_KEYWORDS, (char *)"restart(string sessionKey, string machineId, RestartOp op) -> int"},
-	 { (char *)"createFile", (PyCFunction) _wrap_createFile, METH_VARARGS | METH_KEYWORDS, (char *)"createFile(string sessionKey, string path) -> int"},
-	 { (char *)"chGrp", (PyCFunction) _wrap_chGrp, METH_VARARGS | METH_KEYWORDS, (char *)"chGrp(string sessionKey, string group, string path) -> int"},
-	 { (char *)"chMod", (PyCFunction) _wrap_chMod, METH_VARARGS | METH_KEYWORDS, (char *)"chMod(string sessionKey, mode_t mode, string path) -> int"},
-	 { (char *)"copyFile", (PyCFunction) _wrap_copyFile, METH_VARARGS | METH_KEYWORDS, (char *)"copyFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"},
-	 { (char *)"copyAsyncFile", (PyCFunction) _wrap_copyAsyncFile, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
-		"copyAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, \n"
+	 { (char *)"stop", (PyCFunction) _wrap_stop, METH_VARARGS | METH_KEYWORDS, (char *)"stop(string sessionKey, string machineId, SupervisorOp op) -> int"},
+	 { (char *)"getSystemInfo", (PyCFunction) _wrap_getSystemInfo, METH_VARARGS | METH_KEYWORDS, (char *)"getSystemInfo(string sessionKey, SysInfoOp op = IMS_Data::SysInfoOp()) -> int"},
+	 { (char *)"restart", (PyCFunction) _wrap_restart, METH_VARARGS | METH_KEYWORDS, (char *)"restart(string sessionKey, string machineId, SupervisorOp op) -> int"},
+	 { (char *)"touch", (PyCFunction) _wrap_touch, METH_VARARGS | METH_KEYWORDS, (char *)"touch(string sessionKey, string path) -> int"},
+	 { (char *)"chgrp", (PyCFunction) _wrap_chgrp, METH_VARARGS | METH_KEYWORDS, (char *)"chgrp(string sessionKey, string group, string path) -> int"},
+	 { (char *)"chmod", (PyCFunction) _wrap_chmod, METH_VARARGS | METH_KEYWORDS, (char *)"chmod(string sessionKey, mode_t mode, string path) -> int"},
+	 { (char *)"cp", (PyCFunction) _wrap_cp, METH_VARARGS | METH_KEYWORDS, (char *)"cp(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"},
+	 { (char *)"acp", (PyCFunction) _wrap_acp, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
+		"acp(string sessionKey, string src, string dest, FileTransfer transferInfo, \n"
 		"    CpFileOptions options = FMS_Data::CpFileOptions()) -> int\n"
 		""},
-	 { (char *)"headOfFile", (PyCFunction) _wrap_headOfFile, METH_VARARGS | METH_KEYWORDS, (char *)"headOfFile(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"},
-	 { (char *)"contentOfFile", (PyCFunction) _wrap_contentOfFile, METH_VARARGS | METH_KEYWORDS, (char *)"contentOfFile(string sessionKey, string path) -> int"},
-	 { (char *)"listDir", (PyCFunction) _wrap_listDir, METH_VARARGS | METH_KEYWORDS, (char *)"listDir(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"},
-	 { (char *)"createDir", (PyCFunction) _wrap_createDir, METH_VARARGS | METH_KEYWORDS, (char *)"createDir(string sessionKey, string path, CreateDirOptions options = FMS_Data::CreateDirOptions()) -> int"},
-	 { (char *)"moveFile", (PyCFunction) _wrap_moveFile, METH_VARARGS | METH_KEYWORDS, (char *)"moveFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"},
-	 { (char *)"moveAsyncFile", (PyCFunction) _wrap_moveAsyncFile, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
-		"moveAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, \n"
+	 { (char *)"head", (PyCFunction) _wrap_head, METH_VARARGS | METH_KEYWORDS, (char *)"head(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"},
+	 { (char *)"more", (PyCFunction) _wrap_more, METH_VARARGS | METH_KEYWORDS, (char *)"more(string sessionKey, string path) -> int"},
+	 { (char *)"ls", (PyCFunction) _wrap_ls, METH_VARARGS | METH_KEYWORDS, (char *)"ls(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"},
+	 { (char *)"mkdir", (PyCFunction) _wrap_mkdir, METH_VARARGS | METH_KEYWORDS, (char *)"mkdir(string sessionKey, string path, CreateDirOptions options = FMS_Data::CreateDirOptions()) -> int"},
+	 { (char *)"mv", (PyCFunction) _wrap_mv, METH_VARARGS | METH_KEYWORDS, (char *)"mv(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"},
+	 { (char *)"amv", (PyCFunction) _wrap_amv, METH_VARARGS | METH_KEYWORDS, (char *)"\n"
+		"amv(string sessionKey, string src, string dest, FileTransfer transferInfo, \n"
 		"    CpFileOptions options = FMS_Data::CpFileOptions()) -> int\n"
 		""},
-	 { (char *)"removeFile", (PyCFunction) _wrap_removeFile, METH_VARARGS | METH_KEYWORDS, (char *)"removeFile(string sessionKey, string path, RmFileOptions options = FMS_Data::RmFileOptions()) -> int"},
-	 { (char *)"removeDir", (PyCFunction) _wrap_removeDir, METH_VARARGS | METH_KEYWORDS, (char *)"removeDir(string sessionKey, string path) -> int"},
-	 { (char *)"tailOfFile", (PyCFunction) _wrap_tailOfFile, METH_VARARGS | METH_KEYWORDS, (char *)"tailOfFile(string sessionKey, string path, TailOfFileOptions options = FMS_Data::TailOfFileOptions()) -> int"},
-	 { (char *)"getFileInfo", (PyCFunction) _wrap_getFileInfo, METH_VARARGS | METH_KEYWORDS, (char *)"getFileInfo(string sessionKey, string path, FileStat filesInfo) -> int"},
+	 { (char *)"rm", (PyCFunction) _wrap_rm, METH_VARARGS | METH_KEYWORDS, (char *)"rm(string sessionKey, string path, RmFileOptions options = FMS_Data::RmFileOptions()) -> int"},
+	 { (char *)"rmdir", (PyCFunction) _wrap_rmdir, METH_VARARGS | METH_KEYWORDS, (char *)"rmdir(string sessionKey, string path) -> int"},
+	 { (char *)"tail", (PyCFunction) _wrap_tail, METH_VARARGS | METH_KEYWORDS, (char *)"tail(string sessionKey, string path, TailOfFileOptions options = FMS_Data::TailOfFileOptions()) -> int"},
+	 { (char *)"stat", (PyCFunction) _wrap_stat, METH_VARARGS | METH_KEYWORDS, (char *)"stat(string sessionKey, string path, FileStat filesInfo) -> int"},
 	 { (char *)"stopFileTransfer", (PyCFunction) _wrap_stopFileTransfer, METH_VARARGS | METH_KEYWORDS, (char *)"stopFileTransfer(string sessionKey, StopTransferOptions options = FMS_Data::StopTransferOptions()) -> int"},
 	 { (char *)"listFileTransfers", (PyCFunction) _wrap_listFileTransfers, METH_VARARGS | METH_KEYWORDS, (char *)"listFileTransfers(string sessionKey, LsTransferOptions options = FMS_Data::LsTransferOptions()) -> int"},
 	 { NULL, NULL, 0, NULL }
@@ -42920,6 +42916,9 @@ static void *_p_IMS_Data__CurMetricOpTo_p_ecore__EObject(void *x, int *SWIGUNUSE
 }
 static void *_p_IMS_Data__SysInfoOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::SysInfoOp *) x));
+}
+static void *_p_IMS_Data__SupervisorOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((ecore::EObject *)  ((IMS_Data::SupervisorOp *) x));
 }
 static void *_p_IMS_Data__SystemInfoTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((IMS_Data::SystemInfo *) x));
@@ -43059,9 +43058,6 @@ static void *_p_TMS_Data__JobResultTo_p_ecore__EObject(void *x, int *SWIGUNUSEDP
 static void *_p_FMS_Data__DirEntryTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((FMS_Data::DirEntry *) x));
 }
-static void *_p_IMS_Data__RestartOpTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
-    return (void *)((ecore::EObject *)  ((IMS_Data::RestartOp *) x));
-}
 static void *_p_TMS_Data__ProgressionTo_p_ecore__EObject(void *x, int *SWIGUNUSEDPARM(newmemory)) {
     return (void *)((ecore::EObject *)  ((TMS_Data::Progression *) x));
 }
@@ -43142,7 +43138,7 @@ static swig_type_info _swigt__p_IMS_Data__Metric = {"_p_IMS_Data__Metric", "IMS_
 static swig_type_info _swigt__p_IMS_Data__MetricHistOp = {"_p_IMS_Data__MetricHistOp", "IMS_Data::MetricHistOp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__Process = {"_p_IMS_Data__Process", "IMS_Data::Process *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__ProcessOp = {"_p_IMS_Data__ProcessOp", "IMS_Data::ProcessOp *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_IMS_Data__RestartOp = {"_p_IMS_Data__RestartOp", "IMS_Data::RestartOp *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_IMS_Data__SupervisorOp = {"_p_IMS_Data__SupervisorOp", "IMS_Data::SupervisorOp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__SysInfoOp = {"_p_IMS_Data__SysInfoOp", "IMS_Data::SysInfoOp *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__SystemInfo = {"_p_IMS_Data__SystemInfo", "IMS_Data::SystemInfo *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_IMS_Data__Threshold = {"_p_IMS_Data__Threshold", "IMS_Data::Threshold *", 0, 0, (void*)0, 0};
@@ -43207,7 +43203,7 @@ static swig_type_info _swigt__p_ecorecpp__mapping__EListT___UMS_Data__LocalAccou
 static swig_type_info _swigt__p_ecorecpp__mapping__EListT___UMS_Data__Machine_t = {"_p_ecorecpp__mapping__EListT___UMS_Data__Machine_t", "::ecorecpp::mapping::EList< ::UMS_Data::Machine > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_ecorecpp__mapping__EListT___UMS_Data__User_t = {"_p_ecorecpp__mapping__EListT___UMS_Data__User_t", "::ecorecpp::mapping::EList< ::UMS_Data::User > *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_float = {"_p_float", "float *|ecore::EFloatObject *|ecore::EFloat *", 0, 0, (void*)0, 0};
-static swig_type_info _swigt__p_int = {"_p_int", "IMS_Data::LoadShedType *|IMS_Data::ExportType *|IMS_Data::SeDType *|UMS_Data::AuthType *|TMS_Data::LoadType *|int *|ecore::EResourceSet *|ecore::EFeatureMap *|UMS_Data::EncryptionMethod *|ecore::EInvocationTargetException *|FMS_Data::TransferCommand *|ecore::EEnumerator *|ecore::EFeatureMapEntry *|ecore::EIntegerObject *|ecore::EDiagnosticChain *|ecore::EInt *|TMS_Data::JobPriority *|TMS_Data::QueuePriority *|IMS_Data::ProcessState *|ecore::EResource *|FMS_Data::Status *|TMS_Data::JobStatus *|FMS_Data::FileType *|UMS_Data::StatusType *|UMS_Data::CommandStatusType *|UMS_Data::SessionCloseType *|UMS_Data::PrivilegeType *|IMS_Data::MetricType *|TMS_Data::QueueStatus *", 0, 0, (void*)0, 0};
+static swig_type_info _swigt__p_int = {"_p_int", "IMS_Data::LoadShedType *|IMS_Data::ExportType *|UMS_Data::AuthType *|TMS_Data::LoadType *|int *|ecore::EResourceSet *|ecore::EFeatureMap *|UMS_Data::EncryptionMethod *|ecore::EInvocationTargetException *|FMS_Data::TransferCommand *|ecore::EEnumerator *|ecore::EFeatureMapEntry *|ecore::EIntegerObject *|ecore::EDiagnosticChain *|ecore::EInt *|TMS_Data::JobPriority *|TMS_Data::QueuePriority *|IMS_Data::ProcessState *|ecore::EResource *|FMS_Data::Status *|TMS_Data::JobStatus *|FMS_Data::FileType *|UMS_Data::StatusType *|UMS_Data::CommandStatusType *|UMS_Data::SessionCloseType *|UMS_Data::PrivilegeType *|IMS_Data::MetricType *|TMS_Data::QueueStatus *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_double = {"_p_long_double", "long double *|ecore::EBigDecimal *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_long_long = {"_p_long_long", "ecore::ELongObject *|long long *|ecore::ELong *|ecore::EBigInteger *", 0, 0, (void*)0, 0};
 static swig_type_info _swigt__p_p_char = {"_p_p_char", "char **", 0, 0, (void*)0, 0};
@@ -43250,7 +43246,7 @@ static swig_type_info *swig_type_initial[] = {
   &_swigt__p_IMS_Data__MetricHistOp,
   &_swigt__p_IMS_Data__Process,
   &_swigt__p_IMS_Data__ProcessOp,
-  &_swigt__p_IMS_Data__RestartOp,
+  &_swigt__p_IMS_Data__SupervisorOp,
   &_swigt__p_IMS_Data__SysInfoOp,
   &_swigt__p_IMS_Data__SystemInfo,
   &_swigt__p_IMS_Data__Threshold,
@@ -43358,7 +43354,7 @@ static swig_cast_info _swigc__p_IMS_Data__Metric[] = {  {&_swigt__p_IMS_Data__Me
 static swig_cast_info _swigc__p_IMS_Data__MetricHistOp[] = {  {&_swigt__p_IMS_Data__MetricHistOp, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__Process[] = {  {&_swigt__p_IMS_Data__Process, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__ProcessOp[] = {  {&_swigt__p_IMS_Data__ProcessOp, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_IMS_Data__RestartOp[] = {  {&_swigt__p_IMS_Data__RestartOp, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_IMS_Data__SupervisorOp[] = {  {&_swigt__p_IMS_Data__SupervisorOp, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__SysInfoOp[] = {  {&_swigt__p_IMS_Data__SysInfoOp, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__SystemInfo[] = {  {&_swigt__p_IMS_Data__SystemInfo, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_IMS_Data__Threshold[] = {  {&_swigt__p_IMS_Data__Threshold, 0, 0, 0},{0, 0, 0, 0}};
@@ -43413,7 +43409,7 @@ static swig_cast_info _swigc__p_bool[] = {  {&_swigt__p_bool, 0, 0, 0},{0, 0, 0,
 static swig_cast_info _swigc__p_char[] = {  {&_swigt__p_char, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_double[] = {  {&_swigt__p_double, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EClass[] = {  {&_swigt__p_ecore__EClass, 0, 0, 0},{0, 0, 0, 0}};
-static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsersOptions, _p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__AddWorkOptions, _p_TMS_Data__AddWorkOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__Work, _p_TMS_Data__WorkTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__RestartOp, _p_IMS_Data__RestartOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_ecore__EObject[] = {  {&_swigt__p_IMS_Data__CurMetricOp, _p_IMS_Data__CurMetricOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SysInfoOp, _p_IMS_Data__SysInfoOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Metric, _p_IMS_Data__MetricTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SupervisorOp, _p_IMS_Data__SupervisorOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__SystemInfo, _p_IMS_Data__SystemInfoTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__User, _p_UMS_Data__UserTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthAccount, _p_UMS_Data__AuthAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__LocalAccount, _p_UMS_Data__LocalAccountTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ProcessOp, _p_IMS_Data__ProcessOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Configuration, _p_UMS_Data__ConfigurationTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Job, _p_TMS_Data__JobTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Machine, _p_UMS_Data__MachineTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Threshold, _p_IMS_Data__ThresholdTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__AuthSystem, _p_UMS_Data__AuthSystemTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__Process, _p_IMS_Data__ProcessTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ThresholdOp, _p_IMS_Data__ThresholdOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Command, _p_UMS_Data__CommandTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__OptionValue, _p_UMS_Data__OptionValueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__MetricHistOp, _p_IMS_Data__MetricHistOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_IMS_Data__ExportOp, _p_IMS_Data__ExportOpTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileStat, _p_FMS_Data__FileStatTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Queue, _p_TMS_Data__QueueTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__SubmitOptions, _p_TMS_Data__SubmitOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ProgressOptions, _p_TMS_Data__ProgressOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__ListJobsOptions, _p_TMS_Data__ListJobsOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthAccOptions, _p_UMS_Data__ListAuthAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListAuthSysOptions, _p_UMS_Data__ListAuthSysOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ConnectOptions, _p_UMS_Data__ConnectOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListUsersOptions, _p_UMS_Data__ListUsersOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListSessionOptions, _p_UMS_Data__ListSessionOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListCmdOptions, _p_UMS_Data__ListCmdOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListLocalAccOptions, _p_UMS_Data__ListLocalAccOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListMachineOptions, _p_UMS_Data__ListMachineOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__AddWorkOptions, _p_TMS_Data__AddWorkOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__ListOptOptions, _p_UMS_Data__ListOptOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CpFileOptions, _p_FMS_Data__CpFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__HeadOfFileOptions, _p_FMS_Data__HeadOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsDirOptions, _p_FMS_Data__LsDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__LsTransferOptions, _p_FMS_Data__LsTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__StopTransferOptions, _p_FMS_Data__StopTransferOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__TailOfFileOptions, _p_FMS_Data__TailOfFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__RmFileOptions, _p_FMS_Data__RmFileOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__CreateDirOptions, _p_FMS_Data__CreateDirOptionsTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__LoadCriterion, _p_TMS_Data__LoadCriterionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_UMS_Data__Session, _p_UMS_Data__SessionTo_p_ecore__EObject, 0, 0},  {&_swigt__p_ecore__EObject, 0, 0, 0},  {&_swigt__p_TMS_Data__Work, _p_TMS_Data__WorkTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__FileTransfer, _p_FMS_Data__FileTransferTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__JobResult, _p_TMS_Data__JobResultTo_p_ecore__EObject, 0, 0},  {&_swigt__p_FMS_Data__DirEntry, _p_FMS_Data__DirEntryTo_p_ecore__EObject, 0, 0},  {&_swigt__p_TMS_Data__Progression, _p_TMS_Data__ProgressionTo_p_ecore__EObject, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EOperation[] = {  {&_swigt__p_ecore__EOperation, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EReference[] = {  {&_swigt__p_ecore__EReference, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_ecore__EStructuralFeature[] = {  {&_swigt__p_ecore__EStructuralFeature, 0, 0, 0},{0, 0, 0, 0}};
@@ -43466,7 +43462,7 @@ static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_IMS_Data__MetricHistOp,
   _swigc__p_IMS_Data__Process,
   _swigc__p_IMS_Data__ProcessOp,
-  _swigc__p_IMS_Data__RestartOp,
+  _swigc__p_IMS_Data__SupervisorOp,
   _swigc__p_IMS_Data__SysInfoOp,
   _swigc__p_IMS_Data__SystemInfo,
   _swigc__p_IMS_Data__Threshold,

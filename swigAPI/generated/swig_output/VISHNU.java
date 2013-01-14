@@ -253,16 +253,16 @@ public class VISHNU {
     return VISHNUJNI.getUpdateFrequency(sessionKey, freq);
   }
 
-  public static int stop(String sessionKey, Process proc) throws InternalIMSException {
-    return VISHNUJNI.stop(sessionKey, Process.getCPtr(proc), proc);
+  public static int stop(String sessionKey, String machineId, SupervisorOp op) throws InternalIMSException {
+    return VISHNUJNI.stop(sessionKey, machineId, SupervisorOp.getCPtr(op), op);
   }
 
   public static int getSystemInfo(String sessionKey, ListSysInfo list, SysInfoOp op) throws InternalIMSException {
     return VISHNUJNI.getSystemInfo(sessionKey, ListSysInfo.getCPtr(list), list, SysInfoOp.getCPtr(op), op);
   }
 
-  public static int restart(String sessionKey, String machineId, RestartOp op) throws InternalIMSException {
-    return VISHNUJNI.restart(sessionKey, machineId, RestartOp.getCPtr(op), op);
+  public static int restart(String sessionKey, String machineId, SupervisorOp op) throws InternalIMSException {
+    return VISHNUJNI.restart(sessionKey, machineId, SupervisorOp.getCPtr(op), op);
   }
 
   public static int touch(String sessionKey, String path) throws InternalFMSException {

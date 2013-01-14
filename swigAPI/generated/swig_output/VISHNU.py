@@ -3423,65 +3423,6 @@ class ProcessOp(EObject):
 ProcessOp_swigregister = _VISHNU.ProcessOp_swigregister
 ProcessOp_swigregister(ProcessOp)
 
-class RestartOp(EObject):
-    """Proxy of C++ IMS_Data::RestartOp class"""
-    __swig_setmethods__ = {}
-    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
-    __setattr__ = lambda self, name, value: _swig_setattr(self, RestartOp, name, value)
-    __swig_getmethods__ = {}
-    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
-    __getattr__ = lambda self, name: _swig_getattr(self, RestartOp, name)
-    __repr__ = _swig_repr
-    def __init__(self, *args, **kwargs): 
-        """__init__(self) -> RestartOp"""
-        this = _VISHNU.new_RestartOp(*args, **kwargs)
-        try: self.this.append(this)
-        except: self.this = this
-    __swig_destroy__ = _VISHNU.delete_RestartOp
-    __del__ = lambda self : None;
-    def _initialize(self, *args, **kwargs):
-        """_initialize(self)"""
-        return _VISHNU.RestartOp__initialize(self, *args, **kwargs)
-
-    def getVishnuConf(self, *args, **kwargs):
-        """getVishnuConf(self) -> EString"""
-        return _VISHNU.RestartOp_getVishnuConf(self, *args, **kwargs)
-
-    def setVishnuConf(self, *args, **kwargs):
-        """setVishnuConf(self, EString _vishnuConf)"""
-        return _VISHNU.RestartOp_setVishnuConf(self, *args, **kwargs)
-
-    def getSedType(self, *args, **kwargs):
-        """getSedType(self) -> SeDType"""
-        return _VISHNU.RestartOp_getSedType(self, *args, **kwargs)
-
-    def setSedType(self, *args, **kwargs):
-        """setSedType(self, SeDType _sedType)"""
-        return _VISHNU.RestartOp_setSedType(self, *args, **kwargs)
-
-    def eGet(self, *args, **kwargs):
-        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
-        return _VISHNU.RestartOp_eGet(self, *args, **kwargs)
-
-    def eSet(self, *args, **kwargs):
-        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
-        return _VISHNU.RestartOp_eSet(self, *args, **kwargs)
-
-    def eIsSet(self, *args, **kwargs):
-        """eIsSet(self, EInt _featureID) -> EBoolean"""
-        return _VISHNU.RestartOp_eIsSet(self, *args, **kwargs)
-
-    def eUnset(self, *args, **kwargs):
-        """eUnset(self, EInt _featureID)"""
-        return _VISHNU.RestartOp_eUnset(self, *args, **kwargs)
-
-    def _eClass(self, *args, **kwargs):
-        """_eClass(self) -> EClass_ptr"""
-        return _VISHNU.RestartOp__eClass(self, *args, **kwargs)
-
-RestartOp_swigregister = _VISHNU.RestartOp_swigregister
-RestartOp_swigregister(RestartOp)
-
 class SysInfoOp(EObject):
     """Proxy of C++ IMS_Data::SysInfoOp class"""
     __swig_setmethods__ = {}
@@ -3532,6 +3473,65 @@ class SysInfoOp(EObject):
 
 SysInfoOp_swigregister = _VISHNU.SysInfoOp_swigregister
 SysInfoOp_swigregister(SysInfoOp)
+
+class SupervisorOp(EObject):
+    """Proxy of C++ IMS_Data::SupervisorOp class"""
+    __swig_setmethods__ = {}
+    for _s in [EObject]: __swig_setmethods__.update(getattr(_s,'__swig_setmethods__',{}))
+    __setattr__ = lambda self, name, value: _swig_setattr(self, SupervisorOp, name, value)
+    __swig_getmethods__ = {}
+    for _s in [EObject]: __swig_getmethods__.update(getattr(_s,'__swig_getmethods__',{}))
+    __getattr__ = lambda self, name: _swig_getattr(self, SupervisorOp, name)
+    __repr__ = _swig_repr
+    def __init__(self, *args, **kwargs): 
+        """__init__(self) -> SupervisorOp"""
+        this = _VISHNU.new_SupervisorOp(*args, **kwargs)
+        try: self.this.append(this)
+        except: self.this = this
+    __swig_destroy__ = _VISHNU.delete_SupervisorOp
+    __del__ = lambda self : None;
+    def _initialize(self, *args, **kwargs):
+        """_initialize(self)"""
+        return _VISHNU.SupervisorOp__initialize(self, *args, **kwargs)
+
+    def getURI(self, *args, **kwargs):
+        """getURI(self) -> EString"""
+        return _VISHNU.SupervisorOp_getURI(self, *args, **kwargs)
+
+    def setURI(self, *args, **kwargs):
+        """setURI(self, EString _URI)"""
+        return _VISHNU.SupervisorOp_setURI(self, *args, **kwargs)
+
+    def getName(self, *args, **kwargs):
+        """getName(self) -> EString"""
+        return _VISHNU.SupervisorOp_getName(self, *args, **kwargs)
+
+    def setName(self, *args, **kwargs):
+        """setName(self, EString _name)"""
+        return _VISHNU.SupervisorOp_setName(self, *args, **kwargs)
+
+    def eGet(self, *args, **kwargs):
+        """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
+        return _VISHNU.SupervisorOp_eGet(self, *args, **kwargs)
+
+    def eSet(self, *args, **kwargs):
+        """eSet(self, EInt _featureID, EJavaObject _newValue)"""
+        return _VISHNU.SupervisorOp_eSet(self, *args, **kwargs)
+
+    def eIsSet(self, *args, **kwargs):
+        """eIsSet(self, EInt _featureID) -> EBoolean"""
+        return _VISHNU.SupervisorOp_eIsSet(self, *args, **kwargs)
+
+    def eUnset(self, *args, **kwargs):
+        """eUnset(self, EInt _featureID)"""
+        return _VISHNU.SupervisorOp_eUnset(self, *args, **kwargs)
+
+    def _eClass(self, *args, **kwargs):
+        """_eClass(self) -> EClass_ptr"""
+        return _VISHNU.SupervisorOp__eClass(self, *args, **kwargs)
+
+SupervisorOp_swigregister = _VISHNU.SupervisorOp_swigregister
+SupervisorOp_swigregister(SupervisorOp)
 
 class SystemInfo(EObject):
     """Proxy of C++ IMS_Data::SystemInfo class"""
@@ -5069,20 +5069,20 @@ def getCompletedJobsOutput(*args, **kwargs):
 def exportCommands(*args, **kwargs):
   """
     exportCommands(string sessionKey, string oldSessionId, string filename, 
-        ExportOp op) -> int
+        ExportOp op = IMS_Data::ExportOp()) -> int
     """
   return _VISHNU.exportCommands(*args, **kwargs)
 
 def getMetricCurrentValue(*args, **kwargs):
-  """getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op) -> int"""
+  """getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op = IMS_Data::CurMetricOp()) -> int"""
   return _VISHNU.getMetricCurrentValue(*args, **kwargs)
 
 def getMetricHistory(*args, **kwargs):
-  """getMetricHistory(string sessionKey, string machineId, MetricHistOp op) -> int"""
+  """getMetricHistory(string sessionKey, string machineId, MetricHistOp op = IMS_Data::MetricHistOp()) -> int"""
   return _VISHNU.getMetricHistory(*args, **kwargs)
 
 def getProcesses(*args, **kwargs):
-  """getProcesses(string sessionKey, ProcessOp op) -> int"""
+  """getProcesses(string sessionKey, ProcessOp op = IMS_Data::ProcessOp()) -> int"""
   return _VISHNU.getProcesses(*args, **kwargs)
 
 def setSystemInfo(*args, **kwargs):
@@ -5094,7 +5094,7 @@ def setSystemThreshold(*args, **kwargs):
   return _VISHNU.setSystemThreshold(*args, **kwargs)
 
 def getSystemThreshold(*args, **kwargs):
-  """getSystemThreshold(string sessionKey, ThresholdOp op) -> int"""
+  """getSystemThreshold(string sessionKey, ThresholdOp op = IMS_Data::ThresholdOp()) -> int"""
   return _VISHNU.getSystemThreshold(*args, **kwargs)
 
 def defineUserIdentifier(*args, **kwargs):
@@ -5134,82 +5134,82 @@ def getUpdateFrequency(*args, **kwargs):
   return _VISHNU.getUpdateFrequency(*args, **kwargs)
 
 def stop(*args, **kwargs):
-  """stop(string sessionKey, Process proc) -> int"""
+  """stop(string sessionKey, string machineId, SupervisorOp op) -> int"""
   return _VISHNU.stop(*args, **kwargs)
 
 def getSystemInfo(*args, **kwargs):
-  """getSystemInfo(string sessionKey, SysInfoOp op) -> int"""
+  """getSystemInfo(string sessionKey, SysInfoOp op = IMS_Data::SysInfoOp()) -> int"""
   return _VISHNU.getSystemInfo(*args, **kwargs)
 
 def restart(*args, **kwargs):
-  """restart(string sessionKey, string machineId, RestartOp op) -> int"""
+  """restart(string sessionKey, string machineId, SupervisorOp op) -> int"""
   return _VISHNU.restart(*args, **kwargs)
 
-def createFile(*args, **kwargs):
-  """createFile(string sessionKey, string path) -> int"""
-  return _VISHNU.createFile(*args, **kwargs)
+def touch(*args, **kwargs):
+  """touch(string sessionKey, string path) -> int"""
+  return _VISHNU.touch(*args, **kwargs)
 
-def chGrp(*args, **kwargs):
-  """chGrp(string sessionKey, string group, string path) -> int"""
-  return _VISHNU.chGrp(*args, **kwargs)
+def chgrp(*args, **kwargs):
+  """chgrp(string sessionKey, string group, string path) -> int"""
+  return _VISHNU.chgrp(*args, **kwargs)
 
-def chMod(*args, **kwargs):
-  """chMod(string sessionKey, mode_t mode, string path) -> int"""
-  return _VISHNU.chMod(*args, **kwargs)
+def chmod(*args, **kwargs):
+  """chmod(string sessionKey, mode_t mode, string path) -> int"""
+  return _VISHNU.chmod(*args, **kwargs)
 
-def copyFile(*args, **kwargs):
-  """copyFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
-  return _VISHNU.copyFile(*args, **kwargs)
+def cp(*args, **kwargs):
+  """cp(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
+  return _VISHNU.cp(*args, **kwargs)
 
-def copyAsyncFile(*args, **kwargs):
+def acp(*args, **kwargs):
   """
-    copyAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, 
+    acp(string sessionKey, string src, string dest, FileTransfer transferInfo, 
         CpFileOptions options = FMS_Data::CpFileOptions()) -> int
     """
-  return _VISHNU.copyAsyncFile(*args, **kwargs)
+  return _VISHNU.acp(*args, **kwargs)
 
-def headOfFile(*args, **kwargs):
-  """headOfFile(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"""
-  return _VISHNU.headOfFile(*args, **kwargs)
+def head(*args, **kwargs):
+  """head(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"""
+  return _VISHNU.head(*args, **kwargs)
 
-def contentOfFile(*args, **kwargs):
-  """contentOfFile(string sessionKey, string path) -> int"""
-  return _VISHNU.contentOfFile(*args, **kwargs)
+def more(*args, **kwargs):
+  """more(string sessionKey, string path) -> int"""
+  return _VISHNU.more(*args, **kwargs)
 
-def listDir(*args, **kwargs):
-  """listDir(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"""
-  return _VISHNU.listDir(*args, **kwargs)
+def ls(*args, **kwargs):
+  """ls(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"""
+  return _VISHNU.ls(*args, **kwargs)
 
-def createDir(*args, **kwargs):
-  """createDir(string sessionKey, string path, CreateDirOptions options = FMS_Data::CreateDirOptions()) -> int"""
-  return _VISHNU.createDir(*args, **kwargs)
+def mkdir(*args, **kwargs):
+  """mkdir(string sessionKey, string path, CreateDirOptions options = FMS_Data::CreateDirOptions()) -> int"""
+  return _VISHNU.mkdir(*args, **kwargs)
 
-def moveFile(*args, **kwargs):
-  """moveFile(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
-  return _VISHNU.moveFile(*args, **kwargs)
+def mv(*args, **kwargs):
+  """mv(string sessionKey, string src, string dest, CpFileOptions options = FMS_Data::CpFileOptions()) -> int"""
+  return _VISHNU.mv(*args, **kwargs)
 
-def moveAsyncFile(*args, **kwargs):
+def amv(*args, **kwargs):
   """
-    moveAsyncFile(string sessionKey, string src, string dest, FileTransfer transferInfo, 
+    amv(string sessionKey, string src, string dest, FileTransfer transferInfo, 
         CpFileOptions options = FMS_Data::CpFileOptions()) -> int
     """
-  return _VISHNU.moveAsyncFile(*args, **kwargs)
+  return _VISHNU.amv(*args, **kwargs)
 
-def removeFile(*args, **kwargs):
-  """removeFile(string sessionKey, string path, RmFileOptions options = FMS_Data::RmFileOptions()) -> int"""
-  return _VISHNU.removeFile(*args, **kwargs)
+def rm(*args, **kwargs):
+  """rm(string sessionKey, string path, RmFileOptions options = FMS_Data::RmFileOptions()) -> int"""
+  return _VISHNU.rm(*args, **kwargs)
 
-def removeDir(*args, **kwargs):
-  """removeDir(string sessionKey, string path) -> int"""
-  return _VISHNU.removeDir(*args, **kwargs)
+def rmdir(*args, **kwargs):
+  """rmdir(string sessionKey, string path) -> int"""
+  return _VISHNU.rmdir(*args, **kwargs)
 
-def tailOfFile(*args, **kwargs):
-  """tailOfFile(string sessionKey, string path, TailOfFileOptions options = FMS_Data::TailOfFileOptions()) -> int"""
-  return _VISHNU.tailOfFile(*args, **kwargs)
+def tail(*args, **kwargs):
+  """tail(string sessionKey, string path, TailOfFileOptions options = FMS_Data::TailOfFileOptions()) -> int"""
+  return _VISHNU.tail(*args, **kwargs)
 
-def getFileInfo(*args, **kwargs):
-  """getFileInfo(string sessionKey, string path, FileStat filesInfo) -> int"""
-  return _VISHNU.getFileInfo(*args, **kwargs)
+def stat(*args, **kwargs):
+  """stat(string sessionKey, string path, FileStat filesInfo) -> int"""
+  return _VISHNU.stat(*args, **kwargs)
 
 def stopFileTransfer(*args, **kwargs):
   """stopFileTransfer(string sessionKey, StopTransferOptions options = FMS_Data::StopTransferOptions()) -> int"""

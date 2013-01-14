@@ -20,7 +20,9 @@ set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta" CACHE STRING " comments about the current version ")
 
 if (COMPILE_IMS)
-  find_package(XMLRPC)
+  if (NOT CLIENT_ONLY)
+    find_package(XMLRPC)
+  endif()
 endif()
 
 # Options set to ON by default
@@ -556,7 +558,9 @@ if(COMPILE_TMS)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
-  find_package(Sigar REQUIRED)
+  if (NOT CLIENT_ONLY)
+    find_package(Sigar REQUIRED)
+  endif()
   add_definitions(-DCOMPILE_IMS)
   add_definitions(-DUSE_LOG_SERVICE)
   add_definitions(-DHAVE_ALT_BATCH)
