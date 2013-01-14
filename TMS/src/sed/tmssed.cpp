@@ -79,51 +79,43 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE_2_3
-        std::cerr << "\nError: can't initialize TORQUE batch type because "
-                << "this server has not been compiled with TORQUE library\n\n";
+        std::cerr << "\nError: The support of TORQUE is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = TORQUE;
       } else if (batchTypeStr == "PBS") {
 #ifndef HAVE_PBSPRO_10_4
-
-        std::cerr << std::endl;
-        std::cerr << "Error: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library" << std::endl;
-        std::cerr << std::endl;
+        std::cerr << "\nError: The support of PBS is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = PBSPRO;
       } else if (batchTypeStr == "LOADLEVELER") {
 #ifndef HAVE_LOADLEVELER_2_5
-        std::cerr << "\nError: can't initialize LOADLEVELER batch type because "
-                << "this server has not been compiled with LOADLEVELER library\n\n";
+        std::cerr << "\nError: The support of LOADLEVELER is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = LOADLEVELER;
       } else if (batchTypeStr == "SLURM") {
 #if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
-        std::cerr << "\nError: can't initialize SLURM batch type because "
-                << "this server has not been compiled with SLURM library\n\n";
+        std::cerr << "\nError: The support of SLURM is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = SLURM;
 
       } else if (batchTypeStr == "LSF") {
 #ifndef HAVE_LSF_7_0
-        std::cerr << "\nError: can't initialize LSF batch type because "
-                << "this server has not been compiled with LSF library\n\n";
+        std::cerr << "\nError: The support of LSF is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = LSF;
       } else if (batchTypeStr == "SGE") {
 #ifndef HAVE_SGE_11
-        std::cerr << "\nError: can't initialize SGE batch type because "
-                << "this server has not been compiled with SGE library\n\n";
+        std::cerr << "\nError: The support of SGE is not enabled in this server!\n";
         exit(1);
 #endif
         batchType = SGE;
       } else {
-        std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE')\n\n";
+        std::cerr << "\nError: invalid batch type parameter. Supported batch schedulers are 'TORQUE', 'LOADLEVELER', 'SLURM', 'LSF', 'SGE' and 'PBS')\n";
         exit(1);
       }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
@@ -139,10 +131,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   // Fork a child for UMS monitoring
-  pid_t pid;
-  pid_t ppid;
-  pid = fork();
-
+  pid_t pid = pid = fork();
   if (pid > 0) {
 
       try {
