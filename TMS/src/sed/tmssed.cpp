@@ -131,7 +131,7 @@ int main(int argc, char* argv[], char* envp[]) {
   }
 
   // Fork a child for UMS monitoring
-  pid_t pid = pid = fork();
+  pid_t pid = fork();
   if (pid > 0) {
 
       try {
