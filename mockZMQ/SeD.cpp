@@ -23,9 +23,9 @@ SeD::call(diet_profile_t* profile) {
   std::map<std::string, functionPtr_t>::iterator it;
   it = mcb.find(profile->name);
   if (it == mcb.end()) {
-    std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
-    return UNKNOWN_SERVICE;
-  }
+      std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
+      return UNKNOWN_SERVICE;
+    }
   int (*functionPtr)(diet_profile_t*);
   functionPtr = it->second;
 
@@ -47,8 +47,8 @@ SeD::getServices(){
   std::vector<std::string> res;
   std::map<std::string, functionPtr_t>::iterator it;
   for (it = mcb.begin() ; it != mcb.end() ; ++ it ) {
-    res.push_back(it->first);
-  }
+      res.push_back(it->first);
+    }
   return res;
 }
 
@@ -66,24 +66,24 @@ public:
     socket.connect("inproc://vishnu");
     std::string data;
     while (true) {
-      data.clear();
-      try {
-        data = socket.get();
-      } catch (zmq::error_t &error) {
-        std::cout << boost::format("E: %1%\n") % error.what();
-        continue;
-      }
-      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
+        data.clear();
+        try {
+          data = socket.get();
+        } catch (zmq::error_t &error) {
+          std::cout << boost::format("E: %1%\n") % error.what();
+          continue;
+        }
+        std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
 
-      // Deserialize and call UMS Method
-      if (data.size() != 0) {
-        boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-        server_->call(profile.get());
-        // Send reply back to client
-        std::string resultSerialized = my_serialize(profile.get());
-        socket.send(resultSerialized);
+        // Deserialize and call UMS Method
+        if (data.size() != 0) {
+            boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+            server_->call(profile.get());
+            // Send reply back to client
+            std::string resultSerialized = my_serialize(profile.get());
+            socket.send(resultSerialized);
+          }
       }
-    }
   }
 
 private:
@@ -109,8 +109,8 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   const int NB_THREADS = 50;
   ThreadPool pool(NB_THREADS);
   for (int i = 0; i < NB_THREADS; ++i) {
-    pool.submit(ZMQWorker(context, server, i));
-  }
+      pool.submit(ZMQWorker(context, server, i));
+    }
 
   // connect our workers threads to our server via a queue
   try {
