@@ -9,6 +9,7 @@
 #define TMS_TORQUE_SERVER_H
 
 #include "BatchServer.hpp"
+#include <string>
 #include "pbs_ifl.h"
 
 /**

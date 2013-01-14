@@ -107,7 +107,7 @@ public:
 
 		if(!options->getMultipleStatus().empty()) {
 			bool error = false;
-			string invalidState;
+                        std::string invalidState;
 			std::string multStat = options->getMultipleStatus();
 			std::string::iterator iter;
 			std::string::iterator beg = multStat.begin();
@@ -240,7 +240,7 @@ public:
 		std::string batchJobId;
 		time_t submitDate;
 		time_t endDate;
-		std::vector<string> ignoredIds;
+		std::vector<std::string> ignoredIds;
 
 		if (ListOfJobs->getNbTuples() != 0){
 			for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
