@@ -9,6 +9,7 @@
 #define _JOB_SERVER_H
 
 #include "TMS_Data.hpp"
+#include <string>
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 /**

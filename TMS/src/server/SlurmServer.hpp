@@ -9,6 +9,7 @@
 #define TMS_SLURM_SERVER_H
 
 #include "BatchServer.hpp"
+#include <server>
 
 /**
  * \class SlurmServer
@@ -96,7 +97,7 @@ class SlurmServer : public BatchServer
     processOptions(const char* scriptPath,
                    const TMS_Data::SubmitOptions& options,
                    std::vector<std::string>& cmdsOptions);
-    
+
     /**
      * \brief Function to convert the Slurm state into VISHNU state
      * \param state the state to convert

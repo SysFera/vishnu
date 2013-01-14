@@ -9,6 +9,7 @@
 #define _JOB_OUTPUT_SERVER_H
 
 #include "TMS_Data.hpp"
+#include <string>
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 /**
@@ -17,11 +18,11 @@
  */
 class JobOutputServer
 {
- 
+
 public:
    /**
    * \param sessionServer The object which encapsulates the session information
-   * \param machineId The machine identifier 
+   * \param machineId The machine identifier
    * \brief Constructor
    */
   JobOutputServer(const SessionServer& sessionServer,
@@ -29,7 +30,7 @@ public:
 
   /**
    * \param sessionServer The object which encapsulates the session information
-   * \param machineId The machine identifier 
+   * \param machineId The machine identifier
    * \param jobResult The job result data structure
    * \brief Constructor
    */
@@ -41,7 +42,7 @@ public:
    * \return The job results data structure
    */
   TMS_Data::JobResult
-  getJobOutput();  
+  getJobOutput();
 
   /**
    * \brief Function to get the all completed jobs results
@@ -53,35 +54,35 @@ public:
   /**
    * \brief Destructor
    */
-  ~JobOutputServer(); 
-  
+  ~JobOutputServer();
+
 
   private:
- 
+
   /**
-   * \brief job results data structure 
-   */ 
+   * \brief job results data structure
+   */
   TMS_Data::JobResult mjobResult;
- 
+
   /**
-   * \brief The object which encapsulates the session information 
-   */ 
+   * \brief The object which encapsulates the session information
+   */
   SessionServer msessionServer;
- 
+
   /**
-   * \brief The machine identifier 
-   */ 
+   * \brief The machine identifier
+   */
   std::string mmachineId;
- 
-  /**                   
-   * \brief The lits of job results data structure 
-   */ 
+
+  /**
+   * \brief The lits of job results data structure
+   */
   TMS_Data::ListJobResults_ptr mlistJobsResult;
-  
+
   /**
    * \brief An instance of vishnu database
    */
-  Database *mdatabaseVishnu;  
+  Database *mdatabaseVishnu;
 };
 
 #endif

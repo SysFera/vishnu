@@ -9,6 +9,7 @@
 #define TMS_SGE_SERVER_H
 
 #include "BatchServer.hpp"
+#include <string>
 extern "C" {
 #include "drmaa.h"
 }
@@ -25,19 +26,19 @@ class SGEServer : public BatchServer
      * \brief Constructor
      */
     SGEServer();
-   
+
     /**
      * \brief Function to submit SGE job
      * \param scriptPath the path to the script containing the job characteristique
      * \param options the options to submit job
      * \param job The job data structure
-     * \param envp The list of environment variables used by SGE submission function 
+     * \param envp The list of environment variables used by SGE submission function
      * \return raises an exception on error
      */
-    int 
-    submit(const char* scriptPath, 
-          const TMS_Data::SubmitOptions& options, 
-          TMS_Data::Job& job, 
+    int
+    submit(const char* scriptPath,
+          const TMS_Data::SubmitOptions& options,
+          TMS_Data::Job& job,
           char** envp=NULL);
 
     /**
@@ -45,30 +46,30 @@ class SGEServer : public BatchServer
      * \param jobId the identifier of the job to cancel
      * \return raises an exception on error
      */
-    int 
+    int
     cancel(const char* jobId) ;
 
     /**
      * \brief Function to get the status of the job
-     * \param jobId the identifier of the job 
-     * \return -1 if the job is unknown or server not  unavailable 
+     * \param jobId the identifier of the job
+     * \return -1 if the job is unknown or server not  unavailable
      */
-    int 
-    getJobState(const std::string& jobId);  
+    int
+    getJobState(const std::string& jobId);
 
     /**
      * \brief Function to get the start time of the job
-     * \param jobId the identifier of the job 
-     * \return 0 if the job is unknown 
+     * \param jobId the identifier of the job
+     * \return 0 if the job is unknown
      */
-    time_t 
+    time_t
     getJobStartTime(const std::string& jobId);
 
-   
+
     /**
-     * \brief Function to request the status of queues 
-     * \param optQueueName (optional) the name of the queue to request 
-     * \return The requested status in to ListQueues data structure 
+     * \brief Function to request the status of queues
+     * \param optQueueName (optional) the name of the queue to request
+     * \return The requested status in to ListQueues data structure
      */
     TMS_Data::ListQueues*
     listQueues(const std::string& optQueueName=std::string());
@@ -76,18 +77,18 @@ class SGEServer : public BatchServer
     /**
      * \brief Function to get a list of submitted jobs
      * \param listOfJobs the ListJobs structure to fill
-     * \param ignoredIds the list of job ids to ignore 
+     * \param ignoredIds the list of job ids to ignore
      */
     void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-        const std::vector<string>& ignoredIds=std::vector<string>());
+                        const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
     /**
      * \brief Destructor
      */
-    ~SGEServer(); 
+    ~SGEServer();
 
   private:
-   
+
     /**
      * \brief Function to treat the submission options
      * \param scriptPath The job script path
@@ -95,9 +96,9 @@ class SGEServer : public BatchServer
      * \param cmdsOptions The list of the option value
      * \return raises an exception on error
      */
-    void 
+    void
     processOptions(const char* scriptPath,
-                    const TMS_Data::SubmitOptions& options, 
+                    const TMS_Data::SubmitOptions& options,
                     std::vector<std::string>&cmdsOptions,
                     drmaa_job_template_t *jobt);
 
@@ -112,7 +113,7 @@ class SGEServer : public BatchServer
     getSGEResourceValue(const char* file,
           const std::string& shortOptionLetterSyntax,
           const std::string& longOptionLetterSyntax);
-    
+
     /**
      * \brief Function To fill the info concerning a job
      * \param job: The job to fill
@@ -121,10 +122,10 @@ class SGEServer : public BatchServer
     /*void
     fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId);*/
 
-    
+
     /**
-     * \brief Function to compute the number of running and waiting jobs of each queue 
-     * \param run contains the number of running jobs of each queue 
+     * \brief Function to compute the number of running and waiting jobs of each queue
+     * \param run contains the number of running jobs of each queue
      * \param que contains the number of waiting jobs of each queue
      * \return non zero if error
      */
@@ -136,10 +137,10 @@ class SGEServer : public BatchServer
      * \brief Function to replace slurm job identifer symbol by its real value in to a path
      * \param path The path containing the job symbol
      */
-    /*void 
+    /*void
     replaceSymbolInToJobPath(std::string& path); */
 
-        
+
     /**
      * \brief ListQueues returned
      */
@@ -148,8 +149,7 @@ class SGEServer : public BatchServer
     /**
      * \brief msymbolMap contains the slurm partern symbols of job output and error path
      */
-    std::map<std::string, std::string> msymbolMap; 
+    std::map<std::string, std::string> msymbolMap;
 };
 
 #endif
-
