@@ -408,4 +408,6 @@ ConfigurationServer::ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem) {
     return (" insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
                             "("+numAuth+", '"+authsystem->getLdapBase()+"');");
   }
+
+  return "";
 }
