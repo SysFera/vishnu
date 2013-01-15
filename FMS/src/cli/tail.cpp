@@ -1,6 +1,6 @@
 /**
  * \file tail.cpp
- * This file defines the VISHNU  tail of file command 
+ * This file defines the VISHNU  tail of file command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -30,31 +30,30 @@ struct TailOfFileFunc {
   TailOfFileFunc(const std::string& path,const TailOfFileOptions& tofOptions):mpath(path),mtofOptions(tofOptions){}
 
   int operator()(std::string sessionKey) {
-
     string contentOfTailOfFile;
 
-    int res=tail(sessionKey,mpath,contentOfTailOfFile, mtofOptions);
-    cout << contentOfTailOfFile << "\n"; 
+    int res = tail(sessionKey, mpath, contentOfTailOfFile, mtofOptions);
+    cout << contentOfTailOfFile;
     return res;
   }
 };
 
 
-int main (int ac, char* av[]){
-  
+int
+main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
 
   /********** EMF data ************/
   TailOfFileOptions tofOptions;
-  
+
   /******** Callback functions ******************/
   boost::function1<void,int> fNline(boost::bind(&FMS_Data::TailOfFileOptions::setNline,boost::ref(tofOptions),_1));
-  
+
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
- 
+
   opt->add("nline,n",
       "The last lines to display",
       CONFIG,
