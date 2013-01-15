@@ -112,3 +112,24 @@ ReqCancel(const char* JobId) {
   }
   return 0;
 }
+
+int
+ReqInfo(const char* JobIdi, struct st_job* response) {
+  struct Request req;
+  struct Response ret;
+  const char* sv_sock= "/tmp/tms-posix-socket-1001";
+  int resultat;
+
+  memset(&req,0,sizeof(struct Request));
+  strncpy(req.sig,signature,sizeof(req.sig));
+  strncpy(req.req,lb_req_ginfo,sizeof(req.req));
+
+  resultat = ReqSend(sv_sock, &req, &ret);
+
+  if (ret.status == 0) {
+    memcpy(response,&(ret.data.submit),sizeof(struct st_job));
+    return 0;
+  }
+  return -1;
+}
+

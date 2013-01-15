@@ -6,11 +6,11 @@ static const char* signature = "TMS-POS";
 static const char* lb_req_echo   = "ECHO";
 static const char* lb_req_submit = "SUBMIT";
 static const char* lb_req_cancel = "CANCEL";
-static const char* lb_req_gstate = "GSTATE";
+static const char* lb_req_ginfo  = "GINFO";
 static const char* lb_req_gstime = "GSTIME";
 static const char* lb_req_kill   = "KILL";
 
-enum job_state { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE } ;
+enum job_state { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
 
 struct st_echo {
   char data[128];
@@ -24,6 +24,10 @@ struct st_cancel {
   char JobId[16];
 };
 
+struct st_info {
+  char JobId[16];
+};
+
 struct Request {
   char sig[8];
   char req[8];
@@ -31,6 +35,7 @@ struct Request {
     struct st_echo echo;
     struct st_submit submit;
     struct st_cancel cancel;
+    struct st_info info;
   } data;
 };
 
@@ -47,10 +52,13 @@ struct Response {
   union res_data {
     struct st_echo echo;
     struct st_job submit;
+    struct st_job info;
   } data;
 };
 
 int ReqSend(const char *destination, const struct Request* req);
+
 int ReqSubmit(const char* command,struct st_job* response);
 int ReqEcho(const char* chaine, char* ret);
 int ReqCancel(const char* JobId);
+int ReqInfo(const char* JobIdi, struct st_job* reponse);

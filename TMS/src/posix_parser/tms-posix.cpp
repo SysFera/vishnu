@@ -396,12 +396,41 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
 static int
 RequestCancel(struct Request* req, struct Response* ret) {
+  char* JobId;
+  int i;
+  int Taille;
+
+  JobId = req->data.cancel.JobId;
+
+  Taille = Board.size();
+
+  for (i=0; i<Taille; i++) {
+    if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
+      kill(Board[i].pid,SIGTERM);
+      Board[i].state = KILL;
+    }
+  }
+
   return 0;
 }
 
 static int
-RequestGetState(struct Request* req, struct Response* ret) {
-  return 0;
+RequestGetInfo(struct Request* req, struct Response* ret) {
+  char* JobId;
+  int Taille;
+  int i;
+
+  JobId = req->data.cancel.JobId;
+
+  Taille = Board.size();
+
+  for (i=0; i<Taille; i++) {
+    if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
+      memcpy(&(ret->data.info),&(Board[i]), sizeof(struct st_job));
+      return 0;
+    }
+  }
+  return -1;
 }
 
 static int
@@ -479,11 +508,8 @@ LaunchDaemon(void) {
     if (strncmp(req.req,lb_req_cancel,sizeof(req.req)) == 0) {
       ret.status = RequestCancel(&req,&ret);
     }
-    if (strncmp(req.req,lb_req_gstate,sizeof(req.req)) == 0) {
-      ret.status = RequestGetState(&req,&ret);
-    }
-    if (strncmp(req.req,lb_req_gstime,sizeof(req.req)) == 0) {
-      ret.status = RequestGetStartTime(&req,&ret);
+    if (strncmp(req.req,lb_req_ginfo,sizeof(req.req)) == 0) {
+      ret.status = RequestGetInfo(&req,&ret);
     }
     if (strncmp(req.req,lb_req_kill,sizeof(req.req)) == 0) {
       ret.status = RequestKill(&req,&ret);
