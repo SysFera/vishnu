@@ -24,9 +24,9 @@
 <author>
 <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
 </author>
-    <author>
-      <personname><firstname>Haïkel</firstname><surname>Guémar</surname></personname>
-    </author>
+<author>
+<personname><firstname>Haïkel</firstname><surname>Guémar</surname></personname>
+</author>
 <revhistory>
 <revision>
 <revnumber>1</revnumber>
@@ -256,15 +256,15 @@
       </revision>
       
       <revision>
-        <revnumber>28</revnumber>
-        <date>15/01/2013</date>
-        <authorinitials>H. Guémar</authorinitials>
-        <revdescription>
-          <para>
-            Ajout d'une FAQ pour la résolution des problèmes d'administration.
-            Ajout d'une entrée dans la FAQ à propos du chargement des plugins TMS
-          </para>
-        </revdescription>
+      <revnumber>28</revnumber>
+      <date>15/01/2013</date>
+      <authorinitials>H. Guémar</authorinitials>
+      <revdescription>
+      <para>
+      Ajout d'une FAQ pour la résolution des problèmes d'administration.
+      Ajout d'une entrée dans la FAQ à propos du chargement des plugins TMS
+      </para>
+      </revdescription>
       </revision>
       
       <revision>
@@ -272,7 +272,8 @@
       <date>15/01/2013</date>
       <authorinitials>R. Chakode</authorinitials>
       <revdescription>
-      <para>Mise à jour des dépendences d'installation avec ZeroMQ</para>
+      <para>Mise à jour des dépendences d'installation avec ZeroMQ et
+      suppression du chapite lié aux web services</para>
       </revdescription>
       </revision>
 
@@ -318,9 +319,6 @@
       <para>Installation</para>
       </listitem>
       <listitem>
-      <para>Installation des web services</para>
-      </listitem>
-      <listitem>
       <para>Déploiement</para>
       </listitem>
       <listitem>
@@ -362,9 +360,6 @@
   </listitem>
   <listitem>
   <para>UMS : User Management Service ou système de gestion des utilisateurs</para>
-  </listitem>
-  <listitem>
-  <para>WS : Web Service ou service web</para>
   </listitem>
   <listitem>
   <para>ZeroMQ aussi appelé ZMQ est une bibliothèque de communication par passage de messages asynchrones</para>
@@ -542,7 +537,7 @@
   <para>Supervisord 3.0.a, (installable à partir des outils Python : $ pip install supervisord)</para>
   </listitem>
   <listitem>
-  <para>xmlrpc-c  2.1.19
+  <para>Xmlrpc-c  2.1.19
   </para>
   </listitem>
   </itemizedlist>
@@ -551,69 +546,77 @@
   </section><!-- end prerequis -->
   <section>
   <title> Compilation des sources </title>
-  <para>VISHNU utilise CMake comme système de construction et se conforme aux
-  pratiques communément admises.
-  Les options principales utilisables sont les suivantes :
+  <para>
+  VISHNU utilise CMake comme système de construction. Ses différentes fonctionnalités sont activées
+  à la demande lors de la compilation grâce aux variables Cmake qui doivent être positionnées à
+  <emphasis>ON</emphasis> (activation) ou à  <emphasis>OFF</emphasis> (désactivation).
+  La liste ci-dessous décrit l'ensemble des variables disponibles :
   <itemizedlist>
   <listitem>
   <para>
-  BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut).
+  CLIENT_ONLY permet si on le souhaite de ne compiler les codes clients. Par défault les codes clients et serveurs sont compilés.
   </para>
   </listitem>
   <listitem>
   <para>
-  CLIENT_ONLY, qui permet de ne compiler que les clients si le flag est activé (OFF par défaut). Sinon les clients et les serveurs sont compilés.
+  CMAKE_INSTALL_PREFIX définit le répertoire d'installation. Par défault l'installation est réalisée dans
+  <emphasis>/usr/local</emphasis>.
   </para>
   </listitem>
   <listitem>
   <para>
-  CMAKE_INSTALL_PREFIX, répertoire d'installation (/usr/local par défaut sur les plateformes *nix)
+  COMPILE_UMS indique si le module UMS sera compilé; Ce module est activé par défault (COMPILE_UMS=ON).
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_TMS, compile le module TMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON et
-  les options VISHNU_BATCH et VISHNU_BATCH_VERSION doivent être remplies.
+  COMPILE_FMS spécifie si le module FMS sera compilé. FMS est désactivé par défaut (COMPILE_FMS=OFF), lorsqu'il est activé
+  le module COMPILE_UMS dont il dépend doit être également activé (COMPILE_UMS=ON).
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_IMS, compile le module IMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS, COMPILE_TMS et
-  COMPILE_FMS doivent aussi être à ON.
+  COMPILE_TMS permet de préciser si le module TMS sera compilé. Par défaut désactivé, si TMS est activé (COMPILE_TMS=ON),
+  alors les modules UMS et FMS dont il dépend doivent être égalements activés (COMPILE_UMS=ON et COMPILE_FMS=ON).
+  </para>
+  <para>Par ailleurs lorsque TMS est activé, on doit obligatoirement sélectionner un batch scheduler
+  grâce aux options VISHNU_BATCH et VISHNU_BATCH_VERSION (ex. VISHNU_BATCH=SLURM et VISHNU_BATCH_VERSION=2.2).
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_FMS, compile le module FMS si le flag est activé (OFF par défaut). Si ON, COMPILE_UMS doit aussi être à ON.
+  COMPILE_IMS indique si le module IMS sera compilé. IMS est désactivé par défaut, lorsqu'il est activé,
+  tous les autres modules doivent l'être également (COMPILE_UMS=ON, COMPILE_TMS=ON et COMPILE_FMS=ON).
+  </para>
+  </listitem>
+
+  <listitem>
+  <para>
+  ENABLE_PYTHON : Désactivée par défaut, cette option permet d'activer ou non la compilation du code PYTHON.
+  </para>
+  </listitem>
+
+  <listitem>
+  <para>
+  ENABLE_JAVA : Désactivée par défaut, cette option permet d'activer ou non la compilation du code JAVA.
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_UMS, compile le module UMS si le flag est activé (ON par défaut).
+  VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Option Désactivée par défaut.
   </para>
   </listitem>
   <listitem>
   <para>
-  ENABLE_PYTHON, qui permet d'activer la compilation du code PYTHON (OFF par défaut).
+  ENABLE_SWIG permet d'activer la generation du code des adapteurs Python et Java.
+  </para>
+  <para>Désactivée par défaut, cette option doit obligatoirement être activée si on choisit de ne pas compiler
+  tous les modules VISHNU. C'est-à-dire lorsqu'au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS
+  ou COMPILE_IMS est à OFF. Par ailleurs, l'activation de cette option nécessite que SWIG ait été installé au préalable.
   </para>
   </listitem>
   <listitem>
-  <para>
-  ENABLE_JAVA, qui permet d'activer la compilation des sources JAVA pour les web services (OFF par défaut).
-  </para>
-  </listitem>
-  <listitem>
-  <para>
-  VISHNU_USE_LDAP, qui permet d'activer le support LDAP pour l'authentification (OFF par défaut).
-  </para>
-  </listitem>
-  <listitem>
-  <para>
-  ENABLE_SWIG, qui permet d'activer la generation du code des adapteurs Python et Java (OFF par défaut). Cette option doit obligatoirement être activée si on choisit de ne pas compiler tous les modules VISHNU c'est-à-dire si au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS ou COMPILE_IMS est à OFF. Si l'option ENABLE_SWIG est activée, le package SWIG (voir paragraphe 'Prérequis') est nécessaire pour compiler.
-  </para>
-  </listitem>
-  <listitem>
-  <para>VISHNU_BATCH, compile le SeD TMS avec le batch correspondant (TORQUE par défaut).</para>
+  <para>VISHNU_BATCH indique le batch scheduler à activer (TORQUE par défaut).</para>
   <para>Les variables (BATCHNAME)_INCLUDE_DIR et (BATCHNAME)_LIB doivent être renseignées.</para>
   <itemizedlist>
   <listitem>
@@ -623,7 +626,7 @@
   </listitem>
   <listitem>
   <para>
-  LOADLEVELER_LIB indique le chemin absolu jusqu'à la librairie llapi.so
+  LOADLEVELER_LIB indique le chemin absolu vers la librairie llapi.so
   </para>
   </listitem>
   <listitem>
@@ -691,15 +694,20 @@
   PBS_LIB indique le chemin absolu jusqu'à la librairie libpbs.so
   </para>
   </listitem>
-
-      </itemizedlist>
+  </itemizedlist>
       
-    </listitem>
-    <listitem>
-    <para>
-    VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
-    </para>
-    </listitem>
+  </listitem>
+  <listitem>
+  <para>
+  VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
+  </para>
+  </listitem>
+
+  <listitem>
+  <para>
+  BUILD_TESTING: Désactivée par défaut, cette variable spécifie si le module de test sera compilé.
+  </para>
+  </listitem>
 
   </itemizedlist>
   </para>
@@ -906,145 +914,6 @@
 
   </chapter>
 
-  <chapter>
-  <title>Installation des web services</title>
-  <section>
-  <title>Pré-requis</title>
-  <itemizedlist>
-  <listitem>
-  <para>Installer <emphasis role="bold">Java 1.6</emphasis> (commande 'sudo apt-get install openjdk-6-jdk' ou bien 'sudo apt-get install sun-java6-jdk' sur Linux Debian)
-  et vérifier que la variable JAVA_HOME est bien définie et contient le répertoire racine de l'installation de java.</para>
-  </listitem>
-  <listitem>
-  <para>Installer les modules désirés avec les options -DENABLE_JAVA=ON et -DENABLE_SWIG (<emphasis role="bold">Note</emphasis> :
-  Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services).</para>
-  </listitem>
-  <listitem>
-  <para>Installer <emphasis role="bold">Maven 2</emphasis> pour compiler les jars (<emphasis role="bold">Note</emphasis> :
-  Ce pré-requis est optionnel car les jars sont déjà fournis dans la distribution des web services.
-  Par ailleurs la compilation avec maven nécessite une connexion internet).</para>
-  </listitem>
-  </itemizedlist>
-
-    </section><!-- end prerequis -->
-    <section>
-    <title>Installation de JBoss</title>
-    <itemizedlist>
-    <listitem>
-    <para>Télécharger le package JBOSSAS : (la version binaire est disponible) sur http://www.jboss.org/jbossas/downloads => version 5.1.0.GA</para>
-    </listitem>
-    <listitem>
-    <para>Télécharger le package JBOSSWS : (la version binaire est disponible) sur http://www.jboss.org/jbossws/downloads/ => version 3.3.1.GA</para>
-    </listitem>
-    <listitem>
-    <para>Décompresser l'archive du package JBOSSAS 5.1.0</para>
-    </listitem>
-    <listitem>
-    <para> Définir la variable d'environement JBOSS_HOME sur le répertoire décompressé. Par exemple dans le .bashrc :
-    'export JBOSS_HOME=/home/toto/jboss-5.1.0.GA'</para>
-    </listitem>
-    <listitem>
-    <para>Décompresser l'archive du package JBOSSWS 3.3.1 et aller dans le répertoire créé</para>
-    </listitem>
-    <listitem>
-    <para> Copier le fichier 'ant.properties.example' en 'ant.properties'</para>
-    </listitem>
-    <listitem>
-    <para> Editer le fichier nouvellement créé 'ant.properties'. Mettre la valeur de la variable jboss510.home à la valeur du répertoire de JBOSSAS (même valeur que dans la variable JBOSS_HOME). Il faut noter que si une autre version que la 5.1.0 de jboss a été prise, il faut modifier la variable correspondant à cette version</para>
-    </listitem>
-    <listitem>
-    <para> Lancer la commande 'ant deploy-jboss510'. Si une autre version de jboss a été prise, il faut faire la commande de la version correspondante</para>
-    </listitem>
-    <listitem>
-    <para>Le lancement du serveur se fait en lançant le script JBOSS_HOME/bin/run.sh. Pour que le serveur jboss soit accessible depuis une autre machine, utiliser l'option '-b adresseIP' où
-    adresseIP représente l'adresse IP du serveur, et vérifier que le firewall du serveur autorise l'accès au port 8080.</para>
-    </listitem>
-    <listitem>
-    <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module web services est activé, lancer un navigateur internet sur le serveur et se connecter
-    sur l'adresse 'http://localhost:8080/jbossws' (ou 'http://adresseIP:8080/jbossws') et vérifier que la page affiche bien la version
-    du module web services (jbossws-cxf-3.3.1.GA).</para>
-    </listitem>
-    </itemizedlist>
-    </section>
-    <section>
-    <title>Installation des modules WS dans JBoss</title>
-    <section>
-    <title>Fichiers à installer</title>
-    <itemizedlist>
-    <listitem>
-    <para>VishnuLib-1.0-SNAPSHOT.jar
-    <itemizedlist>
-    <listitem><para>Contient les classes internes faisant le lien JAVA(JNI)/C++.</para></listitem>
-    <listitem><para>A copier dans <emphasis role="bold">JBOSS_HOME/server/default/lib</emphasis>.</para></listitem>
-    <listitem><para>Le changer implique un redémarrage du serveur JBOSS.</para></listitem>
-    <listitem><para>Compilation (si nécessaire)
-    <itemizedlist>
-    <listitem><para>Aller dans le répertoire VISHNULib</para></listitem>
-    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
-    <listitem><para>Le fichier .jar produit se trouve dans le répertoire target/</para></listitem>
-    </itemizedlist>
-    </para></listitem>
-    </itemizedlist>
-    </para>
-    </listitem>
-    <listitem>
-    <para>WSAPI.jar
-    <itemizedlist>
-    <listitem><para>Contient les classes issues du WSDL et l'implémentation des WS.</para></listitem>
-    <listitem><para>A mettre dans <emphasis role="bold">JBOSS_HOME/server/default/deploy</emphasis>.</para></listitem>
-    <listitem><para>Peut être mis à jour sans redémarrer le serveur JBOSS.</para></listitem>
-    <listitem><para>Compilation (si nécessaire)
-    <itemizedlist>
-    <listitem><para>Aller dans le répertoire WSAPI, avoir le jar VishnuLib-1.0-SNAPSHOT.jar de déjà fait</para></listitem>
-    <listitem><para>Faire 'mvn install' (peut être long la première fois)</para></listitem>
-    <listitem><para>Le fichier .jar produit se trouve dans le répertoire target</para></listitem>
-    <listitem><para>Renommer le jar en WSAPI.jar avant de le mettre dans jboss, ceci est nécessaire</para></listitem>
-    </itemizedlist>
-    </para></listitem>
-    </itemizedlist>
-    </para>
-    </listitem>
-    <listitem>
-    <para>libVISHNU.so
-    <itemizedlist>
-    <listitem><para>Nécessaire pour le fonctionnement des WS, cette librairie dynamique est obtenue en compilant les modules VISHNU désirés avec l'option ENABLE_JAVA.</para></listitem>
-    <listitem><para>Le fichier est installé par défaut par le package VISHNU UMS dans '/usr/local/lib' et il n'est pas nécessaire de le copier.</para></listitem>
-    <listitem><para>S'il y a un problème de déploiement dans le serveur jboss, vérifier qu'elle est bien accessible et dans le LD_LIBRARY_PATH.</para></listitem>
-    </itemizedlist>
-    </para>
-    </listitem>
-    </itemizedlist>
-    </section>
-    <section>
-    <title>Variables d'environnement à définir</title>
-    <itemizedlist>
-    <listitem>
-    <para>VISHNU_CONFIG_FILE : contient le chemin complet du fichier de configuration client de VISHNU. Se référer
-    au guide d'installation du client [VISHNU_USER_GUIDE] pour connaître le contenu de ce fichier.
-    Si l'exécution échoue avec un message d'erreur lié à initialisation de la librairie lors du connect, vérifier le contenu de cette variable.
-    </para>
-    </listitem>
-    <listitem>
-    <para>LD_LIBRARY_PATH : contient les chemins des répertoires contenant les librairies VISHNU, notamment libVISHNU.so.</para>
-    </listitem>
-    </itemizedlist>
-    </section>
-    <section>
-    <title>Lancement du serveur JBoss avec le module WS</title>
-    <itemizedlist>
-    <listitem>
-    <para>Après installation des fichiers définis au paragraphe précédent, le serveur JBoss doit être redémarré en lançant le script JBOSS_HOME/bin/run.sh
-    (avec les options indiquées au paragraphe sur le serveur JBoss).</para>
-    </listitem>
-    <listitem>
-    <para><emphasis role="bold">Vérification de l'installation:</emphasis> Pour vérifier que le serveur JBoss est bien démarré et que le module UMS WS est activé, lancer un navigateur internet sur le serveur et se connecter
-    sur l'adresse 'http://localhost:8080/jbossws/services' (ou 'http://adresseIP:8080/jbossws/services') et vérifier que le
-    "service endPoint" : <emphasis role="bold">VISHNUUMSPortImpl</emphasis> est actif.</para>
-    </listitem>
-    </itemizedlist>
-    </section>
-    </section>
-    </chapter><!-- End WS -->
     <chapter>
     <title>Déploiement de VISHNU </title>
     <section>
@@ -1052,17 +921,27 @@
     <para>
     <itemizedlist>
     <listitem>
-    dispatcher: Composant optionnel, il permet à un client de ne pas connaitre les adresses des serveurs en le contactant à la place des serveurs. Les serveurs qui démarrent s'enregistrent dans le dispatcher s'il est présent, mais on peut démarrer le dispatcher après les serveurs en lui donnant un fichier de configuration lui permettant de connaitre une configuration existante. Il utilise 2 URI pour fonctionner, la première lui sert à recevoir les requêtes clients recherchant un serveur, la seconde lui sert à recevoir les commandes de gestion de ses serveurs (ajout et suppression).
+    dispatcher: Composant optionnel, il permet à un client de ne pas connaitre les adresses des serveurs
+    en le contactant à la place des serveurs. Les serveurs qui démarrent s'enregistrent dans le dispatcher
+    s'il est présent, mais on peut démarrer le dispatcher après les serveurs en lui donnant un fichier de
+    configuration lui permettant de connaitre une configuration existante. Il utilise 2 URI pour fonctionner,
+    la première lui sert à recevoir les requêtes clients recherchant un serveur, la seconde lui sert à
+    recevoir les commandes de gestion de ses serveurs (ajout et suppression).
     </listitem>
     <listitem>
-    Supervisord est un outil de monitoring externe à VISHNU permettant de redémarrer automatiquement les serveurs et de controler leur état. Il est également utilisé par IMS au travers d'appels XMLRPC pour gérer les serveurs VISHNU (arrêt, redémarrage).
+    Supervisord est un outil de monitoring externe à VISHNU permettant de redémarrer automatiquement
+    les serveurs et de controler leur état. Il est également utilisé par IMS au travers d'appels XMLRPC
+    pour gérer les serveurs VISHNU (arrêt, redémarrage).
     </listitem>
     </itemizedlist>
     </para>
     </section>
     <section>
     <title>Lancement sur un même réseau</title>
-    <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer <emphasis role="bold">préfrontale</emphasis>.
+    <para>Les modules peuvent être lancés manuellement. Le déploiement se fera en suivant la configuration
+    montrée sur la figure 4.1 du document [ARCH]. Pour simplier les choses, on supposera que les divers
+    éléments dans le carré "dedicated to VISHNU" vont être déployés sur la même machine que l'on va nommer
+    <emphasis role="bold">préfrontale</emphasis>.
     </para>
     <para><emphasis role="bold">NOTES IMPORTANTES:</emphasis>
     <itemizedlist>
@@ -1072,13 +951,15 @@
     <listitem>
     <para> Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU.
     Le rapport de bug est ici et le bug est actuellement ouvert: https://svn.boost.org/trac/boost/ticket/4688.
-    Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error: locale::facet::_S_create_c_locale name not valid,
+    Si lors du lancement d'un SeD, le message d'erreur suivant apparait : std::runtime_error:
+    locale::facet::_S_create_c_locale name not valid,
     faire un "export LANG=C" et cela devrait régler le problème.
     </para>
     </listitem>
     <listitem>
     <para>
-    Les fichiers de configuration de tout les éléments mentionnés ici sont présentés dans une section plus loin exemple avec les détails de chacun
+    Les fichiers de configuration de tout les éléments mentionnés ici sont présentés dans une section plus
+    loin exemple avec les détails de chacun
     </para>
     </listitem>
     </itemizedlist>
@@ -1087,11 +968,14 @@
     Pour démarrer avec succès votre environnement VISHNU, suivez rigoureusement les étapes suivantes:</para>
     <orderedlist>
     <listitem>
-    <para> Vérifier que la base de données (PostGreSQL ou MySQL) a été bien configurée et initialisée comme décrit précédemment. De plus, vérifier vous pouvez vous connecter à la base de données depuis les différents serveurs où sont installés les modules de VISHNU.</para>
+    <para> Vérifier que la base de données (PostGreSQL ou MySQL) a été bien configurée et initialisée comme
+    décrit précédemment. De plus, vérifier vous pouvez vous connecter à la base de données depuis les différents
+    serveurs où sont installés les modules de VISHNU.</para>
     </listitem>
     <listitem>
     <para>
-    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur (pbs_mom) de Torque.
+    Sur la machine hôte de Torque, lancer le serveur (pbs_serv), le scheduler (pbs_sched) et l'ordonnanceur
+    (pbs_mom) de Torque.
     </para>
     </listitem>
     <listitem>
@@ -1668,14 +1552,14 @@ Attention la variable conteur est obligatoire pour éviter la génération d'un 
 Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
 </para>
 </listitem>
-      </itemizedlist>
-    </section>
-    <section>
-      <title>FAQ</title>
-      <itemizedlist>
-        <listitem>
-          <para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins.</para>
-        </listitem>
+</itemizedlist>
+</section>
+<section>
+<title>FAQ</title>
+<itemizedlist>
+<listitem>
+<para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins.</para>
+</listitem>
 </itemizedlist>
 </section>
 </chapter><!-- End administration -->
