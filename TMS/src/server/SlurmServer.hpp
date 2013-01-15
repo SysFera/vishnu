@@ -9,7 +9,7 @@
 #define TMS_SLURM_SERVER_H
 
 #include "BatchServer.hpp"
-#include <server>
+#include <string>
 
 /**
  * \class SlurmServer
