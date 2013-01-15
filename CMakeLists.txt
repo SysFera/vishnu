@@ -211,10 +211,15 @@ if (pbs)
 endif (pbs)
 
 if (ll)
-  string (COMPARE EQUAL ${batch_version_tmp} "3_5" version)
-  if (NOT version)
+  string (COMPARE EQUAL ${batch_version_tmp} "3_x" version)
+  string (COMPARE EQUAL ${batch_version_tmp} "2_x" version2)
+  if (version2)
+    set(batch_version_tmp "3_5")
+  endif()
+  if (NOT (version OR version2) )
     message (FATAL_ERROR "Invalid LoadLeveler version, supported are:
-      3.5")
+      3.x
+      2.x")
   endif()
 
   add_definitions(-DHAVE_LOADLEVELER_${batch_version_tmp})
