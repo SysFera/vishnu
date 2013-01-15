@@ -28,7 +28,7 @@ public :
    * \brief Destructor
    * \fn ~Authenticator()
    */
-  ~Authenticator();
+  virtual ~Authenticator();
    /**
   * \brief To authenticate a useer
   * \param user The user to authenticate
@@ -41,4 +41,3 @@ public :
 
 
 #endif // _AUTHENTICATOR_H_
-
