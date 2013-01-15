@@ -1,3 +1,6 @@
+#ifndef __POSIXPARSER__HH__
+#define __POSIXPARSER__HH__
+
 
 #include <string>
 
@@ -10,3 +13,5 @@ class Definition {
 
 bool ParseCommand(char* Command);
 bool ParseString();
+
+#endif

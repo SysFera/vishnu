@@ -39,6 +39,7 @@ macro( unit_test NAME )
     include_directories( ${Boost_INCLUDE_DIRS}
       ${VISHNU_SOURCE_DIR}/mockZMQ
       ${VISHNU_SOURCE_DIR}/mockZMQ/tests
+      ${VISHNU_SOURCE_DIR}/TMS/src/posix_parser
       ${UTILVISHNU_SOURCE_DIR}
       ${EMF_DATA_DIR}
       ${TMS_EMF_DATA_DIR}
@@ -52,6 +53,7 @@ macro( unit_test NAME )
       fake_zmq
       test_zmq_helper
       vishnu-core
+      vishnu-tms-posix1.0
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-

@@ -52,6 +52,7 @@ if (NOT CLIENT_ONLY)
   include(config.cmake)
   include_directories(server
     utils
+    posix_parser
     ${DATA_BASE_INCLUDE_DIR}
     ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
@@ -154,5 +155,9 @@ if (NOT CLIENT_ONLY)
 
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
+
+  if (BUILD_TESTING)
+    add_subdirectory(posix_parser/tests)
+  endif()
 endif (NOT CLIENT_ONLY)
 
