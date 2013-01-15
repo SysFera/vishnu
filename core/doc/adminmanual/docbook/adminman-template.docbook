@@ -1674,7 +1674,7 @@ Fonctions associées : define_file_format, define_machine_format, define_task_fo
       <title>FAQ</title>
       <itemizedlist>
         <listitem>
-          <para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins</para>
+          <para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins.</para>
         </listitem>
 </itemizedlist>
 </section>

@@ -44,6 +44,12 @@
         <surname>Depardon</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Haïkel</firstname>
+        <surname>Guémar</surname>
+      </personname>
+    </author>
     <title>VISHNU - Le guide de l'administrateur</title>
     <revhistory>
       <revision>
@@ -261,8 +267,20 @@
       <revision>
         <revnumber>28</revnumber>
         <date>15/01/2013</date>
+        <authorinitials>H. Guémar</authorinitials>
+        <revdescription>
+          
+        <para>
+            Ajout d'une FAQ pour la résolution des problèmes d'administration.
+            Ajout d'une entrée dans la FAQ à propos du chargement des plugins TMS
+          </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>29</revnumber>
+        <date>15/01/2013</date>
         <authorinitials>R. Chakode</authorinitials>
         <revdescription>
+      
       <para>Mise à jour des dépendences d'installation avec ZeroMQ</para></revdescription>
       </revision>
     </revhistory>
@@ -1676,6 +1694,15 @@ plusieurs variables :
 Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
 Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
 </para>
+        </listitem>
+      </itemizedlist>
+    </section>
+    <section>
+      <title>FAQ</title>
+      <itemizedlist>
+        <listitem>
+          <para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis
+                role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins</para>
         </listitem>
       </itemizedlist>
     </section>
