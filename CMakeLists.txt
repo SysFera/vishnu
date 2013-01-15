@@ -4,7 +4,7 @@
 # Author: E. PAMBA CAPO-CHICHI
 # Date: 4th February 2011
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8.5)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/Cmake)
