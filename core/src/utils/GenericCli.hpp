@@ -72,6 +72,7 @@ class GenericCli {
 
           }
           errorUsage(av[0],"cannot retrieve sessionKey");
+          return CLI_ERROR_RUNTIME;
 
         } catch(VishnuException& e){// catch all Vishnu runtime error
           std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
