@@ -86,6 +86,14 @@
           
         <para>Added Grid Engine batch scheduler </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>12/01/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>Added posix SHELL, update for design and new paragraph, plus some data about plugins </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -223,7 +231,8 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">TMS Server</emphasis>
-             contains all classes implementing business objects that process requests sent by the TMS Client.
+             contains all classes implementing business objects that process requests sent by the TMS Client. 
+              It loads plugins implementing the different interfaces with all the supported batch schedulers.
             </para>
           </listitem>
           <listitem>
@@ -255,6 +264,10 @@ in the Vishnu Database.
             </para>
           </listitem>
           <listitem>
+            <para><emphasis role="bold">DRMAA API </emphasis> is the C API provided by drmaa for the Grid Engine batch scheduler..
+            </para>
+          </listitem>
+          <listitem>
             <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
             </para>
           </listitem>
@@ -276,6 +289,9 @@ in the Vishnu Database.
           </listitem>
           <listitem>
             <para>Sysfera-DS Client libraries </para>
+          </listitem>
+          <listitem>
+            <para> ZMQ </para>
           </listitem>
         </itemizedlist>
       </section>
@@ -307,6 +323,15 @@ in the Vishnu Database.
                 </listitem>
                 <listitem>
                   <para>LSF library</para>
+                </listitem>
+                <listitem>
+                  <para>drmaa library for Grid Engine</para>
+                </listitem>
+                <listitem>
+                  <para>PBS Pro library</para>
+                </listitem>
+                <listitem>
+                  <para>None (in this case our basic shell implementation is used)</para>
                 </listitem>
               </itemizedlist> 
            </para>
@@ -379,7 +404,7 @@ in the Vishnu Database.
       </section>
       <section>
         <title>TMS server-side components</title>
-        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM, LSF and IBM LoadLeveler API as underlying batch sheduler.</para>
+        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM, LSF, PBS Pro, Grid Engine and IBM LoadLeveler API as underlying batch sheduler. Nevertheless, it is possible to use TMS without underlying batch (in this case, the scripts is executed as a classic shell script, it is important to note that this pseudo batch is always available, even when other API are used, but by default not used).</para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobServer</emphasis>
