@@ -1,5 +1,5 @@
 
-
+#include <time.h>
 
 static const char* signature = "TMS-POS";
 
@@ -7,7 +7,6 @@ static const char* lb_req_echo   = "ECHO";
 static const char* lb_req_submit = "SUBMIT";
 static const char* lb_req_cancel = "CANCEL";
 static const char* lb_req_ginfo  = "GINFO";
-static const char* lb_req_gstime = "GSTIME";
 static const char* lb_req_kill   = "KILL";
 
 enum job_state { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
@@ -18,6 +17,11 @@ struct st_echo {
 
 struct st_submit {
   char cmd[256];
+  char name[256];
+  time_t walltime;
+  char OutPutPath[256];
+  char ErrorPath[256];
+  char WorkDir[256];
 };
 
 struct st_cancel {
@@ -61,4 +65,4 @@ int ReqSend(const char *destination, const struct Request* req);
 int ReqSubmit(const char* command,struct st_job* response);
 int ReqEcho(const char* chaine, char* ret);
 int ReqCancel(const char* JobId);
-int ReqInfo(const char* JobIdi, struct st_job* reponse);
+int ReqInfo(const char* JobId, struct st_job* reponse);

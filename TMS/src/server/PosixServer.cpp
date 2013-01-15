@@ -9,7 +9,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
-
+#include "tms-posix.hpp"
 
 PosixServer::PosixServer():BatchServer(){
 }
@@ -20,25 +20,44 @@ PosixServer::submit(const char* scriptPath,
                     const TMS_Data::SubmitOptions& options,
                     TMS_Data::Job& job,
                     char** envp){
-  return system(scriptPath);
+  int ret;
+  struct st_job resultat;
+
+  buildEnvironment();
+  LaunchDaemon();
+
+  ret = ReqSubmit(scriptPath, &resultat);
+//  return system(scriptPath);
+  return ret;
 }
 
 
 int
 PosixServer::cancel(const char* jobId){
-  return 0;
+  return ReqCancel(jobId);
 }
 
 
 int
 PosixServer::getJobState(const std::string& jobId){
-  return 5;
+  struct st_job resultat;
+  int ret;
+
+  ret = ReqInfo(jobId.c_str(), &resultat);
+  // A voir translation des codes erreurs ou corespondance ....
+  return resultat.status;
+//  return 5;
 }
 
 
 time_t
 PosixServer::getJobStartTime(const std::string& jobId){
-  return time_t();
+  struct st_job resultat;
+  int ret;
+
+  ret = ReqInfo(jobId.c_str(), &resultat);
+  return resultat.startTime;
+//  return time_t();
 }
 
 
