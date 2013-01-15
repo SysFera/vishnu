@@ -19,6 +19,7 @@
 #include <unistd.h>
 #include <limits.h>
 #include <fcntl.h>
+#include <signal.h>
 #include <sys/socket.h>
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
@@ -47,10 +48,11 @@ static const char* libNodefile="VISHNU_BATCHJOB_NODEFILE";
 static const char* libNumNodes="VISHNU_BATCHJOB_NUM_NODES";
 
 static int LogLevel=LOG_INFO;
-static int Terminated=0;
 
 static vector<struct st_job> Board;
 
+static volatile int Terminated = 0;
+static volatile sig_atomic_t ChildSigs = 0;
 /**
  * \brief To show how to use tms-posix
  * \fn int usage(char* cmd)
@@ -68,41 +70,52 @@ usage(char* cmd)
   exit(EXIT_FAILURE);
 }
 
+
+static void
+CheckJobs(void) {
+  int Taille;
+  int i;
+
+  Taille = Board.size();
+  i = 0;
+
+  while (i != Taille) {
+    for (i=0; i<Taille; i++) {
+      if (kill(Board[i].pid,0) == -1) {
+        Board.erase(Board.begin()+i);
+        break;
+      }
+    }
+  }
+  ChildSigs = 0;
+}
+/***
+  une version Boost ....
+  Board.erase(remove_if(Board.begin(), Board.end(),
+                        [](struct st_job elem) {
+                          return kill(elem.pid,0) == -1;
+                        }),
+              Board.end());
+*****/
+
 static void
 sigchldHandler(int sig) {
   int status;
   int svErrno;
   pid_t childPid;
-  sigset_t nmask, omask;
-  int i;
-  int Taille;
+//  sigset_t nmask, omask;
   
   svErrno = errno;
   
   while ((childPid = waitpid(-1, &status, WNOHANG)) > 0) {
     // Traitement mort d'un processus
     // Section critique
+/****
   sigfillset(&nmask);
   sigprocmask(SIG_BLOCK, &nmask, &omask);
-
-/***
-  Board.erase(remove_if(Board.begin(), Board.end(),
-                        [](struct st_job elem) {
-                          return elem.pid == childPid;
-                        }),
-              Board.end());
 *****/
-
-  Taille = Board.size();
-  for (i=0; i<Taille; i++) {
-    if (Board[i].pid == childPid)
-      break;
-  };
-  if (Board[i].pid == childPid) {
-    Board.erase(Board.begin()+i);
-  }
-
-  sigprocmask(SIG_SETMASK, &omask, NULL);
+  ChildSigs = 1;
+//  sigprocmask(SIG_SETMASK, &omask, NULL);
   }
 
   errno = svErrno;
@@ -338,6 +351,9 @@ AcceptRequest(int sfd, struct Request* req) {
       tms_posixLog(LOG_DEBUG, "Error accept socket:%s",strerror(errno));
       return -7;
     }
+    if ( ChildSigs == 1) {
+      CheckJobs();
+    }
   }
 
   // A voir gestion retour et erreur
@@ -370,6 +386,8 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
+
+  Board.push_back(currentState);
 
   memcpy(&(ret->data.submit),&currentState,sizeof ret->data.submit);
 
@@ -440,7 +458,7 @@ LaunchDaemon(void) {
     exit(-sfd);
   }
 
-  for (Terminated=0;Terminated==0;) {
+  for (Terminated = 0; Terminated == 0; ) {
     cfd = AcceptRequest(sfd, &req);
 
     if (cfd < 0) {
@@ -474,6 +492,10 @@ LaunchDaemon(void) {
     write(cfd,&ret,sizeof(struct Response));
 
     close(cfd);
+
+    if ( ChildSigs == 1) {
+      CheckJobs();
+    }
   }
 }
 
