@@ -31,7 +31,8 @@ GetNextValeur(istream& file,string& valeur) {
   
   while (file.get(nextchar)) {
     if (nextchar=='\n') {
-      return true;
+      file.unget();
+      break;
     }
     if (isspace(nextchar)) {
       break;
@@ -136,9 +137,11 @@ GetNextLine(istream& file, Definition& current,bool& valide) {
       break;
     }
   }
+/**
   if (file.eof()) {
     return false;
   }
+**/
   return true;
 }
 
@@ -178,7 +181,7 @@ ParseString()
   Definition def;
   
   while (GetNextDefinition(FluxTest,def)) {
-    cout << "2[" << def.key << "]:" << def.value << endl;   
+    cout << "[" << def.key << "]:" << def.value <<  '#' << endl;   
   };
   return true;
 }
