@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <iterator>
 #include <iostream>
+#include <boost/regex.hpp>
 
 #include <unistd.h>
 #include <sys/wait.h>
@@ -420,14 +421,17 @@ SSHFile::ls(const LsDirOptions& options) const {
   istringstream is(lsResult.first);
   char buffer[1024];
   string line;
+  boost::regex expression("^total [0-9]*");
 
   while (!is.eof()) {
     is.getline(buffer, 1024);
-
     line = buffer;
-    if (line.find("total") != std::string::npos || line.empty()) {
+
+    // Remove empty lines and the "first" line: "total <size>"
+    if (regex_search(line, expression) || line.empty()) {
       continue;
     }
+
 
     FMS_Data::DirEntry_ptr dirEntry = ecoreFactory->createDirEntry();
 
