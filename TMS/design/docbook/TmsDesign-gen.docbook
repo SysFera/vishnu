@@ -427,6 +427,15 @@ in the Vishnu Database.
             </imageobject>
           </mediaobject>
         </figure>
+        <figure>
+          <title>TMS communication diagram</title>
+          <mediaobject>
+            <imageobject>
+              <imagedata fileref="images/png/tms_organisation.jpg" align="center"
+                  scale="35"/>
+            </imageobject>
+          </mediaobject>
+        </figure>
       </section>
       <section>
         <title>SysFera-DS Bus Details</title>
