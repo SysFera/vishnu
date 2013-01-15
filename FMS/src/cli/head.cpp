@@ -1,6 +1,6 @@
 /**
  * \file head.cpp
- * This file defines the VISHNU  head of file command 
+ * This file defines the VISHNU  head of file command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -35,14 +35,14 @@ struct HeadOfFileFunc {
 
     string contentOfHeadOfFile;
 
-    int res=head(sessionKey,mpath,contentOfHeadOfFile, mhofOptions);
-    cout << contentOfHeadOfFile << "\n"; 
+    int res = head(sessionKey, mpath, contentOfHeadOfFile, mhofOptions);
+    cout << contentOfHeadOfFile;
     return res;
   }
 };
 
-int main (int ac, char* av[]){
-
+int
+main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
   string dietConfig;
   string path;
@@ -63,6 +63,6 @@ int main (int ac, char* av[]){
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,ac,av," path");
   HeadOfFileFunc apiFunc(path,hofOptions);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
 
+  return GenericCli().run(apiFunc, dietConfig, ac, av);
 }
