@@ -551,7 +551,7 @@
       <title> Compilation des sources </title>
       <para>
   VISHNU utilise CMake comme système de construction. Ses différentes fonctionnalités sont activées
-  à la demande lors de la compilation grâce aux variables Cmake qui doivent être positionnées à
+  à la demande lors de la compilation grâce à des variables Cmake qui doivent être positionnées à
   <emphasis>ON</emphasis> (activation) ou à  <emphasis>OFF</emphasis> (désactivation).
   La liste ci-dessous décrit l'ensemble des variables disponibles :
   <itemizedlist>
