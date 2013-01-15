@@ -653,8 +653,18 @@ LSFServer::listQueues(const std::string& OptqueueName) {
 
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
 
+    /* qstatus is represents the status of a queue, and is the bitwise
+     * inclusive OR of some of the following values
+     * (see LSFdocumentation):
+     *  - QUEUE_STAT_OPEN
+     *  - QUEUE_STAT_ACTIVE
+     *  - QUEUE_STAT_RUN
+     *  - QUEUE_STAT_NOPERM
+     *  - QUEUE_STAT_DISC
+     *  - QUEUE_STAT_RUNWIN_CLOSE
+     */
     if (queueInfo[i].qStatus & QUEUE_STAT_ACTIVE) {
-      if (!queueInfo[i].qStatus & QUEUE_STAT_OPEN) {
+      if (!(queueInfo[i].qStatus & QUEUE_STAT_OPEN)) {
         queue->setState(0);
       }
       if (queueInfo[i].qStatus & QUEUE_STAT_RUN) {
