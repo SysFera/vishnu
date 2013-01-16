@@ -30,7 +30,7 @@ PosixServer::submit(const char* scriptPath,
 
 std::cout<<"Submit"<<std::endl;
   ret = ReqSubmit(scriptPath, &resultat);
-//  return system(scriptPath);
+  job.setBatchJobId(std::string(resultat.JobId));
   return ret;
 }
 

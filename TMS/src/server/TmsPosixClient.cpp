@@ -34,7 +34,7 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
     errno = sv_errno;
     return -2;
   }
-  
+
   while (nbCharwrite > 0) {
     nbCharwriten = write(sfd,req,nbCharwrite);
     if (nbCharwriten < 0) {
@@ -45,16 +45,16 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
     }
     nbCharwrite -= nbCharwriten;
   }
-  
+
   read(sfd,ret,sizeof(struct Response));
 
   close(sfd);
-  
+
   return 0;
 }
 
 int
-ReqSubmit(const char* command, struct st_job* response) {
+ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   struct Request req;
   struct Response ret;
   const char* sv_sock= "tms-posix-socket-";
@@ -123,7 +123,7 @@ ReqCancel(const char* JobId) {
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_cancel,sizeof(req.req));
   strncpy(req.data.cancel.JobId,JobId,sizeof(req.data.cancel.JobId)-1);
-  
+
   resultat = ReqSend(sv_sock, &req, &res);
   if (resultat < 0) {
     return resultat;
