@@ -14,8 +14,8 @@ struct st_job {
   enum job_state state;
 };
 
-void buildEnvironment(void);
-void LaunchDaemon(void);
+int buildEnvironment();
+void LaunchDaemon();
 
 
 int ReqSubmit(const char* command,struct st_job* response);

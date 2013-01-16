@@ -104,9 +104,9 @@ sigchldHandler(int sig) {
   int svErrno;
   pid_t childPid;
 //  sigset_t nmask, omask;
-  
+
   svErrno = errno;
-  
+
   while ((childPid = waitpid(-1, &status, WNOHANG)) > 0) {
     // Traitement mort d'un processus
     // Section critique
@@ -147,7 +147,7 @@ static int
 Daemonize(void) {
   long maxfd;
   int fd;
-  
+
   switch (fork()) {
     case -1:
       return -1;
@@ -156,11 +156,11 @@ Daemonize(void) {
     default:
       exit(EXIT_SUCCESS);
   }
-  
+
   if (setsid() == -1) {
     return -1;
   }
-  
+
   switch (fork()) {
     case -1:
       return -1;
@@ -169,43 +169,43 @@ Daemonize(void) {
     default:
       exit(EXIT_SUCCESS);
   }
-  
+
   (void)umask(0);
   (void)chdir("/");
   maxfd = sysconf(_SC_OPEN_MAX);
   if (maxfd == -1) {
     maxfd=128;
   }
-  
+
   for (fd=3; fd<maxfd; fd++) {
     close(fd);
   }
-  
+
   close(STDIN_FILENO);
 /****
   fd=open("/dev/null",O_RDWR);
-  
+
   if (fd != STDIN_FILENO) {
     return -1;
   }
 
   (void)dup2(STDIN_FILENO,STDOUT_FILENO);
   (void)dup2(STDIN_FILENO,STDERR_FILENO);
- ****/ 
+ ****/
   return 0;
 }
 
-static int
-buildEnvironment(void){
+int
+buildEnvironment(){
   //int i;
   int fdHostname;
   boost::system::error_code ec;
   const string hostname = boost::asio::ip::host_name(ec);
   static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
 
-  // variable VISHNU_SUBMIT_MACHINE_NAME  
+  // variable VISHNU_SUBMIT_MACHINE_NAME
   (void)setenv(libHostname, hostname.c_str(), true);
-  
+
   // variable VISHNU_BATCHJOB_NODEFILE
   boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
   // permissions non dispo en boost 1.46
@@ -215,7 +215,7 @@ buildEnvironment(void){
   (void)write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   (void)close(fdHostname);
   (void)setenv(libNodefile,fileHostname.c_str(),true);
-  
+
   // variable VISHNU_BATCHJOB_NUM_NODES
   (void)setenv(libNumNodes, "1", true);
 
@@ -230,7 +230,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, struct st_jo
   pid_t pid;
   ostringstream temp;
   int fd;
-  
+
   args[1]=(char *)"/bin/sh";
   args[2]=(char *)"-c";
   strcpy(commandLine,"exec ");
@@ -261,7 +261,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, struct st_jo
       dup2(fd,STDERR_FILENO);
       close(fd);
     }
-    
+
     execvp(args[1],args+1);
   }
   if (pid < 0) {
@@ -273,7 +273,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, struct st_jo
   current->startTime = time(NULL);
   current->state = RUNNING;
   current->maxTime = 0;
-  
+
   return 0;
 }
 
@@ -338,14 +338,14 @@ OpenSocketServer(const char* socketName) {
     tms_posixLog(LOG_DEBUG, "Error listening socket : %s",strerror(errno));
     return -5;
   }
-  
+
   return sfd;
 }
 
 static int
 AcceptRequest(int sfd, struct Request* req) {
   int cfd;
-  
+
   while ( (cfd = accept(sfd,NULL,NULL)) < 0) {
     if (errno != EINTR) {
       tms_posixLog(LOG_DEBUG, "Error accept socket:%s",strerror(errno));
@@ -359,7 +359,7 @@ AcceptRequest(int sfd, struct Request* req) {
   // A voir gestion retour et erreur
   read(cfd, req, sizeof(struct Request));
 
-  return cfd;    
+  return cfd;
 }
 
 static int
@@ -444,8 +444,8 @@ RequestKill(struct Request* req, struct Response* ret) {
   return 0;
 }
 
-static void
-LaunchDaemon(void) {
+void
+LaunchDaemon() {
   struct sigaction sa;
   int sfd;
   int cfd;
@@ -473,7 +473,7 @@ LaunchDaemon(void) {
   printf("Socket:%s\n",name_sock);
 
   Daemonize();
-  
+
   sigemptyset(&sa.sa_mask);
   sa.sa_flags = 0;
   sa.sa_handler = sigchldHandler;
@@ -481,7 +481,7 @@ LaunchDaemon(void) {
     tms_posixLog(LOG_DEBUG, "Error signal handler : %s",strerror(errno));
     exit(6);
   }
-  
+
   sfd = OpenSocketServer(name_sock);
   if (sfd < 0) {
     exit(-sfd);
@@ -546,7 +546,7 @@ main(int argc, char* argv[], char* envp[])
   SetProcName(argc,argv,"tms-posix [Ready]");
 
   (void)buildEnvironment();
-  
+
   if (argc < 2)
     usage(myName);
 
