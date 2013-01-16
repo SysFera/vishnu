@@ -154,7 +154,8 @@ Daemonize(void) {
     case 0:
       break;
     default:
-      exit(EXIT_SUCCESS);
+//      exit(EXIT_SUCCESS);
+      return 0;
   }
 
   if (setsid() == -1) {
@@ -274,6 +275,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, struct st_jo
   current->state = RUNNING;
   current->maxTime = 0;
 
+  printf("JobId:%s.\n",current->JobId);
   return 0;
 }
 

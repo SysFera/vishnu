@@ -63,16 +63,16 @@ ReqSubmit(const char* command, struct st_job* response) {
   struct passwd* lpasswd;
 
   euid = geteuid();
-  printf("euid:%d\n",euid);
+  printf("Client euid:%d\n",euid);
   lpasswd=getpwuid(euid);
   if ( lpasswd == NULL) {
    perror("Erreur passwd");
    return -1;
   }
-  printf("Home:%s\n",lpasswd->pw_dir);
+  printf("Client Home:%s\n",lpasswd->pw_dir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
-  printf("Socket:%s\n",name_sock);
+  printf("Client Socket:%s\n",name_sock);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));

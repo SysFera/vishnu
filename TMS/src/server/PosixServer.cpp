@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <limits>
 
+#include <iostream>
+
 #include "PosixServer.hpp"
 #include "BatchServer.hpp"
 #include "TMSVishnuException.hpp"
@@ -26,6 +28,7 @@ PosixServer::submit(const char* scriptPath,
   buildEnvironment();
   LaunchDaemon();
 
+std::cout<<"Submit"<<std::endl;
   ret = ReqSubmit(scriptPath, &resultat);
 //  return system(scriptPath);
   return ret;
