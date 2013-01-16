@@ -258,6 +258,7 @@
       <revdescription>
       <para>Maj documentation du dispatcher</para></revdescription>
       </revision>
+      
       <revision>
       <revnumber>28</revnumber>
       <date>15/01/2013</date>
@@ -1463,8 +1464,11 @@ urlSupervisor=http://127.0.0.1:9001
     <listitem>
     <para>
     Optionnel: Sur une machine lancer le dispatcher, le fichier de
-    configuration 'config' doit être à la fin et est optionnel.</para>
-    <para>$ <emphasis>dispatcher dispatcher_config.cfg</emphasis></para>
+    configuration 'dispatcher_config.cfg' doit être à la fin et est optionnel.
+    </para>
+    <para>
+    dispatcher dispatcher_config.cfg
+    </para>
     <para>
     Dans cette commande, on demande au dispatcher de démarrer en
     utilisant les serveurs définis dans le fichier config.  Si le
