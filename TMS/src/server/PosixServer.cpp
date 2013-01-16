@@ -45,7 +45,7 @@ PosixServer::getJobState(const std::string& jobId){
 
   ret = ReqInfo(jobId.c_str(), &resultat);
   // A voir translation des codes erreurs ou corespondance ....
-  return resultat.status;
+  return resultat.state;
 //  return 5;
 }
 
