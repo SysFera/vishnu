@@ -68,27 +68,27 @@ void copyFiles(const std::string & sessionKey,
  * \param copts : Copy option (false => non recursive, 0 => scp)
  * \return The copied file or throw exception on error
  */
-std::string genericFileCopier(const std::string & sessionKey,
-                              const std::string & srcMachineId,
-                              const std::string & srcPath,
-                              const std::string & destMachineId,
-                              const std::string & destPath,
-                              const CpFileOptions& copts){
-
+std::string
+genericFileCopier(const std::string & sessionKey,
+                  const std::string & srcMachineId,
+                  const std::string & srcPath,
+                  const std::string & destMachineId,
+                  const std::string & destPath,
+                  const CpFileOptions& copts) {
   string src = srcPath;
-  if(srcMachineId.size() != 0) {
+  if (srcMachineId.size() != 0) {
     src = srcMachineId + ":" + src;
   }
 
   string dest = destPath;
-  if(destMachineId.size() != 0) {
+  if (destMachineId.size() != 0) {
     dest = destMachineId + ":" + dest;
   }
 
-  if( vishnu::cp(sessionKey, src, dest, copts)!=0 ) {
-    string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost" ;
-    string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost" ;
-    string msg = boost::str(boost::format("error while copying the file %1 (machine: %2) to %3 (machine: %4)") % src % dest % srcMachine % destMachine);
+  if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
+    string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost";
+    string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost";
+    string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)") % src % dest % srcMachine % destMachine);
 
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, msg);
   }
