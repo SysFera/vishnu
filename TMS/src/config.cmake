@@ -75,7 +75,9 @@ endif(sge)
 
 # POSIX_INCLUDE_DIR and POSIX_LIB are empty but kept for homogeneity
 if (posix)
-  set(POSIXSERVER server/PosixServer.cpp )
+  set(POSIXSERVER server/PosixServer.cpp
+    server/TmsPosixClient.cpp
+    server/tms-posix.cpp)
   set(POSIX_ALL_INCLUDE_DIR ${POSIX_INCLUDE_DIR})
   set(POSIX_ALL_LIB_DIR ${POSIX_LIB})
 endif(posix)

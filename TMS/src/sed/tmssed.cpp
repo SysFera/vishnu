@@ -242,8 +242,11 @@ int main(int argc, char* argv[], char* envp[]) {
         monitor.init(vishnuId, dbConfig, machineId, POSIX);
         ppidp = getppid();
       }
+    } else {
+      while(kill(ppid,0) == 0) {
+        monitor.run();
+      }
     }
-
   } else {
     std::cerr << "\nThere was a problem to initialize the server\n\n";
     exit(1);

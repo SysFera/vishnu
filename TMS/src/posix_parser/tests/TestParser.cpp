@@ -160,6 +160,10 @@ public:
     bool res;
     bool valide;
     res = GetNextLine(stream, d, valide);
+    std::cerr << "res : " << res << std::endl;
+    std::cerr << "key : " << d.key << std::endl;
+    std::cerr << "value : " << d.value << std::endl;
+    std::cerr << "valide : " << valide << std::endl;
     BOOST_REQUIRE(res && d.key.compare("vishnu_user")==0 && d.value.compare("toto")==0 && valide);
   }
 
@@ -252,6 +256,7 @@ public:
     BOOST_REQUIRE(!res);
   }
 
+///////////////////////////////////// parse command
 
 private :
 };
