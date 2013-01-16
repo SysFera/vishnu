@@ -13,12 +13,12 @@ public:
 /////////////////// Get next val
   void
   testGetNextValeurPrefix(){
-    std::string source("#@ vishnu_user = toto\n");
+    std::string source("#% vishnu_user = toto\n");
     stringstream stream(source);
     string val = "";
     bool res;
     res = GetNextValeur(stream, val);
-    BOOST_REQUIRE(res && val.compare("#@")==0);
+    BOOST_REQUIRE(res && val.compare("#%")==0);
   }
 
   void
@@ -83,7 +83,7 @@ public:
 
   void
   testGetNextEqualMid(){
-    std::string source("#@ vishnu_user = toto\n");
+    std::string source("#% vishnu_user = toto\n");
     stringstream stream(source);
     bool res;
     res = GetNextEqualSign(stream);
@@ -92,7 +92,7 @@ public:
 
   void
   testGetNextEqualBad(){
-    std::string source("#@ vishnu_user toto\n");
+    std::string source("#% vishnu_user toto\n");
     stringstream stream(source);
     bool res;
     res = GetNextEqualSign(stream);
@@ -102,7 +102,7 @@ public:
 /////////////////////: GetNextToken
   void
   testGetNextToken(){
-    std::string source("#@ vishnu_user = toto\n");
+    std::string source("#% vishnu_user = toto\n");
     stringstream stream(source);
     string val = "";
     bool res;
@@ -143,7 +143,7 @@ public:
 /////////////////////: GetNextLine
   void
   testGetNextLineLast(){
-    std::string source("#@ vishnu_user = toto \n");
+    std::string source("#% vishnu_user = toto \n");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -154,7 +154,7 @@ public:
 
   void
   testGetNextLineLastNoSpace(){
-    std::string source("#@ vishnu_user = toto\n");
+    std::string source("#% vishnu_user = toto\n");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -169,7 +169,7 @@ public:
 
   void
   testGetNextLine(){
-    std::string source("#@ vishnu_user = toto \n titi");
+    std::string source("#% vishnu_user = toto \n titi");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -180,7 +180,7 @@ public:
 
   void
   testGetNextLineNoKey(){
-    std::string source("#@ = toto \n titi");
+    std::string source("#% = toto \n titi");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -191,7 +191,7 @@ public:
 
   void
   testGetNextLineNoValue(){
-    std::string source("#@ vishnu_user =  \n");
+    std::string source("#% vishnu_user =  \n");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -202,7 +202,7 @@ public:
 
   void
   testGetNextLineNoValueSpace(){
-    std::string source("#@ vishnu_user =  \n ");
+    std::string source("#% vishnu_user =  \n ");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -214,7 +214,7 @@ public:
 /////////////////////////// GetNextDefinition
   void
   testGetNextDefinition(){
-    std::string source("#@ vishnu_user = toto \n ");
+    std::string source("#% vishnu_user = toto \n ");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -225,7 +225,7 @@ public:
 
   void
   testGetNextDefinitionNoKey(){
-    std::string source("#@  = toto \n ");
+    std::string source("#%  = toto \n ");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -236,7 +236,7 @@ public:
 
   void
   testGetNextDefinitionNoVal(){
-    std::string source("#@ vishnu_user = \n ");
+    std::string source("#% vishnu_user = \n ");
     Definition d;
     stringstream stream(source);
     bool res;
@@ -247,7 +247,7 @@ public:
 
   void
   testGetNextDefinitionNoEq(){
-    std::string source("#@ vishnu_user toto \n ");
+    std::string source("#% vishnu_user toto \n ");
     Definition d;
     stringstream stream(source);
     bool res;

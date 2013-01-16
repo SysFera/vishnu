@@ -122,7 +122,7 @@ int JobServer::submitJob(const std::string& scriptContent,
             key = "#PBS";
             break;
           case POSIX :
-            key = "#@";
+            key = "#%";
             break;
           default :
             break;
