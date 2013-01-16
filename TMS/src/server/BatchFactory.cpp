@@ -114,10 +114,10 @@ BatchFactory::getBatchServerInstance(int batchType) {
 #endif
       break;
   case POSIX:
-      instance = loadPluginBatch("vishnu-tms-posix");
+      instance = loadPluginBatch("vishnu-tms-posix1.0");
       break;
   default : // Always compile tmp-posix
-      instance = loadPluginBatch("vishnu-tms-posix");
+      instance = loadPluginBatch("vishnu-tms-posix1.0");
     break;
   }
   return static_cast<BatchServer *>(instance);
