@@ -5,6 +5,9 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+#include <pwd.h>
+
+#include <cstdio>
 
 #include "TmsPosixClient.hpp"
 
@@ -54,7 +57,22 @@ int
 ReqSubmit(const char* command, struct st_job* response) {
   struct Request req;
   struct Response ret;
-  const char* sv_sock= "/tmp/tms-posix-socket-1001";
+  const char* sv_sock= "tms-posix-socket-";
+  char name_sock[255];
+  uid_t euid;
+  struct passwd* lpasswd;
+
+  euid = geteuid();
+  printf("euid:%d\n",euid);
+  lpasswd=getpwuid(euid);
+  if ( lpasswd == NULL) {
+   perror("Erreur passwd");
+   return -1;
+  }
+  printf("Home:%s\n",lpasswd->pw_dir);
+
+  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
+  printf("Socket:%s\n",name_sock);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));

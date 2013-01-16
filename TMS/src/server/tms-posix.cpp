@@ -289,7 +289,7 @@ OpenSocketServer(const char* socketName) {
   char rtest[128];
 
   ret = stat(socketName,&st_info);
-  printf("Retour:%d\n",ret);
+  printf("stat:%d\n",ret);
   if (ret == 0) {
     printf("stest:%s\n",stest);
     ret2 = ReqEcho(stest,rtest);
@@ -304,10 +304,12 @@ OpenSocketServer(const char* socketName) {
 
     perror("Erreur stat ");
 
-    if (errno != ENOENT) {
+    if (sv_errno != ENOENT) {
         return -3;
     }
   }
+
+  printf("Start serveur.\n");
 
   // Socket UNIX
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
