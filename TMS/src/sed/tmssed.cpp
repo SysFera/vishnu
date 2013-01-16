@@ -70,7 +70,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
-    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
 
     if (interval < 0) {
         throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
