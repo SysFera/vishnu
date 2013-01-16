@@ -142,7 +142,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 
 		//begin
 		boost::filesystem::path errorFile(errorPath.c_str());
-		if(!boost::filesystem::is_empty(errorFile)) {
+		if (!boost::filesystem::is_empty(errorFile)) {
 			merrorInfo = vishnu::get_file_content(errorPath);
 			merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
 			return;
@@ -158,7 +158,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 				merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
 			}
 		}
-		if((WEXITSTATUS(ret)==1)&&(mbatchType==SLURM)) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
+		if ( WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
 			merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
 			vishnu::deleteFile(stderrFilePath.c_str());
 			throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
@@ -168,7 +168,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 	}
 
 	boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
-	if(!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
+	if (!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
 		std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath);
 		TMS_Data::Job_ptr job = NULL;
 		if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
@@ -186,13 +186,13 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 	}
 
 	boost::filesystem::path errorFile(errorPath.c_str());
-	if(!boost::filesystem::is_empty(errorFile)) {
+	if (!boost::filesystem::is_empty(errorFile)) {
 		merrorInfo = vishnu::get_file_content(errorPath);
 		merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
 		errorMsgIsSet=true;
 	}
 
-	if((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+	if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
 		boost::filesystem::path stderrFile(stderrFilePath.c_str());
 		if(!boost::filesystem::is_empty(stderrFile)) {
 			merrorInfo = vishnu::get_file_content(stderrFilePath);
@@ -267,14 +267,14 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 	std::ostringstream cmd1;
 	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
 	cmd1 << muser << "@" << mhostname << ":" << outputPath << " " << copyOfOutputPath;
-	if(system((cmd1.str()).c_str())) {
+	if (system((cmd1.str()).c_str())) {
 		return -1;
 	}
 
 	std::ostringstream cmd2;
 	cmd2 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
 	cmd2 << muser << "@" << mhostname << ":" << errorPath << " " << copyOfErrorPath;
-	if(system((cmd2.str()).c_str())) {
+	if (system((cmd2.str()).c_str())) {
 		return -1;
 	}
 
@@ -293,7 +293,7 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
 	cmd1 << muser << "@" << mhostname << ":" << path << " " << dest;
 	std::cout << cmd1.str()<< std::endl;
-	if(system((cmd1.str()).c_str())) {
+	if (system((cmd1.str()).c_str())) {
 		return -1;
 	}
 	return 0;
