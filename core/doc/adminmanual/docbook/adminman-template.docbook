@@ -549,7 +549,7 @@
   <para>
   VISHNU utilise CMake comme système de construction. Ses différentes fonctionnalités sont activées
   à la demande lors de la compilation grâce à des variables Cmake qui doivent être positionnées à
-  <emphasis>ON</emphasis> (activation) ou à  <emphasis>OFF</emphasis> (désactivation).
+  <emphasis>ON</emphasis> (activation) ou à <emphasis>OFF</emphasis> (désactivation).
   La liste ci-dessous décrit l'ensemble des variables disponibles :
   <itemizedlist>
   <listitem>
@@ -565,19 +565,19 @@
   </listitem>
   <listitem>
   <para>
-  COMPILE_UMS indique si le module UMS sera compilé; Ce module est activé par défault (COMPILE_UMS=ON).
+  COMPILE_UMS indique si le module UMS sera compilé; Ce module est activé par défault (-DCOMPILE_UMS=ON).
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_FMS spécifie si le module FMS sera compilé. FMS est désactivé par défaut (COMPILE_FMS=OFF), lorsqu'il est activé
-  le module COMPILE_UMS dont il dépend doit être également activé (COMPILE_UMS=ON).
+  COMPILE_FMS spécifie si le module FMS sera compilé. FMS est désactivé par défaut (-DCOMPILE_FMS=OFF), lorsqu'il est activé
+  le module COMPILE_UMS dont il dépend doit être également activé (-DCOMPILE_UMS=ON).
   </para>
   </listitem>
   <listitem>
   <para>
-  COMPILE_TMS permet de préciser si le module TMS sera compilé. Par défaut désactivé, si TMS est activé (COMPILE_TMS=ON),
-  alors les modules UMS et FMS dont il dépend doivent être égalements activés (COMPILE_UMS=ON et COMPILE_FMS=ON).
+  COMPILE_TMS permet de préciser si le module TMS sera compilé. Par défaut désactivé, si TMS est activé (-DCOMPILE_TMS=ON),
+  alors les modules UMS et FMS dont il dépend doivent être égalements activés (-DCOMPILE_UMS=ON et -DCOMPILE_FMS=ON).
   </para>
   <para>Par ailleurs lorsque TMS est activé, on doit obligatoirement sélectionner un batch scheduler
   grâce aux options VISHNU_BATCH et VISHNU_BATCH_VERSION (ex. VISHNU_BATCH=SLURM et VISHNU_BATCH_VERSION=2.2).
@@ -586,7 +586,7 @@
   <listitem>
   <para>
   COMPILE_IMS indique si le module IMS sera compilé. IMS est désactivé par défaut, lorsqu'il est activé,
-  tous les autres modules doivent l'être également (COMPILE_UMS=ON, COMPILE_TMS=ON et COMPILE_FMS=ON).
+  tous les autres modules doivent l'être également (-DCOMPILE_UMS=ON, -DCOMPILE_TMS=ON et -DCOMPILE_FMS=ON).
   </para>
   </listitem>
 
