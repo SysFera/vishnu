@@ -114,7 +114,7 @@ GetNextLine(istream& file, Definition& current,bool& valide) {
     if (!file.get(nextchar)) {
       return false;
     }
-    if (nextchar == '@')
+    if (nextchar == '%')
     {
       if (!GetNextToken(file,current.key)) {
         return false;
