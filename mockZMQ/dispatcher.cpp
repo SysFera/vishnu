@@ -258,8 +258,8 @@ main(int argc, char** argv) {
     config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
     config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
     config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
-    config.getRequiredConfigValue<unsigned int>(vishnu::DISP_TIMEOUT, timeout);
     config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+    config.getRequiredConfigValue<unsigned int>(vishnu::TIMEOUT, timeout);
   }
 
   std::cerr << "====== Initial configuration =====\n"
