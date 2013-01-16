@@ -84,7 +84,7 @@ main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email\n";
       exit(1);

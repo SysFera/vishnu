@@ -100,7 +100,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT,
                                                sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uri);
   } catch (UserException& e) {
     std::cerr << e.what() << "\n";
     exit(1);
