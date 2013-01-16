@@ -1,6 +1,8 @@
 #ifndef __TMS_POSIX__HH__
 #define __TMS_POSIX__HH__
 
+extern "C"
+{ 
 
 enum job_state { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
 
@@ -20,5 +22,5 @@ int ReqSubmit(const char* command,struct st_job* response);
 int ReqEcho(const char* chaine, char* ret);
 int ReqCancel(const char* JobId);
 int ReqInfo(const char* JobId, struct st_job* reponse);
-
+};
 #endif
