@@ -17,7 +17,7 @@ namespace vishnu {
     URI_PARAMETER
   } c_type_t ;
 
-/**
+  /**
  * \brief Define a parameter type
  */
 
@@ -32,19 +32,21 @@ namespace vishnu {
     SENDMAILSCRIPT,
     BATCHTYPE,
     MACHINEID,
+    TIMEOUT,
     REMOTEBINDIR,
     INTERVALMONITOR,
     DBPOOLSIZE,
     AUTHENTYPE,
     DEFAULTBATCHCONFIGFILE,
-    URI,
-    URIDISPATCHERSUB,
     URLSUPERVISOR,
     DISP_URIADDR,
     DISP_URISUBS,
     DISP_INITFILE,
-    DISP_TIMEOUT,
-    DISP_NBTHREAD
+    DISP_NBTHREAD,
+    FMS_URIADDR,
+    IMS_URIADDR,
+    TMS_URIADDR,
+    UMS_URIADDR
   } param_type_t;
 
   /**
@@ -59,7 +61,7 @@ namespace vishnu {
      * \brief the value of the parameter
      */
     const std::string value;
-   /**
+    /**
     * \brief the type of the parameter
     */
     c_type_t type;

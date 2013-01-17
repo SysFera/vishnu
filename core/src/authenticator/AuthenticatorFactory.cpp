@@ -31,31 +31,31 @@ AuthenticatorFactory::createAuthenticatorInstance(AuthenticatorConfiguration Aut
     throw SystemException(ERRCODE_AUTHENTERR, "Authenticator instance already initialized");
   }
   switch (AuthenticatorConfig.getAuthenType()){
-    case AuthenticatorConfiguration::UMS :
-        mauth = new UMSAuthenticator();
-      break;
-    case AuthenticatorConfiguration::LDAP :
-      #ifdef USE_LDAP
-        mauth = new LDAPAuthenticator();
-      #else
-        throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
-      #endif
-      break;
-    case AuthenticatorConfiguration::UMSLDAP :
-      #ifdef USE_LDAP
-        mauth = new UMSLDAPAuthenticator();
-      #else
-        throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
-      #endif
-      break;
-    case AuthenticatorConfiguration::LDAPUMS :
-      #ifdef USE_LDAP
-        mauth = new LDAPUMSAuthenticator();
-      #else
-        throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
-      #endif
-      break;
-    default:
+  case AuthenticatorConfiguration::UMS :
+    mauth = new UMSAuthenticator();
+    break;
+  case AuthenticatorConfiguration::LDAP :
+#ifdef USE_LDAP
+    mauth = new LDAPAuthenticator();
+#else
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+#endif
+    break;
+  case AuthenticatorConfiguration::UMSLDAP :
+#ifdef USE_LDAP
+    mauth = new UMSLDAPAuthenticator();
+#else
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+#endif
+    break;
+  case AuthenticatorConfiguration::LDAPUMS :
+#ifdef USE_LDAP
+    mauth = new LDAPUMSAuthenticator();
+#else
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+#endif
+    break;
+  default:
     throw SystemException(ERRCODE_AUTHENTERR, "Authenticator instance type unknown or not managed");
   }
   return mauth;

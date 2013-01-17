@@ -26,106 +26,104 @@
 #include "Server.hpp"
 #include "SystemException.hpp"
 #include "UserException.hpp"
+#include "ExecConfiguration.hpp"
 
 
 // private declarations
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
-typedef std::multimap<std::string, std::string> ConfigMap;
-static ConfigMap theConfig;
-const std::string DISPATCHER_KEY = "dispatcher";
-const std::string TIMEOUT_KEY = "retryTimeout";
+ExecConfiguration config;
 
 typedef std::map<std::string, std::string> ServiceMap;
 static ServiceMap sMap = boost::assign::map_list_of
-  /* UMS services */
-  ("sessionConnect", "UMS")
-  ("sessionReconnect", "UMS")
-  ("sessionClose", "UMS")
-  ("userCreate", "UMS")
-  ("userUpdate", "UMS")
-  ("userDelete", "UMS")
-  ("userPasswordChange", "UMS")
-  ("userPasswordReset", "UMS")
-  ("machineCreate", "UMS")
-  ("machineUpdate", "UMS")
-  ("machineDelete", "UMS")
-  ("localAccountCreate", "UMS")
-  ("localAccountUpdate", "UMS")
-  ("localAccountDelete", "UMS")
-  ("configurationSave", "UMS")
-  ("configurationRestore", "UMS")
-  ("optionValueSet", "UMS")
-  ("optionValueSetDefault", "UMS")
-  ("sessionList", "UMS")
-  ("localAccountList", "UMS")
-  ("machineList", "UMS")
-  ("commandList", "UMS")
-  ("optionValueList", "UMS")
-  ("userList", "UMS")
-  ("restore", "UMS")
-  ("authSystemCreate", "UMS")
-  ("authSystemUpdate", "UMS")
-  ("authSystemDelete", "UMS")
-  ("authSystemList", "UMS")
-  ("authAccountCreate", "UMS")
-  ("authAccountUpdate", "UMS")
-  ("authAccountDelete", "UMS")
-  ("authAccountList", "UMS")
+/* UMS services */
+("sessionConnect", "UMS")
+("sessionReconnect", "UMS")
+("sessionClose", "UMS")
+("userCreate", "UMS")
+("userUpdate", "UMS")
+("userDelete", "UMS")
+("userPasswordChange", "UMS")
+("userPasswordReset", "UMS")
+("machineCreate", "UMS")
+("machineUpdate", "UMS")
+("machineDelete", "UMS")
+("localAccountCreate", "UMS")
+("localAccountUpdate", "UMS")
+("localAccountDelete", "UMS")
+("configurationSave", "UMS")
+("configurationRestore", "UMS")
+("optionValueSet", "UMS")
+("optionValueSetDefault", "UMS")
+("sessionList", "UMS")
+("localAccountList", "UMS")
+("machineList", "UMS")
+("commandList", "UMS")
+("optionValueList", "UMS")
+("userList", "UMS")
+("restore", "UMS")
+("authSystemCreate", "UMS")
+("authSystemUpdate", "UMS")
+("authSystemDelete", "UMS")
+("authSystemList", "UMS")
+("authAccountCreate", "UMS")
+("authAccountUpdate", "UMS")
+("authAccountDelete", "UMS")
+("authAccountList", "UMS")
 /* TMS services */
-  ("jobSubmit", "TMS")
-  ("jobCancel", "TMS")
-  ("jobInfo", "TMS")
-  ("getListOfJobs", "TMS")
-  ("getJobsProgression", "TMS")
-  ("getListOfQueues", "TMS")
-  ("jobOutputGetResult", "TMS")
-  ("jobOutputGetCompletedJobs", "TMS")
-  ("addWork", "TMS")
+("jobSubmit", "TMS")
+("jobCancel", "TMS")
+("jobInfo", "TMS")
+("getListOfJobs", "TMS")
+("getJobsProgression", "TMS")
+("getListOfQueues", "TMS")
+("jobOutputGetResult", "TMS")
+("jobOutputGetCompletedJobs", "TMS")
+("addWork", "TMS")
 /* IMS services */
-  ("int_exportCommands", "IMS")
-  ("int_getMetricCurentValue", "IMS")
-  ("int_getMetricHistory", "IMS")
-  ("int_getProcesses", "IMS")
-  ("int_setSystemInfo", "IMS")
-  ("int_setSystemThreshold", "IMS")
-  ("int_getSystemThreshold", "IMS")
-  ("int_defineUserIdentifier", "IMS")
-  ("int_defineJobIdentifier", "IMS")
-  ("int_defineTransferIdentifier", "IMS")
-  ("int_defineMachineIdentifier", "IMS")
-  ("int_loadShed", "IMS")
-  ("int_setUpdateFrequency", "IMS")
-  ("int_getUpdateFrequency", "IMS")
-  ("int_restart", "IMS")
-  ("int_stop", "IMS")
-  ("int_getSystemInfo", "IMS")
-  ("int_defineAuthIdentifier", "IMS")
-  ("int_defineWorkIdentifier", "IMS")
+("int_exportCommands", "IMS")
+("int_getMetricCurentValue", "IMS")
+("int_getMetricHistory", "IMS")
+("int_getProcesses", "IMS")
+("int_setSystemInfo", "IMS")
+("int_setSystemThreshold", "IMS")
+("int_getSystemThreshold", "IMS")
+("int_defineUserIdentifier", "IMS")
+("int_defineJobIdentifier", "IMS")
+("int_defineTransferIdentifier", "IMS")
+("int_defineMachineIdentifier", "IMS")
+("int_loadShed", "IMS")
+("int_setUpdateFrequency", "IMS")
+("int_getUpdateFrequency", "IMS")
+("int_restart", "IMS")
+("int_stop", "IMS")
+("int_getSystemInfo", "IMS")
+("int_defineAuthIdentifier", "IMS")
+("int_defineWorkIdentifier", "IMS")
 /* FMS services */
-  ("FileCopyAsync", "FMS")
-  ("FileMoveAsync", "FMS")
-  ("FileMove", "FMS")
-  ("FileCopy", "FMS")
-  ("FileGetInfos", "FMS")
-  ("FileChangeGroup", "FMS")
-  ("FileChangeMode", "FMS")
-  ("FileHead", "FMS")
-  ("FileContent", "FMS")
-  ("FileCreate", "FMS")
-  ("DirCreate", "FMS")
-  ("FileRemove", "FMS")
-  ("DirRemove", "FMS")
-  ("FileTail", "FMS")
-  ("DirList", "FMS")
-  ("RemoteFileCopyAsync", "FMS")
-  ("RemoteFileMoveAsync", "FMS")
-  ("RemoteFileCopy", "FMS")
-  ("RemoteFileMove", "FMS")
-  ("FileTransfersList", "FMS")
-  ("FileTransferStop", "FMS")
-  ;
+("FileCopyAsync", "FMS")
+("FileMoveAsync", "FMS")
+("FileMove", "FMS")
+("FileCopy", "FMS")
+("FileGetInfos", "FMS")
+("FileChangeGroup", "FMS")
+("FileChangeMode", "FMS")
+("FileHead", "FMS")
+("FileContent", "FMS")
+("FileCreate", "FMS")
+("DirCreate", "FMS")
+("FileRemove", "FMS")
+("DirRemove", "FMS")
+("FileTail", "FMS")
+("DirList", "FMS")
+("RemoteFileCopyAsync", "FMS")
+("RemoteFileMoveAsync", "FMS")
+("RemoteFileCopy", "FMS")
+("RemoteFileMove", "FMS")
+("FileTransfersList", "FMS")
+("FileTransferStop", "FMS")
+;
 
 std::string
 get_module(const std::string& service) {
@@ -141,48 +139,10 @@ get_module(const std::string& service) {
 }
 
 
-void
-fill(ConfigMap& cfg, const std::string& mfile) {
-
-  std::ifstream tfile(mfile.c_str());
-
-  if (tfile) {
-    std::string line;
-    std::vector<std::string> buff;
-
-    while(std::getline(tfile, line)) {
-      if(boost::algorithm::starts_with("#", line)) {
-        continue;
-      }
-
-      boost::algorithm::trim(line);
-      boost::algorithm::split(buff, line, boost::is_any_of("="));
-
-      if (buff.size() != 2) {
-        // we skip faulty entries
-        std::cerr <<boost::format("E: invalid line in config file %1%: %2%\n")	% mfile % line;
-        continue;
-      }
-
-      cfg.insert(std::make_pair(boost::algorithm::trim_copy(buff[0]), boost::algorithm::trim_copy(buff[1])));
-    }
-  } else {
-    throw SystemException(ERRCODE_SYSTEM, "E: failed to open file for initializing the client\n");
-  }
-}
-
-
-int
-getTimeout() {
-
-  int timeout = DEFAULT_TIMEOUT;
-
-  ConfigMap::iterator iter = theConfig.find(TIMEOUT_KEY);
-  if(iter != theConfig.end()) {
-    timeout = vishnu::convertToInt(iter->second);
-    if (timeout <= 0) {
-      timeout = DEFAULT_TIMEOUT;
-    }
+inline int getTimeout() {
+  int timeout = -1;
+  if (!config.getConfigValue(vishnu::TIMEOUT, timeout) || timeout <= 0) {
+    timeout =  DEFAULT_TIMEOUT;
   }
   return timeout;
 }
@@ -190,7 +150,7 @@ getTimeout() {
 
 diet_profile_t*
 diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
-// TODO : Do not handle -1 for input (no input param)
+  // TODO : Do not handle -1 for input (no input param)
   diet_profile_t* res(NULL);
   res = new diet_profile_t;
   res->IN = IN;
@@ -203,7 +163,7 @@ diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
 }
 
 int
-diet_string_set(diet_arg_t* arg, const char* value, int pers){
+diet_string_set(diet_arg_t* arg, const char* value, int pers) {
   if (value) {
     ((diet_profile_t*)(arg->prof))->param[arg->pos] = (char *)malloc(sizeof(char)*(strlen(value)+1));
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], value, strlen(value));
@@ -213,7 +173,6 @@ diet_string_set(diet_arg_t* arg, const char* value, int pers){
     memcpy(((diet_profile_t*)(arg->prof))->param[arg->pos], "", strlen(""));
     (((diet_profile_t*)(arg->prof))->param[arg->pos])[strlen("")] = '\0';
   }
-
   delete arg;
   return 0;
 }
@@ -252,30 +211,27 @@ diet_call(diet_profile_t* prof) {
   // get the service and the related module
   std::string service(prof->name);
   std::string module = get_module(service);
+  std::transform(module.begin(), module.end(), module.begin(), ::tolower);
 
-  // check if the module has been declared in configuration.
-  // otherwise, ask the naming service
-  ConfigMap::iterator it = theConfig.find(module);
-  if (it != theConfig.end()) {
-    uri = it->second;
-    return diet_call_gen(prof, uri);
+  vishnu::param_type_t param;
+  if (module == "ums") {
+    param = vishnu::UMS_URIADDR;
+  } else if (module == "fms") {
+    param = vishnu::FMS_URIADDR;
+  } else if (module == "ims") {
+    param = vishnu::IMS_URIADDR;
   } else {
-    it = theConfig.find(DISPATCHER_KEY);
-    if (theConfig.end() != it) {
-      uri = it->second;
-      sendProfile(prof, uri);
-    } else {
-      // basically you're screwed here
-      throw SystemException(ERRCODE_SYSTEM,
-                            boost::str(
-                              boost::format("No corresponding %1% server found")
-                              % service));
-    }
+    param = vishnu::TMS_URIADDR;
   }
 
-  //return diet_call_gen(prof, uri);
-
-  return 0;
+  if (!config.getConfigValue(param, uri) &&
+  !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
+    throw SystemException(ERRCODE_SYSTEM,
+    boost::str(
+    boost::format("No corresponding %1% server found")
+    % service));
+  }
+  return diet_call_gen(prof, uri);
 }
 
 int
@@ -290,13 +246,13 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 
   std::string response = lpc.recv();
-//  std::cout << boost::format("I: Recv> %1%...\n")%response;
+  //  std::cout << boost::format("I: Recv> %1%...\n")%response;
 
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i = 0; i <= prof->OUT; ++i){
+  for (int i = 0; i <= prof->OUT; ++i) {
     prof->param[i] = strdup(tmp->param[i]);
   }
 
@@ -329,7 +285,7 @@ diet_profile_free(diet_profile_t* prof) {
 
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos) {
-  if (pos>prof->OUT){
+  if (pos>prof->OUT) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   diet_arg_t* res = new diet_arg_t;
@@ -342,15 +298,15 @@ diet_parameter(diet_profile_t* prof, int pos) {
 std::string
 my_serialize(diet_profile_t* prof) {
 
-  if (prof==NULL){
+  if (prof==NULL) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
 
   std::stringstream res;
   res << prof->name <<  "$$$"
-      << prof->IN << "$$$"
-      << prof->INOUT << "$$$"
-      << prof->OUT << "$$$";
+  << prof->IN << "$$$"
+  << prof->INOUT << "$$$"
+  << prof->OUT << "$$$";
 
   for (int i = 0; i<(prof->OUT); ++i) {
     res << prof->param[i] << "$$$";
@@ -389,10 +345,10 @@ my_deserialize(const std::string& prof) {
 
 int
 diet_initialize(const char* cfg, int argc, char** argv) {
-  if (cfg==NULL){
+  if (cfg==NULL) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid NULL initialization file");
   }
-  fill(theConfig, std::string(cfg));
+  config.initFromFile(cfg);
   return 0;
 }
 
