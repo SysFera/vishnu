@@ -48,6 +48,7 @@ PosixServer::submit(const char* scriptPath,
   ret = ReqSubmit(scriptPath, &resultat, &op);
   job.setBatchJobId(std::string(resultat.JobId));
   job.setJobId(std::string(resultat.JobId));
+  job.setStatus(4);
   return ret;
 }
 
@@ -65,8 +66,26 @@ PosixServer::getJobState(const std::string& jobId){
 
   ret = ReqInfo(jobId.c_str(), &resultat);
   // A voir translation des codes erreurs ou correspondance ....
+  switch (resultat.state){
+  case DEAD:
+  case TERMINATED:
+  case ZOMBIE:
+  case KILL:
+  case KILL9:
+    ret = 5;
+    break;
+  case RUNNING:
+    ret = 4;
+    break;
+  case WAITING:
+    ret = 3;
+    break;
+  default:
+    ret = 5;
+    break;
+  }
+
   return resultat.state;
-//  return 5;
 }
 
 
@@ -83,7 +102,21 @@ PosixServer::getJobStartTime(const std::string& jobId){
 
 TMS_Data::ListQueues*
 PosixServer::listQueues(const std::string& optQueueName){
-  return new TMS_Data::ListQueues();
+  TMS_Data::ListQueues* res = new TMS_Data::ListQueues();
+  TMS_Data::Queue * q = new TMS_Data::Queue();
+  q->setName("posix");
+  q->setMaxJobCpu(1);
+  q->setMaxProcCpu(1);
+  q->setMemory(0);
+  q->setWallTime(0);
+  q->setNode(1);
+  q->setNbRunningJobs(0);
+  q->setNbJobsInQueue(0);
+  q->setState(2);
+  q->setPriority(1);
+  q->setDescription("Basic no queue");
+  res->getQueues().push_back(q);
+  return res;
 }
 
 
