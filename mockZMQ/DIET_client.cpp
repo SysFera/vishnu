@@ -219,7 +219,7 @@ diet_call(diet_profile_t* prof) {
       param = vishnu::TMS_URIADDR;
     }
 
-  if(!config.getConfigValue(param, uri) &&
+  if (!config.getConfigValue(param, uri) &&
      !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
       throw SystemException(ERRCODE_SYSTEM,
                             boost::str(
