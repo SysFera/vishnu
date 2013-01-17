@@ -59,12 +59,22 @@ public:
   std::vector<boost::shared_ptr<Server> >
   get(const std::string& service = "");
 
+  //TODO: clean later
   /**
    * \brief Init the annuary from a file
    * \param file The file to init from
    */
   void
   initFromFile(const std::string& file);
+
+  // TODO: clean comments
+//  /**
+//   * \brief Initialize the annuary with the configuration of the given module
+//   * \param module The name of the module
+//   * \param param the value of the module configuration
+//   */
+  void
+  initializeData(const std::string& module, const std::string cfgValue);
 
   /**
    * \brief Prints the content of the annuary

@@ -260,7 +260,6 @@ main(int argc, char** argv) {
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
     config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
-    config.getRequiredConfigValue<std::string>(vishnu::DISP_INITFILE, confFil);
     config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
     config.getRequiredConfigValue<unsigned int>(vishnu::TIMEOUT, timeout);
   }
@@ -275,11 +274,20 @@ main(int argc, char** argv) {
 
 
   // Get initial configuration
-  if (confFil != "") {
-    ann->initFromFile(confFil);
-  }
+  std::string cfgValue;
+  if (config.getConfigValue(vishnu::FMS_URIADDR, cfgValue)) {
+      ann->initializeData("FMS", cfgValue);
+    }
+  if (config.getConfigValue(vishnu::IMS_URIADDR, cfgValue)) {
+      ann->initializeData("IMS", cfgValue);
+    }
+  if (config.getConfigValue(vishnu::TMS_URIADDR, cfgValue)) {
+      ann->initializeData("TMS", cfgValue);
+    }
+  if (config.getConfigValue(vishnu::UMS_URIADDR, cfgValue)) {
+      ann->initializeData("UMS", cfgValue);
+    }
   ann->print();
-
 
   AddressDealer AD = AddressDealer(uriAddr, ann, nthread);
   AddressSubscriber AS = AddressSubscriber(uriSubs, ann, nthread);
