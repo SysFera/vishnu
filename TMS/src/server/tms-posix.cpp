@@ -53,6 +53,7 @@ static vector<struct st_job> Board;
 
 static volatile int Terminated = 0;
 static volatile sig_atomic_t ChildSigs = 0;
+static volatile sig_atomic_t AlarmSig = 0;
 /**
  * \brief To show how to use tms-posix
  * \fn int usage(char* cmd)
@@ -89,6 +90,14 @@ CheckJobs(void) {
   }
   ChildSigs = 0;
 }
+
+static void
+TimeStatement(void) {
+
+  alarm(10);
+  AlarmSig = 0;
+}
+
 /***
   une version Boost ....
   Board.erase(remove_if(Board.begin(), Board.end(),
@@ -117,6 +126,18 @@ sigchldHandler(int sig) {
   ChildSigs = 1;
 //  sigprocmask(SIG_SETMASK, &omask, NULL);
   }
+
+  errno = svErrno;
+}
+
+static void
+sigalarmHandler(int sig) {
+  int status;
+  int svErrno;
+
+  svErrno = errno;
+
+  AlarmSig = 1;
 
   errno = svErrno;
 }
@@ -358,6 +379,9 @@ AcceptRequest(int sfd, struct Request* req) {
     if ( ChildSigs == 1) {
       CheckJobs();
     }
+    if ( AlarmSig == 1) {
+      TimeStatement();
+    }
   }
 
   // A voir gestion retour et erreur
@@ -488,10 +512,20 @@ LaunchDaemon() {
     exit(6);
   }
 
+  sigemptyset(&sa.sa_mask);
+  sa.sa_flags = 0;
+  sa.sa_handler = sigalarmHandler;
+  if (sigaction(SIGALRM, &sa, NULL) == -1) {
+    tms_posixLog(LOG_DEBUG, "Error signal handler : %s",strerror(errno));
+    exit(6);
+  }
+
   sfd = OpenSocketServer(name_sock);
   if (sfd < 0) {
     exit(-sfd);
   }
+
+  alarm(10);   // test
 
   for (Terminated = 0; Terminated == 0; ) {
     cfd = AcceptRequest(sfd, &req);
@@ -527,6 +561,9 @@ LaunchDaemon() {
 
     if ( ChildSigs == 1) {
       CheckJobs();
+    }
+    if ( AlarmSig == 1) {
+      TimeStatement();
     }
   }
 }
