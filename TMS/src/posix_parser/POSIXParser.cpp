@@ -7,7 +7,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include "utilsVishnu.hpp"
+#include "utilVishnu.hpp"
 
 using namespace std;
 
@@ -24,13 +24,13 @@ GetNextValeur(istream& file,string& valeur) {
       break;
     }
   }
-  
+
   if (file.eof()) {
     return false;
   }
 
   valeur.push_back(nextchar);
-  
+
   while (file.get(nextchar)) {
     if (nextchar=='\n') {
       file.unget();
@@ -39,7 +39,7 @@ GetNextValeur(istream& file,string& valeur) {
     if (isspace(nextchar)) {
       break;
     }
-    
+
     valeur.push_back(nextchar);
   }
   return true;
@@ -48,7 +48,7 @@ GetNextValeur(istream& file,string& valeur) {
 static bool
 GetNextEqualSign(istream& file) {
   char nextchar;
-  
+
   while (file.get(nextchar)) {
     if ((nextchar=='=') || (nextchar=='\n')) {
       break;
@@ -67,7 +67,7 @@ static bool
 GetNextToken(istream& file,string& keyname) {
   char nextchar;
 
-  // Look for the first char of directive name  
+  // Look for the first char of directive name
   while (file.get(nextchar)) {
     if (isalnum(nextchar) || (nextchar=='_')) {
       keyname.push_back(nextchar);
@@ -80,7 +80,7 @@ GetNextToken(istream& file,string& keyname) {
   if (file.eof()) {
     return false;
   }
-  
+
   // Scan the directive name
   while (file.get(nextchar)) {
     if (!isalnum(nextchar) && (nextchar!='_')) {
@@ -101,7 +101,7 @@ GetNextToken(istream& file,string& keyname) {
 static bool
 GetNextLine(istream& file, Definition& current,bool& valide) {
   char nextchar;
-  
+
   valide=false;
   if (!file.get(nextchar)) {
     return false;
@@ -133,7 +133,7 @@ GetNextLine(istream& file, Definition& current,bool& valide) {
       file.unget();
     }
   }
-  
+
   while (file.get(nextchar)) {
     if (nextchar == '\n') {
       break;
@@ -150,7 +150,7 @@ GetNextLine(istream& file, Definition& current,bool& valide) {
 static bool
 GetNextDefinition(istream& file, Definition& def) {
   bool valide;
-  
+
   while (GetNextLine(file,def,valide)){
     if (valide) {
       transform(def.key.begin(), def.key.end(), def.key.begin(), ::tolower);
@@ -161,7 +161,7 @@ GetNextDefinition(istream& file, Definition& def) {
 }
 
 
-void JobCtx::AddDefinition(Definion Current) {
+void JobCtx::AddDefinition(Definition Current) {
   if (Current.key == "vishnu_working_dir") {
     vishnu_working_dir = Current.value;
     return;
@@ -179,15 +179,15 @@ void JobCtx::AddDefinition(Definion Current) {
     return;
   }
   if (Current.key == "vishnu_wallclocklimit") {
-    vishnu_wallclocklimit = convertToTimeType(Current.value);
+    vishnu_wallclocklimit = vishnu::convertToTimeType(Current.value);
     return;
   }
   if (Current.key == "vishnu_nbnodesandcpupernode") {
-    vishnu_nbNodesAndCpuPerNode = convertToInt(Current.value);
+    vishnu_nbNodesAndCpuPerNode = vishnu::convertToInt(Current.value);
     return;
   }
   if (Current.key == "vishnu_memory") {
-    vishnu_memory = convertToInt(Current.value);
+    vishnu_memory = vishnu::convertToInt(Current.value);
     return;
   }
 }
@@ -196,7 +196,7 @@ bool
 ParseCommand(char* Command, JobCtx& Context) {
   ifstream file;
   Definition def;
-  
+
   file.open(Command);
 
   while (GetNextDefinition(file,def)) {
@@ -213,9 +213,9 @@ ParseString()
   string Test="Une ligne\nDeux ligne\n#@vishnu_workingdir    = /tmp/toto\n\n";
   stringstream FluxTest(Test);
   Definition def;
-  
+
   while (GetNextDefinition(FluxTest,def)) {
-    cout << "[" << def.key << "]:" << def.value <<  '#' << endl;   
+    cout << "[" << def.key << "]:" << def.value <<  '#' << endl;
   };
   return true;
 }
