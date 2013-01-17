@@ -1,3 +1,5 @@
+#ifndef __TMSPOSIXCLIENT__HH__
+#define __TMSPOSIXCLIENT__HH__
 
 #include <time.h>
 
@@ -66,3 +68,8 @@ int ReqSubmit(const char* command,struct st_job* response, struct st_submit* sub
 int ReqEcho(const char* chaine, char* ret);
 int ReqCancel(const char* JobId);
 int ReqInfo(const char* JobId, struct st_job* reponse);
+
+int buildEnvironment();
+void LaunchDaemon();
+
+#endif
