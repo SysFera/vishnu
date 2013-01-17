@@ -14,7 +14,7 @@ using namespace std;
  * \param execConfig  the configuration of the program
  */
 AuthenticatorConfiguration::AuthenticatorConfiguration(const ExecConfiguration& execConfig) :
-  mexecConfig(execConfig), mauthType(UMS)
+mexecConfig(execConfig), mauthType(UMS)
 {
 }
 
@@ -25,22 +25,22 @@ void AuthenticatorConfiguration::check() throw (UserException)
 {
   string authenTypeStr;
   if (!mexecConfig.getConfigValue(vishnu::AUTHENTYPE, authenTypeStr)) {
-      std::cerr << "[INFO][UMS] The default authentication mode has been selected";
-      authenTypeStr = "UMS";
-    }
+    std::cerr << "[INFO][UMS] The default authentication mode has been selected";
+    authenTypeStr = "UMS";
+  }
 
   std::transform(authenTypeStr.begin(), authenTypeStr.end(), authenTypeStr.begin(), ::tolower);
   if (authenTypeStr == "ums") {
-      mauthType = AuthenticatorConfiguration::UMS;
-    } else if (authenTypeStr == "ldap") {
-      mauthType = AuthenticatorConfiguration::LDAP;
-    } else if (authenTypeStr == "umsldap") {
-      mauthType = AuthenticatorConfiguration::UMSLDAP;
-    } else if (authenTypeStr == "ldapums") {
-      mauthType = AuthenticatorConfiguration::LDAPUMS;
-    } else {
-      throw UserException(ERRCODE_INVALID_PARAM,
-                          "Invalid authentication mode. Supported mode are: 'UMS', 'LDAP', 'UMSLDAP' or 'LDAPUMS'");
-    }
+    mauthType = AuthenticatorConfiguration::UMS;
+  } else if (authenTypeStr == "ldap") {
+    mauthType = AuthenticatorConfiguration::LDAP;
+  } else if (authenTypeStr == "umsldap") {
+    mauthType = AuthenticatorConfiguration::UMSLDAP;
+  } else if (authenTypeStr == "ldapums") {
+    mauthType = AuthenticatorConfiguration::LDAPUMS;
+  } else {
+    throw UserException(ERRCODE_INVALID_PARAM,
+    "Invalid authentication mode. Supported mode are: 'UMS', 'LDAP', 'UMSLDAP' or 'LDAPUMS'");
+  }
 }
 
