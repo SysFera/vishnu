@@ -17,7 +17,7 @@ using namespace std;
  * \brief To build options for the VISHNU system authentication commands
  * \param pgName : The name of the command
  * \param dietConfig : Represents the VISHNU config file
- * \param fName : The user-authentication system’s name option callback
+ * \param fName : The user-authentication system's name option callback
  * \param fURI : The URI of the user-authentication systems (by
  * the form host:port for LDAP) option callback
  * \param fAuthLogin : The login used to connect to the user-authentication system option callback
@@ -50,7 +50,7 @@ boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string 
   }
 
   opt->add("name,n",
-      "corresponds to the user-authentication system’s",
+      "corresponds to the user-authentication system's",
       group,
       fName,
       type);
@@ -95,7 +95,7 @@ boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string 
 
   opt->add("userPasswordEncryption,e",
       "represents the encryption method used to encrypt"
-      "user’s password",
+      "user's password",
       group,
       fUserPasswordEncryption,
       type);
@@ -125,9 +125,3 @@ boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string 
   return opt;
 
 }
-
-
-
-
-
-
