@@ -224,7 +224,7 @@ diet_call(diet_profile_t* prof) {
       param = vishnu::TMS_URIADDR;
     }
 
-  if(!config.getConfigValue(param, uri) &&
+  if (!config.getConfigValue(param, uri) &&
      !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
       throw SystemException(ERRCODE_SYSTEM,
                             boost::str(
@@ -252,7 +252,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
-  for(int i = 0; i <= prof->OUT; ++i){
+  for (int i = 0; i <= prof->OUT; ++i) {
       prof->param[i] = strdup(tmp->param[i]);
     }
 
@@ -285,7 +285,7 @@ diet_profile_free(diet_profile_t* prof) {
 
 diet_arg_t*
 diet_parameter(diet_profile_t* prof, int pos) {
-  if (pos>prof->OUT){
+  if (pos>prof->OUT) {
       throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
     }
   diet_arg_t* res = new diet_arg_t;
@@ -298,7 +298,7 @@ diet_parameter(diet_profile_t* prof, int pos) {
 std::string
 my_serialize(diet_profile_t* prof) {
 
-  if (prof==NULL){
+  if (prof==NULL) {
       throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
     }
 
@@ -345,7 +345,7 @@ my_deserialize(const std::string& prof) {
 
 int
 diet_initialize(const char* cfg, int argc, char** argv) {
-  if (cfg==NULL){
+  if (cfg==NULL) {
       throw SystemException(ERRCODE_SYSTEM, "Invalid NULL initialization file");
     }
   config.initFromFile(cfg);
