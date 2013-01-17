@@ -49,6 +49,14 @@ PosixServer::submit(const char* scriptPath,
   job.setBatchJobId(std::string(resultat.JobId));
   job.setJobId(std::string(resultat.JobId));
   job.setStatus(4);
+  job.setJobQueue("posix");
+// If no name give a default job name
+  if (options.getName().compare("")==0){
+    job.setJobName("posix_job");
+  } else {
+    job.setJobName(options.getName());
+  }
+
   return ret;
 }
 
@@ -85,7 +93,7 @@ PosixServer::getJobState(const std::string& jobId){
     break;
   }
 
-  return resultat.state;
+  return ret;
 }
 
 

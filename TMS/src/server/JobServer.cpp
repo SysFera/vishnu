@@ -201,7 +201,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		pos = scriptContentStr.find("'");
 	}
 
-	if(batchType==SGE){
+	if(batchType==SGE || POSIX){
 		mjob.setOwner(acLogin);
 	}
 
@@ -212,6 +212,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
 	pos = mjob.getErrorPath().find(":");
 	std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
+
+        std::cout << "updating with status : " << convertToString(mjob.getStatus()) << std::endl;
 
 	std::string sqlUpdate = "UPDATE job set ";
 	sqlUpdate+="vsession_numsessionid="+numsession+",";
@@ -454,6 +456,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 			" AND vsession.users_numuserid=users.numuserid"
 			" AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
 			" AND job.jobId='"+mjob.getJobId()+"'";
+
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
