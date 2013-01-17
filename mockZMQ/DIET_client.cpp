@@ -326,7 +326,7 @@ my_serialize(diet_profile_t* prof) {
   for (int i = 0; i<(prof->OUT); ++i) {
     res << prof->params[i] << "$$$";
   }
-  res << prof->params[(prof->OUT)];
+  res << prof->params[(prof->OUT)] << "$$$";
   return res.str();
 }
 
