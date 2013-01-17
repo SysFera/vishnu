@@ -58,12 +58,12 @@ static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 //Test category 4
 BOOST_FIXTURE_TEST_SUITE(get_metric_data, IMSSeDFixture)
 
-// I2 - B : I2 – B: Get metric data normal
+// I2 - B : I2 - B: Get metric data normal
 // Get metric data : normal call
-BOOST_AUTO_TEST_CASE(get_metric_data_normal_call) 
+BOOST_AUTO_TEST_CASE(get_metric_data_normal_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case I2 – B: Get metric data");
+  BOOST_TEST_MESSAGE("Use case I2 - B: Get metric data");
   int nbResMetric = 2;
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
@@ -93,12 +93,12 @@ BOOST_AUTO_TEST_CASE(get_metric_data_normal_call)
   }
 }
 
-// I2 – E1: Get metric data with bad machine identifier
+// I2 - E1: Get metric data with bad machine identifier
 // Get metric data : bad machine Id
 BOOST_AUTO_TEST_CASE(get_metric_data_bad_machine_Id_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case I2 – E1: Get metric data with bad machine Id");
+  BOOST_TEST_MESSAGE("Use case I2 - E1: Get metric data with bad machine Id");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -109,13 +109,13 @@ BOOST_AUTO_TEST_CASE(get_metric_data_bad_machine_Id_call)
   BOOST_CHECK_THROW(getMetricHistory(sessionKey, badMachineId, list, op), VishnuException);
 }
 
-// I2 – E2: Get metric data with bad machine identifier
+// I2 - E2: Get metric data with bad machine identifier
 // Get metric data : bad metric type
 
 BOOST_AUTO_TEST_CASE(get_metric_data_bad_metric_type)
 {
 
-  BOOST_TEST_MESSAGE("Use case I2 – E2: Get metric data with bad metric type");
+  BOOST_TEST_MESSAGE("Use case I2 - E2: Get metric data with bad metric type");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -130,4 +130,3 @@ BOOST_AUTO_TEST_CASE(get_metric_data_bad_metric_type)
 
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
-

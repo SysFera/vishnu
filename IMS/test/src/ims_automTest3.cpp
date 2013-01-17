@@ -54,15 +54,15 @@ static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
-// IA2.1 – B : Get a system load threshold
+// IA2.1 - B : Get a system load threshold
 BOOST_FIXTURE_TEST_SUITE(get_system_load_threshold, IMSSeDFixture)
 
 // Get a system load threshold : normal call
 
-BOOST_AUTO_TEST_CASE(get_system_load_threshold) 
+BOOST_AUTO_TEST_CASE(get_system_load_threshold)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2.1 – B: Get a system load threshold");
+  BOOST_TEST_MESSAGE("Use case IA2.1 - B: Get a system load threshold");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -98,12 +98,12 @@ BOOST_AUTO_TEST_CASE(get_system_load_threshold)
   }
 }
 
-// IA2.1 – E1 : Get a system load threshold with bad machine Id
+// IA2.1 - E1 : Get a system load threshold with bad machine Id
 // Get a system load threshold : with bad machine Id
-BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id_call) 
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2.1 – E1: Get a system load threshold with bad machine Id");
+  BOOST_TEST_MESSAGE("Use case IA2.1 - E1: Get a system load threshold with bad machine Id");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -114,12 +114,12 @@ BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_machine_Id_call)
   BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
 }
 
-// IA2.1 – E2 : Get a system load threshold with bad metric
+// IA2.1 - E2 : Get a system load threshold with bad metric
 // Get a system load threshold : with bad metric
-BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric_call) 
+BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2.1 – E2: Get a system load threshold with bad metric");
+  BOOST_TEST_MESSAGE("Use case IA2.1 - E2: Get a system load threshold with bad metric");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -132,12 +132,12 @@ BOOST_AUTO_TEST_CASE(get_system_load_threshold_bad_metric_call)
   BOOST_CHECK_THROW(getSystemThreshold(sessionKey, list, op), VishnuException);
 }
 
-// IA2.1 – E3 : Get a system load threshold for no admin user
+// IA2.1 - E3 : Get a system load threshold for no admin user
 // Get a system load threshold : for no admin user
 BOOST_AUTO_TEST_CASE(get_system_load_threshold_for_no_admin_user_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2.1 – E3: Get a system load threshold with no admin user");
+  BOOST_TEST_MESSAGE("Use case IA2.1 - E3: Get a system load threshold with no admin user");
   VishnuConnection vc(userId, userPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();

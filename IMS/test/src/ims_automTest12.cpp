@@ -58,10 +58,10 @@ BOOST_FIXTURE_TEST_SUITE(export_command, IMSSeDFixture)
 
 //Test category 1
 //I3-B: export and replay commands
-BOOST_AUTO_TEST_CASE(export_command_normal_call) 
+BOOST_AUTO_TEST_CASE(export_command_normal_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case I3 – B: Export and replay commands normal call");
+  BOOST_TEST_MESSAGE("Use case I3 - B: Export and replay commands normal call");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
 //I3-E1: export and replay commands with bad old session Id
 BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {
 
-  BOOST_TEST_MESSAGE("Use case I3 – E1: Export and replay commands with bad old session Id call");
+  BOOST_TEST_MESSAGE("Use case I3 - E1: Export and replay commands with bad old session Id call");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {
 //I3-E2: export and replay commands with bad file path
 BOOST_AUTO_TEST_CASE(export_command_bad_file_path_call) {
 
-  BOOST_TEST_MESSAGE("Use case I3 – E2: Export and replay commands with bad file path");
+  BOOST_TEST_MESSAGE("Use case I3 - E2: Export and replay commands with bad file path");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -196,4 +196,3 @@ BOOST_AUTO_TEST_CASE(export_command_bad_file_path_call) {
 
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
-

@@ -56,12 +56,12 @@ static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 BOOST_FIXTURE_TEST_SUITE(set_update_frequency, IMSSeDFixture)
 
-// IA6 – B: Set the update frequency normal call
+// IA6 - B: Set the update frequency normal call
 // Get the update frequency : normal call
-BOOST_AUTO_TEST_CASE(set_update_frequency_normal_call) 
+BOOST_AUTO_TEST_CASE(set_update_frequency_normal_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA6 – B: Set the update frequency");
+  BOOST_TEST_MESSAGE("Use case IA6 - B: Set the update frequency");
 
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
@@ -91,12 +91,12 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_normal_call)
   }
 }
 
-// IA6 – E1: Set the update frequency with frequency value equal to zero
+// IA6 - E1: Set the update frequency with frequency value equal to zero
 // Set the update frequency : frequency equal to zero
-BOOST_AUTO_TEST_CASE(set_update_frequency_zero_call) 
+BOOST_AUTO_TEST_CASE(set_update_frequency_zero_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA6 – E1: Set the update frequency with frequency equal to zero");
+  BOOST_TEST_MESSAGE("Use case IA6 - E1: Set the update frequency with frequency equal to zero");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -105,12 +105,12 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_zero_call)
   BOOST_CHECK_THROW(setUpdateFrequency(sessionKey, frequency), VishnuException);
 }
 
-// IA6 – E2: Set the update frequency with negative frequency
+// IA6 - E2: Set the update frequency with negative frequency
 // Get the update frequency : negative frequency
-BOOST_AUTO_TEST_CASE(set_update_frequency_negative_call) 
+BOOST_AUTO_TEST_CASE(set_update_frequency_negative_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA6 – E2: Set the update frequency with negative value");
+  BOOST_TEST_MESSAGE("Use case IA6 - E2: Set the update frequency with negative value");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -119,12 +119,12 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_negative_call)
   BOOST_CHECK_THROW(setUpdateFrequency(sessionKey, frequency), VishnuException);
 }
 
-// IA6 – E3: Set the update frequency for no admin user
+// IA6 - E3: Set the update frequency for no admin user
 // Get the update frequency : no admin user
 BOOST_AUTO_TEST_CASE(set_update_frequency_no_admin_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA6 – E3: Set the update frequency for no admin user");
+  BOOST_TEST_MESSAGE("Use case IA6 - E3: Set the update frequency for no admin user");
   VishnuConnection vc(userId, userPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();

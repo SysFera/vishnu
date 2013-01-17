@@ -61,7 +61,7 @@ BOOST_FIXTURE_TEST_SUITE(define_identifier, IMSSeDFixture)
 BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA3 – B: Define the identifier");
+  BOOST_TEST_MESSAGE("Use case IA3 - B: Define the identifier");
 
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
@@ -124,7 +124,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
 BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA3 – E1: Define the identifier with bad format");
+  BOOST_TEST_MESSAGE("Use case IA3 - E1: Define the identifier with bad format");
   //bad Format with unknwon $TEST
   string formatUser = "UTEST_$TEST";
   string formatMachine = "MTEST_$TEST";
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
 BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA3 – E2: Define the identifier for no admin user");
+  BOOST_TEST_MESSAGE("Use case IA3 - E2: Define the identifier for no admin user");
   //Format with unknwon $TEST
   string formatUser = "UTEST_$CPT";
   string formatMachine = "MTEST_$CPT";

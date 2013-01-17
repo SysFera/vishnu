@@ -54,14 +54,14 @@ static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
-// I4 – B: Get data on the infrastructure
+// I4 - B: Get data on the infrastructure
 BOOST_FIXTURE_TEST_SUITE(get_metric_current_value, IMSSeDFixture)
 
 // Get metric data : normal call
-BOOST_AUTO_TEST_CASE(get_metric_current_value) 
+BOOST_AUTO_TEST_CASE(get_metric_current_value)
 {
 
-  BOOST_TEST_MESSAGE("Use case I4 – B: Get data on the infrastructure");
+  BOOST_TEST_MESSAGE("Use case I4 - B: Get data on the infrastructure");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();

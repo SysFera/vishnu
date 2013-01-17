@@ -55,14 +55,14 @@ static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 
-// IA2 – B1 : Define a system load threshold for CPUUSE Metric
+// IA2 - B1 : Define a system load threshold for CPUUSE Metric
 BOOST_FIXTURE_TEST_SUITE(define_system_load_threshold, IMSSeDFixture)
 
 // Define a system load threshold : normal call
-BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE) 
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2 – B1: Define a system load threshold for CPUUSE metric");
+  BOOST_TEST_MESSAGE("Use case IA2 - B1: Define a system load threshold for CPUUSE metric");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -109,12 +109,12 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE)
   }
 }
 
-// IA2 – B2 : Define a system load threshold for FREEDISKSPACE Metric
+// IA2 - B2 : Define a system load threshold for FREEDISKSPACE Metric
 // Define a system load threshold : normal call
 BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_SPACE)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2 – B2: Define a system load threshold for FREE DISK SPACE Metric");
+  BOOST_TEST_MESSAGE("Use case IA2 - B2: Define a system load threshold for FREE DISK SPACE Metric");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -162,12 +162,12 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_S
   }
 }
 
-// IA2 – B3 : Define a system load threshold for FREEMEMORY Metric
+// IA2 - B3 : Define a system load threshold for FREEMEMORY Metric
 // Define a system load threshold : normal call
 BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2 – B3: Define a system load threshold for FREE MEMORY Metric");
+  BOOST_TEST_MESSAGE("Use case IA2 - B3: Define a system load threshold for FREE MEMORY Metric");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -213,12 +213,12 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY
   }
 }
 
-// IA2 – E1 : Define a system load threshold with bad machine Id
+// IA2 - E1 : Define a system load threshold with bad machine Id
 // Define a system load threshold : bad machine Id
-BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call) 
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2 – E1: Define a system load threshold with bad machine Id");
+  BOOST_TEST_MESSAGE("Use case IA2 - E1: Define a system load threshold with bad machine Id");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -234,11 +234,11 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call)
   BOOST_CHECK_THROW(setSystemThreshold(sessionKey, systemThreshold), VishnuException);
 }
 
-// IA2 – E2 : Define a system load threshold with bad machine Id
+// IA2 - E2 : Define a system load threshold with bad machine Id
 // Define a system load threshold : bad machine Id
-BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call) 
+BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call)
 {
-  BOOST_TEST_MESSAGE("Use case IA2 – E2: Define a system load threshold with bad metric");
+  BOOST_TEST_MESSAGE("Use case IA2 - E2: Define a system load threshold with bad metric");
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
@@ -254,13 +254,13 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call)
   BOOST_CHECK_THROW(setSystemThreshold(sessionKey, systemThreshold), VishnuException);
 }
 
-// IA2 – E3 : Define a system load threshold for no admin user
+// IA2 - E3 : Define a system load threshold for no admin user
 // Define a system load threshold : for no admin user
 
 BOOST_AUTO_TEST_CASE(define_system_load_threshold_no_admin_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case IA2 – E3: Define a system load threshold for no admin user");
+  BOOST_TEST_MESSAGE("Use case IA2 - E3: Define a system load threshold for no admin user");
   VishnuConnection vc(userId, userPwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();

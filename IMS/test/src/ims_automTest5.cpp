@@ -56,12 +56,12 @@ static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 BOOST_FIXTURE_TEST_SUITE(get_update_frequency, IMSSeDFixture)
 
-// I1 – B: Get the update frequency normal call
+// I1 - B: Get the update frequency normal call
 // Get the update frequency : normal call
-BOOST_AUTO_TEST_CASE(get_update_frequency_normal_call) 
+BOOST_AUTO_TEST_CASE(get_update_frequency_normal_call)
 {
 
-  BOOST_TEST_MESSAGE("Use case I1 – B: Get the update frequency");
+  BOOST_TEST_MESSAGE("Use case I1 - B: Get the update frequency");
 
   VishnuConnection vc(adminId, adminPwd);
   // get the session key and the machine identifier
