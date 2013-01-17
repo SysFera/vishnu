@@ -91,35 +91,21 @@ Annuary::print() {
 }
 
 
-// Init the annuary from a file
+/**
+ * \brief Initialize the annuary with the configuration of the given module
+ * \param module The name of the module
+ * \param param the value of the module configuration
+ */
 void
-Annuary::initFromFile(const std::string& infile) {
-  FileParser initConfigParser(infile);
-  std::map<std::string, std::string> initConfig = initConfigParser.getConfiguration();
-
-  if (!initConfig.empty()) {
-    Splitter split(';');  // URIs are separated by a ';'
-    std::string line;
-    std::string value;
-    std::map<std::string, std::string>::const_iterator it;
-    for (it = initConfig.begin(); it != initConfig.end(); ++it) {
-      std::string name = it->first;
-      line = it->second;
-      split.reset(line);
-
-      while (split.hasNext()) {
-        value = split();
-        std::istringstream iss(value);
-        std::string uri;
-        std::string mid;
-        iss >> uri;
-        iss >> mid;
-        std::vector<std::string> services;
-        fillServices(services, name, mid);
-        mservers.push_back(boost::make_shared<Server>(name, services, uri));
-      }
-    }
-  }
+Annuary::initializeData(const std::string& module, const std::string cfgValue) {
+    std::istringstream iss(cfgValue);
+    std::string uri;
+    std::string mid;
+    iss >> uri;
+    iss >> mid;
+    std::vector<std::string> services;
+    fillServices(services, module, mid);
+    mservers.push_back(boost::make_shared<Server>(module, services, uri));
 }
 
 void
