@@ -154,8 +154,8 @@ Daemonize(void) {
     case 0:
       break;
     default:
-//      exit(EXIT_SUCCESS);
-      return 0;
+      exit(EXIT_SUCCESS);
+//      return 0;
   }
 
   if (setsid() == -1) {

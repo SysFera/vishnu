@@ -4,6 +4,7 @@
 #include <limits>
 
 #include <iostream>
+#include <unistd.h>
 
 #include "PosixServer.hpp"
 #include "BatchServer.hpp"
@@ -11,7 +12,8 @@
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
-#include "tms-posix.hpp"
+/////#include "tms-posix.hpp"
+#include "TmsPosixClient.hpp"
 
 PosixServer::PosixServer():BatchServer(){
 }
@@ -26,10 +28,19 @@ PosixServer::submit(const char* scriptPath,
   struct st_job resultat;
 
   buildEnvironment();
+
+  switch(fork()) {
+    case -1:
+      return -1;
+    case 0:
   LaunchDaemon();
+      break;
+    default:
+      break;
+  }
 
 std::cout<<"Submit"<<std::endl;
-  ret = ReqSubmit(scriptPath, &resultat);
+  ret = ReqSubmit(scriptPath, &resultat,NULL);
   job.setBatchJobId(std::string(resultat.JobId));
   return ret;
 }
@@ -89,3 +100,4 @@ create_plugin_instance(void **instance) {
 
   return PLUGIN_OK;
 }
+

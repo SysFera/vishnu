@@ -19,5 +19,5 @@ void LaunchDaemon();
 int ReqSubmit(const char* command,struct st_job* response);
 int ReqEcho(const char* chaine, char* ret);
 int ReqCancel(const char* JobId);
-int ReqInfo(const char* JobId, struct st_job* reponse);
+int ReqInfo(const char* JobId, struct st_job* reponse, struct st_submit* sub);
 #endif
