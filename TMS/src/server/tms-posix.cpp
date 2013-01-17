@@ -473,11 +473,6 @@ LaunchDaemon() {
   }
   printf("Home:%s\n",lpasswd->pw_dir);
 
-  int a = 1;
-  while (a==1){
-    sleep(5);
-  }
-
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
   printf("Socket:%s\n",name_sock);
 
