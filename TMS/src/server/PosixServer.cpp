@@ -12,7 +12,6 @@
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
-/////#include "tms-posix.hpp"
 #include "TmsPosixClient.hpp"
 
 PosixServer::PosixServer():BatchServer(){
@@ -26,6 +25,12 @@ PosixServer::submit(const char* scriptPath,
                     char** envp){
   int ret;
   struct st_job resultat;
+  struct st_submit op;
+  memcpy(op.name, options.getName().c_str(), strlen(options.getName().c_str()));
+  op.walltime = options.getWallTime();
+  memcpy(op.OutPutPath, options.getOutputPath().c_str(), strlen(options.getOutputPath().c_str()));
+  memcpy(op.ErrorPath, options.getErrorPath().c_str(), strlen(options.getErrorPath().c_str()));
+  memcpy(op.WorkDir, options.getWorkingDir().c_str(), strlen(options.getWorkingDir().c_str()));
 
   buildEnvironment();
 
@@ -39,8 +44,8 @@ PosixServer::submit(const char* scriptPath,
       break;
   }
 
-std::cout<<"Submit"<<std::endl;
-  ret = ReqSubmit(scriptPath, &resultat,NULL);
+  std::cout<<"Submit"<<std::endl;
+  ret = ReqSubmit(scriptPath, &resultat, &op);
   job.setBatchJobId(std::string(resultat.JobId));
   return ret;
 }
