@@ -3,7 +3,7 @@
 
 
 #include <string>
-
+#include <time.h>
 
 class Definition {
   public:
@@ -11,7 +11,24 @@ class Definition {
     std::string value;
 };
 
-bool ParseCommand(char* Command);
+
+
+class JobCtx {
+  public:
+   std::string vishnu_working_dir;
+   std::string vishnu_job_name;
+   std::string vishnu_output;
+   std::string vishnu_error;
+   ::time_t vishnu_wallclocklimit;
+   int vishnu_nbNodesAndCpuPerNode;
+   int vishnu_memory;
+
+   void AddDefinition(Definition Current);
+} ;
+
+
+
+bool ParseCommand(char* Command,JobCtx& Context);
 bool ParseString();
 
 #endif

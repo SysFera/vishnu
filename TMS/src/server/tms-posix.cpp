@@ -377,17 +377,19 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigset_t blockMask;
   sigset_t emptyMask;
   struct st_job currentState;
+  JobCtx Context;
 
   sigemptyset(&emptyMask);
 
   sigemptyset(&blockMask);
   sigaddset(&blockMask, SIGCHLD);
 
-//  ParseCommand(req->data.submit.cmd);
+  ParseCommand(req->data.submit.cmd, Context);
 
   tms_posixLog(LOG_INFO, "Starting shell : %s",req->data.submit.cmd);
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
+  // TODO: Prendre en compte le contexte
   (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 

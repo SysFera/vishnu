@@ -7,6 +7,8 @@
 #include <sstream>
 #include <algorithm>
 
+#include "utilsVishnu.hpp"
+
 using namespace std;
 
 
@@ -158,15 +160,47 @@ GetNextDefinition(istream& file, Definition& def) {
   return false;
 }
 
+
+void JobCtx::AddDefinition(Definion Current) {
+  if (Current.key == "vishnu_working_dir") {
+    vishnu_working_dir = Current.value;
+    return;
+  }
+  if (Current.key == "vishnu_job_name") {
+    vishnu_job_name = Current.value;
+    return;
+  }
+  if (Current.key == "vishnu_output") {
+    vishnu_output = Current.value;
+    return;
+  }
+  if (Current.key == "vishnu_error") {
+    vishnu_error = Current.value;
+    return;
+  }
+  if (Current.key == "vishnu_wallclocklimit") {
+    vishnu_wallclocklimit = convertToTimeType(Current.value);
+    return;
+  }
+  if (Current.key == "vishnu_nbnodesandcpupernode") {
+    vishnu_nbNodesAndCpuPerNode = convertToInt(Current.value);
+    return;
+  }
+  if (Current.key == "vishnu_memory") {
+    vishnu_memory = convertToInt(Current.value);
+    return;
+  }
+}
+
 bool
-ParseCommand(char* Command) {
+ParseCommand(char* Command, JobCtx& Context) {
   ifstream file;
   Definition def;
   
   file.open(Command);
 
   while (GetNextDefinition(file,def)) {
-    cout << "2[" << def.key << "]:" << def.value << endl;
+    Context.AddDefinition(def);
   };
 
   file.close();

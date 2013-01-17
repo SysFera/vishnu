@@ -127,19 +127,37 @@ ReqEcho(const char* chaine, char* ret) {
   return 0;
 }
 
+static char *strccpy(char* dest, const char* src, int lg, char car) {
+  int i;
+
+  for (i = 0; (*src != car) && (i < lg); i++) {
+    *dest++ = *src++;
+  }
+  *dest = 0;
+
+  return dest;
+}
+
+
 int
 ReqCancel(const char* JobId) {
   struct Request req;
   struct Response res;
-  const char* sv_sock= "/tmp/tms-posix-socket-1001";
+  const char* sv_sock= "tms-posix-socket-";
   int resultat;
+  char name_sock[255];
+  char euid[255];
+
+  strccpy(euid,JobId,sizeof(euid),'-');
+
+  snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_cancel,sizeof(req.req));
   strncpy(req.data.cancel.JobId,JobId,sizeof(req.data.cancel.JobId)-1);
 
-  resultat = ReqSend(sv_sock, &req, &res);
+  resultat = ReqSend(name_sock, &req, &res);
   if (resultat < 0) {
     return resultat;
   }
@@ -147,17 +165,23 @@ ReqCancel(const char* JobId) {
 }
 
 int
-ReqInfo(const char* JobIdi, struct st_job* response) {
+ReqInfo(const char* JobId, struct st_job* response) {
   struct Request req;
   struct Response ret;
-  const char* sv_sock= "/tmp/tms-posix-socket-1001";
+  const char* sv_sock= "tms-posix-socket-";
   int resultat;
+  char name_sock[255];
+  char euid[255];
+
+  strccpy(euid,JobId,sizeof(euid),'-');
+
+  snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_ginfo,sizeof(req.req));
 
-  resultat = ReqSend(sv_sock, &req, &ret);
+  resultat = ReqSend(name_sock, &req, &ret);
 
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
