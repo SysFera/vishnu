@@ -49,12 +49,9 @@ int JobServer::submitJob(const std::string& scriptContent,
                 const std::string& slaveDirectory,
                 const std::vector<std::string>& defaultBatchOption)
 {
-
 	msessionServer.check(); //To check the sessionKey
 	std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 	std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
-	std::string ouputDir = "" ;
-    int count=0;
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
@@ -73,7 +70,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	mjob.setWorkId(options.getWorkId()) ;
 
 	bool needOutputDir = false ;
-	if(scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
+	if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ) {
 		std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
 		std::string workingDir = (!options.getWorkingDir().size())? home : options.getWorkingDir() ;
 		std::string prefix = (boost::algorithm::ends_with(workingDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
@@ -86,11 +83,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	std::string jobSerialized ;
 	std::string submitOptionsSerialized;
-	char* scriptPath = NULL;
 	::ecorecpp::serializer::serializer optSer;
 	::ecorecpp::serializer::serializer jobSer;
-
-	scriptPath = strdup("/tmp/job_scriptXXXXXX");
 
 	std::string convertedScript;
 	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
@@ -102,7 +96,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	}
 	std::string key;
         std::string sep = " ";
-        switch(mbatchType) {
+        switch (mbatchType) {
           case TORQUE :
             key = "#PBS";
             break;
@@ -125,17 +119,15 @@ int JobServer::submitJob(const std::string& scriptContent,
           default :
             break;
         }
-        if(options.getSpecificParams().size()){
-
+        if (options.getSpecificParams().size()) {
           std::string specificParams = options.getSpecificParams();
-          
           size_t pos1 =0;
           size_t pos2=0;
           pos2 = specificParams.find("=");
-          while (pos2!=std::string::npos){
+          while (pos2!=std::string::npos) {
             size_t pos3=0;
             pos3 = specificParams.find(" ");
-            if(pos3!=std::string::npos){
+            if (pos3!=std::string::npos) {
                           
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key);
@@ -148,25 +140,25 @@ int JobServer::submitJob(const std::string& scriptContent,
               break;
             }
             pos2 = specificParams.find("=");
-            
-            
           }
         
         }
         if (defaultBatchOption.size()){
           processDefaultOptions(defaultBatchOption, convertedScript, key);
         }
+
+	char* scriptPath = strdup("/tmp/job_scriptXXXXXX");
 	vishnu::createTmpFile(scriptPath, convertedScript);
 
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
 	SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
-	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
+	if (needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
-	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 
+	sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
 	vishnu::deleteFile(scriptPath);
 
 	std::string errorInfo = sshJobExec.getErrorInfo();
@@ -179,7 +171,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	std::string updateJobSerialized = sshJobExec.getJobSerialized();
 	TMS_Data::Job_ptr job = NULL;
-	if(!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
+	if (!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
 		std::cerr << "EXCEPTION::::::::::jobSerialized" << updateJobSerialized <<std::endl;
 		throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
 	}
@@ -196,12 +188,12 @@ int JobServer::submitJob(const std::string& scriptContent,
 
 	string scriptContentStr = std::string(convertedScript);
 	size_t pos = scriptContentStr.find("'");
-	while(pos!=std::string::npos) {
+	while (pos!=std::string::npos) {
 		scriptContentStr.replace(pos, 1, " ");
 		pos = scriptContentStr.find("'");
 	}
 
-	if(mbatchType==SGE){
+	if (mbatchType == SGE) {
 		mjob.setOwner(acLogin);
 	}
 
@@ -253,32 +245,31 @@ int JobServer::submitJob(const std::string& scriptContent,
  * \return raises an exception on error
  */
 void
-JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key){
-  
-  size_t pos = 0;
+JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption,
+                                 std::string& content, std::string& key)
+{
   size_t position =0;
-  size_t posLastDirective = 0;
-  std::string key1, key2;
+  std::string key1;
     int count = 0;
-  while(count < defaultBatchOption.size()) {
+  while (count < defaultBatchOption.size()) {
 
     key1 =  defaultBatchOption.at(count);
     position = 0;
     int found =0;
-    while(position!=string::npos && !found){
+    while (position!=string::npos && !found) {
       position = content.find(key.c_str(), position);
       if(position!=std::string::npos){
         size_t pos1 = content.find("\n", position);
         std::string line = content.substr(position, pos1-position);
         position++;
         size_t pos2 = line.find(key1.c_str());
-        if(pos2 != std::string::npos){
+        if (pos2 != std::string::npos) {
            found =1;
            break;
         }
       }
     }  
-    if(!found){
+    if (!found) {
       std::string lineoption = key + " " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
       insertOptionLine(lineoption, content, key);
     }
@@ -294,16 +285,14 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
  */
 void
 JobServer::insertOptionLine( std::string& optionLineToInsert,
-                             std::string& content, std::string& key) {
-  
+                             std::string& content, std::string& key)
+{
   size_t pos = 0;
-  int found=0;
   size_t posLastDirective = 0;
-  
-  while(pos!=string::npos) {
-    
+
+  while (pos!=string::npos) {
     pos = content.find(key.c_str(), pos);
-    if(pos!=string::npos) {
+    if (pos!=string::npos) {
       size_t pos1 = 0;
       pos1 = content.find("\n", pos);
       while (content.compare(pos1-1,1,"\\") == 0){
@@ -333,9 +322,7 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
  */
 int JobServer::cancelJob(const std::string& slaveDirectory)
 {
-
 	msessionServer.check(); //To check the sessionKey
-
 	std::string acLogin;
 	std::string machineName;
 	std::string jobSerialized;
@@ -359,7 +346,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 	std::string sqlCancelRequest;
 	initialJobId = mjob.getJobId();
-	if(initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0) {
+	if (initialJobId.compare("all") !=0 && initialJobId.compare("ALL")!=0) {
 		sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
 				"where vsession.numsessionid=job.vsession_numsessionid "
 				" and jobId='"+mjob.getJobId()+"'";
@@ -384,7 +371,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			iter = results.begin();
 
 			owner = *iter;
-			if(userServer.isAdmin()) {
+			if (userServer.isAdmin()) {
 				acLogin = owner;
 			} else if(owner.compare(acLogin)!=0) {
 				throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
@@ -392,10 +379,10 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
 			++iter;
 			status = convertToInt(*iter);
-			if(status==5) {
+			if (status==5) {
 				throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED);
 			}
-			if(status==6) {
+			if (status==6) {
 				throw TMSVishnuException(ERRCODE_ALREADY_CANCELED);
 			}
 
@@ -458,7 +445,7 @@ TMS_Data::Job JobServer::getJobInfo() {
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
-	if (sqlResult->getNbTuples() != 0){
+	if (sqlResult->getNbTuples() != 0) {
 		results.clear();
 		results = sqlResult->get(0);
 		iter = results.begin();
@@ -517,9 +504,9 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
 	code = ERRCODE_INVEXCEP;
 
 	size_t pos = errorInfo.find('#');
-	if(pos!=std::string::npos) {
+	if (pos!=std::string::npos) {
 		std::string codeInString = errorInfo.substr(0,pos);
-		if(codeInString.size()!=0) {
+		if (codeInString.size()!=0) {
 			std::istringstream isCode(codeInString);
 			isCode >> code;
 			message = errorInfo.substr(pos+1);
@@ -534,7 +521,7 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
  */
 long long JobServer::convertToTimeType(std::string date) {
 
-	if(date.size()==0 ||
+	if (date.size()==0 ||
 			// For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
 			date.find("0000-00-00")!=std::string::npos) {
 		return 0;
@@ -552,6 +539,4 @@ long long JobServer::convertToTimeType(std::string date) {
 /**
  * \brief Destructor
  */
-JobServer::~JobServer() {
-
-}
+JobServer::~JobServer() { }

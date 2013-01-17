@@ -23,40 +23,40 @@ using namespace std;
 
 int
 vishnu::unregisterSeD(string type, ExecConfiguration config) {
-//  string uri;
-//  string uridispatcher;
-//
-//  // Getting the machine id
-//  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-//  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
-//  zmq::context_t ctx(1);
-//  LazyPirateClient lpc(ctx, uridispatcher);
-//  std::vector<std::string> tmp;
-//  tmp.push_back("deleting");
-//
-//  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
-//
-//  std::string req = "0"+s.get()->toString();
-//  std::cout << "sending " << req << std::endl;
-//
-//  if (!lpc.send(req)) {
-//    std::cerr << "E: request failed, exiting ...\n";
-//    exit(-1);
-//  }
-//  std::string response = lpc.recv();
-//  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
-//
+  //  string uri;
+  //  string uridispatcher;
+  //
+  //  // Getting the machine id
+  //  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
+  //  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uridispatcher);
+  //  zmq::context_t ctx(1);
+  //  LazyPirateClient lpc(ctx, uridispatcher);
+  //  std::vector<std::string> tmp;
+  //  tmp.push_back("deleting");
+  //
+  //  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
+  //
+  //  std::string req = "0"+s.get()->toString();
+  //  std::cout << "sending " << req << std::endl;
+  //
+  //  if (!lpc.send(req)) {
+  //    std::cerr << "E: request failed, exiting ...\n";
+  //    exit(-1);
+  //  }
+  //  std::string response = lpc.recv();
+  //  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
+  //
   return 0;
 }
 
 
 void
 validateUri(const string & uri) {
-	size_t pos = uri.find("*");
-	if(pos != string::npos) {
-		std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
-		exit(-1);
-	}
+  size_t pos = uri.find("*");
+  if(pos != string::npos) {
+    std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
+    exit(-1);
+  }
 
 }
 
@@ -88,14 +88,22 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  config.getRequiredConfigValue<std::string>(vishnu::URIDISPATCHERSUB, uridispatcher);
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uridispatcher);
   config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
+  if (type == "fmssed") {
+    config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uri);
+  } else  if (type == "imssed") {
+    config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uri);
+  } else  if (type == "tmssed") {
+    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
+  } else { // presumably UMS
+    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
+  }
 
   // Check that the uri does not contain *
   validateUri(uridispatcher);
 
-// Register in database
+  // Register in database
   if (isNew(urlsup, mid, type)){
     std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+convertToString(PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
     try {
@@ -113,12 +121,12 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
   LazyPirateClient lpc(ctx, uridispatcher);
 
   boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
-// prefix with 1 to say registering the sed
+  // prefix with 1 to say registering the sed
   std::string req = "1"+s.get()->toString();
 
   std::cout << "sending " << req << std::endl;
   if (!lpc.send(req)) {
-	std::cerr << "W: failed to register in the naming service\n";
+    std::cerr << "W: failed to register in the naming service\n";
     return -1; //instead of exiting
   }
   std::string response = lpc.recv();
@@ -184,7 +192,7 @@ vishnu::isCpt (const char * s) {
 */
 int
 vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
-      std::string name, std::string site) {
+std::string name, std::string site) {
   unsigned int i;
   *size = 0;
 
@@ -247,26 +255,26 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
         (*size) ++;
       }else if (isType (format+i+1)) {
         switch (type){
-          case 0 :
-            array[*size].value = "M";
-            break;
-          case 1 :
-            array[*size].value = "U";
-            break;
-          case 2 :
-            array[*size].value = "J";
-            break;
-          case 3 :
-            array[*size].value = "F";
-            break;
-          case 4 :
-            array[*size].value = "A";
-            break;
-          case 5 :
-            array[*size].value = "W";
-            break;
-          default :
-            break;
+        case 0 :
+          array[*size].value = "M";
+          break;
+        case 1 :
+          array[*size].value = "U";
+          break;
+        case 2 :
+          array[*size].value = "J";
+          break;
+        case 3 :
+          array[*size].value = "F";
+          break;
+        case 4 :
+          array[*size].value = "A";
+          break;
+        case 5 :
+          array[*size].value = "W";
+          break;
+        default :
+          break;
         }
         array[*size].start = i;
         array[*size].end = i+4;
@@ -296,7 +304,7 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
 */
 std::string
 vishnu::getGeneratedName (const char* format, int cpt, IdType type,
-      std::string name , std::string site ) {
+std::string name , std::string site ) {
 
   std::string res;
   res.clear ();
@@ -320,7 +328,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
       // If other variables
       if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
         res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
-      // If text after the variable
+        // If text after the variable
       }
       else if (*(format+keywords[i].end + 1) != '\0' ){
         res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
@@ -346,57 +354,58 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   bool insert=true;
   switch(type) {
   case MACHINE:
-	  table="machine";
-	  fields=" (vishnu_vishnuid) ";
-	  val = " ("+vishnuIdString+") ";
-	  primary="nummachineid";
-	  break;
+    table="machine";
+    fields=" (vishnu_vishnuid) ";
+    val = " ("+vishnuIdString+") ";
+    primary="nummachineid";
+    break;
   case USER:
-	  table="users";
-	  fields=" (vishnu_vishnuid,pwd,userid) ";
-	  val = " ("+vishnuIdString+",'tata','titi') ";
-	  primary="numuserid";
-	  break;
+    table="users";
+    fields=" (vishnu_vishnuid,pwd,userid) ";
+    val = " ("+vishnuIdString+",'tata','titi') ";
+    primary="numuserid";
+    break;
   case JOB:
-	  table="job";
-	  fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
-	  val= " ((select max(numuserid) from users), (select max(nummachineid) from machine), NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-	  primary="numjobid";
-	  break;
+    table="job";
+    fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
+    val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
+    "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+    primary="numjobid";
+    break;
   case FILETRANSFERT:
-	  table="filetransfer";
-	  fields=" (vsession_numsessionid) ";
-	  val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
-	  primary="numfiletransferid";
-	  break;
+    table="filetransfer";
+    fields=" (vsession_numsessionid) ";
+    val= " ((select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+    primary="numfiletransferid";
+    break;
   case AUTH:
-	  table="authsystem";
-	  fields=" (vishnu_vishnuid) ";
-	  val = " ("+vishnuIdString+") ";
-	  primary="numauthsystemid";
-	  break;
+    table="authsystem";
+    fields=" (vishnu_vishnuid) ";
+    val = " ("+vishnuIdString+") ";
+    primary="numauthsystemid";
+    break;
   case WORK:
-	  //FIXME : no auto-increment field in work
-	  fields = " (application_id"
-			  ",date_created,done_ratio, estimated_hours,identifier,"
-			  "last_updated, nbcpus, owner_id, priority, "
-			  "project_id, "
-			  "start_date, status, subject) ";
-	  val = " ((select min(id) from application_version),"
-			  " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-			  " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
-			  "(select min(id) from project), "
-			  "CURRENT_TIMESTAMP, 1,'toto') ";
-	  table = "work";
-	  primary="id";
-	  break;
+    //FIXME : no auto-increment field in work
+    fields = " (application_id"
+    ",date_created,done_ratio, estimated_hours,identifier,"
+    "last_updated, nbcpus, owner_id, priority, "
+    "project_id, "
+    "start_date, status, subject) ";
+    val = " ((select min(id) from application_version),"
+    " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+    " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+    "(select min(id) from project), "
+    "CURRENT_TIMESTAMP, 1,'toto') ";
+    table = "work";
+    primary="id";
+    break;
   default:
-	  fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
-	  val = " (1, 't', 't', 't', 't', 't') ";
-	  table = "vishnu";
-	  insert=false;
-	  primary="vishnu_vishnuid";
-	  break;
+    fields = " (updatefreq, formatiduser, formatidjob, formatidfiletransfer, formatidmachine, formatidauth) ";
+    val = " (1, 't', 't', 't', 't', 't') ";
+    table = "vishnu";
+    insert=false;
+    primary="vishnu_vishnuid";
+    break;
   }
 
   databaseVishnu = factory.getDatabaseInstance();
@@ -408,10 +417,10 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
     throw e;
   }
   if(insert) {
-	  databaseVishnu->endTransaction(tid);
+    databaseVishnu->endTransaction(tid);
   }
   else {
-	  databaseVishnu->cancelTransaction(tid);
+    databaseVishnu->cancelTransaction(tid);
   }
   return ret;
 }
@@ -425,56 +434,56 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 void
 vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
 
-	std::string table;
-	std::string keyname;
-	std::string idname;
-	switch(type) {
-		case MACHINE:
-			table="machine";
-			keyname="nummachineid";
-			idname="machineid";
-			break;
-		case USER:
-			table="users";
-			keyname="numuserid";
-			idname="userid";
-			break;
-		case JOB:
-			table="job";
-			keyname="numjobid";
-			idname="jobid";
-			break;
-		case FILETRANSFERT:
-			table="filetransfer";
-			keyname="numfiletransferid";
-			idname="transferid";
-			break;
-		case AUTH:
-			table="authsystem";
-			keyname="numauthsystemid";
-			idname="authsystemid";
-			break;
-		case WORK:
-			table="work";
-			keyname="id";
-			idname="identifier";
-			break;
-		default:
-			throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
-			break;
-	}
-	std::string sqlReserve="UPDATE "+table+" ";
-	sqlReserve+="set "+idname+"='"+objectId+"' ";
-	sqlReserve+="where "+keyname+"="+convertToString(key)+";";
+  std::string table;
+  std::string keyname;
+  std::string idname;
+  switch(type) {
+  case MACHINE:
+    table="machine";
+    keyname="nummachineid";
+    idname="machineid";
+    break;
+  case USER:
+    table="users";
+    keyname="numuserid";
+    idname="userid";
+    break;
+  case JOB:
+    table="job";
+    keyname="numjobid";
+    idname="jobid";
+    break;
+  case FILETRANSFERT:
+    table="filetransfer";
+    keyname="numfiletransferid";
+    idname="transferid";
+    break;
+  case AUTH:
+    table="authsystem";
+    keyname="numauthsystemid";
+    idname="authsystemid";
+    break;
+  case WORK:
+    table="work";
+    keyname="id";
+    idname="identifier";
+    break;
+  default:
+    throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
+    break;
+  }
+  std::string sqlReserve="UPDATE "+table+" ";
+  sqlReserve+="set "+idname+"='"+objectId+"' ";
+  sqlReserve+="where "+keyname+"="+convertToString(key)+";";
 
-	DbFactory factory;
-	try {
-		factory.getDatabaseInstance()->process(sqlReserve);
-	}
-	catch (exception const & e)
-	{
-		throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
-	}
+  DbFactory factory;
+  try {
+    factory.getDatabaseInstance()->process(sqlReserve);
+  }
+  catch (exception const & e)
+  {
+    throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
+  }
 
 }
 
@@ -528,9 +537,9 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 */
 std::string
 vishnu::getObjectId(int vishnuId,
-                    std::string formatName,
-                    IdType type,
-                    std::string stringforgeneration) {
+std::string formatName,
+IdType type,
+std::string stringforgeneration) {
 
   std::string idGenerated;
 
