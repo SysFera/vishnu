@@ -79,7 +79,7 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   strncpy(req.req,lb_req_submit,sizeof(req.req));
   strncpy(req.data.submit.cmd,command,sizeof(req.data.submit)-1);
 
-  ReqSend(sv_sock, &req, &ret);
+  ReqSend(name_sock, &req, &ret);
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
     return 0;
@@ -92,15 +92,30 @@ int
 ReqEcho(const char* chaine, char* ret) {
   struct Request req;
   struct Response res;
-  const char* sv_sock= "/tmp/tms-posix-socket-1001";
+  const char* sv_sock= "tms-posix-socket-";
+  char name_sock[255];
+  uid_t euid;
+  struct passwd* lpasswd;
   int resultat;
+
+  euid = geteuid();
+  printf("Client euid:%d\n",euid);
+  lpasswd=getpwuid(euid);
+  if ( lpasswd == NULL) {
+   perror("Erreur passwd");
+   return -1;
+  }
+  printf("Client Home:%s\n",lpasswd->pw_dir);
+
+  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
+  printf("Client Socket:%s\n",name_sock);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_echo,sizeof(req.req));
   strncpy(req.data.echo.data,chaine,sizeof(req.data.echo.data)-1);
 
-  resultat = ReqSend(sv_sock, &req, &res);
+  resultat = ReqSend(name_sock, &req, &res);
   if (resultat < 0) {
     return resultat;
   }
