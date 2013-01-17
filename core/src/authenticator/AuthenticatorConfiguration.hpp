@@ -16,53 +16,53 @@
  */
 class AuthenticatorConfiguration {
 
-public:
+  public:
 
-  /**
+    /**
    * \brief The authenticator type
    */
-  typedef enum {
-    UMS,
-    LDAP,
-    UMSLDAP,
-    LDAPUMS
-  } authentype_t;
+    typedef enum {
+      UMS,
+      LDAP,
+      UMSLDAP,
+      LDAPUMS
+    } authentype_t;
 
-  /**
+    /**
    * \brief Constructor
    * \param execConfig  the configuration of the program
    */
-  AuthenticatorConfiguration(const ExecConfiguration& execConfig);
+    AuthenticatorConfiguration(const ExecConfiguration& execConfig);
 
-  /**
+    /**
    * \brief Check that the configuration is correct
    */
-  void
-  check() throw (UserException);
+    void
+    check() throw (UserException);
 
-  /**
+    /**
    * \brief Get the authenticator type
    * \return authenticator type
    */
-  authentype_t
-  getAuthenType() const { return mauthType; }
+    authentype_t
+    getAuthenType() const { return mauthType; }
 
 
-protected:
+  protected:
 
-  /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
+    /////////////////////////////////
+    // Attributes
+    /////////////////////////////////
 
-  /**
+    /**
    * \brief Reference to the main program configuration
    */
-  const ExecConfiguration& mexecConfig;
+    const ExecConfiguration& mexecConfig;
 
-  /**
+    /**
    * \brief Attribute type of authenticator
    */
-  authentype_t mauthType;
+    authentype_t mauthType;
 };
 
 #endif // _AUTHENTICATORCONFIGURATION_HPP_

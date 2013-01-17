@@ -17,7 +17,7 @@ namespace vishnu {
     URI_PARAMETER
   } c_type_t ;
 
-/**
+  /**
  * \brief Define a parameter type
  */
 
@@ -61,7 +61,7 @@ namespace vishnu {
      * \brief the value of the parameter
      */
     const std::string value;
-   /**
+    /**
     * \brief the type of the parameter
     */
     c_type_t type;
