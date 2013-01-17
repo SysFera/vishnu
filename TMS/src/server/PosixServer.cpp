@@ -41,12 +41,13 @@ PosixServer::submit(const char* scriptPath,
   LaunchDaemon();
       break;
     default:
+      sleep(3); // TODO : fix, sleep because need synchronisation and can't wait child that has become a daemon
       break;
   }
 
-  std::cout<<"Submit"<<std::endl;
   ret = ReqSubmit(scriptPath, &resultat, &op);
   job.setBatchJobId(std::string(resultat.JobId));
+  job.setJobId(std::string(resultat.JobId));
   return ret;
 }
 

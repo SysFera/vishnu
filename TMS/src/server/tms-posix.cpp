@@ -383,7 +383,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigemptyset(&blockMask);
   sigaddset(&blockMask, SIGCHLD);
 
-  ParseCommand(req->data.submit.cmd);
+//  ParseCommand(req->data.submit.cmd);
 
   tms_posixLog(LOG_INFO, "Starting shell : %s",req->data.submit.cmd);
 
