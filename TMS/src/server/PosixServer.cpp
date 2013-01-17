@@ -56,6 +56,16 @@ PosixServer::submit(const char* scriptPath,
   } else {
     job.setJobName(options.getName());
   }
+  if (options.getOutputPath().compare("")==0){
+    job.setOutputPath("/tmp/out.o");
+  } else {
+    job.setOutputPath(options.getOutputPath());
+  }
+  if (options.getErrorPath().compare("")==0){
+    job.setErrorPath("/tmp/err.e");
+  } else {
+    job.setErrorPath(options.getErrorPath());
+  }
 
   return ret;
 }
