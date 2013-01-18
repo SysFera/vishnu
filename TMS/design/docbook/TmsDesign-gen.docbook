@@ -119,7 +119,7 @@
              (VISHNU Technical Architecture).</para>
           </listitem>
           <listitem>
-            <para>Chapter 3 describes the internal API used for remote procedure calls through SysFera-DS.</para>
+            <para>Chapter 3 describes the internal API used for remote procedure calls through VISHNU.</para>
           </listitem>
           <listitem>
             <para>Chapter 4 describes the internal classes and data structures except the Vishnu core functions modelization which is included in [D2.1a] (VISHNU User Management Service Module Design)</para>
@@ -166,7 +166,7 @@
             <para><emphasis role="bold">N/A</emphasis>: Not Applicable</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon (SysFera-DS agent)</para>
+            <para><emphasis role="bold">SeD</emphasis>: A Server Daemon (VISHNU agent)</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">SOA</emphasis>: Service Oriented Architecture</para>
@@ -190,9 +190,6 @@
           <listitem>
             <para><emphasis role="bold">Serialized type</emphasis>: this is a class of data (C++ Class) which instances can be serialized in a XML string before being sent over an API (to or from the API). The data is deserialized on the other side of the channel in order to re-build the same instance of the class.</para>
           </listitem>
-          <listitem>
-            <para><emphasis role="bold">SysFera-DS</emphasis>: open-source middleware developped by SysFera.</para>
-          </listitem>
         </itemizedlist>
       </para>
     </section>
@@ -203,8 +200,7 @@
       <title>Overview of the TMS software infrastructure</title>
       <para>We present in this section a detailed description of the TMS package architecture in terms of software components.
         In addition we show the dependencies between components to highlight their reuse. These components follow a SOA model where each
-        server publish a set of services that can be used by the clients. The communication and service assignment layer is provided by
-        the SysFera-DS middleware.
+        server publish a set of services that can be used by the clients.
         We present the different software layers from the API (services provided directly to the user) to the database (used by the server). 
         The TMS module is splitted into eight different interrelated components. The diagrams shown in section 2.4 describe
         the relationships between these components. The definitions of the components are the following:
@@ -219,8 +215,7 @@
           </listitem>
           <listitem>
             <para><emphasis role="bold">Internal API</emphasis>
-             publishes the services provided by the servers. The services of the external API are implemented using requests sent through
-             the SysFera-DS middleware to this API.
+             publishes the services provided by the servers.
             </para>
           </listitem>
           <listitem>
@@ -242,30 +237,29 @@ in the Vishnu Database.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS Client API</emphasis> is the C++ client API provided by the SysFera-DS toolbox.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Sysfera-DS Server API</emphasis> is the C++ server API provided by the SysFera-DS toolbox.</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">Torque API </emphasis> is the C API provided by the Torque batch scheduler.
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">LoadLeveler API </emphasis> is the C API provided by the IBM LoadLeveler batch scheduler..
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">SLURM API </emphasis> is the C API provided by the SLURM batch scheduler..
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">LSF API </emphasis> is the C API provided by the LSF batch scheduler..
-            </para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">DRMAA API </emphasis> is the C API provided by drmaa for the Grid Engine batch scheduler..
-            </para>
+            <para>We need one of the following batch schedulers (see STB for details)</para>
+            <itemizedlist>
+              <listitem>
+                <para><emphasis role="bold">Torque API </emphasis> is the C API provided by the Torque batch scheduler.
+                </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">LoadLeveler API </emphasis> is the C API provided by the IBM LoadLeveler batch scheduler..
+                </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">SLURM API </emphasis> is the C API provided by the SLURM batch scheduler..
+                </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">LSF API </emphasis> is the C API provided by the LSF batch scheduler..
+                </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">DRMAA API </emphasis> is the C API provided by drmaa for the Grid Engine batch scheduler..
+                </para>
+              </listitem>
+            </itemizedlist>
           </listitem>
           <listitem>
             <para><emphasis role="bold">Vishnu Database</emphasis> stores all data manipulated by the TMS Server.
@@ -288,9 +282,6 @@ in the Vishnu Database.
             <para>C++ and Boost-C++ libraries </para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS Client libraries </para>
-          </listitem>
-          <listitem>
             <para> ZMQ </para>
           </listitem>
         </itemizedlist>
@@ -307,33 +298,7 @@ in the Vishnu Database.
             <para>C++ and Boost-C++ libraries</para>
           </listitem>
           <listitem>
-            <para>Sysfera-DS Server libraries </para>
-          </listitem>
-          <listitem>
-            <para>At least one of the following libraries:
-              <itemizedlist>
-                <listitem>
-                  <para>IBM LoadLeveler library</para>
-                </listitem>
-                <listitem>
-                  <para>Torque library</para>
-                </listitem>
-                <listitem>
-                  <para>SLURM library</para>
-                </listitem>
-                <listitem>
-                  <para>LSF library</para>
-                </listitem>
-                <listitem>
-                  <para>drmaa library for Grid Engine</para>
-                </listitem>
-                <listitem>
-                  <para>PBS Pro library</para>
-                </listitem>
-                <listitem>
-                  <para>None (in this case our basic shell implementation is used)</para>
-                </listitem>
-              </itemizedlist> 
+            <para>A library of a batch scheduler (see STB for detail):
            </para>
           </listitem>
         </itemizedlist>
@@ -341,7 +306,7 @@ in the Vishnu Database.
     </section>
     <section>
       <title>Job owner and identifier</title>
-      <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow TMS server to submit job under user local account on the machine on which TMS server runs, TMS server calls an other service et asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API (LoadLeveler or Torque or SLURM API or LSF API). For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier &quot;hostname.344.0&quot; and owner &quot;jdupond&quot;. 
+      <para> Each TMS server process runs using a specific local system account dedicated to VISHNU. To allow a TMS server to submit jobs with a user local account on the machine on which the TMS server runs, the TMS server calls an other service and asks the executor of the service to submit the job. We call this service executor  <emphasis>tmsSlave</emphasis>.  <emphasis>tmsSlave</emphasis> uses <emphasis>ssh executable command</emphasis> by switching the local system account dedicated to VISHNU to user local account, and after connexion on the user local account it calls the underlying batch scheduler API. For example a job submitted by user jdupond on a machine dedicated to LoadLeveler will be visible as a job with identifier &quot;hostname.344.0&quot; and owner &quot;jdupond&quot;. 
          From the VISHNU user point of view, the job owner corresponds of user job owner on the submitted machine and the  job identifier will be hidden and replaced by the generate global job identifier by VISHNU. For example the previous job will be visible in VISHNU as job &quot;JOB_6767&quot; and userId &quot;jdupond&quot;.</para>
       <para>This data translation is entirely transparent to the VISHNU user and simplifies job management. </para>
       <para>This <emphasis>tmsSlave</emphasis> is used only by two services: <emphasis>submitJob</emphasis> service and <emphasis>cancelJob</emphasis> service. </para>
@@ -382,11 +347,11 @@ in the Vishnu Database.
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobProxy</emphasis>
-             provides the services that allow to sumbit, to cancel a job and to get information on a  job.
+             provides the services that allow to submit, to cancel a job and to get information on a  job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
+            <para><emphasis role="bold">QueryProxy</emphasis> provides a generic service that allows to get job information (list of all submitted jobs, information on a specific given job and jobs'progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutProxy</emphasis> provides the services that allow to get the results of all finished jobs or a specific given job.</para>
@@ -404,15 +369,15 @@ in the Vishnu Database.
       </section>
       <section>
         <title>TMS server-side components</title>
-        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. These services are consumed by the TMS Client component through the SysFera-DS API. All the interfaces of the TMS Server component are shown. The TMS Server component uses the Torque, SLURM, LSF, PBS Pro, Grid Engine and IBM LoadLeveler API as underlying batch sheduler. Nevertheless, it is possible to use TMS without underlying batch (in this case, the scripts is executed as a classic shell script, it is important to note that this pseudo batch is always available, even when other API are used, but by default not used).</para>
+        <para>This diagram highlights the TMS server side components. Two services among all the services of the TMS internal API are shown here for example. All the interfaces of the TMS Server component are shown. Nevertheless, it is possible to use TMS without underlying batch scheduler. In this case, the scripts is executed as a classic shell script, it is important to note that this pseudo batch is always available, even when other API are used, but by default not used).</para>
         <itemizedlist>
           <listitem>
             <para><emphasis role="bold">JobServer</emphasis>
-             resolves the services that allow to sumbit, to cancel a job and to get information on a job.
+             resolves the services that allow to submit, to cancel a job and to get information on a job.
             </para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allow to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
+            <para><emphasis role="bold">QueryServer</emphasis> resolves a generic service that allows to get job information (list of all submitted jobs, information on a specific given job and jobs progression) and to list all availables queues on a given machine.</para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">JobOutPutServer</emphasis> resolves the services that allow to get the results of all finished jobs or a specific given job.</para>
@@ -438,10 +403,10 @@ in the Vishnu Database.
         </figure>
       </section>
       <section>
-        <title>SysFera-DS Bus Details</title>
-        <para> This diagram shows the communication paths between the Client host and the TMS servers using the SysFera-DS Bus. On each remote VISHNU machine on which a batch scheduler library and API are installed a TMS server must be launched (for example in the figure 2.3 we have three TMS servers launched on three different nodes). The SysFera-DS MasterAgent is a SysFera-DS agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using the CORBA IIOP (Internet Inter-ORB) protocol and the communications can be tunneled through SSH tunnels if necessary. The MasterAgent entity is involved in the choice of the TMS server to call. The diagram shows here all the communication paths in the case where the TMS Server2 is chosen by the MasterAgent.</para>
+        <title>Communication Bus Details</title>
+        <para> This diagram shows the communication paths between the Client host and the TMS servers using the communication Bus. On each remote VISHNU machine on which a batch scheduler library and API are installed a TMS server must be launched (for example in the figure 2.7 we have seven TMS servers launched on seven different nodes). The dispatcher is an optional VISHNU agent that can be executed on a dedicated host or on the same host as the TMS Server. All the communications between the entities here are done using ZMQ librarie and the communications can be tunneled through SSH tunnels if necessary. The diagram shows here all the communication paths in the case where the TMS Server2 is chosen by the dispatcher.</para>
         <figure>
-          <title>SysFera-DS Bus Details</title>
+          <title>Communication Bus Details</title>
           <mediaobject>
             <imageobject>
               <imagedata fileref="images/png/TMS_SysFera-DS_Bus_Details.png" align="center"

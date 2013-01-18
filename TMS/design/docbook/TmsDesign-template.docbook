@@ -230,8 +230,8 @@ in the Vishnu Database.
             </para>
           </listitem> 
           <listitem>
-            <itemizedlist>
               <para>We need one of the following batch schedulers (see STB for details)</para>
+            <itemizedlist>
               <listitem>
                 <para><emphasis role="bold">Torque API </emphasis> is the C API provided by the Torque batch scheduler.
                 </para>
