@@ -24,6 +24,8 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
   int sv_errno;
   size_t nbCharwrite = sizeof(struct Request);
   ssize_t nbCharwriten = 0;
+  ssize_t nbCharreaden;
+
 
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (sfd == -1) {
@@ -52,11 +54,15 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
     nbCharwrite -= nbCharwriten;
   }
 
-  read(sfd,ret,sizeof(struct Response));
+  memset(ret, 0, sizeof(struct Response));
+  nbCharreaden = read(sfd,ret,sizeof(struct Response));
+
+  printf("Taille req res:%ld.\n",nbCharreaden);
 
   close(sfd);
 
-  return 0;
+  //return 0;
+  return nbCharreaden;
 }
 
 int
@@ -85,7 +91,17 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   strncpy(req.req,lb_req_submit,sizeof(req.req));
   strncpy(req.data.submit.cmd,command,sizeof(req.data.submit)-1);
 
+  strncpy(req.data.submit.OutPutPath,sub->OutPutPath,sizeof(req.data.submit.OutPutPath)-1);
+  strncpy(req.data.submit.ErrorPath,sub->ErrorPath,sizeof(req.data.submit.ErrorPath)-1);
+  strncpy(req.data.submit.WorkDir,sub->WorkDir,sizeof(req.data.submit.WorkDir)-1);
+
   ReqSend(name_sock, &req, &ret);
+
+  printf("RetStatu:%d.\n",ret.status);
+  printf("RetJobID:%s.\n",ret.data.submit.JobId);
+  printf("Retpid:%d.\n",ret.data.submit.pid);
+  
+
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
     return 0;

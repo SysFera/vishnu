@@ -12,10 +12,26 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <cstdlib>
 
 #include "utilVishnu.hpp"
 
+
+#include <stdarg.h>
+
 using namespace std;
+
+static void
+Debug(const char *s, ...) {
+	va_list va_alist;
+	char buf[256];
+
+  va_start(va_alist, s);
+  vsnprintf(buf, sizeof(buf), s, va_alist);
+  va_end(va_alist);
+
+  write(1,buf,strlen(buf));
+}
 
 
 static bool
@@ -157,6 +173,9 @@ static bool
 GetNextDefinition(istream& file, Definition& def) {
   bool valide;
 
+  def.key.clear();
+  def.value.clear();
+
   while (GetNextLine(file,def,valide)){
     if (valide) {
       transform(def.key.begin(), def.key.end(), def.key.begin(), ::tolower);
@@ -185,15 +204,10 @@ void JobCtx::AddDefinition(Definition Current) {
     return;
   }
   if (Current.key == "vishnu_wallclocklimit") {
-    vishnu_wallclocklimit = vishnu::convertToTimeType(Current.value);
-    return;
-  }
-  if (Current.key == "vishnu_nbnodesandcpupernode") {
-    vishnu_nbNodesAndCpuPerNode = vishnu::convertToInt(Current.value);
-    return;
-  }
-  if (Current.key == "vishnu_memory") {
-    vishnu_memory = vishnu::convertToInt(Current.value);
+    Debug("Current WALLCLOCKLIMIT:%s.\n",Current.value.c_str());
+//    vishnu_wallclocklimit = vishnu::convertToTimeType(Current.value); // non Safe!
+    vishnu_wallclocklimit = std::atoi(Current.value.c_str());
+    Debug("Conversion reussie.\n");
     return;
   }
 }
@@ -203,9 +217,12 @@ ParseCommand(char* Command, JobCtx& Context) {
   ifstream file;
   Definition def;
 
+  Debug("Parser:%s.\n",Command);
   file.open(Command);
 
   while (GetNextDefinition(file,def)) {
+    Debug("Definition :%s.\n",def.key.c_str());
+    Debug("Valeur:%s.\n",def.value.c_str());
     Context.AddDefinition(def);
   };
 

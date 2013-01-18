@@ -154,13 +154,13 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobOutput]            = "#% vishnu_output=";
     mconversionTable[jobError]             = "#% vishnu_error=";
     mconversionTable[jobWallClockLimit]    = "#% vishnu_wallclocklimit=";
-    mconversionTable[cpuTime]              = "";
-    mconversionTable[nbCpu]                = "";
-    mconversionTable[nbNodesAndCpuPerNode] = "";
-    mconversionTable[mem]                  = "";
-    mconversionTable[mailNotification]     = ""; //special case
-    mconversionTable[mailNotifyUser]       = "";
-    mconversionTable[queue]                = "";
+    mconversionTable[cpuTime]              = "##";
+    mconversionTable[nbCpu]                = "##";
+    mconversionTable[nbNodesAndCpuPerNode] = "##";
+    mconversionTable[mem]                  = "##";
+    mconversionTable[mailNotification]     = "##"; //special case
+    mconversionTable[mailNotifyUser]       = "##";
+    mconversionTable[queue]                = "##";
 
     mconversionTable[sgeSec]               = "";
     mconversionTable[commandSec]           = "";

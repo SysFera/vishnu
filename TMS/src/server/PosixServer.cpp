@@ -26,14 +26,21 @@ PosixServer::submit(const char* scriptPath,
   int ret;
   struct st_job resultat;
   struct st_submit op;
+
+  memset(&op,0,sizeof(op));
   memcpy(op.name, options.getName().c_str(), strlen(options.getName().c_str()));
   op.walltime = options.getWallTime();
   memcpy(op.OutPutPath, options.getOutputPath().c_str(), strlen(options.getOutputPath().c_str()));
   memcpy(op.ErrorPath, options.getErrorPath().c_str(), strlen(options.getErrorPath().c_str()));
   memcpy(op.WorkDir, options.getWorkingDir().c_str(), strlen(options.getWorkingDir().c_str()));
 
+  std::cout << "OutPutPath: " << op.OutPutPath << std::endl;
+  std::cout << "ErrorPath: " << op.ErrorPath << std::endl;
+  std::cout << "WorkingDir: " << op.WorkDir << std::endl;
+
   buildEnvironment();
 
+  std::cout << "PosixServerSubmit"<<std::endl;
   switch(fork()) {
     case -1:
       return -1;
@@ -45,11 +52,16 @@ PosixServer::submit(const char* scriptPath,
       break;
   }
 
+  std::cout << "PosixServer reqSubmit"<<std::endl;
   ret = ReqSubmit(scriptPath, &resultat, &op);
+
+  std::cout << "PosixServer fin reqSubmit"<<std::endl;
+
   job.setBatchJobId(std::string(resultat.JobId));
   job.setJobId(std::string(resultat.JobId));
   job.setStatus(4);
   job.setJobQueue("posix");
+  std::cout << "Job Status :" << job.getStatus() << std::endl;
 // If no name give a default job name
   if (options.getName().compare("")==0){
     job.setJobName("posix_job");
@@ -66,7 +78,7 @@ PosixServer::submit(const char* scriptPath,
   } else {
     job.setErrorPath(options.getErrorPath());
   }
-
+ std::cout << "ret code : " << ret << std::endl;
   return ret;
 }
 

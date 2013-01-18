@@ -56,15 +56,6 @@ class JobCtx {
  */
    ::time_t vishnu_wallclocklimit;
 /**
- *\brief The number of node and cpu per node
- */
-   int vishnu_nbNodesAndCpuPerNode;
-/**
- *\brief The memory
- */
-   int vishnu_memory;
-
-/**
  *\brief To add a definition "current"
  */
    void

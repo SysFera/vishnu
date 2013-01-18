@@ -73,6 +73,18 @@ usage(char* cmd)
 
 
 static void
+Debug(const char *s, ...) {
+	va_list va_alist;
+	char buf[256];
+
+  va_start(va_alist, s);
+  vsnprintf(buf, sizeof(buf), s, va_alist);
+  va_end(va_alist);
+
+  write(1,buf,strlen(buf));
+}
+
+static void
 CheckJobs(void) {
   int Taille;
   int i;
@@ -94,7 +106,7 @@ CheckJobs(void) {
 static void
 TimeStatement(void) {
 
-  alarm(10);
+  //alarm(10);
   AlarmSig = 0;
 }
 
@@ -151,9 +163,9 @@ tms_posixLog(int loglevel, const char *s, ...) {
   if (loglevel >= LogLevel) {
     return;
   }
-	va_start(va_alist, s);
-	vsnprintf(buf, sizeof(buf), s, va_alist);
-	va_end(va_alist);
+  va_start(va_alist, s);
+  vsnprintf(buf, sizeof(buf), s, va_alist);
+  va_end(va_alist);
 
   sigfillset(&nmask);
   sigprocmask(SIG_BLOCK, &nmask, &omask);
@@ -199,12 +211,12 @@ Daemonize(void) {
     maxfd=128;
   }
 
+/****
   for (fd=3; fd<maxfd; fd++) {
     close(fd);
   }
 
   close(STDIN_FILENO);
-/****
   fd=open("/dev/null",O_RDWR);
 
   if (fd != STDIN_FILENO) {
@@ -312,16 +324,15 @@ OpenSocketServer(const char* socketName) {
   char rtest[128];
 
   ret = stat(socketName,&st_info);
-  printf("stat:%d\n",ret);
+  Debug("stat socketname:%d\n",ret);
   if (ret == 0) {
-    printf("stest:%s\n",stest);
+    Debug("stest:%s\n",stest);
     ret2 = ReqEcho(stest,rtest);
-    printf("ret:%d\n",ret2);
+    Debug("ret ReqEcho:%d\n",ret2);
     if (ret2==0) {
-      printf("rtest:%s\n",rtest);
+      Debug("rtest:%s\n",rtest);
       return -3;
     }
-    printf("ret2:%d\n",ret2);
   } else if (ret < 0) {
     sv_errno=errno;
 
@@ -332,7 +343,7 @@ OpenSocketServer(const char* socketName) {
     }
   }
 
-  printf("Start serveur.\n");
+  Debug("Start serveur.\n");
 
   // Socket UNIX
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
@@ -341,14 +352,15 @@ OpenSocketServer(const char* socketName) {
     return -2;
   }
 
-  printf("Unlink\n");
+  Debug("Unlink\n");
 
   if ( (unlink(socketName) == -1) && errno != ENOENT) {
     tms_posixLog(LOG_DEBUG, "Error removing socket file : %s",strerror(errno));
     return -3;
   }
 
-  printf("Bind:%s\n",socketName);
+  Debug("Bind:%s\n",socketName);
+
   memset(&addr, 0, sizeof(struct sockaddr));
   addr.sun_family = AF_UNIX;
   strncpy(addr.sun_path, socketName, sizeof(addr.sun_path)-1);
@@ -358,7 +370,8 @@ OpenSocketServer(const char* socketName) {
     return -4;
   }
 
-  printf("Listen\n");
+  Debug("Listen\n");
+
   if (listen(sfd, 5) == -1) {
     tms_posixLog(LOG_DEBUG, "Error listening socket : %s",strerror(errno));
     return -5;
@@ -402,24 +415,56 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigset_t emptyMask;
   struct st_job currentState;
   JobCtx Context;
+  char fout[256];
+  char ferr[256];
 
+  Debug("Enter Server RequestSubmit.\n");
   sigemptyset(&emptyMask);
 
   sigemptyset(&blockMask);
   sigaddset(&blockMask, SIGCHLD);
 
+  Debug("Output path:%s.\n",req->data.submit.OutPutPath);
+  Debug("Error path:%s.\n",req->data.submit.ErrorPath);
+
+  Debug("Parse command:%s.\n",req->data.submit.cmd);
+
   ParseCommand(req->data.submit.cmd, Context);
+
+  Debug("Sortie Parser.\n");
 
   tms_posixLog(LOG_INFO, "Starting shell : %s",req->data.submit.cmd);
 
+  if (strlen(req->data.submit.OutPutPath) != 0) {
+    strncpy(fout, req->data.submit.OutPutPath, sizeof(fout));
+  } else if (! Context.vishnu_output.empty()) {
+    strncpy(fout, Context.vishnu_output.c_str(), sizeof(fout));
+  } else {
+    snprintf(fout,sizeof(fout),"VISHNU-%d-%d.out",geteuid(),getpid());
+  }
+
+  if (strlen(req->data.submit.ErrorPath) != 0) {
+    strncpy(ferr, req->data.submit.ErrorPath, sizeof(ferr));
+  } else if (! Context.vishnu_error.empty()) {
+    strncpy(ferr, Context.vishnu_error.c_str(), sizeof(ferr));
+  } else {
+    snprintf(ferr,sizeof(ferr),"VISHNU-%d-%d.err",geteuid(),getpid());
+  }
+
+  Debug("Fichier de sortie:%s.\n",fout);
+  Debug("Fichier de erreur:%s.\n",ferr);
+
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
-  (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
+//  (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
+  (void)execCommand(req->data.submit.cmd, fout, ferr, &currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
   Board.push_back(currentState);
 
   memcpy(&(ret->data.submit),&currentState,sizeof ret->data.submit);
+
+  Debug("Return Server RequestSubmit.\n");
 
   return 0;
 }
@@ -474,6 +519,7 @@ RequestKill(struct Request* req, struct Response* ret) {
   return 0;
 }
 
+
 void
 LaunchDaemon() {
   struct sigaction sa;
@@ -486,23 +532,32 @@ LaunchDaemon() {
   uid_t euid;
   struct passwd* lpasswd;
 
+  char buffer[255];
+
   tms_posixLog(LOG_INFO, "Starting tms-posix monitoring daemon");
 
   Board.reserve(10);
 
   euid = geteuid();
-  printf("euid:%d\n",euid);
+
+  Debug("Serveur euid:%d\n",euid);
+
   lpasswd=getpwuid(euid);
   if ( lpasswd == NULL) {
    perror("Erreur passwd");
    exit(1);
   }
-  printf("Home:%s\n",lpasswd->pw_dir);
+
+  Debug("Server Home:%s\n",lpasswd->pw_dir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
-  printf("Socket:%s\n",name_sock);
+
+
+  Debug("Serveur Socket:%s\n",name_sock);
 
   Daemonize();
+
+  Debug("Daemon Launch.\n");
 
   sigemptyset(&sa.sa_mask);
   sa.sa_flags = 0;
@@ -520,16 +575,20 @@ LaunchDaemon() {
     exit(6);
   }
 
+  Debug("Handlers signal.\n");
+
   sfd = OpenSocketServer(name_sock);
   if (sfd < 0) {
     exit(-sfd);
   }
 
-  alarm(10);   // test
+  Debug("Fin OpenSoocket.\n");
+  //alarm(10);   // test
 
   for (Terminated = 0; Terminated == 0; ) {
     cfd = AcceptRequest(sfd, &req);
 
+  Debug("Fin AcceptSocket.\n");
     if (cfd < 0) {
       exit(-cfd);
     }
@@ -555,16 +614,21 @@ LaunchDaemon() {
       ret.status = RequestKill(&req,&ret);
     }
 
+    Debug("Write answer.\n");
     write(cfd,&ret,sizeof(struct Response));
+
+    Debug("Write return.\n");
 
     close(cfd);
 
+/****
     if ( ChildSigs == 1) {
       CheckJobs();
     }
     if ( AlarmSig == 1) {
       TimeStatement();
     }
+****/
   }
 }
 
