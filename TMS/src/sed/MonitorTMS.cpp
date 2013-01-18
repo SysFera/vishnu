@@ -85,7 +85,7 @@ MonitorTMS::run() {
   int state;
   std::string sqlUpdatedRequest;
   std::string sqlRequest = "SELECT jobId, batchJobId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
-      " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"'";
+    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType=";
 
   while(kill(getppid(), 0) == 0) {
       try {
@@ -100,7 +100,7 @@ MonitorTMS::run() {
                 ++iter;
                 batchJobId = *iter;
                 BatchFactory factory;
-                boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
+                boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
                 try {
                   state = batchServer->getJobState(batchJobId);
                   if (state!=-1) {
@@ -114,8 +114,8 @@ MonitorTMS::run() {
                 } catch (VishnuException& ex) {
                   std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
                 }
-              }
-          }
+            }
+        }
       } catch (VishnuException& ex) {
         std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
       }

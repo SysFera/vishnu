@@ -64,10 +64,65 @@ BatchFactory::getBatchServerInstance() {
       instance = loadPluginBatch("vishnu-tms-sge11");
 #elif HAVE_PBSPRO_10_4
       instance = loadPluginBatch("vishnu-tms-pbspro10.4");
+#elif HAVE_POSIX
+      instance = loadPluginBatch("vishnu-tms-posix");
 #endif
 
   return static_cast<BatchServer *>(instance);
 }
+
+/**
+ * \brief Function to create a batchServer.
+ * \param batchType The type of batchServer to create
+ * \return an instance of BatchServer
+ */
+BatchServer*
+BatchFactory::getBatchServerInstance(int batchType) {
+  BatchServer *instance(NULL);
+  switch(batchType){
+  case TORQUE:
+#ifdef HAVE_TORQUE_2_3
+    instance = loadPluginBatch("vishnu-tms-torque2.3");
+#endif
+    break;
+  case LOADLEVELER:
+#ifdef HAVE_LOADLEVELER_2_5
+    instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
+#endif
+    break;
+  case SLURM:
+#ifdef HAVE_SLURM_2_2
+    instance = loadPluginBatch("vishnu-tms-slurm2.2");
+#endif
+#ifdef HAVE_SLURM_2_3
+      instance = loadPluginBatch("vishnu-tms-slurm2.3");
+#endif
+    break;
+  case LSF:
+#ifdef HAVE_LSF_7_0
+      instance = loadPluginBatch("vishnu-tms-lsf7.0");
+#endif
+      break;
+  case SGE:
+#ifdef HAVE_SGE_11
+      instance = loadPluginBatch("vishnu-tms-sge11");
+#endif
+      break;
+  case PBSPRO:
+#ifdef HAVE_PBSPRO_10_4
+      instance = loadPluginBatch("vishnu-tms-pbspro10.4");
+#endif
+      break;
+  case POSIX:
+      instance = loadPluginBatch("vishnu-tms-posix");
+      break;
+  default : // Always compile tmp-posix
+      instance = loadPluginBatch("vishnu-tms-posix");
+    break;
+  }
+  return static_cast<BatchServer *>(instance);
+}
+
 
 /**
  * \brief Function to delete a batchServer.

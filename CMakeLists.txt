@@ -146,6 +146,7 @@ set(slurm 0)
 set(lsf 0)
 set(sge 0)
 set(pbs 0)
+set(posix 0)
 
 if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF AND NOT VISHNU_USE_SGE)
   string (COMPARE EQUAL ${VISHNU_BATCH} "TORQUE" torque)
@@ -154,7 +155,11 @@ if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VI
   string (COMPARE EQUAL ${VISHNU_BATCH} "LSF" lsf)
   string (COMPARE EQUAL ${VISHNU_BATCH} "SGE" sge)
   string (COMPARE EQUAL ${VISHNU_BATCH} "PBS" pbs)
-  if ( NOT (torque OR ll OR lsf OR slurm OR sge OR pbs) )
+  string (COMPARE EQUAL ${VISHNU_BATCH} "POSIX" posix)
+  if ( torque OR ll OR lsf OR slurm OR sge OR pbs )
+    set(posix 1)
+  endif()
+  if ( NOT (torque OR ll OR lsf OR slurm OR sge OR pbs OR posix) )
     message(FATAL_ERROR "You MUST set either VISHNU_BATCH to TORQUE or LL or SLURM or LSF or SGE or PBS when compiling TMS server")
   endif()
 endif()
@@ -162,7 +167,12 @@ endif()
 if (COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)
   set (COMPILE_FMS 1)
-  string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
+
+  # posix does not need version, can be empty, posix set to 1 if another activated so can't use reverse condition
+  if ( torque OR ll OR lsf OR slurm OR sge OR pbs )
+    string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
+  endif()
+
 endif(COMPILE_TMS)
 
 if (COMPILE_FMS)
@@ -304,6 +314,10 @@ if (sge)
     set(SGE_DIR "" cache path "SGE installation path")
   endif(SGE_FOUND)
 endif (sge)
+
+if (posix)
+  add_definitions(-DHAVE_POSIX)
+endif(posix)
 
 if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
   #To check if the module UMS is activated

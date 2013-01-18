@@ -106,6 +106,8 @@ main(int argc, char* argv[], char* envp[])
     batchType = LSF;
   } else if (batchTypeStr == "SGE") {
     batchType = SGE;
+  } else if (batchTypeStr == "POSIX") {
+    batchType = POSIX;
   } else {
     std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS')" << std::endl;
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS')");
@@ -122,7 +124,7 @@ main(int argc, char* argv[], char* envp[])
 
     //To create batchServer Factory
     BatchFactory factory;
-    batchServer = factory.getBatchServerInstance();
+    batchServer = factory.getBatchServerInstance(batchType);
     if(batchServer==NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
     }

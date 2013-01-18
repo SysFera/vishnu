@@ -148,6 +148,9 @@ ServerTMS::init(int vishnuId,
     case PBSPRO :
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
       break;
+    case POSIX :
+      getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#@");
+      break;
     default :
       break;
   }

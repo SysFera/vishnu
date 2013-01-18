@@ -93,19 +93,21 @@ public:
    * \brief Function to treat the default submission options
    * \param scriptOptions The list of the option value
    * \param cmdsOptions The list of the option value
+   * \param batchType The actual type of batch scheduler
    * \return raises an exception on error
    */
   void
-  processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key);
+  processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key, BatchType batchType);
 
   /**
    * \brief Function to insert option line into string
    * \param optionLineToInsert the option to insert
    * \param content The buffer containing the inserted option
+   * \param batchType The actual type of batch scheduler
    * \return raises an exception on error
    */
   void
-  insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
+  insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key, BatchType batchType);
 
   /**
    * \brief job data structure

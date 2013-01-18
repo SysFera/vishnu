@@ -41,7 +41,8 @@ typedef enum {
   LSF = 3, /*!< For LSF batch type */
   SGE = 4, /*!< For SGE batch type */
   PBSPRO = 5, /*!< For PBS batch type */
-  UNDEFINED = 6 /*!< IF batch type is not defined*/
+  POSIX = 6, /*!< For PBS batch type */
+  UNDEFINED = 7 /*!< IF batch type is not defined*/
 } BatchType;
 
 /**

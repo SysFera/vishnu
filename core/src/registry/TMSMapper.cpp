@@ -180,6 +180,9 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
 	if(!vishnu::parseEmfObject(u, ac)) {
 		throw SystemException(ERRCODE_INVMAPPER, "option: "+u);
 	}
+        if (ac->isPosix()){
+          res += " -p ";
+        }
 
 	u = ac->getName();
 	if (u.compare("")){

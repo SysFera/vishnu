@@ -37,6 +37,13 @@ class BatchFactory
      */
     BatchServer*
     getBatchServerInstance();
+    /**
+     * \brief Function to create a batchServer.
+     * \param batchType The type of batchServer to create
+     * \return an instance of BatchServer
+     */
+    BatchServer*
+    getBatchServerInstance(int BatchType);
 
     /**
      * \brief Function to delete a batchServer.

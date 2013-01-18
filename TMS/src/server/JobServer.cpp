@@ -58,7 +58,12 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string machineName = machineServer.getMachineName();
 	delete machine;
 
-	Env env(mbatchType);
+        BatchType batchType = mbatchType;
+        if (options.isPosix()){
+          batchType = POSIX;
+        }
+	Env env(batchType);
+
 	std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
 	env.replaceEnvVariables(scriptContentRef);
 	env.replaceAllOccurences(scriptContentRef, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
@@ -87,7 +92,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	::ecorecpp::serializer::serializer jobSer;
 
 	std::string convertedScript;
-	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
+	boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(batchType, scriptContentRef));
 	if(scriptConvertor->scriptIsGeneric()) {
 		std::string genScript = scriptConvertor->getConvertedScript();
 		convertedScript = genScript;
@@ -116,6 +121,9 @@ int JobServer::submitJob(const std::string& scriptContent,
           case PBSPRO :
             key = "#PBS";
             break;
+          case POSIX :
+            key = "#@";
+            break;
           default :
             break;
         }
@@ -128,23 +136,22 @@ int JobServer::submitJob(const std::string& scriptContent,
             size_t pos3=0;
             pos3 = specificParams.find(" ");
             if (pos3!=std::string::npos) {
-                          
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
-              insertOptionLine(lineoption, convertedScript, key);
+              insertOptionLine(lineoption, convertedScript, key, batchType);
               specificParams.erase(0,pos3);
               boost::algorithm::trim_left(specificParams);
-                            
+
             } else {
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
-              insertOptionLine(lineoption, convertedScript, key);
+              insertOptionLine(lineoption, convertedScript, key, batchType);
               break;
             }
             pos2 = specificParams.find("=");
           }
-        
+
         }
         if (defaultBatchOption.size()){
-          processDefaultOptions(defaultBatchOption, convertedScript, key);
+          processDefaultOptions(defaultBatchOption, convertedScript, key, batchType);
         }
 
 	char* scriptPath = strdup("/tmp/job_scriptXXXXXX");
@@ -153,8 +160,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-	SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
-	if (needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
+	SSHJobExec sshJobExec(acLogin, machineName, batchType, jobSerialized, submitOptionsSerialized);
+	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
 
@@ -194,7 +201,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		pos = scriptContentStr.find("'");
 	}
 
-	if (mbatchType == SGE) {
+	if(batchType==SGE){
 		mjob.setOwner(acLogin);
 	}
 
@@ -211,7 +218,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
 	sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"',";
 	sqlUpdate+="batchJobId='"+BatchJobId+"',";
-	sqlUpdate+="batchType="+convertToString(mbatchType)+",";
+        sqlUpdate+="batchType="+convertToString(batchType)+",";
 	sqlUpdate+="jobName='"+mjob.getJobName()+"',";
 	sqlUpdate+="jobPath='"+mjob.getJobPath()+"',";
 	sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";
@@ -246,9 +253,9 @@ int JobServer::submitJob(const std::string& scriptContent,
  * \return raises an exception on error
  */
 void
-JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption,
-                                 std::string& content, std::string& key)
-{
+JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key, BatchType batchType){
+
+  size_t pos = 0;
   size_t position =0;
   std::string key1;
     int count = 0;
@@ -269,14 +276,14 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
            break;
         }
       }
-    }  
+    }
     if (!found) {
       std::string lineoption = key + " " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
-      insertOptionLine(lineoption, content, key);
+      insertOptionLine(lineoption, content, key, batchType);
     }
     count +=2;
   }
-  
+
 }
 /**
  * \brief Function to insert option into string
@@ -286,8 +293,8 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
  */
 void
 JobServer::insertOptionLine( std::string& optionLineToInsert,
-                             std::string& content, std::string& key)
-{
+                             std::string& content, std::string& key,
+                             BatchType batchType) {
   size_t pos = 0;
   size_t posLastDirective = 0;
 
@@ -308,9 +315,9 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
             break;
           }
         }
-        posLastDirective = pos + line.size() +1;         
+        posLastDirective = pos + line.size() +1;
       }
-      pos++;    
+      pos++;
     }
   }
   content.insert(posLastDirective, optionLineToInsert);
@@ -328,6 +335,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 	std::string machineName;
 	std::string jobSerialized;
 	std::string batchJobId;
+	BatchType   batchType;
 	std::string initialJobId;
 	std::string jobId;
 	std::string owner;
@@ -348,16 +356,16 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 	std::string sqlCancelRequest;
 	initialJobId = mjob.getJobId();
 	if (initialJobId.compare("all") !=0 && initialJobId.compare("ALL")!=0) {
-		sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+		sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
 				"where vsession.numsessionid=job.vsession_numsessionid "
 				" and jobId='"+mjob.getJobId()+"'";
 	} else {
 		if(!userServer.isAdmin()) {
-			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
 					"where vsession.numsessionid=job.vsession_numsessionid and status < 5 and owner='"+acLogin+"'"
 					" and submitMachineId='"+mmachineId+"'" ;
 		} else {
-			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId from job, vsession "
+			sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, batchType from job, vsession "
 					"where vsession.numsessionid=job.vsession_numsessionid and status < 5"
 					" and submitMachineId='"+mmachineId+"'" ;
 		}
@@ -393,11 +401,14 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			++iter;
 			batchJobId = *iter;
 			mjob.setJobId(batchJobId); //To reset the jobId
+// Type of batch submitted
+			++iter;
+			batchType = static_cast<BatchType>(convertToInt(*iter));
 
 			::ecorecpp::serializer::serializer jobSer;
 			jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-			SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized);
+			SSHJobExec sshJobExec(acLogin, machineName, batchType, jobSerialized);
 			sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
 			std::string errorInfo = sshJobExec.getErrorInfo();

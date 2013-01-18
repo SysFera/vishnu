@@ -47,7 +47,7 @@ using namespace vishnu;
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-makeSubJobOp(string pgName, 
+makeSubJobOp(string pgName,
 		boost::function1<void, string>& fname,
 		boost::function1<void, string>& fqueue,
 		boost::function1<void, int>& fmemory,
@@ -230,11 +230,17 @@ int main (int argc, char* argv[]){
            machineId,1);
   opt->setPosition("machineId",1);
 
-  opt->add("scriptPath,p",
+  opt->add("scriptPath,z",
            "represents the script of submission",
            HIDDEN,
            scriptPath,1);
   opt->setPosition("scriptPath",1);
+
+
+  opt->add("posix,p",
+           "is an option for submitting using the posix backend instead of the batch scheduler ",
+           CONFIG);
+
 
   CLICmd cmd = CLICmd (argc, argv, opt);
 
@@ -251,9 +257,13 @@ int main (int argc, char* argv[]){
 
     // PreProcess (adapt some parameters if necessary)
     checkVishnuConfig(*opt);
-    if ( opt->count("help")){
+    if ( opt->count("help")) {
       helpUsage(*opt,"[options] machineId script");
       return 0;
+    }
+
+    if (opt->count("posix")) {
+      subOp.setPosix(true);
     }
 
     if(walltime.size()!=0) {
