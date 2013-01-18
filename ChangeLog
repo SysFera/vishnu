@@ -2,8 +2,11 @@
 | VISHNU 3.0.0 - Beta version |
 +-----------------------------+
 
+* Unify configuration files
+* New documentation user/admin
+* Add posix-shell : you can start TMS without batch scheduler, TMS functionnalities available in the shell
 * Fixed bugzilla #341 - Rename of FMS commands using POSIX name
-* WS do not work
+* WS are abandonned, they won't be maintained anymore.
 
 +-----------------------------+
 | VISHNU 2.0.0 - Beta3        |
