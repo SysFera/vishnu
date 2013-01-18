@@ -1,123 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <book label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
-<!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
-<info>
-<title>VISHNU - Le guide de l'administrateur</title>
-<author>
-<personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
-</author>
-<author>
-<personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
-</author>
-<author>
-<personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
-</author>
-<author>
-<personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
-</author>
-<author>
-<personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
-</author>
-<author>
-<personname><firstname>Rodrigue</firstname><surname>Chakode</surname></personname>
-</author>
-<author>
-<personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
-</author>
-<author>
-<personname><firstname>Haïkel</firstname><surname>Guémar</surname></personname>
-</author>
-<revhistory>
-<revision>
-<revnumber>1</revnumber>
-<date>08/03/2011</date>
-<authorinitials>K. COULOMB</authorinitials>
-<revdescription>
-<para>Version initiale pour le module UMS uniquement</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>2</revnumber>
-<date>18/03/2011</date>
-<authorinitials>K. COULOMB</authorinitials>
-<revdescription>
-<para>Ajout du lancement manuel avec forwarder et d'image de fichiers de configuration exemple</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>3</revnumber>
-<date>22/03/2011</date>
-<authorinitials>K. COULOMB</authorinitials>
-<revdescription>
-<para>Ajout des web services</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>4</revnumber>
-<date>11/05/2011</date>
-<authorinitials>K. COULOMB, B.ISNARD</authorinitials>
-<revdescription>
-<para>Réécriture du lancement avec fichier de configuration.</para>
-<para>Ajout d'un paragraphe pour le sendmail.</para>
-<para>Ajout de l'administration de TMS.</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>5</revnumber>
-<date>18/05/2011</date>
-<authorinitials>B.ISNARD</authorinitials>
-<revdescription>
-<para>Ajout du parametre de configuration dbConnectionsNb.</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>6</revnumber>
-<date>10/06/2011</date>
-<authorinitials>K.COULOMB</authorinitials>
-<revdescription>
-<para>Documentation pour IMS.</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>7</revnumber>
-<date>15/06/2011</date>
-<authorinitials>I.CISSE</authorinitials>
-<revdescription>
-<para>Documentation pour FMS.</para>
-</revdescription>
-</revision>
-<revision>
-<revnumber>8</revnumber>
-<date>22/06/2011</date>
-<authorinitials>B.ISNARD</authorinitials>
-<revdescription>
-<para>Ajout de l'option ENABLE_SWIG.</para>
-</revdescription>
-</revision>
+  <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
+  <info>
+    <title>VISHNU - Le guide de l'administrateur</title>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Isnard</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Daouda</firstname><surname>Traoré</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Eugène</firstname><surname>Pamba Capo-Chichi</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Kevin</firstname><surname>Coulomb</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Ibrahima</firstname><surname>Cissé</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Rodrigue</firstname><surname>Chakode</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Benjamin</firstname><surname>Depardon</surname></personname>
+    </author>
+    <author>
+      <personname><firstname>Haïkel</firstname><surname>Guémar</surname></personname>
+    </author>
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>08/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Version initiale pour le module UMS uniquement</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>2</revnumber>
+        <date>18/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Ajout du lancement manuel avec forwarder et d'image de fichiers de configuration exemple</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>3</revnumber>
+        <date>22/03/2011</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Ajout des web services</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>4</revnumber>
+        <date>11/05/2011</date>
+        <authorinitials>K. COULOMB, B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Réécriture du lancement avec fichier de configuration.</para>
+          <para>Ajout d'un paragraphe pour le sendmail.</para>
+          <para>Ajout de l'administration de TMS.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>5</revnumber>
+        <date>18/05/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Ajout du parametre de configuration dbConnectionsNb.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>6</revnumber>
+        <date>10/06/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Documentation pour IMS.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>7</revnumber>
+        <date>15/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Documentation pour FMS.</para>
+        </revdescription>
+      </revision>
+      <revision>
+        <revnumber>8</revnumber>
+        <date>22/06/2011</date>
+        <authorinitials>B.ISNARD</authorinitials>
+        <revdescription>
+          <para>Ajout de l'option ENABLE_SWIG.</para>
+        </revdescription>
+      </revision>
 
       <revision>
-      <revnumber>9</revnumber>
-      <date>24/06/2011</date>
-      <authorinitials>I.CISSE</authorinitials>
-      <revdescription>
-      <para>Ajout de l'option vishnuMachineId dans les fichiers de
-      configuration de UMS, IMS et FMS .</para>
-      </revdescription>
+        <revnumber>9</revnumber>
+        <date>24/06/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>Ajout de l'option vishnuMachineId dans les fichiers de
+            configuration de UMS, IMS et FMS .</para>
+        </revdescription>
       </revision>
       <revision>
-      <revnumber>10</revnumber>
-      <date>13/07/2011</date>
-      <authorinitials>K.COULOMB</authorinitials>
-      <revdescription>
-      <para>Mise à jour du document suites aux premiers retours .</para>
-      </revdescription>
+        <revnumber>10</revnumber>
+        <date>13/07/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>Mise à jour du document suites aux premiers retours .</para>
+        </revdescription>
       </revision>
       <revision>
-      <revnumber>11</revnumber>
-      <date>11/08/2011</date>
-      <authorinitials>D.TRAORE</authorinitials>
-      <revdescription>
-      <para>Prise en compte du gestionnaire de resources SLURM</para></revdescription>
+        <revnumber>11</revnumber>
+        <date>11/08/2011</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>Prise en compte du gestionnaire de resources SLURM</para></revdescription>
       </revision>
       
       <revision>
@@ -132,90 +132,90 @@
       </revision>
 
       <revision>
-      <revnumber>13</revnumber>
-      <date>14/12/2011</date>
-      <authorinitials>K.COULOMB</authorinitials>
-      <revdescription>
-      <para>
-      Mise à jour pour les nouveaux forwarder de DIET.
-      </para></revdescription>
+        <revnumber>13</revnumber>
+        <date>14/12/2011</date>
+        <authorinitials>K.COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Mise à jour pour les nouveaux forwarder de DIET.
+        </para></revdescription>
       </revision>
 
 
       <revision>
-      <revnumber>14</revnumber>
-      <date>15/12/2011</date>
-      <authorinitials>I.CISSE</authorinitials>
-      <revdescription>
-      <para>
-      Mise à jour de la section configuration des clés ssh requises pour FMS.
-      </para></revdescription>
+        <revnumber>14</revnumber>
+        <date>15/12/2011</date>
+        <authorinitials>I.CISSE</authorinitials>
+        <revdescription>
+          <para>
+            Mise à jour de la section configuration des clés ssh requises pour FMS.
+        </para></revdescription>
       </revision>
 
       <revision>
-      <revnumber>15</revnumber>
-      <date>16/12/2011</date>
-      <authorinitials>D.TRAORE</authorinitials>
-      <revdescription>
-      <para>
-      Ajout de la section configuration des clés ssh requises pour TMS.
-      </para></revdescription>
+        <revnumber>15</revnumber>
+        <date>16/12/2011</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>
+            Ajout de la section configuration des clés ssh requises pour TMS.
+        </para></revdescription>
       </revision>
       <revision>
-      <revnumber>16</revnumber>
-      <date>30/01/2012</date>
-      <authorinitials>K. COULOMB</authorinitials>
-      <revdescription>
-      <para>
-      Modifie les requirements en fonction de la version de DIET
-      </para></revdescription>
+        <revnumber>16</revnumber>
+        <date>30/01/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Modifie les requirements en fonction de la version de DIET
+        </para></revdescription>
       </revision>
       <revision>
-      <revnumber>17</revnumber>
-      <date>27/02/2012</date>
-      <authorinitials>K. COULOMB</authorinitials>
-      <revdescription>
-      <para>
-      Liste les libs de boost nécessaire
-      </para></revdescription>
+        <revnumber>17</revnumber>
+        <date>27/02/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>
+            Liste les libs de boost nécessaire
+        </para></revdescription>
       </revision>
       <revision>
-      <revnumber>18</revnumber>
-      <date>02/03/2012</date>
-      <authorinitials>D.TRAORE</authorinitials>
-      <revdescription>
-      <para>Prise en compte du gestionnaire de resources LSF</para></revdescription>
+        <revnumber>18</revnumber>
+        <date>02/03/2012</date>
+        <authorinitials>D.TRAORE</authorinitials>
+        <revdescription>
+          <para>Prise en compte du gestionnaire de resources LSF</para></revdescription>
       </revision>
       <revision>
-      <revnumber>19</revnumber>
-      <date>22/03/2012</date>
-      <authorinitials>K. COULOMB</authorinitials>
-      <revdescription>
-      <para>Ajout pour le support de LDAP</para></revdescription>
+        <revnumber>19</revnumber>
+        <date>22/03/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Ajout pour le support de LDAP</para></revdescription>
       </revision>
       
       <revision>
-      <revnumber>20</revnumber>
-      <date>11/04/2012</date>
-      <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
-      <revdescription>
-      <para>Prise en compte du gestionnaire de resources Grid Engine</para></revdescription>
+        <revnumber>20</revnumber>
+        <date>11/04/2012</date>
+        <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+        <revdescription>
+          <para>Prise en compte du gestionnaire de resources Grid Engine</para></revdescription>
       </revision>
       
       <revision>
-      <revnumber>21</revnumber>
-      <date>30/05/2012</date>
-      <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
-      <revdescription>
-      <para> Ajout des versions de LoadLeveler, GLIBC pour libcrypt et ssh</para></revdescription>
+        <revnumber>21</revnumber>
+        <date>30/05/2012</date>
+        <authorinitials>E. PAMBA CAPO-CHICHI</authorinitials>
+        <revdescription>
+          <para> Ajout des versions de LoadLeveler, GLIBC pour libcrypt et ssh</para></revdescription>
       </revision>
 
       <revision>
-      <revnumber>22</revnumber>
-      <date>27/08/2012</date>
-      <authorinitials>K. COULOMB</authorinitials>
-      <revdescription>
-      <para> Nouvelle compilation avec les batchs</para></revdescription>
+        <revnumber>22</revnumber>
+        <date>27/08/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para> Nouvelle compilation avec les batchs</para></revdescription>
       </revision>
       
       <revision>
@@ -228,48 +228,52 @@
       </revision>
 
       <revision>
-      <revnumber>24</revnumber>
-      <date>08/11/2012</date>
-      <authorinitials>K. COULOMB</authorinitials>
-      <revdescription>
-      <para>Ajout d'un paragraphe sur l'utilisation d'une base de données distante</para></revdescription>
+        <revnumber>24</revnumber>
+        <date>08/11/2012</date>
+        <authorinitials>K. COULOMB</authorinitials>
+        <revdescription>
+          <para>Ajout d'un paragraphe sur l'utilisation d'une base de données distante</para></revdescription>
       </revision>
 
       <revision>
-      <revnumber>25</revnumber>
-      <date>08/11/2012</date>
-      <authorinitials>A. BSILA</authorinitials>
-      <revdescription>
-      <para>Prise en compte du gestionnaire de resources PBSPro</para></revdescription>
+        <revnumber>25</revnumber>
+        <date>08/11/2012</date>
+        <authorinitials>A. BSILA</authorinitials>
+        <revdescription>
+          <para>Prise en compte du gestionnaire de resources PBSPro</para></revdescription>
       </revision>
 
       <revision>
-      <revnumber>26</revnumber>
-      <date>21/11/2012</date>
-      <authorinitials>K. Coulomb</authorinitials>
-      <revdescription>
-      <para>Première MAJ pour ZeroMQ</para></revdescription>
+        <revnumber>26</revnumber>
+        <date>21/11/2012</date>
+        <authorinitials>K. Coulomb</authorinitials>
+        <revdescription>
+          <para>Première MAJ pour ZeroMQ</para></revdescription>
       </revision>
 
       <revision>
-      <revnumber>27</revnumber>
-      <date>04/01/2013</date>
-      <authorinitials>B. Depardon</authorinitials>
-      <revdescription>
-      <para>Maj documentation du dispatcher</para></revdescription>
+        <revnumber>27</revnumber>
+        <date>04/01/2013</date>
+        <authorinitials>B. Depardon</authorinitials>
+        <revdescription>
+          <para>Maj documentation du dispatcher</para></revdescription>
       </revision>
       
       <revision>
-      <revnumber>28</revnumber>
-      <date>15/01/2013</date>
-      <authorinitials>H. Guémar</authorinitials>
-      <revdescription>
+        <revnumber>28</revnumber>
+        <date>15/01/2013</date>
+        <authorinitials>H. Guémar</authorinitials>
+        <revdescription>
+          Ajout d'une FAQ pour la résolution des problèmes d'administration.
+          Ajout d'une entrée dans la FAQ à propos du chargement des plugins TMS
+        </revdescription>
+      </revision>
       <revision>
-      <revnumber>29</revnumber>
-      <date>14/01/2013</date>
-      <authorinitials>K. Coulomb</authorinitials>
-      <revdescription>
-        <para>Mise à jour pour le posix shell</para></revdescription>
+        <revnumber>29</revnumber>
+        <date>14/01/2013</date>
+        <authorinitials>K. Coulomb</authorinitials>
+        <revdescription>
+          <para>Mise à jour pour le posix shell</para></revdescription>
       </revision>
     </revhistory>
   </info>
@@ -278,57 +282,34 @@
     <section>
       <title>Objectifs du document</title>
       <para>
-      Ajout d'une FAQ pour la résolution des problèmes d'administration.
-      Ajout d'une entrée dans la FAQ à propos du chargement des plugins TMS
+        Ce document décrit l'installation, la configuration et l'administration
+        des différents composants de la suite logicielle VISHNU.
       </para>
-      </revdescription>
-      </revision>
-      
-      <revision>
-      <revnumber>29</revnumber>
-      <date>15/01/2013</date>
-      <authorinitials>R. Chakode</authorinitials>
-      <revdescription>
-      <para>Mise à jour des dépendences d'installation avec ZeroMQ et
-      suppression du chapite lié aux web services</para>
-      </revdescription>
-      </revision>
-
-      </revhistory>
-      </info>
-      <chapter>
-      <title>Présentation du document</title>
-      <section>
-      <title>Objectifs du document</title>
-      <para>
-      Ce document décrit l'installation, la configuration et l'administration
-      des différents composants de la suite logicielle VISHNU.
-      </para>
-      </section>
+    </section>
 
     <section>
-    <title>Prérequis</title>
-    <para>
-    Pour s'assurer un bon confort lors de la lecture de ce document, le lecteur
-    doit au moins avoir des connaissances basiques en administration système
-    en environnement GNU/Linux. En particulier et selon votre système d'exploitation,
-    la maitrise d'un outil de gestion de paquets tels que
-    <emphasis>apt-get</emphasis>, <emphasis>dpkg</emphasis>, <emphasis>rpm</emphasis>,
-    <emphasis>yum</emphasis> ou <emphasis>zypper</emphasis>
-    est vivement recommandée pour faciliter la recherche et l'installation des
-    dépendances logicielles de VISHNU.
-    </para>
-    <para>Par ailleurs, vous devez avoir bien compris l'architecture de déploiement
-    de VISHNU. Cf. chapitre 4 du document [ARCH].</para>
+      <title>Prérequis</title>
+      <para>
+        Pour s'assurer un bon confort lors de la lecture de ce document, le lecteur
+        doit au moins avoir des connaissances basiques en administration système
+        en environnement GNU/Linux. En particulier et selon votre système d'exploitation,
+        la maitrise d'un outil de gestion de paquets tels que
+        <emphasis>apt-get</emphasis>, <emphasis>dpkg</emphasis>, <emphasis>rpm</emphasis>,
+        <emphasis>yum</emphasis> ou <emphasis>zypper</emphasis>
+        est vivement recommandée pour faciliter la recherche et l'installation des
+        dépendances logicielles de VISHNU.
+      </para>
+      <para>Par ailleurs, vous devez avoir bien compris l'architecture de déploiement
+        de VISHNU. Cf. chapitre 4 du document [ARCH].</para>
     </section>
 
     <section> <!--Document structure -->
-    <title>Structure du document</title>
+      <title>Structure du document</title>
 
       <para>Ce document contient les parties suivantes:
       </para>
       <para>
-	<itemizedlist>
+        <itemizedlist>
           <listitem>
             <para>Définitions</para>
           </listitem>
@@ -353,7 +334,7 @@
 	  <listitem>
             <para>Référence de l'API Python (en anglais)</para>
           </listitem>
-	</itemizedlist>
+        </itemizedlist>
       </para>
     </section> <!--Document structure -->
   </chapter>
@@ -363,33 +344,33 @@
     <section> <!-- Accronymes -->
       <title>Acronymes</title>
       <itemizedlist>
-	<listitem>
+        <listitem>
 	  <para>DB : Database ou base de données, est un point central fournissant des mécanismes pour stocker et récupérer les données de manière efficace par les applicatons</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>FMS : File Management Service ou système de gestion de fichiers</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>IMS : Information Management Service ou système de gestion d'information</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>LDAP : Lightweight Directory Access Protocol, est un protocole de gestion d'annuaires</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>SQL : Structured Query Language, est un langage avancée de requêtes sur les bases de données</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>TMS : Task Management Service ou système de gestion de tâches</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>UMS : User Management Service ou système de gestion des utilisateurs</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>WS : Web Service ou service web</para>
-	</listitem>
-	<listitem>
+        </listitem>
+        <listitem>
 	  <para>ZMQ : Zero Message Queueing, une librairie de message</para>
-	</listitem>
+        </listitem>
       </itemizedlist>
     </section> <!-- Accronymes -->
     <section>
@@ -398,7 +379,7 @@
     <section> <!-- Glossaire -->
       <title>Glossaire</title>
       <para>
-	<itemizedlist>
+        <itemizedlist>
 	  <listitem>
 	    <para>Client FMS : Désigne les programmes permettant un accès à distance aux services d'un SeD FMS. </para>
 	  </listitem>
@@ -426,7 +407,7 @@
 	  <listitem>
 	    <para>SeD UMS : Désigne le programme contenant et exécutant les services du module UMS. </para>
 	  </listitem>
-	</itemizedlist>
+        </itemizedlist>
       </para>
       </section> <!--Document structure -->
 
@@ -540,18 +521,18 @@
 
 
   <chapter>
-  <title>Installation à partir des sources</title>
-  <section>
-  <title>Objectifs</title>
-  <para> Ce chapitre présentera comment installer VISHNU à partir des sources.</para>
-  <para>Nous décrirons comment installer et configurer la partie serveur et la partie client.
-  L'installation de la partie client est indépendante de la partie serveur. Mais, à l'inverse,
-  l'installation de la partie serveur nécessite l'installation de la partie client.
-  Par ailleurs, il faut noter que le module UMS est requis pour faire fonctionner les modules FMS, IMS et TMS.
-  Même si ces derniers peuvent être installés sur des machines indépendantes. Toutefois, pour qu'IMS puisse gérer
-  le délestage, les différents modules doivent être installés sur la même machine. TMS a besoin de FMS pour fonctionner.
-  </para>
-  </section>
+    <title>Installation à partir des sources</title>
+    <section>
+      <title>Objectifs</title>
+      <para> Ce chapitre présentera comment installer VISHNU à partir des sources.</para>
+      <para>Nous décrirons comment installer et configurer la partie serveur et la partie client.
+        L'installation de la partie client est indépendante de la partie serveur. Mais, à l'inverse,
+        l'installation de la partie serveur nécessite l'installation de la partie client.
+        Par ailleurs, il faut noter que le module UMS est requis pour faire fonctionner les modules FMS, IMS et TMS.
+        Même si ces derniers peuvent être installés sur des machines indépendantes. Toutefois, pour qu'IMS puisse gérer
+        le délestage, les différents modules doivent être installés sur la même machine. TMS a besoin de FMS pour fonctionner.
+      </para>
+    </section>
     <section>
       <title>Prérequis</title>
       <para>Selon les modules sélectionnés, la compilation des sources de VISHNU nécessite les bibliothèques suivantes: 
@@ -566,8 +547,8 @@
             <listitem>
               <para>CMAKE</para>
 	      <para>GNU Make ou Ninja: Générateurs exécutables. Comme alternative à Make, le générateur Ninja 
-		est plus rapide et est utile pour réduire la durée de compilation.Surtout quand vous avez besoin 
-		de compiler plusieurs modules de VISHNU sur la même machine.
+	        est plus rapide et est utile pour réduire la durée de compilation.Surtout quand vous avez besoin 
+	        de compiler plusieurs modules de VISHNU sur la même machine.
 	      </para>
             </listitem>
             <listitem>
@@ -583,20 +564,20 @@
             <listitem>
               <para>openSSH</para>
             </listitem>
-           <listitem>
-	     <para>Bibliothèques de connexion à la base de données:</para>
-	     <para>VISHNU nécessite une base de données type MySQL ou PostGreSQL. 
-               Selon le type de base de données choisir, vous devez installer les API correspondantes en tenant 
-	       compte des versions supportées:</para>
-             <itemizedlist>
-	       <listitem>
-		 <para>API PostGreSQL (PGSQL-API)</para>
-	       </listitem>
-	       <listitem>
-		 <para>API MySQL</para>
-	       </listitem>
-             </itemizedlist>
-	      </listitem>
+            <listitem>
+	      <para>Bibliothèques de connexion à la base de données:</para>
+	      <para>VISHNU nécessite une base de données type MySQL ou PostGreSQL. 
+                Selon le type de base de données choisir, vous devez installer les API correspondantes en tenant 
+	        compte des versions supportées:</para>
+              <itemizedlist>
+	        <listitem>
+		  <para>API PostGreSQL (PGSQL-API)</para>
+	        </listitem>
+	        <listitem>
+		  <para>API MySQL</para>
+	        </listitem>
+              </itemizedlist>
+	    </listitem>
           </itemizedlist>
         </listitem>
         <listitem>
@@ -622,7 +603,7 @@
             <listitem>
               <para>LSF API</para>
             </listitem>
-	          <listitem>
+	    <listitem>
               <para>Grid Engine API</para>
             </listitem>
             <listitem>
@@ -658,7 +639,7 @@
             <listitem>
               <para>XMLRPC
                 apt-get install libxmlrpc-c3-dev libxmlrpc-core-c3-dev
-                </para>
+              </para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -667,9 +648,9 @@
     <section>
       <title> Compilation des sources </title>
       <para>VISHNU utilise CMake comme système de construction et se conforme aux
-	pratiques communément admises.
-	Les options principales utilisables sont les suivantes:
-	<itemizedlist>
+        pratiques communément admises.
+        Les options principales utilisables sont les suivantes:
+        <itemizedlist>
 	  <listitem>
 	    <para>
 	      BUILD_TESTING, compile les tests si le flag est activé (OFF par défaut).
@@ -833,7 +814,7 @@
       </para>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire d'installation dans le $PATH (bin et sbin) et ceux des librairies dans $LD_LIBRARY_PATH (lib).</para>
     </section>
-
+    
     <section>
       <para>
         Par exemple, les étapes suivantes permettent d'installer les clients et les serveurs d'UMS et TMS dans /opt/vishnu.
@@ -1093,73 +1074,6 @@
     de réseaux complexes avec du NAT par exemple, il est souvent plus facile de
     passer par des tunnels ssh pour encapsuler les connexions vers la base de
     données.
-    <section>
-      <title>Utiliser une base de données MySQL</title>
-      <para>Nous supposons ici que vous avez déjà une installation de MySQL opérationnelle. Si ce n'est pas le cas, se référer à la documentation officielle pour procéder à l'installation.</para>
-      <para>Vous devez également disposer des droits d'administration sur cette installation (connexion à MySQL en tant l'utilisateur 'root').</para>
-      <para>Vous aurez besoin des scripts <emphasis>mysql_create.sql</emphasis> et <emphasis>database_init.sql</emphasis> disponibles dans le dossier <emphasis>./core/database</emphasis> de l'arborescence des sources. Le premier script (<emphasis>mysql_create.sql</emphasis>) sert créer les tables de la base de données tandis que le second sert à initialiser les données.</para> 
-<para>Pour la création de la base de données VISHNU, suivez les étapes suivantes :
-    	<itemizedlist>
-      		<listitem>
-				<para>Se connecter au serveur MySQL en tant que root :</para>
-				<para>$ <emphasis>mysql -h mysql@server- -u root -p </emphasis> # replacer mysql@server par l'adresse de votre serveur MySQL</para>
-      		</listitem>
-      		<listitem>
-				<para>Créer la base de données Vishnu</para>
-				<para>$ <emphasis>create database vishnu ; </emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Se connecter sur la base de données</para>
-				<para>$ <emphasis>use vishnu ; </emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Créer les tables</para>
-				<para>$ <emphasis>source /path/to/mysql_create.sql</emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Initialiser la base de données</para>
-				<para>$ <emphasis>source /path/to/database_init.sql</emphasis></para>
-      		</listitem>
-   		 </itemizedlist>
-	</para>
-    </section>
-
-    <section>
-      <title>Utiliser une base de données PostGreSQL</title>
-      <para>Nous supposons également que vous avez déjà une installation de PostGreSQL opérationnelle. Si ce n'est pas le cas, se référer à la documentation officielle pour procéder à l'installation.</para>
-      <para>Vous devez également disposer des droits d'administration sur cette installation (accès en tant qu'utilisateur système 'postgres').</para>
-	  <para>Pour une nouvelle installation de la base de données, les scripts <emphasis>postgre_create.sql</emphasis> et <emphasis>database_init.sql</emphasis> doivent respectivement être utilisés pour créer et initialiser la base de données.</para>
-      <para>Pour créer et initialiser la base de données, exécuter les étapes suivantes à partir de votre serveur PostGreSQL :
-    	<itemizedlist>
-      		<listitem>
-				<para>Se connecter en tant que l'utilisateur 'postgres' (root):</para>
-				<para>$ <emphasis>su postgres</emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Créer la base de données vishnu</para>
-				<para>$ <emphasis>createdb vishnu ; </emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Se connecter à la base de données</para>
-				<para>$ <emphasis>psql vishnu ; </emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Créer le schéma de la base de données</para>
-				<para>$ <emphasis>\i /path/to/mysql_create.sql </emphasis></para>
-      		</listitem>
-      		<listitem>
-				<para>Initialiser la base de données</para>
-				<para>$ <emphasis>\i /path/to/database_init.sql</emphasis></para>
-      		</listitem>
-   		 </itemizedlist>
-    </para>
-    </section>
-    <section>
-      <title>Utilisation d'une base de données distante</title>
-      <para>
-        Vishnu repose sur une base de données. Les serveurs de Vishnu ont besoin de s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les ports accessibles entre différentes machines (cas fréquent dans un réseau local), il n'y a généralement pas de problème pour se connecter à une base de données distante en spécifiant correctement le databaseHost dans les fichiers de configuration des éléments de Vishnu.
-        Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas de réseaux complexes avec du NAT par exemple, il est souvent plus facile de passer par des tunnels ssh pour encapsuler les connexions vers la base de données.
-
     Nous avons deux cas différents pour ouvrir le tunnel. Supposons que la
     base de donnée soit sur une machine A, et l'élément Vishnu sur une machine B.
     Nous pouvons ouvrir le tunnel depuis A ou depuis B (parfois seule une de
@@ -1191,7 +1105,7 @@
       Sur la machine B, essayer de vous connecter avec la commande suivante :
       </para>
       <programlisting>
-      mysql -u vishnu_user -h 127.0.0.1 -p
+        mysql -u vishnu_user -h 127.0.0.1 -p
       </programlisting>
       <para>
       Après avoir tapé le mot de passe, vous devriez vous retrouver connecter
@@ -1617,123 +1531,122 @@ urlSupervisor=http://127.0.0.1:9001
     </orderedlist>
     </section>
     <section>
-    <title>Le cas multi-réseaux</title>
-    <para>
-    Le cas multi-réseaux ne change pas du cas précédent, les étapes sont toutes les mêmes. Le seul ajout à faire est d'ajouter des tunnels SSH entre les machines serveurs et la machine ou se trouve la base de données s'il n'y a pas d'accès direct sur le port correspondant au port de la base de données, et un second tunnel pour l'enregistrement des serveurs sur le dispatcher. Par la suite, il est conseillé d'utiliser le dispatcher pour que le client n'ait plus qu'à se connecter au dispatcher pour réaliser ses requêtes (le dispatcher jouant alors un rôle de proxy entre le client et les réseaux).</para>
-    <para>
-    Les tunnels SSH sont faits avec une commande similaire à l'une des suivantes:
-    <itemizedlist>
-    <listitem>
-    <para>
-    ssh -fN -L 8889:localhost:8889 machine_distance
-    </para>
-    <para>
-    Etabli un tunnel entre la machine locale et la machine distante au travers du port 8889.
-    </para>
-    </listitem>
-    <listitem>
-    <para>
-    </para>
-    <para>
-    Etabli un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
-    ssh -R -fN 8889:localhost:8889 machine_distante
-    </para>
-    </listitem>
-    </itemizedlist>
-    </para>
+      <title>Le cas multi-réseaux</title>
+      <para>
+        Le cas multi-réseaux ne change pas du cas précédent, les étapes sont toutes les mêmes. Le seul ajout à faire est d'ajouter des tunnels SSH entre les machines serveurs et la machine ou se trouve la base de données s'il n'y a pas d'accès direct sur le port correspondant au port de la base de données, et un second tunnel pour l'enregistrement des serveurs sur le dispatcher. Par la suite, il est conseillé d'utiliser le dispatcher pour que le client n'ait plus qu'à se connecter au dispatcher pour réaliser ses requêtes (le dispatcher jouant alors un rôle de proxy entre le client et les réseaux).</para>
+      <para>
+        Les tunnels SSH sont faits avec une commande similaire à l'une des suivantes:
+        <itemizedlist>
+          <listitem>
+            <para>
+              ssh -fN -L 8889:localhost:8889 machine_distance
+            </para>
+            <para>
+              Etabli un tunnel entre la machine locale et la machine distante au travers du port 8889.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+            </para>
+            <para>
+              Etabli un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
+              ssh -R -fN 8889:localhost:8889 machine_distante
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
     </section>
-
         <section>
         <title>Configuration de l'envoi des emails par VISHNU</title>
         <para>Le processus UMS SeD utilise le fichier 'sendmail.py' (fourni dans l'installation VISHNU, dans le sous-répertoire sbin/)
         pour envoyer des emails aux utilisateurs lors de certaines opérations. Ce fichier peut être modifié par l'administrateur afin
         de s'adapter à la méthode d'envoi d'email propre au serveur sur lequel est installé le SeD. Par défaut, la configuration
         fournie se connecte sur le serveur SMTP de 'localhost' sur le port 25, sans authentification.</para>
-        <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py :</para>
-        <informaltable>
+      <para>Les paramètres suivants peuvent être configurés dans le script sendmail.py :</para>
+      <informaltable>
         <tgroup cols="2">
-        <colspec colwidth="2cm"/>
-        <colspec colwidth="15cm"/>
-        <thead>
-        <row>
-        <entry>Option</entry>
-        <entry>Ligne du script sendmail.py à modifier</entry>
-        </row>
-        </thead>
-        <tbody>
-        <row>
-        <entry><para>login</para></entry>
-        <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
-        </row>
-        <row>
-        <entry><para>password</para></entry>
-        <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
-        </row>
-        <row>
-        <entry><para>hostname</para></entry>
-        <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
-        </row>
-        <row>
-        <entry><para>port</para></entry>
-        <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
-        </row>
-        <row>
-        <entry><para>SSL</para></entry>
-        <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
-        ]", default=True)</programlisting></entry>
-        </row>
-        </tbody>
+          <colspec colwidth="2cm"/>
+          <colspec colwidth="15cm"/>
+          <thead>
+            <row>
+              <entry>Option</entry>
+              <entry>Ligne du script sendmail.py à modifier</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry><para>login</para></entry>
+              <entry><programlisting>parser.add_option("--login", dest="login", help="", default="[login_utilisateur]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>password</para></entry>
+              <entry><programlisting>parser.add_option("--password", dest="password", help="smtp password", default="[password_utilisateur]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>hostname</para></entry>
+              <entry><programlisting>parser.add_option("--hostname", dest="host", help="smtp host", default="[nom_serveur_SMTP]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>port</para></entry>
+              <entry><programlisting>parser.add_option("--port", dest="port", help="smtp port [default: 25]", type=int, default="[no_port]")</programlisting></entry>
+            </row>
+            <row>
+              <entry><para>SSL</para></entry>
+              <entry><programlisting>parser.add_option("--ssl", action="store_true", dest="use_ssl", help="enable ssl support [default: %default - default port: 587
+                  ]", default=True)</programlisting></entry>
+            </row>
+          </tbody>
         </tgroup>
-        </informaltable>
-        </section>
-        <section>
-        <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
-        <para>
+      </informaltable>
+    </section>
+    <section>
+      <title>Configuration des clés privées/publiques ssh requises pour FMS</title>
+      <para>
         Toutes les commandes éxécutées par le SeD FMS sont lancées via ssh
         sous le nom de l'utilisateur ayant émis la requête. Les services FMS
         sont de deux types : il y a ceux qui n'impliquent qu'une machine
         distante : Exemple getFilesInfo,listDir,etc.. et ceux qui impliquent au
         moins deux machines distantes : machine source et destination pour les transferts de fichiers.
         <itemizedlist>
-        <listitem>
-        <para> Dans le premier cas le SeD se connecte sur la machine distante et
-        effectue la commande. Par conséquent la clé publique du SeD doit
-        être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur de la machine distante
-        concernée.</para>
-        </listitem>
-        <listitem>
-        <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
-        lance le transfert (seconde connexion) vers la machine destination. Par conséquent:
-        <itemizedlist>
-        <listitem>
-        <para> la clé publique du SeD doit être ajoutée au fichier authorized_key de la machine source pour
-        permettre la première connexion.
-        </para>
-        </listitem>
-        <listitem>
-        <para> La machine source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
-        </listitem>
-        </itemizedlist>
-        </para>
-        </listitem>
+          <listitem>
+            <para> Dans le premier cas le SeD se connecte sur la machine distante et
+              effectue la commande. Par conséquent la clé publique du SeD doit
+              être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur de la machine distante
+              concernée.</para>
+          </listitem>
+          <listitem>
+            <para> Dans le second cas, deux connexions ssh sont nécessaires. Le SeD se connecte sur la machine source et
+              lance le transfert (seconde connexion) vers la machine destination. Par conséquent:
+              <itemizedlist>
+                <listitem>
+                  <para> la clé publique du SeD doit être ajoutée au fichier authorized_key de la machine source pour
+                    permettre la première connexion.
+                  </para>
+                </listitem>
+                <listitem>
+                  <para> La machine source doit pouvoir se connecter sur la machine destination par ssh, avec la clé privée enregistrée dans la base de VISHNU lors de l'ajout du compte (local account) liant la machine source à VISHNU. Par ailleurs si le mécanisme d'agent forwarding (de ssh) est activée entre ces différentes machines, il n'est alors plus nécessaire qu'il y ait un autre couple de clés entre la machine source et destination. </para>
+                </listitem>
+              </itemizedlist>
+            </para>
+          </listitem>
         </itemizedlist>
         En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
         par les requêtes FMS. Toutes les clés protégées par des passphrases
         devront être stockées par un agent ssh pour permettre les
         authentifications automatiques.
-        </para>
-        </section>
+      </para>
+    </section>
 
 
     <section>
-    <title>Configuration des clés privées/publiques ssh requises pour TMS</title>
-    <para>
-    Les commandes de soumission, d'annulation et de récupération des résultats de jobs  éxécutées par le SeD TMS sont lancées via ssh
-    sous le nom de l'utilisateur ayant émis la requête. Pour pouvoir exécuter ces commandes correctement, la clé publique du compte dédié au SeD TMS doit
-    être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur.  Toutes les clés protégées par des passphrases
-    devront être stockées par un agent ssh pour permettre les
-    authentifications automatiques.
-    </para>
+      <title>Configuration des clés privées/publiques ssh requises pour TMS</title>
+      <para>
+        Les commandes de soumission, d'annulation et de récupération des résultats de jobs  éxécutées par le SeD TMS sont lancées via ssh
+        sous le nom de l'utilisateur ayant émis la requête. Pour pouvoir exécuter ces commandes correctement, la clé publique du compte dédié au SeD TMS doit
+        être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur.  Toutes les clés protégées par des passphrases
+        devront être stockées par un agent ssh pour permettre les
+        authentifications automatiques.
+      </para>
     </section>
 
     <section>
@@ -1755,8 +1668,8 @@ urlSupervisor=http://127.0.0.1:9001
 	  <para>Ouvrir une session VISHNU</para>
 	  <para>$ <emphasis>vishnu_connect -u user</emphasis></para>
 	  <para>Remplacer 'user' par un vrai identifiant utilisateur. 
-		Par défaut, VISHNU est installé avec un utilisateur 'root' ayant tous les droits sur la plateforme (ID: 'root', Mot de passe: 'vishnu_user').
-	</para>
+	    Par défaut, VISHNU est installé avec un utilisateur 'root' ayant tous les droits sur la plateforme (ID: 'root', Mot de passe: 'vishnu_user').
+	  </para>
 	</listitem>
 	<listitem>
 	  <para>
@@ -1780,7 +1693,7 @@ urlSupervisor=http://127.0.0.1:9001
  <section>
  <title>Les scripts de démarage automatique</title>
  <para>Des scripts de démarage sont préparés pour pouvoir exécuter automatiquement les serveurs VISHNU.
-      Les scripts sont installés lors de l'installation des serveurs dans install/etc/ (ou dans /etc si c'est installé dans /usr). Se fait si les options de compilation INSTALL_SYSTEMD et INSTALL_SYSV sont mises à ON.
+   Se fait si les options de compilation INSTALL_SYSTEMD et INSTALL_SYSV sont mises à ON.
  Les scripts sont installés lors de l'installation des serveurs dans install/etc/ (ou dans /etc si c'est installé dans /usr).</para>
  </section>
  </chapter><!-- End lancement  -->
@@ -2014,13 +1927,13 @@ plusieurs variables :
 	    Dans la fonction 'vishnu_list_file_transfers', l'administrateur peut lister tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou lister les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
 	  </para>
 	</listitem>
-<listitem>
+        <listitem>
 	  <para>
 	    Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou annuler les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
 	  </para>
 	</listitem>
 
-</orderedlist>
+      </orderedlist>
     </section>
     <section>
       <title>Gestion des processus VISHNU et délestage (IMS)</title>
