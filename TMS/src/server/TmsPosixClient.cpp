@@ -1,3 +1,9 @@
+/**
+ * \file TmsPosicClient.cpp
+ * \brief This file contains the implementation of the data and the clients for the posix parser.
+ * \author Olivier Mornard (olivier.mornard@sysfera.com)
+ * \date January 2013
+ */
 
 #include <sys/types.h>
 #include <sys/socket.h>

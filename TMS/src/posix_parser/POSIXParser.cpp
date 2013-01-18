@@ -1,3 +1,9 @@
+/**
+ * \file POSIXParser.cpp
+ * \brief This file contains the implementation for VISHNU of the posix parser class.
+ * \author Olivier Mornard (olivier.mornard@sysfera.com)
+ * \date January 2013
+ */
 
 #include "POSIXParser.hpp"
 
