@@ -293,6 +293,14 @@ copy_rel_file UMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
 
+# Copy test plans in release
+mkdir $pathrel/../doc/concept/images
+copy_rel_file UMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file UMS/test/testPlan/images/\* ../doc/concept/images
+
+
 ###############################################################################
 #                                    T M S                                    #
 ###############################################################################
@@ -332,6 +340,13 @@ copy_rel_file TMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.html ../tests/report/
 
+# Copy test plans in release
+copy_rel_file TMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file TMS/test/testPlan/images/\* ../doc/concept/images
+
+
 ###############################################################################
 #                                    F M S                                    #
 ###############################################################################
@@ -364,6 +379,12 @@ copy_dir FMS/doc/man/man3 FMS/doc/man/
 copy_rel_file FMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file FMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file FMS/test/testReports/\*\.html ../tests/report/
+
+# Copy test plans in release
+copy_rel_file FMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file FMS/test/testPlan/images/\* ../doc/concept/images
 
 ###############################################################################
 #                                    I M S                                    #
@@ -399,6 +420,12 @@ copy_dir IMS/doc/man/man3 IMS/doc/man/
 copy_rel_file IMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.html ../tests/report/
+
+# Copy test plans in release
+copy_rel_file IMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file IMS/test/testPlan/images/\* ../doc/concept/images
 
 ###############################################################################
 #                                  SWIG API                                   #
