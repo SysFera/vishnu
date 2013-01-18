@@ -15,9 +15,9 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>December 2012</date>
+    <date>January 2013</date>
     <copyright>
-      <year>2012</year>
+      <year>2013</year>
       <holder>SysFera SA</holder>
     </copyright>
     <legalnotice>
@@ -53,7 +53,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>ZMQ_beta</releaseinfo>
+    <releaseinfo>3.0beta</releaseinfo>
   </info>
   <reference>
     <title>TMS Command reference</title>
@@ -86,7 +86,8 @@ same conditions as regards security.</para>
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -231,6 +232,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
 E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. 
 
 NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>posix</replaceable></option></term>
+            <listitem>
+              <para>allows to submit on the shell instead of using the batch scheduler.</para>
             </listitem>
           </varlistentry>
         </variablelist>
