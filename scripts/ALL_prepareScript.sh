@@ -295,10 +295,16 @@ copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
 mkdir $pathrel/../doc/concept/images
-copy_rel_file UMS/test/testPlan/\*\.pdf ../doc/concept/
-copy_rel_file UMS/test/testPlan/\*\.docbook ../doc/concept/
-copy_rel_file UMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*-gen\.pdf ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*-gen\.docbook ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*-gen\.html ../doc/concept/
 copy_rel_file UMS/test/testPlan/images/\* ../doc/concept/images
+
+# Copy design in release
+copy_rel_file UMS/design/docbook/\*-gen\.pdf ../doc/concept/
+copy_rel_file UMS/design/docbook/\*-gen\.docbook ../doc/concept/
+copy_rel_file UMS/design/docbook/\*-gen\.html ../doc/concept/
+copy_dir UMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
@@ -341,10 +347,16 @@ copy_rel_file TMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file TMS/test/testPlan/\*\.pdf ../doc/concept/
-copy_rel_file TMS/test/testPlan/\*\.docbook ../doc/concept/
-copy_rel_file TMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*-gen\.pdf ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*-gen\.docbook ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*-gen\.html ../doc/concept/
 copy_rel_file TMS/test/testPlan/images/\* ../doc/concept/images
+
+# Copy design in release
+copy_rel_file TMS/design/docbook/\*-gen\.pdf ../doc/concept/
+copy_rel_file TMS/design/docbook/\*-gen\.docbook ../doc/concept/
+copy_rel_file TMS/design/docbook/\*-gen\.html ../doc/concept/
+copy_dir TMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
@@ -376,15 +388,21 @@ copy_dir FMS/doc/man/man1 FMS/doc/man/
 copy_dir FMS/doc/man/man3 FMS/doc/man/
 
 # Copy tests in release
-copy_rel_file FMS/test/testReports/\*\.pdf ../tests/report/
-copy_rel_file FMS/test/testReports/\*\.docbook ../tests/report/
-copy_rel_file FMS/test/testReports/\*\.html ../tests/report/
+copy_rel_file FMS/test/testReports/\*-gen\.pdf ../tests/report/
+copy_rel_file FMS/test/testReports/\*-gen\.docbook ../tests/report/
+copy_rel_file FMS/test/testReports/\*-gen\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file FMS/test/testPlan/\*\.pdf ../doc/concept/
-copy_rel_file FMS/test/testPlan/\*\.docbook ../doc/concept/
-copy_rel_file FMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*-gen\.pdf ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*-gen\.docbook ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*-gen\.html ../doc/concept/
 copy_rel_file FMS/test/testPlan/images/\* ../doc/concept/images
+
+# Copy design in release
+copy_rel_file FMS/design/docbook/\*-gen\.pdf ../doc/concept/
+copy_rel_file FMS/design/docbook/\*-gen\.docbook ../doc/concept/
+copy_rel_file FMS/design/docbook/\*-gen\.html ../doc/concept/
+copy_dir FMS/design/docbook/images/png ../doc/concept/images
 
 ###############################################################################
 #                                    I M S                                    #
@@ -422,10 +440,28 @@ copy_rel_file IMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file IMS/test/testPlan/\*\.pdf ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*\.docbook ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*\.html ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*-gen\.pdf ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*-gen\.docbook ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*-gen\.html ../doc/concept/
 copy_rel_file IMS/test/testPlan/images/\* ../doc/concept/images
+
+# Copy design in release
+copy_rel_file IMS/design/docbook/\*-gen\.pdf ../doc/concept/
+copy_rel_file IMS/design/docbook/\*-gen\.docbook ../doc/concept/
+copy_rel_file IMS/design/docbook/\*-gen\.html ../doc/concept/
+copy_dir IMS/design/docbook/images/png ../doc/concept/images
+
+
+###############################################################################
+#                                   SPECIF                                    #
+###############################################################################
+mkdir $pathrel/../doc/specif/images
+copy_rel_file core/specs/docbook/\*-gen\.pdf ../doc/specif/
+copy_rel_file core/specs/docbook/\*-gen\.docbook ../doc/specif/
+copy_rel_file core/specs/docbook/\*-gen\.html ../doc/specif/
+copy_dir core/specs/docbook/images/png ../doc/specif/images
+copy_dir core/specs/docbook/images/svg ../doc/specif/images
+
 
 ###############################################################################
 #                                  SWIG API                                   #
