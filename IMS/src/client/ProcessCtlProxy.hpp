@@ -17,22 +17,21 @@
  * \brief ProcessCtlProxy class implementation
  */
 class ProcessCtlProxy {
-
   public:
 
    /**
   * \param session The object which encapsulates the session information
   * \brief Constructor
   */
-  explicit ProcessCtlProxy( const SessionProxy& session);
+  explicit ProcessCtlProxy(const SessionProxy& session);
 
   /**
   * \param session The object which encapsulates the session information
   * \param machineId The id of the machine
   * \brief Constructor
   */
-  explicit ProcessCtlProxy( const SessionProxy& session,
-                            const std::string& machineId);
+  explicit ProcessCtlProxy(const SessionProxy& session,
+                           const std::string& machineId);
 
   /**
   * \brief Function to to restart a SeD or a MA
@@ -44,7 +43,6 @@ class ProcessCtlProxy {
 
   /**
   * \brief Function to get the refresh period
-  * \param process The data structure containing information about the process to stop
   * \param op option for the supervisor
   * \return raises an exception on error
   */
@@ -54,7 +52,6 @@ class ProcessCtlProxy {
   /**
   * \brief Function to get the refresh period
   * \param loadShedType the type of the load shedding mode (SOFT or HARD)
-  * \return raises an exception on error
   * \return raises an exception on error
   */
   int
