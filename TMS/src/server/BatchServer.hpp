@@ -113,6 +113,7 @@ extern "C" {
  * it should instantiate a new IPlugin instance and return true in case
  * of success, false otherwise.
  * @param[out] instance
+ * @return PLUGIN_OK if the creation went well, an error code otherwise
  */
   int DADI_EXPORT
   create_plugin_instance(void **instance);
