@@ -9,10 +9,11 @@
 #include <iostream>
 #include "UMS_fixtures.hpp"
 #include "api_ums.hpp"
-#include "diet_config_tests.h"
 #include"DIET_client.h"
 #include "UMS_test_utils.hpp"
 
+
+#define CONFIG_DIR "/tmp"
 //BOOST_AUTO_TEST_SUITE( test_suite )
 
 BOOST_FIXTURE_TEST_SUITE( test_suite, UMSSeDFixture )
@@ -25,20 +26,21 @@ BOOST_AUTO_TEST_CASE( my_test )
 {
   int argc = 2;
   char* argv[argc];
-  string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
+  std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+  BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
   argv[0]= (char*)"./automTest";
-  argv[1]= (char*) dietClientConfigPath.c_str();
-  if (diet_initialize(dietClientConfigPath.c_str(), argc, argv)) {
+  argv[1]= (char*) vishnuClientTestConfigPath.c_str();
+  if (diet_initialize(vishnuClientTestConfigPath.c_str(), argc, argv)) {
     BOOST_TEST_MESSAGE( "Error in diet_initialize... (using config: "
-                        << dietClientConfigPath << ")" );
+                        << vishnuClientTestConfigPath << ")" );
   }
 
   // CREATE DATA MODEL
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   UMS_DataPackage_ptr ecorePackage = UMS_DataPackage::_instance();
 
-  string sqlScript = UMSSQLPATH;
-  string umsAuthType = UMSAUTHENTYPE;
+  string sqlScript = m_test_ums_sql_path;//UMSSQLPATH;
+  string umsAuthType = m_test_ums_authen_type; //UMSAUTHENTYPE;
 
   ////
   // Parameters
@@ -49,8 +51,8 @@ BOOST_AUTO_TEST_CASE( my_test )
   string             	  key  = ""       ;
   string                  key2 = ""       ;
 
-  string          pwd  = UMSADMINVISHNUPWD  ;
-  string          uid  = UMSADMINVISHNULOGIN;
+  string          pwd  = m_test_ums_admin_vishnu_pwd ; //UMSADMINVISHNUPWD  ;
+  string          uid  = m_test_ums_admin_vishnu_login; //UMSADMINVISHNULOGIN;
 
   string          pwdUMSDb  = "admin"  ;
   string          uidUMSDb  = "admin_1";
@@ -64,16 +66,16 @@ BOOST_AUTO_TEST_CASE( my_test )
   Session                 sess ;
   Session                 sess2 ;
 
-  string 	     	  pwdu = UMSUSERVISHNUPWD;
-  string 	     	  uidu = UMSUSERVISHNULOGIN;
+  string 	     	  pwdu = m_test_ums_user_vishnu_pwd; //UMSUSERVISHNUPWD;
+  string 	     	  uidu = m_test_ums_user_vishnu_login; //UMSUSERVISHNULOGIN;
   string          uiduUMSDb = "user_1";
   string          pwduUMSDb = "toto";
 
   string                  rootUMSDb= "root";
   string                  pwdrUMSDb = "vishnu_user";
 
-  string                  root = UMSROOTVISHNULOGIN;
-  string                  pwdr = UMSROOTVISHNUPWD;
+  string                  root = m_test_ums_root_vishnu_login; //UMSROOTVISHNULOGIN;
+  string                  pwdr = m_test_ums_root_vishnu_pwd; //UMSROOTVISHNUPWD;
 
   // connect as
   string const&      	  subs = "user_1";
@@ -92,7 +94,7 @@ BOOST_AUTO_TEST_CASE( my_test )
   ListLocalAccounts_ptr   lia  = ecoreFactory->createListLocalAccounts();
   ListLocalAccOptions     lioa ;//= ecoreFactory->createListLocalAccOptions();
   LocalAccount            lacc ;//= ecoreFactory->createLocalAccount();
-  string                  mid  = "machine_1" ;
+  string                  mid  = "machine_1" ; 
   string                  accL = "toto"      ;
   string                  ssh  = "/usr/local";
   string                  home = "/home/toto";
@@ -157,7 +159,8 @@ try {
 
   // Connect normal call
   BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
-  BOOST_MESSAGE(" Testing normal connection U1-B1" );
+  
+  BOOST_MESSAGE(" Testing normal connection U1-B1" ); 
 
   BOOST_CHECK  (connect    (uid, pwd, sess, cop )==0);
   BOOST_CHECK  (listSessions(sess.getSessionKey(), *li , opt      )==0);
@@ -234,7 +237,7 @@ try {
   string netrcpath;
 
   // Connect with netrc normal call
-  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  //BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection using the .netrc file U1.1-B2" );
   BOOST_REQUIRE(setenv("HOME", CONFIG_DIR, 1)==0);
   netrcpath = string(getenv("HOME")) + "/.netrc";
@@ -322,7 +325,7 @@ try {
   BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
 
   // Connect with a list of user bad pwd
-  BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
+  //BOOST_REQUIRE(restore    (sqlScript+"/clean_session.sql")==0);
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   liuc  = ecoreFactory->createListUsers();
   u1  = ecoreFactory->createUser();
@@ -536,8 +539,9 @@ try {
     BOOST_CHECK_THROW	 (resetPassword(sess.getSessionKey(), "bad", np          ), VishnuException);
     BOOST_CHECK	 (close        (sess.getSessionKey()                 )==0);
 
-    pwd  = UMSADMINVISHNUPWD  ;
-    uid  = UMSADMINVISHNULOGIN;
+    pwd  = m_test_ums_user_vishnu_pwd; //UMSUSERVISHNUPWD;
+    uid  = m_test_ums_user_vishnu_login; //UMSADMINVISHNULOGIN ;
+    
   }
   // Add local account
   BOOST_MESSAGE(" Testing add local account success U4-B"    );
@@ -571,7 +575,7 @@ try {
 
   // Update local account
   BOOST_MESSAGE(" Testing update local account success U4.1-B"    );
-  BOOST_REQUIRE(restore	  (sqlScript+"/clean_session.sql")==0);
+  //BOOST_REQUIRE(restore	  (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect	  (uid, pwd , sess, cop)==0);
   lacc.setSshKeyPath("/usr/bin");
   lacc.setAcLogin("");  // to avoid changing acLogin
@@ -583,7 +587,7 @@ try {
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
+  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setMachineId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
@@ -593,7 +597,7 @@ try {
   BOOST_MESSAGE(" Testing update local account bad machine U4.1-E"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql")==0);
   BOOST_CHECK  (connect           (uid, pwd , sess, cop)==0);
-  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
+  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2  	)==0);
   lacc.setUserId("bad");
   BOOST_CHECK_THROW  (updateLocalAccount(sess.getSessionKey(), lacc	        ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()        	)==0);
@@ -608,7 +612,7 @@ try {
   lacc.setAcLogin     (accL);
   lacc.setSshKeyPath   (ssh);
   lacc.setHomeDirectory(home);
-  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
+  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2    )==0);
   BOOST_CHECK	 (deleteLocalAccount(sess.getSessionKey(), uidUMSDb , mid     )==0);
   BOOST_CHECK	 (close             (sess.getSessionKey()                )==0);
 
@@ -624,7 +628,7 @@ try {
   BOOST_MESSAGE(" Testing delete local account bad machine"    );
   BOOST_REQUIRE(restore           (sqlScript+"/clean_session.sql"  )==0);
   BOOST_CHECK  (connect           (uid, pwd , sess  , cop)==0);
-  //  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
+  BOOST_CHECK	 (addLocalAccount   (sess.getSessionKey(), lacc, key2      )==0);
   BOOST_CHECK_THROW	 (deleteLocalAccount(sess.getSessionKey(), uidUMSDb , "bad"     ), VishnuException);
   BOOST_CHECK	 (close             (sess.getSessionKey()                  )==0);
 

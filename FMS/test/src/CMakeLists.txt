@@ -14,6 +14,7 @@ include_directories(
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${DATABASE_INCLUDE_DIR}
   ${PROJECT_BINARY_DIR}/include
+  ${CONFIG_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
   ${UMS_TEST_SOURCE_DIR}
@@ -21,14 +22,14 @@ include_directories(
 
 # Standard VISHNU TESTS variables
 file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
-file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
+#file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
 file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 
-set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
-file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
+#set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
+#file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 # Path to the VISHNU UMS SeD configuration
-set (TEST_FMS_SED_CONFIG "${TEST_CONFIG_PATH}/fmssed_testing.cfg")
-file (TO_NATIVE_PATH ${TEST_FMS_SED_CONFIG} FMSSEDCONF)
+#set (TEST_FMS_SED_CONFIG "${TEST_CONFIG_PATH}/fmssed_testing.cfg")
+#file (TO_NATIVE_PATH ${TEST_FMS_SED_CONFIG} FMSSEDCONF)
 
 # Specific to FMS
 set(TEST_FMS_HOST1 "localhost" CACHE STRING " hostname of file server 1")
@@ -43,12 +44,12 @@ file(TO_NATIVE_PATH ${TEST_FMS_DIR1} FMSDIR1)
 file(TO_NATIVE_PATH ${TEST_FMS_DIR2} FMSDIR2)
 
 # Create header for VISHNU FMS tests
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FMS_testconfig.h.in
-  ${PROJECT_BINARY_DIR}/include/FMS_testconfig.h)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/FMS_testconfig.h.in
+#  ${PROJECT_BINARY_DIR}/include/FMS_testconfig.h)
 # Create configuration for VISHNU FMS SeD
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fmssed_testing.cfg.in
-  ${TEST_CONFIG_PATH}/fmssed_testing.cfg
-)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/fmssed_testing.cfg.in
+#  ${TEST_CONFIG_PATH}/fmssed_testing.cfg
+#)
 
 include(FMSTestingMacros)
 fms_test_setup()
