@@ -6,7 +6,6 @@
 // FMS forward Headers
 #include "FMS_Data_forward.hpp"
 #include "FMS_fixtures.hpp"
-#include "FMS_testconfig.h"
 #define STATUS_INPROGRESS 0
 #define STATUS_COMPLETED 1
 #define STATUS_CANCELED 2
@@ -41,7 +40,7 @@ static const string adminId = "admin_1";
 static const string adminPwd = "admin";
 static const string userId = "user_1";
 static const string userPwd = "toto";
-static const string userLogin = FMSUSERLOGIN;
+static const string userLogin = "";//FMSUSERLOGIN;
 static const string groupTest = "test"; // userLogin must belong to groupTest on host 1
 static const string sep = ":";
 static const string slash = "/";
@@ -51,11 +50,11 @@ static const string newFileName = "FMS_test_file";
 static const string newDirName = "FMS_test_dir";
 static const string newSubDirName = "FMS_test_sub_dir";
 // local
-static const string localDir = FMSWORKINGDIR;
+static const string localDir = "";//FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
 // remote
-static const string remoteBaseDir1 = FMSDIR1;
-static const string remoteBaseDir2 = FMSDIR2;
+static const string remoteBaseDir1 = "";//FMSDIR1;
+static const string remoteBaseDir2 = "";//FMSDIR2;
 static const string baseDirFullPath1 = machineId1 + sep + remoteBaseDir1;
 static const string baseDirFullPath2 = machineId2 + sep + remoteBaseDir2;
 static const string fileFullPath1 = baseDirFullPath1 + slash + newFileName;

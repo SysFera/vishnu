@@ -4,7 +4,7 @@
  * Author : bisnard
  */
 
-//#include "diet_fixtures.hpp"
+
 #include <boost/assign/list_inserter.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/assign/std/vector.hpp>
@@ -13,10 +13,9 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>
-#include "UMS_testconfig.h"
-#include "diet_config_tests.h"
 #include "diet_fixtures.hpp"
 #include "utils.hpp"
+#include "FileParser.hpp"
 
 namespace ba = boost::assign;
 namespace bf = boost::filesystem;
@@ -26,56 +25,45 @@ namespace bs = boost::system;
 // must not be static
 // should be a primitive type with an identifier name
 char UMSSeD[] = "umssed";
-char ConfigUMSSeD[] = UMSSEDCONF;
-char BinDirUMSSeD[] = UMSSEDBINDIR;
+char ConfigUMSSeD[] = "";
+char BinDirUMSSeD[] = "";
 
 template <const char *name, const char *binDir, const char *config>
 class UMSSEDFixtureTemplate : public DispatcherFixture
 {
-  boost::scoped_ptr<bp::child> UMSSeD;
-
+  
 public:
+  std::string m_test_ums_sql_path;
+  std::string m_test_ums_authen_type;
+  std::string m_test_ums_root_vishnu_login;
+  std::string m_test_ums_root_vishnu_pwd;
+  std::string m_test_ums_admin_vishnu_login;
+  std::string m_test_ums_admin_vishnu_pwd;
+  std::string m_test_auth_system_uri;
+  std::string m_test_ums_user_vishnu_login;
+  std::string m_test_ums_user_vishnu_pwd;
+  
   UMSSEDFixtureTemplate() {
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching "
-                        <<  "umssed" << " ==");
+    BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
+    std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
 
-    std::string exec;
-    try {
-      exec = bp::find_executable_in_path(name, binDir);
-    } catch (bs::system_error& e) {
-      BOOST_TEST_MESSAGE( "can't find " << UMSSeD << ": "
-                          << e.what() );
-      BOOST_TEST_MESSAGE( "search path: " << BinDirUMSSeD );
-      return;
-    }
+    m_test_ums_sql_path = setupConfig.find("TEST_UMS_SQL_PATH")->second; 
+    m_test_ums_authen_type = setupConfig.find("TEST_UMS_AUTHEN_TYPE")->second ;
+    m_test_ums_root_vishnu_login = setupConfig.find("TEST_UMS_ROOT_VISHNU_LOGIN")->second;
+    m_test_ums_root_vishnu_pwd = setupConfig.find("TEST_UMS_ROOT_VISHNU_PWD")->second;
+    m_test_ums_admin_vishnu_login = setupConfig.find("TEST_UMS_ADMIN_VISHNU_LOGIN")->second;
+    m_test_ums_admin_vishnu_pwd = setupConfig.find("TEST_UMS_ADMIN_VISHNU_PWD")->second;
+    m_test_auth_system_uri = setupConfig.find("TEST_UMS_AUTH_SYTEM_URI")->second;
+    m_test_ums_user_vishnu_login = setupConfig.find("TEST_UMS_USER_VISHNU_LOGIN")->second;
+    m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_UMS_USER_VISHNU_PWD")->second;
 
-    BOOST_TEST_MESSAGE( "SeD found: " << exec );
-
-    // setup SeD environment
-    bp::context ctx;
-    ctx.process_name = name;
-    bp::environment::iterator i_c;
-    i_c = ctx.env.find(ENV_LIBRARY_PATH_NAME);
-    if (i_c != ctx.env.end()) {
-      i_c->second = std::string(ENV_LIBRARY_PATH) + i_c->second;
-    } else {
-      ctx.env[ENV_LIBRARY_PATH_NAME] = ENV_LIBRARY_PATH;
-    }
-#ifndef DEBUG_TESTS
-    // redirect output to /dev/null
-    ctx.streams[bp::stdout_id] = bp::behavior::null();
-    ctx.streams[bp::stderr_id] = bp::behavior::null();
-#endif
     
-    // setup SeD arguments
-    std::vector<std::string> args = ba::list_of(std::string(config));
+    
 
-    // launch SeD
-    const bp::child c = bp::create_child(exec, args, ctx);
-    UMSSeD.reset(utils::copy_child(c));
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
-    BOOST_TEST_MESSAGE( "== Test setup [END]: launching "
-                        << name << " ==" );
+    
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==");
   }
 
 
@@ -83,18 +71,6 @@ public:
   {
     BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping "
                         << name << " ==" );
-    if( UMSSeD ) {
-      try {
-        UMSSeD->terminate();
-        
-        // FIXME: currently UMSSeD->wait() crashes, we need to set the signal handler of SIGCHLD to SID_DFL
-        signal(SIGCHLD, SIG_DFL);
-      } catch (...) {
-        BOOST_TEST_MESSAGE( "== Problem while stopping "
-                            << name << " ==" );
-      }
-    }
-    boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME*2));
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
                         << name << " ==" );
   }
