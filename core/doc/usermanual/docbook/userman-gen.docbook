@@ -205,6 +205,14 @@
       
     <para>Update for ZMQ. </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>21</revnumber>
+        <date>17/12/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+      
+    <para>Update for posix shell. </para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -562,6 +570,13 @@
 	    <emphasis role="bold"> vishnu_list_jobs</emphasis>, 
 	    and for a job's progression status, <emphasis role="bold"> the vishnu_get_job_progression</emphasis> command is used. The job's progression status is calculated according to the wall-clock time specified
 	    by the user during the job's submission.
+            When TMS is running with a classic batch scheduler, it is possible to submit a job to TMS to get the script executed in the 
+            shell and not by the batch scheduler. By default the real underlying batch scheduler is used. To do so, one must use the 
+            <emphasis role="bold">-p</emphasis> option in command line
+            (posix parameter in objects). The user will see it like others jobs and can access the same information. Nevertheless, some
+            parameters are irrelevant in this case, for instance the CPU, the memory, the queue or the mail notification data
+            are ignored. The queue will always be the same. Moreover, on a machine without batch scheduler, the admin can deploy TMS and
+            only this pseudo batch will be used.
 	  </para>
           <section>
             <title> VISHNU generic script </title>
@@ -794,6 +809,13 @@
           <listitem>
             <para> If a message similar to <emphasis role="italic">&quot;warning input stream error&quot;</emphasis> happens when calling vishnu_connect but the call is successful, try cleaning the .vishnu directory.
 	    </para>
+          </listitem>
+          <listitem>
+            <para>
+		The <emphasis role="italic">&quot;DIET initialization failed&quot;</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
+		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. It is also advisable to put the variable maxServerThreadPoolSize to 1000. 
+		The value 1000 is an example value.
+	      </para>
           </listitem>
           <listitem>
             <para>
@@ -3563,7 +3585,8 @@ The required parameters are : the VISHNU user identifier, the user-authenticatio
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -3708,6 +3731,12 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
 E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. 
 
 NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive..</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term><option>-p <replaceable>posix</replaceable></option></term>
+            <listitem>
+              <para>allows to submit on the shell instead of using the batch scheduler.</para>
             </listitem>
           </varlistentry>
         </variablelist>

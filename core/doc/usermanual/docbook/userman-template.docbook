@@ -206,6 +206,14 @@
       <para>Update for ZMQ. </para>
     </revdescription>
   </revision>
+   <revision>
+    <revnumber>21</revnumber>
+    <date>17/12/2013</date>
+    <authorinitials>SysFera</authorinitials>
+    <revdescription>
+      <para>Update for posix shell. </para>
+    </revdescription>
+  </revision>
   
   </revhistory>
 
@@ -589,6 +597,13 @@
 	    <emphasis role="bold"> vishnu_list_jobs</emphasis>, 
 	    and for a job's progression status, <emphasis role="bold"> the vishnu_get_job_progression</emphasis> command is used. The job's progression status is calculated according to the wall-clock time specified
 	    by the user during the job's submission.
+            When TMS is running with a classic batch scheduler, it is possible to submit a job to TMS to get the script executed in the 
+            shell and not by the batch scheduler. By default the real underlying batch scheduler is used. To do so, one must use the 
+            <emphasis role="bold">-p</emphasis> option in command line
+            (posix parameter in objects). The user will see it like others jobs and can access the same information. Nevertheless, some
+            parameters are irrelevant in this case, for instance the CPU, the memory, the queue or the mail notification data
+            are ignored. The queue will always be the same. Moreover, on a machine without batch scheduler, the admin can deploy TMS and
+            only this pseudo batch will be used.
 	  </para>
 	  <section>
 	    <title> VISHNU generic script </title>
