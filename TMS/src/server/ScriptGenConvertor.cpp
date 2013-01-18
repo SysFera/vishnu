@@ -148,12 +148,12 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
   } else if (mbatchType==POSIX) {
-    mconversionTable[group]                = "";
-    mconversionTable[workingDir]           = "";
-    mconversionTable[jobName]              = "";
-    mconversionTable[jobOutput]            = "";
-    mconversionTable[jobError]             = "";
-    mconversionTable[jobWallClockLimit]    = "";
+    mconversionTable[group]                = "#% vishnu_group=";
+    mconversionTable[workingDir]           = "#% vishnu_working_dir=";
+    mconversionTable[jobName]              = "#% vishnu_job_name=";
+    mconversionTable[jobOutput]            = "#% vishnu_output=";
+    mconversionTable[jobError]             = "#% vishnu_error=";
+    mconversionTable[jobWallClockLimit]    = "#% vishnu_wallclocklimit=";
     mconversionTable[cpuTime]              = "";
     mconversionTable[nbCpu]                = "";
     mconversionTable[nbNodesAndCpuPerNode] = "";

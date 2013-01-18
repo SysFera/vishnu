@@ -77,7 +77,9 @@ endif(sge)
 if (posix)
   set(POSIXSERVER server/PosixServer.cpp
     server/TmsPosixClient.cpp
-    server/tms-posix.cpp)
+    server/tms-posix.cpp
+    posix_parser/POSIXParser.cpp
+    )
   set(POSIX_ALL_INCLUDE_DIR ${POSIX_INCLUDE_DIR})
   set(POSIX_ALL_LIB_DIR ${POSIX_LIB})
 endif(posix)
