@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Script to generate the documentation for all modules.
 # All docs are generated in place
 # Author Benjamin Depardon (benjamin.depardon@sysfera.com)
