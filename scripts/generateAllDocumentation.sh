@@ -58,7 +58,6 @@ function generate_doc () {
 function generate_man () {
     cur=$PWD
     cd $1
-    FILEBASENAME=$2
 
     # Create temporary directory
     rm -r man1
@@ -68,11 +67,14 @@ function generate_man () {
     mkdir man1
     mkdir man3
     
-    xsltproc $PWD/docbook/${FILEBASENAME}.docbook 
+    for i in ${@:2}; do
+        FILEBASENAME=$i
+        xsltproc $PWD/docbook/${FILEBASENAME}.docbook 
 
-    # move of files
-    mv *.1 man1
-    mv *.3 man3
+        # move of files
+        mv *.1 man1
+        mv *.3 man3
+    done
 
     cd $cur
 }
@@ -119,8 +121,7 @@ generate_doc TMS/test/testPlan VISHNU_D4_1b-TMS-PlanTests
 generate_doc FMS/test/testPlan VISHNU_D3_1b-FMS-PlanTests
 
 # generate manpages
-generate_man UMS/doc/man adminman-gen
-generate_man UMS/doc/man userman-gen
+generate_man UMS/doc/man adminman-gen userman-gen
 generate_man IMS/doc/man manIMS-gen
 generate_man TMS/doc/man usermanTMS-gen
 generate_man FMS/doc/man usermanFMS-gen

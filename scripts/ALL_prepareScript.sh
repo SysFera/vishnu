@@ -97,6 +97,8 @@ rm -rf deliverables/tests/*
 # Generate all documentation
 sh -c $gen_doc_sh
 
+
+
 # Copy root cmake list, copyright, README, version
 copy_file CMakeLists.txt
 copy_file copyright
