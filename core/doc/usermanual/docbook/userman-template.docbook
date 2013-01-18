@@ -294,7 +294,7 @@
             <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
           </listitem>
         <listitem>
-          <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
+          <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used.</para>
         </listitem>
       </itemizedlist></para>
     </section>
@@ -304,7 +304,7 @@
   <chapter>
     <title>Installation and usage</title>
     <para>
-      The VISHNU software is based on SysFera-DS which is an open-source middleware developped by SysFera. VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
+      VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
       <itemizedlist>
 	<listitem>
 	  <para>User management services (UMS): authentication and session management.</para>
@@ -325,35 +325,31 @@
       <title> Installation procedure of the clients </title>
       
       <para> 
-	This section details the main steps of the installation process for the clients, including the installation requirements [D1.1b]. VISHNU is based on SysFera-DS software
-	which must be installed before.
+	This section details the main steps of the installation process for the clients, including the installation requirements [D1.1b].
       </para>
       
-      <para> <emphasis role = "bold">Installation requirements:</emphasis></para>
+      <para> <emphasis role = "bold">Installation requirements (for versions see the STB document):</emphasis></para>
       <itemizedlist>
 	<listitem>
-	  <para> GCC V4.4.3 </para>
+	  <para> GCC </para>
 	</listitem>
 	<listitem>
-	  <para> CMAKE V2.6 </para>
-	</listitem>
-	<listitem>
-	  <para> OMNIORB 4.1.4 </para>
+	  <para> CMAKE </para>
 	</listitem>
 	<listitem>
 	  <para> ZMQ </para>
 	</listitem>
 	<listitem>
-	  <para> BOOST V1.46.1 </para>
+	  <para> BOOST </para>
 	</listitem>
 	<listitem>
-	  <para> PYTHON V2.5 </para>
+	  <para> PYTHON </para>
 	</listitem>
 	<listitem>
-	  <para> JAVA V1.6 </para>
+	  <para> JAVA  </para>
 	</listitem>
 	<listitem>
-	  <para> SWIG V1.3 </para>
+	  <para> SWIG  </para>
 	</listitem>
 	<listitem>
 	  <para> LIBCRYPT </para>
@@ -364,14 +360,13 @@
       
       <section>
 	<title> From sources </title>
-	
 	<para>
 	  <itemizedlist>
 	    <listitem>
-	      <para> Download the VISHNU install sources </para>
+	      <para> Download the VISHNU install sources: git@github.com:SysFera/vishnu.git for the repository </para>
 	    </listitem>
 	    <listitem>
-	      <para> Decompress it and go to the vishnu directory </para>
+	      <para> Decompress it (if tarball downloaded) and go to the vishnu directory </para>
 	    </listitem>
 	    
 	    <listitem>
@@ -414,7 +409,7 @@
       <section>
 	<title> From binaries package </title>
 	<para>Assuming the dependencies are installed (zmq).
-	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the VISHNU hierarchy is already running and accessible from the client, one can uses VISHNU. All the services are available in the debian packages.
+	Download the vishnu-client_*_i386.deb, where * stands for the VISHNU version and install it (dpkg -i vishnu_client_*_i386.deb). Then, if the VISHNU hierarchy is already running and accessible from the client, you can use VISHNU. All the services are available in the debian packages.
 	</para>
       </section>   
       <section>
@@ -424,14 +419,14 @@
           UMS=tcp://127.0.0.1:5555
           retryTimeout=10
         </programlisting>
-        <para>If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher, an error is returned.
-        retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retry for a client command)</para>
+        <para>If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher is found, an error is returned.
+        retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retries for a client command)</para>
       </section>      
     </section>
     
     <section>
       <title> Software usage description </title>
-      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handle the information of the system (IMS). These clients can be installed alltogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be describe to show the services it offers to the user.</para>
+      <para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handles the information of the system (IMS). These clients can be installed altogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be described to present the services they offer to the users.</para>
       <para>More information about the datatypes can be found in the [VISHNU_API] document.</para>
       <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
       <section><!-- UMS Package -->
@@ -448,7 +443,7 @@
 	<section>
 	  <title> Connection to VISHNU </title>
 	  <para>
-	    To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shell are supported). 
+	    To connect, use the <emphasis role="bold">vishnu_connect</emphasis> command in the shell terminal (all bourne shells are supported). 
       The password received by email is temporary and must be changed at the first connection by using the <emphasis role = "bold"> vishnu_change_password </emphasis> command. It is also possible to make connection by using the .netrc file. Indeed when the userId and the password are empty, with <emphasis role = "bold"> vishnu_connect </emphasis> without parameters, the system automatically gets the login and the password from the .netrc file. A vishnu account on the .netrc file can be defined as follows: 
     
       </para>
@@ -457,7 +452,7 @@
       <para> <emphasis role="bold">login</emphasis> toto </para>
       <para> <emphasis role="bold">password</emphasis> pwd </para> 
       <para>The values toto and pwd are respectively the userId and the password of a user registered in vishnu and the machine must be named <emphasis role = "bold">vishnu</emphasis>.</para>
-      <para>It is also possible to define a serie of VISHNU accounts on the .netrc file. The System will try them each in turn until one which will allow to make a connection. As the .netrc file, the <emphasis role = "bold"> vishnu_connect_m </emphasis> command allows
+      <para>It is also possible to define a series of VISHNU accounts on the .netrc file. The system will try them each in turn until one which will allow to make a connection. As the .netrc file, the <emphasis role = "bold"> vishnu_connect_m </emphasis> command allows
       to give successively several couples login/password.
       </para>
     </section>
@@ -588,7 +583,7 @@
 	  <title> Job submission </title>
 	  <para>
 	    To submit a job, via VISHNU, to the batch scheduler of a specific machine, the user needs: an active VISHNU session, 
-	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine and a script that describes 
+	    a local user configuration registered on VISHNU that corresponds to an existing UNIX account on the specified machine, and a script that describes 
 	    the job to submit. In the current implementation of VISHNU, it is possible to use the directives for several batch schedulers: TORQUE, LoadLeveler, SLURM, LSF,
             Grid Engine and PBSPro.
 	    In order to use the same script on different batch schedulers, a generic script with generic VISHNU directives is used.
@@ -601,9 +596,9 @@
             shell and not by the batch scheduler. By default the real underlying batch scheduler is used. To do so, one must use the 
             <emphasis role="bold">-p</emphasis> option in command line
             (posix parameter in objects). The user will see it like others jobs and can access the same information. Nevertheless, some
-            parameters are irrelevant in this case, for instance the CPU, the memory, the queue or the mail notification data
+            parameters are irrelevant in this case, for instance the CPU, the memory, the queue or the mail notification parameters
             are ignored. The queue will always be the same. Moreover, on a machine without batch scheduler, the admin can deploy TMS and
-            only this pseudo batch will be used.
+            only this 'pseudo batch' will be used.
 	  </para>
 	  <section>
 	    <title> VISHNU generic script </title>
@@ -849,14 +844,6 @@
 	  
 	  <listitem>
 	    <para>
-		The <emphasis role = "italic">"DIET initialization failed"</emphasis> error, possibly caused by the number of omniorb connection limit, can be solved in the previous case by 
-		using the variable maxGIOPConnectionPerServer on the omniorb configuration file as follows : maxGIOPConnectionPerServer = 1000. It is also advisable to put the variable maxServerThreadPoolSize to 1000. 
-		The value 1000 is an example value.
-	      </para>
-	  </listitem>
-	  
-	  <listitem>
-	    <para>
 	      If the message <emphasis role = "italic">"locale::facet::_S_create_c_locale name not valid"</emphasis> occurs after calling vishnu_connect command, you must export environment variable LANG 
 	      as follows : export LANG=C.
 	    </para>  
@@ -865,7 +852,7 @@
 	  <listitem>
 	    <para>
 	      If the message <emphasis role = "italic">"The batch scheduler indicates an error [SGE ERROR: warning: username your job is not allowed to run in any queue]"</emphasis> is returned after
-	      job submission on the batch scheduler SGE, you have to check the existence of a queue by using the command: <emphasis role = "bold"> qconf -sql</emphasis>. If there is no queue, you must add one by using the command <emphasis role = "bold">qconf -aq </emphasis>.
+	      job submission on the batch scheduler SGE, the admin has to check the existence of a queue by using the command: <emphasis role = "bold"> qconf -sql</emphasis>. If there is no queue, you must add one by using the command <emphasis role = "bold">qconf -aq </emphasis>.
 	    </para>  
 	  </listitem>
 	  
@@ -876,7 +863,7 @@
 	
 	<itemizedlist>
 	  <listitem>
-	    <para> If the JAVA API (using the WS or the JAVA jars directly fails), with an error such as undefined reference in a JNI
+	    <para> If the JAVA API (using the WS or the JAVA jars directly) fails, with an error such as undefined reference in a JNI
               call, please add the flags <emphasis role = "italic">-Wl,--add-stdcall-alias</emphasis> at the compilation of the VISHNU
               target in the swigAPI/CMakeLists.txt.
 	    </para>
