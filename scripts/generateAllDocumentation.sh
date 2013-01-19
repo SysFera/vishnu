@@ -25,8 +25,8 @@ fi
 vishnuDir=`pwd`
 scriptDir=$vishnuDir/scripts
 
-# script to generate documentation from a docbook file
-gen_pdf_html_sh=${scriptDir}/generatePDF_HTML_fromDocbook.sh
+nbfailed=0
+nbexec=0
 
 ######################################################################
 #                           /VARIABLES                               #
@@ -35,6 +35,15 @@ gen_pdf_html_sh=${scriptDir}/generatePDF_HTML_fromDocbook.sh
 ######################################################################
 #                            FUNCTIONS                               #
 ######################################################################
+function run_cmd() {
+    $@
+    tmprv=$?
+    nbexec=$(($nbexec+1))
+    if [ $tmprv != 0 ]; then
+        nbfailed=$(($nbfailed+1))
+    fi
+}
+
 function generate_doc () {
     # Generate pdf and html from docbook
     # Usage:  generate_doc <path to directory> <docbook basename without extension>
@@ -46,11 +55,11 @@ function generate_doc () {
     FILEBASENAME=$2
 
     # PDF generation
-    dblatex -s ${vishnuDir}/core/tools/docbook/dblatex/docbook-sysfera.sty ${FILEBASENAME}.docbook
-    mv ${FILEBASENAME}.docbook.pdf ${FILEBASENAME}.pdf
+    run_cmd dblatex -s ${vishnuDir}/core/tools/docbook/dblatex/docbook-sysfera.sty ${FILEBASENAME}.docbook
+    run_cmd mv ${FILEBASENAME}.docbook.pdf ${FILEBASENAME}.pdf
     
     # HTML generation
-    xsltproc --param ignore.image.scaling 1 ${vishnuDir}/core/tools/docbook/docbook-xsl/xhtml/docbook.xsl ${FILEBASENAME}.docbook > ${FILEBASENAME}.html
+    run_cmd xsltproc --param ignore.image.scaling 1 ${vishnuDir}/core/tools/docbook/docbook-xsl/xhtml/docbook.xsl ${FILEBASENAME}.docbook > ${FILEBASENAME}.html
 
     cd $cur
 }
@@ -60,20 +69,20 @@ function generate_man () {
     cd $1
 
     # Create temporary directory
-    rm -r man1
-    rm -r man3
+    run_cmd rm -rf man1
+    run_cmd rm -rf man3
     
     # Create man directory  
-    mkdir man1
-    mkdir man3
+    run_cmd mkdir man1
+    run_cmd mkdir man3
     
     for i in ${@:2}; do
         FILEBASENAME=$i
-        xsltproc $PWD/docbook/${FILEBASENAME}.docbook 
+        run_cmd xsltproc $PWD/docbook/${FILEBASENAME}.docbook 
 
         # move of files
-        mv *.1 man1
-        mv *.3 man3
+        run_cmd mv *.1 man1
+        run_cmd mv *.3 man3
     done
 
     cd $cur
@@ -125,3 +134,10 @@ generate_man UMS/doc/man adminman-gen userman-gen
 generate_man IMS/doc/man manIMS-gen
 generate_man TMS/doc/man usermanTMS-gen
 generate_man FMS/doc/man usermanFMS-gen
+
+echo
+echo
+echo "## Failed / total: $nbfailed / $nbexec"
+
+exit $nbfailed
+
