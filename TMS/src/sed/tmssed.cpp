@@ -189,39 +189,6 @@ int main(int argc, char* argv[], char* envp[]) {
         std::cerr << e.what() << "\n";
         exit(1);
       }
-
-      try{
-
-      //Initialize the TMS Server
-      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, defaultBatchConfig);
-
-      std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(TMSTYPE, config, cfg, ls);
-
-      UMS_Data::UMS_DataFactory_ptr ecoreFactory =
-        UMS_Data::UMS_DataFactory::_instance();
-      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-      machine->setMachineId(machineId);
-
-      MachineServer machineServer(machine);
-      machineServer.checkMachine();
-      delete machine;
-
-      // Initialize the DIET SeD
-      if (!res) {
-        ZMQServerStart(server, uri);
-        unregisterSeD(TMSTYPE, config);
-      } else {
-        std::cerr << "\nThere was a problem during services initialization\n\n";
-        exit(1);
-      }
-      } catch (VishnuException& e) {
-        std::cerr << e.what() << "\n";
-        exit(1);
-      }
-
   }  else if (pid == 0) {
     // Initialize the TMS Monitor (Opens a connection to the database)
     MonitorTMS monitor(interval);
