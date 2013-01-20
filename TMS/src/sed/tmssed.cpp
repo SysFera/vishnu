@@ -23,6 +23,8 @@
 #include "DIET_client.h"
 #include "Server.hpp"
 
+#include <signal.h>
+
 
 /**
  * \brief To show how to use the sed
@@ -140,6 +142,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
   // Fork a child for UMS monitoring
   pid_t pid = fork();
+  pid_t ppid;
   if (pid > 0) {
 
       try {
@@ -187,6 +190,8 @@ int main(int argc, char* argv[], char* envp[]) {
         exit(1);
       }
 
+      try{
+
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId,
@@ -212,10 +217,10 @@ int main(int argc, char* argv[], char* envp[]) {
         std::cerr << "\nThere was a problem during services initialization\n\n";
         exit(1);
       }
-    } catch (VishnuException& e) {
-      std::cerr << e.what() << "\n";
-      exit(1);
-    }
+      } catch (VishnuException& e) {
+        std::cerr << e.what() << "\n";
+        exit(1);
+      }
 
   }  else if (pid == 0) {
     // Initialize the TMS Monitor (Opens a connection to the database)
