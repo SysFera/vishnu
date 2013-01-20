@@ -57,7 +57,7 @@ option(COMPILE_TMS "compile the module TMS")
 option(COMPILE_FMS "compile the module FMS")
 option(COMPILE_IMS "compile the module IMS")
 
-set(VISHNU_BATCH "TORQUE" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS)")
+set(VISHNU_BATCH "TORQUE" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
 set(VISHNU_BATCH_VERSION "2.3" CACHE path "Version of the batch scheduler")
 
 #option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
