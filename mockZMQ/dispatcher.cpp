@@ -73,52 +73,64 @@ public:
     while (true) {
       //Receive message from ZMQ
       zmq::message_t message(0);
-      try {
-        if (!socket.recv(&message, 0)) {
-        }
-      } catch (zmq::error_t &error) {
-        std::cerr << boost::format("E: %1%\n") % error.what();
-      }
+      getMessage(socket, message);
       // Deserialize and call UMS Method
       if (message.size() != 0) {
-        boost::shared_ptr<diet_profile_t> profile(my_deserialize(static_cast<const char*>(message.data())));
-        std::string servname = profile->name;
-        std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
-        std::string uriServer = elect(serv);
-
-        std::string resultSerialized =
-            (boost::format("error %1%: the service %2% is not available")
-             % vishnu::convertToString(ERRCODE_INVALID_PARAM)
-             % servname).str();
-        if (!uriServer.empty()) {
-          //            std::cout << my_serialize(profile.get());
-          diet_call_gen(profile.get(), uriServer);
-          resultSerialized = my_serialize(profile.get());
-        }
-        //        std::cout << boost::format("I: Sending> %1%...\n") % resultSerialized;
+        std::string resultSerialized = doCall(message);
         socket.send(resultSerialized);
       }
     }
   }
 
 private:
+  void
+  getMessage(Socket& socket, zmq::message_t& message) {
+    try {
+      socket.recv(&message, 0);
+    } catch (zmq::error_t &error) {
+      std::cerr << boost::format("E: %1%\n") % error.what();
+    }
+  }
+
+  std::string
+  doCall(zmq::message_t& message) {
+    using boost::format;
+    using boost::str;
+
+    boost::shared_ptr<diet_profile_t> profile =
+      my_deserialize(static_cast<const char*>(message.data()));
+    std::string servname = profile->name;
+    std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
+    std::string uriServer = elect(serv);
+
+    if (!uriServer.empty()) {
+      diet_call_gen(profile.get(), uriServer);
+      return my_serialize(profile.get());
+    } else {
+      return str(format("error %1%: the service %2% is not available")
+                 % vishnu::convertToString(ERRCODE_INVALID_PARAM)
+                 % servname);
+    }
+  }
+
   boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
   std::string uriInproc_; /**< worker id */
   int id_; /**< worker id */
   boost::shared_ptr<Annuary>& mann;
 };
 
+//FIXME: clear unused parameters
 class SubscriptionWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
-                              const std::string & uriInproc, int id,
-                              boost::shared_ptr<Annuary>& ann)
-    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
+  const std::string & uriInproc, int id,
+  boost::shared_ptr<Annuary>& ann)
+  : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
   operator()() {
     Socket socket(*ctx_, ZMQ_REP);
-    socket.connect(uriInproc_.c_str());
+    socket.connect(uriInproc_);
 
     while (true) {
       //Receive message from ZMQ
@@ -139,7 +151,7 @@ public:
 
       if (mode == 1) { // If add a server
         mann->add(server->getName(), server->getURI(),
-                  server->getServices());
+        server->getServices());
       } else if (mode == 0) {
         mann->remove(server->getName(), server->getURI());
       }
@@ -162,7 +174,7 @@ private:
 class AddressDealer{
 public:
   AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread)
-    : muri(uri), mann(ann), mnbThread(nbThread) {}
+  : muri(uri), mann(ann), mnbThread(nbThread) {}
 
   ~AddressDealer() {}
 
