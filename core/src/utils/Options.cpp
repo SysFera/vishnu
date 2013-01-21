@@ -12,14 +12,11 @@
 using namespace std;
 namespace po=boost::program_options;
 /* Default constructor. */
-Configuration::Configuration() {
-  pgName = "unknown";
+Configuration::Configuration() : pgName("unknown") {
 }
 
 /* Standard constructor. Get the program name as parameter. */
-Configuration::Configuration(const std::string& pgName) {
-  this->pgName = pgName;
-}
+Configuration::Configuration(const std::string& pgName) : pgName(pgName) {}
 
 /* Generic program configuration accessors. */
 const string& Configuration::getConfigFile() const {

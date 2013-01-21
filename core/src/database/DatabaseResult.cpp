@@ -12,12 +12,10 @@
 * \fn DatabaseResult()
 * \brief Constructor, raises an exception on error
 */
-DatabaseResult:: DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes){
-  fields  = 0;
-  tuples  = 0;
-  results = res;
-  attributesNames = namesAttributes;
-}
+DatabaseResult::DatabaseResult(const std::vector<std::vector<std::string> >& res,
+                               const std::vector<std::string>& namesAttributes)
+  : fields(0), tuples(0), results(res), attributesNames(namesAttributes) {}
+
 /**
 * \fn ~DatabaseResult()
 * \brief Destructor, raises an exception on error

@@ -33,7 +33,7 @@ class NetrcReader {
      * \param path  The path until the netrc file
      * \brief Constructor
      */
-    NetrcReader(std::string path);
+    NetrcReader(const std::string& path);
 
     /**
      * \brief Function to get the login and the password associated to a specific machine
@@ -99,7 +99,7 @@ class NetrcReader {
     check();
 
     /**
-     * \brief Function to analyze the couple key and value table 
+     * \brief Function to analyze the couple key and value table
      * \param tab a table in which the couple key and value are registered
      * \param machineName the machine name used for searching the couple
      * \return The analyzed tab

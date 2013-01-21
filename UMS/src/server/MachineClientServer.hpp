@@ -26,7 +26,7 @@ public:
   * \param sshKey The ssh key of the client machine
   * \param host The name of the client host
   */
-  MachineClientServer(std::string sshKey, std::string host);
+  MachineClientServer(const std::string& sshKey, const std::string& host);
   /**
   * \brief Function to record the client machine on the database
   * \fn int recordMachineClient()
