@@ -46,9 +46,6 @@ public:
     // check that we receive or not a null-terminated string aka C strings
     size_t sz = message.size();
     const char* pos = dat + sz;
-    if (dat[sz] == '\0') {
-      pos--;
-    }
 
     return std::string(dat, pos);
   }
