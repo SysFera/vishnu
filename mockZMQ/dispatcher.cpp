@@ -32,9 +32,9 @@ elect(const std::vector<boost::shared_ptr<Server> >& serv){
 template<class Callable>
 int
 ZMQStartDevice(const std::string& uriExternal,
-const std::string& uriInproc,
-const int & nbWorker,
-boost::shared_ptr<Annuary>& ann) {
+               const std::string& uriInproc,
+               const int & nbWorker,
+               boost::shared_ptr<Annuary>& ann) {
 
   // Prepare our context and the sockets for server
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
@@ -61,9 +61,9 @@ boost::shared_ptr<Annuary>& ann) {
 class ServiceWorker {
 public:
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
-  const std::string & uriInproc, int id,
-  boost::shared_ptr<Annuary>& ann)
-  : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
+                         const std::string & uriInproc, int id,
+                         boost::shared_ptr<Annuary>& ann)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
   operator()() {
@@ -87,9 +87,9 @@ public:
         std::string uriServer = elect(serv);
 
         std::string resultSerialized =
-        (boost::format("error %1%: the service %2% is not available")
-        % vishnu::convertToString(ERRCODE_INVALID_PARAM)
-        % servname).str();
+            (boost::format("error %1%: the service %2% is not available")
+             % vishnu::convertToString(ERRCODE_INVALID_PARAM)
+             % servname).str();
         if (!uriServer.empty()) {
           //            std::cout << my_serialize(profile.get());
           diet_call_gen(profile.get(), uriServer);
@@ -112,9 +112,9 @@ private:
 class SubscriptionWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
-  const std::string & uriInproc, int id,
-  boost::shared_ptr<Annuary>& ann)
-  : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
+                              const std::string & uriInproc, int id,
+                              boost::shared_ptr<Annuary>& ann)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
 
   void
   operator()() {
@@ -140,7 +140,7 @@ public:
 
       if (mode == 1) { // If add a server
         mann->add(server->getName(), server->getURI(),
-        server->getServices());
+                  server->getServices());
       } else if (mode == 0) {
         mann->remove(server->getName(), server->getURI());
       }
@@ -163,14 +163,14 @@ private:
 class AddressDealer{
 public:
   AddressDealer(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread)
-  : muri(uri), mann(ann), mnbThread(nbThread) {}
+    : muri(uri), mann(ann), mnbThread(nbThread) {}
 
   ~AddressDealer() {}
 
   void
   run() {
     ZMQStartDevice<ServiceWorker>(muri, "inproc://vishnuServiceWorker",
-    mnbThread, mann);
+                                  mnbThread, mann);
   }
 
 
@@ -183,14 +183,14 @@ private:
 class AddressSubscriber{
 public:
   AddressSubscriber(std::string uri, boost::shared_ptr<Annuary>& ann, int nbThread)
-  : muri(uri), mann(ann), mnbThread(nbThread) {}
+    : muri(uri), mann(ann), mnbThread(nbThread) {}
 
   ~AddressSubscriber() {}
 
   void
   run(){
     ZMQStartDevice<SubscriptionWorker>(muri, "inproc://vishnuSubcriberWorker",
-    mnbThread, mann);
+                                       mnbThread, mann);
   }
 
 
@@ -203,7 +203,7 @@ private:
 class Heartbeat{
 public:
   Heartbeat(int freq, boost::shared_ptr<Annuary> ann)
-  : mfreq(freq), mann(ann) {}
+    : mfreq(freq), mann(ann) {}
 
   ~Heartbeat() {}
 
@@ -262,12 +262,12 @@ main(int argc, char** argv) {
   }
 
   std::cerr << "====== Initial configuration =====\n"
-  << "disp_uriAddr=" << uriAddr << "\n"
-  << "disp_uriSubs=" << uriSubs << "\n"
-  << "disp_initFile=" << confFil << "\n"
-  << "disp_timeout=" << timeout << "\n"
-  << "disp_nbthread=" << nthread << "\n"
-  << "==================================\n";
+            << "disp_uriAddr=" << uriAddr << "\n"
+            << "disp_uriSubs=" << uriSubs << "\n"
+            << "disp_initFile=" << confFil << "\n"
+            << "disp_timeout=" << timeout << "\n"
+            << "disp_nbthread=" << nthread << "\n"
+            << "==================================\n";
 
 
   // Get initial configuration

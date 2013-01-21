@@ -38,93 +38,93 @@ ExecConfiguration config;
 
 typedef std::map<std::string, std::string> ServiceMap;
 static ServiceMap sMap = boost::assign::map_list_of
-/* UMS services */
-("sessionConnect", "UMS")
-("sessionReconnect", "UMS")
-("sessionClose", "UMS")
-("userCreate", "UMS")
-("userUpdate", "UMS")
-("userDelete", "UMS")
-("userPasswordChange", "UMS")
-("userPasswordReset", "UMS")
-("machineCreate", "UMS")
-("machineUpdate", "UMS")
-("machineDelete", "UMS")
-("localAccountCreate", "UMS")
-("localAccountUpdate", "UMS")
-("localAccountDelete", "UMS")
-("configurationSave", "UMS")
-("configurationRestore", "UMS")
-("optionValueSet", "UMS")
-("optionValueSetDefault", "UMS")
-("sessionList", "UMS")
-("localAccountList", "UMS")
-("machineList", "UMS")
-("commandList", "UMS")
-("optionValueList", "UMS")
-("userList", "UMS")
-("restore", "UMS")
-("authSystemCreate", "UMS")
-("authSystemUpdate", "UMS")
-("authSystemDelete", "UMS")
-("authSystemList", "UMS")
-("authAccountCreate", "UMS")
-("authAccountUpdate", "UMS")
-("authAccountDelete", "UMS")
-("authAccountList", "UMS")
-/* TMS services */
-("jobSubmit", "TMS")
-("jobCancel", "TMS")
-("jobInfo", "TMS")
-("getListOfJobs", "TMS")
-("getJobsProgression", "TMS")
-("getListOfQueues", "TMS")
-("jobOutputGetResult", "TMS")
-("jobOutputGetCompletedJobs", "TMS")
-("addWork", "TMS")
-/* IMS services */
-("int_exportCommands", "IMS")
-("int_getMetricCurentValue", "IMS")
-("int_getMetricHistory", "IMS")
-("int_getProcesses", "IMS")
-("int_setSystemInfo", "IMS")
-("int_setSystemThreshold", "IMS")
-("int_getSystemThreshold", "IMS")
-("int_defineUserIdentifier", "IMS")
-("int_defineJobIdentifier", "IMS")
-("int_defineTransferIdentifier", "IMS")
-("int_defineMachineIdentifier", "IMS")
-("int_loadShed", "IMS")
-("int_setUpdateFrequency", "IMS")
-("int_getUpdateFrequency", "IMS")
-("int_restart", "IMS")
-("int_stop", "IMS")
-("int_getSystemInfo", "IMS")
-("int_defineAuthIdentifier", "IMS")
-("int_defineWorkIdentifier", "IMS")
-/* FMS services */
-("FileCopyAsync", "FMS")
-("FileMoveAsync", "FMS")
-("FileMove", "FMS")
-("FileCopy", "FMS")
-("FileGetInfos", "FMS")
-("FileChangeGroup", "FMS")
-("FileChangeMode", "FMS")
-("FileHead", "FMS")
-("FileContent", "FMS")
-("FileCreate", "FMS")
-("DirCreate", "FMS")
-("FileRemove", "FMS")
-("DirRemove", "FMS")
-("FileTail", "FMS")
-("DirList", "FMS")
-("RemoteFileCopyAsync", "FMS")
-("RemoteFileMoveAsync", "FMS")
-("RemoteFileCopy", "FMS")
-("RemoteFileMove", "FMS")
-("FileTransfersList", "FMS")
-("FileTransferStop", "FMS")
-;
+                         /* UMS services */
+                         ("sessionConnect", "UMS")
+                         ("sessionReconnect", "UMS")
+                         ("sessionClose", "UMS")
+                         ("userCreate", "UMS")
+                         ("userUpdate", "UMS")
+                         ("userDelete", "UMS")
+                         ("userPasswordChange", "UMS")
+                         ("userPasswordReset", "UMS")
+                         ("machineCreate", "UMS")
+                         ("machineUpdate", "UMS")
+                         ("machineDelete", "UMS")
+                         ("localAccountCreate", "UMS")
+                         ("localAccountUpdate", "UMS")
+                         ("localAccountDelete", "UMS")
+                         ("configurationSave", "UMS")
+                         ("configurationRestore", "UMS")
+                         ("optionValueSet", "UMS")
+                         ("optionValueSetDefault", "UMS")
+                         ("sessionList", "UMS")
+                         ("localAccountList", "UMS")
+                         ("machineList", "UMS")
+                         ("commandList", "UMS")
+                         ("optionValueList", "UMS")
+                         ("userList", "UMS")
+                         ("restore", "UMS")
+                         ("authSystemCreate", "UMS")
+                         ("authSystemUpdate", "UMS")
+                         ("authSystemDelete", "UMS")
+                         ("authSystemList", "UMS")
+                         ("authAccountCreate", "UMS")
+                         ("authAccountUpdate", "UMS")
+                         ("authAccountDelete", "UMS")
+                         ("authAccountList", "UMS")
+                         /* TMS services */
+                         ("jobSubmit", "TMS")
+                         ("jobCancel", "TMS")
+                         ("jobInfo", "TMS")
+                         ("getListOfJobs", "TMS")
+                         ("getJobsProgression", "TMS")
+                         ("getListOfQueues", "TMS")
+                         ("jobOutputGetResult", "TMS")
+                         ("jobOutputGetCompletedJobs", "TMS")
+                         ("addWork", "TMS")
+                         /* IMS services */
+                         ("int_exportCommands", "IMS")
+                         ("int_getMetricCurentValue", "IMS")
+                         ("int_getMetricHistory", "IMS")
+                         ("int_getProcesses", "IMS")
+                         ("int_setSystemInfo", "IMS")
+                         ("int_setSystemThreshold", "IMS")
+                         ("int_getSystemThreshold", "IMS")
+                         ("int_defineUserIdentifier", "IMS")
+                         ("int_defineJobIdentifier", "IMS")
+                         ("int_defineTransferIdentifier", "IMS")
+                         ("int_defineMachineIdentifier", "IMS")
+                         ("int_loadShed", "IMS")
+                         ("int_setUpdateFrequency", "IMS")
+                         ("int_getUpdateFrequency", "IMS")
+                         ("int_restart", "IMS")
+                         ("int_stop", "IMS")
+                         ("int_getSystemInfo", "IMS")
+                         ("int_defineAuthIdentifier", "IMS")
+                         ("int_defineWorkIdentifier", "IMS")
+                         /* FMS services */
+                         ("FileCopyAsync", "FMS")
+                         ("FileMoveAsync", "FMS")
+                         ("FileMove", "FMS")
+                         ("FileCopy", "FMS")
+                         ("FileGetInfos", "FMS")
+                         ("FileChangeGroup", "FMS")
+                         ("FileChangeMode", "FMS")
+                         ("FileHead", "FMS")
+                         ("FileContent", "FMS")
+                         ("FileCreate", "FMS")
+                         ("DirCreate", "FMS")
+                         ("FileRemove", "FMS")
+                         ("DirRemove", "FMS")
+                         ("FileTail", "FMS")
+                         ("DirList", "FMS")
+                         ("RemoteFileCopyAsync", "FMS")
+                         ("RemoteFileMoveAsync", "FMS")
+                         ("RemoteFileCopy", "FMS")
+                         ("RemoteFileMove", "FMS")
+                         ("FileTransfersList", "FMS")
+                         ("FileTransferStop", "FMS")
+                         ;
 
 std::string
 get_module(const std::string& service) {
@@ -169,7 +169,7 @@ diet_string_set(diet_profile_t* prof, int pos,
     (prof->params).at(pos) = value;
   } catch (const std::out_of_range& err) {
     throw
-      SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
+    SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   return 0;
 }
@@ -220,11 +220,11 @@ diet_call(diet_profile_t* prof) {
   }
 
   if (!config.getConfigValue(param, uri) &&
-  !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
+      !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
     throw SystemException(ERRCODE_SYSTEM,
-    boost::str(
-    boost::format("No corresponding %1% server found")
-    % service));
+                          boost::str(
+                            boost::format("No corresponding %1% server found")
+                            % service));
   }
   return diet_call_gen(prof, uri);
 }
@@ -275,9 +275,9 @@ my_serialize(diet_profile_t* prof) {
 
   std::stringstream res;
   res << prof->name <<  "$$$"
-  << prof->IN << "$$$"
-  << prof->INOUT << "$$$"
-  << prof->OUT << "$$$";
+      << prof->IN << "$$$"
+      << prof->INOUT << "$$$"
+      << prof->OUT << "$$$";
 
   for (int i = 0; i<(prof->OUT); ++i) {
     res << prof->params[i] << "$$$";
