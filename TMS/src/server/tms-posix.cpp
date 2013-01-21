@@ -52,6 +52,7 @@ static int LogLevel = LOG_INFO;
 static vector<struct st_job> Board;
 
 static volatile int Terminated = 0;
+
 static volatile sig_atomic_t ChildSigs = 0;
 static volatile sig_atomic_t AlarmSig = 0;
 
@@ -91,25 +92,69 @@ static void
 CheckJobs() {
   int Taille;
   int i;
+  bool CheckIn5s = false;
 
   Taille = Board.size();
-  i = 0;
 
-  while (i != Taille) {
+  // End of Daemon ?
+  if (Taille == 0) {
+    Terminated = 1;
+    return;
+  }
+
+  // Clean the Board off Deads Processes
+  while (i < Taille) {
     for (i = 0; i<Taille; i++) {
-      if (kill(Board[i].pid,0) == -1) {
+      if (Board[i].state == TERMINATED) {
         Board.erase(Board.begin()+i);
         break;
       }
     }
   }
+
+  // Manage Processes states
+  for (i = 0; i<Taille; i++) {
+    if (Board[i].state == KILL) {
+      if (kill(Board[i].pid,0) == -1) {
+        Board[i].state = TERMINATED;
+      } else {
+        CheckIn5s = true;
+      }
+    }
+  }
+
+  // Checks for normal ends of process
+  for (i = 0; i<Taille; i++) {
+    if (kill(Board[i].pid,0) == -1) {
+      Board[i].state = TERMINATED;
+    }
+  }
+
+  if (CheckIn5s) {
+    alarm(5);
+  }
+
   ChildSigs = 0;
 }
 
 static void
 TimeStatement() {
+  int Taille;
+  int i;
 
-  //alarm(10);
+  // Manage Dangling Processes
+  for (i = 0; i<Taille; i++) {
+    if (Board[i].state == KILL) {
+      if (kill(Board[i].pid,0) == -1) {
+        Board[i].state = KILL9;
+        kill(Board[i].pid,SIGKILL);
+      } else {
+        Board[i].state = TERMINATED;
+        alarm(5);
+      }
+    }
+  }
+
   AlarmSig = 0;
 }
 
@@ -389,6 +434,9 @@ AcceptRequest(int sfd, struct Request* req) {
     if ( AlarmSig == 1) {
       TimeStatement();
     }
+    if (Terminated == 1) {
+      return -1;
+    }
   }
 
   // A voir gestion retour et erreur
@@ -463,8 +511,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   Board.push_back(currentState);
 
-//  strncpy(ret->data.submit.OutPutPath,fout,sizeof(ret->data.submit.OutPutPath)-1);
-//  strncpy(ret->data.submit.ErrorPath,ferr,sizeof(ret->data.submit.ErrorPath)-1);
   memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));
 
   Debug("SORTIE:%s.\n",ret->data.submit.OutPutPath);
@@ -611,7 +657,6 @@ LaunchDaemon() {
   }
 
   Debug("Fin OpenSoocket.\n");
-  //alarm(10);   // test
 
   for (Terminated = 0; Terminated == 0; ) {
     cfd = AcceptRequest(sfd, &req);
