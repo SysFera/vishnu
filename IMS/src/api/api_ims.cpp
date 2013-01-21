@@ -13,16 +13,18 @@
 #include "utilVishnu.hpp"
 
 int
-vishnu::exportCommands(const string sessionKey,
-                       const string oldSessionId,
-                       string filename,
+vishnu::exportCommands(const std::string& sessionKey,
+                       const std::string& oldSessionId,
+                       const std::string& filename,
                        const IMS_Data::ExportOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   boost::filesystem::path file (filename);
   // Check the existence of file
-  if (((false== boost::filesystem::exists(file)) || (true== boost::filesystem::is_directory(file)))
-    || (false== boost::filesystem::is_regular_file(file))) {
+  if (((false== boost::filesystem::exists(file)) ||
+       (true== boost::filesystem::is_directory(file))) ||
+      (false== boost::filesystem::is_regular_file(file))) {
     throw UserException(ERRCODE_INVALID_PARAM, "The file: " + filename +" is a directory or does not exists");
   }
 
@@ -34,11 +36,12 @@ vishnu::exportCommands(const string sessionKey,
 }
 
 int
-vishnu::getMetricCurrentValue(const string sessionKey,
-			      string machineId,
-			      IMS_Data::ListMetric& list,
-			      const IMS_Data::CurMetricOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::getMetricCurrentValue(const std::string& sessionKey,
+                              const std::string& machineId,
+                              IMS_Data::ListMetric& list,
+                              const IMS_Data::CurMetricOp& op)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricCurentValue@"+machineId;
@@ -48,8 +51,9 @@ vishnu::getMetricCurrentValue(const string sessionKey,
   IMS_Data::ListMetric_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
-    for(unsigned int i = 0; i < li->getMetric().size(); i++) {
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+      IMS_Data::IMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < li->getMetric().size(); i++) {
       IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
       //To copy the content and not the pointer
       *met = *li->getMetric().get(i);
@@ -61,11 +65,12 @@ vishnu::getMetricCurrentValue(const string sessionKey,
 }
 
 int
-vishnu::getMetricHistory(const string sessionKey,
-                         string machineId,
+vishnu::getMetricHistory(const std::string& sessionKey,
+                         const std::string& machineId,
                          IMS_Data::ListMetric& list,
                          const IMS_Data::MetricHistOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getMetricHistory";
@@ -78,8 +83,9 @@ vishnu::getMetricHistory(const string sessionKey,
   IMS_Data::ListMetric_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
-    for(unsigned int i = 0; i < li->getMetric().size(); i++) {
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+      IMS_Data::IMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < li->getMetric().size(); i++) {
       IMS_Data::Metric_ptr met = ecoreFactory->createMetric();
       //To copy the content and not the pointer
       *met = *li->getMetric().get(i);
@@ -92,10 +98,11 @@ vishnu::getMetricHistory(const string sessionKey,
 
 
 int
-vishnu::getProcesses(const string sessionKey,
+vishnu::getProcesses(const std::string& sessionKey,
                      IMS_Data::ListProcesses& list,
                      const IMS_Data::ProcessOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   string name = "int_getProcesses";
@@ -105,8 +112,9 @@ vishnu::getProcesses(const string sessionKey,
   IMS_Data::ListProcesses_ptr li = query.list();
 
   if(li != NULL) {
-    IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
-    for(unsigned int i = 0; i < li->getProcess().size(); i++) {
+    IMS_Data::IMS_DataFactory_ptr ecoreFactory =
+      IMS_Data::IMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < li->getProcess().size(); i++) {
       IMS_Data::Process_ptr proc = ecoreFactory->createProcess();
       *proc = *li->getProcess().get(i);
       list.getProcess().push_back(proc);
@@ -118,11 +126,10 @@ vishnu::getProcesses(const string sessionKey,
 }
 
 
-
 int
-vishnu::setSystemInfo(const string sessionKey,
-	      IMS_Data::SystemInfo sys)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::setSystemInfo(const std::string& sessionKey, IMS_Data::SystemInfo sys)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   SysInfoProxy sysInfo(sessionProxy);
@@ -133,9 +140,10 @@ vishnu::setSystemInfo(const string sessionKey,
 
 
 int
-vishnu::setSystemThreshold(const string sessionKey,
-		   IMS_Data::Threshold threshold)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::setSystemThreshold(const std::string& sessionKey,
+                           IMS_Data::Threshold threshold)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   //To check the metric value
   checkMetricHistoryValue(threshold.getType());
@@ -149,10 +157,11 @@ vishnu::setSystemThreshold(const string sessionKey,
 
 
 int
-vishnu::getSystemThreshold(const string sessionKey,
+vishnu::getSystemThreshold(const std::string& sessionKey,
                            IMS_Data::ListThreshold& list,
                            const IMS_Data::ThresholdOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   //To check the metric value
   checkMetricHistoryValue(op.getMetricType());
@@ -166,9 +175,10 @@ vishnu::getSystemThreshold(const string sessionKey,
 
 
 int
-vishnu::defineUserIdentifier(const string sessionKey,
-		     string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineUserIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -178,9 +188,10 @@ vishnu::defineUserIdentifier(const string sessionKey,
 
 
 int
-vishnu::defineMachineIdentifier(const string sessionKey,
-			string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineMachineIdentifier(const std::string& sessionKey,
+                                const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -190,9 +201,10 @@ vishnu::defineMachineIdentifier(const string sessionKey,
 
 
 int
-vishnu::defineJobIdentifier(const string sessionKey,
-		    string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineJobIdentifier(const std::string& sessionKey,
+                            const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -202,9 +214,10 @@ vishnu::defineJobIdentifier(const string sessionKey,
 
 
 int
-vishnu::defineTransferIdentifier(const string sessionKey,
-			 string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineTransferIdentifier(const std::string& sessionKey,
+                                 const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -213,9 +226,10 @@ vishnu::defineTransferIdentifier(const string sessionKey,
 }
 
 int
-vishnu::defineAuthIdentifier(const string sessionKey,
-			 string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineAuthIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -224,9 +238,10 @@ vishnu::defineAuthIdentifier(const string sessionKey,
 }
 
 int
-vishnu::defineWorkIdentifier(const string sessionKey,
-                             string fmt)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::defineWorkIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   ObjectIdProxy ob(sessionProxy);
@@ -236,10 +251,11 @@ vishnu::defineWorkIdentifier(const string sessionKey,
 
 
 int
-vishnu::loadShed(const string sessionKey,
-                 string machineId,
+vishnu::loadShed(const std::string& sessionKey,
+                 const std::string& machineId,
                  IMS_Data::LoadShedType loadShedType)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
@@ -250,9 +266,9 @@ vishnu::loadShed(const string sessionKey,
 
 
 int
-vishnu::setUpdateFrequency(const string sessionKey,
-                           int freq)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::setUpdateFrequency(const std::string& sessionKey, int freq)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   MetricProxy met(sessionProxy);
@@ -262,9 +278,9 @@ vishnu::setUpdateFrequency(const string sessionKey,
 
 
 int
-vishnu::getUpdateFrequency(const string sessionKey,
-                           int& freq)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+vishnu::getUpdateFrequency(const std::string& sessionKey, int freq)
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
 
   MetricProxy met(sessionProxy);
@@ -274,10 +290,11 @@ vishnu::getUpdateFrequency(const string sessionKey,
 
 
 int
-vishnu::stop(const string sessionKey,
-             string machineId,
+vishnu::stop(const std::string& sessionKey,
+             const std::string& machineId,
              const IMS_Data::SupervisorOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
@@ -288,10 +305,11 @@ vishnu::stop(const string sessionKey,
 
 
 int
-vishnu::getSystemInfo(const string sessionKey,
+vishnu::getSystemInfo(const std::string& sessionKey,
                       IMS_Data::ListSysInfo& list,
                       const IMS_Data::SysInfoOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   SysInfoProxy sysInfo(sessionProxy);
@@ -302,10 +320,11 @@ vishnu::getSystemInfo(const string sessionKey,
 
 
 int
-vishnu::restart(const string sessionKey,
-                string machineId,
+vishnu::restart(const std::string& sessionKey,
+                const std::string& machineId,
                 const IMS_Data::SupervisorOp& op)
-  throw (UMSVishnuException, IMSVishnuException, UserException, SystemException){
+  throw (UMSVishnuException, IMSVishnuException,
+         UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
   ProcessCtlProxy processCtlProxy(sessionProxy, machineId);
@@ -313,4 +332,3 @@ vishnu::restart(const string sessionKey,
 
   return IMS_SUCCESS;
 }
-
