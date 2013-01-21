@@ -534,7 +534,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
         if(boost::algorithm::starts_with(line, "priority")){
           line = line.substr(8);
           boost::algorithm::trim_left(line);
-          int priority = atoi(line.c_str());
+          int priority = boost::lexical_cast<int>(line);
           queue->setPriority(priority);
         }
         if(boost::algorithm::starts_with(line, "slots")){
@@ -549,7 +549,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
             if(position!=std::string::npos ){
               jobnb = jobnb.substr(position +1);
             }
-            MaxJob += atoi(jobnb.c_str());
+            MaxJob += boost::lexical_cast<int>(jobnb);
             line = line.substr(pos+1);
             pos = line.find(",");
           }
