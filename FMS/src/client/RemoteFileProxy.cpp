@@ -27,25 +27,19 @@ using namespace std;
 using namespace FMS_Data;
 
 /* Default constructor. */
-RemoteFileProxy::RemoteFileProxy() {
-  upToDate = false;
-}
+RemoteFileProxy::RemoteFileProxy() : upToDate(false) {}
 
 /* Standard constructor.
  * Take the file path and user name as parameters.
  */
-RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,const string& path,
-    const string& localUser) : FileProxy(sessionProxy,path)
-{
-  upToDate = false;
-  this->localUser = localUser;
-}
+RemoteFileProxy::RemoteFileProxy(const SessionProxy& sessionProxy,
+                                 const string& path,
+                                 const string& localUser)
+  : FileProxy(sessionProxy, path), upToDate(false), localUser(localUser) {}
 
 /* Copy constructor. */
-RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file) : FileProxy(file) {
-  upToDate = false;
-  this->localUser = file.localUser;
-}
+RemoteFileProxy::RemoteFileProxy(const RemoteFileProxy& file)
+  : FileProxy(file), upToDate(false), localUser(file.localUser) {}
 
 /* Standard destructor. */
 RemoteFileProxy::~RemoteFileProxy() {

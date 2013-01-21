@@ -15,11 +15,9 @@
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session):
-  mlocalAccount(localAccount), msessionProxy(session)
-{
-  msshPublicKey = "";
-}
+LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
+                                     const SessionProxy& session)
+ : mlocalAccount(localAccount), msessionProxy(session) {}
 
 /**
  * \brief Function to combine add() and update() into one function
@@ -27,7 +25,8 @@ LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
  * \param isNewLocalAccount to select the call of add or update function
  * \return raises an exception on error
  */
-int LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
+int
+LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
   diet_profile_t* profile = NULL;
   std::string sessionKey;

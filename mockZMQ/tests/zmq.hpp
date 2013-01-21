@@ -31,18 +31,15 @@ public:
 
 class message_t{
 public:
-  message_t(){
-    mbuff = "ok";
+  message_t() : mbuff("ok") {
     msize = mbuff.length();
   }
 
-  message_t(std::string p1){
-    mbuff = "ok";
+  message_t(const std::string& p1) : mbuff("ok") {
     msize = mbuff.length();
   }
 
-  message_t(int p1){
-    mbuff = "ok";
+  message_t(int p1) : mbuff("ok") {
     msize = mbuff.length();
   }
 

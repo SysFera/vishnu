@@ -22,9 +22,9 @@
   * \brief Constructor
   */
 NetrcReader::NetrcReader() {
-  mpath = boost::filesystem::path(boost::filesystem::path(getenv("HOME"))
-                                  /
-                                  boost::filesystem::path(".netrc")).string();
+  boost::filesystem::path p(getenv("HOME"));
+  p /= ".netrc";
+  mpath = p.string();
 }
 
 
@@ -33,9 +33,7 @@ NetrcReader::NetrcReader() {
   * \param path  The path until the netrc file
   * \brief Constructor
   */
-NetrcReader::NetrcReader(std::string path) {
-  mpath = path;
-}
+NetrcReader::NetrcReader(const std::string& path) : mpath(path) {}
 
 /**
   * \brief Function to read the netrc file for getting the login and the password for
@@ -57,8 +55,7 @@ NetrcReader::read(map<size_t, pair<string,string> > &auth, const string& machine
  * \fn ~NetrcReader
  * \brief Destructor
  */
-NetrcReader::~NetrcReader() {
-}
+NetrcReader::~NetrcReader() {}
 
 /**
   * \brief Function to get value associated to a key

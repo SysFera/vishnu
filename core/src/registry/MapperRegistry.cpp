@@ -4,12 +4,9 @@ using namespace std;
 
 MapperRegistry* MapperRegistry::mreg = NULL; //%RELAX<MISRA_0_1_3> Used in this file
 
-MapperRegistry::MapperRegistry(){
-  mmapper = map<string, Mapper*>();
-}
+MapperRegistry::MapperRegistry() {}
 
-MapperRegistry::~MapperRegistry(){
-}
+MapperRegistry::~MapperRegistry() {}
 
 MapperRegistry*
 MapperRegistry::getInstance(){
@@ -20,7 +17,7 @@ MapperRegistry::getInstance(){
 }
 
 int
-MapperRegistry::addMapper(string s, Mapper* mapper){
+MapperRegistry::addMapper(const std::string& s, Mapper* mapper){
   if (mreg==NULL){
     me = SystemException(ERRCODE_SYSTEM, "Cannot add to a nill mapper");
     me.setType(VishnuException::INTERNAL);
@@ -36,7 +33,7 @@ MapperRegistry::addMapper(string s, Mapper* mapper){
 }
 
 int
-MapperRegistry::removeMapper(string s){
+MapperRegistry::removeMapper(const std::string& s) {
   if (!mreg){
     return 0;
   }
@@ -47,8 +44,8 @@ MapperRegistry::removeMapper(string s){
 }
 
 Mapper*
-MapperRegistry::getMapper(const string& s) {
-  map<string, Mapper*>::const_iterator it;
+MapperRegistry::getMapper(const std::string& s) {
+  std::map<std::string, Mapper*>::const_iterator it;
   for (it = mmapper.begin() ; it != mmapper.end() ; ++it){
     if (s.compare(it->first)==0){
       return it->second;
@@ -63,9 +60,9 @@ MapperRegistry::getMapper(const string& s) {
 }
 
 bool
-MapperRegistry::contains(string s){
-  map<string, Mapper*>::const_iterator it = mmapper.begin();
-  for ( ; it != mmapper.end() ; ++it){
+MapperRegistry::contains(const std::string& s) {
+  std::map<std::string, Mapper*>::const_iterator it = mmapper.begin();
+  for ( ; it != mmapper.end() ; ++it) {
     if (s.compare(it->first)==0){
       return true;
     }
@@ -73,8 +70,9 @@ MapperRegistry::contains(string s){
   return false;
 }
 
-void MapperRegistry::display(){
-  map<string, Mapper*>::const_iterator it;
+void
+MapperRegistry::display() {
+  map<std::string, Mapper*>::const_iterator it;
   for (it = mmapper.begin() ; it != mmapper.end() ; ++it){
   }
 }
