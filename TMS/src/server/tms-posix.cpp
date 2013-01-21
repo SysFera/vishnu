@@ -125,36 +125,17 @@ TimeStatement() {
 static void
 sigchldHandler(int sig) {
   int status;
-  int svErrno;
   pid_t childPid;
-//  sigset_t nmask, omask;
 
-  svErrno = errno;
 
   while ((childPid = waitpid(-1, &status, WNOHANG)) > 0) {
-    // Traitement mort d'un processus
-    // Section critique
-/****
-  sigfillset(&nmask);
-  sigprocmask(SIG_BLOCK, &nmask, &omask);
-*****/
   ChildSigs = 1;
-//  sigprocmask(SIG_SETMASK, &omask, NULL);
   }
-
-  errno = svErrno;
 }
 
 static void
 sigalarmHandler(int sig) {
-  int status;
-  int svErrno;
-
-  svErrno = errno;
-
   AlarmSig = 1;
-
-  errno = svErrno;
 }
 
 static void
@@ -232,7 +213,6 @@ Daemonize() {
 
 int
 buildEnvironment(){
-  //int i;
   int fdHostname;
   boost::system::error_code ec;
   const string hostname = boost::asio::ip::host_name(ec);
@@ -295,11 +275,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     setenv(libBatchId,temp.str().c_str(),true);
 
     if (fstdout != NULL) {
-#ifdef BSD_LIKE_SYSTEM
       fd = open(fstdout,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
-#else
-      fd = open(fstdout,O_CREAT|O_CLOEXEC|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
-#endif
       close(STDOUT_FILENO);
       dup2(fd,STDOUT_FILENO);
       close(fd);
@@ -525,18 +501,36 @@ RequestGetInfo(struct Request* req, struct Response* ret) {
   char* JobId;
   int Taille;
   int i;
+  struct st_job NoJob;
 
-  JobId = req->data.cancel.JobId;
+/****
+  int a = 1;
+
+  while (a == 1) {
+    sleep(2);
+  }
+*****/
+
+  JobId = req->data.info.JobId;
 
   Taille = Board.size();
+
+  memset(&NoJob,0,sizeof(struct st_job));
+  NoJob.state = DEAD;
+
+  Debug("Get Info JobId:%s.\n",JobId);
 
   for (i = 0; i<Taille; i++) {
     if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
       memcpy(&(ret->data.info),&(Board[i]), sizeof(struct st_job));
+      Debug("Find, status:%d.\n",ret->data.info.state);
       return 0;
     }
   }
-  return -1;
+  memcpy(&(ret->data.info),&NoJob,sizeof(struct st_job));
+
+  Debug("Not Found.\n");
+  return 0;
 }
 
 static int
@@ -655,44 +649,12 @@ LaunchDaemon() {
 
     close(cfd);
 
-/****
     if ( ChildSigs == 1) {
       CheckJobs();
     }
     if ( AlarmSig == 1) {
       TimeStatement();
     }
-****/
   }
 }
 
-/**
- * \brief The main function
- * \param argc Number of parameter
- * \param argv List of argument
- * \param envp Array of environment variables
- * \return The result of the diet sed call
- */
-
-/**************
-
-int
-main(int argc, char* argv[], char* envp[])
-{
-  char myName[255];  // the Name of the program (and not the path)
-
-  // Get ProcName
-  strncpy(myName,GetProcName(argv[0]),sizeof(myName));
-
-  SetProcName(argc,argv,"tms-posix [Ready]");
-
-  (void)buildEnvironment();
-
-  if (argc < 2)
-    usage(myName);
-
-  LaunchDaemon();
-
-  return EXIT_SUCCESS;
-} // End : main ()
-*******************/

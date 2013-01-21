@@ -204,15 +204,21 @@ ReqInfo(const char* JobId, struct st_job* response) {
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
 
+  printf("REqInfo socket:%s.\n",name_sock);
+  printf("ReqInfo JobId:%s.\n",JobId);
+
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_ginfo,sizeof(req.req));
+  strncpy(req.data.info.JobId,JobId,sizeof(req.data.info.JobId)-1);
 
   resultat = ReqSend(name_sock, &req, &ret);
+  printf("Resultat:%d.\n",resultat);
+  printf("JobId:%s.\n",ret.data.info.JobId);
 
   printf("FinReqInfo\n");
   if (ret.status == 0) {
-    memcpy(response,&(ret.data.submit),sizeof(struct st_job));
+    memcpy(response,&(ret.data.info),sizeof(struct st_job));
     return 0;
   }
   return -1;
