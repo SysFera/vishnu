@@ -53,7 +53,6 @@ throw(UserException, SystemException)
 	UMS_Data::ListUsers listUsers;
 	UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 	UMS_Data::User_ptr user = ecoreFactory->createUser();
-	unsigned int state = 0x0000;
 
 	//If the userId and the password is undefined the netrc file is used
 	if ((userId.empty()) && (password.empty())) {
@@ -67,7 +66,7 @@ throw(UserException, SystemException)
 		 * items that are already registered to know when
 		 * to save the user
 		 */
-
+        unsigned int state = 0x0000;
 		// Convert to list of users
 		for (iter = auth.begin(); iter!=auth.end(); ++iter){
 			pair<string,string> couple = iter->second;
@@ -238,7 +237,6 @@ throw(UserException, SystemException)
 	UMS_Data::ListUsers listUsers;
 	UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 	UMS_Data::User_ptr user = ecoreFactory->createUser();
-	unsigned int state = 0x0000;
 
 	//If the userId and the password is undefined the netrc file is used
 	if ((userId.empty()) && (password.empty())) {
@@ -252,7 +250,7 @@ throw(UserException, SystemException)
 		 * items that are already registered to know when
 		 * to save the user
 		 */
-
+        unsigned int state = 0x0000;
 		// Convert to list of users
 		for (iter = auth.begin(); iter!=auth.end(); ++iter){
 			pair<string,string> couple = iter->second;
