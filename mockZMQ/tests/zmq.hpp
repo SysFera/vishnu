@@ -45,8 +45,8 @@ public:
 
   void*
   data(){
-    char* s = (char *)malloc(sizeof(char)*mbuff.length());
-    memcpy(s, mbuff.c_str(), mbuff.length()+1);
+    char* s = static_cast<char *>(malloc(sizeof(char) * mbuff.length()));
+    memcpy(s, mbuff.c_str(), mbuff.length() + 1);
     return s;
   }
 
@@ -54,6 +54,7 @@ public:
   size(){
     return msize;
   }
+
 private :
   int msize;
   std::string mbuff;
