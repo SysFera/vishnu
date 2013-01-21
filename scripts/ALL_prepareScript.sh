@@ -303,9 +303,9 @@ copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
 mkdir $pathrel/../doc/concept/images
-copy_rel_file UMS/test/testPlan/\*-gen\.pdf ../doc/concept/
-copy_rel_file UMS/test/testPlan/\*-gen\.docbook ../doc/concept/
-copy_rel_file UMS/test/testPlan/\*-gen\.html ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file UMS/test/testPlan/\*\.html ../doc/concept/
 copy_rel_file UMS/test/testPlan/images/\* ../doc/concept/images
 
 # Copy design in release
@@ -355,9 +355,9 @@ copy_rel_file TMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file TMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file TMS/test/testPlan/\*-gen\.pdf ../doc/concept/
-copy_rel_file TMS/test/testPlan/\*-gen\.docbook ../doc/concept/
-copy_rel_file TMS/test/testPlan/\*-gen\.html ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file TMS/test/testPlan/\*\.html ../doc/concept/
 copy_rel_file TMS/test/testPlan/images/\* ../doc/concept/images
 
 # Copy design in release
@@ -401,9 +401,9 @@ copy_rel_file FMS/test/testReports/\*-gen\.docbook ../tests/report/
 copy_rel_file FMS/test/testReports/\*-gen\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file FMS/test/testPlan/\*-gen\.pdf ../doc/concept/
-copy_rel_file FMS/test/testPlan/\*-gen\.docbook ../doc/concept/
-copy_rel_file FMS/test/testPlan/\*-gen\.html ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file FMS/test/testPlan/\*\.html ../doc/concept/
 copy_rel_file FMS/test/testPlan/images/\* ../doc/concept/images
 
 # Copy design in release
@@ -448,9 +448,9 @@ copy_rel_file IMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file IMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-copy_rel_file IMS/test/testPlan/\*-gen\.pdf ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*-gen\.docbook ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*-gen\.html ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*\.pdf ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*\.docbook ../doc/concept/
+copy_rel_file IMS/test/testPlan/\*\.html ../doc/concept/
 copy_rel_file IMS/test/testPlan/images/\* ../doc/concept/images
 
 # Copy design in release
