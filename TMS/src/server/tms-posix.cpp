@@ -476,7 +476,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
-  if (context.find("vishnu_working_dir")  != map::end) {
+  if (context.find("vishnu_working_dir")  != context.end()) {
     execCommand(req->data.submit.cmd, fout, ferr,
                 context["vishnu_working_dir"].c_str(), &currentState);
   } else {
