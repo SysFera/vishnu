@@ -282,7 +282,11 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     (void)setenv(libBatchId,temp.str().c_str(),true);
 
     if (fstdout != NULL) {
+#ifdef BSD_LIKE_SYSTEM
+      fd=open(fstdout,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+#else
       fd=open(fstdout,O_CREAT|O_CLOEXEC|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+#endif
       close(STDOUT_FILENO);
       dup2(fd,STDOUT_FILENO);
       close(fd);
@@ -411,12 +415,14 @@ RequestEcho(struct Request* req, struct Response* ret) {
   return 0;
 }
 
+
+
 static int
 RequestSubmit(struct Request* req, struct Response* ret) {
   sigset_t blockMask;
   sigset_t emptyMask;
   struct st_job currentState;
-  JobCtx Context;
+  std::map<std::string, std::string> context;
   char fout[256];
   char ferr[256];
 
@@ -431,7 +437,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   Debug("Parse command:%s.\n",req->data.submit.cmd);
 
-  ParseCommand(req->data.submit.cmd, Context);
+  POSIXParser::parseFile(req->data.submit.cmd, context);
 
   Debug("Sortie Parser.\n");
 
@@ -439,18 +445,18 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   if (strlen(req->data.submit.OutPutPath) != 0) {
     strncpy(fout, req->data.submit.OutPutPath, sizeof(fout));
-  } else if (! Context.vishnu_output.empty()) {
-    strncpy(fout, Context.vishnu_output.c_str(), sizeof(fout));
+  } else if (context.find("vishnu_output") != context.end()) {
+    strncpy(fout, context["vishnu_output"].c_str(), sizeof(fout));
   } else {
-    snprintf(fout,sizeof(fout),"VISHNU-%d-%d.out",geteuid(),getpid());
+    snprintf(fout,sizeof(fout), "VISHNU-%d-%d.out", geteuid(), getpid());
   }
 
   if (strlen(req->data.submit.ErrorPath) != 0) {
     strncpy(ferr, req->data.submit.ErrorPath, sizeof(ferr));
-  } else if (! Context.vishnu_error.empty()) {
-    strncpy(ferr, Context.vishnu_error.c_str(), sizeof(ferr));
+  } else if (context.find("vishnu_error") != context.end()) {
+    strncpy(ferr, context["vishnu_error"].c_str(), sizeof(ferr));
   } else {
-    snprintf(ferr,sizeof(ferr),"VISHNU-%d-%d.err",geteuid(),getpid());
+    snprintf(ferr,sizeof(ferr), "VISHNU-%d-%d.err", geteuid(), getpid());
   }
 
   Debug("Fichier de sortie:%s.\n",fout);

@@ -10,72 +10,38 @@
 
 
 #include <string>
-#include <time.h>
+#include <map>
+#include <istream>
+
 
 /**
- * \class Definition
- * \brief The definitions key = value on a line to parse
+ * \class POSIXParser
+ * \brief This class provides a parser for retrieving TMS scripts
+ *        submission parameters. These parameters are of the form
+ *        "#% key = value". The parser also handles comments (#) on a
+ *        single ligne, or in a ligne containing key = value
  */
-class Definition {
-  public:
-/**
- * \brief The key in the line, vishnu_* usually
- */
-    std::string key;
-/**
- * \brief The value of the variable
- */
-    std::string value;
+class POSIXParser {
+public:
+  /**
+   * \brief Parses a file
+   * \param filePath the command file to parse
+   * \param context the context (INOUT) of the job
+   * \return true on good parsing
+   */
+  static bool
+  parseFile(const std::string &filePath,
+            std::map<std::string, std::string> &context);
+
+  /**
+   * \brief Parses a stream
+   * \param content the string to parse
+   * \param context the context (INOUT) of the job
+   * \return true on good parsing
+   */
+  static bool
+  parseStream(std::istream &content,
+              std::map<std::string, std::string> &context);
 };
-
-
-/**
- * \class JobCtx
- * \brief The context for a job
- */
-class JobCtx {
-  public:
-/**
- *\brief The working directory
- */
-   std::string vishnu_working_dir;
-/**
- *\brief The name of the job
- */
-   std::string vishnu_job_name;
-/**
- *\brief The output file
- */
-   std::string vishnu_output;
-/**
- *\brief The error file
- */
-   std::string vishnu_error;
-/**
- *\brief The clock limit
- */
-   ::time_t vishnu_wallclocklimit;
-/**
- *\brief To add a definition "current"
- */
-   void
-   AddDefinition(Definition current);
-} ;
-
-
-/**
- * \brief Return true on good parsing
- * \param command the command file to parse
- * \param context the context (INOUT) of the job
- * \return true on good parsing
- */
-bool
-ParseCommand(char* command,JobCtx& context);
-
-/**
- * \brief Test function
- */
-bool
-ParseString();
 
 #endif
