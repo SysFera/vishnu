@@ -74,7 +74,7 @@ public:
    * \param cfgInfo list of the initialisation data
    */
   void
-  initializeData(const std::string& module, std::vector<std::string>& cfgInfo);
+  setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo);
 
   /**
    * \brief Prints the content of the annuary

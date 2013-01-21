@@ -58,9 +58,7 @@ displayJob(TMS_Data::Job& j){
 	cout << " Session              : " << j.getSessionId() << endl;
 	cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
 	cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-	cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
-	cout << " Output path (remote) : " << j.getOutputPath() << endl;
-	cout << " Error path  (remote) : " << j.getErrorPath() << endl;
+  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
 	cout << " Output dir (remote)  : " << j.getOutputDir() << endl;
 	cout << " Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")" << endl;
 	cout << " CPU per Node         : " << j.getNbCpus() << endl;

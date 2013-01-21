@@ -273,16 +273,20 @@ main(int argc, char** argv) {
   // Get initial configuration
   std::vector<std::string> cfgInfo;
   if (config.getConfigValues(vishnu::FMS_URIADDR, cfgInfo)) {
-    ann->initializeData("FMS", cfgInfo);
+    ann->setInitConfig("FMS", cfgInfo);
+    cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::IMS_URIADDR, cfgInfo)) {
-    ann->initializeData("IMS", cfgInfo);
+    ann->setInitConfig("IMS", cfgInfo);
+    cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
-    ann->initializeData("TMS", cfgInfo);
+    ann->setInitConfig("TMS", cfgInfo);
+    cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::UMS_URIADDR, cfgInfo)) {
-    ann->initializeData("UMS", cfgInfo);
+    ann->setInitConfig("UMS", cfgInfo);
+    cfgInfo.clear();
   }
   ann->print();
 

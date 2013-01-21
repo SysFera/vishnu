@@ -98,7 +98,7 @@ Annuary::print() {
  * \param cfgInfo the value of the module configuration
  */
 void
-Annuary::initializeData(const std::string& module, std::vector<std::string>& cfgInfo) {
+Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
   for (std::vector<std::string>::iterator entry = cfgInfo.begin(), end = cfgInfo.end();
   entry != end; entry++) {
     std::istringstream iss(*entry);
