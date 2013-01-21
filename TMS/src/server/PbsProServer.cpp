@@ -903,8 +903,6 @@ PbsProServer::getNbNodesInNodeFormat(const std::string& format,
                                      int& maxNbCpu) {
 
   std::string nextNodeContent;
-  std::string nextNode;
-  std::string nbCpuStr;
   nbCpu = std::numeric_limits<int>::max();
   int nbNodes = 0;
   size_t beg = 0;
@@ -1192,7 +1190,6 @@ void PbsProServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
    if(p_status!=NULL)
    {
-     std::string batchId;
      int jobStatus;
      long nbRunningJobs = 0;
      long nbWaitingJobs = 0;
