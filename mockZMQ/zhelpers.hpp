@@ -34,6 +34,29 @@ public:
     }
   }
 
+  /**
+   * @brief wraps zmq::socket_t connect
+   * @param addr connection uri
+   * @return void
+   * @throw error_t if it fails
+   */
+  void
+  connect(const std::string& addr) {
+    connect(addr.c_str());
+  }
+
+  /**
+   * @brief wraps zmq::socket_t connect
+   * @param addr connection uri
+   * @return void
+   * @throw error_t if it fails
+   */
+  void
+  connect(const char* addr) {
+    /* we explicitely call base class method to avoid
+       looping method calls */
+    socket_t::connect(addr);
+  }
 
   /**
    * @brief send data
@@ -156,7 +179,7 @@ private:
   void
   reset() {
     sock_.reset(new Socket(ctx_, ZMQ_REQ));
-    sock_->connect(addr_.c_str());
+    sock_->connect(addr_);
     sock_->setLinger(0);
   }
 
