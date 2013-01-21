@@ -33,17 +33,17 @@ class message_t{
 public:
   message_t(){
     mbuff = "ok";
-    msize = mbuff.length();
+    msize = mbuff.length() + 1;
   }
 
   message_t(std::string p1){
     mbuff = "ok";
-    msize = mbuff.length();
+    msize = mbuff.length() + 1;
   }
 
   message_t(int p1){
     mbuff = "ok";
-    msize = mbuff.length();
+    msize = mbuff.length() + 1;
   }
 
   void*
