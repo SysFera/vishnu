@@ -82,6 +82,10 @@ function copy_rel_file () {
     run_cmd cp $1 $pathrel/$2;
 }
 
+function copy_rel_dir () {
+    run_cmd cp -r $1 $pathrel/$2;
+}
+
 function copy_ar_file () {
     run_cmd cp $1 $path/$2;
 }
@@ -332,7 +336,7 @@ copy_rel_file UMS/test/testPlan/images/\* ../doc/concept/images
 copy_rel_file UMS/design/docbook/\*-gen\.pdf ../doc/concept/
 copy_rel_file UMS/design/docbook/\*-gen\.docbook ../doc/concept/
 copy_rel_file UMS/design/docbook/\*-gen\.html ../doc/concept/
-copy_dir UMS/design/docbook/images/png ../doc/concept/images
+copy_rel_dir UMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
@@ -384,7 +388,7 @@ copy_rel_file TMS/test/testPlan/images/\* ../doc/concept/images
 copy_rel_file TMS/design/docbook/\*-gen\.pdf ../doc/concept/
 copy_rel_file TMS/design/docbook/\*-gen\.docbook ../doc/concept/
 copy_rel_file TMS/design/docbook/\*-gen\.html ../doc/concept/
-copy_dir TMS/design/docbook/images/png ../doc/concept/images
+copy_rel_dir TMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
@@ -430,7 +434,7 @@ copy_rel_file FMS/test/testPlan/images/\* ../doc/concept/images
 copy_rel_file FMS/design/docbook/\*-gen\.pdf ../doc/concept/
 copy_rel_file FMS/design/docbook/\*-gen\.docbook ../doc/concept/
 copy_rel_file FMS/design/docbook/\*-gen\.html ../doc/concept/
-copy_dir FMS/design/docbook/images/png ../doc/concept/images
+copy_rel_dir FMS/design/docbook/images/png ../doc/concept/images
 
 ###############################################################################
 #                                    I M S                                    #
@@ -477,7 +481,7 @@ copy_rel_file IMS/test/testPlan/images/\* ../doc/concept/images
 copy_rel_file IMS/design/docbook/\*-gen\.pdf ../doc/concept/
 copy_rel_file IMS/design/docbook/\*-gen\.docbook ../doc/concept/
 copy_rel_file IMS/design/docbook/\*-gen\.html ../doc/concept/
-copy_dir IMS/design/docbook/images/png ../doc/concept/images
+copy_rel_dir IMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
