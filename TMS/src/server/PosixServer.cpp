@@ -26,6 +26,8 @@ PosixServer::submit(const char* scriptPath,
   int ret;
   struct st_job resultat;
   struct st_submit op;
+  std::string OutPutPath;
+  std::string ErrorPath;
 
   memset(&op,0,sizeof(op));
   memcpy(op.name, options.getName().c_str(), strlen(options.getName().c_str()));
@@ -45,7 +47,8 @@ PosixServer::submit(const char* scriptPath,
     case -1:
       return -1;
     case 0:
-  LaunchDaemon();
+      LaunchDaemon();
+      exit(0);
       break;
     default:
       sleep(3); // TODO : fix, sleep because need synchronisation and can't wait child that has become a daemon
@@ -70,8 +73,14 @@ PosixServer::submit(const char* scriptPath,
     job.setJobName(options.getName());
   }
 
-  job.setOutputPath(op.OutPutPath);
+  std::cout << resultat.OutPutPath<<std::endl;
+  OutPutPath = std::string(resultat.OutPutPath);
+  ErrorPath = std::string(resultat.ErrorPath);
 
+  std::cout << OutPutPath << std::endl;
+  std::cout << ErrorPath << std::endl;
+//  job.setOutputPath(op.OutPutPath);
+   job.setOutputPath(OutPutPath);
 /***
   if (options.getOutputPath().compare("")==0){
     job.setOutputPath("/tmp/out.o");
@@ -80,7 +89,8 @@ PosixServer::submit(const char* scriptPath,
   }
 **/
 
-  job.setErrorPath(op.ErrorPath);
+  //job.setErrorPath(op.ErrorPath);
+  job.setErrorPath(ErrorPath);
 /**
   if (options.getErrorPath().compare("")==0){
     job.setErrorPath("/tmp/err.e");

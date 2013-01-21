@@ -165,6 +165,18 @@ struct st_job {
  * \brief the state of the job
  */
   enum job_state state;
+/**
+ * \brief the output path
+ */
+  char OutPutPath[256];
+/**
+ * \brief the error path
+ */
+  char ErrorPath[256];
+/**
+ * \brief the HomeDir
+ */
+  char HomeDir[256];
 };
 
 /**

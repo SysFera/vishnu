@@ -54,6 +54,9 @@ static vector<struct st_job> Board;
 static volatile int Terminated = 0;
 static volatile sig_atomic_t ChildSigs = 0;
 static volatile sig_atomic_t AlarmSig = 0;
+
+static char HomeDir[255];
+
 /**
  * \brief To show how to use tms-posix
  * \fn int usage(char* cmd)
@@ -210,7 +213,6 @@ Daemonize() {
     maxfd = 128;
   }
 
-/****
   for (fd = 3; fd<maxfd; fd++) {
     close(fd);
   }
@@ -224,7 +226,7 @@ Daemonize() {
 
   (void)dup2(STDIN_FILENO,STDOUT_FILENO);
   (void)dup2(STDIN_FILENO,STDERR_FILENO);
- ****/
+
   return 0;
 }
 
@@ -272,7 +274,18 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   args[4] = NULL;
   args[0] = args[1];
 
-  printf("Exec:%s > %s 2> %s \n",commandLine,fstdout,fstderr);
+  Debug("Current Dir:%s.\n",working_dir);
+  Debug("Exec:%s > %s 2> %s \n",commandLine,fstdout,fstderr);
+
+
+  if (strlen(working_dir) != 0) {
+    if (chdir(working_dir) < 0) {
+      chdir(HomeDir);
+    }
+  }
+
+  getcwd(current->HomeDir,sizeof(current->HomeDir));
+  Debug("Cwd:%s.\n",current->HomeDir);
 
   memset(current->JobId,0,sizeof current->JobId);
 
@@ -298,21 +311,20 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
       dup2(fd,STDERR_FILENO);
       close(fd);
     }
-
-    if (strlen(working_dir) != 0) {
-      chdir(working_dir);
-    }
     execvp(args[1],args+1);
   }
   if (pid < 0) {
     return -1;
   }
+
   // get Job info
   snprintf(current->JobId,sizeof(current->JobId)-1,"%d-%d",geteuid(),pid);
   current->pid = pid;
   current->startTime = time(NULL);
   current->state = RUNNING;
   current->maxTime = 0;
+  snprintf(current->OutPutPath,sizeof(current->OutPutPath),"%s/%s",current->HomeDir,fstdout);
+  snprintf(current->ErrorPath,sizeof(current->ErrorPath),"%s/%s",current->HomeDir,fstderr);
 
   printf("JobId:%s.\n",current->JobId);
   return 0;
@@ -464,14 +476,24 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
-//  execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
-  execCommand(req->data.submit.cmd, fout, ferr,
-              context["vishnu_working_dir"].c_str(), &currentState);
+  if (context.find("vishnu_working_dir")  != map::end) {
+    execCommand(req->data.submit.cmd, fout, ferr,
+                context["vishnu_working_dir"].c_str(), &currentState);
+  } else {
+    (void)execCommand(req->data.submit.cmd, fout, ferr, HomeDir, &currentState);
+  }
+
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
   Board.push_back(currentState);
 
-  memcpy(&(ret->data.submit),&currentState,sizeof ret->data.submit);
+//  strncpy(ret->data.submit.OutPutPath,fout,sizeof(ret->data.submit.OutPutPath)-1);
+//  strncpy(ret->data.submit.ErrorPath,ferr,sizeof(ret->data.submit.ErrorPath)-1);
+  memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));
+
+  Debug("SORTIE:%s.\n",ret->data.submit.OutPutPath);
+  Debug("ERREUR:%s.\n",ret->data.submit.ErrorPath);
+  Debug("HOME:%s.\n",ret->data.submit.HomeDir);
 
   Debug("Return Server RequestSubmit.\n");
 
@@ -558,6 +580,9 @@ LaunchDaemon() {
   }
 
   Debug("Server Home:%s\n",lpasswd->pw_dir);
+
+  strncpy(HomeDir,lpasswd->pw_dir,sizeof(HomeDir));
+  Debug("Home : %s.\n",HomeDir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
 
