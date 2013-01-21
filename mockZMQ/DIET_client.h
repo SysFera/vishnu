@@ -115,7 +115,8 @@ my_serialize(diet_profile_t* prof);
  * \param cfg DEPRECATED, kept for compatibility
  * \param argc DEPRECATED, kept for compatibility
  * \param argv DEPRECATED, kept for compatibility
- * \return 0 on success, an error code otherwise
+ * \return 0 on success, an error code otherwise or throws exceptions:
+ *         (SystemException, UserException, std::exception)
  */
 int
 diet_initialize(const char* cfg, int argc, char** argv);

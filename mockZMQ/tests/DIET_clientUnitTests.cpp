@@ -120,16 +120,13 @@ BOOST_AUTO_TEST_CASE( my_test_alloc_n )
 
 BOOST_AUTO_TEST_CASE( my_test_free_n )
 {
-  // TODO: test deactivated as it creates a segfault
-  // diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
-  // BOOST_REQUIRE_EQUAL(prof->IN, 1);
-  // BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
-  // BOOST_REQUIRE_EQUAL(prof->OUT, 3);
-  // BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
+  BOOST_REQUIRE_EQUAL(prof->IN, 1);
+  BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
+  BOOST_REQUIRE_EQUAL(prof->OUT, 3);
+  BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
 
-  // BOOST_REQUIRE_EQUAL(diet_profile_free(prof), 0);
-  BOOST_MESSAGE("test deactivated as it creates a segfault");
-  BOOST_REQUIRE(false);
+  BOOST_REQUIRE_EQUAL(diet_profile_free(prof), 0);
 }
 
 
@@ -165,7 +162,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_n )
   diet_string_set(prof, 1);
   std::string res = my_serialize(prof);
 
-  BOOST_REQUIRE_EQUAL(res, "alloc$$$0$$$0$$$1$$$param1$$$");
+  BOOST_REQUIRE_EQUAL(res, "alloc$$$0$$$0$$$1$$$param1$$$$$$");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_serial_b )
@@ -176,7 +173,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_b )
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
-  std::string profSer = "alloc$$$0$$$0$$$1$$$param1$$$";
+  std::string profSer = "alloc$$$0$$$0$$$1$$$param1$$$$$$";
   boost::shared_ptr<diet_profile_t> prof = my_deserialize(profSer);
   BOOST_REQUIRE_EQUAL(prof->name, "alloc");
   BOOST_REQUIRE_EQUAL(prof->IN, 0);
@@ -198,7 +195,7 @@ BOOST_AUTO_TEST_CASE( my_test_init_b_nul )
 
 BOOST_AUTO_TEST_CASE( my_test_init_b_invalid )
 {
-  BOOST_REQUIRE_THROW(diet_initialize("/tmp/toto", 0, NULL), SystemException);
+  BOOST_REQUIRE_THROW(diet_initialize("/tmp/toto", 0, NULL), std::exception);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
