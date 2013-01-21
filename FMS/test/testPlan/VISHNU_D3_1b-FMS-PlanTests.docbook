@@ -1,14 +1,144 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book lang="fr-FR">
-  <?ooogenerator LibreOffice/3.3$Linux LibreOffice_project/330m19$Build-401?>
-  <?oooversion ?>
-  <bookinfo>
-    <title> </title>
-    <date>2012-03-29T10:28:56</date>
-    <keywordset/>
-    <confgroup/>
-  </bookinfo>
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cissé</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Rodrigue</firstname>
+        <surname>Chakode</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Depardon</surname>
+      </personname>
+    </author>
+
+    <title>Plan de tests FMS</title>
+
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>25/03/11</date>
+        <authorinitials>B. Isnard, I. Cissé, D. Traoré, E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Version initiale
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>2</revnumber>
+        <date>15/12/11</date>
+        <authorinitials>I. Cissé, D. Traoré</authorinitials>
+        <revdescription>
+          <para>
+            Prise en compte de l'expression des besoins d’évolution de VISHNU :
+            ajout du test F1.CR2-B2:Create New directories et  F1.CR2-E4: Create
+            new directories
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>3</revnumber>
+        <date>21/02/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Correction du nom de la commande dans F1.DI4-B:Display content of directories
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>4</revnumber>
+        <date>29/03/12</date>
+        <authorinitials>I. Cissé</authorinitials>
+        <revdescription>
+          <para>
+            Ajout d'une note pour la prise en compte de transfert de gros fichiers
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>5</revnumber>
+        <date>10/12/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Renommage  des commandes FMS
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>6</revnumber>
+        <date>21/01/13</date>
+        <authorinitials>B. Depardon</authorinitials>
+        <revdescription>
+          <para>
+            Passage au format docbook de base. Problèmes de compilation réglés.
+          </para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+
+  <chapter>
+    <title>Références</title>
+    <itemizedlist>
+      <listitem>
+        <para>VISHNU_D1_1e-POL-TESTS : Politique de tests du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1a-SPECSGEN : Spécifications générales du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1b-STB : Spécifications Techniques des besoins</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1g-ARCH : VISHNU Technical Architecture</para>
+      </listitem>
+    </itemizedlist>
+  </chapter>
+
+
+
+
   <chapter>
     <title>Présentation du document</title>
     <section>
@@ -103,7 +233,7 @@
           <para>Nombre de machines clientes : une machine cliente décrite dans [STB] pour pouvoir lancer des tests à distance (selon le cas de test).</para>
         </listitem>
         <listitem>
-          <para>Nombre de machines serveurs : un serveur FMS décrit dans [ARCH] .</para>
+          <para>Nombre de machines serveurs : un serveur FMS décrit dans [ARCH].</para>
         </listitem>
         <listitem>
           <para>Un serveur SysFera-DS dédié décrit dans [ARCH].</para>
@@ -427,7 +557,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -528,7 +657,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -616,7 +744,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -740,7 +867,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -833,7 +959,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -926,7 +1051,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1013,7 +1137,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1103,7 +1226,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1227,7 +1349,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1314,7 +1435,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1454,7 +1574,7 @@
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>copy_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4 . </para>
+                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>copy_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4. </para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -1462,7 +1582,7 @@
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Comparer le contenu des deux fichiers (ou répertoires) .</para>
+                      <para>Comparer le contenu des deux fichiers (ou répertoires).</para>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1490,7 +1610,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1606,7 +1725,7 @@
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Comparer le contenu des deux fichiers (ou répertoires) .</para>
+                      <para>Comparer le contenu des deux fichiers (ou répertoires).</para>
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1746,11 +1865,11 @@
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Faire une copie du fichier (ou répertoire) à déplacer dans le répertoire local .</para>
+                      <para>Faire une copie du fichier (ou répertoire) à déplacer dans le répertoire local.</para>
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>move_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4 .</para>
+                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>move_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4.</para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -1790,7 +1909,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1898,11 +2016,11 @@
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Faire une copie du fichier (ou répertoire) à déplacer dans le répertoire local .</para>
+                      <para>Faire une copie du fichier (ou répertoire) à déplacer dans le répertoire local.</para>
                       <para/>
                     </listitem>
                     <listitem>
-                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>move_</emphasis><emphasis>a</emphasis><emphasis>sync_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4 .</para>
+                      <para>Lancer la commande <emphasis>vishnu_</emphasis><emphasis>move_</emphasis><emphasis>a</emphasis><emphasis>sync_</emphasis><emphasis>f</emphasis><emphasis>ile </emphasis>avec le nom du répertoire destination et les identifiants des machines sources et destinations pour les cas 1, 2, 3 et 4.</para>
                       <para/>
                     </listitem>
                     <listitem>
@@ -1942,7 +2060,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -2351,9 +2468,6 @@
             </tbody>
           </tgroup>
         </informaltable>
-        <section>
-          <title/>
-        </section>
       </section>
     </section>
     <section>
@@ -2579,9 +2693,7 @@
         </informaltable>
       </section>
     </section>
-    <section>
-      <title/>
-    </section>
+
     <section>
       <title>Contrôle de la qualité du code</title>
       <section>
@@ -2908,14 +3020,12 @@
         </informaltable>
       </section>
     </section>
-    <section>
-      <title/>
-    </section>
+
     <section>
       <title>Contrôle de la documentation utilisateur</title>
       <section>
         <title>Présentation</title>
-        <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</para>
+        <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées.</para>
       </section>
       <section>
         <title>Liste des tests</title>
