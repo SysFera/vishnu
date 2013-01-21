@@ -67,14 +67,14 @@ public:
   void
   initFromFile(const std::string& file);
 
-  // TODO: clean comments
-//  /**
-//   * \brief Initialize the annuary with the configuration of the given module
-//   * \param module The name of the module
-//   * \param param the value of the module configuration
-//   */
+
+  /**
+   * \brief Initialize the annuary with the configuration of the given module
+   * \param module The name of the module
+   * \param cfgInfo list of the initialisation data
+   */
   void
-  initializeData(const std::string& module, const std::string cfgValue);
+  initializeData(const std::string& module, std::vector<std::string>& cfgInfo);
 
   /**
    * \brief Prints the content of the annuary
@@ -91,7 +91,7 @@ private :
    */
   void
   fillServices(std::vector<std::string> & services, const std::string& name,
-               const std::string& mid);
+  const std::string& mid);
 
   /**
    * \param The servers
