@@ -465,7 +465,8 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
 //  (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
-  (void)execCommand(req->data.submit.cmd, fout, ferr, Context.vishnu_working_dir.c_str(), &currentState);
+  (void)execCommand(req->data.submit.cmd, fout, ferr,
+                    context["vishnu_working_dir"].c_str(), &currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
   Board.push_back(currentState);
