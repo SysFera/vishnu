@@ -197,6 +197,16 @@ copy_dir core/test/third-party core/test
 copy_file core/src/version/\*pp core/src/version/
 copy_file core/examples/confs/\* core/examples/confs/
 
+# Copy ZMQ files
+create_dir mockZMQ/tests
+
+copy_file mockZMQ/\*pp mockZMQ/
+copy_file mockZMQ/\*h mockZMQ/
+copy_file mockZMQ/CMakeLists.txt mockZMQ/
+copy_file mockZMQ/tests/\*pp mockZMQ/tests
+copy_file mockZMQ/tests/\*h mockZMQ/tests
+copy_file mockZMQ/tests/CMakeLists.txt mockZMQ/tests
+
 
 # dependency of emf
 create_dir core/deps
