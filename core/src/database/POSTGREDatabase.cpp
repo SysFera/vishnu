@@ -21,13 +21,11 @@ using namespace std;
  */
 int
 POSTGREDatabase::process(std::string request, int transacId){
-
-  PGresult* res;
   int reqPos;
   PGconn* lconn = getConnection(reqPos);
 
   if (PQstatus(lconn) == CONNECTION_OK) {
-    res = PQexec(lconn, request.c_str());
+    PGresult* res = PQexec(lconn, request.c_str());
 
     if (PQresultStatus(res) != PGRES_COMMAND_OK) {
       PQclear(res);
@@ -37,8 +35,7 @@ POSTGREDatabase::process(std::string request, int transacId){
       throw SystemException(ERRCODE_DBERR, errorMsg);
     }
     PQclear(res);
-  }
-  else {
+  } else {
     releaseConnection(reqPos);
     throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(lconn)));
   }
