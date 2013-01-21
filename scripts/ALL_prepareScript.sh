@@ -416,9 +416,9 @@ copy_dir FMS/doc/man/man1 FMS/doc/man/
 copy_dir FMS/doc/man/man3 FMS/doc/man/
 
 # Copy tests in release
-copy_rel_file FMS/test/testReports/\*-gen\.pdf ../tests/report/
-copy_rel_file FMS/test/testReports/\*-gen\.docbook ../tests/report/
-copy_rel_file FMS/test/testReports/\*-gen\.html ../tests/report/
+copy_rel_file FMS/test/testReports/\*\.pdf ../tests/report/
+copy_rel_file FMS/test/testReports/\*\.docbook ../tests/report/
+copy_rel_file FMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
 copy_rel_file FMS/test/testPlan/\*\.pdf ../doc/concept/
