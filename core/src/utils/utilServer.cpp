@@ -71,9 +71,9 @@ vishnu::isNew(std::string urlsup, std::string mid, std::string type){
     if(result->getNbTuples() != 0) {
       return false;
     }
-  }catch(SystemException& e){
+  } catch(SystemException& e){
     e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
-    throw(e);
+    throw;
   }
   return true;
 }
@@ -412,9 +412,9 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   int tid = databaseVishnu->startTransaction();
   try{
     ret = databaseVishnu->generateId(table, fields, val, tid, primary);
-  } catch (exception const & e){
+  } catch (const exception& e){
     databaseVishnu->cancelTransaction(tid);
-    throw e;
+    throw;
   }
   if(insert) {
     databaseVishnu->endTransaction(tid);
