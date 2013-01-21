@@ -74,7 +74,7 @@ public:
 //   * \param param the value of the module configuration
 //   */
   void
-  initializeData(const std::string& module, const std::string cfgValue);
+  initializeData(const std::string& module, const std::string& cfgValue);
 
   /**
    * \brief Prints the content of the annuary

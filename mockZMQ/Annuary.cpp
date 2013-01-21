@@ -97,7 +97,7 @@ Annuary::print() {
  * \param param the value of the module configuration
  */
 void
-Annuary::initializeData(const std::string& module, const std::string cfgValue) {
+Annuary::initializeData(const std::string& module, const std::string& cfgValue) {
     std::istringstream iss(cfgValue);
     std::string uri;
     std::string mid;
