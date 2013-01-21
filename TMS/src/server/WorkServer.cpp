@@ -14,9 +14,8 @@
 * \brief Constructor
 * \param work The work data structure
 */
-WorkServer::WorkServer(TMS_Data::Work*& work):
-mwork(work)
-{
+WorkServer::WorkServer(TMS_Data::Work*& work)
+  : mwork(work), mworkop(NULL) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -26,9 +25,8 @@ mwork(work)
 * \param work The work data structure
 * \param session The object which encapsulates session data
 */
-WorkServer::WorkServer(TMS_Data::Work*& work, SessionServer& session):
-mwork(work), msessionServer(session)
-{
+WorkServer::WorkServer(TMS_Data::Work*& work, SessionServer& session)
+  : mwork(work), mworkop(NULL), msessionServer(session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
