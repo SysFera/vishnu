@@ -32,6 +32,12 @@
         <surname>Coulomb</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Depardon</surname>
+      </personname>
+    </author>
 
     <title>Plan de tests IMS</title>
 
@@ -67,6 +73,18 @@
             Ajout des cas de tests pour la génération d'identifiants concernant les systèmes
             d'authentification :  IA3-B: Define the identifier auth et IA3-E1/E2: Define the
             identifier auth
+          </para>
+        </revdescription>
+      </revision>
+    </revhistory>
+
+      <revision>
+        <revnumber>7</revnumber>
+        <date>21/01/13</date>
+        <authorinitials>B. Depardon</authorinitials>
+        <revdescription>
+          <para>
+            Passage au format docbook de base. Problèmes de compilation réglés.
           </para>
         </revdescription>
       </revision>
