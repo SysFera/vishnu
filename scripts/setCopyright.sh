@@ -5,6 +5,8 @@
 # Usage    : ./setCopyright.sh copyright  
 
 
-for file in $(find . -name third-party -prune -o -name "*.?pp"); do cat $1 $file > tmp.txt && cp tmp.txt $file; done;
+for file in $(find . -name third-party -prune -o -name "*.?pp" -o -name "*.h"); do
+    cat $1 $file > tmp.txt && cp tmp.txt $file
+done
 
 
