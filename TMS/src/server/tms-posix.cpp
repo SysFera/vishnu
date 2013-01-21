@@ -24,6 +24,7 @@
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/lexical_cast.hpp>
 #include <vector>
 
 #include <cstdio>
@@ -141,6 +142,11 @@ static void
 TimeStatement() {
   int Taille;
   int i;
+  time_t now;
+  time_t temp;
+  time_t futur = 0;
+
+  now = time(NULL);
 
   // Manage Dangling Processes
   for (i = 0; i<Taille; i++) {
@@ -156,6 +162,26 @@ TimeStatement() {
   }
 
   AlarmSig = 0;
+
+  // Manage walclocklimit
+  for (i = 0; i<Taille; i++) {
+    if (Board[i].maxTime != 0) {
+      if ( (Board[i].startTime + Board[i].maxTime) > now) {
+        Board[i].state = KILL;
+        kill(Board[i].pid,SIGTERM);
+      } else {
+        temp = (Board[i].startTime + Board[i].maxTime) - now;
+        if (futur == 0) {
+          futur = temp;
+        } else {
+          if (temp < futur) {
+            futur = temp;
+          }
+        }
+      }
+    }
+  }
+ 
 }
 
 /***
@@ -284,12 +310,13 @@ buildEnvironment(){
 
 
 static int
-execCommand(char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current) {
+execCommand(char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current, int maxTime) {
   char* args[16];
   char commandLine[255];
   pid_t pid;
   ostringstream temp;
   int fd;
+  boost::filesystem::path p;
 
   args[1] = (char *)"/bin/sh";
   args[2] = (char *)"-c";
@@ -343,9 +370,23 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   current->pid = pid;
   current->startTime = time(NULL);
   current->state = RUNNING;
-  current->maxTime = 0;
-  snprintf(current->OutPutPath,sizeof(current->OutPutPath),"%s/%s",current->HomeDir,fstdout);
-  snprintf(current->ErrorPath,sizeof(current->ErrorPath),"%s/%s",current->HomeDir,fstderr);
+  current->maxTime = maxTime;
+
+  p = boost::filesystem::path(fstdout);
+
+  if ( p.is_absolute() ) {
+    strncpy(current->OutPutPath,fstdout,sizeof(current->OutPutPath));
+  } else {
+    snprintf(current->OutPutPath,sizeof(current->OutPutPath),"%s/%s",current->HomeDir,fstdout);
+  }
+
+  p = boost::filesystem::path(fstderr);
+ 
+  if ( p.is_absolute() ) {
+    strncpy(current->ErrorPath,fstderr,sizeof(current->ErrorPath));
+  } else {
+    snprintf(current->ErrorPath,sizeof(current->ErrorPath),"%s/%s",current->HomeDir,fstderr);
+  }
 
   printf("JobId:%s.\n",current->JobId);
   return 0;
@@ -461,6 +502,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   std::map<std::string, std::string> context;
   char fout[256];
   char ferr[256];
+  int wallclocklimit;
 
   Debug("Enter Server RequestSubmit.\n");
   sigemptyset(&emptyMask);
@@ -499,12 +541,24 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   Debug("Fichier de erreur:%s.\n",ferr);
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
+
+  if (context.find("vishnu_wallclocklimit") != context.end()) {
+    try {
+      wallclocklimit = boost::lexical_cast<int>(context["vishnu_wallclocklimit"]);
+    }
+    catch (boost::bad_lexical_cast &) {
+      wallclocklimit = 0;
+    }
+  } else {
+    wallclocklimit = 0;
+  }
+
   // TODO: Prendre en compte le contexte
   if (context.find("vishnu_working_dir")  != context.end()) {
     execCommand(req->data.submit.cmd, fout, ferr,
-                context["vishnu_working_dir"].c_str(), &currentState);
+                context["vishnu_working_dir"].c_str(), &currentState, wallclocklimit);
   } else {
-    (void)execCommand(req->data.submit.cmd, fout, ferr, HomeDir, &currentState);
+    (void)execCommand(req->data.submit.cmd, fout, ferr, HomeDir, &currentState, wallclocklimit);
   }
 
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
