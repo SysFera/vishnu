@@ -27,7 +27,7 @@ Server::add(const std::string& service) {
   Services::iterator it =
     std::find(mservices.begin(), mservices.end(), service);
 
-  if (it != mservices.end()) {
+  if (it == mservices.end()) {
     mservices.push_back(service);
   }
 

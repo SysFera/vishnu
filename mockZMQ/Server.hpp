@@ -11,20 +11,6 @@
 #include <boost/shared_ptr.hpp>
 
 class Server {
-private:
-  /**
-   * \brief The name of the server
-   */
-  std::string mname;
-  /**
-   * \brief The services offered by the server
-   */
-  std::vector<std::string> mservices;
-  /**
-   * \brief The uri the server is running over
-   */
-  std::string muri;
-
 public:
 
   /**
@@ -96,6 +82,20 @@ public:
    */
   std::string
   toString();
+
+private:
+  /**
+   * \brief The name of the server
+   */
+  std::string mname;
+  /**
+   * \brief The services offered by the server
+   */
+  std::vector<std::string> mservices;
+  /**
+   * \brief The uri the server is running over
+   */
+  std::string muri;
 };
 
 #endif // __SERVER__H__
