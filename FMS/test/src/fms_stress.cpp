@@ -2,6 +2,7 @@
 #include "FMS_Data_forward.hpp"
 #include <unistd.h>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "api_ums.hpp"
 #include "api_fms.hpp"
 #include "FMS_testconfig.h"
@@ -10,7 +11,8 @@ using namespace std;
 using namespace UMS_Data;
 using namespace vishnu;
 
-void stress(int cpt,const string& sessionKey,const string& machineId,int type){
+void
+stress(int cpt,const string& sessionKey,const string& machineId,int type) {
 
   string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
   ostringstream fileName;
@@ -98,16 +100,14 @@ void forker(int cpt,const string& sessionKey,const std::string& machineId, int t
 
 int main(int argc, char** argv){
   int cpt;
-  int i;
   int type;
-  string key  = ""       ;
   string pwd  = "toto"  ;
   string uid  = "user_1";
   string machineId  = "MA_2";
   ConnectOptions cop  ;
   Session sess ;
 
-  string dietClientConfigPath =CONFIG_DIR + string("/client_testing.cfg");
+  string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
   cop.setClosePolicy(2);
 
   try{
@@ -119,8 +119,8 @@ int main(int argc, char** argv){
       std::cerr << "[1 for listfiletransfer and 2 for createFile]" << std::endl;
       return 1;
     }
-    cpt = atoi (argv[1]);
-    type = atoi (argv[2]);
+    cpt = boost::lexical_cast<int>(argv[1]);
+    type = boost::lexical_cast<int>(argv[2]);
     //To check the cpt value
     if (cpt < 1) {
        std::cerr << "The value of the number of test is incorrect" << std::endl;
