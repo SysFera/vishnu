@@ -14,8 +14,10 @@
 #include "sessionUtils.hpp"
 #include "displayer.hpp"
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
 
 namespace po = boost::program_options;
+namespace bfs = boost::filesystem;
 
 using namespace std;
 using namespace vishnu;
@@ -337,8 +339,8 @@ int main (int argc, char* argv[]){
     displaySubmit(job);
     printSuccessMessage();
   } catch(VishnuException& except){// catch all Vishnu runtime error
-    std::string  submitErrmsg = except.getMsg()+" ["+except.getMsgComp()+"]";
-    errorUsage(basename(argv[0]), submitErrmsg, EXECERROR);
+    std::string  submitErrmsg = except.getMsg() + " [" + except.getMsgComp() + "]";
+    errorUsage(bfs::basename(bfs::path(argv[0])), submitErrmsg, EXECERROR);
     //check the bad session key
     if (checkBadSessionKeyError(except)){
       removeBadSessionKeyFromFile(getppid());
