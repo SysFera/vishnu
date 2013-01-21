@@ -2,7 +2,7 @@
  * \file DatabaseResult.hpp
  * \brief This file presents the Database results class.
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi.sysfera.com)
- * \date 15/12/10 
+ * \date 15/12/10
  */
 
 #ifndef _DATABASERESULT_H_
@@ -21,47 +21,47 @@ public :
    * \brief Function to print the database results
    * \fn    print()
    */
-  void 
+  void
   print();
   /**
    * \brief Function to print the attributes names
    * \fn    printAttributesNames()
    */
-  void 
+  void
   printAttributesNames();
   /**
-   * \brief To get the number of tuples 
+   * \brief To get the number of tuples
    * \fn size_t getNbTuples() const
    * \return 0 on success, an error code otherwise
    */
-  size_t 
+  size_t
   getNbTuples() const;
   /**
-   * \brief To get the number of fields 
+   * \brief To get the number of fields
    * \fn size_t getNbFields() const
    * \return 0 on success, an error code otherwise
    */
-  size_t 
+  size_t
   getNbFields() const;
-  
+
   /**
    * \brief To get a specific results using its position
-   * \fn std::vector<std::string> get(size_t position) const 
+   * \fn std::vector<std::string> get(size_t position) const
    * \param position The position of the request
    * \return the tuple associated to the postion
    */
-  std::vector<std::string> 
+  std::vector<std::string>
   get(size_t position) const;
   /**
-   * \brief To get the number of fields 
+   * \brief To get the number of fields
    * \fn std::vector<std::vector<std::string> > getResults() const
- 
+
    * \return all results
    */
   std::vector<std::vector<std::string> >
   getResults() const;
   /**
-   * \brief To get the first attribut value of the first element 
+   * \brief To get the first attribut value of the first element
    * \fn std::string getFirstElement() const
    * \return the first attribut value of the first element
    */
@@ -71,7 +71,8 @@ public :
    * \fn DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes)
    * \brief Constructor, raises an exception on error
    */
-  DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes);
+  DatabaseResult(const std::vector<std::vector<std::string> >& res,
+                 const std::vector<std::string>& namesAttributes);
   /**
    * \fn ~DatabaseResult()
    * \brief Destructor, raises an exception on error

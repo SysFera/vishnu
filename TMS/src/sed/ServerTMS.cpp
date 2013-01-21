@@ -84,13 +84,8 @@ ServerTMS::getSlaveDirectory() {
 /**
  * \brief Constructor (private)
  */
-ServerTMS::ServerTMS() {
-//  mprofile = NULL;
-  mbatchType = UNDEFINED;
-  mmachineId = "";
-  mdatabaseVishnu = NULL;
-  mslaveBinDir = "";
-}
+ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
+
 /**
  * \brief To get the Default Batch Options
  * \return batch Default Options Vector
@@ -115,8 +110,7 @@ ServerTMS::init(int vishnuId,
                 const std::string& machineId,
                 BatchType batchType,
                 const std::string& slaveBinDir,
-                std::string batchDefaultConfigFile)
-{
+                std::string batchDefaultConfigFile) {
 
   //initialization of the batchType
   mbatchType = batchType;
