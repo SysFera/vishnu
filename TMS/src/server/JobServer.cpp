@@ -128,12 +128,12 @@ int JobServer::submitJob(const std::string& scriptContent,
             size_t pos3=0;
             pos3 = specificParams.find(" ");
             if (pos3!=std::string::npos) {
-                          
+
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, pos3-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key);
               specificParams.erase(0,pos3);
               boost::algorithm::trim_left(specificParams);
-                            
+
             } else {
               std::string lineoption = key +" "+ specificParams.substr(pos1, pos2-pos1)+ sep +  specificParams.substr(pos2+1, specificParams.size()-pos2) + "\n";
               insertOptionLine(lineoption, convertedScript, key);
@@ -141,9 +141,9 @@ int JobServer::submitJob(const std::string& scriptContent,
             }
             pos2 = specificParams.find("=");
           }
-        
+
         }
-        if (defaultBatchOption.size()){
+        if (!defaultBatchOption.empty()){
           processDefaultOptions(defaultBatchOption, convertedScript, key);
         }
 
@@ -269,14 +269,14 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
            break;
         }
       }
-    }  
+    }
     if (!found) {
       std::string lineoption = key + " " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
       insertOptionLine(lineoption, content, key);
     }
     count +=2;
   }
-  
+
 }
 /**
  * \brief Function to insert option into string
@@ -308,9 +308,9 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
             break;
           }
         }
-        posLastDirective = pos + line.size() +1;         
+        posLastDirective = pos + line.size() + 1;
       }
-      pos++;    
+      pos++;
     }
   }
   content.insert(posLastDirective, optionLineToInsert);
