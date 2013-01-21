@@ -81,9 +81,9 @@ function copy_ar_file () {
 
 # Create temporary directory
 rm -rf /tmp/prepaRel
-mkdir /tmp/prepaRel
+mkdir -p /tmp/prepaRel
 path=/tmp/prepaRel/VISHNU_$NO_VERSION
-mkdir $path
+mkdir -p $path
 
 pathrel=deliverables/src
 
@@ -182,11 +182,11 @@ copy_dir core/deps/emf4cpp core/deps/
 
 
 ### Documentation html/pdf/docbook
-mkdir $path/core/doc/adminmanual
-mkdir $path/core/doc/usermanual
+mkdir -p $path/core/doc/adminmanual
+mkdir -p $path/core/doc/usermanual
 
-mkdir $pathrel/../doc/adminmanual
-mkdir $pathrel/../doc/usermanual
+mkdir -p $pathrel/../doc/adminmanual
+mkdir -p $pathrel/../doc/usermanual
 
 cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/vishnu-adminman.docbook
 cp core/doc/adminmanual/docbook/adminman-gen.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
@@ -295,14 +295,14 @@ copy_dir UMS/doc/man/man1 UMS/doc/man/
 copy_dir UMS/doc/man/man3 UMS/doc/man/
 
 # Copy tests in release
-mkdir $pathrel/../tests/report
+mkdir -p $pathrel/../tests/report
 
 copy_rel_file UMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-mkdir $pathrel/../doc/concept/images
+mkdir -p $pathrel/../doc/concept/images
 copy_rel_file UMS/test/testPlan/\*\.pdf ../doc/concept/
 copy_rel_file UMS/test/testPlan/\*\.docbook ../doc/concept/
 copy_rel_file UMS/test/testPlan/\*\.html ../doc/concept/
@@ -463,7 +463,7 @@ copy_dir IMS/design/docbook/images/png ../doc/concept/images
 ###############################################################################
 #                                   SPECIF                                    #
 ###############################################################################
-mkdir $pathrel/../doc/specif/images
+mkdir -p $pathrel/../doc/specif/images
 copy_rel_file core/specs/docbook/\*-gen\.pdf ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.docbook ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.html ../doc/specif/
