@@ -63,21 +63,32 @@ PosixServer::submit(const char* scriptPath,
   job.setJobQueue("posix");
   std::cout << "Job Status :" << job.getStatus() << std::endl;
 // If no name give a default job name
+  
   if (options.getName().compare("")==0){
     job.setJobName("posix_job");
   } else {
     job.setJobName(options.getName());
   }
+
+  job.setOutputPath(op.OutPutPath);
+
+/***
   if (options.getOutputPath().compare("")==0){
     job.setOutputPath("/tmp/out.o");
   } else {
     job.setOutputPath(options.getOutputPath());
   }
+**/
+
+  job.setErrorPath(op.ErrorPath);
+/**
   if (options.getErrorPath().compare("")==0){
     job.setErrorPath("/tmp/err.e");
   } else {
     job.setErrorPath(options.getErrorPath());
   }
+**/
+
  std::cout << "ret code : " << ret << std::endl;
   return ret;
 }
@@ -126,7 +137,6 @@ PosixServer::getJobStartTime(const std::string& jobId){
 
   ret = ReqInfo(jobId.c_str(), &resultat);
   return resultat.startTime;
-//  return time_t();
 }
 
 

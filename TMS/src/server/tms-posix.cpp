@@ -188,7 +188,6 @@ Daemonize(void) {
       break;
     default:
       exit(EXIT_SUCCESS);
-//      return 0;
   }
 
   if (setsid() == -1) {
@@ -258,7 +257,7 @@ buildEnvironment(){
 
 
 static int
-execCommand(char* command,const char* fstdout, const char* fstderr, struct st_job* current) {
+execCommand(char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current) {
   char* args[16];
   char commandLine[255];
   pid_t pid;
@@ -296,6 +295,9 @@ execCommand(char* command,const char* fstdout, const char* fstderr, struct st_jo
       close(fd);
     }
 
+    if (strlen(working_dir) != 0) {
+      chdir(working_dir);
+    }
     execvp(args[1],args+1);
   }
   if (pid < 0) {
@@ -457,7 +459,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
 //  (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
-  (void)execCommand(req->data.submit.cmd, fout, ferr, &currentState);
+  (void)execCommand(req->data.submit.cmd, fout, ferr, Context.vishnu_working_dir.c_str(), &currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
   Board.push_back(currentState);

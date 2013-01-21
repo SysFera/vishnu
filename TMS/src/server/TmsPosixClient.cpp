@@ -61,7 +61,6 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
 
   close(sfd);
 
-  //return 0;
   return nbCharreaden;
 }
 
@@ -74,6 +73,7 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   uid_t euid;
   struct passwd* lpasswd;
 
+  printf("ReqSubmit\n");
   euid = geteuid();
   printf("Client euid:%d\n",euid);
   lpasswd=getpwuid(euid);
@@ -102,12 +102,12 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   printf("Retpid:%d.\n",ret.data.submit.pid);
   
 
+  printf("FinReqSubmit\n");
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
     return 0;
   }
   return -1;
-//  return (ret.status == 0);
 }
 
 int
@@ -120,6 +120,7 @@ ReqEcho(const char* chaine, char* ret) {
   struct passwd* lpasswd;
   int resultat;
 
+  printf("ReqEcho\n");
   euid = geteuid();
   printf("Client euid:%d\n",euid);
   lpasswd=getpwuid(euid);
@@ -142,6 +143,7 @@ ReqEcho(const char* chaine, char* ret) {
     return resultat;
   }
 
+  printf("FinReqEcho\n");
   strncpy(ret,res.data.echo.data,sizeof(res.data.echo.data)-1);
   if (res.status != 0) {
     return 0;
@@ -170,6 +172,7 @@ ReqCancel(const char* JobId) {
   char name_sock[255];
   char euid[255];
 
+  printf("ReqCancel\n");
   strccpy(euid,JobId,sizeof(euid),'-');
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
@@ -180,6 +183,7 @@ ReqCancel(const char* JobId) {
   strncpy(req.data.cancel.JobId,JobId,sizeof(req.data.cancel.JobId)-1);
 
   resultat = ReqSend(name_sock, &req, &res);
+  printf("FinReqCancel\n");
   if (resultat < 0) {
     return resultat;
   }
@@ -195,6 +199,7 @@ ReqInfo(const char* JobId, struct st_job* response) {
   char name_sock[255];
   char euid[255];
 
+  printf("ReqInfo\n");
   strccpy(euid,JobId,sizeof(euid),'-');
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
@@ -205,6 +210,7 @@ ReqInfo(const char* JobId, struct st_job* response) {
 
   resultat = ReqSend(name_sock, &req, &ret);
 
+  printf("FinReqInfo\n");
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
     return 0;
