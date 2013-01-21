@@ -91,7 +91,7 @@ private :
    */
   void
   fillServices(std::vector<std::string> & services, const std::string& name,
-  const std::string& mid);
+               const std::string& mid);
 
   /**
    * \param The servers
