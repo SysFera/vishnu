@@ -41,6 +41,9 @@ scriptDir=$vishnuDir/scripts
 # script to generate all docs
 gen_doc_sh=${scriptDir}/generateAllDocumentation.sh
 
+nbfailed=0
+nbexec=0
+
 ######################################################################
 #                           /VARIABLES                               #
 ######################################################################
@@ -49,29 +52,46 @@ gen_doc_sh=${scriptDir}/generateAllDocumentation.sh
 ######################################################################
 #                            FUNCTIONS                               #
 ######################################################################
+function run_cmd() {
+    $@
+    tmprv=$?
+    nbexec=$(($nbexec+1))
+    if [ $tmprv != 0 ]; then
+        nbfailed=$(($nbfailed+1))
+    fi
+}
+
 # Function that copy the dir in the archive and the depot copy
 function copy_dir () {
-    cp -r $1 $path/$2;
-    cp -r $1 $pathrel/$2;
+    run_cmd cp -r $1 $path/$2;
+    run_cmd cp -r $1 $pathrel/$2;
 }
 
 function copy_file () {
-    cp $1 $path/$2;
-    cp $1 $pathrel/$2;
+    run_cmd cp $1 $path/$2;
+    run_cmd cp $1 $pathrel/$2;
 }
 
 # Function that create the dir in the archive and the depot copy
 function create_dir () {
-    mkdir -p $path/$1;
-    mkdir -p $pathrel/$1;
+    run_cmd mkdir -p $path/$1;
+    run_cmd mkdir -p $pathrel/$1;
 }
 
 function copy_rel_file () {
-    cp $1 $pathrel/$2;
+    run_cmd cp $1 $pathrel/$2;
 }
 
 function copy_ar_file () {
-    cp $1 $path/$2;
+    run_cmd cp $1 $path/$2;
+}
+
+function remove_files () {
+    run_cmd rm -rf $@;
+}
+
+function change_dir () {
+    run_cmd cd $1;
 }
 ######################################################################
 #                           /FUNCTIONS                               #
@@ -80,28 +100,28 @@ function copy_ar_file () {
 
 
 # Create temporary directory
-rm -rf /tmp/prepaRel
-mkdir -p /tmp/prepaRel
+run_cmd rm -rf /tmp/prepaRel
+run_cmd mkdir -p /tmp/prepaRel
 path=/tmp/prepaRel/VISHNU_$NO_VERSION
-mkdir -p $path
+run_cmd mkdir -p $path
 
 pathrel=deliverables/src
 
-mkdir -p deliverables/src
-mkdir -p deliverables/doc
-mkdir -p deliverables/debs
-mkdir -p deliverables/tests
+run_cmd mkdir -p deliverables/src
+run_cmd mkdir -p deliverables/doc
+run_cmd mkdir -p deliverables/debs
+run_cmd mkdir -p deliverables/tests
 
 
-rm -rf deliverables/src/*
-rm -rf deliverables/doc/*
-rm -rf deliverables/debs/*
-rm -rf deliverables/tests/*
+remove_files deliverables/src/*
+remove_files deliverables/doc/*
+remove_files deliverables/debs/*
+remove_files deliverables/tests/*
 
 
 
 # Generate all documentation
-sh -c $gen_doc_sh
+run_cmd sh -c $gen_doc_sh
 
 
 
@@ -182,27 +202,27 @@ copy_dir core/deps/emf4cpp core/deps/
 
 
 ### Documentation html/pdf/docbook
-mkdir -p $path/core/doc/adminmanual
-mkdir -p $path/core/doc/usermanual
+run_cmd mkdir -p $path/core/doc/adminmanual
+run_cmd mkdir -p $path/core/doc/usermanual
 
-mkdir -p $pathrel/../doc/adminmanual
-mkdir -p $pathrel/../doc/usermanual
+run_cmd mkdir -p $pathrel/../doc/adminmanual
+run_cmd mkdir -p $pathrel/../doc/usermanual
 
-cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
-cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/vishnu-adminman.html
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.docbook $path/core/doc/adminmanual/vishnu-adminman.docbook
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.pdf $path/core/doc/adminmanual/vishnu-adminman.pdf
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.html $path/core/doc/adminmanual/vishnu-adminman.html
 
-cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/usermanual/vishnu-userman.docbook
-cp core/doc/usermanual/docbook/userman-gen.pdf $path/core/doc/usermanual/vishnu-userman.pdf
-cp core/doc/usermanual/docbook/userman-gen.html $path/core/doc/usermanual/vishnu-userman.html
+run_cmd cp core/doc/usermanual/docbook/userman-gen.docbook $path/core/doc/usermanual/vishnu-userman.docbook
+run_cmd cp core/doc/usermanual/docbook/userman-gen.pdf $path/core/doc/usermanual/vishnu-userman.pdf
+run_cmd cp core/doc/usermanual/docbook/userman-gen.html $path/core/doc/usermanual/vishnu-userman.html
 
-cp core/doc/adminmanual/docbook/adminman-gen.docbook $pathrel/../doc/adminmanual/vishnu-adminman.docbook
-cp core/doc/adminmanual/docbook/adminman-gen.pdf $pathrel/../doc/adminmanual/vishnu-adminman.pdf
-cp core/doc/adminmanual/docbook/adminman-gen.html $pathrel/../doc/adminmanual/vishnu-adminman.html
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.docbook $pathrel/../doc/adminmanual/vishnu-adminman.docbook
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.pdf $pathrel/../doc/adminmanual/vishnu-adminman.pdf
+run_cmd cp core/doc/adminmanual/docbook/adminman-gen.html $pathrel/../doc/adminmanual/vishnu-adminman.html
 
-cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/vishnu-userman.docbook
-cp core/doc/usermanual/docbook/userman-gen.pdf $pathrel/../doc/usermanual/vishnu-userman.pdf
-cp core/doc/usermanual/docbook/userman-gen.html $pathrel/../doc/usermanual/vishnu-userman.html
+run_cmd cp core/doc/usermanual/docbook/userman-gen.docbook $pathrel/../doc/usermanual/vishnu-userman.docbook
+run_cmd cp core/doc/usermanual/docbook/userman-gen.pdf $pathrel/../doc/usermanual/vishnu-userman.pdf
+run_cmd cp core/doc/usermanual/docbook/userman-gen.html $pathrel/../doc/usermanual/vishnu-userman.html
 
 
 
@@ -233,17 +253,17 @@ copy_file $eclipse/VishnuLib/pom.xml WS/impl/VishnuLib/
 
 cur=$PWD
 
-cd $path
+change_dir $path
 
 # Constructing the 2 jar to send
-cd WS/impl/VishnuLib
+change_dir WS/impl/VishnuLib
 
-mvn clean
+run_cmd mvn clean
 
-mvn install
+run_cmd mvn install
 
-cp target/VishnuLib-1.0-SNAPSHOT.jar ..
-cp target/VishnuLib-1.0-SNAPSHOT.jar $cur/$pathrel/WS/impl/
+run_cmd cp target/VishnuLib-1.0-SNAPSHOT.jar ..
+run_cmd cp target/VishnuLib-1.0-SNAPSHOT.jar $cur/$pathrel/WS/impl/
 
 # cd ../WSAPI
 
@@ -254,7 +274,7 @@ cp target/VishnuLib-1.0-SNAPSHOT.jar $cur/$pathrel/WS/impl/
 # cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar ../WSAPI.jar
 # cp target/WSAPI-1.0-SNAPSHOT-jar-with-dependencies.jar $cur/$pathrel/WS/impl/WSAPI.jar
 
-cd $cur
+change_dir $cur
 
 ###############################################################################
 #                                    U M S                                    #
@@ -295,14 +315,14 @@ copy_dir UMS/doc/man/man1 UMS/doc/man/
 copy_dir UMS/doc/man/man3 UMS/doc/man/
 
 # Copy tests in release
-mkdir -p $pathrel/../tests/report
+run_cmd mkdir -p $pathrel/../tests/report
 
 copy_rel_file UMS/test/testReports/\*\.pdf ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.docbook ../tests/report/
 copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
 
 # Copy test plans in release
-mkdir -p $pathrel/../doc/concept/images
+run_cmd mkdir -p $pathrel/../doc/concept/images
 copy_rel_file UMS/test/testPlan/\*\.pdf ../doc/concept/
 copy_rel_file UMS/test/testPlan/\*\.docbook ../doc/concept/
 copy_rel_file UMS/test/testPlan/\*\.html ../doc/concept/
@@ -463,7 +483,7 @@ copy_dir IMS/design/docbook/images/png ../doc/concept/images
 ###############################################################################
 #                                   SPECIF                                    #
 ###############################################################################
-mkdir -p $pathrel/../doc/specif/images
+run_cmd mkdir -p $pathrel/../doc/specif/images
 copy_rel_file core/specs/docbook/\*-gen\.pdf ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.docbook ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.html ../doc/specif/
@@ -486,70 +506,82 @@ copy_dir swigAPI/generated swigAPI
 
 copy_file scripts/setCopyright.sh 
 
-cd $path
+change_dir $path
+run_cmd ./setCopyright.sh copyright
+remove_files setCopyright.sh
 
-./setCopyright.sh copyright
+change_dir - 
+change_dir $pathrel
 
-rm setCopyright.sh
+run_cmd ./setCopyright.sh copyright
 
-cd - 
+remove_files setCopyright.sh
 
-cd $pathrel
-
-./setCopyright.sh copyright
-
-rm setCopyright.sh
-
-cd -
+change_dir -
 
 # Copy emf4cpp files
 copy_dir core/deps/emf4cpp core/deps/
 
-cd $path
+change_dir $path
 
-rm -f tmp.txt
-
-# Remove .project
-rm -f UMS/src/utils/emfdata/UMS_Data/.project
-rm -f UMS/src/utils/emfdata/UMS_Data/.cproject
-rm core/deps/emf4cpp/.project
-rm core/deps/emf4cpp/.cproject
-
-# remove all ~ files
-for i in  $(find . -name "*~") ; do rm $i;  done ;
-
-# remove all bak files
-for i in  $(find . -name "*bak") ; do rm $i;  done ;
-
-# remove all build dir
-for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
-
-cd -
-
-cd $pathrel
+remove_files tmp.txt
 
 # Remove .project
-rm -f UMS/src/utils/emfdata/UMS_Data/.project
-rm -f UMS/src/utils/emfdata/UMS_Data/.cproject
-rm core/deps/emf4cpp/.project
-rm core/deps/emf4cpp/.cproject
+remove_files UMS/src/utils/emfdata/UMS_Data/.project
+remove_files UMS/src/utils/emfdata/UMS_Data/.cproject
+remove_files core/deps/emf4cpp/.project
+remove_files core/deps/emf4cpp/.cproject
 
 # remove all ~ files
-for i in  $(find . -name "*~") ; do rm $i;  done ;
+for i in  $(find . -name "*~") ; do
+    remove_files $i
+done
 
 # remove all bak files
-for i in  $(find . -name "*bak") ; do rm $i;  done ;
+for i in  $(find . -name "*bak") ; do
+    remove_files $i
+done
 
 # remove all build dir
-for i in  $(find . -name "*build") ; do rm -rf $i;  done ;
+for i in  $(find . -name "*build") ; do
+    remove_files -rf $i
+done
 
-cd $path
+change_dir -
+change_dir $pathrel
 
-cd ..
+# Remove .project
+remove_files UMS/src/utils/emfdata/UMS_Data/.project
+remove_files UMS/src/utils/emfdata/UMS_Data/.cproject
+remove_files core/deps/emf4cpp/.project
+remove_files core/deps/emf4cpp/.cproject
+
+# remove all ~ files
+for i in  $(find . -name "*~") ; do
+    remove_files $i
+done
+
+# remove all bak files
+for i in  $(find . -name "*bak") ; do
+    remove_files $i
+done
+
+# remove all build dir
+for i in  $(find . -name "*build") ; do
+    remove_files $i
+done
+
+change_dir $path
+change_dir ..
 
 # Archive to send
-tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
+run_cmd tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
 
 # Moving archive in /tmp
-mv vishnu_v${NO_VERSION}.tgz /tmp/
+run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
 
+echo
+echo
+echo "## Failed / total: $nbfailed / $nbexec"
+
+exit $nbfailed
