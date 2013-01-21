@@ -5,7 +5,7 @@
 #include <regex.h>
 #include <stdexcept>
 #include <unistd.h>
-
+#include <boost/algorithm/string.hpp>
 #include "ExecConfiguration.hpp"
 #include "constants.hpp"
 #include <unistd.h>
@@ -54,6 +54,23 @@ ExecConfiguration::getConfigValue(vishnu::param_type_t param, std::string& value
     value = it->second;
     return true;
   }
+}
+
+/**
+ * \brief Get the values of a configuration parameter
+ * \param[in]  param
+ * \param[out] value the list of result
+ * \return param has been set or not
+ */
+bool
+ExecConfiguration::getConfigValues(vishnu::param_type_t param, std::vector<std::string>& values) const {
+  const std::string& key = (vishnu::params)[param].value;
+  ConfigMap::const_iterator it = mconfig.find(key);
+  if (mconfig.end() == it) {
+    return false;
+  }
+  boost::split(values, it->second, boost::is_any_of(";"));
+  return true;
 }
 
 string

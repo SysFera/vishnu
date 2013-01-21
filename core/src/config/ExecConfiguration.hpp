@@ -85,11 +85,20 @@ public:
     ConfigMap::const_iterator it = mconfig.find(key);
     if (mconfig.end() == it) {
       return false;
-    } else {
-      value = simple_cast<T>(it->second);
-      return true;
     }
+    value = simple_cast<T>(it->second);
+    return true;
   }
+
+  /**
+   * \brief Get the values of a configuration parameter
+   * \param[in]  param
+   * \param[out] value the list of result
+   * \return param has been set or not
+   */
+  bool
+  getConfigValues(vishnu::param_type_t param, std::vector<std::string>& values) const;
+
 
   /**
    * \brief Check and get the value of a configuration parameter

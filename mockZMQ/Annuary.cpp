@@ -4,6 +4,7 @@
 #include <boost/bind.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/algorithm/string.hpp>
 #include <cstdio>
 #include <cstring>
 #include <iterator>
@@ -17,7 +18,7 @@
 
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
-  : mservers(serv) {}
+: mservers(serv) {}
 
 
 // anonymous namespace
@@ -25,11 +26,11 @@ namespace {
   class is_server : std::unary_function<Server, bool> {
   public:
     is_server(const std::string& name, const std::string& uri) :
-      name_(name), uri_(uri) {}
+    name_(name), uri_(uri) {}
 
     bool operator() (boost::shared_ptr<Server> serv) {
       return ((serv->getName() == name_) &&
-              (serv->getURI() == uri_));
+      (serv->getURI() == uri_));
     }
 
   private:
@@ -40,10 +41,10 @@ namespace {
 
 int
 Annuary::add(const std::string& name, const std::string& uri,
-             const std::vector<std::string>& services) {
+const std::vector<std::string>& services) {
   is_server helper(name, uri);
   std::vector<boost::shared_ptr<Server> >::iterator it =
-    std::find_if(mservers.begin(), mservers.end(), helper);
+  std::find_if(mservers.begin(), mservers.end(), helper);
   if (it == mservers.end()) {
     mservers.push_back(boost::make_shared<Server>(name, services, uri));
   }
@@ -55,7 +56,7 @@ int
 Annuary::remove(const std::string& name, const std::string& uri) {
   is_server helper(name, uri);
   mservers.erase(std::remove_if(mservers.begin(), mservers.end(), helper),
-                 mservers.end());
+  mservers.end());
   return 0;
 }
 
@@ -69,8 +70,8 @@ Annuary::get(const std::string& service) {
     res.assign(mservers.begin(), mservers.end());
   } else {
     std::remove_copy_if(mservers.begin(), mservers.end(),
-                        std::back_inserter(res),
-                        !boost::bind(&Server::hasService, _1, service));
+    std::back_inserter(res),
+    !boost::bind(&Server::hasService, _1, service));
   }
 
   return res;
@@ -94,11 +95,13 @@ Annuary::print() {
 /**
  * \brief Initialize the annuary with the configuration of the given module
  * \param module The name of the module
- * \param param the value of the module configuration
+ * \param cfgInfo the value of the module configuration
  */
 void
-Annuary::initializeData(const std::string& module, const std::string cfgValue) {
-    std::istringstream iss(cfgValue);
+Annuary::initializeData(const std::string& module, std::vector<std::string>& cfgInfo) {
+  for (std::vector<std::string>::iterator entry = cfgInfo.begin(), end = cfgInfo.end();
+  entry != end; entry++) {
+    std::istringstream iss(*entry);
     std::string uri;
     std::string mid;
     iss >> uri;
@@ -106,12 +109,13 @@ Annuary::initializeData(const std::string& module, const std::string cfgValue) {
     std::vector<std::string> services;
     fillServices(services, module, mid);
     mservers.push_back(boost::make_shared<Server>(module, services, uri));
+  }
 }
 
 void
 Annuary::fillServices(std::vector< std::string> &services,
-                      const std::string& name,
-                      const std::string& mid) {
+const std::string& name,
+const std::string& mid) {
   if (name.compare("UMS") == 0) {
     services.push_back("sessionConnect") ;
     services.push_back("sessionReconnect") ;
@@ -199,7 +203,7 @@ Annuary::fillServices(std::vector< std::string> &services,
     services.push_back("RemoteFileCopy") ;
     services.push_back("RemoteFileMove") ;
     services.push_back("FileTransfersList") ;
-    } else { // Routage
+  } else { // Routage
     services.push_back("routage");
   }
 }
