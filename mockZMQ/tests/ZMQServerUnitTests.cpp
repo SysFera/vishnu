@@ -29,7 +29,8 @@ BOOST_FIXTURE_TEST_SUITE( ZMQserver_unit_tests, ZMQServerFixture )
 BOOST_AUTO_TEST_CASE( test_fromStr_n )
 {
 // Test the server class
-  std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" + mservices.at(1);
+  std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" +
+    mservices.at(1) + "$$$";
   boost::shared_ptr<Server> s = Server::fromString(res);
 
   BOOST_REQUIRE_EQUAL(s->getName(), mname);
@@ -42,7 +43,8 @@ BOOST_AUTO_TEST_CASE( test_toStr_n )
 {
 // Test the server class
   Server s(mname, mservices, muri);
-  std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" + mservices.at(1);
+  std::string res = mname + "$$$" + muri + "$$$" + mservices.at(0) + "$$$" +
+    mservices.at(1) + "$$$";
 
   BOOST_REQUIRE_EQUAL(res, s.toString());
 }
