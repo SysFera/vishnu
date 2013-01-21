@@ -1180,6 +1180,14 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv)
 	return UtilsProxy(cfg, argc, argv).initialize();
 }
 
+/**
+ * \brief Function to finalize, currently useless
+ */
+void
+vishnuFinalize(){
+}
+
+
 #ifdef BUILD_TESTING
 /**
  * \brief Function to initialize the database
