@@ -1,14 +1,96 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book lang="fr-FR">
-  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m12$Build-9483?>
-  <?oooversion 3.2$Linux?>
-  <bookinfo>
-    <title> </title>
-    <date>2012-02-14T10:08:18</date>
-    <keywordset/>
-    <confgroup/>
-  </bookinfo>
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Ibrahima</firstname>
+        <surname>Cisse</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+
+    <title>Plan de tests IMS</title>
+
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>06/04/11</date>
+        <authorinitials>B. Isnard, D. Traoré, K. Coulomb, I. Cisse E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Version initiale
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>2</revnumber>
+        <date>15/06/11</date>
+        <authorinitials>B. Isnard, D. Traoré, K. Coulomb, I. Cisse E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Mise à jour pour la livraison du module du IMS
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>3</revnumber>
+        <date>14/02/12</date>
+        <authorinitials>B. Isnard, D. Traoré, K. Coulomb, I. Cisse E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Ajout des cas de tests pour la génération d'identifiants concernant les systèmes
+            d'authentification :  IA3-B: Define the identifier auth et IA3-E1/E2: Define the
+            identifier auth
+          </para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+
+  <chapter>
+    <title>Références</title>
+    <itemizedlist>
+      <listitem>
+        <para>VISHNU_D1_1e-POL-TESTS : Politique de tests du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1a-SPECSGEN : Spécifications générales du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1b-STB : Spécifications Techniques des besoins</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1g-ARCH : VISHNU Technical Architecture</para>
+      </listitem>
+    </itemizedlist>
+  </chapter>
+
   <chapter>
     <title>Présentation du document</title>
     <section>
@@ -1281,7 +1363,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1354,7 +1435,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <itemizedlist>
@@ -1715,9 +1795,6 @@
             </tbody>
           </tgroup>
         </informaltable>
-        <section>
-          <title/>
-        </section>
       </section>
     </section>
     <section>
@@ -2305,9 +2382,7 @@
         </informaltable>
       </section>
     </section>
-    <section>
-      <title/>
-    </section>
+
     <section>
       <title>Contrôle de la documentation utilisateur</title>
       <section>
