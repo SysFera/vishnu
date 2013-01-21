@@ -32,6 +32,12 @@
         <surname>Chakode</surname>
       </personname>
     </author>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Depardon</surname>
+      </personname>
+    </author>
 
     <title>Plan de tests UMS</title>
 
@@ -154,9 +160,37 @@
         </para>
         </revdescription>
       </revision>
+
+      <revision>
+        <revnumber>7</revnumber>
+        <date>21/01/13</date>
+        <authorinitials>B. Depardon</authorinitials>
+        <revdescription>
+          <para>
+            Passage au format docbook de base. Problèmes de compilation réglés.
+          </para>
+        </revdescription>
+      </revision>
     </revhistory>
   </info>
 
+  <chapter>
+    <title>Références</title>
+    <itemizedlist>
+      <listitem>
+        <para>VISHNU_D1_1e-POL-TESTS : Politique de tests du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1a-SPECSGEN : Spécifications générales du projet VISHNU</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1b-STB : Spécifications Techniques des besoins</para>
+      </listitem>
+      <listitem>
+        <para>VISHNU_D1_1g-ARCH : VISHNU Technical Architecture</para>
+      </listitem>
+    </itemizedlist>
+  </chapter>
 
 
   <chapter>
