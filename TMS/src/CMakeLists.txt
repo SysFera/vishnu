@@ -150,7 +150,7 @@ if (NOT CLIENT_ONLY)
   endif()
 # always compile posix server
   add_library(vishnu-tms-posix1.0 ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix1.0 ${POSIX_LIB})
+  target_link_libraries(vishnu-tms-posix1.0 ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
   install(TARGETS vishnu-tms-posix1.0 DESTINATION ${LIB_INSTALL_DIR})
 
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
