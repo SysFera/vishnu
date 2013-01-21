@@ -1,14 +1,164 @@
 <?xml version="1.0"?>
 <!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.4//EN" "http://www.oasis-open.org/docbook/xml/4.4/docbookx.dtd">
 <book lang="fr-FR">
-  <?ooogenerator OpenOffice.org/3.2$Linux OpenOffice.org_project/320m12$Build-9483?>
-  <?oooversion 3.2$Linux?>
-  <bookinfo>
-    <title> </title>
-    <date>2012-03-06T17:28:23</date>
-    <keywordset/>
-    <confgroup/>
-  </bookinfo>
+  <info>
+    <author>
+      <personname>
+        <firstname>Benjamin</firstname>
+        <surname>Isnard</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Daouda</firstname>
+        <surname>Traoré</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Eugène</firstname>
+        <surname>Pamba Capo-Chichi</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Kevin</firstname>
+        <surname>Coulomb</surname>
+      </personname>
+    </author>
+    <author>
+      <personname>
+        <firstname>Rodrigue</firstname>
+        <surname>Chakode</surname>
+      </personname>
+    </author>
+
+    <title>Plan de tests UMS</title>
+
+    <revhistory>
+      <revision>
+        <revnumber>1</revnumber>
+        <date>25/01/11</date>
+        <authorinitials>B. Isnard, D. Traoré, E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Version initiale
+          </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>2</revnumber>
+        <date>14/12/11</date>
+        <authorinitials>D. Traoré</authorinitials>
+        <revdescription>
+          <para>
+            Prise en compte de l'expression des besoins d'évolution de
+            VISHNU : ajout des cas de tests U1.1-B2:connect, U1.1-E3:connect,
+            U1.1-E4:connect, U1.1-E5:connect ,U1.1-E6:connect, U1.1-E7:connect ,
+            U1.5-B2:reconnect,  U1.5-E1:reconnect, U1.5-E2:reconnect,
+            U1.5-E3:reconnect, U1.5-E4:reconnect, U1.5-E5:reconnect,
+            U1.5-E6:reconnect et U1.5-E7:reconnect
+        </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>3</revnumber>
+        <date>27/01/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Ajout du support LDAP dans VISHNU :
+            <itemizedlist>
+              <listitem>
+                <para>modification des cas de tests :  U1.1-B2:connect , U1.5-B2:reconnect</para>
+              </listitem>
+              <listitem>
+                <para>Ajout des cas de tests : 
+                  U1.1-E8:connect, U1.5-E8:reconnect, 
+                  UA8-B : addAuthenticationSystem, 
+                  UA8.1-B : updateAuthenticationSystem, 
+                  UA8.2-B : deleteAuthenticationSystem, 
+                  U5 - B : listAuthenticationSystem, 
+                  U6 - B1 : addAuthAccount, 
+                  U6 - B2 : addAuthAccount, 
+                  U6.1 - B1 : updateAuthAccount,
+                  U6.1 - B2 : updateAuthAccount,  
+                  U6.2 - B1 : deleteAuthAccount,
+                  U6.2 - B2 : deleteAuthAccount,  
+                  U6.3 – B1 : listAuthAccounts, 
+                  U6.3 – B2 : listAuthAccounts 
+                </para>
+              </listitem>
+              <listitem>
+                <para>Ajout des cas d'exception correspondant au cas de tests précédents :
+                  UA8-E1:addAuthenticationSystem,
+                  UA8-E2:addAuthenticationSystem,
+                  UA8-E3:addAuthenticationSystem,
+                  UA8-E4:addAuthenticationSystem,
+                  UA8.1-E1:updateAuthenticationSystem,
+                  UA8.1-E2:updateAuthenticationSystem,
+                  UA8.1-E3:updateAuthenticationSystem,
+                  UA8.1-E4:updateAuthenticationSystem,
+                  UA8.2-E1:deleteAuthenticationSystem,
+                  U5-E1:listAuthenticationSystem,
+                  U6-E1:addAuthAccount,U6-E2:addAuthAccount,
+                  U6-E3:addAuthAccount, -E1:updateAuthAccount,
+                  U6.1-E2:updateAuthAccount, U6.1-E3:updateAuthAccoun,
+                  U6.1-E4:updateAuthAccount, U6.2-E1 : deleteAuthAccount, U6.2-E2:
+                  deleteAuthAccount,
+                  U6.2-E3: deleteAuthAccount,
+                  U6.2-E4: deleteAuthAccount, U6.3-E1:listAuthAccounts,
+                  U6.3-E2:listAuthAccounts
+                </para>
+              </listitem>
+            </itemizedlist>
+          </para>
+        </revdescription>
+      </revision>
+
+
+      <revision>
+        <revnumber>4</revnumber>
+        <date>06/03/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Ajout des cas d'exception prenant en compte la variable $USERNAME
+            dans la définition des bases LDAP :
+            UA8-E5:addAuthenticationSystem,UA8.1-E5:updateAuthenticationSystem
+        </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>5</revnumber>
+        <date>03/09/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Ajout des tests de compatibilités de version clients/serveurs
+        </para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>6</revnumber>
+        <date>01/10/12</date>
+        <authorinitials>E. Capo-Chichi</authorinitials>
+        <revdescription>
+          <para>
+            Ajout d'une variante de UA4-B:restoreConfig lorsque des données du
+            WebBoard sont enregistrées (cf. bugzilla 410)
+        </para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </info>
+
+
+
   <chapter>
     <title>Présentation du document</title>
     <section>
@@ -66,7 +216,7 @@
           </listitem>
           <listitem>
             <para>MPI : Message Passing Interface</para>
-            <para/>
+            
           </listitem>
         </itemizedlist>
       </section>
@@ -170,7 +320,7 @@
         </imageobject>
       </mediaobject>
     </figure>
-    <para/>
+    
   </chapter>
   <chapter>
     <title>Liste des tests</title>
@@ -388,7 +538,7 @@
                         </listitem>
                         <listitem>
                           <para>Cas E8 : Aucun couple dans la liste de couple (userId, mot de passe) n'est présent dans la base de données.</para>
-                          <para/>
+                          
                         </listitem>
                       </itemizedlist>
                     </listitem>
@@ -397,7 +547,7 @@
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>connect </emphasis>avec le cas de test correspondant (E1, E2, E3, E4, E5, E6, E7, E8).</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer une commande (<emphasis>listSessions</emphasis>) et vérifier que son exécution échoue.</para>
@@ -521,7 +671,7 @@
                         </listitem>
                         <listitem>
                           <para>Cas E2 : aucune session n'est ouverte</para>
-                          <para/>
+                          
                         </listitem>
                       </itemizedlist>
                     </listitem>
@@ -530,11 +680,11 @@
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>connect </emphasis>avec le cas de test correspondant.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Aucun certificat de session n'est crée.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer une commande (<emphasis>listSessions</emphasis>) et vérifier que son exécution échoue.</para>
@@ -679,11 +829,11 @@
                       <para>Cas 6 : le login n'est pas défini ou ne précède pas le mot de passe dans le fichier .netrc.</para>
                       <para>Cas 7 : le mot de passe n'est pas défini dans le fichier .netrc. </para>
                       <para>Cas 8 : Aucun couple dans la liste de couple (userId, mot de passe) n'est présent dans la base de données.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>reconnect</emphasis></para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Son exécution échoue</para>
@@ -941,7 +1091,7 @@
                     </listitem>
                     <listitem>
                       <para>Vérifier que la commande<emphasis role="strong"> </emphasis><emphasis>listSession</emphasis><emphasis> </emphasis>ou <emphasis>listHistorycmd</emphasis> échoue.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1151,20 +1301,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : l'utilisateur n'est pas un administrateur VISHNU</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : aucune session n'est ouverte</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>addUser</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -1240,7 +1390,7 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : l'identifiant de l'utilisateur est inconnu</para>
@@ -1250,21 +1400,21 @@
                         </listitem>
                         <listitem>
                           <para>Cas E5 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">update</emphasis><emphasis>User</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer la commande <emphasis>listUsers </emphasis>et vérifier que l'utilisateur à ajouter n'est pas dans la liste.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1334,16 +1484,16 @@
                       </listitem>
                       <listitem>
                         <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                        <para/>
+                        
                       </listitem>
                     </orderedlist>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">delete</emphasis><emphasis>User</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1421,24 +1571,24 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : aucune session n'est ouverte</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme<emphasis> </emphasis><emphasis>listUser</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1507,24 +1657,24 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : l'identifiant de l'utilisateur est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas un administratuer VISHNU</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">c</emphasis><emphasis role="strong">hange</emphasis><emphasis>Password</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1557,7 +1707,7 @@
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">reset</emphasis><emphasis>Password</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Le mot de passe de l'utilisateur est réinitialisé.</para>
@@ -1594,24 +1744,24 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : l'identifiant de l'utilisateur est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">resetPassword</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -1712,20 +1862,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de la machine est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas connu</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">addLocalAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -1766,7 +1916,7 @@
                         </listitem>
                         <listitem>
                           <para>A l'aide de la commande listLocalAccount, vérifier la mise à jour des informations en les comparant à celles enregistrées.</para>
-                          <para/>
+                          
                         </listitem>
                       </itemizedlist>
                     </listitem>
@@ -1795,20 +1945,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de la machine est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas connu</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>updateLocalAccount</emphasis><emphasis> </emphasis>avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -1869,20 +2019,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de la machine est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas connu</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>delete</emphasis><emphasis role="strong">LocalAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -1900,6 +2050,7 @@
                   <?border-left 0.002cm solid #000000?>
                 </entry>
               </row>
+
               <row>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1935,6 +2086,7 @@
                   <?border-left 0.002cm solid #000000?>
                 </entry>
               </row>
+
               <row>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -1947,12 +2099,15 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
-                      <orderedlist continuation="restarts" numeration="arabic"/>
+                      
                     </listitem>
                     <listitem>
-                      <para>Lancer le programme <emphasis>saveConfiguration</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      <para>
+                        Lancer le
+                        programme <emphasis>saveConfiguration</emphasis> avec
+                        les paramètres correspondant à chaque cas.
+                      </para>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -1970,6 +2125,7 @@
                   <?border-left 0.002cm solid #000000?>
                 </entry>
               </row>
+
               <row>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -2014,17 +2170,17 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom du fichier n'est pas connu</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>restoreConfiguration</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -2060,7 +2216,7 @@
                     </listitem>
                     <listitem>
                       <para>Inspecter la base de données pour vérifier que le nombre d'utilisateurs retourné par la commande <emphasis>listLocalAccount</emphasis><emphasis> </emphasis>est égal au nombre de configurations dans la base de données, que chaque configuration est bien enregistrée dans la base de données.</para>
-                      <para/>
+                      
                     </listitem>
                   </orderedlist>
                 </entry>
@@ -2087,20 +2243,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de la machine est inconnu</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : l'utilisateur n'est pas un administrateur VISHNU</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">listLocalAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -2166,20 +2322,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de l'option n'est valide</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : la valeur de l'option n'est pas valide</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">configureDefaultOption</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -2241,17 +2397,17 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E : le nom de l'option n'est pas connu</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>listOptions </emphasis>avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -2317,20 +2473,20 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <para><emphasis role="strong">Cas de test</emphasis> : paramètres non valides</para>
-                      <para/>
+                      
                       <orderedlist continuation="restarts" numeration="arabic">
                         <listitem>
                           <para>Cas E1 : le nom de l'option n'est valide</para>
                         </listitem>
                         <listitem>
                           <para>Cas E2 : la valeur de l'option n'est pas valide</para>
-                          <para/>
+                          
                         </listitem>
                       </orderedlist>
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis role="strong">configureOption</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -3028,7 +3184,7 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <orderedlist continuation="restarts" numeration="arabic"/>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>addAuthAccount</emphasis> avec les paramètres correspondant à chaque cas et vérifier que son exécution échoue.</para>
@@ -3109,11 +3265,11 @@
                   <orderedlist continuation="restarts" numeration="arabic">
                     <listitem>
                       <orderedlist continuation="restarts" numeration="arabic"/>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>Lancer le programme <emphasis>updateAuthAccount</emphasis> avec les paramètres correspondant à chaque cas.</para>
-                      <para/>
+                      
                     </listitem>
                     <listitem>
                       <para>L'exécution de la commande échoue et un message d'erreur est affiché.</para>
@@ -3188,7 +3344,6 @@
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
                   <?border-left 0.002cm solid #000000?>
-                  <orderedlist continuation="restarts" numeration="arabic"/>
                 </entry>
                 <entry>
                   <?border-bottom 0.002cm solid #000000?>
@@ -3358,9 +3513,6 @@
             </tbody>
           </tgroup>
         </informaltable>
-        <section>
-          <title/>
-        </section>
       </section>
     </section>
     <section>
@@ -3667,9 +3819,7 @@
         </informaltable>
       </section>
     </section>
-    <section>
-      <title/>
-    </section>
+
     <section>
       <title>Contrôle de la qualité du code</title>
       <section>
@@ -3996,14 +4146,12 @@
         </informaltable>
       </section>
     </section>
-    <section>
-      <title/>
-    </section>
+
     <section>
       <title>Contrôle de la documentation utilisateur</title>
       <section>
         <title>Présentation</title>
-        <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées .</para>
+        <para>L'objectif est de vérifier que la documentation utilisateur permet à l'utilisateur de comprendre et d'utiliser les fonctions spécifiées.</para>
       </section>
       <section>
         <title>Liste des tests</title>
