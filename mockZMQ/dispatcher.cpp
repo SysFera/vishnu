@@ -108,7 +108,6 @@ private:
   boost::shared_ptr<Annuary>& mann;
 };
 
-//FIXME: clear unused parameters
 class SubscriptionWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
