@@ -6,15 +6,13 @@
 #
 # 29/08/11 : Add new directory to prepare in the git version of the depot
 #            Merge with WS release
-#
+# 21/01/13 : use generateAllDocumentation.sh to generate Vishnu docs.
+#            Use CMakeLists.txt to retrieve Vishnu version
 #
 
-if [ ! $# -eq 2 ]; then
-  echo "Usage: " $0 "<no_version: 1.0.x> <depot_eclipe_path>"
+if [ ! $# -eq 1 ]; then
+  echo "Usage: " $0 " <depot_eclipe_path>"
   exit 1
-else
-  NO_VERSION=$1
-  echo "Preparing VISHNU v" $NO_VERSION "..."
 fi
 
 if [ ! -f copyright ]; then
@@ -22,7 +20,15 @@ if [ ! -f copyright ]; then
   exit 1
 fi
 
-eclipse=$2
+eclipse=$1
+
+
+# Get vishnu version
+versionNumber=`egrep -e "VISHNU_VERSION .*" CMakeLists.txt | awk -F'"' '{print $2}' | sed "s/ /_/g"` 
+versionComment=`egrep -e "VISHNU_VERSION_COMMENTS .*" CMakeLists.txt | awk -F'"' '{print $2}' | sed "s/ /_/g"`
+
+NO_VERSION="${versionNumber}${versionComment}"
+echo "Preparing VISHNU v" $NO_VERSION "..."
 
 
 ######################################################################
