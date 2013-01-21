@@ -195,7 +195,7 @@ BOOST_AUTO_TEST_CASE( my_test_init_b_nul )
 
 BOOST_AUTO_TEST_CASE( my_test_init_b_invalid )
 {
-  BOOST_REQUIRE_THROW(diet_initialize("/tmp/toto", 0, NULL), std::exception);
+  BOOST_REQUIRE_THROW(diet_initialize("/tmp/toto", 0, NULL), UserException);
 }
 
 BOOST_AUTO_TEST_SUITE_END()
