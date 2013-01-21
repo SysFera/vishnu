@@ -58,11 +58,8 @@ void FileProxy::exists(const bool exist) const {
 
 /**
  * \brief The default constructor
- */ 
-FileProxy::FileProxy() {
-  
-  this->exist = exist;
-}
+ */
+FileProxy::FileProxy() : exist(false) {}
 
 /**
  * \brief Another constructor taking two parameters
