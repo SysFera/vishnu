@@ -85,7 +85,7 @@ Debug(const char *s, ...) {
 }
 
 static void
-CheckJobs(void) {
+CheckJobs() {
   int Taille;
   int i;
 
@@ -104,7 +104,7 @@ CheckJobs(void) {
 }
 
 static void
-TimeStatement(void) {
+TimeStatement() {
 
   //alarm(10);
   AlarmSig = 0;
@@ -177,7 +177,7 @@ tms_posixLog(int loglevel, const char *s, ...) {
 
 
 static int
-Daemonize(void) {
+Daemonize() {
   long maxfd;
   int fd;
 
@@ -203,8 +203,8 @@ Daemonize(void) {
       exit(EXIT_SUCCESS);
   }
 
-  (void)umask(0);
-  (void)chdir("/");
+  umask(0);
+  chdir("/");
   maxfd = sysconf(_SC_OPEN_MAX);
   if (maxfd == -1) {
     maxfd=128;
@@ -237,7 +237,7 @@ buildEnvironment(){
   static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
 
   // variable VISHNU_SUBMIT_MACHINE_NAME
-  (void)setenv(libHostname, hostname.c_str(), true);
+  setenv(libHostname, hostname.c_str(), true);
 
   // variable VISHNU_BATCHJOB_NODEFILE
   boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
@@ -245,12 +245,12 @@ buildEnvironment(){
   // boost::filesystem::permissions(tfileHostname,boost::filesystem::owner_read|boost::filesystem::owner_write,ec);
   // Donc, on reste POSIX
   fdHostname = open(fileHostname.c_str(),O_CREAT|O_EXCL|O_WRONLY,S_IRUSR|S_IWUSR);
-  (void)write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
-  (void)close(fdHostname);
-  (void)setenv(libNodefile,fileHostname.c_str(),true);
+  write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
+  close(fdHostname);
+  setenv(libNodefile,fileHostname.c_str(),true);
 
   // variable VISHNU_BATCHJOB_NUM_NODES
-  (void)setenv(libNumNodes, "1", true);
+  setenv(libNumNodes, "1", true);
 
   return 0;
 }
@@ -279,7 +279,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   if ((pid=fork()) == 0) {
     pid=getpid();
     temp<<pid;
-    (void)setenv(libBatchId,temp.str().c_str(),true);
+    setenv(libBatchId,temp.str().c_str(),true);
 
     if (fstdout != NULL) {
 #ifdef BSD_LIKE_SYSTEM
@@ -464,9 +464,9 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
   // TODO: Prendre en compte le contexte
-//  (void)execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
-  (void)execCommand(req->data.submit.cmd, fout, ferr,
-                    context["vishnu_working_dir"].c_str(), &currentState);
+//  execCommand(req->data.submit.cmd,"/tmp/SORTIE","/tmp/Erreurs",&currentState);
+  execCommand(req->data.submit.cmd, fout, ferr,
+              context["vishnu_working_dir"].c_str(), &currentState);
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
   Board.push_back(currentState);
