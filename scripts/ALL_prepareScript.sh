@@ -491,8 +491,8 @@ run_cmd mkdir -p $pathrel/../doc/specif/images
 copy_rel_file core/specs/docbook/\*-gen\.pdf ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.docbook ../doc/specif/
 copy_rel_file core/specs/docbook/\*-gen\.html ../doc/specif/
-copy_dir core/specs/docbook/images/png ../doc/specif/images
-copy_dir core/specs/docbook/images/svg ../doc/specif/images
+copy_rel_dir core/specs/docbook/images/png ../doc/specif/images
+copy_rel_dir core/specs/docbook/images/svg ../doc/specif/images
 
 
 ###############################################################################
