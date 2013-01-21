@@ -4,6 +4,7 @@
 #include <sstream>
 #include <cmath>
 #include <fstream>
+#include <boost/lexical_cast.hpp>
 
 /*To get the time in second*/
 inline double gettime()
@@ -44,7 +45,7 @@ int main(int argc, char* argv[]) {
    char* vishnu_progname = argv[2];
    char* host_name = argv[3];
    char* ssh_progname = argv[4];
-   int nbIter = atoi(argv[5]);
+   int nbIter = boost::lexical_cast<int>(argv[5]);
    char* outputFile = argv[6];
 
    double t0;

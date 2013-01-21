@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <boost/lexical_cast.hpp>
 
 #include "UMS_Data_forward.hpp"
 #include "TMS_Data_forward.hpp"
@@ -147,7 +148,7 @@ int main(int argc, char** argv){
   const FunctionNameType functNameType = convertToFunctionNameType(functionToCallName);
 
   if (argc > 3){
-    cpt = atoi (argv[3]);
+    cpt = boost::lexical_cast<int>(argv[3]);
   }
   else{
     cpt = 5;

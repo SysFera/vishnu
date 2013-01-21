@@ -2,6 +2,7 @@
 #include "UMS_Data_forward.hpp"
 #include <unistd.h>
 #include <iostream>
+#include <boost/lexical_cast.hpp>
 #include "api_ums.hpp"
 
 using namespace std;
@@ -52,7 +53,7 @@ void forker(int cpt){
 int main(int argc, char** argv){
   int cpt;
   if (argc>1){
-    cpt = atoi (argv[1]);
+    cpt = boost::lexical_cast<int>(argv[1]);
   }
   else{
     cpt = 5;
