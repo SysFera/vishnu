@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <boost/bind.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/algorithm/string/regex.hpp>
@@ -79,7 +80,7 @@ Server::toString() {
   for (i = 0 ; i < mservices.size() - 1 ; ++i){
     res << mservices.at(i) << "$$$";
   }
-  res << mservices.at(mservices.size()-1);
+  res << mservices.at(mservices.size()-1) << "$$$";
   return res.str();
 }
 
@@ -99,9 +100,11 @@ Server::fromString(const std::string& prof) {
     name = *(it++);
     uri = *(it++);
 
-    for (; it != vecString.end(); ++it) {
-      services.push_back(*it);
-    }
+    // we only copy non-empty strings to avoid deserialization errors
+    std::remove_copy_if(it, vecString.end(),
+                        std::back_inserter(services),
+                        boost::bind(&std::string::empty, _1));
+
     res = boost::make_shared<Server>(name, services, uri);
   }
   return res;
