@@ -84,10 +84,10 @@ int main (int ac, char* av[]){
       if (isPolicy(tmp)) {
         if (tmp.size()>2) {
           counter++;
-          UMS_Data::SessionCloseType type(atoi(tmp.substr(2).c_str()));
+          UMS_Data::SessionCloseType type(boost::lexical_cast<int>(tmp.substr(2)));
           connectOpt.setClosePolicy(type);
         } else {
-          UMS_Data::SessionCloseType type(atoi(av[counter+1]));
+          UMS_Data::SessionCloseType type(boost::lexical_cast<int>(av[counter+1]));
           connectOpt.setClosePolicy(type);
           counter +=2;
         }
@@ -95,9 +95,9 @@ int main (int ac, char* av[]){
       else if (isDelay(tmp)) {
         if (tmp.size()>2) {
           counter++;
-          connectOpt.setSessionInactivityDelay(atoi(tmp.substr(2).c_str()));
+          connectOpt.setSessionInactivityDelay(boost::lexical_cast<int>(tmp.substr(2)));
         } else {
-          connectOpt.setSessionInactivityDelay(atoi(av[counter+1]));
+          connectOpt.setSessionInactivityDelay(boost::lexical_cast<int>(av[counter+1]));
           counter +=2;
         }
       } // end if delay
