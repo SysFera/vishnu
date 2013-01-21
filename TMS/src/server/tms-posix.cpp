@@ -15,18 +15,18 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <stdlib.h>
-#include <string.h>
+#include <cstring>
 #include <unistd.h>
-#include <limits.h>
+#include <climits>
 #include <fcntl.h>
-#include <signal.h>
+#include <csignal>
 #include <sys/socket.h>
 #include <boost/asio.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <vector>
 
-#include <stdio.h>
+#include <cstdio>
 
 #include <syslog.h>
 #include <stdarg.h>
@@ -41,13 +41,13 @@ using namespace std;
 using namespace boost::system;
 
 
-static const char* libBatchId="VISHNU_BATCHJOB_ID";
-static const char* libBatchName="VISHNU_BATCHJOB_NAME";
-static const char* libHostname="VISHNU_SUBMIT_MACHINE_NAME";
-static const char* libNodefile="VISHNU_BATCHJOB_NODEFILE";
-static const char* libNumNodes="VISHNU_BATCHJOB_NUM_NODES";
+static const char* libBatchId = "VISHNU_BATCHJOB_ID";
+static const char* libBatchName = "VISHNU_BATCHJOB_NAME";
+static const char* libHostname = "VISHNU_SUBMIT_MACHINE_NAME";
+static const char* libNodefile = "VISHNU_BATCHJOB_NODEFILE";
+static const char* libNumNodes = "VISHNU_BATCHJOB_NUM_NODES";
 
-static int LogLevel=LOG_INFO;
+static int LogLevel = LOG_INFO;
 
 static vector<struct st_job> Board;
 
@@ -93,7 +93,7 @@ CheckJobs() {
   i = 0;
 
   while (i != Taille) {
-    for (i=0; i<Taille; i++) {
+    for (i = 0; i<Taille; i++) {
       if (kill(Board[i].pid,0) == -1) {
         Board.erase(Board.begin()+i);
         break;
@@ -207,16 +207,16 @@ Daemonize() {
   chdir("/");
   maxfd = sysconf(_SC_OPEN_MAX);
   if (maxfd == -1) {
-    maxfd=128;
+    maxfd = 128;
   }
 
 /****
-  for (fd=3; fd<maxfd; fd++) {
+  for (fd = 3; fd<maxfd; fd++) {
     close(fd);
   }
 
   close(STDIN_FILENO);
-  fd=open("/dev/null",O_RDWR);
+  fd = open("/dev/null",O_RDWR);
 
   if (fd != STDIN_FILENO) {
     return -1;
@@ -264,28 +264,28 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   ostringstream temp;
   int fd;
 
-  args[1]=(char *)"/bin/sh";
-  args[2]=(char *)"-c";
+  args[1] = (char *)"/bin/sh";
+  args[2] = (char *)"-c";
   strcpy(commandLine,"exec ");
   strncat(commandLine,command,sizeof(commandLine)-strlen(commandLine)-1);
-  args[3]=commandLine;
-  args[4]=NULL;
-  args[0]=args[1];
+  args[3] = commandLine;
+  args[4] = NULL;
+  args[0] = args[1];
 
   printf("Exec:%s > %s 2> %s \n",commandLine,fstdout,fstderr);
 
   memset(current->JobId,0,sizeof current->JobId);
 
-  if ((pid=fork()) == 0) {
-    pid=getpid();
+  if ((pid = fork()) == 0) {
+    pid = getpid();
     temp<<pid;
     setenv(libBatchId,temp.str().c_str(),true);
 
     if (fstdout != NULL) {
 #ifdef BSD_LIKE_SYSTEM
-      fd=open(fstdout,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+      fd = open(fstdout,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
 #else
-      fd=open(fstdout,O_CREAT|O_CLOEXEC|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+      fd = open(fstdout,O_CREAT|O_CLOEXEC|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
 #endif
       close(STDOUT_FILENO);
       dup2(fd,STDOUT_FILENO);
@@ -293,7 +293,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     }
 
     if (fstderr != NULL) {
-      fd=open(fstderr,O_CREAT|O_WRONLY|O_APPEND,S_IRUSR|S_IWUSR);
+      fd = open(fstderr,O_CREAT|O_WRONLY|O_APPEND,S_IRUSR|S_IWUSR);
       close(STDERR_FILENO);
       dup2(fd,STDERR_FILENO);
       close(fd);
@@ -326,7 +326,7 @@ OpenSocketServer(const char* socketName) {
   int ret;
   int ret2;
   int sv_errno;
-  const char* stest="COUCOU";
+  const char* stest = "COUCOU";
   char rtest[128];
 
   ret = stat(socketName,&st_info);
@@ -340,7 +340,7 @@ OpenSocketServer(const char* socketName) {
       return -3;
     }
   } else if (ret < 0) {
-    sv_errno=errno;
+    sv_errno = errno;
 
     perror("Erreur stat ");
 
@@ -488,7 +488,7 @@ RequestCancel(struct Request* req, struct Response* ret) {
 
   Taille = Board.size();
 
-  for (i=0; i<Taille; i++) {
+  for (i = 0; i<Taille; i++) {
     if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
       kill(Board[i].pid,SIGTERM);
       Board[i].state = KILL;
@@ -508,7 +508,7 @@ RequestGetInfo(struct Request* req, struct Response* ret) {
 
   Taille = Board.size();
 
-  for (i=0; i<Taille; i++) {
+  for (i = 0; i<Taille; i++) {
     if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
       memcpy(&(ret->data.info),&(Board[i]), sizeof(struct st_job));
       return 0;
@@ -524,7 +524,7 @@ RequestGetStartTime(struct Request* req, struct Response* ret) {
 
 static int
 RequestKill(struct Request* req, struct Response* ret) {
-  Terminated=1;
+  Terminated = 1;
   return 0;
 }
 
@@ -536,7 +536,7 @@ LaunchDaemon() {
   int cfd;
   struct Request req;
   struct Response ret;
-  const char* sv_sock= "tms-posix-socket-";
+  const char* sv_sock =  "tms-posix-socket-";
   char name_sock[255];
   uid_t euid;
   struct passwd* lpasswd;
@@ -551,7 +551,7 @@ LaunchDaemon() {
 
   Debug("Serveur euid:%d\n",euid);
 
-  lpasswd=getpwuid(euid);
+  lpasswd = getpwuid(euid);
   if ( lpasswd == NULL) {
    perror("Erreur passwd");
    exit(1);
