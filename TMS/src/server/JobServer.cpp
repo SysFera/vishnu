@@ -58,10 +58,10 @@ int JobServer::submitJob(const std::string& scriptContent,
 	std::string machineName = machineServer.getMachineName();
 	delete machine;
 
-        BatchType batchType = mbatchType;
-        if (options.isPosix()){
-          batchType = POSIX;
-        }
+    BatchType batchType = mbatchType;
+    if (options.isPosix()) {
+      batchType = POSIX;
+    }
 	Env env(batchType);
 
 	std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
@@ -150,7 +150,7 @@ int JobServer::submitJob(const std::string& scriptContent,
           }
 
         }
-        if (defaultBatchOption.size()){
+        if (!defaultBatchOption.empty()){
           processDefaultOptions(defaultBatchOption, convertedScript, key, batchType);
         }
 
@@ -161,7 +161,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
 	SSHJobExec sshJobExec(acLogin, machineName, batchType, jobSerialized, submitOptionsSerialized);
-	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
+	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
 
@@ -218,7 +218,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
 	sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"',";
 	sqlUpdate+="batchJobId='"+BatchJobId+"',";
-        sqlUpdate+="batchType="+convertToString(batchType)+",";
+    sqlUpdate+="batchType="+convertToString(batchType)+",";
 	sqlUpdate+="jobName='"+mjob.getJobName()+"',";
 	sqlUpdate+="jobPath='"+mjob.getJobPath()+"',";
 	sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";
@@ -253,12 +253,12 @@ int JobServer::submitJob(const std::string& scriptContent,
  * \return raises an exception on error
  */
 void
-JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key, BatchType batchType){
-
-  size_t pos = 0;
-  size_t position =0;
+JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption,
+                                 std::string& content, std::string& key,
+                                 BatchType batchType) {
+  size_t position = 0;
   std::string key1;
-    int count = 0;
+  int count = 0;
   while (count < defaultBatchOption.size()) {
 
     key1 =  defaultBatchOption.at(count);
@@ -315,7 +315,7 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
             break;
           }
         }
-        posLastDirective = pos + line.size() +1;
+        posLastDirective = pos + line.size() + 1;
       }
       pos++;
     }
@@ -454,7 +454,6 @@ TMS_Data::Job JobServer::getJobInfo() {
 			" AND vsession.users_numuserid=users.numuserid"
 			" AND job.status > 0 and job.submitMachineId='"+mmachineId+"'"
 			" AND job.jobId='"+mjob.getJobId()+"'";
-
 
 	boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
