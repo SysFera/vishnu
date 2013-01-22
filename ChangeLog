@@ -1,5 +1,5 @@
 +-----------------------------+
-| VISHNU 3.0.0 - Beta version |
+| VISHNU 3.0.0 - Beta1 version |
 +-----------------------------+
 * Added sample configuration files for VISHNU and Supervisord
 * Fixed several memory leaks
