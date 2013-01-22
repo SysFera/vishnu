@@ -565,6 +565,8 @@ class VISHNUJNI {
   public final static native void SubmitOptions_setWorkId(long jarg1, SubmitOptions jarg1_, long jarg2);
   public final static native String SubmitOptions_getSpecificParams(long jarg1, SubmitOptions jarg1_);
   public final static native void SubmitOptions_setSpecificParams(long jarg1, SubmitOptions jarg1_, String jarg2);
+  public final static native boolean SubmitOptions_isPosix(long jarg1, SubmitOptions jarg1_);
+  public final static native void SubmitOptions_setPosix(long jarg1, SubmitOptions jarg1_, boolean jarg2);
   public final static native long SubmitOptions_getCriterion(long jarg1, SubmitOptions jarg1_);
   public final static native void SubmitOptions_setCriterion(long jarg1, SubmitOptions jarg1_, long jarg2, LoadCriterion jarg2_);
   public final static native long SubmitOptions_eGet(long jarg1, SubmitOptions jarg1_, int jarg2, boolean jarg3);

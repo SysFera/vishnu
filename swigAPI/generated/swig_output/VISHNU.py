@@ -2645,6 +2645,14 @@ class SubmitOptions(EObject):
         """setSpecificParams(self, EString _specificParams)"""
         return _VISHNU.SubmitOptions_setSpecificParams(self, *args, **kwargs)
 
+    def isPosix(self, *args, **kwargs):
+        """isPosix(self) -> EBoolean"""
+        return _VISHNU.SubmitOptions_isPosix(self, *args, **kwargs)
+
+    def setPosix(self, *args, **kwargs):
+        """setPosix(self, EBoolean _posix)"""
+        return _VISHNU.SubmitOptions_setPosix(self, *args, **kwargs)
+
     def getCriterion(self, *args, **kwargs):
         """getCriterion(self) -> LoadCriterion_ptr"""
         return _VISHNU.SubmitOptions_getCriterion(self, *args, **kwargs)

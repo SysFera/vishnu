@@ -9007,6 +9007,34 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Su
 }
 
 
+SWIGEXPORT jboolean JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_SubmitOptions_1isPosix(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jboolean jresult = 0 ;
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  ::ecore::EBoolean result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::SubmitOptions **)&jarg1; 
+  result = (::ecore::EBoolean)((TMS_Data::SubmitOptions const *)arg1)->isPosix();
+  jresult = (jboolean)result; 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_SubmitOptions_1setPosix(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jboolean jarg2) {
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  ::ecore::EBoolean arg2 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::SubmitOptions **)&jarg1; 
+  arg2 = jarg2 ? true : false; 
+  (arg1)->setPosix(arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_SubmitOptions_1getCriterion(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
   jlong jresult = 0 ;
   TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;

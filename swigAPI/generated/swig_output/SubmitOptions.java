@@ -187,6 +187,14 @@ public class SubmitOptions extends EObject {
     VISHNUJNI.SubmitOptions_setSpecificParams(swigCPtr, this, _specificParams);
   }
 
+  public boolean isPosix() {
+    return VISHNUJNI.SubmitOptions_isPosix(swigCPtr, this);
+  }
+
+  public void setPosix(boolean _posix) {
+    VISHNUJNI.SubmitOptions_setPosix(swigCPtr, this, _posix);
+  }
+
   public LoadCriterion getCriterion() {
     long cPtr = VISHNUJNI.SubmitOptions_getCriterion(swigCPtr, this);
     return (cPtr == 0) ? null : new LoadCriterion(cPtr, false);

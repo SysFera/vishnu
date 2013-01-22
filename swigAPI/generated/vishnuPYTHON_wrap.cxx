@@ -20952,6 +20952,61 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_SubmitOptions_isPosix(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ::ecore::EBoolean result;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:SubmitOptions_isPosix",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__SubmitOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SubmitOptions_isPosix" "', argument " "1"" of type '" "TMS_Data::SubmitOptions const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::SubmitOptions * >(argp1);
+  result = (::ecore::EBoolean)((TMS_Data::SubmitOptions const *)arg1)->isPosix();
+  resultobj = SWIG_From_bool(static_cast< bool >(result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_SubmitOptions_setPosix(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
+  ::ecore::EBoolean arg2 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  bool val2 ;
+  int ecode2 = 0 ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_posix", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:SubmitOptions_setPosix",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__SubmitOptions, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "SubmitOptions_setPosix" "', argument " "1"" of type '" "TMS_Data::SubmitOptions *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::SubmitOptions * >(argp1);
+  ecode2 = SWIG_AsVal_bool(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "SubmitOptions_setPosix" "', argument " "2"" of type '" "::ecore::EBoolean""'");
+  } 
+  arg2 = static_cast< ::ecore::EBoolean >(val2);
+  (arg1)->setPosix(arg2);
+  resultobj = SWIG_Py_Void();
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_SubmitOptions_getCriterion(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
   PyObject *resultobj = 0;
   TMS_Data::SubmitOptions *arg1 = (TMS_Data::SubmitOptions *) 0 ;
@@ -42302,6 +42357,8 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"SubmitOptions_setWorkId", (PyCFunction) _wrap_SubmitOptions_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setWorkId(SubmitOptions self, ELong _workId)"},
 	 { (char *)"SubmitOptions_getSpecificParams", _wrap_SubmitOptions_getSpecificParams, METH_VARARGS, (char *)"SubmitOptions_getSpecificParams(SubmitOptions self) -> EString"},
 	 { (char *)"SubmitOptions_setSpecificParams", (PyCFunction) _wrap_SubmitOptions_setSpecificParams, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setSpecificParams(SubmitOptions self, EString _specificParams)"},
+	 { (char *)"SubmitOptions_isPosix", _wrap_SubmitOptions_isPosix, METH_VARARGS, (char *)"SubmitOptions_isPosix(SubmitOptions self) -> EBoolean"},
+	 { (char *)"SubmitOptions_setPosix", (PyCFunction) _wrap_SubmitOptions_setPosix, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setPosix(SubmitOptions self, EBoolean _posix)"},
 	 { (char *)"SubmitOptions_getCriterion", _wrap_SubmitOptions_getCriterion, METH_VARARGS, (char *)"SubmitOptions_getCriterion(SubmitOptions self) -> LoadCriterion_ptr"},
 	 { (char *)"SubmitOptions_setCriterion", (PyCFunction) _wrap_SubmitOptions_setCriterion, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_setCriterion(SubmitOptions self, LoadCriterion_ptr _criterion)"},
 	 { (char *)"SubmitOptions_eGet", (PyCFunction) _wrap_SubmitOptions_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"SubmitOptions_eGet(SubmitOptions self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
