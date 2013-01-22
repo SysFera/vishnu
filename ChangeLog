@@ -1,7 +1,6 @@
 +-----------------------------+
 | VISHNU 3.0.0 - Beta version |
 +-----------------------------+
-* Changed and added on configuration keys
 * Added sample configuration files for VISHNU and Supervisord
 * Fixed several memory leaks
 * Fixed bad boost version in CMakeLists
