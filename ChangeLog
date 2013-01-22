@@ -2,14 +2,26 @@
 | VISHNU 3.0.0 - Beta version |
 +-----------------------------+
 * Changed and added on configuration keys
-* Added configuration samples for VISHNU and Supervisord
-* Fix memory leak
+* Added sample configuration files for VISHNU and Supervisord
+* Fixed several memory leaks
 * Fixed bad boost version in CMakeLists
-* Unify configuration files
+* Unified configuration files: all Vishnu daemons and clients can have the
+	same configuration file
 * New documentation user/admin
-* Add posix-shell : you can start TMS without batch scheduler, TMS functionnalities available in the shell
+* Add posix-shell: you can start TMS without batch scheduler, TMS functionnalities available in the shell
 * Fixed bugzilla #341 - Rename of FMS commands using POSIX name
-* WS are abandonned, they won't be maintained anymore.
+* WS are abandonned, they won't be maintained anymore. Related files and
+	directories have been removed.
+* Java APIs are available
+* Vishnu does not rely on DIET anymore. All communications are handled by
+	ZMQ. SeDs only require 1 open port to communicate (easier for
+	deployments)
+* TMS now uses FMS to send input files to jobs. You can use remote files
+	as input files.
+* A new daemon has been introduced: the dispatcher which serves as a proxy
+	between clients and SeDs
+* Several bugs closed: #449, #452, #453, #225, #409, #344, #291, #289,
+	#288, #226, #292, #295, #441, #233, #341, #386, #447, #436, #446
 
 +-----------------------------+
 | VISHNU 2.0.0 - Beta3        |
