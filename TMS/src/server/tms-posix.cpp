@@ -129,9 +129,14 @@ TimeStatement() {
         kill(Board[i].pid,SIGKILL);
       } else {
         Board[i].state = TERMINATED;
-        alarm(5);
+        AlarmSig = 0;
       }
     }
+  }
+
+  if (AlarmSig == 0) {
+    alarm(5);
+    return;
   }
 
   // Manage walclocklimit
@@ -153,18 +158,12 @@ TimeStatement() {
     }
   }
  
+  if (futur != 0) {
+    alarm(futur);
+  }
   AlarmSig = 0;
 
 }
-
-/***
-  une version Boost ....
-  Board.erase(remove_if(Board.begin(), Board.end(),
-                        [](struct st_job elem) {
-                          return kill(elem.pid,0) == -1;
-                        }),
-              Board.end());
-*****/
 
 static void
 sigchldHandler(int sig) {
@@ -246,9 +245,6 @@ buildEnvironment(){
 
   // variable VISHNU_BATCHJOB_NODEFILE
   boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
-  // permissions non dispo en boost 1.46
-  // boost::filesystem::permissions(tfileHostname,boost::filesystem::owner_read|boost::filesystem::owner_write,ec);
-  // Donc, on reste POSIX
   fdHostname = open(fileHostname.c_str(),O_CREAT|O_EXCL|O_WRONLY,S_IRUSR|S_IWUSR);
   write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   close(fdHostname);
@@ -510,14 +506,6 @@ RequestGetInfo(struct Request* req, struct Response* ret) {
   int i;
   struct st_job NoJob;
 
-/****
-  int a = 1;
-
-  while (a == 1) {
-    sleep(2);
-  }
-*****/
-
   JobId = req->data.info.JobId;
 
   Taille = Board.size();
@@ -613,7 +601,6 @@ LaunchDaemon() {
     }
     if (strncmp(req.req,lb_req_submit,sizeof(req.req)) == 0) {
       ret.status = RequestSubmit(&req,&ret);
-//      Board.push_back(ret.data.submit);
     }
     if (strncmp(req.req,lb_req_cancel,sizeof(req.req)) == 0) {
       ret.status = RequestCancel(&req,&ret);
