@@ -29,7 +29,6 @@
 
 #include <cstdio>
 
-#include <syslog.h>
 #include <stdarg.h>
 #include <pwd.h>
 
@@ -58,24 +57,6 @@ static volatile sig_atomic_t AlarmSig = 0;
 static char HomeDir[255];
 
 static void
-tms_posixLog(int loglevel, const char *s, ...) {
-	va_list va_alist;
-	char buf[256];
-	sigset_t nmask, omask;
-
-  va_start(va_alist, s);
-  vsnprintf(buf, sizeof(buf), s, va_alist);
-  va_end(va_alist);
-
-  sigfillset(&nmask);
-  sigprocmask(SIG_BLOCK, &nmask, &omask);
-  openlog("tms-posix", 0, LOG_DAEMON);
-  syslog(loglevel, "%s", buf);
-  closelog();
-  sigprocmask(SIG_SETMASK, &omask, NULL);
-}
-
-static void
 CheckJobs() {
   int Taille;
   int i;
@@ -83,11 +64,8 @@ CheckJobs() {
 
   Taille = Board.size();
 
-  tms_posixLog(LOG_INFO, "CheckJobs T:%d",Taille);
-
   // End of Daemon ?
   if (Taille == 0) {
-  tms_posixLog(LOG_INFO, "Fin daemon");
     Terminated = 1;
     return;
   }
@@ -96,7 +74,6 @@ CheckJobs() {
   while (i < Taille) {
     for (i = 0; i<Taille; i++) {
       if (Board[i].state == TERMINATED) {
-  tms_posixLog(LOG_INFO, "Board Erase i:%d",i);
         Board.erase(Board.begin()+i);
         Taille = Board.size();
         CheckIn5s = true;
@@ -118,7 +95,6 @@ CheckJobs() {
   // Checks for normal ends of process
   for (i = 0; i<Taille; i++) {
     if (kill(Board[i].pid,0) == -1) {
-  tms_posixLog(LOG_INFO, "Job Terminated");
       Board[i].state = TERMINATED;
       CheckIn5s = true;
     }
@@ -141,7 +117,6 @@ TimeStatement() {
   time_t temp;
   time_t futur = 0;
 
-  tms_posixLog(LOG_INFO, "TimeStatement");
   now = time(NULL);
 
   Taille = Board.size();
@@ -391,12 +366,10 @@ OpenSocketServer(const char* socketName) {
   // Socket UNIX
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (sfd == -1) {
-    tms_posixLog(LOG_DEBUG, "Error creating socket : %s",strerror(errno));
     return -2;
   }
 
   if ( (unlink(socketName) == -1) && errno != ENOENT) {
-    tms_posixLog(LOG_DEBUG, "Error removing socket file : %s",strerror(errno));
     return -3;
   }
 
@@ -405,12 +378,10 @@ OpenSocketServer(const char* socketName) {
   strncpy(addr.sun_path, socketName, sizeof(addr.sun_path)-1);
 
   if (::bind(sfd, (struct sockaddr *)&addr,sizeof(struct sockaddr_un)) == -1) {
-    tms_posixLog(LOG_DEBUG, "Error binding socket : %s",strerror(errno));
     return -4;
   }
 
   if (listen(sfd, 5) == -1) {
-    tms_posixLog(LOG_DEBUG, "Error listening socket : %s",strerror(errno));
     return -5;
   }
 
@@ -423,7 +394,6 @@ AcceptRequest(int sfd, struct Request* req) {
 
   while ( (cfd = accept(sfd,NULL,NULL)) < 0) {
     if (errno != EINTR) {
-      tms_posixLog(LOG_DEBUG, "Error accept socket:%s",strerror(errno));
       return -7;
     }
     if ( ChildSigs == 1) {
@@ -467,8 +437,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigaddset(&blockMask, SIGCHLD);
 
   POSIXParser::parseFile(req->data.submit.cmd, context);
-
-  tms_posixLog(LOG_INFO, "Starting shell : %s",req->data.submit.cmd);
 
   if (strlen(req->data.submit.OutPutPath) != 0) {
     strncpy(fout, req->data.submit.OutPutPath, sizeof(fout));
@@ -594,9 +562,6 @@ LaunchDaemon() {
 
   char buffer[255];
 
-  tms_posixLog(LOG_INFO, "Starting tms-posix monitoring daemon");
-
-  //Board.reserve(10);
 
   euid = geteuid();
 
@@ -617,7 +582,6 @@ LaunchDaemon() {
   sa.sa_flags = 0;
   sa.sa_handler = sigchldHandler;
   if (sigaction(SIGCHLD, &sa, NULL) == -1) {
-    tms_posixLog(LOG_DEBUG, "Error signal handler : %s",strerror(errno));
     exit(6);
   }
 
@@ -625,7 +589,6 @@ LaunchDaemon() {
   sa.sa_flags = 0;
   sa.sa_handler = sigalarmHandler;
   if (sigaction(SIGALRM, &sa, NULL) == -1) {
-    tms_posixLog(LOG_DEBUG, "Error signal handler : %s",strerror(errno));
     exit(6);
   }
 
