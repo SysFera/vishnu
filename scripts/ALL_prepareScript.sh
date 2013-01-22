@@ -159,6 +159,10 @@ copy_file core/database/postgre_create.sql core/database/
 copy_file core/database/postgre_update.sql core/database/
 copy_file core/database/mysql_create.sql core/database/
 
+# Copy contrib
+create_dir contrib
+copy_file contrib/\* contrib/
+
 # Copy core sources
 create_dir core/doc
 create_dir core/src
