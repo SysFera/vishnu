@@ -1345,8 +1345,7 @@ urlSupervisor=http://127.0.0.1:9001
     lancer et de contrôler leur exécution. </para>
     <para>Cette section décrit les principaux élements à configurer pour Supervisord.
   Vous pouvez vous inspirer du fichier d'exemple <emphasis>supervisord-sample.cfg</emphasis>
-  situé dans le dossier $INSTALL_PREFIX/etc et l'adapter selon votre installation.
-  Les textes après un point-virgule ';' sont des commentaires.</para>
+  situé dans le dossier $INSTALL_PREFIX/etc et l'adapter selon votre installation.</para>
   <para>Les textes après un point-virgule ';' sont des commentaires. </para>
 
 
