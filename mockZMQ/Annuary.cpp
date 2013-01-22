@@ -105,7 +105,7 @@ void
 Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
   boost::lock_guard<boost::recursive_mutex> lock(mutex);
   for (std::vector<std::string>::iterator entry = cfgInfo.begin(), end = cfgInfo.end();
-  entry != end; entry++) {
+       entry != end; ++entry) {
     std::istringstream iss(*entry);
     std::string uri;
     std::string mid;
