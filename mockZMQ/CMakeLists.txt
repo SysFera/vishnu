@@ -29,9 +29,8 @@ target_link_libraries (zmq_helper
   vishnu-core
 )
 
-add_executable(dispatcher
-  dispatcher.cpp
-  )
+add_executable(dispatcher dispatcher/main.cpp
+  dispatcher/dispatcher.cpp)
 
 target_link_libraries(dispatcher
   ${ZMQ_LIBRARIES} 
