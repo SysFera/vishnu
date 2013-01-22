@@ -41,7 +41,6 @@ namespace vishnu {
     URLSUPERVISOR,
     DISP_URIADDR,
     DISP_URISUBS,
-    DISP_INITFILE,
     DISP_NBTHREAD,
     FMS_URIADDR,
     IMS_URIADDR,

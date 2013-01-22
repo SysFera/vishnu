@@ -25,13 +25,11 @@ namespace vishnu {
   /* [16] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER},
   /* [17] */ {DISP_URIADDR, "disp_uriAddr", URI_PARAMETER},
   /* [18] */ {DISP_URISUBS, "disp_uriSubs", URI_PARAMETER},
-  /* [19] */ {DISP_INITFILE, "disp_initFile", STRING_PARAMETER},
-  /* [20] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER},
-  /* [21] */ {FMS_URIADDR, "fms_uriAddr", URI_PARAMETER},
-  /* [22] */ {IMS_URIADDR, "ims_uriAddr", URI_PARAMETER},
-  /* [23] */ {TMS_URIADDR, "tms_uriAddr", URI_PARAMETER},
-  /* [24] */ {UMS_URIADDR, "ums_uriAddr", URI_PARAMETER}
+  /* [19] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER},
+  /* [20] */ {FMS_URIADDR, "fms_uriAddr", URI_PARAMETER},
+  /* [21] */ {IMS_URIADDR, "ims_uriAddr", URI_PARAMETER},
+  /* [22] */ {TMS_URIADDR, "tms_uriAddr", URI_PARAMETER},
+  /* [23] */ {UMS_URIADDR, "ums_uriAddr", URI_PARAMETER}
   };
   //}}RELAX<MISRA_0_1_3>
 }
-

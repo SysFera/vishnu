@@ -247,7 +247,6 @@ main(int argc, char** argv) {
   // Set default values
   std::string  uriAddr = "tcp://127.0.0.1:5560";  // localhost and 5560
   std::string  uriSubs = "tcp://127.0.0.1:5561";  // localhost and 5561
-  std::string  confFil;  // no init configuration file
   unsigned int nthread = 5;  // 5 threads to manage requests
   unsigned int timeout = 10; // wait 10s before retrying
 
@@ -263,7 +262,6 @@ main(int argc, char** argv) {
   std::cerr << "====== Initial configuration =====\n"
             << "disp_uriAddr=" << uriAddr << "\n"
             << "disp_uriSubs=" << uriSubs << "\n"
-            << "disp_initFile=" << confFil << "\n"
             << "disp_timeout=" << timeout << "\n"
             << "disp_nbthread=" << nthread << "\n"
             << "==================================\n";
