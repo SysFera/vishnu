@@ -153,11 +153,9 @@ copy_dir Cmake
 create_dir core
 create_dir core/database
 
-copy_file core/database/database_init.sql core/database/
-copy_file core/database/database_update.sql core/database/
-copy_file core/database/postgre_create.sql core/database/
-copy_file core/database/postgre_update.sql core/database/
-copy_file core/database/mysql_create.sql core/database/
+copy_file core/database/database_\*.sql core/database/
+copy_file core/database/postgre_\*.sql core/database/
+copy_file core/database/mysql_\*.sql core/database/
 
 # Copy contrib
 create_dir contrib
