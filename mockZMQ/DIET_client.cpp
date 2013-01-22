@@ -152,8 +152,7 @@ inline int getTimeout() {
 diet_profile_t*
 diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
   // TODO : Do not handle -1 for input (no input param)
-  diet_profile_t* res(NULL);
-  res = new diet_profile_t;
+  diet_profile_t* res = new diet_profile_t;
   res->IN = IN;
   res->INOUT = INOUT;
   res->OUT = OUT;
