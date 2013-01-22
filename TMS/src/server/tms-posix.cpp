@@ -108,6 +108,7 @@ CheckJobs() {
     for (i = 0; i<Taille; i++) {
       if (Board[i].state == TERMINATED) {
         Board.erase(Board.begin()+i);
+        CheckIn5s = true;
         break;
       }
     }
@@ -118,9 +119,8 @@ CheckJobs() {
     if (Board[i].state == KILL) {
       if (kill(Board[i].pid,0) == -1) {
         Board[i].state = TERMINATED;
-      } else {
-        CheckIn5s = true;
       }
+      CheckIn5s = true;
     }
   }
 
@@ -128,14 +128,17 @@ CheckJobs() {
   for (i = 0; i<Taille; i++) {
     if (kill(Board[i].pid,0) == -1) {
       Board[i].state = TERMINATED;
+      CheckIn5s = true;
     }
   }
 
+  // Groundwork for futurs signals
   if (CheckIn5s) {
+    ChildSigs = 1;
     alarm(5);
+  } else {
+    ChildSigs = 0;
   }
-
-  ChildSigs = 0;
 }
 
 static void
@@ -161,8 +164,6 @@ TimeStatement() {
     }
   }
 
-  AlarmSig = 0;
-
   // Manage walclocklimit
   for (i = 0; i<Taille; i++) {
     if (Board[i].maxTime != 0) {
@@ -182,6 +183,8 @@ TimeStatement() {
     }
   }
  
+  AlarmSig = 0;
+
 }
 
 /***
@@ -200,7 +203,7 @@ sigchldHandler(int sig) {
 
 
   while ((childPid = waitpid(-1, &status, WNOHANG)) > 0) {
-  ChildSigs = 1;
+    ChildSigs = 1;
   }
 }
 
@@ -553,7 +556,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
     wallclocklimit = 0;
   }
 
-  // TODO: Prendre en compte le contexte
   if (context.find("vishnu_working_dir")  != context.end()) {
     execCommand(req->data.submit.cmd, fout, ferr,
                 context["vishnu_working_dir"].c_str(), &currentState, wallclocklimit);
@@ -717,7 +719,7 @@ LaunchDaemon() {
 
   Debug("Fin AcceptSocket.\n");
     if (cfd < 0) {
-      exit(-cfd);
+      break;
     }
 
     if (strncmp(req.sig,signature,sizeof(req.sig)) != 0) {
@@ -755,5 +757,6 @@ LaunchDaemon() {
       TimeStatement();
     }
   }
+  unlink(name_sock);
 }
 
