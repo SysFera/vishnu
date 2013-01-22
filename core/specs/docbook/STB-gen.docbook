@@ -561,14 +561,14 @@ de SHA-1.</para>
               <entry><para>Adresse IP et nom DNS statiques </para></entry>
             </row>
             <row>
-              <entry><para>1.4.3</para></entry>
+              <entry><para>1.4.2</para></entry>
               <entry><para>Machine virtuelle Java</para></entry>
               <entry><para>Java SDK v1.6.0</para></entry>
             </row>
             <row>
-              <entry><para>1.4.6</para></entry>
+              <entry><para>1.4.3</para></entry>
               <entry><para>Autres logiciels requis</para></entry>
-              <entry><para>SysFera DS, ZMQ, SSH (client/serveur), RSync</para></entry>
+              <entry><para>ZMQ(version 2), SSH (client/serveur), RSync, supervisord (version 3.0a12), xmlrpc (version 2.1.19)</para></entry>
             </row>
             <row>
               <entry><para>1.5</para></entry>
@@ -698,7 +698,7 @@ de SHA-1.</para>
             <row>
               <entry><para>2.3</para></entry>
               <entry><para>Librairie BOOST C++</para></entry>
-              <entry><para>v1.46.1 minimum</para></entry>
+              <entry><para>v1.46.1</para></entry>
             </row>
             <row>
               <entry><para>2.4</para></entry>
@@ -709,11 +709,6 @@ de SHA-1.</para>
               <entry><para>2.5</para></entry>
               <entry><para>Logiciels de transferts de fichiers</para></entry>
               <entry><para>RSync v3.0</para></entry>
-            </row>
-            <row>
-              <entry><para>2.6</para></entry>
-              <entry><para>SysFera-DS</para></entry>
-              <entry><para>Version 2.8</para></entry>
             </row>
             <row>
               <entry><para>2.8</para></entry>
@@ -733,12 +728,12 @@ de SHA-1.</para>
             <row>
               <entry><para>3.1</para></entry>
               <entry><para>CMake</para></entry>
-              <entry><para>CMake v2.8.3 minimum</para></entry>
+              <entry><para>CMake v2.8.3</para></entry>
             </row>
             <row>
               <entry><para>3.2</para></entry>
               <entry><para>GCC</para></entry>
-              <entry><para>GCC v4.4.3 minimum (Janvier 2010)</para></entry>
+              <entry><para>GCC v4.4.3 (Janvier 2010)</para></entry>
             </row>
             <row>
               <entry><para>3.3</para></entry>
