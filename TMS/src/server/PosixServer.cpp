@@ -36,13 +36,8 @@ PosixServer::submit(const char* scriptPath,
   memcpy(op.ErrorPath, options.getErrorPath().c_str(), strlen(options.getErrorPath().c_str()));
   memcpy(op.WorkDir, options.getWorkingDir().c_str(), strlen(options.getWorkingDir().c_str()));
 
-  std::cout << "OutPutPath: " << op.OutPutPath << std::endl;
-  std::cout << "ErrorPath: " << op.ErrorPath << std::endl;
-  std::cout << "WorkingDir: " << op.WorkDir << std::endl;
-
   buildEnvironment();
 
-  std::cout << "PosixServerSubmit"<<std::endl;
   switch(fork()) {
     case -1:
       return -1;
@@ -55,16 +50,12 @@ PosixServer::submit(const char* scriptPath,
       break;
   }
 
-  std::cout << "PosixServer reqSubmit"<<std::endl;
   ret = ReqSubmit(scriptPath, &resultat, &op);
-
-  std::cout << "PosixServer fin reqSubmit"<<std::endl;
 
   job.setBatchJobId(std::string(resultat.JobId));
   job.setJobId(std::string(resultat.JobId));
   job.setStatus(4);
   job.setJobQueue("posix");
-  std::cout << "Job Status :" << job.getStatus() << std::endl;
 // If no name give a default job name
   
   if (options.getName().compare("")==0){
@@ -73,33 +64,13 @@ PosixServer::submit(const char* scriptPath,
     job.setJobName(options.getName());
   }
 
-  std::cout << resultat.OutPutPath<<std::endl;
   OutPutPath = std::string(resultat.OutPutPath);
   ErrorPath = std::string(resultat.ErrorPath);
 
-  std::cout << OutPutPath << std::endl;
-  std::cout << ErrorPath << std::endl;
-//  job.setOutputPath(op.OutPutPath);
-   job.setOutputPath(OutPutPath);
-/***
-  if (options.getOutputPath().compare("")==0){
-    job.setOutputPath("/tmp/out.o");
-  } else {
-    job.setOutputPath(options.getOutputPath());
-  }
-**/
+  job.setOutputPath(OutPutPath);
 
-  //job.setErrorPath(op.ErrorPath);
   job.setErrorPath(ErrorPath);
-/**
-  if (options.getErrorPath().compare("")==0){
-    job.setErrorPath("/tmp/err.e");
-  } else {
-    job.setErrorPath(options.getErrorPath());
-  }
-**/
 
- std::cout << "ret code : " << ret << std::endl;
   return ret;
 }
 

@@ -48,8 +48,6 @@ static const char* libHostname = "VISHNU_SUBMIT_MACHINE_NAME";
 static const char* libNodefile = "VISHNU_BATCHJOB_NODEFILE";
 static const char* libNumNodes = "VISHNU_BATCHJOB_NUM_NODES";
 
-static int LogLevel = LOG_INFO;
-
 static vector<struct st_job> Board;
 
 static volatile int Terminated = 0;
@@ -59,34 +57,22 @@ static volatile sig_atomic_t AlarmSig = 0;
 
 static char HomeDir[255];
 
-/**
- * \brief To show how to use tms-posix
- * \fn int usage(char* cmd)
- * \param cmd The name of the program
- * \return Always 1
- */
-
 static void
-usage(char* cmd)
-{
-  cerr << "Usage: " << cmd << " COMMANDE_TYPE[SUBMIT] <BatchType> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>";
-  cerr << " <SubmitOptionsSerializedPath> <job_script_path>" << endl;
-  cerr << "\t\t\t\t\t" << " or " << endl;
-  cerr << "Usage: " << cmd << " COMMANDE_TYPE[CANCEL] <BatchType> <JobSerializedPath>  <SlaveErrorPath>" << endl;
-  exit(EXIT_FAILURE);
-}
-
-
-static void
-Debug(const char *s, ...) {
+tms_posixLog(int loglevel, const char *s, ...) {
 	va_list va_alist;
 	char buf[256];
+	sigset_t nmask, omask;
 
   va_start(va_alist, s);
   vsnprintf(buf, sizeof(buf), s, va_alist);
   va_end(va_alist);
 
-  write(1,buf,strlen(buf));
+  sigfillset(&nmask);
+  sigprocmask(SIG_BLOCK, &nmask, &omask);
+  openlog("tms-posix", 0, LOG_DAEMON);
+  syslog(loglevel, "%s", buf);
+  closelog();
+  sigprocmask(SIG_SETMASK, &omask, NULL);
 }
 
 static void
@@ -97,8 +83,11 @@ CheckJobs() {
 
   Taille = Board.size();
 
+  tms_posixLog(LOG_INFO, "CheckJobs T:%d",Taille);
+
   // End of Daemon ?
   if (Taille == 0) {
+  tms_posixLog(LOG_INFO, "Fin daemon");
     Terminated = 1;
     return;
   }
@@ -107,7 +96,9 @@ CheckJobs() {
   while (i < Taille) {
     for (i = 0; i<Taille; i++) {
       if (Board[i].state == TERMINATED) {
+  tms_posixLog(LOG_INFO, "Board Erase i:%d",i);
         Board.erase(Board.begin()+i);
+        Taille = Board.size();
         CheckIn5s = true;
         break;
       }
@@ -127,6 +118,7 @@ CheckJobs() {
   // Checks for normal ends of process
   for (i = 0; i<Taille; i++) {
     if (kill(Board[i].pid,0) == -1) {
+  tms_posixLog(LOG_INFO, "Job Terminated");
       Board[i].state = TERMINATED;
       CheckIn5s = true;
     }
@@ -149,7 +141,10 @@ TimeStatement() {
   time_t temp;
   time_t futur = 0;
 
+  tms_posixLog(LOG_INFO, "TimeStatement");
   now = time(NULL);
+
+  Taille = Board.size();
 
   // Manage Dangling Processes
   for (i = 0; i<Taille; i++) {
@@ -210,27 +205,6 @@ sigchldHandler(int sig) {
 static void
 sigalarmHandler(int sig) {
   AlarmSig = 1;
-}
-
-static void
-tms_posixLog(int loglevel, const char *s, ...) {
-	va_list va_alist;
-	char buf[256];
-	sigset_t nmask, omask;
-
-  if (loglevel >= LogLevel) {
-    return;
-  }
-  va_start(va_alist, s);
-  vsnprintf(buf, sizeof(buf), s, va_alist);
-  va_end(va_alist);
-
-  sigfillset(&nmask);
-  sigprocmask(SIG_BLOCK, &nmask, &omask);
-  openlog("tms-posix", 0, LOG_DAEMON);
-  syslog(loglevel, "%s", buf);
-  closelog();
-  sigprocmask(SIG_SETMASK, &omask, NULL);
 }
 
 
@@ -329,10 +303,6 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   args[4] = NULL;
   args[0] = args[1];
 
-  Debug("Current Dir:%s.\n",working_dir);
-  Debug("Exec:%s > %s 2> %s \n",commandLine,fstdout,fstderr);
-
-
   if (strlen(working_dir) != 0) {
     if (chdir(working_dir) < 0) {
       chdir(HomeDir);
@@ -340,7 +310,6 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
   }
 
   getcwd(current->HomeDir,sizeof(current->HomeDir));
-  Debug("Cwd:%s.\n",current->HomeDir);
 
   memset(current->JobId,0,sizeof current->JobId);
 
@@ -391,7 +360,6 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     snprintf(current->ErrorPath,sizeof(current->ErrorPath),"%s/%s",current->HomeDir,fstderr);
   }
 
-  printf("JobId:%s.\n",current->JobId);
   return 0;
 }
 
@@ -407,26 +375,18 @@ OpenSocketServer(const char* socketName) {
   char rtest[128];
 
   ret = stat(socketName,&st_info);
-  Debug("stat socketname:%d\n",ret);
   if (ret == 0) {
-    Debug("stest:%s\n",stest);
     ret2 = ReqEcho(stest,rtest);
-    Debug("ret ReqEcho:%d\n",ret2);
     if (ret2==0) {
-      Debug("rtest:%s\n",rtest);
       return -3;
     }
   } else if (ret < 0) {
     sv_errno = errno;
 
-    perror("Erreur stat ");
-
     if (sv_errno != ENOENT) {
         return -3;
     }
   }
-
-  Debug("Start serveur.\n");
 
   // Socket UNIX
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
@@ -435,14 +395,10 @@ OpenSocketServer(const char* socketName) {
     return -2;
   }
 
-  Debug("Unlink\n");
-
   if ( (unlink(socketName) == -1) && errno != ENOENT) {
     tms_posixLog(LOG_DEBUG, "Error removing socket file : %s",strerror(errno));
     return -3;
   }
-
-  Debug("Bind:%s\n",socketName);
 
   memset(&addr, 0, sizeof(struct sockaddr));
   addr.sun_family = AF_UNIX;
@@ -452,8 +408,6 @@ OpenSocketServer(const char* socketName) {
     tms_posixLog(LOG_DEBUG, "Error binding socket : %s",strerror(errno));
     return -4;
   }
-
-  Debug("Listen\n");
 
   if (listen(sfd, 5) == -1) {
     tms_posixLog(LOG_DEBUG, "Error listening socket : %s",strerror(errno));
@@ -507,20 +461,12 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   char ferr[256];
   int wallclocklimit;
 
-  Debug("Enter Server RequestSubmit.\n");
   sigemptyset(&emptyMask);
 
   sigemptyset(&blockMask);
   sigaddset(&blockMask, SIGCHLD);
 
-  Debug("Output path:%s.\n",req->data.submit.OutPutPath);
-  Debug("Error path:%s.\n",req->data.submit.ErrorPath);
-
-  Debug("Parse command:%s.\n",req->data.submit.cmd);
-
   POSIXParser::parseFile(req->data.submit.cmd, context);
-
-  Debug("Sortie Parser.\n");
 
   tms_posixLog(LOG_INFO, "Starting shell : %s",req->data.submit.cmd);
 
@@ -539,9 +485,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   } else {
     snprintf(ferr,sizeof(ferr), "VISHNU-%d-%d.err", geteuid(), getpid());
   }
-
-  Debug("Fichier de sortie:%s.\n",fout);
-  Debug("Fichier de erreur:%s.\n",ferr);
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
 
@@ -568,12 +511,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   Board.push_back(currentState);
 
   memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));
-
-  Debug("SORTIE:%s.\n",ret->data.submit.OutPutPath);
-  Debug("ERREUR:%s.\n",ret->data.submit.ErrorPath);
-  Debug("HOME:%s.\n",ret->data.submit.HomeDir);
-
-  Debug("Return Server RequestSubmit.\n");
 
   return 0;
 }
@@ -620,18 +557,14 @@ RequestGetInfo(struct Request* req, struct Response* ret) {
   memset(&NoJob,0,sizeof(struct st_job));
   NoJob.state = DEAD;
 
-  Debug("Get Info JobId:%s.\n",JobId);
-
   for (i = 0; i<Taille; i++) {
     if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
       memcpy(&(ret->data.info),&(Board[i]), sizeof(struct st_job));
-      Debug("Find, status:%d.\n",ret->data.info.state);
       return 0;
     }
   }
   memcpy(&(ret->data.info),&NoJob,sizeof(struct st_job));
 
-  Debug("Not Found.\n");
   return 0;
 }
 
@@ -663,11 +596,9 @@ LaunchDaemon() {
 
   tms_posixLog(LOG_INFO, "Starting tms-posix monitoring daemon");
 
-  Board.reserve(10);
+  //Board.reserve(10);
 
   euid = geteuid();
-
-  Debug("Serveur euid:%d\n",euid);
 
   lpasswd = getpwuid(euid);
   if ( lpasswd == NULL) {
@@ -675,19 +606,12 @@ LaunchDaemon() {
    exit(1);
   }
 
-  Debug("Server Home:%s\n",lpasswd->pw_dir);
-
   strncpy(HomeDir,lpasswd->pw_dir,sizeof(HomeDir));
-  Debug("Home : %s.\n",HomeDir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
 
 
-  Debug("Serveur Socket:%s\n",name_sock);
-
   Daemonize();
-
-  Debug("Daemon Launch.\n");
 
   sigemptyset(&sa.sa_mask);
   sa.sa_flags = 0;
@@ -705,19 +629,14 @@ LaunchDaemon() {
     exit(6);
   }
 
-  Debug("Handlers signal.\n");
-
   sfd = OpenSocketServer(name_sock);
   if (sfd < 0) {
     exit(-sfd);
   }
 
-  Debug("Fin OpenSoocket.\n");
-
   for (Terminated = 0; Terminated == 0; ) {
     cfd = AcceptRequest(sfd, &req);
 
-  Debug("Fin AcceptSocket.\n");
     if (cfd < 0) {
       break;
     }
@@ -731,7 +650,7 @@ LaunchDaemon() {
     }
     if (strncmp(req.req,lb_req_submit,sizeof(req.req)) == 0) {
       ret.status = RequestSubmit(&req,&ret);
-      Board.push_back(ret.data.submit);
+//      Board.push_back(ret.data.submit);
     }
     if (strncmp(req.req,lb_req_cancel,sizeof(req.req)) == 0) {
       ret.status = RequestCancel(&req,&ret);
@@ -743,10 +662,7 @@ LaunchDaemon() {
       ret.status = RequestKill(&req,&ret);
     }
 
-    Debug("Write answer.\n");
     write(cfd,&ret,sizeof(struct Response));
-
-    Debug("Write return.\n");
 
     close(cfd);
 

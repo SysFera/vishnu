@@ -296,7 +296,6 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 	std::ostringstream cmd1;
 	cmd1 << "scp -o NoHostAuthenticationForLocalhost=yes  -o PasswordAuthentication=no ";
 	cmd1 << muser << "@" << mhostname << ":" << path << " " << dest;
-	std::cout << cmd1.str()<< std::endl;
 	if (system((cmd1.str()).c_str())) {
 		return -1;
 	}

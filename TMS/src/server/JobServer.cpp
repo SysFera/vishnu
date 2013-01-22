@@ -213,8 +213,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 	pos = mjob.getErrorPath().find(":");
 	std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
 
-        std::cout << "updating with status : " << convertToString(mjob.getStatus()) << std::endl;
-
 	std::string sqlUpdate = "UPDATE job set ";
 	sqlUpdate+="vsession_numsessionid="+numsession+",";
 	sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"',";
