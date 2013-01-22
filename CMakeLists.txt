@@ -340,7 +340,7 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
 
 
-find_package(Boost 1.45
+find_package(Boost 1.46
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
 find_package(Threads)
