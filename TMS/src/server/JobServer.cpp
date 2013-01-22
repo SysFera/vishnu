@@ -201,7 +201,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 		pos = scriptContentStr.find("'");
 	}
 
-	if(batchType==SGE || POSIX){
+	if(batchType == SGE || batchType == POSIX){
 		mjob.setOwner(acLogin);
 	}
 
