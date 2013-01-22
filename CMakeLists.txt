@@ -375,6 +375,10 @@ set(VERSION_MANAGER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/version)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${PROJECT_BINARY_DIR}/vishnu_version.hpp)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core/examples/confs/vishnu-sample.cfg.in
+    ${PROJECT_BINARY_DIR}/vishnu-sample.cfg)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core/examples/confs/supervisord-sample.cfg.in
+    ${PROJECT_BINARY_DIR}/supervisord-sample.cfg)
 #UMS
 set(UMS_EMF_DATA_DIR ${EMF_DATA_DIR}/UMS_Data)
 set(UMS_CLIENT_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/UMS/src/client)
@@ -438,6 +442,8 @@ set(SBIN_INSTALL_DIR "sbin"
   CACHE INTERNAL "Directory where privilegied binaries will be installed")
 set(INCLUDE_INSTALL_DIR "include"
   CACHE INTERNAL "Directory where includes will be installed")
+set(ETC_INSTALL_DIR "etc"
+  CACHE INTERNAL "Directory where configuration files will be installed")
 set(MAN_INSTALL_DIR "share/man"
   CACHE INTERNAL "Directory where man pages will be installed")
 set(CMAKE_MOD_INSTALL_DIR "share/cmake/Modules"

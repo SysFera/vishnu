@@ -1,0 +1,70 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Attention: il faut bien respecter les nommages 'umssed', 'imssed',
+; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
+
+; Définir le SeD UMS comme un processus à surveiller
+; Son alias est umssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:umssed]
+command=/opt/vishnu/sbin/umssed /opt/vishnu/etc/vishnu-sample.cfg
+
+; Définir le SeD FMS comme un processus à surveiller
+; Son alias est fmssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:fmssed]
+command=/opt/vishnu/sbin/fmssed /opt/vishnu/etc/vishnu-sample.cfg
+
+; Définir le SeD IMS comme un processus à surveiller
+; Son alias est imssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:imssed]
+command=/opt/vishnu/sbin/imssed /opt/vishnu/etc/vishnu-sample.cfg
+
+; Définir le SeD TMS comme un processus à surveiller
+; Son alias est tmssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:tmssed]
+command=/opt/vishnu/sbin/tmssed /opt/vishnu/etc/vishnu-sample.cfg
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;; PARAMETRES SPECIFIQUES A SUPERVISORD  ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Définir l'URL de connexion à Supervisord
+[supervisorctl]
+serverurl=http://127.0.0.1:9001
+
+; inet (TCP) server disabled by default
+; ip_address:port specifier, *:port for all if
+[inet_http_server]
+port=127.0.0.1:9001
+[supervisord]
+
+; main log file;default $CWD/supervisord.log)
+logfile=/tmp/supervisord.log
+
+; max main logfile bytes b4 rotation;default 50MB
+logfile_maxbytes=50MB
+
+; num of main logfile rotation backups;default 10
+logfile_backups=10
+
+; log level;default info; others: debug,warn,trace
+loglevel=info
+
+;supervisord pidfile
+pidfile=/tmp/supervisord.pid
+
+; start in foreground if true;default false
+nodaemon=false
+
+; min. avail startup file descriptors;default 1024
+minfds=1024
+
+; min. avail process descriptors;default 200
+minprocs=200
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
