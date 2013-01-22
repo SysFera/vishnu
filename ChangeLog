@@ -2,6 +2,8 @@
 | VISHNU 3.0.0 - Beta version |
 +-----------------------------+
 
+* Fix memory leak
+* Fixed bad boost version in CMakeLists
 * Unify configuration files
 * New documentation user/admin
 * Add posix-shell : you can start TMS without batch scheduler, TMS functionnalities available in the shell
