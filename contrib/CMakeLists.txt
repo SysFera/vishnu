@@ -8,7 +8,7 @@ if(NOT CLIENT_ONLY)
   endif()
   set(SBIN_DIR ${CMAKE_INSTALL_PREFIX}/${SBIN_INSTALL_DIR})
   # configuration files for vishnu services
-  set(CONFIG_FILES SeD.cfg UMS.cfg)
+  set(CONFIG_FILES UMS.cfg)
   if(COMPILE_FMS)
     set(CONFIG_FILES ${CONFIG_FILES} FMS.cfg)
   endif()
