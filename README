@@ -39,6 +39,8 @@ The root directory VISHNU_Vx.y.z
                       |
                       |---------- Doxyfile and Doxyfile_API files used to generate the documentation in doxygen
                       |
+                      |---------- logoSysFera.jpg the logo of SysFera included in all docs
+                      |
                       |---------- This README that describes the archive
                       |
                       |---------- vishnu_version.hpp.in header parsed by Cmake to include the version of vishnu in all binaries
