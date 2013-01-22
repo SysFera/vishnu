@@ -60,6 +60,7 @@ int main(int argc, char* argv[], char* envp[]) {
   string TMSTYPE = "tmssed";
   string cfg;
   string uri;
+  std::string defaultBatchConfig;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -122,6 +123,7 @@ int main(int argc, char* argv[], char* envp[]) {
 #endif
       batchType = SGE;
     } else if (batchTypeStr == "DELTACLOUD") {
+#ifndef HAVE_DELTACLOUD
       std::cerr << "\nError: The support of DELTACLOUD is not enabled in this server!\n";
       exit(1);
 #endif
@@ -285,6 +287,6 @@ int main(int argc, char* argv[], char* envp[]) {
     std::cerr << "\nThere was a problem to initialize the server\n\n";
     exit(1);
   }
-  config.reset();
+  delete config;
   return res;
 }

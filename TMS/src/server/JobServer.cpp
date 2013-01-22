@@ -276,8 +276,8 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
   size_t position = 0;
   std::string key1;
   int count = 0;
-  while (count < defaultBatchOption.size()) {
-
+  int countOptions = defaultBatchOption.size();
+  while (count < countOptions) {
     key1 =  defaultBatchOption.at(count);
     position = 0;
     int found =0;
@@ -296,11 +296,10 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
     }
     if (!found) {
       std::string lineoption = key + " " + defaultBatchOption.at(count) + " " + defaultBatchOption.at(count +1) + "\n";
-      insertOptionLine(lineoption, content, key, batchType);
+      insertOptionLine(lineoption, content, key);
     }
     count +=2;
   }
-
 }
 /**
  * \brief Function to insert option into string
@@ -310,8 +309,7 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
  */
 void
 JobServer::insertOptionLine( std::string& optionLineToInsert,
-                             std::string& content, std::string& key,
-                             BatchType batchType) {
+                             std::string& content, std::string& key) {
   size_t pos = 0;
   size_t posLastDirective = 0;
 
