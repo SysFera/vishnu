@@ -139,23 +139,23 @@ ServerIMS::~ServerIMS() {
 
 void
 ServerIMS::initMap(std::string mid) {
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[0], solveExport));
-  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[1])+"@"+mid, solveCurMetric));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[2], solveOldMetric));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[3], solvePS));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[4], solveSetSysInfo));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[5], solveSetThreshold));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[6], solveGetThreshold));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[7], solveSetUID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[8], solveSetJID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[9], solveSetTID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[10], solveSetMID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[11])+"@"+mid, solveLoadShed));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[13], solveGetUpFreq));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[12], solveSetUpFreq));
-  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[14])+"@"+mid, solveRestart));
-  mcb.insert(std::pair<std::string, functionPtr_t>(std::string(SRV[15])+"@"+mid, solveStop));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[16], solveGetSysInfo));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[17], solveSetAID));
-  mcb.insert(std::pair<std::string, functionPtr_t>(SRV[18], solveSetWID));
+  mcb[SRV[0]] = solveExport;
+  mcb[std::string(SRV[1])+"@"+mid] = solveCurMetric;
+  mcb[SRV[2]] = solveOldMetric;
+  mcb[SRV[3]] = solvePS;
+  mcb[SRV[4]] = solveSetSysInfo;
+  mcb[SRV[5]] = solveSetThreshold;
+  mcb[SRV[6]] = solveGetThreshold;
+  mcb[SRV[7]] = solveSetUID;
+  mcb[SRV[8]] = solveSetJID;
+  mcb[SRV[9]] = solveSetTID;
+  mcb[SRV[10]] = solveSetMID;
+  mcb[std::string(SRV[11])+"@"+mid] = solveLoadShed;
+  mcb[SRV[13]] = solveGetUpFreq;
+  mcb[SRV[12]] = solveSetUpFreq;
+  mcb[std::string(SRV[14])+"@"+mid] = solveRestart;
+  mcb[std::string(SRV[15])+"@"+mid] = solveStop;
+  mcb[SRV[16]] = solveGetSysInfo;
+  mcb[SRV[17]] = solveSetAID;
+  mcb[SRV[18]] = solveSetWID;
 }

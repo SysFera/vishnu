@@ -5,11 +5,14 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <boost/function.hpp>
 
 #define UNKNOWN_SERVICE 1;
 #define INTERNAL_ERROR 2;
 
-typedef int (*functionPtr_t)(diet_profile_t*);
+typedef boost::function1<int, diet_profile_t*> CallbackFn;
+typedef std::map<std::string, CallbackFn> CallbackMap;
+;
 /**
  * \class SeD
  * \brief base class to Server*MS classes
@@ -40,7 +43,7 @@ protected:
   /**
    * \brief map with function ptr for callback
    */
-  std::map<std::string, functionPtr_t> mcb;
+  CallbackMap mcb;
 };
 
 int

@@ -1,54 +1,54 @@
 #include "SeD.hpp"
 #include <iostream>
+#include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include "zhelpers.hpp"
 #include "utils.hpp"
 #include "utilVishnu.hpp"
 #include "zmq.hpp"
 
+
+
 int
 heartbeat(diet_profile_t* pb){
-  std::string ack("OK");
-  diet_string_set(pb, 1, ack);
+  diet_string_set(pb, 1, "OK");
   return 0;
 }
 
-SeD::SeD(){
-  mcb.insert( std::pair<std::string, functionPtr_t> ("heartbeat", heartbeat));
+SeD::SeD() {
+  mcb["heartbeat"] = boost::ref(heartbeat);
 }
 
 
 int
 SeD::call(diet_profile_t* profile) {
-  std::map<std::string, functionPtr_t>::iterator it;
-  it = mcb.find(profile->name);
+  CallbackMap::iterator it  = mcb.find(profile->name);
   if (it == mcb.end()) {
-      std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
-      return UNKNOWN_SERVICE;
-    }
-  int (*functionPtr)(diet_profile_t*);
-  functionPtr = it->second;
+    std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
+    return UNKNOWN_SERVICE;
+  }
+  CallbackFn fn = boost::ref(it->second);
 
   /* we need to catch all exceptions to prevent the SeD from
    * crashing in case the function raises an exception
    */
   int rv;
   try {
-    rv = (*functionPtr)(profile);
-  } catch (std::exception &e) {
+    rv = fn(profile);
+  } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
     std::cerr << boost::format("%1%\n") % e.what();
   }
+
   return rv;
 }
 
 std::vector<std::string>
-SeD::getServices(){
+SeD::getServices() {
   std::vector<std::string> res;
-  std::map<std::string, functionPtr_t>::iterator it;
-  for (it = mcb.begin() ; it != mcb.end() ; ++ it ) {
-      res.push_back(it->first);
-    }
+  std::transform(mcb.begin(), mcb.end(), std::back_inserter(res),
+                 boost::bind(&CallbackMap::value_type::first, _1));
+
   return res;
 }
 
@@ -76,7 +76,7 @@ public:
         std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
 
         // Deserialize and call UMS Method
-        if (data.size() != 0) {
+        if (!data.empty()) {
             boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
             server_->call(profile.get());
             // Send reply back to client
