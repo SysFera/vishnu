@@ -8,9 +8,9 @@
 * Unified configuration files: all Vishnu daemons and clients can have the
 	same configuration file
 * New documentation user/admin
-* Add posix-shell: you can start TMS without batch scheduler, TMS functionnalities available in the shell
+* Add posix-shell: you can start TMS without batch scheduler, TMS functionalities available in the shell
 * Fixed bugzilla #341 - Rename of FMS commands using POSIX name
-* WS are abandonned, they won't be maintained anymore. Related files and
+* WS are abandoned, they won't be maintained anymore. Related files and
 	directories have been removed.
 * Java APIs are available
 * Vishnu does not rely on DIET anymore. All communications are handled by
@@ -26,7 +26,7 @@
 +-----------------------------+
 | VISHNU 2.0.0 - Beta3        |
 +-----------------------------+
-* Improve the generation of the ID for vishnu objects
+* Improve the generation of the ID for Vishnu objects
 * Add documentation for admin with distant databases
 * Clean unused files
 * Fixed bug 440
