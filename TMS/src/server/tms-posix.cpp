@@ -297,7 +297,7 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     }
 
     if (fstderr != NULL) {
-      fd = open(fstderr,O_CREAT|O_WRONLY|O_APPEND,S_IRUSR|S_IWUSR);
+      fd = open(fstderr,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
       close(STDERR_FILENO);
       dup2(fd,STDERR_FILENO);
       close(fd);
