@@ -11,14 +11,16 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "MonitorFMS.hpp"
+#include <boost/format.hpp>
+#include <csignal>
 
 /**
 * \brief Constructor, raises an exception on error
 * \param interval The interval to check the database
 */
 MonitorFMS::MonitorFMS(int interval) {
-minterval = interval;
-mdatabaseVishnu = NULL;
+  minterval = interval;
+  mdatabaseVishnu = NULL;
 }
 
 /**
@@ -76,35 +78,34 @@ MonitorFMS::run() {
   std::vector<std::string> tmp;
   std::string pid,transferId;
   std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT transferid,processid from filetransfer,vsession where vsession.numsessionid=filetransfer.vsession_numsessionid "
-                           " and filetransfer.status=0";
-
-  try {
-
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
-    if (result->getNbTuples() != 0) {
-      for (size_t i = 0; i < result->getNbTuples(); ++i) {
-        tmp.clear();
-        tmp = result->get(i);
-        iter = tmp.begin();
-        transferId=*iter;
-        ++iter;
-        pid = *iter;
-        ++iter;
-        if(false==process_exists(vishnu::convertToString(pid))) {
-          sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
-          mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+  std::string sqlRequest = "SELECT transferid,processid "
+                           " FROM filetransfer,vsession"
+                           " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid "
+                           " AND filetransfer.status=0";
+  while(kill(getppid(), 0) == 0) {
+    try {
+      boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+      if (result->getNbTuples() != 0) {
+        for (size_t i = 0; i < result->getNbTuples(); ++i) {
+          tmp.clear();
+          tmp = result->get(i);
+          iter = tmp.begin();
+          transferId=*iter;
+          ++iter;
+          pid = *iter;
+          ++iter;
+          try {
+            if(false==process_exists(vishnu::convertToString(pid))) {
+              sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
+              mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+            }
+          } catch (VishnuException& ex) {
+            std::clog << boost::format("[FMSMONITOR][ERROR] %1%\n")%ex.what();
+          }
         }
       }
-    }
-
-    sleep(minterval);
-
-  } catch (VishnuException& e) {
-    string errorInfo =  e.buildExceptionString();
-    if (e.getMsgI() == ERRCODE_DBERR) {
-      cerr << errorInfo << endl;
-      exit(1);
+    } catch (VishnuException& ex) {
+      std::clog << boost::format("[FMSMONITOR][ERROR] %1%\n")%ex.what();
     }
     sleep(minterval);
   }
