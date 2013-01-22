@@ -119,7 +119,7 @@
       <revdescription>
       <para>Prise en compte du gestionnaire de resources SLURM</para></revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>12</revnumber>
       <date>23/08/2011</date>
@@ -193,7 +193,7 @@
       <revdescription>
       <para>Ajout pour le support de LDAP</para></revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>20</revnumber>
       <date>11/04/2012</date>
@@ -201,7 +201,7 @@
       <revdescription>
       <para>Prise en compte du gestionnaire de resources Grid Engine</para></revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>21</revnumber>
       <date>30/05/2012</date>
@@ -217,7 +217,7 @@
       <revdescription>
       <para> Nouvelle compilation avec les batchs</para></revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>23</revnumber>
       <date>01/10/2012</date>
@@ -258,7 +258,7 @@
       <revdescription>
       <para>Maj documentation du dispatcher</para></revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>28</revnumber>
       <date>15/01/2013</date>
@@ -270,7 +270,7 @@
       </para>
       </revdescription>
       </revision>
-      
+
       <revision>
       <revnumber>29</revnumber>
       <date>15/01/2013</date>
@@ -856,6 +856,11 @@
      programmes ligne de commande.
      </para>
     </listitem>
+    <listitem>
+     <para>
+     $INSTALL_PREFIX/etc : contient des exemples de fichiers de configuration.
+     </para>
+    </listitem>
     </itemizedlist>
     </para>
     </section>
@@ -1119,7 +1124,10 @@
 
     <section>
     <title>Configuration des composants</title>
-    <para>Cette section présente les clés de configuration des différents composants de VISHNU</para>
+    <para>Cette section présente les clés de configuration des différents composants de VISHNU.
+    Pour une première configuration, vous pouvez vous inspirer du fichier d'exemple
+    <emphasis>vishnu-sample.cfg</emphasis> situé dans le dossier $INSTALL_PREFIX/etc.</para>
+    <para>Les textes après un dièse '#' sont des commentaires. </para>
     <programlisting>
 <![CDATA[
 # This is a commented sample configuration file for VISHNU
@@ -1334,83 +1342,59 @@ urlSupervisor=http://127.0.0.1:9001
  <section>
   <title>Configuration de Supervisod</title>
   <para> Il est recommandé d'éviter de lancer les SeDs à la main mais d'utiliser Supervisord qui se charge de
-    lancer et de contrôler leur exécution.</para>
-    <para>Cette section décrit la configuration de Supervisord.
-    Les textes après un point-virgule ';' sont des commentaires.
-    </para>
+    lancer et de contrôler leur exécution. </para>
+    <para>Cette section décrit les principaux élements à configurer pour Supervisord.
+  Vous pouvez vous inspirer du fichier d'exemple <emphasis>supervisord-sample.cfg</emphasis>
+  situé dans le dossier $INSTALL_PREFIX/etc et l'adapter selon votre installation.
+  Les textes après un point-virgule ';' sont des commentaires.</para>
+  <para>Les textes après un point-virgule ';' sont des commentaires. </para>
 
-    <programlisting>
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ; Attention: il faut bien respecter les nommages 'umssed', 'imssed',
-    ; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
 
-    ; Définir le SeD UMS comme un processus à surveiller
-    ; Son alias est umssed
-    ; command indique la commande à exécuter. A modifier selon votre installation
-    [program:umssed]
-    command=umssed ~/conf/ums_config.cfg ; Commande comme on ferait dans un terminal
+<programlisting>
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Attention: il faut bien respecter les nommages 'umssed', 'imssed',
+; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
 
-    ; Définir le SeD FMS comme un processus à surveiller
-    ; Son alias est fmssed
-    ; command indique la commande à exécuter. A modifier selon votre installation
-    [program:fmssed]
-    command=fmssed ~/conf/fms_config.cfg
+; Définir le SeD UMS comme un processus à surveiller
+; Son alias est umssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:umssed]
+command=umssed ~/conf/ums_config.cfg ; Commande comme on ferait dans un terminal
 
-    ; Définir le SeD IMS comme un processus à surveiller
-    ; Son alias est imssed
-    ; command indique la commande à exécuter. A modifier selon votre installation
-    [program:imssed]
-    command=imssed ~/conf/ims_config.cfg
+; Définir le SeD FMS comme un processus à surveiller
+; Son alias est fmssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:fmssed]
+command=fmssed ~/conf/fms_config.cfg
 
-    ; Définir le SeD TMS comme un processus à surveiller
-    ; Son alias est tmssed
-    ; command indique la commande à exécuter. A modifier selon votre installation
-    [program:tmssed]
-    command=tmssed ~/conf/tms_config.cfg
+; Définir le SeD IMS comme un processus à surveiller
+; Son alias est imssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:imssed]
+command=imssed ~/conf/ims_config.cfg
 
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;;;;;;;;;;;;;;;; PARAMETRES SPECIFIQUES A SUPERVISORD  ;;;;;;;;;;;;;;;;;;;;;
-    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ;
-    ; Définir l'URL de connexion à Supervisord
-    [supervisorctl]
-    serverurl=http://127.0.0.1:9001
+; Définir le SeD TMS comme un processus à surveiller
+; Son alias est tmssed
+; command indique la commande à exécuter. A modifier selon votre installation
+[program:tmssed]
+command=tmssed ~/conf/tms_config.cfg
 
-    ; inet (TCP) server disabled by default
-    ; ip_address:port specifier, *:port for all if
-    [inet_http_server]
-    port=127.0.0.1:9001
-    [supervisord]
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;; PARAMETRES SPECIFIQUES A SUPERVISORD  ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Définir l'URL de connexion à Supervisord
+[supervisorctl]
+serverurl=http://127.0.0.1:9001
 
-    ; main log file;default $CWD/supervisord.log)
-    logfile=/tmp/supervisord.log
+; inet (TCP) server disabled by default
+; ip_address:port specifier, *:port for all if
+[inet_http_server]
+port=127.0.0.1:9001
 
-    ; max main logfile bytes b4 rotation;default 50MB
-    logfile_maxbytes=50MB
-
-    ; num of main logfile rotation backups;default 10
-    logfile_backups=10
-
-    ; log level;default info; others: debug,warn,trace
-    loglevel=info
-
-    ;supervisord pidfile
-    pidfile=/tmp/supervisord.pid
-
-    ; start in foreground if true;default false
-    nodaemon=false
-
-    ; min. avail startup file descriptors;default 1024
-    minfds=1024
-
-    ; min. avail process descriptors;default 200
-    minprocs=200
-
-    [rpcinterface:supervisor]
-    supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
-    </programlisting>
+</programlisting>
  </section>
     </section>
     <section>
