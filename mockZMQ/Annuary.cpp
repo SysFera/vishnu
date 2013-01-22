@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <string>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/locks.hpp>
@@ -104,9 +105,8 @@ Annuary::print() {
 void
 Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
   boost::lock_guard<boost::recursive_mutex> lock(mutex);
-  for (std::vector<std::string>::iterator entry = cfgInfo.begin(), end = cfgInfo.end();
-       entry != end; ++entry) {
-    std::istringstream iss(*entry);
+  BOOST_FOREACH(const std::string& entry, cfgInfo) {
+    std::istringstream iss(entry);
     std::string uri;
     std::string mid;
     iss >> uri;
