@@ -57,8 +57,6 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
   memset(ret, 0, sizeof(struct Response));
   nbCharreaden = read(sfd,ret,sizeof(struct Response));
 
-  printf("Taille req res:%ld.\n",nbCharreaden);
-
   close(sfd);
 
   return nbCharreaden;
@@ -73,18 +71,13 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   uid_t euid;
   struct passwd* lpasswd;
 
-  printf("ReqSubmit\n");
   euid = geteuid();
-  printf("Client euid:%d\n",euid);
   lpasswd=getpwuid(euid);
   if ( lpasswd == NULL) {
-   perror("Erreur passwd");
    return -1;
   }
-  printf("Client Home:%s\n",lpasswd->pw_dir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
-  printf("Client Socket:%s\n",name_sock);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
@@ -97,12 +90,6 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
 
   ReqSend(name_sock, &req, &ret);
 
-  printf("RetStatu:%d.\n",ret.status);
-  printf("RetJobID:%s.\n",ret.data.submit.JobId);
-  printf("Retpid:%d.\n",ret.data.submit.pid);
-  
-
-  printf("FinReqSubmit\n");
   if (ret.status == 0) {
     memcpy(response,&(ret.data.submit),sizeof(struct st_job));
     return 0;
@@ -120,18 +107,13 @@ ReqEcho(const char* chaine, char* ret) {
   struct passwd* lpasswd;
   int resultat;
 
-  printf("ReqEcho\n");
   euid = geteuid();
-  printf("Client euid:%d\n",euid);
   lpasswd=getpwuid(euid);
   if ( lpasswd == NULL) {
-   perror("Erreur passwd");
    return -1;
   }
-  printf("Client Home:%s\n",lpasswd->pw_dir);
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
-  printf("Client Socket:%s\n",name_sock);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
@@ -143,7 +125,6 @@ ReqEcho(const char* chaine, char* ret) {
     return resultat;
   }
 
-  printf("FinReqEcho\n");
   strncpy(ret,res.data.echo.data,sizeof(res.data.echo.data)-1);
   if (res.status != 0) {
     return 0;
@@ -172,7 +153,6 @@ ReqCancel(const char* JobId) {
   char name_sock[255];
   char euid[255];
 
-  printf("ReqCancel\n");
   strccpy(euid,JobId,sizeof(euid),'-');
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
@@ -183,7 +163,6 @@ ReqCancel(const char* JobId) {
   strncpy(req.data.cancel.JobId,JobId,sizeof(req.data.cancel.JobId)-1);
 
   resultat = ReqSend(name_sock, &req, &res);
-  printf("FinReqCancel\n");
   if (resultat < 0) {
     return resultat;
   }
@@ -199,13 +178,9 @@ ReqInfo(const char* JobId, struct st_job* response) {
   char name_sock[255];
   char euid[255];
 
-  printf("ReqInfo\n");
   strccpy(euid,JobId,sizeof(euid),'-');
 
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
-
-  printf("REqInfo socket:%s.\n",name_sock);
-  printf("ReqInfo JobId:%s.\n",JobId);
 
   memset(&req,0,sizeof(struct Request));
   strncpy(req.sig,signature,sizeof(req.sig));
@@ -213,10 +188,7 @@ ReqInfo(const char* JobId, struct st_job* response) {
   strncpy(req.data.info.JobId,JobId,sizeof(req.data.info.JobId)-1);
 
   resultat = ReqSend(name_sock, &req, &ret);
-  printf("Resultat:%d.\n",resultat);
-  printf("JobId:%s.\n",ret.data.info.JobId);
 
-  printf("FinReqInfo\n");
   if (ret.status == 0) {
     memcpy(response,&(ret.data.info),sizeof(struct st_job));
     return 0;
