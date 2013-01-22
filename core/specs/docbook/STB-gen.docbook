@@ -101,6 +101,14 @@
               
             <para> Support SLURM 2.3 et 2.4, new cmake version.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>10</revnumber>
+        <date>22/01/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para> Clean corba/sysfera-ds.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -400,7 +408,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.1.6</para></entry>
               <entry><para>Logiciels requis</para></entry>
-              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync</para></entry>
+              <entry><para>SysFera DS, SSH (client/serveur), RSync</para></entry>
             </row>
             <row>
               <entry><para>1.1.7</para></entry>
@@ -450,7 +458,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2.7</para></entry>
               <entry><para>Logiciels requis</para></entry>
-              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync, Client database (MySQL ou PostGreSQL)</para></entry>
+              <entry><para>SSH (client/serveur), RSync, Client database (MySQL ou PostGreSQL), ZMQ</para></entry>
             </row>
             <row>
               <entry><para>1.2.8</para></entry>
@@ -553,29 +561,14 @@ de SHA-1.</para>
               <entry><para>Adresse IP et nom DNS statiques </para></entry>
             </row>
             <row>
-              <entry><para>1.4.2</para></entry>
-              <entry><para>Standard de publication des services web</para></entry>
-              <entry><para>WSDL 1.1</para></entry>
-            </row>
-            <row>
               <entry><para>1.4.3</para></entry>
               <entry><para>Machine virtuelle Java</para></entry>
               <entry><para>Java SDK v1.6.0</para></entry>
             </row>
             <row>
-              <entry><para>1.4.4</para></entry>
-              <entry><para>Serveur web d'applications</para></entry>
-              <entry><para>JBoss AS 5.1.0</para></entry>
-            </row>
-            <row>
-              <entry><para>1.4.5</para></entry>
-              <entry><para>Module Web Services</para></entry>
-              <entry><para>Module JBossWS version Stack CXF Server 3.3.1.GA</para></entry>
-            </row>
-            <row>
               <entry><para>1.4.6</para></entry>
               <entry><para>Autres logiciels requis</para></entry>
-              <entry><para>SysFera DS, OmniORB, SSH (client/serveur), RSync</para></entry>
+              <entry><para>SysFera DS, ZMQ, SSH (client/serveur), RSync</para></entry>
             </row>
             <row>
               <entry><para>1.5</para></entry>
@@ -703,11 +696,6 @@ de SHA-1.</para>
               <entry><para>OpenSSL 0.9.8k</para></entry>
             </row>
             <row>
-              <entry><para>2.2</para></entry>
-              <entry><para>CORBA</para></entry>
-              <entry><para>OmniORB v4.1.4</para></entry>
-            </row>
-            <row>
               <entry><para>2.3</para></entry>
               <entry><para>Librairie BOOST C++</para></entry>
               <entry><para>v1.46.1 minimum</para></entry>
@@ -726,11 +714,6 @@ de SHA-1.</para>
               <entry><para>2.6</para></entry>
               <entry><para>SysFera-DS</para></entry>
               <entry><para>Version 2.8</para></entry>
-            </row>
-            <row>
-              <entry><para>2.7</para></entry>
-              <entry><para>Modules SysFera-DS</para></entry>
-              <entry><para>LogService version 2.8</para></entry>
             </row>
             <row>
               <entry><para>2.8</para></entry>

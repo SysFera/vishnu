@@ -95,6 +95,14 @@
               <para> Support SLURM 2.3 et 2.4, new cmake version.</para>
             </revdescription>
           </revision>
+	  <revision>
+            <revnumber>10</revnumber>
+            <date>22/01/2013</date>
+            <authorinitials>SysFera</authorinitials>
+            <revdescription>
+              <para> Clean corba/sysfera-ds.</para>
+            </revdescription>
+          </revision>
 	  
         </revhistory>
     </info>
