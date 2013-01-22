@@ -53,6 +53,7 @@ macro( unit_test NAME )
       fake_zmq
       test_zmq_helper
       vishnu-core
+      ${POSIX_TEST_LIB}
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
