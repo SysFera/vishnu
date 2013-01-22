@@ -72,16 +72,10 @@ main(int argc, char* argv[], char* envp[]) {
     exit(1);
   }
 
-
   // Fork a child for FMS monitoring
-  pid_t pid;
-  pid_t ppid;
-  pid = fork();
-
+  pid_t pid = fork();
   if (pid > 0) {
-
     try {
-
       //Initialize the FMS Server (Opens a connection to the database)
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
@@ -106,11 +100,7 @@ main(int argc, char* argv[], char* envp[]) {
     MonitorFMS monitor(interval);
     dbConfig.setDbPoolSize(1);
     monitor.init(vishnuId, dbConfig);
-    ppid = getppid();
-
-    while(kill(ppid,0) == 0) {
-      monitor.run();
-    }
+    monitor.run();
   } else {
     std::cerr << "There was a problem to initialize the server\n";
     exit(1);

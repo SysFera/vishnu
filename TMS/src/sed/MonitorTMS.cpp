@@ -14,7 +14,7 @@
 #include "utilVishnu.hpp"
 #include "MonitorTMS.hpp"
 #include "Env.hpp"
-#include <signal.h>
+#include <csignal>
 #include "Env.hpp"
 #include <boost/format.hpp>
 
@@ -130,11 +130,11 @@ MonitorTMS::run() {
             }
           }
         } catch (VishnuException& ex) {
-          std::clog << boost::format("[TMS][MONITOR] ERROR: %1%\n")%ex.what();
+          std::clog << boost::format("[TMSMONITOR][ERROR] %1%\n")%ex.what();
         }
       }
     } catch (VishnuException& ex) {
-      std::clog << "[TMSMONITOR][ERROR] "<< ex.buildExceptionString() << "\n";
+      std::clog << boost::format("[TMSMONITOR][ERROR] %1%\n")%ex.what();
     }
     sleep(minterval);
   }
