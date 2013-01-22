@@ -24,6 +24,7 @@
 // Boost Headers
 #include <boost/thread.hpp>
 #include <boost/filesystem.hpp>
+#include "utilVishnu.hpp"
 
 // namespaces declaration and  aliases
 using namespace std;
@@ -243,7 +244,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
     //Setting submitjob parameters
     const std::string scriptFilePath=TMSSCRIPTPATH;
     SubmitOptions options;
-    
+
     Job machine1FirstJob;
     BOOST_REQUIRE(submitJob(sessionKey, submitMachineId1, scriptFilePath,machine1FirstJob,options)==0  );
     BOOST_TEST_MESSAGE("************ The first job identifier on " << submitMachineId1 <<" is " << machine1FirstJob.getJobId() );
@@ -251,7 +252,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
     BOOST_REQUIRE(submitJob(sessionKey, submitMachineId1, scriptFilePath,machine1SecondJob,options)==0  );
     BOOST_TEST_MESSAGE("************ The second job identifier on " << submitMachineId1 << " is " << machine1SecondJob.getJobId() );
 
-    Job machine2FirstJob; 
+    Job machine2FirstJob;
     BOOST_REQUIRE(submitJob(sessionKey, submitMachineId2, scriptFilePath,machine2FirstJob,options)==0  );
     BOOST_TEST_MESSAGE("************ The first job identifier on " << submitMachineId2 << " is " << machine2FirstJob.getJobId() );
     Job machine2SecondJob;
@@ -259,7 +260,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
     BOOST_TEST_MESSAGE("************ The second job identifier on " << submitMachineId2 << " is " << machine2SecondJob.getJobId() );
     Job machine2ThirdJob;
     BOOST_REQUIRE(submitJob(sessionKey, submitMachineId2, scriptFilePath,machine2ThirdJob,options)==0  );
-    BOOST_TEST_MESSAGE("************ The second job identifier on " << submitMachineId2 << " is " << machine2ThirdJob.getJobId() );
+    BOOST_TEST_MESSAGE("************ The third job identifier on " << submitMachineId2 << " is " << machine2ThirdJob.getJobId() );
 
     ListJobs lsJobs;
     ListJobsOptions lsOptions;
@@ -321,6 +322,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
     }
 
     BOOST_CHECK( found ) ;
+    BOOST_TEST_MESSAGE("*******nbjob:"+vishnu::convertToString(nbJobs)+", m1: "+vishnu::convertToString(nbSubmittedJobsMachine1)+", m2: "+vishnu::convertToString(nbSubmittedJobsMachine2));
     BOOST_CHECK(nbJobs==5 && nbSubmittedJobsMachine1==2 && nbSubmittedJobsMachine2==3);
 
     BOOST_TEST_MESSAGE("*********************** list jobs on all machines: normal call ok!!!!*****************************");
@@ -399,11 +401,11 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
     const std::string scriptFilePath=TMSSCRIPTPATH;
     const std::string stdOutResult="stdOutResult_"+machineId;
     BOOST_TEST_MESSAGE("************BATCH TYPE is equal to " << BATCHTYPE);
-    std::ostringstream createCommand; 
+    std::ostringstream createCommand;
     if(BATCHTYPE=="TORQUE") {
       createCommand << "qsub " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
-      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0); 
+      BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     } else if(BATCHTYPE=="SLURM") {
       createCommand << "sbatch " << scriptFilePath << " > " << stdOutResult;
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
@@ -415,7 +417,7 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
       BOOST_TEST_MESSAGE("**The SGE commande line is: " << createCommand.str().c_str());
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     }
-    if(BATCHTYPE!="SGE"){
+    if(BATCHTYPE!="SGE" && BATCHTYPE!="POSIX"){
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
       lsOptions.setBatchJob(true);
@@ -445,9 +447,9 @@ BOOST_AUTO_TEST_CASE(list_batch_jobs_normal_call)
 
       BOOST_CHECK( found ) ;
       BOOST_TEST_MESSAGE("*********************** list batch jobs: normal call ok!!!!*****************************");
-      
+
     }
-    
+
     createCommand.str("");
     createCommand << "rm " << stdOutResult;
     //BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
