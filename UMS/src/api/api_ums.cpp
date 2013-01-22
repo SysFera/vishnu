@@ -36,75 +36,74 @@ using namespace std;
  */
 int
 vishnu::connect(const string& userId,
-		const string& password,
-		UMS_Data::Session& session,
-		const UMS_Data::ConnectOptions& connectOpt)
-throw(UserException, SystemException)
-{
+                const string& password,
+                UMS_Data::Session& session,
+                const UMS_Data::ConnectOptions& connectOpt)
+  throw(UserException, SystemException) {
 
-	if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
-	}
+  if((connectOpt.getClosePolicy() < 0) || (connectOpt.getClosePolicy() > 2)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
+  }
 
-	string connectLogin;
-	string connectPassword;
-	map<size_t, pair<string,string> > auth;
-	std::map<size_t, pair<string,string> >::iterator iter;
-	UMS_Data::ListUsers listUsers;
-	UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-	UMS_Data::User_ptr user = ecoreFactory->createUser();
+  string connectLogin;
+  string connectPassword;
+  map<size_t, pair<string,string> > auth;
+  std::map<size_t, pair<string,string> >::iterator iter;
+  UMS_Data::ListUsers listUsers;
+  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+  UMS_Data::User_ptr user = ecoreFactory->createUser();
 
-	//If the userId and the password is undefined the netrc file is used
-	if ((userId.empty()) && (password.empty())) {
-		NetrcReader netrcReader;
-		netrcReader.read(auth);
+  //If the userId and the password is undefined the netrc file is used
+  if ((userId.empty()) && (password.empty())) {
+    NetrcReader netrcReader;
+    netrcReader.read(auth);
 
-		/**
-		 * The map contain the user/password in different area
-		 * So to rebuild the full user (uid/password), browse
-		 * the map using binary mask to keep the data of the
-		 * items that are already registered to know when
-		 * to save the user
-		 */
-        unsigned int state = 0x0000;
-		// Convert to list of users
-		for (iter = auth.begin(); iter!=auth.end(); ++iter){
-			pair<string,string> couple = iter->second;
+    /**
+     * The map contain the user/password in different area
+     * So to rebuild the full user (uid/password), browse
+     * the map using binary mask to keep the data of the
+     * items that are already registered to know when
+     * to save the user
+     */
+    unsigned int state = 0x0000;
+    // Convert to list of users
+    for (iter = auth.begin(); iter!=auth.end(); ++iter) {
+      pair<string,string> couple = iter->second;
 
-			if(couple.first.compare("login")==0) {
-				user->setUserId(couple.second);
-				state |= 0x0001;
-			}
-			if(couple.first.compare("password")==0) {
-				user->setPassword(couple.second);
-				state |= 0x1000;
-			}
-			if(couple.first.compare("machine")==0) {
-				continue;
-			}
-			if (state == 0x1001){
-				state = 0x0000;
-				listUsers.getUsers().push_back(user);
-				user = ecoreFactory->createUser();
-			}
-		}
-		return connect(listUsers,
-				session,
-				connectOpt);
-	} else {
-		connectLogin = userId;
-		connectPassword = password;
-	}
+      if(couple.first.compare("login")==0) {
+        user->setUserId(couple.second);
+        state |= 0x0001;
+      }
+      if(couple.first.compare("password")==0) {
+        user->setPassword(couple.second);
+        state |= 0x1000;
+      }
+      if(couple.first.compare("machine")==0) {
+        continue;
+      }
+      if (state == 0x1001) {
+        state = 0x0000;
+        listUsers.getUsers().push_back(user);
+        user = ecoreFactory->createUser();
+      }
+    }
+    return connect(listUsers,
+                   session,
+                   connectOpt);
+  } else {
+    connectLogin = userId;
+    connectPassword = password;
+  }
 
-	std::string encryptedPassword = vishnu::cryptPassword(connectLogin, connectPassword, false);
+  std::string encryptedPassword = vishnu::cryptPassword(connectLogin, connectPassword, false);
 
-	UserProxy userProxy(connectLogin, encryptedPassword);
-	SessionProxy sessionProxy;
-        int res = sessionProxy.connect(userProxy, connectOpt);
+  UserProxy userProxy(connectLogin, encryptedPassword);
+  SessionProxy sessionProxy;
+  int res = sessionProxy.connect(userProxy, connectOpt);
 
-	session = sessionProxy.getData();
+  session = sessionProxy.getData();
 
-	return 0;
+  return 0;
 
 }
 
@@ -121,7 +120,7 @@ int
 vishnu::connect(UMS_Data::ListUsers& users,
                 UMS_Data::Session& session,
                 const UMS_Data::ConnectOptions& connectOpt)
-  throw(UserException, SystemException){
+  throw(UserException, SystemException) {
   unsigned int cpt;
   UMS_Data::User* user;
   bool connected = false;
@@ -131,31 +130,28 @@ vishnu::connect(UMS_Data::ListUsers& users,
   bool umsexcepfound = false;
   bool excepfound = false;
 
-// For each account
-  for(cpt=0;cpt<users.getUsers().size();cpt++){
+  for (cpt = 0; cpt < users.getUsers().size(); cpt++) {
     user = users.getUsers().at(cpt);
-// If empty account, leaving
-    if(user->getUserId()=="" || user->getPassword()==""){
+    std::string userId = user->getUserId();
+    std::string password = user->getPassword();
+    // no credentials, leaving
+    if (userId.empty() || password.empty()) {
       continue;
     }
-// Trying to connect
-    try{
-      ret = connect(user->getUserId(), user->getPassword(), session, connectOpt);
-// If connection successfull
+    try {
+      ret = connect(userId, password, session, connectOpt);
       connected = true;
       break;
-// Catching bad authentication exceptions
-    } catch (UMSVishnuException &e){
+    } catch (UMSVishnuException &e) {
       umsexcep = e;
       umsexcepfound = true;
-    } catch (SystemException &e){
+    } catch (SystemException &e) {
       excep =e;
       excepfound = true;
     }
   }
-//If no user account has managed to connect
-  if(!connected){
-    //If an exception has been found
+  // if no connection has been made
+  if (!connected) {
     if (excepfound) {
       throw excep;
     }
@@ -176,40 +172,40 @@ vishnu::connect(UMS_Data::ListUsers& users,
  */
 int
 vishnu::reconnect(UMS_Data::ListUsers& users,
-		const string& sessionId,
-		UMS_Data::Session& session)
-throw(UserException, SystemException)
-{
-	unsigned int cpt;
-	UMS_Data::User* user;
-	bool reconnected = false;
-	int ret;
-	// For each account
-	for(cpt=0;cpt<users.getUsers().size();cpt++){
-		user = users.getUsers().at(cpt);
-		// If empty account, leaving
-		if(user->getUserId()=="" || user->getPassword()==""){
-			continue;
-		}
-		// Trying to connect
-		try{
-			ret = reconnect(user->getUserId(), user->getPassword(), sessionId, session);
-			// If connection successfull
-			if (ret==0) {
-				reconnected = true;
-				break;
-			}
+                  const string& sessionId,
+                  UMS_Data::Session& session)
+  throw(UserException, SystemException) {
+  unsigned int cpt;
+  UMS_Data::User* user;
+  bool reconnected = false;
+  int ret;
+  // For each account
+  for (cpt = 0; cpt < users.getUsers().size(); cpt++) {
+    user = users.getUsers().at(cpt);
+    std::string userId = user->getUserId();
+    std::string password = user->getPassword();
+    // no credentials, leaving
+    if (userId.empty() || password.empty()) {
+      continue;
+    }
+    try {
+      ret = reconnect(userId, password, sessionId, session);
+      // If connection successfull
+      if (ret == 0) {
+        reconnected = true;
+        break;
+      }
 
-			// Catching bad authentication exceptions
-		} catch (UserException &e){
-		} catch (SystemException &e){
-		}
-	}
-	//If no user account has managed to connect
-	if(!reconnected){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "No account could be used to reconnect");
-	}
-	return ret;
+      // Catching bad authentication exceptions
+    } catch (UserException &e) {
+    } catch (SystemException &e) {
+    }
+  }
+  //If no user account has managed to connect
+  if (!reconnected) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_USER, "No account could be used to reconnect");
+  }
+  return ret;
 
 }
 
@@ -224,74 +220,73 @@ throw(UserException, SystemException)
  */
 int
 vishnu::reconnect(const string& userId,
-		const string& password,
-		const string& sessionId,
-		UMS_Data::Session& session)
-throw(UserException, SystemException)
-{
+                  const string& password,
+                  const string& sessionId,
+                  UMS_Data::Session& session)
+  throw(UserException, SystemException) {
 
-	string connectLogin;
-	string connectPassword;
-	map<size_t, pair<string,string> > auth;
-	std::map<size_t, pair<string,string> >::iterator iter;
-	UMS_Data::ListUsers listUsers;
-	UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-	UMS_Data::User_ptr user = ecoreFactory->createUser();
+  string connectLogin;
+  string connectPassword;
+  map<size_t, pair<string,string> > auth;
+  std::map<size_t, pair<string,string> >::iterator iter;
+  UMS_Data::ListUsers listUsers;
+  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+  UMS_Data::User_ptr user = ecoreFactory->createUser();
 
-	//If the userId and the password is undefined the netrc file is used
-	if ((userId.empty()) && (password.empty())) {
-		NetrcReader netrcReader;
-		netrcReader.read(auth);
+  //If the userId and the password is undefined the netrc file is used
+  if ((userId.empty()) && (password.empty())) {
+    NetrcReader netrcReader;
+    netrcReader.read(auth);
 
-		/**
-		 * The map contain the user/password in different area
-		 * So to rebuild the full user (uid/password), browse
-		 * the map using binary mask to keep the data of the
-		 * items that are already registered to know when
-		 * to save the user
-		 */
-        unsigned int state = 0x0000;
-		// Convert to list of users
-		for (iter = auth.begin(); iter!=auth.end(); ++iter){
-			pair<string,string> couple = iter->second;
-			if(couple.first.compare("login")==0) {
-				user->setUserId(couple.second);
-				state |= 0x0001;
-			}
-			if(couple.first.compare("password")==0) {
-				user->setPassword(couple.second);
-				state |= 0x1000;
-			}
-			if(couple.first.compare("machine")==0) {
-				continue;
-			}
-			if (state == 0x1001){
-				state = 0x0000;
-				listUsers.getUsers().push_back(user);
-				user = ecoreFactory->createUser();
-			}
-		}
-		return reconnect(listUsers,
-				sessionId,
-				session);
+    /**
+     * The map contain the user/password in different area
+     * So to rebuild the full user (uid/password), browse
+     * the map using binary mask to keep the data of the
+     * items that are already registered to know when
+     * to save the user
+     */
+    unsigned int state = 0x0000;
+    // Convert to list of users
+    for (iter = auth.begin(); iter != auth.end(); ++iter) {
+      pair<string, string> couple = iter->second;
+      if (couple.first == "login") {
+        user->setUserId(couple.second);
+        state |= 0x0001;
+      }
+      if (couple.first == "password") {
+        user->setPassword(couple.second);
+        state |= 0x1000;
+      }
+      if (couple.first == "machine") {
+        continue;
+      }
+      if (state == 0x1001) {
+        state = 0x0000;
+        listUsers.getUsers().push_back(user);
+        user = ecoreFactory->createUser();
+      }
+    }
+    return reconnect(listUsers, sessionId, session);
 
-	} else {
-		connectLogin = userId;
-		connectPassword = password;
-	}
+  } else {
+    connectLogin = userId;
+    connectPassword = password;
+  }
 
-	std::string encryptedPassword = vishnu::cryptPassword(connectLogin, connectPassword, false);
+  std::string encryptedPassword =
+    vishnu::cryptPassword(connectLogin, connectPassword, false);
 
-	UserProxy userProxy(connectLogin, encryptedPassword);
-	session.setSessionId(sessionId);
-	SessionProxy sessionProxy(session);
+  UserProxy userProxy(connectLogin, encryptedPassword);
+  session.setSessionId(sessionId);
+  SessionProxy sessionProxy(session);
 
-	int res = sessionProxy.reconnect(userProxy);
+  int res = sessionProxy.reconnect(userProxy);
 
-	session = sessionProxy.getData();
+  session = sessionProxy.getData();
 
-	return res;
+  return res;
 }
+
 
 /**
  * \brief Function to close the session identfied by the session key
@@ -300,10 +295,8 @@ throw(UserException, SystemException)
  */
 int
 vishnu::close(const string&  sessionKey)
-throw(UserException, SystemException)
-{
-
-	return SessionProxy(sessionKey).close();
+  throw(UserException, SystemException) {
+  return SessionProxy(sessionKey).close();
 }
 
 /**
@@ -314,49 +307,52 @@ throw(UserException, SystemException)
  */
 int
 vishnu::addUser(const string& sessionKey, UMS_Data::User& newUser)
-throw(UserException, SystemException)
-{
+  throw(UserException, SystemException) {
+  if ((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Privilege value: its value must be 0 or 1");
+  }
+  if ((newUser.getStatus() < -1) || (newUser.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Status value: its value must be 0 or 1");
+  }
 
-	if((newUser.getPrivilege() < 0) || (newUser.getPrivilege() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
-	}
-	if((newUser.getStatus() < -1) || (newUser.getStatus() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
-	}
+  checkIfTextIsEmpty(newUser.getFirstname(), "The user firstname is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newUser.getLastname(), "The user lastname is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkEmail(newUser.getEmail());
 
-	checkIfTextIsEmpty(newUser.getFirstname(), "The user firstname is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newUser.getLastname(), "The user lastname is empty", ERRCODE_INVALID_PARAM);
-	checkEmail(newUser.getEmail());
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
+  int res = userProxy.add(newUser);
 
-	SessionProxy sessionProxy(sessionKey);
-	UserProxy userProxy(sessionProxy);
-	int res = userProxy.add(newUser);
-
-	return res;
+  return res;
 }
+
 
 /**
  * \brief Function to update the user information except the userId and the password
-                                       std::cout << "type "  << newAuthSys.getType() << "\n";
+ std::cout << "type "  << newAuthSys.getType() << "\n";
  * \param sessionKey is the encrypted identifier of the session generated by VISHNU
  * \param user is an object containing the new user information
  * \return raises an exception on error
  */
 int
 vishnu::updateUser(const string& sessionKey,
-		const UMS_Data::User& user)
-throw(UserException, SystemException)
-{
+                   const UMS_Data::User& user)
+  throw(UserException, SystemException) {
+  if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Privilege value: its value must be 0 or 1");
+  }
 
-	if((user.getPrivilege() < 0) || (user.getPrivilege() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Privilege value: its value must be 0 or 1");
-	}
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	UserProxy userProxy(sessionProxy);
-
-	return userProxy.update(user);
+  return userProxy.update(user);
 }
+
 
 /**
  * \brief Function to remove a user from VISHNU
@@ -366,17 +362,16 @@ throw(UserException, SystemException)
  */
 int
 vishnu::deleteUser(const string& sessionKey,
-		const string& userId)
-throw(UserException, SystemException)
-{
+                   const string& userId)
+  throw(UserException, SystemException) {
+  UMS_Data::User user;
+  user.setUserId(userId);
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
 
-	UMS_Data::User user;
-	user.setUserId(userId);
-	SessionProxy sessionProxy(sessionKey);
-	UserProxy userProxy(sessionProxy);
-
-	return userProxy.deleteUser(user);
+  return userProxy.deleteUser(user);
 }
+
 
 /**
  * \brief Function to change the password
@@ -387,22 +382,24 @@ throw(UserException, SystemException)
  */
 int
 vishnu::changePassword(const std::string& userId,
-		const std::string& password,
-		const std::string& passwordNew)
-throw(UserException, SystemException)
-{
+                       const std::string& password,
+                       const std::string& passwordNew)
+  throw(UserException, SystemException) {
+  checkIfTextIsEmpty(passwordNew, "The new password is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	checkIfTextIsEmpty(passwordNew, "The new password is empty", ERRCODE_INVALID_PARAM);
+  UMS_Data::User user;
+  user.setUserId(userId);
+  UserProxy userProxy(user);
 
-	UMS_Data::User user;
-	user.setUserId(userId);
-	UserProxy userProxy(user);
+  std::string encryptedPassword =
+    vishnu::cryptPassword(userId, password, false);
+  std::string encryptedPasswordNew =
+    vishnu::cryptPassword(userId, passwordNew, false);
 
-	std::string encryptedPassword = vishnu::cryptPassword(userId, password, false);
-	std::string encryptedPasswordNew = vishnu::cryptPassword(userId, passwordNew, false);
-
-	return userProxy.changePassword(encryptedPassword, encryptedPasswordNew);
+  return userProxy.changePassword(encryptedPassword, encryptedPasswordNew);
 }
+
 
 /**
  * \brief Function to reset the password of a user
@@ -412,20 +409,19 @@ throw(UserException, SystemException)
  */
 int
 vishnu::resetPassword(const std::string& sessionKey,
-		const std::string& userId,
-		std::string& tmpPassword)
-throw(UserException, SystemException)
-{
+                      const std::string& userId,
+                      std::string& tmpPassword)
+  throw(UserException, SystemException) {
+  UMS_Data::User user;
+  user.setUserId(userId);
+  SessionProxy sessionProxy(sessionKey);
+  UserProxy userProxy(sessionProxy);
 
-	UMS_Data::User user;
-	user.setUserId(userId);
-	SessionProxy sessionProxy(sessionKey);
-	UserProxy userProxy(sessionProxy);
-
-	int res = userProxy.resetPassword(user);
-	tmpPassword = (userProxy.getData()).getPassword();
-	return res;
+  int res = userProxy.resetPassword(user);
+  tmpPassword = (userProxy.getData()).getPassword();
+  return res;
 }
+
 
 /**
  * \brief Function to add a new machine in VISHNU
@@ -436,27 +432,39 @@ throw(UserException, SystemException)
  */
 int
 vishnu::addMachine(const std::string& sessionKey,
-		UMS_Data::Machine& newMachine)
-throw(UserException, SystemException)
+                   UMS_Data::Machine& newMachine)
+  throw(UserException, SystemException)
 {
 
-	if((newMachine.getStatus() < -1) || (newMachine.getStatus() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
-	}
+  if ((newMachine.getStatus() < -1) || (newMachine.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Status value: its value must be 0 or 1");
+  }
 
-	checkIfTextIsEmpty(newMachine.getName(), "The machine name is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newMachine.getSite(), "The machine site is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newMachine.getLanguage(), "The machine language is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newMachine.getSshPublicKey(), "The machine sshPublicKeyFile is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newMachine.getMachineDescription(), "The machine description is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getName(),
+                     "The machine name is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getSite(),
+                     "The machine site is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getLanguage(),
+                     "The machine language is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getSshPublicKey(),
+                     "The machine sshPublicKeyFile is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newMachine.getMachineDescription(),
+                     "The machine description is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	SessionProxy sessionProxy(sessionKey);
-	MachineProxy machineProxy(newMachine, sessionProxy);
-	int res = machineProxy.add();
-	newMachine = machineProxy.getData();
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(newMachine, sessionProxy);
+  int res = machineProxy.add();
+  newMachine = machineProxy.getData();
 
-	return res;
+  return res;
 }
+
 
 /**
  * \brief Function to update machine description
@@ -466,19 +474,19 @@ throw(UserException, SystemException)
  */
 int
 vishnu::updateMachine(const std::string& sessionKey,
-		const UMS_Data::Machine& machine)
-throw(UserException, SystemException)
-{
+                      const UMS_Data::Machine& machine)
+  throw(UserException, SystemException) {
+  if ((machine.getStatus() < -1) || (machine.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Status value: its value must be 0 or 1");
+  }
 
-	if((machine.getStatus() < -1) || (machine.getStatus() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
-	}
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machine, sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	MachineProxy machineProxy(machine, sessionProxy);
-
-	return machineProxy.update();
+  return machineProxy.update();
 }
+
 
 /**
  * \brief Function to remove a machine from VISHNU
@@ -488,17 +496,16 @@ throw(UserException, SystemException)
  */
 int
 vishnu::deleteMachine(const std::string& sessionKey,
-		const std::string& machineId)
-throw(UserException, SystemException)
-{
+                      const std::string& machineId)
+  throw(UserException, SystemException) {
+  UMS_Data::Machine machine;
+  machine.setMachineId(machineId);
+  SessionProxy sessionProxy(sessionKey);
+  MachineProxy machineProxy(machine, sessionProxy);
 
-	UMS_Data::Machine machine;
-	machine.setMachineId(machineId);
-	SessionProxy sessionProxy(sessionKey);
-	MachineProxy machineProxy(machine, sessionProxy);
-
-	return machineProxy.deleteMachine();
+  return machineProxy.deleteMachine();
 }
+
 
 /**
  * \brief Function to add a new local user configuration
@@ -509,25 +516,35 @@ throw(UserException, SystemException)
  */
 int
 vishnu::addLocalAccount(const std::string& sessionKey,
-		const UMS_Data::LocalAccount& newLocalAccount,
-		std::string& sshPublicKey)
-throw(UserException, SystemException)
-{
+                        const UMS_Data::LocalAccount& newLocalAccount,
+                        std::string& sshPublicKey)
+  throw(UserException, SystemException) {
 
-	checkIfTextIsEmpty(newLocalAccount.getUserId(), "The local account userId is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newLocalAccount.getMachineId(), "The local account machineId is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newLocalAccount.getAcLogin(), "The local account acLogin is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newLocalAccount.getSshKeyPath(), "The local sshPublicKeyPath is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newLocalAccount.getHomeDirectory(), "The local account home directory is empty", ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getUserId(),
+                     "The local account userId is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getMachineId(),
+                     "The local account machineId is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getAcLogin(),
+                     "The local account acLogin is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getSshKeyPath(),
+                     "The local sshPublicKeyPath is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newLocalAccount.getHomeDirectory(),
+                     "The local account home directory is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	SessionProxy sessionProxy(sessionKey);
-	LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
+  SessionProxy sessionProxy(sessionKey);
+  LocalAccountProxy localAccountProxy(newLocalAccount, sessionProxy);
 
-	int  res = localAccountProxy.add();
-	sshPublicKey = localAccountProxy.getSshPublicKey();
+  int res = localAccountProxy.add();
+  sshPublicKey = localAccountProxy.getSshPublicKey();
 
-	return res;
+  return res;
 }
+
 
 /**
  * \brief Function to update a local user configuration
@@ -537,15 +554,15 @@ throw(UserException, SystemException)
  */
 int
 vishnu::updateLocalAccount(const std::string& sessionKey,
-		const UMS_Data::LocalAccount& localAccount)
-throw(UserException, SystemException)
-{
+                           const UMS_Data::LocalAccount& localAccount)
+  throw(UserException, SystemException) {
 
-	SessionProxy sessionProxy(sessionKey);
-	LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
+  SessionProxy sessionProxy(sessionKey);
+  LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
 
-	return localAccountProxy.update();
+  return localAccountProxy.update();
 }
+
 
 /**
  * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
@@ -556,19 +573,18 @@ throw(UserException, SystemException)
  */
 int
 vishnu::deleteLocalAccount(const std::string& sessionKey,
-		const std::string& userId,
-		const std::string& machineId)
-throw(UserException, SystemException)
-{
+                           const std::string& userId,
+                           const std::string& machineId)
+  throw(UserException, SystemException) {
+  UMS_Data::LocalAccount localAccount;
+  localAccount.setUserId(userId);
+  localAccount.setMachineId(machineId);
+  SessionProxy sessionProxy(sessionKey);
+  LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
 
-	UMS_Data::LocalAccount localAccount;
-	localAccount.setUserId(userId);
-	localAccount.setMachineId(machineId);
-	SessionProxy sessionProxy(sessionKey);
-	LocalAccountProxy localAccountProxy(localAccount, sessionProxy);
-
-	return localAccountProxy.deleteLocalAccount();
+  return localAccountProxy.deleteLocalAccount();
 }
+
 
 /**
  * \brief Function to save the configuration of VISHNU
@@ -578,68 +594,72 @@ throw(UserException, SystemException)
  */
 int
 vishnu::saveConfiguration(const std::string& sessionKey,
-		UMS_Data::Configuration& config)
-throw(UserException, SystemException)
-{
+                          UMS_Data::Configuration& config)
+  throw(UserException, SystemException) {
+  //the current time
+  boost::posix_time::ptime now =
+    boost::posix_time::microsec_clock::local_time();
 
-	//the current time
-	boost::posix_time::ptime now = boost::posix_time::microsec_clock::local_time();
+  //To get the current time as a string
+  std::string nowToString = to_simple_string(now.date());
+  nowToString.append("-"+to_simple_string(now.time_of_day()));
 
-	//To get the current time as a string
-	std::string nowToString = to_simple_string(now.date());
-	nowToString.append("-"+to_simple_string(now.time_of_day()));
+  //To construct the file to save
+  boost::filesystem::path home_dir = getenv("HOME");
+  boost::filesystem::path  config_dir = home_dir;
+  config_dir /= ".vishnu";
+  config_dir /= "configurationSaved";
 
-	//To construct the file to save
-	boost::filesystem::path home_dir = getenv("HOME");
-	boost::filesystem::path  config_dir = home_dir;
-	config_dir /= ".vishnu";
-	config_dir /= "configurationSaved";
+  if(!boost::filesystem::exists(config_dir)) {
+    boost::filesystem::create_directories(config_dir);
+  }
 
-	if(!boost::filesystem::exists(config_dir)){
-		boost::filesystem::create_directories(config_dir);
-	}
+  std::string filePath;
+  filePath.append(config_dir.string()+"/");
+  filePath.append(nowToString);
 
-	std::string filePath;
-	filePath.append(config_dir.string()+"/");
-	filePath.append(nowToString);
+  SessionProxy sessionProxy(sessionKey);
+  ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	ConfigurationProxy configurationProxy(filePath, sessionProxy);
+  int res = configurationProxy.save();
+  if (!res) {
+    UMS_Data::Configuration *configData = configurationProxy.getData();
+    if (configData) {
+      UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+        UMS_Data::UMS_DataFactory::_instance();
+      //To set the user list
+      for (unsigned int i = 0; i < configData->getListConfUsers().size();
+           i++) {
+        UMS_Data::User_ptr user = ecoreFactory->createUser();
+        //To copy the content and not the pointer
+        *user = *configData->getListConfUsers().get(i);
+        config.getListConfUsers().push_back(user);
+      }
+      //To set the machine list
+      for (unsigned int i = 0; i < configData->getListConfMachines().size();
+           i++) {
+        UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+        //To copy the content and not the pointer
+        *machine = *configData->getListConfMachines().get(i);
+        config.getListConfMachines().push_back(machine);
+      }
+      //To set the LocalAccounts list
+      for (unsigned int i = 0;
+           i < configData->getListConfLocalAccounts().size(); i++) {
+        UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
+        //To copy the content and not the pointer
+        *localAccount = *configData->getListConfLocalAccounts().get(i);
+        config.getListConfLocalAccounts().push_back(localAccount);
+      }
+      config.setFilePath(configData->getFilePath());
 
-	int res = configurationProxy.save();
-	if(!res) {
-		UMS_Data::Configuration *configData = configurationProxy.getData();
-		if(configData!=NULL) {
-			UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-			//To set the user list
-			for(unsigned int i = 0; i < configData->getListConfUsers().size(); i++) {
-				UMS_Data::User_ptr user = ecoreFactory->createUser();
-				//To copy the content and not the pointer
-				*user = *configData->getListConfUsers().get(i);
-				config.getListConfUsers().push_back(user);
-			}
-			//To set the machine list
-			for(unsigned int i = 0; i < configData->getListConfMachines().size(); i++) {
-				UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-				//To copy the content and not the pointer
-				*machine = *configData->getListConfMachines().get(i);
-				config.getListConfMachines().push_back(machine);
-			}
-			//To set the LocalAccounts list
-			for(unsigned int i = 0; i < configData->getListConfLocalAccounts().size(); i++) {
-				UMS_Data::LocalAccount_ptr localAccount = ecoreFactory->createLocalAccount();
-				//To copy the content and not the pointer
-				*localAccount = *configData->getListConfLocalAccounts().get(i);
-				config.getListConfLocalAccounts().push_back(localAccount);
-			}
-			config.setFilePath(configData->getFilePath());
+      delete configData;
+    }
+  }
 
-			delete configData;
-		}
-	}
-
-	return res;
+  return res;
 }
+
 
 /**
  * \brief Function to restore the configuration of VISHNU
@@ -649,22 +669,23 @@ throw(UserException, SystemException)
  */
 int
 vishnu::restoreConfiguration(const std::string& sessionKey,
-		const std::string& filePath)
-throw(UserException, SystemException)
-{
+                             const std::string& filePath)
+  throw(UserException, SystemException) {
+  if (!boost::filesystem::exists(filePath)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "can't open file "+filePath);
+  }
+  if (!boost::filesystem::is_regular_file(filePath)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             filePath+" is not a regular file");
+  }
 
-	if(false==boost::filesystem::exists(filePath)) {
-		throw UMSVishnuException(ERRCODE_INVALID_PARAM, "can't open file "+filePath);
-	}
-	if(false==boost::filesystem::is_regular_file(filePath)){
-		throw UMSVishnuException(ERRCODE_INVALID_PARAM, filePath+" is not a regular file");
-	}
+  SessionProxy sessionProxy(sessionKey);
+  ConfigurationProxy configurationProxy(filePath, sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	ConfigurationProxy configurationProxy(filePath, sessionProxy);
-
-	return configurationProxy.restoreFromFile();
+  return configurationProxy.restoreFromFile();
 }
+
 
 /**
  * \brief Function to configure an option of the user
@@ -674,17 +695,19 @@ throw(UserException, SystemException)
  */
 int
 vishnu::configureOption(const std::string& sessionKey,
-		const UMS_Data::OptionValue& optionValue)
-throw(UserException, SystemException)
-{
+                        const UMS_Data::OptionValue& optionValue)
+  throw(UserException, SystemException) {
+  checkIfTextIsEmpty(optionValue.getOptionName(),
+                     "The name of the option is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(optionValue.getValue(),
+                     "The value of the option is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(optionValue.getValue(), "The value of the option is empty", ERRCODE_INVALID_PARAM);
+  SessionProxy sessionProxy(sessionKey);
+  OptionValueProxy optionValueProxy(optionValue, sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	OptionValueProxy optionValueProxy(optionValue, sessionProxy);
-
-	return optionValueProxy.configureOption();
+  return optionValueProxy.configureOption();
 }
 
 /**
@@ -695,17 +718,21 @@ throw(UserException, SystemException)
  */
 int
 vishnu::configureDefaultOption(const std::string& sessionKey,
-		const UMS_Data::OptionValue& optionValue)
-throw(UserException, SystemException)
-{
-	checkIfTextIsEmpty(optionValue.getOptionName(), "The name of the option is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(optionValue.getValue(), "The value of the option is empty", ERRCODE_INVALID_PARAM);
+                               const UMS_Data::OptionValue& optionValue)
+  throw(UserException, SystemException) {
+  checkIfTextIsEmpty(optionValue.getOptionName(),
+                     "The name of the option is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(optionValue.getValue(),
+                     "The value of the option is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	SessionProxy sessionProxy(sessionKey);
-	OptionValueProxy optionValueProxy(optionValue, sessionProxy);
+  SessionProxy sessionProxy(sessionKey);
+  OptionValueProxy optionValueProxy(optionValue, sessionProxy);
 
-	return optionValueProxy.configureDefaultOption();
+  return optionValueProxy.configureDefaultOption();
 }
+
 
 /**
  * \brief Function to list all sessions of the user
@@ -718,36 +745,44 @@ throw(UserException, SystemException)
  */
 int
 vishnu::listSessions(const std::string& sessionKey,
-		UMS_Data::ListSessions& listSession,
-		const UMS_Data::ListSessionOptions& options)
-throw(UserException, SystemException)
-{
-	if((options.getSessionClosePolicy() < 0) || (options.getSessionClosePolicy() > 2)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE, "Invalid ClosePolicy value: its value must be 0, 1 or 2");
-	}
+                     UMS_Data::ListSessions& listSession,
+                     const UMS_Data::ListSessionOptions& options)
+  throw(UserException, SystemException) {
+  if((options.getSessionClosePolicy() < 0) ||
+     (options.getSessionClosePolicy() > 2)) {
+    throw
+      UMSVishnuException(ERRCODE_UNKNOWN_CLOSURE_MODE,
+                         "Invalid ClosePolicy value: its value must be 0, 1 or 2");
+  }
 
-	if((options.getStatus() < 0) || (options.getStatus() > 1)) {
-		throw UserException(ERRCODE_INVALID_PARAM, "Invalid status value: its value must be 0 or 1");
-	}
+  if((options.getStatus() < 0) || (options.getStatus() > 1)) {
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        "Invalid status value: its value must be 0 or 1");
+  }
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListSessionOptions, UMS_Data::ListSessions> query(options, sessionProxy, "sessionList");
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListSessionOptions,
+             UMS_Data::ListSessions> query(options, sessionProxy,
+                                           "sessionList");
 
-	UMS_Data::ListSessions* listSession_ptr = query.list();
+  UMS_Data::ListSessions* listSession_ptr = query.list();
 
-	if(listSession_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listSession_ptr->getSessions().size(); i++) {
-			UMS_Data::Session_ptr session = ecoreFactory->createSession();
-			//To copy the content and not the pointer
-			*session = *listSession_ptr->getSessions().get(i);
-			listSession.getSessions().push_back(session);
-		}
-		delete  listSession_ptr;
-	}
+  if (listSession_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
 
-	return 0;
+    for (unsigned int i = 0; i < listSession_ptr->getSessions().size(); i++) {
+      UMS_Data::Session_ptr session = ecoreFactory->createSession();
+      //To copy the content and not the pointer
+      *session = *listSession_ptr->getSessions().get(i);
+      listSession.getSessions().push_back(session);
+    }
+    delete  listSession_ptr;
+  }
+
+  return 0;
 }
+
 
 /**
  * \brief Function to list the local user configurations
@@ -759,29 +794,31 @@ throw(UserException, SystemException)
  */
 int
 vishnu::listLocalAccounts(const std::string& sessionKey,
-		UMS_Data::ListLocalAccounts& listLocalAcc,
-		const UMS_Data::ListLocalAccOptions& options)
-throw(UserException, SystemException)
-{
+                          UMS_Data::ListLocalAccounts& listLocalAcc,
+                          const UMS_Data::ListLocalAccOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListLocalAccOptions,
+             UMS_Data::ListLocalAccounts> query(options, sessionProxy,
+                                                "localAccountList");
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts> query(options, sessionProxy, "localAccountList");
+  UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
 
-	UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
+  if (listLocalAcc_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
+      UMS_Data::LocalAccount_ptr account = ecoreFactory->createLocalAccount();
+      //To copy the content and not the pointer
+      *account = *listLocalAcc_ptr->getAccounts().get(i);
+      listLocalAcc.getAccounts().push_back(account);
+    }
+    delete listLocalAcc_ptr;
+  }
 
-	if(listLocalAcc_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listLocalAcc_ptr->getAccounts().size(); i++) {
-			UMS_Data::LocalAccount_ptr account = ecoreFactory->createLocalAccount();
-			//To copy the content and not the pointer
-			*account = *listLocalAcc_ptr->getAccounts().get(i);
-			listLocalAcc.getAccounts().push_back(account);
-		}
-		delete listLocalAcc_ptr;
-	}
-
-	return 0;
+  return 0;
 }
+
 
 /**
  * \brief Function to list the machines in which the local user configurations are defined for the given user
@@ -793,27 +830,29 @@ throw(UserException, SystemException)
  */
 int
 vishnu::listMachines(const std::string& sessionKey,
-		UMS_Data::ListMachines& listMachine,
-		const UMS_Data::ListMachineOptions& options)
-throw(UserException, SystemException)
-{
+                     UMS_Data::ListMachines& listMachine,
+                     const UMS_Data::ListMachineOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListMachineOptions,
+             UMS_Data::ListMachines> query(options, sessionProxy,
+                                           "machineList");
+  UMS_Data::ListMachines* listMachine_ptr = query.list();
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListMachineOptions, UMS_Data::ListMachines> query(options, sessionProxy, "machineList");
-	UMS_Data::ListMachines* listMachine_ptr = query.list();
-
-	if(listMachine_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
-			UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-			//To copy the content and not the pointer
-			*machine = *listMachine_ptr->getMachines().get(i);
-			listMachine.getMachines().push_back(machine);
-		}
-		delete listMachine_ptr;
-	}
-	return 0;
+  if (listMachine_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < listMachine_ptr->getMachines().size(); i++) {
+      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+      //To copy the content and not the pointer
+      *machine = *listMachine_ptr->getMachines().get(i);
+      listMachine.getMachines().push_back(machine);
+    }
+    delete listMachine_ptr;
+  }
+  return 0;
 }
+
 
 /**
  * \brief Function to list the commands
@@ -825,27 +864,29 @@ throw(UserException, SystemException)
  */
 int
 vishnu::listHistoryCmd(const std::string& sessionKey,
-		UMS_Data::ListCommands& listCommands,
-		const UMS_Data::ListCmdOptions& options)
-throw(UserException, SystemException)
-{
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListCmdOptions, UMS_Data::ListCommands> query(options, sessionProxy, "commandList");
+                       UMS_Data::ListCommands& listCommands,
+                       const UMS_Data::ListCmdOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListCmdOptions,
+             UMS_Data::ListCommands> query(options, sessionProxy,
+                                           "commandList");
 
-	UMS_Data::ListCommands* listCommands_ptr = query.list();
+  UMS_Data::ListCommands* listCommands_ptr = query.list();
 
-	if(listCommands_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
-			UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-			//To copy the content and not the pointer
-			*command = *listCommands_ptr->getCommands().get(i);
-			listCommands.getCommands().push_back(command);
-		}
-		delete listCommands_ptr;
-	}
+  if (listCommands_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < listCommands_ptr->getCommands().size(); i++) {
+      UMS_Data::Command_ptr command = ecoreFactory->createCommand();
+      //To copy the content and not the pointer
+      *command = *listCommands_ptr->getCommands().get(i);
+      listCommands.getCommands().push_back(command);
+    }
+    delete listCommands_ptr;
+  }
 
-	return 0;
+  return 0;
 }
 
 /**
@@ -857,28 +898,30 @@ throw(UserException, SystemException)
  */
 int
 vishnu::listOptions(const std::string& sessionKey,
-		UMS_Data::ListOptionsValues& listOptValues,
-		const UMS_Data::ListOptOptions& options)
-throw(UserException, SystemException)
-{
+                    UMS_Data::ListOptionsValues& listOptValues,
+                    const UMS_Data::ListOptOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListOptOptions,
+             UMS_Data::ListOptionsValues> query(options, sessionProxy,
+                                                "optionValueList");
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues> query(options, sessionProxy, "optionValueList");
+  UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
 
-	UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
+  if (listOptValues_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < listOptValues_ptr->getOptionValues().size();
+         i++) {
+      UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();
+      //To copy the content and not the pointer
+      *optionValue = *listOptValues_ptr->getOptionValues().get(i);
+      listOptValues.getOptionValues().push_back(optionValue);
+    }
+    delete listOptValues_ptr;
+  }
 
-	if(listOptValues_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listOptValues_ptr->getOptionValues().size(); i++) {
-			UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();
-			//To copy the content and not the pointer
-			*optionValue = *listOptValues_ptr->getOptionValues().get(i);
-			listOptValues.getOptionValues().push_back(optionValue);
-		}
-		delete listOptValues_ptr;
-	}
-
-	return 0;
+  return 0;
 }
 
 /**
@@ -891,34 +934,28 @@ throw(UserException, SystemException)
 
 int
 vishnu::listUsers(const std::string& sessionKey,
-		UMS_Data::ListUsers& listUsers,
-		const UMS_Data::ListUsersOptions& listOptions )
-throw(UserException, SystemException)
+                  UMS_Data::ListUsers& listUsers,
+                  const UMS_Data::ListUsersOptions& listOptions )
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListUsersOptions,
+             UMS_Data::ListUsers> query(listOptions, sessionProxy, "userList");
 
-{
+  UMS_Data::ListUsers* listUsers_ptr = query.list();
 
+  if (listUsers_ptr) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
+      UMS_Data::User_ptr user = ecoreFactory->createUser();
+      //To copy the content and not the pointer
+      *user = *listUsers_ptr->getUsers().get(i);
+      listUsers.getUsers().push_back(user);
+    }
+    delete listUsers_ptr;
+  }
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListUsersOptions, UMS_Data::ListUsers> query(listOptions, sessionProxy, "userList");
-
-	UMS_Data::ListUsers* listUsers_ptr = query.list();
-
-	if(listUsers_ptr!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listUsers_ptr->getUsers().size(); i++) {
-			UMS_Data::User_ptr user = ecoreFactory->createUser();
-			//To copy the content and not the pointer
-			*user = *listUsers_ptr->getUsers().get(i);
-			listUsers.getUsers().push_back(user);
-		}
-		delete listUsers_ptr;
-	}
-
-
-
-
-
-	return 0;
+  return 0;
 }
 
 
@@ -932,37 +969,46 @@ throw(UserException, SystemException)
  * user-authentication system which will be added in
  * VISHNU
  */
-
-
 int
-vishnu::addAuthSystem(const std::string& sessionKey, UMS_Data::AuthSystem& newAuthSys)
-throw(UserException, SystemException){
+vishnu::addAuthSystem(const std::string& sessionKey,
+                      UMS_Data::AuthSystem& newAuthSys)
+  throw(UserException, SystemException) {
+  if (newAuthSys.getType() != LDAPTYPE) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
+  }
 
+  if (newAuthSys.getType()==LDAPTYPE &&
+      (string(newAuthSys.getLdapBase()).empty())) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE,
+                             "Missing ldap base");
+  }
 
-	if (newAuthSys.getType() != LDAPTYPE){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
-	}
+  if (newAuthSys.getUserPasswordEncryption() != SSHA_METHOD ) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD,
+                             "Invalid encryption method");
+  }
 
-	if (newAuthSys.getType()==LDAPTYPE && (string(newAuthSys.getLdapBase()).size()==0)){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Missing ldap base");
-	}
+  checkIfTextIsEmpty(newAuthSys.getName(),
+                     "The authentication name is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getURI(),
+                     "The authentication item is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthLogin(),
+                     "The authentication login is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(newAuthSys.getAuthPassword(),
+                     "The authentication password is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	if (newAuthSys.getUserPasswordEncryption() != SSHA_METHOD ){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
-	}
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(newAuthSys, sessionProxy);
+  auth.add();
+  newAuthSys = auth.getData();
 
-	checkIfTextIsEmpty(newAuthSys.getName(), "The authentication name is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newAuthSys.getURI(), "The authentication item is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newAuthSys.getAuthLogin(), "The authentication login is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(newAuthSys.getAuthPassword(), "The authentication password is empty", ERRCODE_INVALID_PARAM);
-
-	SessionProxy sessionProxy(sessionKey);
-	AuthSystemProxy auth(newAuthSys, sessionProxy);
-	auth.add();
-	newAuthSys = auth.getData();
-	return 0;
-
+  return 0;
 }
+
 
 /***
  * \brief Function to add a new user-authentication system in VISHNU
@@ -971,31 +1017,33 @@ throw(UserException, SystemException){
  * user-authentication system which will be added in
  * VISHNU
  */
-
-
 int
-vishnu::updateAuthSystem(const std::string& sessionKey,  UMS_Data::AuthSystem& authSys)
-throw(UserException, SystemException){
-	SessionProxy sessionProxy(sessionKey);
-	AuthSystemProxy auth(authSys, sessionProxy);
+vishnu::updateAuthSystem(const std::string& sessionKey,
+                         UMS_Data::AuthSystem& authSys)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(authSys, sessionProxy);
 
-	if (authSys.getType()<-1 || authSys.getType()>0){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
-	}
-	if((authSys.getStatus() < -1) || (authSys.getStatus() > 1)) {
-		throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, "Invalid Status value: its value must be 0 or 1");
-	}
+  if (authSys.getType() < -1 || authSys.getType() > 0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM_TYPE, "Invalid type");
+  }
+  if((authSys.getStatus() < -1) || (authSys.getStatus() > 1)) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
+                             "Invalid Status value: its value must be 0 or 1");
+  }
 
+  if (authSys.getUserPasswordEncryption()<-1 ||
+      authSys.getUserPasswordEncryption()>0 ) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD,
+                             "Invalid encryption method");
+  }
 
-	if (authSys.getUserPasswordEncryption()<-1 ||
-			authSys.getUserPasswordEncryption()>0 ){
-		throw UMSVishnuException(ERRCODE_UNKNOWN_ENCRYPTION_METHOD, "Invalid encryption method");
-	}
+  auth.update();
+  authSys = auth.getData();
 
-	auth.update();
-	authSys = auth.getData();
-	return 0;
+  return 0;
 }
+
 
 /***
  * \brief Function to remove a user-authentication system from VISHNU
@@ -1003,18 +1051,16 @@ throw(UserException, SystemException){
  * \param authSystemId authSystemId is the identifier of the user-authentication
  * system
  */
-
 int
-vishnu::deleteAuthSystem(const std::string& sessionKey, const std::string& authSystemId)
-throw(UserException, SystemException){
+vishnu::deleteAuthSystem(const std::string& sessionKey,
+                         const std::string& authSystemId)
+  throw(UserException, SystemException) {
+  UMS_Data::AuthSystem sys;
+  sys.setAuthSystemId(authSystemId);
+  SessionProxy sessionProxy(sessionKey);
+  AuthSystemProxy auth(sys, sessionProxy);
 
-
-	UMS_Data::AuthSystem sys;
-	sys.setAuthSystemId(authSystemId);
-	SessionProxy sessionProxy(sessionKey);
-	AuthSystemProxy auth(sys, sessionProxy);
-
-	return auth.deleteAuthSystem();
+  return auth.deleteAuthSystem();
 }
 
 
@@ -1029,28 +1075,31 @@ throw(UserException, SystemException){
  * are defined). It also allows to list user-authentication
  * systems of a specific type
  */
-
-
 int
-vishnu::listAuthSystems(const std::string& sessionKey, UMS_Data::ListAuthSystems& listAuthSys, const UMS_Data::ListAuthSysOptions& options )
-throw(UserException, SystemException){
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems> query(options, sessionProxy, "authSystemList");
+vishnu::listAuthSystems(const std::string& sessionKey,
+                        UMS_Data::ListAuthSystems& listAuthSys,
+                        const UMS_Data::ListAuthSysOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListAuthSysOptions,
+             UMS_Data::ListAuthSystems> query(options, sessionProxy,
+                                              "authSystemList");
 
-	UMS_Data::ListAuthSystems* list = query.list();
+  UMS_Data::ListAuthSystems* list = query.list();
 
-	if (list!=NULL) {
+  if (list) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < list->getAuthSystems().size(); i++) {
+      UMS_Data::AuthSystem_ptr auth = ecoreFactory->createAuthSystem();
+      //To copy the content and not the pointer
+      *auth = *list->getAuthSystems().get(i);
+      listAuthSys.getAuthSystems().push_back(auth);
+    }
+    delete list;
+  }
 
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < list->getAuthSystems().size(); i++) {
-			UMS_Data::AuthSystem_ptr auth = ecoreFactory->createAuthSystem();
-			//To copy the content and not the pointer
-			*auth = *list->getAuthSystems().get(i);
-			listAuthSys.getAuthSystems().push_back(auth);
-		}
-		delete list;
-	}
-	return 0;
+  return 0;
 }
 
 
@@ -1061,18 +1110,21 @@ throw(UserException, SystemException){
  * local user-authentication configuration which will be
  * added in VISHNU
  */
-
 int
-vishnu::addAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
-throw(UserException, SystemException){
+vishnu::addAuthAccount(const std::string& sessionKey,
+                       const UMS_Data::AuthAccount& authAccount)
+  throw(UserException, SystemException) {
+  checkIfTextIsEmpty(authAccount.getAuthSystemId(),
+                     "The authentication account systemId is empty",
+                     ERRCODE_INVALID_PARAM);
+  checkIfTextIsEmpty(authAccount.getAcLogin(),
+                     "The authentication acc login is empty",
+                     ERRCODE_INVALID_PARAM);
 
-	checkIfTextIsEmpty(authAccount.getAuthSystemId(), "The authentication account systemId is empty", ERRCODE_INVALID_PARAM);
-	checkIfTextIsEmpty(authAccount.getAcLogin(), "The authentication acc login is empty", ERRCODE_INVALID_PARAM);
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy auth(authAccount, sessionProxy);
 
-	SessionProxy sessionProxy(sessionKey);
-	AuthAccountProxy auth(authAccount, sessionProxy);
-
-	return auth.add();
+  return auth.add();
 }
 
 
@@ -1083,18 +1135,14 @@ throw(UserException, SystemException){
  * local user-authentication configuration which will be
  * updated
  */
-
 int
-vishnu::updateAuthAccount(const std::string& sessionKey, const UMS_Data::AuthAccount& authAccount)
-throw(UserException, SystemException){
+vishnu::updateAuthAccount(const std::string& sessionKey,
+                          const UMS_Data::AuthAccount& authAccount)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy auth(authAccount, sessionProxy);
 
-
-	SessionProxy sessionProxy(sessionKey);
-	AuthAccountProxy auth(authAccount, sessionProxy);
-
-	return auth.update();
-
-
+  return auth.update();
 }
 
 
@@ -1108,23 +1156,20 @@ throw(UserException, SystemException){
  * identifier of the user whose local user-authentication
  * configuration will be deleted
  */
-
-
 int
-vishnu::deleteAuthAccount(const std::string& sessionKey, const std::string& authSystemId, const std::string& userId )
-throw(UserException, SystemException){
+vishnu::deleteAuthAccount(const std::string& sessionKey,
+                          const std::string& authSystemId,
+                          const std::string& userId)
+  throw(UserException, SystemException) {
+  UMS_Data::AuthAccount authAccount;
+  authAccount.setUserId(userId);
+  authAccount.setAuthSystemId(authSystemId);
+  SessionProxy sessionProxy(sessionKey);
+  AuthAccountProxy authAccountProxy(authAccount, sessionProxy);
 
-
-	UMS_Data::AuthAccount authAccount;
-	authAccount.setUserId(userId);
-	authAccount.setAuthSystemId(authSystemId);
-	SessionProxy sessionProxy(sessionKey);
-	AuthAccountProxy authAccountProxy(authAccount, sessionProxy);
-
-	return authAccountProxy.deleteAuthAccount();
-
-
+  return authAccountProxy.deleteAuthAccount();
 }
+
 
 /***
  * \brief Function to lists local user-authentication configurations
@@ -1137,30 +1182,31 @@ throw(UserException, SystemException){
  * user-authentication configuration defined for a specific
  * user-authentication system
  */
-
-
 int
-vishnu::listAuthAccounts(const std::string& sessionKey, UMS_Data::ListAuthAccounts& listAuthAccounts, const UMS_Data::ListAuthAccOptions& options)
-throw(UserException, SystemException){
+vishnu::listAuthAccounts(const std::string& sessionKey,
+                         UMS_Data::ListAuthAccounts& listAuthAccounts,
+                         const UMS_Data::ListAuthAccOptions& options)
+  throw(UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<UMS_Data::ListAuthAccOptions,
+             UMS_Data::ListAuthAccounts> query(options, sessionProxy,
+                                               "authAccountList");
 
-	SessionProxy sessionProxy(sessionKey);
-	QueryProxy<UMS_Data::ListAuthAccOptions, UMS_Data::ListAuthAccounts> query(options, sessionProxy, "authAccountList");
+  UMS_Data::ListAuthAccounts* list = query.list();
 
-	UMS_Data::ListAuthAccounts* list = query.list();
+  if (list) {
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory =
+      UMS_Data::UMS_DataFactory::_instance();
+    for (unsigned int i = 0; i < list->getAuthAccounts().size(); i++) {
+      UMS_Data::AuthAccount_ptr auth = ecoreFactory->createAuthAccount();
+      //To copy the content and not the pointer
+      *auth = *list->getAuthAccounts().get(i);
+      listAuthAccounts.getAuthAccounts().push_back(auth);
+    }
+    delete list;
+  }
 
-	if(list!=NULL) {
-		UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < list->getAuthAccounts().size(); i++) {
-			UMS_Data::AuthAccount_ptr auth = ecoreFactory->createAuthAccount();
-			//To copy the content and not the pointer
-			*auth = *list->getAuthAccounts().get(i);
-			listAuthAccounts.getAuthAccounts().push_back(auth);
-		}
-		delete list;
-	}
-
-	return 0;
-
+  return 0;
 }
 
 
@@ -1172,10 +1218,8 @@ throw(UserException, SystemException){
  * \return an error code
  */
 int
-vishnu::vishnuInitialize(char* cfg, int argc, char** argv)
-{
-
-	return UtilsProxy(cfg, argc, argv).initialize();
+vishnu::vishnuInitialize(char* cfg, int argc, char** argv) {
+  return UtilsProxy(cfg, argc, argv).initialize();
 }
 
 #ifdef BUILD_TESTING
@@ -1185,11 +1229,10 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv)
  * \return an error code
  */
 int
-vishnu::restore(const std::string& filePath)
-{
+vishnu::restore(const std::string& filePath) {
+  UtilsProxy utilsProxy(filePath) ;
 
-	UtilsProxy utilsProxy(filePath) ;
-
-	return utilsProxy.restore();
+  return utilsProxy.restore();
 }
+
 #endif
