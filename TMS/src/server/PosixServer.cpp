@@ -57,7 +57,7 @@ PosixServer::submit(const char* scriptPath,
   job.setStatus(4);
   job.setJobQueue("posix");
 // If no name give a default job name
-  
+
   if (options.getName().compare("")==0){
     job.setJobName("posix_job");
   } else {
@@ -70,6 +70,7 @@ PosixServer::submit(const char* scriptPath,
   job.setOutputPath(OutPutPath);
 
   job.setErrorPath(ErrorPath);
+  job.setWallClockLimit(resultat.maxTime);
 
   return ret;
 }
