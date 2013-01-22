@@ -81,7 +81,6 @@ main(int argc, char* argv[], char* envp[]) {
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
   string sendmailScriptPath;
-  string dietConfigFile;
   string IMSTYPE = "imssed";
   struct sigaction action;
   string mid;

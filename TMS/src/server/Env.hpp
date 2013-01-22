@@ -31,7 +31,7 @@ public:
    * \param oldValue The value to replace
    * \param newValue The new value
    */
-  void
+  static void
   replaceAllOccurences(std::string& scriptContent,
                        const std::string& oldValue,
                        const std::string& newValue);
@@ -49,23 +49,14 @@ public:
    * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
    */
   void
-  setParams(std::string& scriptContent, const std::string& params) ;
-	/**
-	 * \brief Function to replace all occurences in a string
-	 * \param scriptContent The string to modify
-	 * \param oldValue The value to replace
-	 * \param newValue The new value
-	 */
-	static void replaceAllOccurences(std::string& scriptContent,
-			const std::string& oldValue,
-			const std::string& newValue);
+  setParams(std::string& scriptContent, const std::string& params);
 
   /**
    * \brief Function to set environment variables accordinf to parameters
    * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
    */
   static void
-  setParamsEnvVars(const std::string& params) ;
+  setParamsEnvVars(const std::string& params);
 
 	/**
 	 * \brief Function to retrieve an environment variable
