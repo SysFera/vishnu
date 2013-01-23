@@ -1,4 +1,4 @@
-if(NOT CLIENT_ONLY)
+if(COMPILE_SERVERS)
   # common stuff for init scripts
   # hack to avoid installing configuration stuff in /usr/etc
   if(${CMAKE_INSTALL_PREFIX} MATCHES "^/usr/?$")
@@ -58,4 +58,4 @@ if(NOT CLIENT_ONLY)
         PERMISSIONS OWNER_EXECUTE GROUP_EXECUTE WORLD_EXECUTE)
     endforeach()
   endif()
-endif()
+endif(COMPILE_SERVERS)

@@ -42,7 +42,8 @@ option(INSTALL_SYSV "install systemV init scripts" OFF)
 option(INSTALL_SYSTEMD "install systemd services" OFF)
 
 # Options set to OFF by default
-option(CLIENT_ONLY "only compile the client side")
+option(COMPILE_CLIENT_CLI "compile the client command line interface")
+option(COMPILE_SERVERS "compile the servers")
 option(ENABLE_PYTHON "compile the python api")
 option(ENABLE_JAVA "compile the java api")
 option(ENABLE_SWIG "use swig to re-generate code for the wrappers")
@@ -67,8 +68,8 @@ if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
-include(CMakeDependentOption)
-cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
+# include(CMakeDependentOption)
+# cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
 option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
 
 find_package(ZMQ)
@@ -130,7 +131,7 @@ if (ENABLE_MYSQL)
   endif(MYSQL_FOUND)
 endif (ENABLE_MYSQL)
 
-if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
+if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
@@ -143,7 +144,7 @@ set(pbs 0)
 set(deltacloud 0)
 set(posix 0)
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF AND NOT VISHNU_USE_SGE)
+if (COMPILE_TMS AND COMPILE_SERVERS) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF AND NOT VISHNU_USE_SGE)
   string (COMPARE EQUAL ${VISHNU_BATCH} "TORQUE" torque)
   string (COMPARE EQUAL ${VISHNU_BATCH} "LL" ll)
   string (COMPARE EQUAL ${VISHNU_BATCH} "SLURM" slurm)
@@ -172,10 +173,6 @@ if (COMPILE_TMS)
   endif()
 
 endif(COMPILE_TMS)
-
-if (COMPILE_FMS)
-  add_definitions(-DCOMPILE_FMS)
-endif(COMPILE_FMS)
 
 
 if (torque)
@@ -333,7 +330,7 @@ if (posix)
   add_definitions(-DHAVE_TMSPOSIX)
 endif(posix)
 
-if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
+if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
   #To check if the module UMS is activated
   if (COMPILE_UMS)
     find_package(LDAP)
@@ -351,7 +348,7 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
   else (COMPILE_UMS)
     message("To use LDAP, the UMS module must be activated.")
   endif (COMPILE_UMS)
-endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
+endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
 
 
 find_package(Boost 1.46
@@ -532,7 +529,7 @@ if(COMPILE_TMS)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
-  if (NOT CLIENT_ONLY)
+  if (COMPILE_SERVERS)
     find_package(XMLRPC)
     find_package(Sigar REQUIRED)
   endif()

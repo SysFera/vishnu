@@ -46,9 +46,13 @@ set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 
-add_subdirectory(cli)
+## client CLI
+if(COMPILE_CLIENT_CLI)
+  add_subdirectory(cli)
+endif()
 
-if (NOT CLIENT_ONLY)
+
+if (COMPILE_SERVERS)
   include(config.cmake)
   include_directories(server
     utils
@@ -165,5 +169,8 @@ if (NOT CLIENT_ONLY)
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
 
-endif (NOT CLIENT_ONLY)
+  if (BUILD_TESTING)
+    add_subdirectory(posix_parser/tests)
+  endif()
+endif (COMPILE_SERVERS)
 
