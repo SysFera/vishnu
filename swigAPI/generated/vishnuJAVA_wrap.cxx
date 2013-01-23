@@ -23076,9 +23076,9 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_exportCommands(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jstring jarg3, jlong jarg4, jobject jarg4_) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
-  std::string arg3 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
   IMS_Data::ExportOp const &arg4_defvalue = IMS_Data::ExportOp() ;
   IMS_Data::ExportOp *arg4 = (IMS_Data::ExportOp *) &arg4_defvalue ;
   int result;
@@ -23089,26 +23089,29 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ex
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   if(!jarg3) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg3_pstr = (const char *)jenv->GetStringUTFChars(jarg3, 0); 
   if (!arg3_pstr) return 0;
-  (&arg3)->assign(arg3_pstr);
+  std::string arg3_str(arg3_pstr);
+  arg3 = &arg3_str;
   jenv->ReleaseStringUTFChars(jarg3, arg3_pstr); 
   arg4 = *(IMS_Data::ExportOp **)&jarg4;
   if (!arg4) {
@@ -23117,7 +23120,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ex
   } 
   {
     try {
-      result = (int)vishnu::exportCommands(arg1,arg2,arg3,(IMS_Data::ExportOp const &)*arg4);
+      result = (int)vishnu::exportCommands((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(IMS_Data::ExportOp const &)*arg4);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23167,8 +23170,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ex
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getMetricCurrentValue(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::ListMetric *arg3 = 0 ;
   IMS_Data::CurMetricOp const &arg4_defvalue = IMS_Data::CurMetricOp() ;
   IMS_Data::CurMetricOp *arg4 = (IMS_Data::CurMetricOp *) &arg4_defvalue ;
@@ -23181,18 +23184,20 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   arg3 = *(IMS_Data::ListMetric **)&jarg3;
   if (!arg3) {
@@ -23206,7 +23211,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getMetricCurrentValue(arg1,arg2,*arg3,(IMS_Data::CurMetricOp const &)*arg4);
+      result = (int)vishnu::getMetricCurrentValue((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(IMS_Data::CurMetricOp const &)*arg4);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23256,8 +23261,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getMetricHistory(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_, jlong jarg4, jobject jarg4_) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::ListMetric *arg3 = 0 ;
   IMS_Data::MetricHistOp const &arg4_defvalue = IMS_Data::MetricHistOp() ;
   IMS_Data::MetricHistOp *arg4 = (IMS_Data::MetricHistOp *) &arg4_defvalue ;
@@ -23270,18 +23275,20 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   arg3 = *(IMS_Data::ListMetric **)&jarg3;
   if (!arg3) {
@@ -23295,7 +23302,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getMetricHistory(arg1,arg2,*arg3,(IMS_Data::MetricHistOp const &)*arg4);
+      result = (int)vishnu::getMetricHistory((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(IMS_Data::MetricHistOp const &)*arg4);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23345,7 +23352,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getProcesses(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListProcesses *arg2 = 0 ;
   IMS_Data::ProcessOp const &arg3_defvalue = IMS_Data::ProcessOp() ;
   IMS_Data::ProcessOp *arg3 = (IMS_Data::ProcessOp *) &arg3_defvalue ;
@@ -23358,10 +23365,11 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   arg2 = *(IMS_Data::ListProcesses **)&jarg2;
   if (!arg2) {
@@ -23375,7 +23383,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getProcesses(arg1,*arg2,(IMS_Data::ProcessOp const &)*arg3);
+      result = (int)vishnu::getProcesses((std::string const &)*arg1,*arg2,(IMS_Data::ProcessOp const &)*arg3);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23425,7 +23433,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_setSystemInfo(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::SystemInfo arg2 ;
   IMS_Data::SystemInfo *argp2 ;
   int result;
@@ -23436,10 +23444,11 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   argp2 = *(IMS_Data::SystemInfo **)&jarg2; 
   if (!argp2) {
@@ -23449,7 +23458,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
   arg2 = *argp2; 
   {
     try {
-      result = (int)vishnu::setSystemInfo(arg1,arg2);
+      result = (int)vishnu::setSystemInfo((std::string const &)*arg1,arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23499,7 +23508,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_setSystemThreshold(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::Threshold arg2 ;
   IMS_Data::Threshold *argp2 ;
   int result;
@@ -23510,10 +23519,11 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   argp2 = *(IMS_Data::Threshold **)&jarg2; 
   if (!argp2) {
@@ -23523,7 +23533,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
   arg2 = *argp2; 
   {
     try {
-      result = (int)vishnu::setSystemThreshold(arg1,arg2);
+      result = (int)vishnu::setSystemThreshold((std::string const &)*arg1,arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23573,7 +23583,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getSystemThreshold(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListThreshold *arg2 = 0 ;
   IMS_Data::ThresholdOp const &arg3_defvalue = IMS_Data::ThresholdOp() ;
   IMS_Data::ThresholdOp *arg3 = (IMS_Data::ThresholdOp *) &arg3_defvalue ;
@@ -23586,10 +23596,11 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   arg2 = *(IMS_Data::ListThreshold **)&jarg2;
   if (!arg2) {
@@ -23603,7 +23614,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getSystemThreshold(arg1,*arg2,(IMS_Data::ThresholdOp const &)*arg3);
+      result = (int)vishnu::getSystemThreshold((std::string const &)*arg1,*arg2,(IMS_Data::ThresholdOp const &)*arg3);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23653,8 +23664,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineUserIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -23662,22 +23673,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineUserIdentifier(arg1,arg2);
+      result = (int)vishnu::defineUserIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23727,8 +23740,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineMachineIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -23736,22 +23749,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineMachineIdentifier(arg1,arg2);
+      result = (int)vishnu::defineMachineIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23801,8 +23816,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineJobIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -23810,22 +23825,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineJobIdentifier(arg1,arg2);
+      result = (int)vishnu::defineJobIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23875,8 +23892,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineTransferIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -23884,22 +23901,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineTransferIdentifier(arg1,arg2);
+      result = (int)vishnu::defineTransferIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -23949,8 +23968,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineAuthIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -23958,22 +23977,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineAuthIdentifier(arg1,arg2);
+      result = (int)vishnu::defineAuthIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24023,8 +24044,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_defineWorkIdentifier(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   int result;
   
   (void)jenv;
@@ -24032,22 +24053,24 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   {
     try {
-      result = (int)vishnu::defineWorkIdentifier(arg1,arg2);
+      result = (int)vishnu::defineWorkIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24097,8 +24120,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_de
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_loadShed(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jint jarg3) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::LoadShedType arg3 ;
   int result;
   
@@ -24107,23 +24130,25 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_lo
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   arg3 = (IMS_Data::LoadShedType)jarg3; 
   {
     try {
-      result = (int)vishnu::loadShed(arg1,arg2,arg3);
+      result = (int)vishnu::loadShed((std::string const &)*arg1,(std::string const &)*arg2,arg3);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24173,7 +24198,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_lo
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_setUpdateFrequency(JNIEnv *jenv, jclass jcls, jstring jarg1, jint jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   int arg2 ;
   int result;
   
@@ -24182,15 +24207,16 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   arg2 = (int)jarg2; 
   {
     try {
-      result = (int)vishnu::setUpdateFrequency(arg1,arg2);
+      result = (int)vishnu::setUpdateFrequency((std::string const &)*arg1,arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24238,11 +24264,10 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_se
 }
 
 
-SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getUpdateFrequency(JNIEnv *jenv, jclass jcls, jstring jarg1, jintArray jarg2) {
+SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getUpdateFrequency(JNIEnv *jenv, jclass jcls, jstring jarg1, jint jarg2) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  int *arg2 = 0 ;
-  int temp2 ;
+  std::string *arg1 = 0 ;
+  int arg2 ;
   int result;
   
   (void)jenv;
@@ -24250,25 +24275,16 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
-  {
-    if (!jarg2) {
-      SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "array null");
-      return 0;
-    }
-    if (jenv->GetArrayLength(jarg2) == 0) {
-      SWIG_JavaThrowException(jenv, SWIG_JavaIndexOutOfBoundsException, "Array must contain at least 1 element");
-      return 0;
-    }
-    arg2 = &temp2; 
-  }
+  arg2 = (int)jarg2; 
   {
     try {
-      result = (int)vishnu::getUpdateFrequency(arg1,*arg2);
+      result = (int)vishnu::getUpdateFrequency((std::string const &)*arg1,arg2);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24312,19 +24328,14 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
     }
   }
   jresult = (jint)result; 
-  {
-    jint jvalue = (jint)temp2;
-    jenv->SetIntArrayRegion(jarg2, 0, 1, &jvalue);
-  }
-  
   return jresult;
 }
 
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_stop(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::SupervisorOp *arg3 = 0 ;
   int result;
   
@@ -24334,18 +24345,20 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_st
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   arg3 = *(IMS_Data::SupervisorOp **)&jarg3;
   if (!arg3) {
@@ -24354,7 +24367,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_st
   } 
   {
     try {
-      result = (int)vishnu::stop(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
+      result = (int)vishnu::stop((std::string const &)*arg1,(std::string const &)*arg2,(IMS_Data::SupervisorOp const &)*arg3);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24404,7 +24417,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_st
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_getSystemInfo(JNIEnv *jenv, jclass jcls, jstring jarg1, jlong jarg2, jobject jarg2_, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListSysInfo *arg2 = 0 ;
   IMS_Data::SysInfoOp const &arg3_defvalue = IMS_Data::SysInfoOp() ;
   IMS_Data::SysInfoOp *arg3 = (IMS_Data::SysInfoOp *) &arg3_defvalue ;
@@ -24417,10 +24430,11 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   arg2 = *(IMS_Data::ListSysInfo **)&jarg2;
   if (!arg2) {
@@ -24434,7 +24448,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
   } 
   {
     try {
-      result = (int)vishnu::getSystemInfo(arg1,*arg2,(IMS_Data::SysInfoOp const &)*arg3);
+      result = (int)vishnu::getSystemInfo((std::string const &)*arg1,*arg2,(IMS_Data::SysInfoOp const &)*arg3);
     }
     catch(UMSVishnuException &_e) {
       {
@@ -24484,8 +24498,8 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_ge
 
 SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_restart(JNIEnv *jenv, jclass jcls, jstring jarg1, jstring jarg2, jlong jarg3, jobject jarg3_) {
   jint jresult = 0 ;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::SupervisorOp *arg3 = 0 ;
   int result;
   
@@ -24495,18 +24509,20 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_re
   if(!jarg1) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg1_pstr = (const char *)jenv->GetStringUTFChars(jarg1, 0); 
   if (!arg1_pstr) return 0;
-  (&arg1)->assign(arg1_pstr);
+  std::string arg1_str(arg1_pstr);
+  arg1 = &arg1_str;
   jenv->ReleaseStringUTFChars(jarg1, arg1_pstr); 
   if(!jarg2) {
     SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
     return 0;
-  } 
+  }
   const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
   if (!arg2_pstr) return 0;
-  (&arg2)->assign(arg2_pstr);
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
   jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
   arg3 = *(IMS_Data::SupervisorOp **)&jarg3;
   if (!arg3) {
@@ -24515,7 +24531,7 @@ SWIGEXPORT jint JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_re
   } 
   {
     try {
-      result = (int)vishnu::restart(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
+      result = (int)vishnu::restart((std::string const &)*arg1,(std::string const &)*arg2,(IMS_Data::SupervisorOp const &)*arg3);
     }
     catch(UMSVishnuException &_e) {
       {

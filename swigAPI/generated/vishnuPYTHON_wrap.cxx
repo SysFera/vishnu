@@ -34568,8 +34568,8 @@ SWIGINTERN PyObject *_wrap_listSessions(PyObject *SWIGUNUSEDPARM(self), PyObject
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListSessions
     for (int i = 0; i < arg2->getSessions().size() ; ++i) {
-      // Getting the corresponding swig Session    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::Session")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::Session")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListSessions (because emf destroys its objects at the end)
       UMS_Data::Session* object = ecoreFactory->createSession();
@@ -34660,8 +34660,8 @@ SWIGINTERN PyObject *_wrap_listLocalAccounts(PyObject *SWIGUNUSEDPARM(self), PyO
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListLocalAccounts
     for (int i = 0; i < arg2->getAccounts().size() ; ++i) {
-      // Getting the corresponding swig LocalAccount    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::LocalAccount")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::LocalAccount")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListLocalAccounts (because emf destroys its objects at the end)
       UMS_Data::LocalAccount* object = ecoreFactory->createLocalAccount();
@@ -34752,8 +34752,8 @@ SWIGINTERN PyObject *_wrap_listMachines(PyObject *SWIGUNUSEDPARM(self), PyObject
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListMachines
     for (int i = 0; i < arg2->getMachines().size() ; ++i) {
-      // Getting the corresponding swig Machine    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::Machine")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::Machine")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListMachines (because emf destroys its objects at the end)
       UMS_Data::Machine* object = ecoreFactory->createMachine();
@@ -34844,8 +34844,8 @@ SWIGINTERN PyObject *_wrap_listHistoryCmd(PyObject *SWIGUNUSEDPARM(self), PyObje
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListCommands
     for (int i = 0; i < arg2->getCommands().size() ; ++i) {
-      // Getting the corresponding swig Command    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::Command")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::Command")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListCommands (because emf destroys its objects at the end)
       UMS_Data::Command* object = ecoreFactory->createCommand();
@@ -34936,8 +34936,8 @@ SWIGINTERN PyObject *_wrap_listOptions(PyObject *SWIGUNUSEDPARM(self), PyObject 
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListOptionsValues
     for (int i = 0; i < arg2->getOptionValues().size() ; ++i) {
-      // Getting the corresponding swig OptionValue    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::OptionValue")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::OptionValue")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListOptionsValues (because emf destroys its objects at the end)
       UMS_Data::OptionValue* object = ecoreFactory->createOptionValue();
@@ -35028,8 +35028,8 @@ SWIGINTERN PyObject *_wrap_listUsers(PyObject *SWIGUNUSEDPARM(self), PyObject *a
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListUsers
     for (int i = 0; i < arg2->getUsers().size() ; ++i) {
-      // Getting the corresponding swig User    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::User")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::User")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListUsers (because emf destroys its objects at the end)
       UMS_Data::User* object = ecoreFactory->createUser();
@@ -35289,8 +35289,8 @@ SWIGINTERN PyObject *_wrap_listAuthSystems(PyObject *SWIGUNUSEDPARM(self), PyObj
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListAuthSystems
     for (int i = 0; i < arg2->getAuthSystems().size() ; ++i) {
-      // Getting the corresponding swig AuthSystem    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::AuthSystem")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::AuthSystem")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListAuthSystems (because emf destroys its objects at the end)
       UMS_Data::AuthSystem* object = ecoreFactory->createAuthSystem();
@@ -35569,8 +35569,8 @@ SWIGINTERN PyObject *_wrap_listAuthAccounts(PyObject *SWIGUNUSEDPARM(self), PyOb
     UMS_Data::UMS_DataFactory * ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
     // For each item of the ListAuthAccounts
     for (int i = 0; i < arg2->getAuthAccounts().size() ; ++i) {
-      // Getting the corresponding swig AuthAccount    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("UMS_Data::AuthAccount")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("UMS_Data::AuthAccount")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListAuthAccounts (because emf destroys its objects at the end)
       UMS_Data::AuthAccount* object = ecoreFactory->createAuthAccount();
@@ -38471,8 +38471,8 @@ SWIGINTERN PyObject *_wrap_listJobs(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
     TMS_Data::TMS_DataFactory * ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     // For each item of the ListJobs
     for (int i = 0; i < arg3->getJobs().size() ; ++i) {
-      // Getting the corresponding swig Job    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("TMS_Data::Job")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("TMS_Data::Job")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListJobs (because emf destroys its objects at the end)
       TMS_Data::Job* object = ecoreFactory->createJob();
@@ -38585,8 +38585,8 @@ SWIGINTERN PyObject *_wrap_getJobProgress(PyObject *SWIGUNUSEDPARM(self), PyObje
     TMS_Data::TMS_DataFactory * ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     // For each item of the ListProgression
     for (int i = 0; i < arg3->getProgress().size() ; ++i) {
-      // Getting the corresponding swig Progression    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("TMS_Data::Progression")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("TMS_Data::Progression")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListProgression (because emf destroys its objects at the end)
       TMS_Data::Progression* object = ecoreFactory->createProgression();
@@ -38701,8 +38701,8 @@ SWIGINTERN PyObject *_wrap_listQueues(PyObject *SWIGUNUSEDPARM(self), PyObject *
     TMS_Data::TMS_DataFactory * ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     // For each item of the ListQueues
     for (int i = 0; i < arg3->getQueues().size() ; ++i) {
-      // Getting the corresponding swig Queue    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("TMS_Data::Queue")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("TMS_Data::Queue")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListQueues (because emf destroys its objects at the end)
       TMS_Data::Queue* object = ecoreFactory->createQueue();
@@ -38931,8 +38931,8 @@ SWIGINTERN PyObject *_wrap_getCompletedJobsOutput(PyObject *SWIGUNUSEDPARM(self)
     TMS_Data::TMS_DataFactory * ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     // For each item of the ListJobResults
     for (int i = 0; i < arg3->getResults().size() ; ++i) {
-      // Getting the corresponding swig JobResult    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("TMS_Data::JobResult")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("TMS_Data::JobResult")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListJobResults (because emf destroys its objects at the end)
       TMS_Data::JobResult* object = ecoreFactory->createJobResult();
@@ -38963,11 +38963,14 @@ fail:
 
 SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
-  std::string arg3 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  std::string *arg3 = 0 ;
   IMS_Data::ExportOp const &arg4_defvalue = IMS_Data::ExportOp() ;
   IMS_Data::ExportOp *arg4 = (IMS_Data::ExportOp *) &arg4_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
+  int res3 = SWIG_OLDOBJ ;
   void *argp4 = 0 ;
   int res4 = 0 ;
   PyObject * obj0 = 0 ;
@@ -38982,30 +38985,36 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO|O:exportCommands",kwnames,&obj0,&obj1,&obj2,&obj3)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "exportCommands" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "exportCommands" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "exportCommands" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "exportCommands" "', argument " "2"" of type '" "std::string const""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "exportCommands" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "exportCommands" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj2, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "exportCommands" "', argument " "3"" of type '" "std::string""'"); 
+    res3 = SWIG_AsPtr_std_string(obj2, &ptr);
+    if (!SWIG_IsOK(res3)) {
+      SWIG_exception_fail(SWIG_ArgError(res3), "in method '" "exportCommands" "', argument " "3"" of type '" "std::string const &""'"); 
     }
-    arg3 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "exportCommands" "', argument " "3"" of type '" "std::string const &""'"); 
+    }
+    arg3 = ptr;
   }
   if (obj3) {
     res4 = SWIG_ConvertPtr(obj3, &argp4, SWIGTYPE_p_IMS_Data__ExportOp,  0  | 0);
@@ -39018,7 +39027,7 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
     arg4 = reinterpret_cast< IMS_Data::ExportOp * >(argp4);
   }
   try {
-    result = (int)vishnu::exportCommands(arg1,arg2,arg3,(IMS_Data::ExportOp const &)*arg4);
+    result = (int)vishnu::exportCommands((std::string const &)*arg1,(std::string const &)*arg2,(std::string const &)*arg3,(IMS_Data::ExportOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39036,19 +39045,27 @@ SWIGINTERN PyObject *_wrap_exportCommands(PyObject *SWIGUNUSEDPARM(self), PyObje
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  if (SWIG_IsNewObj(res3)) delete arg3;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::ListMetric *arg3 = 0 ;
   IMS_Data::CurMetricOp const &arg4_defvalue = IMS_Data::CurMetricOp() ;
   IMS_Data::CurMetricOp *arg4 = (IMS_Data::CurMetricOp *) &arg4_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   IMS_Data::ListMetric temp3 ;
   void *argp4 = 0 ;
   int res4 = 0 ;
@@ -39066,21 +39083,25 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:getMetricCurrentValue",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getMetricCurrentValue" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getMetricCurrentValue" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricCurrentValue" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getMetricCurrentValue" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getMetricCurrentValue" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricCurrentValue" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_IMS_Data__CurMetricOp,  0  | 0);
@@ -39093,7 +39114,7 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
     arg4 = reinterpret_cast< IMS_Data::CurMetricOp * >(argp4);
   }
   try {
-    result = (int)vishnu::getMetricCurrentValue(arg1,arg2,*arg3,(IMS_Data::CurMetricOp const &)*arg4);
+    result = (int)vishnu::getMetricCurrentValue((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(IMS_Data::CurMetricOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39122,8 +39143,8 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
     IMS_Data::IMS_DataFactory * ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     // For each item of the ListMetric
     for (int i = 0; i < arg3->getMetric().size() ; ++i) {
-      // Getting the corresponding swig Metric    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("IMS_Data::Metric")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("IMS_Data::Metric")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListMetric (because emf destroys its objects at the end)
       IMS_Data::Metric* object = ecoreFactory->createMetric();
@@ -39140,19 +39161,25 @@ SWIGINTERN PyObject *_wrap_getMetricCurrentValue(PyObject *SWIGUNUSEDPARM(self),
     // The result is the tupple
     resultobj = tup;
   }
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::ListMetric *arg3 = 0 ;
   IMS_Data::MetricHistOp const &arg4_defvalue = IMS_Data::MetricHistOp() ;
   IMS_Data::MetricHistOp *arg4 = (IMS_Data::MetricHistOp *) &arg4_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   IMS_Data::ListMetric temp3 ;
   void *argp4 = 0 ;
   int res4 = 0 ;
@@ -39170,21 +39197,25 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO|O:getMetricHistory",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getMetricHistory" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getMetricHistory" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricHistory" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getMetricHistory" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "getMetricHistory" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getMetricHistory" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   if (obj2) {
     res4 = SWIG_ConvertPtr(obj2, &argp4, SWIGTYPE_p_IMS_Data__MetricHistOp,  0  | 0);
@@ -39197,7 +39228,7 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
     arg4 = reinterpret_cast< IMS_Data::MetricHistOp * >(argp4);
   }
   try {
-    result = (int)vishnu::getMetricHistory(arg1,arg2,*arg3,(IMS_Data::MetricHistOp const &)*arg4);
+    result = (int)vishnu::getMetricHistory((std::string const &)*arg1,(std::string const &)*arg2,*arg3,(IMS_Data::MetricHistOp const &)*arg4);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39226,8 +39257,8 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
     IMS_Data::IMS_DataFactory * ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     // For each item of the ListMetric
     for (int i = 0; i < arg3->getMetric().size() ; ++i) {
-      // Getting the corresponding swig Metric    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("IMS_Data::Metric")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("IMS_Data::Metric")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListMetric (because emf destroys its objects at the end)
       IMS_Data::Metric* object = ecoreFactory->createMetric();
@@ -39244,18 +39275,23 @@ SWIGINTERN PyObject *_wrap_getMetricHistory(PyObject *SWIGUNUSEDPARM(self), PyOb
     // The result is the tupple
     resultobj = tup;
   }
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListProcesses *arg2 = 0 ;
   IMS_Data::ProcessOp const &arg3_defvalue = IMS_Data::ProcessOp() ;
   IMS_Data::ProcessOp *arg3 = (IMS_Data::ProcessOp *) &arg3_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
   IMS_Data::ListProcesses temp2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
@@ -39272,12 +39308,14 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getProcesses",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getProcesses" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getProcesses" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getProcesses" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__ProcessOp,  0  | 0);
@@ -39290,7 +39328,7 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
     arg3 = reinterpret_cast< IMS_Data::ProcessOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getProcesses(arg1,*arg2,(IMS_Data::ProcessOp const &)*arg3);
+    result = (int)vishnu::getProcesses((std::string const &)*arg1,*arg2,(IMS_Data::ProcessOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39319,8 +39357,8 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
     IMS_Data::IMS_DataFactory * ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     // For each item of the ListProcesses
     for (int i = 0; i < arg2->getProcess().size() ; ++i) {
-      // Getting the corresponding swig Process    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("IMS_Data::Process")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("IMS_Data::Process")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListProcesses (because emf destroys its objects at the end)
       IMS_Data::Process* object = ecoreFactory->createProcess();
@@ -39337,16 +39375,19 @@ SWIGINTERN PyObject *_wrap_getProcesses(PyObject *SWIGUNUSEDPARM(self), PyObject
     // The result is the tupple
     resultobj = tup;
   }
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_setSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::SystemInfo arg2 ;
+  int res1 = SWIG_OLDOBJ ;
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -39359,12 +39400,14 @@ SWIGINTERN PyObject *_wrap_setSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:setSystemInfo",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "setSystemInfo" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setSystemInfo" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setSystemInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_IMS_Data__SystemInfo,  0  | 0);
@@ -39380,7 +39423,7 @@ SWIGINTERN PyObject *_wrap_setSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
     }
   }
   try {
-    result = (int)vishnu::setSystemInfo(arg1,arg2);
+    result = (int)vishnu::setSystemInfo((std::string const &)*arg1,arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39398,16 +39441,19 @@ SWIGINTERN PyObject *_wrap_setSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_setSystemThreshold(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::Threshold arg2 ;
+  int res1 = SWIG_OLDOBJ ;
   void *argp2 ;
   int res2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -39420,12 +39466,14 @@ SWIGINTERN PyObject *_wrap_setSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:setSystemThreshold",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "setSystemThreshold" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setSystemThreshold" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setSystemThreshold" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     res2 = SWIG_ConvertPtr(obj1, &argp2, SWIGTYPE_p_IMS_Data__Threshold,  0  | 0);
@@ -39441,7 +39489,7 @@ SWIGINTERN PyObject *_wrap_setSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
     }
   }
   try {
-    result = (int)vishnu::setSystemThreshold(arg1,arg2);
+    result = (int)vishnu::setSystemThreshold((std::string const &)*arg1,arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39459,18 +39507,21 @@ SWIGINTERN PyObject *_wrap_setSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListThreshold *arg2 = 0 ;
   IMS_Data::ThresholdOp const &arg3_defvalue = IMS_Data::ThresholdOp() ;
   IMS_Data::ThresholdOp *arg3 = (IMS_Data::ThresholdOp *) &arg3_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
   IMS_Data::ListThreshold temp2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
@@ -39487,12 +39538,14 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getSystemThreshold",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getSystemThreshold" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getSystemThreshold" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemThreshold" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__ThresholdOp,  0  | 0);
@@ -39505,7 +39558,7 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
     arg3 = reinterpret_cast< IMS_Data::ThresholdOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getSystemThreshold(arg1,*arg2,(IMS_Data::ThresholdOp const &)*arg3);
+    result = (int)vishnu::getSystemThreshold((std::string const &)*arg1,*arg2,(IMS_Data::ThresholdOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39534,8 +39587,8 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
     IMS_Data::IMS_DataFactory * ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     // For each item of the ListThreshold
     for (int i = 0; i < arg2->getThreshold().size() ; ++i) {
-      // Getting the corresponding swig Threshold    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("IMS_Data::Threshold")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("IMS_Data::Threshold")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListThreshold (because emf destroys its objects at the end)
       IMS_Data::Threshold* object = ecoreFactory->createThreshold();
@@ -39552,16 +39605,20 @@ SWIGINTERN PyObject *_wrap_getSystemThreshold(PyObject *SWIGUNUSEDPARM(self), Py
     // The result is the tupple
     resultobj = tup;
   }
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineUserIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39572,24 +39629,28 @@ SWIGINTERN PyObject *_wrap_defineUserIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineUserIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineUserIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineUserIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineUserIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineUserIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineUserIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineUserIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineUserIdentifier(arg1,arg2);
+    result = (int)vishnu::defineUserIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39607,16 +39668,22 @@ SWIGINTERN PyObject *_wrap_defineUserIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineMachineIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39627,24 +39694,28 @@ SWIGINTERN PyObject *_wrap_defineMachineIdentifier(PyObject *SWIGUNUSEDPARM(self
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineMachineIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineMachineIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineMachineIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineMachineIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineMachineIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineMachineIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineMachineIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineMachineIdentifier(arg1,arg2);
+    result = (int)vishnu::defineMachineIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39662,16 +39733,22 @@ SWIGINTERN PyObject *_wrap_defineMachineIdentifier(PyObject *SWIGUNUSEDPARM(self
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineJobIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39682,24 +39759,28 @@ SWIGINTERN PyObject *_wrap_defineJobIdentifier(PyObject *SWIGUNUSEDPARM(self), P
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineJobIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineJobIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineJobIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineJobIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineJobIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineJobIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineJobIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineJobIdentifier(arg1,arg2);
+    result = (int)vishnu::defineJobIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39717,16 +39798,22 @@ SWIGINTERN PyObject *_wrap_defineJobIdentifier(PyObject *SWIGUNUSEDPARM(self), P
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineTransferIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39737,24 +39824,28 @@ SWIGINTERN PyObject *_wrap_defineTransferIdentifier(PyObject *SWIGUNUSEDPARM(sel
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineTransferIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineTransferIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineTransferIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineTransferIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineTransferIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineTransferIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineTransferIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineTransferIdentifier(arg1,arg2);
+    result = (int)vishnu::defineTransferIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39772,16 +39863,22 @@ SWIGINTERN PyObject *_wrap_defineTransferIdentifier(PyObject *SWIGUNUSEDPARM(sel
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineAuthIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39792,24 +39889,28 @@ SWIGINTERN PyObject *_wrap_defineAuthIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineAuthIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineAuthIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineAuthIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineAuthIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineAuthIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineAuthIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineAuthIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineAuthIdentifier(arg1,arg2);
+    result = (int)vishnu::defineAuthIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39827,16 +39928,22 @@ SWIGINTERN PyObject *_wrap_defineAuthIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_defineWorkIdentifier(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   PyObject * obj0 = 0 ;
   PyObject * obj1 = 0 ;
   char *  kwnames[] = {
@@ -39847,24 +39954,28 @@ SWIGINTERN PyObject *_wrap_defineWorkIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:defineWorkIdentifier",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineWorkIdentifier" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "defineWorkIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineWorkIdentifier" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "defineWorkIdentifier" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "defineWorkIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "defineWorkIdentifier" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   try {
-    result = (int)vishnu::defineWorkIdentifier(arg1,arg2);
+    result = (int)vishnu::defineWorkIdentifier((std::string const &)*arg1,(std::string const &)*arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39882,17 +39993,23 @@ SWIGINTERN PyObject *_wrap_defineWorkIdentifier(PyObject *SWIGUNUSEDPARM(self), 
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_loadShed(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::LoadShedType arg3 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   int val3 ;
   int ecode3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -39906,21 +40023,25 @@ SWIGINTERN PyObject *_wrap_loadShed(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:loadShed",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "loadShed" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "loadShed" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "loadShed" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "loadShed" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "loadShed" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "loadShed" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   ecode3 = SWIG_AsVal_int(obj2, &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -39928,7 +40049,7 @@ SWIGINTERN PyObject *_wrap_loadShed(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   } 
   arg3 = static_cast< IMS_Data::LoadShedType >(val3);
   try {
-    result = (int)vishnu::loadShed(arg1,arg2,arg3);
+    result = (int)vishnu::loadShed((std::string const &)*arg1,(std::string const &)*arg2,arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39946,16 +40067,21 @@ SWIGINTERN PyObject *_wrap_loadShed(PyObject *SWIGUNUSEDPARM(self), PyObject *ar
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_setUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
   int val2 ;
   int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
@@ -39968,12 +40094,14 @@ SWIGINTERN PyObject *_wrap_setUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), Py
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:setUpdateFrequency",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "setUpdateFrequency" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "setUpdateFrequency" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "setUpdateFrequency" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   ecode2 = SWIG_AsVal_int(obj1, &val2);
   if (!SWIG_IsOK(ecode2)) {
@@ -39981,7 +40109,7 @@ SWIGINTERN PyObject *_wrap_setUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), Py
   } 
   arg2 = static_cast< int >(val2);
   try {
-    result = (int)vishnu::setUpdateFrequency(arg1,arg2);
+    result = (int)vishnu::setUpdateFrequency((std::string const &)*arg1,arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -39999,38 +40127,47 @@ SWIGINTERN PyObject *_wrap_setUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), Py
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  int *arg2 = 0 ;
-  int temp2 ;
+  std::string *arg1 = 0 ;
+  int arg2 ;
+  int res1 = SWIG_OLDOBJ ;
+  int val2 ;
+  int ecode2 = 0 ;
   PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
   char *  kwnames[] = {
-    (char *) "sessionKey", NULL 
+    (char *) "sessionKey",(char *) "freq", NULL 
   };
   int result;
   
-  {
-    arg2 = &temp2;
-  }
-  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O:getUpdateFrequency",kwnames,&obj0)) SWIG_fail;
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:getUpdateFrequency",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getUpdateFrequency" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getUpdateFrequency" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getUpdateFrequency" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
+  ecode2 = SWIG_AsVal_int(obj1, &val2);
+  if (!SWIG_IsOK(ecode2)) {
+    SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "getUpdateFrequency" "', argument " "2"" of type '" "int""'");
+  } 
+  arg2 = static_cast< int >(val2);
   try {
-    result = (int)vishnu::getUpdateFrequency(arg1,*arg2);
+    result = (int)vishnu::getUpdateFrequency((std::string const &)*arg1,arg2);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40048,21 +40185,21 @@ SWIGINTERN PyObject *_wrap_getUpdateFrequency(PyObject *SWIGUNUSEDPARM(self), Py
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
-  {
-    PyObject *o = PyInt_FromLong(*arg2);
-    resultobj = SWIG_Python_AppendOutput(resultobj, o);
-  }
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::SupervisorOp *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -40076,21 +40213,25 @@ SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, 
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:stop",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "stop" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "stop" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stop" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "stop" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "stop" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "stop" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_IMS_Data__SupervisorOp,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -40101,7 +40242,7 @@ SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, 
   }
   arg3 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp3);
   try {
-    result = (int)vishnu::stop(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
+    result = (int)vishnu::stop((std::string const &)*arg1,(std::string const &)*arg2,(IMS_Data::SupervisorOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40119,18 +40260,23 @@ SWIGINTERN PyObject *_wrap_stop(PyObject *SWIGUNUSEDPARM(self), PyObject *args, 
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
+  std::string *arg1 = 0 ;
   IMS_Data::ListSysInfo *arg2 = 0 ;
   IMS_Data::SysInfoOp const &arg3_defvalue = IMS_Data::SysInfoOp() ;
   IMS_Data::SysInfoOp *arg3 = (IMS_Data::SysInfoOp *) &arg3_defvalue ;
+  int res1 = SWIG_OLDOBJ ;
   IMS_Data::ListSysInfo temp2 ;
   void *argp3 = 0 ;
   int res3 = 0 ;
@@ -40147,12 +40293,14 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"O|O:getSystemInfo",kwnames,&obj0,&obj1)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "getSystemInfo" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "getSystemInfo" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "getSystemInfo" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   if (obj1) {
     res3 = SWIG_ConvertPtr(obj1, &argp3, SWIGTYPE_p_IMS_Data__SysInfoOp,  0  | 0);
@@ -40165,7 +40313,7 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
     arg3 = reinterpret_cast< IMS_Data::SysInfoOp * >(argp3);
   }
   try {
-    result = (int)vishnu::getSystemInfo(arg1,*arg2,(IMS_Data::SysInfoOp const &)*arg3);
+    result = (int)vishnu::getSystemInfo((std::string const &)*arg1,*arg2,(IMS_Data::SysInfoOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40194,8 +40342,8 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
     IMS_Data::IMS_DataFactory * ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
     // For each item of the ListSysInfo
     for (int i = 0; i < arg2->getSysInfo().size() ; ++i) {
-      // Getting the corresponding swig SystemInfo    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("IMS_Data::SystemInfo")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("IMS_Data::SystemInfo")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ ListSysInfo (because emf destroys its objects at the end)
       IMS_Data::SystemInfo* object = ecoreFactory->createSystemInfo();
@@ -40212,17 +40360,21 @@ SWIGINTERN PyObject *_wrap_getSystemInfo(PyObject *SWIGUNUSEDPARM(self), PyObjec
     // The result is the tupple
     resultobj = tup;
   }
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
   return NULL;
 }
 
 
 SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
-  std::string arg1 ;
-  std::string arg2 ;
+  std::string *arg1 = 0 ;
+  std::string *arg2 = 0 ;
   IMS_Data::SupervisorOp *arg3 = 0 ;
+  int res1 = SWIG_OLDOBJ ;
+  int res2 = SWIG_OLDOBJ ;
   void *argp3 = 0 ;
   int res3 = 0 ;
   PyObject * obj0 = 0 ;
@@ -40236,21 +40388,25 @@ SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OOO:restart",kwnames,&obj0,&obj1,&obj2)) SWIG_fail;
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj0, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "restart" "', argument " "1"" of type '" "std::string const""'"); 
+    res1 = SWIG_AsPtr_std_string(obj0, &ptr);
+    if (!SWIG_IsOK(res1)) {
+      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "restart" "', argument " "1"" of type '" "std::string const &""'"); 
     }
-    arg1 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "restart" "', argument " "1"" of type '" "std::string const &""'"); 
+    }
+    arg1 = ptr;
   }
   {
     std::string *ptr = (std::string *)0;
-    int res = SWIG_AsPtr_std_string(obj1, &ptr);
-    if (!SWIG_IsOK(res) || !ptr) {
-      SWIG_exception_fail(SWIG_ArgError((ptr ? res : SWIG_TypeError)), "in method '" "restart" "', argument " "2"" of type '" "std::string""'"); 
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "restart" "', argument " "2"" of type '" "std::string const &""'"); 
     }
-    arg2 = *ptr;
-    if (SWIG_IsNewObj(res)) delete ptr;
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "restart" "', argument " "2"" of type '" "std::string const &""'"); 
+    }
+    arg2 = ptr;
   }
   res3 = SWIG_ConvertPtr(obj2, &argp3, SWIGTYPE_p_IMS_Data__SupervisorOp,  0  | 0);
   if (!SWIG_IsOK(res3)) {
@@ -40261,7 +40417,7 @@ SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   }
   arg3 = reinterpret_cast< IMS_Data::SupervisorOp * >(argp3);
   try {
-    result = (int)vishnu::restart(arg1,arg2,(IMS_Data::SupervisorOp const &)*arg3);
+    result = (int)vishnu::restart((std::string const &)*arg1,(std::string const &)*arg2,(IMS_Data::SupervisorOp const &)*arg3);
   }
   catch(UMSVishnuException &_e) {
     SWIG_Python_Raise(SWIG_NewPointerObj((new UMSVishnuException(static_cast< const UMSVishnuException& >(_e))),SWIGTYPE_p_UMSVishnuException,SWIG_POINTER_OWN), "UMSVishnuException", SWIGTYPE_p_UMSVishnuException); SWIG_fail;
@@ -40279,8 +40435,12 @@ SWIGINTERN PyObject *_wrap_restart(PyObject *SWIGUNUSEDPARM(self), PyObject *arg
   }
   
   resultobj = SWIG_From_int(static_cast< int >(result));
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return resultobj;
 fail:
+  if (SWIG_IsNewObj(res1)) delete arg1;
+  if (SWIG_IsNewObj(res2)) delete arg2;
   return NULL;
 }
 
@@ -40960,8 +41120,8 @@ SWIGINTERN PyObject *_wrap_ls(PyObject *SWIGUNUSEDPARM(self), PyObject *args, Py
     FMS_Data::FMS_DataFactory * ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
     // For each item of the DirEntryList
     for (int i = 0; i < arg3->getDirEntries().size() ; ++i) {
-      // Getting the corresponding swig DirEntry    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("FMS_Data::DirEntry")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("FMS_Data::DirEntry")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ DirEntryList (because emf destroys its objects at the end)
       FMS_Data::DirEntry* object = ecoreFactory->createDirEntry();
@@ -41719,8 +41879,8 @@ SWIGINTERN PyObject *_wrap_listFileTransfers(PyObject *SWIGUNUSEDPARM(self), PyO
     FMS_Data::FMS_DataFactory * ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
     // For each item of the FileTransferList
     for (int i = 0; i < arg2->getFileTransfers().size() ; ++i) {
-      // Getting the corresponding swig FileTransfer    
-      swig_type_info* swig_type = SWIG_TypeQuery(string(string("FMS_Data::FileTransfer")+string(" *")).c_str());
+      // Getting the corresponding swig types
+      swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string("FMS_Data::FileTransfer")+std::string(" *")).c_str());
       
       // Instanciating an object to copy each item of the C++ FileTransferList (because emf destroys its objects at the end)
       FMS_Data::FileTransfer* object = ecoreFactory->createFileTransfer();
@@ -42935,7 +43095,7 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"defineWorkIdentifier", (PyCFunction) _wrap_defineWorkIdentifier, METH_VARARGS | METH_KEYWORDS, (char *)"defineWorkIdentifier(string sessionKey, string fmt) -> int"},
 	 { (char *)"loadShed", (PyCFunction) _wrap_loadShed, METH_VARARGS | METH_KEYWORDS, (char *)"loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"},
 	 { (char *)"setUpdateFrequency", (PyCFunction) _wrap_setUpdateFrequency, METH_VARARGS | METH_KEYWORDS, (char *)"setUpdateFrequency(string sessionKey, int freq) -> int"},
-	 { (char *)"getUpdateFrequency", (PyCFunction) _wrap_getUpdateFrequency, METH_VARARGS | METH_KEYWORDS, (char *)"getUpdateFrequency(string sessionKey) -> int"},
+	 { (char *)"getUpdateFrequency", (PyCFunction) _wrap_getUpdateFrequency, METH_VARARGS | METH_KEYWORDS, (char *)"getUpdateFrequency(string sessionKey, int freq) -> int"},
 	 { (char *)"stop", (PyCFunction) _wrap_stop, METH_VARARGS | METH_KEYWORDS, (char *)"stop(string sessionKey, string machineId, SupervisorOp op) -> int"},
 	 { (char *)"getSystemInfo", (PyCFunction) _wrap_getSystemInfo, METH_VARARGS | METH_KEYWORDS, (char *)"getSystemInfo(string sessionKey, SysInfoOp op = IMS_Data::SysInfoOp()) -> int"},
 	 { (char *)"restart", (PyCFunction) _wrap_restart, METH_VARARGS | METH_KEYWORDS, (char *)"restart(string sessionKey, string machineId, SupervisorOp op) -> int"},
