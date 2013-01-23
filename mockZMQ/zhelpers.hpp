@@ -11,10 +11,19 @@
 
 const int DEFAULT_TIMEOUT = 2; // seconds
 
+/**
+ * @class wraps zmq::socket_t to simplify its use
+ * with std::string
+ */
 class Socket : public zmq::socket_t, public boost::noncopyable {
 public:
   Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
 
+  /**
+   * @brief set linger period for socket shutdown
+   * @param linger linger time (default: -1 means infinite)
+   * @returns true if it succeeded
+   */
   bool
   setLinger(int linger = -1) {
     try {
@@ -25,16 +34,57 @@ public:
     }
   }
 
+  /**
+   * @brief wraps zmq::socket_t connect
+   * @param addr connection uri
+   * @return void
+   * @throw error_t if it fails
+   */
+  void
+  connect(const std::string& addr) {
+    connect(addr.c_str());
+  }
+
+  /**
+   * @brief wraps zmq::socket_t connect
+   * @param addr connection uri
+   * @return void
+   * @throw error_t if it fails
+   */
+  void
+  connect(const char* addr) {
+    /* we explicitely call base class method to avoid
+       looping method calls */
+    socket_t::connect(addr);
+  }
+
+  /**
+   * @brief send data
+   * @param data string to be sent
+   * @param flags zmq flags
+   * @return true if it succeeded
+   */
   bool
   send(const std::string& data, int flags = 0) {
     return send(data.c_str(), data.length()+1, flags);
   }
 
+  /**
+   * @brief send data
+   * @param data buffer to be sent
+   * @param flags zmq flags
+   * @return true if it succeeded
+   */
   bool
   send(const char* data, int flags = 0) {
     return send(data, strlen(data)+1, flags);
   }
 
+  /**
+   * @brief get response for server
+   * @param flags zmq flags
+   * @return message
+   */
   std::string
   get(int flags = 0) {
     zmq::message_t message;
@@ -51,6 +101,13 @@ public:
   }
 
 private:
+  /**
+   * @brief internal method that sends message
+   * @param data buffer to be sent
+   * @param len size of the buffer
+   * @param flags zmq flags
+   * @return true if it succeeded
+   */
   bool
   send(const char* data, size_t len, int flags = 0) {
     zmq::message_t msg(len);
@@ -60,13 +117,24 @@ private:
   }
 };
 
+
+/**
+ * @class implements the Lazy Pirate pattern, argh matey !
+ */
 class LazyPirateClient {
 public:
-  LazyPirateClient(zmq::context_t& ctx, const std::string& addr, const int timeout = DEFAULT_TIMEOUT)
+  LazyPirateClient(zmq::context_t& ctx, const std::string& addr,
+                   const int timeout = DEFAULT_TIMEOUT)
     : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000) {
     reset();
   }
 
+  /**
+   * @brief most of the pattern is implemented here
+   * @param data message to be sent
+   * @param retries number of retries
+   * @return true if it succeeded
+   */
   bool
   send(const std::string& data, int retries = 3) {
     while (retries) {
@@ -111,7 +179,7 @@ private:
   void
   reset() {
     sock_.reset(new Socket(ctx_, ZMQ_REQ));
-    sock_->connect(addr_.c_str());
+    sock_->connect(addr_);
     sock_->setLinger(0);
   }
 

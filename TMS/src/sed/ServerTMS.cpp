@@ -84,13 +84,8 @@ ServerTMS::getSlaveDirectory() {
 /**
  * \brief Constructor (private)
  */
-ServerTMS::ServerTMS() {
-//  mprofile = NULL;
-  mbatchType = UNDEFINED;
-  mmachineId = "";
-  mdatabaseVishnu = NULL;
-  mslaveBinDir = "";
-}
+ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
+
 /**
  * \brief To get the Default Batch Options
  * \return batch Default Options Vector
@@ -115,8 +110,7 @@ ServerTMS::init(int vishnuId,
                 const std::string& machineId,
                 BatchType batchType,
                 const std::string& slaveBinDir,
-                std::string batchDefaultConfigFile)
-{
+                std::string batchDefaultConfigFile) {
 
   //initialization of the batchType
   mbatchType = batchType;
@@ -259,28 +253,28 @@ ServerTMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
   functionPtr = solveSubmitJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[0])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[0])+"@"+mid] = functionPtr;
   functionPtr = solveCancelJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[1])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[1])+"@"+mid] = functionPtr;
   functionPtr = solveJobInfo;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[2])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[2])+"@"+mid] = functionPtr;
   functionPtr = solveGetListOfJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[3])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[3])+"@"+mid] = functionPtr;
   functionPtr = solveGetListOfJobsProgression;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[4])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[4])+"@"+mid] = functionPtr;
   functionPtr = solveListOfQueues;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[5])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[5])+"@"+mid] = functionPtr;
   functionPtr = solveJobOutPutGetResult;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[6])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[6])+"@"+mid] = functionPtr;
   functionPtr = solveJobOutPutGetCompletedJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[7])+"@"+mid,functionPtr));
+  mcb[string(SERVICES[7])+"@"+mid] = functionPtr;
   // Remove ?
   functionPtr = solveGetListOfJobs;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[8]),functionPtr));
+  mcb[SERVICES[8]] = functionPtr;
   functionPtr = solveSubmitJob;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[9]),functionPtr));
+  mcb[SERVICES[9]] = functionPtr;
   functionPtr = solveAddWork;
-  mcb.insert( pair<string, functionPtr_t> (string(SERVICES[10]),functionPtr));
+  mcb[SERVICES[10]] = functionPtr;
 }
 
 

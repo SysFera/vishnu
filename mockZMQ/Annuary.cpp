@@ -2,9 +2,10 @@
 #include <algorithm>
 #include <string>
 #include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
-#include <boost/algorithm/string.hpp>
+#include <boost/thread/locks.hpp>
 #include <cstdio>
 #include <cstring>
 #include <iterator>
@@ -18,7 +19,7 @@
 
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
-: mservers(serv) {}
+  : mservers(serv) {}
 
 
 // anonymous namespace
@@ -26,11 +27,11 @@ namespace {
   class is_server : std::unary_function<Server, bool> {
   public:
     is_server(const std::string& name, const std::string& uri) :
-    name_(name), uri_(uri) {}
+      name_(name), uri_(uri) {}
 
     bool operator() (boost::shared_ptr<Server> serv) {
       return ((serv->getName() == name_) &&
-      (serv->getURI() == uri_));
+              (serv->getURI() == uri_));
     }
 
   private:
@@ -41,10 +42,11 @@ namespace {
 
 int
 Annuary::add(const std::string& name, const std::string& uri,
-const std::vector<std::string>& services) {
+             const std::vector<std::string>& services) {
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
   is_server helper(name, uri);
   std::vector<boost::shared_ptr<Server> >::iterator it =
-  std::find_if(mservers.begin(), mservers.end(), helper);
+    std::find_if(mservers.begin(), mservers.end(), helper);
   if (it == mservers.end()) {
     mservers.push_back(boost::make_shared<Server>(name, services, uri));
   }
@@ -54,9 +56,10 @@ const std::vector<std::string>& services) {
 
 int
 Annuary::remove(const std::string& name, const std::string& uri) {
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
   is_server helper(name, uri);
   mservers.erase(std::remove_if(mservers.begin(), mservers.end(), helper),
-  mservers.end());
+                 mservers.end());
   return 0;
 }
 
@@ -64,14 +67,15 @@ Annuary::remove(const std::string& name, const std::string& uri) {
 // Note: we're using copy elision optimization here, no useless copy
 std::vector<boost::shared_ptr<Server> >
 Annuary::get(const std::string& service) {
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
   std::vector<boost::shared_ptr<Server> > res;
 
   if (service.empty()) {
     res.assign(mservers.begin(), mservers.end());
   } else {
     std::remove_copy_if(mservers.begin(), mservers.end(),
-    std::back_inserter(res),
-    !boost::bind(&Server::hasService, _1, service));
+                        std::back_inserter(res),
+                        !boost::bind(&Server::hasService, _1, service));
   }
 
   return res;
@@ -79,6 +83,7 @@ Annuary::get(const std::string& service) {
 
 void
 Annuary::print() {
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
   if (!mservers.empty()) {
     std::cerr << "\n==== Initial startup services ====\n";
     std::vector<boost::shared_ptr<Server> >::const_iterator it;
@@ -99,9 +104,9 @@ Annuary::print() {
  */
 void
 Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
-  for (std::vector<std::string>::iterator entry = cfgInfo.begin(), end = cfgInfo.end();
-  entry != end; entry++) {
-    std::istringstream iss(*entry);
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  BOOST_FOREACH(const std::string& entry, cfgInfo) {
+    std::istringstream iss(entry);
     std::string uri;
     std::string mid;
     iss >> uri;
@@ -114,9 +119,10 @@ Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgI
 
 void
 Annuary::fillServices(std::vector< std::string> &services,
-const std::string& name,
-const std::string& mid) {
-  if (name.compare("UMS") == 0) {
+                      const std::string& name,
+                      const std::string& mid) {
+  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  if (name == "UMS") {
     services.push_back("sessionConnect") ;
     services.push_back("sessionReconnect") ;
     services.push_back("sessionClose") ;
@@ -150,7 +156,7 @@ const std::string& mid) {
     services.push_back("authAccountUpdate") ;
     services.push_back("authAccountDelete") ;
     services.push_back("authAccountList") ;
-  } else if (name.compare("TMS") == 0) {
+  } else if (name == "TMS") {
     services.push_back("jobSubmit@"+mid) ;
     services.push_back("jobCancel@"+mid) ;
     services.push_back("jobInfo@"+mid) ;
@@ -162,7 +168,7 @@ const std::string& mid) {
     services.push_back("getListOfJobs_all") ;
     services.push_back("jobSubmit_autom") ;
     services.push_back("addwork") ;
-  } else if (name.compare("IMS") == 0) {
+  } else if (name == "IMS") {
     services.push_back("int_exportCommands") ;
     services.push_back("int_getMetricCurentValue@"+mid) ;
     services.push_back("int_getMetricHistory") ;
@@ -182,7 +188,7 @@ const std::string& mid) {
     services.push_back("int_getSystemInfo") ;
     services.push_back("int_defineAuthIdentifier") ;
     services.push_back("int_defineWorkIdentifier") ;
-  } else if (name.compare("FMS") == 0) {
+  } else if (name == "FMS") {
     services.push_back("FileCopyAsync") ;
     services.push_back("FileMoveAsync") ;
     services.push_back("FileMove") ;
@@ -203,7 +209,7 @@ const std::string& mid) {
     services.push_back("RemoteFileCopy") ;
     services.push_back("RemoteFileMove") ;
     services.push_back("FileTransfersList") ;
-  } else { // Routage
+    } else { // Routage
     services.push_back("routage");
   }
 }

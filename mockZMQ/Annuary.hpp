@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread/recursive_mutex.hpp>
+
 
 /**
  * \brief This class represents the annuary to store the services
@@ -91,12 +93,14 @@ private :
    */
   void
   fillServices(std::vector<std::string> & services, const std::string& name,
-  const std::string& mid);
+               const std::string& mid);
 
   /**
    * \param The servers
    */
   std::vector<boost::shared_ptr<Server> > mservers;
-}; // End class annuary
+
+  mutable boost::recursive_mutex mutex;
+};
 
 #endif // __ANNUARY__H__

@@ -7,21 +7,21 @@
 
 using namespace vishnu;
 
-ProcessServer::ProcessServer(const UserServer session):msession(session){
+ProcessServer::ProcessServer(const UserServer session)
+  : msession(session), mcommandName("vishnu_list_processes") {
   DbFactory factory;
-  mcommandName = "vishnu_list_processes";
   mdatabase = factory.getDatabaseInstance();
   mop = IMS_Data::ProcessOp_ptr();
 }
 
-ProcessServer::ProcessServer(IMS_Data::ProcessOp_ptr op, const UserServer session):mop(op), msession(session){
+ProcessServer::ProcessServer(IMS_Data::ProcessOp_ptr op,
+                             const UserServer session)
+  : mop(op), msession(session), mcommandName("vishnu_list_processes") {
   DbFactory factory;
-  mcommandName = "vishnu_list_processes";
   mdatabase = factory.getDatabaseInstance();
 }
 
-ProcessServer::~ProcessServer(){
-}
+ProcessServer::~ProcessServer() {}
 
 IMS_Data::ListProcesses*
 ProcessServer::list(){

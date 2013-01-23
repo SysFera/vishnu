@@ -23,29 +23,6 @@ using namespace std;
 
 int
 vishnu::unregisterSeD(string type, ExecConfiguration config) {
-  //  string uri;
-  //  string uridispatcher;
-  //
-  //  // Getting the machine id
-  //  config.getRequiredConfigValue<std::string>(vishnu::URI, uri);
-  //  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uridispatcher);
-  //  zmq::context_t ctx(1);
-  //  LazyPirateClient lpc(ctx, uridispatcher);
-  //  std::vector<std::string> tmp;
-  //  tmp.push_back("deleting");
-  //
-  //  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, tmp, uri));
-  //
-  //  std::string req = "0"+s.get()->toString();
-  //  std::cout << "sending " << req << std::endl;
-  //
-  //  if (!lpc.send(req)) {
-  //    std::cerr << "E: request failed, exiting ...\n";
-  //    exit(-1);
-  //  }
-  //  std::string response = lpc.recv();
-  //  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
-  //
   return 0;
 }
 
@@ -53,11 +30,10 @@ vishnu::unregisterSeD(string type, ExecConfiguration config) {
 void
 validateUri(const string & uri) {
   size_t pos = uri.find("*");
-  if(pos != string::npos) {
+  if (pos != string::npos) {
     std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
     exit(-1);
   }
-
 }
 
 bool
@@ -71,9 +47,9 @@ vishnu::isNew(std::string urlsup, std::string mid, std::string type){
     if(result->getNbTuples() != 0) {
       return false;
     }
-  }catch(SystemException& e){
+  } catch(SystemException& e){
     e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
-    throw(e);
+    throw;
   }
   return true;
 }
@@ -412,9 +388,9 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   int tid = databaseVishnu->startTransaction();
   try{
     ret = databaseVishnu->generateId(table, fields, val, tid, primary);
-  } catch (exception const & e){
+  } catch (const exception& e){
     databaseVishnu->cancelTransaction(tid);
-    throw e;
+    throw;
   }
   if(insert) {
     databaseVishnu->endTransaction(tid);

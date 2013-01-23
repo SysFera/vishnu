@@ -17,10 +17,10 @@
 * \param sshKey The ssh key of the client machine
 * \param host The name of the client host
 */
-MachineClientServer::MachineClientServer(std::string sshKey, std::string host) {
+MachineClientServer::MachineClientServer(const std::string& sshKey,
+                                         const std::string& host)
+  : mmachineSSHKey(sshKey), mhostname(host) {
   DbFactory factory;
-  mmachineSSHKey = sshKey;
-  mhostname = host;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
@@ -92,4 +92,3 @@ MachineClientServer::~MachineClientServer() {
 bool MachineClientServer::exist(){
   return (getId().size() != 0);
 }
-

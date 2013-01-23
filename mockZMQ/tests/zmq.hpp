@@ -31,25 +31,22 @@ public:
 
 class message_t{
 public:
-  message_t(){
-    mbuff = "ok";
+  message_t() : mbuff("ok") {
     msize = mbuff.length();
   }
 
-  message_t(std::string p1){
-    mbuff = "ok";
+  message_t(const std::string& p1) : mbuff("ok") {
     msize = mbuff.length();
   }
 
-  message_t(int p1){
-    mbuff = "ok";
+  message_t(int p1) : mbuff("ok") {
     msize = mbuff.length();
   }
 
   void*
   data(){
-    char* s = (char *)malloc(sizeof(char)*mbuff.length());
-    memcpy(s, mbuff.c_str(), mbuff.length()+1);
+    char* s = static_cast<char *>(malloc(sizeof(char) * mbuff.length()));
+    memcpy(s, mbuff.c_str(), mbuff.length() + 1);
     return s;
   }
 
@@ -57,6 +54,7 @@ public:
   size(){
     return msize;
   }
+
 private :
   int msize;
   std::string mbuff;

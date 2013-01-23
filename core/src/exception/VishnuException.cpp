@@ -8,25 +8,14 @@ std::string convertToString(T val) {
     return out.str();
 }
 
-VishnuException::VishnuException(){
-  mmsgc = "";
-  mtype =VishnuException::NONE;
-  mval = -1;
-}
+VishnuException::VishnuException() : mtype(VishnuException::NONE), mval(-1) {}
 
-VishnuException::VishnuException(const VishnuException& e): std::exception(e){
-  mp = std::map<int, std::string>();
-  mfullMsg = "";
-  mmsgc = e.getMsgComp();
-  mtype = e.getTypeI();
-  mval  = e.getMsgI();
-}
+VishnuException::VishnuException(const VishnuException& e)
+  : std::exception(e), mmsgc(e.getMsgComp()), mtype(e.getTypeI()),
+    mval(e.getMsgI()) {}
 
-VishnuException::VishnuException(int msg, std::string msgComp){
-  mval = msg;
-  mmsgc = msgComp;
-  mtype = VishnuException::NONE;
-}
+VishnuException::VishnuException(int msg, std::string msgComp)
+  : mval(msg), mmsgc(msgComp), mtype(VishnuException::NONE) {}
 
 const char*
 VishnuException::what() const throw()

@@ -2,6 +2,7 @@
 #include "IMS_Data_forward.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <boost/lexical_cast.hpp>
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 #include "IMS_testconfig.h"
@@ -56,7 +57,6 @@ void forker(int cpt,const string& sessionKey, const string& machineId, int type)
 int main(int argc, char** argv){
   int cpt;
   int type;
-  string key  = ""       ;
   string pwd  = "vishnu_user"  ;
   string uid  = "root";
   ConnectOptions cop  ;
@@ -74,8 +74,8 @@ int main(int argc, char** argv){
       std::cerr << "[1 for getMetricCurrentValue and 2 for getMetricHistory]" << std::endl;
       return 1;
     }
-    cpt = atoi (argv[1]);
-    type = atoi (argv[2]);
+    cpt = boost::lexical_cast<int>(argv[1]);
+    type = boost::lexical_cast<int>(argv[2]);
     //To check the cpt value
     if (cpt < 1) {
        std::cerr << "The value of the number of test is incorrect" << std::endl;
