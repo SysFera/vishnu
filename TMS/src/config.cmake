@@ -80,8 +80,7 @@ endif(sge)
 if (deltacloud)
   set(DELTACLOUDSERVER 
   server/DeltaCloudServer.cpp 
-  deltacloudcommon/common.c 
-  )
+  deltacloudcommon/common.c)
 
   set(DELTACLOUD_ALL_INCLUDE_DIR ${LIBDELTACLOUD_INCLUDE_DIR} ${COMMON_DELTACLOUD_DIR})
   set(DELTACLOUD_ALL_LIB_DIR ${LIBDELTACLOUD_LIB})
@@ -106,7 +105,7 @@ set(USED_BATCH_INCLUDE_DIR
   ${SGE_ALL_INCLUDE_DIR}
   ${LSF_ALL_INCLUDE_DIR}
   ${PBSPRO_ALL_INCLUDE_DIR}
-  ${DELTACLOUD_ALL_INCLUDE_DIR},
+  ${DELTACLOUD_ALL_INCLUDE_DIR}
   ${POSIX_ALL_INCLUDE_DIR})
   
 set(UsedBatchServer 
@@ -116,8 +115,8 @@ set(UsedBatchServer
   ${SGESERVER} 
   ${LSFSERVER}  
   ${PBSPROSERVER}
-  ${DELTACLOUD}
-  )
+  ${DELTACLOUD})
+
 set(USED_BATCH_LIB 
   ${TORQUE_ALL_LIB_DIR} 
   ${LOADLEVELER_ALL_LIB_DIR}  
