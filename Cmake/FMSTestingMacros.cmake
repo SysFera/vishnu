@@ -35,7 +35,6 @@ macro( fms_test NAME )
       #entry point
       TestRunner.cpp)
     include_directories( ${Boost_INCLUDE_DIRS}
-      ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}
       ${FMS_EMF_DATA_DIR}
       ${UMS_DATA_DIR}

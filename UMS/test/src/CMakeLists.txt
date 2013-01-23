@@ -2,7 +2,6 @@ include_directories(
   ${UTILVISHNU_SOURCE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
-  ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
   ${UMS_API_SOURCE_DIR}
