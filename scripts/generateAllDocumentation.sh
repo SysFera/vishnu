@@ -41,6 +41,7 @@ function run_cmd() {
     nbexec=$(($nbexec+1))
     if [ $tmprv != 0 ]; then
         nbfailed=$(($nbfailed+1))
+        echo "## Command failed: $@"
     fi
 }
 
