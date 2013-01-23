@@ -14,9 +14,9 @@
 using namespace std;
 using namespace vishnu;
 
-char IMSSeD[] = "imssed";
+/*char IMSSeD[] = "imssed";
 char ConfigIMSSeD[] = IMSSEDCONF;
-char BinDirIMSSeD[] = IMSSEDBINDIR;
+char BinDirIMSSeD[] = IMSSEDBINDIR;*/
 
 class IMSFixture : public TMSSeDForIMSFixture {
 
@@ -27,7 +27,7 @@ public:
     // Name of the test executable
     mav[0]= (char*)"./ims_automTest";
     // Client configuration file
-    string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
+    string dietClientConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     mav[1]= (char*) dietClientConfigPath.c_str();
 
     if (vishnu::vishnuInitialize(mav[1], mac, mav)) {
@@ -35,20 +35,7 @@ public:
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-    string sqlPath = IMSSQLPATH;
 
-    if (restore(sqlPath + "/IMScleanall.sql") != 0) {
-      cout << "Clean database failed" << endl;
-      return;
-    }
-    if (restore(sqlPath + "/IMSinitTest.sql")!=0) {
-      cout << "Database initialization failed" << endl;
-      return;
-    }
-
-
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
   }
 
   ~IMSFixture() {
@@ -61,4 +48,4 @@ public:
   char* mav[2];
 };
 
-typedef DietSeDFixture<IMSSeD, BinDirIMSSeD, ConfigIMSSeD, IMSFixture> IMSSeDFixture;
+typedef IMSFixture IMSSeDFixture;

@@ -5,7 +5,6 @@
  */
 
 #include "UMS_fixtures.hpp"
-
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
 #include "api_fms.hpp"
@@ -33,28 +32,38 @@ public:
       BOOST_TEST_MESSAGE( "Error in VishnuInitialize..." );
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
-
-    /*BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-    string sqlPath = FMSSQLPATH;
-    if (restore(sqlPath + "/cleanall.sql") != 0) {
-      cout << "Clean database failed" << endl;
-      return;
-    }
-    if (restore(sqlPath + "/FMSinitTest.sql")!=0) {
-      cout << "Database initialization failed" << endl;
-      return;
-    }
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );*/
-    
+  
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
     string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
-
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+    m_test_fms_sql_path = setupConfig.find("TEST_SQL_PATH")->second;
+    m_test_fms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
+    m_test_fms_host1 = setupConfig.find("TEST_FMS_HOST1")->second;;
+    m_test_fms_host2 = setupConfig.find("TEST_FMS_HOST2")->second;
+    m_test_fms_dir1 = setupConfig.find("TEST_FMS_HOST1_WORKING_DIR")->second;
+    m_test_fms_dir2 = setupConfig.find("TEST_FMS_HOST2_WORKING_DIR")->second;
+    m_test_fms_user_login = setupConfig.find("TEST_USER_LOGIN")->second;
+    m_test_fms_local_dir = setupConfig.find("TEST_FMS_LOCAL_DIR")->second;
+    
 
     
     
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
 
-    /*if (FMSHOST1 == "localhost" ||  FMSHOST2 == "localhost") {
+    /*BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
+    string sqlPath = m_test_fms_sql_path;                                            
+     if (restore(sqlPath + "/cleanall.sql") != 0) {
+       cout << "Clean database failed" << endl;
+       return;
+     }
+     if (restore(sqlPath + "/FMSinitTest.sql")!=0) {
+       cout << "Database initialization failed" << endl;
+       return;
+     }
+     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );*/
+
+    /*if (m_test_fms_host1 == "localhost" ||  m_test_fms_host2 == "localhost") {
       BOOST_TEST_MESSAGE( "== WARNING: TEST_FMS_HOST1/2 should not be 'localhost' ==" );
     }*/
 
@@ -64,8 +73,16 @@ public:
     BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Finalizing client ==" );
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
   }
-  
 
+  std::string m_test_fms_sql_path;
+  std::string m_test_fms_working_dir;
+  std::string m_test_fms_host1;
+  std::string m_test_fms_host2;
+  std::string m_test_fms_dir1;
+  std::string m_test_fms_dir2;
+  std::string m_test_fms_user_login;
+  std::string m_test_fms_local_dir;
+  
 //private:
   int mac;
   char* mav[2];

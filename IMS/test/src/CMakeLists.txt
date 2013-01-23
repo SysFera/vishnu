@@ -22,35 +22,14 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   ${IMS_UTIL_DIR}
   )
-# Standard VISHNU TESTS variables
-file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
-file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
-file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 
-set (TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
-file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
 
-# Path to the VISHNU IMS SeD configuration
-set (TEST_IMS_SED_CONFIG "${TEST_CONFIG_PATH}/imssed_testing.cfg")
-file (TO_NATIVE_PATH ${TEST_IMS_SED_CONFIG} IMSSEDCONF)
 
 set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH "Path to the sendmail script used for tests")
 mark_as_advanced(TEST_SENDMAIL_SCRIPT)
 file (TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
-# Specific to IMS
-set(TEST_PATH_SCRIPT_REMOTE_UMSSED "${TEST_BIN_PATH}/launchRemoteUmssed.sh" CACHE FILEPATH "The script to launch the umssed on the remote machine")
-mark_as_advanced(TEST_PATH_SCRIPT_REMOTE_UMSSED)
-file(TO_NATIVE_PATH "${TEST_PATH_SCRIPT_REMOTE_UMSSED}" TESTPATHSCRIPTREMOTEUMSSED)
-file(TO_NATIVE_PATH "${TEST_REMOTE_HOSTNAME}" TESTREMOTEHOSTNAME)
 
-# Create header for VISHNU IMS tests
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/IMS_testconfig.h.in
-  ${PROJECT_BINARY_DIR}/include/IMS_testconfig.h)
-# Create configuration for VISHNU IMS SeD
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/imssed_testing.cfg.in
-  ${TEST_CONFIG_PATH}/imssed_testing.cfg
-)
 
 
 

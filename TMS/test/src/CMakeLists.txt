@@ -23,8 +23,6 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
-message("FMS_TEST_SOURCE_DIR = " ${FMS_TEST_SOURCE_DIR})
-
 # Standard VISHNU TESTS variables
 file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
 file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)

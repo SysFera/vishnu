@@ -486,9 +486,7 @@ if (BUILD_TESTING)
   add_definitions(-DBUILD_TESTING)
 
   # Common directories for tests
-  set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
   set(TEST_BIN_PATH "${PROJECT_BINARY_DIR}/bin" CACHE STRING "Contains binaries for tests")
-  mark_as_advanced(TEST_SQL_PATH)
   mark_as_advanced(TEST_BIN_PATH)
 
   add_subdirectory(core/test)
@@ -526,7 +524,6 @@ if(COMPILE_FMS)
   if (BUILD_TESTING)
       add_subdirectory(FMS/test/src)
       set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
-      message("FMS_TEST_SOURCE_DIR = " ${FMS_TEST_SOURCE_DIR})
   endif (BUILD_TESTING)
 endif (COMPILE_FMS)
 
@@ -536,6 +533,7 @@ if(COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)
   if (BUILD_TESTING)
     add_subdirectory(TMS/test/src)
+    set(TMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_TMS)
 
@@ -548,6 +546,7 @@ if(COMPILE_IMS)
   add_subdirectory(IMS/doc/man)
   if (BUILD_TESTING)
     add_subdirectory(IMS/test/src)
+    set(IMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_IMS)
 

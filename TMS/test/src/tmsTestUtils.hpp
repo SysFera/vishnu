@@ -8,6 +8,11 @@
 
 using namespace std;
 
+
+static const std::string BATCHTYPE = "";
+static const std::string TMSSCRIPTPATH = "";
+static const std::string TMSWORKINGDIR = "";
+
 struct VishnuConnexion{
 
 
