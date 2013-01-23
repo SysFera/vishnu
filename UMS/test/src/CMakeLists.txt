@@ -59,8 +59,6 @@ add_executable(ums_stresser
   stress.cpp)
 
 target_link_libraries(ums_stresser
-  ${DIET_CLIENT_LIB}
-  ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
   vishnu-core

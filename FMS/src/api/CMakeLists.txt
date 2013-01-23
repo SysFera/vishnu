@@ -24,7 +24,6 @@ vishnu-fms-api api_fms.cpp
 set_target_properties(vishnu-fms-api PROPERTIES COMPILE_FLAGS "-fPIC")
 
 target_link_libraries(vishnu-fms-api
-  ${DIET_CLIENT_LIBRARIES}
   ${Boost_LIBRARIES}
   emf4cpp-FMS_Data
   exception-vishnu

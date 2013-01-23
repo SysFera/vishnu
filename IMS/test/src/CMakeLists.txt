@@ -52,8 +52,6 @@ add_executable(ims_stresser
  ims_stress.cpp)
 
 target_link_libraries(ims_stresser
-  ${DIET_CLIENT_LIB}
-  ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
   vishnu-core
