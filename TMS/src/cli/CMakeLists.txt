@@ -5,7 +5,6 @@ link_directories(${Boost_LIBRARY_DIRS}
                 )
 
 include_directories(${Boost_INCLUDE_DIRS}
-                    ${DIET_INCLUDE_DIR}
                     ${TMS_EMF_DATA_DIR}
                     ${TMS_DATA_DIR}
                     ${EMF4CPP_INCLUDE_DIR}
