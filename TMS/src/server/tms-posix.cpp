@@ -1,4 +1,5 @@
 /**
+  static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
  * \file tms-posix.cpp
  * \brief This file contains the TMS-Posix scheduler for local batch.
  * \author Olivier Mornard (olivier.mornard@sysfera.com)
@@ -56,16 +57,18 @@ static volatile sig_atomic_t AlarmSig = 0;
 
 static char HomeDir[255];
 
+
 static void
 CheckJobs() {
   int Taille;
-  int i;
+  int i=0;
   bool CheckIn5s = false;
 
   Taille = Board.size();
 
   // End of Daemon ?
   if (Taille == 0) {
+  // End of Daemon ?
     Terminated = 1;
     return;
   }
@@ -75,18 +78,21 @@ CheckJobs() {
     for (i = 0; i<Taille; i++) {
       if (Board[i].state == TERMINATED) {
         Board.erase(Board.begin()+i);
-        Taille = Board.size();
         CheckIn5s = true;
         break;
       }
     }
+    Taille = Board.size();
   }
+
+  Taille = Board.size();
 
   // Manage Processes states
   for (i = 0; i<Taille; i++) {
     if (Board[i].state == KILL) {
       if (kill(Board[i].pid,0) == -1) {
         Board[i].state = TERMINATED;
+        unlink(Board[i].ScriptPath);
       }
       CheckIn5s = true;
     }
@@ -96,6 +102,7 @@ CheckJobs() {
   for (i = 0; i<Taille; i++) {
     if (kill(Board[i].pid,0) == -1) {
       Board[i].state = TERMINATED;
+      unlink(Board[i].ScriptPath);
       CheckIn5s = true;
     }
   }
@@ -245,7 +252,7 @@ buildEnvironment(){
 
   // variable VISHNU_BATCHJOB_NODEFILE
   boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
-  fdHostname = open(fileHostname.c_str(),O_CREAT|O_EXCL|O_WRONLY,S_IRUSR|S_IWUSR);
+  fdHostname = open(fileHostname.c_str(),O_CREAT|O_WRONLY,S_IRUSR|S_IWUSR);
   write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   close(fdHostname);
   setenv(libNodefile,fileHostname.c_str(),true);
@@ -258,7 +265,7 @@ buildEnvironment(){
 
 
 static int
-execCommand(char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current, int maxTime) {
+execCommand(const char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current, int maxTime) {
   char* args[16];
   char commandLine[255];
   pid_t pid;
@@ -290,14 +297,14 @@ execCommand(char* command,const char* fstdout, const char* fstderr, const char* 
     setenv(libBatchId,temp.str().c_str(),true);
 
     if (fstdout != NULL) {
-      fd = open(fstdout,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+      fd = open(fstdout,O_CREAT|O_RDWR,S_IRUSR|S_IWUSR);
       close(STDOUT_FILENO);
       dup2(fd,STDOUT_FILENO);
       close(fd);
     }
 
     if (fstderr != NULL) {
-      fd = open(fstderr,O_CREAT|O_EXCL|O_RDWR,S_IRUSR|S_IWUSR);
+      fd = open(fstderr,O_CREAT|O_RDWR,S_IRUSR|S_IWUSR);
       close(STDERR_FILENO);
       dup2(fd,STDERR_FILENO);
       close(fd);
@@ -422,10 +429,18 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   sigset_t blockMask;
   sigset_t emptyMask;
   struct st_job currentState;
-  std::map<std::string, std::string> context;
   char fout[256];
   char ferr[256];
   int wallclocklimit;
+  std::map<std::string, std::string> context;
+  boost::system::error_code ec;
+  static const boost::filesystem::path foutName("VISHNU-%%%%%%.out");
+  boost::filesystem::path fileOut = boost::filesystem::unique_path(foutName,ec);
+  static const boost::filesystem::path ferrName("VISHNU-%%%%%%.err");
+  boost::filesystem::path fileErr = boost::filesystem::unique_path(ferrName,ec);
+  static const boost::filesystem::path scriptName("/tmp/VISHNU-script%%%%%.sh");
+  boost::filesystem::path fileScript = boost::filesystem::unique_path(scriptName,ec);
+  boost::filesystem::path tmpScript;
 
   sigemptyset(&emptyMask);
 
@@ -439,7 +454,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   } else if (context.find("vishnu_output") != context.end()) {
     strncpy(fout, context["vishnu_output"].c_str(), sizeof(fout));
   } else {
-    snprintf(fout,sizeof(fout), "VISHNU-%d-%d.out", geteuid(), getpid());
+    strncpy(fout,fileOut.c_str(),sizeof(fout));
   }
 
   if (strlen(req->data.submit.ErrorPath) != 0) {
@@ -447,7 +462,7 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   } else if (context.find("vishnu_error") != context.end()) {
     strncpy(ferr, context["vishnu_error"].c_str(), sizeof(ferr));
   } else {
-    snprintf(ferr,sizeof(ferr), "VISHNU-%d-%d.err", geteuid(), getpid());
+    strncpy(ferr,fileErr.c_str(),sizeof(ferr));
   }
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
@@ -463,15 +478,25 @@ RequestSubmit(struct Request* req, struct Response* ret) {
     wallclocklimit = 0;
   }
 
+  buildEnvironment();
+
+  tmpScript = req->data.submit.cmd;
+
+  boost::filesystem::copy_file(tmpScript, fileScript,
+                               boost::filesystem::copy_option::overwrite_if_exists,ec);
+
+  setenv(libBatchName, req->data.submit.JobName, true);
+
   if (context.find("vishnu_working_dir")  != context.end()) {
-    execCommand(req->data.submit.cmd, fout, ferr,
+    execCommand(fileScript.c_str(), fout, ferr,
                 context["vishnu_working_dir"].c_str(), &currentState, wallclocklimit);
   } else {
-    (void)execCommand(req->data.submit.cmd, fout, ferr, HomeDir, &currentState, wallclocklimit);
+    execCommand(fileScript.c_str(), fout, ferr, HomeDir, &currentState, wallclocklimit);
   }
 
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
+  strncpy(currentState.ScriptPath,fileScript.c_str(),sizeof(currentState.ScriptPath));
   Board.push_back(currentState);
 
   memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));

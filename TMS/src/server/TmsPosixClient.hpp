@@ -81,6 +81,10 @@ struct st_submit {
  * \brief the working dir
  */
   char WorkDir[256];
+/**
+ * \brief the Job name
+ */
+  char JobName[256];
 };
 
 /**
@@ -177,6 +181,10 @@ struct st_job {
  * \brief the HomeDir
  */
   char HomeDir[256];
+/**
+ * \brief the ScriptPath
+ */
+  char ScriptPath[255];
 };
 
 /**

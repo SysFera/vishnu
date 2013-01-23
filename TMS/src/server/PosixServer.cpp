@@ -36,8 +36,6 @@ PosixServer::submit(const char* scriptPath,
   memcpy(op.ErrorPath, options.getErrorPath().c_str(), strlen(options.getErrorPath().c_str()));
   memcpy(op.WorkDir, options.getWorkingDir().c_str(), strlen(options.getWorkingDir().c_str()));
 
-  buildEnvironment();
-
   switch(fork()) {
     case -1:
       return -1;
@@ -50,10 +48,6 @@ PosixServer::submit(const char* scriptPath,
       break;
   }
 
-  ret = ReqSubmit(scriptPath, &resultat, &op);
-
-  job.setBatchJobId(std::string(resultat.JobId));
-  job.setJobId(std::string(resultat.JobId));
   job.setStatus(4);
   job.setJobQueue("posix");
 // If no name give a default job name
@@ -63,11 +57,16 @@ PosixServer::submit(const char* scriptPath,
   } else {
     job.setJobName(options.getName());
   }
+  strncpy(op.JobName, job.getJobName().c_str(), sizeof(op.JobName)-1);
+
+  ret = ReqSubmit(scriptPath, &resultat, &op);
 
   OutPutPath = std::string(resultat.OutPutPath);
   ErrorPath = std::string(resultat.ErrorPath);
 
   job.setOutputPath(OutPutPath);
+  job.setBatchJobId(std::string(resultat.JobId));
+  job.setJobId(std::string(resultat.JobId));
 
   job.setErrorPath(ErrorPath);
   job.setWallClockLimit(resultat.maxTime);

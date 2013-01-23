@@ -87,6 +87,7 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   strncpy(req.data.submit.OutPutPath,sub->OutPutPath,sizeof(req.data.submit.OutPutPath)-1);
   strncpy(req.data.submit.ErrorPath,sub->ErrorPath,sizeof(req.data.submit.ErrorPath)-1);
   strncpy(req.data.submit.WorkDir,sub->WorkDir,sizeof(req.data.submit.WorkDir)-1);
+  strncpy(req.data.submit.JobName,sub->JobName,sizeof(req.data.submit.JobName)-1);
 
   ReqSend(name_sock, &req, &ret);
 
@@ -183,6 +184,7 @@ ReqInfo(const char* JobId, struct st_job* response) {
   snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
 
   memset(&req,0,sizeof(struct Request));
+  memset(&ret,0,sizeof(struct Response));
   strncpy(req.sig,signature,sizeof(req.sig));
   strncpy(req.req,lb_req_ginfo,sizeof(req.req));
   strncpy(req.data.info.JobId,JobId,sizeof(req.data.info.JobId)-1);
