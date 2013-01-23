@@ -118,6 +118,10 @@ run_cmd mkdir -p deliverables/doc
 run_cmd mkdir -p deliverables/debs
 run_cmd mkdir -p deliverables/tests
 
+# create releasepath
+releasePath=deliverables/VISHNU_$NO_VERSION
+run_cmd mkdir -p $releasePath
+
 
 remove_files deliverables/src/*
 remove_files deliverables/doc/*
@@ -467,6 +471,24 @@ run_cmd tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
 
 # Moving archive in /tmp
 run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
+
+# also copy it in the release directory
+run_cmd cd $vishnu_dir
+copy_rel_file /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
+
+# tarballs of the doc and tests
+run_cmd cd $pathrel/..
+run_cmd -czvf ${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc >/dev/null
+run_cmd -czvf ${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests >/dev/null
+
+# Prepare release note
+run_cmd cat > ${releasePath}/releaseNotes <<EOF
++--------------------+
+| VISHNU ${NO_VERSION} |
++--------------------+
+
+Dependencies: TODO
+EOF
 
 echo
 echo
