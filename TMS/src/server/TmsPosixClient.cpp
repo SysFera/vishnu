@@ -88,6 +88,7 @@ ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
   strncpy(req.data.submit.ErrorPath,sub->ErrorPath,sizeof(req.data.submit.ErrorPath)-1);
   strncpy(req.data.submit.WorkDir,sub->WorkDir,sizeof(req.data.submit.WorkDir)-1);
   strncpy(req.data.submit.JobName,sub->JobName,sizeof(req.data.submit.JobName)-1);
+  req.data.submit.walltime = sub->walltime;
 
   ReqSend(name_sock, &req, &ret);
 

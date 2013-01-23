@@ -38,6 +38,8 @@
 #include "POSIXParser.hpp"
 #include "utils.hpp"
 
+#include "utilVishnu.hpp"
+
 using namespace std;
 using namespace boost::system;
 
@@ -467,13 +469,18 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
 
-  if (context.find("vishnu_wallclocklimit") != context.end()) {
-    try {
-      wallclocklimit = boost::lexical_cast<int>(context["vishnu_wallclocklimit"]);
-    }
-    catch (boost::bad_lexical_cast &) {
-      wallclocklimit = 0;
-    }
+  if (req->data.submit.walltime != 0) {
+    wallclocklimit = req->data.submit.walltime;
+  } else if (context.find("vishnu_wallclocklimit") != context.end()) {
+    wallclocklimit = vishnu::convertStringToWallTime(context["vishnu_wallclocklimit"]);
+/***********
+      try {
+        wallclocklimit = boost::lexical_cast<int>(context["vishnu_wallclocklimit"]);
+      }
+      catch (boost::bad_lexical_cast &) {
+        wallclocklimit = 0;
+      }
+**********/
   } else {
     wallclocklimit = 0;
   }
