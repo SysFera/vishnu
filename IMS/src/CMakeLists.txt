@@ -35,6 +35,7 @@ target_link_libraries(vishnu-ims-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
+  vishnu-ums-client
   ${LIBCRYPT_LIB}
 )
 if(COMPILE_FMS)
