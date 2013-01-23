@@ -204,9 +204,7 @@ int main(int argc, char* argv[], char* envp[]) {
         MonitorTMS monitor(interval);
         dbConfig.setDbPoolSize(1);
         monitor.init(vishnuId, dbConfig, machineId, batchType);
-        while(kill(ppid,0) == 0) {
-          monitor.run();
-        }
+        monitor.run();
       } else {
         // Initialize the TMS Monitor (Opens a connection to the database)
         MonitorTMS monitor2(interval);
@@ -214,18 +212,14 @@ int main(int argc, char* argv[], char* envp[]) {
         monitor2.init(vishnuId, dbConfig, machineId, POSIX);
 
         ppidp = getppid();
-        while(kill(ppidp,0) == 0) {
-          monitor2.run();
-        }
+        monitor2.run();
       }
     } else {
       // Initialize the TMS Monitor (Opens a connection to the database)
       MonitorTMS monitor(interval);
       dbConfig.setDbPoolSize(1);
       monitor.init(vishnuId, dbConfig, machineId, batchType);
-      while(kill(ppid,0) == 0) {
-        monitor.run();
-      }
+      monitor.run();
     }
   } else {
     std::cerr << "\nThere was a problem to initialize the server\n\n";
