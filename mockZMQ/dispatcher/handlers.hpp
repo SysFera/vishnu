@@ -58,9 +58,7 @@ private:
 };
 
 
-template class Handler<ServiceWorker>;
 typedef Handler<ServiceWorker> ClientHandler;
-template class Handler<SubscriptionWorker>;
 typedef Handler<SubscriptionWorker> ServerHandler;
 
 #endif /* _HANDLERS_HPP_ */
