@@ -582,53 +582,51 @@
                   role="bold">#% vishnu_job_name</emphasis>. 
 	      The possible generic directives are:
 	    </para>
-            <para>  
-	      <itemizedlist>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_group</emphasis>: allow to specify the group's name,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_working_dir</emphasis>: allow to specify a job remote working dir,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: allow to specify the job's name. Spaces are not accepted in job name,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_output</emphasis>: allow to specify the path of the job's ouput file,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_error</emphasis>: allow to specify the path of the file containing the problems that occured during the job's execution,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: allow to specify the estimated time for the job's execution,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_cput</emphasis>: allow to specify the job cpu limit time,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: allow to specify the number of cpus per node of the job,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: allow to specify the number of nodes and the cpu of each node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by &quot;4:3&quot;, </para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_memory</emphasis>: allow to specify the memory size that the job requires,</para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_mailNotification </emphasis>: allow to specify the notification type of the job. Valid type values are BEGIN, END, ERROR, 
+            <itemizedlist>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_group</emphasis>: allow to specify the group's name,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_working_dir</emphasis>: allow to specify a job remote working dir,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_job_name</emphasis>: allow to specify the job's name. Spaces are not accepted in job name,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_output</emphasis>: allow to specify the path of the job's ouput file,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_error</emphasis>: allow to specify the path of the file containing the problems that occured during the job's execution,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: allow to specify the estimated time for the job's execution,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_cput</emphasis>: allow to specify the job cpu limit time,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: allow to specify the number of cpus per node of the job,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: allow to specify the number of nodes and the cpu of each node. For exemple if you want to use 4 nodes and to use 3 cpus of each node, you must sepecify thes numbers by &quot;4:3&quot;, </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_memory</emphasis>: allow to specify the memory size that the job requires,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_mailNotification </emphasis>: allow to specify the notification type of the job. Valid type values are BEGIN, END, ERROR, 
         and ALL (any state change), </para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user,
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: The name of user to receive email notification of state changes as defined by the option mailNotification. The default value is the submitting user,
 		  </para>
-                </listitem>
-                <listitem>
-                  <para><emphasis role="bold">#% vishnu_queue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_queue</emphasis>: specifies the queue where the job will be submitted. It is possible to obtain a list of 
 		    the batch scheduler's queues by using the <emphasis role="bold">vishnu_list_queues</emphasis> command.
 		  </para>
-                </listitem>
-              </itemizedlist>
-	    </para>
+              </listitem>
+            </itemizedlist>
             <para>
         It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM, LSF or Grid Engine). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
@@ -665,6 +663,52 @@
 	#$ -l s_rt=01:02:20
 	#$ -q myFavoriteQueue
       </programlisting>
+          </section>
+          <section>
+            <title> Posix batch default configuration </title>
+            <itemizedlist>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_group</emphasis>: ignored, </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_working_dir</emphasis>: user's home by default,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_job_name</emphasis>: posix_job,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_output</emphasis>: in the user's home in a file called VISHNU-XXXX-XXXX.out </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_error</emphasis>: in the user's home in a file called VISHNU-XXXX-XXXX.err, </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: infinite by default,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_cput</emphasis>: ignored,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: ignored,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: ignored,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_memory</emphasis>: ignored,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_mailNotification </emphasis>: ignored,</para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: ignored, 
+		  </para>
+              </listitem>
+              <listitem>
+                <para><emphasis role="bold">#% vishnu_queue</emphasis>: ignored.
+		  </para>
+              </listitem>
+            </itemizedlist>
           </section>
         </section>
         <section>
