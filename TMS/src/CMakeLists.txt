@@ -150,7 +150,7 @@ if (NOT CLIENT_ONLY)
   endif()
   if(deltacloud)
     add_library(vishnu-tms-deltacloud ${DELTACLOUDSERVER})
-    target_link_libraries(vishnu-tms-deltacloud ${LIBDELTACLOUD_LIB} ${CURL_LIBRARY} ${XML_LIBRARY} )
+    target_link_libraries(vishnu-tms-deltacloud ${LIBDELTACLOUD_LIB})
     install(TARGETS vishnu-tms-deltacloud DESTINATION ${LIB_INSTALL_DIR})
   endif()
   

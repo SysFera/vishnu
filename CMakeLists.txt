@@ -158,7 +158,7 @@ if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VI
   string (COMPARE EQUAL ${VISHNU_BATCH} "PBS" pbs)
   string (COMPARE EQUAL ${VISHNU_BATCH} "DELTACLOUD" deltacloud)
   string (COMPARE EQUAL ${VISHNU_BATCH} "POSIX" posix)
-  if ( torque OR ll OR lsf OR slurm OR sge OR pbs )
+  if (torque OR ll OR lsf OR slurm OR sge OR pbs OR deltacloud)
     set(posix 1)
   endif()
   
