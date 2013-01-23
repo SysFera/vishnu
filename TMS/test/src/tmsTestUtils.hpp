@@ -12,6 +12,8 @@ using namespace std;
 static const std::string BATCHTYPE = "";
 static const std::string TMSSCRIPTPATH = "";
 static const std::string TMSWORKINGDIR = "";
+static const std::string TMSCONFIGDIR = "";
+static const std::string TMSSCRIPTPATHWAITING = "";
 
 struct VishnuConnexion{
 
