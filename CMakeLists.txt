@@ -55,12 +55,6 @@ option(COMPILE_IMS "compile the module IMS")
 set(VISHNU_BATCH "TORQUE" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
 set(VISHNU_BATCH_VERSION "2.3" CACHE path "Version of the batch scheduler")
 
-#option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
-#option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
-#option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
-#option(VISHNU_USE_LSF   "Build VISHNU with LSF support...")
-#option(VISHNU_USE_SGE     "Build VISHNU with SGE support...")
-
 option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
@@ -70,6 +64,7 @@ endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 # FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
 # include(CMakeDependentOption)
 # cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
+option(BUILD_TESTING "Enable unit testing" OFF)
 option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
 
 find_package(ZMQ)
