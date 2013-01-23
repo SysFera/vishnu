@@ -19,12 +19,6 @@ endif()
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta1" CACHE STRING " comments about the current version ")
 
-if (COMPILE_IMS)
-  if (NOT CLIENT_ONLY)
-    find_package(XMLRPC)
-  endif()
-endif()
-
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
 
@@ -539,6 +533,7 @@ endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
   if (NOT CLIENT_ONLY)
+    find_package(XMLRPC)
     find_package(Sigar REQUIRED)
   endif()
   add_definitions(-DCOMPILE_IMS)
