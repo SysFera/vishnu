@@ -4,6 +4,9 @@
 # Author: E. PAMBA CAPO-CHICHI
 # Date: 4th February 2011
 
+######################################################################
+#                         GLOBAL PARAMETER                           #
+######################################################################
 cmake_minimum_required(VERSION 2.8.5)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
@@ -19,6 +22,11 @@ endif()
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta1" CACHE STRING " comments about the current version ")
 
+
+
+######################################################################
+#                             OPTIONS                                #
+######################################################################
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
 
@@ -34,23 +42,40 @@ else (POSTGRESQL_FOUND)
     option(ENABLE_MYSQL "compile with mysql support" OFF)
   endif(MYSQL_FOUND)
 endif(POSTGRESQL_FOUND)
+
 # COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
-# INSTALL_SYSV option set to OFF by default
-option(INSTALL_SYSV "install systemV init scripts" OFF)
-# INSTALL_SYSTEMD option set to OFF by default
-option(INSTALL_SYSTEMD "install systemd services" OFF)
 
 # Options set to OFF by default
-option(COMPILE_CLIENT_CLI "compile the client command line interface")
-option(COMPILE_SERVERS "compile the servers")
-option(ENABLE_PYTHON "compile the python api")
-option(ENABLE_JAVA "compile the java api")
-option(ENABLE_SWIG "use swig to re-generate code for the wrappers")
-option(ENABLE_MYSQL "compile with the mysql support.")
-option(COMPILE_TMS "compile the module TMS")
-option(COMPILE_FMS "compile the module FMS")
-option(COMPILE_IMS "compile the module IMS")
+option(COMPILE_CLIENT_CLI "compile the client command line interface" OFF)
+option(COMPILE_SERVERS "compile the servers" OFF)
+option(ENABLE_PYTHON "compile the python api" OFF)
+option(ENABLE_JAVA "compile the java api" OFF)
+option(ENABLE_SWIG "use swig to re-generate code for the wrappers" OFF)
+option(ENABLE_MYSQL "compile with the mysql support." OFF)
+option(COMPILE_TMS "compile the module TMS" OFF)
+option(COMPILE_FMS "compile the module FMS" OFF)
+option(COMPILE_IMS "compile the module IMS" OFF)
+option(INSTALL_SYSV "install systemV init scripts" OFF)
+option(INSTALL_SYSTEMD "install systemd services" OFF)
+
+# set dependencies
+if (ENABLE_PYTHON OR ENABLE_JAVA)
+  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+  set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
+  set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
+  add_subdirectory(swigAPI)
+endif(ENABLE_PYTHON OR ENABLE_JAVA)
+
+if (COMPILE_TMS OR COMPILE_IMS OR COMPILE_FMS)
+  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+endif()
+
+if (COMPILE_TMS)
+  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+endif()
+
 
 set(VISHNU_BATCH "TORQUE" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
 set(VISHNU_BATCH_VERSION "2.3" CACHE path "Version of the batch scheduler")
@@ -61,12 +86,16 @@ if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
   set(COMPILE_ALL_MODULES 1)
 endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 
-# FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
-# include(CMakeDependentOption)
-# cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
 option(BUILD_TESTING "Enable unit testing" OFF)
 option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
 
+
+
+
+
+######################################################################
+#                             PACKAGES                               #
+######################################################################
 find_package(ZMQ)
 
 find_package(LIBCRYPT)
@@ -80,6 +109,27 @@ else (LIBCRYPT_FOUND)
   set(LIBCRYPT_DIR "" cache path "LIBCRYPT installation path")
 endif(LIBCRYPT_FOUND)
 
+
+find_package(Boost 1.46
+  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
+
+find_package(Threads)
+if(THREADS_FOUND)
+  set(THREADS_LIB ${CMAKE_THREAD_LIBS_INIT})
+endif()
+
+set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
+
+
+if(APPLE)
+  add_definitions("-DBSD_LIKE_SYSTEM")  
+endif()
+
+
+
+######################################################################
+#                             DATABASES                              #
+######################################################################
 if (ENABLE_POSTGRESQL)
   find_package(POSTGRESQL)
   if (POSTGRESQL_FOUND)
@@ -130,6 +180,10 @@ if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
+
+######################################################################
+#                         BATCH SCHEDULERS                           #
+######################################################################
 set(torque 0)
 set(ll 0)
 set(slurm 0)
@@ -311,6 +365,10 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
 endif(COMPILE_TMS AND COMPILE_SERVERS)
 
 
+
+######################################################################
+#                                LDAP                                #
+######################################################################
 if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
   #To check if the module UMS is activated
   if (COMPILE_UMS)
@@ -332,23 +390,10 @@ if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
 endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
 
 
-find_package(Boost 1.46
-  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
-find_package(Threads)
-if(THREADS_FOUND)
-  set(THREADS_LIB ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
-
-add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
-
-if(APPLE)
-  add_definitions("-DBSD_LIKE_SYSTEM")  
-endif()
-
-
+######################################################################
+#                           COMPILATION                              #
+######################################################################
 # mock
 set(MOCK_INCLUDE_DIR
   ${VISHNU_SOURCE_DIR}/mockZMQ
@@ -464,16 +509,6 @@ if (BUILD_TESTING)
   add_subdirectory(core/test)
 endif (BUILD_TESTING)
 
-# It's required to enable all the modules when SWIG is enabled. Otherwise you'll have linking problems
-# To avoid dealing with IMS dependencies when you only need API, you may need to set CLIENT_ONLY at ON
-if (ENABLE_PYTHON OR ENABLE_JAVA)
-  set (COMPILE_UMS 1 )
-  set (COMPILE_FMS 1 )
-  set (COMPILE_TMS 1 )
-  set (COMPILE_IMS 1 )
-  add_subdirectory(swigAPI)
-endif(ENABLE_PYTHON OR ENABLE_JAVA)
-
 add_subdirectory(mockZMQ)
 
 
@@ -490,9 +525,6 @@ if(COMPILE_UMS)
 endif (COMPILE_UMS)
 
 if(COMPILE_TMS)
-  # we need to compile FMS
-  set (COMPILE_FMS 1)
-
   add_subdirectory(TMS/src)
   add_subdirectory(TMS/doc/man)
   add_definitions(-DCOMPILE_TMS)
