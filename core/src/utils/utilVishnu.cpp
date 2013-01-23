@@ -448,6 +448,7 @@ vishnu::convertStringToWallTime(const std::string& walltime_) {
  */
 void
 vishnu::checkJobStatus(const int& status) {
+//TODO Rethink this function, conceptually bad, a void function that does not modificate any parameter is bad conceptually.
   if ((status < -1) || (status > 8)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
   }
