@@ -473,13 +473,14 @@ run_cmd tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
 run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
 
 # also copy it in the release directory
-run_cmd cd $vishnu_dir
-copy_rel_file /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
+change_dir $vishnu_dir
+run_cmd cp /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
 
 # tarballs of the doc and tests
-run_cmd cd $pathrel/..
-run_cmd -czvf ${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc >/dev/null
-run_cmd -czvf ${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests >/dev/null
+change_dir $pathrel
+change_dir ..
+run_cmd tar -czvf ${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc >/dev/null
+run_cmd tar -czvf ${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests >/dev/null
 
 # Prepare release note
 run_cmd cat > ${releasePath}/releaseNotes <<EOF
