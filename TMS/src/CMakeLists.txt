@@ -109,7 +109,6 @@ if (NOT CLIENT_ONLY)
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed
     ${Boost_LIBRARIES}
-    ${LOG_LIBRARY}
     ${DATABASE_LIBS}
     vishnu-core
     ${LIBCRYPT_LIB}
