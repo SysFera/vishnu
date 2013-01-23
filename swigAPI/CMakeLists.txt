@@ -78,8 +78,7 @@ set(SWIG_LINK_LIB
   ${SWIG_LINK_LIB}
   emf4cpp-vishnu
   vishnu-core
-  vishnu-ums-client
-  ${DIET_CLIENT_LIB} )
+  vishnu-ums-client)
 
 if(COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)

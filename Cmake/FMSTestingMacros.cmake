@@ -54,8 +54,6 @@ macro( fms_test NAME )
 
     # link libraries
     target_link_libraries( ${NAME}
-      ${DIET_CLIENT_LIB}
-      ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core
