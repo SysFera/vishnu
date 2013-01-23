@@ -43,7 +43,6 @@ namespace bfs= boost::filesystem;
 
 BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 
-static const std::string BATCHTYPE = "SGE"
 
 //// submit a job: normal call
 //BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
@@ -327,13 +326,13 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
   //Setting submitjob parameters
   std::string scriptFilePath;
   if(BATCHTYPE=="TORQUE") {
-    scriptFilePath=TMSCONFIGDIR "/bad_torque_script";
+    scriptFilePath=TMSCONFIGDIR + "/bad_torque_script";
   } else if(BATCHTYPE=="SLURM") {
-    scriptFilePath=TMSCONFIGDIR "/bad_slurm_script";
+    scriptFilePath=TMSCONFIGDIR + "/bad_slurm_script";
   } else if(BATCHTYPE=="LSF") {
-    scriptFilePath=TMSCONFIGDIR "/bad_lsf_script";
+    scriptFilePath=TMSCONFIGDIR + "/bad_lsf_script";
   } else {
-    scriptFilePath=TMSCONFIGDIR "/bad_unknow_batch_type_script";
+    scriptFilePath=TMSCONFIGDIR + "/bad_unknow_batch_type_script";
   }
 
   Job jobInfo;

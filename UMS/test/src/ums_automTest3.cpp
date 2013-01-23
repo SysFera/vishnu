@@ -85,6 +85,7 @@ BOOST_AUTO_TEST_CASE( Account_failure )
   std::string lana = "dupont";
   std::string mail = "cl3m3ntlebgkidechyr@hotmail.fr";
   User_ptr use = ecoreFactory->createUser();
+  
   use->setUserId   (cu)  ;
   use->setPassword (pass);
   use->setFirstname(fina);
@@ -124,7 +125,7 @@ BOOST_AUTO_TEST_CASE( Account_failure )
 
   BOOST_MESSAGE(" Testing bad update parameter bad user id U4.1-E"    );
   {
-
+    
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK    (addUser(sess.getSessionKey(), *use      )==0);
     use->setUserId("bad");
