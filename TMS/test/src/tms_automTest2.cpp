@@ -13,7 +13,7 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
-#include "TMS_testconfig.h"
+
 
 // C++ Headers
 #include <iostream>
@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
+    const std::string scriptFilePath="TMSSCRIPTPATH";
     Job jobInfo;
     SubmitOptions options;
 

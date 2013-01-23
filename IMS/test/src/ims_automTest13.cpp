@@ -22,7 +22,6 @@ account of local machine must be defined
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
 #include "utilVishnu.hpp"
-#include "IMS_testconfig.h"
 
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
@@ -49,7 +48,7 @@ static const string adminId = "root";
 static const string adminPwd = "vishnu_user";
 static const string userId = "user_1";
 static const string userPwd = "toto";
-static const string sqlPath = IMSSQLPATH;
+static const string sqlPath = "IMSSQLPATH";
 static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";

@@ -16,6 +16,7 @@
 #include "diet_fixtures.hpp"
 #include "utils.hpp"
 #include "FileParser.hpp"
+#include "api_ums.hpp"
 
 namespace ba = boost::assign;
 namespace bf = boost::filesystem;
@@ -44,20 +45,34 @@ public:
   std::string m_test_ums_user_vishnu_pwd;
   
   UMSSEDFixtureTemplate() {
+
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
+    int argc = 2;
+    char* argv[argc];
+    std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
+    argv[0]= (char*)"./automTest";
+    argv[1]= (char*) vishnuClientTestConfigPath.c_str();
+    if (vishnu::vishnuInitialize(argv[1], argc, argv)) {
+      BOOST_TEST_MESSAGE( "Error in diet_initialize... (using config: "
+      << vishnuClientTestConfigPath << ")" );
+    }
+    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
+    
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
     std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
 
-    m_test_ums_sql_path = setupConfig.find("TEST_UMS_SQL_PATH")->second; 
+    m_test_ums_sql_path = setupConfig.find("TEST_SQL_PATH")->second;
     m_test_ums_authen_type = setupConfig.find("TEST_UMS_AUTHEN_TYPE")->second ;
-    m_test_ums_root_vishnu_login = setupConfig.find("TEST_UMS_ROOT_VISHNU_LOGIN")->second;
-    m_test_ums_root_vishnu_pwd = setupConfig.find("TEST_UMS_ROOT_VISHNU_PWD")->second;
-    m_test_ums_admin_vishnu_login = setupConfig.find("TEST_UMS_ADMIN_VISHNU_LOGIN")->second;
-    m_test_ums_admin_vishnu_pwd = setupConfig.find("TEST_UMS_ADMIN_VISHNU_PWD")->second;
+    m_test_ums_root_vishnu_login = setupConfig.find("TEST_ROOT_VISHNU_LOGIN")->second;
+    m_test_ums_root_vishnu_pwd = setupConfig.find("TEST_ROOT_VISHNU_PWD")->second;
+    m_test_ums_admin_vishnu_login = setupConfig.find("TEST_ADMIN_VISHNU_LOGIN")->second;
+    m_test_ums_admin_vishnu_pwd = setupConfig.find("TEST_ADMIN_VISHNU_PWD")->second;
     m_test_auth_system_uri = setupConfig.find("TEST_UMS_AUTH_SYTEM_URI")->second;
-    m_test_ums_user_vishnu_login = setupConfig.find("TEST_UMS_USER_VISHNU_LOGIN")->second;
-    m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_UMS_USER_VISHNU_PWD")->second;
+    m_test_ums_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
+    m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
 
     
     

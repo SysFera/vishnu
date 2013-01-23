@@ -5,7 +5,6 @@
  */
 #include "diet_fixtures.hpp"
 #include "FMS_fixtures.hpp"
-#include "TMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
 #include "api_tms.hpp"
@@ -13,8 +12,8 @@ using namespace std;
 using namespace vishnu;
 
 char TMSSeDInit[] = "tmssed";
-char ConfigTMSSeDInit[] = TMSSEDCONF;
-char BinDirTMSSeDInit[] = TMSSEDBINDIR;
+char ConfigTMSSeDInit[] = "TMSSEDCONF";
+char BinDirTMSSeDInit[] = "TMSSEDBINDIR";
 
 class TMSFixtureInit : public FMSSeDFixture {
 
@@ -34,17 +33,7 @@ public:
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
-    /*BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-    string sqlPath = TMSSQLPATH;
-    if (restore(sqlPath + "/cleanall.sql") != 0) {
-      cout << "Clean database failed" << endl;
-      return;
-    }
-    if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
-      cout << "Database initialization failed" << endl;
-      return;
-    }
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );*/
+
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
     string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");

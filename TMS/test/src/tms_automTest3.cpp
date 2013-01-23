@@ -12,7 +12,7 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
-#include "TMS_testconfig.h"
+
 
 // C++ Headers
 #include <iostream>
@@ -60,7 +60,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
   try {
     //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSFASTSCRIPTPATH;
+    const std::string scriptFilePath="TMSFASTSCRIPTPATH";
     Job jobInfo;
     SubmitOptions options;
 
@@ -87,8 +87,9 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
 
     // Check the success of get jobs output function
     JobResult outputInfos;
+    std::string workingdir("TMSWORKINGDIR");
 
-    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
+    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, workingdir),0  );
 
     bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath())) ;
 
@@ -126,7 +127,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
   try {
     //Setting submitjob parameters
     
-    const std::string scriptFilePath=TMSFASTSCRIPTPATHOUTDIR;
+    const std::string scriptFilePath="TMSFASTSCRIPTPATHOUTDIR";
     Job jobInfo;
     SubmitOptions options;
     
@@ -153,8 +154,9 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
     
     // Check the success of get jobs output function
     JobResult outputInfos;
+    std::string workingdir("TMSWORKINGDIR");
     
-    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
+    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, workingdir),0  );
     
     bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getErrorPath())) && bfs::is_directory(bfs::path(outputInfos.getOutputDir()));
     

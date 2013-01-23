@@ -22,8 +22,12 @@ namespace ba = boost::assign;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
+
+
 // The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_FIXTURE_TEST_SUITE(CreateFile, FMSSeDFixture)
+
+
 
 /*****************************************************************************/
 /******************************* F I L E S ***********************************/
@@ -33,6 +37,17 @@ BOOST_FIXTURE_TEST_SUITE(CreateFile, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(CreateFile_Base)
 {
+
+  /*std::string remoteBaseDir1 = "";//FMSDIR1;
+  std::string remoteBaseDir2 = "";//FMSDIR2;
+  std::string baseDirFullPath1 = m_test_fms_host1 + sep + remoteBaseDir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + sep + remoteBaseDir2;
+  std::string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;*/
+  
   BOOST_TEST_MESSAGE("Testing file creation UC F1.CR1-B");
   VishnuConnection vc(userId, userPwd);
   string sessionKey=vc.getSessionKey();
@@ -63,6 +78,16 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
 BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
 {
+  /*std::string remoteBaseDir1 = "";//FMSDIR1;
+  std::string remoteBaseDir2 = "";//FMSDIR2;
+  std::string baseDirFullPath1 = m_test_fms_host1 + sep + remoteBaseDir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + sep + remoteBaseDir2;
+  std::string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;*/
+  
   BOOST_TEST_MESSAGE("Testing file creation errors UC F1.CR1-E");
   VishnuConnection vc(userId, userPwd);
   string sessionKey=vc.getSessionKey();
@@ -74,7 +99,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
     BOOST_CHECK_THROW( touch(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessDir = "/root";
-    string noAccessFullPath = machineId1 + sep + noAccessDir;
+    string noAccessFullPath = m_test_fms_host1 + sep + noAccessDir;
     BOOST_CHECK_THROW( touch(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
