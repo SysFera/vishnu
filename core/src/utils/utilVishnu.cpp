@@ -448,7 +448,6 @@ vishnu::convertStringToWallTime(const std::string& walltime_) {
  */
 void
 vishnu::checkJobStatus(const int& status) {
-//TODO Rethink this function, conceptually bad, a void function that does not modificate any parameter is bad conceptually.
   if ((status < -1) || (status > 8)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The status value is incorrect");
   }
@@ -686,6 +685,7 @@ vishnu::checkRemotePath(const std::string& path){
 
 bool
 vishnu::process_exists(const std::string& pid, const bfs::path& proc_dir) {
+// FIXME : procdir is not portable, kill 0 might be better, but right problems ?
   bfs::path token(proc_dir);
   token /= pid;
   return bfs::exists(token);
