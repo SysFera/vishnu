@@ -66,8 +66,8 @@ tms_test(tms_automTest6)
 tms_test(tms_automTest7)
 tms_test(tms_automTest8)
 
-add_executable(tms_stresser
- tms_stress.cpp)
+add_executable(tms_stresser tms_stress.cpp)
+add_executable(InternalAPIUnitTests ${TMS_TEST_SOURCE_DIR}/InternalApiUnitTests.cpp)
 
 target_link_libraries(tms_stresser
  ${DIET_CLIENT_LIB}
