@@ -600,6 +600,8 @@
             are ignored. The queue will always be the same. Moreover, on a machine without batch scheduler, the admin can deploy TMS and
             only this 'pseudo batch' will be used.
 	  </para>
+
+
 	  <section>
 	    <title> VISHNU generic script </title>
 	    <para> The key words of a VISHNU generic script start with the special character <emphasis role="bold">#%</emphasis>. For example, to specify 
@@ -607,7 +609,6 @@
 	      The possible generic directives are:
 	    </para>
 	    
-	    <para>  
 	      <itemizedlist>
 		<listitem>
 		  <para><emphasis role="bold">#% vishnu_group</emphasis>: allow to specify the group's name,</para>
@@ -658,7 +659,6 @@
 		  </para>
 		</listitem>
 	      </itemizedlist>
-	    </para>
 	    <para>
         It is important to note that the user can also add directives specific to a batch scheduler (TORQUE, LoadLeveler, SLURM, LSF or Grid Engine). Such specific directives must be added directly after the generic directives. Here is an example:
       </para>
@@ -696,6 +696,59 @@
 	#$ -q myFavoriteQueue
       </programlisting>
     </section> 
+          <section>
+	    <title> Posix batch default configuration </title>
+	      <itemizedlist>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_group</emphasis>: ignored, </para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_working_dir</emphasis>: user's home by default,</para>
+		</listitem>
+    <listitem>
+		  <para><emphasis role="bold">#% vishnu_job_name</emphasis>: posix_job,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_output</emphasis>: in the user's home in a file called VISHNU-XXXX-XXXX.out </para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_error</emphasis>: in the user's home in a file called VISHNU-XXXX-XXXX.err, </para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_wallclocklimit</emphasis>: infinite by default,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_cput</emphasis>: ignored,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_nb_cpu</emphasis>: ignored,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_nbNodesAndCpuPerNode</emphasis>: ignored,</para>
+		</listitem>
+		<listitem>
+		  <para><emphasis role="bold">#% vishnu_memory</emphasis>: ignored,</para>
+		</listitem>
+    <listitem>
+      <para><emphasis role="bold">#% vishnu_mailNotification </emphasis>: ignored,</para>
+		</listitem>
+    <!--listitem>
+		  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: specifies the mail adress of the job's owner in order to receive a notification when the 
+		    job is completed, 
+		  </para>
+		</listitem-->
+    <listitem>
+		  <para><emphasis role="bold">#% vishnu_notify_user</emphasis>: ignored, 
+		  </para>
+		</listitem>
+    <listitem>
+		  <para><emphasis role="bold">#% vishnu_queue</emphasis>: ignored.
+		  </para>
+		</listitem>
+	      </itemizedlist>
+
+          </section>
+          
   </section>
 
   <section>
