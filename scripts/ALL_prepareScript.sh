@@ -10,10 +10,18 @@
 #            Use CMakeLists.txt to retrieve Vishnu version
 #
 
-if [ ! $# -eq 1 ]; then
-  echo "Usage: " $0 " <depot_eclipe_path>"
+if [ $# -lt 1 ]; then
+  echo "Usage: " $0 " <depot_eclipe_path> [0/1]"
+  echo " depot_eclipe_path: relative or complete path to the eclipse repository (containing generators)"
+  echo " 0/1 (optional): if 0, then documentation is not generated. Default is 1."
   exit 1
 fi
+
+generateDoc=1
+if [ $# == 2 ]; then
+    generateDoc=$2
+fi
+
 
 if [ ! -f copyright ]; then
   echo "Missing copyright file - please start the script in VISHNU root directory"
@@ -28,7 +36,7 @@ versionNumber=`egrep -e "VISHNU_VERSION .*" CMakeLists.txt | awk -F'"' '{print $
 versionComment=`egrep -e "VISHNU_VERSION_COMMENTS .*" CMakeLists.txt | awk -F'"' '{print $2}' | sed "s/ /_/g"`
 
 NO_VERSION="${versionNumber}${versionComment}"
-echo "Preparing VISHNU v" $NO_VERSION "..."
+echo "## Preparing VISHNU v${NO_VERSION} ..."
 
 
 ######################################################################
@@ -58,6 +66,17 @@ function run_cmd() {
     nbexec=$(($nbexec+1))
     if [ $tmprv != 0 ]; then
         nbfailed=$(($nbfailed+1))
+        echo "## Command failed: $@"
+    fi
+}
+
+function run_cmd_noOutput() {
+    $@  >/dev/null 2>&1
+    tmprv=$?
+    nbexec=$(($nbexec+1))
+    if [ $tmprv != 0 ]; then
+        nbfailed=$(($nbfailed+1))
+        echo "## Command failed: $@"
     fi
 }
 
@@ -96,6 +115,8 @@ function remove_files () {
 
 function change_dir () {
     run_cmd cd $1;
+    location=`pwd`
+    echo "## Now in $location"
 }
 ######################################################################
 #                           /FUNCTIONS                               #
@@ -119,7 +140,7 @@ run_cmd mkdir -p deliverables/debs
 run_cmd mkdir -p deliverables/tests
 
 # create releasepath
-releasePath=deliverables/VISHNU_$NO_VERSION
+releasePath=deliverables/release/VISHNU_$NO_VERSION
 run_cmd mkdir -p $releasePath
 
 
@@ -130,7 +151,12 @@ remove_files deliverables/tests/*
 
 
 # Generate all documentation
-run_cmd sh -c $gen_doc_sh
+if [ $generateDoc == 1 ]; then
+    echo "## Generating documentation"
+    run_cmd sh -c $gen_doc_sh
+else
+    echo "## Documentation won't be generated"
+fi
 
 
 # Copy root cmake list, copyright, README, version
@@ -467,22 +493,23 @@ change_dir $path
 change_dir ..
 
 # Archive to send
-run_cmd tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION >/dev/null
+run_cmd_noOutput tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION
 
 # Moving archive in /tmp
 run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
 
 # also copy it in the release directory
-change_dir $vishnu_dir
+change_dir $vishnuDir
 run_cmd cp /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
 
 # tarballs of the doc and tests
 change_dir $pathrel
 change_dir ..
-run_cmd tar -czvf ${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc >/dev/null
-run_cmd tar -czvf ${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests >/dev/null
+run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc
+run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests
 
 # Prepare release note
+change_dir $vishnuDir
 run_cmd cat > ${releasePath}/releaseNotes <<EOF
 +--------------------+
 | VISHNU ${NO_VERSION} |
