@@ -244,8 +244,8 @@
   cont::facto * ecoreFactory = cont::facto::_instance();
   // For each item of the list
   for (int i = 0; i < $1->getter().size() ; ++i) {
-    // Getting the corresponding swig type    
-    swig_type_info* swig_type = SWIG_TypeQuery(string(string(strtype)+string(" *")).c_str());
+    // Getting the corresponding swig types
+    swig_type_info* swig_type = SWIG_TypeQuery(std::string(std::string(strtype)+std::string(" *")).c_str());
 
     // Instanciating an object to copy each item of the C++ list (because emf destroys its objects at the end)
     cont::type* object = ecoreFactory->create();
