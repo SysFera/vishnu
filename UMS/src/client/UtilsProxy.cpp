@@ -62,10 +62,10 @@ UtilsProxy::initialize() {
   try {
     res = diet_initialize(mcfg, margc, margv);
   } catch (...) {
-    throw SystemException(ERRCODE_DIET, "Internal DIET Exception");
+    throw SystemException(ERRCODE_DIET, "Internal communication exception");
   }
   if (res == -1) {
-    throw SystemException(ERRCODE_DIET, "DIET Initialization failure");
+    throw SystemException(ERRCODE_DIET, "Bus initialization failure");
   }
   return res;
 }
