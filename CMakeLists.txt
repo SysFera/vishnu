@@ -87,7 +87,6 @@ if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 
 option(BUILD_TESTING "Enable unit testing" OFF)
-option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
 
 
 
@@ -495,9 +494,6 @@ endif()
 add_subdirectory(core/src)
 add_subdirectory(core/deps)
 
-if (DEBUG_TESTS)
-  add_definitions(-DDEBUG_TESTS)
-endif (DEBUG_TESTS)
 
 if (BUILD_TESTING)
   add_definitions(-DBUILD_TESTING)
