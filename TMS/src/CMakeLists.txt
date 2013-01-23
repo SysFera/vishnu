@@ -13,7 +13,7 @@ include_directories(client api
   ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
   ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
-)
+  ${CONFIG_SOURCE_DIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
   ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
@@ -54,7 +54,6 @@ if (NOT CLIENT_ONLY)
     utils
     posix_parser
     ${DATA_BASE_INCLUDE_DIR}
-    ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR}
