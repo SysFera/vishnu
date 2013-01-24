@@ -96,9 +96,9 @@ main(int argc, char* argv[], char* envp[]) {
   }
 
   if(batchType == UNDEFINED) {
-    std::string msg = "Invalid value for batch. Batch type must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBS or DELTACLOUD)\n";
+    std::string msg = "Slave: Invalid batch. Batch type must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBSPRO, DELTACLOUD or POSIX\n";
     std::cerr << msg;
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Slave: "+ msg);
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, msg);
   }
 
   TMS_Data::Job_ptr job = NULL;
