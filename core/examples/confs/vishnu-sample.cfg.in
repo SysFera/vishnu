@@ -172,7 +172,7 @@ tms_uriAddr=tcp://127.0.0.1:5565
 
 # batchSchedulerType (M<TMS>): Defines the type of the batch scheduler TMS
 # will handle.
-# VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE and PBS
+# VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS and POSIX
 batchSchedulerType=SLURM
 
 # intervalMonitor (M<TMS>): In seconds, this key defines the interval after
