@@ -84,8 +84,13 @@ void
 MonitorTMS::run() {
   int state;
   std::string sqlUpdatedRequest;
-  std::string sqlRequest = "SELECT jobId, batchJobId, vmIp, vmId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
-    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(mbatchType);
+  std::string sqlRequest = "SELECT jobId, batchJobId, vmIp, vmId "
+                           " FROM job, vsession "
+                           " WHERE vsession.numsessionid=job.vsession_numsessionid "
+                           " AND status > 0 "
+                           " AND status < 5 "
+                           " AND submitMachineId='"+mmachineId+"'"
+                           " AND batchType="+vishnu::convertToString(mbatchType);
 
   std::string vmUser = "root";
   if(mbatchType == DELTACLOUD) {
