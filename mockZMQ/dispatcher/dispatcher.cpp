@@ -4,13 +4,11 @@
 #include <boost/thread.hpp>
 
 
-Dispatcher::Dispatcher(int argc, char** argv)
-  : argc(argc), argv(argv), uriAddr("tcp://127.0.0.1:5560"),
+Dispatcher::Dispatcher(const std::string &confFile)
+  : uriAddr("tcp://127.0.0.1:5560"),
     uriSubs("tcp://127.0.0.1:5561"), nthread(5), timeout(10) {
-  if (argc == 2) {
-    config.initFromFile(argv[1]);
-  } else {
-    std::cerr << "Usage: dispatcher [configFile]\n";
+  if (!confFile.empty()) {
+    config.initFromFile(confFile);
   }
 }
 
@@ -28,10 +26,10 @@ Dispatcher::printConfiguration() const{
 
 void
 Dispatcher::readConfiguration() {
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
-  config.getRequiredConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
-  config.getRequiredConfigValue<unsigned int>(vishnu::TIMEOUT, timeout);
+  config.getConfigValue<std::string>(vishnu::DISP_URIADDR, uriAddr);
+  config.getConfigValue<std::string>(vishnu::DISP_URISUBS, uriSubs);
+  config.getConfigValue<unsigned int>(vishnu::DISP_NBTHREAD, nthread);
+  config.getConfigValue<unsigned int>(vishnu::TIMEOUT, timeout);
   printConfiguration();
 }
 
