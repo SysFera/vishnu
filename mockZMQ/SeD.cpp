@@ -96,7 +96,7 @@ private:
 int
 ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   // Prepare our context and the sockets for server
-  const std::string WORKER_INPROC_QUEUE = "vishnu-sedworkers";
+  const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
