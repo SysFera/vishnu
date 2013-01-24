@@ -101,20 +101,78 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
 
+    // Checks on the batchVersions
     if (batchVersion.empty() && batchType != POSIX) {
       std::cerr << "\nError: batch version has not been specified, this parameter is mandatory for batch schedulers other than POSIX\n\n";
+      exit(1);
+    }
+
+    std::string versError;
+    switch (batchType) {
+    case TORQUE: {
+      if (batchVersion != "2.3") {
+        versError = "2.3";
+      }
+      break;
+    }
+    case PBSPRO: {
+      if (batchVersion != "10.4") {
+        versError = "10.4";
+      }
+      break;
+    }
+    case LOADLEVELER: {
+      if (batchVersion != "3.x" || batchVersion != "2.x") {
+        versError = "2.x and 3.x";
+      }
+      break;
+    }
+    case SLURM: {
+      if (batchVersion != "2.2"
+          || batchVersion != "2.3"
+          || batchVersion != "2.4") {
+        versError = "2.2, 2.3 and 2.4";
+      }
+
+      if (batchVersion == "2.4") {
+        // SLURM 2.4 uses the same API as 2.3
+        batchVersion = "2.3";
+      }
+      break;
+    }
+    case LSF: {
+      if (batchVersion != "7.0") {
+        versError = "7.0";
+      }
+      break;
+    }
+    case SGE: {
+      if (batchVersion != "11") {
+        versError = "11";
+      }
+      break;
+    }
+    default: {
+      // nothing to do
+    }
+    }
+
+    if (!versError.empty()) {
+      std::cerr << "\nError: specified batch version is not supported.\n"
+                << "Supported versions for " << batchTypeStr
+                << " are: " << versError << "\n";
       exit(1);
     }
 
 
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
     if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
-        remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
-      }
+      remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
+    }
   } catch (UserException& e) {
     std::cerr << "\n" << e.what() << "\n\n";
     exit(1);
-  }catch (std::exception& e) {
+  } catch (std::exception& e) {
     std::cerr << "\n" << argv[0] << " : "<< e.what() << "\n\n";
     exit(1);
   }
