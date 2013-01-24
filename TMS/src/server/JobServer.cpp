@@ -271,8 +271,7 @@ int JobServer::submitJob(const std::string& scriptContent,
  */
 void
 JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOption,
-                                 std::string& content, std::string& key,
-                                 BatchType batchType) {
+                                 std::string& content, std::string& key) {
   size_t position = 0;
   std::string key1;
   int count = 0;
