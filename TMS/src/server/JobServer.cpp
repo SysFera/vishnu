@@ -163,8 +163,8 @@ int JobServer::submitJob(const std::string& scriptContent,
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
 	SSHJobExec sshJobExec(acLogin, machineName,
-                              mbatchType,
-                              mbatchVersion,
+                              batchType,
+                              mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                               jobSerialized, submitOptionsSerialized);
 	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
@@ -414,8 +414,8 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
 			SSHJobExec sshJobExec(acLogin, machineName,
-                                              mbatchType,
-                                              mbatchVersion,
+                                              batchType,
+                                              mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
                                               jobSerialized);
 			sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
