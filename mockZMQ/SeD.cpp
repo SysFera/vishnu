@@ -56,14 +56,14 @@ SeD::getServices() {
 class ZMQWorker {
 public:
   explicit ZMQWorker(boost::shared_ptr<zmq::context_t> ctx,
-                     boost::shared_ptr<SeD> server, int id)
-    : ctx_(ctx), server_(server), id_(id) {
+                     boost::shared_ptr<SeD> server, int id, const std::string& queue)
+    : ctx_(ctx), server_(server), id_(id),  queue_(queue) {
   }
 
   void
   operator()() {
     Socket socket(*ctx_, ZMQ_REP);
-    socket.connect(WORKER_INPROC_QUEUE.c_str());
+    socket.connect(queue_.c_str());
     std::string data;
     while (true) {
         data.clear();
@@ -89,12 +89,14 @@ private:
   boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
   boost::shared_ptr<SeD> server_; /**< Server implementation */
   int id_; /**< worker id */
+  std::string queue_;
 };
 
 
 int
 ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   // Prepare our context and the sockets for server
+  const std::string WORKER_INPROC_QUEUE = "vishnu-sedworkers";
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
@@ -108,7 +110,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   const int NB_THREADS = 50;
   ThreadPool pool(NB_THREADS);
   for (int i = 0; i < NB_THREADS; ++i) {
-      pool.submit(ZMQWorker(context, server, i));
+      pool.submit(ZMQWorker(context, server, i, WORKER_INPROC_QUEUE));
     }
 
   // connect our workers threads to our server via a queue
