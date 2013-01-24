@@ -105,6 +105,9 @@ BatchFactory::getBatchServerInstance(int batchType,
   case PBSPRO:
     libname += "pbspro";
     break;
+  case DELTACLOUD:
+    libname += "deltacloud";
+    break;
   case POSIX:
     libname += "posix";
     break;
@@ -124,7 +127,7 @@ BatchFactory::getBatchServerInstance(int batchType,
  * \brief Function to delete a batchServer.
  */
 void BatchFactory::deleteBatchServerInstance() {
-   delete mbatchServer;
+  delete mbatchServer;
 }
 /**
  * \brief Destructor
