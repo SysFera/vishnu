@@ -166,8 +166,5 @@ if (NOT CLIENT_ONLY)
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
 
-  if (BUILD_TESTING)
-    add_subdirectory(posix_parser/tests)
-  endif()
 endif (NOT CLIENT_ONLY)
 

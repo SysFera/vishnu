@@ -88,7 +88,6 @@ endif(deltacloud)
 
 # POSIX_INCLUDE_DIR and POSIX_LIB are empty but kept for homogeneity
 if (posix)
-  set (POSIX_TEST_LIB vishnu-tms-posix1.0)
   set(POSIXSERVER server/PosixServer.cpp
     server/TmsPosixClient.cpp
     server/tms-posix.cpp
