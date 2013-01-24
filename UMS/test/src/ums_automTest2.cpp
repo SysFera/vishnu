@@ -54,6 +54,7 @@ BOOST_AUTO_TEST_CASE( User_base )
   {
     BOOST_CHECK(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK(addUser(sess.getSessionKey(), *use)==0);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK(close        (sess.getSessionKey()     )==0);
   }
   
@@ -64,7 +65,9 @@ BOOST_AUTO_TEST_CASE( User_base )
     use->setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
     BOOST_CHECK (updateUser   (sess.getSessionKey(), *use           )==0);
     use->setEmail(mail);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
+    
   }
 
   
@@ -94,15 +97,27 @@ BOOST_AUTO_TEST_CASE( User_base )
   }
 
   if (m_test_ums_authen_type.compare("LDAP") != 0) {
-    std::string uid = m_test_ums_admin_vishnu_login;
-    std::string pwd = m_test_ums_admin_vishnu_pwd;
-    // Change pwd ok
     BOOST_MESSAGE(" Testing change password normal U1.3.3"    );
-    BOOST_CHECK  (connect       (uid, pwd , sess, cop)==0);
-    BOOST_CHECK  (changePassword(uid , pwd, "newPwd")==0);
-    BOOST_CHECK  (changePassword(uid , "newPwd", pwd)==0);
-    BOOST_CHECK  (close(sess.getSessionKey())==0);
-  }  
+    {
+      std::string uid = m_test_ums_admin_vishnu_login;
+      std::string pwd = m_test_ums_admin_vishnu_login;
+      BOOST_CHECK  (connect       (uid, pwd , sess, cop)==0);
+      BOOST_CHECK  (changePassword(uid , pwd, "newPwd")==0);
+      BOOST_CHECK  (changePassword(uid , "newPwd", pwd)==0);
+      BOOST_CHECK  (close         (sess.getSessionKey()                )==0);
+    }
+    // Reset pwd ok
+    BOOST_MESSAGE(" Testing reset password normal UA2-B"    );
+    {
+      std::string uid = m_test_ums_admin_vishnu_login;
+      std::string pwd = m_test_ums_admin_vishnu_login;
+      std::string np;
+      BOOST_CHECK  (connect      (uid, pwd, sess, cop )==0);
+      BOOST_CHECK    (resetPassword(sess.getSessionKey(), uid, np       )==0);
+      BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
+      BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
+    }
+  } 
   
 }
 
@@ -158,9 +173,13 @@ BOOST_AUTO_TEST_CASE( User_failure )
   {
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     BOOST_CHECK  (addUser(sess.getSessionKey(), *use           )==0);
+    BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
     use->setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
     BOOST_CHECK  (connect      (m_test_ums_user_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop )==0);
     BOOST_CHECK_THROW (updateUser   (sess.getSessionKey(), *use           ), VishnuException);
+    BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
+    BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     use->setEmail(mail);
     BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
   }
@@ -172,6 +191,7 @@ BOOST_AUTO_TEST_CASE( User_failure )
     BOOST_CHECK    (addUser(sess.getSessionKey(), *use      )==0);
     use->setUserId("bad");
     BOOST_CHECK_THROW      (updateUser   (sess.getSessionKey(), *use        ), VishnuException);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK    (close        (sess.getSessionKey()               )==0);
     use->setUserId(cu);
     
@@ -183,8 +203,10 @@ BOOST_AUTO_TEST_CASE( User_failure )
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK    (addUser(sess.getSessionKey(), *use      )==0);
     BOOST_CHECK    (close        (sess.getSessionKey()               )==0);    
-    BOOST_CHECK_THROW      (updateUser   (sess.getSessionKey(), *use        ), VishnuException);   
-    
+    BOOST_CHECK_THROW      (updateUser   (sess.getSessionKey(), *use        ), VishnuException);
+    BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop)==0);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
+    BOOST_CHECK    (close        (sess.getSessionKey()               )==0);
   }
 
   BOOST_MESSAGE(" Testing delete normal UA4.2B"    );
@@ -201,7 +223,9 @@ BOOST_AUTO_TEST_CASE( User_failure )
     BOOST_CHECK    (connect      (m_test_ums_user_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop )==0);
     BOOST_CHECK_THROW      (deleteUser   (sess.getSessionKey(), use->getUserId()     ), VishnuException);
     BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
-    
+    BOOST_CHECK    (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
+    BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
   }
 
   BOOST_MESSAGE(" Testing delete bad uid UA4.2E"    );
@@ -229,6 +253,45 @@ BOOST_AUTO_TEST_CASE( User_failure )
     liu = ecoreFactory->createListUsers();
     BOOST_CHECK_THROW  (listUsers("bad", *liu, liuo       ), VishnuException);
     BOOST_CHECK  (close    (sess.getSessionKey()                  )==0);
+  }
+
+
+  if (m_test_ums_authen_type.compare("LDAP") != 0) {
+    std::string uid = m_test_ums_admin_vishnu_login;
+    std::string pwd = m_test_ums_admin_vishnu_pwd;
+   
+    // Change pwd bad uid
+    BOOST_MESSAGE(" Testing change password bad uid U1.3.3E"    );
+    {
+      BOOST_CHECK  (connect       (uid  , pwd, sess, cop )==0);
+      BOOST_CHECK  (addUser (sess.getSessionKey()  , *use           )==0);
+      BOOST_CHECK_THROW    (changePassword("bad", pass, "newPwd"), VishnuException);
+      
+      BOOST_CHECK  (close         (sess.getSessionKey()                  )==0);
+     }
+    // Change pwd bad pwd
+    BOOST_MESSAGE(" Testing change password bad pwd U1.3.3E"    );
+    {
+      BOOST_CHECK  (connect       (uid, pwd , sess, cop)==0);
+      BOOST_CHECK  (addUser (sess.getSessionKey(), *use           )==0);
+      BOOST_CHECK_THROW    (changePassword(use->getUserId(), "bad", "newPwd"), VishnuException);
+      BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
+      BOOST_CHECK  (close         (sess.getSessionKey()                )==0);
+    }
+
+    
+    // Reset pwd bad uid
+    
+    BOOST_MESSAGE(" Testing reset password bad uid UA2-E"    );
+    {
+      std::string np;
+      BOOST_CHECK  (connect      (uid, pwd  , sess, cop)==0);
+      BOOST_CHECK  (addUser(sess.getSessionKey(), *use            )==0);
+      BOOST_CHECK_THROW    (resetPassword(sess.getSessionKey(), "bad", np          ), VishnuException);
+      BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
+      BOOST_CHECK  (close        (sess.getSessionKey()                 )==0);
+    }
+    
   }
 
   

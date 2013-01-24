@@ -69,6 +69,5 @@ target_link_libraries(tms_stresser
   vishnu-ums-client
   vishnu-tms-client)
 
-add_subdirectory(sql)
-
 add_subdirectory(unit)
+

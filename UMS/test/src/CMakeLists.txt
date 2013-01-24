@@ -19,8 +19,7 @@ include_directories(
   )
 
 # Standard VISHNU TESTS variables
-file(TO_NATIVE_PATH "${TEST_SQL_PATH}" TESTSQLPATH)
-file(TO_NATIVE_PATH "${TEST_CONFIG_PATH}" TESTCONFIGPATH)
+
 file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
 
 
@@ -66,4 +65,3 @@ target_link_libraries(ums_stresser
   ${LIBCRYPT_LIB}
   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-add_subdirectory(sql)
