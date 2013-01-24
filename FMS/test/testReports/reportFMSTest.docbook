@@ -29,7 +29,7 @@
       <revision>
         <revnumber>1</revnumber>
         <date>06/06/2011</date>
-        <authorinitials>  SYSFERA SAS</authorinitials>
+        <authorinitials>  SYSFERA SA</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
         </revdescription>
@@ -38,7 +38,7 @@
     <revision>
         <revnumber>2</revnumber>
         <date>11/01/2012</date>
-        <authorinitials>  SYSFERA SAS</authorinitials>
+        <authorinitials>  SYSFERA SA</authorinitials>
         <revdescription>
           <para>Added test case F1.CR2-E4 corresponding to recursive directories creation</para>
         </revdescription>
@@ -47,7 +47,7 @@
       <revision>
         <revnumber>3</revnumber>
         <date>04/02/2012</date>
-        <authorinitials>  SYSFERA SAS</authorinitials>
+        <authorinitials>  SYSFERA SA</authorinitials>
         <revdescription>
           <para> Remame of FMS API functions according to POSIX names</para>
         </revdescription>
