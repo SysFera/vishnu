@@ -113,7 +113,7 @@ private:
   boost::thread_group workers_;/**< worker threads */
   threadsafe::queue<Task> tasks_; /**< scheduled tasks */
   int nb_; /**< number of allocated threads */
-  bool finished_; /**< is our pool running or not ? */
+  volatile bool finished_; /**< is our pool running or not ? */
 };
 
 
