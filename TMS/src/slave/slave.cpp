@@ -71,10 +71,8 @@ main(int argc, char* argv[], char* envp[]) {
   char* slaveJobFile = NULL;
   char* slaveErrorPath = NULL;
   char* jobScriptPath = NULL;
-
   BatchType batchType;
   std::string batchVersion;
-  std::string batchTypeStr;
 
   if(argc < 5) { // Too few arguments
     usage(argv[0]);
@@ -83,7 +81,7 @@ main(int argc, char* argv[], char* envp[]) {
   if(action.compare("SUBMIT")==0) {
     if(argc < 8) {
        // Too few arguments
-       usage(argv[0]);
+      usage(argv[0]);
     }
 
     // Get batchtype
@@ -94,20 +92,13 @@ main(int argc, char* argv[], char* envp[]) {
     optionsPath = argv[6];
     jobScriptPath = argv[7];
   } else if(action.compare("CANCEL")!=0) {
-     usage(argv[0]);
+    usage(argv[0]);
   }
 
   if(batchType == UNDEFINED) {
-	  std::string msg = "invalid value for batch type parameter (must be 'TORQUE', "
-	  			"'LOADLEVLER', 'SLURM', 'LSF', 'SGE' or 'DELTACLOUD')\n";
-	  std::cerr << "Error: "+ msg + "\n";
-	  throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Slave: "+ msg);
-  } else if (batchTypeStr == "PBSPRO") {
-    batchType = PBSPRO;
-    std::cerr << "Error: invalid value for batch type parameter (must be 'TORQUE', 'LOADLEVLER', 'SLURM', 'LSF', 'SGE', 'PBS' or DELTACLOUD\n";
-  } else if (batchTypeStr == "POSIX") {
-    batchType = POSIX;
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBS, DELTACLOUD or POSIX)");
+    std::string msg = "Invalid value for batch. Batch type must be TORQUE, LOADLEVLER, SLURM, LSF, SGE, PBS or DELTACLOUD)\n";
+    std::cerr << msg;
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Slave: "+ msg);
   }
 
   TMS_Data::Job_ptr job = NULL;
@@ -146,10 +137,10 @@ main(int argc, char* argv[], char* envp[]) {
       }
     } else if(action.compare("CANCEL")==0) {
       //To cancel the job
-    	std::string jobdDescr = job->getJobId();
-    	if(batchType == DELTACLOUD) {
-    	      jobdDescr += "@"+job->getVmId();
-    	}
+      std::string jobdDescr = job->getJobId();
+      if(batchType == DELTACLOUD) {
+        jobdDescr += "@"+job->getVmId();
+      }
       batchServer->cancel(jobdDescr.c_str());
     }
   } catch (VishnuException& ve) {
