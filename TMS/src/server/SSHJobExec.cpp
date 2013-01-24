@@ -36,12 +36,14 @@ const std::string TMS_SERVER_FILES_DIR="/tmp";
  * \param submitOptionsSerialized the job options serialized
  */
 SSHJobExec::SSHJobExec(const std::string& user,
-		const std::string& hostname,
-		const BatchType& batchType,
-		const std::string& jobSerialized,
-		const std::string& submitOptionsSerialized):
-		muser(user), mhostname(hostname), mbatchType(batchType), mjobSerialized(jobSerialized),
-		msubmitOptionsSerialized(submitOptionsSerialized)
+                       const std::string& hostname,
+                       const BatchType& batchType,
+                       const std::string& batchVersion,
+                       const std::string& jobSerialized,
+                       const std::string& submitOptionsSerialized):
+  muser(user), mhostname(hostname), mbatchType(batchType),
+  mbatchVersion(batchVersion), mjobSerialized(jobSerialized),
+  msubmitOptionsSerialized(submitOptionsSerialized)
 {
 }
 
@@ -130,6 +132,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
 			<< slaveDirectory << "/tmsSlave "
 			<< serviceName << " "
 			<< convertBatchTypeToString(mbatchType) << " "
+			<< mbatchVersion << " "
 			<< jobSerializedPath << " " <<  errorPath << " "
 			<< cmdDetails
 			<< " 2> " << stderrFilePath;

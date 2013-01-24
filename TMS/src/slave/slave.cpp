@@ -46,10 +46,12 @@ using namespace vishnu;
  * \return Always 1
  */
 void usage(char* cmd) {
-  cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>";
-  cerr << " <SubmitOptionsSerializedPath> <job_script_path>" << endl;
-  cerr << "\t\t\t\t\t" << " or " << endl;
-  cerr << "Usage: " << cmd << "COMMANDE_TYPE[CANCEL] <BatchType> <JobSerializedPath>  <SlaveErrorPath>" << endl;
+  cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <BatchVersion>"
+       << " <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>"
+       << " <SubmitOptionsSerializedPath> <job_script_path>\n"
+       << "\t\t\t\t\t" << " or\n"
+       << "Usage: " << cmd << "COMMANDE_TYPE[CANCEL] <BatchType> <BatchVersion>"
+       << " <JobSerializedPath> <SlaveErrorPath>\n";
   exit(EXIT_FAILURE);
 }
 
@@ -61,15 +63,15 @@ void usage(char* cmd) {
  * \return The result of the diet sed call
  */
 int
-main(int argc, char* argv[], char* envp[])
-{
+main(int argc, char* argv[], char* envp[]) {
   std::string action;
   char* jobSerializedPath = NULL;
   char* optionsPath = NULL;
   char* slaveJobFile = NULL;
   char* slaveErrorPath = NULL;
   char* jobScriptPath = NULL;
-  BatchType batchType ;
+  BatchType batchType;
+  std::string batchVersion;
   std::string batchTypeStr;
 
   if(argc < 2) {
@@ -77,15 +79,15 @@ main(int argc, char* argv[], char* envp[])
   }
   action = std::string(argv[1]);
   if(action.compare("SUBMIT")==0) {
-    if(argc < 8) {
+    if(argc < 9) {
        usage(argv[0]);
      }
-    slaveJobFile = argv[5];
-    optionsPath = argv[6];
-    jobScriptPath = argv[7];
+    slaveJobFile = argv[6];
+    optionsPath = argv[7];
+    jobScriptPath = argv[8];
   }
   else if(action.compare("CANCEL")==0) {
-    if(argc < 5) {
+    if(argc < 6) {
      usage(argv[0]);
     }
   } else {
@@ -94,6 +96,7 @@ main(int argc, char* argv[], char* envp[])
 
   // Other command-line parameters
   batchTypeStr = argv[2];
+  batchVersion = argv[3];
   if (batchTypeStr == "TORQUE") {
     batchType = TORQUE;
   } else if (batchTypeStr == "LOADLEVELER") {
@@ -113,8 +116,8 @@ main(int argc, char* argv[], char* envp[])
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVLER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS' or 'POSIX')");
   }
 
-  jobSerializedPath = argv[3];
-  slaveErrorPath = argv[4];
+  jobSerializedPath = argv[4];
+  slaveErrorPath = argv[5];
 
   TMS_Data::Job_ptr job = NULL;
   TMS_Data::SubmitOptions_ptr submitOptions = NULL;
@@ -124,7 +127,7 @@ main(int argc, char* argv[], char* envp[])
 
     //To create batchServer Factory
     BatchFactory factory;
-    batchServer = factory.getBatchServerInstance(batchType);
+    batchServer = factory.getBatchServerInstance(batchType, batchVersion);
     if(batchServer==NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
     }

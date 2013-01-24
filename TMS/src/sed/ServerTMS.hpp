@@ -49,12 +49,14 @@ public :
   /**
    * \brief To get the unique instance of the server
    */
-  static ServerTMS*  getInstance();
+  static ServerTMS*
+  getInstance();
 
   /**
    * \brief To get the unique instance of the database
    */
-  Database* getDatabaseVishnu();
+  Database*
+  getDatabaseVishnu();
 
   /**
    * \brief to get the VishnuId
@@ -62,49 +64,63 @@ public :
    */
   int
   getVishnuId() const;
+
   /**
    * \brief To get the batchType
    * \return the type of the underlying batch scheduler
    */
   BatchType
-  getBatchType();
+  getBatchType() const;
+
+  /**
+   * \brief To get the batchVersion
+   * \return the version of the underlying batch scheduler
+   */
+  std::string
+  getBatchVersion() const;
 
   /**
    * \brief To get the machine id of the TMS server
    * \return the machine id
    */
   std::string
-  getMachineId();
+  getMachineId() const;
 
   /**
    * \brief To get the slave binary directory
    * \return path to the binary tmsSlave
    */
   std::string
-  getSlaveDirectory();
+  getSlaveDirectory() const;
+
   /**
    * \brief To get the Default Batch Options
    * \return batch Default Options Vector
    */
   std::vector<std::string>
-  getDefaultBatchOption();
+  getDefaultBatchOption() const;
 
   /**
    * \brief To initialize the TMS Server class
    * \param vishnuId The identifier of the vishnu instance
    * \param dbConfig  The configuration of the database
    * \param machineId the id of the machine
-   * \param batchType the type of batch scheduler
+   * \param batchType the type of the batch scheduler
+   * \param batchVersion the version of the batch scheduler
    * \param slaveBinDir  the directory that contains the slave binary
+   * \param batchDefaultConfigFile  a configuration file for default options
    * \return raises an exception on error
    */
   int
   init(int vishnuId,
        DbConfiguration dbConfig,
-       const std::string & machineId,
+       const std::string& machineId,
        BatchType batchType,
-       const std::string & slaveBinDir,
-       std::string batchDefaultConfigFile);
+       const std::string& batchVersion,
+       const std::string& slaveBinDir,
+       const std::string& batchDefaultConfigFile);
+
+
   /**
    * \brief Destructor, raises an exception on error
    */
@@ -169,11 +185,15 @@ private :
    */
   int mvishnuId;
   /**
-   * \brief represents The batch Type
+   * \brief represents the batch Type
    */
   BatchType mbatchType;
   /**
-   * \brief represents The batch Type
+   * \brief represents the batch Version
+   */
+  std::string mbatchVersion;
+  /**
+   * \brief represents the machine ID
    */
   std::string mmachineId;
   /**

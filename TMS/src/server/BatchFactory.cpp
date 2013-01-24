@@ -6,12 +6,14 @@
  */
 
 #include "BatchFactory.hpp"
-#include "SharedLibrary.hh"
-
+#include <string>
 #include <boost/format.hpp>
 #include <iostream>
 
-static int created=0;
+#include "SharedLibrary.hh"
+
+
+static int created = 0;
 
 /**
  * \brief Constructor
@@ -42,84 +44,78 @@ loadPluginBatch(const char *name) {
 
 
 
+// /**
+//  * \brief Function to create a batchServer.
+//  * \param batchType The type of batchServer to create
+//  * \return an instance of BatchServer
+//  */
+// BatchServer*
+// BatchFactory::getBatchServerInstance() {
+//   BatchServer *instance(NULL);
+// #ifdef HAVE_TORQUE_2_3
+//     instance = loadPluginBatch("vishnu-tms-torque2.3");
+// #elif HAVE_LOADLEVELER_2_5
+//     instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
+// #elif HAVE_SLURM_2_2
+//       instance = loadPluginBatch("vishnu-tms-slurm2.2");
+// #elif HAVE_SLURM_2_3
+//       instance = loadPluginBatch("vishnu-tms-slurm2.3");
+// #elif HAVE_LSF_7_0
+//       instance = loadPluginBatch("vishnu-tms-lsf7.0");
+// #elif HAVE_SGE_11
+//       instance = loadPluginBatch("vishnu-tms-sge11");
+// #elif HAVE_PBSPRO_10_4
+//       instance = loadPluginBatch("vishnu-tms-pbspro10.4");
+// #elif HAVE_TMSPOSIX
+//       instance = loadPluginBatch("vishnu-tms-posix1.0");
+// #endif
+
+//   return static_cast<BatchServer *>(instance);
+// }
+
 /**
  * \brief Function to create a batchServer.
  * \param batchType The type of batchServer to create
- * \return an instance of BatchServer
+ * \param batchVersion The version of batchServer to create
+ * \return an instance of BatchServer, or NULL
  */
 BatchServer*
-BatchFactory::getBatchServerInstance() {
+BatchFactory::getBatchServerInstance(int batchType,
+                                     const std::string &batchVersion) {
   BatchServer *instance(NULL);
-#ifdef HAVE_TORQUE_2_3
-    instance = loadPluginBatch("vishnu-tms-torque2.3");
-#elif HAVE_LOADLEVELER_2_5
-    instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
-#elif HAVE_SLURM_2_2
-      instance = loadPluginBatch("vishnu-tms-slurm2.2");
-#elif HAVE_SLURM_2_3
-      instance = loadPluginBatch("vishnu-tms-slurm2.3");
-#elif HAVE_LSF_7_0
-      instance = loadPluginBatch("vishnu-tms-lsf7.0");
-#elif HAVE_SGE_11
-      instance = loadPluginBatch("vishnu-tms-sge11");
-#elif HAVE_PBSPRO_10_4
-      instance = loadPluginBatch("vishnu-tms-pbspro10.4");
-#elif HAVE_TMSPOSIX
-      instance = loadPluginBatch("vishnu-tms-posix1.0");
-#endif
+  std::string libname = "vishnu-tms-";
+  std::string realBatchVersion = batchVersion;
 
-  return static_cast<BatchServer *>(instance);
-}
-
-/**
- * \brief Function to create a batchServer.
- * \param batchType The type of batchServer to create
- * \return an instance of BatchServer
- */
-BatchServer*
-BatchFactory::getBatchServerInstance(int batchType) {
-  BatchServer *instance(NULL);
   switch(batchType){
   case TORQUE:
-#ifdef HAVE_TORQUE_2_3
-    instance = loadPluginBatch("vishnu-tms-torque2.3");
-#endif
+    libname += "torque";
     break;
   case LOADLEVELER:
-#ifdef HAVE_LOADLEVELER_2_5
-    instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
-#endif
+    libname += "loadleveler";
     break;
   case SLURM:
-#ifdef HAVE_SLURM_2_2
-    instance = loadPluginBatch("vishnu-tms-slurm2.2");
-#endif
-#ifdef HAVE_SLURM_2_3
-      instance = loadPluginBatch("vishnu-tms-slurm2.3");
-#endif
+    libname += "slurm";
     break;
   case LSF:
-#ifdef HAVE_LSF_7_0
-      instance = loadPluginBatch("vishnu-tms-lsf7.0");
-#endif
-      break;
+    libname += "lsf";
+    break;
   case SGE:
-#ifdef HAVE_SGE_11
-      instance = loadPluginBatch("vishnu-tms-sge11");
-#endif
-      break;
+    libname += "sge";
+    break;
   case PBSPRO:
-#ifdef HAVE_PBSPRO_10_4
-      instance = loadPluginBatch("vishnu-tms-pbspro10.4");
-#endif
-      break;
+    libname += "pbspro";
+    break;
   case POSIX:
-      instance = loadPluginBatch("vishnu-tms-posix1.0");
-      break;
+    libname += "posix";
+    break;
   default : // Always compile tmp-posix
-      instance = loadPluginBatch("vishnu-tms-posix1.0");
+    libname += "posix";
+    realBatchVersion = "1.0";
     break;
   }
+
+  libname += realBatchVersion;
+  instance = loadPluginBatch(libname.c_str());
   return static_cast<BatchServer *>(instance);
 }
 

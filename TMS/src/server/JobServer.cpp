@@ -23,16 +23,18 @@ using namespace std;
  * \param machineId The machine identifier
  * \param job The job data structure
  * \param batchType The batch scheduler type
+ * \param batchVersion The batch scheduler version
  * \brief Constructor
  */
 JobServer::JobServer(const SessionServer& sessionServer,
-		const std::string& machineId,
-		const TMS_Data::Job& job,
-		const BatchType& batchType):
-		msessionServer(sessionServer), mmachineId(machineId), mjob(job), mbatchType(batchType) {
-
-	DbFactory factory;
-	mdatabaseVishnu = factory.getDatabaseInstance();
+                     const std::string& machineId,
+                     const TMS_Data::Job& job,
+                     const BatchType& batchType,
+                     const std::string& batchVersion):
+  msessionServer(sessionServer), mmachineId(machineId), mjob(job),
+  mbatchType(batchType), mbatchVersion(batchVersion) {
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
 /**
@@ -160,7 +162,10 @@ int JobServer::submitJob(const std::string& scriptContent,
 	submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
 	jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-	SSHJobExec sshJobExec(acLogin, machineName, batchType, jobSerialized, submitOptionsSerialized);
+	SSHJobExec sshJobExec(acLogin, machineName,
+                              mbatchType,
+                              mbatchVersion,
+                              jobSerialized, submitOptionsSerialized);
 	if( needOutputDir && sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) {
 		throw SystemException(ERRCODE_SYSTEM, "Unable to set the job's output dir : " + mjob.getOutputDir()) ;
 	}
@@ -408,7 +413,10 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 			::ecorecpp::serializer::serializer jobSer;
 			jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-			SSHJobExec sshJobExec(acLogin, machineName, batchType, jobSerialized);
+			SSHJobExec sshJobExec(acLogin, machineName,
+                                              mbatchType,
+                                              mbatchVersion,
+                                              jobSerialized);
 			sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
 			std::string errorInfo = sshJobExec.getErrorInfo();
