@@ -56,4 +56,3 @@ target_link_libraries(fms_stresser
   vishnu-ums-client
   vishnu-fms-client)
 
-add_subdirectory(sql)

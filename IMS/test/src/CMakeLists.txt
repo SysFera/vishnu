@@ -29,9 +29,6 @@ mark_as_advanced(TEST_SENDMAIL_SCRIPT)
 file (TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
 
 
-
-
-
 include(IMSTestingMacros)
 ims_test_setup()
 ims_test(ims_automTest1)
@@ -59,4 +56,3 @@ target_link_libraries(ims_stresser
   vishnu-ums-client
   vishnu-ims-client)
 
-add_subdirectory(sql)
