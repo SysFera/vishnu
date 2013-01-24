@@ -125,7 +125,7 @@ int main(int argc, char* argv[], char* envp[]) {
                 << "the config file whereas TMS may have been compiled for another batch\n\n";
 #endif
     } else {
-      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS')\n\n";
+      std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS' or 'POSIX')\n\n";
       exit(1);
     }
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
