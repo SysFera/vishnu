@@ -1,5 +1,4 @@
 /**
-  static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
  * \file tms-posix.cpp
  * \brief This file contains the TMS-Posix scheduler for local batch.
  * \author Olivier Mornard (olivier.mornard@sysfera.com)
@@ -30,7 +29,6 @@
 
 #include <cstdio>
 
-#include <stdarg.h>
 #include <pwd.h>
 
 #include "TmsPosixClient.hpp"
@@ -59,7 +57,6 @@ static volatile sig_atomic_t AlarmSig = 0;
 
 static char HomeDir[255];
 
-
 static void
 CheckJobs() {
   int Taille;
@@ -70,7 +67,6 @@ CheckJobs() {
 
   // End of Daemon ?
   if (Taille == 0) {
-  // End of Daemon ?
     Terminated = 1;
     return;
   }
@@ -151,7 +147,7 @@ TimeStatement() {
   // Manage walclocklimit
   for (i = 0; i<Taille; i++) {
     if (Board[i].maxTime != 0) {
-      if ( (Board[i].startTime + Board[i].maxTime) > now) {
+      if ( (Board[i].startTime + Board[i].maxTime) <= now) {
         Board[i].state = KILL;
         kill(Board[i].pid,SIGTERM);
       } else {
@@ -469,19 +465,15 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   sigprocmask(SIG_SETMASK, &blockMask, NULL);
 
-  if (req->data.submit.walltime != 0) {
+  if (req->data.submit.walltime > 0) {
     wallclocklimit = req->data.submit.walltime;
   } else if (context.find("vishnu_wallclocklimit") != context.end()) {
     wallclocklimit = vishnu::convertStringToWallTime(context["vishnu_wallclocklimit"]);
-/***********
-      try {
-        wallclocklimit = boost::lexical_cast<int>(context["vishnu_wallclocklimit"]);
-      }
-      catch (boost::bad_lexical_cast &) {
-        wallclocklimit = 0;
-      }
-**********/
   } else {
+    wallclocklimit = 0;
+  }
+
+  if (wallclocklimit <0) {
     wallclocklimit = 0;
   }
 
@@ -505,6 +497,8 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   strncpy(currentState.ScriptPath,fileScript.c_str(),sizeof(currentState.ScriptPath));
   Board.push_back(currentState);
+
+  AlarmSig = 1;
 
   memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));
 
