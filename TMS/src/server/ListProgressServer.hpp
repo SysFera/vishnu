@@ -154,7 +154,9 @@ public:
 
         BatchFactory factory;
         BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
+        std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
+        boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType,
+                                                                                  batchVersion));
 
         startTime = batchServer->getJobStartTime(batchJobId);
         if(startTime!=0) {

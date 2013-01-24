@@ -25,12 +25,16 @@ public:
   * \param machineId The machine identifier
   * \param job The job data structure
   * \param batchType The batch scheduler type
+  * \param batchVersion The batch scheduler version
   * \brief Constructor
   */
   explicit JobServer(const SessionServer& sessionServer,
                      const std::string& machineId,
                      const TMS_Data::Job& job,
-                     const BatchType& batchType);
+                     const BatchType& batchType,
+                     const std::string& batchVersion);
+
+
   /**
    * \brief Function to submit job
    * \param scriptContent the content of the script
@@ -128,6 +132,11 @@ public:
    * \brief The type of the batch scheduler
    */
   BatchType mbatchType;
+
+  /**
+   * \brief The type of the batch scheduler
+   */
+  std::string mbatchVersion;
 
   /**
    * \brief An instance of vishnu database

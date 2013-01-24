@@ -1,8 +1,8 @@
 /**
  * \file ListQueuesServer.hpp
  * \brief This file contains the VISHNU QueryServer class.
- * \author Daouda Traore (daouda.traore@sysfera.com) 
- * \date February 2011 
+ * \author Daouda Traore (daouda.traore@sysfera.com)
+ * \date February 2011
  */
 #ifndef _LIST_QUEUES_H_SERVER_
 #define _LIST_QUEUES_H_SERVER_
@@ -13,22 +13,27 @@
 #include "ListQueues.hpp"
 
 /**
- * \class ListQueuesServer 
- * \brief ListQueuesServer class implementation 
+ * \class ListQueuesServer
+ * \brief ListQueuesServer class implementation
  */
 class ListQueuesServer
 {
 
 public:
-  
+
   /**
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The machine identifier
    * \param batchType The batch scheduler Type
+   * \param batchVersion The batch scheduler version
    * \param option The option value
    * \brief Constructor, raises an exception on error
    */
-  explicit ListQueuesServer(const SessionServer& session, const std::string& machineId, const BatchType& batchType, const std::string& option);
+  explicit ListQueuesServer(const SessionServer& session,
+                            const std::string& machineId,
+                            const BatchType& batchType,
+                            const std::string& batchVersion,
+                            const std::string& option);
   /**
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
@@ -36,7 +41,7 @@ public:
   ListQueuesServer(const SessionServer& session);
 
  /**
-  * \brief Function to list machines information 
+  * \brief Function to list machines information
   * \return The pointer to the TMS_Data::ListQueues containing users information
   * \return raises an exception on error
   */
@@ -45,7 +50,7 @@ public:
   /**
    * \brief Destructor, raises an exception on error
    */
-  ~ListQueuesServer(); 
+  ~ListQueuesServer();
 
  private:
 
@@ -59,11 +64,11 @@ public:
    */
   std::string moption;
   /**
-  * \brief The Object containing users information 
+  * \brief The Object containing users information
   */
   TMS_Data::ListQueues* mlistQueues;
   /**
-  * \brief The BatchServer instance 
+  * \brief The BatchServer instance
   */
   BatchServer* mbatchServer;
 };

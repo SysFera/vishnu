@@ -95,7 +95,9 @@ solveSubmitJob(diet_profile_t* pb) {
 			throw SystemException(ERRCODE_INVDATA, "solve_submitJob: SubmitOptions object is not well built");
 		}
 
-		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
+		JobServer jobServer(sessionServer, machineId, *job,
+                                    ServerTMS::getInstance()->getBatchType(),
+                                    ServerTMS::getInstance()->getBatchVersion());
 		int vishnuId = ServerTMS::getInstance()->getVishnuId();
 		std::string slaveDirectory = ServerTMS::getInstance()->getSlaveDirectory();
 		jobServer.submitJob(scriptContent, *submitOptions, vishnuId, slaveDirectory, ServerTMS::getInstance()->getDefaultBatchOption());
@@ -160,7 +162,9 @@ solveCancelJob(diet_profile_t* pb) {
 			SystemException(ERRCODE_INVDATA, "solve_cancelJob: Job object is not well built");
 		}
 
-		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
+		JobServer jobServer(sessionServer, machineId, *job,
+                                    ServerTMS::getInstance()->getBatchType(),
+                                    ServerTMS::getInstance()->getBatchVersion());
 		jobServer.cancelJob(ServerTMS::getInstance()->getSlaveDirectory());
 
 		diet_string_set(pb,3, errorInfo.c_str());
@@ -215,7 +219,9 @@ solveJobInfo(diet_profile_t* pb) {
 			throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: Job object is not well built");
 		}
 
-		JobServer jobServer(sessionServer, machineId, *job, ServerTMS::getInstance()->getBatchType());
+		JobServer jobServer(sessionServer, machineId, *job,
+                                    ServerTMS::getInstance()->getBatchType(),
+                                    ServerTMS::getInstance()->getBatchVersion());
 		*job = jobServer.getJobInfo();
 
 		::ecorecpp::serializer::serializer _ser;
@@ -266,7 +272,10 @@ solveListOfQueues(diet_profile_t* pb) {
 	TMS_Data::ListQueues_ptr listQueues = NULL;
 
 
-	ListQueuesServer queryQueues(sessionServer, machineId, ServerTMS::getInstance()->getBatchType(), option);
+	ListQueuesServer queryQueues(sessionServer, machineId,
+                                     ServerTMS::getInstance()->getBatchType(),
+                                     ServerTMS::getInstance()->getBatchVersion(),
+                                     option);
 
 	try {
 		//MAPPER CREATION

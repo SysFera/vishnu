@@ -23,11 +23,12 @@
 ListQueuesServer::ListQueuesServer(const SessionServer& session,
                                    const std::string& machineId,
                                    const BatchType& batchType,
+                                   const std::string& batchVersion,
                                    const std::string& option)
  : moption(option), mlistQueues(NULL)
 {
    BatchFactory factory;
-   mbatchServer = factory.getBatchServerInstance();
+   mbatchServer = factory.getBatchServerInstance(batchType, batchVersion);
 }
 
 /**

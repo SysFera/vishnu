@@ -54,6 +54,7 @@ int main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   BatchType batchType ;
   std::string batchTypeStr;
+  std::string batchVersion;
   std::string machineId;
   std::string remoteBinDirectory;
   std::string defaultBatchConfig;
@@ -78,56 +79,28 @@ int main(int argc, char* argv[], char* envp[]) {
         throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
       }
     dbConfig.check();
-    config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
-    if (batchTypeStr == "TORQUE") {
-#ifndef HAVE_TORQUE_2_3
-        std::cerr << "\nError: The support of TORQUE is not enabled in this server!\n";
-        exit(1);
-#endif
-        batchType = TORQUE;
-      } else if (batchTypeStr == "PBS") {
-#ifndef HAVE_PBSPRO_10_4
-      std::cerr << std::endl;
-      std::cerr << "Warning: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library" << std::endl;
-      std::cerr << std::endl;
-      exit(1);
-#endif
-        batchType = PBSPRO;
-      } else if (batchTypeStr == "LOADLEVELER") {
-#ifndef HAVE_LOADLEVELER_2_5
-        std::cerr << "\nError: The support of LOADLEVELER is not enabled in this server!\n";
-        exit(1);
-#endif
-        batchType = LOADLEVELER;
-      } else if (batchTypeStr == "SLURM") {
-#if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
-        std::cerr << "\nError: The support of SLURM is not enabled in this server!\n";
-        exit(1);
-#endif
-        batchType = SLURM;
 
-      } else if (batchTypeStr == "LSF") {
-#ifndef HAVE_LSF_7_0
-        std::cerr << "\nError: The support of LSF is not enabled in this server!\n";
-        exit(1);
-#endif
-        batchType = LSF;
-      } else if (batchTypeStr == "SGE") {
-#ifndef HAVE_SGE_11
-        std::cerr << "\nError: The support of SGE is not enabled in this server!\n";
-        exit(1);
-#endif
-        batchType = SGE;
+    config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
+    config.getConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
+    if (batchTypeStr == "TORQUE") {
+      batchType = TORQUE;
+    } else if (batchTypeStr == "PBS") {
+      batchType = PBSPRO;
+    } else if (batchTypeStr == "LOADLEVELER") {
+      batchType = LOADLEVELER;
+    } else if (batchTypeStr == "SLURM") {
+      batchType = SLURM;
+    } else if (batchTypeStr == "LSF") {
+      batchType = LSF;
+    } else if (batchTypeStr == "SGE") {
+      batchType = SGE;
     } else if (batchTypeStr == "POSIX") {
       batchType = POSIX;
-#ifndef HAVE_TMSPOSIX
-      std::cerr << "\nWarning: only posix submission have been enabled in "
-                << "the config file whereas TMS may have been compiled for another batch\n\n";
-#endif
     } else {
       std::cerr << "\nError: invalid value for batch type parameter (must be 'TORQUE' or 'LOADLEVELER' or 'SLURM' or 'LSF' or 'SGE' or 'PBS' or 'POSIX')\n\n";
       exit(1);
     }
+
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
     if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
         remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
@@ -162,8 +135,8 @@ int main(int argc, char* argv[], char* envp[]) {
 
         //Initialize the TMS Server
         boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-        res = server->init(vishnuId, dbConfig, machineId,
-                           batchType, remoteBinDirectory, defaultBatchConfig);
+        res = server->init(vishnuId, dbConfig, machineId, batchType,
+                           batchVersion, remoteBinDirectory,defaultBatchConfig);
 
         std::vector<std::string> ls = server.get()->getServices();
         registerSeD(TMSTYPE, config, cfg, ls);
@@ -203,13 +176,13 @@ int main(int argc, char* argv[], char* envp[]) {
         // Initialize the TMS Monitor (Opens a connection to the database)
         MonitorTMS monitor(interval);
         dbConfig.setDbPoolSize(1);
-        monitor.init(vishnuId, dbConfig, machineId, batchType);
+        monitor.init(vishnuId, dbConfig, machineId, batchType, batchVersion);
         monitor.run();
       } else {
         // Initialize the TMS Monitor (Opens a connection to the database)
         MonitorTMS monitor2(interval);
         dbConfig.setDbPoolSize(1);
-        monitor2.init(vishnuId, dbConfig, machineId, POSIX);
+        monitor2.init(vishnuId, dbConfig, machineId, POSIX, batchVersion);
 
         ppidp = getppid();
         monitor2.run();
@@ -218,7 +191,7 @@ int main(int argc, char* argv[], char* envp[]) {
       // Initialize the TMS Monitor (Opens a connection to the database)
       MonitorTMS monitor(interval);
       dbConfig.setDbPoolSize(1);
-      monitor.init(vishnuId, dbConfig, machineId, batchType);
+      monitor.init(vishnuId, dbConfig, machineId, batchType, batchVersion);
       monitor.run();
     }
   } else {

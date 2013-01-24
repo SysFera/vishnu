@@ -59,8 +59,17 @@ ServerTMS::getVishnuId() const {
  * \return the id of the underlying batch scheduler
  */
 BatchType
-ServerTMS::getBatchType()  {
+ServerTMS::getBatchType() const {
   return mbatchType;
+}
+
+/**
+ * \brief To get the batchVersion
+ * \return the version of the underlying batch scheduler
+ */
+std::string
+ServerTMS::getBatchVersion() const {
+  return mbatchVersion;
 }
 
 /**
@@ -68,7 +77,7 @@ ServerTMS::getBatchType()  {
  * \return the machine id
  */
 std::string
-ServerTMS::getMachineId() {
+ServerTMS::getMachineId() const {
   return mmachineId;
 }
 
@@ -77,7 +86,7 @@ ServerTMS::getMachineId() {
  * \return path to the binary tmsSlave
  */
 string
-ServerTMS::getSlaveDirectory() {
+ServerTMS::getSlaveDirectory() const {
   return mslaveBinDir;
 }
 
@@ -91,7 +100,7 @@ ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
  * \return batch Default Options Vector
  */
 std::vector<std::string>
-ServerTMS::getDefaultBatchOption() {
+ServerTMS::getDefaultBatchOption() const {
   return mdefaultBatchOption;
 }
 
@@ -100,8 +109,10 @@ ServerTMS::getDefaultBatchOption() {
  * \param vishnuId The identifier of the vishnu instance
  * \param dbConfig  The configuration of the database
  * \param machineId the id of the machine
- * \param batchType the type of batch scheduler
+ * \param batchType the type of the batch scheduler
+ * \param batchVersion the version of the batch scheduler
  * \param slaveBinDir  the directory that contains the slave binary
+ * \param batchDefaultConfigFile  a configuration file for default options
  * \return raises an exception on error
  */
 int
@@ -109,11 +120,15 @@ ServerTMS::init(int vishnuId,
                 DbConfiguration dbConfig,
                 const std::string& machineId,
                 BatchType batchType,
+                const std::string& batchVersion,
                 const std::string& slaveBinDir,
-                std::string batchDefaultConfigFile) {
+                const std::string& batchDefaultConfigFile) {
 
   //initialization of the batchType
   mbatchType = batchType;
+
+ //initialization of the batchVersion
+  mbatchVersion = batchVersion;
 
   //initialization of the machineId
   mmachineId = machineId;

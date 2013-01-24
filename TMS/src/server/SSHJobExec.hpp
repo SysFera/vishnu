@@ -24,12 +24,14 @@ class SSHJobExec {
      * \param user the user login
      * \param hostname the hostname of the machine
      * \param batchType the type of the batch scheduler
+     * \param batchVersion the version of the batch scheduler
      * \param jobSerialized the job serialized
      * \param submitOptionsSerialized the job options serialized
      */
     SSHJobExec(const std::string& user,
                const std::string& hostname,
                const BatchType& batchType = UNDEFINED,
+               const std::string& batchVersion = "",
                const std::string& jobSerialized = "",
                const std::string& submitOptionsSerialized="");
 
@@ -122,6 +124,11 @@ class SSHJobExec {
      * \brief The type of the batch scheduler
      */
     BatchType mbatchType;
+
+    /**
+     * \brief The version of the batch scheduler
+     */
+  std::string mbatchVersion;
 
     /**
      * \brief The message erroro occured during execution of a service
