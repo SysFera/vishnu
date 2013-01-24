@@ -113,10 +113,10 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
 
 
 /**
-* \brief Function to get a random number
-* \fn    int isMonth (const char * s)
-* \return
-*/
+ * \brief Function to get a random number
+ * \fn    int isMonth (const char * s)
+ * \return
+ */
 int
 vishnu::isMonth (const char * s) {
   return (s[0]=='M' && s[1]=='O' && s[2]=='N' && s[3]=='T' && s[4]=='H');
@@ -151,24 +151,24 @@ vishnu::isCpt (const char * s) {
 }
 
 /**
-* \brief Parse the format and fill the array with the variable and their value
-* \fn void getKeywords(int* size, Format_t* array,
-*                      const char* format,
-*                      int cpt, IdType type,
-*                      std::string name,
-*                      std::string site)
-* \param size Size of the array (OUT)
-* \param array Array to fill with variables and their value (OUT)
-* \param format The string to parse
-* \param cpt Value of the counter variable
-* \param type Type of the id to generate
-* \param name Name of the user or machine
-* \param site Site of the machine
-* \return 0 on success and -1 when an error occurs
-*/
+ * \brief Parse the format and fill the array with the variable and their value
+ * \fn void getKeywords(int* size, Format_t* array,
+ *                      const char* format,
+ *                      int cpt, IdType type,
+ *                      std::string name,
+ *                      std::string site)
+ * \param size Size of the array (OUT)
+ * \param array Array to fill with variables and their value (OUT)
+ * \param format The string to parse
+ * \param cpt Value of the counter variable
+ * \param type Type of the id to generate
+ * \param name Name of the user or machine
+ * \param site Site of the machine
+ * \return 0 on success and -1 when an error occurs
+ */
 int
 vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, IdType type,
-std::string name, std::string site) {
+                     std::string name, std::string site) {
   unsigned int i;
   *size = 0;
 
@@ -266,21 +266,21 @@ std::string name, std::string site) {
 
 
 /**
-* \brief Function to generate an ID
-* \fn std::string getGeneratedName (const char* format,
-*                                   int cpt,
-*                                   IdType type,
-*                                   std::string name = "",
-*                                   std::string site ="")
-* \param format Format to use to generate the id
-* \param cpt Value of the counter to use
-* \param type Type of the id generated
-* \param name Name of the user or machine (optionnal)
-* \param site Site of the machine (optionnal)
-*/
+ * \brief Function to generate an ID
+ * \fn std::string getGeneratedName (const char* format,
+ *                                   int cpt,
+ *                                   IdType type,
+ *                                   std::string name = "",
+ *                                   std::string site ="")
+ * \param format Format to use to generate the id
+ * \param cpt Value of the counter to use
+ * \param type Type of the id generated
+ * \param name Name of the user or machine (optionnal)
+ * \param site Site of the machine (optionnal)
+ */
 std::string
 vishnu::getGeneratedName (const char* format, int cpt, IdType type,
-std::string name , std::string site ) {
+                          std::string name , std::string site ) {
 
   std::string res;
   res.clear ();
@@ -345,7 +345,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
     table="job";
     fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
     val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
-    "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+      "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
     primary="numjobid";
     break;
   case FILETRANSFERT:
@@ -363,15 +363,15 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   case WORK:
     //FIXME : no auto-increment field in work
     fields = " (application_id"
-    ",date_created,done_ratio, estimated_hours,identifier,"
-    "last_updated, nbcpus, owner_id, priority, "
-    "project_id, "
-    "start_date, status, subject) ";
+      ",date_created,done_ratio, estimated_hours,identifier,"
+      "last_updated, nbcpus, owner_id, priority, "
+      "project_id, "
+      "start_date, status, subject) ";
     val = " ((select min(id) from application_version),"
-    " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-    " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
-    "(select min(id) from project), "
-    "CURRENT_TIMESTAMP, 1,'toto') ";
+      " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+      " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+      "(select min(id) from project), "
+      "CURRENT_TIMESTAMP, 1,'toto') ";
     table = "work";
     primary="id";
     break;
@@ -506,16 +506,16 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 }
 
 /**
-* \brief Function to get an Id generated by VISHNU
-* \param vishnuId the vishnu Id
-* \param formatName the name of the format
-* \return the corresponding conversion
-*/
+ * \brief Function to get an Id generated by VISHNU
+ * \param vishnuId the vishnu Id
+ * \param formatName the name of the format
+ * \return the corresponding conversion
+ */
 std::string
 vishnu::getObjectId(int vishnuId,
-std::string formatName,
-IdType type,
-std::string stringforgeneration) {
+                    std::string formatName,
+                    IdType type,
+                    std::string stringforgeneration) {
 
   std::string idGenerated;
 
@@ -533,7 +533,7 @@ std::string stringforgeneration) {
 
   if (format.size() != 0) {
     idGenerated =
-    getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+      getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
     } else {
