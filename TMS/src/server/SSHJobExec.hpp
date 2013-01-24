@@ -31,7 +31,7 @@ class SSHJobExec {
     SSHJobExec(const std::string& user,
                const std::string& hostname,
                const BatchType& batchType = UNDEFINED,
-               const std::string& batchVersion = "",
+               const std::string& batchVersion = "-",
                const std::string& jobSerialized = "",
                const std::string& submitOptionsSerialized="");
 

@@ -42,9 +42,14 @@ SSHJobExec::SSHJobExec(const std::string& user,
                        const std::string& jobSerialized,
                        const std::string& submitOptionsSerialized):
   muser(user), mhostname(hostname), mbatchType(batchType),
-  mbatchVersion(batchVersion), mjobSerialized(jobSerialized),
+  mjobSerialized(jobSerialized),
   msubmitOptionsSerialized(submitOptionsSerialized)
 {
+  if (batchVersion.empty()) {
+    mbatchVersion = "-";  // mbatchVersion must never be empty
+  } else {
+    mbatchVersion = batchVersion;
+  }
 }
 
 /**
