@@ -279,7 +279,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
 	std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
 	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				(boost::format("Deleting the virtual machine failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
+        (boost::format("Deleting the virtual machine failed (%1%)")%deltacloud_get_last_error_string()).str());
 	}
 	deltacloud_free_instance(&instance);
 	finalize();
@@ -296,7 +296,7 @@ ListStrings DeltaCloudServer::getJobInfos(const std::string jobDescr, const int 
 	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
 	if(jobInfos.size() != numParams) {
 		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
-				"Expects "+vishnu::convertToString(numParams)+" parameters in the form of param1@param2...");
+        "Expects "+vishnu::convertToString(numParams)+" parameters following the pattern param1@param2...");
 	}
 	return jobInfos;
 }
