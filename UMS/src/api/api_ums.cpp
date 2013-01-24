@@ -1226,7 +1226,7 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv) {
  * \brief Function to finalize, currently useless
  */
 void
-vishnuFinalize(){
+vishnu::vishnuFinalize(){
 }
 
 
