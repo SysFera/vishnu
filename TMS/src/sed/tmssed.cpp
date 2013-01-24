@@ -101,6 +101,12 @@ int main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
 
+    if (batchVersion.empty() && batchType != POSIX) {
+      std::cerr << "\nError: batch version has not been specified, this parameter is mandatory for batch schedulers other than POSIX\n\n";
+      exit(1);
+    }
+
+
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
     if (!config.getConfigValue<std::string>(vishnu::REMOTEBINDIR, remoteBinDirectory)) {
         remoteBinDirectory = ExecConfiguration::getCurrentBinaryDir();
