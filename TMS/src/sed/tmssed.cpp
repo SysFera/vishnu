@@ -93,7 +93,7 @@ int main(int argc, char* argv[], char* envp[]) {
       batchType = TORQUE;
     } else if (batchTypeStr == "PBS") {
 #ifndef HAVE_PBSPRO_10_4
-      std::cerr << "\nError: can't initialize PBSPRO batch type because this server has not been compiled with PBSPRO library\n";
+      std::cerr << "\nError: The support of PBSPRO is not enabled in this server!\n";
       exit(1);
 #endif
       batchType = PBSPRO;
@@ -138,7 +138,7 @@ int main(int argc, char* argv[], char* envp[]) {
                 << "the config file whereas TMS may have been compiled for another batch\n\n";
 #endif			
     } else {
-      std::cerr << "\nError: invalid batch type parameter. Supported batch type are TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS or DELTACLOUD)\n";
+      std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO or DELTACLOUD)\n";
       exit(1);
     }
 
@@ -249,7 +249,7 @@ int main(int argc, char* argv[], char* envp[]) {
         ZMQServerStart(server, uri);
         unregisterSeD(TMSTYPE, *config);
       } else {
-        std::cerr << "\nThere was a problem during services initialization\n\n";
+        std::cerr << "\nAn error occurred when initializing the services\n\n";
         exit(1);
       }
     } catch (VishnuException& e) {
@@ -261,23 +261,20 @@ int main(int argc, char* argv[], char* envp[]) {
       pid_t pidp;
       pidp = fork();
       if (pidp == -1){
-        std::cerr << "\nThere was a problem to fork the posix monitor\n\n";
+        std::cerr << "\nAn error occurred when creating the posix monitor\n\n";
         exit(1);
       } else if (pidp > 0) {
-        // Initialize the TMS Monitor (Opens a connection to the database)
         MonitorTMS monitor(interval);
         dbConfig.setDbPoolSize(1);
         monitor.init(vishnuId, dbConfig, machineId, batchType);
         monitor.run();
       } else {
-        // Initialize the TMS Monitor (Opens a connection to the database)
         MonitorTMS monitor2(interval);
         dbConfig.setDbPoolSize(1);
         monitor2.init(vishnuId, dbConfig, machineId, POSIX);
         monitor2.run();
       }
     } else {
-      // Initialize the TMS Monitor (Opens a connection to the database)
       MonitorTMS monitor(interval);
       dbConfig.setDbPoolSize(1);
       monitor.init(vishnuId, dbConfig, machineId, batchType);
