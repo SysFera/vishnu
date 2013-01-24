@@ -31,6 +31,7 @@ namespace vishnu {
     DBPASSWORD,
     SENDMAILSCRIPT,
     BATCHTYPE,
+    BATCHVERSION,
     MACHINEID,
     TIMEOUT,
     REMOTEBINDIR,
