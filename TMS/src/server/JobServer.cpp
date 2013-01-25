@@ -404,11 +404,11 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
 
       ++iter;
       status = convertToInt(*iter);
-      if(status == vishnu::JOB_COMPLETED) {
+      if(status == vishnu::STATE_COMPLETED) {
         throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, mjob.getJobId());
       }
 
-      if(status == vishnu::JOB_CANCELLED) {
+      if(status == vishnu::STATE_CANCELLED) {
         throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, mjob.getJobId());
       }
 
@@ -439,7 +439,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
         throw TMSVishnuException(code, message);
       } else if(errorInfo.size()==0) {
         std::string sqlUpdatedRequest = ""
-                                        "UPDATE job SET status="+vishnu::convertToString(vishnu::JOB_CANCELLED)+""
+                                        "UPDATE job SET status="+vishnu::convertToString(vishnu::STATE_CANCELLED)+""
                                         " WHERE jobId='"+jobId+"'";
         mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
       }

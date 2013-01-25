@@ -391,7 +391,7 @@ SGEServer::getJobState(const std::string& jobId) {
 
   switch (state) {
     case DRMAA_PS_UNDETERMINED:
-     ret = vishnu::JOB_UNDEFINED;
+     ret = vishnu::STATE_UNDEFINED;
      break;
     case DRMAA_PS_QUEUED_ACTIVE:
     case DRMAA_PS_SYSTEM_ON_HOLD:
@@ -400,17 +400,17 @@ SGEServer::getJobState(const std::string& jobId) {
     case DRMAA_PS_SYSTEM_SUSPENDED:
     case DRMAA_PS_USER_SUSPENDED:
     case DRMAA_PS_USER_SYSTEM_SUSPENDED:
-     ret = vishnu::JOB_WAITING;
+     ret = vishnu::STATE_WAITING;
      break;
    case DRMAA_PS_RUNNING:
-     ret = vishnu::JOB_RUNNING;
+     ret = vishnu::STATE_RUNNING;
      break;
    case DRMAA_PS_DONE:
    case DRMAA_PS_FAILED:
-     ret = vishnu::JOB_COMPLETED;
+     ret = vishnu::STATE_COMPLETED;
      break;
    default:
-     ret = vishnu::JOB_COMPLETED;
+     ret = vishnu::STATE_COMPLETED;
      break;
 
   } /* switch */

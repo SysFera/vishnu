@@ -28,6 +28,7 @@ extern "C" {
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "constants.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -50,8 +51,8 @@ SlurmServer::SlurmServer():BatchServer() {
  */
 int
 SlurmServer::submit(const char* scriptPath,
-    const TMS_Data::SubmitOptions& options,
-    TMS_Data::Job& job, char** envp) {
+                    const TMS_Data::SubmitOptions& options,
+                    TMS_Data::Job& job, char** envp) {
 
   std::vector<std::string> cmdsOptions;
   //processes the vishnu options
@@ -429,7 +430,7 @@ SlurmServer::processOptions(const char* scriptPath,
           int qCpuMax = queue->getMaxProcCpu();
 
           if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
-              (cpu <= qCpuMax)){
+             (cpu <= qCpuMax)){
             cmdsOptions.push_back("-p");
             cmdsOptions.push_back(queueName);
             break;
@@ -452,7 +453,7 @@ uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
   std::istringstream is(jobId);
   is >> slurmJobId;
 
-return slurmJobId;
+  return slurmJobId;
 }
 
 /**
@@ -491,13 +492,13 @@ SlurmServer::getJobState(const std::string& jobId) {
   job_info_msg_t * job_buffer_ptr = NULL;
   res = slurm_load_job(&job_buffer_ptr, slurmJobId, 1);
 
-  int state = 5; //TERMINATED
+  int state = vishnu::STATE_COMPLETED;
   if(!res) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     state = convertSlurmStateToVishnuState(slurmJobInfo.job_state);
   } else {
     if(res==SLURM_PROTOCOL_SOCKET_IMPL_TIMEOUT || res==SLURM_PROTOCOL_VERSION_ERROR) {
-      state = -1;
+      state = vishnu::STATE_UNDEFINED;
     }
   }
 
@@ -546,21 +547,25 @@ SlurmServer::convertSlurmStateToVishnuState(const uint16_t& state) {
 
   int res = 0;
   switch(state) {
-    case JOB_PENDING:case JOB_SUSPENDED:
-      res = 3;//WAITING
-      break;
-    case JOB_RUNNING:
-      res = 4;//RUNNING
-      break;
-    case JOB_COMPLETE:case JOB_FAILED:case JOB_NODE_FAIL:case JOB_TIMEOUT:
-      res = 5; //TERMINATED
-      break;
-    case JOB_CANCELLED:
-      res = 6; //CANCELLED
-      break;
-    default:
-      res = 5;
-      break;
+  case JOB_PENDING:
+  case JOB_SUSPENDED:
+    res = vishnu::STATE_WAITING;
+    break;
+  case JOB_RUNNING:
+    res = vishnu::STATE_RUNNING;
+    break;
+  case JOB_COMPLETE:
+  case JOB_FAILED:
+  case JOB_NODE_FAIL:
+  case JOB_TIMEOUT:
+    res = vishnu::STATE_COMPLETED;
+    break;
+  case JOB_CANCELLED:
+    res = vishnu::STATE_CANCELLED;
+    break;
+  default:
+    res = vishnu::STATE_COMPLETED;
+    break;
   }
   return res;
 }
@@ -662,7 +667,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
  */
 int
 SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
-                                       std::map<std::string, size_t>& que) {
+                                          std::map<std::string, size_t>& que) {
 
   job_info_msg_t * allJobs = NULL;
   int res = slurm_load_jobs((time_t)NULL, &allJobs, 1);
@@ -672,19 +677,19 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
     job = allJobs->job_array;
     for (uint32_t i = 0; i < allJobs->record_count; i++) {
       switch(job[i].job_state) {
-        case JOB_PENDING: case JOB_SUSPENDED:
-          que[job[i].partition]++;
-          break;
-        case JOB_RUNNING:
-          run[job[i].partition]++;
-          break;
-        default:
-         break;
+      case JOB_PENDING: case JOB_SUSPENDED:
+        que[job[i].partition]++;
+        break;
+      case JOB_RUNNING:
+        run[job[i].partition]++;
+        break;
+      default:
+        break;
       }
     }
   }
 
- return res;
+  return res;
 }
 
 /**
@@ -736,18 +741,18 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
     TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
     //Set the queue state
     switch(partition[i].state_up) {
-      case PARTITION_DOWN:
-        queue->setState(0);
-        break;
-      case PARTITION_INACTIVE:
-        queue->setState(1);
-        break;
-      case PARTITION_UP:case PARTITION_DRAIN:
-        queue->setState(2);
-        break;
-      default:
-        queue->setState(0);
-        break;
+    case PARTITION_DOWN:
+      queue->setState(vishnu::STATE_UNDEFINED);
+      break;
+    case PARTITION_INACTIVE:
+      queue->setState(1);
+      break;
+    case PARTITION_UP:case PARTITION_DRAIN:
+      queue->setState(2);
+      break;
+    default:
+      queue->setState(0);
+      break;
     }
 
     if (run.count(partition[i].name)) {
@@ -762,7 +767,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
 
     //Here we multiplie the max_time by 60 because SLURM max_time in minutes
     if(partition[i].max_time < ((std::numeric_limits<uint32_t>::max())/60)) {
-        queue->setWallTime(60*partition[i].max_time);
+      queue->setWallTime(60*partition[i].max_time);
     }
     queue->setMemory(-1);//UNDEFINED in SLURM
     queue->setDescription("");//UNDEFINED in SLURM
@@ -793,7 +798,7 @@ SlurmServer::listQueues(const std::string& OptqueueName) {
  * \param ignoredIds the list of job ids to ignore
  */
 void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-    const std::vector<string>& ignoredIds) {
+                                 const std::vector<string>& ignoredIds) {
 
   job_info_msg_t * job_buffer_ptr = NULL;
   int res = slurm_load_jobs((time_t) NULL, &job_buffer_ptr, SHOW_ALL);
@@ -802,15 +807,15 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
     int jobStatus;
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
-    for(uint32_t i=0; i < job_buffer_ptr->record_count; i++) {
+    for (uint32_t i=0; i < job_buffer_ptr->record_count; i++) {
       batchId = (job_buffer_ptr->job_array[i]).job_id;
       std::vector<std::string>::const_iterator iter;
       iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(batchId));
-      if(iter==ignoredIds.end()) {
+      if (iter==ignoredIds.end()) {
         TMS_Data::Job_ptr job = new TMS_Data::Job();
         fillJobInfo(*job, batchId);
         jobStatus = job->getStatus();
-        if(jobStatus==4) {
+        if (jobStatus == vishnu::STATE_RUNNING) {
           nbRunningJobs++;
         } else if(jobStatus >= 1 && jobStatus <= 3) {
           nbWaitingJobs++;
@@ -834,8 +839,8 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
  */
 std::string
 SlurmServer::getSlurmResourceValue(const char* file,
-    const std::string& shortOptionLetterSyntax,
-    const std::string& longOptionLetterSyntax) {
+                                   const std::string& shortOptionLetterSyntax,
+                                   const std::string& longOptionLetterSyntax) {
 
   std::string resourceValue;
   std::string slurmPrefix = "#SBATCH";

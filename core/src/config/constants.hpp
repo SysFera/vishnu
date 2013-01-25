@@ -65,14 +65,14 @@ namespace vishnu {
   } cloud_env_vars_t;
 
   typedef enum {
-    JOB_UNDEFINED=0,
-    JOB_SUBMITTED=1,
-    JOB_QUEUED=2,
-    JOB_WAITING=3,
-    JOB_RUNNING=4,
-    JOB_COMPLETED=5,
-    JOB_CANCELLED=6,
-    JOB_ALREADY_DOWNLOADED=7
+    STATE_UNDEFINED=0,
+    STATE_SUBMITTED=1,
+    STATE_QUEUED=2,
+    STATE_WAITING=3,
+    STATE_RUNNING=4,
+    STATE_COMPLETED=5,
+    STATE_CANCELLED=6,
+    STATE_DOWNLOADED=7
   } job_status_t;
 
 

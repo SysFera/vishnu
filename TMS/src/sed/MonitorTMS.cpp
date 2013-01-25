@@ -126,10 +126,10 @@ MonitorTMS::run() {
         }
         try {
           state = batchServer->getJobState(jobDescr);
-          if (state != vishnu::JOB_UNDEFINED) {
+          if (state != vishnu::STATE_UNDEFINED) {
             sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
             mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
-            if (state == vishnu::JOB_COMPLETED) {
+            if (state == vishnu::STATE_COMPLETED) {
               sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
               mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
             }

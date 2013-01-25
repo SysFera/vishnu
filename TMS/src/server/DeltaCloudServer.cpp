@@ -127,7 +127,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 	job.setJobName("PID_"+job.getBatchJobId());
 	job.setJobId(vishnu::convertToString(jobPid));
 	job.setVmId(instance.id);
-	job.setStatus(vishnu::JOB_SUBMITTED);
+	job.setStatus(vishnu::STATE_SUBMITTED);
 	job.setVmIp(instance.private_addresses->address);
 	job.setOutputPath(job.getOutputDir()+"/stdout");
 	job.setErrorPath(job.getOutputDir()+"/stderr");
@@ -174,12 +174,12 @@ DeltaCloudServer::getJobState(const std::string& jobDescr) {
 	std::string statusFile = "/tmp/"+jobDescr;
 	sshEngine.execCmd("ps -o pid= -p " + pid +" | wc -l >"+statusFile, false);
 
-	int status = vishnu::JOB_RUNNING;
+	int status = vishnu::STATE_RUNNING;
 	int count = vishnu::getStatusValue(statusFile);
 	if( count == 0) {
 		// stop the virtual machine to release the resources
 		releaseResources(vmId);
-		status = vishnu::JOB_COMPLETED;
+		status = vishnu::STATE_COMPLETED;
 	}
 
 	vishnu::deleteFile(statusFile.c_str());

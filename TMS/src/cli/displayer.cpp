@@ -235,28 +235,28 @@ std::string convertJobStateToString(const int& state) {
 
   string stateStr;
   switch(state) {
-	case vishnu::JOB_SUBMITTED:
+	case vishnu::STATE_SUBMITTED:
     stateStr = "SUBMITTED";
     break;
-	case vishnu::JOB_QUEUED:
+	case vishnu::STATE_QUEUED:
     stateStr = "QUEUED";
     break;
-	case vishnu::JOB_WAITING:
+	case vishnu::STATE_WAITING:
     stateStr = "WAITING";
     break;
-	case vishnu::JOB_RUNNING:
+	case vishnu::STATE_RUNNING:
     stateStr = "RUNNING";
     break;
-	case vishnu::JOB_COMPLETED:
+	case vishnu::STATE_COMPLETED:
 		stateStr = "COMPLETED";
     break;
-	case vishnu::JOB_CANCELLED:
+	case vishnu::STATE_CANCELLED:
     stateStr = "CANCELLED";
     break;
-	case vishnu::JOB_ALREADY_DOWNLOADED:
+	case vishnu::STATE_DOWNLOADED:
     stateStr = "DOWNLOADED";
 		break;
-	case vishnu::JOB_UNDEFINED:
+	case vishnu::STATE_UNDEFINED:
 		stateStr = "UNDEFINED";
     break;
   default:
