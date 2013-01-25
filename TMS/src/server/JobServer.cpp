@@ -118,7 +118,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
   }
-  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
+  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || batchType == DELTACLOUD ) {
     setOutputDir(workingDir, suffix, scriptContentRef);
     needOutputDir = true ;
   }
@@ -142,7 +142,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
   // Create the output directory if necessary
   if (needOutputDir) {
-    if(mbatchType == DELTACLOUD) {
+    if(batchType == DELTACLOUD) {
       vishnu::createWorkingDir(mjob.getOutputDir()); // Create the output directory
       env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
       env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
@@ -152,7 +152,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   }
   // Convert the script
   std::string convertedScript;
-  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
+  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(batchType, scriptContentRef));
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
@@ -182,7 +182,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   // Submission with deltacloud doesn't make copy of the script
   // So the script needs to be kept until the end of the execution
   // Clean the temporary script if not deltacloud
-  if(mbatchType != DELTACLOUD) {
+  if(batchType != DELTACLOUD) {
     vishnu::deleteFile(scriptPath.c_str());
   }
   std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
@@ -214,7 +214,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   }
   // Set the job owner for SGE and Deltacloud
   // For other batch schedulers this information is known
-  if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
+  if(batchType == SGE || batchType == DELTACLOUD || batchType == POSIX) {
     mjob.setOwner(acLogin);
   }
   std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
@@ -229,7 +229,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"', ";
   sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
   sqlUpdate+="batchJobId='"+BatchJobId+"', ";
-  sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
+  sqlUpdate+="batchType="+convertToString(batchType)+", ";
   sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
   sqlUpdate+="jobPath='"+mjob.getJobPath()+"', ";
   sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";

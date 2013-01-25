@@ -76,9 +76,7 @@ BatchFactory::getBatchServerInstance(int batchType,
   case DELTACLOUD:
     libname += "deltacloud";
     break;
-  case POSIX:
-    libname += "posix";
-    break;
+  case POSIX: // POSIX IS THE DEFAULT CASE
   default : // Always compile tmp-posix
     libname += "posix";
     realBatchVersion = "1.0";

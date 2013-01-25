@@ -60,9 +60,13 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
   string mid;
   string uridispatcher;
   string urlsup;
+  int timeout;
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+  config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
+  if (timeout<=0)
+    timeout = 10;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uridispatcher);
   config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
   if (type == "fmssed") {
@@ -93,7 +97,7 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
   }
 
   zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, uridispatcher);
+  LazyPirateClient lpc(ctx, uridispatcher, timeout);
 
   boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
   // prefix with 1 to say registering the sed
