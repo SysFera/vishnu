@@ -83,10 +83,6 @@ main(int argc, char* argv[], char* envp[]) {
   jobSerializedPath = argv[4];
   slaveErrorPath = argv[5];
 
-  for(int i=0; i< argc; i++) {
-    std::cout << argv[i] << " ";
-  }
- std::cout << "\n";
   if(action.compare("SUBMIT")==0) {
     if(argc < 9) {
       // Too few arguments
