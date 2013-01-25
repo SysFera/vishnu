@@ -5,8 +5,9 @@
 #include <boost/lexical_cast.hpp>
 #include "api_ums.hpp"
 #include "api_ims.hpp"
-#include "IMS_testconfig.h"
 #include "diet_config_tests.h"
+#include "FileParser.hpp"
+
 
 using namespace std;
 using namespace UMS_Data;
@@ -14,7 +15,8 @@ using namespace vishnu;
 
 void stress(int cpt,const string& sessionKey, const string& machineId, int type){
 
-  string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
+  string dietClientConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+ 
   IMS_Data::CurMetricOp op;
   IMS_Data::MetricHistOp histOp;
   IMS_Data::ListMetric list;
@@ -57,12 +59,16 @@ void forker(int cpt,const string& sessionKey, const string& machineId, int type)
 int main(int argc, char** argv){
   int cpt;
   int type;
-  string pwd  = "vishnu_user"  ;
-  string uid  = "root";
+  string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+  FileParser fileparser(vishnuTestSetupPath.c_str());
+  std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+  
+  string uid  = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
+  string pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
   ConnectOptions cop  ;
   Session sess ;
 
-  string dietClientConfigPath = CONFIG_DIR + string("/client_testing.cfg");
+  string dietClientConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
   cop.setClosePolicy(2);
 
   try{

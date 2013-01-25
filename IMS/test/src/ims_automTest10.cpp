@@ -45,12 +45,7 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = "";
-static const string machineId="machine_1";
+
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -66,13 +61,13 @@ BOOST_AUTO_TEST_CASE(get_running_processes_normal_call)
   bool imssedFound = false;
   bool tmssedFound = false;
   bool umssedFound = false;
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
 
   IMS_Data::ListProcesses listProcess;
   IMS_Data::ProcessOp op;
-  op.setMachineId(machineId);
+  op.setMachineId(m_test_ums_user_vishnu_machineid);
 
   try {
     BOOST_CHECK_EQUAL(getProcesses(sessionKey, listProcess, op),0  );
@@ -111,7 +106,7 @@ BOOST_AUTO_TEST_CASE(get_running_processes_bad_machine_Id_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA1-E1: Get the running processes with bad machine Id");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //List processes
@@ -129,13 +124,13 @@ BOOST_AUTO_TEST_CASE(get_running_processes_no_admin_user_call)
 
   BOOST_TEST_MESSAGE("Use case IA1-E2: Get the running processes for no admin user Id");
   //no admin user
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_ims_user_vishnu_login, m_test_ims_user_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //List processes
   IMS_Data::ListProcesses listProcess;
   IMS_Data::ProcessOp op;
-  op.setMachineId(machineId);
+  op.setMachineId(m_test_ums_user_vishnu_machineid);
 
   BOOST_CHECK_THROW(getProcesses(sessionKey, listProcess, op), VishnuException);
 }

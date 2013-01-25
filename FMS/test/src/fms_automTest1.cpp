@@ -38,18 +38,19 @@ BOOST_FIXTURE_TEST_SUITE(CreateFile, FMSSeDFixture)
 BOOST_AUTO_TEST_CASE(CreateFile_Base)
 {
 
-  /*std::string remoteBaseDir1 = "";//FMSDIR1;
-  std::string remoteBaseDir2 = "";//FMSDIR2;
-  std::string baseDirFullPath1 = m_test_fms_host1 + sep + remoteBaseDir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + sep + remoteBaseDir2;
-  std::string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
-  std::string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
-  std::string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
-  std::string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
-  std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;*/
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   
   BOOST_TEST_MESSAGE("Testing file creation UC F1.CR1-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
@@ -78,32 +79,33 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
 
 BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
 {
-  /*std::string remoteBaseDir1 = "";//FMSDIR1;
-  std::string remoteBaseDir2 = "";//FMSDIR2;
-  std::string baseDirFullPath1 = m_test_fms_host1 + sep + remoteBaseDir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + sep + remoteBaseDir2;
-  std::string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
-  std::string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
-  std::string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
-  std::string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
-  std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;*/
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   
   BOOST_TEST_MESSAGE("Testing file creation errors UC F1.CR1-E");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
     // E1 case
     string invalidDir = "rkvh";
-    string invalidFullPath = baseDirFullPath1 + slash + invalidDir + slash + newFileName;
+    string invalidFullPath = baseDirFullPath1 + "/" + invalidDir + "/" + newFileName;
     BOOST_CHECK_THROW( touch(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessDir = "/root";
-    string noAccessFullPath = m_test_fms_host1 + sep + noAccessDir;
+    string noAccessFullPath = m_test_fms_host1 + ":" + noAccessDir;
     BOOST_CHECK_THROW( touch(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    string invalidMachineFullPath = invalidMachineId + ":" + m_test_fms_dir1;
     BOOST_CHECK_THROW( touch(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {

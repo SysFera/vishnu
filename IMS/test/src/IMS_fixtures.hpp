@@ -5,22 +5,28 @@
  */
 
 #include "diet_fixtures.hpp"
-#include "TMS_fixtures4ims.hpp"
-#include "IMS_testconfig.h"
+#include "TMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
 #include "api_tms.hpp"
 #include "api_ums.hpp"
 #include "api_ims.hpp"
+#include "FileParser.hpp"
 using namespace std;
 using namespace vishnu;
 
-/*char IMSSeD[] = "imssed";
-char ConfigIMSSeD[] = IMSSEDCONF;
-char BinDirIMSSeD[] = IMSSEDBINDIR;*/
 
-class IMSFixture : public TMSSeDForIMSFixture {
+
+class IMSFixture : public TMSSeDFixture {
 
 public:
+
+  std::string m_test_ims_admin_vishnu_login;
+  std::string m_test_ims_admin_vishnu_pwd;
+  std::string m_test_ims_user_vishnu_login;
+  std::string m_test_ims_user_vishnu_pwd;
+  std::string m_test_ims_user_vishnu_machineid;
+  
+  
   IMSFixture():mac(2){
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
@@ -34,6 +40,21 @@ public:
       BOOST_TEST_MESSAGE( "Error in VishnuInitialize..." );
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
+
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
+    string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+    
+    m_test_ims_admin_vishnu_login = setupConfig.find("TEST_ADMIN_VISHNU_LOGIN")->second;
+    m_test_ims_admin_vishnu_pwd = setupConfig.find("TEST_ADMIN_VISHNU_PWD")->second;
+    m_test_ims_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
+    m_test_ims_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
+    m_test_ums_user_vishnu_machineid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second;
+    
+    
+    
+    BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
 
 
   }

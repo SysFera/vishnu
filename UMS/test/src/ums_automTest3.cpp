@@ -83,6 +83,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
     BOOST_CHECK    (close             (sess.getSessionKey()                )==0);
   }
   
+
 }
 
 

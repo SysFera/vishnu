@@ -20,7 +20,7 @@ namespace ba = boost::assign;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-// The database, UMS and FMS SeD are launched by FMSSedFixture.
+
 BOOST_FIXTURE_TEST_SUITE(HeadOfFile, FMSSeDFixture)
 
 /*****************************************************************************/
@@ -31,8 +31,20 @@ BOOST_FIXTURE_TEST_SUITE(HeadOfFile, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing file head display UC F1.DI1-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
@@ -57,9 +69,23 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Base)
 
 BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing file head display errors UC F1.DI1-E");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
+  string slash = "/";
+  string sep = ":";
 
   try {
     string content;
@@ -69,11 +95,11 @@ BOOST_AUTO_TEST_CASE(HeadOfFile_Exceptions)
     BOOST_CHECK_THROW( head(sessionKey, invalidFullPath, content), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
-    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    string noAccessFullPath = m_test_fms_host1 + sep + noAccessLocalPath;
     BOOST_CHECK_THROW( head(sessionKey, noAccessFullPath, content), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    string invalidMachineFullPath = invalidMachineId + sep + m_test_fms_dir1;
     BOOST_CHECK_THROW( head(sessionKey, invalidMachineFullPath, content), VishnuException);
 
   } catch (VishnuException& e) {

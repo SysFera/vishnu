@@ -71,14 +71,14 @@ BOOST_AUTO_TEST_CASE(AddFakeFileTransfer)
 {
 BOOST_TEST_MESSAGE("Testing file transfer UC F2.CP1-B:Execute a synchronous copy of files");
 
-  VishnuConnection vc(userId, userPwd);
+VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
     FileTransfer transferInfo;
     transferInfo.setTransferId(bfs::unique_path().string());
     transferInfo.setStatus(3);
-    transferInfo.setUserId(userId);
+    transferInfo.setUserId(m_test_fms_user_login);
     transferInfo.setClientMachineId("clientMachine");
     transferInfo.setSourceMachineId("sourceMachine");
     transferInfo.setDestinationMachineId("sourceMachine");

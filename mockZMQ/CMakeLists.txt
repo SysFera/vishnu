@@ -30,6 +30,22 @@ target_link_libraries (zmq_helper
   vishnu-core
 )
 
+add_executable(dispatcher dispatcher/main.cpp
+  dispatcher/dispatcher.cpp)
+
+target_link_libraries(dispatcher
+  ${ZMQ_LIBRARIES} 
+  ${Boost_LIBRARIES}
+  zmq_helper
+  vishnu-core
+)
+
+install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
+set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
+install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
+# --------------------------------------------------------------------------
+#add_subdirectory(ZMQHelper)
+# --------------------------------------------------------------------------
 
 if(COMPILE_SERVERS)
   add_executable(dispatcher dispatcher/main.cpp

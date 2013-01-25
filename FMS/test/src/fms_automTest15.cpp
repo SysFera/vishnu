@@ -29,8 +29,20 @@ BOOST_FIXTURE_TEST_SUITE(AsyncMoveFile, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing asynchronous move of files UC F2.MV2-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
@@ -41,7 +53,7 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
     BOOST_REQUIRE( amv(sessionKey, localFilePath, baseDirFullPath1, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalSourceFound = isFoundInLocalDir(localDir, newFileName);
+    bool isLocalSourceFound = isFoundInLocalDir(m_test_fms_working_dir, newFileName);
     BOOST_CHECK(!isLocalSourceFound);
     bool isRemoteCopyFound1 = isFoundInDir(sessionKey, baseDirFullPath1, newFileName);
     BOOST_CHECK(isRemoteCopyFound1);
@@ -58,12 +70,12 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
 
     // remote to local (using file from previous step)
     BOOST_MESSAGE("Checking remote to local move");
-    BOOST_REQUIRE( amv(sessionKey, fileFullPath2, localDir, transferInfo) == 0);
+    BOOST_REQUIRE( amv(sessionKey, fileFullPath2, m_test_fms_working_dir, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
     isRemoteCopyFound2 = isFoundInDir(sessionKey, baseDirFullPath2, newFileName);
     BOOST_CHECK(!isRemoteCopyFound2);
-    bool isLocalCopyFound = isFoundInLocalDir(localDir, newFileName);
+    bool isLocalCopyFound = isFoundInLocalDir(m_test_fms_working_dir, newFileName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
@@ -76,9 +88,23 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Base)
 
 BOOST_AUTO_TEST_CASE(AsyncMoveFile_Exceptions)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing asynchronous move of files errors UC F2.MV2-E");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
+  string slash = "/";
+  string sep = ":";
 
   try {
     DirEntryList dirContent;
@@ -97,18 +123,18 @@ BOOST_AUTO_TEST_CASE(AsyncMoveFile_Exceptions)
     // E3 case - no access to source path
     BOOST_MESSAGE("Check unaccessible source path");
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";;
-    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    string noAccessFullPath = m_test_fms_host1 + sep + noAccessLocalPath;
     BOOST_REQUIRE( amv(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo) == 0);
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to remote path
     BOOST_MESSAGE("Check unaccessible destination path");
-    string noAccessRemotePath = machineId1 + sep + "/root";
+    string noAccessRemotePath = m_test_fms_host1 + sep + "/root";
     BOOST_REQUIRE( amv(sessionKey, localFilePath, noAccessRemotePath, transferInfo) == 0);
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E4 case
     BOOST_MESSAGE("Check invalid machine");
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    string invalidMachineFullPath = invalidMachineId + sep + m_test_fms_dir1;
     BOOST_CHECK_THROW( amv(sessionKey, invalidMachineFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());

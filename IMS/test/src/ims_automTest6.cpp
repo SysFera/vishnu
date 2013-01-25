@@ -45,12 +45,6 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = "IMSSQLPATH";
-static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -63,7 +57,7 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_normal_call)
 
   BOOST_TEST_MESSAGE("Use case IA6 - B: Set the update frequency");
 
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int frequency;
@@ -97,7 +91,7 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_zero_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA6 - E1: Set the update frequency with frequency equal to zero");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int frequency = 0;
@@ -111,7 +105,7 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_negative_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA6 - E2: Set the update frequency with negative value");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int frequency = -15;
@@ -125,7 +119,7 @@ BOOST_AUTO_TEST_CASE(set_update_frequency_no_admin_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA6 - E3: Set the update frequency for no admin user");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_ims_user_vishnu_login, m_test_ims_user_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
 

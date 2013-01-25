@@ -29,9 +29,23 @@ BOOST_FIXTURE_TEST_SUITE(AsyncCopyFile, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing asynchronous copy of files UC F2.CP2-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
+  string slash = "/";
+  string sep = ":";
 
   try {
     FileTransfer transferInfo;
@@ -50,11 +64,11 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
     // remote to local
     BOOST_MESSAGE("Checking remote to local copy");
     string localCopyName = newFileName + ".bak";
-    string localCopyPath = localDir + slash + localCopyName;
+    string localCopyPath = m_test_fms_working_dir + slash + localCopyName;
     BOOST_REQUIRE( acp(sessionKey, fileFullPath1, localCopyPath, transferInfo) == 0);
     // Check
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_COMPLETED );
-    bool isLocalCopyFound = isFoundInLocalDir(localDir, localCopyName);
+    bool isLocalCopyFound = isFoundInLocalDir(m_test_fms_working_dir, localCopyName);
     BOOST_CHECK(isLocalCopyFound);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
@@ -78,9 +92,23 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
 
 BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing asynchronous copy of files errors UC F2.CP2-E");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
+  string slash = "/";
+  string sep = ":";
 
   try {
     DirEntryList dirContent;
@@ -100,20 +128,20 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
     // E3 case - no access to source path
     BOOST_MESSAGE("Check unaccessible source path");
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
-    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    string noAccessFullPath = m_test_fms_host1 + sep + noAccessLocalPath;
     BOOST_REQUIRE( acp(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo) == 0);
     BOOST_MESSAGE("Launched transfer: " + transferInfo.getTransferId());
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to remote path
     BOOST_MESSAGE("Check unaccessible destination path");
-    string noAccessRemotePath = machineId1 + sep + "/root";
+    string noAccessRemotePath = m_test_fms_host1 + sep + "/root";
     BOOST_REQUIRE( acp(sessionKey, localFilePath, noAccessRemotePath, transferInfo) == 0);
     BOOST_MESSAGE("Launched transfer: " + transferInfo.getTransferId());
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E4 case
     BOOST_MESSAGE("Check invalid machine");
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    string invalidMachineFullPath = invalidMachineId + sep + m_test_fms_dir1;
     BOOST_CHECK_THROW( acp(sessionKey, invalidMachineFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // Cleanup
     vishnu::deleteFile(localFilePath.c_str());
