@@ -18,14 +18,13 @@
 #include "TmsPosixClient.hpp"
 
 int
-ReqSend(const char *destination, const struct Request* req, struct Response* ret) {
+reqSend(const char *destination, const struct Request* req, struct Response* ret) {
   int sfd;
   struct sockaddr_un addr;
   int sv_errno;
-  size_t nbCharwrite = sizeof(struct Request);
-  ssize_t nbCharwriten = 0;
-  ssize_t nbCharreaden;
-
+  size_t nbCharWrite = sizeof(struct Request);
+  ssize_t nbCharWriten = 0;
+  ssize_t nbCharReaden;
 
   sfd = socket(AF_UNIX, SOCK_STREAM, 0);
   if (sfd == -1) {
@@ -43,91 +42,77 @@ ReqSend(const char *destination, const struct Request* req, struct Response* ret
     return -2;
   }
 
-  while (nbCharwrite > 0) {
-    nbCharwriten = write(sfd,req,nbCharwrite);
-    if (nbCharwriten < 0) {
+  while (nbCharWrite > 0) {
+    nbCharWriten = write(sfd, req, nbCharWrite);
+    if (nbCharWriten < 0) {
       sv_errno = errno;
       close(sfd);
       errno = sv_errno;
       return -3;
     }
-    nbCharwrite -= nbCharwriten;
+    nbCharWrite -= nbCharWriten;
   }
 
   memset(ret, 0, sizeof(struct Response));
-  nbCharreaden = read(sfd,ret,sizeof(struct Response));
+  nbCharReaden = read(sfd, ret, sizeof(struct Response));
 
   close(sfd);
 
-  return nbCharreaden;
+  return nbCharReaden;
 }
 
 int
-ReqSubmit(const char* command, struct st_job* response, struct st_submit* sub) {
+reqSubmit(const char *command, struct trameJob *response, struct trameSubmit *sub) {
   struct Request req;
   struct Response ret;
-  const char* sv_sock= "tms-posix-socket-";
   char name_sock[255];
   uid_t euid;
-  struct passwd* lpasswd;
 
   euid = geteuid();
-  lpasswd=getpwuid(euid);
-  if ( lpasswd == NULL) {
-   return -1;
-  }
+  snprintf(name_sock, sizeof(name_sock), "%s/%s%d","/tmp", SV_SOCK, euid);
 
-  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
+  memset(&req, 0, sizeof(struct Request));
+  strncpy(req.sig, SIGNATURE, sizeof(req.sig));
+  strncpy(req.req, LB_REQ_SUBMIT, sizeof(req.req));
+  strncpy(req.data.submit.cmd, command, sizeof(req.data.submit)-1);
 
-  memset(&req,0,sizeof(struct Request));
-  strncpy(req.sig,signature,sizeof(req.sig));
-  strncpy(req.req,lb_req_submit,sizeof(req.req));
-  strncpy(req.data.submit.cmd,command,sizeof(req.data.submit)-1);
-
-  strncpy(req.data.submit.OutPutPath,sub->OutPutPath,sizeof(req.data.submit.OutPutPath)-1);
-  strncpy(req.data.submit.ErrorPath,sub->ErrorPath,sizeof(req.data.submit.ErrorPath)-1);
-  strncpy(req.data.submit.WorkDir,sub->WorkDir,sizeof(req.data.submit.WorkDir)-1);
-  strncpy(req.data.submit.JobName,sub->JobName,sizeof(req.data.submit.JobName)-1);
+  strncpy(req.data.submit.outPutPath, sub->outPutPath, sizeof(req.data.submit.outPutPath)-1);
+  strncpy(req.data.submit.errorPath, sub->errorPath, sizeof(req.data.submit.errorPath)-1);
+  strncpy(req.data.submit.workDir, sub->workDir, sizeof(req.data.submit.workDir)-1);
+  strncpy(req.data.submit.jobName, sub->jobName, sizeof(req.data.submit.jobName)-1);
   req.data.submit.walltime = sub->walltime;
 
-  ReqSend(name_sock, &req, &ret);
+  reqSend(name_sock, &req, &ret);
 
   if (ret.status == 0) {
-    memcpy(response,&(ret.data.submit),sizeof(struct st_job));
+    *response = ret.data.submit;
     return 0;
   }
   return -1;
 }
 
 int
-ReqEcho(const char* chaine, char* ret) {
+reqEcho(const char* chaine, char* ret) {
   struct Request req;
   struct Response res;
-  const char* sv_sock= "tms-posix-socket-";
+  int resultat;
   char name_sock[255];
   uid_t euid;
-  struct passwd* lpasswd;
-  int resultat;
 
   euid = geteuid();
-  lpasswd=getpwuid(euid);
-  if ( lpasswd == NULL) {
-   return -1;
-  }
+  snprintf(name_sock, sizeof(name_sock), "%s/%s%d","/tmp", SV_SOCK, euid);
 
-  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
+  memset(&req, 0, sizeof(struct Request));
+  strncpy(req.sig, SIGNATURE, sizeof(req.sig));
+  strncpy(req.req, LB_REQ_ECHO, sizeof(req.req));
+  strncpy(req.data.echo.data, chaine, sizeof(req.data.echo.data)-1);
 
-  memset(&req,0,sizeof(struct Request));
-  strncpy(req.sig,signature,sizeof(req.sig));
-  strncpy(req.req,lb_req_echo,sizeof(req.req));
-  strncpy(req.data.echo.data,chaine,sizeof(req.data.echo.data)-1);
-
-  resultat = ReqSend(name_sock, &req, &res);
+  resultat = reqSend(name_sock, &req, &res);
   if (resultat < 0) {
     return resultat;
   }
 
-  strncpy(ret,res.data.echo.data,sizeof(res.data.echo.data)-1);
+  strncpy(ret, res.data.echo.data, sizeof(res.data.echo.data)-1);
   if (res.status != 0) {
     return 0;
   }
@@ -147,24 +132,23 @@ static char *strccpy(char* dest, const char* src, int lg, char car) {
 
 
 int
-ReqCancel(const char* JobId) {
+reqCancel(const char* jobId) {
   struct Request req;
   struct Response res;
-  const char* sv_sock= "tms-posix-socket-";
   int resultat;
   char name_sock[255];
   char euid[255];
 
-  strccpy(euid,JobId,sizeof(euid),'-');
+  strccpy(euid, jobId, sizeof(euid), '-');
 
-  snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
+  snprintf(name_sock, sizeof(name_sock), "%s/%s%s", "/tmp", SV_SOCK, euid);
 
-  memset(&req,0,sizeof(struct Request));
-  strncpy(req.sig,signature,sizeof(req.sig));
-  strncpy(req.req,lb_req_cancel,sizeof(req.req));
-  strncpy(req.data.cancel.JobId,JobId,sizeof(req.data.cancel.JobId)-1);
+  memset(&req, 0, sizeof(struct Request));
+  strncpy(req.sig, SIGNATURE, sizeof(req.sig));
+  strncpy(req.req, LB_REQ_CANCEL, sizeof(req.req));
+  strncpy(req.data.cancel.jobId,jobId, sizeof(req.data.cancel.jobId)-1);
 
-  resultat = ReqSend(name_sock, &req, &res);
+  resultat = reqSend(name_sock, &req, &res);
   if (resultat < 0) {
     return resultat;
   }
@@ -172,28 +156,26 @@ ReqCancel(const char* JobId) {
 }
 
 int
-ReqInfo(const char* JobId, struct st_job* response) {
+reqInfo(const char* jobId, struct trameJob *response) {
   struct Request req;
   struct Response ret;
-  const char* sv_sock= "tms-posix-socket-";
   int resultat;
   char name_sock[255];
   char euid[255];
 
-  strccpy(euid,JobId,sizeof(euid),'-');
+  strccpy(euid, jobId, sizeof(euid), '-');
 
-  snprintf(name_sock,sizeof(name_sock),"%s/%s%s","/tmp",sv_sock,euid);
+  snprintf(name_sock, sizeof(name_sock), "%s/%s%s", "/tmp", SV_SOCK, euid);
 
-  memset(&req,0,sizeof(struct Request));
-  memset(&ret,0,sizeof(struct Response));
-  strncpy(req.sig,signature,sizeof(req.sig));
-  strncpy(req.req,lb_req_ginfo,sizeof(req.req));
-  strncpy(req.data.info.JobId,JobId,sizeof(req.data.info.JobId)-1);
+  memset(&req, 0, sizeof(struct Request));
+  strncpy(req.sig, SIGNATURE, sizeof(req.sig));
+  strncpy(req.req, LB_REQ_GINFO, sizeof(req.req));
+  strncpy(req.data.info.jobId, jobId, sizeof(req.data.info.jobId)-1);
 
-  resultat = ReqSend(name_sock, &req, &ret);
+  resultat = reqSend(name_sock, &req, &ret);
 
   if (ret.status == 0) {
-    memcpy(response,&(ret.data.info),sizeof(struct st_job));
+    *response = ret.data.info;
     return 0;
   }
   return -1;

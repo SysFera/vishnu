@@ -24,23 +24,21 @@ PosixServer::submit(const char* scriptPath,
                     TMS_Data::Job& job,
                     char** envp){
   int ret;
-  struct st_job resultat;
-  struct st_submit op;
-  std::string OutPutPath;
-  std::string ErrorPath;
+  struct trameJob resultat;
+  struct trameSubmit op;
 
-  memset(&op,0,sizeof(op));
-  memcpy(op.name, options.getName().c_str(), strlen(options.getName().c_str()));
+  memset(&op, 0, sizeof(op));
+  strncpy(op.name, options.getName().c_str(), sizeof(op.name)-1);
   op.walltime = options.getWallTime();
-  memcpy(op.OutPutPath, options.getOutputPath().c_str(), strlen(options.getOutputPath().c_str()));
-  memcpy(op.ErrorPath, options.getErrorPath().c_str(), strlen(options.getErrorPath().c_str()));
-  memcpy(op.WorkDir, options.getWorkingDir().c_str(), strlen(options.getWorkingDir().c_str()));
+  strncpy(op.outPutPath, options.getOutputPath().c_str(), sizeof(op.outPutPath)-1);
+  strncpy(op.errorPath, options.getErrorPath().c_str(), sizeof(op.errorPath)-1);
+  strncpy(op.workDir, options.getWorkingDir().c_str(), sizeof(op.workDir)-1);
 
   switch(fork()) {
     case -1:
       return -1;
     case 0:
-      LaunchDaemon();
+      launchDaemon();
       exit(0);
       break;
     default:
@@ -50,25 +48,23 @@ PosixServer::submit(const char* scriptPath,
 
   job.setStatus(4);
   job.setJobQueue("posix");
-// If no name give a default job name
 
-  if (options.getName().compare("")==0){
+  // If no name give a default job name
+  if (options.getName() == ""){
     job.setJobName("posix_job");
   } else {
     job.setJobName(options.getName());
   }
-  strncpy(op.JobName, job.getJobName().c_str(), sizeof(op.JobName)-1);
 
-  ret = ReqSubmit(scriptPath, &resultat, &op);
+  strncpy(op.jobName, job.getJobName().c_str(), sizeof(op.jobName)-1);
 
-  OutPutPath = std::string(resultat.OutPutPath);
-  ErrorPath = std::string(resultat.ErrorPath);
+  ret = reqSubmit(scriptPath, &resultat, &op);
 
-  job.setOutputPath(OutPutPath);
-  job.setBatchJobId(std::string(resultat.JobId));
-  job.setJobId(std::string(resultat.JobId));
+  job.setOutputPath(std::string(resultat.outPutPath));
+  job.setBatchJobId(std::string(resultat.jobId));
+  job.setJobId(std::string(resultat.jobId));
 
-  job.setErrorPath(ErrorPath);
+  job.setErrorPath(std::string(resultat.errorPath));
   job.setWallClockLimit(resultat.maxTime);
 
   return ret;
@@ -77,17 +73,17 @@ PosixServer::submit(const char* scriptPath,
 
 int
 PosixServer::cancel(const char* jobId){
-  return ReqCancel(jobId);
+  return reqCancel(jobId);
 }
 
 
 int
 PosixServer::getJobState(const std::string& jobId){
-  struct st_job resultat;
+  struct trameJob resultat;
   int ret;
 
-  ret = ReqInfo(jobId.c_str(), &resultat);
-  // A voir translation des codes erreurs ou correspondance ....
+  ret = reqInfo(jobId.c_str(), &resultat);
+
   switch (resultat.state){
   case DEAD:
   case TERMINATED:
@@ -113,10 +109,10 @@ PosixServer::getJobState(const std::string& jobId){
 
 time_t
 PosixServer::getJobStartTime(const std::string& jobId){
-  struct st_job resultat;
+  struct trameJob resultat;
   int ret;
 
-  ret = ReqInfo(jobId.c_str(), &resultat);
+  ret = reqInfo(jobId.c_str(), &resultat);
   return resultat.startTime;
 }
 

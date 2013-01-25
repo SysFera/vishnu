@@ -42,71 +42,71 @@ using namespace std;
 using namespace boost::system;
 
 
-static const char* libBatchId = "VISHNU_BATCHJOB_ID";
-static const char* libBatchName = "VISHNU_BATCHJOB_NAME";
-static const char* libHostname = "VISHNU_SUBMIT_MACHINE_NAME";
-static const char* libNodefile = "VISHNU_BATCHJOB_NODEFILE";
-static const char* libNumNodes = "VISHNU_BATCHJOB_NUM_NODES";
+static const char* LIB_BATCH_ID = "VISHNU_BATCHJOB_ID";
+static const char* LIB_BATCH_NAME = "VISHNU_BATCHJOB_NAME";
+static const char* LIB_HOSTNAME = "VISHNU_SUBMIT_MACHINE_NAME";
+static const char* LIB_NODEFILE = "VISHNU_BATCHJOB_NODEFILE";
+static const char* LIB_NUM_NODES = "VISHNU_BATCHJOB_NUM_NODES";
 
-static vector<struct st_job> Board;
+static vector<struct trameJob> Board;
 
-static volatile int Terminated = 0;
+static volatile bool terminated = false;
 
 static volatile sig_atomic_t ChildSigs = 0;
 static volatile sig_atomic_t AlarmSig = 0;
 
-static char HomeDir[255];
+static char homeDir[255];
+
+/*
+ * Function SignalHandler for SIGCHLD
+ */
+
+static bool isDead(const struct trameJob& test) {
+  return (test.state == TERMINATED);
+}
 
 static void
-CheckJobs() {
-  int Taille;
-  int i=0;
-  bool CheckIn5s = false;
-
-  Taille = Board.size();
+checkJobs() {
+  int taille;
+  bool checkIn5s = false;
+  vector<struct trameJob>::iterator it;
+ 
+  taille = Board.size();
 
   // End of Daemon ?
-  if (Taille == 0) {
-    Terminated = 1;
+  if (taille == 0) {
+    terminated = true;
     return;
   }
 
   // Clean the Board off Deads Processes
-  while (i < Taille) {
-    for (i = 0; i<Taille; i++) {
-      if (Board[i].state == TERMINATED) {
-        Board.erase(Board.begin()+i);
-        CheckIn5s = true;
-        break;
-      }
-    }
-    Taille = Board.size();
+  Board.erase(std::remove_if(Board.begin(), Board.end(), isDead), Board.end());
+
+  if (taille != Board.size()) {
+    checkIn5s = true;
   }
-
-  Taille = Board.size();
-
+ 
   // Manage Processes states
-  for (i = 0; i<Taille; i++) {
-    if (Board[i].state == KILL) {
-      if (kill(Board[i].pid,0) == -1) {
-        Board[i].state = TERMINATED;
-        unlink(Board[i].ScriptPath);
+  for (it = Board.begin(); it != Board.end(); ++it) {
+    if (it->state == KILL) {
+      if (kill(it->pid, 0) == -1) {
+        it->state = TERMINATED;
+        unlink(it->scriptPath);
       }
-      CheckIn5s = true;
     }
   }
 
   // Checks for normal ends of process
-  for (i = 0; i<Taille; i++) {
-    if (kill(Board[i].pid,0) == -1) {
-      Board[i].state = TERMINATED;
-      unlink(Board[i].ScriptPath);
-      CheckIn5s = true;
+  for (it = Board.begin(); it != Board.end(); ++it) {
+    if ( kill(it->pid,0) == -1 ) {
+      it->state = TERMINATED;
+      unlink(it->scriptPath);
+      checkIn5s = true;
     }
   }
 
   // Groundwork for futurs signals
-  if (CheckIn5s) {
+  if (checkIn5s) {
     ChildSigs = 1;
     alarm(5);
   } else {
@@ -114,26 +114,26 @@ CheckJobs() {
   }
 }
 
+/*
+ * Function signal handler SIGALARM
+ */
 static void
-TimeStatement() {
-  int Taille;
-  int i;
+timeStatement() {
   time_t now;
-  time_t temp;
+  time_t tmp;
   time_t futur = 0;
+  vector<struct trameJob>::iterator it;
 
   now = time(NULL);
 
-  Taille = Board.size();
-
   // Manage Dangling Processes
-  for (i = 0; i<Taille; i++) {
-    if (Board[i].state == KILL) {
-      if (kill(Board[i].pid,0) == -1) {
-        Board[i].state = KILL9;
-        kill(Board[i].pid,SIGKILL);
+  for (it = Board.begin(); it != Board.end(); ++it) {
+    if (it->state == KILL) {
+      if (kill(it->pid,0) == -1) {
+        it->state = KILL9;
+        kill(it->pid,SIGKILL);
       } else {
-        Board[i].state = TERMINATED;
+        it->state = TERMINATED;
         AlarmSig = 0;
       }
     }
@@ -145,18 +145,18 @@ TimeStatement() {
   }
 
   // Manage walclocklimit
-  for (i = 0; i<Taille; i++) {
-    if (Board[i].maxTime != 0) {
-      if ( (Board[i].startTime + Board[i].maxTime) <= now) {
-        Board[i].state = KILL;
-        kill(Board[i].pid,SIGTERM);
+  for (it = Board.begin(); it != Board.end(); ++it) {
+    if (it->maxTime != 0) {
+      if ( (it->startTime + it->maxTime) <= now) {
+        it->state = KILL;
+        kill(it->pid,SIGTERM);
       } else {
-        temp = (Board[i].startTime + Board[i].maxTime) - now;
+        tmp = (it->startTime + it->maxTime) - now;
         if (futur == 0) {
-          futur = temp;
+          futur = tmp;
         } else {
-          if (temp < futur) {
-            futur = temp;
+          if (tmp < futur) {
+            futur = tmp;
           }
         }
       }
@@ -167,8 +167,11 @@ TimeStatement() {
     alarm(futur);
   }
   AlarmSig = 0;
-
 }
+
+/*
+ * Function System sigchild handler
+ */
 
 static void
 sigchldHandler(int sig) {
@@ -181,6 +184,10 @@ sigchldHandler(int sig) {
   }
 }
 
+/*
+ * Function System sigalarm handler
+ */
+
 static void
 sigalarmHandler(int sig) {
   AlarmSig = 1;
@@ -188,7 +195,7 @@ sigalarmHandler(int sig) {
 
 
 static int
-Daemonize() {
+daemonize() {
   long maxfd;
   int fd;
 
@@ -216,6 +223,7 @@ Daemonize() {
 
   umask(0);
   chdir("/");
+
   maxfd = sysconf(_SC_OPEN_MAX);
   if (maxfd == -1) {
     maxfd = 128;
@@ -232,81 +240,83 @@ Daemonize() {
     return -1;
   }
 
-  (void)dup2(STDIN_FILENO,STDOUT_FILENO);
-  (void)dup2(STDIN_FILENO,STDERR_FILENO);
+  dup2(STDIN_FILENO,STDOUT_FILENO);
+  dup2(STDIN_FILENO,STDERR_FILENO);
 
   return 0;
 }
 
-int
-buildEnvironment(){
+static void
+buildEnvironment() {
   int fdHostname;
   boost::system::error_code ec;
   const string hostname = boost::asio::ip::host_name(ec);
   static const boost::filesystem::path templateHostname("/tmp/NODELIST_%%%%%%");
 
   // variable VISHNU_SUBMIT_MACHINE_NAME
-  setenv(libHostname, hostname.c_str(), true);
+  setenv(LIB_HOSTNAME, hostname.c_str(), true);
 
   // variable VISHNU_BATCHJOB_NODEFILE
   boost::filesystem::path fileHostname = boost::filesystem::unique_path(templateHostname,ec);
   fdHostname = open(fileHostname.c_str(),O_CREAT|O_WRONLY,S_IRUSR|S_IWUSR);
   write(fdHostname,hostname.c_str(),strlen(hostname.c_str()));
   close(fdHostname);
-  setenv(libNodefile,fileHostname.c_str(),true);
+  setenv(LIB_NODEFILE,fileHostname.c_str(),true);
 
   // variable VISHNU_BATCHJOB_NUM_NODES
-  setenv(libNumNodes, "1", true);
-
-  return 0;
+  setenv(LIB_NUM_NODES, "1", true);
 }
 
 
 static int
-execCommand(const char* command,const char* fstdout, const char* fstderr, const char* working_dir, struct st_job* current, int maxTime) {
-  char* args[16];
-  char commandLine[255];
+execCommand( const boost::filesystem::path &command,
+             const boost::filesystem::path &fstdout,
+             const boost::filesystem::path &fstderr,
+             const boost::filesystem::path workingDir,
+             struct trameJob *current, int maxTime) {
+  char* args[5];
+  std::string commandLine;
+  std::string envJobId;
   pid_t pid;
-  ostringstream temp;
   int fd;
-  boost::filesystem::path p;
 
-  args[1] = (char *)"/bin/sh";
-  args[2] = (char *)"-c";
-  strcpy(commandLine,"exec ");
-  strncat(commandLine,command,sizeof(commandLine)-strlen(commandLine)-1);
-  args[3] = commandLine;
+  args[1] = const_cast<char *>("/bin/sh");
+  args[2] = const_cast<char*>("-c");
+  commandLine = "exec ";
+  commandLine.append(command.string());
+  args[3] = const_cast<char *>(commandLine.c_str());
   args[4] = NULL;
   args[0] = args[1];
 
-  if (strlen(working_dir) != 0) {
-    if (chdir(working_dir) < 0) {
-      chdir(HomeDir);
+  if ( ! workingDir.empty() ) {
+    if (chdir(workingDir.c_str()) < 0) {
+      chdir(homeDir);
     }
   }
 
-  getcwd(current->HomeDir,sizeof(current->HomeDir));
+  getcwd(current->homeDir, sizeof(current->homeDir));
 
-  memset(current->JobId,0,sizeof current->JobId);
+  memset(current->jobId, 0, sizeof current->jobId);
 
   if ((pid = fork()) == 0) {
-    pid = getpid();
-    temp<<pid;
-    setenv(libBatchId,temp.str().c_str(),true);
+    envJobId = boost::lexical_cast<string>(geteuid());
+    envJobId.push_back('-');
+    envJobId.append(boost::lexical_cast<string>(getpid()));
 
-    if (fstdout != NULL) {
-      fd = open(fstdout,O_CREAT|O_RDWR,S_IRUSR|S_IWUSR);
-      close(STDOUT_FILENO);
+    setenv(LIB_BATCH_ID, envJobId.c_str(), true);
+
+    if ( ! fstdout.empty() ) {
+      fd = open(fstdout.c_str(), O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
       dup2(fd,STDOUT_FILENO);
       close(fd);
     }
 
-    if (fstderr != NULL) {
-      fd = open(fstderr,O_CREAT|O_RDWR,S_IRUSR|S_IWUSR);
-      close(STDERR_FILENO);
+    if ( ! fstderr.empty() ) {
+      fd = open(fstderr.c_str(), O_CREAT|O_RDWR, S_IRUSR|S_IWUSR);
       dup2(fd,STDERR_FILENO);
       close(fd);
     }
+
     execvp(args[1],args+1);
   }
   if (pid < 0) {
@@ -314,45 +324,41 @@ execCommand(const char* command,const char* fstdout, const char* fstderr, const 
   }
 
   // get Job info
-  snprintf(current->JobId,sizeof(current->JobId)-1,"%d-%d",geteuid(),pid);
+  snprintf(current->jobId, sizeof(current->jobId)-1, "%d-%d", geteuid(),pid);
   current->pid = pid;
   current->startTime = time(NULL);
   current->state = RUNNING;
   current->maxTime = maxTime;
 
-  p = boost::filesystem::path(fstdout);
-
-  if ( p.is_absolute() ) {
-    strncpy(current->OutPutPath,fstdout,sizeof(current->OutPutPath));
+  if ( fstdout.is_absolute() ) {
+    strncpy(current->outPutPath, fstdout.c_str(), sizeof(current->outPutPath));
   } else {
-    snprintf(current->OutPutPath,sizeof(current->OutPutPath),"%s/%s",current->HomeDir,fstdout);
+    snprintf(current->outPutPath, sizeof(current->outPutPath), "%s/%s", current->homeDir, fstdout.c_str());
   }
 
-  p = boost::filesystem::path(fstderr);
- 
-  if ( p.is_absolute() ) {
-    strncpy(current->ErrorPath,fstderr,sizeof(current->ErrorPath));
+  if ( fstderr.is_absolute() ) {
+    strncpy(current->errorPath, fstderr.c_str(), sizeof(current->errorPath));
   } else {
-    snprintf(current->ErrorPath,sizeof(current->ErrorPath),"%s/%s",current->HomeDir,fstderr);
+    snprintf(current->errorPath, sizeof(current->errorPath), "%s/%s", current->homeDir, fstderr.c_str());
   }
 
   return 0;
 }
 
 static int
-OpenSocketServer(const char* socketName) {
+openSocketServer(const char* socketName) {
   int sfd;
   struct sockaddr_un addr;
-  struct stat st_info;
+  struct stat info;
   int ret;
   int ret2;
   int sv_errno;
   const char* stest = "COUCOU";
   char rtest[128];
 
-  ret = stat(socketName,&st_info);
+  ret = stat(socketName, &info);
   if (ret == 0) {
-    ret2 = ReqEcho(stest,rtest);
+    ret2 = reqEcho(stest,rtest);
     if (ret2==0) {
       return -3;
     }
@@ -378,7 +384,7 @@ OpenSocketServer(const char* socketName) {
   addr.sun_family = AF_UNIX;
   strncpy(addr.sun_path, socketName, sizeof(addr.sun_path)-1);
 
-  if (::bind(sfd, (struct sockaddr *)&addr,sizeof(struct sockaddr_un)) == -1) {
+  if (::bind(sfd, (struct sockaddr *)&addr, sizeof(struct sockaddr_un)) == -1) {
     return -4;
   }
 
@@ -390,7 +396,7 @@ OpenSocketServer(const char* socketName) {
 }
 
 static int
-AcceptRequest(int sfd, struct Request* req) {
+acceptRequest(int sfd, struct Request* req) {
   int cfd;
 
   while ( (cfd = accept(sfd,NULL,NULL)) < 0) {
@@ -398,12 +404,12 @@ AcceptRequest(int sfd, struct Request* req) {
       return -7;
     }
     if ( ChildSigs == 1) {
-      CheckJobs();
+      checkJobs();
     }
     if ( AlarmSig == 1) {
-      TimeStatement();
+      timeStatement();
     }
-    if (Terminated == 1) {
+    if (terminated) {
       return -1;
     }
   }
@@ -415,30 +421,31 @@ AcceptRequest(int sfd, struct Request* req) {
 }
 
 static int
-RequestEcho(struct Request* req, struct Response* ret) {
-  memcpy(ret->data.echo.data,req->data.echo.data,sizeof(ret->data.echo));
+requestEcho(struct Request* req, struct Response* ret) {
+  memcpy(ret->data.echo.data, req->data.echo.data, sizeof(ret->data.echo));
   return 0;
 }
 
 
 
 static int
-RequestSubmit(struct Request* req, struct Response* ret) {
+requestSubmit(struct Request* req, struct Response* ret) {
   sigset_t blockMask;
   sigset_t emptyMask;
-  struct st_job currentState;
-  char fout[256];
-  char ferr[256];
+  struct trameJob currentState;
+  boost::filesystem::path fout;
+  boost::filesystem::path ferr;
   int wallclocklimit;
   std::map<std::string, std::string> context;
   boost::system::error_code ec;
-  static const boost::filesystem::path foutName("VISHNU-%%%%%%.out");
+  const boost::filesystem::path foutName("VISHNU-%%%%%%.out");
   boost::filesystem::path fileOut = boost::filesystem::unique_path(foutName,ec);
-  static const boost::filesystem::path ferrName("VISHNU-%%%%%%.err");
+  const boost::filesystem::path ferrName("VISHNU-%%%%%%.err");
   boost::filesystem::path fileErr = boost::filesystem::unique_path(ferrName,ec);
-  static const boost::filesystem::path scriptName("/tmp/VISHNU-script%%%%%.sh");
+  const boost::filesystem::path scriptName("/tmp/VISHNU-script%%%%%.sh");
   boost::filesystem::path fileScript = boost::filesystem::unique_path(scriptName,ec);
   boost::filesystem::path tmpScript;
+  boost::filesystem::path workDir;
 
   sigemptyset(&emptyMask);
 
@@ -447,23 +454,21 @@ RequestSubmit(struct Request* req, struct Response* ret) {
 
   POSIXParser::parseFile(req->data.submit.cmd, context);
 
-  if (strlen(req->data.submit.OutPutPath) != 0) {
-    strncpy(fout, req->data.submit.OutPutPath, sizeof(fout));
+  if (strlen(req->data.submit.outPutPath) != 0) {
+    fout = req->data.submit.outPutPath;
   } else if (context.find("vishnu_output") != context.end()) {
-    strncpy(fout, context["vishnu_output"].c_str(), sizeof(fout));
+    fout = context["vishnu_output"];
   } else {
-    strncpy(fout,fileOut.c_str(),sizeof(fout));
+    fout = fileOut;
   }
 
-  if (strlen(req->data.submit.ErrorPath) != 0) {
-    strncpy(ferr, req->data.submit.ErrorPath, sizeof(ferr));
+  if (strlen(req->data.submit.errorPath) != 0) {
+    ferr = req->data.submit.errorPath;
   } else if (context.find("vishnu_error") != context.end()) {
-    strncpy(ferr, context["vishnu_error"].c_str(), sizeof(ferr));
+    ferr = context["vishnu_error"];
   } else {
-    strncpy(ferr,fileErr.c_str(),sizeof(ferr));
+    ferr = fileErr;
   }
-
-  sigprocmask(SIG_SETMASK, &blockMask, NULL);
 
   if (req->data.submit.walltime > 0) {
     wallclocklimit = req->data.submit.walltime;
@@ -472,7 +477,6 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   } else {
     wallclocklimit = 0;
   }
-
   if (wallclocklimit <0) {
     wallclocklimit = 0;
   }
@@ -484,39 +488,42 @@ RequestSubmit(struct Request* req, struct Response* ret) {
   boost::filesystem::copy_file(tmpScript, fileScript,
                                boost::filesystem::copy_option::overwrite_if_exists,ec);
 
-  setenv(libBatchName, req->data.submit.JobName, true);
+  setenv(LIB_BATCH_NAME, req->data.submit.jobName, true);
 
-  if (context.find("vishnu_working_dir")  != context.end()) {
-    execCommand(fileScript.c_str(), fout, ferr,
-                context["vishnu_working_dir"].c_str(), &currentState, wallclocklimit);
+  if (context.find("vishnu_working_dir") != context.end()) {
+    workDir = context["vishnu_working_dir"];
   } else {
-    execCommand(fileScript.c_str(), fout, ferr, HomeDir, &currentState, wallclocklimit);
+    workDir = homeDir;
   }
+
+  sigprocmask(SIG_SETMASK, &blockMask, NULL);
+
+  execCommand(fileScript, fout, ferr, workDir, &currentState, wallclocklimit);
 
   sigprocmask(SIG_SETMASK, &emptyMask, NULL);
 
-  strncpy(currentState.ScriptPath,fileScript.c_str(),sizeof(currentState.ScriptPath));
+  strncpy(currentState.scriptPath,fileScript.c_str(),sizeof(currentState.scriptPath));
   Board.push_back(currentState);
 
   AlarmSig = 1;
 
-  memcpy(&(ret->data.submit),&currentState,sizeof(struct st_job));
+  ret->data.submit = currentState;
 
   return 0;
 }
 
 static int
-RequestCancel(struct Request* req, struct Response* ret) {
-  char* JobId;
+requestCancel(struct Request* req, struct Response* ret) {
+  char* jobId;
   int i;
-  int Taille;
+  int taille;
 
-  JobId = req->data.cancel.JobId;
+  jobId = req->data.cancel.jobId;
 
-  Taille = Board.size();
+  taille = Board.size();
 
-  for (i = 0; i<Taille; i++) {
-    if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
+  for (i = 0; i < taille; i++) {
+    if (strncmp(jobId, Board[i].jobId, sizeof(Board[i].jobId)) == 0) {
       kill(Board[i].pid,SIGTERM);
       Board[i].state = KILL;
     }
@@ -526,56 +533,47 @@ RequestCancel(struct Request* req, struct Response* ret) {
 }
 
 static int
-RequestGetInfo(struct Request* req, struct Response* ret) {
-  char* JobId;
-  int Taille;
+requestGetInfo(struct Request* req, struct Response* ret) {
+  char* jobId;
+  int taille;
   int i;
-  struct st_job NoJob;
+  struct trameJob NoJob;
 
-  JobId = req->data.info.JobId;
+  jobId = req->data.info.jobId;
 
-  Taille = Board.size();
+  taille = Board.size();
 
-  memset(&NoJob,0,sizeof(struct st_job));
+  memset(&NoJob,0,sizeof(struct trameJob));
   NoJob.state = DEAD;
 
-  for (i = 0; i<Taille; i++) {
-    if (strncmp(JobId,Board[i].JobId,sizeof(Board[i].JobId)) == 0) {
-      memcpy(&(ret->data.info),&(Board[i]), sizeof(struct st_job));
+  for (i = 0; i<taille; i++) {
+    if (strncmp(jobId,Board[i].jobId,sizeof(Board[i].jobId)) == 0) {
+      memcpy(&(ret->data.info),&(Board[i]), sizeof(struct trameJob));
       return 0;
     }
   }
-  memcpy(&(ret->data.info),&NoJob,sizeof(struct st_job));
+  memcpy(&(ret->data.info),&NoJob,sizeof(struct trameJob));
 
   return 0;
 }
 
 static int
-RequestGetStartTime(struct Request* req, struct Response* ret) {
-  return 0;
-}
-
-static int
-RequestKill(struct Request* req, struct Response* ret) {
-  Terminated = 1;
+requestKill(struct Request* req, struct Response* ret) {
+  terminated = true;
   return 0;
 }
 
 
 void
-LaunchDaemon() {
+launchDaemon() {
   struct sigaction sa;
   int sfd;
   int cfd;
   struct Request req;
   struct Response ret;
-  const char* sv_sock =  "tms-posix-socket-";
   char name_sock[255];
   uid_t euid;
   struct passwd* lpasswd;
-
-  char buffer[255];
-
 
   euid = geteuid();
 
@@ -585,12 +583,11 @@ LaunchDaemon() {
    exit(1);
   }
 
-  strncpy(HomeDir,lpasswd->pw_dir,sizeof(HomeDir));
+  strncpy(homeDir,lpasswd->pw_dir,sizeof(homeDir));
 
-  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",sv_sock,euid);
+  snprintf(name_sock,sizeof(name_sock),"%s/%s%d","/tmp",SV_SOCK,euid);
 
-
-  Daemonize();
+  daemonize();
 
   sigemptyset(&sa.sa_mask);
   sa.sa_flags = 0;
@@ -606,36 +603,36 @@ LaunchDaemon() {
     exit(6);
   }
 
-  sfd = OpenSocketServer(name_sock);
+  sfd = openSocketServer(name_sock);
   if (sfd < 0) {
     exit(-sfd);
   }
 
-  for (Terminated = 0; Terminated == 0; ) {
-    cfd = AcceptRequest(sfd, &req);
+  for (terminated = false; ! terminated ; ) {
+    cfd = acceptRequest(sfd, &req);
 
     if (cfd < 0) {
       break;
     }
 
-    if (strncmp(req.sig,signature,sizeof(req.sig)) != 0) {
+    if (strncmp(req.sig, SIGNATURE, sizeof(req.sig)) != 0) {
       continue;
     }
 
-    if (strncmp(req.req,lb_req_echo,sizeof(req.req)) == 0) {
-      ret.status = RequestEcho(&req,&ret);
+    if (strncmp(req.req, LB_REQ_ECHO, sizeof(req.req)) == 0) {
+      ret.status = requestEcho(&req,&ret);
     }
-    if (strncmp(req.req,lb_req_submit,sizeof(req.req)) == 0) {
-      ret.status = RequestSubmit(&req,&ret);
+    if (strncmp(req.req, LB_REQ_SUBMIT, sizeof(req.req)) == 0) {
+      ret.status = requestSubmit(&req,&ret);
     }
-    if (strncmp(req.req,lb_req_cancel,sizeof(req.req)) == 0) {
-      ret.status = RequestCancel(&req,&ret);
+    if (strncmp(req.req, LB_REQ_CANCEL, sizeof(req.req)) == 0) {
+      ret.status = requestCancel(&req,&ret);
     }
-    if (strncmp(req.req,lb_req_ginfo,sizeof(req.req)) == 0) {
-      ret.status = RequestGetInfo(&req,&ret);
+    if (strncmp(req.req, LB_REQ_GINFO, sizeof(req.req)) == 0) {
+      ret.status = requestGetInfo(&req,&ret);
     }
-    if (strncmp(req.req,lb_req_kill,sizeof(req.req)) == 0) {
-      ret.status = RequestKill(&req,&ret);
+    if (strncmp(req.req, LB_REQ_KILL, sizeof(req.req)) == 0) {
+      ret.status = requestKill(&req,&ret);
     }
 
     write(cfd,&ret,sizeof(struct Response));
@@ -643,10 +640,10 @@ LaunchDaemon() {
     close(cfd);
 
     if ( ChildSigs == 1) {
-      CheckJobs();
+      checkJobs();
     }
     if ( AlarmSig == 1) {
-      TimeStatement();
+      timeStatement();
     }
   }
   unlink(name_sock);
