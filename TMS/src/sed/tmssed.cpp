@@ -60,7 +60,6 @@ int main(int argc, char* argv[], char* envp[]) {
   string TMSTYPE = "tmssed";
   string cfg;
   string uri;
-  std::string defaultBatchConfig;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -78,13 +77,14 @@ int main(int argc, char* argv[], char* envp[]) {
     config->getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
+    config->getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
 
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
     dbConfig.check();
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
-    config.getConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
+    config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
     if (batchTypeStr == "TORQUE") {
 #ifndef HAVE_TORQUE_2_3
       std::cerr << "\nError: The support of TORQUE is not enabled in this server!\n";
@@ -157,15 +157,15 @@ int main(int argc, char* argv[], char* envp[]) {
       break;
     }
     case LOADLEVELER: {
-      if (batchVersion != "3.x" || batchVersion != "2.x") {
+      if (batchVersion != "3.x" && batchVersion != "2.x") {
         versError = "2.x and 3.x";
       }
       break;
     }
     case SLURM: {
-      if (batchVersion != "2.2"
-          || batchVersion != "2.3"
-          || batchVersion != "2.4") {
+      if (batchVersion != "2.2" &&
+          batchVersion != "2.3" &&
+          batchVersion != "2.4") {
         versError = "2.2, 2.3 and 2.4";
       }
 
@@ -187,9 +187,8 @@ int main(int argc, char* argv[], char* envp[]) {
       }
       break;
     }
-    default: {
-      // nothing to do
-    }
+    default:
+      break;
     }
 
     if (!versError.empty()) {
@@ -214,7 +213,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
     try {
       //Check if machineId is authorized
-      if (0 == machineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)) {
+      if (machineId == AUTOMATIC_SUBMIT_JOB_KEYWORD) {
         std::cerr << "\n" << AUTOMATIC_SUBMIT_JOB_KEYWORD
                   << " is not authorized as machine identifier. "
                   << "It is a TMS keyword.\n\n";
@@ -229,20 +228,19 @@ int main(int argc, char* argv[], char* envp[]) {
 
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId,
-                         batchType, remoteBinDirectory, config);
+      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, config);
 
       std::vector<std::string> ls = server.get()->getServices();
       registerSeD(TMSTYPE, *config, cfg, ls);
 
-      UMS_Data::UMS_DataFactory_ptr ecoreFactory =
-          UMS_Data::UMS_DataFactory::_instance();
+      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+
+      // check the machine
       UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
       machine->setMachineId(machineId);
-
       MachineServer machineServer(machine);
       machineServer.checkMachine();
-      delete machine;
+      if (machine) delete machine;
 
       // Initialize the DIET SeD
       if (!res) {
@@ -266,18 +264,18 @@ int main(int argc, char* argv[], char* envp[]) {
       } else if (pidp > 0) {
         MonitorTMS monitor(interval);
         dbConfig.setDbPoolSize(1);
-        monitor.init(vishnuId, dbConfig, machineId, batchType);
+        monitor.init(vishnuId, dbConfig, machineId, batchType, batchVersion);
         monitor.run();
       } else {
         MonitorTMS monitor2(interval);
         dbConfig.setDbPoolSize(1);
-        monitor2.init(vishnuId, dbConfig, machineId, POSIX);
+        monitor2.init(vishnuId, dbConfig, machineId, POSIX, batchVersion);
         monitor2.run();
       }
     } else {
       MonitorTMS monitor(interval);
       dbConfig.setDbPoolSize(1);
-      monitor.init(vishnuId, dbConfig, machineId, batchType);
+      monitor.init(vishnuId, dbConfig, machineId, batchType, batchVersion);
       monitor.run();
     }
   } else {

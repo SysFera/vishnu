@@ -1084,7 +1084,7 @@ vishnu::convertToBatchType(const std::string& batchName) {
 		batchType = SGE;
   } else if (batchName == "DELTACLOUD") {
 		batchType = DELTACLOUD;
-  } else if (batchName == "PBSPRO") {
+  } else if (batchName == "PBS") {
     batchType = PBSPRO;
   } else if (batchName == "POSIX") {
     batchType = POSIX;

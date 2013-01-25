@@ -74,23 +74,28 @@ main(int argc, char* argv[], char* envp[]) {
   BatchType batchType;
   std::string batchVersion;
 
-  if(argc < 5) { // Too few arguments
+  if(argc < 6) { // Too few arguments
     usage(argv[0]);
   }
   action = std::string(argv[1]);
+  batchType = vishnu::convertToBatchType(argv[2]);
+  batchVersion = argv[3];
+  jobSerializedPath = argv[4];
+  slaveErrorPath = argv[5];
+
+  for(int i=0; i< argc; i++) {
+    std::cout << argv[i] << " ";
+  }
+ std::cout << "\n";
   if(action.compare("SUBMIT")==0) {
-    if(argc < 8) {
-       // Too few arguments
+    if(argc < 9) {
+      // Too few arguments
       usage(argv[0]);
     }
-
     // Get batchtype
-    batchType = convertToBatchType(argv[2]);
-    jobSerializedPath = argv[3];
-    slaveErrorPath = argv[4];
-    slaveJobFile = argv[5];
-    optionsPath = argv[6];
-    jobScriptPath = argv[7];
+    slaveJobFile = argv[6];
+    optionsPath = argv[7];
+    jobScriptPath = argv[8];
   } else if(action.compare("CANCEL")!=0) {
     usage(argv[0]);
   }
@@ -126,7 +131,6 @@ main(int argc, char* argv[], char* envp[]) {
 
       //Submits the job
       if(batchServer->submit(jobScriptPath, *submitOptions, *job)==0){;
-
         //To serialize the job object
         ::ecorecpp::serializer::serializer _ser;
         std::string slaveJob = _ser.serialize_str(job);

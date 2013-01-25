@@ -49,8 +49,7 @@ SSHJobExec::SSHJobExec(const std::string& user,
                        const std::string& submitOptionsSerialized):
   muser(user), mhostname(hostname), mbatchType(batchType),
   mjobSerialized(jobSerialized),
-  msubmitOptionsSerialized(submitOptionsSerialized),
-  mcloudEndpoint("")
+  msubmitOptionsSerialized(submitOptionsSerialized)
 {
   if (batchVersion.empty()) {
     mbatchVersion = "-";  // mbatchVersion must never be empty
@@ -329,7 +328,7 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
     value = "SGE";
     break;
   case PBSPRO:
-    value = "PBSPRO";
+    value = "PBS";
     break;
   case DELTACLOUD:
     value = "DELTACLOUD";

@@ -20,12 +20,11 @@ class JobServer
 {
 
 public:
-	/**
+  /**
   * \param sessionServer The object which encapsulates the session information
   * \param machineId The machine identifier
   * \param job The job data structure
-  * \param batchType The batch scheduler type
-  * \param batchVersion The batch scheduler version
+  * \param sedConfig A pointer to the SeD configuration
   * \brief Constructor
   */
   explicit JobServer(const SessionServer& sessionServer,
@@ -58,7 +57,7 @@ public:
    * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
-	int cancelJob(const std::string& slaveDirectory);
+  int cancelJob(const std::string& slaveDirectory);
 
   /**
    * \brief Function to get job information
@@ -84,7 +83,7 @@ public:
   ExecConfiguration_Ptr
   getSedConfig() const;
 
-  private:
+private:
 
   /**
    * \brief Function to scan VISHNU error message
@@ -156,7 +155,7 @@ public:
   */
   ExecConfiguration_Ptr msedConfig;
 
-  private:
+private:
 
   /**
   * \brief Function to set the path of output directory
@@ -165,8 +164,8 @@ public:
   * \param content the script content to be update which the generated path
   */
   void setOutputDir(const std::string& parentDir,
-		const std::string & dirSuffix,
-		  std::string & content);
+                    const std::string & dirSuffix,
+                    std::string & content);
 
   /*
    * \brief Return the directive associated to the batch scheduler

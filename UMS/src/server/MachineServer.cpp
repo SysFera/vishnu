@@ -9,6 +9,7 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
+#include <boost/format.hpp>
 
 /**
 * \brief Constructor
@@ -279,9 +280,9 @@ MachineServer::getMachineName() {
 */
 void MachineServer::checkMachine() {
 
-  if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").size()==0){
-    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, mmachine->getMachineId()+" does not exist among the defined"
-                                                                 " machines by VISHNU System");
+  if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").empty()){
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,
+                             (boost::format("The machine id %1% does not exist")%mmachine->getMachineId()).str());
   }
   if(getAttribut("where status=1 and  machineid='"+mmachine->getMachineId()+"'").size() == 0) {
     throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);

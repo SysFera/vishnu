@@ -32,13 +32,6 @@ class BatchFactory
      */
     ~BatchFactory();
 
-    // /**
-    //  * \brief Function to create a batchServer.
-    //  * \return an instance of BatchServer
-    //  */
-    // BatchServer*
-    // getBatchServerInstance();
-
     /**
      * \brief Function to create a batchServer.
      * \param batchType The type of batchServer to create

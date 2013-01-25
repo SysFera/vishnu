@@ -175,6 +175,8 @@ tms_uriAddr=tcp://127.0.0.1:5565
 # VISHNU supports TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS and POSIX
 batchSchedulerType=SLURM
 
+batchSchedulerVersion=2.2
+
 # batchSchedulerVersion (M<TMS>): Defines the versoin of the batch scheduler TMS
 # will handle.
 # Required for TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBS
