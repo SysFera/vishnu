@@ -41,38 +41,6 @@ loadPluginBatch(const char *name) {
   return instance;
 }
 
-
-
-// /**
-//  * \brief Function to create a batchServer.
-//  * \param batchType The type of batchServer to create
-//  * \return an instance of BatchServer
-//  */
-// BatchServer*
-// BatchFactory::getBatchServerInstance() {
-//   BatchServer *instance(NULL);
-// #ifdef HAVE_TORQUE_2_3
-//     instance = loadPluginBatch("vishnu-tms-torque2.3");
-// #elif HAVE_LOADLEVELER_2_5
-//     instance = loadPluginBatch("vishnu-tms-loadleveler2.5");
-// #elif HAVE_SLURM_2_2
-//       instance = loadPluginBatch("vishnu-tms-slurm2.2");
-// #elif HAVE_SLURM_2_3
-//       instance = loadPluginBatch("vishnu-tms-slurm2.3");
-// #elif HAVE_LSF_7_0
-//       instance = loadPluginBatch("vishnu-tms-lsf7.0");
-// #elif HAVE_SGE_11
-//       instance = loadPluginBatch("vishnu-tms-sge11");
-// #elif HAVE_PBSPRO_10_4
-//       instance = loadPluginBatch("vishnu-tms-pbspro10.4");
-//#elif HAVE_DELTACLOUD
-//      instance = loadPluginBatch("vishnu-tms-deltacloud");
-// #elif HAVE_TMSPOSIX
-//       instance = loadPluginBatch("vishnu-tms-posix1.0");
-// #endif
-//   return static_cast<BatchServer *>(instance);
-// }
-
 /**
  * \brief Function to create a batchServer.
  * \param batchType The type of batchServer to create

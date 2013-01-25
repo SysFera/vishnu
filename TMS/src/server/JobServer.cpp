@@ -26,8 +26,7 @@ using namespace std;
  * \param sessionServer The object which encapsulates the session information
  * \param machineId The machine identifier
  * \param job The job data structure
- * \param batchType The batch scheduler type
- * \param batchVersion The batch scheduler version
+ * \param sedConfig A pointer to the SeD configuration
  * \brief Constructor
  */
 JobServer::JobServer(const SessionServer& sessionServer,
@@ -37,10 +36,12 @@ JobServer::JobServer(const SessionServer& sessionServer,
   msessionServer(sessionServer), mmachineId(machineId), mjob(job), msedConfig(sedConfig) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
-  if(msedConfig) {
-    std::string batchName;
-    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchName);
-    mbatchType =  convertToBatchType(batchName);
+  if (msedConfig) {
+    std::string value;
+    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, value);
+    mbatchType =  convertToBatchType(value);
+    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, value);
+    mbatchVersion =  value;
   }
 }
 
@@ -80,10 +81,10 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string machineName = machineServer.getMachineName();
   delete machine;
 
-    BatchType batchType = mbatchType;
-    if (options.isPosix()) {
-      batchType = POSIX;
-    }
+  BatchType batchType = mbatchType;
+  if (options.isPosix()) {
+    batchType = POSIX;
+  }
   Env env(batchType);
 
   std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
@@ -117,8 +118,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
   }
-  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos ||
-      mbatchType == DELTACLOUD ) {
+  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
     setOutputDir(workingDir, suffix, scriptContentRef);
     needOutputDir = true ;
   }
@@ -135,16 +135,19 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
   //Initialize a ssh engine to submit the job to the underlying batch system
-  SSHJobExec sshJobExec(acLogin, machineName, mbatchType, jobSerialized, submitOptionsSerialized);
+  SSHJobExec sshJobExec(acLogin, machineName,
+                        batchType,
+                        mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
+                        jobSerialized, submitOptionsSerialized);
+
   // Create the output directory if necessary
   if (needOutputDir) {
     if(mbatchType == DELTACLOUD) {
-      // Create the output directory if necessary and set NODEFILE
-      vishnu::createWorkingDir(mjob.getOutputDir());
+      vishnu::createWorkingDir(mjob.getOutputDir()); // Create the output directory
       env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
       env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
     } else if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) { // Create the output directory through ssh
-      throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
+      throw SystemException(ERRCODE_INVDATA, "Failed to create the job's output directory : " + mjob.getOutputDir()) ;
     }
   }
   // Convert the script
@@ -161,17 +164,10 @@ int JobServer::submitJob(const std::string& scriptContent,
   if (options.getSpecificParams().size()) {
     treatSpecificParams(options.getSpecificParams(), convertedScript);
   }
-        if (!defaultBatchOption.empty()){
+  if (!defaultBatchOption.empty()){
     processDefaultOptions(defaultBatchOption, convertedScript, directive);
   }
-	SSHJobExec sshJobExec(acLogin, machineName,
-                              batchType,
-                              mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
-                              jobSerialized, submitOptionsSerialized);
-	if( needOutputDir &&
-			sshJobExec.execCmd("mkdir " + mjob.getOutputDir())!=0) {
-			throw SystemException(ERRCODE_INVDATA, "Unable to set the job's output directory : " + mjob.getOutputDir()) ;
-		}
+
   // Create the script file and make it executable
   vishnu::saveInFile(scriptPath, convertedScript);
   if(0 != chmod(scriptPath.c_str(),
@@ -180,9 +176,8 @@ int JobServer::submitJob(const std::string& scriptContent,
                 S_IROTH|S_IXOTH)) {
     throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
   }
-  // Submit the job
-  // This is achieved by the slave launched in the method sshJobExec.sshexec
-  sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath));
+
+  sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath)); // Submit the job
 
   // Submission with deltacloud doesn't make copy of the script
   // So the script needs to be kept until the end of the execution
@@ -191,7 +186,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     vishnu::deleteFile(scriptPath.c_str());
   }
   std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
-  if(errorInfo.size()!=0) {
+  if (errorInfo.size()!=0) {
     int code;
     std::string message;
     scanErrorMessage(errorInfo, code, message);
@@ -427,10 +422,10 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       ::ecorecpp::serializer::serializer jobSer;
       jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-			SSHJobExec sshJobExec(acLogin, machineName,
-                                              batchType,
-                                              mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
-                                              jobSerialized);
+      SSHJobExec sshJobExec(acLogin, machineName,
+                            batchType,
+                            mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
+                            jobSerialized);
       sshJobExec.sshexec(slaveDirectory, "CANCEL");
 
       std::string errorInfo = sshJobExec.getErrorInfo();

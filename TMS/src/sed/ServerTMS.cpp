@@ -102,7 +102,7 @@ ServerTMS::getSedConfig() const {
 /**
  * \brief Constructor (private)
  */
-ServerTMS::ServerTMS() : mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
+ServerTMS::ServerTMS(): mbatchType(UNDEFINED), mdatabaseVishnu(NULL) {}
 
 /**
  * \brief To get the Default Batch Options
@@ -118,26 +118,18 @@ ServerTMS::getDefaultBatchOption() const {
  * \param vishnuId The identifier of the vishnu instance
  * \param dbConfig  The configuration of the database
  * \param machineId the id of the machine
- * \param batchType the type of the batch scheduler
- * \param batchVersion the version of the batch scheduler
+ * \param batchType The type of the batch scheduler
  * \param slaveBinDir  the directory that contains the slave binary
- * \param batchDefaultConfigFile  a configuration file for default options
+ * \param sedConfig A pointer to the SeD configuration
  * \return raises an exception on error
  */
 int
-ServerTMS::init(int & vishnuId,
-                DbConfiguration & dbConfig,
+ServerTMS::init(int& vishnuId,
+                DbConfiguration& dbConfig,
                 const std::string& machineId,
                 BatchType batchType,
-                const std::string& batchVersion,
-                const std::string & slaveBinDir,
+                const std::string& slaveBinDir,
                 const ExecConfiguration_Ptr sedConfig) {
-
-  //initialization of the batchType
-  mbatchType = batchType;
-
- //initialization of the batchVersion
-  mbatchVersion = batchVersion;
 
   //initialization of the machineId
   mmachineId = machineId;
@@ -148,40 +140,45 @@ ServerTMS::init(int & vishnuId,
   // initialize the SeD configuration object
   msedConfig = sedConfig;
 
+  //initialization of the batchType
+  mbatchType = batchType;
+
+  //initialization of the batchVersion
+  msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, mbatchVersion);
+
   std::string batchDefaultConfigFile;
   if(msedConfig->getConfigValue(vishnu::DEFAULTBATCHCONFIGFILE, batchDefaultConfigFile)) {
     switch(mbatchType) {
-    case TORQUE :
+    case TORQUE:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
       break;
-    case LOADLEVELER :
+    case LOADLEVELER:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "# @");
       break;
-    case SLURM :
+    case SLURM:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#SBATCH");
       break;
-    case LSF :
+    case LSF:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#BSUB");
       break;
-    case SGE :
+    case SGE:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#$");
       break;
-    case PBSPRO :
+    case PBSPRO:
       getConfigOptions(batchDefaultConfigFile.c_str(), mdefaultBatchOption, "#PBS");
       break;
-    case DELTACLOUD :
+    case DELTACLOUD:
       //No yet supported
       break;
-    case POSIX :
-      //TODO: implemented POSIX Specific config
+    case POSIX:
+      //No yet supported
       break;
-    default :
+    default:
       break;
     }
   }
 
   DbFactory factory;
-
   try {
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
@@ -323,14 +320,14 @@ ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::M
   int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
   try {
     switch(criterionType) {
-    case NBRUNNINGJOBS :
+    case NBRUNNINGJOBS:
       load = jobs.getNbRunningJobs();
       break;
-    case NBJOBS :
+    case NBJOBS:
       load = jobs.getNbJobs();
       break;
-    case NBWAITINGJOBS :
-    default :
+    case NBWAITINGJOBS:
+    default:
       load =jobs.getNbWaitingJobs();
       break;
     }
@@ -338,7 +335,7 @@ ServerTMS::getMachineLoadPerformance(const string& sessionKey, const UMS_Data::M
     std::cerr << ex.what() << std::endl;
   } catch(...) {
     std::cerr << "E: error while calculating the load performance of the machine "
-              << machine->getMachineId() << " (" << machine->getName() <<")"<< std::endl;
+              << machine->getMachineId() << " (" << machine->getName() <<")\n";
   }
   return load ;
 }

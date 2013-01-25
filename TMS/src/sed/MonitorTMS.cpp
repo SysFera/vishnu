@@ -98,7 +98,7 @@ MonitorTMS::run() {
   }
 
   BatchFactory factory;
-  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance());
+  boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType, mbatchVersion));
   while (kill(getppid(), 0) == 0) {
     try {
       boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
