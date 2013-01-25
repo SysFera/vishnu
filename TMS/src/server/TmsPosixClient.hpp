@@ -13,40 +13,44 @@
 /**
  * \brief Signature for the socket communications
  */
-static const char* signature = "TMS-POS";
+static const char *SIGNATURE     = "TMS-POS";
 
 /**
  * \brief Type of message for ping
  */
-static const char* lb_req_echo   = "ECHO";
+static const char *LB_REQ_ECHO   = "ECHO";
 /**
  * \brief Type of message for submit
  */
-static const char* lb_req_submit = "SUBMIT";
+static const char *LB_REQ_SUBMIT = "SUBMIT";
 /**
  * \brief Type of message for cancel
  */
-static const char* lb_req_cancel = "CANCEL";
+static const char *LB_REQ_CANCEL = "CANCEL";
 /**
  * \brief Type of message for getting info
  */
-static const char* lb_req_ginfo  = "GINFO";
+static const char *LB_REQ_GINFO  = "GINFO";
 /**
  * \brief Type of message for killing
  */
-static const char* lb_req_kill   = "KILL";
+static const char *LB_REQ_KILL   = "KILL";
+
+/**
+ * \brief Template name of socket UNIX
+ */
+static const char* SV_SOCK =  "tms-posix-socket-";
 
 /**
  * \brief The states of the processes for the posix server
  * \enum jobb_state
  */
-enum job_state { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
+enum job_state_t { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
 
 /**
  * \brief Structure sent for echo message
- * \struct st_echo
  */
-struct st_echo {
+struct trameEcho {
 /**
  * \brief Data to display in echo
  */
@@ -55,8 +59,9 @@ struct st_echo {
 
 /**
  * \brief Structure sent for submit message
+ * \struct trameSubmit
  */
-struct st_submit {
+struct trameSubmit {
 /**
  * \brief the command
  */
@@ -72,41 +77,41 @@ struct st_submit {
 /**
  * \brief the output path
  */
-  char OutPutPath[256];
+  char outPutPath[256];
 /**
  * \brief the error path
  */
-  char ErrorPath[256];
+  char errorPath[256];
 /**
  * \brief the working dir
  */
-  char WorkDir[256];
+  char workDir[256];
 /**
  * \brief the Job name
  */
-  char JobName[256];
+  char jobName[256];
 };
 
 /**
  * \brief Structure sent for cancel messages
- * \struct st_cancel
+ * \struct trameCancel
  */
-struct st_cancel {
+struct trameCancel {
 /**
  * \brief the id of the job to cancel
  */
-  char JobId[16];
+  char jobId[16];
 };
 
 /**
  * \brief Structure sent for getting info messages
- * \struct st_info
+ * \struct trameInfo
  */
-struct st_info {
+struct trameInfo {
 /**
  * \brief The id of the job
  */
-  char JobId[16];
+  char jobId[16];
 };
 
 /**
@@ -125,34 +130,34 @@ struct Request {
  * \brief union containing the data for the request
  * \union req_data
  */
-  union req_data {
+  union requestData {
 /**
  * \brief the echo data
  */
-    struct st_echo echo;
+    struct trameEcho echo;
 /**
  * \brief the submit data
  */
-    struct st_submit submit;
+    struct trameSubmit submit;
 /**
  * \brief the cancel data
  */
-    struct st_cancel cancel;
+    struct trameCancel cancel;
 /**
  * \brief the getinfo data
  */
-    struct st_info info;
+    struct trameInfo info;
   } data;
 };
 
 /**
  * \brief Structure describing a job
  */
-struct st_job {
+struct trameJob {
 /**
  * \brief the id of the job
  */
-  char JobId[16];
+  char jobId[16];
 /**
  * \brief the pid
  */
@@ -168,23 +173,23 @@ struct st_job {
 /**
  * \brief the state of the job
  */
-  enum job_state state;
+  enum job_state_t state;
 /**
  * \brief the output path
  */
-  char OutPutPath[256];
+  char outPutPath[256];
 /**
  * \brief the error path
  */
-  char ErrorPath[256];
+  char errorPath[256];
 /**
- * \brief the HomeDir
+ * \brief the homeDir
  */
-  char HomeDir[256];
+  char homeDir[256];
 /**
- * \brief the ScriptPath
+ * \brief the scriptPath
  */
-  char ScriptPath[255];
+  char scriptPath[255];
 };
 
 /**
@@ -199,19 +204,19 @@ struct Response {
  * \brief the data for the response
  * \union res_data
  */
-  union res_data {
+  union responseData {
 /**
  * \brief the echo data
  */
-    struct st_echo echo;
+    struct trameEcho echo;
 /**
  * \brief the job data
  */
-    struct st_job submit;
+    struct trameJob submit;
 /**
  * \brief the jobinfo data
  */
-    struct st_job info;
+    struct trameJob info;
   } data;
 };
 
@@ -222,7 +227,7 @@ struct Response {
  * \return 0 on success
  */
 int
-ReqSend(const char *destination, const struct Request* req);
+reqSend(const char *destination, const struct Request *req);
 
 /**
  * \brief function to submit a command with the option subs and tu get the response
@@ -232,7 +237,7 @@ ReqSend(const char *destination, const struct Request* req);
  * \return 0 on success
  */
 int
-ReqSubmit(const char* command,struct st_job* response, struct st_submit* sub);
+reqSubmit(const char* command, struct trameJob *response, struct trameSubmit *sub);
 
 /**
  * \brief function to make a echo. Test function.
@@ -241,7 +246,7 @@ ReqSubmit(const char* command,struct st_job* response, struct st_submit* sub);
  * \return 0 on success
  */
 int
-ReqEcho(const char* chaine, char* ret);
+reqEcho(const char *chaine, char *ret);
 
 /**
  * \brief function to cancel a job
@@ -249,7 +254,7 @@ ReqEcho(const char* chaine, char* ret);
  * \return 0 on success
  */
 int
-ReqCancel(const char* jobId);
+reqCancel(const char *jobId);
 
 /**
  * \brief function to get data about jobId
@@ -258,19 +263,12 @@ ReqCancel(const char* jobId);
  * \return 0 on success
  */
 int
-ReqInfo(const char* jobId, struct st_job* reponse);
-
-/**
- * \brief function to build the environnement before executing a job
- * \return 0 on success
- */
-int
-buildEnvironment();
+reqInfo(const char *jobId, struct trameJob *reponse);
 
 /**
  * \brief function to launch the daemon that will handle the jobs for a given user
  */
 void
-LaunchDaemon();
+launchDaemon();
 
 #endif
