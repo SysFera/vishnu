@@ -35,6 +35,9 @@ namespace bfs= boost::filesystem;
 
 // The database, UMS and TMS SeD are launched by TMSSedFixture.
 
+//BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, workingdir),0  );
+
+//bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath())) ;
 
 //Test category 1
 
@@ -45,50 +48,54 @@ BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 
 
 //// submit a job: normal call
-//BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
-//{
-//
-//  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
-//
-//  VishnuConnexion vc("root","vishnu_user");
-//
+BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
+{
+
+  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
+
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+
 //  // get the session key and the machine identifier
-//
-//  string sessionKey=vc.getConnexion();
-//
-//  string machineId="machine_1";
-//
-//  try {
-//    //Setting submitjob parameters
-//
-//    const std::string scriptFilePath= TMSSCRIPTPATH;
-//    Job jobInfo;
-//    SubmitOptions subOptions;
-//
-//    BOOST_TEST_MESSAGE("************ The script is " << scriptFilePath );
-//
-//    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
-//
-//    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-//
-//    // To check the success of submitJob function
-//
-//    ListJobs lsJobs;
-//    ListJobsOptions lsOptions;
-//    lsOptions.setJobId(jobInfo.getJobId());
-//    BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
-//
-//    BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
-//
-//    BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************");
-//
-//  //  Clean up: delete the submitted job
-//    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-//  } catch (VishnuException& e) {
-//    BOOST_MESSAGE(e.what());
-//    BOOST_CHECK(false);
-//  }
-//}
+
+  string sessionKey=vc.getConnexion();
+
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+ 
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+
+    try {
+      //Setting submitjob parameters
+      
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
+      Job jobInfo;
+      SubmitOptions subOptions;
+
+      BOOST_TEST_MESSAGE("************ The script is " << scriptFilePath );
+
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+
+      // To check the success of submitJob function
+
+      ListJobs lsJobs;
+      ListJobsOptions lsOptions;
+      lsOptions.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
+
+      BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
+
+      BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************");
+
+  //  Clean up: delete the submitted job
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  }
+}
 //
 //// submit a job: normal call
 //BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
@@ -97,7 +104,7 @@ BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 //  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
 //  BOOST_TEST_MESSAGE("In case where the script contains the vishnu JOB OUTPUT ENVIRONMENT VARIABLES");
 //
-//  VishnuConnexion vc("root","vishnu_user");
+//  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 //
 //  // get the session key and the machine identifier
 //
@@ -205,7 +212,7 @@ BOOST_FIXTURE_TEST_SUITE(submit_a_job, TMSSeDFixture)
 //  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
 //  BOOST_TEST_MESSAGE("By activating an option: working directory");
 //
-//  VishnuConnexion vc("root","vishnu_user");
+//  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 //
 //  // get the session key and the machine identifier
 //
@@ -315,34 +322,27 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
 {
   BOOST_TEST_MESSAGE("Testing bad script content for job submission (use case T1.1)" );
 
-  VishnuConnexion vc("root","vishnu_user");
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 
   // get the session key and the machine identifier
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="machine_1";
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+    //Setting submitjob parameters
+    const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "bad");
+    Job jobInfo;
+    SubmitOptions options;
 
-  //Setting submitjob parameters
-  std::string scriptFilePath;
-  if(BATCHTYPE=="TORQUE") {
-    scriptFilePath=TMSCONFIGDIR + "/bad_torque_script";
-  } else if(BATCHTYPE=="SLURM") {
-    scriptFilePath=TMSCONFIGDIR + "/bad_slurm_script";
-  } else if(BATCHTYPE=="LSF") {
-    scriptFilePath=TMSCONFIGDIR + "/bad_lsf_script";
-  } else {
-    scriptFilePath=TMSCONFIGDIR + "/bad_unknow_batch_type_script";
+    BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
+
+    BOOST_TEST_MESSAGE("***********************  submit a job: bad script content  ok!!!!*****************************");
+
   }
-
-  Job jobInfo;
-  SubmitOptions options;
-
-  BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
-
-  BOOST_TEST_MESSAGE("***********************  submit a job: bad script content  ok!!!!*****************************");
-
-
+  
 }
 
 // submit a job: bad parameters: bad script path
@@ -351,32 +351,34 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
 {
   BOOST_TEST_MESSAGE("Testing bad script path for job submission (use case T1.1)" );
 
-  VishnuConnexion vc("root","vishnu_user");
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 
   // get the session key and the machine identifier
 
   string sessionKey=vc.getConnexion();
 
-  string machineId="machine_1";
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+    //Setting submitjob parameters
+    const std::string scriptFilePath = "/home/ibrahima/Brouillon/";
+    Job jobInfo;
+    SubmitOptions subOptions;
 
-  //Setting submitjob parameters
-
-  const std::string scriptFilePath="/home/ibrahima/Brouillon/";
-  Job jobInfo;
-  SubmitOptions subOptions;
-
-  BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
+    BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
+  }  
 
 }
 
 
 // automatic submit a job: normal call
-BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
+/*BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Testing normal automatic job submission corresponding to use case T1.2");
 
-  VishnuConnexion vc("root","vishnu_user");
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
 
   // get the session key and the machine identifier
 
@@ -418,7 +420,7 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_normal_call)
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
-}
+}*/
 
 //TODO: Est ce que les cas E1, E2 et E3 sont utiles? Parce qu'ils sont déjà testés plus haut?
 //autom c'est juste le nom de la machine qui change
@@ -430,7 +432,7 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
 
   BOOST_TEST_MESSAGE("Testing automatic job submission for user with no local accounts (use case T1.2-E4)");
 
-  VishnuConnexion vc("user_2","toto");
+  VishnuConnexion vc(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd);
 
   // get the session key and the machine identifier
   string sessionKey=vc.getConnexion();
@@ -439,8 +441,8 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
 
   try {
     //Setting submitjob parameters
-
-    const std::string scriptFilePath= TMSSCRIPTPATH;
+    std::string generic = "generic";
+    const std::string scriptFilePath= generateTmpScript(generic, "bad");
     Job jobInfo;
     SubmitOptions subOptions;
 

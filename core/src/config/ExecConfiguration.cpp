@@ -73,6 +73,24 @@ ExecConfiguration::getConfigValues(vishnu::param_type_t param, std::vector<std::
   return true;
 }
 
+/**
+ * \brief Get the values of a configuration parameter
+ * \param[in]  key
+ * \param[out] value the list of result
+ * \return values has been set or not
+ */
+
+bool
+ExecConfiguration::getConfigValues(std::string& key, std::vector<std::string>& values) const {
+  ConfigMap::const_iterator it = mconfig.find(key);
+  if (mconfig.end() == it) {
+    return false;
+  }
+  boost::split(values, it->second, boost::is_any_of(";"));
+  return true;
+}
+
+
 string
 ExecConfiguration::scriptToString(){
   string res;
