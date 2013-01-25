@@ -30,7 +30,7 @@ target_link_libraries (test_zmq_helper
   )
 
 # register tests
-unit_test(LazyPirateUnitTests)
-unit_test(AnnuaryUnitTests)
-unit_test(ZMQServerUnitTests)
-unit_test(DIET_clientUnitTests)
+unit_test(LazyPirateUnitTests test_zmq_helper)
+unit_test(AnnuaryUnitTests test_zmq_helper)
+unit_test(ZMQServerUnitTests test_zmq_helper)
+unit_test(DIET_clientUnitTests test_zmq_helper)

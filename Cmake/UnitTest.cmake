@@ -18,63 +18,54 @@ endmacro()
 ###############################################################################
 # unit_test: macro that setup a test
 # @param[in] NAME  test filename stripped from extension
-# @param[in] DISABLED (optional) when defined, remove test from master suite
-#                     and display a message to the user.
+# @param[in] LIBS (optional) list of libraries to link the test with
 ###############################################################################
 
-macro( unit_test NAME )
-  if( ${ARGC} MATCHES 2 )
-    if( ${ARGV1} MATCHES "DISABLED" )
-      message( STATUS "${ARGV0}: explicitly disabled by developer" )
-      set( ${ARGV0}-DISABLED ON )
-    endif()
-  endif()
-
-  if( NOT DEFINED ${ARGV0}-DISABLED )
-    # create unit tests executable
-    add_executable( ${NAME}
-      "${NAME}.cpp"
-      #entry point
+function( unit_test NAME )
+  # create unit tests executable
+  add_executable( ${NAME}
+    "${NAME}.cpp"
+    #entry point
     TestRunner.cpp )
-    include_directories( ${Boost_INCLUDE_DIRS}
-      ${VISHNU_SOURCE_DIR}/mockZMQ
-      ${VISHNU_SOURCE_DIR}/mockZMQ/tests
-      ${VISHNU_SOURCE_DIR}/TMS/src/posix_parser
-      ${UTILVISHNU_SOURCE_DIR}
-      ${EMF_DATA_DIR}
-      ${TMS_EMF_DATA_DIR}
-      ${EMF4CPP_INCLUDE_DIR}
-      ${VISHNU_EXCEPTION_INCLUDE_DIR}
-      )
+  include_directories( ${Boost_INCLUDE_DIRS}
+    ${VISHNU_SOURCE_DIR}/mockZMQ
+    ${VISHNU_SOURCE_DIR}/mockZMQ/tests
+    ${VISHNU_SOURCE_DIR}/TMS/src/posix_parser
+    ${UTILVISHNU_SOURCE_DIR}
+    ${EMF_DATA_DIR}
+    ${TMS_EMF_DATA_DIR}
+    ${EMF4CPP_INCLUDE_DIR}
+    ${VISHNU_EXCEPTION_INCLUDE_DIR}
+    )
+  
+  # link libraries
+  target_link_libraries( ${NAME}
+    ${Boost_LIBRARIES}
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-    # link libraries
-    target_link_libraries( ${NAME}
-      ${Boost_LIBRARIES}
-      fake_zmq
-      test_zmq_helper
-      vishnu-core
-      ${POSIX_TEST_LIB}
-      ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
-    # test executable installation has not been tested yet -sic-
-    # install( TARGETS ${NAME} DESTINATION bin )
-    add_test( ${NAME} ${BIN_DIR}/${NAME} )
-
-    # prevent Boost.Test to catch unrelated exceptions
-    set_property( TEST ${NAME}
-      PROPERTY ENVIRONMENT "BOOST_TEST_CATCH_SYSTEM_ERRORS=no;" )
-    # just make sure that our test are run in a serial fashion
-    set_property( TEST ${NAME} PROPERTY RUN_SERIAL ON )
-
-    #
-    add_custom_target( ${NAME}-xml
-        COMMAND ${CMAKE_COMMAND}
-        -DTEST_PROG=${NAME}
-        -DBIN_PATH=${BIN_DIR}
-        -DREPORT_PATH=${REPORT_OUTPUT_PATH}
-        -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
-      add_dependencies( unit_test-xml ${NAME}-xml )
-    endif()
-endmacro()
+  foreach(LIBT ${ARGN})
+    target_link_libraries( ${NAME} ${LIBT} )
+  endforeach()
+  
+  # test executable installation has not been tested yet -sic-
+  # install( TARGETS ${NAME} DESTINATION bin )
+  add_test( ${NAME} ${BIN_DIR}/${NAME} )
+  
+  # prevent Boost.Test to catch unrelated exceptions
+  set_property( TEST ${NAME}
+    PROPERTY ENVIRONMENT "BOOST_TEST_CATCH_SYSTEM_ERRORS=no;" )
+  # just make sure that our test are run in a serial fashion
+  set_property( TEST ${NAME} PROPERTY RUN_SERIAL ON )
+  
+  #
+  add_custom_target( ${NAME}-xml
+    COMMAND ${CMAKE_COMMAND}
+    -DTEST_PROG=${NAME}
+    -DBIN_PATH=${BIN_DIR}
+    -DREPORT_PATH=${REPORT_OUTPUT_PATH}
+    -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake )
+  add_dependencies( unit_test-xml ${NAME}-xml )
+endfunction()
 
 ###############################################################################
