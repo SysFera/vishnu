@@ -205,6 +205,9 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
   endif()
 
+  if (COMPILE_FMS)
+    add_definitions(-DCOMPILE_FMS)
+  endif(COMPILE_FMS)
 
   if (torque)
     string (COMPARE EQUAL ${batch_version_tmp} "2_3" version)
@@ -212,7 +215,7 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
       message (FATAL_ERROR "Invalid TORQUE version, supported are: 2.3")
     endif()
     add_definitions(-DHAVE_TORQUE_${batch_version_tmp})
-
+    
     find_package(TORQUE)
     if (TORQUE_FOUND)
     else (TORQUE_FOUND)
@@ -279,9 +282,9 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     if (NOT (version OR version2 OR version3) )
       message (FATAL_ERROR "Invalid SLURM version, supported are: 2.2, 2.3 or 2.4")
     endif()
-
+    
     add_definitions(-DHAVE_SLURM_${batch_version_tmp})
-
+    
     find_package(SLURM)
     if (SLURM_FOUND)
     else (SLURM_FOUND)
@@ -299,9 +302,9 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     if (NOT version)
       message (FATAL_ERROR "Invalid LSF version, supported are: 7.0")
     endif()
-
+    
     add_definitions(-DHAVE_LSF_${batch_version_tmp})
-
+    
     find_package(LSF)
     if (LSF_FOUND)
     else (LSF_FOUND)
@@ -319,7 +322,7 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     if (NOT version)
       message (FATAL_ERROR "Invalid SGE version, supported are: 11")
     endif()
-
+    
     add_definitions(-DHAVE_SGE_${batch_version_tmp})
 
     find_package(SGE)
