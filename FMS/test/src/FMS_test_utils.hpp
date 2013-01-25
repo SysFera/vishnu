@@ -37,14 +37,14 @@ namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
 
-static const std::string machineId1 = "";//FMSDIR1;
+/*static const std::string machineId1 = "";//FMSDIR1;
 static const std::string machineId2 = "";//FMSDIR2;
 static const string adminId = "admin_1";
 static const string adminPwd = "admin";
 static const string userId = "user_1";
 static const string userPwd = "toto";
 static const string userLogin = "";//FMSUSERLOGIN;*/
-static const string groupTest = "test"; // userLogin must belong to groupTest on host 1
+/*static const string groupTest = "test"; // userLogin must belong to groupTest on host 1
 static const string sep = ":";
 static const string slash = "/";
 static const string newFileName = "FMS_test_file";
@@ -63,7 +63,7 @@ static const std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;
 // local
 static const string localDir = "";//FMSWORKINGDIR;
 static const string localFilePath = localDir + slash + newFileName;
-// remote
+// remote*/
 
 
 

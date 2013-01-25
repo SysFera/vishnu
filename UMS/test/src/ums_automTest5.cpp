@@ -240,6 +240,7 @@ BOOST_AUTO_TEST_CASE( Account_failure )
     BOOST_CHECK_THROW(listAuthSystems(sess.getSessionKey(), *lias, liaso), VishnuException);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()

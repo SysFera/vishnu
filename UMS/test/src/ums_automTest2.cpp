@@ -67,7 +67,7 @@ BOOST_AUTO_TEST_CASE( User_base )
     use->setEmail(mail);
     BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
-    
+   
   }
 
   
@@ -254,7 +254,6 @@ BOOST_AUTO_TEST_CASE( User_failure )
     BOOST_CHECK_THROW  (listUsers("bad", *liu, liuo       ), VishnuException);
     BOOST_CHECK  (close    (sess.getSessionKey()                  )==0);
   }
-
 
   if (m_test_ums_authen_type.compare("LDAP") != 0) {
     std::string uid = m_test_ums_admin_vishnu_login;

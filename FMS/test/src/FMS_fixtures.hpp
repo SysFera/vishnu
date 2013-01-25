@@ -44,7 +44,9 @@ public:
     m_test_fms_dir1 = setupConfig.find("TEST_FMS_HOST1_WORKING_DIR")->second;
     m_test_fms_dir2 = setupConfig.find("TEST_FMS_HOST2_WORKING_DIR")->second;
     m_test_fms_user_login = setupConfig.find("TEST_USER_LOGIN")->second;
+    m_test_fms_user_pwd = setupConfig.find("TEST_USER_PWD")->second;
     m_test_fms_local_dir = setupConfig.find("TEST_FMS_LOCAL_DIR")->second;
+    m_test_fms_user_local_group =  setupConfig.find("TEST_FMS_USER_LOCAL_GROUP")->second;
     
 
     
@@ -82,6 +84,8 @@ public:
   std::string m_test_fms_dir2;
   std::string m_test_fms_user_login;
   std::string m_test_fms_local_dir;
+  std::string m_test_fms_user_pwd;
+  std::string m_test_fms_user_local_group;
   
 //private:
   int mac;

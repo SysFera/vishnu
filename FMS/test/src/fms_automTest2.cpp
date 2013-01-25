@@ -20,7 +20,6 @@ namespace ba = boost::assign;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-// The database, UMS and FMS SeD are launched by FMSSedFixture.
 BOOST_FIXTURE_TEST_SUITE(DeleteFile, FMSSeDFixture)
 
 /*****************************************************************************/
@@ -31,8 +30,19 @@ BOOST_FIXTURE_TEST_SUITE(DeleteFile, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(DeleteFile_Base)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  
   BOOST_TEST_MESSAGE("Testing file deletion UC F1.DE1-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {
@@ -58,9 +68,22 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Base)
 
 BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  
   BOOST_TEST_MESSAGE("Testing file deletion errors UC F1.DE1-E");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
+  string slash = "/";
+  string sep = ":";
 
   try {
     // E1 case
@@ -69,11 +92,11 @@ BOOST_AUTO_TEST_CASE(DeleteFile_Exceptions)
     BOOST_CHECK_THROW( rm(sessionKey, invalidFullPath), VishnuException);
     // E2 case
     string noAccessLocalPath = "/root/abc";
-    string noAccessFullPath = machineId1 + sep + noAccessLocalPath;
+    string noAccessFullPath = m_test_fms_host1 + sep + noAccessLocalPath;
     BOOST_CHECK_THROW( rm(sessionKey, noAccessFullPath), VishnuException);
     // E3 case
     string invalidMachineId = "tt";
-    string invalidMachineFullPath = invalidMachineId + sep + remoteBaseDir1;
+    string invalidMachineFullPath = invalidMachineId + sep + m_test_fms_dir1;
     BOOST_CHECK_THROW( rm(sessionKey, invalidMachineFullPath), VishnuException);
 
   } catch (VishnuException& e) {

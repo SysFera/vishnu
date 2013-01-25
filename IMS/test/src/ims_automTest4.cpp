@@ -45,12 +45,6 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = "IMSSQLPATH";
-static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -63,7 +57,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE)
 {
 
   BOOST_TEST_MESSAGE("Use case IA2 - B1: Define a system load threshold for CPUUSE metric");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int currentThreshold;
@@ -71,12 +65,12 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_CPU_USE)
   IMS_Data::ListThreshold list;
   IMS_Data::ThresholdOp op;
   IMS_Data::Threshold systemThreshold;
-  op.setMachineId(machineId);
+  op.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set CPUUSE Metric
   op.setMetricType(1);
   //Set handler
   systemThreshold.setHandler("root");
-  systemThreshold.setMachineId(machineId);
+  systemThreshold.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set CPUUSE Metric
   systemThreshold.setType(1);
 
@@ -115,7 +109,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_S
 {
 
   BOOST_TEST_MESSAGE("Use case IA2 - B2: Define a system load threshold for FREE DISK SPACE Metric");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int currentThreshold;
@@ -125,10 +119,10 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_DISK_S
   IMS_Data::Threshold systemThreshold;
   //Set FREEDISKSPACE Metric
   op.setMetricType(2);
-  op.setMachineId(machineId);
+  op.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set handler
   systemThreshold.setHandler("root");
-  systemThreshold.setMachineId(machineId);
+  systemThreshold.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set FREEDISKSPACE Metric
   systemThreshold.setType(2);
 
@@ -168,7 +162,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY
 {
 
   BOOST_TEST_MESSAGE("Use case IA2 - B3: Define a system load threshold for FREE MEMORY Metric");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   int currentThreshold;
@@ -178,10 +172,10 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_normal_call_metric_FREE_MEMORY
   IMS_Data::Threshold systemThreshold;
   //Set FREEMEMORY Metric
   op.setMetricType(3);
-  op.setMachineId(machineId);
+  op.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set handler
   systemThreshold.setHandler("root");
-  systemThreshold.setMachineId(machineId);
+  systemThreshold.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set FREEMEMORY Metric
   systemThreshold.setType(3);
 
@@ -219,7 +213,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA2 - E1: Define a system load threshold with bad machine Id");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //ListThreshold
@@ -239,7 +233,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_machine_Id_call)
 BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call)
 {
   BOOST_TEST_MESSAGE("Use case IA2 - E2: Define a system load threshold with bad metric");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //ListThreshold
@@ -247,7 +241,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_bad_metric_call)
   IMS_Data::Threshold systemThreshold;
   //Set handler
   systemThreshold.setHandler("root");
-  systemThreshold.setMachineId(machineId);
+  systemThreshold.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set unknown metric
   systemThreshold.setType(15);
 
@@ -261,7 +255,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_no_admin_call)
 {
 
   BOOST_TEST_MESSAGE("Use case IA2 - E3: Define a system load threshold for no admin user");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_ims_user_vishnu_login, m_test_ims_user_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //ListThreshold
@@ -269,7 +263,7 @@ BOOST_AUTO_TEST_CASE(define_system_load_threshold_no_admin_call)
   IMS_Data::Threshold systemThreshold;
   //Set handler
   systemThreshold.setHandler("root");
-  systemThreshold.setMachineId(machineId);
+  systemThreshold.setMachineId(m_test_ums_user_vishnu_machineid);
   //Set FREEMEMORY Metric
   systemThreshold.setType(3);
 

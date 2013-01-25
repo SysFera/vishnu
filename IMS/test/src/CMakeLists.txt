@@ -18,7 +18,10 @@ include_directories(
   ${PROJECT_BINARY_DIR}/include
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
+  ${CONFIG_SOURCE_DIR}
   ${UMS_TEST_SOURCE_DIR}
+  ${FMS_TEST_SOURCE_DIR}
+  ${TMS_TEST_SOURCE_DIR}
   ${IMS_UTIL_DIR}
   )
 
