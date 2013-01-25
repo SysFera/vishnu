@@ -47,45 +47,49 @@ BOOST_AUTO_TEST_CASE(get_job_information_normal_call)
   BOOST_TEST_MESSAGE("Testing normal execution of the  get job information function corresponding to use case T2.1" );
 
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
-  string machineId="machine_1";
+    try {
+      //Setting submitjob parameters
 
-  try {
-    //Setting submitjob parameters
+      const std::string scriptFilePath=generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
 
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      ListJobs lsJobs;
+      ListJobsOptions lsOptions;
+      lsOptions.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
 
-    ListJobs lsJobs;
-    ListJobsOptions lsOptions;
-    lsOptions.setJobId(jobInfo.getJobId());
-    BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
+      Job job;
 
-    Job job;
+      BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
 
-    BOOST_CHECK_EQUAL(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job),0  );
+    // Check the success of getJobInfo function
 
-  // Check the success of getJobInfo function
+      BOOST_CHECK( *(lsJobs.getJobs().get(0))== job) ;
 
-    BOOST_CHECK( *(lsJobs.getJobs().get(0))== job) ;
+      BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************");
 
-    BOOST_TEST_MESSAGE("***********************  Get a job info: normal call ok!!!!*****************************");
-
-  //  Clean up: delete the submitted job
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+    //  Clean up: delete the submitted job
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 
@@ -98,39 +102,45 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_sessionKey)
 
   BOOST_TEST_MESSAGE(" Testing bad session Key for the get job information function (use case T2.1)" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
+  
   string sessionKey=vc.getConnexion();
-  string machineId="machine_1";
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
-  try {
-    //Setting submitjob parameters
+    try {
+      //Setting submitjob parameters
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)== 0 );
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) == 0 );
 
-    // now let get the job information
+      // now let get the job information
 
-    // set the get the job information function parameters
+      // set the get the job information function parameters
 
-    Job job;
+      Job job;
 
-    BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", machineId, jobInfo.getJobId(), job),VishnuException );
+      BOOST_CHECK_THROW(getJobInfo("bad sessionKey ", machineId, jobInfo.getJobId(), job),VishnuException );
 
-    BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************");
+      BOOST_TEST_MESSAGE("***********************  Get a job info: bad sessionKey  ok!!!!*****************************");
 
-  //  Clean up: delete the submitted job
+    //  Clean up: delete the submitted job
 
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId()) == 0  );
 
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
-  }
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
+  } 
 }
 
 //---------------------------------------------------------------------------
@@ -142,34 +152,38 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_machineId)
 {
   BOOST_TEST_MESSAGE(" Testing bad machine identifier for the get job information function (use case T2.1)" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+    
+    try {
+      //Setting submitjob parameters
+      
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-  string machineId="machine_1";
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
 
-  try {
-    //Setting submitjob parameters
+      // setting get job information function parameters
+      Job job;
+      BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad machineId", jobInfo.getJobId(),job),VishnuException );
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
+      BOOST_TEST_MESSAGE("***********************  Get a job info: bad machine ID ok!!!!*****************************");
 
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
-
-    // setting get job information function parameters
-    Job job;
-    BOOST_CHECK_THROW(getJobInfo(sessionKey, "bad machineId", jobInfo.getJobId(),job),VishnuException );
-
-    BOOST_TEST_MESSAGE("***********************  Get a job info: bad machine ID ok!!!!*****************************");
-
-  //  Clean up: delete the submitted job
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+    //  Clean up: delete the submitted job
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 
@@ -183,19 +197,23 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_JobId)
 {
   BOOST_TEST_MESSAGE("Testing bad job identifier for the  get job information function (use case T2.1)" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
-
-  string machineId="machine_1";
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
   // setting get job information function parameters
-  Job job;
-  BOOST_CHECK_THROW(getJobInfo(sessionKey,machineId, "bad job id",job),VishnuException );
+    Job job;
+    BOOST_CHECK_THROW(getJobInfo(sessionKey,machineId, "bad job id",job),VishnuException );
 
-  BOOST_TEST_MESSAGE("***********************  Get a job info: bad job ID ok!!!!*****************************");
+    BOOST_TEST_MESSAGE("***********************  Get a job info: bad job ID ok!!!!*****************************");
+  }
 
 }
 

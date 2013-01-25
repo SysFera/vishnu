@@ -48,48 +48,51 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_normal_call)
   BOOST_TEST_MESSAGE("Testing normal job cancelling corresponding to use case T2.2" );
 
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
-  string machineId="machine_1";
+    try {
+      //Setting submitjob parameters
 
-  try {
-    //Setting submitjob parameters
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
+      BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
 
-    BOOST_REQUIRE_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),0  );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      // now let cancel the job
 
-    // now let cancel the job
+      // setting cancel job parameters
+      BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
 
-    // setting cancel job parameters
-    BOOST_CHECK_EQUAL(cancelJob(sessionKey, machineId, jobInfo.getJobId()),0  );
+      // wait a few seconds and check the success of cancelling job
+      bpt::seconds sleepTime(4);
+      boost::this_thread::sleep(sleepTime);
 
-    // wait a few seconds and check the success of cancelling job
-    bpt::seconds sleepTime(4);
-    boost::this_thread::sleep(sleepTime);
+      Job job;
+      BOOST_REQUIRE(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job)==0);
 
-    Job job;
-    BOOST_REQUIRE(getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job)==0);
+      BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
 
-    BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
+      BOOST_CHECK_EQUAL(job.getStatus(), 6);
 
-    BOOST_CHECK_EQUAL(job.getStatus(), 6);
+      BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************");
 
-    BOOST_TEST_MESSAGE("***********************  cancel a job: normal call  ok!!!!*****************************");
-
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
-
 }
 
 //----------------------------------------------------------------------------------------
@@ -99,37 +102,41 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_normal_call)
 BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_sessionKey)
 {
 
-  BOOST_TEST_MESSAGE("Testing bad session Key for job cancelling (use case T2.2)");
-
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
+  
   string sessionKey=vc.getConnexion();
-  string machineId="machine_1";
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+    
+    try {
+      //Setting submitjob parameters
+      
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-  try {
-    //Setting submitjob parameters
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
+      // now let cancel the job
 
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
-
-    // now let cancel the job
-
-    // setting cancel job parameters
+      // setting cancel job parameters
 
 
-    BOOST_CHECK_THROW(cancelJob("bad sessionKey ", machineId, jobInfo.getJobId()),VishnuException );
+      BOOST_CHECK_THROW(cancelJob("bad sessionKey ", machineId, jobInfo.getJobId()),VishnuException );
 
-    BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************");
+      BOOST_TEST_MESSAGE("***********************  cancel a job: bad sessionKey   ok!!!!*****************************");
 
-  // Clean up:  Clean up: delete the submitted job
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+    // Clean up:  Clean up: delete the submitted job
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 
@@ -142,36 +149,40 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_machineId)
 {
   BOOST_TEST_MESSAGE("Testing bad machine identifier for job cancellin (use case T2.2)" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+    
+    try {
+      //Setting submitjob parameters
+      
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-  string machineId="machine_1";
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
 
-  try {
-    //Setting submitjob parameters
-
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
-
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options) ==0 );
-
-    // now let try to cancel the job
+      // now let try to cancel the job
 
 
-    BOOST_CHECK_THROW(cancelJob(sessionKey, "bad machineId", jobInfo.getJobId()),VishnuException );
+      BOOST_CHECK_THROW(cancelJob(sessionKey, "bad machineId", jobInfo.getJobId()),VishnuException );
 
-    BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************");
+      BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************");
 
-    //  Clean up: delete the submitted job
+      //  Clean up: delete the submitted job
 
-    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 
 }
@@ -189,22 +200,23 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_JobId)
 {
   BOOST_TEST_MESSAGE("Testing bad job identifier for job cancelling (use case T2.2)" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+ 
 
-  string machineId="machine_1";
 
+    BOOST_CHECK_THROW(cancelJob(sessionKey,machineId, "bad job id"),VishnuException );
 
-  // now let cancel the job
-
-
-  BOOST_CHECK_THROW(cancelJob(sessionKey,machineId, "bad job id"),VishnuException );
-
-  BOOST_TEST_MESSAGE("***********************  cancel a job: bad job id  ok!!!!*****************************");
-
+    BOOST_TEST_MESSAGE("***********************  cancel a job: bad job id  ok!!!!*****************************");
+  }
   // wait a few seconds and check the success of cancelling job
 
 //  bpt::seconds sleepTime(500);
@@ -227,43 +239,47 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_userId)
 {
   BOOST_TEST_MESSAGE("Testing bad user identifier for job cancelling (use case T2.2)" );
 
-  VishnuConnexion vc1("root","vishnu_user");
-
-  // get the session key and the machine identifier
-
-  string sessionKey=vc1.getConnexion();
-
-  string machineId="machine_1";
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
   
-  try {
-    //Setting submitjob parameters
-
-    const std::string scriptFilePath=TMSSCRIPTPATH;
-    Job jobInfo;
-    SubmitOptions options;
-
-    BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
+  // get the session key and the machine identifier
+  
+  string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
     
-  // now let cancel the job
-
-  // setting cancel job parameters
-
-  // get another connexion for another user
-
-
-    VishnuConnexion vc2("user_1","toto");
-
-    // get his session key
-
-    sessionKey=vc2.getConnexion();
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
     
-    BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()), VishnuException  );
+    try {
+      //Setting submitjob parameters
+      
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
+      Job jobInfo;
+      SubmitOptions options;
 
-    BOOST_TEST_MESSAGE("***********************  cancel a job: bad user  id  ok!!!!*****************************");
+      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0 );
     
-  } catch (VishnuException& e) {
-    BOOST_MESSAGE(e.what());
-    BOOST_CHECK(false);
+    // now let cancel the job
+
+    // setting cancel job parameters
+
+    // get another connexion for another user
+
+
+      VishnuConnexion vc2(m_test_ums_root_vishnu_login,m_test_ums_root_vishnu_pwd);
+
+      // get his session key
+
+      sessionKey=vc2.getConnexion();
+
+      BOOST_CHECK_THROW(cancelJob(sessionKey, machineId, jobInfo.getJobId()), VishnuException  );
+
+      BOOST_TEST_MESSAGE("***********************  cancel a job: bad user  id  ok!!!!*****************************");
+
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 

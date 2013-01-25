@@ -11,11 +11,6 @@
 using namespace std;
 using namespace vishnu;
 
-char TMSSeD[] = "tmssed";
-
-char ConfigTMSSeD[] = "TMSSEDCONF2";
-char BinDirTMSSeD[] = "TMSSEDBINDIR";
-
 
 typedef TMSSeDFixtureInit TMSSeDFixture;
 

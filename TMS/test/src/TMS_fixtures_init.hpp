@@ -6,23 +6,34 @@
 #include "diet_fixtures.hpp"
 #include "FMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
+#include <boost/algorithm/string.hpp>
 #include "api_ums.hpp"
 #include "api_tms.hpp"
+#include "ExecConfiguration.hpp"
 using namespace std;
 using namespace vishnu;
 
-char TMSSeDInit[] = "tmssed";
-char ConfigTMSSeDInit[] = "TMSSEDCONF";
-char BinDirTMSSeDInit[] = "TMSSEDBINDIR";
+
+
+struct Machine_TMS {
+  std::string machine_id;
+  std::string batch_name;
+};
 
 class TMSFixtureInit : public FMSSeDFixture {
 
 public:
+
+  std::string m_test_tms_user_vishnu_login;
+  std::string m_test_tms_user_vishnu_pwd;
+  std::string m_test_tms_working_dir;
+
+  std::vector<Machine_TMS> m_test_tms_machines;
   TMSFixtureInit():mac(2){
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     // Name of the test executable
-    mav[0]= (char*)"./fms_automTest";
+    mav[0]= (char*)"./tms_automTest";
     // Client configuration file
     string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
@@ -37,6 +48,34 @@ public:
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
     string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    std::string key = "TEST_TMS_MACHINE_IDS";
+    ExecConfiguration tmsConfiguration;
+    tmsConfiguration.initFromFile(vishnuTestSetupPath);
+    std::vector<std::string> tmsMachines;
+    tmsConfiguration.getConfigValues(key, tmsMachines);
+    for(std::vector<std::string>::iterator it = tmsMachines.begin(); it != tmsMachines.end();++it)
+    {
+      Machine_TMS ma;
+      std::vector<std::string> machine;
+      boost::split(machine, *it, boost::is_any_of(" "));
+      if (machine.size() == 2 )
+      {
+        ma.machine_id = machine.at(0);
+        ma.batch_name = machine.at(1);
+        m_test_tms_machines.push_back(ma);
+      }     
+    }
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+    
+
+    m_test_tms_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
+    m_test_tms_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
+    m_test_tms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
+    
+      
+        
+    
     
     
     

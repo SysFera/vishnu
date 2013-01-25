@@ -3,17 +3,13 @@
 
 #include <iostream>
 #include <boost/test/unit_test.hpp>
+#include <boost/filesystem.hpp>
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 
 using namespace std;
 
 
-static const std::string BATCHTYPE = "";
-static const std::string TMSSCRIPTPATH = "";
-static const std::string TMSWORKINGDIR = "";
-static const std::string TMSCONFIGDIR = "";
-static const std::string TMSSCRIPTPATHWAITING = "";
 
 struct VishnuConnexion{
 
@@ -42,5 +38,7 @@ bool operator== (const Job& lJob,const Job& rJob );
 std::string findValue(const std::string& content, const std::string& key);
 
 std::string getFileContent(const std::string& filePath);
+
+std::string generateTmpScript(std::string& batchtype, std::string scriptType);
 
 #endif
