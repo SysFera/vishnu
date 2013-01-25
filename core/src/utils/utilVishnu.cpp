@@ -62,15 +62,19 @@ long long
 vishnu::convertToTimeType(const std::string& date) {
 	/* For mysql, the empty date is 0000-00-00, not empty,
      need this test to avoid problem in ptime */
-	if ((date.size() == 0) ||
-			date.find("0000-00-00") != std::string::npos) {
-		return 0;
-	}
-	boost::posix_time::ptime pt(time_from_string(date));
-	boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
-	time_duration::sec_type time = (pt - epoch).total_seconds();
+  if ((date.size() == 0) ||
+     date.find("0000-00-00") != std::string::npos) {
+    return 0;
+  }
 
-	return (long long) time_t(time);
+  try{
+    boost::posix_time::ptime pt(time_from_string(date));
+    boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
+    time_duration::sec_type time = (pt - epoch).total_seconds();
+  } catch (std::exception& e){
+    throw UserException(ERRCODE_INVALID_PARAM, "Error converting date :"+date+" to time, error is :" +e.what());
+  }
+  return (long long) time_t(time);
 }
 
 /**
@@ -282,16 +286,22 @@ vishnu::boostMoveFile(const std::string& src, const std::string& dest,
  */
 bool
 vishnu::isNumericalValue(const std::string& value) {
-	if (0 == value.size()) {
-		throw UserException(ERRCODE_INVALID_PARAM,
-				("Invalid numerical value: The given value is empty"));
-	}
-	bool ret(value.find_first_not_of("0123456789") == std::string::npos);
-	if (!ret) {
-		throw UserException(ERRCODE_INVALID_PARAM,
-				("Invalid numerical value: " + value));
-	}
-	return ret;
+  bool ret;
+  if (0 == value.size()) {
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        ("Invalid numerical value: The given value is empty"));
+  }
+  try{
+    ret = value.find_first_not_of("0123456789") == std::string::npos;
+  } catch (std::exception& e){
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        ("std exception caught for: " + value+ " with error: "+e.what()));
+  }
+  if (!ret) {
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        ("Invalid numerical value: " + value));
+  }
+  return ret;
 }
 
 
@@ -729,10 +739,10 @@ vishnu::getLocalMachineName(const std::string& port ) {
  */
 void
 vishnu::checkEmptyString(const std::string& str,
-		const std::string& compMsg) {
-	if(str.empty()) {
-		throw UserException(ERRCODE_INVALID_PARAM, compMsg + " must be not empty");
-	}
+                         const std::string& compMsg) {
+  if(str.empty()) {
+    throw UserException(ERRCODE_INVALID_PARAM, compMsg + " must not be empty");
+  }
 }
 
 /**

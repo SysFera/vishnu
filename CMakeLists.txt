@@ -470,6 +470,11 @@ set(MAN_INSTALL_DIR "share/man"
 set(CMAKE_MOD_INSTALL_DIR "share/cmake/Modules"
   CACHE INTERNAL "Directory where cmake modules will be installed")
 
+if(BUILD_TESTING)
+  include(UnitTest)
+  unit_test_setup()
+endif()
+
 add_subdirectory(core/src)
 add_subdirectory(core/deps)
 

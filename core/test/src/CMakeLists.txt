@@ -19,4 +19,5 @@ target_link_libraries(vishnu-test
   ${Boost_LIBRARIES}
 )
 
+add_subdirectory(unit)
 
