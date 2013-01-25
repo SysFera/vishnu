@@ -43,16 +43,19 @@ MonitorTMS::~MonitorTMS() {
  * \param dbConfig The configuration of the database
  * \param machineId The machine identifier
  * \param batchType The batch scheduler type
+   * \param batchVersion The batch scheduler version
  * \return raises an execption
  */
 void
-MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& machineId, const BatchType& batchType) {
+MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& machineId,
+                 const BatchType& batchType, const std::string& batchVersion) {
 
   DbFactory factory;
 
   mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
   mmachineId = machineId;
   mbatchType = batchType;
+  mbatchVersion = batchVersion;
 
   std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
@@ -84,9 +87,8 @@ MonitorTMS::run() {
   std::string jobId;
   int state;
   std::string sqlUpdatedRequest;
-  int batchType = mbatchType;
   std::string sqlRequest = "SELECT jobId, batchJobId from job, vsession where vsession.numsessionid=job.vsession_numsessionid "
-    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(batchType);
+    " and status > 0 and status < 5 and submitMachineId='"+mmachineId+"' and batchType="+vishnu::convertToString(mbatchType);
 
   while(kill(getppid(), 0) == 0) {
       try {
@@ -101,7 +103,7 @@ MonitorTMS::run() {
                 ++iter;
                 batchJobId = *iter;
                 BatchFactory factory;
-                boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType));
+                boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(mbatchType, mbatchVersion));
                 try {
                   state = batchServer->getJobState(batchJobId);
                   if (state!=-1) {

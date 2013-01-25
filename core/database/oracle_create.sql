@@ -1,7 +1,6 @@
 -- This script is for initialization of the VISHNU Oracle 11g database
 -- Script name          : oracle_create.sql
--- Script owner         : SysFera SAS
-
+-- Script owner         : SysFera SA
 -- REVISIONS
 -- Revision nb          : 1.0
 -- Revision date        : 27/01/11

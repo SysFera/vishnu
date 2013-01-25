@@ -8,6 +8,7 @@
 #ifndef TMS_BATCH_FACTORY_H
 #define TMS_BATCH_FACTORY_H
 
+#include <string>
 #include "utilVishnu.hpp"
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
@@ -31,19 +32,22 @@ class BatchFactory
      */
     ~BatchFactory();
 
-    /**
-     * \brief Function to create a batchServer.
-     * \return an instance of BatchServer
-     */
-    BatchServer*
-    getBatchServerInstance();
+    // /**
+    //  * \brief Function to create a batchServer.
+    //  * \return an instance of BatchServer
+    //  */
+    // BatchServer*
+    // getBatchServerInstance();
+
     /**
      * \brief Function to create a batchServer.
      * \param batchType The type of batchServer to create
-     * \return an instance of BatchServer
+     * \param batchVersion The version of batchServer to create
+     * \return an instance of BatchServer, or NULL
      */
     BatchServer*
-    getBatchServerInstance(int BatchType);
+    getBatchServerInstance(int BatchType,
+                           const std::string &batchVersion);
 
     /**
      * \brief Function to delete a batchServer.

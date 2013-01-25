@@ -29,7 +29,7 @@
       <revision>
         <revnumber>1</revnumber>
         <date>06/06/2011</date>
-        <authorinitials>  SYSFERA SAS</authorinitials>
+        <authorinitials>  SYSFERA SA</authorinitials>
         <revdescription>
           <para>Deliverable version</para>
         </revdescription>
@@ -46,7 +46,7 @@
     
       <copyright>
               <year>2011</year>
-              <holder>SysFera SAS</holder>
+              <holder>SYSFERA SA</holder>
       </copyright>
       <legalnotice>
               <para>This report is provided under the following conditions:</para>
