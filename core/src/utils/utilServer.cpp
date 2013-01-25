@@ -28,11 +28,10 @@ vishnu::unregisterSeD(string type, ExecConfiguration config) {
 
 
 void
-validateUri(const string & uri) {
+vishnu::validateUri(const string & uri) {
   size_t pos = uri.find("*");
   if (pos != string::npos) {
-    std::cerr << boost::format("W: character '*' is not permitted in the uri %1%\n")%uri;
-    exit(-1);
+    throw UserException(ERRCODE_INVALID_PARAM, std::string("W: character '*' is not permitted in the uri"));
   }
 }
 
@@ -114,49 +113,43 @@ vishnu::registerSeD(string type, ExecConfiguration config, string& cfg, std::vec
 
 /**
  * \brief Function to get a random number
- * \fn    int isMonth (const char * s)
  * \return
  */
-int
+bool
 vishnu::isMonth (const char * s) {
   return (s[0]=='M' && s[1]=='O' && s[2]=='N' && s[3]=='T' && s[4]=='H');
 }
-int
+bool
 vishnu::isYear (const char * s) {
   return (s[0]=='Y' && s[1]=='E' && s[2]=='A' && s[3]=='R');
 }
-int
+bool
 vishnu::isSite (const char * s) {
   return (s[0]=='S' && s[1]=='I' && s[2]=='T' && s[3]=='E');
 }
-int
+bool
 vishnu::isType (const char * s) {
   return (s[0]=='T' && s[1]=='Y' && s[2]=='P' && s[3]=='E');
 }
-int
+bool
 vishnu::isUName (const char * s) {
   return (s[0]=='U' && s[1]=='N' && s[2]=='A' && s[3]=='M' && s[4]=='E');
 }
-int
+bool
 vishnu::isMaName (const char * s) {
   return (s[0]=='M' && s[1]=='A' && s[2]=='N' && s[3]=='A' && s[4]=='M' && s[5]=='E');
 }
-int
+bool
 vishnu::isDay (const char * s) {
   return (s[0]=='D' && s[1]=='A' && s[2]=='Y');
 }
-int
+bool
 vishnu::isCpt (const char * s) {
   return (s[0]=='C' && s[1]=='P' && s[2]=='T');
 }
 
 /**
  * \brief Parse the format and fill the array with the variable and their value
- * \fn void getKeywords(int* size, Format_t* array,
- *                      const char* format,
- *                      int cpt, IdType type,
- *                      std::string name,
- *                      std::string site)
  * \param size Size of the array (OUT)
  * \param array Array to fill with variables and their value (OUT)
  * \param format The string to parse
@@ -267,11 +260,6 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
 
 /**
  * \brief Function to generate an ID
- * \fn std::string getGeneratedName (const char* format,
- *                                   int cpt,
- *                                   IdType type,
- *                                   std::string name = "",
- *                                   std::string site ="")
  * \param format Format to use to generate the id
  * \param cpt Value of the counter to use
  * \param type Type of the id generated
@@ -465,7 +453,6 @@ vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
 
 /**
  * \brief Function to get information from the table vishnu
- * \fn    string getAttrVishnu(string attrname, string vishnuid)
  * \param attrname the name of the attribut
  * \param vishnuid the id of the vishnu configuration
  * \return the corresponding attribut
@@ -485,7 +472,6 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
 }
 /**
  * \brief Function to increment a counter of the table vishnu
- * \fn    incrementCpt(std::string cptName, int cpt)
  * \param cptName the name of the counter to increment
  * \param cpt     the current value of the counter
  * \return raises an exception
