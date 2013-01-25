@@ -21,6 +21,7 @@ extern "C" {
 #include "TorqueServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "constants.hpp"
 
 using namespace std;
 using namespace vishnu;

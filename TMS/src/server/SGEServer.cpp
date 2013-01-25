@@ -20,6 +20,7 @@
 #include <pwd.h>
 #include <grp.h>
 #include <time.h>
+#include "constants.hpp"
 
 
 extern "C" {
@@ -419,7 +420,7 @@ SGEServer::getJobState(const std::string& jobId) {
   return ret;
 }
 
-  
+
 
 /**
  * \brief Function to get the start time of the job
