@@ -84,46 +84,11 @@ class DispatcherFixture : public createTmpDirsFixture {
 
 public:
     DispatcherFixture() : processNamingService(NULL) {
-        BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Launching Dispatcher ==" );
 
-        std::string exec;
-        try {
-            exec = bp::find_executable_in_path(DISPATCHER_COMMAND, BIN_DIR);
-        } catch (bs::system_error& e) {
-            BOOST_TEST_MESSAGE( "can't find " << DISPATCHER_COMMAND << ": " << e.what() );
-            return;
-        }
-
-        BOOST_TEST_MESSAGE( DISPATCHER_COMMAND << " found: " << exec );
-
-        // setup omniNames environment
-        bp::context ctx;
-        ctx.process_name = DISPATCHER_COMMAND;
-
-#ifndef DEBUG_TESTS
-        // redirect output to /dev/null
-        ctx.streams[bp::stdout_id] = bp::behavior::null();
-        ctx.streams[bp::stderr_id] = bp::behavior::null();
-#endif
-        // setup dispatcher arguments
-				char cfg[] = DISPATCHER_CONFIG;
-				BOOST_TEST_MESSAGE( "=== Dispatcher CONFIG == "<<  DISPATCHER_CONFIG);
-        std::vector<std::string> args = ba::list_of(cfg);
-        bp::child c = bp::create_child(exec, args, ctx);
-        processNamingService.reset(utils::copy_child(c));
-        boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-        BOOST_TEST_MESSAGE( "== Test setup [END]:  Launching Dispatcher ==" );
     }
 
     ~DispatcherFixture() {
-        BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping Dispatcher ==" );
 
-        if (processNamingService) {
-            processNamingService->terminate();
-            processNamingService->wait();
-        }
-        boost::this_thread::sleep(boost::posix_time::milliseconds(SLEEP_TIME));
-        BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping Dispatcher ==" );
     }
 };
 
