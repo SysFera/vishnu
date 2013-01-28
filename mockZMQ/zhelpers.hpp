@@ -1,12 +1,13 @@
 #ifndef _ZHELPERS_HPP_
 #define _ZHELPERS_HPP_
 
-#include "zmq.hpp"
+#include <zmq.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
-#include <string.h>
+#include <cstring>
+#include <cerrno>
 
 
 const int DEFAULT_TIMEOUT = 120; // seconds
@@ -88,9 +89,17 @@ public:
   std::string
   get(int flags = 0) {
     zmq::message_t message;
-    if (!recv(&message, flags)) {
-      throw zmq::error_t();
-    }
+    do {
+      try {
+        if (recv(&message, flags)) {
+          break;
+        }
+      } catch (const zmq::error_t& e) {
+        if (EINTR == e.num()) {
+          continue;
+        }
+      }
+    } while(true);
 
     const char *dat = static_cast<const char*>(message.data());
     // check that we receive or not a null-terminated string aka C strings

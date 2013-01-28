@@ -26,6 +26,10 @@ class error_t : public std::exception {
 public:
   error_t(){}
 
+  int
+  num() const {
+    return 0;
+  }
 };
 
 
