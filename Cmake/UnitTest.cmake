@@ -28,14 +28,6 @@ function( unit_test NAME )
     #entry point
     TestRunner.cpp )
   include_directories( ${Boost_INCLUDE_DIRS}
-    ${VISHNU_SOURCE_DIR}/mockZMQ
-    ${VISHNU_SOURCE_DIR}/mockZMQ/tests
-    ${VISHNU_SOURCE_DIR}/TMS/src/posix_parser
-    ${UTILVISHNU_SOURCE_DIR}
-    ${EMF_DATA_DIR}
-    ${TMS_EMF_DATA_DIR}
-    ${EMF4CPP_INCLUDE_DIR}
-    ${VISHNU_EXCEPTION_INCLUDE_DIR}
     )
   
   # link libraries
