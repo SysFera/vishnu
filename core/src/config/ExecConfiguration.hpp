@@ -70,7 +70,8 @@ public:
    * \brief Initialize from a file
    * \param filePath  full path of the configuration filePath
    */
-  void initFromFile(std::string filePath) throw (UserException,std::exception);
+  void
+  initFromFile(std::string filePath) throw (UserException,std::exception);
 
   /**
    * \brief Get the value of a configuration parameter
@@ -127,7 +128,7 @@ public:
    * \brief To convert the script in a string
    */
   std::string
-  scriptToString();
+  scriptToString() const;
 
   /**
    * \brief To get the full path to the current executable

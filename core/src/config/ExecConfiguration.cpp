@@ -92,11 +92,11 @@ ExecConfiguration::getConfigValues(std::string& key, std::vector<std::string>& v
 
 
 string
-ExecConfiguration::scriptToString(){
+ExecConfiguration::scriptToString() const {
   string res;
-  for (map<string, string>::iterator it = mconfig.begin();
+  for (ConfigMap::const_iterator it = mconfig.begin();
        it != mconfig.end();
-       ++it){
+       ++it) {
     res += it->first;
     res += "=";
     res += it->second;
@@ -106,8 +106,7 @@ ExecConfiguration::scriptToString(){
 }
 
 string
-ExecConfiguration::getCurrentBinaryDir()
-{
+ExecConfiguration::getCurrentBinaryDir() {
   int length;
   char fullpath[MAXPATHLEN];
 
