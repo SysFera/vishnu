@@ -48,12 +48,12 @@ databaseName=vishnu
 # databaseUserName (M<FMS,IMS,TMS,UMS>): Sets the login name for authenticating
 # against the database
 #
-databaseUserName=vishnu
+databaseUserName=vishnu_user
 
 # databaseUserPassword (M<FMS,IMS,TMS,UMS>): Sets the password associated to
 # the database user
 #
-databaseUserPassword=vishnu
+databaseUserPassword=vishnu_user
 
 
 ###############################################################################
