@@ -1,4 +1,0 @@
-UPDATE machine SET memory=256 where machineid='machine_1';
-UPDATE machine SET diskspace=1000000 where machineid='machine_1';
-
-

@@ -113,9 +113,8 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
 
   BOOST_MESSAGE(" Testing delete auth account success U6.2"    );
   {
-    std::string uid = m_test_ums_admin_vishnu_login;
-    std::string pwd = m_test_ums_admin_vishnu_login;
-    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     aacc.setAuthSystemId(asys.getAuthSystemId());
     aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAcLogin("toto2");
@@ -127,9 +126,7 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
 
   BOOST_MESSAGE(" Testing list auth system U6.3"    );
   {
-    std::string uid = m_test_ums_admin_vishnu_login;
-    std::string pwd = m_test_ums_admin_vishnu_login;
-    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     liaao.setListAll(true);
     BOOST_CHECK(listAuthAccounts(sess.getSessionKey(), *liaa, liaao)==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
@@ -327,9 +324,8 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
 
   BOOST_MESSAGE(" Testing update auth account bad AuthSystem U6.1"    );
   {
-    std::string uid = m_test_ums_admin_vishnu_login;
-    std::string pwd = m_test_ums_admin_vishnu_login;
-    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAuthSystemId("toto");
     aacc.setAcLogin("titi");
@@ -339,8 +335,8 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
 
   // Update auth account bad user
   BOOST_MESSAGE(" Testing update auth account bad userId"    );
-  {
-    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+  {  
+    BOOST_CHECK (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop ) == 0);
     aacc.setAuthSystemId(asys.getAuthSystemId());
     aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAcLogin("toto");

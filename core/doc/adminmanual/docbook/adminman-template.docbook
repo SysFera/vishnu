@@ -1870,6 +1870,61 @@ Fonctions associées : define_file_format, define_machine_format, define_task_fo
 </listitem>
 </itemizedlist>
 </section>
+</chapter>
+
+<chapter>
+ <title>Tests</title>
+ <para>
+Les tests automatiques permettent de valider les fonctionnalités de Vishnu et de garantir la non régression lors des développements. Le module de test est activé ou pas au moment de la construction de Vshnu, en activant la variable Cmake  BUILD_TESTING.  Le module de test sera donc compilé avec les sources de vishnu. Toutes fois, pour l’exécution de ces tests l’administrateur doit fournir un ensemble de paramètres d’exécutions liées à la plateforme de test : </para>
+
+<itemizedlist>
+<listitem>
+<para>
+VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin vers le fichier de configuration client. Ce fichier permet à au client vishnu de se connecter à la plateforme.
+</para>
+</listitem>
+<listitem>
+<para>
+VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de  données de description de la plateforme. Ce fichier permet aux tests automatiques de s’exécuter sur la plateforme. Ce fichier doit contenir un ensemble de paramètres : </para> 
+<itemizedlist>
+<listitem>
+<para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plateforme de test; </para>
+</listitem>
+<listitem>
+<para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plateforme de test; </para>
+</listitem>
+<listitem>
+<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+</listitem>
+<listitem>
+<para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
+</listitem>
+<listitem>
+<para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+</listitem>
+</itemizedlist>
+
+</listitem>
+</itemizedlist>
+
+
+
+
 </chapter><!-- End administration -->
 </book>
 
