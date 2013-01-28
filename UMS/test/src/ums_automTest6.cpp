@@ -22,7 +22,7 @@ using namespace UMS_Data;
 using namespace vishnu;
 namespace bfs= boost::filesystem;
 
-BOOST_AUTO_TEST_CASE( Account_base )
+BOOST_AUTO_TEST_CASE( AuthAccount_base )
 {
 
   Session sess;
@@ -34,6 +34,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
   cop.setSubstituteUserId(sub);
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   ListSessions_ptr li = ecoreFactory->createListSessions();
+ 
   PrivilegeType pri = 1;
   std::string cu   = "toto_1";
   std::string pass = "user_1";
@@ -42,32 +43,21 @@ BOOST_AUTO_TEST_CASE( Account_base )
   std::string mail = "cl3m3ntlebgkidechyr@hotmail.fr";
   User_ptr use = ecoreFactory->createUser();
 
-  BOOST_MESSAGE(" Testing adding a user U4-B");
-
-  BOOST_CHECK(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
-  use->setUserId   (cu)  ;
-  use->setPassword (pass);
-  use->setFirstname(fina);
-  use->setLastname (lana);
-  use->setPrivilege(pri) ;
-  use->setEmail    (mail);
-  BOOST_CHECK(addUser(sess.getSessionKey(), *use)==0);
-  BOOST_CHECK(close        (sess.getSessionKey()     )==0);
-
-  BOOST_MESSAGE(" Testing valid update user U4.1-B"    );
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
   {
-    BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
-    BOOST_CHECK  (addUser(sess.getSessionKey(), *use           )==0);
-    use->setEmail("cl3m3ntlebgkidechyrGRAVE@hotmail.fr");
-    BOOST_CHECK (updateUser   (sess.getSessionKey(), *use           )==0);
-    use->setEmail(mail);
-    BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
+    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId(uidUMSDb);
+    aacc.setAcLogin("toto");
+    BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
+  
 }
 
 
 
-BOOST_AUTO_TEST_CASE( Account_failure )
+BOOST_AUTO_TEST_CASE( AuthAccount_failure )
 {
   Session sess;
   ConnectOptions cop;

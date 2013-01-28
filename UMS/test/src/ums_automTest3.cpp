@@ -52,6 +52,9 @@ BOOST_AUTO_TEST_CASE( Account_base )
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
   std::string key = "";
+  Configuration conf ;
+  ListLocalAccounts_ptr lia  = ecoreFactory->createListLocalAccounts();
+  ListLocalAccOptions lioa ;
 
  
   BOOST_MESSAGE(" Testing add local account success U4-B"    );
@@ -77,13 +80,52 @@ BOOST_AUTO_TEST_CASE( Account_base )
 
   BOOST_MESSAGE(" Testing delete local account normal U4.2B"    );
   { 
-    BOOST_CHECK  (connect           (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd , sess, cop)==0);
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd , sess, cop)==0);
     BOOST_CHECK    (deleteLocalAccount(sess.getSessionKey(), use->getUserId() , m_test_ums_user_vishnu_machineid     )==0);
     BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK    (close             (sess.getSessionKey()                )==0);
   }
-  
 
+  BOOST_MESSAGE(" Testing save conf"    );
+  {
+    BOOST_CHECK    (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    BOOST_CHECK    (saveConfiguration(sess.getSessionKey(), conf          )==0);
+    BOOST_CHECK    (close            (sess.getSessionKey()                )==0);
+  }
+
+  BOOST_MESSAGE(" Testing restore conf"    );
+  {
+    BOOST_CHECK    (connect             (m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd  , sess  , cop)==0);
+    BOOST_MESSAGE("Configuration = "+conf.getFilePath());
+    BOOST_CHECK    (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
+    BOOST_CHECK    (changePassword(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, m_test_ums_admin_vishnu_pwd       )==0);
+    BOOST_CHECK    (changePassword(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd , m_test_ums_root_vishnu_pwd       )==0);
+    BOOST_CHECK    (close               (sess.getSessionKey()                   )==0);
+  }
+  
+  BOOST_MESSAGE(" Testing normal list local account U4.3B" );
+  {
+    BOOST_CHECK  (connect         (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
+    BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
+    BOOST_CHECK (lia->getAccounts().size()>0);
+
+  }
+
+  // Test list local account mid
+  
+  
+  BOOST_MESSAGE(" Testing normal list local account on a machine U4.3B" );
+  BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
+  lioa.setMachineId(m_test_ums_user_vishnu_machineid);
+  lia  = ecoreFactory->createListLocalAccounts();
+  BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
+  BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
+  BOOST_CHECK (lia->getAccounts().size()>0);
+  if (lia->getAccounts().size()>0) {
+    BOOST_CHECK((lia->getAccounts()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
+  }
+  
 }
 
 
@@ -117,6 +159,9 @@ BOOST_AUTO_TEST_CASE( Account_failure )
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
   std::string key = "";
+  Configuration conf ;
+  ListLocalAccounts_ptr lia  = ecoreFactory->createListLocalAccounts();
+  ListLocalAccOptions lioa ;
 
   BOOST_MESSAGE(" Testing add local account bad machine U4-E"    );
   {
@@ -174,6 +219,22 @@ BOOST_AUTO_TEST_CASE( Account_failure )
     BOOST_CHECK    (close             (sess.getSessionKey()                 )==0);
   }
 
+  BOOST_MESSAGE(" Testing restore conf"    );
+  {
+    BOOST_CHECK    (connect             (m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd , sess  , cop)==0);
+    BOOST_CHECK    (saveConfiguration   (sess.getSessionKey(), conf             )==0);
+    //  conf->setFilePath("bad");
+    BOOST_CHECK_THROW      (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
+    BOOST_CHECK    (close               (sess.getSessionKey()                   )==0);
+  }
 
+  BOOST_MESSAGE(" Testing bad machine on list local account U4.3E" );
+  {
+    lioa.setMachineId("bad");
+    BOOST_CHECK  (connect         (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    lia  = ecoreFactory->createListLocalAccounts();
+    BOOST_CHECK_THROW  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      ), VishnuException);
+    BOOST_CHECK  (close           (sess.getSessionKey()                 )==0);
+  }
 }
 BOOST_AUTO_TEST_SUITE_END()

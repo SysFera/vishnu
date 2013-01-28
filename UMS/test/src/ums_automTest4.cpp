@@ -22,7 +22,7 @@ using namespace UMS_Data;
 using namespace vishnu;
 namespace bfs= boost::filesystem;
 
-BOOST_AUTO_TEST_CASE( Account_base )
+BOOST_AUTO_TEST_CASE( Machine_base )
 {
 
   Session sess;
@@ -101,7 +101,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
 
 
 
-BOOST_AUTO_TEST_CASE( Account_failure )
+BOOST_AUTO_TEST_CASE( Machine_failure )
 {
   Session sess;
   ConnectOptions cop;

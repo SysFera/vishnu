@@ -24,8 +24,7 @@ public:
   std::string m_test_ims_admin_vishnu_pwd;
   std::string m_test_ims_user_vishnu_login;
   std::string m_test_ims_user_vishnu_pwd;
-  std::string m_test_ims_user_vishnu_machineid;
-  
+    
   
   IMSFixture():mac(2){
 
