@@ -1,7 +1,0 @@
-#!/bin/bash
-
-/bin/hostname 
-
-cat $f1 > ${VISHNU_OUTPUT_DIR}/f1
-echo ${VISHNU_OUTPUT_DIR}
-

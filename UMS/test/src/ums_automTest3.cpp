@@ -116,7 +116,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
   
   
   BOOST_MESSAGE(" Testing normal list local account on a machine U4.3B" );
-  BOOST_CHECK  (connect         (uid, pwd, sess, cop )==0);
+  BOOST_CHECK  (connect         (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
   lioa.setMachineId(m_test_ums_user_vishnu_machineid);
   lia  = ecoreFactory->createListLocalAccounts();
   BOOST_CHECK  (listLocalAccounts(sess.getSessionKey(), *lia, lioa      )==0);
