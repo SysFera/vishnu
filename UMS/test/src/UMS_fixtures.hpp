@@ -34,7 +34,6 @@ class UMSSEDFixtureTemplate : public DispatcherFixture
 {
   
 public:
-  std::string m_test_ums_sql_path;
   std::string m_test_ums_authen_type;
   std::string m_test_ums_root_vishnu_login;
   std::string m_test_ums_root_vishnu_pwd;
@@ -65,7 +64,6 @@ public:
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
 
-    m_test_ums_sql_path = setupConfig.find("TEST_SQL_PATH")->second;
     m_test_ums_authen_type = setupConfig.find("TEST_UMS_AUTHEN_TYPE")->second ;
     m_test_ums_root_vishnu_login = setupConfig.find("TEST_ROOT_VISHNU_LOGIN")->second;
     m_test_ums_root_vishnu_pwd = setupConfig.find("TEST_ROOT_VISHNU_PWD")->second;

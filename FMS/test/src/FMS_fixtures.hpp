@@ -37,7 +37,6 @@ public:
     string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
-    m_test_fms_sql_path = setupConfig.find("TEST_SQL_PATH")->second;
     m_test_fms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
     m_test_fms_host1 = setupConfig.find("TEST_FMS_HOST1")->second;;
     m_test_fms_host2 = setupConfig.find("TEST_FMS_HOST2")->second;
@@ -76,7 +75,6 @@ public:
     BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
   }
 
-  std::string m_test_fms_sql_path;
   std::string m_test_fms_working_dir;
   std::string m_test_fms_host1;
   std::string m_test_fms_host2;

@@ -22,7 +22,7 @@ using namespace UMS_Data;
 using namespace vishnu;
 namespace bfs= boost::filesystem;
 
-BOOST_AUTO_TEST_CASE( Account_base )
+BOOST_AUTO_TEST_CASE( Authentication_base )
 {
 
   Session sess;
@@ -36,6 +36,9 @@ BOOST_AUTO_TEST_CASE( Account_base )
   AuthSystem asys;
   UMS_Data::EncryptionMethod enc = 0;
   ListAuthSystems_ptr lias  = ecoreFactory->createListAuthSystems();
+  AuthAccount aacc;
+  ListAuthAccounts_ptr liaa  = ecoreFactory->createListAuthAccounts();
+  ListAuthAccOptions liaao;
 
   BOOST_MESSAGE(" Testing add auth system success UA8"    );
   {
@@ -86,11 +89,54 @@ BOOST_AUTO_TEST_CASE( Account_base )
     BOOST_CHECK(listAuthSystems(sess.getSessionKey(), *lias, liaso)==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  {
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    asys.setName("ldap1");
+    asys.setURI("httm://www.graal.ens-lyon.fr");
+    asys.setAuthLogin("toto");
+    asys.setAuthPassword("toto");
+    asys.setUserPasswordEncryption(enc);
+    AuthType tsys = 0;
+    StatusType ssys = 1;
+    asys.setType(tsys);
+    asys.setStatus(ssys);
+    asys.setLdapBase("$USERNAME.base");
+    BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
+    aacc.setAcLogin("toto");
+    BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+    BOOST_CHECK(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId())==0);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+
+  BOOST_MESSAGE(" Testing delete auth account success U6.2"    );
+  {
+    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
+    aacc.setAcLogin("toto2");
+    BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
+    BOOST_CHECK(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId())==0);
+    BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+
+  BOOST_MESSAGE(" Testing list auth system U6.3"    );
+  {
+    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+    liaao.setListAll(true);
+    BOOST_CHECK(listAuthAccounts(sess.getSessionKey(), *liaa, liaao)==0);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+    
+  }
+  
 }
 
 
 
-BOOST_AUTO_TEST_CASE( Account_failure )
+BOOST_AUTO_TEST_CASE( Authentication_failure )
 {
   Session sess;
   ConnectOptions cop;
@@ -104,6 +150,7 @@ BOOST_AUTO_TEST_CASE( Account_failure )
   AuthSystem asys;
   UMS_Data::EncryptionMethod enc = 0;
   ListAuthSystems_ptr lias  = ecoreFactory->createListAuthSystems();
+  AuthAccount aacc;
   
   // Add auth system already exist
   BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
@@ -241,6 +288,82 @@ BOOST_AUTO_TEST_CASE( Account_failure )
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
 
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  {
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd,  sess, cop )==0);
+    aacc.setAuthSystemId("storm");
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
+    aacc.setAcLogin("toto");
+    BOOST_CHECK_THROW(addAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+  // Add auth account bad user
+  BOOST_MESSAGE(" Testing add auth account success U6"    );
+  {
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    asys.setName("ldap1");
+    asys.setURI("httm://www.graal.ens-lyon.fr");
+    asys.setAuthLogin("toto");
+    asys.setAuthPassword("toto");
+    asys.setUserPasswordEncryption(enc);
+    AuthType tsys = 0;
+    StatusType ssys = 1;
+    asys.setType(tsys);
+    asys.setStatus(ssys);
+    asys.setLdapBase("$USERNAME.base");
+    BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId("plop");
+    aacc.setAcLogin("toto");
+    BOOST_CHECK_THROW(addAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+    BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+
+
+  BOOST_MESSAGE(" Testing update auth account bad AuthSystem U6.1"    );
+  {
+    BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
+    aacc.setAuthSystemId("toto");
+    aacc.setAcLogin("titi");
+    BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+  
+  // Update auth account bad user
+  BOOST_MESSAGE(" Testing update auth account bad userId"    );
+  {  
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId((m_test_ums_admin_vishnu_login);
+    aacc.setAcLogin("toto");
+    aacc.setUserId("choco");
+    BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+
+  // Delete auth account bad uid
+  BOOST_MESSAGE(" Testing delete auth account bad uid U6.2"    );
+  
+  BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+  {
+    aacc.setUserId("plouf");
+    BOOST_CHECK_THROW(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId()), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+  // Delete auth account bad auth id
+  BOOST_MESSAGE(" Testing delete auth account bad AuthSystem U6.2"    );
+  {
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    aacc.setAuthSystemId(asys.getAuthSystemId());
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
+    aacc.setAuthSystemId("err");
+    BOOST_CHECK_THROW(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId()), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
+
+  
 }
 
 BOOST_AUTO_TEST_SUITE_END()
