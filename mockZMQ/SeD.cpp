@@ -70,7 +70,7 @@ public:
         try {
           data = socket.get();
         } catch (zmq::error_t &error) {
-          std::cout << boost::format("E: %1%\n") % error.what();
+          std::cerr << boost::format("E: %1%\n") % error.what();
           continue;
         }
         std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
