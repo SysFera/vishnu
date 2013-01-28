@@ -102,7 +102,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 
 /**
- * \brief The listJobs function gets a list of all submitted jobs
+ * \brief The getJobInfo function gets a specific job's information
 bInfo function gets information on a job from its id
  * \param sessionKey : The session key
  * \param machineId : The id of the machine
@@ -447,4 +447,3 @@ vishnu::addWork(const std::string& sessionKey,
   newWork = workProxy.getData();
   return res;
 }
-
