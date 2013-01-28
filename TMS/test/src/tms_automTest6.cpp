@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_SUITE(list_job_queues, TMSSeDFixture)
 
   //list job queues : normal call
 
-BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
+/*BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Testing normal execution of the list job queues function corresponding to use case T2.3" );
@@ -53,13 +53,16 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
     //Check the batch type    
     BOOST_CHECK(BATCHTYPE=="TORQUE" || BATCHTYPE=="SLURM" || BATCHTYPE=="LSF" || BATCHTYPE=="SGE");
 
-    VishnuConnexion vc("root","vishnu_user");
-
+    VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+    
     // get the session key and the machine identifier
-
+    
     string sessionKey=vc.getConnexion();
-
-    string machineId="machine_1";
+    
+    for(int i = 0; i < m_test_tms_machines.size();++i)
+    {
+      
+      std::string machineId= m_test_tms_machines.at(i).machine_id;
     string lsfQueuesConfigdir;
     string oldContentLSFQueuesConfigFile;
     // create queues
@@ -163,7 +166,7 @@ BOOST_AUTO_TEST_CASE(list_job_queues_normal_call)
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
-}
+}*/
 
 //------------------------------------------------------------------------------------------------------------------------
 //  get Jobs progression: bad parameters : bad sessionKey
@@ -173,13 +176,23 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_sessionKey)
 
   BOOST_TEST_MESSAGE(" Testing bad sessionKey for the list job queues function corresponding to use case T2.3" );
 
-  string machineId="machine_1";
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
+  // get the session key and the machine identifier
+  
+  string sessionKey=vc.getConnexion();
+  
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+    
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
-  ListQueues listofQueues;
+    ListQueues listofQueues;
 
-  BOOST_CHECK_THROW(listQueues( "bad sessionKey", machineId, listofQueues),VishnuException  );
+    BOOST_CHECK_THROW(listQueues( "bad sessionKey", machineId, listofQueues),VishnuException  );
 
-  BOOST_TEST_MESSAGE("*********************** list job queues : bad sessionKey ok!!!!*****************************");
+    BOOST_TEST_MESSAGE("*********************** list job queues : bad sessionKey ok!!!!*****************************");
+  }  
 }
 
 
@@ -192,14 +205,12 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_machineId)
 
   BOOST_TEST_MESSAGE(" Testing bad machineId for the list job queues function corresponding to use case T2.3" );
 
-  VishnuConnexion vc("root","vishnu_user");
-
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+  
   // get the session key and the machine identifier
-
+  
   string sessionKey=vc.getConnexion();
-
-  string machineId="machine_1";
-
+  
   ListQueues listofQueues;
 
   BOOST_CHECK_THROW(listQueues(sessionKey, "bad machineId", listofQueues),VishnuException  );

@@ -29,8 +29,20 @@ BOOST_FIXTURE_TEST_SUITE(CancelFileTransfer, FMSSeDFixture)
 
 BOOST_AUTO_TEST_CASE(CancelFileTransfer_Base)
 {
+  std::string newFileName = "Test_FMS_File";
+  std::string newDirName = "Test_FMS_Dir";
+  std::string newSubDirName = "Test_FMS_Sub_Dir";
+  std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
+  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
+  std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
+  std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
+  std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
+  std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
+  std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
+  
   BOOST_TEST_MESSAGE("Testing file transfer cancel UC F2.CA1-B");
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
 
   try {

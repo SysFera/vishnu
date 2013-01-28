@@ -419,7 +419,7 @@ install(FILES ${PROJECT_BINARY_DIR}/supervisord-sample.cfg DESTINATION ${ETC_INS
 
 target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
-if(NOT CLIENT_ONLY)
+if(COMPILE_SERVERS)
   set(database_SRCS
     database/DbConfiguration.cpp
     database/DbFactory.cpp

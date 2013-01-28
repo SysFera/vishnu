@@ -1,3 +1,0 @@
-UPDATE threshold SET value=1000000 where thresholdid=1;
-
-

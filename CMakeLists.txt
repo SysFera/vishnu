@@ -4,6 +4,9 @@
 # Author: E. PAMBA CAPO-CHICHI
 # Date: 4th February 2011
 
+######################################################################
+#                         GLOBAL PARAMETER                           #
+######################################################################
 cmake_minimum_required(VERSION 2.8.5)
 project(VISHNU)
 set(EXECUTABLE_OUTPUT_PATH bin/${CMAKE_BUILD_TYPE})
@@ -19,12 +22,11 @@ endif()
 set( VISHNU_VERSION "3.0.0" CACHE STRING " the version of the source ")
 set( VISHNU_VERSION_COMMENTS "beta1" CACHE STRING " comments about the current version ")
 
-if (COMPILE_IMS)
-  if (NOT CLIENT_ONLY)
-    find_package(XMLRPC)
-  endif()
-endif()
 
+
+######################################################################
+#                             OPTIONS                                #
+######################################################################
 # Options set to ON by default
 option(BUILD_SHARED_LIBS "disable shared libraries usage" ON)
 
@@ -40,31 +42,43 @@ else (POSTGRESQL_FOUND)
     option(ENABLE_MYSQL "compile with mysql support" OFF)
   endif(MYSQL_FOUND)
 endif(POSTGRESQL_FOUND)
+
 # COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
-# INSTALL_SYSV option set to OFF by default
-option(INSTALL_SYSV "install systemV init scripts" OFF)
-# INSTALL_SYSTEMD option set to OFF by default
-option(INSTALL_SYSTEMD "install systemd services" OFF)
 
 # Options set to OFF by default
-option(CLIENT_ONLY "only compile the client side")
-option(ENABLE_PYTHON "compile the python api")
-option(ENABLE_JAVA "compile the java api")
-option(ENABLE_SWIG "use swig to re-generate code for the wrappers")
-option(ENABLE_MYSQL "compile with the mysql support.")
-option(COMPILE_TMS "compile the module TMS")
-option(COMPILE_FMS "compile the module FMS")
-option(COMPILE_IMS "compile the module IMS")
+option(COMPILE_CLIENT_CLI "compile the client command line interface" OFF)
+option(COMPILE_SERVERS "compile the servers" OFF)
+option(ENABLE_PYTHON "compile the python api" OFF)
+option(ENABLE_JAVA "compile the java api" OFF)
+option(ENABLE_SWIG "use swig to re-generate code for the wrappers" OFF)
+option(ENABLE_MYSQL "compile with the mysql support." OFF)
+option(COMPILE_TMS "compile the module TMS" OFF)
+option(COMPILE_FMS "compile the module FMS" OFF)
+option(COMPILE_IMS "compile the module IMS" OFF)
+option(INSTALL_SYSV "install systemV init scripts" OFF)
+option(INSTALL_SYSTEMD "install systemd services" OFF)
 
-set(VISHNU_BATCH "TORQUE" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
-set(VISHNU_BATCH_VERSION "2.3" CACHE path "Version of the batch scheduler")
+# set dependencies
+if (ENABLE_PYTHON OR ENABLE_JAVA)
+  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+  set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
+  set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
+  add_subdirectory(swigAPI)
+endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
-#option(VISHNU_USE_LOADLEVELER   "Build VISHNU with LoadLeveler support...")
-#option(VISHNU_USE_TORQUE   "Build VISHNU with Torque support...")
-#option(VISHNU_USE_SLURM   "Build VISHNU with SLURM support...")
-#option(VISHNU_USE_LSF   "Build VISHNU with LSF support...")
-#option(VISHNU_USE_SGE     "Build VISHNU with SGE support...")
+if (COMPILE_TMS OR COMPILE_IMS OR COMPILE_FMS)
+  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+endif()
+
+if (COMPILE_TMS)
+  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+endif()
+
+
+set(VISHNU_BATCH "POSIX" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
+set(VISHNU_BATCH_VERSION "1" CACHE path "Version of the batch scheduler")
 
 option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
 
@@ -72,11 +86,15 @@ if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
   set(COMPILE_ALL_MODULES 1)
 endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 
-# FIXME: cache is not updated when CLIENT_ONLY is enabled and BUILD_TESTING previously set to ON
-include(CMakeDependentOption)
-cmake_dependent_option(BUILD_TESTING "Enable unit testing" OFF "NOT CLIENT_ONLY" OFF)
-option(DEBUG_TESTS "Provide debug info during tests execution" OFF)
+option(BUILD_TESTING "Enable unit testing" OFF)
 
+
+
+
+
+######################################################################
+#                             PACKAGES                               #
+######################################################################
 find_package(ZMQ)
 
 find_package(LIBCRYPT)
@@ -90,6 +108,27 @@ else (LIBCRYPT_FOUND)
   set(LIBCRYPT_DIR "" cache path "LIBCRYPT installation path")
 endif(LIBCRYPT_FOUND)
 
+
+find_package(Boost 1.46
+  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
+
+find_package(Threads)
+if(THREADS_FOUND)
+  set(THREADS_LIB ${CMAKE_THREAD_LIBS_INIT})
+endif()
+
+set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
+
+
+if(APPLE)
+  add_definitions("-DBSD_LIKE_SYSTEM")  
+endif()
+
+
+
+######################################################################
+#                             DATABASES                              #
+######################################################################
 if (ENABLE_POSTGRESQL)
   find_package(POSTGRESQL)
   if (POSTGRESQL_FOUND)
@@ -136,10 +175,14 @@ if (ENABLE_MYSQL)
   endif(MYSQL_FOUND)
 endif (ENABLE_MYSQL)
 
-if (NOT CLIENT_ONLY AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
+if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
 
+
+######################################################################
+#                         BATCH SCHEDULERS                           #
+######################################################################
 set(torque 0)
 set(ll 0)
 set(slurm 0)
@@ -149,7 +192,7 @@ set(pbs 0)
 set(deltacloud 0)
 set(posix 0)
 
-if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VISHNU_USE_TORQUE AND NOT VISHNU_USE_SLURM AND NOT VISHNU_USE_LSF AND NOT VISHNU_USE_SGE)
+if (COMPILE_TMS AND COMPILE_SERVERS)
   string (COMPARE EQUAL ${VISHNU_BATCH} "TORQUE" torque)
   string (COMPARE EQUAL ${VISHNU_BATCH} "LL" ll)
   string (COMPARE EQUAL ${VISHNU_BATCH} "SLURM" slurm)
@@ -166,180 +209,166 @@ if (COMPILE_TMS AND NOT CLIENT_ONLY) # AND NOT VISHNU_USE_LOADLEVELER AND NOT VI
   if ( NOT (torque OR ll OR lsf OR slurm OR sge OR pbs OR deltacloud OR posix) )
     message(FATAL_ERROR "VISHNU_BATCH must be either TORQUE, LL, SLURM, LSF, SGE, PBS, DELTACLOUD or POSIX")
   endif()
-endif()
-
-if (COMPILE_TMS)
-  add_definitions(-DCOMPILE_TMS)
-  set (COMPILE_FMS 1)
 
   # posix does not need version, can be empty, posix set to 1 if another activated so can't use reverse condition
   if ( torque OR ll OR lsf OR slurm OR sge OR pbs )
     string(REPLACE "." "_" batch_version_tmp ${VISHNU_BATCH_VERSION})
   endif()
 
-endif(COMPILE_TMS)
 
-if (COMPILE_FMS)
-  add_definitions(-DCOMPILE_FMS)
-endif(COMPILE_FMS)
+  if (torque)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_3" version)
+    if (NOT version)
+      message (FATAL_ERROR "Invalid TORQUE version, supported are: 2.3")
+    endif()
+    add_definitions(-DHAVE_TORQUE_${batch_version_tmp})
 
+    find_package(TORQUE)
+    if (TORQUE_FOUND)
+    else (TORQUE_FOUND)
+      message("TORQUE installation was not found. Define the TORQUE_DIR variable to continue.")
+      message("     - You can define a TORQUE_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DTORQUE_DIR:PATH=/path/to/TORQUE")
+      message("     - You can use the ccmake GUI")
+      set(TORQUE_DIR "" cache path "TORQUE installation path")
+    endif(TORQUE_FOUND)
+  endif (torque)
 
-if (torque)
-  string (COMPARE EQUAL ${batch_version_tmp} "2_3" version)
-  if (NOT version)
-    message (FATAL_ERROR "Invalid TORQUE version, supported are:
-      2.3")
-  endif()
-  add_definitions(-DHAVE_TORQUE_${batch_version_tmp})
+  if (pbs)
+    string (COMPARE EQUAL ${batch_version_tmp} "10_4" version)
+    if (NOT version)
+      message (FATAL_ERROR "Invalid PBSPRO version, supported are: 10.4")
+    endif()
+    add_definitions(-DHAVE_PBSPRO_${batch_version_tmp})
+    
+    find_package(PBSPRO)
+    if (PBSPRO_FOUND)
+    else (PBSPRO_FOUND)
+      message("PBSPRO installation was not found. Define the PBSPRO_DIR variable to continue.")
+      message("     - You can define a PBSPRO_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DPBSPRO_DIR:PATH=/path/to/PBSPRO")
+      message("     - You can use the ccmake GUI")
+      set(PBSPRO_DIR "" cache path "PBSPRO installation path")
+    endif(PBSPRO_FOUND)
+  endif (pbs)
 
-  find_package(TORQUE)
-  if (TORQUE_FOUND)
-  else (TORQUE_FOUND)
-    message("TORQUE installation was not found. Define the TORQUE_DIR variable to continue.")
-    message("     - You can define a TORQUE_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DTORQUE_DIR:PATH=/path/to/TORQUE")
-    message("     - You can use the ccmake GUI")
-    set(TORQUE_DIR "" cache path "TORQUE installation path")
-  endif(TORQUE_FOUND)
-endif (torque)
+  if (ll)
+    string (COMPARE EQUAL ${batch_version_tmp} "3_x" version)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_x" version2)
+    if (version2)
+      set(batch_version_tmp "3_5")
+    endif()
+    if (NOT (version OR version2) )
+      message (FATAL_ERROR "Invalid LoadLeveler version, supported are: 2.x, 3.x")
+    endif()
+    
+    add_definitions(-DHAVE_LOADLEVELER_${batch_version_tmp})
+    
+    find_package(LOADLEVELER)
+    if (LOADLEVELER_FOUND)
+    else (LOADLEVELER_FOUND)
+      message("LOADLEVELER installation was not found. Define the LOADLEVELER_DIR variable to continue.")
+      message("     - You can define a LOADLEVELER_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DLOADLEVELER_DIR:PATH=/path/to/LOADLEVELER")
+      message("     - You can use the ccmake GUI")
+      set(LOADLEVELER_DIR "" cache path "LOADLEVELER installation path")
+    endif(LOADLEVELER_FOUND)
+  endif (ll)
 
-if (pbs)
-  string (COMPARE EQUAL ${batch_version_tmp} "10_4" version)
-  if (NOT version)
-    message (FATAL_ERROR "Invalid PBSPRO version, supported are:
-      10.4")
-  endif()
-  add_definitions(-DHAVE_PBSPRO_${batch_version_tmp})
+  if (slurm)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_2" version)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_3" version2)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_4" version3)
+    # Slurm 2.4 compile with 2.3 implementation
+    if (version3)
+      set(batch_version_tmp "2_3")
+    endif()
+    if (NOT (version OR version2 OR version3) )
+      message (FATAL_ERROR "Invalid SLURM version, supported are: 2.2, 2.3 or 2.4")
+    endif()
 
-  find_package(PBSPRO)
-  if (PBSPRO_FOUND)
-  else (PBSPRO_FOUND)
-    message("PBSPRO installation was not found. Define the PBSPRO_DIR variable to continue.")
-    message("     - You can define a PBSPRO_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DPBSPRO_DIR:PATH=/path/to/PBSPRO")
-    message("     - You can use the ccmake GUI")
-    set(PBSPRO_DIR "" cache path "PBSPRO installation path")
-  endif(PBSPRO_FOUND)
-endif (pbs)
+    add_definitions(-DHAVE_SLURM_${batch_version_tmp})
 
-if (ll)
-  string (COMPARE EQUAL ${batch_version_tmp} "3_x" version)
-  string (COMPARE EQUAL ${batch_version_tmp} "2_x" version2)
-  if (version2)
-    set(batch_version_tmp "3_5")
-  endif()
-  if (NOT (version OR version2) )
-    message (FATAL_ERROR "Invalid LoadLeveler version, supported are:
-      3.x
-      2.x")
-  endif()
+    find_package(SLURM)
+    if (SLURM_FOUND)
+    else (SLURM_FOUND)
+      message("SLURM installation was not found. Define the SLURM_DIR variable to continue.")
+      message("     - You can define a SLURM_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DSLURM_DIR:PATH=/path/to/SLURM")
+      message("     - You can use the ccmake GUI")
+      set(SLURM_DIR "" cache path "SLURM installation path")
+    endif(SLURM_FOUND)
+  endif (slurm)
 
-  add_definitions(-DHAVE_LOADLEVELER_${batch_version_tmp})
+  if (lsf)
+    string (COMPARE EQUAL ${batch_version_tmp} "7_0" version)
+    if (NOT version)
+      message (FATAL_ERROR "Invalid LSF version, supported are: 7.0")
+    endif()
 
-  find_package(LOADLEVELER)
-  if (LOADLEVELER_FOUND)
-  else (LOADLEVELER_FOUND)
-    message("LOADLEVELER installation was not found. Define the LOADLEVELER_DIR variable to continue.")
-    message("     - You can define a LOADLEVELER_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DLOADLEVELER_DIR:PATH=/path/to/LOADLEVELER")
-    message("     - You can use the ccmake GUI")
-    set(LOADLEVELER_DIR "" cache path "LOADLEVELER installation path")
-  endif(LOADLEVELER_FOUND)
-endif (ll)
+    add_definitions(-DHAVE_LSF_${batch_version_tmp})
 
-if (slurm)
-  string (COMPARE EQUAL ${batch_version_tmp} "2_2" version)
-  string (COMPARE EQUAL ${batch_version_tmp} "2_3" version2)
-  string (COMPARE EQUAL ${batch_version_tmp} "2_4" version3)
-# Slurm 2.4 compile with 2.3 implementation
-  if (version3)
-    set(batch_version_tmp "2_3")
-  endif()
-  if (NOT (version OR version2 OR version3) )
-    message (FATAL_ERROR "Invalid SLURM version, supported are:
-      2.2 or 2.3 or 2.4")
-  endif()
+    find_package(LSF)
+    if (LSF_FOUND)
+    else (LSF_FOUND)
+      message("LSF installation was not found. Define the LSF_DIR variable to continue.")
+      message("     - You can define a LSF_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DLSF_DIR:PATH=/path/to/LSF")
+      message("     - You can use the ccmake GUI")
+      set(LSF_DIR "" cache path "LSF installation path")
+    endif(LSF_FOUND)
+  endif (lsf)
 
-  add_definitions(-DHAVE_SLURM_${batch_version_tmp})
+  if (sge)
+    string (COMPARE EQUAL ${batch_version_tmp} "11" version)
+    if (NOT version)
+      message (FATAL_ERROR "Invalid SGE version, supported are: 11")
+    endif()
 
-  find_package(SLURM)
-  if (SLURM_FOUND)
-  else (SLURM_FOUND)
-    message("SLURM installation was not found. Define the SLURM_DIR variable to continue.")
-    message("     - You can define a SLURM_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DSLURM_DIR:PATH=/path/to/SLURM")
-    message("     - You can use the ccmake GUI")
-    set(SLURM_DIR "" cache path "SLURM installation path")
-  endif(SLURM_FOUND)
-endif (slurm)
+    add_definitions(-DHAVE_SGE_${batch_version_tmp})
 
-if (lsf)
-  string (COMPARE EQUAL ${batch_version_tmp} "7_0" version)
-  if (NOT version)
-    message (FATAL_ERROR "Invalid LSF version, supported are:
-      7.0")
-  endif()
+    find_package(SGE)
+    if (SGE_FOUND)
+    else (SGE_FOUND)
+      message("SGE installation was not found. Define the SGE_DIR variable to continue.")
+      message("     - You can define a SGE_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DSGE_DIR:PATH=/path/to/SGE")
+      message("     - You can use the ccmake GUI")
+      set(SGE_DIR "" cache path "SGE installation path")
+    endif(SGE_FOUND)
+  endif (sge)
+  if (deltacloud)
+    add_definitions(-DHAVE_DELTACLOUD)
+    mark_as_advanced(VISHNU_BATCH_VERSION)
+    find_package(LibDeltaCloud)
+    if (LIBDELTACLOUD_FOUND)
+    else (LIBDELTACLOUD_FOUND)
+      message("LIBDELTACLOUD was not found. You may need to define LIBDELTACLOUD_DIR.")
+      message("     - You can define a LIBDELTACLOUD_DIR environment variable")
+      message("     - You can pass it as argument to cmake:")
+      message("       $ cmake <source root directory> -DLIBDELTACLOUD_DIR:PATH=/path/to/libdeltacloud")
+      message("     - You can use the ccmake GUI")
+      set(LIBDELTACLOUD_DIR "" cache path "LIBDELTACLOUD installation path")
+    endif(LIBDELTACLOUD_FOUND)
+  endif (deltacloud)
 
-  add_definitions(-DHAVE_LSF_${batch_version_tmp})
-
-  find_package(LSF)
-  if (LSF_FOUND)
-  else (LSF_FOUND)
-    message("LSF installation was not found. Define the LSF_DIR variable to continue.")
-    message("     - You can define a LSF_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DLSF_DIR:PATH=/path/to/LSF")
-    message("     - You can use the ccmake GUI")
-    set(LSF_DIR "" cache path "LSF installation path")
-  endif(LSF_FOUND)
-endif (lsf)
-
-if (sge)
-  string (COMPARE EQUAL ${batch_version_tmp} "11" version)
-  if (NOT version)
-    message (FATAL_ERROR "Invalid SGE version, supported are:
-      11")
-  endif()
-
-  add_definitions(-DHAVE_SGE_${batch_version_tmp})
-
-  find_package(SGE)
-  if (SGE_FOUND)
-  else (SGE_FOUND)
-    message("SGE installation was not found. Define the SGE_DIR variable to continue.")
-    message("     - You can define a SGE_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DSGE_DIR:PATH=/path/to/SGE")
-    message("     - You can use the ccmake GUI")
-    set(SGE_DIR "" cache path "SGE installation path")
-  endif(SGE_FOUND)
-endif (sge)
-
-if (deltacloud)
-  add_definitions(-DHAVE_DELTACLOUD)
-  mark_as_advanced(VISHNU_BATCH_VERSION)
-  find_package(LibDeltaCloud)
-  if (LIBDELTACLOUD_FOUND)
-  else (LIBDELTACLOUD_FOUND)
-    message("LIBDELTACLOUD was not found. You may need to define LIBDELTACLOUD_DIR.")
-    message("     - You can define a LIBDELTACLOUD_DIR environment variable")
-    message("     - You can pass it as argument to cmake:")
-    message("       $ cmake <source root directory> -DLIBDELTACLOUD_DIR:PATH=/path/to/libdeltacloud")
-    message("     - You can use the ccmake GUI")
-    set(LIBDELTACLOUD_DIR "" cache path "LIBDELTACLOUD installation path")
-  endif(LIBDELTACLOUD_FOUND)
-endif (deltacloud)
+  if (posix)
+    add_definitions(-DHAVE_TMSPOSIX)
+  endif(posix)
+endif(COMPILE_TMS AND COMPILE_SERVERS)
 
 
-if (posix)
-  add_definitions(-DHAVE_TMSPOSIX)
-endif(posix)
 
-if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
+######################################################################
+#                                LDAP                                #
+######################################################################
+if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
   #To check if the module UMS is activated
   if (COMPILE_UMS)
     find_package(LDAP)
@@ -357,26 +386,13 @@ if (VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
   else (COMPILE_UMS)
     message("To use LDAP, the UMS module must be activated.")
   endif (COMPILE_UMS)
-endif(VISHNU_USE_LDAP AND NOT CLIENT_ONLY)
+endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
 
 
-find_package(Boost 1.46
-  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 
-find_package(Threads)
-if(THREADS_FOUND)
-  set(THREADS_LIB ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-set(Boost_LIBRARIES ${Boost_LIBRARIES} ${THREADS_LIB})
-
-add_definitions("-DBOOST_FILESYSTEM_VERSION=3")
-
-if(APPLE)
-  add_definitions("-DBSD_LIKE_SYSTEM")  
-endif()
-
-
+######################################################################
+#                           COMPILATION                              #
+######################################################################
 # mock
 set(MOCK_INCLUDE_DIR
   ${VISHNU_SOURCE_DIR}/mockZMQ
@@ -478,118 +494,16 @@ endif()
 add_subdirectory(core/src)
 add_subdirectory(core/deps)
 
-if (DEBUG_TESTS)
-  add_definitions(-DDEBUG_TESTS)
-endif (DEBUG_TESTS)
 
 if (BUILD_TESTING)
   add_definitions(-DBUILD_TESTING)
-  string(TOLOWER ${VISHNU_BATCH} VISHNU_BATCH_LOWERCASE)
-
-  set(TEST_DB_TYPE "postgresql" CACHE STRING "Type of the test database")
-  set(TEST_DB_HOST "127.0.0.1" CACHE STRING "Hostname of the test database server")
-  set(TEST_DB_NAME "vishnu" CACHE STRING "Database name of the test database")
-  set(TEST_DB_LOGIN "vishnu" CACHE STRING "Login for the test database")
-  set(TEST_DB_PASSWORD "vishnu" CACHE STRING "Password for the test database")
-  set(TEST_USER_LOGIN "vishnu" CACHE STRING "Login for local account used for tests")
-  set(TEST_ROOT_LOGIN "vishnu" CACHE STRING "Vishnu root login for local account used for tests")
-  set(TEST_ADMIN_LOGIN "vishnu" CACHE STRING "Vishnu admin login for local account used for tests")
-  set(TEST_USER_SSHKEY "$ENV{HOME}/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set(TEST_ROOT_SSHKEY "$ENV{HOME}/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set(TEST_ADMIN_SSHKEY "$ENV{HOME}/.ssh/id_rsa" CACHE STRING "Private key path for local account used for tests")
-  set(TEST_USER_HOME "$ENV{HOME}" CACHE STRING "Vishnu user home directory for local account used for tests")
-  set(TEST_ROOT_HOME "$ENV{HOME}" CACHE STRING "Vishnu root home directory for local account used for tests")
-  set(TEST_ADMIN_HOME "$ENV{HOME}" CACHE STRING "Vishnu admin home directory for local account used for tests")
-  set(TEST_BATCH_SERVER_HOSTNAME "127.0.0.1" CACHE STRING " local hostname used for tests")
-  set(TEST_BATCH_TYPE "${VISHNU_BATCH}" CACHE STRING " batch scheduler type")
-  set(TEST_BATCH_TYPE2 "${VISHNU_BATCH}" CACHE STRING " batch scheduler type")
-  set(TEST_WORKING_DIR ${PROJECT_BINARY_DIR}/test_files CACHE PATH "Tests working directory")
-  set(TEST_LOCAL_HOSTNAME "127.0.0.1" CACHE STRING " local hostname used for tests")
-  set(TEST_REMOTE_HOSTNAME "$ENV{HOSTNAME}" CACHE STRING " remote hostname used for tests")
-  set(TEST_TMS_FAST_SCRIPT_NAME "fast_${VISHNU_BATCH_LOWERCASE}_script" CACHE STRING " The name of the fast script to submit")
-  set(TEST_TMS_FAST_SCRIPT_OUTPUTDIR_NAME "fast_${VISHNU_BATCH_LOWERCASE}_outputdir_script" CACHE STRING " The name of the fast script containing the VISHNU_OUTPUTDIR variable to submit")
-  set(TMS_FAST_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the fast script to submit")
-  set(TEST_TMS_SCRIPT_NAME testScriptGen CACHE STRING " The name of the script to submit")
-  set(TEST_TMS_SCRIPT_NAME_WAITING testScriptGenWaiting CACHE STRING " The name of the with an option to put job on waiting state")
-  set(TMS_SCRIPT_PATH ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts CACHE STRING " The path to the script to submit")
-  set(TEST_CONFIG_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src/scripts/ CACHE PATH "Tests configuration directory")
-  set(LSF_QUEUES_CONFIG_DIR /opt/lsf7u6/conf/lsbatch/cluster1/configdir/lsb.queues CACHE PATH "LSF queues configuration directory")
-  set(TEST_AUTHENTYPE "UMS" CACHE STRING "The type of authentication")
-  set(TEST_ROOT_UMS_LOGIN "root" CACHE STRING "Vishnu root login registered on the user-authentication system and used for tests")
-  set(TEST_ROOT_UMS_PWD "vishnu_user" CACHE STRING "Vishnu root password registered on the user-authentication system and used for tests")
-  set(TEST_AUTHSYTEM_URI "ldap://127.0.0.1:389/" CACHE STRING "The URI of the authentication system")
-  set(TEST_AUTHSYTEM_BASE "uid=$USERNAME,ou=users,dc=edf,dc=fr" CACHE STRING "The base of the ldap authentication system")
-  set(TEST_ADMIN_UMS_LOGIN "admin_1" CACHE STRING "Vishnu admin login registered on the user-authentication system and used for tests")
-  set(TEST_ADMIN_UMS_PWD "admin" CACHE STRING "Vishnu admin password registered on the user-authentication system and used for tests")
-  set(TEST_USER_UMS_LOGIN "user_1" CACHE STRING "Vishnu user login registered on the user-authentication system and used for tests")
-  set(TEST_USER_UMS_PWD "toto" CACHE STRING "Vishnu user password registered on the user-authentication system and used for tests")
-  set(TEST_ZMQ_DISPATCHER_URI_SRV "tcp://127.0.0.1:5560" CACHE STRING "Uri for binding the Dispatcher for the clients (where the clients connect to request the addresses of SeDs)")
-  set(TEST_ZMQ_DISPATCHER_URI_SUB "tcp://127.0.0.1:5561" CACHE STRING "Uri for binding the Dispatcher's registry service (where each SeD connects to registry itself)")
-  set(TEST_ZMQ_UMS_URI "tcp://127.0.0.1:5510" CACHE STRING "Uri for binding UMS")
-  set(TEST_ZMQ_FMS_URI "tcp://127.0.0.1:5520" CACHE STRING "Uri for binding FMS")
-  set(TEST_ZMQ_TMS_SCHED_URI "tcp://127.0.0.1:5530" CACHE STRING "Uri for binding the TMS's scheduler for automatic submission")
-  set(TEST_ZMQ_TMS_SED1_URI "tcp://127.0.0.1:5531" CACHE STRING "Uri for binding the first TMS SeD")
-  set(TEST_ZMQ_TMS_SED2_URI "tcp://127.0.0.1:5532" CACHE STRING "Uri for binding the second TMS SeD")  
-  set(TEST_ZMQ_LPC_TIMEOUT "10" CACHE STRING "Timeout between two lazy pirate retries") 
- 
-  set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
-  set(TEST_IMS_SUPERVISOR_URL "http://127.0.0.1:9001" CACHE STRING "Web url of Supervisord")
-  set(TEST_CLOUD_ENDPOINT "http://127.0.0.1:3001/api" CACHE STRING "Deltacloud API's url")
-
-  mark_as_advanced(TEST_DB_TYPE)
-  mark_as_advanced(TEST_DB_HOST)
-  mark_as_advanced(TEST_DB_NAME)
-  mark_as_advanced(TEST_DB_LOGIN)
-  mark_as_advanced(TEST_DB_PASSWORD)
-  mark_as_advanced(TEST_WORKING_DIR)
-  mark_as_advanced(TEST_ROOT_LOGIN)
-  mark_as_advanced(TEST_ROOT_SSHKEY)
-  mark_as_advanced(TEST_ADMIN_LOGIN)
-  mark_as_advanced(TEST_ADMIN_LOGIN)
-  mark_as_advanced(TEST_USER_SSHKEY)
-  mark_as_advanced(TEST_USER_SSHKEY)
-  mark_as_advanced(TEST_BATCH_SERVER_HOSTNAME)
-  mark_as_advanced(TEST_LOCAL_HOSTNAME)
-  mark_as_advanced(TEST_REMOTE_HOSTNAME)
-  mark_as_advanced(TEST_ROOT_UMS_LOGIN)
-  mark_as_advanced(TEST_ROOT_UMS_PWD)
-  mark_as_advanced(TEST_AUTHSYTEM_URI)
-  mark_as_advanced(TEST_AUTHSYTEM_BASE)
-  mark_as_advanced(TEST_ADMIN_UMS_LOGIN)
-  mark_as_advanced(TEST_ADMIN_UMS_PWD)
-  mark_as_advanced(TEST_USER_UMS_LOGIN)
-  mark_as_advanced(TEST_USER_UMS_PWD)
-  mark_as_advanced(TEST_ZMQ_DISPATCHER_URI_SRV)
-  mark_as_advanced(TEST_ZMQ_DISPATCHER_URI_SUB)
-  mark_as_advanced(TEST_ZMQ_UMS_URI)
-  mark_as_advanced(TEST_ZMQ_FMS_URI)
-  mark_as_advanced(TEST_ZMQ_TMS_SED1_URI)
-  mark_as_advanced(TEST_ZMQ_TMS_SED2_URI)
-  mark_as_advanced(TEST_ZMQ_TMS_SCHED_URI)
-  mark_as_advanced(TEST_ZMQ_LPC_TIMEOUT) 
-  mark_as_advanced(TEST_IMS_SUPERVISOR_URL)
-  mark_as_advanced(TEST_CLOUD_ENDPOINT)
 
   # Common directories for tests
-  set(TEST_SQL_PATH "${PROJECT_BINARY_DIR}/test_files/sql" CACHE STRING "Contains SQL for tests")
-  set(TEST_CONFIG_PATH "${PROJECT_BINARY_DIR}/test_files/cfg" CACHE STRING "Contains configurations for tests")
   set(TEST_BIN_PATH "${PROJECT_BINARY_DIR}/bin" CACHE STRING "Contains binaries for tests")
-  mark_as_advanced(TEST_SQL_PATH)
-  mark_as_advanced(TEST_CONFIG_PATH)
   mark_as_advanced(TEST_BIN_PATH)
 
   add_subdirectory(core/test)
 endif (BUILD_TESTING)
-
-# It's required to enable all the modules when SWIG is enabled. Otherwise you'll have linking problems
-# To avoid dealing with IMS dependencies when you only need API, you may need to set CLIENT_ONLY at ON
-if (ENABLE_PYTHON OR ENABLE_JAVA)
-  set (COMPILE_UMS 1 )
-  set (COMPILE_FMS 1 )
-  set (COMPILE_TMS 1 )
-  set (COMPILE_IMS 1 )
-  add_subdirectory(swigAPI)
-endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
 add_subdirectory(mockZMQ)
 
@@ -606,17 +520,29 @@ if(COMPILE_UMS)
   endif (BUILD_TESTING)
 endif (COMPILE_UMS)
 
+if(COMPILE_FMS)
+  add_subdirectory(FMS/src)
+  add_subdirectory(FMS/doc/man)
+  add_definitions(-DCOMPILE_FMS)
+  if (BUILD_TESTING)
+      add_subdirectory(FMS/test/src)
+      set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
+  endif (BUILD_TESTING)
+endif (COMPILE_FMS)
+
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
   add_subdirectory(TMS/doc/man)
   add_definitions(-DCOMPILE_TMS)
   if (BUILD_TESTING)
     add_subdirectory(TMS/test/src)
+    set(TMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_TMS)
 
 if(COMPILE_IMS)
-  if (NOT CLIENT_ONLY)
+  if (COMPILE_SERVERS)
+    find_package(XMLRPC)
     find_package(Sigar REQUIRED)
   endif()
   add_definitions(-DCOMPILE_IMS)
@@ -624,17 +550,11 @@ if(COMPILE_IMS)
   add_subdirectory(IMS/doc/man)
   if (BUILD_TESTING)
     add_subdirectory(IMS/test/src)
+    set(IMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/IMS/test/src)
   endif (BUILD_TESTING)
 endif (COMPILE_IMS)
 
-if(COMPILE_FMS)
-  add_subdirectory(FMS/src)
-  add_subdirectory(FMS/doc/man)
-  add_definitions(-DCOMPILE_FMS)
-  if (BUILD_TESTING)
-      add_subdirectory(FMS/test/src)
-  endif (BUILD_TESTING)
-endif (COMPILE_FMS)
+
 
 # module that adds an uninstall target
 include(CMakeUninstall)

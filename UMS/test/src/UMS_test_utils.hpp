@@ -4,6 +4,9 @@
 #include <fstream>
 #include <sstream>
 
+#include <boost/filesystem.hpp>
+
+
 /**
  * \brief To put the a string content on a file
  * \param path  the file path

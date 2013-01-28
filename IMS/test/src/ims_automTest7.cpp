@@ -22,7 +22,7 @@ account of local machine must be defined
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
 #include "utilVishnu.hpp"
-#include "IMS_testconfig.h"
+
 
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
@@ -45,12 +45,7 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = IMSSQLPATH;
-static const string machineId="machine_1";
+
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -63,7 +58,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
 
   BOOST_TEST_MESSAGE("Use case IA3 - B: Define the identifier");
 
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
 
@@ -73,7 +68,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
   string formatFileTransfer = "FTTEST_$CPT";
   string formatAuth = "ATEST_$CPT";
   //Job
-  const std::string scriptFilePath= TMSSCRIPTPATH;
+  const std::string scriptFilePath= "TMSSCRIPTPATH"; //FIXE
   SubmitOptions subOptions;
 
   try {
@@ -104,11 +99,11 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
     ma.setLanguage          ("lang");
     ma.setSshPublicKey      ("/id_rsa.pub");
     BOOST_CHECK_EQUAL(addMachine(sessionKey, ma), 0);
-    //To check if the machineId format is correct
+    //To check if the m_test_ums_user_vishnu_machineid format is correct
     BOOST_REQUIRE(ma.getMachineId().find("MTEST_") == 0);
     //job
     Job jobInfo;
-    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0 );
+    BOOST_CHECK_EQUAL(submitJob(sessionKey, m_test_ums_user_vishnu_machineid, scriptFilePath, jobInfo,subOptions),0 );
     //To check if the jobId format is correct
     BOOST_REQUIRE(jobInfo.getJobId().find("JTEST_") == 0);
   }
@@ -132,7 +127,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
   string formatFileTransfer = "FTTEST_$TEST";
   string formatAuth = "ATTEST_$TEST";
 
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //To define the user format
@@ -160,7 +155,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   string formatFileTransfer = "FTTEST_$CPT";
   string formatAuth = "ATTEST_$CPT";
   //no admin user
-  VishnuConnection vc(userId, userPwd);
+  VishnuConnection vc(m_test_ims_user_vishnu_login, m_test_ims_user_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
 

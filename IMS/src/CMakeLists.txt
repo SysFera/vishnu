@@ -35,6 +35,7 @@ target_link_libraries(vishnu-ims-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
+  vishnu-ums-client
   ${LIBCRYPT_LIB}
 )
 if(COMPILE_FMS)
@@ -45,9 +46,11 @@ install(TARGETS vishnu-ims-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 ## client CLI
-add_subdirectory(cli)
+if(COMPILE_CLIENT_CLI)
+  add_subdirectory(cli)
+endif()
 
-if(NOT CLIENT_ONLY)
+if(COMPILE_SERVERS)
   include_directories(${DATA_BASE_INCLUDE_DIR}
     ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
@@ -90,4 +93,4 @@ if(NOT CLIENT_ONLY)
 )
 
   install(TARGETS imssed DESTINATION ${SBIN_INSTALL_DIR})
-endif (NOT CLIENT_ONLY)  
+endif (COMPILE_SERVERS)

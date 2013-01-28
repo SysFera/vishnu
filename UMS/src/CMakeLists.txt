@@ -53,18 +53,21 @@ install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 ## client CLI
-add_subdirectory(cli)
+if(COMPILE_CLIENT_CLI)
+  add_subdirectory(cli)
+endif()
 
-if(NOT CLIENT_ONLY)
+
+if(COMPILE_SERVERS)
   include_directories(
-  ${CONFIG_SOURCE_DIR}
-  ${DATABASE_INCLUDE_DIR}
-  ${DATA_BASE_INCLUDE_DIR}
-  ${UMS_SERVER_SOURCE_DIR}
-  ${Boost_INCLUDE_DIRS}
-  ${REGISTRY_SOURCE_DIR}
-  ${LDAP_PROXY_SOURCE_DIR}
-  ${AUTHENTICATOR_INCLUDE_DIR})
+    ${CONFIG_SOURCE_DIR}
+    ${DATABASE_INCLUDE_DIR}
+    ${DATA_BASE_INCLUDE_DIR}
+    ${UMS_SERVER_SOURCE_DIR}
+    ${Boost_INCLUDE_DIRS}
+    ${REGISTRY_SOURCE_DIR}
+    ${LDAP_PROXY_SOURCE_DIR}
+    ${AUTHENTICATOR_INCLUDE_DIR})
 
   set(sed_SRCS sed/umssed.cpp
     sed/ServerUMS.cpp
@@ -90,8 +93,6 @@ if(NOT CLIENT_ONLY)
 
   add_executable(umssed ${sed_SRCS})
   target_link_libraries(umssed 
-#${DIET_SERVER_LIBRARIES}
-    ${LOG_LIBRARY}
     vishnu-ums-server
     emf4cpp-vishnu
     ${LIBCRYPT_LIB}
@@ -99,9 +100,9 @@ if(NOT CLIENT_ONLY)
     ${CMAKE_DL_LIBS}
     ${ZMQ_LIBRARIES}
     zmq_helper
-)
+    )
 
 
-install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
+  install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif()
 

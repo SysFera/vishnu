@@ -99,6 +99,15 @@ public:
   bool
   getConfigValues(vishnu::param_type_t param, std::vector<std::string>& values) const;
 
+  /**
+   * \brief Get the values of a configuration parameter
+   * \param[in]  key
+   * \param[out] value the list of result
+   * \return values has been set or not
+   */
+  bool
+  getConfigValues(std::string& key, std::vector<std::string>& values) const;
+
 
   /**
    * \brief Check and get the value of a configuration parameter

@@ -36,7 +36,6 @@ macro( ums_test NAME )
       #entry point
     TestRunner.cpp )
     include_directories( ${Boost_INCLUDE_DIRS}
-      ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}
       ${UMS_DATA_DIR}
       ${API_SOURCE_DIR}
@@ -51,8 +50,6 @@ macro( ums_test NAME )
 
     # link libraries
     target_link_libraries( ${NAME}
-      ${DIET_CLIENT_LIB}
-      ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core

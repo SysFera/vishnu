@@ -1,5 +1,4 @@
 include_directories(client api
-#  ${DIET_INCLUDE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -25,8 +24,6 @@ set(api_HEADERS api/api_fms.hpp)
 add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
 SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
 target_link_libraries(vishnu-fms-client
-#  ${DIET_CLIENT_LIBRARIES}
-  ${LOG_LIBRARY}
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
   vishnu-core
@@ -37,12 +34,14 @@ target_link_libraries(vishnu-fms-client
 )
 
 ## client CLI
-add_subdirectory(cli)
+if(COMPILE_CLIENT_CLI)
+  add_subdirectory(cli)
+endif()
 
 install(TARGETS vishnu-fms-client DESTINATION ${LIB_INSTALL_DIR})
 install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
-if(NOT CLIENT_ONLY)
+if(COMPILE_SERVERS)
   include_directories(${DATA_BASE_INCLUDE_DIR}
     ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
@@ -78,8 +77,6 @@ if(NOT CLIENT_ONLY)
   add_executable(fmssed ${sed_SRCS} ${server_SRCS})
   install(TARGETS fmssed DESTINATION ${SBIN_INSTALL_DIR})
   target_link_libraries(fmssed 
-#    ${DIET_SERVER_LIBRARIES}
-    ${LOG_LIBRARY}
     ${DATABASE_LIBS}
     ${Boost_LIBRARIES}
     vishnu-core

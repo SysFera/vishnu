@@ -36,7 +36,6 @@ macro( tms_test NAME )
     TestRunner.cpp
     tmsTestUtils.cpp)
     include_directories( ${Boost_INCLUDE_DIRS}
-      ${DIET_INCLUDE_DIR}
       ${EMF_DATA_DIR}
       ${TMS_EMF_DATA_DIR}
       ${UMS_DATA_DIR}
@@ -56,8 +55,6 @@ macro( tms_test NAME )
 
     # link libraries
     target_link_libraries( ${NAME}
-      ${DIET_CLIENT_LIB}
-      ${DIET_SERVER_LIB}
       ${LIBPQ_LIB}
       ${Boost_LIBRARIES}
       vishnu-core

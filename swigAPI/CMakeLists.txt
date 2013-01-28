@@ -3,7 +3,6 @@ link_directories(
 )
 
 include_directories(
-  ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${UMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
@@ -79,8 +78,7 @@ set(SWIG_LINK_LIB
   ${SWIG_LINK_LIB}
   emf4cpp-vishnu
   vishnu-core
-  vishnu-ums-client
-  ${DIET_CLIENT_LIB} )
+  vishnu-ums-client)
 
 if(COMPILE_TMS)
   add_definitions(-DCOMPILE_TMS)

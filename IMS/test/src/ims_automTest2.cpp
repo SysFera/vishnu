@@ -22,7 +22,7 @@ account of local machine must be defined
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
 #include "utilVishnu.hpp"
-#include "IMS_testconfig.h"
+
 
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
@@ -45,14 +45,7 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = IMSSQLPATH;
-static const string machineId="machine_1";
-static const string badMachineId="unknown_name";
-static const string sshCmd =" ssh -o PasswordAuthentication=no ";
+
 
 // I4 - B: Get data on the infrastructure
 BOOST_FIXTURE_TEST_SUITE(get_metric_current_value, IMSSeDFixture)
@@ -62,7 +55,7 @@ BOOST_AUTO_TEST_CASE(get_metric_current_value)
 {
 
   BOOST_TEST_MESSAGE("Use case I4 - B: Get data on the infrastructure");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //List metric
@@ -71,7 +64,7 @@ BOOST_AUTO_TEST_CASE(get_metric_current_value)
   op.setMetricType(2);
 
   try {
-    BOOST_CHECK_EQUAL(getMetricCurrentValue(sessionKey, machineId, list, op),0 );
+    BOOST_CHECK_EQUAL(getMetricCurrentValue(sessionKey, m_test_ums_user_vishnu_machineid, list, op),0 );
     BOOST_REQUIRE(list.getMetric().size() != 0);
   }
   catch (VishnuException& e) {

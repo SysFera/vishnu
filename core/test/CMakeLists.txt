@@ -22,12 +22,12 @@ if (BUILD_TESTING)
   add_subdirectory(cfgs)
   add_subdirectory(src)
 
-  set(TEST_DISPATCHER_CFG "${TEST_CONFIG_PATH}/dispatcher.cfg" CACHE PATH "Path to the dispatcher's configuration file")
-  file(TO_NATIVE_PATH "${TEST_DISPATCHER_CFG}" TEST_DISPATCHER_CONFIG)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dispatcher.cfg.in ${TEST_DISPATCHER_CONFIG})
+  #set(TEST_DISPATCHER_CFG "${TEST_CONFIG_PATH}/dispatcher.cfg" CACHE PATH "Path to the dispatcher's configuration file")
+  #file(TO_NATIVE_PATH "${TEST_DISPATCHER_CFG}" TEST_DISPATCHER_CONFIG)
+  #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dispatcher.cfg.in ${TEST_DISPATCHER_CONFIG})
   
-  set(TEST_DISPATCHER_INIT_CFG "${TEST_CONFIG_PATH}/dispatcher_init.cfg" CACHE PATH "Path to the dispatcher's init configuration")
-  file(TO_NATIVE_PATH "${TEST_DISPATCHER_INIT_CFG}" TEST_DISPATCHER_INIT_CONFIG)
-  configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dispatcher_init.cfg.in ${TEST_DISPATCHER_INIT_CONFIG})
+  #set(TEST_DISPATCHER_INIT_CFG "${TEST_CONFIG_PATH}/dispatcher_init.cfg" CACHE PATH "Path to the dispatcher's init configuration")
+  #file(TO_NATIVE_PATH "${TEST_DISPATCHER_INIT_CFG}" TEST_DISPATCHER_INIT_CONFIG)
+  #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dispatcher_init.cfg.in ${TEST_DISPATCHER_INIT_CONFIG})
 
 endif(BUILD_TESTING)

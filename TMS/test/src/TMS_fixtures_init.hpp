@@ -5,45 +5,82 @@
  */
 #include "diet_fixtures.hpp"
 #include "FMS_fixtures.hpp"
-#include "TMS_testconfig.h"
 #include <boost/test/unit_test.hpp>
+#include <boost/algorithm/string.hpp>
 #include "api_ums.hpp"
 #include "api_tms.hpp"
+#include "ExecConfiguration.hpp"
 using namespace std;
 using namespace vishnu;
 
-char TMSSeDInit[] = "tmssed";
-char ConfigTMSSeDInit[] = TMSSEDCONF;
-char BinDirTMSSeDInit[] = TMSSEDBINDIR;
+
+
+struct Machine_TMS {
+  std::string machine_id;
+  std::string batch_name;
+};
 
 class TMSFixtureInit : public FMSSeDFixture {
 
 public:
+
+  std::string m_test_tms_user_vishnu_login;
+  std::string m_test_tms_user_vishnu_pwd;
+  std::string m_test_tms_working_dir;
+
+  std::vector<Machine_TMS> m_test_tms_machines;
   TMSFixtureInit():mac(2){
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     // Name of the test executable
     mav[0]= (char*)"./tms_automTest";
     // Client configuration file
-    string clientConfig = CONFIG_DIR + string("/client_testing.cfg");
-    mav[1]= (char*) clientConfig.c_str();
-
+    string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
+    mav[1]= (char*)vishnuClientTestConfigPath.c_str();
+    
     if (vishnu::vishnuInitialize(mav[1], mac, mav)) {
       BOOST_TEST_MESSAGE( "Error in VishnuInitialize..." );
     }
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing database ==" );
-    string sqlPath = TMSSQLPATH;
-    if (restore(sqlPath + "/cleanall.sql") != 0) {
-      cout << "Clean database failed" << endl;
-      return;
+
+
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
+    string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    std::string key = "TEST_TMS_MACHINE_IDS";
+    ExecConfiguration tmsConfiguration;
+    tmsConfiguration.initFromFile(vishnuTestSetupPath);
+    std::vector<std::string> tmsMachines;
+    tmsConfiguration.getConfigValues(key, tmsMachines);
+    for(std::vector<std::string>::iterator it = tmsMachines.begin(); it != tmsMachines.end();++it)
+    {
+      Machine_TMS ma;
+      std::vector<std::string> machine;
+      boost::split(machine, *it, boost::is_any_of(" "));
+      if (machine.size() == 2 )
+      {
+        ma.machine_id = machine.at(0);
+        ma.batch_name = machine.at(1);
+        m_test_tms_machines.push_back(ma);
+      }     
     }
-    if (restore(sqlPath + "/TMSinitTest.sql")!=0) {
-      cout << "Database initialization failed" << endl;
-      return;
-    }
-    BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing database ==" );
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+    
+
+    m_test_tms_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
+    m_test_tms_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
+    m_test_tms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
+    
+      
+        
+    
+    
+    
+    
+    
+    BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
 
   }
 
@@ -57,4 +94,4 @@ public:
   char* mav[2];
 };
 
-typedef DietSeDFixture <TMSSeDInit, BinDirTMSSeDInit, ConfigTMSSeDInit, TMSFixtureInit> TMSSeDFixtureInit;
+typedef TMSFixtureInit TMSSeDFixtureInit;

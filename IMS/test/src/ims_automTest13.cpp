@@ -22,7 +22,6 @@ account of local machine must be defined
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
 #include "utilVishnu.hpp"
-#include "IMS_testconfig.h"
 
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
@@ -45,12 +44,6 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = IMSSQLPATH;
-static const string machineId="machine_1";
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -60,17 +53,17 @@ BOOST_FIXTURE_TEST_SUITE(cleaning_call, IMSSeDFixture)
 BOOST_AUTO_TEST_CASE(cleaning_call) {
 
   BOOST_TEST_MESSAGE("Cleaning call");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   int ret;
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   try {
     //Clean of the table process
-    BOOST_CHECK_EQUAL(restore(sqlPath + "/IMScleanProcesses.sql"), 0);
+    /*BOOST_CHECK_EQUAL(restore(sqlPath + "/IMScleanProcesses.sql"), 0);
 
     if (restore(sqlPath + "/IMScleanProcesses.sql") != 0) {
       BOOST_TEST_MESSAGE("Database update failed for restore(sqlPath + /IMScleanProcesses.sql)");
-    }
+    }*/ //FIXE 
   }
   catch (VishnuException& e) {
     BOOST_MESSAGE("FAILED\n");

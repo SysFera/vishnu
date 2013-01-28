@@ -7,7 +7,6 @@ link_directories(${Boost_LIBRARY_DIRS}
                 )
 
 include_directories(${Boost_INCLUDE_DIRS}
-                    ${DIET_INCLUDE_DIR}
                     ${IMS_EMF_DATA_DIR}
                     ${EMF4CPP_INCLUDE_DIR}
                     ${IMS_API_SOURCE_DIR}
@@ -61,7 +60,6 @@ macro(genCli NAME )
 
   #Configuration de l'edition de liens
   target_link_libraries(${CMDNAME}
-                        ${LOG_LIBRARY}
                         ${Boost_LIBRARIES}
                         vishnu-ums-client
                         vishnu-ims-client

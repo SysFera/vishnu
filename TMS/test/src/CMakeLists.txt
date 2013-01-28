@@ -1,7 +1,6 @@
 include_directories(
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
-  ${DIET_INCLUDE_DIR}
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${UMS_DATA_DIR}
@@ -19,6 +18,7 @@ include_directories(
   ${TESTVISHNU_SOURCE_DIR}/../third-party
   ${UMS_TEST_SOURCE_DIR}
   ${FMS_TEST_SOURCE_DIR}
+  ${CONFIG_SOURCE_DIR}
   ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
@@ -33,27 +33,19 @@ set(TEST_TMS_SQL "${PROJECT_BINARY_DIR}/test_files/sql")
 file(TO_NATIVE_PATH ${TEST_TMS_SQL} TMSSQL)
 set(TEST_TMS_SCRIPTS "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
 file(TO_NATIVE_PATH ${TEST_TMS_SCRIPTS} TMSSCRIPTS)
-# Path to the DIET configuration for the SeD(used for umssed_testing.cfg)
-set(TEST_DIET_SED_CONFIG "${TEST_CONFIG_PATH}/SeD_testing.cfg")
-file(TO_NATIVE_PATH ${TEST_DIET_SED_CONFIG} DIETSEDCONF)
-# Path to the VISHNU TMS SeD configuration
-set(TEST_TMS_SED_CONFIG "${TEST_CONFIG_PATH}/tmssed_testing.cfg")
-file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG} TMSSEDCONF)
-set(TEST_TMS_SED_CONFIG2 "${TEST_CONFIG_PATH}/tmssed_testing2.cfg")
-file(TO_NATIVE_PATH ${TEST_TMS_SED_CONFIG2} TMSSEDCONF2)
 
 # Path to the VISHNU TMS SeD executable
 file(TO_NATIVE_PATH "${PROJECT_BINARY_DIR}/bin" TMSSEDBINDIR)
 
 # Create header for VISHNU TMS tests
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TMS_testconfig.h.in
-  ${PROJECT_BINARY_DIR}/include/TMS_testconfig.h)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TMS_testconfig.h.in
+#  ${PROJECT_BINARY_DIR}/include/TMS_testconfig.h)
 # Create configuration for the first TMS SeD
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
-  ${TEST_CONFIG_PATH}/tmssed_testing.cfg)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg.in
+#  ${TEST_CONFIG_PATH}/tmssed_testing.cfg)
 # Create configuration for the second TMS SeD
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg2.in
-  ${TEST_CONFIG_PATH}/tmssed_testing2.cfg)
+#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tmssed_testing.cfg2.in
+#  ${TEST_CONFIG_PATH}/tmssed_testing2.cfg)
 
 include(TMSTestingMacros)
 tms_test_setup()
@@ -70,8 +62,6 @@ add_executable(tms_stresser tms_stress.cpp)
 #add_executable(InternalAPIUnitTests ${TMS_TEST_SOURCE_DIR}/InternalApiUnitTests.cpp)
 
 target_link_libraries(tms_stresser
- ${DIET_CLIENT_LIB}
-  ${DIET_SERVER_LIB}
   ${LIBPQ_LIB}
   ${Boost_LIBRARIES}
   vishnu-core
@@ -79,6 +69,5 @@ target_link_libraries(tms_stresser
   vishnu-ums-client
   vishnu-tms-client)
 
-add_subdirectory(sql)
-
 add_subdirectory(unit)
+

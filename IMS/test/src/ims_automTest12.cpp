@@ -22,7 +22,7 @@ account of local machine must be defined
 #include "IMS_fixtures.hpp"
 #include "vishnuTestUtils.hpp"
 #include "utilVishnu.hpp"
-#include "IMS_testconfig.h"
+
 
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
@@ -45,12 +45,7 @@ using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
-static const string adminId = "root";
-static const string adminPwd = "vishnu_user";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string sqlPath = IMSSQLPATH;
-static const string machineId="machine_1";
+
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
@@ -62,7 +57,7 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
 {
 
   BOOST_TEST_MESSAGE("Use case I3 - B: Export and replay commands normal call");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   // Command history
@@ -95,13 +90,13 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
 
   try {
     //To open a session to launch commands
-    BOOST_CHECK_EQUAL(connect(adminId, adminPwd, sess, connectOpt), 0);
+    BOOST_CHECK_EQUAL(connect(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd, sess, connectOpt), 0);
     //To list sessions
     BOOST_CHECK_EQUAL(listSessions(sess.getSessionKey(), listSess, listSessionsOpt), 0);
     //To list jobs
-    BOOST_CHECK_EQUAL(listJobs(sessionKey, machineId, lsJobs, lsOptions), 0);
+    BOOST_CHECK_EQUAL(listJobs(sessionKey, m_test_ums_user_vishnu_machineid, lsJobs, lsOptions), 0);
     //To list metric history
-    BOOST_CHECK_EQUAL(getMetricHistory(sess.getSessionKey(), machineId, list, op),0  );
+    BOOST_CHECK_EQUAL(getMetricHistory(sess.getSessionKey(), m_test_ums_user_vishnu_machineid, list, op),0  );
     listCmdOpt.setSessionId(sess.getSessionId());
     //To list the commands
     BOOST_CHECK_EQUAL(vishnu::listHistoryCmd(sess.getSessionKey(), listCmd, listCmdOpt), 0);
@@ -145,7 +140,7 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
 BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {
 
   BOOST_TEST_MESSAGE("Use case I3 - E1: Export and replay commands with bad old session Id call");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //Options for export
@@ -171,7 +166,7 @@ BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {
 BOOST_AUTO_TEST_CASE(export_command_bad_file_path_call) {
 
   BOOST_TEST_MESSAGE("Use case I3 - E2: Export and replay commands with bad file path");
-  VishnuConnection vc(adminId, adminPwd);
+  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
   // get the session key and the machine identifier
   string sessionKey=vc.getSessionKey();
   //Options for export
@@ -186,7 +181,7 @@ BOOST_AUTO_TEST_CASE(export_command_bad_file_path_call) {
   //Set close policy : on disconnect
   connectOpt.setClosePolicy(2);
   //To open a session
-  BOOST_CHECK_EQUAL(connect(adminId, adminPwd, sess, connectOpt), 0);
+  BOOST_CHECK_EQUAL(connect(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd, sess, connectOpt), 0);
   //To close session
   BOOST_CHECK_EQUAL(close (sess.getSessionKey()), 0);
 

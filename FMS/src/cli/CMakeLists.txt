@@ -5,7 +5,6 @@ link_directories(${Boost_LIBRARY_DIRS}
   )
 
 include_directories(${Boost_INCLUDE_DIRS}
-  ${DIET_INCLUDE_DIR}
   ${FMS_EMF_DATA_DIR}
   ${FMS_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
@@ -62,9 +61,7 @@ macro(genCli NAME )
   target_link_libraries(${CMDNAME}
     ${Boost_LIBRARIES}
     ${VISHNU_EXCEPTION_LIB}
-    ${LOG_LIBRARY}
     vishnu-fms-client
-#    vishnu-ums-client
 )
   install(TARGETS ${CMDNAME} DESTINATION ${BIN_INSTALL_DIR})
 endmacro(genCli)
