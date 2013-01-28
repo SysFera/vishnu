@@ -59,14 +59,6 @@ option(COMPILE_IMS "compile the module IMS" OFF)
 option(INSTALL_SYSV "install systemV init scripts" OFF)
 option(INSTALL_SYSTEMD "install systemd services" OFF)
 
-# set dependencies
-if (ENABLE_PYTHON OR ENABLE_JAVA)
-  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
-  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
-  set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
-  set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
-  add_subdirectory(swigAPI)
-endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
 if (COMPILE_TMS OR COMPILE_IMS OR COMPILE_FMS)
   set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
@@ -87,9 +79,6 @@ if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 endif (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
 
 option(BUILD_TESTING "Enable unit testing" OFF)
-
-
-
 
 
 ######################################################################
@@ -178,6 +167,7 @@ endif (ENABLE_MYSQL)
 if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
+
 
 
 ######################################################################
@@ -554,6 +544,16 @@ if(COMPILE_IMS)
   endif (BUILD_TESTING)
 endif (COMPILE_IMS)
 
+
+## KEEP AFTER VARIABLE DECLARATION
+# set dependencies
+if (ENABLE_PYTHON OR ENABLE_JAVA)
+  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+  set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
+  set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
+  add_subdirectory(swigAPI)
+endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
 
 # module that adds an uninstall target

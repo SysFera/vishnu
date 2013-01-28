@@ -56,11 +56,11 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
     BOOST_CHECK(addAuthSystem(sess.getSessionKey(), asys)==0);
     BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
-    
+
   }
 
   BOOST_MESSAGE(" Testing update auth system  UA8.1"    );
-  
+
   {
     BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     asys.setName("ldap3");
@@ -113,6 +113,8 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
 
   BOOST_MESSAGE(" Testing delete auth account success U6.2"    );
   {
+    std::string uid = m_test_ums_admin_vishnu_login;
+    std::string pwd = m_test_ums_admin_vishnu_login;
     BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
     aacc.setAuthSystemId(asys.getAuthSystemId());
     aacc.setUserId(m_test_ums_admin_vishnu_login);
@@ -125,13 +127,15 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
 
   BOOST_MESSAGE(" Testing list auth system U6.3"    );
   {
+    std::string uid = m_test_ums_admin_vishnu_login;
+    std::string pwd = m_test_ums_admin_vishnu_login;
     BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
     liaao.setListAll(true);
     BOOST_CHECK(listAuthAccounts(sess.getSessionKey(), *liaa, liaao)==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
-    
+
   }
-  
+
 }
 
 
@@ -151,7 +155,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
   UMS_Data::EncryptionMethod enc = 0;
   ListAuthSystems_ptr lias  = ecoreFactory->createListAuthSystems();
   AuthAccount aacc;
-  
+
   // Add auth system already exist
   BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
   {
@@ -168,9 +172,9 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     asys.setLdapBase("$USERNAME.base");
     BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
-    
+
   }
-  
+
   // Add auth system bad type
   BOOST_MESSAGE(" Testing add auth system bad Type UA8"    );
   {
@@ -207,7 +211,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
 
-  
+
   BOOST_MESSAGE(" Testing update auth system bad type UA8.1"    );
   {
     BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
@@ -228,7 +232,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
-  
+
   BOOST_MESSAGE(" Testing update auth system bad status UA8.1"    );
   {
     BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
@@ -250,7 +254,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     BOOST_CHECK(deleteAuthSystem(sess.getSessionKey(), asys.getAuthSystemId())==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
-  
+
   BOOST_MESSAGE(" Testing update auth system with bad LDAP base UA8.1-E5"    );
   {
     BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
@@ -323,6 +327,8 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
 
   BOOST_MESSAGE(" Testing update auth account bad AuthSystem U6.1"    );
   {
+    std::string uid = m_test_ums_admin_vishnu_login;
+    std::string pwd = m_test_ums_admin_vishnu_login;
     BOOST_CHECK  (connect(uid, pwd, sess, cop )==0);
     aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAuthSystemId("toto");
@@ -330,13 +336,13 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
-  
+
   // Update auth account bad user
   BOOST_MESSAGE(" Testing update auth account bad userId"    );
-  {  
+  {
     BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     aacc.setAuthSystemId(asys.getAuthSystemId());
-    aacc.setUserId((m_test_ums_admin_vishnu_login);
+    aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAcLogin("toto");
     aacc.setUserId("choco");
     BOOST_CHECK_THROW(updateAuthAccount(sess.getSessionKey(), aacc), VishnuException);
@@ -345,7 +351,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
 
   // Delete auth account bad uid
   BOOST_MESSAGE(" Testing delete auth account bad uid U6.2"    );
-  
+
   BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
   {
     aacc.setUserId("plouf");
@@ -363,7 +369,7 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
 
-  
+
 }
 
 BOOST_AUTO_TEST_SUITE_END()
