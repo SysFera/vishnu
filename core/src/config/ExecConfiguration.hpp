@@ -130,18 +130,11 @@ public:
   std::string
   scriptToString() const;
 
-  /**
-   * \brief To get the full path to the current executable
-   */
-  static std::string
-  getCurrentBinaryDir();
-
 protected:
 
   /**
    * \brief To store the configuration map
    */
-
   ConfigMap mconfig;
 };
 
