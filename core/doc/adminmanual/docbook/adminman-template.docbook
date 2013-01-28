@@ -1988,5 +1988,315 @@ urlSupervisor=http://127.0.0.1:9001
     </section>
   </chapter>
 
+	</listitem>
+ </orderedlist>
+ </section>
+ <section>
+ <title>Les scripts de démarage automatique</title>
+ <para>Des scripts de démarage sont préparés pour pouvoir exécuter automatiquement les serveurs VISHNU.
+ Les scripts sont installés lors de l'installation des serveurs dans install/etc/ (ou dans /etc si c'est installé dans /usr).</para>
+ </section>
+ </chapter><!-- End lancement  -->
+ <chapter>
+ <title>Administration</title>
+ <section>
+ <title>Présentation</title>
+ <para>
+ Le module UMS correspond à la gestion des utilisateurs et des machines de VISHNU. Il permet aussi de sauvegarder la configuration de VISHNU à chaud et de la restaurer si besoin est.
+ Dans toute la suite du chapitre, on supposera que l'utilisateur est déjà connecté avec un compte administrateur de VISHNU pour pouvoir réaliser ces manipulations. De plus, on présentera l'utilisation des commandes depuis le shell, mais cela reste valable depuis les API Python ou C++.
+ </para>
+ <para>L'API est disponible dans le document [VISHNU_API]</para>
+ </section>
+ <section>
+ <title>Gestion des utilisateurs (UMS)</title>
+ <orderedlist>
+ <listitem>
+ <para>
+ L'ajout d'un utilisateur se fait à l'aide de la commande 'vishnu_add_user'. Elle prend en paramètre le prénom de l'utilisateur, son nom de famille, les droits qui lui sont associés dans VISHNU (administrateur ou simple utilisateur) et son adresse de couriel. Tout ces paramètres sont obligatoires. Un privilège à 1 signifie administrateur, un privilège à 0 signifie un utilisateur. L'identifiant de l'utilisateur est généré et renvoyé.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ La mise à jour d'un utilisateur ne peut être faite que par un administrateur. Cette mise à jour se fait avec un appel à la commande 'vishnu_update_user' et permet de modifier les paramètres de l'ajout (nom, prénom, statut, couriel).
+ Il faut avoir l'identifiant de l'utilisateur (généré lors de la création de l'utilisateur) pour le désigner lors de la mise à jour.
+ </para>
+ <para>Note : le changement du statut d'un utilisateur à l'état "INACTIVE" correspond à un blocage de son compte.</para>
+ </listitem>
+ <listitem>
+ <para>
+ La suppression d'un utilisateur efface toutes les informations liées à l'utilisateur de la base de donnée. Cette suppression se fait à l'aide de la commande 'vishnu_delete_user'.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ La liste des utilisateurs ne peut être faite que par un administrateur. Cela se fait avec la commande 'vishnu_list_user'. Cette commande peut prendre en paramètre l'identifiant d'un utilisateur pour n'avoir les informations que concernant cet utilisateur.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de VISHNU. Pour ce faire, il doit appeller la commande 'vishnu_reset_password'  en fournissant l'identifiant de l'utilisateur dont l'administrateur veut réinitialiser le mot de passe. Le nouveau mot de passe est temporaire et renvoyé par la commande. Lors de la prochaine connexion, l'utilisateur devra changer son mot de passe avec 'vishnu_change_password'.
+ </para>
+ </listitem>
+ </orderedlist>
+ </section>
+ <section>
+ <title>Gestion des machines (UMS+IMS)</title>
+ <orderedlist>
+ <listitem>
+ <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
+ </listitem>
+ <listitem>
+ <para>
+ La mise à jour d'une machine se fait à l'aide de la commande 'vishnu_update_machine' et permet de modifier les paramètres mis lors de l'ajout de la machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+ </para>
+ <para>Note : le changement du statut d'une machine à l'état "INACTIVE" correspond à un blocage de la machine. Cela rend la machine inaccessible aux utilisateurs de VISHNU mais toujours visible pour les administrateurs.</para>
+ </listitem>
+ <listitem>
+ <para>
+ La suppression d'une machine se fait à l'aide de la commande 'vishnu_delete_machine' avec l'identifiant de la machine à supprimer. Cela supprime la machine de la base de données, ainsi que toutes les informations qui y sont attachées (Attention : cette commande est irréversible).
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Les utilisateurs peuvent lister les machines, mais un administrateur a en plus une option qui est l'identifiant d'un utilisateur. Ceci lui permet de lister les machines sur lesquelles l'utilisateur a un compte VISHNU.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ La mise à jour d'informations système d'une machine se fait à l'aide de la commande 'vishnu_set_system_info' et permet d'ajouter ou modifier des informations système d'une machine. Il faut utiliser l'identifiant de la machine pour l'identifier lors de la mise à jour.
+ </para>
+ </listitem>
+ </orderedlist>
+ </section>
+ <section>
+ <title>Gestion de la plateforme (UMS)</title>
+ <orderedlist>
+ <listitem>
+ <para>
+ L'administrateur peut faire une sauvegarde à chaud à un moment donné de VISHNU. Ceci sauvegarde les utilisateurs, les machines et les comptes des utilisateurs. Le fichier, dans lequel la configuration est, est retourné par la fonction. La fonction est 'vishnu_save_configuration', pas besoin de paramètres.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ L'administrateur peut recharger une configuration précédente de VISHNU à l'aide de la commande 'vishnu_restore_configuration' qui a besoin du fichier de sauvegarde pour recharger la base.
+ Avant de pouvoir lancer cette restauration, tous les utilisateurs de VISHNU doivent être déconnectés.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Un administrateur peut également définir les valeurs par défaut des options de VISHNU pour tout les utilisateurs (ces options sont le temps de déconnexion par défaut et le type de fermeture d'une session par défaut). Cela se fait en appellant 'vishnu_configure_default_option' en donnant le nom de l'option et sa nouvelle valeur.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Un administrateur peut ajouter ou modifier un système d'authentification. Par exemple il peut ajouter différents LDAP pour authentifier ses utilisateurs. Actuellement, pour un même LDAP, si les utilisateurs sont dans des branches différentes il faut ajouter un système d'authentification par branche. Ceci afin de faciliter la connexion de l'utilisateur, pour qu'il ne donne aucune information concernant son arbre LDAP, juste son login. C'est l'administrateur lorsqu'il crée son système d'authentification qui doit remplir le champs ldapbase avec le chemin complet dans l'arbre LDAP à utiliser pour authentifier un utilisateur. Lorsqu'un administrateur rempli le chemin menant aux utilisateurs, il doit remplacer le nom de l'utilisateur par la chaîne de caractère \$USERNAME, cette chaîne sera remplacée par vishnu par le login de l'utilisateur que l'on cherche à authentifier.
+ Fonctions associées : vishnu_add_auth_system, vishnu_update_auth_system, vishnu_delete_auth_system
+ </para>
+ </listitem>
+ </orderedlist>
+ </section>
+ <section>
+ <title>Options propres à l'administrateur dans les commandes utilisateurs(UMS+FMS)</title>
+ <orderedlist>
+ <listitem>
+ <para>Dans la fonction 'vishnu_connect', un administrateur peut donner l'identifiant d'un utilisateur pour se connecter sous le nom de cet utilisateur dans VISHNU.</para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_list_history_cmd', l'administrateur peut lister toutes les commandes de tout les utilisateurs ou les commandes d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_list_local_accounts', l'administrateur peut lister toutes les comptes de tout les utilisateurs ou les comptes d'un utilisateur particulier en fournissant l'identifiant de l'utilisateur.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_list_options', l'administrateur peut lister les toutes les options de tout les utilisateurs ou les options d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_list_sessions', l'administrateur peut lister les toutes les sessions de tous les utilisateurs ou les sessions d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou les sessions sur une machine particulière en fournissant l'identifiant de la machine.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_list_file_transfers', l'administrateur peut lister tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou lister les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+ </para>
+ </listitem>
+ <listitem>
+ <para>
+ Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tous les transferts de fichiers de tous les utilisateurs ou ceux  d'un utilisateur en particulier en fournissant l'identifiant de l'utilisateur, ou annuler les transferts impliquant une machine particulière (qui peut être source ou destination du transfert) en fournissant l'identifiant de la machine.
+ </para>
+ </listitem>
+
+</orderedlist>
+</section>
+<section>
+<title>Gestion des processus VISHNU et délestage (IMS)</title>
+<itemizedlist>
+<listitem>
+<para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
+Fonction associée : vishnu_get_processes.</para>
+</listitem>
+<listitem>
+<para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
+Attention : l'administrateur doit avoir un compte sur la machine
+Fonction associée : vishnu_stop </para>
+</listitem>
+<listitem>
+<para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
+pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
+Fonction associée : vishnu_restart </para>
+</listitem>
+<listitem>
+<para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
+de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts
+et jobs en cours.
+Fonction associée : vishnu_load_shed </para>
+</listitem>
+</itemizedlist>
+</section>
+<section>
+<title>Surveillance de l'état des machines (IMS)</title>
+<itemizedlist>
+<listitem>
+<para> Un administrateur peut fixer la fréquence de mise à jour de l'enregistrement de l'état des machines.
+Fonction associée : vishnu_set_update_frequency</para>
+</listitem>
+<listitem>
+<para> Un administrateur peut obtenir la fréquence de mise à jour de l'enregistrement de l'état des machines.
+Fonction associée : vishnu_get_update_frequency</para>
+</listitem>
+<listitem>
+<para> Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la
+mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
+si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
+Fonction associée : vishnu_set_threshold</para>
+</listitem>
+<listitem>
+<para> Un administrateur peut obtenir les seuils fixés sur une machine. Pour plus d'informations sur les seuils
+voir la partie pour fixer les seuils ci-dessus.
+Fonction associée : vishnu_get_threshold</para>
+</listitem>
+</itemizedlist>
+</section>
+<section>
+<title>Définition des formats des identifiants (IMS)</title>
+<itemizedlist>
+<listitem>
+<para>
+Un administrateur peut fixer le format des identifiants VISHNU automatiquement générés pour les utilisateurs,
+les machines, les jobs soumis aux batchs scheduler et les transferts de fichiers. Ces identifiants peuvent contenir
+plusieurs variables :
+<itemizedlist>
+<listitem>
+<para>
+'$DAY' : Variable qui sera remplacée par le jour de création (1-31)
+</para>
+</listitem>
+<listitem>
+<para>
+'$MONTH' : Variable qui sera remplacée par le mois de création (1-12)
+</para>
+</listitem>
+<listitem>
+<para>
+'$YEAR' :  Variable qui sera remplacé par l'année de création (0-99)
+</para>
+</listitem>
+<listitem>
+<para>
+'$CPT' : Variable compteur qui est automatiquement incrémentée
+</para>
+</listitem>
+<listitem>
+<para>
+'$SITE' : Pour les utilisateurs ou machine, une information sur le lieu
+</para>
+</listitem>
+<listitem>
+<para>
+'$UNAME' : Pour les utilisateurs, variable remplacée par le nom de l'utilisateur
+</para>
+</listitem>
+<listitem>
+<para>
+'$MANAME' : Pour les machines, variable remplacée par le nom de la machine
+</para>
+</listitem>
+</itemizedlist>
+Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
+Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
+</para>
+</listitem>
+</itemizedlist>
+</section>
+<section>
+<title>FAQ</title>
+<itemizedlist>
+<listitem>
+<para>Si vous rencontrez des problèmes lors du chargement des plugins TMS, vous pouvez configurez la variable d'environnement <emphasis role="italic">LD_LIBRARY_PATH</emphasis> pour pointer sur le répertoire contenant les plugins.</para>
+</listitem>
+</itemizedlist>
+</section>
+</chapter>
+
+<chapter>
+ <title>Tests</title>
+ <para>
+Les tests automatiques permettent de valider les fonctionnalités de Vishnu et de garantir la non régression lors des développements. Le module de test est activé ou pas au moment de la construction de Vshnu, en activant la variable Cmake  BUILD_TESTING.  Le module de test sera donc compilé avec les sources de vishnu. Toutes fois, pour l’exécution de ces tests l’administrateur doit fournir un ensemble de paramètres d’exécutions liées à la plateforme de test : </para>
+
+<itemizedlist>
+<listitem>
+<para>
+VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin vers le fichier de configuration client. Ce fichier permet à au client vishnu de se connecter à la plateforme.
+</para>
+</listitem>
+<listitem>
+<para>
+VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de  données de description de la plateforme. Ce fichier permet aux tests automatiques de s’exécuter sur la plateforme. Ce fichier doit contenir un ensemble de paramètres : </para> 
+<itemizedlist>
+<listitem>
+<para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plateforme de test; </para>
+</listitem>
+<listitem>
+<para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plateforme de test; </para>
+</listitem>
+<listitem>
+<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+</listitem>
+<listitem>
+<para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
+</listitem>
+<listitem>
+<para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+</listitem>
+<listitem>
+<para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+</listitem>
+</itemizedlist>
+
+</listitem>
+</itemizedlist>
+
+
+
+
+</chapter><!-- End administration -->
 </book>
 
