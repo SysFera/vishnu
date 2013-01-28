@@ -86,59 +86,21 @@ int main(int argc, char* argv[], char* envp[]) {
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
     if (batchTypeStr == "TORQUE") {
-#ifndef HAVE_TORQUE_2_3
-      std::cerr << "\nError: The support of TORQUE is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = TORQUE;
     } else if (batchTypeStr == "PBS") {
-#ifndef HAVE_PBSPRO_10_4
-      std::cerr << "\nError: The support of PBSPRO is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = PBSPRO;
     } else if (batchTypeStr == "LOADLEVELER") {
-#ifndef HAVE_LOADLEVELER_2_5
-      std::cerr << "\nError: The support of LOADLEVELER is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = LOADLEVELER;
     } else if (batchTypeStr == "SLURM") {
-#if !( HAVE_SLURM_2_2 || HAVE_SLURM_2_3)
-      std::cerr << "\nError: The support of SLURM is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = SLURM;
-
     } else if (batchTypeStr == "LSF") {
-#ifndef HAVE_LSF_7_0
-      std::cerr << "\nError: The support of LSF is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = LSF;
     } else if (batchTypeStr == "SGE") {
-#ifndef HAVE_SGE_11
-      std::cerr << "\nError: The support of SGE is not enabled in this server!\n";
-      exit(1);
-#endif
       batchType = SGE;
-    } else if (batchTypeStr == "DELTACLOUD") {
-#ifndef HAVE_DELTACLOUD
-      std::cerr << "\nError: The support of DELTACLOUD is not enabled in this server!\n";
-      exit(1);
-#endif
-      batchType = DELTACLOUD;
-      std::string cloudEndpoint;
-      config->getRequiredConfigValue<std::string>(vishnu::CLOUDENDPOINT, cloudEndpoint);
-      setenv(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT].c_str(), cloudEndpoint.c_str(), 1);
     } else if (batchTypeStr == "POSIX") {
       batchType = POSIX;
-#ifndef HAVE_TMSPOSIX
-      std::cerr << "\nWarning: only posix submission have been enabled in "
-                << "the config file whereas TMS may have been compiled for another batch\n\n";
-#endif			
     } else {
-      std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO or DELTACLOUD)\n";
+      std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO, POSIX or DELTACLOUD)\n";
       exit(1);
     }
 
