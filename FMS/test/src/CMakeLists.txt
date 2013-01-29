@@ -17,8 +17,6 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   )
 
-file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
-
 
 
 # Specific to FMS
@@ -45,14 +43,14 @@ fms_test(fms_automTest17)
 
 
 
-add_executable(fms_stresser
-  fms_stress.cpp)
+## Currently disabled, not maintained since a while
+# add_executable(fms_stresser  fms_stress.cpp)
 
-target_link_libraries(fms_stresser
-  ${LIBPQ_LIB}
-  ${Boost_LIBRARIES}
-  vishnu-core
-  ${LIBCRYPT_LIB}
-  vishnu-ums-client
-  vishnu-fms-client)
+# target_link_libraries(fms_stresser
+#   ${LIBPQ_LIB}
+#   ${Boost_LIBRARIES}
+#   vishnu-core
+#   ${LIBCRYPT_LIB}
+#   vishnu-ums-client
+#   vishnu-fms-client)
 

@@ -18,29 +18,6 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
-# Standard VISHNU TESTS variables
-
-file(TO_NATIVE_PATH "${TEST_BIN_PATH}" TESTBINPATH)
-
-
-# Specific to UMS
-# Path to the sendmail script (used for umssed_testing.cfg)
-set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH "Path to the sendmail script used for tests")
-mark_as_advanced(TEST_SENDMAIL_SCRIPT)
-file (TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
-
-# Create header for VISHNU UMS tests
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/UMS_testconfig.h.in
-#  ${PROJECT_BINARY_DIR}/include/UMS_testconfig.h)
-# Create configuration for VISHNU UMS SeD
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/umssed_testing.cfg.in
-#  ${TEST_CONFIG_PATH}/umssed_testing.cfg
-#)
-
-# Create configuration for .netrc file
-#configure_file(${CMAKE_CURRENT_SOURCE_DIR}/.netrc.in
-#  ${TEST_CONFIG_PATH}/.netrc
-#)
 
 
 include(UMSTestingMacros)
@@ -53,14 +30,14 @@ ums_test(ums_automTest5)
 
 
 
-add_executable(ums_stresser
-  stress.cpp)
+## Currently disabled, not maintained since a while
+# add_executable(ums_stresser stress.cpp)
 
-target_link_libraries(ums_stresser
-  ${LIBPQ_LIB}
-  ${Boost_LIBRARIES}
-  vishnu-core
-  vishnu-ums-client
-  ${LIBCRYPT_LIB}
-  ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+# target_link_libraries(ums_stresser
+#   ${LIBPQ_LIB}
+#   ${Boost_LIBRARIES}
+#   vishnu-core
+#   vishnu-ums-client
+#   ${LIBCRYPT_LIB}
+#   ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 

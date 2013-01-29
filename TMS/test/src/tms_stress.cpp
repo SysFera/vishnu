@@ -8,7 +8,6 @@
 
 #include "api_ums.hpp"
 #include "api_tms.hpp"
-#include "TMS_testconfig.h"
 #include "diet_config_tests.h"
 
 using namespace std;

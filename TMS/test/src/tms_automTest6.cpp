@@ -12,7 +12,6 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
-#include "TMS_testconfig.h"
 #include "SGEConfig.hpp"
 
 // C++ Headers
@@ -49,19 +48,19 @@ BOOST_FIXTURE_TEST_SUITE(list_job_queues, TMSSeDFixture)
   BOOST_TEST_MESSAGE("Testing normal execution of the list job queues function corresponding to use case T2.3" );
 
   try {
-    
-    //Check the batch type    
+
+    //Check the batch type
     BOOST_CHECK(BATCHTYPE=="TORQUE" || BATCHTYPE=="SLURM" || BATCHTYPE=="LSF" || BATCHTYPE=="SGE");
 
     VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-    
+
     // get the session key and the machine identifier
-    
+
     string sessionKey=vc.getConnexion();
-    
+
     for(int i = 0; i < m_test_tms_machines.size();++i)
     {
-      
+
       std::string machineId= m_test_tms_machines.at(i).machine_id;
     string lsfQueuesConfigdir;
     string oldContentLSFQueuesConfigFile;
@@ -88,7 +87,7 @@ BOOST_FIXTURE_TEST_SUITE(list_job_queues, TMSSeDFixture)
       addedQueue << "NICE         = 20\n";
       addedQueue << "DESCRIPTION = First vishnu test queue.\n";
       addedQueue << "End Queue \n";
-      //add of second queue 
+      //add of second queue
       addedQueue << "Begin Queue \n";
       addedQueue << "QUEUE_NAME   = test_queue2\n";
       addedQueue << "PRIORITY     = 10\n";
@@ -109,7 +108,7 @@ BOOST_FIXTURE_TEST_SUITE(list_job_queues, TMSSeDFixture)
       createCommand << SGE_BIN_PATH << "/qconf -Aq " << TMSCONFIGDIR << "/config_queues_SGE_test2.cfg ";
       BOOST_CHECK_EQUAL(system(createCommand.str().c_str()), 0);
     } else {
-      BOOST_TEST_MESSAGE("***********************Unknown Batch Type*****************************");  
+      BOOST_TEST_MESSAGE("***********************Unknown Batch Type*****************************");
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown Batch Type");
     }
 
@@ -158,7 +157,7 @@ BOOST_FIXTURE_TEST_SUITE(list_job_queues, TMSSeDFixture)
       BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
       delCommand.str("");
       delCommand << SGE_BIN_PATH << "/qconf -dq " << "test_queue2";
-      BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);    
+      BOOST_CHECK_EQUAL(system(delCommand.str().c_str()), 0);
     }
 
     BOOST_TEST_MESSAGE("*********************** list job queues: normal call ok!!!!*****************************");
@@ -177,14 +176,14 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_sessionKey)
   BOOST_TEST_MESSAGE(" Testing bad sessionKey for the list job queues function corresponding to use case T2.3" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     ListQueues listofQueues;
@@ -192,7 +191,7 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_sessionKey)
     BOOST_CHECK_THROW(listQueues( "bad sessionKey", machineId, listofQueues),VishnuException  );
 
     BOOST_TEST_MESSAGE("*********************** list job queues : bad sessionKey ok!!!!*****************************");
-  }  
+  }
 }
 
 
@@ -206,11 +205,11 @@ BOOST_AUTO_TEST_CASE(list_job_queues_bad_machineId)
   BOOST_TEST_MESSAGE(" Testing bad machineId for the list job queues function corresponding to use case T2.3" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   ListQueues listofQueues;
 
   BOOST_CHECK_THROW(listQueues(sessionKey, "bad machineId", listofQueues),VishnuException  );
@@ -222,4 +221,3 @@ BOOST_AUTO_TEST_SUITE_END()
 
 
 // THE END
-

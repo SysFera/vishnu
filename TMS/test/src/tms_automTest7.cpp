@@ -12,7 +12,6 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
-#include "TMS_testconfig.h"
 
 // C++ Headers
 #include <iostream>
@@ -48,14 +47,14 @@ BOOST_AUTO_TEST_CASE(get_job_information_normal_call)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -103,14 +102,14 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_sessionKey)
   BOOST_TEST_MESSAGE(" Testing bad session Key for the get job information function (use case T2.1)" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -140,7 +139,7 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_sessionKey)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  } 
+  }
 }
 
 //---------------------------------------------------------------------------
@@ -153,19 +152,19 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_machineId)
   BOOST_TEST_MESSAGE(" Testing bad machine identifier for the get job information function (use case T2.1)" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
-    
+
     try {
       //Setting submitjob parameters
-      
+
       const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
       Job jobInfo;
       SubmitOptions options;
@@ -198,14 +197,14 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_JobId)
   BOOST_TEST_MESSAGE("Testing bad job identifier for the  get job information function (use case T2.1)" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
   // setting get job information function parameters
@@ -219,4 +218,3 @@ BOOST_AUTO_TEST_CASE(get_job_information_bad_JobId)
 
 
 BOOST_AUTO_TEST_SUITE_END()
-

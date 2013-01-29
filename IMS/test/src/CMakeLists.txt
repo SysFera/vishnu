@@ -28,11 +28,6 @@ include_directories(
 
 
 
-set (TEST_SENDMAIL_SCRIPT "${UTILVISHNU_SOURCE_DIR}/sendmail.py" CACHE FILEPATH "Path to the sendmail script used for tests")
-mark_as_advanced(TEST_SENDMAIL_SCRIPT)
-file (TO_NATIVE_PATH ${TEST_SENDMAIL_SCRIPT} SENDMAILPY)
-
-
 include(IMSTestingMacros)
 ims_test_setup()
 ims_test(ims_automTest1)
@@ -49,14 +44,15 @@ ims_test(ims_automTest11)
 ims_test(ims_automTest12)
 ims_test(ims_automTest13)
 
-add_executable(ims_stresser
- ims_stress.cpp)
 
-target_link_libraries(ims_stresser
-  ${LIBPQ_LIB}
-  ${Boost_LIBRARIES}
-  vishnu-core
-  ${LIBCRYPT_LIB}
-  vishnu-ums-client
-  vishnu-ims-client)
+## Currently disabled, not maintained since a while
+# add_executable(ims_stresser ims_stress.cpp)
+
+# target_link_libraries(ims_stresser
+#   ${LIBPQ_LIB}
+#   ${Boost_LIBRARIES}
+#   vishnu-core
+#   ${LIBCRYPT_LIB}
+#   vishnu-ums-client
+#   vishnu-ims-client)
 

@@ -12,7 +12,6 @@
 #include "TMS_Data_forward.hpp"
 #include "TMS_fixtures.hpp"
 #include "tmsTestUtils.hpp"
-#include "TMS_testconfig.h"
 
 // C++ Headers
 #include <iostream>
@@ -49,14 +48,14 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -133,7 +132,7 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_bad_sessionKey)
 
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     ListProgression listOfProgress;
@@ -158,11 +157,11 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_bad_machineId)
   BOOST_TEST_MESSAGE("Testing bad machineId for the get jobs progression function corresponding to use case T2.5" );
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   ListProgression listOfProgress;
 
   ProgressOptions pgOptions;
