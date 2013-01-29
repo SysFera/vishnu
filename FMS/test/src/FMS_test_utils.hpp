@@ -37,37 +37,6 @@ namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
 
 
-/*static const std::string machineId1 = "";//FMSDIR1;
-static const std::string machineId2 = "";//FMSDIR2;
-static const string adminId = "admin_1";
-static const string adminPwd = "admin";
-static const string userId = "user_1";
-static const string userPwd = "toto";
-static const string userLogin = "";//FMSUSERLOGIN;*/
-/*static const string groupTest = "test"; // userLogin must belong to groupTest on host 1
-static const string sep = ":";
-static const string slash = "/";
-static const string newFileName = "FMS_test_file";
-static const string newDirName = "FMS_test_dir";
-static const string newSubDirName = "FMS_test_sub_dir";
-
-static const std::string remoteBaseDir1 = "";//FMSDIR1;
-static const std::string remoteBaseDir2 = "";//FMSDIR2;
-static const std::string baseDirFullPath1 = "host1" + sep + remoteBaseDir1;
-static const std::string baseDirFullPath2 = "m_test_fms_host1" + sep + remoteBaseDir2;
-static const std::string fileFullPath1 = baseDirFullPath1 + slash + newFileName;
-static const std::string fileFullPath2 = baseDirFullPath2 + slash + newFileName;
-static const std::string dirFullPath1 = baseDirFullPath1 + slash + newDirName;
-static const std::string recursiveDirFullPath1 = dirFullPath1 + slash +  newSubDirName;
-static const std::string dirFullPath2 = baseDirFullPath2 + slash + newDirName;
-// local
-static const string localDir = "";//FMSWORKINGDIR;
-static const string localFilePath = localDir + slash + newFileName;
-// remote*/
-
-
-
-
 /**
  * \brief Check if given strings are found in directory
  * \param sessionKey  the session key
@@ -221,4 +190,4 @@ waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
 }
 
 
-#endif
+#endif  // FMS_TEST_UTILS_HPP

@@ -4,6 +4,10 @@
  * Author : bisnard
  */
 
+#ifndef _FMS_FIXTURES_HPP_
+#define _FMS_FIXTURES_HPP_
+
+
 #include "UMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
@@ -12,10 +16,10 @@ using namespace std;
 using namespace vishnu;
 
 
-class FMSFixture : public UMSSeDFixture {
+class FMSSeDFixture : public UMSSeDFixture {
 
 public:
-  FMSFixture():mac(2){
+  FMSSeDFixture():mac(2){
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     // Name of the test executable
@@ -48,9 +52,9 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
   }
 
-  ~FMSFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Finalizing client ==" );
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
+  ~FMSSeDFixture() {
+    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: FMSSeDFixture ==" );
+    BOOST_TEST_MESSAGE( "== Test teardown [END]: FMSSeDFixture ==" );
   }
 
   std::string m_test_fms_working_dir;
@@ -63,9 +67,10 @@ public:
   std::string m_test_fms_user_pwd;
   std::string m_test_fms_user_local_group;
 
-//private:
   int mac;
   char* mav[2];
 };
 
-typedef FMSFixture FMSSeDFixture;
+
+
+#endif  // _FMS_FIXTURES_HPP_

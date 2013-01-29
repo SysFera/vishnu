@@ -3,6 +3,9 @@
  *
  * Author : bisnard
  */
+#ifndef _UMS_FIXTURES_HPP_
+#define _UMS_FIXTURES_HPP_
+
 
 
 #include <boost/assign/list_inserter.hpp>
@@ -21,14 +24,8 @@ namespace bf = boost::filesystem;
 namespace bp = boost::process;
 namespace bs = boost::system;
 
-// must not be static
-// should be a primitive type with an identifier name
-char UMSSeD[] = "umssed";
-char ConfigUMSSeD[] = "";
-char BinDirUMSSeD[] = "";
 
-template <const char *name, const char *binDir, const char *config>
-class UMSSEDFixtureTemplate {
+class UMSSeDFixture {
 
 public:
   std::string m_test_ums_authen_type;
@@ -41,7 +38,7 @@ public:
   std::string m_test_ums_user_vishnu_pwd;
   std::string m_test_ums_user_vishnu_machineid;
 
-  UMSSEDFixtureTemplate() {
+  UMSSeDFixture() {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     int argc = 2;
     char* argv[argc];
@@ -57,7 +54,7 @@ public:
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
-    BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
     std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
@@ -73,16 +70,16 @@ public:
     m_test_ums_user_vishnu_machineid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second;
 
 
-    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==");
+    BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==");
   }
 
 
-  ~UMSSEDFixtureTemplate() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Stopping "
-                        << name << " ==" );
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Stopping "
-                        << name << " ==" );
+  ~UMSSeDFixture() {
+    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: UMSSeDFixture ==" );
+    BOOST_TEST_MESSAGE( "== Test teardown [END]: UMSSeDFixture ==" );
   }
 };
 
-typedef UMSSEDFixtureTemplate<UMSSeD, BinDirUMSSeD, ConfigUMSSeD>  UMSSeDFixture;
+
+
+#endif  // _UMS_FIXTURES_HPP_

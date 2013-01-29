@@ -4,6 +4,9 @@
  * Author : E. PAMBA CAPO-CHICHI
  */
 
+#ifndef _IMS_FIXTURES_HPP_
+#define _IMS_FIXTURES_HPP_
+
 #include "TMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
 #include "api_tms.hpp"
@@ -15,7 +18,7 @@ using namespace vishnu;
 
 
 
-class IMSFixture : public TMSSeDFixture {
+class IMSSeDFixture : public TMSSeDFixture {
 
 public:
 
@@ -25,7 +28,7 @@ public:
   std::string m_test_ims_user_vishnu_pwd;
 
 
-  IMSFixture():mac(2){
+  IMSSeDFixture():mac(2){
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     // Name of the test executable
@@ -54,14 +57,14 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
   }
 
-  ~IMSFixture() {
-    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: Finalizing client ==" );
-    BOOST_TEST_MESSAGE( "== Test teardown [END]: Finalizing client ==" );
+  ~IMSSeDFixture() {
+    BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: IMSSeDFixture ==" );
+    BOOST_TEST_MESSAGE( "== Test teardown [END]: IMSSeDFixture ==" );
   }
 
-//private:
   int mac;
   char* mav[2];
 };
 
-typedef IMSFixture IMSSeDFixture;
+
+#endif  // _FMS_FIXTURES_HPP_
