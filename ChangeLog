@@ -1,6 +1,23 @@
-+-----------------------------+
-| VISHNU 3.0.0 - Beta1 version |
-+-----------------------------+
++----------------------+
+| VISHNU 3.0.0 - Beta2 |
++----------------------+
+* Added beta support to submit jobs to a cloud, using DeltaCloud (tested
+	only with OpenStack). Currently, only the vishnu user is used,
+	there is no user switch during submission.
+* /!\ Database needs to be updated using scripts in core/database/database_update_addvminfo_*.sql
+* /!\ Compilation process has been updated: you can now compile client
+	CLI, and servers separately
+* Automtests have been updated: they do not launch the Vishnu platform,
+	they use an already deployed one
+* Fixed issues with zmq and EINTR
+* Fixed bugs on "POSIX" backend: the wallclock time was not correctly
+	handled, and submission scripts were sometimes deleted before
+	being executed...
+
+	
++----------------------+
+| VISHNU 3.0.0 - Beta1 |
++----------------------+
 * Added sample configuration files for VISHNU and Supervisord
 * Fixed several memory leaks
 * Fixed bad boost version in CMakeLists
