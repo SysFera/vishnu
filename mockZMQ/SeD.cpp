@@ -114,13 +114,19 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
     }
 
   // connect our workers threads to our server via a queue
-  try {
-    zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
-  } catch (zmq::error_t & e) {
-    std::cerr << boost::format("E: zmq device creation failed (%1%)\n") % e.what();
-    return 1;
-  }
-
+  do {
+    try {
+      zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+      break;
+    } catch (const zmq::error_t& e) {
+      if (EINTR == e.num()) {
+        continue;
+      } else {
+        std::cerr << boost::format("E: zmq device creation failed (%1%)\n") % e.what();
+        return 1;
+      }
+    }
+  } while(true);
 
   return 0;
 }
