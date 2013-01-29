@@ -15,10 +15,6 @@ include_directories(${PROJECT_BINARY_DIR}/include/
   ${VISHNU_SOURCE_DIR}/core/src/config
 )
 
-add_library(vishnu-test utils.cpp)
-target_link_libraries(vishnu-test
-  ${Boost_LIBRARIES}
-)
 
 add_subdirectory(unit)
 

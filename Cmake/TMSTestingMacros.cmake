@@ -61,7 +61,6 @@ macro( tms_test NAME )
       ${LIBCRYPT_LIB}
       vishnu-tms-client
       vishnu-ums-client
-      vishnu-test
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     file(READ "${NAME}.cpp" content)

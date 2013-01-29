@@ -19,7 +19,6 @@ if (BUILD_TESTING)
   set(EXECUTABLE_OUTPUT_PATH ${BIN_DIR})
   set(GENERATED_LOG_TESTS_DIR ${PROJECT_BINARY_DIR}/generated_test_logs)
 
-  add_subdirectory(cfgs)
   add_subdirectory(src)
 
   #set(TEST_DISPATCHER_CFG "${TEST_CONFIG_PATH}/dispatcher.cfg" CACHE PATH "Path to the dispatcher's configuration file")
