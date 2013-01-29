@@ -13,7 +13,6 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/test/unit_test.hpp>
 #include <boost/thread.hpp>
-#include "utils.hpp"
 #include "FileParser.hpp"
 #include "api_ums.hpp"
 
