@@ -3,7 +3,6 @@
  *
  * Author : bisnard
  */
-#include "diet_fixtures.hpp"
 #include "FMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
 #include <boost/algorithm/string.hpp>
@@ -38,7 +37,7 @@ public:
     string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
     mav[1]= (char*)vishnuClientTestConfigPath.c_str();
-    
+
     if (vishnu::vishnuInitialize(mav[1], mac, mav)) {
       BOOST_TEST_MESSAGE( "Error in VishnuInitialize..." );
     }
@@ -63,23 +62,23 @@ public:
         ma.machine_id = machine.at(0);
         ma.batch_name = machine.at(1);
         m_test_tms_machines.push_back(ma);
-      }     
+      }
     }
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
-    
+
 
     m_test_tms_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
     m_test_tms_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
     m_test_tms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
-    
-      
-        
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
 
   }
