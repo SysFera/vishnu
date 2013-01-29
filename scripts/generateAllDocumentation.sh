@@ -125,10 +125,10 @@ generate_doc TMS/test/testReports reportTMSTest
 generate_doc FMS/test/testReports reportFMSTest
 
 # generate UMS, IMS, FMS and TMS test plan
-generate_doc UMS/test/testPlan VISHNU_D2_1b-UMS-PlanTests
-generate_doc IMS/test/testPlan VISHNU_D5_1b-IMS-PlanTests
-generate_doc TMS/test/testPlan VISHNU_D4_1b-TMS-PlanTests
-generate_doc FMS/test/testPlan VISHNU_D3_1b-FMS-PlanTests
+generate_doc UMS/test/testPlan UMS-PlanTests
+generate_doc IMS/test/testPlan IMS-PlanTests
+generate_doc TMS/test/testPlan TMS-PlanTests
+generate_doc FMS/test/testPlan FMS-PlanTests
 
 # generate manpages
 generate_man UMS/doc/man adminman-gen userman-gen
