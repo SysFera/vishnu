@@ -97,6 +97,8 @@ public:
       } catch (const zmq::error_t& e) {
         if (EINTR == e.num()) {
           continue;
+        } else {
+          throw e;
         }
       }
     } while(true);
