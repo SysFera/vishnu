@@ -24,14 +24,14 @@ set(client_SRCS client/SessionProxy.cpp
   client/UtilsProxy.cpp
   client/NetrcReader.cpp)
 
-set(cli_SRCS cli/utils
-  cli/daemon_cleaner
-  cli/configureOptionUtils
-  cli/localAccountUtils
-  cli/userUtils
-  cli/machineUtils
-  cli/listMachineUtils
-  cli/listHistoryCmdUtils
+set(cli_SRCS cli/utils.cpp
+  cli/daemon_cleaner.cpp
+  cli/configureOptionUtils.cpp
+  cli/localAccountUtils.cpp
+  cli/userUtils.cpp
+  cli/machineUtils.cpp
+  cli/listMachineUtils.cpp
+  cli/listHistoryCmdUtils.cpp
   cli/authenticationSystemUtils.cpp
   cli/authenticationAccountUtils.cpp)
 
@@ -73,6 +73,7 @@ if(COMPILE_SERVERS)
     sed/ServerUMS.cpp
     sed/internalApi.cpp
     sed/MonitorUMS.cpp)
+
   set(server_SRCS server/SessionServer.cpp
     server/UserServer.cpp
     server/MachineClientServer.cpp
