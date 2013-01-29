@@ -89,11 +89,12 @@ public:
   std::string
   get(int flags = 0) {
     zmq::message_t message;
+    bool rv = false;
+
     do {
       try {
-        if (recv(&message, flags)) {
-          break;
-        }
+        rv = recv(&message, flags);
+        break;
       } catch (const zmq::error_t& e) {
         if (EINTR == e.num()) {
           continue;
@@ -102,6 +103,11 @@ public:
         }
       }
     } while(true);
+
+    if (!rv) {
+      throw zmq::error_t();
+    }
+
 
     const char *dat = static_cast<const char*>(message.data());
     // check that we receive or not a null-terminated string aka C strings
