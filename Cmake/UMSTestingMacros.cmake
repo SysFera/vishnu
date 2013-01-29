@@ -55,7 +55,6 @@ macro( ums_test NAME )
       vishnu-core
       ${LIBCRYPT_LIB}
       vishnu-ums-client
-      vishnu-test
       ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 
     # test executable installation has not been tested yet -sic-
