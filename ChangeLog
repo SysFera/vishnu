@@ -9,7 +9,7 @@
 	CLI, and servers separately
 * Automtests have been updated: they do not launch the Vishnu platform,
 	they use an already deployed one
-* Fixed issues with zmq and EINTR
+* Bugfix: handle properly signal-interrupted zmq calls (EINTR)
 * Fixed bugs on "POSIX" backend: the wallclock time was not correctly
 	handled, and submission scripts were sometimes deleted before
 	being executed...
