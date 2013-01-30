@@ -2,8 +2,10 @@
 | VISHNU 3.0.0 - Beta2 |
 +----------------------+
 * Added beta support to submit jobs to a cloud, using DeltaCloud (tested
-	only with OpenStack). Currently, only the vishnu user is used,
-	there is no user switch during submission.
+	only with OpenStack). The submission to a cloud requires valid
+	credentials in the cloud. The credentials need to be provided to
+	VISHNU though an configuration file, options, or environment
+	variables.
 * /!\ Database needs to be updated using scripts in core/database/database_update_addvminfo_*.sql
 * /!\ Compilation process has been updated: you can now compile client
 	CLI, and servers separately
