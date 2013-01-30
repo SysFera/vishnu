@@ -134,6 +134,7 @@ run_cmd mkdir -p $path
 
 pathrel=deliverables/src
 
+remove_files deliverables/*
 run_cmd mkdir -p deliverables/src
 run_cmd mkdir -p deliverables/doc
 run_cmd mkdir -p deliverables/debs
@@ -142,7 +143,6 @@ run_cmd mkdir -p deliverables/tests
 # create releasepath
 releasePath=deliverables/release/VISHNU_$NO_VERSION
 run_cmd mkdir -p $releasePath
-
 
 remove_files deliverables/src/*
 remove_files deliverables/doc/*
