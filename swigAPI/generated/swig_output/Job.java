@@ -251,6 +251,22 @@ public class Job extends EObject {
     VISHNUJNI.Job_setUserId(swigCPtr, this, _userId);
   }
 
+  public String getVmId() {
+    return VISHNUJNI.Job_getVmId(swigCPtr, this);
+  }
+
+  public void setVmId(String _vmId) {
+    VISHNUJNI.Job_setVmId(swigCPtr, this, _vmId);
+  }
+
+  public String getVmIp() {
+    return VISHNUJNI.Job_getVmIp(swigCPtr, this);
+  }
+
+  public void setVmIp(String _vmIp) {
+    VISHNUJNI.Job_setVmIp(swigCPtr, this, _vmIp);
+  }
+
   public SWIGTYPE_p_ecorecpp__mapping__any eGet(int _featureID, boolean _resolve) {
     return new SWIGTYPE_p_ecorecpp__mapping__any(VISHNUJNI.Job_eGet(swigCPtr, this, _featureID, _resolve), true);
   }

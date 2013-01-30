@@ -1955,6 +1955,22 @@ class Job(EObject):
         """setUserId(self, EString _userId)"""
         return _VISHNU.Job_setUserId(self, *args, **kwargs)
 
+    def getVmId(self, *args, **kwargs):
+        """getVmId(self) -> EString"""
+        return _VISHNU.Job_getVmId(self, *args, **kwargs)
+
+    def setVmId(self, *args, **kwargs):
+        """setVmId(self, EString _vmId)"""
+        return _VISHNU.Job_setVmId(self, *args, **kwargs)
+
+    def getVmIp(self, *args, **kwargs):
+        """getVmIp(self) -> EString"""
+        return _VISHNU.Job_getVmIp(self, *args, **kwargs)
+
+    def setVmIp(self, *args, **kwargs):
+        """setVmIp(self, EString _vmIp)"""
+        return _VISHNU.Job_setVmIp(self, *args, **kwargs)
+
     def eGet(self, *args, **kwargs):
         """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
         return _VISHNU.Job_eGet(self, *args, **kwargs)
@@ -5138,7 +5154,7 @@ def setUpdateFrequency(*args, **kwargs):
   return _VISHNU.setUpdateFrequency(*args, **kwargs)
 
 def getUpdateFrequency(*args, **kwargs):
-  """getUpdateFrequency(string sessionKey) -> int"""
+  """getUpdateFrequency(string sessionKey, int freq) -> int"""
   return _VISHNU.getUpdateFrequency(*args, **kwargs)
 
 def stop(*args, **kwargs):

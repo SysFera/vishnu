@@ -16359,6 +16359,130 @@ fail:
 }
 
 
+SWIGINTERN PyObject *_wrap_Job_getVmId(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Job_getVmId",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_getVmId" "', argument " "1"" of type '" "TMS_Data::Job const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Job const *)arg1)->getVmId();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Job_setVmId(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_vmId", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Job_setVmId",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_setVmId" "', argument " "1"" of type '" "TMS_Data::Job *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Job_setVmId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Job_setVmId" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setVmId((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Job_getVmIp(PyObject *SWIGUNUSEDPARM(self), PyObject *args) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  PyObject * obj0 = 0 ;
+  ecore::EString *result = 0 ;
+  
+  if (!PyArg_ParseTuple(args,(char *)"O:Job_getVmIp",&obj0)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_getVmIp" "', argument " "1"" of type '" "TMS_Data::Job const *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  result = (ecore::EString *) &((TMS_Data::Job const *)arg1)->getVmIp();
+  resultobj = SWIG_From_std_string(static_cast< std::string >(*result));
+  return resultobj;
+fail:
+  return NULL;
+}
+
+
+SWIGINTERN PyObject *_wrap_Job_setVmIp(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
+  PyObject *resultobj = 0;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  void *argp1 = 0 ;
+  int res1 = 0 ;
+  int res2 = SWIG_OLDOBJ ;
+  PyObject * obj0 = 0 ;
+  PyObject * obj1 = 0 ;
+  char *  kwnames[] = {
+    (char *) "self",(char *) "_vmIp", NULL 
+  };
+  
+  if (!PyArg_ParseTupleAndKeywords(args,kwargs,(char *)"OO:Job_setVmIp",kwnames,&obj0,&obj1)) SWIG_fail;
+  res1 = SWIG_ConvertPtr(obj0, &argp1,SWIGTYPE_p_TMS_Data__Job, 0 |  0 );
+  if (!SWIG_IsOK(res1)) {
+    SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "Job_setVmIp" "', argument " "1"" of type '" "TMS_Data::Job *""'"); 
+  }
+  arg1 = reinterpret_cast< TMS_Data::Job * >(argp1);
+  {
+    std::string *ptr = (std::string *)0;
+    res2 = SWIG_AsPtr_std_string(obj1, &ptr);
+    if (!SWIG_IsOK(res2)) {
+      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "Job_setVmIp" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    if (!ptr) {
+      SWIG_exception_fail(SWIG_ValueError, "invalid null reference " "in method '" "Job_setVmIp" "', argument " "2"" of type '" "ecore::EString const &""'"); 
+    }
+    arg2 = ptr;
+  }
+  (arg1)->setVmIp((ecore::EString const &)*arg2);
+  resultobj = SWIG_Py_Void();
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return resultobj;
+fail:
+  if (SWIG_IsNewObj(res2)) delete arg2;
+  return NULL;
+}
+
+
 SWIGINTERN PyObject *_wrap_Job_eGet(PyObject *SWIGUNUSEDPARM(self), PyObject *args, PyObject *kwargs) {
   PyObject *resultobj = 0;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
@@ -42355,6 +42479,10 @@ static PyMethodDef SwigMethods[] = {
 	 { (char *)"Job_setWorkId", (PyCFunction) _wrap_Job_setWorkId, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setWorkId(Job self, ELong _workId)"},
 	 { (char *)"Job_getUserId", _wrap_Job_getUserId, METH_VARARGS, (char *)"Job_getUserId(Job self) -> EString"},
 	 { (char *)"Job_setUserId", (PyCFunction) _wrap_Job_setUserId, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setUserId(Job self, EString _userId)"},
+	 { (char *)"Job_getVmId", _wrap_Job_getVmId, METH_VARARGS, (char *)"Job_getVmId(Job self) -> EString"},
+	 { (char *)"Job_setVmId", (PyCFunction) _wrap_Job_setVmId, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setVmId(Job self, EString _vmId)"},
+	 { (char *)"Job_getVmIp", _wrap_Job_getVmIp, METH_VARARGS, (char *)"Job_getVmIp(Job self) -> EString"},
+	 { (char *)"Job_setVmIp", (PyCFunction) _wrap_Job_setVmIp, METH_VARARGS | METH_KEYWORDS, (char *)"Job_setVmIp(Job self, EString _vmIp)"},
 	 { (char *)"Job_eGet", (PyCFunction) _wrap_Job_eGet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eGet(Job self, EInt _featureID, EBoolean _resolve) -> EJavaObject"},
 	 { (char *)"Job_eSet", (PyCFunction) _wrap_Job_eSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eSet(Job self, EInt _featureID, EJavaObject _newValue)"},
 	 { (char *)"Job_eIsSet", (PyCFunction) _wrap_Job_eIsSet, METH_VARARGS | METH_KEYWORDS, (char *)"Job_eIsSet(Job self, EInt _featureID) -> EBoolean"},

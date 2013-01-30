@@ -249,7 +249,7 @@ public class VISHNU {
     return VISHNUJNI.setUpdateFrequency(sessionKey, freq);
   }
 
-  public static int getUpdateFrequency(String sessionKey, int[] freq) throws InternalIMSException {
+  public static int getUpdateFrequency(String sessionKey, int freq) throws InternalIMSException {
     return VISHNUJNI.getUpdateFrequency(sessionKey, freq);
   }
 

@@ -6583,6 +6583,78 @@ SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Jo
 }
 
 
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getVmId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  result = (ecore::EString *) &((TMS_Data::Job const *)arg1)->getVmId();
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setVmId(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  (arg1)->setVmId((ecore::EString const &)*arg2);
+}
+
+
+SWIGEXPORT jstring JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1getVmIp(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_) {
+  jstring jresult = 0 ;
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *result = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  result = (ecore::EString *) &((TMS_Data::Job const *)arg1)->getVmIp();
+  jresult = jenv->NewStringUTF(result->c_str()); 
+  return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1setVmIp(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
+  ecore::EString *arg2 = 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(TMS_Data::Job **)&jarg1; 
+  if(!jarg2) {
+    SWIG_JavaThrowException(jenv, SWIG_JavaNullPointerException, "null std::string");
+    return ;
+  }
+  const char *arg2_pstr = (const char *)jenv->GetStringUTFChars(jarg2, 0); 
+  if (!arg2_pstr) return ;
+  std::string arg2_str(arg2_pstr);
+  arg2 = &arg2_str;
+  jenv->ReleaseStringUTFChars(jarg2, arg2_pstr); 
+  (arg1)->setVmIp((ecore::EString const &)*arg2);
+}
+
+
 SWIGEXPORT jlong JNICALL Java_com_sysfera_vishnu_api_vishnu_internal_VISHNUJNI_Job_1eGet(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jboolean jarg3) {
   jlong jresult = 0 ;
   TMS_Data::Job *arg1 = (TMS_Data::Job *) 0 ;
