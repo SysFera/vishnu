@@ -134,6 +134,7 @@ run_cmd mkdir -p $path
 
 pathrel=deliverables/src
 
+run_cmd mkdir -p deliverables/
 remove_files deliverables/*
 run_cmd mkdir -p deliverables/src
 run_cmd mkdir -p deliverables/doc
