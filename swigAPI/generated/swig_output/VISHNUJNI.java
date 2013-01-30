@@ -409,6 +409,10 @@ class VISHNUJNI {
   public final static native void Job_setWorkId(long jarg1, Job jarg1_, long jarg2);
   public final static native String Job_getUserId(long jarg1, Job jarg1_);
   public final static native void Job_setUserId(long jarg1, Job jarg1_, String jarg2);
+  public final static native String Job_getVmId(long jarg1, Job jarg1_);
+  public final static native void Job_setVmId(long jarg1, Job jarg1_, String jarg2);
+  public final static native String Job_getVmIp(long jarg1, Job jarg1_);
+  public final static native void Job_setVmIp(long jarg1, Job jarg1_, String jarg2);
   public final static native long Job_eGet(long jarg1, Job jarg1_, int jarg2, boolean jarg3);
   public final static native void Job_eSet(long jarg1, Job jarg1_, int jarg2, long jarg3);
   public final static native boolean Job_eIsSet(long jarg1, Job jarg1_, int jarg2);
@@ -1373,7 +1377,7 @@ class VISHNUJNI {
   public final static native int defineWorkIdentifier(String jarg1, String jarg2) throws InternalIMSException;
   public final static native int loadShed(String jarg1, String jarg2, int jarg3) throws InternalIMSException;
   public final static native int setUpdateFrequency(String jarg1, int jarg2) throws InternalIMSException;
-  public final static native int getUpdateFrequency(String jarg1, int[] jarg2) throws InternalIMSException;
+  public final static native int getUpdateFrequency(String jarg1, int jarg2) throws InternalIMSException;
   public final static native int stop(String jarg1, String jarg2, long jarg3, SupervisorOp jarg3_) throws InternalIMSException;
   public final static native int getSystemInfo(String jarg1, long jarg2, ListSysInfo jarg2_, long jarg3, SysInfoOp jarg3_) throws InternalIMSException;
   public final static native int restart(String jarg1, String jarg2, long jarg3, SupervisorOp jarg3_) throws InternalIMSException;
