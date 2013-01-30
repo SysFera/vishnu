@@ -18,19 +18,9 @@ if [ ! -f copyright ]; then
 fi
 
 
-######################################################################
-#                            VARIABLES                               #
-######################################################################
-# get complete path to script dir
-vishnuDir=`pwd`
-scriptDir=$vishnuDir/scripts
+# Get common functions and variables
+source scripts/common.sh
 
-nbfailed=0
-nbexec=0
-
-######################################################################
-#                           /VARIABLES                               #
-######################################################################
 
 ######################################################################
 #                            FUNCTIONS                               #
@@ -136,9 +126,7 @@ generate_man IMS/doc/man manIMS-gen
 generate_man TMS/doc/man usermanTMS-gen
 generate_man FMS/doc/man usermanFMS-gen
 
-echo
-echo
-echo "## Failed / total: $nbfailed / $nbexec"
 
-exit $nbfailed
+# All done
+print_exit
 
