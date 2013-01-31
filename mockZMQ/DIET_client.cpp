@@ -133,14 +133,14 @@ static const int PROFILE_ELT_NB = 4;
 std::string
 get_module(const std::string& service) {
   std::size_t pos = service.find("@");
-  std::string realServ = service;
   ServiceMap::const_iterator it;
 
   if (std::string::npos != pos) {
-    realServ = service.substr(0, pos);
+    it = sMap.find(service.substr(0, pos));
+  } else {
+    it = sMap.find(service);
   }
 
-  it = sMap.find(realServ);
   if (it != sMap.end()) {
     return it->second;
   }
