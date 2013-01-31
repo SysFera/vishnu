@@ -976,7 +976,7 @@ travers d'une socket unix.
 <section>
 <title>Utilisation de LDAP</title>
 <para>Nous supposons que vous avez déjà une installation de LDAP opérationnelle.
-Si ce n'est pas le cas, référer à la documentation officielle pour procéder à
+Si ce n'est pas le cas, référer vous à la documentation officielle pour procéder à
 l'installation. Vous pouvez également installer ces dépendances à partir du
 gestionnaire de paquets de votre système. Sur les systèmes basés sur Debian
 par exemple, vous devez installer les paquets suivants: <emphasis>slapd,
@@ -1015,21 +1015,21 @@ LDAP : Authentifie uniquement en utilisant LDAP
 <section>
 <title>Utilisation d'une base de données distante</title>
 <para>
-Vishnu repose sur une base de données. Les serveurs de Vishnu ont besoin de
+VISHNU repose sur une base de données. Les serveurs de VISHNU ont besoin de
 s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les
 ports accessibles entre différentes machines (cas fréquent dans un réseau
 local), il n'y a généralement pas de problème pour se connecter à une base
 de données distante en spécifiant correctement le databaseHost dans les
-fichiers de configuration des éléments de Vishnu.
+fichiers de configuration des éléments de VISHNU.
 Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas
 de réseaux complexes avec du NAT par exemple, il est souvent plus facile de
 passer par des tunnels ssh pour encapsuler les connexions vers la base de
 données.
 
 Nous avons deux cas différents pour ouvrir le tunnel. Supposons que la
-base de donnée soit sur une machine A, et l'élément Vishnu sur une machine B.
+base de données soit sur une machine A, et l'élément VISHNU sur une machine B.
 Nous pouvons ouvrir le tunnel depuis A ou depuis B (parfois seule une de
-ces deux configuration est possible dans le cas où le ssh ne passe que dans
+ces deux configurations est possible dans le cas où le ssh ne passe que dans
 un sens).
 Nous supposons que le port d'écoute de la base de données est 3306.
 </para>
@@ -1054,17 +1054,17 @@ ssh -t -t -L 3306:localhost:3306 user@A
 </listitem>
 </itemizedlist>
 <para>Il convient maintenant de tester la connexion à la base de données.
-Sur la machine B, essayer de vous connecter avec la commande suivante :
+Sur la machine B, essayez de vous connecter avec la commande suivante :
 </para>
 <programlisting>
 mysql -u vishnu_user -h 127.0.0.1 -p
 </programlisting>
 <para>
-Après avoir tapé le mot de passe, vous devriez vous retrouver connecter
+Après avoir tapé le mot de passe, vous devriez vous retrouver connecté
 sur la base de données sur la machine A.
 
 Il ne vous reste plus qu'à configurer le fichier de configuration de
-l'élément vishnu avec les éléments suivants (à adapter en fonction de votre
+l'élément VISHNU avec les éléments suivants (à adapter en fonction de votre
 configuration) :
 </para>
 <programlisting>
