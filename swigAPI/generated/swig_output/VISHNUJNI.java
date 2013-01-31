@@ -1301,14 +1301,6 @@ class VISHNUJNI {
   public final static native long EFileTransferList_size(long jarg1, EFileTransferList jarg1_);
   public final static native void EFileTransferList_clear(long jarg1, EFileTransferList jarg1_);
   public final static native void delete_EFileTransferList(long jarg1);
-  public final static native void EFileStatList_insert_all(long jarg1, EFileStatList jarg1_, long jarg2, EFileStatList jarg2_);
-  public final static native void EFileStatList_insert_at(long jarg1, EFileStatList jarg1_, long jarg2, long jarg3, FileStat jarg3_);
-  public final static native long EFileStatList_at(long jarg1, EFileStatList jarg1_, long jarg2);
-  public final static native long EFileStatList_get(long jarg1, EFileStatList jarg1_, long jarg2);
-  public final static native void EFileStatList_push_back(long jarg1, EFileStatList jarg1_, long jarg2, FileStat jarg2_);
-  public final static native long EFileStatList_size(long jarg1, EFileStatList jarg1_);
-  public final static native void EFileStatList_clear(long jarg1, EFileStatList jarg1_);
-  public final static native void delete_EFileStatList(long jarg1);
   public final static native void EDirEntryList_insert_all(long jarg1, EDirEntryList jarg1_, long jarg2, EDirEntryList jarg2_);
   public final static native void EDirEntryList_insert_at(long jarg1, EDirEntryList jarg1_, long jarg2, long jarg3, DirEntry jarg3_);
   public final static native long EDirEntryList_at(long jarg1, EDirEntryList jarg1_, long jarg2);
