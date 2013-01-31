@@ -2,14 +2,14 @@
 #                            VARIABLES                               #
 ######################################################################
 # Get vishnu version
-versionNumber=`egrep -e "VISHNU_VERSION .*" CMakeLists.txt | awk -F'"' '{print $2}' | sed "s/ /_/g"` 
-versionComment=`egrep -e "VISHNU_VERSION_COMMENTS .*" CMakeLists.txt | awk -F'"' '{print $2}' | sed "s/ /_/g"`
+versionNumber=$(awk -F'"' '/VISHNU_VERSION .*/ {gsub(/ /,"_", $2); print $2}' CMakeLists.txt)
+versionComment=$(awk -F'"' '/VISHNU_VERSION_COMMENTS .*/ {gsub(/ /,"_", $2); print $2}' CMakeLists.txt)
 
 NO_VERSION="${versionNumber}${versionComment}"
 
 
 # get complete path to script dir
-vishnuDir=`pwd`
+vishnuDir=$(pwd)
 scriptDir=$vishnuDir/scripts
 
 nbfailed=0
@@ -26,8 +26,8 @@ nbexec=0
 function run_cmd() {
     $@
     tmprv=$?
-    nbexec=$(($nbexec+1))
-    if [ $tmprv != 0 ]; then
+    (( nbexec++ ))
+    if (( $tmprv != 0 )); then
         nbfailed=$(($nbfailed+1))
         echo "## Command failed: $@"
     fi
@@ -36,9 +36,9 @@ function run_cmd() {
 function run_cmd_noOutput() {
     $@  >/dev/null 2>&1
     tmprv=$?
-    nbexec=$(($nbexec+1))
-    if [ $tmprv != 0 ]; then
-        nbfailed=$(($nbfailed+1))
+    (( nbexec++ ))
+    if (( $tmprv != 0 )); then
+        (( nbfailed++ ))
         echo "## Command failed: $@"
     fi
 }
@@ -87,7 +87,7 @@ function remove_files () {
 
 function change_dir () {
     run_cmd cd $1;
-    location=`pwd`
+    location=$(pwd)
     echo "## Now in $location"
 }
 ######################################################################
