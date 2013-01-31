@@ -48,7 +48,7 @@ if(ENABLE_SWIG)
 endif(ENABLE_SWIG)
 
 #Install swig language-specific generated files in a dedicated directory
-set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/swig_output)
+set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_SOURCE_DIR}/generated/swig_output)
 file(MAKE_DIRECTORY ${CMAKE_SWIG_OUTDIR})
 
 if(ENABLE_PYTHON)
