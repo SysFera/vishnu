@@ -153,10 +153,10 @@ private:
  * \brief Constructor, raises an exception on error
  */
 template <class QueryParameters, class ListObject>
-QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session,
+QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
+                                                    const SessionProxy& session,
                                                     const std::string& serviceName):
-  mparameters(params), mserviceName(serviceName), msessionProxy(session)
-{
+  mparameters(params), mserviceName(serviceName), msessionProxy(session) {
   mlistObject = NULL;
   mmachineId = "";
 }
@@ -171,10 +171,12 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
  */
 
 template <class QueryParameters, class ListObject>
-QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params, const SessionProxy& session,
-                                                    const std::string& serviceName, const std::string& machineId):
-  mparameters(params), mserviceName(serviceName), msessionProxy(session), mmachineId (machineId)
-{
+QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
+                                                    const SessionProxy& session,
+                                                    const std::string& serviceName,
+                                                    const std::string& machineId):
+  mparameters(params), mserviceName(serviceName),
+  msessionProxy(session), mmachineId (machineId) {
   mlistObject = NULL;
 }
 
@@ -207,8 +209,7 @@ QueryProxy<QueryParameters, ListObject>::getMachineId() const {
  * \return raises an exception on error
  */
 template <class QueryParameters, class ListObject>
-ListObject* QueryProxy<QueryParameters, ListObject>::list()
-{
+ListObject* QueryProxy<QueryParameters, ListObject>::list() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string queryParmetersToString;
@@ -216,12 +217,10 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-
   //If the query uses the machineId (machineId not null)
-  if (mmachineId.size() != 0) {
+  if (!mmachineId.empty()) {
     profile = diet_profile_alloc(mserviceName.c_str(), 2, 2, 4);
-  }
-  else {
+  } else {
     profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
   }
 
@@ -235,8 +234,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
   }
 
   //If the query uses the machineId (machineId not null)
-  if (mmachineId.size() != 0) {
-
+  if (!mmachineId.empty()) {
     if (diet_string_set(profile, 1, mmachineId)) {
       msg += "with machineId parameter "+mmachineId;
       raiseDietMsgException(msg);
@@ -251,44 +249,39 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list()
     diet_string_set(profile,3);
     diet_string_set(profile,4);
 
-    if(!diet_call(profile)) {
-      if(diet_string_get(profile,3, listObjectInString)){
+    if (!diet_call(profile)) {
+      if (diet_string_get(profile,3, listObjectInString)){
         msg += "by receiving listObjectInString message";
         raiseDietMsgException(msg);
       }
-      if(diet_string_get(profile,4, errorInfo)){
+      if (diet_string_get(profile,4, errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
-    }
-    else {
+    } else {
       raiseDietMsgException("DIET call failure");
     }
-  }
-  else {
-
+  } else {
     if (diet_string_set(profile, 1, queryParmetersToString)) {
       msg += "with queryParmetersToString parameter "+queryParmetersToString;
       raiseDietMsgException(msg);
     }
 
     //OUT Parameters
-
     diet_string_set(profile,2);
     diet_string_set(profile,3);
 
-    if(!diet_call(profile)) {
-
-      if(diet_string_get(profile,2, listObjectInString)){
+    if (!diet_call(profile)) {
+      if (diet_string_get(profile,2, listObjectInString)){
         msg += "by receiving listObjectInString message";
         raiseDietMsgException(msg);
       }
-      if(diet_string_get(profile,3, errorInfo)){
+
+      if (diet_string_get(profile,3, errorInfo)){
         msg += "by receiving errorInfo message";
         raiseDietMsgException(msg);
       }
-    }
-    else {
+    } else {
       raiseDietMsgException("DIET call failure");
     }
   }
