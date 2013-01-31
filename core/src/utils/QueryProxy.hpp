@@ -156,9 +156,8 @@ template <class QueryParameters, class ListObject>
 QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& params,
                                                     const SessionProxy& session,
                                                     const std::string& serviceName):
-  mparameters(params), mserviceName(serviceName), msessionProxy(session) {
-  mlistObject = NULL;
-  mmachineId = "";
+  mparameters(params), mserviceName(serviceName),
+  msessionProxy(session), mlistObject(NULL) {
 }
 
 /**
@@ -176,8 +175,8 @@ QueryProxy<QueryParameters, ListObject>::QueryProxy(const QueryParameters& param
                                                     const std::string& serviceName,
                                                     const std::string& machineId):
   mparameters(params), mserviceName(serviceName),
-  msessionProxy(session), mmachineId (machineId) {
-  mlistObject = NULL;
+  msessionProxy(session), mmachineId (machineId),
+  mlistObject(NULL) {
 }
 
 
