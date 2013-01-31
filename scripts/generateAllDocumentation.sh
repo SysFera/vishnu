@@ -12,7 +12,7 @@
 # - UMS, IMS, FMS and TMS test plan
 # - manpages
 
-if [ ! -f copyright ]; then
+if [[ ! -f copyright ]]; then
   echo "Missing copyright file - please start the script in VISHNU root directory"
   exit 1
 fi
@@ -25,16 +25,6 @@ source scripts/common.sh
 ######################################################################
 #                            FUNCTIONS                               #
 ######################################################################
-function run_cmd() {
-    $@
-    tmprv=$?
-    nbexec=$(($nbexec+1))
-    if [ $tmprv != 0 ]; then
-        nbfailed=$(($nbfailed+1))
-        echo "## Command failed: $@"
-    fi
-}
-
 function generate_doc () {
     # Generate pdf and html from docbook
     # Usage:  generate_doc <path to directory> <docbook basename without extension>
