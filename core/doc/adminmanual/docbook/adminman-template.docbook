@@ -957,19 +957,19 @@ suivantes à partir de votre serveur PostGreSQL :
 <title>Utilisation de TMS en mode natif: TMS Posix Shell</title>
 <para>
 Après installation, il est possible d'utiliser les fonctionnalités de TMS sur une machine
-ne possédant pas de batch scheduler sous jacent. Pour ce faire, il faut mettre le batch
+ne possédant pas de batch scheduler sous-jacent. Pour ce faire, il faut mettre le batch
 scheduler à la valeur "POSIX" lors de la compilation. Le flag dans le fichier de configuration
 du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de
 VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé,
 et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch
 posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler
-auquel vishnu soumet. Cela implique que d'un point de vu système, vishnu a constamment
+auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment
 3 processus 'tmssed' dans le cas d'un batch scheduler classique, un premier qui est le
 serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés
 par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données
-associées aux jobs à jour. De plus, afin de gérer les jobs utilisateurs et pouvoir les
+ à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les
 annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
-tournera et pouvant controller les jobs, et fournir des informations au moniteur au
+tournera, pourra contrôler les jobs, et fournir des informations au moniteur au
 travers d'une socket unix.
 </para>
 </section>
