@@ -126,6 +126,10 @@ static ServiceMap sMap = boost::assign::map_list_of
                          ("FileTransferStop", "FMS")
                          ;
 
+// defines minimal number of elements in a diet profile
+static const int PROFILE_ELT_NB = 4;
+
+
 std::string
 get_module(const std::string& service) {
   std::size_t pos = service.find("@");
@@ -326,7 +330,7 @@ my_deserialize(const std::string& prof) {
   // TODO: this is not "safe" as we can receive errors int "prof"
   // Currently, we check that the size of vecString is at least 4:
   // profile's name, IN, INOUT and OUT
-  if (vecString.size() >= 4 && (vecString.at(0) != "")) {
+  if (vecString.size() >= PROFILE_ELT_NB && (vecString.at(0) != "")) {
     res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
     res->name = *(it++);
