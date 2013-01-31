@@ -27,6 +27,9 @@
     <author>
       <personname><firstname>Haïkel</firstname><surname>Guémar</surname></personname>
     </author>
+    <author>
+      <personname><firstname>Amine</firstname><surname>Bsila</surname></personname>
+    </author>
     <revhistory>
       <revision>
         <revnumber>1</revnumber>
@@ -278,6 +281,15 @@
         <revdescription>
           <para>Mise à jour des dépendences d'installation avec ZeroMQ et
             suppression du chapite lié aux web services</para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>30</revnumber>
+        <date>28/01/2013</date>
+        <authorinitials>A. Bsila</authorinitials>
+        <revdescription>
+          <para>Présentation des tests automatiques</para>
         </revdescription>
       </revision>
 
