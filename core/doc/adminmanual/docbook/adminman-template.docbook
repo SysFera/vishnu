@@ -585,8 +585,14 @@
         <itemizedlist>
           <listitem>
             <para>
-              CLIENT_ONLY permet si on le souhaite de ne compiler les codes clients. Par défault les
-              codes clients et serveurs sont compilés.
+              COMPILE_CLIENT_CLI permet si on le souhaite de compiler les binaires clients en ligne de commande.
+              Par défault seules les libs sont compilées.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              COMPILE_SERVERS permet si on le souhaite de compiler les serveurs.
+              Par défault ils ne sont pas compilés.
             </para>
           </listitem>
           <listitem>
@@ -768,6 +774,8 @@
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
               <para><emphasis>  -DTORQUE_DIR=/opt/torque</emphasis></para>
+              <para><emphasis>  -DCOMPILE_CLIENT_CLI=ON</emphasis></para>
+              <para><emphasis>  -DCOMPILE_SERVERS=ON</emphasis></para>
             </listitem>
             <listitem><para>En utilisant Ninja : changement du générateur via le flag CMAKE_GENERATOR.</para>
               <para>$ <emphasis>cmake -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..  \</emphasis></para>
@@ -778,6 +786,8 @@
               <para><emphasis>  -DVISHNU_BATCH=TORQUE  \</emphasis></para>
               <para><emphasis>  -DVISHNU_BATCH_VERSION=2.3  \</emphasis></para>
               <para><emphasis>  -DTORQUE_DIR=/opt/torque \</emphasis></para>
+              <para><emphasis>  -DCOMPILE_CLIENT_CLI=ON</emphasis></para>
+              <para><emphasis>  -DCOMPILE_SERVERS=ON</emphasis></para>
               <para><emphasis role="bold">  -DCMAKE_GENERATOR=Ninja</emphasis></para>
             </listitem>
           </itemizedlist>
