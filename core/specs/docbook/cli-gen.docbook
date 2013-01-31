@@ -329,27 +329,23 @@
     <section>
       <title> Environment variables and options</title>
       <para>Here is detailed the way to use the user options which are stored in the database and environment variables in VISHNU.</para>
-      <example id="optionUse"><title>Pseudo code</title><programlisting>
-		  if (the option is provided in the command line) {
-		      optionValue = option 
-		      
-		  } else {
-			    if (an environment variable exists) {
-				      optionValue = EnVariable_Value
-		 	
-			    } else { 
-			    
-				     if (a value has been defined in the user configuration) {
-					      optionValue = user_Option
-				     }
-				     else { 
-					      //The default value of the option defined by VISHNU admin is used
-					      optionValue = defaultValueOption
-				     }
-			   } 
-		   } 
-		  
-	    </programlisting></example>
+        <title>Pseudo code</title>
+        <programlisting>
+	  if (the option is provided in the command line) {
+	    optionValue = option
+	  } else {
+	    if (an environment variable exists) {
+	      optionValue = EnVariable_Value
+	    } else {
+	      if (a value has been defined in the user configuration) {
+	        optionValue = user_Option
+	      } else {
+	        //The default value of the option defined by VISHNU admin is used
+	        optionValue = defaultValueOption
+	      }
+	    }
+	  }
+        </programlisting>
     </section>
   </chapter>
   <chapter annotations="UMS.apim#CLIOPS+CLIDATA">
