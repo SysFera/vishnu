@@ -517,7 +517,7 @@ system, unit_test_framework, serialization, random</emphasis> et <emphasis>regex
 <para>Sigar 1.6.4 disponible sur sourceforge (http://sourceforge.net/projects/sigar/files/sigar/1.6/)</para>
 </listitem>
 <listitem>
-<para>Supervisord 3.0.a, installable à partir des outils Python (ex. pip install supervisord)</para>
+<para>Supervisord 3.0.a, installable à partir des outils Python (ex. pip install supervisor)</para>
 </listitem>
 <listitem>
 <para>Xmlrpc-c 1.16.42
@@ -876,7 +876,7 @@ infrastructure VISHNU (UMS, TMS, IMS et IMS).</para>
 <section>
 <title>Utiliser une base de données MySQL</title>
 <para>Nous supposons ici que vous avez déjà une installation de MySQL opérationnelle.
-Si ce n'est pas le cas référez-vous à la documentation officielle pour procéder à
+Si ce n'est pas le cas, référez-vous à la documentation officielle pour procéder à
 l'installation.
 </para>
 <para>Vous devez également disposer des droits d'administration sur cette
@@ -917,7 +917,7 @@ les données de la base.
 <section>
 <title>Utiliser une base de données PostGreSQL</title>
 <para>Nous supposons également que vous avez déjà une installation de PostGreSQL
-opérationnelle. Si ce n'est pas le cas référez-vous à la documentation officielle pour
+opérationnelle. Si ce n'est pas le cas, référez-vous à la documentation officielle pour
 procéder à l'installation.</para>
 <para>Vous devez également disposer des droits d'administration sur cette installation
 (accès en tant qu'utilisateur système 'postgres').
@@ -935,15 +935,15 @@ suivantes à partir de votre serveur PostGreSQL :
 </listitem>
 <listitem>
 <para>Créer la base de données vishnu</para>
-<para>$ <emphasis>createdb vishnu ; </emphasis></para>
+<para>$ <emphasis>createdb -h localhost vishnu ; </emphasis></para>
 </listitem>
 <listitem>
 <para>Se connecter à la base de données</para>
-<para>$ <emphasis>psql vishnu ; </emphasis></para>
+<para>$ <emphasis>psql -h localhost vishnu ; </emphasis></para>
 </listitem>
 <listitem>
 <para>Créer le schéma de la base de données</para>
-<para>$ <emphasis>\i /path/to/mysql_create.sql </emphasis></para>
+<para>$ <emphasis>\i /path/to/postgre_create.sql </emphasis></para>
 </listitem>
 <listitem>
 <para>Initialiser la base de données</para>
