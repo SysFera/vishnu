@@ -806,8 +806,8 @@ d'installation dans le $PATH</para>
 <title>Vérifier l'installation</title>
 <para>
 En supposant que la variable d'environnement INSTALL_PREFIX pointe à la racine
-du repertoire d'installation (/opt/vishnu dans notre exemple), vous devez avoir les
-programmes suivantes en fonction des modules installés:
+du répertoire d'installation (/opt/vishnu dans notre exemple), vous devez avoir les
+programmes suivants en fonction des modules installés:
 <itemizedlist>
 <listitem>
 <para>
