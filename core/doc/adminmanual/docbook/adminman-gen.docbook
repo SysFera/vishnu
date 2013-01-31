@@ -1866,57 +1866,102 @@ urlSupervisor=http://127.0.0.1:9001
       </itemizedlist>
     </section>
   </chapter>
+
   <chapter>
     <title>Tests</title>
     <para>
-      Les tests automatiques permettent de valider les fonctionnalités de Vishnu et de garantir la non régression lors des développements. Le module de test est activé ou pas au moment de la construction de Vshnu, en activant la variable Cmake  BUILD_TESTING.  Le module de test sera donc compilé avec les sources de vishnu. Toutes fois, pour l’exécution de ces tests l’administrateur doit fournir un ensemble de paramètres d’exécutions liées à la plateforme de test : 
+      Les tests automatiques permettent de valider les fonctionnalités de Vishnu
+      et de garantir la non régression lors des développements. Le module de
+      test peut être activé au moment de la construction de Vishnu, en activant
+      la variable Cmake BUILD_TESTING.  Le module de test sera donc compilé avec
+      les sources de vishnu.
     </para>
     <section>
-      <itemizedlist>
-        <listitem>
-          <para>
-            VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin vers le fichier de configuration client. Ce fichier permet à au client vishnu de se connecter à la plateforme.
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de  données de description de la plateforme. Ce fichier permet aux tests automatiques de s’exécuter sur la plateforme. Ce fichier doit contenir un ensemble de paramètres : </para>
-          <itemizedlist>
-            <listitem>
-              <para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plateforme de test; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plateforme de test; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
-            </listitem>
-            <listitem>
-              <para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
-            </listitem>
-          </itemizedlist>
-        </listitem>
-      </itemizedlist>
+      <title>Tests unitaires</title>
+      <para>
+        un certain nombre de tests unitaires sont fournis avec Vishnu. Lorsque
+        vous compilez Vishnu avec BUILD_TESTING, ces tests sont construits et
+        présents dans le sous-répertoire bin de votre répertoire de build. Les
+        tests unitaires ont tous un nom terminant par UnitTests. Pour les
+        lancer, il suffit juste d'appeler le binaire. Pour voir les options
+        qu'il est possible de leur passer, vous pouvez lancer le binaire avec
+        l'option --help (ce sont les options du framework boost tests)
+      </para>
+      <para>
+        Ces tests ne nécessitent pas d'avoir une plateforme Vishnu déployée.
+      </para>
+    </section>
+    <section>
+      <title>Configuration des tests fonctionnels</title>
+      <para>
+        Ces tests, contrairement aux tests unitaires, nécessitent d'avoir une
+        plateforme Vishnu déployée. L'administrateur doit fournir un ensemble de
+        paramètres d'exécutions liés à la plateforme de test. Il est nécessaire
+        de positionner 2 variables d'environnement.
+      </para>
+      <section>
+        <title>Variables d'environnement et options de configuration</title>
+        <itemizedlist>
+          <listitem>
+            <para>
+              VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin
+              vers le fichier de configuration client. Ce fichier permet au
+              client Vishnu de se connecter à la plateforme (voir le manuel
+              utilisateur pour plus d'informations sur la configuration de ce fichier).
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+              VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le
+              fichier de  données de description de la plateforme. Ce fichier
+              permet aux tests automatiques de s'exécuter sur la plateforme. Ce
+              fichier doit contenir un ensemble de paramètres :
+            </para>
+            <itemizedlist>
+              <listitem>
+                <para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d'authentification de la plateforme de test; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d'authentification de la plateforme de test; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+              </listitem>
+            </itemizedlist>
+          </listitem>
+        </itemizedlist>
+      </section>
+      <section>
+        <title>Exemple de fichier de configuration</title>
+        <programlisting>
+          TODO
+        </programlisting>
+      </section>
     </section>
   </chapter>
+
+
   <reference>
     <title>UMS Command reference</title>
     <refentry>
