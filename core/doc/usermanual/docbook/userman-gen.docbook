@@ -4307,7 +4307,7 @@ NOTE: The name of parameter as well as those of the corresponding environment ar
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>lists the jobs with the specified status.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (SUBMITTED), 2 (QUEUED), 3 (WAITING), 4 (RUNNING), 5 (TERMINATED), 6 (CANCELLED), 7 (ALREADY_DOWNLOADED).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (SUBMITTED), 2 (QUEUED), 3 (WAITING), 4 (RUNNING), 5 (COMPLETED), 6 (CANCELLED), 7 (ALREADY_DOWNLOADED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
