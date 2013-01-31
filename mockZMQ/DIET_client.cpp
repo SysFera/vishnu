@@ -233,7 +233,9 @@ diet_call(diet_profile_t* prof) {
     return 1;
   }
 
-
+  /* TODO: use config.getConfigValues to retrieve all URI/machine_id
+   * (especially for TMS and IMS)
+   */
   if (!config.getConfigValue(param, uri) &&
       !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
     // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
@@ -245,6 +247,7 @@ diet_call(diet_profile_t* prof) {
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
   }
+
   return diet_call_gen(prof, uri);
 }
 
