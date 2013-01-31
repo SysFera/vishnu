@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 <book
     xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
@@ -2827,7 +2829,8 @@
               choice="opt"><option>-V <replaceable>textParams</replaceable></option></arg><arg
               choice="opt"><option>-w <replaceable>workId</replaceable></option></arg><arg
               choice="opt"><option>-S <replaceable>specificParams</replaceable></option></arg><arg
-              choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-p</option></arg><arg choice="plain"><replaceable>machineId</replaceable></arg><arg
+              choice="plain"><replaceable>scriptFilePath</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -2996,6 +2999,13 @@
                 <entry><para>string</para></entry>
                 <entry><para>S</para></entry>
                 <entry><para>Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.</para><para>E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>posix</para></entry>
+                <entry><para>boolean</para></entry>
+                <entry><para>p</para></entry>
+                <entry><para>allows to submit on the shell instead of using the batch scheduler</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -3662,7 +3672,7 @@
               <entry><para>4</para></entry>
             </row>
             <row>
-              <entry><para>TERMINATED</para></entry>
+              <entry><para>COMPLETED</para></entry>
               <entry><para>5</para></entry>
             </row>
             <row>
@@ -4415,6 +4425,8 @@
         <para>The vishnu_load_shed command sheds load on a machine</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_load_shed</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg><arg choice="plain"><replaceable>loadShedType</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4452,6 +4464,20 @@
                 <entry/>
                 <entry><para>Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>URI</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>The URI of the supervisor to control the processes</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>name</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>The path to the supervisord script file on the machine</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4525,7 +4551,9 @@
         <para>The vishnu_stop command to stop (and do not try to relaunch) a SeD</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_stop</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>processName</replaceable></arg><arg choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
+              choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
           <tgroup cols="5">
@@ -4550,18 +4578,25 @@
             </thead>
             <tbody>
               <row>
-                <entry><para>processName</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The name of the process (the name of the executable)</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-              <row>
                 <entry><para>machineId</para></entry>
                 <entry><para>string</para></entry>
                 <entry/>
-                <entry><para>The id of the machine</para></entry>
+                <entry><para>The id of the machine where to restart</para></entry>
                 <entry><para>YES</para></entry>
+              </row>
+              <row>
+                <entry><para>URI</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>The URI of the supervisor to control the processes</para></entry>
+                <entry><para>NO</para></entry>
+              </row>
+              <row>
+                <entry><para>name</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>The path to the supervisord script file on the machine</para></entry>
+                <entry><para>NO</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -4622,8 +4657,8 @@
         <para>The vishnu_restart command to restart a SeD or a MA</para>
         <para><emphasis role="bold">Example of use </emphasis></para>
         <cmdsynopsis><command>vishnu_restart</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="opt"><option>-v <replaceable>vishnuConf</replaceable></option></arg><arg
-              choice="opt"><option>-t <replaceable>sedType</replaceable></option></arg><arg
+              choice="opt"><option>-s <replaceable>URI</replaceable></option></arg><arg
+              choice="opt"><option>-n <replaceable>name</replaceable></option></arg><arg
               choice="plain"><replaceable>machineId</replaceable></arg></cmdsynopsis>
         <para><emphasis role="bold">Parameters</emphasis></para>
         <informaltable>
@@ -4656,17 +4691,17 @@
                 <entry><para>YES</para></entry>
               </row>
               <row>
-                <entry><para>vishnuConf</para></entry>
+                <entry><para>URI</para></entry>
                 <entry><para>string</para></entry>
-                <entry><para>v</para></entry>
-                <entry><para>The path to the vishnu configuration file</para></entry>
+                <entry><para>s</para></entry>
+                <entry><para>The URI of the supervisor to control the processes</para></entry>
                 <entry><para>NO</para></entry>
               </row>
               <row>
-                <entry><para>sedType</para></entry>
-                <entry><para><link linkend="SeDType">SeDType</link></para></entry>
-                <entry><para>t</para></entry>
-                <entry><para>The type of the vishnu sed</para></entry>
+                <entry><para>name</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>n</para></entry>
+                <entry><para>The path to the supervisord script file on the machine</para></entry>
                 <entry><para>NO</para></entry>
               </row>
             </tbody>
@@ -4839,43 +4874,6 @@
             <row>
               <entry><para>DELETED</para></entry>
               <entry><para>3</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="SeDType"><emphasis role="bold">Enumeration IMS::SeDType Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>UMS</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>TMS</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
-              <entry><para>FMS</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>IMS</para></entry>
-              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
