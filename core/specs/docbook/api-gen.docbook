@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl"
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?>
 <book
     xmlns:xml="xml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <info>
@@ -7131,6 +7133,16 @@
               <entry><para>string</para></entry>
               <entry><para>represents the vishnu identifier of the owner of the job</para></entry>
             </row>
+            <row>
+              <entry><para>vmId</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Holds the id of the virtual machine associated to the job</para></entry>
+            </row>
+            <row>
+              <entry><para>vmIp</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>Holds the IP address of the virtual machine associated to the job</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -7692,6 +7704,11 @@
               <entry><para>string</para></entry>
               <entry><para>Sets a list of specific parameters for the batch scheduler so at the job submition, each of parameter can be used by the batch shcheduler.</para><para>E.g. --specificParams &quot;PARAM1=value1 PARAM2=value2&quot; or -S &quot;PARAM1=value1  PARAM2=value2&quot;, will set the batch parameter named PARAM1 and PARAM2 with value1 and value2, respectively. </para><para>NOTE: The name of parameter as well as those of the corresponding environment are case-insensitive.</para></entry>
             </row>
+            <row>
+              <entry><para>posix</para></entry>
+              <entry><para>boolean</para></entry>
+              <entry><para>allows to submit on the shell instead of using the batch scheduler</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>
@@ -7892,7 +7909,7 @@
               <entry><para>4</para></entry>
             </row>
             <row>
-              <entry><para>TERMINATED</para></entry>
+              <entry><para>COMPLETED</para></entry>
               <entry><para>5</para></entry>
             </row>
             <row>
@@ -9095,6 +9112,13 @@
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
               </row>
+              <row>
+                <entry><para>op</para></entry>
+                <entry><para><link linkend="SupervisorOp">SupervisorOp</link></para></entry>
+                <entry><para>The option for the supervision</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
+              </row>
             </tbody>
           </tgroup>
         </informaltable>
@@ -9135,7 +9159,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::loadShed</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const LoadShedType&amp; <parameter>loadShedType</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::setUpdateFrequency</title>
@@ -9342,11 +9366,18 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>process</para></entry>
-                <entry><para><link linkend="Process">Process</link></para></entry>
-                <entry><para>The process to stop and do not try to restart anymore</para></entry>
+                <entry><para>machineId</para></entry>
+                <entry><para>string</para></entry>
+                <entry><para>The id of the machine where to restart</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
+              </row>
+              <row>
+                <entry><para>op</para></entry>
+                <entry><para><link linkend="SupervisorOp">SupervisorOp</link></para></entry>
+                <entry><para>The option for the supervision</para></entry>
+                <entry><para>IN</para></entry>
+                <entry><para>no</para></entry>
               </row>
             </tbody>
           </tgroup>
@@ -9384,7 +9415,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const Process&amp; <parameter>process</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::stop</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op = SupervisorOp()</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::getSystemInfo</title>
@@ -9526,8 +9557,8 @@
                 <entry><para>yes</para></entry>
               </row>
               <row>
-                <entry><para>options</para></entry>
-                <entry><para><link linkend="RestartOp">RestartOp</link></para></entry>
+                <entry><para>op</para></entry>
+                <entry><para><link linkend="SupervisorOp">SupervisorOp</link></para></entry>
                 <entry><para>The option for the restart</para></entry>
                 <entry><para>IN</para></entry>
                 <entry><para>yes</para></entry>
@@ -9568,7 +9599,7 @@
           </tgroup>
         </informaltable>
         <para><emphasis role="bold">Signature </emphasis></para>
-        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const RestartOp&amp; <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef>int <function>vishnu::restart</function></funcdef><paramdef>const string&amp; <parameter>sessionKey</parameter></paramdef><paramdef>const string&amp; <parameter>machineId</parameter></paramdef><paramdef>const SupervisorOp&amp; <parameter>op</parameter></paramdef></funcprototype></funcsynopsis>
       </section>
       <section>
         <title>Function IMS::defineWorkIdentifier</title>
@@ -9957,7 +9988,7 @@
           </tbody>
         </tgroup>
       </informaltable>
-      <para xml:id="RestartOp"><emphasis role="bold">Class IMS::RestartOp Content</emphasis></para>
+      <para xml:id="SupervisorOp"><emphasis role="bold">Class IMS::SupervisorOp Content</emphasis></para>
       <informaltable>
         <tgroup cols="3">
           <colspec colwidth="4cm"/>
@@ -9976,14 +10007,14 @@
           </thead>
           <tbody>
             <row>
-              <entry><para>vishnuConf</para></entry>
+              <entry><para>URI</para></entry>
               <entry><para>string</para></entry>
-              <entry><para>The path to the vishnu configuration file</para></entry>
+              <entry><para>The URI of the supervisor to control the processes</para></entry>
             </row>
             <row>
-              <entry><para>sedType</para></entry>
-              <entry><para><link linkend="SeDType">SeDType</link></para></entry>
-              <entry><para>The type of the vishnu sed</para></entry>
+              <entry><para>name</para></entry>
+              <entry><para>string</para></entry>
+              <entry><para>The path to the supervisord script file on the machine</para></entry>
             </row>
           </tbody>
         </tgroup>
@@ -10238,43 +10269,6 @@
             <row>
               <entry><para>DELETED</para></entry>
               <entry><para>3</para></entry>
-            </row>
-          </tbody>
-        </tgroup>
-      </informaltable>
-      <para xml:id="SeDType"><emphasis role="bold">Enumeration IMS::SeDType Type</emphasis></para>
-      <informaltable>
-        <tgroup cols="2">
-          <colspec colwidth="4cm"/>
-          <colspec colwidth="4cm"/>
-          <thead>
-            <row>
-              <entry>Name
-</entry>
-              <entry>Value
-</entry>
-            </row>
-          </thead>
-          <tbody>
-            <row>
-              <entry><para>UNDEFINED</para></entry>
-              <entry><para>0</para></entry>
-            </row>
-            <row>
-              <entry><para>UMS</para></entry>
-              <entry><para>1</para></entry>
-            </row>
-            <row>
-              <entry><para>TMS</para></entry>
-              <entry><para>2</para></entry>
-            </row>
-            <row>
-              <entry><para>FMS</para></entry>
-              <entry><para>3</para></entry>
-            </row>
-            <row>
-              <entry><para>IMS</para></entry>
-              <entry><para>4</para></entry>
             </row>
           </tbody>
         </tgroup>
