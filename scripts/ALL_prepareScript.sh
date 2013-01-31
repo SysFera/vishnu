@@ -8,18 +8,18 @@
 #            Merge with WS release
 # 21/01/13 : use generateAllDocumentation.sh to generate Vishnu docs.
 #            Use CMakeLists.txt to retrieve Vishnu version
+# 31/01/13 : do not need the external eclipse_1 repository anymore.
 #
 
-if [ $# -lt 1 ]; then
-  echo "Usage: " $0 " <depot_eclipe_path> [0/1]"
-  echo " depot_eclipe_path: relative or complete path to the eclipse repository (containing generators)"
+if [ $# -lt 0 ]; then
+  echo "Usage: " $0 " [0/1]"
   echo " 0/1 (optional): if 0, then documentation is not generated. Default is 1."
   exit 1
 fi
 
 generateDoc=1
-if [ $# == 2 ]; then
-    generateDoc=$2
+if [ $# == 1 ]; then
+    generateDoc=$1
 fi
 
 
@@ -27,8 +27,6 @@ if [ ! -f copyright ]; then
   echo "Missing copyright file - please start the script in VISHNU root directory"
   exit 1
 fi
-
-eclipse=$1
 
 
 # Get common functions and variables
@@ -75,7 +73,7 @@ if [ $generateDoc == 1 ]; then
     echo "## Generating documentation"
     run_cmd sh -c $gen_doc_sh
 else
-    echo "## Documentation won't be generated"
+    echo "## Documentation will not be generated"
 fi
 
 
@@ -159,8 +157,8 @@ create_dir Java/impl
 create_dir Java/impl/VishnuLib
 
 # Getting vishnu jar
-copy_dir $eclipse/VishnuLib/src Java/impl/VishnuLib/
-copy_file $eclipse/VishnuLib/pom.xml Java/impl/VishnuLib/
+copy_dir $vishnuDir/swigAPI/VishnuLib/\* Java/impl/VishnuLib/
+copy_file $vishnuDir/swigAPI/generated/swig_output/\*\.java Java/impl/VishnuLib/src/main/java/com/sysfera/vishnu/api/vishnu/internal/
 
 
 # Regenerating the jar files
