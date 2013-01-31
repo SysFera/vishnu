@@ -572,11 +572,11 @@ VISHNU utilise CMake comme système de construction. Les différentes fonctionna
 sont activées ou désactivées à la demande grâce à des variables Cmake spécifiques.
 Positionnée à <emphasis>ON</emphasis> une variable permet d'activer la fonctionnalité
 associée. Ex. -DCOMPILE_UMS=ON active la compilation du module UMS.
-Un positionnement à <emphasis>OFF</emphasis> désactive la compilation de la fonctionnée.
+Un positionnement à <emphasis>OFF</emphasis> désactive la compilation de la fonctionnalité.
 Ex. -DCOMPILE_UMS=ON désactive la compilation du module UMS.
 </para>
 <para>
-Dans certains cas on peut avoir besoin de mots clés spécifiques pour activer une fonctionnalité.
+Dans certains cas on peut avoir besoin de mots-clés spécifiques pour activer une fonctionnalité.
 Ex. -DVISHNU_BATCH=SLURM permet de sélectionner SLURM comme batch scheduler sous-jacent à TMS.
 </para>
 <para>
@@ -584,7 +584,7 @@ La liste ci-dessous décrit les variables disponibles :
 <itemizedlist>
 <listitem>
 <para>
-CLIENT_ONLY permet si on le souhaite de ne compiler les codes clients. Par défault les
+CLIENT_ONLY permet, si on le souhaite, de ne compiler que les codes clients. Par défault les
 codes clients et serveurs sont compilés.
 </para>
 </listitem>
@@ -638,12 +638,12 @@ ENABLE_JAVA : Désactivée par défaut cette option permet d'activer ou non la c
 </listitem>
 <listitem>
 <para>
-VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Option Désactivée par défaut.
+VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Cette option est désactivée par défaut.
 </para>
 </listitem>
 <listitem>
 <para>
-ENABLE_SWIG permet d'activer la generation du code des adapteurs Python et Java.
+ENABLE_SWIG permet d'activer la génération du code des adapteurs PYTHON et JAVA.
 </para>
 <para>Désactivée par défaut cette option doit obligatoirement être activée si on choisit de ne pas compiler
 tous les modules VISHNU. C'est-à-dire lorsqu'au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS
@@ -734,13 +734,13 @@ PBS_LIB indique le chemin absolu jusqu'à la librairie libpbs.so
 </listitem>
 <listitem>
 <para>
-VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
+VISHNU_BATCH_VERSION indique la version du batch scheduler utilisé.
 </para>
 </listitem>
 
 <listitem>
 <para>
-BUILD_TESTING: Désactivée par défaut cette variable spécifie si le module de test sera compilé.
+BUILD_TESTING: Désactivée par défaut, cette variable spécifie si le module de test sera compilé.
 </para>
 </listitem>
 
@@ -752,7 +752,7 @@ TORQUE est utilisé comme backend à TMS. La compilation des APIs Python sera é
 </para>
 <itemizedlist>
 <listitem>
-<para>1. Créer un répertoire build à la racine du projet et se placer dedans</para>
+<para>1. Créer un répertoire build à la racine du projet et s'y placer</para>
 <para>$ <emphasis>mkdir build</emphasis></para>
 <para>$ <emphasis>cd build</emphasis></para>
 </listitem>
@@ -785,21 +785,21 @@ TORQUE est utilisé comme backend à TMS. La compilation des APIs Python sera é
 <itemizedlist>
 <listitem><para>En utilisant Make</para>
 <para>$ <emphasis>make -j 2</emphasis></para>
-<para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+<para>L'option -j 2 permet de lancer la compilation avec deux processus</para>
 </listitem>
 <listitem><para>En utilisant Ninja</para>
 <para>$ <emphasis>ninja -j 2</emphasis></para>
-<para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+<para>L'option -j 2 permet de lancer la compilation avec deux processus</para>
 </listitem>
 </itemizedlist>
 </listitem>
 <listitem><para>4. Installer les binaires</para>
 <para>$ <emphasis>make install</emphasis></para>
-<para>Cette étape peut nécessiter des droits d'administrateur.</para>
+<para>Cette étape peut nécessiter des droits d'administrateur</para>
 </listitem>
 </itemizedlist>
 <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire
-d'installation dans le $PATH.</para>
+d'installation dans le $PATH</para>
 </section> <!-- End compilation des sources -->
 
 <section>
