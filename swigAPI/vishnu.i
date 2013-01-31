@@ -145,7 +145,6 @@
 %template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;
 %template(EThresholdList) ::ecorecpp::mapping::EList<::IMS_Data::Threshold>;
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
-%template(EFileStatList) ::ecorecpp::mapping::EList<::FMS_Data::FileStat>;
 %template(EDirEntryList) ::ecorecpp::mapping::EList<::FMS_Data::DirEntry>;
 #endif
 

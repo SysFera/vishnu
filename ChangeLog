@@ -15,6 +15,10 @@
 * Fixed bugs on "POSIX" backend: the wallclock time was not correctly
 	handled, and submission scripts were sometimes deleted before
 	being executed...
+* Fixed a bug on TMS and IMS clients when a bad machine id was given
+* Files necessary to build vishnu java library have been included in this
+	repository. Currently there is no doc for this, see
+	scripts/ALL_prepareScript.sh if you want the lib.
 
 	
 +----------------------+

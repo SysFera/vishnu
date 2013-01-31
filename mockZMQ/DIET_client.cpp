@@ -128,15 +128,21 @@ static ServiceMap sMap = boost::assign::map_list_of
 
 std::string
 get_module(const std::string& service) {
-
   std::size_t pos = service.find("@");
-  if (std::string::npos == pos) {
-    return sMap[service];
-  } else {
-    return sMap[service.substr(0, pos)];
+  std::string realServ = service;
+  ServiceMap::const_iterator it;
+
+  if (std::string::npos != pos) {
+    realServ = service.substr(0, pos);
   }
 
-  return sMap[service];
+  it = sMap.find(realServ);
+  if (it != sMap.end()) {
+    return it->second;
+  }
+
+  // Service not found
+  return "";
 }
 
 
@@ -214,17 +220,34 @@ diet_call(diet_profile_t* prof) {
     param = vishnu::FMS_URIADDR;
   } else if (module == "ims") {
     param = vishnu::IMS_URIADDR;
-  } else {
+  } else if (module == "tms") {
     param = vishnu::TMS_URIADDR;
+  } else {
+    // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
+    // No module or server found
+    // throw SystemException(ERRCODE_SYSTEM,
+    //                       boost::str(
+    //                         boost::format("No corresponding %1% server found")
+    //                         % service));
+    std::cerr << boost::format("No corresponding %1% server found") % service;
+    return 1;
   }
 
+  /* TODO: use config.getConfigValues to retrieve all URI/machine_id
+   * (especially for TMS and IMS)
+   */
   if (!config.getConfigValue(param, uri) &&
       !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
-    throw SystemException(ERRCODE_SYSTEM,
-                          boost::str(
-                            boost::format("No corresponding %1% server found")
-                            % service));
+    // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
+    // No module or server found
+    // throw SystemException(ERRCODE_SYSTEM,
+    //                       boost::str(
+    //                         boost::format("No corresponding %1% server found")
+    //                         % service));
+    std::cerr << boost::format("No corresponding %1% server found") % service;
+    return 1;
   }
+
   return diet_call_gen(prof, uri);
 }
 
@@ -240,14 +263,18 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 
   std::string response = lpc.recv();
-  //  std::cout << boost::format("I: Recv> %1%...\n")%response;
+  // std::cout << boost::format("I: Recv> %1%...\n")%response;
 
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
+  if (!tmp) {
+    std::cerr << boost::format("E: %1%...\n")%response;
+    return 1;
+  }
+
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
   prof->INOUT = tmp->INOUT;
   prof->params = tmp->params;
-
   return 0;
 }
 
@@ -267,7 +294,6 @@ diet_profile_free(diet_profile_t* prof) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
-
   if (!prof){
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
@@ -297,7 +323,10 @@ my_deserialize(const std::string& prof) {
 
   boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
 
-  if (!vecString.empty() && (vecString.at(0) != "")) {
+  // TODO: this is not "safe" as we can receive errors int "prof"
+  // Currently, we check that the size of vecString is at least 4:
+  // profile's name, IN, INOUT and OUT
+  if (vecString.size() >= 4 && (vecString.at(0) != "")) {
     res.reset(new diet_profile_t);
     std::vector<std::string>::iterator it = vecString.begin();
     res->name = *(it++);
