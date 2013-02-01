@@ -2263,13 +2263,10 @@ VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de  don
 <para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plateforme de test; </para>
 </listitem>
 <listitem>
-<para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plateforme de test; </para>
+<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant d'une machine Vishnu sur laquelle les tests UMS vont être exécutés; </para>
 </listitem>
 <listitem>
-<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
-</listitem>
-<listitem>
-<para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
+<para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail locale des tests; </para>
 </listitem>
 <listitem>
 <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
@@ -2289,12 +2286,31 @@ VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de  don
 <listitem>
 <para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
 </listitem>
+<listitem>
+<para>TEST_FMS_HOST1 :  Contient l'identifiant de la première machine Vishnu sur laquelle les tests FMS vont être exécutés;</para>
+</listitem>
+<listitem>
+<para>TEST_FMS_HOST2 :  Contient l'identifiant de la deuxième machine Vishnu sur laquelle les tests FMS vont être exécutés; </para>
+</listitem>
+<listitem>
+<para>TEST_FMS_HOST1_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST1;  </para>
+</listitem>
+<listitem>
+<para>TEST_FMS_HOST2_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST2; </para>
+</listitem>
+<listitem>
+<para>TEST_FMS_USER_LOCAL_GROUP : Contient le groupe de l'utilisateur vishnu; </para>
+</listitem>
+<listitem>
+<para> TEST_TMS_MACHINE_IDS : Contient la liste des machines TMS sur lesquelles les tests TMS vont êtres exécutés. Cette liste est constituée des doublé, identifiant de machine batch scheduler, séparé par des point-virgule;  </para>
+</listitem>
 </itemizedlist>
-
 </listitem>
 </itemizedlist>
 
 
+
+       
 
 
 </chapter><!-- End administration -->
