@@ -33,7 +33,6 @@ public:
   std::string m_test_ums_root_vishnu_pwd;
   std::string m_test_ums_admin_vishnu_login;
   std::string m_test_ums_admin_vishnu_pwd;
-  std::string m_test_auth_system_uri;
   std::string m_test_ums_user_vishnu_login;
   std::string m_test_ums_user_vishnu_pwd;
   std::string m_test_ums_user_vishnu_machineid;
@@ -64,7 +63,6 @@ public:
     m_test_ums_root_vishnu_pwd = setupConfig.find("TEST_ROOT_VISHNU_PWD")->second;
     m_test_ums_admin_vishnu_login = setupConfig.find("TEST_ADMIN_VISHNU_LOGIN")->second;
     m_test_ums_admin_vishnu_pwd = setupConfig.find("TEST_ADMIN_VISHNU_PWD")->second;
-    m_test_auth_system_uri = setupConfig.find("TEST_UMS_AUTH_SYTEM_URI")->second;
     m_test_ums_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
     m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
     m_test_ums_user_vishnu_machineid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second;
