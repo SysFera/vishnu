@@ -478,7 +478,7 @@ system, unit_test_framework, serialization, random</emphasis> et <emphasis>regex
 </para>
 </listitem>
 <listitem>
-<para>ZeroMQ 2.x. Non testé avec les versions 3.x</para>
+<para>ZeroMQ 2.x. Non supporté avec les versions 3.x</para>
 </listitem>
 <listitem>
 <para>libuuid : est une dépendance de ZeroMQ</para>
