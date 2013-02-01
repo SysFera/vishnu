@@ -1474,7 +1474,7 @@ Etabli un tunnel entre la machine locale et la machine distante au travers du po
 <para>
     </para>
 <para>
-Établir un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
+Etablir un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
 ssh -R -fN 8889:localhost:8889 machine_distante
 </para>
 </listitem>
@@ -1763,12 +1763,14 @@ Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tou
 <title>Gestion des processus VISHNU et délestage (IMS)</title>
 <itemizedlist>
 <listitem>
-<para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
-Fonction associée : vishnu_get_processes.</para>
-</listitem>
+<para>
+L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
+Fonction associée : vishnu_get_processes
+</para>
+*</listitem>
 <listitem>
 <para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
-Attention : l'administrateur doit avoir un compte sur la machine
+Attention : l'administrateur doit avoir un compte sur la machine.
 Fonction associée : vishnu_stop </para>
 </listitem>
 <listitem>
@@ -1853,7 +1855,7 @@ plusieurs variables :
 </para>
 </listitem>
 </itemizedlist>
-Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
+Attention la variable compteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
 Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
 </para>
 </listitem>
@@ -1872,47 +1874,47 @@ Fonctions associées : define_file_format, define_machine_format, define_task_fo
 <chapter>
 <title>Tests</title>
 <para>
-Les tests automatiques permettent de valider les fonctionnalités de Vishnu et de garantir la non régression lors des développements. Le module de test est activé ou pas au moment de la construction de Vshnu, en activant la variable Cmake BUILD_TESTING. Le module de test sera donc compilé avec les sources de vishnu. Toutes fois, pour l’exécution de ces tests l’administrateur doit fournir un ensemble de paramètres d’exécutions liées à la plateforme de test : </para>
+Les tests automatiques permettent de valider les fonctionnalités de VISHNU et de garantir la non-régression lors des développements. Le module de test est activé ou pas au moment de la construction de Vshnu, en activant la variable Cmake BUILD_TESTING. Le module de test sera donc compilé avec les sources de VISHNU. Toutefois, pour l’exécution de ces tests, l’administrateur doit fournir un ensemble de paramètres d’exécutions liées à la plateforme de test : </para>
 
 <itemizedlist>
 <listitem>
 <para>
-VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin vers le fichier de configuration client. Ce fichier permet à au client vishnu de se connecter à la plateforme.
+VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin vers le fichier de configuration client. Ce fichier permet au client VISHNU de se connecter à la plate-forme.
 </para>
 </listitem>
 <listitem>
 <para>
-VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de données de description de la plateforme. Ce fichier permet aux tests automatiques de s’exécuter sur la plateforme. Ce fichier doit contenir un ensemble de paramètres : </para> 
+VISHNU_TEST_SETUP_FILE : Variable qui contient le chemin vers le fichier de données de description de la plateforme. Ce fichier permet aux tests automatiques de s’exécuter sur la plate-forme. Ce fichier doit contenir un ensemble de paramètres : </para> 
 <itemizedlist>
 <listitem>
-<para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plateforme de test; </para>
+<para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d’authentification de la plate-forme de test; </para>
 </listitem>
 <listitem>
-<para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plateforme de test; </para>
+<para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d’authentification de la plate-forme de test; </para>
 </listitem>
 <listitem>
-<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+<para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant d'une machine VISHNU sur laquelle les tests vont être exécutés; </para>
 </listitem>
 <listitem>
 <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
 </listitem>
 <listitem>
-<para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+<para>TEST_ROOT_VISHNU_LOGIN : Contient le login VISHNU de l'utilisateur ROOT de la plate-forme; </para>
 </listitem>
 <listitem>
-<para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
+<para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe VISHNU de l'utilisateur ROOT de la plate-forme; </para>
 </listitem>
 <listitem>
-<para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+<para>TEST_ADMIN_VISHNU_LOGIN : Contient le login VISHNU de l'administrateur de la plate-forme; </para>
 </listitem>
 <listitem>
-<para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
+<para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe ViISHNU de l'administrateur de la plate-forme; </para>
 </listitem>
 <listitem>
-<para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+<para>TEST_USER_VISHNU_LOGIN : Contient le login VISHNU de l'utilisateur de test de la plate-forme; </para>
 </listitem>
 <listitem>
-<para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+<para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe VISHNU de l'utilisateur de test de la plate-forme; </para>
 </listitem>
 </itemizedlist>
 
