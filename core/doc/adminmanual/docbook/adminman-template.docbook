@@ -1339,8 +1339,8 @@ urlSupervisor=http://127.0.0.1:9001
 </programlisting>
 
 <section>
-<title>Configuration de Supervisod</title>
-<para>Il est recommandé d'éviter de lancer les SeDs à la main mais d'utiliser Supervisord qui se charge de
+<title>Configuration de Supervisord</title>
+<para>Il est recommandé de ne pas lancer les SeDs à la main mais plutôt d'utiliser Supervisord qui se charge de
 lancer et de contrôler leur exécution. </para>
 <para>Cette section décrit les principaux élements à configurer pour Supervisord.
 Vous pouvez vous inspirer du fichier d'exemple <emphasis>supervisord-sample.cfg</emphasis>
@@ -1397,7 +1397,7 @@ port=127.0.0.1:9001
 </section>
 <section>
 <title>Déploiement dans un même sous-réseau</title>
-<para>Dans cette section nous supposons que tous les composants vont être déployés sur une même machine nommé
+<para>Dans cette section nous supposons que tous les composants vont être déployés sur une même machine nommée
 <emphasis role="bold">prefrontale</emphasis>.
 </para>
 <para><emphasis role="bold">NOTES :</emphasis> Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU.
