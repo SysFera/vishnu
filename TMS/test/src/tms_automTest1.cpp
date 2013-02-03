@@ -59,6 +59,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
   string sessionKey=vc.getConnexion();
 
+  BOOST_TEST_MESSAGE("************ The number of machine is: " << m_test_tms_machines.size());
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
  

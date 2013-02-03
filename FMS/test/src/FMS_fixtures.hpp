@@ -35,18 +35,18 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
-    string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
-    FileParser fileparser(vishnuTestSetupPath.c_str());
-    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
-    m_test_fms_working_dir = setupConfig.find("TEST_WORKING_DIR")->second;
-    m_test_fms_host1 = setupConfig.find("TEST_FMS_HOST1")->second;;
-    m_test_fms_host2 = setupConfig.find("TEST_FMS_HOST2")->second;
-    m_test_fms_dir1 = setupConfig.find("TEST_FMS_HOST1_WORKING_DIR")->second;
-    m_test_fms_dir2 = setupConfig.find("TEST_FMS_HOST2_WORKING_DIR")->second;
-    m_test_fms_user_login = setupConfig.find("TEST_USER_LOGIN")->second;
-    m_test_fms_user_pwd = setupConfig.find("TEST_USER_PWD")->second;
-    m_test_fms_local_dir = setupConfig.find("TEST_FMS_LOCAL_DIR")->second;
-    m_test_fms_user_local_group =  setupConfig.find("TEST_FMS_USER_LOCAL_GROUP")->second;
+    std::string vishnuTestSetupPath2 = getenv("VISHNU_TEST_SETUP_FILE");
+    BOOST_REQUIRE(vishnuTestSetupPath2.size() !=0  );
+    FileParser fileparser2(vishnuTestSetupPath2.c_str());
+    std::map<std::string, std::string> setupConfig2 = fileparser2.getConfiguration();
+    m_test_fms_working_dir = setupConfig2.find("TEST_WORKING_DIR")->second;
+    m_test_fms_host1 = setupConfig2.find("TEST_FMS_HOST1")->second;;
+    m_test_fms_host2 = setupConfig2.find("TEST_FMS_HOST2")->second;
+    m_test_fms_dir1 = setupConfig2.find("TEST_FMS_HOST1_WORKING_DIR")->second;
+    m_test_fms_dir2 = setupConfig2.find("TEST_FMS_HOST2_WORKING_DIR")->second;
+    m_test_fms_user_login = m_test_ums_user_vishnu_login; 
+    m_test_fms_user_pwd = m_test_ums_user_vishnu_pwd;
+    m_test_fms_user_local_group =  setupConfig2.find("TEST_FMS_USER_LOCAL_GROUP")->second;
 
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==" );
@@ -63,7 +63,6 @@ public:
   std::string m_test_fms_dir1;
   std::string m_test_fms_dir2;
   std::string m_test_fms_user_login;
-  std::string m_test_fms_local_dir;
   std::string m_test_fms_user_pwd;
   std::string m_test_fms_user_local_group;
 

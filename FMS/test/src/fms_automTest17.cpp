@@ -94,7 +94,7 @@ VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
     BOOST_REQUIRE_EQUAL(listFileTransfers(sessionKey, fileTransferList, options) , 0); 
     BOOST_REQUIRE_EQUAL(fileTransferList.getFileTransfers().size(), 1); 
       FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
-      BOOST_CHECK(transferInfo == *ft);
+      BOOST_CHECK(transferInfo.getTransferId() == ft->getTransferId());
   }catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);

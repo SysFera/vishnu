@@ -141,10 +141,9 @@ BOOST_AUTO_TEST_CASE( Machine_failure )
   {
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     ma.setMachineId("bad");
-    BOOST_CHECK_THROW      (updateMachine(sess.getSessionKey(), ma            ), VishnuException);
-    ma.setMachineId(maid);
-    BOOST_CHECK    (deleteMachine(sess.getSessionKey(), ma.getMachineId()          )==0);
+    BOOST_CHECK_THROW   (deleteMachine(sess.getSessionKey(), ma.getMachineId()          ), VishnuException);
     BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
+    ma.setMachineId(maid);
   }
 
   
