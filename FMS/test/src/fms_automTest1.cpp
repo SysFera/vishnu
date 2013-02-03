@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Base)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE(CreateFile_Exceptions)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;

@@ -73,7 +73,7 @@ BOOST_AUTO_TEST_CASE( Connect_base )
     BOOST_MESSAGE("Sess.GetSessionKey() generated : " << sess.getSessionKey());
     BOOST_CHECK  (close      (sess.getSessionKey()                )==0);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
       
   }
@@ -143,7 +143,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_REQUIRE (system(string("chmod 700 "+ netrcpath).c_str()) != -1);
     BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
   }
 
@@ -156,7 +156,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
     BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
     
   }
@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
     BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
   }
 
@@ -183,7 +183,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
     BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
 
   }
@@ -197,7 +197,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_REQUIRE (system(string("chmod 600 "+ netrcpath).c_str()) != -1);
     BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
     bfs::path netrc(netrcpath.c_str());
-    BOOST_REQUIRE(bfs::remove_all(netrc)==0);
+    BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
   }
 

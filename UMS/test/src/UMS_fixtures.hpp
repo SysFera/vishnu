@@ -38,6 +38,15 @@ public:
   std::string m_test_ums_user_vishnu_machineid;
 
   UMSSeDFixture() {
+
+    m_test_ums_authen_type="";
+    m_test_ums_root_vishnu_login="";
+    m_test_ums_root_vishnu_pwd="";
+    m_test_ums_admin_vishnu_login="";
+    m_test_ums_admin_vishnu_pwd="";
+    m_test_ums_user_vishnu_login="";
+    m_test_ums_user_vishnu_pwd="";
+    m_test_ums_user_vishnu_machineid="";
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     int argc = 2;
     char* argv[argc];
@@ -55,6 +64,7 @@ public:
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
     std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    BOOST_REQUIRE(vishnuTestSetupPath.size() !=0  );
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
 
@@ -66,6 +76,8 @@ public:
     m_test_ums_user_vishnu_login = setupConfig.find("TEST_USER_VISHNU_LOGIN")->second;
     m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
     m_test_ums_user_vishnu_machineid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second;
+
+    
 
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==");

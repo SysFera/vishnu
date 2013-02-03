@@ -57,8 +57,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
     BOOST_REQUIRE( vishnu::stat(sessionKey, fileFullPath1, stat) == 0);
     // To check the success
     BOOST_CHECK( stat.getSize() == 10240 );
-    //BOOST_CHECK( stat.getOwner() == userLogin);
-    BOOST_CHECK( stat.getPerms() == 0644);
+    
     // Cleanup
     BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     vishnu::deleteFile(localFilePath.c_str());

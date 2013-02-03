@@ -41,7 +41,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
   std::string fina = "toto";
   std::string lana = "dupont";
   std::string mail = "cl3m3ntlebgkidechyr@hotmail.fr";
-  string accL = "toto"      ;
+  string accL = "kkk"      ;
   string ssh  = "/usr/local";
   string home = "/home/toto";
   LocalAccount lacc;
@@ -74,7 +74,7 @@ BOOST_AUTO_TEST_CASE( Account_base )
   {
     BOOST_CHECK  (connect   (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
     lacc.setSshKeyPath("/usr/bin");
-    BOOST_CHECK(updateLocalAccount(sess.getSessionKey(), lacc           )==0);
+    BOOST_CHECK(updateLocalAccount(sess.getSessionKey(), lacc )==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
 

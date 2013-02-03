@@ -511,10 +511,9 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     
   }
   vishnu::createTmpFile(scriptchar, content);
+  std:string ret(scriptchar);
 
-  free(scriptchar);
-
-  return scriptpath;
+  return ret;
   
 }
 
