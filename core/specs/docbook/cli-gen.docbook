@@ -329,8 +329,8 @@
     <section>
       <title> Environment variables and options</title>
       <para>Here is detailed the way to use the user options which are stored in the database and environment variables in VISHNU.</para>
-        <title>Pseudo code</title>
-        <programlisting>
+      <title>Pseudo code</title>
+      <programlisting>
 	  if (the option is provided in the command line) {
 	    optionValue = option
 	  } else {
