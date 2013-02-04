@@ -258,7 +258,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
         raiseDietMsgException(msg);
       }
     } else {
-      raiseDietMsgException("DIET call failure");
+      raiseDietMsgException("Bus initialization failure");
     }
   } else {
     if (diet_string_set(profile, 1, queryParmetersToString)) {
@@ -281,7 +281,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
         raiseDietMsgException(msg);
       }
     } else {
-      raiseDietMsgException("DIET call failure");
+      raiseDietMsgException("Bus call failure");
     }
   }
 

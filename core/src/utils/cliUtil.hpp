@@ -6,7 +6,7 @@
 /**
  * \brief Contains a generic diet error message
  */
-const std::string dietErrorMsg = "DIET initialization failed !";
+const std::string dietErrorMsg = "Bus initialization failed !";
 
 /**
  * \struct env_name_mapper
