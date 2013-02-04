@@ -2082,7 +2082,9 @@ TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE
           du test ainsi que les résultats. Ces rapports peuvent être générés en
           XML, pour cela il faut exécuter la commande suivante : "make
           test_name-xml" en remplaçant test_name par le nom du test à exécuter
-          (e.g., fms_automTest1).
+          (e.g., fms_automTest1). Ce format XML est pratique pour intégrer les
+          résultats de test dans votre environnement d'intégration continue tel
+          que Jenkins.
         </para>
       </section>
     </section>
