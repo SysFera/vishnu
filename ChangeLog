@@ -1,26 +1,26 @@
 +----------------------+
 | VISHNU 3.0.0 - Beta2 |
 +----------------------+
-* Added beta support to submit jobs to a cloud, using DeltaCloud (tested
-	only with OpenStack). The submission to a cloud requires valid
-	credentials in the cloud. The credentials need to be provided to
-	VISHNU though an configuration file, options, or environment
-	variables.
-* /!\ Database needs to be updated using scripts in core/database/database_update_addvminfo_*.sql
-* /!\ Compilation process has been updated: you can now compile client
-	CLI, and servers separately
+* Added beta support for submitting jobs to a Cloud, using DeltaCloud
+  (tested with OpenStack only). Currently, only the Vishnu user is
+  used, there is no user switch during submission. The credentials
+  need to be provided to VISHNU though an configuration file,
+  options, or environment variables.
+* /!\ The database needs to be updated using scripts in
+  core/database/database_update_addvminfo_*.sql
+* /!\ The compilation process has been updated: you can now compile the
+  client CLI and the servers separately
 * Automtests have been updated: they do not launch the Vishnu platform,
-	they use an already deployed one
-* Bugfix: handle properly signal-interrupted zmq calls (EINTR)
-* Fixed bugs on "POSIX" backend: the wallclock time was not correctly
-	handled, and submission scripts were sometimes deleted before
-	being executed...
-* Fixed a bug on TMS and IMS clients when a bad machine id was given
+  they use an already deployed one.
+* fixed a bug where signal-interrupted zmq calls (EINTR) were not
+  handled properly
+* fixed a bug on the "POSIX" backend where the wallclock time was not
+  correctly handled which caused submission scripts to sometimes be
+  deleted before being executed.
 * Files necessary to build vishnu java library have been included in this
-	repository. Currently there is no doc for this, see
-	scripts/ALL_prepareScript.sh if you want the lib.
+  repository. Currently there is no doc for this, see
+  scripts/ALL_prepareScript.sh if you want the lib.
 
-	
 +----------------------+
 | VISHNU 3.0.0 - Beta1 |
 +----------------------+
