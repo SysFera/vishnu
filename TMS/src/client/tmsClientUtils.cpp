@@ -135,10 +135,6 @@ sendInputFiles(const std::string & sessionKey,
 
     string rpath = rdestDir + "/" + bfs::path(path).filename().string();
 
-    CpFileOptions copts;
-    copts.setIsRecursive(true) ;
-    copts.setTrCommand(0); // for using scp
-
     genericFileCopier(sessionKey, filerMachineId, path, destMachineId, rpath, copts);
     paramsBuf << ((paramsBuf.str().size() != 0)? " " : "") + param << "=" << rpath ;
   }
