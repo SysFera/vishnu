@@ -1918,7 +1918,7 @@ urlSupervisor=http://127.0.0.1:9001
         tests unitaires ont tous un nom terminant par UnitTests. Pour les
         lancer, il suffit juste d'appeler le binaire. Pour voir les options
         qu'il est possible de leur passer, vous pouvez lancer le binaire avec
-        l'option --help (ce sont les options du framework boost tests)
+        l'option --help (ce sont les options du framework boost tests).
       </para>
       <para>
         Ces tests ne nécessitent pas d'avoir une plateforme VISHNU déployée.
@@ -1926,6 +1926,17 @@ urlSupervisor=http://127.0.0.1:9001
     </section>
     <section>
       <title>Configuration des tests fonctionnels</title>
+      <para>
+        Lorsque
+        vous compilez Vishnu avec BUILD_TESTING, ces tests sont construits et
+        présents dans le sous-répertoire bin de votre répertoire de build. Les
+        tests fonctionnels ont tous un nom qui suit la nomenclature suivante:
+        &lt;nom du module&gt;_automTest&lt;numéro&gt; (e.g., fms_automTest11
+        pour la suite de test 11 du module FMS). Pour les
+        lancer, il suffit juste d'appeler le binaire. Pour voir les options
+        qu'il est possible de leur passer, vous pouvez lancer le binaire avec
+        l'option --help (ce sont les options du framework boost tests)
+      </para>
       <para>
         Ces tests, contrairement aux tests unitaires, nécessitent d'avoir une
         plateforme VISHNU déployée. L'administrateur doit fournir un ensemble de
@@ -2055,14 +2066,23 @@ TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE
       <section>
         <title>Prérequis</title>
         <para>
-          Afin que les tests automatiques s’exécutent, la plateforme doit être fonctionnelle et les variable d’environnement renseignées. Tous les paramètres du fichier VISHNU_TEST_SETUP_FILE doivent être renseignés.
-          Les différentes machines de test peuvent être une même machine, l’exemple de fichier ci-dessus fait référence à une seule machine.    
+          Afin que les tests automatiques s'exécutent, la plateforme Vishnu doit
+          être fonctionnelle et les variable d'environnement renseignées. Tous
+          les paramètres du fichier VISHNU_TEST_SETUP_FILE doivent être
+          renseignés.
+        </para>
+        <para>
+          Les différentes machines de test peuvent être une seule et même machine (l'exemple de fichier ci-dessus fait référence à une seule machine).
         </para>
       </section>
       <section>
         <title>Rapport de test </title>
         <para>
-          Les tests automatiques génèrent des rapports résumant le déroulement du test ainsi que les résultats. Ces rapports peuvent être générés en XML, pour cela il faut exécuter la commande suivante : "make test_name –xml".
+          Les tests automatiques génèrent des rapports résumant le déroulement
+          du test ainsi que les résultats. Ces rapports peuvent être générés en
+          XML, pour cela il faut exécuter la commande suivante : "make
+          test_name-xml" en remplaçant test_name par le nom du test à exécuter
+          (e.g., fms_automTest1).
         </para>
       </section>
     </section>
