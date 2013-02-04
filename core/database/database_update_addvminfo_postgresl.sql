@@ -6,7 +6,7 @@
 -- Revision nb          : 1.0
 -- Revision date        : 10/12/12
 -- Revision author      : Amine Bsila <amine.bsila@sysfera.com>
--- Revision comment     : initial version for upgrade from release 2.0.x to 2.1.x
+-- Revision comment     : initial version for upgrade from release 2.0.x to 3.0.beta2
 
 alter table job add vmIp VARCHAR(255) default NULL;
 alter table job add vmId  VARCHAR(255) default NULL;
