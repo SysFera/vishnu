@@ -46,7 +46,7 @@ echo "## Preparing VISHNU v${NO_VERSION} ..."
 # Create temporary directory
 run_cmd rm -rf /tmp/prepaRel
 run_cmd mkdir -p /tmp/prepaRel
-path=/tmp/prepaRel/VISHNU_$NO_VERSION
+path=/tmp/prepaRel/VISHNU_v$NO_VERSION
 run_cmd mkdir -p $path
 
 pathrel=deliverables/src
@@ -59,7 +59,7 @@ run_cmd mkdir -p deliverables/debs
 run_cmd mkdir -p deliverables/tests
 
 # create releasepath
-releasePath=deliverables/release/VISHNU_$NO_VERSION
+releasePath=deliverables/release/VISHNU_v$NO_VERSION
 run_cmd mkdir -p $releasePath
 
 remove_files deliverables/src/*
@@ -411,7 +411,7 @@ change_dir $path
 change_dir ..
 
 # Archive to send
-run_cmd_noOutput tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_$NO_VERSION
+run_cmd_noOutput tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_v$NO_VERSION
 
 # Moving archive in /tmp
 run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
