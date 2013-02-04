@@ -111,7 +111,7 @@ sendInputFiles(const std::string & sessionKey,
 
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
-  string rdestDir = bfs::unique_path("/tmp/fms%%%%%%").string();
+  string rdestDir = "VISHNU_INPUT"+vishnu::createSuffixFromCurTime();
 
   if (listFiles.size() > 0 && srcFiles.size() != 0) {
     string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%rdestDir).str();
