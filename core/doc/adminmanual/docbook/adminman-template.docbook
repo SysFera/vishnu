@@ -1949,31 +1949,46 @@ urlSupervisor=http://127.0.0.1:9001
                 <para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d'authentification de la plateforme de test; </para>
               </listitem>
               <listitem>
-                <para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d'authentification de la plateforme de test; </para>
+                <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant d'une machine Vishnu sur laquelle les tests UMS vont être exécutés; </para>
               </listitem>
               <listitem>
-                <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+                <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail local des tests;  </para>
               </listitem>
               <listitem>
-                <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
-              </listitem>
-              <listitem>
-                <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+                <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme. L'utilisateur ROOT a les droits administrateur et a un Local Account sur chacune des machines de test; </para>
               </listitem>
               <listitem>
                 <para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
               </listitem>
               <listitem>
-                <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+                <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme. L'administrateur est un utilisateur qui a les droits administrateur et qui n'a aucun Local Account sur aucune des machines de test; </para>
               </listitem>
               <listitem>
                 <para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
               </listitem>
               <listitem>
-                <para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+                <para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme. L'utilisateur doit avoir un Local Account sur chacune des machines de test. Tout les test FMS et TMS sont exécutés en tant que l'utilistaeur TEST_USER_VISHNU_LOGIN; </para>
               </listitem>
               <listitem>
-                <para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+                <para>TEST_USER_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST1 :  Contient l'identifiant de la première machine Vishnu sur laquelle les tests FMS vont être exécutés;</para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST2 :  Contient l'identifiant de la deuxième machine Vishnu sur laquelle les tests FMS vont être exécutés; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST1_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST1. Ce répertoire accessible en lecture et ecriture par le Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST1;    </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST2_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST2. Ce répertoire accessible en lecture et ecriture par le Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST2; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_USER_LOCAL_GROUP : Contient le groupe UNIX du Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST1; </para>
+              </listitem>
+              <listitem>
+                <para> TEST_TMS_MACHINE_IDS : Contient la liste des machines TMS sur lesquelles les tests TMS vont êtres exécutés. Cette liste est constituée des couples: "&lt;identifiant de machine&gt; &lt;batch scheduler&gt;", séparé par des point-virgule. Exemple "TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE"  </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -1982,8 +1997,67 @@ urlSupervisor=http://127.0.0.1:9001
       <section>
         <title>Exemple de fichier de configuration</title>
         <programlisting>
-          TODO
-        </programlisting>
+        <![CDATA[
+# This is a sample setup file for VISHNU tests
+# Copyright (c) SysFera SA
+# Last update: 04/02/2013
+#
+
+
+# Definitions
+# FMS: File Management System
+# IMS: Information Management System
+# TMS: Task Management System
+# UMS: User Management System
+
+
+###############################################################################
+#               Common Parameters                                             #
+###############################################################################
+TEST_VISHNU_MACHINEID1=machine_1
+TEST_WORKING_DIR=/home/absila/machine_1
+TEST_ROOT_VISHNU_LOGIN=root
+TEST_ROOT_VISHNU_PWD=vishnu_user
+TEST_ADMIN_VISHNU_LOGIN=admin_1
+TEST_ADMIN_VISHNU_PWD=admin
+TEST_USER_VISHNU_LOGIN=user_1
+TEST_USER_VISHNU_PWD=toto
+
+
+###############################################################################
+#                UMS Related Parameters                                       #
+###############################################################################
+TEST_UMS_AUTHEN_TYPE=UMS
+
+###############################################################################
+#                FMS Specfic Parameters                                       #
+###############################################################################
+TEST_FMS_HOST1=machine_1
+TEST_FMS_HOST2=machine_1
+TEST_FMS_HOST1_WORKING_DIR=/home/absila/machine_2
+TEST_FMS_HOST2_WORKING_DIR=/home/absila/machine_3
+TEST_FMS_USER_LOCAL_GROUP=test;
+
+###############################################################################
+#                TMS Related Parameters                                       #
+###############################################################################
+TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE
+
+]]>
+      </programlisting>
+      </section>
+      <section>
+        <title>Prérequis</title>
+        <para>
+          Afin que les tests automatiques s’exécutent, la plateforme doit être fonctionnelle et les variable d’environnement renseignées. Tous les paramètres du fichier VISHNU_TEST_SETUP_FILE doivent être renseignés.
+          Les différentes machines de test peuvent être une même machine, l’exemple de fichier ci-dessus fait référence à une seule machine.    
+        </para>
+      </section>
+      <section>
+        <title>Rapport de test </title>
+        <para>
+          Les tests automatiques génèrent des rapports résumant le déroulement du test ainsi que les résultats. Ces rapports peuvent être générés en XML, pour cela il faut exécuter la commande suivante : "make test_name –xml".
+        </para>
       </section>
     </section>
   </chapter>
