@@ -59,8 +59,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
   string sessionKey=vc.getConnexion();
 
-  BOOST_TEST_MESSAGE("************ The number of machine is: " << m_test_tms_machines.size());
-
+  
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
  
@@ -92,6 +91,9 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
   //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
+      
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -100,196 +102,144 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 }
 //
 //// submit a job: normal call
-//BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
-//{
+BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
+{
+
+  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
+  BOOST_TEST_MESSAGE("In case where the script contains the vishnu JOB OUTPUT ENVIRONMENT VARIABLES");
+
+  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
+
+  // get the session key and the machine identifier
+
+  string sessionKey=vc.getConnexion();
+
+  for(int i = 0; i < m_test_tms_machines.size();++i)
+  {
+
+    std::string machineId= m_test_tms_machines.at(i).machine_id;
+
+    try {
+        //Setting submitjob parameters
+
+        const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
+
+        //To get the content of the script
+        std::string scriptContent;
+
+        BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
+
+        Job jobInfo;
+        SubmitOptions subOptions;
+        BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+
+        BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+
+        Job job;
+        getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+
+        while (5!=job.getStatus()){
+
+          bpt::seconds sleepTime(5);
+          boost::this_thread::sleep(sleepTime);
+
+          getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+        }
+
+        JobResult outputInfos;
+        BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, m_test_tms_working_dir),0  );
+        BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
+        std::string jobOutputPath = outputInfos.getOutputPath();
+          //To get the content of the output
+        std::string jobOutputContent;
+        std::string vishnuEnvId;
+        std::string batchEnvId;
+        std::string vishnuEnvName;
+        std::string batchEnvName;
+
+
+        std::string envSubmitMachine;
+        std::ifstream ifile (jobOutputPath.c_str());
+        if (ifile.is_open()) {
+          std::ostringstream oss;
+          oss << ifile.rdbuf();
+          jobOutputContent = oss.str();
+          ifile.close();
+
+          vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
+          batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
+          vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
+          batchEnvName  = findValue(jobOutputContent, "#BATCH_JOB_NAME:");
+
+          /* iThe following tests below are difficult: because ALL batchs do not provide environment variable for
+            * the number of nodes and the nodes file
+          */
+          /*
+              std::string tmp = findValue(jobOutputContent, "#TEST_NUM_NODES:");
+              if(!tmp.empty()) {
+              std::istringstream iss(tmp);
+              iss >> envNbNodes;
+              }
+              vishnuNodesFile = findValue(jobOutputContent, "#TEST_NODEFILE:");
+              */
+
+          /* Only VISHNU provides this variable: VISHNU_SUBMIT_MACHINE_NAME
+            */
+          envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
+
+        }
+
+        BOOST_TEST_MESSAGE("*********************** vishnuEnvId=" << vishnuEnvId);
+        BOOST_TEST_MESSAGE("*********************** vishnuEnvName=" << vishnuEnvName);
+        BOOST_TEST_MESSAGE("*********************** envSubmitMachine=" << envSubmitMachine);
+
+        BOOST_TEST_MESSAGE("*********************** batchEnvId=" << batchEnvId);
+        BOOST_TEST_MESSAGE("*********************** batchEnvName=" << batchEnvName);
+        BOOST_TEST_MESSAGE("*********************** jobSubmitMachineName=" << job.getSubmitMachineName());
+
+        BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
+
+        BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");
+
+        bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
+
+        bfs::remove (bfs::path(outputInfos.getOutputPath()));
+        bfs::remove (bfs::path(outputInfos.getErrorPath()));
+        bfs::path script(scriptFilePath.c_str());
+        BOOST_CHECK(bfs::remove_all(script)==1);
+
+      } catch (VishnuException& e) {
+        BOOST_MESSAGE(e.what());
+        BOOST_CHECK(false);
+      }
+  }
+}
 //
-//  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
-//  BOOST_TEST_MESSAGE("In case where the script contains the vishnu JOB OUTPUT ENVIRONMENT VARIABLES");
-//
-//  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-//
-//  // get the session key and the machine identifier
-//
-//  string sessionKey=vc.getConnexion();
-//
-//  string machineId="machine_1";
-//
-//  try {
-//    //Setting submitjob parameters
-//
-//    const std::string scriptFilePath=TMSFASTSCRIPTPATH;
-//
-//    //To get the content of the script
-//    std::string scriptContent;
-//
-//    BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
-//
-//    Job jobInfo;
-//    SubmitOptions subOptions;
-//    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
-//
-//    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-//
-//    Job job;
-//    getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-//
-//    while (5!=job.getStatus()){
-//
-//      bpt::seconds sleepTime(5);
-//      boost::this_thread::sleep(sleepTime);
-//
-//      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-//    }
-//
-//    JobResult outputInfos;
-//    BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, TMSWORKINGDIR),0  );
-//    BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
-//    std::string jobOutputPath = outputInfos.getOutputPath();
-//     //To get the content of the output
-//    std::string jobOutputContent;
-//    std::string vishnuEnvId;
-//    std::string batchEnvId;
-//    std::string vishnuEnvName;
-//    std::string batchEnvName;
-//
-//
-//    std::string envSubmitMachine;
-//    std::ifstream ifile (jobOutputPath.c_str());
-//    if (ifile.is_open()) {
-//      std::ostringstream oss;
-//      oss << ifile.rdbuf();
-//      jobOutputContent = oss.str();
-//      ifile.close();
-//
-//      vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
-//      batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
-//      vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
-//      batchEnvName  = findValue(jobOutputContent, "#BATCH_JOB_NAME:");
-//
-//      /* iThe following tests below are difficult: because ALL batchs do not provide environment variable for
-//       * the number of nodes and the nodes file
-//      */
-//      /*
-//         std::string tmp = findValue(jobOutputContent, "#TEST_NUM_NODES:");
-//         if(!tmp.empty()) {
-//         std::istringstream iss(tmp);
-//         iss >> envNbNodes;
-//         }
-//         vishnuNodesFile = findValue(jobOutputContent, "#TEST_NODEFILE:");
-//         */
-//
-//      /* Only VISHNU provides this variable: VISHNU_SUBMIT_MACHINE_NAME
-//       */
-//     envSubmitMachine = findValue(jobOutputContent, "TEST_SUBMIT_MACHINE_NAME:");
-//
-//    }
-//
-//    BOOST_TEST_MESSAGE("*********************** vishnuEnvId=" << vishnuEnvId);
-//    BOOST_TEST_MESSAGE("*********************** vishnuEnvName=" << vishnuEnvName);
-//    BOOST_TEST_MESSAGE("*********************** envSubmitMachine=" << envSubmitMachine);
-//
-//    BOOST_TEST_MESSAGE("*********************** batchEnvId=" << batchEnvId);
-//    BOOST_TEST_MESSAGE("*********************** batchEnvName=" << batchEnvName);
-//    BOOST_TEST_MESSAGE("*********************** jobSubmitMachineName=" << job.getSubmitMachineName());
-//
-//    BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
-//
-//    BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");
-//
-//    bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
-//
-//    bfs::remove (bfs::path(outputInfos.getOutputPath()));
-//    bfs::remove (bfs::path(outputInfos.getErrorPath()));
-//
-//  } catch (VishnuException& e) {
-//    BOOST_MESSAGE(e.what());
-//    BOOST_CHECK(false);
-//  }
-//}
-//
-//// submit a job: normal call
-//BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call3)
-//{
-//
-//  BOOST_TEST_MESSAGE("Testing normal job submission corresponding to use case T1.1");
-//  BOOST_TEST_MESSAGE("By activating an option: working directory");
-//
-//  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-//
-//  // get the session key and the machine identifier
-//
-//  string sessionKey=vc.getConnexion();
-//
-//  string machineId="machine_1";
-//
-//  try {
-//    //Setting submitjob parameters
-//
-//    const std::string scriptFilePath= TMSSCRIPTPATH;
-//    Job jobInfo;
-//    SubmitOptions subOptions;
-//    Job job;
-//    //First test of option WORKINGDIR
-//    subOptions.setWorkingDir(TMSWORKINGDIR);
-//    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
-//    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-//    getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-//    BOOST_TEST_MESSAGE("************ First test: job.getJobWorkingDir()=" << job.getJobWorkingDir());
-//    BOOST_REQUIRE(job.getJobWorkingDir()==TMSWORKINGDIR);
-//    //Clean up: delete the submitted job
-//    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-//
-//    //Second test of option WORKINGDIR
-//    subOptions.setWorkingDir("/tmp");
-//    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
-//    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-//    getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-//    BOOST_TEST_MESSAGE("************ Second test: job.getJobWorkingDir()=" << job.getJobWorkingDir());
-//    BOOST_REQUIRE(job.getJobWorkingDir()=="/tmp");
-//    //Clean up: delete the submitted job
-//    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-//
-//
-//    //Third test of option WORKINGDIR
-//    subOptions.setWorkingDir(std::string(getenv("HOME")));
-//    BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
-//    BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-//    getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-//    BOOST_TEST_MESSAGE("************ Third test: job.getJobWorkingDir()=" << job.getJobWorkingDir());
-//    BOOST_REQUIRE(job.getJobWorkingDir()==std::string(getenv("HOME")));
-//    //Clean up: delete the submitted job
-//    BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
-//
-//    BOOST_TEST_MESSAGE("***********************  submit a job: normal call3   ok!!!!*****************************");
-//
-//  } catch (VishnuException& e) {
-//    BOOST_MESSAGE(e.what());
-//    BOOST_CHECK(false);
-//  }
-//}
-//
-////------------------------------------------------------------------------------------------------------------------------------------
-//// submit a job: bad parameters: bad sessionKey
-//BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
-//{
-//
-//  BOOST_TEST_MESSAGE("Testing bad session Key for job submission (use case T1.1)");
-//
-//
-//  // set the machine ID
-//  string machineId="machine_1";
-//
-//  //Setting submitjob parameters
-//
-//  const std::string scriptFilePath=TMSSCRIPTPATH;
-//  Job jobInfo;
-//  SubmitOptions subOptions;
-//  BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,subOptions) ,VishnuException );
-//
-//  BOOST_TEST_MESSAGE("***********************  submit a job: bad sessionKey    ok!!!!*****************************");
-//
-//
-//}
+
+BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
+{
+
+ BOOST_TEST_MESSAGE("Testing bad session Key for job submission (use case T1.1)");
+
+ for(int i = 0; i < m_test_tms_machines.size();++i)
+ {
+   
+   std::string machineId= m_test_tms_machines.at(i).machine_id;
+
+   //Setting submitjob parameters
+
+   const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
+    Job jobInfo;
+    SubmitOptions subOptions;
+    BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,subOptions) ,VishnuException );
+    bfs::path script(scriptFilePath.c_str());
+    BOOST_CHECK(bfs::remove_all(script)==1);
+    BOOST_TEST_MESSAGE("***********************  submit a job: bad sessionKey    ok!!!!*****************************");
+
+ }
+
+
+}
 //
 ////---------------------------------------------------------------------------
 //

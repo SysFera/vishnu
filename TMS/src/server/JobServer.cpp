@@ -366,19 +366,19 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
   if(initialJobId.compare("all") != 0 &&
      initialJobId.compare("ALL") != 0) {
 
-    sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+    sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                        " FROM job, vsession"
                        " WHERE vsession.numsessionid=job.vsession_numsessionid"
                        " AND jobId='"+mjob.getJobId()+"'";
   } else {
     if(userServer.isAdmin()) {
-      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                          " FROM job, vsession "
                          " WHERE vsession.numsessionid=job.vsession_numsessionid"
                          " AND status < 5"
                          " AND submitMachineId='"+mmachineId+"'" ;
     } else {
-      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId"
+      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                          " FROM job, vsession"
                          " WHERE vsession.numsessionid=job.vsession_numsessionid"
                          " AND status < 5"
@@ -418,10 +418,11 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       mjob.setJobId(*iter); //To reset the jobId
       ++iter;
       mjob.setVmId(*iter);
-
+      ++iter;
+      batchType = static_cast<BatchType>(convertToInt(*iter));
       ::ecorecpp::serializer::serializer jobSer;
       jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
-
+      
       SSHJobExec sshJobExec(acLogin, machineName,
                             batchType,
                             mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version

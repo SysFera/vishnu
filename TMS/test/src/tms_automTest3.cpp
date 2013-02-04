@@ -102,6 +102,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
         bfs::remove (bfs::path(outputInfos.getOutputPath()));
         bfs::remove (bfs::path(outputInfos.getErrorPath()));
       }
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
       BOOST_TEST_MESSAGE("*********************** get jobs output : normal call ok!!!!*****************************");
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
@@ -182,6 +184,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
         bfs::remove (bfs::path(outputInfos.getErrorPath()));
         bfs::remove (bfs::path(filepath));
       }
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
       BOOST_TEST_MESSAGE("*********************** get jobs output with outputdir: normal call ok!!!!*****************************");
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
@@ -230,6 +234,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_sessionKey)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -278,6 +284,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_machineId)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -326,6 +334,8 @@ BOOST_AUTO_TEST_CASE(get_job_output_unterminated)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
