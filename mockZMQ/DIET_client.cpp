@@ -211,6 +211,9 @@ sendProfile(diet_profile_t* prof, const std::string& uri) {
 int
 diet_call(diet_profile_t* prof) {
   std::string uri;
+  std::vector<std::string> uriv;
+  std::string disp;
+  std::vector<std::string> dispv;
 
   // get the service and the related module
   std::string service(prof->name);
@@ -237,11 +240,18 @@ diet_call(diet_profile_t* prof) {
     return 1;
   }
 
-  /* TODO: use config.getConfigValues to retrieve all URI/machine_id
-   * (especially for TMS and IMS)
-   */
-  if (!config.getConfigValue(param, uri) &&
-      !config.getConfigValue(vishnu::DISP_URIADDR, uri)) {
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0){
+    std::istringstream iss(uriv[0]);
+    iss >> uri;
+  }
+  config.getConfigValues(vishnu::DISP_URIADDR, dispv);
+  if (dispv.size()>0){
+    disp = dispv[0];
+  }
+
+  if (uri == "" &&
+      disp == "") {
     // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
     // No module or server found
     // throw SystemException(ERRCODE_SYSTEM,
@@ -251,7 +261,10 @@ diet_call(diet_profile_t* prof) {
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
   }
-
+  // If no direct data but dispatcher found
+  if (uri == ""){
+    uri = disp;
+  }
   return diet_call_gen(prof, uri);
 }
 
