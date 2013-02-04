@@ -492,7 +492,7 @@
               </para>
             </listitem>
             <listitem>
-              <para>ZeroMQ 2.x. Non testé avec les versions 3.x</para>
+              <para>ZeroMQ 2.x. Non supporté avec les versions 3.x</para>
             </listitem>
             <listitem>
               <para>libuuid : est une dépendance de ZeroMQ</para>
@@ -531,7 +531,7 @@
               <para>Sigar 1.6.4 disponible sur sourceforge (http://sourceforge.net/projects/sigar/files/sigar/1.6/)</para>
             </listitem>
             <listitem>
-              <para>Supervisord 3.0.a, installable à partir des outils Python (ex. pip install supervisord)</para>
+              <para>Supervisord 3.0.a, installable à partir des outils Python (ex. pip install supervisor)</para>
             </listitem>
             <listitem>
               <para>Xmlrpc-c  2.1.19
@@ -586,11 +586,11 @@
         sont activées ou désactivées à la demande grâce à des variables Cmake spécifiques.
         Positionnée à <emphasis>ON</emphasis> une variable permet d'activer la fonctionnalité
         associée. Ex. -DCOMPILE_UMS=ON active la compilation du module UMS.
-        Un positionnement à <emphasis>OFF</emphasis> désactive la compilation de la fonctionnée.
+        Un positionnement à <emphasis>OFF</emphasis> désactive la compilation de la fonctionnalité.
         Ex. -DCOMPILE_UMS=ON désactive la compilation du module UMS.
       </para>
       <para>
-        Dans certains cas on peut avoir besoin de mots clés spécifiques pour activer une fonctionnalité.
+        Dans certains cas on peut avoir besoin de mots-clés spécifiques pour activer une fonctionnalité.
         Ex. -DVISHNU_BATCH=SLURM permet de sélectionner SLURM comme batch scheduler sous-jacent à TMS.
       </para>
       <para>
@@ -598,7 +598,7 @@
         <itemizedlist>
           <listitem>
             <para>
-              COMPILE_CLIENT_CLI permet si on le souhaite de compiler les binaires clients en ligne de commande.
+              COMPILE_CLIENT_CLI permet, si on le souhaite, de compiler les binaires clients en ligne de commande.
               Par défault seules les libs sont compilées.
             </para>
           </listitem>
@@ -656,12 +656,12 @@
           </listitem>
           <listitem>
             <para>
-              VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Option Désactivée par défaut.
+              VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Cette option est désactivée par défaut.
             </para>
           </listitem>
           <listitem>
             <para>
-              ENABLE_SWIG permet d'activer la generation du code des adapteurs Python et Java.
+              ENABLE_SWIG permet d'activer la generation du code des adapteurs PYTHON et JAVA.
             </para>
             <para>Désactivée par défaut cette option doit obligatoirement être activée si on choisit de ne pas compiler
               tous les modules VISHNU. C'est-à-dire lorsqu'au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS
@@ -751,12 +751,12 @@
           </listitem>
           <listitem>
             <para>
-              VISHNU_BATCH_VERSION indique la version du batch scheduler utilisée
+              VISHNU_BATCH_VERSION indique la version du batch scheduler utilisé
             </para>
           </listitem>
           <listitem>
             <para>
-              BUILD_TESTING: Désactivée par défaut cette variable spécifie si le module de test sera compilé.
+              BUILD_TESTING: Désactivée par défaut, cette variable spécifie si le module de test sera compilé.
             </para>
           </listitem>
         </itemizedlist>
@@ -767,7 +767,7 @@
       </para>
       <itemizedlist>
         <listitem>
-          <para>1. Créer un répertoire build à la racine du projet et se placer dedans</para>
+          <para>1. Créer un répertoire build à la racine du projet et s'y placer</para>
           <para>$ <emphasis>mkdir build</emphasis></para>
           <para>$ <emphasis>cd build</emphasis></para>
         </listitem>
@@ -809,12 +809,12 @@
             <listitem>
               <para>En utilisant Make</para>
               <para>$ <emphasis>make -j 2</emphasis></para>
-              <para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+              <para>L'option -j 2 permet de lancer la compilation avec deux processus</para>
             </listitem>
             <listitem>
               <para>En utilisant Ninja</para>
               <para>$ <emphasis>ninja -j 2</emphasis></para>
-              <para>L'option -j 2 permet de lancer la compilation avec deux processus.</para>
+              <para>L'option -j 2 permet de lancer la compilation avec deux processus</para>
             </listitem>
           </itemizedlist>
         </listitem>
@@ -825,14 +825,14 @@
         </listitem>
       </itemizedlist>
       <para><emphasis role="bold">Note</emphasis>: pensez à ajouter le répertoire
-        d'installation dans le $PATH.</para>
+        d'installation dans le $PATH</para>
     </section>
     <section>
       <title>Vérifier l'installation</title>
       <para>
         En supposant que la variable d'environnement INSTALL_PREFIX pointe à la racine
         du repertoire d'installation (/opt/vishnu dans notre exemple), vous devez avoir les
-        programmes suivantes en fonction des modules installés:
+        programmes suivants en fonction des modules installés:
         <itemizedlist>
           <listitem>
             <para>
@@ -899,7 +899,7 @@
     <section>
       <title>Utiliser une base de données MySQL</title>
       <para>Nous supposons ici que vous avez déjà une installation de MySQL opérationnelle.
-        Si ce n'est pas le cas référez-vous à la documentation officielle pour procéder à
+        Si ce n'est pas le cas, référez-vous à la documentation officielle pour procéder à
         l'installation.
       </para>
       <para>Vous devez également disposer des droits d'administration sur cette
@@ -939,7 +939,7 @@
     <section>
       <title>Utiliser une base de données PostGreSQL</title>
       <para>Nous supposons également que vous avez déjà une installation de PostGreSQL
-        opérationnelle. Si ce n'est pas le cas référez-vous à la documentation officielle pour
+        opérationnelle. Si ce n'est pas le cas, référez-vous à la documentation officielle pour
         procéder à l'installation.</para>
       <para>Vous devez également disposer des droits d'administration sur cette installation
         (accès en tant qu'utilisateur système 'postgres').
@@ -957,15 +957,15 @@
           </listitem>
           <listitem>
             <para>Créer la base de données vishnu</para>
-            <para>$ <emphasis>createdb vishnu ; </emphasis></para>
+            <para>$ <emphasis>createdb -h localhost vishnu ; </emphasis></para>
           </listitem>
           <listitem>
             <para>Se connecter à la base de données</para>
-            <para>$ <emphasis>psql vishnu ; </emphasis></para>
+            <para>$ <emphasis>psql -h localhost vishnu ; </emphasis></para>
           </listitem>
           <listitem>
             <para>Créer le schéma de la base de données</para>
-            <para>$ <emphasis>\i /path/to/mysql_create.sql </emphasis></para>
+            <para>$ <emphasis>\i /path/to/postgre_create.sql </emphasis></para>
           </listitem>
           <listitem>
             <para>Initialiser la base de données</para>
@@ -978,26 +978,26 @@
       <title>Utilisation de TMS en mode natif: TMS Posix Shell</title>
       <para>
         Après installation, il est possible d'utiliser les fonctionnalités de TMS sur une machine
-        ne possédant pas de batch scheduler sous jacent. Pour ce faire, il faut mettre le batch
+        ne possédant pas de batch scheduler sous-jacent. Pour ce faire, il faut mettre le batch
         scheduler à la valeur &quot;POSIX&quot; lors de la compilation. Le flag dans le fichier de configuration
         du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de
         VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé,
         et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch
         posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler
-        auquel vishnu soumet. Cela implique que d'un point de vu système, vishnu a constamment
+        auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment
         3 processus 'tmssed' dans le cas d'un batch scheduler classique, un premier qui est le
         serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés
         par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données
-        associées aux jobs à jour. De plus, afin de gérer les jobs utilisateurs et pouvoir les
+        à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les
         annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
-        tournera et pouvant controller les jobs, et fournir des informations au moniteur au
+        tournera, pourra controller les jobs, et fournir des informations au moniteur au
         travers d'une socket unix.
       </para>
     </section>
     <section>
       <title>Utilisation de LDAP</title>
       <para>Nous supposons que vous avez déjà une installation de LDAP opérationnelle.
-        Si ce n'est pas le cas, référer à la documentation officielle pour procéder à
+        Si ce n'est pas le cas, référer vous à la documentation officielle pour procéder à
         l'installation. Vous pouvez également installer ces dépendances à partir du
         gestionnaire de paquets de votre système.  Sur les systèmes basés sur Debian
         par exemple, vous devez installer les paquets suivants: <emphasis>slapd,
@@ -1036,19 +1036,19 @@
     <section>
       <title>Utilisation d'une base de données distante</title>
       <para>
-        Vishnu repose sur une base de données. Les serveurs de Vishnu ont besoin de
+        VISHNU repose sur une base de données. Les serveurs de VISHNU ont besoin de
         s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les
         ports accessibles entre différentes machines (cas fréquent dans un réseau
         local), il n'y a généralement pas de problème pour se connecter à une base
         de données distante en spécifiant correctement le databaseHost dans les
-        fichiers de configuration des éléments de Vishnu.
+        fichiers de configuration des éléments de VISHNU.
         Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas
         de réseaux complexes avec du NAT par exemple, il est souvent plus facile de
         passer par des tunnels ssh pour encapsuler les connexions vers la base de
         données.
 
         Nous avons deux cas différents pour ouvrir le tunnel. Supposons que la
-        base de donnée soit sur une machine A, et l'élément Vishnu sur une machine B.
+        base de donnéesx soit sur une machine A, et l'élément Vishnu sur une machine B.
         Nous pouvons ouvrir le tunnel depuis A ou depuis B (parfois seule une de
         ces deux configuration est possible dans le cas où le ssh ne passe que dans
         un sens).
@@ -1075,17 +1075,17 @@
         </listitem>
       </itemizedlist>
       <para> Il convient maintenant de tester la connexion à la base de données.
-        Sur la machine B, essayer de vous connecter avec la commande suivante :
+        Sur la machine B, essayez de vous connecter avec la commande suivante :
       </para>
       <programlisting>
         mysql -u vishnu_user -h 127.0.0.1 -p
       </programlisting>
       <para>
-        Après avoir tapé le mot de passe, vous devriez vous retrouver connecter
+        Après avoir tapé le mot de passe, vous devriez vous retrouver connecté
         sur la base de données sur la machine A.
 
         Il ne vous reste plus qu'à configurer le fichier de configuration de
-        l'élément vishnu avec les éléments suivants (à adapter en fonction de votre
+        l'élément VISHNU avec les éléments suivants (à adapter en fonction de votre
         configuration) :
       </para>
       <programlisting>
@@ -1357,7 +1357,7 @@ urlSupervisor=http://127.0.0.1:9001
       </programlisting>
       <section>
         <title>Configuration de Supervisod</title>
-        <para> Il est recommandé d'éviter de lancer les SeDs à la main mais d'utiliser Supervisord qui se charge de
+        <para> Il est recommandé de ne pas lancer les SeDs à la main mais d'utiliser Supervisord qui se charge de
           lancer et de contrôler leur exécution. </para>
         <para>Cette section décrit les principaux élements à configurer pour Supervisord.
           Vous pouvez vous inspirer du fichier d'exemple <emphasis>supervisord-sample.cfg</emphasis>
@@ -1412,7 +1412,7 @@ urlSupervisor=http://127.0.0.1:9001
     </section>
     <section>
       <title>Déploiement dans un même sous-réseau</title>
-      <para>Dans cette section nous supposons que tous les composants vont être déployés sur une même machine nommé
+      <para>Dans cette section nous supposons que tous les composants vont être déployés sur une même machine nommée
         <emphasis role="bold">prefrontale</emphasis>.
       </para>
       <para><emphasis role="bold">NOTES :</emphasis> Il existe un bug connu sur debian (entre autre) avec boost file system, utilisé par VISHNU.
@@ -1426,7 +1426,7 @@ urlSupervisor=http://127.0.0.1:9001
       <orderedlist>
         <listitem>
           <para> Vérifier que la base de données (PostGreSQL ou MySQL) a été bien configurée et initialisée comme
-            décrit précédemment. De plus, vérifier vous pouvez vous connecter à la base de données depuis les différents
+            décrit précédemment. De plus, vérifier que vous pouvez vous connecter à la base de données depuis les différents
             serveurs où sont installés les modules de VISHNU.</para>
         </listitem>
         <listitem>
@@ -1457,7 +1457,7 @@ urlSupervisor=http://127.0.0.1:9001
           <para>$ <emphasis>dispatcher dispatcher_config.cfg</emphasis></para>
           <para>
             Dans cette commande, on demande au dispatcher de démarrer en
-            utilisant les serveurs définis dans le fichier config.  Si le
+            utilisant les serveurs définis dans le fichier 'config'.  Si le
             fichier de configuration n'est pas fourni, des options par défaut sont utilisées. Les différents options de configurations et leur valeur par défaut sont décrites deux sections plus loin.
           </para>
         </listitem>
@@ -1484,14 +1484,14 @@ urlSupervisor=http://127.0.0.1:9001
               ssh -fN -L 8889:localhost:8889 machine_distance
             </para>
             <para>
-              Etabli un tunnel entre la machine locale et la machine distante au travers du port 8889.
+              Etablir un tunnel entre la machine locale et la machine distante au travers du port 8889.
             </para>
           </listitem>
           <listitem>
             <para>
             </para>
             <para>
-              Etabli un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
+              Etablir un reverse tunnel entre la machine locale et la machine distante au travers du port 8889
               ssh -R -fN 8889:localhost:8889 machine_distante
             </para>
           </listitem>
@@ -1774,18 +1774,24 @@ urlSupervisor=http://127.0.0.1:9001
       <title>Gestion des processus VISHNU et délestage (IMS)</title>
       <itemizedlist>
         <listitem>
-          <para>L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
-            Fonction associée : vishnu_get_processes.</para>
+          <para>
+            L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
+            Fonction associée : vishnu_get_processes.
+          </para>
         </listitem>
         <listitem>
-          <para>L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
-            Attention : l'administrateur doit avoir un compte sur la machine
-            Fonction associée : vishnu_stop </para>
+          <para>
+            L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
+            Attention : l'administrateur doit avoir un compte sur la machine.
+            Fonction associée : vishnu_stop 
+          </para>
         </listitem>
         <listitem>
-          <para>L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
+          <para>
+            L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
             pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
-            Fonction associée : vishnu_restart </para>
+            Fonction associée : vishnu_restart 
+          </para>
         </listitem>
         <listitem>
           <para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
@@ -1864,7 +1870,7 @@ urlSupervisor=http://127.0.0.1:9001
                 </para>
               </listitem>
             </itemizedlist>
-            Attention la variable conteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
+            Attention la variable compteur est obligatoire pour éviter la génération d'un identifiant déjà existant.
             Fonctions associées : define_file_format, define_machine_format, define_task_format, define_user_format, define_auth_format.
           </para>
         </listitem>
@@ -1883,32 +1889,43 @@ urlSupervisor=http://127.0.0.1:9001
   <chapter>
     <title>Tests</title>
     <para>
-      Les tests automatiques permettent de valider les fonctionnalités de Vishnu
+      Les tests automatiques permettent de valider les fonctionnalités de VISHNU
       et de garantir la non régression lors des développements. Le module de
-      test peut être activé au moment de la construction de Vishnu, en activant
+      test peut être activé au moment de la construction de VISHNU, en activant
       la variable Cmake BUILD_TESTING.  Le module de test sera donc compilé avec
       les sources de vishnu.
     </para>
     <section>
       <title>Tests unitaires</title>
       <para>
-        un certain nombre de tests unitaires sont fournis avec Vishnu. Lorsque
-        vous compilez Vishnu avec BUILD_TESTING, ces tests sont construits et
+        un certain nombre de tests unitaires sont fournis avec VISHNU. Lorsque
+        vous compilez VISHNU avec BUILD_TESTING, ces tests sont construits et
         présents dans le sous-répertoire bin de votre répertoire de build. Les
         tests unitaires ont tous un nom terminant par UnitTests. Pour les
         lancer, il suffit juste d'appeler le binaire. Pour voir les options
         qu'il est possible de leur passer, vous pouvez lancer le binaire avec
-        l'option --help (ce sont les options du framework boost tests)
+        l'option --help (ce sont les options du framework boost tests).
       </para>
       <para>
-        Ces tests ne nécessitent pas d'avoir une plateforme Vishnu déployée.
+        Ces tests ne nécessitent pas d'avoir une plateforme VISHNU déployée.
       </para>
     </section>
     <section>
       <title>Configuration des tests fonctionnels</title>
       <para>
+        Lorsque
+        vous compilez Vishnu avec BUILD_TESTING, ces tests sont construits et
+        présents dans le sous-répertoire bin de votre répertoire de build. Les
+        tests fonctionnels ont tous un nom qui suit la nomenclature suivante:
+        &lt;nom du module>_automTest&lt;numéro> (e.g., fms_automTest11
+        pour la suite de test 11 du module FMS). Pour les
+        lancer, il suffit juste d'appeler le binaire. Pour voir les options
+        qu'il est possible de leur passer, vous pouvez lancer le binaire avec
+        l'option --help (ce sont les options du framework boost tests)
+      </para>
+      <para>
         Ces tests, contrairement aux tests unitaires, nécessitent d'avoir une
-        plateforme Vishnu déployée. L'administrateur doit fournir un ensemble de
+        plateforme VISHNU déployée. L'administrateur doit fournir un ensemble de
         paramètres d'exécutions liés à la plateforme de test. Il est nécessaire
         de positionner 2 variables d'environnement.
       </para>
@@ -1919,7 +1936,7 @@ urlSupervisor=http://127.0.0.1:9001
             <para>
               VISHNU_CLIENT_TEST_CONFIG_FILE : Variable qui contient le chemin
               vers le fichier de configuration client. Ce fichier permet au
-              client Vishnu de se connecter à la plateforme (voir le manuel
+              client VISHNU de se connecter à la plateforme (voir le manuel
               utilisateur pour plus d'informations sur la configuration de ce fichier).
             </para>
           </listitem>
@@ -1935,31 +1952,46 @@ urlSupervisor=http://127.0.0.1:9001
                 <para>TEST_UMS_AUTHEN_TYPE : Contient le type de système d'authentification de la plateforme de test; </para>
               </listitem>
               <listitem>
-                <para>TEST_UMS_AUTH_SYTEM_URI : Contient l'adresse du système d'authentification de la plateforme de test; </para>
+                <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant d'une machine VISHNU sur laquelle les tests UMS vont être exécutés; </para>
               </listitem>
               <listitem>
-                <para>TEST_VISHNU_MACHINEID1 : Contient l'identifiant de une machine Vishnu sur laquelle les tests vont être exécutés; </para>
+                <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail local des tests;  </para>
               </listitem>
               <listitem>
-                <para>TEST_WORKING_DIR : Contient le chemin vers le répertoire de travail des tests; </para>
+                <para>TEST_ROOT_VISHNU_LOGIN : Contient le login VISHNU de l'utilisateur ROOT de la plateforme. L'utilisateur ROOT a les droits administrateur et a un Local Account sur chacune des machines de test; </para>
               </listitem>
               <listitem>
-                <para>TEST_ROOT_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur ROOT de la plateforme; </para>
+                <para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe VISHNU de l'utilisateur ROOT de la plateforme; </para>
               </listitem>
               <listitem>
-                <para>TEST_ROOT_VISHNU_PWD : Contient le mot de passe Vishnu de l'utilisateur ROOT de la plateforme; </para>
+                <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login VISHNU de l'administrateur de la plateforme. L'administrateur est un utilisateur qui a les droits administrateur et qui n'a aucun Local Account sur aucune des machines de test; </para>
               </listitem>
               <listitem>
-                <para>TEST_ADMIN_VISHNU_LOGIN : Contient le login Vishnu de l'administrateur de la plateforme; </para>
+                <para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe VISHNU de l'administrateur de la plateforme; </para>
               </listitem>
               <listitem>
-                <para>TEST_ADMIN_VISHNU_PWD : Contient le mot de passe Vishnu de l'administrateur de la plateforme; </para>
+                <para>TEST_USER_VISHNU_LOGIN : Contient le login VISHNU de l'utilisateur de test de la plateforme. L'utilisateur doit avoir un Local Account sur chacune des machines de test. Tout les test FMS et TMS sont exécutés en tant que l'utilistaeur TEST_USER_VISHNU_LOGIN; </para>
               </listitem>
               <listitem>
-                <para>TEST_USER_VISHNU_LOGIN : Contient le login Vishnu de l'utilisateur de test de la plateforme; </para>
+                <para>TEST_USER_VISHNU_PWD : Contient le mot de passe VISHNU de l'utilisateur de test de la plateforme; </para>
               </listitem>
               <listitem>
-                <para>TEST_USER_VISHNU_LOGIN : Contient le mot de passe Vishnu de l'utilisateur de test de la plateforme; </para>
+                <para>TEST_FMS_HOST1 :  Contient l'identifiant de la première machine VISHNU sur laquelle les tests FMS vont être exécutés;</para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST2 :  Contient l'identifiant de la deuxième machine VISHNU sur laquelle les tests FMS vont être exécutés; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST1_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST1. Ce répertoire accessible en lecture et ecriture par le Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST1;    </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_HOST2_WORKING_DIR : Contient le chemin vers le répertoire de travail distant des tests FMS sur la machine TEST_FMS_HOST2. Ce répertoire accessible en lecture et ecriture par le Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST2; </para>
+              </listitem>
+              <listitem>
+                <para>TEST_FMS_USER_LOCAL_GROUP : Contient le groupe UNIX du Local Account de l'utilisateur TEST_USER_VISHNU_LOGIN sur la machine TEST_FMS_HOST1; </para>
+              </listitem>
+              <listitem>
+                <para> TEST_TMS_MACHINE_IDS : Contient la liste des machines TMS sur lesquelles les tests TMS vont êtres exécutés. Cette liste est constituée des couples: &quot;&lt;identifiant de machine> &lt;batch scheduler>&quot;, séparé par des point-virgule. Exemple &quot;TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE&quot;  </para>
               </listitem>
             </itemizedlist>
           </listitem>
@@ -1968,8 +2000,78 @@ urlSupervisor=http://127.0.0.1:9001
       <section>
         <title>Exemple de fichier de configuration</title>
         <programlisting>
-          TODO
-        </programlisting>
+        <![CDATA[
+# This is a sample setup file for VISHNU tests
+# Copyright (c) SysFera SA
+# Last update: 04/02/2013
+#
+
+
+# Definitions
+# FMS: File Management System
+# IMS: Information Management System
+# TMS: Task Management System
+# UMS: User Management System
+
+
+###############################################################################
+#               Common Parameters                                             #
+###############################################################################
+TEST_VISHNU_MACHINEID1=machine_1
+TEST_WORKING_DIR=/home/absila/machine_1
+TEST_ROOT_VISHNU_LOGIN=root
+TEST_ROOT_VISHNU_PWD=vishnu_user
+TEST_ADMIN_VISHNU_LOGIN=admin_1
+TEST_ADMIN_VISHNU_PWD=admin
+TEST_USER_VISHNU_LOGIN=user_1
+TEST_USER_VISHNU_PWD=toto
+
+
+###############################################################################
+#                UMS Related Parameters                                       #
+###############################################################################
+TEST_UMS_AUTHEN_TYPE=UMS
+
+###############################################################################
+#                FMS Specfic Parameters                                       #
+###############################################################################
+TEST_FMS_HOST1=machine_1
+TEST_FMS_HOST2=machine_1
+TEST_FMS_HOST1_WORKING_DIR=/home/absila/machine_2
+TEST_FMS_HOST2_WORKING_DIR=/home/absila/machine_3
+TEST_FMS_USER_LOCAL_GROUP=test;
+
+###############################################################################
+#                TMS Related Parameters                                       #
+###############################################################################
+TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 TORQUE
+
+]]>
+      </programlisting>
+      </section>
+      <section>
+        <title>Prérequis</title>
+        <para>
+          Afin que les tests automatiques s'exécutent, la plateforme Vishnu doit
+          être fonctionnelle et les variable d'environnement renseignées. Tous
+          les paramètres du fichier VISHNU_TEST_SETUP_FILE doivent être
+          renseignés.
+        </para>
+        <para>
+          Les différentes machines de test peuvent être une seule et même machine (l'exemple de fichier ci-dessus fait référence à une seule machine).
+        </para>
+      </section>
+      <section>
+        <title>Rapport de test </title>
+        <para>
+          Les tests automatiques génèrent des rapports résumant le déroulement
+          du test ainsi que les résultats. Ces rapports peuvent être générés en
+          XML, pour cela il faut exécuter la commande suivante : &quot;make
+          test_name-xml&quot; en remplaçant test_name par le nom du test à exécuter
+          (e.g., fms_automTest1). Ce format XML est pratique pour intégrer les
+          résultats de test dans votre environnement d'intégration continue tel
+          que Jenkins.
+        </para>
       </section>
     </section>
   </chapter>
