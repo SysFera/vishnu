@@ -106,6 +106,9 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
         }
       }
 
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
+
       BOOST_TEST_MESSAGE("*********************** get completed jobs output : normal call ok!!!!*****************************");
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
@@ -157,6 +160,8 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_sessionKey)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -205,6 +210,8 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_machineId)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);

@@ -119,6 +119,8 @@ BOOST_AUTO_TEST_CASE(list_job_normal_call)
     //  Clean up: delete the submitted jobs
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, firstJob.getJobId())==0  );
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, secondJob.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -170,6 +172,8 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -222,6 +226,8 @@ BOOST_AUTO_TEST_CASE(list_job_bad_machineId)
 
     //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -308,6 +314,8 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
       //  Clean up: delete the submitted jobs
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, machine1FirstJob.getJobId())==0  );
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, machine1SecondJob.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);

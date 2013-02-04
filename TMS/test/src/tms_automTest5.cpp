@@ -114,6 +114,8 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       //  Clean up: delete the submitted job
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
