@@ -16,7 +16,7 @@ namespace vishnu {
     /* [6]  */ {DBPASSWORD, "databaseUserPassword", STRING_PARAMETER},
     /* [7]  */ {SENDMAILSCRIPT, "sendmailScriptPath", STRING_PARAMETER},
     /* [8]  */ {BATCHTYPE, "batchSchedulerType", STRING_PARAMETER},
-  /* [8]  */ {BATCHVERSION, "batchSchedulerVersion", STRING_PARAMETER},
+    /* [8]  */ {BATCHVERSION, "batchSchedulerVersion", STRING_PARAMETER},
     /* [9]  */ {MACHINEID, "vishnuMachineId", STRING_PARAMETER},
     /* [10] */ {TIMEOUT, "timeout", INT_PARAMETER},
     /* [11] */ {REMOTEBINDIR, "vishnuRemoteBinDirectory", STRING_PARAMETER},
@@ -32,7 +32,8 @@ namespace vishnu {
     /* [21] */ {IMS_URIADDR, "ims_uriAddr", URI_PARAMETER},
     /* [22] */ {TMS_URIADDR, "tms_uriAddr", URI_PARAMETER},
     /* [23] */ {UMS_URIADDR, "ums_uriAddr", URI_PARAMETER},
-    /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER}
+    /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER},
+    /* [25] */ {DEBUG_LEVEL, "debugLevel", INT_PARAMETER}
   };
 
 

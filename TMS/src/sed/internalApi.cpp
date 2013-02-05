@@ -96,6 +96,8 @@ solveSubmitJob(diet_profile_t* pb) {
 
     ServerTMS* server = ServerTMS::getInstance();
     JobServer jobServer(sessionServer, machineId, *job, server->getSedConfig());
+    jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
+
     int vishnuId = server->getVishnuId();
     std::string slaveDirectory = server->getSlaveDirectory();
     jobServer.submitJob(scriptContent, *submitOptions, vishnuId, slaveDirectory, server->getDefaultBatchOption());

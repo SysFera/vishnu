@@ -131,7 +131,9 @@ ServerTMS::init(int& vishnuId,
                 const std::string& slaveBinDir,
                 const ExecConfiguration_Ptr sedConfig) {
 
-  //initialization of the machineId
+  setenv("VISHNU_DEBUG_LEVEL", vishnu::convertToString(mdebugLevel).c_str(), 0);
+
+  //set the machineId
   mmachineId = machineId;
 
   //initialization of the slave directory
@@ -139,6 +141,12 @@ ServerTMS::init(int& vishnuId,
 
   // initialize the SeD configuration object
   msedConfig = sedConfig;
+
+  // set the debug level
+  bool isSetDebugLevel = sedConfig->getConfigValue(vishnu::DEBUG_LEVEL, mdebugLevel);
+  if (!isSetDebugLevel || mdebugLevel < 0) {
+    mdebugLevel = 0;
+  }
 
   //initialization of the batchType
   mbatchType = batchType;

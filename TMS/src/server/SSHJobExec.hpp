@@ -136,6 +136,12 @@ class SSHJobExec {
    void
    mountNfsDir(const std::string & host, const std::string point);
 
+   /**
+    * \brief Set the debug level
+    * \param debugLevel The debug level
+    */
+   void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+
   private:
 
     /**
@@ -186,6 +192,10 @@ class SSHJobExec {
      */
     std::string mhostname;
 
+    /**
+     * \brief Holds the level of debug
+     */
+    int mdebugLevel;
 };
 
 #endif

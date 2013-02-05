@@ -46,11 +46,11 @@ using namespace vishnu;
  * \return Always 1
  */
 void usage(char* cmd) {
-  cerr << "Usage: " << cmd << "COMMANDE_TYPE[SUBMIT] <BatchType> <BatchVersion>"
+  cerr << "Usage: " << cmd << " COMMAND_TYPE[SUBMIT] <BatchType> <BatchVersion>"
        << " <JobSerializedPath> <SlaveErrorPath> <JobUpdatedSerializedPath>"
        << " <SubmitOptionsSerializedPath> <job_script_path>\n"
        << "\t\t\t\t\t" << " or\n"
-       << "Usage: " << cmd << "COMMANDE_TYPE[CANCEL] <BatchType> <BatchVersion>"
+       << "Usage: " << cmd << " COMMAND_TYPE[CANCEL] <BatchType> <BatchVersion>"
        << " <JobSerializedPath> <SlaveErrorPath>\n";
   exit(EXIT_FAILURE);
 }
@@ -78,17 +78,15 @@ main(int argc, char* argv[], char* envp[]) {
     usage(argv[0]);
   }
   action = std::string(argv[1]);
-  batchType = vishnu::convertToBatchType(argv[2]);
+  batchType = vishnu::convertToBatchType(argv[2]);   //Get batchType
   batchVersion = argv[3];
   jobSerializedPath = argv[4];
   slaveErrorPath = argv[5];
 
   if(action.compare("SUBMIT")==0) {
-    if(argc < 9) {
-      // Too few arguments
+    if(argc < 9) {       // Too few arguments
       usage(argv[0]);
     }
-    // Get batchtype
     slaveJobFile = argv[6];
     optionsPath = argv[7];
     jobScriptPath = argv[8];
@@ -111,22 +109,22 @@ main(int argc, char* argv[], char* envp[]) {
     //To create batchServer Factory
     BatchFactory factory;
     batchServer = factory.getBatchServerInstance(batchType, batchVersion);
-    if(batchServer==NULL) {
+    if (batchServer==NULL) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
     }
     std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
-    if(!parseEmfObject(std::string(jobSerialized), job)) {
+    if (!parseEmfObject(std::string(jobSerialized), job)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: job object is not well built");
     }
 
-    if(action.compare("SUBMIT")==0) {
+    if (action.compare("SUBMIT")==0) {
       std::string options  = vishnu::get_file_content(optionsPath);
       if(!parseEmfObject(std::string(options), submitOptions)) {
         throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: SubmitOptions object is not well built");
       }
 
       //Submits the job
-      if(batchServer->submit(jobScriptPath, *submitOptions, *job)==0){;
+      if (batchServer->submit(jobScriptPath, *submitOptions, *job)==0){;
         //To serialize the job object
         ::ecorecpp::serializer::serializer _ser;
         std::string slaveJob = _ser.serialize_str(job);
@@ -135,10 +133,10 @@ main(int argc, char* argv[], char* envp[]) {
         os_slaveJobFile << slaveJob;
         os_slaveJobFile.close();
       }
-    } else if(action.compare("CANCEL")==0) {
+    } else if (action.compare("CANCEL")==0) {
       //To cancel the job
       std::string jobdDescr = job->getJobId();
-      if(batchType == DELTACLOUD) {
+      if (batchType == DELTACLOUD) {
         jobdDescr += "@"+job->getVmId();
       }
       batchServer->cancel(jobdDescr.c_str());

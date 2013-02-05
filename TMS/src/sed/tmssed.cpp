@@ -56,12 +56,12 @@ getCurrentBinaryDir() {
 
   // Catch some errors
   if (length < 0) {
-      cerr << "Error resolving symlink /proc/self/exe." << endl;
-      exit(1);
+    cerr << "Error resolving symlink /proc/self/exe." << endl;
+    exit(1);
   }
   if (length >= MAXPATHLEN) {
-      cerr << "Path too long. Truncated." << endl;
-      exit(1);
+    cerr << "Path too long. Truncated." << endl;
+    exit(1);
   }
 
   /* I don't know why, but the string this readlink() function
@@ -125,14 +125,15 @@ int main(int argc, char* argv[], char* envp[]) {
   try {
     config->initFromFile(argv[1]);
     config->getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
-    config->getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
     config->getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
 
+    config->getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
+
     dbConfig.check();
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);

@@ -39,9 +39,9 @@ JobServer::JobServer(const SessionServer& sessionServer,
   if (msedConfig) {
     std::string value;
     msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, value);
-    mbatchType =  convertToBatchType(value);
+    mbatchType = convertToBatchType(value);
     msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, value);
-    mbatchVersion =  value;
+    mbatchVersion = value;
   }
 }
 
@@ -139,6 +139,7 @@ int JobServer::submitJob(const std::string& scriptContent,
                         batchType,
                         mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                         jobSerialized, submitOptionsSerialized);
+  sshJobExec.setDebugLevel(mdebugLevel);  // Set the debug level
 
   // Create the output directory if necessary
   if (needOutputDir) {
@@ -176,17 +177,16 @@ int JobServer::submitJob(const std::string& scriptContent,
                 S_IROTH|S_IXOTH)) {
     throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
   }
-
   sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath)); // Submit the job
 
   // Submission with deltacloud doesn't make copy of the script
   // So the script needs to be kept until the end of the execution
   // Clean the temporary script if not deltacloud
-  if(batchType != DELTACLOUD) {
+  if (batchType != DELTACLOUD && mdebugLevel) {
     vishnu::deleteFile(scriptPath.c_str());
   }
   std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
-  if (errorInfo.size()!=0) {
+  if (!errorInfo.empty()) {
     int code;
     std::string message;
     scanErrorMessage(errorInfo, code, message);

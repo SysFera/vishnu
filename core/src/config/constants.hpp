@@ -48,7 +48,8 @@ namespace vishnu {
     IMS_URIADDR,
     TMS_URIADDR,
     UMS_URIADDR,
-    CLOUDENDPOINT
+    CLOUDENDPOINT,
+    DEBUG_LEVEL
   } param_type_t;
 
   typedef enum {

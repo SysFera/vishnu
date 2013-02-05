@@ -83,6 +83,12 @@ public:
   ExecConfiguration_Ptr
   getSedConfig() const;
 
+  /**
+   * \brief Set the debug level
+   * \param debugLevel The debug level
+   */
+  void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+
 private:
 
   /**
@@ -154,6 +160,11 @@ private:
   * \brief The configuration of the SeD
   */
   ExecConfiguration_Ptr msedConfig;
+
+  /**
+   * \brief Holds the level of debug
+   */
+  int mdebugLevel;
 
 private:
 

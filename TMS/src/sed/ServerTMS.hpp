@@ -147,6 +147,11 @@ public :
   ExecConfiguration_Ptr
   getSedConfig() const;
 
+  /**
+   * \brief Function to get the debug level
+   */
+  int getDebugLevel() const {return mdebugLevel;}
+
 private :
   /**
      * \brief Init the ptr function map
@@ -184,7 +189,6 @@ private :
   getConfigOptions(const char* configPath,
                    std::vector<std::string>& defaultOptions,
                    const char* batchKey);
-
 
   /////////////////////////////////
   // Attributes
@@ -243,5 +247,10 @@ private :
     * \brief  Default batch submittion Options
     */
   std::vector<std::string> mdefaultBatchOption;
+
+  /**
+   * \brief Holds the level of debug
+   */
+  int mdebugLevel;
 };
 #endif // SERVER

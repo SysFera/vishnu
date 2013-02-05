@@ -24,6 +24,15 @@
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
 #include "Env.hpp"
+#include <boost/format.hpp>
+
+#define CLEANUP_SUBMITTING_DATA(debugLevel) if (!debugLevel) { \
+  vishnu::deleteFile(jobSerializedPath.c_str()); \
+  vishnu::deleteFile(submitOptionsSerializedPath.c_str()); \
+  vishnu::deleteFile(jobUpdateSerializedPath.c_str()); \
+  vishnu::deleteFile(stderrFilePath.c_str()); \
+  vishnu::deleteFile(errorPath.c_str()); \
+  }
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
@@ -108,139 +117,89 @@ void
 SSHJobExec::sshexec(const std::string& slaveDirectory,
                     const std::string& serviceName,
                     const std::string& script_path) {
-
   checkSshParams();
-
   std::string jobSerializedPath;
   std::string submitOptionsSerializedPath;
   std::string jobUpdateSerializedPath;
-  std::string errorPath;
-  std::string stderrFilePath;
   std::string cmdDetails;
   bool wellSubmitted = false;
   bool errorMsgIsSet = false;
 
-  jobSerializedPath = TMS_SERVER_FILES_DIR+"/jobSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(jobSerializedPath.c_str()), mjobSerialized);
+  jobSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobSerialized%%%%%%").string();
+  vishnu::saveInFile(jobSerializedPath, mjobSerialized);
 
-  submitOptionsSerializedPath = TMS_SERVER_FILES_DIR+"/submitOptionsSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(submitOptionsSerializedPath.c_str()), msubmitOptionsSerialized);
+  submitOptionsSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/submitOptionsSerialized%%%%%%").string();
+  vishnu::saveInFile(submitOptionsSerializedPath, msubmitOptionsSerialized);
 
-  jobUpdateSerializedPath = TMS_SERVER_FILES_DIR+"/jobUpdateSerializedXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(jobUpdateSerializedPath.c_str()));
+  jobUpdateSerializedPath =  bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobUpdateSerialized%%%%%%").string();
 
-  errorPath = TMS_SERVER_FILES_DIR+"/errorPathXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(errorPath.c_str()));
-
-  std::ostringstream cmd;
   cmdDetails = "" ;
-  if(serviceName.compare("SUBMIT")==0) {
-    // set specific arguments for submit job
+  if (serviceName.compare("SUBMIT")==0) {  // set specific arguments for submit job
     cmdDetails += jobUpdateSerializedPath
                   + " " +  submitOptionsSerializedPath
                   + " " + script_path;
   }
 
   // For traditional batch scheduler we need to submit the job through ssh
-  if(mbatchType != DELTACLOUD) {
+  std::ostringstream cmd;
+  if (mbatchType != DELTACLOUD) {
     cmd << "ssh -l " << muser << " " << mhostname << " "
         << " -o NoHostAuthenticationForLocalhost=yes "
         << " -o PasswordAuthentication=no ";
   }
 
-  stderrFilePath = TMS_SERVER_FILES_DIR+"/stderrFilePathXXXXXX";
-  vishnu::createTmpFile(const_cast<char*>(stderrFilePath.c_str()));
+  std::string errorPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/errorPath%%%%%%").string();
+  std::string stderrFilePath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/stderr%%%%%%").string();
 
   cmd << slaveDirectory << "/tmsSlave "
       << serviceName << " "
       << convertBatchTypeToString(mbatchType) << " "
-			<< mbatchVersion << " "
+      << mbatchVersion << " "
       << jobSerializedPath << " " <<  errorPath << " "
       << cmdDetails
       << " 2> " << stderrFilePath;
 
   int ret;
-  std::cerr << cmd.str() << std::endl;
-  if((ret=system((cmd.str()).c_str()))) {
-    vishnu::deleteFile(jobSerializedPath.c_str());
-    vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-    vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-
-    //begin
-    boost::filesystem::path errorFile(errorPath.c_str());
-    if (!boost::filesystem::is_empty(errorFile)) {
-      merrorInfo = vishnu::get_file_content(errorPath);
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-      return;
+  if ((ret=system((cmd.str()).c_str())) != 0) {
+    merrorInfo = vishnu::get_file_content(errorPath, false);
+    merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+    if (merrorInfo.find("password") != std::string::npos) {
+      merrorInfo.append(" You must copy the VISHNU publickey in your authorized_keys file.");
     }
-    //end
-
-    vishnu::deleteFile(errorPath.c_str());
-    vishnu::deleteFile(script_path.c_str());
-    boost::filesystem::path stderrFile(stderrFilePath.c_str());
-    if(!boost::filesystem::is_empty(stderrFile)) {
-      merrorInfo = vishnu::get_file_content(stderrFilePath);
-      if(merrorInfo.find("password")!=std::string::npos) {
-        merrorInfo.append("  You must copy the VISHNU publickey in your authorized_keys file.");
-      }
+    if (WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
+      merrorInfo.append("==> SLURM ERROR");
     }
-    if ( WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-      vishnu::deleteFile(stderrFilePath.c_str());
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+merrorInfo);
+    if (merrorInfo.empty()) {
+      merrorInfo = (boost::format("Unknown error while executing the command: \n")%cmd.str()).str();
     }
-    vishnu::deleteFile(stderrFilePath.c_str());
+    CLEANUP_SUBMITTING_DATA(mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
-  }
-
-  boost::filesystem::path jobUpdateSerializedFile(jobUpdateSerializedPath);
-  if (!boost::filesystem::is_empty(jobUpdateSerializedFile)) {
-    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath);
+  } else {
+    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
     TMS_Data::Job_ptr job = NULL;
-    if(!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      vishnu::deleteFile(jobSerializedPath.c_str());
-      vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-      vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-      vishnu::deleteFile(errorPath.c_str());
-      vishnu::deleteFile(stderrFilePath.c_str());
-      throw SystemException(ERRCODE_INVDATA, "SSHJobExec::sshexec: job object is not well built");
+    if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
+      ::ecorecpp::serializer::serializer _ser;
+      mjobSerialized = _ser.serialize_str(job);
+      wellSubmitted = true;
+      delete job;
+    } else {
+      merrorInfo = "SSHJobExec::sshexec: job object is not well built";
+      CLEANUP_SUBMITTING_DATA(mdebugLevel);
+      throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
     }
-    ::ecorecpp::serializer::serializer _ser;//("job");
-    mjobSerialized = _ser.serialize_str(job);
-    wellSubmitted = true;
-    delete job;
-  }
-
-  boost::filesystem::path errorFile(errorPath.c_str());
-  if (!boost::filesystem::is_empty(errorFile)) {
-    merrorInfo = vishnu::get_file_content(errorPath);
-    merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
-    errorMsgIsSet=true;
-  }
-
-  if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
-    boost::filesystem::path stderrFile(stderrFilePath.c_str());
-    if(!boost::filesystem::is_empty(stderrFile)) {
-      merrorInfo = vishnu::get_file_content(stderrFilePath);
-
-      std::ostringstream errorMsgSerialized;
-      if(mbatchType==LOADLEVELER) {
-        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LOADLEVELER ERROR: ";
+    merrorInfo.append(vishnu::get_file_content(errorPath, false));
+    errorMsgIsSet = true;
+    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+      if (mbatchType==LOADLEVELER) {
+        merrorInfo.append("==>LOADLEVELER ERROR");
       }
-      if(mbatchType==LSF) {
-        errorMsgSerialized << ERRCODE_BATCH_SCHEDULER_ERROR << "#" << "LSF ERROR: ";
+      if (mbatchType==LSF) {
+        merrorInfo.append("==>LSF ERROR");
       }
-      errorMsgSerialized << merrorInfo;
-      merrorInfo = errorMsgSerialized.str();
-      merrorInfo = merrorInfo.substr(0, merrorInfo.find_last_of('\n'));
     }
   }
-
-  vishnu::deleteFile(jobSerializedPath.c_str());
-  vishnu::deleteFile(submitOptionsSerializedPath.c_str());
-  vishnu::deleteFile(jobUpdateSerializedPath.c_str());
-  vishnu::deleteFile(errorPath.c_str());
-  vishnu::deleteFile(stderrFilePath.c_str());
+  CLEANUP_SUBMITTING_DATA(mdebugLevel);
 }
 
 /**
