@@ -34,6 +34,8 @@
   vishnu::deleteFile(errorPath.c_str()); \
   }
 
+#define LOG(msg, logLevel) if (logLevel) std::cout << msg << "\n"
+
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
 const int SSH_CONNECT_MAX_RETRY = 20;
@@ -171,9 +173,10 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       merrorInfo.append("==> SLURM ERROR");
     }
     if (merrorInfo.empty()) {
-      merrorInfo = (boost::format("Unknown error while executing the command: \n")%cmd.str()).str();
+      merrorInfo = (boost::format("Unknown error while executing the command: %1%\nError code: %2%")%cmd.str()%ret).str();
     }
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
+    LOG(merrorInfo, mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 
@@ -188,6 +191,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   } else {
     merrorInfo = "SSHJobExec::sshexec: job object is not well built";
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
+    LOG(merrorInfo, mdebugLevel);
     throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
   }
   if (bfs::exists(errorPath)) {
@@ -203,6 +207,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       merrorInfo.append("==>LSF ERROR");
     }
   }
+  LOG(merrorInfo, mdebugLevel);
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
 }
 
@@ -226,7 +231,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   cmd << "exit; echo $? >" << machineStatusFile;
 
   int attempt = 1;
-  std::clog << "[TMS][INFO] Checking ssh connection...\n" ;
+  LOG("[TMS][INFO] Checking ssh connection...", mdebugLevel);
   while(attempt <= SSH_CONNECT_MAX_RETRY) {
     execCmd(cmd.str());
     int ret =  vishnu::getStatusValue(machineStatusFile);
@@ -246,7 +251,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   }
 
   // Mount the NFS repository
-  std::clog << "[TMS][INFO] Mounting the nfs directory...\n" ;
+  LOG("[TMS][INFO] Mounting the nfs directory...", mdebugLevel);
   if(nfsServer.size()>0 &&
      nfsMountPoint.size()> 0) {
     mountNfsDir(nfsServer, nfsMountPoint);
@@ -254,7 +259,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
   // If succeed execute the script to the virtual machine
   // This assumes that the script is located on a shared DFS
-  std::clog << "[TMS][INFO] Executing the script...\n" ;
+  LOG("[TMS][INFO] Executing the script...", mdebugLevel);
   execCmd("'mkdir -p "+workDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
   int pid = -1;
   if(execCmd(scriptPath + " &>>"+logfile, true, workDir, &pid)) {
@@ -262,7 +267,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);
   }
-  std::clog << "[TMS][INFO] Submission completed. PID: "<< pid << "\n" ;
+  LOG("[TMS][INFO] Submission completed. PID:"+pid, mdebugLevel);
   return pid;
 }
 

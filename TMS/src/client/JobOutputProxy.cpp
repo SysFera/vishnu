@@ -205,7 +205,7 @@ JobOutputProxy::getCompletedJobsOutput() {
       }
     }
   } catch (FMSVishnuException ex) {
-    std::cerr << boost::format("Error on file %1%: %2%")%routputInfo%ex.what();
+    std::cerr << boost::format("Error on file %1%\n%2%")%routputInfo%ex.what();
   }
   diet_profile_free(getCompletedJobsOutputProfile);
   return listJobResults_ptr;

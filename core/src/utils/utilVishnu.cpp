@@ -557,7 +557,7 @@ vishnu::saveInFile(const std::string & fileName,
                    const std::string& content) {
 
   bfs::ofstream file(fileName);
-  if(!file.good()) {
+  if (!file.good()) {
     throw SystemException(ERRCODE_INVDATA,
                           "vishnu::saveInFile: Cannot create the file "+fileName);
   }
