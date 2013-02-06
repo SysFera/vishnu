@@ -23,8 +23,8 @@ fi
 source scripts/common.sh
 
 
-if [ ! -f deliverables/release/VISHNU_$NO_VERSION/vishnu_v${NO_VERSION}.tgz ]; then
-  echo "Missing release file:  deliverables/release/VISHNU_$NO_VERSION/vishnu_v${NO_VERSION}.tgz"
+if [ ! -f deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz ]; then
+  echo "Missing release file:  deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz"
   echo "Please run ALL_prepareScript.sh first!"
   exit 1
 fi
