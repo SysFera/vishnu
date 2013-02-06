@@ -4,7 +4,7 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:suwl="http://nwalsh.com/xslt/ext/com.nwalsh.saxon.UnwrapLinks" xmlns:exsl="http://exslt.org/common" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="suwl exsl xlink" version="1.0">
 
 <!-- ********************************************************************
-     $Id: xref.xsl 8421 2009-05-04 07:49:49Z bobstayton $
+     $Id: xref.xsl 9650 2012-10-26 18:24:02Z bobstayton $
      ********************************************************************
 
      This file is part of the XSL DocBook Stylesheet distribution.
@@ -19,7 +19,16 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="anchor">
-  <xsl:call-template name="anchor"/>
+  <xsl:choose>
+    <xsl:when test="$generate.id.attributes = 0">
+      <xsl:call-template name="anchor"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <span>
+        <xsl:call-template name="id.attribute"/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -152,12 +161,14 @@
           </xsl:message>
           <a href="{$href}">
             <xsl:apply-templates select="." mode="common.html.attributes"/>
+            <xsl:call-template name="id.attribute"/>
             <xsl:text>???</xsl:text>
           </a>
         </xsl:when>
         <xsl:otherwise>
           <a href="{$href}">
             <xsl:apply-templates select="." mode="common.html.attributes"/>
+            <xsl:call-template name="id.attribute"/>
             <xsl:apply-templates select="$etarget" mode="endterm"/>
           </a>
         </xsl:otherwise>
@@ -191,7 +202,7 @@
 
       <a href="{$href}">
         <xsl:apply-templates select="." mode="class.attribute"/>
-        <xsl:if test="$target/title or $target/*/title">
+        <xsl:if test="$target/title or $target/info/title">
           <xsl:attribute name="title">
             <xsl:apply-templates select="$target" mode="xref-title"/>
           </xsl:attribute>
@@ -223,7 +234,7 @@
 <xsl:template match="*" mode="endterm">
   <!-- Process the children of the endterm element -->
   <xsl:variable name="endterm">
-    <xsl:apply-templates select="child::node()"/>
+    <xsl:apply-templates select="child::node()" mode="no.anchor.mode"/>
   </xsl:variable>
 
   <xsl:choose>
@@ -327,7 +338,7 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template match="abstract|authorblurb|personblurb|bibliodiv|bibliomset                      |biblioset|blockquote|calloutlist|caution|colophon                      |constraintdef|formalpara|glossdiv|important|indexdiv                      |itemizedlist|legalnotice|lot|msg|msgexplan|msgmain                      |msgrel|msgset|msgsub|note|orderedlist|partintro                      |productionset|qandadiv|refsynopsisdiv|segmentedlist                      |set|setindex|sidebar|tip|toc|variablelist|warning" mode="xref-to">
+<xsl:template match="abstract|authorblurb|personblurb|bibliodiv|bibliomset                      |biblioset|blockquote|calloutlist|caution|colophon                      |constraintdef|formalpara|glossdiv|important|indexdiv                      |itemizedlist|legalnotice|lot|msg|msgexplan|msgmain                      |msgrel|msgset|msgsub|note|orderedlist|partintro                      |productionset|qandadiv|refsynopsisdiv|screenshot|segmentedlist                      |set|setindex|sidebar|tip|toc|variablelist|warning" mode="xref-to">
   <xsl:param name="referrer"/>
   <xsl:param name="xrefstyle"/>
   <xsl:param name="verbose" select="1"/>
@@ -454,7 +465,7 @@
               <xsl:number from="bibliography" count="biblioentry|bibliomixed" level="any" format="1"/>
             </xsl:when>
             <xsl:when test="local-name($entry/*[1]) = 'abbrev'">
-              <xsl:apply-templates select="$entry/*[1]"/>
+              <xsl:apply-templates select="$entry/*[1]" mode="no.anchor.mode"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="(@id|@xml:id)[1]"/>
@@ -478,7 +489,7 @@
           <xsl:number from="bibliography" count="biblioentry|bibliomixed" level="any" format="1"/>
         </xsl:when>
         <xsl:when test="local-name(*[1]) = 'abbrev'">
-          <xsl:apply-templates select="*[1]"/>
+          <xsl:apply-templates select="*[1]" mode="no.anchor.mode"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:value-of select="(@id|@xml:id)[1]"/>
@@ -509,7 +520,7 @@
     <xsl:when test="$glossentry.show.acronym = 'primary'">
       <xsl:choose>
         <xsl:when test="acronym|abbrev">
-          <xsl:apply-templates select="(acronym|abbrev)[1]"/>
+          <xsl:apply-templates select="(acronym|abbrev)[1]" mode="no.anchor.mode"/>
         </xsl:when>
         <xsl:otherwise>
           <xsl:apply-templates select="glossterm[1]" mode="xref-to">
@@ -531,7 +542,7 @@
 </xsl:template>
 
 <xsl:template match="glossterm|firstterm" mode="xref-to">
-  <xsl:apply-templates/>
+  <xsl:apply-templates mode="no.anchor.mode"/>
 </xsl:template>
 
 <xsl:template match="index" mode="xref-to">
@@ -574,6 +585,19 @@
   <!-- FIXME: What about "in Chapter X"? -->
 </xsl:template>
 
+<xsl:template match="topic" mode="xref-to">
+  <xsl:param name="referrer"/>
+  <xsl:param name="xrefstyle"/>
+  <xsl:param name="verbose" select="1"/>
+
+  <xsl:apply-templates select="." mode="object.xref.markup">
+    <xsl:with-param name="purpose" select="'xref'"/>
+    <xsl:with-param name="xrefstyle" select="$xrefstyle"/>
+    <xsl:with-param name="referrer" select="$referrer"/>
+    <xsl:with-param name="verbose" select="$verbose"/>
+  </xsl:apply-templates>
+</xsl:template>
+
 <xsl:template match="bridgehead" mode="xref-to">
   <xsl:param name="referrer"/>
   <xsl:param name="xrefstyle"/>
@@ -589,19 +613,6 @@
 </xsl:template>
 
 <xsl:template match="qandaset" mode="xref-to">
-  <xsl:param name="referrer"/>
-  <xsl:param name="xrefstyle"/>
-  <xsl:param name="verbose" select="1"/>
-
-  <xsl:apply-templates select="." mode="object.xref.markup">
-    <xsl:with-param name="purpose" select="'xref'"/>
-    <xsl:with-param name="xrefstyle" select="$xrefstyle"/>
-    <xsl:with-param name="referrer" select="$referrer"/>
-    <xsl:with-param name="verbose" select="$verbose"/>
-  </xsl:apply-templates>
-</xsl:template>
-
-<xsl:template match="qandadiv" mode="xref-to">
   <xsl:param name="referrer"/>
   <xsl:param name="xrefstyle"/>
   <xsl:param name="verbose" select="1"/>
@@ -665,13 +676,13 @@
 
   <xsl:choose>
     <xsl:when test="refmeta/refentrytitle">
-      <xsl:apply-templates select="refmeta/refentrytitle"/>
+      <xsl:apply-templates select="refmeta/refentrytitle" mode="no.anchor.mode"/>
     </xsl:when>
     <xsl:otherwise>
-      <xsl:apply-templates select="refnamediv/refname[1]"/>
+      <xsl:apply-templates select="refnamediv/refname[1]" mode="no.anchor.mode"/>
     </xsl:otherwise>
   </xsl:choose>
-  <xsl:apply-templates select="refmeta/manvolnum"/>
+  <xsl:apply-templates select="refmeta/manvolnum" mode="no.anchor.mode"/>
 </xsl:template>
 
 <xsl:template match="refnamediv" mode="xref-to">
@@ -729,8 +740,7 @@
   <xsl:param name="referrer"/>
   <xsl:param name="xrefstyle"/>
 
-  <!-- to avoid the comma that will be generated if there are several terms -->
-  <xsl:apply-templates/>
+  <xsl:apply-templates mode="no.anchor.mode"/>
 </xsl:template>
 
 <xsl:template match="co" mode="xref-to">
@@ -772,7 +782,7 @@
   <xsl:param name="xrefstyle"/>
   <xsl:param name="verbose" select="1"/>
 
-  <xsl:variable name="context" select="(ancestor::simplesect                                        |ancestor::section                                        |ancestor::sect1                                        |ancestor::sect2                                        |ancestor::sect3                                        |ancestor::sect4                                        |ancestor::sect5                                        |ancestor::refsection                                        |ancestor::refsect1                                        |ancestor::refsect2                                        |ancestor::refsect3                                        |ancestor::chapter                                        |ancestor::appendix                                        |ancestor::preface                                        |ancestor::partintro                                        |ancestor::dedication                                        |ancestor::acknowledgements                                        |ancestor::colophon                                        |ancestor::bibliography                                        |ancestor::index                                        |ancestor::glossary                                        |ancestor::glossentry                                        |ancestor::listitem                                        |ancestor::varlistentry)[last()]"/>
+  <xsl:variable name="context" select="(ancestor::simplesect                                        |ancestor::section                                        |ancestor::sect1                                        |ancestor::sect2                                        |ancestor::sect3                                        |ancestor::sect4                                        |ancestor::sect5                                        |ancestor::topic                                        |ancestor::refsection                                        |ancestor::refsect1                                        |ancestor::refsect2                                        |ancestor::refsect3                                        |ancestor::chapter                                        |ancestor::appendix                                        |ancestor::preface                                        |ancestor::partintro                                        |ancestor::dedication                                        |ancestor::acknowledgements                                        |ancestor::colophon                                        |ancestor::bibliography                                        |ancestor::index                                        |ancestor::glossary                                        |ancestor::glossentry                                        |ancestor::listitem                                        |ancestor::varlistentry)[last()]"/>
 
   <xsl:choose>
     <xsl:when test="$xrefstyle != ''">
@@ -841,7 +851,7 @@
     <xsl:text>[</xsl:text>
     <xsl:choose>
       <xsl:when test="local-name(*[1]) = 'abbrev'">
-        <xsl:apply-templates select="*[1]"/>
+        <xsl:apply-templates select="*[1]" mode="no.anchor.mode"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="(@id|@xml:id)[1]"/>
@@ -889,7 +899,7 @@
     <xsl:choose>
       <xsl:when test="count(child::node()) &gt; 0">
         <!-- If it has content, use it -->
-        <xsl:apply-templates/>
+        <xsl:apply-templates mode="no.anchor.mode"/>
       </xsl:when>
       <!-- else look for an endterm -->
       <xsl:when test="@endterm">
@@ -940,9 +950,18 @@
     <a>
       <xsl:apply-templates select="." mode="common.html.attributes"/>
       <xsl:if test="@id or @xml:id">
-        <xsl:attribute name="id">
-          <xsl:value-of select="(@id|@xml:id)[1]"/>
-        </xsl:attribute>
+        <xsl:choose>
+          <xsl:when test="$generate.id.attributes = 0">
+            <xsl:attribute name="id">
+              <xsl:value-of select="(@id|@xml:id)[1]"/>
+            </xsl:attribute>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:attribute name="id">
+              <xsl:value-of select="(@id|@xml:id)[1]"/>
+            </xsl:attribute>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
       <xsl:attribute name="href"><xsl:value-of select="$url"/></xsl:attribute>
       <xsl:if test="$ulink.target != ''">
@@ -955,7 +974,7 @@
           <xsl:value-of select="$url"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:apply-templates/>
+          <xsl:apply-templates mode="no.anchor.mode"/>
         </xsl:otherwise>
       </xsl:choose>
     </a>
@@ -976,8 +995,6 @@
   <xsl:param name="content" select="NOTANELEMENT"/>
 
   <xsl:call-template name="anchor"/>
-
-  <xsl:variable name="localinfo" select="@localinfo"/>
 
   <xsl:choose>
     <!-- olinks resolved by stylesheet and target database -->
@@ -1093,13 +1110,17 @@
         <xsl:when test="$href != ''">
           <a href="{$href}">
             <xsl:apply-templates select="." mode="common.html.attributes"/>
+            <xsl:call-template name="id.attribute"/>
             <xsl:copy-of select="$hottext"/>
           </a>
           <xsl:copy-of select="$olink.page.citation"/>
           <xsl:copy-of select="$olink.docname.citation"/>
         </xsl:when>
         <xsl:otherwise>
-          <span class="olink"><xsl:copy-of select="$hottext"/></span>
+          <span class="olink">
+            <xsl:call-template name="id.attribute"/>
+            <xsl:copy-of select="$hottext"/>
+          </span>
           <xsl:copy-of select="$olink.page.citation"/>
           <xsl:copy-of select="$olink.docname.citation"/>
         </xsl:otherwise>
@@ -1107,53 +1128,20 @@
 
     </xsl:when>
 
-    <!-- Or use old olink mechanism -->
     <xsl:otherwise>
-      <xsl:variable name="href">
-        <xsl:choose>
-          <xsl:when test="@linkmode">
-            <!-- use the linkmode to get the base URI, use localinfo as fragid -->
-            <xsl:variable name="modespec" select="key('id',@linkmode)"/>
-            <xsl:if test="count($modespec) != 1                           or local-name($modespec) != 'modespec'">
-              <xsl:message>Warning: olink linkmode pointer is wrong.</xsl:message>
-            </xsl:if>
-            <xsl:value-of select="$modespec"/>
-            <xsl:if test="@localinfo">
-              <xsl:text>#</xsl:text>
-              <xsl:value-of select="@localinfo"/>
-            </xsl:if>
-          </xsl:when>
-          <xsl:when test="@type = 'href'">
-            <xsl:call-template name="olink.outline">
-              <xsl:with-param name="outline.base.uri" select="unparsed-entity-uri(@targetdocent)"/>
-              <xsl:with-param name="localinfo" select="@localinfo"/>
-              <xsl:with-param name="return" select="'href'"/>
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:value-of select="$olink.resolver"/>
-            <xsl:text>?</xsl:text>
-            <xsl:value-of select="$olink.sysid"/>
-            <xsl:value-of select="unparsed-entity-uri(@targetdocent)"/>
-            <!-- XSL gives no access to the public identifier (grumble...) -->
-            <xsl:if test="@localinfo">
-              <xsl:text>&amp;</xsl:text>
-              <xsl:value-of select="$olink.fragid"/>
-              <xsl:value-of select="@localinfo"/>
-            </xsl:if>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:variable>
-    
       <xsl:choose>
-        <xsl:when test="$href != ''">
-          <a href="{$href}">
-            <xsl:apply-templates select="." mode="common.html.attributes"/>
-            <xsl:call-template name="olink.hottext"/>
-          </a>
+        <xsl:when test="@linkmode or @targetdocent or @localinfo">
+          <!-- old olink mechanism -->
+          <xsl:message>
+            <xsl:text>ERROR: olink using obsolete attributes </xsl:text>
+            <xsl:text>@linkmode, @targetdocent, @localinfo are </xsl:text>
+            <xsl:text>not supported.</xsl:text>
+          </xsl:message>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:call-template name="olink.hottext"/>
+          <xsl:message>
+            <xsl:text>ERROR: olink is missing linking attributes.</xsl:text>
+          </xsl:message>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:otherwise>
@@ -1162,53 +1150,6 @@
 
 <xsl:template match="*" mode="pagenumber.markup">
   <!-- no-op in HTML -->
-</xsl:template>
-
-
-<xsl:template name="olink.outline">
-  <xsl:param name="outline.base.uri"/>
-  <xsl:param name="localinfo"/>
-  <xsl:param name="return" select="href"/>
-
-  <xsl:variable name="outline-file" select="concat($outline.base.uri,                                $olink.outline.ext)"/>
-
-  <xsl:variable name="outline" select="document($outline-file,.)/div"/>
-
-  <xsl:variable name="node-href">
-    <xsl:choose>
-      <xsl:when test="$localinfo != ''">
-        <xsl:variable name="node" select="$outline//                                    *[@id=$localinfo or @xml:id=$localinfo]"/>
-        <xsl:value-of select="$node/@href"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$outline/@href"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:variable name="node-xref">
-    <xsl:choose>
-      <xsl:when test="$localinfo != ''">
-        <xsl:variable name="node" select="$outline//                                *[@id=$localinfo or @xml:id=$localinfo]"/>
-        <xsl:copy-of select="$node/xref"/>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:value-of select="$outline/xref"/>
-      </xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
-
-  <xsl:choose>
-    <xsl:when test="$return = 'href'">
-      <xsl:value-of select="$node-href"/>
-    </xsl:when>
-    <xsl:when test="$return = 'xref'">
-      <xsl:value-of select="$node-xref"/>
-    </xsl:when>
-    <xsl:otherwise>
-      <xsl:copy-of select="$node-xref"/>
-    </xsl:otherwise>
-  </xsl:choose>
 </xsl:template>
 
 <!-- ==================================================================== -->
@@ -1224,7 +1165,7 @@
 <!-- ==================================================================== -->
 
 <xsl:template match="title" mode="xref">
-  <xsl:apply-templates/>
+  <xsl:apply-templates mode="no.anchor.mode"/>
 </xsl:template>
 
 <xsl:template match="command" mode="xref">
@@ -1260,9 +1201,9 @@
 
   <xsl:choose>
     <xsl:when test="$purpose = 'xref'">
-      <i>
+      <em xmlns:xslo="http://www.w3.org/1999/XSL/Transform">
         <xsl:copy-of select="$title"/>
-      </i>
+      </em>
     </xsl:when>
     <xsl:otherwise>
       <xsl:copy-of select="$title"/>

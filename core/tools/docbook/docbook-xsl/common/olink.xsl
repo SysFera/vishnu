@@ -2,6 +2,16 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 version="1.0">
 
+<!-- ********************************************************************
+     $Id: olink.xsl 9650 2012-10-26 18:24:02Z bobstayton $
+     ********************************************************************
+
+     This file is part of the DocBook XSL Stylesheet distribution.
+     See ../README or http://docbook.sf.net/ for copyright
+     copyright and other information.
+
+     ******************************************************************** -->
+
 <!-- Create keys for quickly looking up olink targets -->
 <xsl:key name="targetdoc-key" match="document" use="@targetdoc" />
 <xsl:key name="targetptr-key"  match="div|obj"
@@ -45,6 +55,13 @@
         <xsl:text>$target.database.document parameter&#10;</xsl:text>
         <xsl:text>when using olinks with targetdoc </xsl:text>
         <xsl:text>and targetptr attributes.</xsl:text>
+      </xsl:message>
+    </xsl:when>
+    <xsl:when test="namespace-uri($target.database/*) != ''">
+      <xsl:message>
+        <xsl:text>Olink error: the targetset element and children in '</xsl:text>
+        <xsl:value-of select="$target.database.document"/>
+        <xsl:text>' should not be in any namespace.</xsl:text>
       </xsl:message>
     </xsl:when>
     <!-- Did it not open? Should be a targetset element -->
@@ -531,19 +548,36 @@
       </xsl:choose>
     </xsl:variable>
   
+    <!-- Is this olink to be active? -->
+    <xsl:variable name="active.olink">
+      <xsl:choose>
+        <xsl:when test="$activate.external.olinks = 0">
+          <xsl:choose>
+            <xsl:when test="$current.docid = ''">1</xsl:when>
+            <xsl:when test="$targetdoc = ''">1</xsl:when>
+            <xsl:when test="$targetdoc = $current.docid">1</xsl:when>
+            <xsl:otherwise>0</xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>1</xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
     <!-- Form the href information -->
-    <xsl:if test="$baseuri != ''">
-      <xsl:value-of select="$baseuri"/>
-      <xsl:if test="substring($target.href,1,1) != '#'">
-        <!--xsl:text>/</xsl:text-->
+    <xsl:if test="$active.olink != 0">
+      <xsl:if test="$baseuri != ''">
+        <xsl:value-of select="$baseuri"/>
+        <xsl:if test="substring($target.href,1,1) != '#'">
+          <!--xsl:text>/</xsl:text-->
+        </xsl:if>
       </xsl:if>
-    </xsl:if>
-    <!-- optionally turn off frag for PDF references -->
-    <xsl:if test="not($insert.olink.pdf.frag = 0 and
-          translate(substring($baseuri, string-length($baseuri) - 3),
-                    'PDF', 'pdf') = '.pdf'
-          and starts-with($target.href, '#') )">
-      <xsl:value-of select="$target.href"/>
+      <!-- optionally turn off frag for PDF references -->
+      <xsl:if test="not($insert.olink.pdf.frag = 0 and
+            translate(substring($baseuri, string-length($baseuri) - 3),
+                      'PDF', 'pdf') = '.pdf'
+            and starts-with($target.href, '#') )">
+        <xsl:value-of select="$target.href"/>
+      </xsl:if>
     </xsl:if>
   </xsl:if>
 </xsl:template>
@@ -857,7 +891,7 @@
               <xsl:for-each select="$target.database" >
                 <xsl:call-template name="insert.targetdb.data">
                   <xsl:with-param name="data"
-                                  select="key('targetptr-key', $olink.key)/ttl" />
+                                  select="key('targetptr-key', $olink.key)/ttl/node()"/>
                 </xsl:call-template>
               </xsl:for-each>
             </xsl:with-param>
@@ -877,7 +911,7 @@
               <xsl:for-each select="$target.database" >
                 <xsl:call-template name="insert.targetdb.data">
                   <xsl:with-param name="data"
-                       select="key('targetdoc-key', $targetdoc)[1]/div[1]/ttl" />
+                       select="key('targetdoc-key', $targetdoc)[1]/div[1]/ttl/node()" />
                 </xsl:call-template>
               </xsl:for-each>
             </xsl:with-param>
@@ -946,7 +980,7 @@
               <xsl:for-each select="$target.database" >
                 <xsl:call-template name="insert.targetdb.data">
                   <xsl:with-param name="data"
-                                  select="key('targetptr-key', $olink.key)[1]/ttl" />
+                               select="key('targetptr-key', $olink.key)[1]/ttl/node()" />
                 </xsl:call-template>
               </xsl:for-each>
             </xsl:with-param>
@@ -974,7 +1008,7 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:when>
-    <xsl:when test="@targetdoc != '' or @targetptr != ''">
+    <xsl:otherwise>
       <xsl:if test="$olink.key != ''">
         <xsl:message>
           <xsl:text>Olink error: no generated text for </xsl:text>
@@ -984,15 +1018,6 @@
         </xsl:message>
       </xsl:if>
       <xsl:text>????</xsl:text>
-    </xsl:when>
-    <xsl:otherwise>
-      <!-- old style olink -->
-      <xsl:call-template name="olink.outline">
-        <xsl:with-param name="outline.base.uri"
-                        select="unparsed-entity-uri(@targetdocent)"/>
-        <xsl:with-param name="localinfo" select="@localinfo"/>
-        <xsl:with-param name="return" select="'xreftext'"/>
-      </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
@@ -1156,7 +1181,7 @@
     <xsl:for-each select="$target.database" >
       <xsl:call-template name="insert.targetdb.data">
         <xsl:with-param name="data"
-             select="key('targetdoc-key', $targetdoc)[1]/div[1]/ttl" />
+             select="key('targetdoc-key', $targetdoc)[1]/div[1]/ttl/node()" />
       </xsl:call-template>
     </xsl:for-each>
   </xsl:variable>
