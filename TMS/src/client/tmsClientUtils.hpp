@@ -17,7 +17,7 @@
  * \brief Function to get the hostname of a machine id
  *  \param Id of the machine
  */
-inline std::string getMachineName(const std::string & sessionKey, const std::string & machineId);
+inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
 
 /**
  * \brief Function to copy a list of remote files to a local directory
@@ -25,15 +25,17 @@ inline std::string getMachineName(const std::string & sessionKey, const std::str
  * \param rfiles : List of the files to copy
  * \param ldestDir : Destination directory on the local machine
  * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \param missingFiles: The list of missing files*
  * \param startPos : Position of the file
  * \return Throw exception on error
  */
-void copyFiles(const std::string & sessionKey,
-		const std::string & srcMid,
-		const ListStrings & rfiles,
-		const std::string & ldestDir,
-		const CpFileOptions& copts,
-		const int & startPos=0);
+void copyFiles(const std::string& sessionKey,
+               const std::string& srcMid,
+               const ListStrings& rfiles,
+               const std::string& ldestDir,
+               const CpFileOptions& copts,
+               std::string& missingFiles,
+               const int& startPos=0);
 
 /**
  * \brief Function to copy a remote file to a local directory
@@ -45,11 +47,11 @@ void copyFiles(const std::string & sessionKey,
  * \return The copied file or throw exception on error
  */
 std::string
-genericFileCopier(const std::string & sessionKey,
-                  const std::string & srcMachineId,
-                  const std::string & srcPath,
-                  const std::string & destMachineId,
-                  const std::string & destPath,
+genericFileCopier(const std::string& sessionKey,
+                  const std::string& srcMachineId,
+                  const std::string& srcPath,
+                  const std::string& destMachineId,
+                  const std::string& destPath,
                   const CpFileOptions& copts);
 
 
@@ -61,10 +63,10 @@ genericFileCopier(const std::string & sessionKey,
  * \return A string describing the destination file. The function throw exception on error
  */
 std::string
-sendInputFiles(const std::string & sessionKey,
-                  const std::string & srcFiles,
-                  const std::string & destMachineId,
-                  const CpFileOptions & copts);
+sendInputFiles(const std::string& sessionKey,
+               const std::string& srcFiles,
+               const std::string& destMachineId,
+               const CpFileOptions& copts);
 
 /**
  * \brief Function to select a machine for automatic submission
@@ -74,7 +76,7 @@ sendInputFiles(const std::string & sessionKey,
  */
 std::string
 findMachine(const std::string& sessionKey,
-		const TMS_Data::LoadCriterion_ptr & criterion);
+            const TMS_Data::LoadCriterion_ptr& criterion);
 
 /**
  * \brief Function to compute the load performance of a given machine
@@ -84,8 +86,8 @@ findMachine(const std::string& sessionKey,
  */
 static long
 getMachineLoadPerformance(const std::string& sessionKey,
-		const UMS_Data::Machine_ptr& machine,
-		const TMS_Data::LoadCriterion_ptr & criterion);
+                          const UMS_Data::Machine_ptr& machine,
+                          const TMS_Data::LoadCriterion_ptr& criterion);
 
 
 #endif /* TMSCLIENTUTILS_HPP_ */

@@ -160,9 +160,10 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       << " 2> " << stderrFilePath;
 
   int ret;
-  if ((ret=system((cmd.str()).c_str())) != 0) {
-    merrorInfo = vishnu::get_file_content(errorPath, false);
-    merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+  if ((ret=system((cmd.str()).c_str())) != 0) { // The execution of the command failed
+    if (bfs::exists(stderrFilePath)) {
+      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+    }
     if (merrorInfo.find("password") != std::string::npos) {
       merrorInfo.append(" You must copy the VISHNU publickey in your authorized_keys file.");
     }
@@ -174,42 +175,45 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     }
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
+  }
+
+  // Command has been executed successfully
+  std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
+  TMS_Data::Job_ptr job = NULL;
+  if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
+    ::ecorecpp::serializer::serializer _ser;
+    mjobSerialized = _ser.serialize_str(job);
+    wellSubmitted = true;
+    delete job;
   } else {
-    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
-    TMS_Data::Job_ptr job = NULL;
-    if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      ::ecorecpp::serializer::serializer _ser;
-      mjobSerialized = _ser.serialize_str(job);
-      wellSubmitted = true;
-      delete job;
-    } else {
-      merrorInfo = "SSHJobExec::sshexec: job object is not well built";
-      CLEANUP_SUBMITTING_DATA(mdebugLevel);
-      throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
-    }
+    merrorInfo = "SSHJobExec::sshexec: job object is not well built";
+    CLEANUP_SUBMITTING_DATA(mdebugLevel);
+    throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
+  }
+  if (bfs::exists(errorPath)) {
     merrorInfo.append(vishnu::get_file_content(errorPath, false));
-    errorMsgIsSet = true;
-    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
-      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
-      if (mbatchType==LOADLEVELER) {
-        merrorInfo.append("==>LOADLEVELER ERROR");
-      }
-      if (mbatchType==LSF) {
-        merrorInfo.append("==>LSF ERROR");
-      }
+  }
+  errorMsgIsSet = true;
+  if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+    merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+    if (mbatchType==LOADLEVELER) {
+      merrorInfo.append("==>LOADLEVELER ERROR");
+    }
+    if (mbatchType==LSF) {
+      merrorInfo.append("==>LSF ERROR");
     }
   }
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
 }
 
 /**
- * \brief Function to execute a script remotely
- * \param scriptPath the path to script to submit
- * \param nfsServer: The NFS server
- * \param nfsMountPointthe mount point on the NFS server
- * \param workDir The wordking directory of the job
- * \return raises an exception on error
- */
+     * \brief Function to execute a script remotely
+     * \param scriptPath the path to script to submit
+     * \param nfsServer: The NFS server
+     * \param nfsMountPointthe mount point on the NFS server
+     * \param workDir The wordking directory of the job
+     * \return raises an exception on error
+     */
 int
 SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              const std::string & nfsServer,
@@ -264,10 +268,10 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
 
 /**
- * \brief Function to convert the batch type to string
- * \param BatchType the batch type to convert
- * \return the converted batch type
- */
+     * \brief Function to convert the batch type to string
+     * \param BatchType the batch type to convert
+     * \return the converted batch type
+     */
 std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
   std::string value;
   switch(batchType) {
@@ -303,13 +307,13 @@ std::string SSHJobExec::convertBatchTypeToString(BatchType batchType) {
 }
 
 /**
- * \brief Function to copy files from remote machine
- * \param outputPath the output path to get
- * \param errorPath the error path to get
- * \param copyOfOutputPath the copy of the outputPath
- * \param copyOfErrorPath the copy of errorPath
- * \return raises an exception on error
- */
+     * \brief Function to copy files from remote machine
+     * \param outputPath the output path to get
+     * \param errorPath the error path to get
+     * \param copyOfOutputPath the copy of the outputPath
+     * \param copyOfErrorPath the copy of errorPath
+     * \return raises an exception on error
+     */
 int
 SSHJobExec::copyFiles(const std::string& outputPath,
                       const std::string& errorPath,
@@ -335,10 +339,10 @@ SSHJobExec::copyFiles(const std::string& outputPath,
 }
 
 /**
- * \brief Function to copy files from remote machine
- * \param path the path of the file
- * \return raises an exception on error
- */
+     * \brief Function to copy files from remote machine
+     * \param path the path of the file
+     * \return raises an exception on error
+     */
 int
 SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 
@@ -352,12 +356,12 @@ SSHJobExec::copyFile(const std::string& path, const std::string& dest) {
 }
 
 /**
- * \brief Function to execute a command via ssh
- * \param cmd the command to execute
- * \param background: Tell whether launch the script is background
- * \param outDir the directory when the output will be stored
- * \param pid: return value containing the pid of the of the running background process
- */
+     * \brief Function to execute a command via ssh
+     * \param cmd the command to execute
+     * \param background: Tell whether launch the script is background
+     * \param outDir the directory when the output will be stored
+     * \param pid: return value containing the pid of the of the running background process
+     */
 int
 SSHJobExec::execCmd(const std::string& cmd,
                     const bool & background,
@@ -393,10 +397,10 @@ SSHJobExec::execCmd(const std::string& cmd,
 }
 
 /**
- * \brief To mount a NFS directory to a remote server
- * \param host: The NFS server
- * \param point the mount point on the NFS server
- */
+     * \brief To mount a NFS directory to a remote server
+     * \param host: The NFS server
+     * \param point the mount point on the NFS server
+     */
 void
 SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
 

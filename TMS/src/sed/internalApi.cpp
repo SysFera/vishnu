@@ -19,6 +19,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
+#include <boost/filesystem/path.hpp>
 
 
 //EMF
@@ -340,7 +341,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
 
 
     TMS_Data::JobResult_ptr jobResult = NULL;
-    if(!parseEmfObject(jobResultSerialized, jobResult)) {
+    if (!parseEmfObject(jobResultSerialized, jobResult)) {
       throw SystemException(ERRCODE_INVDATA, "solveJobOutPutGetResult: jobResult object is not well built");
     }
 
@@ -348,11 +349,10 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
     TMS_Data::JobResult result = jobOutputServer.getJobOutput();
     string jobFiles =  vishnu::getResultFiles(result, false) ;
-    string outputInfo = "/tmp/vishnu-"+result.getJobId()+"-outdescrXXXXXX"; // extension by convention
+    string outputInfo = bfs::unique_path("/tmp/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
+    vishnu::saveInFile(outputInfo, jobFiles);
 
-    vishnu::createTmpFile(const_cast<char*>(outputInfo.c_str()), jobFiles) ;
-
-    diet_string_set(pb,4, outputInfo.c_str());
+    diet_string_set(pb,4, outputInfo);
 
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -365,7 +365,6 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     diet_string_set(pb,4, e.buildExceptionString().c_str());
-
   }
   return 0;
 }
@@ -479,7 +478,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
   diet_string_get(pb,2, moutDir);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
@@ -498,10 +496,10 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     int nbResult = completedJobsOutput->getResults().size() ;
     for(size_t i = 0; i < nbResult; i++) {
       ostringstream missingFiles ; missingFiles.clear() ;
-      ossFileName << vishnu::getResultFiles(*completedJobsOutput->getResults().get(i), true) ;
+      ossFileName << vishnu::getResultFiles(*completedJobsOutput->getResults().get(i), true);
     }
-    string outputInfo = "/tmp/vishnu-outdescrXXXXXX"; // extension by convention
-    vishnu::createTmpFile(const_cast<char*>(outputInfo.c_str()), ossFileName.str()) ;
+    string outputInfo = bfs::unique_path("/tmp/vishnu-outdescr%%%%%%%").string();
+    vishnu::saveInFile(outputInfo, ossFileName.str());
 
     diet_string_set(pb,3, outputInfo.c_str());
     diet_string_set(pb,4, jobsOutputSerialized.c_str());

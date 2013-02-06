@@ -23,7 +23,7 @@ namespace bfs = boost::filesystem;
  * \brief Function to get the hostname of a machine id
  *  \param Id of the machine
  */
-std::string getMachineName(const std::string & sessionKey, const std::string & machineId) {
+std::string getMachineName(const std::string& sessionKey, const std::string& machineId) {
 
   UMS_Data::ListMachines machines;
   UMS_Data::ListMachineOptions mopts;
@@ -38,23 +38,29 @@ std::string getMachineName(const std::string & sessionKey, const std::string & m
 
 /**
  * \brief Function to copy a list of remote files to a local directory
- * \param srcMid : Id of the remote machine
- * \param rfiles : List of the files to copy
- * \param ldestDir : Destination directory on the local machine
- * \param copts : Copy option (false => non recursive, 0 => scp)
- * \param startPos : Position of the file
+ * \param srcMid: Id of the remote machine
+ * \param rfiles: List of the files to copy
+ * \param ldestDir: Destination directory on the local machine
+ * \param copts: Copy option (false => non recursive, 0 => scp)
+ * \param missingFiles: The list of missing files
+ * \param startPos: Position of the file
  * \return Throw exception on error
  */
-void copyFiles(const std::string & sessionKey,
-               const std::string & srcMid,
-               const ListStrings & rfiles,
-               const std::string & ldestDir,
+void copyFiles(const std::string& sessionKey,
+               const std::string& srcMid,
+               const ListStrings& rfiles,
+               const std::string& ldestDir,
                const CpFileOptions& copts,
-               const int & startPos) {
-
+               std::string& missingFiles,
+               const int& startPos) {
+  missingFiles.clear();
   int nbFiles = rfiles.size() ;
-  for(int i=startPos; i<nbFiles; i++) {
-    genericFileCopier(sessionKey, srcMid, rfiles[i], "", ldestDir, copts);
+  for (int i=startPos; i<nbFiles; i++) {
+    try {
+      genericFileCopier(sessionKey, srcMid, rfiles[i], "", ldestDir, copts);
+    } catch (...) {
+      missingFiles+=rfiles[i]+"\n";
+    }
   }
 }
 
@@ -69,27 +75,20 @@ void copyFiles(const std::string & sessionKey,
  * \return The copied file or throw exception on error
  */
 std::string
-genericFileCopier(const std::string & sessionKey,
-                  const std::string & srcMachineId,
-                  const std::string & srcPath,
-                  const std::string & destMachineId,
-                  const std::string & destPath,
+genericFileCopier(const std::string& sessionKey,
+                  const std::string& srcMachineId,
+                  const std::string& srcPath,
+                  const std::string& destMachineId,
+                  const std::string& destPath,
                   const CpFileOptions& copts) {
-  string src = srcPath;
-  if (srcMachineId.size() != 0) {
-    src = srcMachineId + ":" + src;
-  }
-
-  string dest = destPath;
-  if (destMachineId.size() != 0) {
-    dest = destMachineId + ":" + dest;
-  }
-
+  string src = "";
+  string dest = "";
+  src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
+  dest = destMachineId.empty()? destPath : destMachineId+":"+destPath;
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
     string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost";
     string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost";
     string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)") % src % dest % srcMachine % destMachine);
-
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, msg);
   }
 
@@ -104,9 +103,9 @@ genericFileCopier(const std::string & sessionKey,
  * \return A string describing the destination file. The function throw exception on error
  */
 std::string
-sendInputFiles(const std::string & sessionKey,
-               const std::string & srcFiles,
-               const std::string & destMachineId,
+sendInputFiles(const std::string& sessionKey,
+               const std::string& srcFiles,
+               const std::string& destMachineId,
                const CpFileOptions& copts) {
 
   ListStrings listFiles ;
@@ -150,7 +149,7 @@ sendInputFiles(const std::string & sessionKey,
  */
 std::string
 findMachine(const std::string& sessionKey,
-            const TMS_Data::LoadCriterion_ptr & criterion) {
+            const TMS_Data::LoadCriterion_ptr& criterion) {
 
   // First list all active machines where we have a local account
   // FIXME: Update the selection option so to ensure that we do not select an inactive machine
