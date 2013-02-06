@@ -22,14 +22,15 @@ fi
 # Get common functions and variables
 source scripts/common.sh
 
+VISHNUTAR=deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz
 
-if [ ! -f deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz ]; then
-  echo "Missing release file:  deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz"
+if [ ! -f ${VISHNUTAR} ]; then
+  echo "Missing release file:  ${VISHNUTAR}"
   echo "Please run ALL_prepareScript.sh first!"
   exit 1
 fi
 
-echo "## Trying to compile VISHNU v${NO_VERSION} extracted from deliverables/release/VISHNU_$NO_VERSION/vishnu_v${NO_VERSION}.tgz"
+echo "## Trying to compile VISHNU v${NO_VERSION} extracted from ${VISHNUTAR}"
 
 
 
@@ -37,12 +38,12 @@ echo "## Trying to compile VISHNU v${NO_VERSION} extracted from deliverables/rel
 #                            COMPILATION                             #
 ######################################################################
 tmpdir=`mktemp -d /tmp/vishnu_XXXXXX`
-cp  deliverables/release/VISHNU_$NO_VERSION/vishnu_v${NO_VERSION}.tgz $tmpdir
+run_cmd cp  ${VISHNUTAR} $tmpdir
 
 change_dir $tmpdir
 
 run_cmd tar xvf vishnu_v${NO_VERSION}.tgz >/dev/null 2>&1
-change_dir VISHNU_${NO_VERSION}
+change_dir VISHNU_v${NO_VERSION}
 
 run_cmd mkdir build
 change_dir build
