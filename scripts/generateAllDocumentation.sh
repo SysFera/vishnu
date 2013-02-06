@@ -21,6 +21,9 @@ fi
 # Get common functions and variables
 source scripts/common.sh
 
+MANPAGESXSL=${vishnuDir}/core/tools/docbook/docbook-xsl/manpages/docbook.xsl
+HTMLXSL=${vishnuDir}/core/tools/docbook/docbook-xsl/xhtml/docbook.xsl
+PDFSTY=${vishnuDir}/core/tools/docbook/dblatex/docbook-sysfera.sty
 
 ######################################################################
 #                            FUNCTIONS                               #
@@ -36,17 +39,16 @@ function generate_doc () {
     FILEBASENAME=$2
 
     # PDF generation
-    run_cmd dblatex -s ${vishnuDir}/core/tools/docbook/dblatex/docbook-sysfera.sty ${FILEBASENAME}.docbook
-    run_cmd mv ${FILEBASENAME}.docbook.pdf ${FILEBASENAME}.pdf
+    run_cmd dblatex -s ${PDFSTY} -o ${FILEBASENAME}.pdf ${FILEBASENAME}.docbook
     
     # HTML generation
-    run_cmd xsltproc --param ignore.image.scaling 1 ${vishnuDir}/core/tools/docbook/docbook-xsl/xhtml/docbook.xsl ${FILEBASENAME}.docbook > ${FILEBASENAME}.html
+    run_cmd xsltproc -o ${FILEBASENAME}.html --param ignore.image.scaling 1 ${HTMLXSL} ${FILEBASENAME}.docbook
 
     cd $cur
 }
 
 function generate_man () {
-    cur=$PWD
+    cur=${PWD}
     cd $1
 
     # Create temporary directory
@@ -59,7 +61,7 @@ function generate_man () {
     
     for i in ${@:2}; do
         FILEBASENAME=$i
-        run_cmd xsltproc $PWD/docbook/${FILEBASENAME}.docbook 
+        run_cmd xsltproc ${MANPAGESXSL} $PWD/docbook/${FILEBASENAME}.docbook 
 
         # move of files
         run_cmd mv *.1 man1
@@ -82,7 +84,7 @@ doxygen Doxyfile_API
 
 # generate adminman, userman and quickstart
 generate_doc core/doc/adminmanual/docbook adminman-gen
-generate_doc core/doc/adminmanual/docbook adminman_eng-gen
+# generate_doc core/doc/adminmanual/docbook adminman_eng-gen
 generate_doc core/doc/usermanual/docbook userman-gen
 generate_doc core/doc/quickstart quick-start
 
