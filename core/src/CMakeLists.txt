@@ -7,8 +7,6 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${MOCK_INCLUDE_DIR}
-  ${ZMQ_INCLUDE_DIR}
-  ZMQHelper
   )
 
 #################### config ###################################################
