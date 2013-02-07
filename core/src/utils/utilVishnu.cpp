@@ -434,7 +434,7 @@ vishnu::convertStringToWallTime(const std::string& walltime_) {
       pos =  walltime.rfind(":", size-1);
       if(pos!=std::string::npos) {
         if((size-pos > 1)) {
-          throw std::runtime_error("Invalid walltime value: " + walltime);
+          throw UserException(ERRCODE_INVALID_PARAM, "Invalid walltime value: " + walltime);
         }
       } else {
         value = walltime.substr(0, size);
@@ -447,7 +447,7 @@ vishnu::convertStringToWallTime(const std::string& walltime_) {
     long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
     return walltimeInSeconds;
   } else {
-    throw UserException(ERRCODE_INVALID_PARAM, ("Invalid walltime value: The given value is empty"));
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid walltime value: The given value is empty");
   }
 }
 
