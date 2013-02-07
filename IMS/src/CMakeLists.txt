@@ -12,7 +12,6 @@ include_directories(client api utils
   ${SIGAR_INCLUDE_DIR}
   ${ZMQ_INCLUDE_DIR}
   ${MOCK_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   ${XMLRPC_INCLUDE_DIR}
 )
 
