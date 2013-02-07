@@ -105,7 +105,7 @@ ums_uriAddr=tcp://127.0.0.1:5562
 
 # sendmailScriptPath (M<UMS>): Sets the path to the script for sending emails
 #
-sendmailScriptPath=/opt/software/GIT/vishnu_1/core/src/utils/sendmail.py
+sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/@SBIN_INSTALL_DIR@/sendmail.py
 
 # authenticationType (M<UMS>): Defines the underlying authentication mode
 # VISHNU supports four modes of authentication:
@@ -211,7 +211,7 @@ intervalMonitor=30
 #
 vishnuMachineId=machine_1
 
-# timeout (M<Dispatcher>|O<FMS,IMS,TMS,UMS>): In seconds, this defines the
+# timeout (M<Dispatcher>|O<FMS,IMS,TMS,UMS,Client>): In seconds, this defines the
 # duration afer which a request is considered as expired.
 #
 timeout=120
