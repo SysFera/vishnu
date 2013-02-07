@@ -9,7 +9,6 @@ include_directories(client api
   ${Boost_INCLUDE_DIRS}
   ${ZMQ_INCLUDE_DIR}
   ${MOCK_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
 )
 
 set(client_SRCS client/FileProxy
