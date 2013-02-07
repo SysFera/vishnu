@@ -161,11 +161,19 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
       << cmdDetails
       << " 2> " << stderrFilePath;
 
-  int ret;
-  if ((ret=system((cmd.str()).c_str())) != 0) { // The execution of the command failed
-    if (bfs::exists(stderrFilePath)) {
-      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
-    }
+  // Execute the command
+  int ret = system((cmd.str()).c_str());
+
+  // Treat possibly errors
+  if (bfs::exists(errorPath)) {
+     merrorInfo.append(vishnu::get_file_content(errorPath, false));
+  }
+  if (bfs::exists(stderrFilePath)) {
+    merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+  }
+
+  // Check if something went false
+  if (ret || !merrorInfo.empty()) {
     if (merrorInfo.find("password") != std::string::npos) {
       merrorInfo.append(" You must copy the VISHNU publickey in your authorized_keys file.");
     }
@@ -180,7 +188,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 
-  // Command has been executed successfully
+  // The command has been executed successfully
   std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
   TMS_Data::Job_ptr job = NULL;
   if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
@@ -193,9 +201,6 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
     LOG(merrorInfo, mdebugLevel);
     throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
-  }
-  if (bfs::exists(errorPath)) {
-    merrorInfo.append(vishnu::get_file_content(errorPath, false));
   }
   errorMsgIsSet = true;
   if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {

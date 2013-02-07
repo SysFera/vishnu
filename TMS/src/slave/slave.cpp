@@ -105,34 +105,32 @@ main(int argc, char* argv[], char* envp[]) {
   BatchServer* batchServer;
 
   try {
-
     //To create batchServer Factory
     BatchFactory factory;
     batchServer = factory.getBatchServerInstance(batchType, batchVersion);
     if (batchServer==NULL) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: getBatchServerInstance return NULL instance");
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: getBatchServerInstance return NULL instance");
     }
     std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
-    if (!parseEmfObject(std::string(jobSerialized), job)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: job object is not well built");
+    if (!parseEmfObject(jobSerialized, job)) {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: job object is not well built");
     }
 
     if (action.compare("SUBMIT")==0) {
       std::string options  = vishnu::get_file_content(optionsPath);
       if(!parseEmfObject(std::string(options), submitOptions)) {
-        throw UMSVishnuException(ERRCODE_INVALID_PARAM, "slave: SubmitOptions object is not well built");
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
       }
-
       //Submits the job
-      if (batchServer->submit(jobScriptPath, *submitOptions, *job)==0){;
-        //To serialize the job object
-        ::ecorecpp::serializer::serializer _ser;
-        std::string slaveJob = _ser.serialize_str(job);
-
-        std::ofstream os_slaveJobFile(slaveJobFile);
-        os_slaveJobFile << slaveJob;
-        os_slaveJobFile.close();
+      if (batchServer->submit(jobScriptPath, *submitOptions, *job)!=0) {
+        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
+      //To serialize the job object
+      ::ecorecpp::serializer::serializer _ser;
+      std::string slaveJob = _ser.serialize_str(job);
+      std::ofstream os_slaveJobFile(slaveJobFile);
+      os_slaveJobFile << slaveJob;
+      os_slaveJobFile.close();
     } else if (action.compare("CANCEL")==0) {
       //To cancel the job
       std::string jobdDescr = job->getJobId();
@@ -156,6 +154,5 @@ main(int argc, char* argv[], char* envp[]) {
   delete job;
   delete submitOptions;
   delete batchServer;
-
   return 0;
 }

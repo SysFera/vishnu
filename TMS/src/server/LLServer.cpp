@@ -1,13 +1,9 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-
 #include <boost/algorithm/string.hpp>
-
 #include "llapi.h"
-
 #include "LLServer.hpp"
-
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 
@@ -40,8 +36,8 @@ LLServer::submit(const char* scriptPath,
 
   LL_job llJobInfo;
   if(llsubmit(const_cast<char*>(scriptPath), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {
-    return -1 ;//error messages are written to stderr, VISHNU redirects these messages into a file
-  };
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LLServer::submit: the submission failed");
+  }
 
   std::ostringstream llJobId;
   llJobId<< (llJobInfo.step_list[0])->id.from_host;

@@ -238,6 +238,7 @@ vishnu::get_file_content(const std::string& filePath,
   // Read the whole file into string
   std::stringstream ss;
   ss << ifs.rdbuf();
+  ifs.close();
   return ss.str();
 }
 
