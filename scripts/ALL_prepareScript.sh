@@ -120,7 +120,7 @@ copy_file core/deps/CMakeLists.txt core/deps/
 copy_dir core/deps/emf4cpp core/deps/
 
 # Copy ZMQ files
-copy_dir mockZMQ
+copy_dir communication
 
 
 

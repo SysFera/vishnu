@@ -10,7 +10,7 @@ include_directories(
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/
+  ${VISHNU_SOURCE_DIR}/communication/
   ${Boost_INCLUDE_DIR}
 )
 

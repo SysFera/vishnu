@@ -29,4 +29,6 @@ if (BUILD_TESTING)
   #file(TO_NATIVE_PATH "${TEST_DISPATCHER_INIT_CFG}" TEST_DISPATCHER_INIT_CONFIG)
   #configure_file(${CMAKE_CURRENT_SOURCE_DIR}/dispatcher_init.cfg.in ${TEST_DISPATCHER_INIT_CONFIG})
 
+  add_subdirectory(mock/database)
+
 endif(BUILD_TESTING)

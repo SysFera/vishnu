@@ -1,8 +1,8 @@
 
 include_directories(${CONFIG_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
-  ${VISHNU_SOURCE_DIR}/mockZMQ
-  ${VISHNU_SOURCE_DIR}/mockZMQ/tests
+  ${VISHNU_SOURCE_DIR}/communication
+  ${VISHNU_SOURCE_DIR}/communication/tests
   ${UTILVISHNU_SOURCE_DIR}
   ${EMF_DATA_DIR}
   ${TMS_EMF_DATA_DIR}

@@ -385,7 +385,7 @@ endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
 ######################################################################
 # mock
 set(MOCK_INCLUDE_DIR
-  ${VISHNU_SOURCE_DIR}/mockZMQ
+  ${VISHNU_SOURCE_DIR}/communication
 )
 
 #Core
@@ -495,7 +495,7 @@ if (BUILD_TESTING)
   add_subdirectory(core/test)
 endif (BUILD_TESTING)
 
-add_subdirectory(mockZMQ)
+add_subdirectory(communication)
 
 
 if(COMPILE_UMS)
