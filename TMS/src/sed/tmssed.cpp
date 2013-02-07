@@ -23,6 +23,9 @@
 #include "zmq.hpp"
 #include "DIET_client.h"
 #include "Server.hpp"
+#include "DbFactory.hpp"
+#include "zhelpers.hpp"
+#include "CommServer.cpp"
 
 #include <signal.h>
 

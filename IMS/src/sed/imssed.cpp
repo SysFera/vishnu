@@ -15,6 +15,11 @@
 #include <sys/types.h>
 #include <signal.h>
 
+#include "Server.hpp"
+#include "DbFactory.hpp"
+#include "zhelpers.hpp"
+#include "CommServer.cpp"
+
 using namespace vishnu;
 using namespace boost;
 /**

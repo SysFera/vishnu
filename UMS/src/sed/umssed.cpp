@@ -14,6 +14,8 @@
 #include "zmq.hpp"
 #include "DIET_client.h"
 #include "Server.hpp"
+#include "zhelpers.hpp"
+#include "CommServer.cpp"
 
 using namespace vishnu;
 

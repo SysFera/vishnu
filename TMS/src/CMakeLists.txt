@@ -75,8 +75,6 @@ if (COMPILE_SERVERS)
     vishnu-ums-server
     vishnu-tms-server
     emf4cpp-vishnu
-    ${ZMQ_LIBRARIES}
-    zmq_helper
     )
 
   set(sed_SRCS sed/tmssed.cpp

@@ -86,13 +86,6 @@ namespace vishnu {
   static const int PDOWN = 2;
 
   /**
-   * \brief Check if the URI does not contain any star symbol,  throws an exception if it is the case
-   * \param uri the URI to check
-   */
-  void
-  validateUri(const std::string & uri);
-
-  /**
    * \brief Return if the server on the machine is already declared
    * \param urlsup the url of the supervisor
    * \param mid the machine id
@@ -101,25 +94,6 @@ namespace vishnu {
    */
   bool
   isNew(std::string urlsup, std::string mid, std::string type);
-
-  /**
-   * \brief To register the server in the database
-   * \param type The type of the SeD
-   * \param config The configuration of the executable
-   * \param cfg The created path to the config file
-   * \param services The list of services
-   * \return 0 if the function succeeds or another value otherwise
-   */
-  int
-  registerSeD(std::string type, ExecConfiguration config, std::string &cfg, std::vector<std::string>& services);
-  /**
-   * \brief To unregister the server in the database (set as stopped)
-   * \param type The type of the SeD
-   * \param mid The machine id
-   * \return 0 if the function succeeds or another value otherwise
-   */
-  int
-  unregisterSeD(std::string type, ExecConfiguration config);
 
   /**
    * \brief Return true if the string starts with 'MONTH'

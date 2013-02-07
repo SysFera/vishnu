@@ -6,16 +6,16 @@
 
 BOOST_AUTO_TEST_SUITE( utilServer_unit_tests )
 
-BOOST_AUTO_TEST_CASE( test_validateUri_n )
-{
-
-  std::string input_1 = "tcp://toto";
-  std::string input_2 = "tcp://*";
-
-  vishnu::validateUri(input_1);
-  BOOST_REQUIRE_THROW(vishnu::validateUri(input_2), VishnuException);
-  BOOST_MESSAGE("Test validate URI OK");
-}
+//BOOST_AUTO_TEST_CASE( test_validateUri_n )
+//{
+//
+//  std::string input_1 = "tcp://toto";
+//  std::string input_2 = "tcp://*";
+//
+//  vishnu::validateUri(input_1);
+//  BOOST_REQUIRE_THROW(vishnu::validateUri(input_2), VishnuException);
+//  BOOST_MESSAGE("Test validate URI OK");
+//}
 
 BOOST_AUTO_TEST_CASE( test_isMonth_n )
 {
