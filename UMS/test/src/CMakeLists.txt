@@ -14,8 +14,7 @@ include_directories(
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
+  ${COMMUNICATION_INCLUDE_DIR}
   )
 
 

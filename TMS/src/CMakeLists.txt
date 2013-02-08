@@ -9,10 +9,9 @@ include_directories(client api
   ${Boost_INCLUDE_DIRS}
   ${PROJECT_BINARY_DIR}/include/
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
   ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   ${CONFIG_SOURCE_DIR})
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
@@ -81,7 +80,7 @@ if (COMPILE_SERVERS)
     sed/ServerTMS.cpp
     sed/internalApi.cpp
     sed/MonitorTMS.cpp
-    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     )
 
   
