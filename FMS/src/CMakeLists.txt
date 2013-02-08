@@ -8,7 +8,7 @@ include_directories(client api
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
 )
 
 set(client_SRCS client/FileProxy
@@ -63,7 +63,7 @@ if(COMPILE_SERVERS)
     sed/lsSrv.cpp
     sed/transferSrv.cpp
     sed/MonitorFMS.cpp
-    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
 )
 
   set(server_SRCS

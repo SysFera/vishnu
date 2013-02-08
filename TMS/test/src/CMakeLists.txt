@@ -19,7 +19,6 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   ${FMS_TEST_SOURCE_DIR}
   ${CONFIG_SOURCE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
 

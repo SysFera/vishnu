@@ -11,7 +11,7 @@ include_directories(client api utils
   ${Boost_INCLUDE_DIRS}
   ${SIGAR_INCLUDE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
   ${XMLRPC_INCLUDE_DIR}
 )
 
@@ -59,7 +59,7 @@ if(COMPILE_SERVERS)
   set(sed_SRCS sed/imssed.cpp
     sed/ServerIMS.cpp
     sed/internalApiIMS.cpp
-    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     )
   set(server_SRCS 
     server/controller/HM/HM.cpp

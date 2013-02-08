@@ -6,7 +6,7 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${DATABASE_INCLUDE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
-  ${MOCK_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
   )
 
 #################### config ###################################################

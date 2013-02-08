@@ -8,7 +8,7 @@ include_directories(client api
   ${PROJECT_BINARY_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
-  ${MOCK_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
   )
 
 set(client_SRCS client/SessionProxy.cpp
@@ -72,7 +72,7 @@ if(COMPILE_SERVERS)
     sed/ServerUMS.cpp
     sed/internalApi.cpp
     sed/MonitorUMS.cpp
-    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     )
 
   set(server_SRCS server/SessionServer.cpp

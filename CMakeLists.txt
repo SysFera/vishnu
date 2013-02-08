@@ -383,8 +383,8 @@ endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
 ######################################################################
 #                           COMPILATION                              #
 ######################################################################
-# mock
-set(MOCK_INCLUDE_DIR
+# communication
+set(COMMUNICATION_INCLUDE_DIR
   ${VISHNU_SOURCE_DIR}/communication
 )
 
