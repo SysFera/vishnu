@@ -62,7 +62,9 @@ if(COMPILE_SERVERS)
     sed/chmodSrv.cpp
     sed/lsSrv.cpp
     sed/transferSrv.cpp
-    sed/MonitorFMS.cpp)
+    sed/MonitorFMS.cpp
+    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+)
 
   set(server_SRCS
     server/File.cpp

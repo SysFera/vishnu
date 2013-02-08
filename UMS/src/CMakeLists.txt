@@ -9,7 +9,6 @@ include_directories(client api
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
   ${MOCK_INCLUDE_DIR}
-  ${VISHNU_SOURCE_DIR}/mockZMQ/ZMQHelper
   )
 
 set(client_SRCS client/SessionProxy.cpp
@@ -72,7 +71,9 @@ if(COMPILE_SERVERS)
   set(sed_SRCS sed/umssed.cpp
     sed/ServerUMS.cpp
     sed/internalApi.cpp
-    sed/MonitorUMS.cpp)
+    sed/MonitorUMS.cpp
+    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    )
 
   set(server_SRCS server/SessionServer.cpp
     server/UserServer.cpp
