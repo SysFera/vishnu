@@ -25,7 +25,7 @@
 #include "Server.hpp"
 #include "DbFactory.hpp"
 #include "zhelpers.hpp"
-#include "CommServer.cpp"
+#include "CommServer.hpp"
 
 #include <signal.h>
 

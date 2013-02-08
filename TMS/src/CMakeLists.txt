@@ -80,7 +80,9 @@ if (COMPILE_SERVERS)
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
     sed/internalApi.cpp
-    sed/MonitorTMS.cpp)
+    sed/MonitorTMS.cpp
+    ${MOCK_INCLUDE_DIR}/CommServer.cpp
+    )
 
   
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")

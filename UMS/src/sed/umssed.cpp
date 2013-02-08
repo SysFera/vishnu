@@ -15,7 +15,7 @@
 #include "DIET_client.h"
 #include "Server.hpp"
 #include "zhelpers.hpp"
-#include "CommServer.cpp"
+#include "CommServer.hpp"
 
 using namespace vishnu;
 

@@ -18,7 +18,7 @@
 #include "Server.hpp"
 #include "DbFactory.hpp"
 #include "zhelpers.hpp"
-#include "CommServer.cpp"
+#include "CommServer.hpp"
 
 using namespace vishnu;
 using namespace boost;

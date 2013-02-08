@@ -1,23 +1,33 @@
+#include "CommServer.hpp"
+#include "Database.hpp"
+#include "DbFactory.hpp"
+#include "utilVishnu.hpp"
+#include "utilServer.hpp"
+#include "SystemException.hpp"
+#include "zmq.hpp"
+#include "DIET_client.h"
+#include "Server.hpp"
+#include "zhelpers.hpp"
 
-inline int
-unregisterSeD(string type, ExecConfiguration config) {
+int
+unregisterSeD(std::string type, ExecConfiguration config) {
   return 0;
 }
 
-inline void
-validateUri(const string & uri) {
+void
+validateUri(const std::string & uri) {
   size_t pos = uri.find("*");
-  if (pos != string::npos) {
+  if (pos != std::string::npos) {
     throw UserException(ERRCODE_INVALID_PARAM, std::string("W: character '*' is not permitted in the uri"));
   }
 }
 
-inline int
-registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std::string>& services){
-  string uri;
-  string mid;
-  string uridispatcher;
-  string urlsup;
+int
+registerSeD(std::string type, ExecConfiguration config, std::string& cfg, std::vector<std::string>& services){
+  std::string uri;
+  std::string mid;
+  std::string uridispatcher;
+  std::string urlsup;
   int timeout;
 
   // Getting the machine id
@@ -41,8 +51,8 @@ registerSeD(string type, ExecConfiguration config, string& cfg, std::vector<std:
   validateUri(uridispatcher);
 
   // Register in database
-  if (isNew(urlsup, mid, type)){
-    std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+convertToString(PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
+  if (vishnu::isNew(urlsup, mid, type)){
+    std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+vishnu::convertToString(vishnu::PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
     try {
       DbFactory factory;
       Database* database = factory.getDatabaseInstance();
