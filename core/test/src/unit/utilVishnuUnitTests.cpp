@@ -181,10 +181,10 @@ BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_n )
 
 
   // Only seconds
-  BOOST_REQUIRE(vishnu::convertStringToWallTime(wall10) == 10);
-  BOOST_REQUIRE(vishnu::convertStringToWallTime(wall10b) == 10);
-  BOOST_REQUIRE(vishnu::convertStringToWallTime(wall10a) == 10);
-  BOOST_REQUIRE(vishnu::convertStringToWallTime(wall10ab) == 10);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10), 10);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10b), 10);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10a), 10);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10ab), 10);
 
   // minutes:seconds
   BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670), 670);
