@@ -373,7 +373,6 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
   boost::regex reg("^\"?(\\d+)(?::(\\d+))?(?::(\\d+))?(?::(\\d+))?\"?$");
   boost::smatch groups;
 
-  boost::smatch::const_iterator it;
   long time = 0;
 
   if (boost::regex_match(walltime, groups, reg)) {
