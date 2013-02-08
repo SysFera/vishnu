@@ -20,8 +20,8 @@ namespace ba=boost::algorithm;
  * \param scriptGenContent the generic script to convert
  */
 ScriptGenConvertor::ScriptGenConvertor(const int batchType,
-                                       const std::string& scriptGenContent): 
-  mbatchType(batchType), mscriptGenContent(scriptGenContent) 
+                                       const std::string& scriptGenContent):
+  mbatchType(batchType), mscriptGenContent(scriptGenContent)
 {
 	if(mbatchType==LOADLEVELER) {
 
@@ -37,7 +37,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 		mconversionTable[mem]                  = "# @ data_limit=";//a voir
 		mconversionTable[mailNotification]     = "# @ notification=";//special case
 		mconversionTable[mailNotifyUser]       = "# @ notify_user=";
-    mconversionTable[queue]                = "# @ class="; 
+    mconversionTable[queue]                = "# @ class=";
 
 		mconversionTable[loadLevelerSec]       = "";
 		mconversionTable[commandSec]           = "";
@@ -98,7 +98,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 		mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
 		mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
 		mconversionTable[mem]                  = "#SBATCH --mem=";
-    mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case; 
+    mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case;
 		mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
 		mconversionTable[queue]                = "#SBATCH -p ";
 
@@ -119,7 +119,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 		mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
 		mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
 		mconversionTable[mem]                  = "#BSUB -M ";
-                mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser 
+                mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser
 		mconversionTable[mailNotifyUser]       = "#BSUB -u ";
 		mconversionTable[queue]                = "#BSUB -q ";
 
@@ -567,7 +567,6 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
 	char delim = '+';
 	size_t begin = 0;
 	size_t end = str.find(delim);
-	std::string tmp;
 	if(end==std::string::npos) {
 		findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
 	}
