@@ -28,7 +28,7 @@
 
 using namespace boost::posix_time;
 using namespace boost::gregorian;
-namespace bfs=boost::filesystem;
+namespace bfs = boost::filesystem;
 
 /**
  * \enum BatchType
@@ -53,7 +53,7 @@ typedef enum {
 typedef enum {
   NBWAITINGJOBS = 0,
   NBJOBS = 1,
-  NBRUNNINGJOBS =2
+  NBRUNNINGJOBS = 2
 } LoadType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
