@@ -83,14 +83,14 @@ main(int argc, char* argv[], char* envp[]) {
   jobSerializedPath = argv[4];
   slaveErrorPath = argv[5];
 
-  if(action.compare("SUBMIT")==0) {
+  if (action == "SUBMIT") {
     if(argc < 9) {       // Too few arguments
       usage(argv[0]);
     }
     slaveJobFile = argv[6];
     optionsPath = argv[7];
     jobScriptPath = argv[8];
-  } else if(action.compare("CANCEL")!=0) {
+  } else if (action == "CANCEL") {
     usage(argv[0]);
   }
 
@@ -116,7 +116,7 @@ main(int argc, char* argv[], char* envp[]) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: job object is not well built");
     }
 
-    if (action.compare("SUBMIT")==0) {
+    if (action == "SUBMIT") {
       std::string options  = vishnu::get_file_content(optionsPath);
       if(!parseEmfObject(std::string(options), submitOptions)) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
@@ -131,7 +131,7 @@ main(int argc, char* argv[], char* envp[]) {
       std::ofstream os_slaveJobFile(slaveJobFile);
       os_slaveJobFile << slaveJob;
       os_slaveJobFile.close();
-    } else if (action.compare("CANCEL")==0) {
+    } else if (action == "CANCEL") {
       //To cancel the job
       std::string jobdDescr = job->getJobId();
       if (batchType == DELTACLOUD) {

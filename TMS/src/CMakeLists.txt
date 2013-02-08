@@ -75,7 +75,7 @@ if (COMPILE_SERVERS)
     vishnu-ums-server
     vishnu-tms-server
     emf4cpp-vishnu
-    )
+    ${USED_BATCH_LIB})
 
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
