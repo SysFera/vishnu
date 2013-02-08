@@ -13,6 +13,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/system/error_code.hpp>
+#include <boost/regex.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
@@ -352,103 +353,62 @@ vishnu::convertWallTimeToString(const long& walltime) {
 
 /**
  * \brief Function a given walltime into seconds
+ *
+ * walltime can be of the following format:
+ * - it can start and/or end by '"'
+ * - each value is separated by ':'
+ * - possible values represent:
+ *   - days
+ *   - hours
+ *   - minutes
+ *   - seconds
+ * in the form [days:][hours:][minutes:]seconds
+ *  (element between square brackets are optional)
+ *
  * \param walltime The walltime to convert
  * \return the walltime converted to seconds
  */
 long
-vishnu::convertStringToWallTime(const std::string& walltime_) {
-  std::string walltime(walltime_);
+vishnu::convertStringToWallTime(const std::string& walltime) {
+  boost::regex reg("^\"?(\\d+)(?::(\\d+))?(?::(\\d+))?(?::(\\d+))?\"?$");
+  boost::smatch groups;
 
-  if (!walltime.empty()){
-    if (*(walltime.begin()) == '\"'){
-      walltime.replace(walltime.begin(), walltime.begin()+1, "");
-    }
-    if (*(walltime.end()-1) == '\"'){
-      walltime.replace(walltime.end()-1, walltime.end(), "");
-    }
-  }
+  boost::smatch::const_iterator it;
+  long time = 0;
 
-  if(walltime.size()) {
-    int seconds = 0;
-    int minute = 0;
-    int heure = 0;
-    int jour = 0;
-    std::string value;
+  if (boost::regex_match(walltime, groups, reg)) {
+    std::string tmp;
+    boost::smatch::const_iterator it;
+    unsigned int start = 1;  // skip first value which is the full string
+    unsigned int nbFound = 0;
 
-    size_t size = walltime.size();
-    size_t pos = walltime.rfind(":");
-    if(pos!=std::string::npos) {
-      if((size-pos > 1)) {
-        value = walltime.substr(pos+1, size-1-pos);
-        if(isNumericalValue(value)) {
-          seconds = convertToInt(value);
-        }
+    it = groups.begin();
+    ++it;  // skip first value which is the full string
+
+    for (; it != groups.end(); ++it) {
+      tmp = *it;
+      if (tmp.empty()) {
+        break;
       }
-    } else {
-      if(walltime.size() > 0) {
-        value = walltime;
-        if(isNumericalValue(value)) {
-          seconds = convertToInt(value);
-        }
-      }
+      nbFound ++;
     }
 
-    if ((pos!=std::string::npos) && (pos > 0)) {
-      size = pos;
-      pos =  walltime.rfind(":", size-1);
-      if (pos!=std::string::npos) {
-        if ((size-pos > 1)) {
-          value = walltime.substr(pos+1, size-pos-1);
-          if (isNumericalValue(value)) {
-            minute = convertToInt(value);
-          }
-        }
-      } else {
-        value = walltime.substr(0, size);
-        if (isNumericalValue(value)) {
-          minute = convertToInt(value);
-        }
-      }
+    if (nbFound == 4) {  // days:hours:minutes:seconds
+      time += 86400 * boost::lexical_cast<long>(groups[1]);
+      start = 2;
     }
 
-    if ((pos!=std::string::npos) && (pos > 0)) {
-      size = pos;
-      pos =  walltime.rfind(":", size-1);
-      if (pos!=std::string::npos) {
-        if ((size-pos > 1)) {
-          value = walltime.substr(pos+1, size-pos-1);
-          if(isNumericalValue(value)) {
-            heure = convertToInt(value);
-          }
-        }
-      } else {
-        value = walltime.substr(0, size);
-        if(isNumericalValue(value)) {
-          heure = convertToInt(value);
-        }
-      }
+    for (unsigned int i = start; i <= nbFound; i++) {
+      time += boost::lexical_cast<long>(
+        std::pow(60.,
+                 boost::lexical_cast<int>(nbFound - i))) * boost::lexical_cast<long>(groups[i]);
     }
-
-    if((pos!=std::string::npos) && (pos > 0)) {
-      size = pos;
-      pos =  walltime.rfind(":", size-1);
-      if(pos!=std::string::npos) {
-        if((size-pos > 1)) {
-          throw UserException(ERRCODE_INVALID_PARAM, "Invalid walltime value: " + walltime);
-        }
-      } else {
-        value = walltime.substr(0, size);
-        if(isNumericalValue(value)) {
-          jour = convertToInt(value);
-        }
-      }
-    }
-
-    long walltimeInSeconds = (jour*86400+heure*3600+minute*60+seconds);
-    return walltimeInSeconds;
   } else {
-    throw UserException(ERRCODE_INVALID_PARAM, "Invalid walltime value: The given value is empty");
+    throw UserException(ERRCODE_INVALID_PARAM,
+                        "Invalid walltime value: '" + walltime + "'");
   }
+
+  return time;
 }
 
 /**
