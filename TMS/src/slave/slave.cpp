@@ -65,6 +65,7 @@ void usage(char* cmd) {
 int
 main(int argc, char* argv[], char* envp[]) {
 
+  int ret = EXIT_SUCCESS;
   std::string action;
   char* jobSerializedPath = NULL;
   char* optionsPath = NULL;
@@ -144,15 +145,16 @@ main(int argc, char* argv[], char* envp[]) {
     std::ofstream os_error(slaveErrorPath);
     os_error << errorInfo;
     os_error.close();
+    ret = EXIT_FAILURE;
   } catch (std::exception& e) {
     std::string errorInfo = e.what();
     std::ofstream os_error(slaveErrorPath);
     os_error << errorInfo;
     os_error.close();
+    ret = EXIT_FAILURE;
   }
-
   delete job;
   delete submitOptions;
   delete batchServer;
-  return 0;
+  return ret;
 }

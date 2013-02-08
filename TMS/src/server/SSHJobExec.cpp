@@ -34,7 +34,7 @@
   vishnu::deleteFile(errorPath.c_str()); \
   }
 
-#define LOG(msg, logLevel) if (logLevel) std::cout << msg << "\n"
+#define LOG(msg, logLevel) if (logLevel) std::clog << msg << "\n"
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
@@ -173,7 +173,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   }
 
   // Check if something went false
-  if (ret || !merrorInfo.empty()) {
+  if (ret) {
     if (merrorInfo.find("password") != std::string::npos) {
       merrorInfo.append(" You must copy the VISHNU publickey in your authorized_keys file.");
     }
@@ -197,7 +197,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
     wellSubmitted = true;
     delete job;
   } else {
-    merrorInfo = "SSHJobExec::sshexec: job object is not well built";
+    merrorInfo.append("SSHJobExec::sshexec: job object is not well built");
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
     LOG(merrorInfo, mdebugLevel);
     throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
@@ -206,13 +206,13 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
     merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
     if (mbatchType==LOADLEVELER) {
-      merrorInfo.append("==>LOADLEVELER ERROR");
+      merrorInfo.append("\n==>LOADLEVELER ERROR");
     }
     if (mbatchType==LSF) {
-      merrorInfo.append("==>LSF ERROR");
+      merrorInfo.append("\n==>LSF ERROR");
     }
   }
-  LOG(merrorInfo, mdebugLevel);
+  LOG(merrorInfo, mdebugLevel); merrorInfo.clear();
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
 }
 
