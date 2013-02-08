@@ -41,7 +41,7 @@ typedef enum {
   LSF = 3, /*!< For LSF batch type */
   SGE = 4, /*!< For SGE batch type */
   PBSPRO = 5, /*!< For PBS Pro batch type */
-  DELTACLOUD = 6, /*!< For DELTACLOUD batch type */  
+  DELTACLOUD = 6, /*!< For DELTACLOUD batch type */
   POSIX = 7, /*!< For POSIX batch type */
   UNDEFINED = 8 /*!< IF batch type is not defined*/
 } BatchType;
@@ -51,9 +51,9 @@ typedef enum {
  * \brief The type of the scheduling criteria
  */
 typedef enum {
-	NBWAITINGJOBS = 0,
-	NBJOBS = 1,
-	NBRUNNINGJOBS =2
+  NBWAITINGJOBS = 0,
+  NBJOBS = 1,
+  NBRUNNINGJOBS =2
 } LoadType;
 
 static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
@@ -168,7 +168,8 @@ string_to_time_t(const std::string& ts);
  */
 
 
-std::time_t string_lc_to_utc_time_t(const std::string & ts,const std::string& utcOffset);
+std::time_t
+string_lc_to_utc_time_t(const std::string & ts,const std::string& utcOffset);
 
 
 /**
@@ -195,21 +196,36 @@ boostMoveFile(const std::string& src, const std::string& dest,  const std::strin
  * \param value The value to check
  * \return raises an exception on error
  */
-bool isNumericalValue(const std::string& value);
+bool
+isNumericalValue(const std::string& value);
 
 /**
  * \brief Function a given walltime into string
  * \param walltime The walltime to convert
  * \return the walltime converted to string
  */
-std::string convertWallTimeToString(const long& walltime);
+std::string
+convertWallTimeToString(const long& walltime);
 
 /**
  * \brief Function a given walltime into seconds
+ *
+ * walltime can be of the following format:
+ * - it can start and/or end by '"'
+ * - each value is separated by ':'
+ * - possible values represent:
+ *   - days
+ *   - hours
+ *   - minutes
+ *   - seconds
+ * in the form [days:][hours:][minutes:]seconds
+ *  (element between square brackets are optional)
+ *
  * \param walltime The walltime to convert
  * \return the walltime converted to seconds
  */
-long convertStringToWallTime(const std::string& walltime);
+long
+convertStringToWallTime(const std::string& walltime);
 
 /**
  * \brief Function to check the job status
@@ -219,27 +235,27 @@ long convertStringToWallTime(const std::string& walltime);
 void
 checkJobStatus(const int& status);
 
-    /**
-     * \brief Return all the IP of the machines (IPV4, except 127.0.0.1)
-     * \return The IP of the machine
-     */
-    std::vector<std::string>
-    getIPList();
+/**
+ * \brief Return all the IP of the machines (IPV4, except 127.0.0.1)
+ * \return The IP of the machine
+ */
+std::vector<std::string>
+getIPList();
 
-    /**
-     * \brief Replace localhost by the IP of the machine in the path
-     * \param name The string to replace the machine name
-     * \param IP The IP of the machine
-     */
-    void
-    setIP(std::string& name, std::string IP);
+/**
+ * \brief Replace localhost by the IP of the machine in the path
+ * \param name The string to replace the machine name
+ * \param IP The IP of the machine
+ */
+void
+setIP(std::string& name, std::string IP);
 
-    /**
-     * \brief Tells if the string is an IP address
-     * \param name The string to test
-     */
-    bool
-    isNotIP(std::string name);
+/**
+ * \brief Tells if the string is an IP address
+ * \param name The string to test
+ */
+bool
+isNotIP(std::string name);
 
 /**
  * \brief Function to check the job priority
@@ -261,76 +277,87 @@ checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
  * \brief Function to get current time in seconds (UTC)
  * \return the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
  */
-time_t getCurrentTimeInUTC();
+time_t
+getCurrentTimeInUTC();
 
 /**
  * \brief Function to convert UTC time into localtime (seconds)
  * \param localtime the local time
  * \return the correspondant localtime (seconds)
  */
-time_t convertUTCtimeINLocaltime(const time_t& localtime);
+time_t
+convertUTCtimeINLocaltime(const time_t& localtime);
 
 /**
  * \brief Function to localtime into UTC (seconds)
  * \param localtime the local time
  * \return the diffence time (seconds)
  */
-time_t convertLocaltimeINUTCtime(const time_t& localtime);
+time_t
+convertLocaltimeINUTCtime(const time_t& localtime);
 
 /**
  * \brief Function to return the difference between localtime and UTC time (seconds)
  * \return the difference time (seconds)
  */
-long diffLocaltimeUTCtime();
+long
+diffLocaltimeUTCtime();
 
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
  * \param file_content The content of the file
  */
-void createTmpFile(char* fileName, const std::string& file_content);
+void
+createTmpFile(char* fileName, const std::string& file_content);
 
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
  * \param content The content of the file
  */
-void saveInFile(const std::string & fileName, const std::string& content);
+void
+saveInFile(const std::string & fileName, const std::string& content);
 
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
  * \param missingDesc The content of the file
  */
-void recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
+void
+recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
 
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
  */
-void createTmpFile(char* fileName);
+void
+createTmpFile(char* fileName);
 
 /**
  * \brief Function to delete file
  * \param fileName The name of the file to create
  * \return 0 in case of success, another value otherwise
  */
-int deleteFile(const char* fileName);
+int
+deleteFile(const char* fileName);
 
 /**
  * \brief Function to print success message
  */
-inline void printSuccessMessage() {
-	// can be used to display a message when vishnu service was performed successfully
-	;
+inline void
+printSuccessMessage() {
+  // can be used to display a message when vishnu service was performed successfully
+  ;
 }
 
 /**
  * \brief Function to display the session key
  */
-inline void printSessionKeyMessage() {
-	// can be used to display a message containing the current session key
-	;
+inline void
+printSessionKeyMessage() {
+  // can be used to display a message containing the current session key
+  ;
 }
 
 /**
@@ -363,7 +390,8 @@ process_exists(const std::string& pid, const bfs::path& proc_dir="/proc");
  * \param port the port
  * \return the fully qualified name for the current system
  */
-std::string getLocalMachineName(const std::string& port );
+std::string
+getLocalMachineName(const std::string& port );
 
 /**
  * \brief Function to check if a string is empty
@@ -373,7 +401,7 @@ std::string getLocalMachineName(const std::string& port );
  */
 void
 checkEmptyString(const std::string& str,
-		const std::string& compMsg);
+                 const std::string& compMsg);
 
 /**
  * \brief Function to parse textual or file parameters
@@ -385,9 +413,9 @@ checkEmptyString(const std::string& str,
  */
 int
 validateParameters(const boost::shared_ptr<Options> & opt,
-		std::string & paramsStr,
-		const std::string & paramOptName,
-		const std::vector<std::string> & paramsVector);
+                   std::string & paramsStr,
+                   const std::string & paramOptName,
+                   const std::vector<std::string> & paramsVector);
 
 
 /**
@@ -409,7 +437,7 @@ appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath);
  * */
 std::string
 getResultFiles(const TMS_Data::JobResult & result,
-		const bool & appendJobId);
+               const bool & appendJobId);
 
 
 
@@ -425,7 +453,8 @@ createOutputDir(std::string& dirPath);
  * \brief Function to create a unique file suffix with the current time
  * \return tha suffix created
  * */
-std::string createSuffixFromCurTime() ;
+std::string
+createSuffixFromCurTime() ;
 
 /**
  * \brief Function to make a link from a given
@@ -436,13 +465,13 @@ std::string createSuffixFromCurTime() ;
 std::string
 mklink(const std::string& src) ;
 
- /**
-   * \brief Function to parse the string representing the version
-   * \param version the string representing the version
-   * \return  The version object
-   */
-  UMS_Data::Version_ptr
-  parseVersion(const std::string& version);
+/**
+ * \brief Function to parse the string representing the version
+ * \param version the string representing the version
+ * \return  The version object
+ */
+UMS_Data::Version_ptr
+parseVersion(const std::string& version);
 
 
 /**
