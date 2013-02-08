@@ -106,7 +106,7 @@ if (COMPILE_SERVERS)
  
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server vishnu-ums-server vishnu-ums-client)
+  target_link_libraries(vishnu-tms-server vishnu-ums-server)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed
