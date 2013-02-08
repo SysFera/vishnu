@@ -9,6 +9,7 @@
 #include "utilVishnu.hpp"
 #include <stdexcept>
 #include <boost/asio.hpp>
+#include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/filesystem/path.hpp>
@@ -376,21 +377,16 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
   long time = 0;
 
   if (boost::regex_match(walltime, groups, reg)) {
-    std::string tmp;
     boost::smatch::const_iterator it;
     unsigned int start = 1;  // skip first value which is the full string
-    unsigned int nbFound = 0;
 
     it = groups.begin();
     ++it;  // skip first value which is the full string
-
-    for (; it != groups.end(); ++it) {
-      tmp = *it;
-      if (tmp.empty()) {
-        break;
-      }
-      nbFound ++;
-    }
+    /* Count the number of not empty groups (-1, as the first element
+     * in the group is the full string)
+     */
+    unsigned int nbFound =
+      groups.size() - 1 - std::count(it, groups.end(), "");
 
     if (nbFound == 4) {  // days:hours:minutes:seconds
       time += 86400 * boost::lexical_cast<long>(groups[1]);
