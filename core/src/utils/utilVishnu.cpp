@@ -378,16 +378,9 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
   long time = 0;
 
   if (boost::regex_match(walltime, groups, reg)) {
-    boost::smatch::const_iterator it;
     unsigned int start = 1;  // skip first value which is the full string
-
-    it = groups.begin();
-    ++it;  // skip first value which is the full string
-    /* Count the number of not empty groups (-1, as the first element
-     * in the group is the full string)
-     */
-    unsigned int nbFound =
-      groups.size() - 1 - std::count(it, groups.end(), "");
+    // boost::smatch::size returns how many groups were matched + 1
+    unsigned int nbFound = groups.size() - 1;
 
     if (nbFound == 4) {  // days:hours:minutes:seconds
       time += 86400 * boost::lexical_cast<long>(groups[1]);
