@@ -126,8 +126,8 @@ int main(int argc, char* argv[], char* envp[]) {
   ExecConfiguration_Ptr config(new ExecConfiguration);
   DbConfiguration dbConfig(*config);
   try {
-    dbConfig.check();
     config->initFromFile(argv[1]);
+    dbConfig.check();
     config->getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
