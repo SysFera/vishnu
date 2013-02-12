@@ -79,12 +79,9 @@ function generate_man () {
 }
 
 function generate_docbook () {
-    cur=${PWD}
-    cd scripts
     path=$1
     template=$2
-    run_cmd ./docbook_astah_gen.sh $GENERATORDIR $path $template
-    cd $cur
+    run_cmd ${scriptDir}/docbook_astah_gen.sh $GENERATORDIR $path $template
 }
 
 ######################################################################
