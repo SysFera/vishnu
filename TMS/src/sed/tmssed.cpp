@@ -139,14 +139,14 @@ int main(int argc, char* argv[], char* envp[]) {
     }
 
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
-    if (batchType != DELTACLOUD) {
-      config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
-    }
-
     batchType = vishnu::convertToBatchType(batchTypeStr);
     if (batchType == UNDEFINED) {
       std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO, POSIX or DELTACLOUD)\n";
       exit(1);
+    }
+
+    if (batchType != DELTACLOUD) {
+      config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
     }
 
     std::string versError;
