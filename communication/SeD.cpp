@@ -102,9 +102,22 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
 
   // bind the sockets
-  socket_server.bind(uri.c_str());
-  socket_workers.bind(WORKER_INPROC_QUEUE.c_str());
+  try {
+    socket_server.bind(uri.c_str());
+  } catch (const zmq::error_t& e) {
+    std::cerr << boost::format("E: zmq socket_server (%1%) binding failed (%2%)\n") % uri % e.what();
+    return 1;
+  }
+
+  try {
+    socket_workers.bind(WORKER_INPROC_QUEUE.c_str());
+  } catch (const zmq::error_t& e) {
+    std::cerr << boost::format("E: zmq socket_worker (%1%) binding failed (%2%)\n") % WORKER_INPROC_QUEUE % e.what();
+    return 1;
+  }
+
   std::cout << boost::format("I: listening... (%1%)\n") % uri;
+
 
   // Create our threads pool
   const int NB_THREADS = 50;
