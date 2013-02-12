@@ -126,35 +126,25 @@ int main(int argc, char* argv[], char* envp[]) {
   ExecConfiguration_Ptr config(new ExecConfiguration);
   DbConfiguration dbConfig(*config);
   try {
+    dbConfig.check();
     config->initFromFile(argv[1]);
     config->getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
     config->getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
 
-    config->getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
-    if (interval < 0) {
-      throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
+    if (!config->getConfigValue(vishnu::INTERVALMONITOR, interval) || interval < 0) {
+      interval = 60;
+      std::clog << boost::format("The monitoring interval has been set to %1%")%internal;
     }
 
-    dbConfig.check();
     config->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
-    config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
-    if (batchTypeStr == "TORQUE") {
-      batchType = TORQUE;
-    } else if (batchTypeStr == "PBS") {
-      batchType = PBSPRO;
-    } else if (batchTypeStr == "LOADLEVELER") {
-      batchType = LOADLEVELER;
-    } else if (batchTypeStr == "SLURM") {
-      batchType = SLURM;
-    } else if (batchTypeStr == "LSF") {
-      batchType = LSF;
-    } else if (batchTypeStr == "SGE") {
-      batchType = SGE;
-    } else if (batchTypeStr == "POSIX") {
-      batchType = POSIX;
-    } else {
+    if (batchType != DELTACLOUD) {
+      config->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, batchVersion);
+    }
+
+    batchType = vishnu::convertToBatchType(batchTypeStr);
+    if (batchType == UNDEFINED) {
       std::cerr << "\nError: Invalid batch. Batch type must be TORQUE, LOADLEVELER, SLURM, LSF, SGE, PBSPRO, POSIX or DELTACLOUD)\n";
       exit(1);
     }

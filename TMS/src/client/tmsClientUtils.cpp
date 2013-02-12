@@ -135,7 +135,7 @@ sendInputFiles(const std::string& sessionKey,
     string rpath = rdestDir + "/" + bfs::path(path).filename().string();
 
     genericFileCopier(sessionKey, filerMachineId, path, destMachineId, rpath, copts);
-    paramsBuf << ((paramsBuf.str().size() != 0)? " " : "") + param << "=" << rpath ;
+    paramsBuf << ((paramsBuf.str().empty())? "" : " ") + param << "=$HOME/" << rpath ;
   }
 
   return paramsBuf.str() ;
