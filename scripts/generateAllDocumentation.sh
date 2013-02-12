@@ -81,10 +81,9 @@ function generate_man () {
 function generate_docbook () {
     cur=${PWD}
     cd scripts
-    generator=$1
-    path=$2
-    template=$3
-    run_cmd ./docbook_astah_gen.sh $generator $path $template
+    path=$1
+    template=$2
+    run_cmd ./docbook_astah_gen.sh $GENERATORDIR $path $template
     cd $cur
 }
 
@@ -96,35 +95,35 @@ function generate_docbook () {
 #
 
 # Generate STB from template
-generate_docbook $1 ${PWD} ${PWD}/core/specs/docbook/STB-template.docbook
+generate_docbook ${PWD} ${PWD}/core/specs/docbook/STB-template.docbook
 
 # Generate SpecGen from template
-generate_docbook $1 ${PWD} ${PWD}/core/specs/docbook/SpecGen-template.docbook
+generate_docbook ${PWD} ${PWD}/core/specs/docbook/SpecGen-template.docbook
 
 # Generate design from template
-generate_docbook $1 ${PWD} ${PWD}/TMS/design/docbook/TmsDesign-template.docbook
-generate_docbook $1 ${PWD} ${PWD}/FMS/design/docbook/FmsDesign-template.docbook
-generate_docbook $1 ${PWD} ${PWD}/IMS/design/docbook/ImsDesign-template.docbook
-generate_docbook $1 ${PWD} ${PWD}/UMS/design/docbook/UmsDesign-template.docbook
+generate_docbook ${PWD} ${PWD}/TMS/design/docbook/TmsDesign-template.docbook
+generate_docbook ${PWD} ${PWD}/FMS/design/docbook/FmsDesign-template.docbook
+generate_docbook ${PWD} ${PWD}/IMS/design/docbook/ImsDesign-template.docbook
+generate_docbook ${PWD} ${PWD}/UMS/design/docbook/UmsDesign-template.docbook
 
 # Generate adminman from template
-generate_docbook $1 ${PWD}/core/model ${PWD}/core/doc/adminmanual/docbook/adminman-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/core/doc/adminmanual/docbook/adminman-template.docbook
 
 # Generate userman from template
-generate_docbook $1 ${PWD}/core/model ${PWD}/core/doc/usermanual/docbook/userman-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/core/doc/usermanual/docbook/userman-template.docbook
 
 # Generate manpage from template
-generate_docbook $1 ${PWD}/core/model ${PWD}/UMS/doc/man/docbook/userman-template.docbook
-generate_docbook $1 ${PWD}/core/model ${PWD}/UMS/doc/man/docbook/adminman-template.docbook
-generate_docbook $1 ${PWD}/core/model ${PWD}/TMS/doc/man/docbook/usermanTMS-template.docbook
-generate_docbook $1 ${PWD}/core/model ${PWD}/FMS/doc/man/docbook/usermanFMS-template.docbook
-generate_docbook $1 ${PWD}/core/model ${PWD}/IMS/doc/man/docbook/manIMS-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/UMS/doc/man/docbook/userman-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/UMS/doc/man/docbook/adminman-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/TMS/doc/man/docbook/usermanTMS-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/FMS/doc/man/docbook/usermanFMS-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/IMS/doc/man/docbook/manIMS-template.docbook
 
 # Generate cli from template
-generate_docbook $1 ${PWD}/core/model ${PWD}/core/specs/docbook/cli-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/core/specs/docbook/cli-template.docbook
 
 # Generate api from template
-generate_docbook $1 ${PWD}/core/model ${PWD}/core/specs/docbook/api-template.docbook
+generate_docbook ${PWD}/core/model ${PWD}/core/specs/docbook/api-template.docbook
 
 
 ######################################################################

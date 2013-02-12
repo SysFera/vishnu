@@ -11,15 +11,15 @@
 # 31/01/13 : do not need the external eclipse_1 repository anymore.
 #
 
-if [ $# -lt 2 ]; then
-  echo "Usage: " $0 " [0/1] <generator_dir>"
-  echo " 0/1 (optional): if 0, then documentation is not generated. Default is 1."
+if [ $# -lt 1 ]; then
+  echo "Usage: " $0 " <generator_dir>"
+  echo " if generator_dir is given, the documentation will be generated"
   exit 1
 fi
 
-generateDoc=1
+generateDoc=0
 if [ $# -gt 1 ]; then
-    generateDoc=$1
+    generateDoc=1
 fi
 
 
@@ -71,7 +71,7 @@ remove_files deliverables/tests/*
 # Generate all documentation
 if [ $generateDoc == 1 ]; then
     echo "## Generating documentation"
-    run_cmd $gen_doc_sh $2
+    run_cmd $gen_doc_sh $1
 else
     echo "## Documentation will not be generated"
 fi
