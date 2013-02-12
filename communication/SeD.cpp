@@ -6,7 +6,7 @@
 #include "utils.hpp"
 #include "utilVishnu.hpp"
 #include "zmq.hpp"
-
+#include "SeDWorker.hpp"
 
 
 int
@@ -97,9 +97,10 @@ int
 ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
   const int NB_THREADS = 50;
-  return serverWorkerSockets<ZMQWorker,
-                             boost::shared_ptr<SeD>,
-                             std::string>(uri, WORKER_INPROC_QUEUE,
-                                          50, server,
-                                          WORKER_INPROC_QUEUE);
+
+  return serverWorkerSockets<SeDWorker,
+                             boost::shared_ptr<SeD> >(uri,
+                                                      WORKER_INPROC_QUEUE,
+                                                      50,
+                                                      server);
 }

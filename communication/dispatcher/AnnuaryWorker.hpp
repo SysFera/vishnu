@@ -1,54 +1,10 @@
-#ifndef _WORKERS_HPP_
-#define _WORKERS_HPP_
+#ifndef _ANNUARYWORKERS_HPP_
+#define _ANNUARYWORKERS_HPP_
 
+#include "Worker.hpp"
 #include "DIET_client.h"
-#include "zhelpers.hpp"
-#include "utils.hpp"
 #include "UserException.hpp"
-
-
-/**
- * @class Base class for workers
- */
-class Worker {
-public:
-  explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
-                  const std::string& uriInproc, int id)
-    : ctx_(ctx), uriInproc_(uriInproc), id_(id) {}
-
-  void
-  operator()() {
-    Socket socket(*ctx_, ZMQ_REP);
-    socket.connect(uriInproc_.c_str());
-    std::string data;
-
-    while (true) {
-      data.clear();
-      try {
-        data = socket.get();
-      } catch (zmq::error_t &error) {
-        std::cerr << boost::format("E: %1%\n") % error.what();
-        continue;
-      }
-      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
-      // Deserialize and call Method
-      if (!data.empty()) {
-        std::string resultSerialized = doCall(data);
-        socket.send(resultSerialized);
-      }
-    }
-  }
-
-
-protected:
-  virtual std::string
-  doCall(std::string& data) = 0;
-
-  boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
-  std::string uriInproc_; /**< worker id */
-  int id_; /**< worker id */
-};
-
+#include "Annuary.hpp"
 
 class AnnuaryWorker : public Worker {
 public:
@@ -132,6 +88,4 @@ private:
 
 };
 
-
-
-#endif /* _WORKERS_HPP_ */
+#endif /* _ANNUARYWORKERS_HPP_ */

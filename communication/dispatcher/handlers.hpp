@@ -2,7 +2,7 @@
 #define _HANDLERS_HPP_
 
 #include "zhelpers.hpp"
-#include "workers.hpp"
+#include "AnnuaryWorker.hpp"
 
 
 template<typename T>
@@ -33,11 +33,9 @@ public:
   void
   run() {
     serverWorkerSockets<Worker,
-                        std::string,
                         boost::shared_ptr<Annuary> >(muri,
                                                      InternalEndpoint<Worker>::value(),
                                                      nbThread,
-                                                     InternalEndpoint<Worker>::value(),
                                                      mann);
   }
 
