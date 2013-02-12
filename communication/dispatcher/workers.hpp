@@ -13,9 +13,8 @@
 class Worker {
 public:
   explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
-                  const std::string& uriInproc, int id,
-                  boost::shared_ptr<Annuary> ann)
-    : ctx_(ctx), uriInproc_(uriInproc), id_(id), mann(ann) {}
+                  const std::string& uriInproc, int id)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id) {}
 
   void
   operator()() {
@@ -48,17 +47,29 @@ protected:
   boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
   std::string uriInproc_; /**< worker id */
   int id_; /**< worker id */
-  boost::shared_ptr<Annuary> mann;
+};
+
+
+class AnnuaryWorker : public Worker {
+public:
+  explicit AnnuaryWorker(boost::shared_ptr<zmq::context_t> ctx,
+                         const std::string& uriInproc, int id,
+                         boost::shared_ptr<Annuary> ann)
+    : Worker(ctx, uriInproc, id), mann_(ann) {}
+
+protected:
+  boost::shared_ptr<Annuary> mann_;
 };
 
 
 
-class ServiceWorker : public Worker {
+
+class ServiceWorker : public AnnuaryWorker {
 public:
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
                          boost::shared_ptr<Annuary> ann)
-    : Worker(ctx, uriInproc, id, ann) {}
+    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
 
 private:
   std::string
@@ -68,7 +79,7 @@ private:
 
     boost::shared_ptr<diet_profile_t> profile = my_deserialize(data);
     std::string servname = profile->name;
-    std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
+    std::vector<boost::shared_ptr<Server> > serv = mann_->get(servname);
     std::string uriServer = elect(serv);
 
     if (!uriServer.empty()) {
@@ -92,12 +103,12 @@ private:
 };
 
 //FIXME: clear unused parameters
-class SubscriptionWorker : public Worker {
+class SubscriptionWorker : public AnnuaryWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
                               const std::string& uriInproc, int id,
                               boost::shared_ptr<Annuary> ann)
-    : Worker(ctx, uriInproc, id, ann) {}
+    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
 
 private:
   std::string
@@ -110,10 +121,10 @@ private:
 
     if (mode == 1) {
       // adding a new server
-      mann->add(server->getName(), server->getURI(),
+      mann_->add(server->getName(), server->getURI(),
                 server->getServices());
     } else if (mode == 0) {
-      mann->remove(server->getName(), server->getURI());
+      mann_->remove(server->getName(), server->getURI());
     }
 
     return "OK";
