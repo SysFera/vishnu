@@ -2,6 +2,7 @@
 include_directories(${CONFIG_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${VISHNU_SOURCE_DIR}/communication
+  ${VISHNU_SOURCE_DIR}/communication/dispatcher
   ${VISHNU_SOURCE_DIR}/communication/tests
   ${UTILVISHNU_SOURCE_DIR}
   ${EMF_DATA_DIR}
