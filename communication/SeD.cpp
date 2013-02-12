@@ -95,51 +95,11 @@ private:
 
 int
 ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
-  // Prepare our context and the sockets for server
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
-  boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
-  zmq::socket_t socket_server(*context, ZMQ_ROUTER);
-  zmq::socket_t socket_workers(*context, ZMQ_DEALER);
-
-  // bind the sockets
-  try {
-    socket_server.bind(uri.c_str());
-  } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("E: zmq socket_server (%1%) binding failed (%2%)\n") % uri % e.what();
-    return 1;
-  }
-
-  try {
-    socket_workers.bind(WORKER_INPROC_QUEUE.c_str());
-  } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("E: zmq socket_worker (%1%) binding failed (%2%)\n") % WORKER_INPROC_QUEUE % e.what();
-    return 1;
-  }
-
-  std::cout << boost::format("I: listening... (%1%)\n") % uri;
-
-
-  // Create our threads pool
   const int NB_THREADS = 50;
-  ThreadPool pool(NB_THREADS);
-  for (int i = 0; i < NB_THREADS; ++i) {
-      pool.submit(ZMQWorker(context, server, i, WORKER_INPROC_QUEUE));
-    }
-
-  // connect our workers threads to our server via a queue
-  do {
-    try {
-      zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
-      break;
-    } catch (const zmq::error_t& e) {
-      if (EINTR == e.num()) {
-        continue;
-      } else {
-        std::cerr << boost::format("E: zmq device creation failed (%1%)\n") % e.what();
-        return 1;
-      }
-    }
-  } while(true);
-
-  return 0;
+  return serverWorkerSockets<ZMQWorker,
+                             boost::shared_ptr<SeD>,
+                             std::string>(uri, WORKER_INPROC_QUEUE,
+                                          50, server,
+                                          WORKER_INPROC_QUEUE);
 }

@@ -1,6 +1,7 @@
 #ifndef _HANDLERS_HPP_
 #define _HANDLERS_HPP_
 
+#include "zhelpers.hpp"
 #include "workers.hpp"
 
 
@@ -31,24 +32,13 @@ public:
 
   void
   run() {
-    // Prepare our context and the sockets for server
-    boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
-    zmq::socket_t socket_server(*context, ZMQ_ROUTER);
-    zmq::socket_t socket_workers(*context, ZMQ_DEALER);
-
-    std::string internalEndpoint = InternalEndpoint<Worker>::value();
-    // bind the sockets
-    socket_server.bind(muri.c_str());
-    socket_workers.bind(internalEndpoint.c_str());
-
-    // Create our threads pool
-    ThreadPool pool(nbThread);
-    for (int i = 0; i < nbThread; ++i) {
-      pool.submit(Worker(context, internalEndpoint, i, mann));
-    }
-
-    // connect our workers threads to our server via a queue
-    zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+    serverWorkerSockets<Worker,
+                        std::string,
+                        boost::shared_ptr<Annuary> >(muri,
+                                                     InternalEndpoint<Worker>::value(),
+                                                     nbThread,
+                                                     InternalEndpoint<Worker>::value(),
+                                                     mann);
   }
 
 private:

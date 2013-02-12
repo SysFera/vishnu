@@ -9,6 +9,7 @@
 #include <cstring>
 #include <cerrno>
 
+#include "utils.hpp"
 
 const int DEFAULT_TIMEOUT = 120; // seconds
 
@@ -205,6 +206,62 @@ private:
   boost::scoped_ptr<Socket> sock_;
   long timeout_;
 };
+
+
+template<typename WorkerType,
+         typename WorkerParam1,
+         typename WorkerParam2>
+int
+serverWorkerSockets(const std::string& serverUri,
+                    const std::string& workerUri,
+                    int nbThreads,
+                    WorkerParam1 params1,
+                    WorkerParam2 params2) {
+  boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
+  zmq::socket_t socket_server(*context, ZMQ_ROUTER);
+  zmq::socket_t socket_workers(*context, ZMQ_DEALER);
+
+  // bind the sockets
+  try {
+    socket_server.bind(serverUri.c_str());
+  } catch (const zmq::error_t& e) {
+    std::cerr << boost::format("E: zmq socket_server (%1%) binding failed (%2%)\n") % serverUri % e.what();
+    return 1;
+  }
+
+  try {
+    socket_workers.bind(workerUri.c_str());
+  } catch (const zmq::error_t& e) {
+    std::cerr << boost::format("E: zmq socket_worker (%1%) binding failed (%2%)\n") % workerUri % e.what();
+    return 1;
+  }
+
+  std::cout << boost::format("I: listening... (%1%)\n") % serverUri;
+
+  // Create our pool of threads
+  ThreadPool pool(nbThreads);
+  for (int i = 0; i < nbThreads; ++i) {
+    pool.submit(WorkerType(context, params1, i, params2));
+  }
+
+  // connect our workers threads to our server via a queue
+  do {
+    try {
+      zmq::device(ZMQ_QUEUE, socket_server, socket_workers);
+      break;
+    } catch (const zmq::error_t& e) {
+      if (EINTR == e.num()) {
+        continue;
+      } else {
+        std::cerr << boost::format("E: zmq device creation failed (%1%)\n") % e.what();
+        return 1;
+      }
+    }
+  } while(true);
+
+  return 0;
+}
+
 
 
 #endif /* _ZHELPERS_HPP_ */
