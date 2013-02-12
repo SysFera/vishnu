@@ -69,7 +69,6 @@ public:
 private:
   std::string
   doCall(std::string& data) {
-    // std::string data(static_cast<char*>(message.data()), message.size());
     int mode = boost::lexical_cast<int>(data.substr(0,1));
 
     // Deserialize
