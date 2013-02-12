@@ -21,14 +21,20 @@ public:
   operator()() {
     Socket socket(*ctx_, ZMQ_REP);
     socket.connect(uriInproc_.c_str());
+    std::string data;
 
     while (true) {
-      //Receive message from ZMQ
-      zmq::message_t message(0);
-      getMessage(socket, message);
-      // Deserialize and call UMS Method
-      if (message.size() != 0) {
-        std::string resultSerialized = doCall(message);
+      data.clear();
+      try {
+        data = socket.get();
+      } catch (zmq::error_t &error) {
+        std::cerr << boost::format("E: %1%\n") % error.what();
+        continue;
+      }
+      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
+      // Deserialize and call Method
+      if (!data.empty()) {
+        std::string resultSerialized = doCall(data);
         socket.send(resultSerialized);
       }
     }
@@ -36,17 +42,8 @@ public:
 
 
 protected:
-  void
-  getMessage(Socket& socket, zmq::message_t& message) {
-    try {
-      socket.recv(&message, 0);
-    } catch (zmq::error_t &error) {
-      std::cerr << boost::format("E: %1%\n") % error.what();
-    }
-  }
-
   virtual std::string
-  doCall(zmq::message_t& message) = 0;
+  doCall(std::string& data) = 0;
 
   boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
   std::string uriInproc_; /**< worker id */
@@ -64,14 +61,12 @@ public:
     : Worker(ctx, uriInproc, id, ann) {}
 
 private:
-
   std::string
-  doCall(zmq::message_t& message) {
+  doCall(std::string& data) {
     using boost::format;
     using boost::str;
 
-    boost::shared_ptr<diet_profile_t> profile =
-      my_deserialize(static_cast<const char*>(message.data()));
+    boost::shared_ptr<diet_profile_t> profile = my_deserialize(data);
     std::string servname = profile->name;
     std::vector<boost::shared_ptr<Server> > serv = mann->get(servname);
     std::string uriServer = elect(serv);
@@ -106,8 +101,8 @@ public:
 
 private:
   std::string
-  doCall(zmq::message_t& message) {
-    std::string data(static_cast<char*>(message.data()), message.size());
+  doCall(std::string& data) {
+    // std::string data(static_cast<char*>(message.data()), message.size());
     int mode = boost::lexical_cast<int>(data.substr(0,1));
 
     // Deserialize
