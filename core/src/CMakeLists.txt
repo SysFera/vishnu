@@ -423,7 +423,8 @@ if(COMPILE_SERVERS)
     database/DbFactory.cpp
     database/Database.cpp
     database/DatabaseResult.cpp)
-    set(utils_server_SRCS utils/utilServer.cpp 
+
+  set(utils_server_SRCS utils/utilServer.cpp 
 #    utils/Logger.cpp
     )
 
@@ -465,7 +466,7 @@ if(COMPILE_SERVERS)
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
-  target_link_libraries(vishnu-core-server ${DB_LIBS})
+  target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS})
 
   install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
 endif()
