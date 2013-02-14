@@ -14,7 +14,6 @@ include_directories(
   ${Boost_INCLUDE_DIR}
 )
 
-
 add_library(zmq_helper
   DIET_client.cpp
   Annuary.cpp
@@ -46,7 +45,8 @@ if(COMPILE_SERVERS)
     )
   
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
-  set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 endif()
+
+set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
+install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 

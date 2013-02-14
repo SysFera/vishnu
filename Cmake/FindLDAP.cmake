@@ -15,7 +15,7 @@ find_library(LBER_LIBRARY
   NAMES lber
   PATHS ${LDAP_INSTALL_DIR}/lib)
 
-set(LDAP_LIBRARIES LDAP_LIBRARY LBER_LIBRARY)
+set(LDAP_LIBRARIES ${LDAP_LIBRARY} ${LBER_LIBRARY})
 
 # defines our variable
 include(FindPackageHandleStandardArgs)
