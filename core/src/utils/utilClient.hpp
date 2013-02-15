@@ -31,6 +31,11 @@ void raiseDietMsgException(const std::string& msg);
 
 /**
  * \brief Function to split the receiving message into error code and message error
+ * error code < 10 -> throws SystemException
+ * 10 <= error code < 100 -> throws UMSVishnuException
+ * 100 <= error code < 200 -> throws TMSVishnuException
+ * 200 <= error code < 300 -> throws FMSVishnuException
+ * 300 <= error code < 400 -> throws IMSVishnuException
  * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg)
  * \param msg to split
  */
