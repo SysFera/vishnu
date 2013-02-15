@@ -29,15 +29,15 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
   if(msg.size() > 0 ) {
     size_t pos = msg.find('#');
     if(pos!=std::string::npos) {
-      std::string codeInString = msg.substr(0,pos);
-      if(codeInString.size()!=0) {
+      std::string codeInString = msg.substr(0, pos);
+      if(codeInString.size() != 0) {
         std::istringstream isCode(codeInString);
         int code;
         isCode >> code;
-        std::string message = msg.substr(pos+1);
-        if (code<10){
+        std::string message = msg.substr(pos + 1);
+        if (code < 10){
           throw SystemException(code, message);
-        } else if (code<100){
+        } else if (code < 100){
           throw UMSVishnuException(code, message);
         } else if ((code >= 100) && (code < 200)) {
           throw TMSVishnuException(code, message);
@@ -58,4 +58,3 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
     }
   }
 }
-
