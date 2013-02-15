@@ -78,6 +78,8 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms )
   BOOST_REQUIRE_EQUAL(get_module("getListOfQueues"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetResult"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetCompletedJobs"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("getListOfJobs_all"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("jobSubmit_autom"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("addWork"), "TMS");
 }
 
@@ -91,7 +93,6 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms_at )
   BOOST_REQUIRE_EQUAL(get_module("getListOfQueues@cluster"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetResult@cluster"), "TMS");
   BOOST_REQUIRE_EQUAL(get_module("jobOutputGetCompletedJobs@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("addWork@cluster"), "TMS");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
@@ -119,25 +120,10 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims_at )
 {
-  BOOST_REQUIRE_EQUAL(get_module("int_exportCommands@cluster"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_getMetricCurentValue@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_getMetricHistory@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_getProcesses@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_setSystemInfo@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_setSystemThreshold@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_getSystemThreshold@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineUserIdentifier@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineJobIdentifier@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineTransferIdentifier@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineMachineIdentifier@cluster"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_loadShed@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_setUpdateFrequency@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_getUpdateFrequency@cluster"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_restart@cluster"), "IMS");
   BOOST_REQUIRE_EQUAL(get_module("int_stop@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_getSystemInfo@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineAuthIdentifier@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_defineWorkIdentifier@cluster"), "IMS");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_get_b_mod )

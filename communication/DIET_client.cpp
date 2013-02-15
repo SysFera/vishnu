@@ -81,6 +81,8 @@ static ServiceMap sMap = boost::assign::map_list_of
                          ("getListOfQueues", "TMS")
                          ("jobOutputGetResult", "TMS")
                          ("jobOutputGetCompletedJobs", "TMS")
+                         ("getListOfJobs_all", "TMS")
+                         ("jobSubmit_autom", "TMS")
                          ("addWork", "TMS")
                          /* IMS services */
                          ("int_exportCommands", "IMS")
