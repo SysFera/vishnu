@@ -112,7 +112,9 @@ DeltaCloudServer::submit(const char* scriptPath,
 	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
 			" ID: %1%\n"
 			" NAME: %2%\n"
-			" IP: %3%\n")%instance.id%instance.name%instance.private_addresses->address;
+			" IP: %3%\n"
+      " Startime: %4%")%instance.id%instance.name
+                       %instance.private_addresses->address%instance.launch_time;
 
 	// Create an ssh engine for the virtual machine & submit the script
 	SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
@@ -201,9 +203,13 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 	if (deltacloud_get_instance_by_id(mcloudApi, jobInfos[1].c_str(), &instance) < 0) {
 		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
 	}
-	vishnu::convertToTimeType(instance.launch_time);
+  long long startTime = 0;
+  try {
+    startTime = vishnu::convertToTimeType(instance.launch_time);
+  } catch (...) {} // leave 0
 	deltacloud_free_instance(&instance);
 	finalize();
+  return startTime;
 }
 
 
