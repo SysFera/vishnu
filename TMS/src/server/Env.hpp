@@ -15,9 +15,7 @@
  * \class Env
  * \brief Env class implementation
  */
-class Env
-{
-
+class Env {
 public:
   /**
    * \param batchType The batch scheduler type
@@ -58,16 +56,17 @@ public:
   static void
   setParamsEnvVars(const std::string& params);
 
-	/**
-	 * \brief Function to retrieve an environment variable
-	 * \param name The name of the variable
-	 * \param optional tell whether the parameter is optional or not
-	 * \param defaultValue give the default value return when the variable is optional
-	 * \return the value of the environment variable or throw exception is the variable is set and is not optional
-	 */
-	static std::string getVar(const std::string& name,
-			const bool & optional=true,
-			const std::string defaultValue="");
+  /**
+   * \brief Function to retrieve an environment variable
+   * \param name The name of the variable
+   * \param optional tell whether the parameter is optional or not
+   * \param defaultValue give the default value return when the variable is optional
+   * \return the value of the environment variable or throw exception is the variable is set and is not optional
+   */
+  static std::string
+  getVar(const std::string& name,
+         const bool & optional = true,
+         const std::string defaultValue = "");
 
 private:
 
