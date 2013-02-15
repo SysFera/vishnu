@@ -69,6 +69,9 @@ Dispatcher::configureHandlers() {
                                 clientHandler.get()));
   boost::thread th2(boost::bind(&ServerHandler::run,
                                 serverHandler.get()));
+
+  th1.join();
+  th2.join();
 }
 
 

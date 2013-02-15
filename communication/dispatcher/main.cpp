@@ -13,12 +13,7 @@ main(int argc, char* argv[]) {
   }
 
   Dispatcher dispatcher(confFile);
-
   dispatcher.run();
-  // To avoid quitting too fast in case of problems
-  while(1) {
-    sleep(seconds(1000));
-  }
 
   return 0;
 }
