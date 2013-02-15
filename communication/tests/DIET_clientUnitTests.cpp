@@ -81,6 +81,19 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms )
   BOOST_REQUIRE_EQUAL(get_module("addWork"), "TMS");
 }
 
+BOOST_AUTO_TEST_CASE( my_test_get_n_tms_at )
+{
+  BOOST_REQUIRE_EQUAL(get_module("jobSubmit@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("jobCancel@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("jobInfo@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("getListOfJobs@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("getJobsProgression@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("getListOfQueues@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("jobOutputGetResult@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("jobOutputGetCompletedJobs@cluster"), "TMS");
+  BOOST_REQUIRE_EQUAL(get_module("addWork@cluster"), "TMS");
+}
+
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
 {
   BOOST_REQUIRE_EQUAL(get_module("int_exportCommands"), "IMS");
