@@ -138,23 +138,23 @@ Env::replaceEnvVariables(std::string& scriptContent) {
       replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
       replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
     }
-		//To replace VISHNU_BATCHJOB_NUM_NODES
+    //To replace VISHNU_BATCHJOB_NUM_NODES
     replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
     replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
     break;
 
-	case DELTACLOUD:
-		//To replace VISHNU_BATCHJOB_ID
-		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
-		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");
-		//To replace VISHNU_BATCHJOB_NAME
-		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
-		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
-		//To replace VISHNU_BATCHJOB_NUM_NODES. Depends on the number of nodes in VISHNU_BATCHJOB_NODEFILE
-		//Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
-		replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
-		replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
-		break;
+  case DELTACLOUD:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
+    //To replace VISHNU_BATCHJOB_NUM_NODES. Depends on the number of nodes in VISHNU_BATCHJOB_NODEFILE
+    //Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+    break;
 
   default:
     break;
@@ -169,16 +169,11 @@ Env::replaceEnvVariables(std::string& scriptContent) {
  * \param newValue The new value
  */
 
-void Env::replaceAllOccurences(std::string& scriptContent,
-		const std::string& oldValue,
-		const std::string& newValue) {
-
-	size_t pos = scriptContent.find(oldValue);
-	while(pos!=std::string::npos) {
-		scriptContent.replace(pos, oldValue.size(), newValue, 0, newValue.size());
-		pos = scriptContent.find(oldValue, pos+newValue.size());
-	}
-
+void
+Env::replaceAllOccurences(std::string& scriptContent,
+                          const std::string& oldValue,
+                          const std::string& newValue) {
+  boost::replace_all(scriptContent, oldValue, newValue);
 }
 
 /**
@@ -209,7 +204,7 @@ Env::setParams(std::string& scriptContent,
 }
 
 /**
- * \brief Function to set environment variables accordinf to parameters
+ * \brief Function to set environment variables according to parameters
  * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
  */
 void
@@ -245,16 +240,17 @@ Env::setParamsEnvVars(const std::string& params) {
  */
 std::string
 Env::getVar(const std::string& name,
-		const bool & optional,
-		const std::string defaultValue) {
+            const bool & optional,
+            const std::string defaultValue) {
 
-	std::string value = defaultValue;
-	char* cvalue = getenv(name.c_str());
-	if(cvalue != NULL) {
-		value = std::string(cvalue);
-	} else if(!optional) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "Missing parameter "+name);
-	}
+  std::string value = defaultValue;
+  char* cvalue = getenv(name.c_str());
+  if (cvalue != NULL) {
+    value = std::string(cvalue);
+  } else if (!optional) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             "Missing parameter " +name);
+  }
 
-	return value;
+  return value;
 }
