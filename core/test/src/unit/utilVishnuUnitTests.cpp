@@ -28,6 +28,16 @@ BOOST_AUTO_TEST_CASE( test_convertToInt_n )
   BOOST_MESSAGE("Test convert to int OK");
 }
 
+BOOST_AUTO_TEST_CASE( test_convertToInt_b )
+{
+
+  std::string input = "pouet";
+
+  BOOST_REQUIRE_NO_THROW(vishnu::convertToInt(input));
+  BOOST_REQUIRE_EQUAL(vishnu::convertToInt(input), -1);
+  BOOST_MESSAGE("Test convert to int OK");
+}
+
 BOOST_AUTO_TEST_CASE( test_convertToLong_n )
 {
 
@@ -38,19 +48,36 @@ BOOST_AUTO_TEST_CASE( test_convertToLong_n )
   BOOST_MESSAGE("Test convert to long OK");
 }
 
+BOOST_AUTO_TEST_CASE( test_convertToLong_b )
+{
+
+  std::string input = "pouet";
+
+  BOOST_REQUIRE_NO_THROW(vishnu::convertToLong(input));
+  BOOST_REQUIRE_EQUAL(vishnu::convertToLong(input), -1);
+  BOOST_MESSAGE("Test convert to long OK");
+}
+
 BOOST_AUTO_TEST_CASE( test_convertToTimeType_n )
 {
 
   std::string input_1 = "0000-00-00";
   std::string input_2 = "";
-  std::string input_3 = "0000-01-10";
-  std::string input_4 = "2000-00-10";
-  std::string input_5 = "2000-10-00";
   long long res1 = 0;
   long long res2 = 0;
 
-  BOOST_REQUIRE(vishnu::convertToTimeType(input_1) == res1 &&
-                vishnu::convertToTimeType(input_2) == res2);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToTimeType(input_1), res1);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToTimeType(input_2), res2);
+  BOOST_MESSAGE("Test convert to time type OK");
+}
+
+BOOST_AUTO_TEST_CASE( test_convertToTimeType_b )
+{
+
+  std::string input_3 = "0000-01-10";
+  std::string input_4 = "2000-00-10";
+  std::string input_5 = "2000-10-00";
+
   BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_3), UserException);
   BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_4), UserException);
   BOOST_REQUIRE_THROW(vishnu::convertToTimeType(input_5), UserException);
@@ -65,6 +92,8 @@ BOOST_AUTO_TEST_CASE( test_cryptPwd_n )
   std::string res = "8vU7h/n6KOW8reLF1Lt2/5gzjZ.HvGK3A9doVMbmPtaYKkkCoWrMKiPa7s.fEigSTS5gQmX5F8BlW2XotCeHa0";
 
   BOOST_REQUIRE(vishnu::cryptPassword(user, pwd) == res);
+  BOOST_REQUIRE(vishnu::cryptPassword(user, pwd, true) == res);
+  BOOST_REQUIRE(vishnu::cryptPassword(user, pwd, false) == pwd);
   BOOST_MESSAGE("Test cryptPwd OK");
 }
 
@@ -215,6 +244,49 @@ BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_b )
   BOOST_REQUIRE_THROW(vishnu::convertStringToWallTime(""), UserException);
   BOOST_REQUIRE_THROW(vishnu::convertStringToWallTime("\""), UserException);
   BOOST_REQUIRE_THROW(vishnu::convertStringToWallTime("\"\""), UserException);
+}
+
+BOOST_AUTO_TEST_CASE( test_isNotIP_nv4 )
+{
+  // IPv4
+  BOOST_REQUIRE(!vishnu::isNotIP("127.0.0.1"));
+  BOOST_REQUIRE(!vishnu::isNotIP("192.168.0.12"));
+  BOOST_REQUIRE(!vishnu::isNotIP("1.2.3.4"));
+}
+
+BOOST_AUTO_TEST_CASE( test_isNotIP_nv6 )
+{
+  // IPv6
+  BOOST_REQUIRE(!vishnu::isNotIP("fe80::fa1e:dfff:feec:2b2d%en1"));
+  BOOST_REQUIRE(!vishnu::isNotIP("fe80::200:ff:fe00:0"));
+  BOOST_REQUIRE(!vishnu::isNotIP("fe80::224:e8ff:fe3c:f559"));
+}
+
+BOOST_AUTO_TEST_CASE( test_isNotIP_b )
+{
+  // IPv6
+  BOOST_REQUIRE(vishnu::isNotIP("localhost"));
+  BOOST_REQUIRE(vishnu::isNotIP("toto"));
+  BOOST_REQUIRE(vishnu::isNotIP("127.0.1.1.1"));
+  BOOST_REQUIRE(vishnu::isNotIP("127.0.a.b"));
+}
+
+BOOST_AUTO_TEST_CASE( test_convertToBatchType_n )
+{
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("TORQUE"), TORQUE);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("SLURM"), SLURM);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("LOADLEVELER"), LOADLEVELER);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("LSF"), LSF);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("SGE"), SGE);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("DELTACLOUD"), DELTACLOUD);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("PBS"), PBSPRO);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("POSIX"), POSIX);
+}
+
+BOOST_AUTO_TEST_CASE( test_convertToBatchType_b )
+{
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType(""), UNDEFINED);
+  BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("pouet"), UNDEFINED);
 }
 
 
