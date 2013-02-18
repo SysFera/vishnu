@@ -1,6 +1,11 @@
 +----------------------+
 | VISHNU 3.0.0 - Beta2 |
 +----------------------+
+* Fixed a few bugs: #348, #414, #424, #454
+	
++----------------------+
+| VISHNU 3.0.0 - Beta2 |
++----------------------+
 * Added beta support for submitting jobs to a Cloud, using DeltaCloud
   (tested with OpenStack only). Currently, only the Vishnu user is
   used, there is no user switch during submission. The credentials
