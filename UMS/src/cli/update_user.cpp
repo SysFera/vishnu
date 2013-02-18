@@ -57,9 +57,9 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
   boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
- 
+
   opt->add("status,s",
-           "the status of the user (active or inactive)",
+           "the status of the user: 0 (inactive) or 1 (active)",
            CONFIG,
            fStatus);
 
@@ -93,5 +93,3 @@ int main (int ac, char* av[]){
 
 
 }// end of main
-
-
