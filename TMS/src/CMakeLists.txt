@@ -122,7 +122,8 @@ if (COMPILE_SERVERS)
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
     ${ZMQ_LIBRARIES}
-    zmq_helper)
+    zmq_helper
+    ${USED_BATCH_LIB})
 
   if (torque)
     add_library(vishnu-tms-torque${VISHNU_BATCH_VERSION} ${TORQUESERVER})
