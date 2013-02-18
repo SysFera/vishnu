@@ -79,14 +79,13 @@ int main (int ac, char* av[]){
       CONFIG);
 
   opt->add("listFullInfo,f",
-      "s an admin option for listing full VISHNU"
-      "user-authentication systems information such as"
-      "all concerned only the administrator:"
+      "is an admin option for providing all the information related to "
+      "the user-authentication systems: "
       "authLogin, authPassword and userPasswordEncryption",
       CONFIG);
 
   opt->add("userId,u",
-      "is an admin option for listing all"
+      "is an admin option for listing all "
       "user-authentication systems in which a specific"
       "user has local user-authentication configs",
       CONFIG,
@@ -120,5 +119,3 @@ int main (int ac, char* av[]){
   ListAuthenticationsystemsFunc listAuthenticationsystemsFunc (lsAuthSystems, listOptions, full);
   return GenericCli().run(listAuthenticationsystemsFunc, dietConfig, ac, av);
 }// end of main
-
-
