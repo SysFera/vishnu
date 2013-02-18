@@ -42,7 +42,7 @@ BOOST_AUTO_TEST_CASE( Machine_base )
   Machine ma;
   ListMachines_ptr        lim  = ecoreFactory->createListMachines();
   ListMachineOptions      liom ;
-  
+
   BOOST_MESSAGE(" Testing add machine UA6.1B"    );
   {
     BOOST_CHECK  (connect    (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
@@ -62,14 +62,14 @@ BOOST_AUTO_TEST_CASE( Machine_base )
     ma.setName("Machina");
     BOOST_CHECK    (updateMachine(sess.getSessionKey(), ma            )==0);
     BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
-    
+
   }
   BOOST_MESSAGE(" Testing update machine UA6.2B"    );
   {
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login,  m_test_ums_admin_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK    (deleteMachine(sess.getSessionKey(), ma.getMachineId()          )==0);
     BOOST_CHECK    (close        (sess.getSessionKey()                )==0);
-      
+
   }
 
   BOOST_MESSAGE(" Testing normal list machine UA6.3B" );
@@ -83,7 +83,7 @@ BOOST_AUTO_TEST_CASE( Machine_base )
     }
   }
 
-  
+
   BOOST_MESSAGE(" Testing normal list machine on a specific machine UA6.3B" );
   {
     liom.setMachineId(m_test_ums_user_vishnu_machineid);
@@ -96,7 +96,7 @@ BOOST_AUTO_TEST_CASE( Machine_base )
       BOOST_CHECK((lim->getMachines()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
     }
   }
-  
+
 }
 
 
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE( Machine_failure )
     ma.setMachineId(maid);
   }
 
-  
+
   BOOST_MESSAGE(" Testing bad mid list machine on a specific machine UA6.3E" );
   {
     liom.setMachineId("bad");
