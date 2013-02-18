@@ -257,7 +257,7 @@ BOOST_AUTO_TEST_CASE( test_isNotIP_nv4 )
 BOOST_AUTO_TEST_CASE( test_isNotIP_nv6 )
 {
   // IPv6
-  BOOST_REQUIRE(!vishnu::isNotIP("fe80::fa1e:dfff:feec:2b2d%en1"));
+  BOOST_REQUIRE(!vishnu::isNotIP("fe80::fa1e:dfff:feec:2b2d"));
   BOOST_REQUIRE(!vishnu::isNotIP("fe80::200:ff:fe00:0"));
   BOOST_REQUIRE(!vishnu::isNotIP("fe80::224:e8ff:fe3c:f559"));
 }
