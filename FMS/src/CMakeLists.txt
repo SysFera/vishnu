@@ -49,7 +49,6 @@ if(COMPILE_SERVERS)
 
   set(sed_SRCS sed/fmssed.cpp
     sed/ServerFMS.cpp
-    sed/internalApiFMS.cpp
     sed/getInfosSrv.cpp
     sed/getContentSrv.cpp
     sed/headSrv.cpp
