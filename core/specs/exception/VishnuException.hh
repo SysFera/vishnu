@@ -15,41 +15,16 @@
 
 
 
-class VishnuException :
-  public std::exception {
+class VishnuException : public std::exception {
 public:
 
-typedef enum ExceptionType{
-  UMS  = 0 ,
-  TMS  = 1 ,
-  FMS  = 2 , 
-  IMS  = 3 ,
-  NONE = 4   
-} ExceptionType;
-
-private :
-
-protected :
-
-  /**
-   * \brief Map containing The generic messages
-   */
-  mutable std::map<int, std::string> mp;  
-  /**
-   *  \brief A complementatry message to the exception
-   */
-  std::string   mmsgc;
-  /**
-   *  \brief The type of the exception (UMS, TMS, FMS, IMS, NONE)
-   */
-  ExceptionType mtype;
-  /**
-   *  \brief An exception code refereing to a generic message. -1 means no generic error message.
-   */
-  int           mval;
-
-
-public :
+  typedef enum ExceptionType{
+    UMS  = 0 ,
+    TMS  = 1 ,
+    FMS  = 2 ,
+    IMS  = 3 ,
+    NONE = 4
+  } ExceptionType;
 
   /**
    * \brief Default constructor
@@ -70,7 +45,7 @@ public :
    * \brief Default destructor
    * \fn ~VishnuException()
    */
-  virtual ~VishnuException() throw(){};
+  virtual ~VishnuException() throw() {};
   /**
    * \brief To get the type of the exception in integer
    * \fn ExceptionType getTypeI()
@@ -87,11 +62,11 @@ public :
   getTypeS() const {return "";};
   /**
    * \brief To get a complement to the message
-   * \fn virtual const char* what()const 
+   * \fn virtual const char* what()const
    * \return Returns a complement to the generic error message
    */
   virtual const char*
-  what() const throw(){return mmsgc.c_str();}
+  what() const throw() {return mmsgc.c_str();}
   /**
    * \brief To get the generic message
    * \fn virtual std::string getMsg()
@@ -105,21 +80,21 @@ public :
    * \param t The type of the exception
    */
   void
-  setType(ExceptionType t){mtype = t;}
+  setType(ExceptionType t) {mtype = t;}
   /**
    * \brief Function to set the complement of a message
    * \fn void setMsgComp(std::string m)
    * \param m The complement of the message
    */
   void
-  setMsgComp(std::string m){mmsgc = m;}
+  setMsgComp(std::string m) {mmsgc = m;}
   /**
    * \brief Function to set the generic message
    * \fn void setMsg(int val)
    * \param val The val of the msg
    */
   void
-  setMsg(int val){mval = val;}
+  setMsg(int val) {mval = val;}
   /**
    * \brief Function to append a complement to the detailled message
    * \fn void appendMsgComp(string s)
@@ -138,7 +113,26 @@ public :
    * \fn virtual void initMsg()
    */
   virtual void
-  initMsg() =0;
+  initMsg() = 0;
+
+protected :
+
+  /**
+   * \brief Map containing The generic messages
+   */
+  mutable std::map<int, std::string> mp;
+  /**
+   *  \brief A complementatry message to the exception
+   */
+  std::string   mmsgc;
+  /**
+   *  \brief The type of the exception (UMS, TMS, FMS, IMS, NONE)
+   */
+  ExceptionType mtype;
+  /**
+   *  \brief An exception code refereing to a generic message. -1 means no generic error message.
+   */
+  int           mval;
 };
 
 #endif // VISHNUEXCEPTION
