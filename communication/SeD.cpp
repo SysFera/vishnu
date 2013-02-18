@@ -101,6 +101,6 @@ ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
   return serverWorkerSockets<SeDWorker,
                              boost::shared_ptr<SeD> >(uri,
                                                       WORKER_INPROC_QUEUE,
-                                                      50,
+                                                      NB_THREADS,
                                                       server);
 }
