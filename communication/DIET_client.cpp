@@ -243,17 +243,16 @@ diet_call(diet_profile_t* prof) {
   }
 
   config.getConfigValues(param, uriv);
-  if (uriv.size()>0){
+  if (!uriv.empty()) {
     std::istringstream iss(uriv[0]);
     iss >> uri;
   }
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
-  if (dispv.size()>0){
+  if (!dispv.empty()) {
     disp = dispv[0];
   }
 
-  if (uri == "" &&
-      disp == "") {
+  if (uri == "" && disp == "") {
     // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
     // No module or server found
     // throw SystemException(ERRCODE_SYSTEM,
@@ -264,7 +263,7 @@ diet_call(diet_profile_t* prof) {
     return 1;
   }
   // If no direct data but dispatcher found
-  if (uri == ""){
+  if (uri == "") {
     uri = disp;
   }
   return diet_call_gen(prof, uri);
