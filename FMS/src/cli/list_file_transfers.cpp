@@ -59,7 +59,7 @@ makeListFileTransferTrOpt(string pgName,
       ffromMachineId);
 
  opt->add("userId,u",
-      "Allows an admin to stop file transfers of a specific user",
+      "Allows an admin to list file transfers of a specific user",
       CONFIG,
       fuserId);
 
