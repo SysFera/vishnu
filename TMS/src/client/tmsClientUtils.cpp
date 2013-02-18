@@ -91,8 +91,7 @@ genericFileCopier(const std::string& sessionKey,
     string msg = boost::str(boost::format("error while copying the file %1% (machine: %2%) to %3% (machine: %4%)") % src % dest % srcMachine % destMachine);
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, msg);
   }
-
-  return dest ;
+  return dest;
 }
 
 /**
@@ -110,18 +109,15 @@ sendInputFiles(const std::string& sessionKey,
 
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
-  string rdestDir = "VISHNU_INPUT"+vishnu::createSuffixFromCurTime();
-
+  string rdestDir = "VISHNU_INPUT"+vishnu::createSuffixFromCurTime()+bfs::unique_path("%%").string();
   if (listFiles.size() > 0 && srcFiles.size() != 0) {
     string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%rdestDir).str();
-    if(vishnu::mkdir(sessionKey, fqdnDestDir)){
+    if (vishnu::mkdir(sessionKey, fqdnDestDir)) {
       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the remote directory for input files: "+fqdnDestDir);
     }
   }
-
   std::ostringstream paramsBuf ;
-  for(ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); ++it){
-
+  for (ListStrings::const_iterator it = listFiles.begin(); it != listFiles.end(); ++it) {
     size_t pos = (*it).find("=") ; if(pos == std::string::npos) continue ; //*it would be in the form of param=path
     string param = (*it).substr(0, pos) ;
     string path = (*it).substr(pos+1, std::string::npos);
@@ -131,9 +127,7 @@ sendInputFiles(const std::string& sessionKey,
     if ((colonPos == string::npos) && !bfs::exists(path)) {
       throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
     }
-
     string rpath = rdestDir + "/" + bfs::path(path).filename().string();
-
     genericFileCopier(sessionKey, filerMachineId, path, destMachineId, rpath, copts);
     paramsBuf << ((paramsBuf.str().empty())? "" : " ") + param << "=$HOME/" << rpath ;
   }
@@ -174,7 +168,7 @@ findMachine(const std::string& sessionKey,
         selectedMachine = machine->getMachineId();
       }
     } catch(...) {
-      continue ;
+      continue;
     }
   }
   return selectedMachine;
