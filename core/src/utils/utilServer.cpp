@@ -21,17 +21,17 @@
 using namespace std;
 
 bool
-vishnu::isNew(std::string urlsup, std::string mid, std::string type){
+vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
   std::string req = "select machineid from process where machineid='"+mid+"' and vishnuname='"+type+"' and dietname='"+urlsup+"'";
   DbFactory factory;
   Database *mdatabase;
   mdatabase = factory.getDatabaseInstance();
-  try{
+  try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
-    if(result->getNbTuples() != 0) {
+    if (result->getNbTuples() != 0) {
       return false;
     }
-  } catch(SystemException& e){
+  } catch (SystemException& e) {
     e.appendMsgComp(" Failed to determine if the process "+type + " already exist");
     throw;
   }
@@ -111,47 +111,47 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
   // Loop parsing for the variables, setting their position and their value
   /* >RELAX<MISRA_6_3_1> avoid using too many brackets */
   /* >RELAX<MISRA_6_4_1> avoid using too many brackets */
-  for (i=0;i<strlen (format);i++){
-    if (format[i]=='$'){
-      if (isDay (format+i+1)){
+  for (i=0;i<strlen (format);i++) {
+    if (format[i]=='$') {
+      if (isDay (format+i+1)) {
         array[*size].start = i;
         array[*size].end = i+3;
         array[*size].value = day;
         (*size) ++;
-      }else if (isMonth (format+i+1)){
+      } else if (isMonth (format+i+1)) {
         array[*size].value = month;
         array[*size].start = i;
         array[*size].end = i+5;
         (*size) ++;
-      }else if (isYear (format+i+1)){
+      } else if (isYear (format+i+1)) {
         array[*size].start = i;
         array[*size].end = i+4;
         array[*size].value = year;
         (*size) ++;
-      }else if (isCpt (format+i+1)){
+      } else if (isCpt (format+i+1)) {
         char tmp[10];
         sprintf (tmp, "%d", cpt);
         array[*size].value = std::string (tmp);
         array[*size].start = i;
         array[*size].end = i+3;
         (*size) ++;
-      }else if (isSite (format+i+1)){
+      } else if (isSite (format+i+1)) {
         array[*size].value = site;
         array[*size].start = i;
         array[*size].end = i+4;
         (*size) ++;
-      }else if (isMaName (format+i+1)){
+      } else if (isMaName (format+i+1)) {
         array[*size].value = name;
         array[*size].start = i;
         array[*size].end = i+6;
         (*size) ++;
-      }else if (isUName (format+i+1)){
+      } else if (isUName (format+i+1)) {
         array[*size].value = name;
         array[*size].start = i;
         array[*size].end = i+5;
         (*size) ++;
-      }else if (isType (format+i+1)) {
-        switch (type){
+      } else if (isType (format+i+1)) {
+        switch (type) {
         case 0 :
           array[*size].value = "M";
           break;
@@ -176,8 +176,7 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
         array[*size].start = i;
         array[*size].end = i+4;
         (*size) ++;
-      }
-      else {
+      } else {
         return -1;
       }
     }
@@ -197,7 +196,6 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
 std::string
 vishnu::getGeneratedName (const char* format, int cpt, IdType type,
                           std::string name , std::string site ) {
-
   std::string res;
   res.clear ();
   res = std::string ("");
@@ -210,19 +208,19 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
   // if there is no error with the getKeywords function
   if (ret != -1) {
     // Building the id using the format and the values of the var
-    if (size > 0){
+    if (size > 0) {
       res.append(format, keywords[0].start);
     } else {
       res = std::string (format);
     }
-    for (int i = 0; i < size; i++){
+
+    for (int i = 0; i < size; i++) {
       res.append (keywords[i].value);
       // If other variables
       if (*(format+keywords[i].end + 1) != '\0' && i!=size-1) {
         res.append (format+keywords[i].end+1, keywords[i+1].start-keywords[i].end-1);
         // If text after the variable
-      }
-      else if (*(format+keywords[i].end + 1) != '\0' ){
+      } else if (*(format+keywords[i].end + 1) != '\0' ) {
         res.append (format+keywords[i].end+1, strlen (format)-keywords[i].end-1);
       }
     }
@@ -232,7 +230,7 @@ vishnu::getGeneratedName (const char* format, int cpt, IdType type,
 }
 
 int
-vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
+vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
   DbFactory factory;
   Database *databaseVishnu;
   int ret;
@@ -261,7 +259,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
     table="job";
     fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
     val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
-         "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+      "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
     primary="numjobid";
     break;
   case FILETRANSFERT:
@@ -279,15 +277,15 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
   case WORK:
     //FIXME : no auto-increment field in work
     fields = " (application_id"
-             ",date_created,done_ratio, estimated_hours,identifier,"
-             "last_updated, nbcpus, owner_id, priority, "
-             "project_id, "
-             "start_date, status, subject) ";
+      ",date_created,done_ratio, estimated_hours,identifier,"
+      "last_updated, nbcpus, owner_id, priority, "
+      "project_id, "
+      "start_date, status, subject) ";
     val = " ((select min(id) from application_version),"
-          " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
-          "(select min(id) from project), "
-          "CURRENT_TIMESTAMP, 1,'toto') ";
+      " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+      " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+      "(select min(id) from project), "
+      "CURRENT_TIMESTAMP, 1,'toto') ";
     table = "work";
     primary="id";
     break;
@@ -302,16 +300,16 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
 
   databaseVishnu = factory.getDatabaseInstance();
   int tid = databaseVishnu->startTransaction();
-  try{
+  try {
     ret = databaseVishnu->generateId(table, fields, val, tid, primary);
-  } catch (const exception& e){
+  } catch (const exception& e) {
     databaseVishnu->cancelTransaction(tid);
     throw;
   }
-  if(insert) {
+
+  if (insert) {
     databaseVishnu->endTransaction(tid);
-  }
-  else {
+  } else {
     databaseVishnu->cancelTransaction(tid);
   }
   return ret;
@@ -325,7 +323,6 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type){
  */
 void
 vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
-
   std::string table;
   std::string keyname;
   std::string idname;
@@ -371,9 +368,7 @@ vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
   DbFactory factory;
   try {
     factory.getDatabaseInstance()->process(sqlReserve);
-  }
-  catch (exception const & e)
-  {
+  } catch (exception const & e) {
     throw SystemException(ERRCODE_SYSTEM,string("Cannot reserve Object id : ")+e.what());
   }
 
@@ -387,7 +382,6 @@ vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
  */
 std::string
 vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId) {
-
   DbFactory factory;
   Database *databaseVishnu;
 
@@ -406,7 +400,6 @@ vishnu::getAttrVishnu(std::string attrname, std::string vishnuid, int transacId)
  */
 void
 vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
-
   DbFactory factory;
   Database *databaseVishnu;
 
@@ -430,7 +423,6 @@ vishnu::getObjectId(int vishnuId,
                     std::string formatName,
                     IdType type,
                     std::string stringforgeneration) {
-
   std::string idGenerated;
 
   std::string vishnuIdString = convertToString(vishnuId);
@@ -447,7 +439,7 @@ vishnu::getObjectId(int vishnuId,
 
   if (format.size() != 0) {
     idGenerated =
-        getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+      getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
     } else {
@@ -457,7 +449,6 @@ vishnu::getObjectId(int vishnuId,
     }
     // To set the idGenerated in the related row
     reserveObjectId(counter,idGenerated,type);
-
   } else {
     pthread_mutex_unlock(&(mutex));
     SystemException e (ERRCODE_SYSTEM, "The format "+ formatName +" is undefined");
@@ -509,19 +500,19 @@ int vishnu::getStatusValue (const std::string& file) {
  *  \param dir the directory where we create the links
  *  \return the string of the directory to which the link was created
  */
-std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
+std::string vishnu::moveFileData(const std::string& fileparam, std::string dir) {
   std::string directory="";
   std::string file="";
   size_t pos = fileparam.find("=");
-  if(pos!=std::string::npos) {
+  if (pos!=std::string::npos) {
     size_t pos1 = fileparam.find(" ", pos);
-    if(pos1!=std::string::npos){
+    if (pos1!=std::string::npos) {
       file = fileparam.substr(pos+1, pos1-pos);
     } else {
       file = fileparam.substr(pos+1);
     }
     size_t pos2 = file.rfind("/");
-    if(pos2 != std::string::npos){
+    if (pos2 != std::string::npos) {
       directory = file.substr(0, pos2);
 
       std::ostringstream oss;
@@ -542,11 +533,10 @@ std::string vishnu::moveFileData(const std::string& fileparam, std::string dir){
  *  \param path the path of the working directory
  */
 void vishnu::createWorkingDir(const std::string& path) {
-
   try {
     bfs::create_directories(path);
     // The working directory needs rwxt permissions
-    if(0 != chmod(path.c_str(),
+    if (0 != chmod(path.c_str(),
                   S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
                   |S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
                   |S_IROTH|S_IWOTH|S_IXOTH // RWX for other
@@ -554,8 +544,7 @@ void vishnu::createWorkingDir(const std::string& path) {
       throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the working directory "
                             + path) ;
     }
-  } catch(bfs::filesystem_error ex){
+  } catch (bfs::filesystem_error &ex) {
     throw SystemException(ERRCODE_INVDATA, ex.what());
   }
 }
-
