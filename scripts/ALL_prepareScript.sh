@@ -18,8 +18,10 @@ if [ $# -lt 1 ]; then
 fi
 
 generateDoc=0
-if [ $# -gt 1 ]; then
+generatorPath=""
+if [ $# -ge 1 ]; then
     generateDoc=1
+    generatorPath=$1
 fi
 
 
@@ -71,7 +73,7 @@ remove_files deliverables/tests/*
 # Generate all documentation
 if [ $generateDoc == 1 ]; then
     echo "## Generating documentation"
-    run_cmd $gen_doc_sh $1
+    run_cmd $gen_doc_sh $generatorPath
 else
     echo "## Documentation will not be generated"
 fi
