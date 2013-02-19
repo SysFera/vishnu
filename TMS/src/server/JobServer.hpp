@@ -166,8 +166,6 @@ private:
    */
   int mdebugLevel;
 
-private:
-
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir

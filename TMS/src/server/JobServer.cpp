@@ -77,6 +77,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
     std::string sessionId = msessionServer.getAttribut("where sessionkey='"
                                                        +(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+    mjob.setSessionId(sessionId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
@@ -212,7 +213,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 
     mjob.setSubmitMachineId(mmachineId);
     mjob.setSubmitMachineName(machineName);
-    mjob.setSessionId(sessionId);
     mjob.setJobId(vishnuJobId);
     mjob.setBatchJobId(mjob.getJobId()); // do this before mjob.setJobId()
     mjob.setJobId(vishnuJobId);
@@ -674,8 +674,8 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
 void JobServer::saveJob2Db()
 {
   std::string sqlUpdate = "UPDATE job set ";
-  sqlUpdate+="vsession_numsessionid="+mjob.getSessionId()+", ";
-  sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"', ";
+  sqlUpdate+="vsession_numsessionid='"+mjob.getSessionId()+"', ";
+  sqlUpdate+="submitMachineId='"+mmachineId+"', ";
   sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
   sqlUpdate+="batchJobId='"+mjob.getBatchJobId()+"', ";
   sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
