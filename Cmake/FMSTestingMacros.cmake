@@ -97,16 +97,15 @@ macro( fms_test NAME )
       set_property(TEST "${testsuite}${loop_var}" PROPERTY RUN_SERIAL ON)
     endforeach()
 
-    if(ENABLE_REPORTS)
-      add_custom_target(${NAME}-xml
-        COMMAND ${CMAKE_COMMAND}
-        -DTEST_PROG=${NAME}
-        -DBIN_PATH=${BIN_DIR}
-        -DVISHNU_CONFIG=${PROJECT_BINARY_DIR}/test_files/cfg/client_testing.cfg
-        -DREPORT_PATH=${REPORT_OUTPUT_PATH}
-        -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake)
-      add_dependencies(fms_test-xml ${TEST_NAME}-xml)
-    endif()
+    add_custom_target(${NAME}-xml
+      COMMAND ${CMAKE_COMMAND}
+      -DTEST_PROG=${NAME}
+      -DBIN_PATH=${BIN_DIR}
+      -DVISHNU_CONFIG=${PROJECT_BINARY_DIR}/test_files/cfg/client_testing.cfg
+      -DREPORT_PATH=${REPORT_OUTPUT_PATH}
+      -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake)
+    add_dependencies(fms_test-xml ${TEST_NAME}-xml)
+    
   endif()
 endmacro()
 

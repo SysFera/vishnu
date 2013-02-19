@@ -99,8 +99,7 @@ macro( tms_test NAME )
     endforeach()
 
     # generate XML reports
-    if(ENABLE_REPORTS)
-      add_custom_target(${NAME}-xml
+    add_custom_target(${NAME}-xml
       COMMAND ${CMAKE_COMMAND}
       -DTEST_PROG=${NAME}
       -DBIN_PATH=${BIN_DIR}
@@ -108,7 +107,7 @@ macro( tms_test NAME )
       -DREPORT_PATH=${REPORT_OUTPUT_PATH}
       -P ${PROJECT_SOURCE_DIR}/Cmake/runtest.cmake)
     add_dependencies(tms_test-xml ${TEST_NAME}-xml)
-    endif()
+    
   endif()
 endmacro()
 
