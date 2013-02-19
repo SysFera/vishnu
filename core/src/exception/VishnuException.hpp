@@ -13,72 +13,43 @@
 
 /**
  * \brief If everything is ok , no need to define exception so
-*/
+ */
 static const int VISHNU_OK = 0;
 /**
  * \brief This class represents the root of all the exception of the system
  * \class VishnuException
  */
-class VishnuException :
-  public std::exception {
+class VishnuException : public std::exception {
 public:
-
   /**
    * \brief The type of exception
    */
-typedef enum ExceptionType{
-  /**
-   * \brief UMS exception
-   */
-  UMS  	    = 0 ,
-  /**
-   * \brief TMS exception
-   */
-  TMS  	    = 1 ,
-  /**
-   * \brief FMS exception
-   */
-  FMS  	    = 2 ,
-  /**
-   * \brief IMS exception
-   */
-  IMS  	    = 3 ,
-  /**
-   * \brief internal exception
-   */
-  INTERNAL  = 4 ,
-  /**
-   * \brief not an exception
-   */
-  NONE      = 5
-} ExceptionType;
-
-private :
-
-protected :
-
-  /**
-   * \brief Map containing The generic messages
-   */
-  mutable std::map<int, std::string> mp;
-  /**
-   *  \brief A complementatry message to the exception
-   */
-  std::string   mmsgc;
-  /**
-   *  \brief The type of the exception (UMS, TMS, FMS, IMS, NONE)
-   */
-  ExceptionType mtype;
-  /**
-   *  \brief An exception code refereing to a generic message. -1 means no generic error message.
-   */
-  int           mval;
-  /**
-   * \brief The full exception message
-   */
-  mutable std::string   mfullMsg;
-
-public :
+  typedef enum ExceptionType{
+    /**
+     * \brief UMS exception
+     */
+    UMS  	    = 0 ,
+    /**
+     * \brief TMS exception
+     */
+    TMS  	    = 1 ,
+    /**
+     * \brief FMS exception
+     */
+    FMS  	    = 2 ,
+    /**
+     * \brief IMS exception
+     */
+    IMS  	    = 3 ,
+    /**
+     * \brief internal exception
+     */
+    INTERNAL  = 4 ,
+    /**
+     * \brief not an exception
+     */
+    NONE      = 5
+  } ExceptionType;
 
   /**
    * \brief Default constructor
@@ -176,19 +147,42 @@ public :
   virtual void
   initMsg() = 0;
   /**
-  * \brief Function to get the string associated to the exception
-  * \fn    std::string buildExceptionString() const
-  * \return the exception as a string
-  */
+   * \brief Function to get the string associated to the exception
+   * \fn    std::string buildExceptionString() const
+   * \return the exception as a string
+   */
   std::string
   buildExceptionString() const;
   /**
-  * \brief Implementation of the equal operator
-  * \param e the object to assign
-  * \return the object exception with the new values
-  */
+   * \brief Implementation of the equal operator
+   * \param e the object to assign
+   * \return the object exception with the new values
+   */
   VishnuException&
   operator=(const VishnuException &e);
+
+
+protected :
+  /**
+   * \brief Map containing The generic messages
+   */
+  mutable std::map<int, std::string> mp;
+  /**
+   *  \brief A complementatry message to the exception
+   */
+  std::string   mmsgc;
+  /**
+   *  \brief The type of the exception (UMS, TMS, FMS, IMS, NONE)
+   */
+  ExceptionType mtype;
+  /**
+   *  \brief An exception code refereing to a generic message. -1 means no generic error message.
+   */
+  int           mval;
+  /**
+   * \brief The full exception message
+   */
+  mutable std::string   mfullMsg;
 };
 
 #endif // VISHNUEXCEPTION
