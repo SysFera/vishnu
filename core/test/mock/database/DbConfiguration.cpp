@@ -25,7 +25,6 @@ DbConfiguration::DbConfiguration() :
  */
 void DbConfiguration::check()
 {
-    std::string dbTypeStr;
     mdbType = DbConfiguration::MOCK;
     mdbHost = "localhost";
     mdbPort = 1;
