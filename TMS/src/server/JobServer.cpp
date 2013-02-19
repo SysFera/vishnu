@@ -648,33 +648,27 @@ std::string JobServer::getBatchDirective(std::string& seperator) const {
  */
 void JobServer::treatSpecificParams(const std::string& specificParams,
                                     std::string& scriptContent) {
-
+  
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
-  switch (mbatchType) {
-  case SGE: {
-    size_t pos1 = 0;
-    size_t pos2 = 0;
-    std::string& params = const_cast<std::string&>(specificParams);
-    pos2 = params.find("=");
-    while (pos2 != std::string::npos) {
-      size_t pos3 = 0;
-      pos3 = params.find(sep);
-      if(pos3 != std::string::npos) {
-        std::string lineoption = directive +sep+ params.substr(pos1, pos2-pos1) + sep +  params.substr(pos2+1, pos3-pos2) + "\n";
-        insertOptionLine(lineoption, scriptContent, directive);
-        params.erase(0, pos3);
-        boost::algorithm::trim_left(params);
-      } else {
-        std::string lineoption = directive +sep+ params.substr(pos1, pos2-pos1)+ sep +  params.substr(pos2+1, params.size()-pos2) + "\n";
-        insertOptionLine(lineoption, scriptContent, directive);
-        break;
-      }
-      pos2 = params.find("=");
+  size_t pos1 = 0;
+  size_t pos2 = 0;
+  std::string& params = const_cast<std::string&>(specificParams);
+  pos2 = params.find("=");
+  while (pos2 != std::string::npos) {
+    size_t pos3 = 0;
+    pos3 = params.find(" ");
+    if(pos3 != std::string::npos) {
+      std::string lineoption = directive +" "+ params.substr(pos1, pos2-pos1) + sep +  params.substr(pos2+1, pos3-pos2) + "\n";
+      insertOptionLine(lineoption, scriptContent, directive);
+      params.erase(0, pos3);
+      boost::algorithm::trim_left(params);
+    } else {
+      std::string lineoption = directive +" "+ params.substr(pos1, pos2-pos1)+ sep +  params.substr(pos2+1, params.size()-pos2) + "\n";
+      insertOptionLine(lineoption, scriptContent, directive);
+      break;
     }
-  }
-    break;
-  default:
-    break;
+    pos2 = params.find("=");
   }
 }
+                                    
