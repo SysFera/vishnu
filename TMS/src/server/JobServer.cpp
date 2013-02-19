@@ -109,7 +109,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     string directory = "";
     try {
       directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
-    } catch(bfs::filesystem_error ex) {
+    } catch(bfs::filesystem_error &ex) {
       throw (ERRCODE_INVDATA, ex.what());
     }
     if(directory.length() > 0) {
@@ -426,7 +426,7 @@ int JobServer::cancelJob(const std::string& slaveDirectory)
       batchType = static_cast<BatchType>(convertToInt(*iter));
       ::ecorecpp::serializer::serializer jobSer;
       jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
-      
+
       SSHJobExec sshJobExec(acLogin, machineName,
                             batchType,
                             mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
@@ -678,4 +678,3 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
     break;
   }
 }
-
