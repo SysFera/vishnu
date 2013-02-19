@@ -112,7 +112,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
     if (!missingFiles.empty()) {
       vishnu::saveInFile(moutDir+"/MISSINGS", missingFiles);
     }
-  } catch (FMSVishnuException ex) {
+  } catch (FMSVishnuException &ex) {
     std::cerr << boost::format("Error on file %1%: %2%")%routputInfo%ex.what();
   }
 
