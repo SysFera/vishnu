@@ -204,8 +204,8 @@ JobOutputProxy::getCompletedJobsOutput() {
         vishnu::saveInFile(targetDir+"/MISSINGS", missingFiles);
       }
     }
-  } catch (FMSVishnuException ex) {
-    std::cerr << boost::format("Error on file %1%\n%2%")%routputInfo%ex.what();
+  } catch (FMSVishnuException &ex) {
+    std::cerr << boost::format("Error on file %1%\n%2%") % routputInfo % ex.what();
   }
   diet_profile_free(getCompletedJobsOutputProfile);
   return listJobResults_ptr;
