@@ -239,7 +239,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   pos = mjob.getOutputPath().find(":");
   std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
   mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
-      pos = mjob.getErrorPath().find(":");
+  pos = mjob.getErrorPath().find(":");
   std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
   mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
 
