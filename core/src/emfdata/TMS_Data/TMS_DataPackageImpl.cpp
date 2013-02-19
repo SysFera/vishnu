@@ -1053,7 +1053,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__userId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__userId->setName("userId");
-    m_Job__userId->setDefaultValueLiteral("");
+    m_Job__userId->setDefaultValueLiteral("" "");
     m_Job__userId->setLowerBound(0);
     m_Job__userId->setUpperBound(1);
     m_Job__userId->setTransient(false);
@@ -1067,7 +1067,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__vmId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__vmId->setName("vmId");
-    m_Job__vmId->setDefaultValueLiteral("");
+    m_Job__vmId->setDefaultValueLiteral("" "");
     m_Job__vmId->setLowerBound(0);
     m_Job__vmId->setUpperBound(1);
     m_Job__vmId->setTransient(false);
@@ -1081,7 +1081,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_Job__vmIp->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Job__vmIp->setName("vmIp");
-    m_Job__vmIp->setDefaultValueLiteral("");
+    m_Job__vmIp->setDefaultValueLiteral("" "");
     m_Job__vmIp->setLowerBound(0);
     m_Job__vmIp->setUpperBound(1);
     m_Job__vmIp->setTransient(false);
@@ -2625,6 +2625,16 @@ TMS_DataPackage::TMS_DataPackage()
         _el->setName("ALREADY_DOWNLOADED");
         _el->setValue(7);
         _el->setLiteral("ALREADY_DOWNLOADED");
+        _el->setEEnum(m_JobStatusEEnum);
+        m_JobStatusEEnum->getELiterals().push_back(_el);
+    }
+
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // FAILED
+        _el->setName("FAILED");
+        _el->setValue(8);
+        _el->setLiteral("FAILED");
         _el->setEEnum(m_JobStatusEEnum);
         m_JobStatusEEnum->getELiterals().push_back(_el);
     }

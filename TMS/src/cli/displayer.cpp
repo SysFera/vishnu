@@ -76,7 +76,7 @@ displayJob(TMS_Data::Job& j){
   cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
   cout << "\n CPU per Node         : " << j.getNbCpus();
   cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
-  cout << "\n Status               : " << convertJobStateToString(j.getStatus());
+  cout << "\n Status               : " << vishnu::convertJobStateToString(j.getStatus());
   if(j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
     cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
@@ -144,7 +144,7 @@ displayProgress(Progression& p){
     cout << " End time  : UNDEFINED" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
-  cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
+  cout << " Status    : " << vishnu::convertJobStateToString(p.getStatus()) << endl;
   cout << endl;
 }
 
@@ -226,48 +226,6 @@ displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
 }
 
-/**
- * \brief  function to convert job status into string
- * \param state: The state of job
- * \return The converted state value
- */
-std::string convertJobStateToString(const int& state) {
-
-  string stateStr;
-  switch(state) {
-  case vishnu::STATE_SUBMITTED:
-    stateStr = "SUBMITTED";
-    break;
-  case vishnu::STATE_QUEUED:
-    stateStr = "QUEUED";
-    break;
-  case vishnu::STATE_WAITING:
-    stateStr = "WAITING";
-    break;
-  case vishnu::STATE_RUNNING:
-    stateStr = "RUNNING";
-    break;
-  case vishnu::STATE_COMPLETED:
-    stateStr = "COMPLETED";
-    break;
-  case vishnu::STATE_CANCELLED:
-    stateStr = "CANCELLED";
-    break;
-  case vishnu::STATE_DOWNLOADED:
-    stateStr = "DOWNLOADED";
-    break;
-  case vishnu::STATE_FAILED:
-    stateStr = "FAILED";
-    break;
-  case vishnu::STATE_UNDEFINED:
-    stateStr = "UNDEFINED";
-    break;
-  default:
-    stateStr = "UNDEFINED";
-    break;
-  }
-  return stateStr;
-}
 
 /**
  * \brief  function to convert job priority into string
@@ -489,7 +447,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     maxQueueSize = std::max(maxQueueSize, queue.size());
 
     status = (listJobs.getJobs().get(i))->getStatus();
-    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+    maxStatusSize = std::max(maxStatusSize, vishnu::convertJobStateToString(status).size());
 
     priority = (listJobs.getJobs().get(i))->getJobPrio();
     maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size()+3);
@@ -531,7 +489,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWorkIdSize+2) << left << workId_;
     os << setw(maxOwnerSize+2) << left << owner;
-    os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
+    os << setw(maxStatusSize+2) << left << vishnu::convertJobStateToString(status);
     os << setw(maxQueueSize+2) << left << queue;
     ostringstream oss;
     oss << priority  << "(" << convertJobPriorityToString(priority) << ")";
@@ -606,7 +564,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     }
 
     status = (listProgress.getProgress().get(i))->getStatus();
-    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+    maxStatusSize = std::max(maxStatusSize, vishnu::convertJobStateToString(status).size());
 
     percent = (listProgress.getProgress().get(i))->getPercent();
     maxPercentSize = std::max(maxPercentSize, convertToString(percent).size());
@@ -651,7 +609,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     } else {
       os << setw(maxEndTimeSize+2) << left <<  " --- ";
     }
-    os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
+    os << setw(maxStatusSize+2) << left <<  vishnu::convertJobStateToString(status);
     ostringstream oss;
     oss <<  percent << "%";
     os << setw(maxPercentSize+2) << left << oss.str() ;
