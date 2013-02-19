@@ -59,49 +59,49 @@ displayJob(TMS_Data::Job& j){
   cout << " Session              : " << j.getSessionId() << endl;
   cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
   cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;	
+  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
   cout << "\n Output dir (remote)  : " << j.getOutputDir();
 
   boost::posix_time::ptime pt;
-	cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
-	if(j.getVmId().size() > 0) {
-		cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
-	}
-	cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-	cout << "\n User                 : " << j.getUserId();
-	cout << "\n Session              : " << j.getSessionId();
-	cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
-	cout << "\n Job name             : " << j.getJobName();
-	cout << "\n Job path             : " << j.getJobPath();
-	cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
-	cout << "\n CPU per Node         : " << j.getNbCpus();
-	cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
-	cout << "\n Status               : " << convertJobStateToString(j.getStatus());
+  cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
+  if(j.getVmId().size() > 0) {
+    cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
+  }
+  cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
+  cout << "\n User                 : " << j.getUserId();
+  cout << "\n Session              : " << j.getSessionId();
+  cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
+  cout << "\n Job name             : " << j.getJobName();
+  cout << "\n Job path             : " << j.getJobPath();
+  cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
+  cout << "\n CPU per Node         : " << j.getNbCpus();
+  cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
+  cout << "\n Status               : " << convertJobStateToString(j.getStatus());
   if(j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
-		cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
+    cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
   } else  {
-		cout << "\n Submit date          : UNDEFINED";
+    cout << "\n Submit date          : UNDEFINED";
   }
 
   if(j.getEndDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getEndDate()));
-		cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
+    cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
   } else {
-		cout << "\n End date             : UNDEFINED";
+    cout << "\n End date             : UNDEFINED";
   }
-	cout << "\n Owner                : " << j.getOwner();
-	cout << "\n Queue                : " << j.getJobQueue();
-	cout << "\n Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit());
-	cout << "\n Group name           : " << j.getGroupName();
-	cout << "\n Description          : " << j.getJobDescription();
+  cout << "\n Owner                : " << j.getOwner();
+  cout << "\n Queue                : " << j.getJobQueue();
+  cout << "\n Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit());
+  cout << "\n Group name           : " << j.getGroupName();
+  cout << "\n Description          : " << j.getJobDescription();
   if(j.getMemLimit() > 0) {
-		cout << "\n Max memory           : " << j.getMemLimit();
+    cout << "\n Max memory           : " << j.getMemLimit();
   } else {
-		cout << "\n Max memory           : UNDEFINED";
+    cout << "\n Max memory           : UNDEFINED";
   }
-	cout << "\n Nodes                : " << j.getNbNodes();
-	cout << "\n NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode();
+  cout << "\n Nodes                : " << j.getNbNodes();
+  cout << "\n NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode();
   cout << endl;
 }
 
@@ -235,29 +235,32 @@ std::string convertJobStateToString(const int& state) {
 
   string stateStr;
   switch(state) {
-	case vishnu::STATE_SUBMITTED:
+  case vishnu::STATE_SUBMITTED:
     stateStr = "SUBMITTED";
     break;
-	case vishnu::STATE_QUEUED:
+  case vishnu::STATE_QUEUED:
     stateStr = "QUEUED";
     break;
-	case vishnu::STATE_WAITING:
+  case vishnu::STATE_WAITING:
     stateStr = "WAITING";
     break;
-	case vishnu::STATE_RUNNING:
+  case vishnu::STATE_RUNNING:
     stateStr = "RUNNING";
     break;
-	case vishnu::STATE_COMPLETED:
-		stateStr = "COMPLETED";
+  case vishnu::STATE_COMPLETED:
+    stateStr = "COMPLETED";
     break;
-	case vishnu::STATE_CANCELLED:
+  case vishnu::STATE_CANCELLED:
     stateStr = "CANCELLED";
     break;
-	case vishnu::STATE_DOWNLOADED:
+  case vishnu::STATE_DOWNLOADED:
     stateStr = "DOWNLOADED";
-		break;
-	case vishnu::STATE_UNDEFINED:
-		stateStr = "UNDEFINED";
+    break;
+  case vishnu::STATE_FAILED:
+    stateStr = "FAILED";
+    break;
+  case vishnu::STATE_UNDEFINED:
+    stateStr = "UNDEFINED";
     break;
   default:
     stateStr = "UNDEFINED";

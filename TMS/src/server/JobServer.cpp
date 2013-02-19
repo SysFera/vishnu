@@ -75,6 +75,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 
   std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
   mjob.setJobId(vishnuJobId);
+  mjob.setStatus(vishnu::STATE_UNDEFINED);
 
   std::string workingDir ="/tmp" ;
   bool needOutputDir = false ;
@@ -85,11 +86,10 @@ int JobServer::submitJob(const std::string& scriptContent,
   std::string machineName = machineServer.getMachineName();
   delete machine;
 
-  BatchType batchType = mbatchType;
   if (options.isPosix()) {
-    batchType = POSIX;
+    mbatchType = POSIX;
   }
-  Env env(batchType);
+  Env env(mbatchType);
 
   std::string& scriptContentRef = const_cast<std::string&>(scriptContent) ;
   TMS_Data::SubmitOptions& optionsref = const_cast<TMS_Data::SubmitOptions&>(options);
@@ -110,7 +110,9 @@ int JobServer::submitJob(const std::string& scriptContent,
     try {
       directory = vishnu::moveFileData(optionsref.getFileParams(), inputDir);
     } catch(bfs::filesystem_error &ex) {
-      throw (ERRCODE_INVDATA, ex.what());
+      mjob.setStatus(vishnu::STATE_FAILED);
+      saveJob2Db();
+      throw SystemException(ERRCODE_INVDATA, ex.what());
     }
     if(directory.length() > 0) {
       std::string fileparams = optionsref.getFileParams();
@@ -122,7 +124,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
   }
-  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || batchType == DELTACLOUD ) {
+  if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
     setOutputDir(workingDir, suffix, scriptContentRef);
     needOutputDir = true ;
   }
@@ -140,24 +142,26 @@ int JobServer::submitJob(const std::string& scriptContent,
 
   //Initialize a ssh engine to submit the job to the underlying batch system
   SSHJobExec sshJobExec(acLogin, machineName,
-                        batchType,
+                        mbatchType,
                         mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
                         jobSerialized, submitOptionsSerialized);
   sshJobExec.setDebugLevel(mdebugLevel);  // Set the debug level
 
   // Create the output directory if necessary
   if (needOutputDir) {
-    if(batchType == DELTACLOUD) {
+    if(mbatchType == DELTACLOUD) {
       vishnu::createWorkingDir(mjob.getOutputDir()); // Create the output directory
       env.replaceAllOccurences(scriptContentRef, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
       env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
     } else if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) { // Create the output directory through ssh
+      mjob.setStatus(vishnu::STATE_FAILED);
+      saveJob2Db();
       throw SystemException(ERRCODE_INVDATA, "Failed to create the job's output directory : " + mjob.getOutputDir()) ;
     }
   }
   // Convert the script
   std::string convertedScript;
-  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(batchType, scriptContentRef));
+  boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContentRef));
   if(scriptConvertor->scriptIsGeneric()) {
     std::string genScript = scriptConvertor->getConvertedScript();
     convertedScript = genScript;
@@ -179,6 +183,8 @@ int JobServer::submitJob(const std::string& scriptContent,
                 S_IRUSR|S_IXUSR|
                 S_IRGRP|S_IXGRP|
                 S_IROTH|S_IXOTH)) {
+    mjob.setStatus(vishnu::STATE_FAILED);
+    saveJob2Db();
     throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
   }
   sshJobExec.sshexec(slaveDirectory, "SUBMIT", std::string(scriptPath)); // Submit the job
@@ -186,7 +192,7 @@ int JobServer::submitJob(const std::string& scriptContent,
   // Submission with deltacloud doesn't make copy of the script
   // So the script needs to be kept until the end of the execution
   // Clean the temporary script if not deltacloud
-  if (batchType != DELTACLOUD && mdebugLevel) {
+  if (mbatchType != DELTACLOUD && mdebugLevel) {
     vishnu::deleteFile(scriptPath.c_str());
   }
   std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
@@ -194,11 +200,15 @@ int JobServer::submitJob(const std::string& scriptContent,
     int code;
     std::string message;
     scanErrorMessage(errorInfo, code, message);
+    mjob.setStatus(vishnu::STATE_FAILED);
+    saveJob2Db();
     throw TMSVishnuException(code, message);
   }
   std::string updateJobSerialized = sshJobExec.getJobSerialized(); //  Get the serialized job
   TMS_Data::Job_ptr job = NULL;
   if (!vishnu::parseEmfObject(std::string(updateJobSerialized), job)) {
+    mjob.setStatus(vishnu::STATE_FAILED);
+    saveJob2Db();
     throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
   }
   mjob = *job;
@@ -207,7 +217,8 @@ int JobServer::submitJob(const std::string& scriptContent,
   mjob.setSubmitMachineId(mmachineId);
   mjob.setSubmitMachineName(machineName);
   mjob.setSessionId(sessionId);
-  std::string BatchJobId=mjob.getJobId();
+  mjob.setJobId(vishnuJobId);
+  mjob.setBatchJobId(mjob.getJobId()); // do this before mjob.setJobId()
   mjob.setJobId(vishnuJobId);
 
   string scriptContentStr = std::string(convertedScript);
@@ -218,47 +229,21 @@ int JobServer::submitJob(const std::string& scriptContent,
   }
   // Set the job owner for SGE and Deltacloud
   // For other batch schedulers this information is known
-  if(batchType == SGE || batchType == DELTACLOUD || batchType == POSIX) {
+  if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
     mjob.setOwner(acLogin);
   }
   std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
+  mjob.setSessionId(numsession);
   std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
+  mjob.setWorkId(vishnu::convertToLong(workId));
   pos = mjob.getOutputPath().find(":");
   std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
-  pos = mjob.getErrorPath().find(":");
+  mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
+      pos = mjob.getErrorPath().find(":");
   std::string prefixErrorPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
+  mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
 
-  std::string sqlUpdate = "UPDATE job set ";
-  sqlUpdate+="vsession_numsessionid="+numsession+", ";
-  sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"', ";
-  sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
-  sqlUpdate+="batchJobId='"+BatchJobId+"', ";
-  sqlUpdate+="batchType="+convertToString(batchType)+", ";
-  sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
-  sqlUpdate+="jobPath='"+mjob.getJobPath()+"', ";
-  sqlUpdate+="outputPath='"+prefixOutputPath+mjob.getOutputPath()+"',";
-  sqlUpdate+="errorPath='"+prefixErrorPath+mjob.getErrorPath()+"',";
-  sqlUpdate+="scriptContent='job', ";
-  sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+", ";
-  sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+", ";
-  sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"', ";
-  sqlUpdate+="status="+convertToString(mjob.getStatus())+", ";
-  sqlUpdate+="submitDate=CURRENT_TIMESTAMP, ";
-  sqlUpdate+="owner='"+mjob.getOwner()+"', ";
-  sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"', ";
-  sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
-  sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
-  sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"', ";
-  sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+", ";
-  sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
-  sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
-  sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
-  sqlUpdate+="workId="+workId+", ";
-  sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
-  sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
-  sqlUpdate+="WHERE jobid='"+vishnuJobId+"';";
-  mdatabaseVishnu->process(sqlUpdate);
-
+  saveJob2Db();
   return 0;
 }
 
@@ -672,3 +657,40 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
   }
 }
                                     
+}
+
+/**
+ * \brief Function to save the encapsulated job into the database
+ */
+void JobServer::saveJob2Db()
+{
+  std::string sqlUpdate = "UPDATE job set ";
+  sqlUpdate+="vsession_numsessionid="+mjob.getSessionId()+", ";
+  sqlUpdate+="submitMachineId='"+mjob.getSubmitMachineId()+"', ";
+  sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
+  sqlUpdate+="batchJobId='"+mjob.getBatchJobId()+"', ";
+  sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
+  sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
+  sqlUpdate+="jobPath='"+mjob.getJobPath()+"', ";
+  sqlUpdate+="outputPath='"+mjob.getOutputPath()+"',";
+  sqlUpdate+="errorPath='"+mjob.getErrorPath()+"',";
+  sqlUpdate+="scriptContent='job', ";
+  sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+", ";
+  sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+", ";
+  sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"', ";
+  sqlUpdate+="status="+convertToString(mjob.getStatus())+", ";
+  sqlUpdate+="submitDate=CURRENT_TIMESTAMP, ";
+  sqlUpdate+="owner='"+mjob.getOwner()+"', ";
+  sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"', ";
+  sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
+  sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
+  sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"', ";
+  sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+", ";
+  sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
+  sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
+  sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
+  sqlUpdate+="workId="+vishnu::convertToString(mjob.getWorkId())+", ";
+  sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
+  sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
+  sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
+  mdatabaseVishnu->process(sqlUpdate);
