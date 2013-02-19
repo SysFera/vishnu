@@ -190,6 +190,12 @@ private:
    * \param scriptContent The content of the script when required
    */
   void treatSpecificParams(const std::string& specificParams, std::string& scriptContent);
+
+
+  /**
+   * \brief Function to save the encapsulated job into the database
+   */
+  void saveJob2Db();
 };
 
 #endif
