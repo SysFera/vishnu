@@ -230,8 +230,6 @@ int JobServer::submitJob(const std::string& scriptContent,
     }
     std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
     mjob.setSessionId(numsession);
-    std::string workId = (mjob.getWorkId() != 0)? convertToString(mjob.getWorkId()) : "NULL" ;
-    mjob.setWorkId(vishnu::convertToLong(workId));
     pos = mjob.getOutputPath().find(":");
     std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
     mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
@@ -241,11 +239,17 @@ int JobServer::submitJob(const std::string& scriptContent,
     succeed = true;
   } catch (VishnuException& ex) {
     succeed = false;
+    mjob.setWorkId(0);
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
     mjob.setErrorPath(errMsg);
     mjob.setStatus(vishnu::STATE_FAILED);
   }
-  saveJob2Db();
+  try {
+    saveJob2Db();
+  } catch (VishnuException& ex) {
+    succeed = false;
+    scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
+  }
   if (!succeed) {
     throw TMSVishnuException(errCode, mjob.getJobId()+": "+errMsg);
   }
@@ -694,8 +698,9 @@ void JobServer::saveJob2Db()
   sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
   sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
   sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
-  sqlUpdate+="workId="+vishnu::convertToString(mjob.getWorkId())+", ";
+  sqlUpdate+="workId="+(mjob.getWorkId()? convertToString(mjob.getWorkId()) : "NULL")+", ";
   sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
   sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
   sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
+  std::cout << sqlUpdate << "\n";
   mdatabaseVishnu->process(sqlUpdate);
