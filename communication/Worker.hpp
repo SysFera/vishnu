@@ -10,10 +10,22 @@
  */
 class Worker {
 public:
+  /**
+   * @brief Constructor
+   * @param ctx zmq context
+   * @param uriInproc URI to be used to connect the socket
+   * @param id worker's identifier
+   */
   explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
                   const std::string& uriInproc, int id)
     : ctx_(ctx), uriInproc_(uriInproc), id_(id) {}
 
+
+  /**
+   * @brief Main loop. receives data and deal with it if it isn't empty
+   * Uses protected method doCall to provide implementation specific
+   * behavior when recieving data.
+   */
   void
   operator()() {
     Socket socket(*ctx_, ZMQ_REP);
@@ -39,15 +51,28 @@ public:
 
 
 protected:
+  /** @brief method to provide implementation specific behavior
+   * to handle received data.
+   * @param data a string containing the data
+   */
   virtual std::string
   doCall(std::string& data) = 0;
 
-  boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
-  std::string uriInproc_; /**< worker id */
-  int id_; /**< worker id */
+  boost::shared_ptr<zmq::context_t> ctx_;  /**< zmq context */
+  std::string uriInproc_;  /**< worker id */
+  int id_;  /**< worker id */
 };
 
 
+
+/** @brief templated method to create two sockets: a router and dealer
+ * and, creates a pool of threads of workers to handle the requests
+ *
+ * @param serverUri URI of the server socket (ROUTER)
+ * @param workerUri URI of the worker socket (DEALER)
+ * @param nbThreads number of threads in the pool
+ * @param params Worker specific parameter
+ */
 template<typename WorkerType,
          typename WorkerParam>
 int
