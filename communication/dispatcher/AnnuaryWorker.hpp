@@ -6,6 +6,9 @@
 #include "UserException.hpp"
 #include "Annuary.hpp"
 
+/**
+ * @class Base class for workers having an Annuary
+ */
 class AnnuaryWorker : public Worker {
 public:
   explicit AnnuaryWorker(boost::shared_ptr<zmq::context_t> ctx,
@@ -58,7 +61,8 @@ private:
 
 };
 
-//FIXME: clear unused parameters
+
+
 class SubscriptionWorker : public AnnuaryWorker {
 public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
