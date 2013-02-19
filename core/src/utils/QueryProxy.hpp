@@ -225,13 +225,11 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
 
   sessionKey = msessionProxy.getSessionKey();
   queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
-
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseDietMsgException(msg);
   }
-
   //If the query uses the machineId (machineId not null)
   if (!mmachineId.empty()) {
     if (diet_string_set(profile, 1, mmachineId)) {
@@ -285,7 +283,7 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
     }
   }
 
-  /*To check the receiving message error*/
+  /*CTo check the receiving message error*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse List object serialized

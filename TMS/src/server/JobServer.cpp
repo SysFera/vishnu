@@ -70,7 +70,7 @@ int JobServer::submitJob(const std::string& scriptContent,
 {
 
   bool succeed = false;
-  int errCode = ERRCODE_INVDATA;
+  int errCode = ERRCODE_RUNTIME_ERROR;
   std::string errMsg  = "";
   try {
     msessionServer.check(); //To check the sessionKey
