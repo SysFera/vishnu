@@ -19,7 +19,6 @@
 #include <dirent.h>
 
 #include "DIET_client.h"
-//#include "DIET_Dagda.h"
 
 #include "SessionProxy.hpp"
 
