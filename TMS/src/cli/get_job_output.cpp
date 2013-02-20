@@ -44,7 +44,7 @@ struct JobOutputJobFunc {
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
   string jobId;
   std::string outDir;
@@ -53,10 +53,10 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
    opt->add("outDir,o",
      "The outputh dir of the job output",
@@ -82,6 +82,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   JobOutputJobFunc jobOutputFunc(machineId, jobId, outDir);
-  return GenericCli().run(jobOutputFunc, dietConfig, argc, argv);
+  return GenericCli().run(jobOutputFunc, configFile, argc, argv);
   
 }

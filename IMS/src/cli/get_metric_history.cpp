@@ -59,14 +59,14 @@ makeGHMOp(string pgName,
          std::string& startTime,
          std::string& endTime,
         boost::function1<void, IMS_Data::MetricType>& ftype,
-	     string& dietConfig){
+	     string& configFile){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli options
   opt->add("start,s",
@@ -92,7 +92,7 @@ makeGHMOp(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string mid;
   string startTime;
   string endTime;
@@ -104,7 +104,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::MetricHistOp::setType,boost::ref(op),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], startTime, endTime, ftype,  dietConfig);
+  boost::shared_ptr<Options> opt = makeGHMOp(argv[0], startTime, endTime, ftype,  configFile);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -119,5 +119,5 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   MetricHistoryFunc metricHistoryFunc(mid, op, opt, startTime, endTime);
-  return GenericCli().run(metricHistoryFunc, dietConfig, argc, argv);
+  return GenericCli().run(metricHistoryFunc, configFile, argc, argv);
 }

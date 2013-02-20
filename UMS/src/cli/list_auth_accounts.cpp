@@ -49,7 +49,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -69,10 +69,10 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
 
   opt->add("userId,u",
@@ -108,7 +108,7 @@ int main (int ac, char* av[]){
   }
 
   ListAuthenticationAccountsFunc listAuthenticationAccountsFunc (lsAuthAccounts, listOptions, full);
-  return GenericCli().run(listAuthenticationAccountsFunc, dietConfig, ac, av);
+  return GenericCli().run(listAuthenticationAccountsFunc, configFile, ac, av);
 }// end of main
 
 

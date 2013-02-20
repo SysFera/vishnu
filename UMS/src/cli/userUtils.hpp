@@ -38,7 +38,7 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
 /**
  * \brief To build options for the VISHNU user commands
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fPrivilege: The privilege option callback
  * \param fFirstname: The user first name option callback
  * \param fLastName: The user last name option callback
@@ -49,7 +49,7 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
 
 
 boost::shared_ptr<Options> 
-makeUserOptions(std::string pgName,std::string & dietConfig,
+makeUserOptions(std::string pgName,std::string & configFile,
                 privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
                 StringcallBackType& fLastName, StringcallBackType & fEmail, int type=0);
 

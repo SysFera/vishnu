@@ -28,7 +28,7 @@ int main (int ac, char* av[]){
 
 	string sessionId;
 
-	string dietConfig;
+	string configFile;
 
 /********* Out parameters     *****************/
 
@@ -37,7 +37,7 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, dietConfig,CONFIG);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, configFile,CONFIG);
 
 
 
@@ -89,11 +89,11 @@ int main (int ac, char* av[]){
 
     /************** Call UMS reconnect service *******************************/
 
-    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
+    cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
 
     // initializing DIET
    
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
     

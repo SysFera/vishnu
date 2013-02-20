@@ -47,7 +47,7 @@ int
 main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
   string queueName;
 
@@ -56,10 +56,10 @@ main (int argc, char* argv[]){
 
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("queueName,q",
           "An option for listing all information of the given\n"
@@ -80,5 +80,5 @@ main (int argc, char* argv[]){
 
   //call of the api function
   ListQueuesFunc listQueueFunc(machineId, queueName);
-  return GenericCli().run(listQueueFunc, dietConfig, argc, argv);
+  return GenericCli().run(listQueueFunc, configFile, argc, argv);
 }

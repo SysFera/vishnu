@@ -17,7 +17,7 @@ using namespace std;
  * \brief To build options for the VISHNU machine commands
  * \param pgName : The name of the command
  * \param fName : The machine name option callback
- * \param dietConfig : Represents the VISHNU config file
+ * \param configFile : Represents the VISHNU config file
  * \param fSite : The site name option callback
  * \param fLanguage : The language option callback
  * \param sshPublicKeyPath : The user ssh key path option
@@ -27,17 +27,17 @@ using namespace std;
  */
 
 
-boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
+boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & configFile,
                                               StringcallBackType & fSite, StringcallBackType& fLanguage,
                                               std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
 
   Group_type group=CONFIG;

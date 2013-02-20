@@ -21,10 +21,10 @@ using namespace vishnu;
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string newJobFormat;
 
-  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], dietConfig, newJobFormat));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newJobFormat));
 
   bool isEmpty;
   //To process list options
@@ -32,6 +32,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   DefineIdentifierFunc<JOB> jobIdFunc(newJobFormat);
-  return GenericCli().run(jobIdFunc, dietConfig, argc, argv);
+  return GenericCli().run(jobIdFunc, configFile, argc, argv);
  
 }

@@ -991,7 +991,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
             <itemizedlist>
               <listitem>
                 <para>
-                  'dietConfigFile=/usr/local/etc/SeD.cfg': the path until the DIET configuration file. See the paragraph 6.4 for an example. The file can contains the two following lines:
+                  'configFileFile=/usr/local/etc/SeD.cfg': the path until the DIET configuration file. See the paragraph 6.4 for an example. The file can contains the two following lines:
                   <itemizedlist>
                     <listitem>
                       <para>'traceLevel = 0':  The level of verbosity of the agent, can be between 0 and 100. (100 is fully verbose, with corba details).</para>
@@ -1535,7 +1535,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       <title>Example of a UMS configuration file</title>
       <programlisting>
     # Configuration of the VISHNU UMS SeD
-    dietConfigFile=/usr/local/etc/SeD.cfg
+    configFileFile=/usr/local/etc/SeD.cfg
     vishnuId=1
     databaseType=postgresql
     databaseHost=localhost
@@ -1552,7 +1552,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       <title>Example of a TMS SeD configuration file </title>
       <programlisting>
     # Configuration of the VISHNU TMS SeD
-    dietConfigFile=/usr/local/etc/SeD.cfg
+    configFileFile=/usr/local/etc/SeD.cfg
     vishnuId=1
     databaseType=postgresql
     databaseHost=localhost
@@ -1575,7 +1575,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
       <title>Example of a FMS SeD configuration file </title>
       <programlisting>
     # Configuration of the VISHNU FMS SeD
-    dietConfigFile=/usr/local/etc/SeD.cfg
+    configFileFile=/usr/local/etc/SeD.cfg
     vishnuId=1
     databaseType=postgresql
     databaseHost=localhost

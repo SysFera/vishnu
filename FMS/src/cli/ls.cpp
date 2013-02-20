@@ -57,7 +57,7 @@ struct ListDirFunc {
 int main (int ac, char* av[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
    
   /********** EMF data ************/
@@ -66,7 +66,7 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
 
 
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
 
  opt->add("longFormat,l",
       "It specifies the long display format (all available file information",
@@ -91,6 +91,6 @@ int main (int ac, char* av[]){
 
  ListDirFunc apiFunc(path,lsDirOptions);
   
- return GenericCli().run(apiFunc, dietConfig, ac, av);
+ return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

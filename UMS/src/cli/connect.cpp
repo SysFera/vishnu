@@ -24,7 +24,7 @@ using namespace vishnu;
 int
 main(int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  std::string dietConfig;
+  std::string configFile;
   std::string userId;
   std::string password;
 
@@ -41,7 +41,7 @@ main(int ac, char* av[]) {
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt =
-    makeConnectOptions(av[0], userId, 0, dietConfig, CONFIG);
+    makeConnectOptions(av[0], userId, 0, configFile, CONFIG);
 
   opt->add("sessionInactivityDelay,d", "The session inactivity delay",
            CONFIG,fSessionInactivityDelay);
@@ -73,10 +73,10 @@ main(int ac, char* av[]) {
 
     /************** Call UMS connect service *******************************/
 // lauch the daemon cleaner if it is not already running
-    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);
+    cleaner(const_cast<char*>(configFile.c_str()), ac, av);
 
     // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
       errorUsage(av[0],dietErrorMsg,EXECERROR);
       return  ERRCODE_CLI_ERROR_DIET ;
     }

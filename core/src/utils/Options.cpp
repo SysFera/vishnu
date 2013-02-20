@@ -226,7 +226,7 @@ Options::parse_cfile() {
  * \brief To parse environement variable
  * \param name_mapper: a functor providing a simple name from the conventional
  * name of the environment variable
- * Ex: for VISHNU_CONFIG_FILE, it returns dietConfig
+ * Ex: for VISHNU_CONFIG_FILE, it returns configFile
  */
 
 void

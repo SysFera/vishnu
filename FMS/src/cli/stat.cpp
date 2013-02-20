@@ -46,13 +46,13 @@ struct GetFileInfoFunc {
 int main (int ac, char* av[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
   //buid options and parse 
   
-  ParseRemoteCommandOptions (ac,av,dietConfig,path);
+  ParseRemoteCommandOptions (ac,av,configFile,path);
   GetFileInfoFunc apiFunc(path);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 }
 

@@ -24,13 +24,13 @@ using namespace vishnu;
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
   //buid options and parse 
-  ParseRemoteCommandOptions (argc,argv,dietConfig,path);
+  ParseRemoteCommandOptions (argc,argv,configFile,path);
 
   FileActionFunc<CREATEFILE> apiFunc(path);
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv);
 
 }

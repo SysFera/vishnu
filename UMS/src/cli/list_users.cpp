@@ -47,7 +47,7 @@ struct ListUserFunc {
 int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -63,10 +63,10 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("userId,u",
       "  allows an admin to get information about \n"
@@ -94,7 +94,7 @@ int main (int ac, char* av[]){
   }
 
   ListUserFunc listFunc(lsUsers, listOptions, full);
-  return GenericCli().run(listFunc, dietConfig, ac, av);
+  return GenericCli().run(listFunc, configFile, ac, av);
 
 }// end of main
 

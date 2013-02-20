@@ -49,21 +49,21 @@ pid_exists(const std::string& pid);
 
 /**
  * \brief Deletes the file corresponding to the terminal closed
- * \param dietConfig: The VISHNU configuration file
+ * \param configFile: The VISHNU configuration file
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
 void 
-deleter(char* dietConfig,int ac,char* av[]);
+deleter(char* configFile,int ac,char* av[]);
 
 /**
  * \brief Creates a child process and call the deleter() function
- * \param dietConfig: The VISHNU configuration file
+ * \param configFile: The VISHNU configuration file
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
 
 void 
-cleaner(char* dietConfig,int ac,char* av[]);
+cleaner(char* configFile,int ac,char* av[]);
 
 #endif

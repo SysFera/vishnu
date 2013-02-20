@@ -44,8 +44,8 @@ using namespace vishnu;
  * \param listFiles : Sets a list of files to be uploaded onto the server before computing the command
  * \param loadCriterionStr : The load value to use (for now three criterions are be used:
  *  minimum number of waiting jobs, minimum number of running jobs and the total number of job )
- * \param dietConfig: Represents the VISHNU config file
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
@@ -70,14 +70,14 @@ makeSubJobOp(string pgName,
              boost::function1<void, long long>& fworkId,
              string& loadCriterionStr,
              string& walltime,
-             string& dietConfig){
+             string& configFile){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli options
   opt->add("name,n",
@@ -190,7 +190,7 @@ int main (int argc, char* argv[]){
   int ret; // Return value
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string sessionKey;
   string machineId;
   string scriptPath;
@@ -227,7 +227,7 @@ int main (int argc, char* argv[]){
       fmemory, fnbCpu, fnbNodeAndCpu,
       foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
       ftextParams, fspecificParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
-      loadCriterionStr, walltime, dietConfig);
+      loadCriterionStr, walltime, configFile);
 
   opt->add("selectQueueAutom,Q",
            "allows to select automatically a queue which has the number of nodes requested by the user.",
@@ -330,7 +330,7 @@ int main (int argc, char* argv[]){
     }
 
     // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
       errorUsage(argv[0], dietErrorMsg, EXECERROR);
       return  CLI_ERROR_DIET ;
     }

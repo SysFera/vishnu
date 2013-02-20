@@ -51,7 +51,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   std::string startDateOption;
 
@@ -79,7 +79,7 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
+  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, configFile, fSessionId, startDateOption, endDateOption);
 
 
   opt->add("status,t",
@@ -134,6 +134,6 @@ int main (int ac, char* av[]){
 
   /************** Call UMS list sessions service *******************************/
   ListSessionFunc listSessFunc(listSession,listOptions, full);
-  return GenericCli().run(listSessFunc, dietConfig, ac, av);
+  return GenericCli().run(listSessFunc, configFile, ac, av);
 
 }// end of main

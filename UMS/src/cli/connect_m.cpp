@@ -44,7 +44,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF Data ****************************/
 
@@ -61,7 +61,7 @@ int main (int ac, char* av[]){
   boost::function1<void,int> fSessionInactivityDelay( boost::bind(&UMS_Data::ConnectOptions::setSessionInactivityDelay,boost::ref(connectOpt),_1));
   boost::function1<void,string> fSubstituteUserId( boost::bind(&UMS_Data::ConnectOptions::setSubstituteUserId,boost::ref(connectOpt),_1));
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0,dietConfig,CONFIG);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0,configFile,CONFIG);
   opt->add("sessionInactivityDelay,d", "The session inactivity delay",CONFIG,fSessionInactivityDelay);
 
 
@@ -72,7 +72,7 @@ int main (int ac, char* av[]){
 
   UMS_Data::Session session;
 
-  dietConfig = string(getenv("VISHNU_CONFIG_FILE"));
+  configFile = string(getenv("VISHNU_CONFIG_FILE"));
 
 
   /********* Get all the couples user/pwd ******************/
@@ -136,10 +136,10 @@ int main (int ac, char* av[]){
     /************** Call UMS connect service *******************************/
   try{
 
-    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
+    cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
     // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
 

@@ -44,16 +44,16 @@ int main (int ac, char* av[]){
 
   string userId;
 
-  string dietConfig;
+  string configFile;
 
   /**************** Describe options *************/
 
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
           "The diet config file",
           ENV,
-          dietConfig);
+          configFile);
 
   opt->add("userId",
           "The VISHNU user identifier",
@@ -80,7 +80,7 @@ int main (int ac, char* av[]){
   }
 
   ChgPassWordFunc chPwdFunc(userId);
-  return GenericCli().runWithoutSessionKey(chPwdFunc, dietConfig, ac, av);
+  return GenericCli().runWithoutSessionKey(chPwdFunc, configFile, ac, av);
 
 
 }// end of main

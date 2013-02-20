@@ -34,17 +34,17 @@ struct SetUpdateFreqFunc {
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string freq;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli obligatory parameters
   opt->add("freq,f",
@@ -59,6 +59,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   SetUpdateFreqFunc setUpdateFreqFunc(freq);
-  return GenericCli().run(setUpdateFreqFunc, dietConfig, argc, argv); 
+  return GenericCli().run(setUpdateFreqFunc, configFile, argc, argv); 
 }
 

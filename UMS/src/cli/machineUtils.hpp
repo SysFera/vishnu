@@ -33,7 +33,7 @@ typedef  boost::function1<void,std::string> StringcallBackType;
  * \brief To build options for the VISHNU machine commands
  * \param pgName : The name of the command
  * \param fName : The machine name option callback
- * \param dietConfig : Represents the VISHNU config file
+ * \param configFile : Represents the VISHNU config file
  * \param fSite : The site name option callback
  * \param fLanguage : The language option callback
  * \param sshPublicKeyPath : The user ssh key path option
@@ -43,7 +43,7 @@ typedef  boost::function1<void,std::string> StringcallBackType;
  */
 
 
-boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & dietConfig,
+boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & configFile,
                                               StringcallBackType & fSite, StringcallBackType& fLanguage,
                                               std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type=0);
 

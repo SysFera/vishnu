@@ -35,7 +35,7 @@ struct SetSysThresholdFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
   string handler;
   int value;
@@ -47,10 +47,10 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   //Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add("machineId,i",
             "represents the id of the machine",
@@ -87,6 +87,6 @@ int main (int argc, char* argv[]){
   systemThreshold.setHandler(handler);
   //call of the api function
   SetSysThresholdFunc setSysThresholdFunc(systemThreshold);
-  return GenericCli().run(setSysThresholdFunc, dietConfig, argc, argv);
+  return GenericCli().run(setSysThresholdFunc, configFile, argc, argv);
 }
 

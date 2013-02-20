@@ -36,16 +36,16 @@ struct GetUpDateFreqFunc {
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   bool isEmpty;
   //To process list options
@@ -53,5 +53,5 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   GetUpDateFreqFunc getUpDateFreqFunc;
-  return GenericCli().run(getUpDateFreqFunc, dietConfig, argc, argv);
+  return GenericCli().run(getUpDateFreqFunc, configFile, argc, argv);
 }

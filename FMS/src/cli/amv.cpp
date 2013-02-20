@@ -30,7 +30,7 @@ using namespace vishnu;
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string src;
   string dest;
 
@@ -40,11 +40,11 @@ int main (int argc, char* argv[]){
    /********** EMF data ************/
   FMS_Data::CpFileOptions cpFileOptions;
 
-  copyParseOptions (argc, argv, dietConfig,src,dest,cpFileOptions,MV);
+  copyParseOptions (argc, argv, configFile,src,dest,cpFileOptions,MV);
 
   TransferAsyncFunc<MV> apiFunc(src, dest, transferInfo, cpFileOptions);
 
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv);
 }
 
 

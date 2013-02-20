@@ -18,21 +18,21 @@ using namespace vishnu;
  * \brief To build options for the VISHNU configure option command
  * \param opt: Describes all allowed options for the VISHNU configure option
  * command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fOptionName : A callback for the option name
  * \param fValue      : A callback for the option value
  */
 
 
-void makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
+void makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& configFile,
                           StringcallBackType& fOptionName,StringcallBackType& fValue){
 
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
 
   opt->add("optionName",
@@ -74,7 +74,7 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
   /******* Parsed value containers ****************/
 
-  std::string dietConfig;
+  std::string configFile;
 
   std::string sessionKey;
 
@@ -92,7 +92,7 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
   /**************** Describe options *************/
 
-  makeConfigureOptions(opt,dietConfig,fOptionName, fValue);
+  makeConfigureOptions(opt,configFile,fOptionName, fValue);
 
 
   try{
@@ -114,7 +114,7 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
   // initializing DIET
 
-  if (vishnuInitialize(const_cast<char*>(const_cast<char*>(dietConfig.c_str())), ac, av)) {
+  if (vishnuInitialize(const_cast<char*>(const_cast<char*>(configFile.c_str())), ac, av)) {
    
     errorUsage(av[0],dietErrorMsg,EXECERROR);
     

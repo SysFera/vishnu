@@ -44,7 +44,7 @@ struct UMS_env_name_mapper{
 
                 if (name=="VISHNU_CONFIG_FILE") {
 
-                        result="dietConfig";
+                        result="configFile";
                 }
 
                 if (name=="VISHNU_CLOSE_POLICY") {
@@ -66,7 +66,7 @@ struct UMS_env_name_mapper{
  * \param userId : A callback for user identifier
  * \param req    : for required parameters, 0 optional paramter whereas 1 means
  * mandatory parameter
- * \param dietConfig      : Represents the VISHNU config file
+ * \param configFile      : Represents the VISHNU config file
  * \param userIdGroup : represents the userId option group type, it may be HIDDEN,CONFIG,or ENV
  * \return The description of all options allowed by the command
  */
@@ -75,15 +75,15 @@ struct UMS_env_name_mapper{
 template <typename userIdType>
 
 boost::shared_ptr<Options>
-makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& dietConfig, const Group_type& userIdGroup=HIDDEN){
+makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& configFile, const Group_type& userIdGroup=HIDDEN){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add("userId,u",
            "represents the VISHNU user identifier",

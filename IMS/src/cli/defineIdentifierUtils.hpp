@@ -30,22 +30,22 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU copy of file command
  * \param pgName The name of the command
- * \param dietConfig Represents the VISHNU config file
+ * \param configFile Represents the VISHNU config file
  * \param newFormat Represents the new format to use
  * \return The built option
  */
 boost::shared_ptr<Options>
 makeDefineIdentifierOptions(string pgName,
-    string& dietConfig,
+    string& configFile,
     string& newFormat){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   // All cli obligatory parameters
   opt->add("format,f",

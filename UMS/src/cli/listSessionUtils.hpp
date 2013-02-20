@@ -66,7 +66,7 @@ boost::function1<void,int> IntcallBackType;
  * \brief To build options for the VISHNU list session command
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fMachineId: The machine identifier option callback
  * \param fSessionId: The session identifier option callback
  * \param fStatus: The session status option callback
@@ -80,7 +80,7 @@ boost::function1<void,int> IntcallBackType;
 
 boost::shared_ptr<Options> 
 makeListSessionOptions(std::string pgName,StringcallBackType& fUserId,
-                       std::string & dietConfig,  StringcallBackType& fMachineId, 
+                       std::string & configFile,  StringcallBackType& fMachineId, 
                        StringcallBackType& fSessionId, StatuscallBackType& fStatus,
                        ClosePolicycallBackType& fClosePolicy, IntcallBackType& fSessionInactivityDelay,
                        LongcallBackType& fStartDateOption, LongcallBackType& fEndDateOption);

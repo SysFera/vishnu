@@ -37,7 +37,7 @@ struct SaveConfigFunc {
 
 int main (int ac, char* av[]){
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF Data ****************************/
 
@@ -49,17 +49,17 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
           "The diet config file",
           ENV,
-          dietConfig);
+          configFile);
   
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   SaveConfigFunc configFunc(configuration);
-  return GenericCli().run(configFunc, dietConfig, ac, av);
+  return GenericCli().run(configFunc, configFile, ac, av);
 
 }// end of main
 

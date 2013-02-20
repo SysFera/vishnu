@@ -24,7 +24,7 @@ int main (int ac, char* av[]){
 
   string sessionId;
 
-  string dietConfig;
+  string configFile;
 
   string userId;
 
@@ -35,7 +35,7 @@ int main (int ac, char* av[]){
   UMS_Data::ListUsers listUsers;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, dietConfig,CONFIG);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,0, configFile,CONFIG);
 
 
 
@@ -57,7 +57,7 @@ int main (int ac, char* av[]){
 
   try {
 
-    dietConfig = string(getenv("VISHNU_CONFIG_FILE"));
+    configFile = string(getenv("VISHNU_CONFIG_FILE"));
     if (ac<2) {
       helpUsage(*opt,"[option] ");
       return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
@@ -67,7 +67,7 @@ int main (int ac, char* av[]){
 
     /************** Call UMS reconnect service *******************************/
 
-    cleaner(const_cast<char*>(dietConfig.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
+    cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
     /********* Get all the couples user/pwd ******************/
     counter = 2;
@@ -86,7 +86,7 @@ int main (int ac, char* av[]){
 
     // initializing DIET
 
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
 

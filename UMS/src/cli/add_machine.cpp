@@ -41,7 +41,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   std::string sshPublicKeyPath;
 
@@ -56,7 +56,7 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
   boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(newMachine),_1));
 
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -76,7 +76,7 @@ int main (int ac, char* av[]){
   }
  
   AddMachineFunc apiFunc(sshPublicKeyPath, newMachine);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

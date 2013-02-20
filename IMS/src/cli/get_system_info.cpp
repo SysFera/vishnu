@@ -41,15 +41,15 @@ struct GetSysInfoFunc {
 boost::shared_ptr<Options>
 makeGetystemInfoOpt(string pgName,
                   boost::function1<void, string>& fMachineId,
-                  string& dietConfig) {
+                  string& configFile) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
    opt->add("machineId,m",
             "represents the id of the machine",
@@ -63,7 +63,7 @@ makeGetystemInfoOpt(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
 
    /********** EMF data ************/
   IMS_Data::SysInfoOp sysInfoOp;
@@ -72,7 +72,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fMachineId (boost::bind(&IMS_Data::SysInfoOp::setMachineId,boost::ref(sysInfoOp),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetystemInfoOpt(argv[0], fMachineId, dietConfig);
+  boost::shared_ptr<Options> opt=makeGetystemInfoOpt(argv[0], fMachineId, configFile);
 
   bool isEmpty;
   //To process list options
@@ -80,6 +80,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   GetSysInfoFunc getSysInfoFunc(sysInfoOp);
-  return GenericCli().run(getSysInfoFunc, dietConfig, argc, argv);
+  return GenericCli().run(getSysInfoFunc, configFile, argc, argv);
 }
 

@@ -19,7 +19,7 @@ using namespace vishnu;
  * \brief A generic class to handle some command line operations like run a
  * function
  * \param function the api function
- * \param dietConfig the VISHNU client config file
+ * \param configFile the VISHNU client config file
  * \param ac The number of command line arguments
  * \param av The command line arguments
  * \return 0 if it succeeds or an error code otherwise
@@ -34,7 +34,7 @@ class GenericCli {
      * \brief A generic class to handle some command line operations like run a
      * function
      * \param function the api function
-     * \param dietConfig the VISHNU client config file
+     * \param configFile the VISHNU client config file
      * \param ac The number of command line arguments
      * \param av The command line arguments
      * \return 0 if it succeeds or an error code otherwise
@@ -42,13 +42,13 @@ class GenericCli {
 
 
     template <class ApiFunc>
-      int run(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
+      int run(ApiFunc function, std::string configFile, int ac, char*  av[]) {
 
         try{
 
           // initializing DIET
 
-          if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+          if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 
@@ -93,7 +93,7 @@ class GenericCli {
      * \brief A generic class to handle some command line operations like run a
      * functioni without managing the session
      * \param function the api function
-     * \param dietConfig the VISHNU client config file
+     * \param configFile the VISHNU client config file
      * \param ac The number of command line arguments
      * \param av The command line arguments
      * \return 0 if it succeeds or an error code otherwise
@@ -101,13 +101,13 @@ class GenericCli {
 
 
     template <class ApiFunc>
-      int runWithoutSessionKey(ApiFunc function, std::string dietConfig, int ac, char*  av[]) {
+      int runWithoutSessionKey(ApiFunc function, std::string configFile, int ac, char*  av[]) {
 
         try{
 
           // initializing DIET
 
-          if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), ac, av)) {
+          if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 

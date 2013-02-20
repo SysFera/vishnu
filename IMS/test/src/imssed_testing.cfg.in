@@ -1,5 +1,5 @@
 # Configuration of the VISHNU IMS SeD
-dietConfigFile=@DIETSEDCONF@
+configFileFile=@DIETSEDCONF@
 vishnuId=1
 vishnuMachineId=machine_1
 databaseType=@TEST_DB_TYPE@

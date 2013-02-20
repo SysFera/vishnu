@@ -28,14 +28,14 @@ int main (int ac, char* av[]){
   
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
   /********** EMF data ************/
   FMS_Data::RmFileOptions rmFileOptions;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
   
   opt->add("isRecursive,r",
       "It specifies when the remove command is recursive (case of directory) or not.",
@@ -51,6 +51,6 @@ int main (int ac, char* av[]){
   }
 
   FileActionFunc<REMOVEFILE,FMS_Data::RmFileOptions> apiFunc(path,rmFileOptions);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

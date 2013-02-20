@@ -41,7 +41,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   std::string sshPublicKeyPath;
 
@@ -65,7 +65,7 @@ int main (int ac, char* av[]){
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
   // Describe options
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,dietConfig, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
 
 
   opt->add("machineId",
@@ -107,7 +107,7 @@ int main (int ac, char* av[]){
     }
 
     UpDateMachineFunc upFunc(upMachine);
-    return GenericCli().run(upFunc, dietConfig, ac, av);
+    return GenericCli().run(upFunc, configFile, ac, av);
 
   } catch(std::exception& e){
 

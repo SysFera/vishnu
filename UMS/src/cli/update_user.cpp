@@ -40,7 +40,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -56,7 +56,7 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fEmail( boost::bind(&UMS_Data::User::setEmail,boost::ref(upUser),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail);
+  boost::shared_ptr<Options>opt= makeUserOptions(av[0],configFile,fPrivilege,fFirstname, fLastname,fEmail);
 
   opt->add("status,s",
            "the status of the user: 0 (inactive) or 1 (active)",
@@ -89,7 +89,7 @@ int main (int ac, char* av[]){
   }
 
   UpDateUserFunc upFunc(upUser);
-  return GenericCli().run(upFunc, dietConfig, ac, av);
+  return GenericCli().run(upFunc, configFile, ac, av);
 
 
 }// end of main

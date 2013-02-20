@@ -16,7 +16,7 @@ using namespace std;
 /**
  * \brief To build options for the VISHNU user commands
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fPrivilege: The privilege option callback
  * \param ffirstname: The user first name option callback
  * \param fLastName: The user last name option callback
@@ -27,17 +27,17 @@ using namespace std;
 
 
 boost::shared_ptr<Options>
-makeUserOptions(std::string pgName,std::string & dietConfig,
+makeUserOptions(std::string pgName,std::string & configFile,
                 privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
                 StringcallBackType& fLastname, StringcallBackType& fEmail, int type){
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   Group_type group=CONFIG;
 

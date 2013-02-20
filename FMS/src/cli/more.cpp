@@ -42,14 +42,14 @@ struct ContentOfFileFunc {
 int
 main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
 
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,ac,av," path");
   ContentOfFileFunc apiFunc(path);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

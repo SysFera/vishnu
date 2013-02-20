@@ -52,7 +52,7 @@ struct FMS_env_name_mapper{
 
     if (name=="VISHNU_CONFIG_FILE") {
 
-      result="dietConfig";
+      result="configFile";
     }
 
     if (name=="VISHNU_TRANSFER_CMD") {
@@ -70,7 +70,7 @@ struct FMS_env_name_mapper{
 /**
  * \brief To build options for the VISHNU copy of file command
  * \param pgName The name of the command
- * \param dietConfig Represents the VISHNU config file
+ * \param configFile Represents the VISHNU config file
  * \param trCmdStr The command to use to perform file transfer
  * \param src The source file to copy following the pattern [host:]file path
  * \param dest The path of the destination file
@@ -78,7 +78,7 @@ struct FMS_env_name_mapper{
  */
 boost::shared_ptr<Options>
 makeTransferCommandOptions(string pgName,
-    string& dietConfig,
+    string& configFile,
     string& trCmdStr,
     string& src,
     string& dest){
@@ -86,10 +86,10 @@ makeTransferCommandOptions(string pgName,
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("trCommand,t",
       "The command to use to perform file transfer. The different values  are:\n"
@@ -127,7 +127,7 @@ typedef enum{
  * \brief common parse function for file transfer command
  * \param argc The number of command line arguments
  * \param argv The command line arguments
- * \param dietConfig The VISHNU client config file
+ * \param configFile The VISHNU client config file
  * \param src The file transfer source
  * \param dest The file transfer destination
  * \param cpFileOptions The file transfer options
@@ -135,7 +135,7 @@ typedef enum{
  */
 
 void
-copyParseOptions (int argc, char* argv[],std::string& dietConfig,
+copyParseOptions (int argc, char* argv[],std::string& configFile,
                   std::string& src, std::string& dest,
                   FMS_Data::CpFileOptions& cpFileOptions,
                   TransferType transferType) {
@@ -144,7 +144,7 @@ copyParseOptions (int argc, char* argv[],std::string& dietConfig,
 
   // build transfer command options
   boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0],
-                                                            dietConfig,
+                                                            configFile,
                                                             trCmdStr,
                                                             src, dest));
 

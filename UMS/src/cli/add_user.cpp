@@ -45,7 +45,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -60,7 +60,7 @@ int main (int ac, char* av[]){
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options>opt= makeUserOptions(av[0],dietConfig,fPrivilege,fFirstname, fLastname,fEmail,1);
+  boost::shared_ptr<Options>opt= makeUserOptions(av[0],configFile,fPrivilege,fFirstname, fLastname,fEmail,1);
 
 
   CLICmd cmd = CLICmd (ac, av, opt);
@@ -81,7 +81,7 @@ int main (int ac, char* av[]){
   }
  
   AddUserFunc apiFunc(newUser);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

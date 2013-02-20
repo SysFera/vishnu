@@ -48,7 +48,7 @@ struct ListMachineFunc {
 
 int main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
   UMS_Data::ListMachines lsMachine;
@@ -60,7 +60,7 @@ int main (int ac, char* av[]) {
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::ListMachineOptions::setMachineId,boost::ref(listOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, dietConfig, fMachineId);
+  boost::shared_ptr<Options> opt= makeListMachineOptions(av[0],fUserId, configFile, fMachineId);
 
 
   opt->add("listAllmachine,a",
@@ -84,5 +84,5 @@ int main (int ac, char* av[]) {
   }
 
   ListMachineFunc listFunc(lsMachine,listOptions, full);
-  return GenericCli().run(listFunc, dietConfig, ac, av);
+  return GenericCli().run(listFunc, configFile, ac, av);
 }// end of main

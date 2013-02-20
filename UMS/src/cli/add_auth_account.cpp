@@ -42,7 +42,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -60,7 +60,7 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-boost::shared_ptr<Options> opt= makeAuthAccountOptions(av[0],dietConfig, fAuthSystemId,fUserId,fAcLogin,1);
+boost::shared_ptr<Options> opt= makeAuthAccountOptions(av[0],configFile, fAuthSystemId,fUserId,fAcLogin,1);
 
 CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -80,7 +80,7 @@ CLICmd cmd = CLICmd (ac, av, opt);
   }
 
   AddAuthenticationAccountFunc apiFunc(newAuthAccount);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

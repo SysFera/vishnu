@@ -37,17 +37,17 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   std::string machineId;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("machineId",
           "The identifier of the machine",
@@ -74,7 +74,7 @@ int main (int ac, char* av[]){
   }
 
   DeleteMachineFunc delFunc(machineId);
-  return GenericCli().run(delFunc, dietConfig, ac, av); 
+  return GenericCli().run(delFunc, configFile, ac, av); 
 
 }// end of main
 

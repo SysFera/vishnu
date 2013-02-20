@@ -42,7 +42,7 @@ struct TailOfFileFunc {
 int
 main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
   /********** EMF data ************/
@@ -52,7 +52,7 @@ main (int ac, char* av[]) {
   boost::function1<void,int> fNline(boost::bind(&FMS_Data::TailOfFileOptions::setNline,boost::ref(tofOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
 
   opt->add("nline,n",
       "The last lines to display",
@@ -62,6 +62,6 @@ main (int ac, char* av[]) {
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,ac,av," path");
   TailOfFileFunc apiFunc(path,tofOptions);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

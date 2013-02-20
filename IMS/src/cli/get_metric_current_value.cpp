@@ -43,14 +43,14 @@ struct MetricCurrentValueFunc {
 boost::shared_ptr<Options>
 makeGCMOp(string pgName,
 	  boost::function1<void, IMS_Data::MetricType>& ftype,
-	  string& dietConfig){
+	  string& configFile){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli options
 
@@ -65,7 +65,7 @@ makeGCMOp(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string mid;
 
   /********** EMF data ************/
@@ -75,7 +75,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,IMS_Data::MetricType> ftype(boost::bind(&IMS_Data::CurMetricOp::setMetricType,boost::ref(op),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt = makeGCMOp(argv[0], ftype,  dietConfig);
+  boost::shared_ptr<Options> opt = makeGCMOp(argv[0], ftype,  configFile);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -90,6 +90,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   MetricCurrentValueFunc metricMetricCurrentValueFunc(mid, op);
-  return GenericCli().run(metricMetricCurrentValueFunc, dietConfig, argc, argv);
+  return GenericCli().run(metricMetricCurrentValueFunc, configFile, argc, argv);
 
 }

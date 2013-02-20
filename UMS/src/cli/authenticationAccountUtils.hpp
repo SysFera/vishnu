@@ -40,14 +40,14 @@ typedef  boost::function1<void,std::string> StringcallBackType;
 /**
  * \brief To build options for the VISHNU system authentication commands
  * \param pgName : The name of the command
- * \param dietConfig : Represents the VISHNU config file
+ * \param configFile : Represents the VISHNU config file
  * \param fAuthSytemId : the identifier of the user-authentication system
  * \param fUserId :represents an admin option to add a local user-authentication configuration of a specific user
  * \param fAcLogin : represents the login of the user on the associated user-authentication system
  * \param type : represents the type (if add or update)
  * \return The description of all options allowed by the command
  */
-boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fAuthSytemId,StringcallBackType& fUserId, StringcallBackType& fAcLogin, int type=0);
+boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string & configFile,StringcallBackType& fAuthSytemId,StringcallBackType& fUserId, StringcallBackType& fAcLogin, int type=0);
 
 #endif
 
