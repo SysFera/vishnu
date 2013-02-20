@@ -193,7 +193,7 @@ private:
   /**
    * \brief Function to save the encapsulated job into the database
    */
-  void saveJob2Db();
+  void recordJob2db();
 };
 
 #endif
