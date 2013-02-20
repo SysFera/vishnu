@@ -30,7 +30,7 @@ void makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& configFile
 
 
   opt->add("configFile,c",
-           "The diet config file",
+           "VISHNU configuration file",
            ENV,
            configFile);
 

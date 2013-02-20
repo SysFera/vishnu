@@ -56,7 +56,7 @@ int main (int ac, char* av[]){
 
 
   opt->add("configFile,c",
-      "The diet config file",
+      "VISHNU configuration file",
       ENV,
       configFile);
 

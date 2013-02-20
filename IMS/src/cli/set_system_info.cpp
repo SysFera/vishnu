@@ -42,7 +42,7 @@ makeSystemInfoOpt(string pgName,
 
   // Environement option
   opt->add("configFile,c",
-           "The diet config file",
+           "VISHNU configuration file",
            ENV,
            configFile);
 

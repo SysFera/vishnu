@@ -45,7 +45,7 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
   opt->add("configFile,c",
-      "The diet config file",
+      "VISHNU configuration file",
       ENV,
       configFile);
 

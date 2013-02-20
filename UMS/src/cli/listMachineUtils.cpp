@@ -34,7 +34,7 @@ makeListMachineOptions(std::string pgName,StringcallBackType& fUserId,
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   opt->add("configFile,c",
-           "The diet config file",
+           "VISHNU configuration file",
            ENV,
            configFile);
 

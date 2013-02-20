@@ -34,7 +34,7 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
 
 
   opt->add("configFile,c",
-           "The diet config file",
+           "VISHNU configuration file",
            ENV,
            configFile);
 
