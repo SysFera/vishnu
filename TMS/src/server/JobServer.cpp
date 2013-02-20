@@ -81,6 +81,7 @@ int JobServer::submitJob(const std::string& scriptContent,
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
+    mjob.setWorkId(options.getWorkId());
 
     std::string workingDir ="/tmp" ;
     bool needOutputDir = false ;
@@ -137,7 +138,6 @@ int JobServer::submitJob(const std::string& scriptContent,
     if(options.getFileParams().size()) {
       env.setParams(scriptContentRef, optionsref.getFileParams()) ;
     }
-    mjob.setWorkId(optionsref.getWorkId()) ;
     ::ecorecpp::serializer::serializer optSer;
     ::ecorecpp::serializer::serializer jobSer;
     std::string submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
@@ -237,7 +237,6 @@ int JobServer::submitJob(const std::string& scriptContent,
     succeed = true;
   } catch (VishnuException& ex) {
     succeed = false;
-    mjob.setWorkId(0);
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
     mjob.setErrorPath(errMsg);
     mjob.setOutputPath("");
@@ -701,7 +700,7 @@ void JobServer::recordJob2db()
   sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
   sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
   sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
-  sqlUpdate+="workId="+(mjob.getWorkId()? convertToString(mjob.getWorkId()) : "NULL")+", ";
+  sqlUpdate+= mjob.getWorkId()? "workId="+convertToString(mjob.getWorkId())+", " : "";
   sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
   sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
   sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
