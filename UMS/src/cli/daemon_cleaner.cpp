@@ -82,7 +82,7 @@ deleter(char* configFile,int ac,char* av[]) {
                 if (vishnuInitialize(configFile, ac, av)) {
                   if (vishnuInitialize(configFile, ac, av)) {
                     if (vishnuInitialize(configFile, ac, av)) {
-                      syslog(LOG_ERR,"DIET initialization failed !");
+                      syslog(LOG_ERR,"VISHNU initialization failed !");
                       exit (EXIT_FAILURE);
                     }
                   }

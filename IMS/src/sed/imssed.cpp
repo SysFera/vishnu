@@ -114,7 +114,7 @@ main(int argc, char* argv[], char* envp[]) {
   }
   // Check DIET Configuration file
   if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
-    std::cerr << "Error: cannot open DIET configuration file" << "\n";
+    std::cerr << "Error: cannot open sendmail script file" << "\n";
     exit(1);
   }
 
