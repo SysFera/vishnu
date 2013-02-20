@@ -36,14 +36,14 @@ boost::function1<void,std::string> StringcallBackType;
  * \brief To build options for the VISHNU list machine command
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fMachineId : The callback for the machine identifier
  * \return The description of all options allowed by the command
  */
 
 boost::shared_ptr<Options>
 makeListMachineOptions(std::string pgName,StringcallBackType& fUserId,
-                       std::string & dietConfig,StringcallBackType& fMachineId);
+                       std::string & configFile,StringcallBackType& fMachineId);
 
 
 

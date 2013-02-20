@@ -38,7 +38,7 @@ struct CancelJobFunc {
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
   string cancelJobId;
 
@@ -48,10 +48,10 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt (new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli obligatory parameters
   opt->add("machineId,m",
@@ -72,6 +72,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   CancelJobFunc cancelJobFunc(machineId, cancelJobId);
-  return GenericCli().run(cancelJobFunc, dietConfig, argc, argv); 
+  return GenericCli().run(cancelJobFunc, configFile, argc, argv); 
 
 }

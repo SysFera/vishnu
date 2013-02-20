@@ -52,7 +52,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
 
   /********** EMF data ************/
@@ -71,10 +71,10 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt(new Options (av[0]) );
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
           "The diet config file",
           ENV,
-          dietConfig);
+          configFile);
 
   opt->add("listAllDeftValue,a",
           "is an option for listing all default option values\n"
@@ -109,7 +109,7 @@ int main (int ac, char* av[]){
     lsOptions.setListAllDeftValue (true);
   }
   ListOptionsFunc listFunc(lsOptionsValues,lsOptions, full);
-  return GenericCli().run(listFunc, dietConfig, ac, av);
+  return GenericCli().run(listFunc, configFile, ac, av);
 }// end of main
 
 

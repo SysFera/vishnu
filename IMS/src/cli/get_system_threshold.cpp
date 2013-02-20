@@ -41,15 +41,15 @@ boost::shared_ptr<Options>
 makeGetystemThresholdOpt(string pgName,
                   boost::function1<void, string>& fMachineId,
                   boost::function1<void, IMS_Data::MetricType>& fType,
-                  string& dietConfig) {
+                  string& configFile) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add("machineId,m",
             "represents the id of the machine",
@@ -68,7 +68,7 @@ makeGetystemThresholdOpt(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
 
    /********** EMF data ************/
   IMS_Data::ThresholdOp thresholdOp;
@@ -78,7 +78,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,IMS_Data::MetricType> fType (boost::bind(&IMS_Data::ThresholdOp::setMetricType,boost::ref(thresholdOp),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetystemThresholdOpt(argv[0], fMachineId, fType, dietConfig);
+  boost::shared_ptr<Options> opt=makeGetystemThresholdOpt(argv[0], fMachineId, fType, configFile);
 
   bool isEmpty;
   //To process list options
@@ -86,7 +86,7 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   GetSysThresholdFunc getSysThresholdFunc(thresholdOp);
-  return GenericCli().run(getSysThresholdFunc, dietConfig, argc, argv);
+  return GenericCli().run(getSysThresholdFunc, configFile, argc, argv);
 
 }
 

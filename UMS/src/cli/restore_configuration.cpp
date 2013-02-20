@@ -36,15 +36,15 @@ int main (int ac, char* av[]){
 
   string filePath;
 
-  string dietConfig;
+  string configFile;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(av[0]));
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
 
   opt->add("filePath",
@@ -74,7 +74,7 @@ int main (int ac, char* av[]){
   }
 
   RestoreConfigFunc restconfigFunc(filePath);
-  return GenericCli().run(restconfigFunc, dietConfig, ac, av);
+  return GenericCli().run(restconfigFunc, configFile, ac, av);
 
 }// end of main
 

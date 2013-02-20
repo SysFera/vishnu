@@ -28,7 +28,7 @@ struct env_name_mapper {
   operator ()(const std::string& name) const {
     std::string result = "";
     if ("VISHNU_CONFIG_FILE" == name) {
-      result = "dietConfig";
+      result = "configFile";
     }
 
     return result;

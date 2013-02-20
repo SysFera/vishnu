@@ -40,14 +40,14 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   std::string userId;
 
   std::string machineId;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, dietConfig);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1, configFile);
 
   opt->setPosition("userId",1);
 
@@ -78,7 +78,7 @@ int main (int ac, char* av[]){
   }
 
   DeleteLocalAccountFunc apiFunc(userId,machineId);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

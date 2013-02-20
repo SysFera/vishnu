@@ -41,7 +41,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -56,7 +56,7 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,dietConfig,fMachineId,
+  boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,configFile,fMachineId,
                                                          fAcLogin,fSshKeyPath,fHomeDirectory);
 
   CLICmd cmd = CLICmd (ac, av, opt);
@@ -76,6 +76,6 @@ int main (int ac, char* av[]){
   }
  
   UpdateLocalAccountFunc apiFunc(upAcLogin);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main

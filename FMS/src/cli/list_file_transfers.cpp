@@ -26,7 +26,7 @@ using namespace FMS_Data;
 /**
  * \brief To build options for the VISHNU list directory of file command
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param ftransferId: The file transfer identifier
  * \param ffromMachineId: The machine that is the source of the file transfer
  * \param fuserId: The user identifier
@@ -34,7 +34,7 @@ using namespace FMS_Data;
  */
 boost::shared_ptr<Options>
 makeListFileTransferTrOpt(string pgName,
-    string& dietConfig,
+    string& configFile,
     boost::function1<void, string>& ftransferId,
     boost::function1<void, string>& ffromMachineId,
     boost::function1<void, string>& fuserId,
@@ -43,10 +43,10 @@ makeListFileTransferTrOpt(string pgName,
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("transferId,t",
       "A given transfer id",
@@ -106,7 +106,7 @@ int main (int ac, char* av[]) {
   int ret; // Return value
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string statusStr;
 
    /********** EMF data ************/
@@ -118,7 +118,7 @@ int main (int ac, char* av[]) {
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::LsTransferOptions::setUserId, boost::ref(lsFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], dietConfig, ftranferId, ffromMachineId, fuserId, statusStr);
+  boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], configFile, ftranferId, ffromMachineId, fuserId, statusStr);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -175,6 +175,6 @@ int main (int ac, char* av[]) {
 
   // Process command
  ListFileTransferFunc apiFunc( lsFileTransferOptions);
- return GenericCli().run(apiFunc, dietConfig, ac, av);
+ return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

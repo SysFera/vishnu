@@ -67,7 +67,7 @@ typedef  boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
 /**
  * \brief To build options for the VISHNU system authentication commands
  * \param pgName : The name of the command
- * \param dietConfig : Represents the VISHNU config file
+ * \param configFile : Represents the VISHNU config file
  * \param fName : The user-authentication system’s name option callback
  * \param fURI : The URI of the user-authentication systems (by
  * the form host:port for LDAP) option callback
@@ -81,7 +81,7 @@ typedef  boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
  */
 
 
-boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword, EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, StringcallBackType& fLdapBase,int type=0);
+boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & configFile,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword, EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, StringcallBackType& fLdapBase,int type=0);
 
 #endif
 

@@ -38,11 +38,11 @@ int main (int ac, char* av[]){
 
   string userId;
 
-  string dietConfig;
+  string configFile;
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,dietConfig);
+  boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,configFile);
 
   opt->setPosition("userId",-1);
 
@@ -64,7 +64,7 @@ int main (int ac, char* av[]){
   }
   std::string tmpPassword;
   ResetPassWordFunc resetPassWordFunc(userId, tmpPassword);
-  return GenericCli().run(resetPassWordFunc, dietConfig, ac, av);
+  return GenericCli().run(resetPassWordFunc, configFile, ac, av);
 
 }// end of main
 

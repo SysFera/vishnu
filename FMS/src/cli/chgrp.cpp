@@ -39,12 +39,12 @@ struct ChangeFileGroupFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
   string group;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
+  boost::shared_ptr<Options> opt=processOpt(argv[0], configFile);
 
   opt->add("group,g",
       "The new group owner of file/directory",
@@ -61,6 +61,6 @@ int main (int argc, char* argv[]){
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,argc,argv,"group path");
   ChangeFileGroupFunc apiFunc(path,group);
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv);
 
 }

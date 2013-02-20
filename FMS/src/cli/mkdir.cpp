@@ -26,14 +26,14 @@ using namespace FMS_Data;
 int main (int ac, char* av[]){
   
  /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
 
   /********** EMF data ************/
   FMS_Data::CreateDirOptions mkdirOptions;
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],dietConfig,path));
+  boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
 
   opt->add("isRecursive,p",
       "It specifies when the make directory command is recursive (make the parent directory if needed) or not.",
@@ -49,6 +49,6 @@ int main (int ac, char* av[]){
   } 
   
   FileActionFunc<CREATEDIR,FMS_Data::CreateDirOptions> apiFunc(path,mkdirOptions);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }

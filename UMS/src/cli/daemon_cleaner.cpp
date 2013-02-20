@@ -47,12 +47,12 @@ pid_exists(int pid) {
 
 /**
  * \brief Deletes the file corresponding to the terminal closed
- * \param dietConfig: The VISHNU configuration file
+ * \param configFile: The VISHNU configuration file
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
 void
-deleter(char* dietConfig,int ac,char* av[]) {
+deleter(char* configFile,int ac,char* av[]) {
   extern bfs::path daemon_file;
   extern bfs::path session_dir;
 
@@ -79,9 +79,9 @@ deleter(char* dietConfig,int ac,char* av[]) {
             BOOST_FOREACH (SessionEntry session, allSessions) {
               if (session.getClosePolicy() == 2) {//that session is open by disconnect mode
                 // TODO : a loop to handle that
-                if (vishnuInitialize(dietConfig, ac, av)) {
-                  if (vishnuInitialize(dietConfig, ac, av)) {
-                    if (vishnuInitialize(dietConfig, ac, av)) {
+                if (vishnuInitialize(configFile, ac, av)) {
+                  if (vishnuInitialize(configFile, ac, av)) {
+                    if (vishnuInitialize(configFile, ac, av)) {
                       syslog(LOG_ERR,"DIET initialization failed !");
                       exit (EXIT_FAILURE);
                     }
@@ -116,7 +116,7 @@ deleter(char* dietConfig,int ac,char* av[]) {
 
 /**
  *\brief Creates a child process and call the deleter() function
- * \param dietConfig: The VISHNU configuration file
+ * \param configFile: The VISHNU configuration file
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
@@ -124,7 +124,7 @@ deleter(char* dietConfig,int ac,char* av[]) {
 
 
 void
-cleaner(char* dietConfig,int ac,char* av[]) {
+cleaner(char* configFile,int ac,char* av[]) {
   // declare all global variables
   extern bfs::path home_dir;
   extern bfs::path session_dir;
@@ -156,7 +156,7 @@ cleaner(char* dietConfig,int ac,char* av[]) {
       f.close();
     }
 
-    deleter(dietConfig,ac,av);
+    deleter(configFile,ac,av);
   }
 
   return;

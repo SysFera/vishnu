@@ -22,10 +22,10 @@ using namespace vishnu;
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string newUserFormat;
 
-  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], dietConfig, newUserFormat));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newUserFormat));
 
   bool isEmpty;
   //To process list options
@@ -33,7 +33,7 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   DefineIdentifierFunc<USER>  userIdFunc(newUserFormat);
-  return GenericCli().run(userIdFunc, dietConfig, argc, argv); 
+  return GenericCli().run(userIdFunc, configFile, argc, argv); 
 
 }
 

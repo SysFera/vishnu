@@ -37,7 +37,7 @@ struct RestartFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
   string type;
 
@@ -48,10 +48,10 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add( "machineId,i",
             "represents the id of the machine",
@@ -73,6 +73,6 @@ int main (int argc, char* argv[]){
   restartOp.setName(type);
   //call of the api function
   RestartFunc restartFunc(machineId, restartOp);
-  return GenericCli().run(restartFunc, dietConfig, argc, argv);
+  return GenericCli().run(restartFunc, configFile, argc, argv);
 
 }

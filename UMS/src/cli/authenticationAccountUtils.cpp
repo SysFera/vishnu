@@ -16,7 +16,7 @@ using namespace std;
 /**
  * \brief To build options for the VISHNU system authentication commands
  * \param pgName : The name of the command
- * \param dietConfig : Represents the VISHNU config file
+ * \param configFile : Represents the VISHNU config file
  * \param fAuthSystemId : the identifier of the user-authentication system
  * \param fUserId :represents an admin option to add a local user-authentication configuration of a specific user
  * \param fAcLogin : represents the login of the user on the associated user-authentication system
@@ -24,16 +24,16 @@ using namespace std;
  */
 
 
-boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string & dietConfig,StringcallBackType& fAuthSystemId,StringcallBackType& fUserId, StringcallBackType& fAcLogin, int type) {
+boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string & configFile,StringcallBackType& fAuthSystemId,StringcallBackType& fUserId, StringcallBackType& fAcLogin, int type) {
 
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
 
   Group_type group=CONFIG;

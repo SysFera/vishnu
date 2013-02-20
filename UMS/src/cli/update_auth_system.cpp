@@ -42,7 +42,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -71,7 +71,7 @@ int main (int ac, char* av[]){
   StringcallBackType fLdapBase(boost::bind(&UMS_Data::AuthSystem::setLdapBase,boost::ref(newAuthsystem),_1));
   /**************** Describe options *************/
 
-boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],dietConfig, fName,
+boost::shared_ptr<Options> opt= makeAuthSystemOptions(av[0],configFile, fName,
 fURI,fAuthLogin,fAuthPassword,fUserPasswordEncryption,fType,fLdapBase);
 
 opt->add("status,s",
@@ -108,7 +108,7 @@ CLICmd cmd = CLICmd (ac, av, opt);
 
 
   UpdateAuthenticationSystemFunc apiFunc(newAuthsystem);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

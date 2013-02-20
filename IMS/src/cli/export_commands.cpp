@@ -39,15 +39,15 @@ struct ExportFunc {
 boost::shared_ptr<Options>
 makeExportOpt(string pgName,
             boost::function1<void, IMS_Data::ExportType>& fExportType,
-            string& dietConfig) {
+            string& configFile) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
     // All cli options
    opt->add("exportType,t",
@@ -63,7 +63,7 @@ makeExportOpt(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string oldSessionId;
   string filename;
 
@@ -75,7 +75,7 @@ int main (int argc, char* argv[]){
 
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeExportOpt(argv[0], fExportType, dietConfig);
+  boost::shared_ptr<Options> opt=makeExportOpt(argv[0], fExportType, configFile);
 
   opt->add( "oldSessionId,o",
             "represents the id of the session to export",
@@ -97,7 +97,7 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   ExportFunc exportFunc(oldSessionId, filename, exportOp);
-  return GenericCli().run(exportFunc, dietConfig, argc, argv);
+  return GenericCli().run(exportFunc, configFile, argc, argv);
 
 }
 

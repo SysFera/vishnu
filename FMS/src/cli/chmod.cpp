@@ -41,13 +41,13 @@ int main (int argc, char* argv[]){
 
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string path;
   mode_t  mode;
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
+  boost::shared_ptr<Options> opt=processOpt(argv[0], configFile);
 
   opt->add("mode,m",
       "The acces rights of file/directory in octal sytem",
@@ -64,6 +64,6 @@ int main (int argc, char* argv[]){
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,argc,argv,"mode path");
   ChangeFileModeFunc apiFunc(path,mode);
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv);
 
 }

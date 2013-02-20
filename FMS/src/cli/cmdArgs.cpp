@@ -22,19 +22,19 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU cmdArgs command
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  */
 boost::shared_ptr<Options>
 processOpt(string pgName,
-    string& dietConfig){
+    string& configFile){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   return opt;
 }

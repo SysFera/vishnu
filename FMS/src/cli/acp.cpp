@@ -29,7 +29,7 @@ int main (int argc, char* argv[]){
   
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string src;
   string dest;
 
@@ -40,11 +40,11 @@ int main (int argc, char* argv[]){
   FMS_Data::CpFileOptions cpFileOptions;
 
 
-  copyParseOptions ( argc, argv,dietConfig,src,dest,cpFileOptions,CP);
+  copyParseOptions ( argc, argv,configFile,src,dest,cpFileOptions,CP);
 
   TransferAsyncFunc<CP> apiFunc(src, dest, transferInfo, cpFileOptions);
  
-  return GenericCli().run(apiFunc, dietConfig, argc, argv);
+  return GenericCli().run(apiFunc, configFile, argc, argv);
 }
 
 

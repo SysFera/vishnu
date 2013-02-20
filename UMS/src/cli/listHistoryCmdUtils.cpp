@@ -17,14 +17,14 @@ using namespace std;
  * \brief To build options for the VISHNU list history command
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fSessionId : The callback for the session identifier
  * \param startDateOption: The start date option
  * \param endDateOption: The end date option
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options> 
-makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & dietConfig,
+makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & configFile,
                           StringcallBackType& fSessionId,
                           std::string& startDateOption,
                           std::string& endDateOption){
@@ -33,10 +33,10 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add("adminListOption,a",
            "is an admin option to list with respect to all users ",

@@ -42,7 +42,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   /********** EMF data ************/
 
@@ -55,10 +55,10 @@ int main (int ac, char* av[]){
     boost::shared_ptr<Options> opt(new Options(av[0]));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("authSystemId",
       "the identifier of the user-authentication system",
@@ -90,7 +90,7 @@ CLICmd cmd = CLICmd (ac, av, opt);
 
 
   DeleteAuthenticationSystemFunc apiFunc(authSystemId);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

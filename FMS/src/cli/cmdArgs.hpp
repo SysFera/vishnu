@@ -16,11 +16,11 @@ using namespace std;
 /**
  * \brief To build options for the VISHNU cmdArgs command
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \return  The built command
  */
 boost::shared_ptr<Options>
 processOpt(string pgName,
-           string& dietConfig);
+           string& configFile);
 
 #endif

@@ -37,15 +37,15 @@ struct StopFunc {
 boost::shared_ptr<Options>
 makeStopOpt(string pgName,
             boost::function1<void, string>& fname,
-            string& dietConfig) {
+            string& configFile) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add( "processName,n",
             "represents the name of the element",
@@ -59,7 +59,7 @@ makeStopOpt(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
 
    /********** EMF data ************/
@@ -69,7 +69,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fname(boost::bind(&IMS_Data::SupervisorOp::setName,boost::ref(op),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fname, dietConfig);
+  boost::shared_ptr<Options> opt=makeStopOpt(argv[0], fname, configFile);
 
 
 
@@ -86,6 +86,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   StopFunc stopFunc(machineId, op);
-  return GenericCli().run(stopFunc, dietConfig, argc, argv);
+  return GenericCli().run(stopFunc, configFile, argc, argv);
 
 }

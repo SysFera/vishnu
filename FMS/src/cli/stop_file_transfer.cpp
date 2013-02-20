@@ -23,14 +23,14 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU list directory of file command
  * \param pgName : The name of the command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param ftransferId: The file transfer identifier
  * \param ffromMachineId: The machine that is the source of the file transfer
  * \param fuserId: The user identifier
  */
 boost::shared_ptr<Options>
 makeStopFileTrOpt(string pgName, 
-    string& dietConfig,
+    string& configFile,
     boost::function1<void, string>& ftransferId,
     boost::function1<void, string>& ffromMachineId,
     boost::function1<void, string>& fuserId){
@@ -38,10 +38,10 @@ makeStopFileTrOpt(string pgName,
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
       "The diet config file",
       ENV,
-      dietConfig);
+      configFile);
 
   opt->add("transferId,i",
       "A given transfer id",
@@ -67,7 +67,7 @@ int main (int argc, char* argv[]){
   int ret; // Return value
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string sessionKey;
 
    /********** EMF data ************/
@@ -79,7 +79,7 @@ int main (int argc, char* argv[]){
   boost::function1<void, string> fuserId(boost::bind(&FMS_Data::StopTransferOptions::setUserId, boost::ref(stopFileTransferOptions),_1));
 
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], dietConfig, ftranferId, ffromMachineId, fuserId);
+  boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], configFile, ftranferId, ffromMachineId, fuserId);
 
   CLICmd cmd = CLICmd (argc, argv, opt);
 
@@ -102,7 +102,7 @@ int main (int argc, char* argv[]){
   try {
 
     // initializing DIET
-    if (vishnuInitialize(const_cast<char*>(dietConfig.c_str()), argc, argv)) {
+    if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);
       return  CLI_ERROR_DIET ;
     }

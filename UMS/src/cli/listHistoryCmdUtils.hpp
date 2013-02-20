@@ -59,7 +59,7 @@ boost::function1<void,int> IntcallBackType;
  * \brief To build options for the VISHNU list history command
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fSessionId : The callback for the session identifier
  * \param startDateOption: The start date option
  * \param endDateOption: The  end date option
@@ -69,7 +69,7 @@ boost::function1<void,int> IntcallBackType;
 
 boost::shared_ptr<Options>
 makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,
-                          std::string & dietConfig, StringcallBackType& fSessionId,
+                          std::string & configFile, StringcallBackType& fSessionId,
 												  std::string& startDateOption, std::string& endDateOption);
 
 

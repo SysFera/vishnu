@@ -21,7 +21,7 @@ namespace po = boost::program_options;
 using namespace std;
 using namespace vishnu;
 
-boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & dietConfig,
+boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & configFile,
                                            boost::function1<void, string> & fapp, boost::function1<void, string>& fsub,
                                            boost::function1<void, int>& fpri,  boost::function1<void, string>& fown, boost::function1<void, int>& fest,
 
@@ -32,10 +32,10 @@ boost::shared_ptr<Options> makeWorkOptions(std::string pgName, std::string & die
   boost::shared_ptr<Options> opt(new Options(pgName));
 
 
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
 
   Group_type group=CONFIG;
@@ -167,7 +167,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
 
   /********** EMF data ************/
@@ -186,7 +186,7 @@ int main (int ac, char* av[]){
   boost::function1<void,std::string> fmac( boost::bind(&TMS_Data::AddWorkOptions::setMachineId,boost::ref(newWorkop),_1));
   boost::function1<void,int> fcpu( boost::bind(&TMS_Data::AddWorkOptions::setNbCPU,boost::ref(newWorkop),_1));
 
-  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], dietConfig, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
+  boost::shared_ptr<Options> opt= makeWorkOptions(av[0], configFile, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -206,7 +206,7 @@ int main (int ac, char* av[]){
   }
 
   AddWorkFunc apiFunc(newWork, newWorkop);
-  return GenericCli().run(apiFunc, dietConfig, ac, av);
+  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
 

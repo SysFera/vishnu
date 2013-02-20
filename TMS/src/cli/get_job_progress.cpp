@@ -50,21 +50,21 @@ struct JobProgressFunc {
  * \param pgName : The name of the command
  * \param fjid: The id of the job
  * \param fown: The owner of the job
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
 makeGetJobProgOp(string pgName, 
 		 boost::function1<void, string>& fjid,
 		 boost::function1<void, string>& fown,
-		 string& dietConfig){
+		 string& configFile){
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   // All cli options
   opt->add("jobid,i",
@@ -83,7 +83,7 @@ makeGetJobProgOp(string pgName,
 int main (int argc, char* argv[]){
   
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
 
   /********** EMF data ************/
@@ -95,7 +95,7 @@ int main (int argc, char* argv[]){
 
      
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, dietConfig);
+  boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, configFile);
 
   opt->add("machineId,m",
 	   "represents the id of the machine",
@@ -109,5 +109,5 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   JobProgressFunc jobProgressFunc(machineId, progOp);
-  return GenericCli().run(jobProgressFunc, dietConfig, argc, argv);
+  return GenericCli().run(jobProgressFunc, configFile, argc, argv);
 }

@@ -34,7 +34,7 @@ boost::function1<void,std::string> StringcallBackType;
  * \brief To build options for the VISHNU local account commands
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fMachineId: The machine identifier option callback
  * \param fAcLogin: The user login option callback
  * \param fSshKeyPath: The user ssh key path option callback
@@ -45,7 +45,7 @@ boost::function1<void,std::string> StringcallBackType;
 
 boost::shared_ptr<Options>
 makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
-                        std::string & dietConfig, StringcallBackType & fMachineId,
+                        std::string & configFile, StringcallBackType & fMachineId,
                         StringcallBackType& fAcLogin, StringcallBackType& fSshKeyPath,
                         StringcallBackType & fHomeDirectory, int type=0);
 

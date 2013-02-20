@@ -38,7 +38,7 @@ struct LoadShedFunc {
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
 
    /********** EMF data ************/
@@ -50,10 +50,10 @@ int main (int argc, char* argv[]){
   boost::shared_ptr<Options> opt(new Options(argv[0]));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
   opt->add( "machineId,i",
             "represents the id of the machine",
@@ -82,6 +82,6 @@ int main (int argc, char* argv[]){
 
   //call of the api function
   LoadShedFunc loadShedFunc(loadShedType, machineId);
-  return GenericCli().run(loadShedFunc, dietConfig, argc, argv);
+  return GenericCli().run(loadShedFunc, configFile, argc, argv);
 }
 

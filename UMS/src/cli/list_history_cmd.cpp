@@ -50,7 +50,7 @@ int main (int ac, char* av[]){
 
   /******* Parsed value containers ****************/
 
-  string dietConfig;
+  string configFile;
 
   string startDateOption;
   string endDateOption;
@@ -68,7 +68,7 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
 
-  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, dietConfig, fSessionId, startDateOption, endDateOption);
+  boost::shared_ptr<Options> opt= makeListHistoryCmdOptions(av[0],fUserId, configFile, fSessionId, startDateOption, endDateOption);
 
   bool isEmpty;
   //To process list options
@@ -115,7 +115,7 @@ int main (int ac, char* av[]){
 
 
   ListCommandsFunc listFunc(listCmd,listOptions, full);
-  return GenericCli().run(listFunc, dietConfig, ac, av);
+  return GenericCli().run(listFunc, configFile, ac, av);
 }// end of main
 
 

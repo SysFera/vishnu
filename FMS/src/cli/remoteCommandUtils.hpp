@@ -32,17 +32,17 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU command line
  * \param pgName : The name of the command
- * \param dietConfig Represents the VISHNU config file
+ * \param configFile Represents the VISHNU config file
  * \param path  Represents the path of the file
  * \return  The built command
  */
 boost::shared_ptr<Options>
 makeRemoteCommandOpt(string pgName,
-           string& dietConfig,
+           string& configFile,
            string& path){
 
 
-  boost::shared_ptr<Options> opt=processOpt(pgName, dietConfig);
+  boost::shared_ptr<Options> opt=processOpt(pgName, configFile);
   
   opt->add("path",
       "represents the path of the file",
@@ -60,14 +60,14 @@ makeRemoteCommandOpt(string pgName,
  * \brief A generic functio to parse remote command involving a file 
  * \param argc The number of command line arguments
  * \param argv the command line arguments
- * \param dietConfig the diet client config file
+ * \param configFile the diet client config file
  * \param path the path of the file 
  */
-void ParseRemoteCommandOptions (int argc, char* argv[],std::string& dietConfig, std::string& path){
+void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string& path){
 
 // build remote command options
 
-boost::shared_ptr<Options> opt=processOpt(argv[0], dietConfig);
+boost::shared_ptr<Options> opt=processOpt(argv[0], configFile);
   
 opt->add("path,p",
       "The file following the pattern [host:]file path.",

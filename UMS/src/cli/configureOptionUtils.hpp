@@ -40,13 +40,13 @@ boost::function2<int,const std::string&,const UMS_Data::OptionValue&> ConfigureC
  * \brief To build options for the VISHNU configure option command
  * \param opt: Describes all allowed options for the VISHNU configure option
  * command
- * \param dietConfig: Represents the VISHNU config file
+ * \param configFile: Represents the VISHNU config file
  * \param fOptionName : A callback for the option name
  * \param fValue      : A callback for the option value
  */
 
 void
-makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& dietConfig,
+makeConfigureOptions(boost::shared_ptr<Options> opt,std::string& configFile,
 		                      StringcallBackType& fOptionName,StringcallBackType& fValue
                          );
 /**

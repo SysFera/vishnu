@@ -36,15 +36,15 @@ boost::shared_ptr<Options>
 makeSystemInfoOpt(string pgName,
                   boost::function1<void, long>& fMemory,
                   boost::function1<void, long>& fDiskSpace,
-                  string& dietConfig) {
+                  string& configFile) {
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
-  opt->add("dietConfig,c",
+  opt->add("configFile,c",
            "The diet config file",
            ENV,
-           dietConfig);
+           configFile);
 
    opt->add("memory,m",
             "Amount of disk space available on the machine (in Bytes)",
@@ -64,7 +64,7 @@ makeSystemInfoOpt(string pgName,
 int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
-  string dietConfig;
+  string configFile;
   string machineId;
 
    /********** EMF data ************/
@@ -75,7 +75,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,long> fDiskSpace (boost::bind(&IMS_Data::SystemInfo::setDiskSpace,boost::ref(sysInfo),_1));
   
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSystemInfoOpt(argv[0], fMemory, fDiskSpace, dietConfig);
+  boost::shared_ptr<Options> opt=makeSystemInfoOpt(argv[0], fMemory, fDiskSpace, configFile);
 
   opt->add( "machineId,i",
             "represents the id of the machine",
@@ -91,7 +91,7 @@ int main (int argc, char* argv[]){
   sysInfo.setMachineId(machineId);
   //call of the api function
   SetSysInfoFunc setSysInfoFunc(sysInfo);
-  return GenericCli().run(setSysInfoFunc, dietConfig, argc, argv);
+  return GenericCli().run(setSysInfoFunc, configFile, argc, argv);
 
 }
 
