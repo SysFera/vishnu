@@ -49,6 +49,7 @@ const std::string DEFAULT_SSH_OPTIONS =
  * \param user the user login
  * \param hostname the hostname of the machine
  * \param batchType the type of the batch scheduler
+ * \param batchVersion the version of the batch scheduler
  * \param jobSerialized the job serialized
  * \param submitOptionsSerialized the job options serialized
  */
