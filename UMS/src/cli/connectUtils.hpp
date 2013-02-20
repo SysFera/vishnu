@@ -81,7 +81,7 @@ makeConnectOptions(std::string pgName,userIdType& userId,int req,std::string& co
 
 
   opt->add("configFile,c",
-           "The diet config file",
+           "VISHNU configuration file",
            ENV,
            configFile);
 

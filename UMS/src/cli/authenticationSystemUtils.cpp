@@ -36,7 +36,7 @@ boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string 
 
 
   opt->add("configFile,c",
-      "The diet config file",
+      "VISHNU configuration file",
       ENV,
       configFile);
 
