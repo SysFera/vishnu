@@ -27,7 +27,6 @@
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "TMS_Data.hpp"
 #include "DIET_client.h"
-//#include "DIET_Dagda.h"
 
 #include "utilServer.hpp"
 #include "BatchServer.hpp"

@@ -8,9 +8,7 @@
 #include <sys/types.h>
 #include <pwd.h>
 
-//#include "DIET_data.h"
 #include "DIET_client.h"
-//#include "DIET_Dagda.h"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "RemoteFileProxy.hpp"
