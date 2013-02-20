@@ -43,7 +43,7 @@ makeRemoteCommandOpt(string pgName,
 
 
   boost::shared_ptr<Options> opt=processOpt(pgName, configFile);
-  
+
   opt->add("path",
       "represents the path of the file",
       HIDDEN,
@@ -57,18 +57,18 @@ makeRemoteCommandOpt(string pgName,
 
 
 /**
- * \brief A generic functio to parse remote command involving a file 
+ * \brief A generic functio to parse remote command involving a file
  * \param argc The number of command line arguments
  * \param argv the command line arguments
- * \param configFile the diet client config file
- * \param path the path of the file 
+ * \param configFile the VISHNU configuration file
+ * \param path the path of the file
  */
 void ParseRemoteCommandOptions (int argc, char* argv[],std::string& configFile, std::string& path){
 
 // build remote command options
 
 boost::shared_ptr<Options> opt=processOpt(argv[0], configFile);
-  
+
 opt->add("path,p",
       "The file following the pattern [host:]file path.",
       HIDDEN,
@@ -93,7 +93,7 @@ typedef enum{
 
 /**
  * \brief Represents non typed Options
- */ 
+ */
 struct NoOptions{};
 
 /**
@@ -104,7 +104,7 @@ struct FileApiCommand {
 };
 
 /**
- * \brief A specialization of FileApiCommand for file creation function 
+ * \brief A specialization of FileApiCommand for file creation function
  */
 
 template <>
@@ -125,7 +125,7 @@ return  touch(sessionKey,path);
 
 
 /**
- * \brief A specialization of FileApiCommand for directory creation function 
+ * \brief A specialization of FileApiCommand for directory creation function
  */
 
 template <>
@@ -145,7 +145,7 @@ return  mkdir(sessionKey,path,options);
 };
 
 /**
- * \brief A specialization of FileApiCommand for file deletion function 
+ * \brief A specialization of FileApiCommand for file deletion function
  */
 template <>
 struct FileApiCommand<REMOVEFILE,FMS_Data::RmFileOptions> {
@@ -164,7 +164,7 @@ return  rm(sessionKey,path,options);
 };
 
 /**
- * \brief A specialization of FileApiCommand for file deletion function 
+ * \brief A specialization of FileApiCommand for file deletion function
  */
 template <>
 struct FileApiCommand<REMOVEDIR,NoOptions> {
@@ -189,11 +189,11 @@ return  rmdir(sessionKey,path);
 template<FileActionType fileActionType, typename CommandOptionsType=NoOptions>
 struct FileActionFunc {
   /**
-   * \brief The path to treat 
+   * \brief The path to treat
    */
   std::string mpath;
   /**
-   * \brief The file transfer options 
+   * \brief The file transfer options
    */
   CommandOptionsType moptions;
 
@@ -216,9 +216,9 @@ struct FileActionFunc {
    * \return non-zero on error
    */
   int operator()(std::string sessionKey) {
-    
+
      return FileApiCommand<fileActionType,CommandOptionsType>::api(sessionKey,mpath,moptions);
-    
+
   }
 };
 
