@@ -75,8 +75,8 @@ int JobServer::submitJob(const std::string& scriptContent,
   try {
     msessionServer.check(); //To check the sessionKey
     std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"
-                                                       +(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+    std::string sessionKey = (msessionServer.getData()).getSessionKey();
+    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+sessionKey+"'", "numsessionid");
     mjob.setSessionId(sessionId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
@@ -158,7 +158,7 @@ int JobServer::submitJob(const std::string& scriptContent,
         env.replaceAllOccurences(scriptContentRef, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
       } else if (sshJobExec.execCmd("mkdir " + mjob.getOutputDir()) != 0) { // Create the output directory through ssh
         mjob.setStatus(vishnu::STATE_FAILED);
-        saveJob2Db();
+        recordJob2db();
         throw SystemException(ERRCODE_INVDATA, "Failed to create the job's output directory : " + mjob.getOutputDir()) ;
       }
     }
@@ -228,8 +228,6 @@ int JobServer::submitJob(const std::string& scriptContent,
     if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
       mjob.setOwner(acLogin);
     }
-    std::string numsession = msessionServer.getAttribut("WHERE sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
-    mjob.setSessionId(numsession);
     pos = mjob.getOutputPath().find(":");
     std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
     mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
@@ -242,10 +240,12 @@ int JobServer::submitJob(const std::string& scriptContent,
     mjob.setWorkId(0);
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
     mjob.setErrorPath(errMsg);
+    mjob.setOutputPath("");
+    mjob.setOutputDir("");
     mjob.setStatus(vishnu::STATE_FAILED);
   }
   try {
-    saveJob2Db();
+    recordJob2db();
   } catch (VishnuException& ex) {
     succeed = false;
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
@@ -671,8 +671,11 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
 /**
  * \brief Function to save the encapsulated job into the database
  */
-void JobServer::saveJob2Db()
+void JobServer::recordJob2db()
 {
+  if (mjob.getSessionId().empty()) {
+    throw TMSVishnuException(ERRCODE_AUTHENTERR, "Empty session key");
+  }
   std::string sqlUpdate = "UPDATE job set ";
   sqlUpdate+="vsession_numsessionid='"+mjob.getSessionId()+"', ";
   sqlUpdate+="submitMachineId='"+mmachineId+"', ";
@@ -702,5 +705,4 @@ void JobServer::saveJob2Db()
   sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
   sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
   sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
-  std::cout << sqlUpdate << "\n";
   mdatabaseVishnu->process(sqlUpdate);
