@@ -155,7 +155,7 @@ ServerTMS::init(int& vishnuId,
   if (mbatchType != DELTACLOUD) {
     msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, mbatchVersion);
   } else {
-    mbatchVersion = "n/a";
+    mbatchVersion = "";
   }
 
   std::string batchDefaultConfigFile;

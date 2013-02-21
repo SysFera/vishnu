@@ -44,7 +44,7 @@
 #include <iostream>
 #include <netinet/in.h>
 #include <net/if.h>
-
+#include "constants.hpp"
 
 #include "UserException.hpp"
 #include "SystemException.hpp"
@@ -1037,3 +1037,45 @@ vishnu::convertToBatchType(const std::string& batchName) {
 
   return batchType;
 }
+
+/**
+ * \brief  function to convert job status into string
+ * \param state: The state of job
+ * \return The converted state value
+ */
+std::string vishnu::convertJobStateToString(const int& state) {
+
+  std::string stateStr;
+  switch(state) {
+  case vishnu::STATE_SUBMITTED:
+    stateStr = "SUBMITTED";
+    break;
+  case vishnu::STATE_QUEUED:
+    stateStr = "QUEUED";
+    break;
+  case vishnu::STATE_WAITING:
+    stateStr = "WAITING";
+    break;
+  case vishnu::STATE_RUNNING:
+    stateStr = "RUNNING";
+    break;
+  case vishnu::STATE_COMPLETED:
+    stateStr = "COMPLETED";
+    break;
+  case vishnu::STATE_CANCELLED:
+    stateStr = "CANCELLED";
+    break;
+  case vishnu::STATE_DOWNLOADED:
+    stateStr = "DOWNLOADED";
+    break;
+  case vishnu::STATE_FAILED:
+    stateStr = "FAILED";
+    break;
+  case vishnu::STATE_UNDEFINED:
+  default:
+    stateStr = "UNDEFINED";
+    break;
+  }
+  return stateStr;
+}
+

@@ -166,8 +166,6 @@ private:
    */
   int mdebugLevel;
 
-private:
-
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
@@ -190,6 +188,12 @@ private:
    * \param scriptContent The content of the script when required
    */
   void treatSpecificParams(const std::string& specificParams, std::string& scriptContent);
+
+
+  /**
+   * \brief Function to save the encapsulated job into the database
+   */
+  void recordJob2db();
 };
 
 #endif

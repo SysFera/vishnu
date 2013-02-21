@@ -490,6 +490,15 @@ sourceFile(const std::string& filePath);
 BatchType
 convertToBatchType(const std::string& batchName);
 
+
+/**
+ * \brief  function to convert job status into string
+ * \param state: The state of job
+ * \return The converted state value
+ */
+std::string
+convertJobStateToString(const int& state);
+
 } //END NAMESPACE
 
 
