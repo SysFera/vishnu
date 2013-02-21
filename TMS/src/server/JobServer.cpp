@@ -664,8 +664,6 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
     pos2 = params.find("=");
   }
 }
-                                    
-}
 
 /**
  * \brief Function to save the encapsulated job into the database
@@ -705,3 +703,4 @@ void JobServer::recordJob2db()
   sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
   sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
   mdatabaseVishnu->process(sqlUpdate);
+}
