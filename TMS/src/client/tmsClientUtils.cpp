@@ -81,10 +81,12 @@ genericFileCopier(const std::string& sessionKey,
                   const std::string& destMachineId,
                   const std::string& destPath,
                   const CpFileOptions& copts) {
-  string src = "";
-  string dest = "";
+  string src;
+  string dest;
+
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
   dest = destMachineId.empty()? destPath : destMachineId+":"+destPath;
+
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
     string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost";
     string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost";

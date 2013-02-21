@@ -19,7 +19,7 @@ bool
 POSIXParser::parseFile(const string &filePath,
                        map<string, string> &context) {
   ifstream file;
-  bool rv = false;
+  bool rv;
   file.open(filePath.c_str());
 
   rv = POSIXParser::parseStream(file, context);

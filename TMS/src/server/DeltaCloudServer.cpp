@@ -21,17 +21,17 @@
 
 
 DeltaCloudServer::DeltaCloudServer()
-: mcloudUser(""),
-  mcloudUserPassword(""),
-  mvmImageId(""),
-  mvmFlavor(""),
-  mvmUser(""),
-  mvmUserKey(""),
-  mnfsServer(""),
-  mnfsMountPoint("") {}
+  : mcloudUser(""),
+    mcloudUserPassword(""),
+    mvmImageId(""),
+    mvmFlavor(""),
+    mvmUser(""),
+    mvmUserKey(""),
+    mnfsServer(""),
+    mnfsMountPoint("") {}
 
 DeltaCloudServer::~DeltaCloudServer() {
-	deltacloud_free(mcloudApi);
+  deltacloud_free(mcloudApi);
 }
 
 /**
@@ -44,100 +44,100 @@ DeltaCloudServer::~DeltaCloudServer() {
  */
 int
 DeltaCloudServer::submit(const char* scriptPath,
-		const TMS_Data::SubmitOptions& options,
-		TMS_Data::Job& job,
-		char** envp) {
+                         const TMS_Data::SubmitOptions& options,
+                         TMS_Data::Job& job,
+                         char** envp) {
 
-	initialize(); // Initialize Delatacloud API
-	retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
+  initialize(); // Initialize Delatacloud API
+  retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
 
-	// Get configuration parameters
-	//FIXME: possibly memory leak if Env::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
-	if (mvmImageId.empty()) {
-		mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
-	}
-	if (mvmFlavor.empty()) {
-		mvmFlavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
-	}
-	if (mvmUser.empty()) {
-		mvmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
-	}
-	if (mvmUserKey.empty()) {
-		mvmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
-	}
-	if (mnfsServer.empty()) {
-		mnfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
-	}
-	if(mnfsMountPoint.empty()) {
-		mnfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-	}
-	// Set the parameters of the virtual machine instance
-	std::vector<deltacloud_create_parameter> params;
-	deltacloud_create_parameter param;
-	param.name = strdup("hwp_id");
-	param.value = strdup(mvmFlavor.c_str());
-	params.push_back(param);
+  // Get configuration parameters
+  //FIXME: possibly memory leak if Env::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
+  if (mvmImageId.empty()) {
+    mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+  }
+  if (mvmFlavor.empty()) {
+    mvmFlavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+  }
+  if (mvmUser.empty()) {
+    mvmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+  }
+  if (mvmUserKey.empty()) {
+    mvmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+  }
+  if (mnfsServer.empty()) {
+    mnfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+  }
+  if(mnfsMountPoint.empty()) {
+    mnfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+  }
+  // Set the parameters of the virtual machine instance
+  std::vector<deltacloud_create_parameter> params;
+  deltacloud_create_parameter param;
+  param.name = strdup("hwp_id");
+  param.value = strdup(mvmFlavor.c_str());
+  params.push_back(param);
 
-	param.name = strdup("keyname");
-	param.value = strdup(mvmUserKey.c_str());
-	params.push_back(param);
+  param.name = strdup("keyname");
+  param.value = strdup(mvmUserKey.c_str());
+  params.push_back(param);
 
-	param.name = strdup("user_data");
-	param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
-	params.push_back(param);
+  param.name = strdup("user_data");
+  param.value = strdup("day=kkkqkhq&month=hsqgdgqjdfd");
+  params.push_back(param);
 
-	std::string vmName = "vishnu-job.vm."+job.getJobId();
-	param.name = strdup("name");
-	param.value = strdup(vmName.c_str());
-	params.push_back(param);
+  std::string vmName = "vishnu-job.vm."+job.getJobId();
+  param.name = strdup("name");
+  param.value = strdup(vmName.c_str());
+  params.push_back(param);
 
-	char *instid = NULL;
-	if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
-		cleanUpParams(params); // cleanup allocated parameters
-		finalize();
-		std::string msg = (boost::format("Unable to create instance=>%1%")%deltacloud_get_last_error_string()).str();
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
-	}
-	cleanUpParams(params);  // cleanup allocated parameters
+  char *instid = NULL;
+  if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
+    cleanUpParams(params); // cleanup allocated parameters
+    finalize();
+    std::string msg = (boost::format("Unable to create instance=>%1%")%deltacloud_get_last_error_string()).str();
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
+  }
+  cleanUpParams(params);  // cleanup allocated parameters
 
-	struct deltacloud_instance instance;
-	if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
-		std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%")%instance.state).str();
-		deltacloud_instance_destroy(mcloudApi, &instance);
-		finalize();
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
-	}
-	vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
+  struct deltacloud_instance instance;
+  if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
+    std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%")%instance.state).str();
+    deltacloud_instance_destroy(mcloudApi, &instance);
+    finalize();
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
+  }
+  vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
 
-	std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
-			" ID: %1%\n"
-			" NAME: %2%\n"
-			" IP: %3%\n"
-      " Startime: %4%")%instance.id%instance.name
-                       %instance.private_addresses->address%instance.launch_time;
+  std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
+                             " ID: %1%\n"
+                             " NAME: %2%\n"
+                             " IP: %3%\n"
+                             " Startime: %4%")%instance.id%instance.name
+    %instance.private_addresses->address%instance.launch_time;
 
-	// Create an ssh engine for the virtual machine & submit the script
-	SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
-	int jobPid = -1;
-	try {
-		jobPid = sshEngine.execRemoteScript(scriptPath, mnfsServer, mnfsMountPoint, job.getOutputDir());
-	} catch(...) {
-		throw;
-	}
+  // Create an ssh engine for the virtual machine & submit the script
+  SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
+  int jobPid = -1;
+  try {
+    jobPid = sshEngine.execRemoteScript(scriptPath, mnfsServer, mnfsMountPoint, job.getOutputDir());
+  } catch(...) {
+    throw;
+  }
 
-	job.setBatchJobId(vishnu::convertToString(jobPid));
-	job.setJobName("PID_"+job.getBatchJobId());
-	job.setJobId(vishnu::convertToString(jobPid));
-	job.setVmId(instance.id);
-	job.setStatus(vishnu::STATE_SUBMITTED);
-	job.setVmIp(instance.private_addresses->address);
-	job.setOutputPath(job.getOutputDir()+"/stdout");
-	job.setErrorPath(job.getOutputDir()+"/stderr");
-	job.setNbNodes(1);
+  job.setBatchJobId(vishnu::convertToString(jobPid));
+  job.setJobName("PID_"+job.getBatchJobId());
+  job.setJobId(vishnu::convertToString(jobPid));
+  job.setVmId(instance.id);
+  job.setStatus(vishnu::STATE_SUBMITTED);
+  job.setVmIp(instance.private_addresses->address);
+  job.setOutputPath(job.getOutputDir()+"/stdout");
+  job.setErrorPath(job.getOutputDir()+"/stderr");
+  job.setNbNodes(1);
 
-	deltacloud_free_instance(&instance);
-	finalize();
-	return 0;
+  deltacloud_free_instance(&instance);
+  finalize();
+  return 0;
 }
 
 /**
@@ -148,13 +148,13 @@ DeltaCloudServer::submit(const char* scriptPath,
 int
 DeltaCloudServer::cancel(const char* jobDescr) {
 
-	ListStrings jobInfos = getJobInfos(jobDescr, 2);
-	try {
-		releaseResources(jobInfos[1]); // Stop the virtual machine to release resources
-	} catch(...) {
-		throw;
-	}
-	return 0;
+  ListStrings jobInfos = getJobInfos(jobDescr, 2);
+  try {
+    releaseResources(jobInfos[1]); // Stop the virtual machine to release resources
+  } catch(...) {
+    throw;
+  }
+  return 0;
 }
 
 /**
@@ -165,28 +165,28 @@ DeltaCloudServer::cancel(const char* jobDescr) {
 int
 DeltaCloudServer::getJobState(const std::string& jobDescr) {
 
-	// Get job infos
-	ListStrings jobInfos = getJobInfos(jobDescr, 4);
-	std::string pid = jobInfos[0];
-	std::string vmUser = jobInfos[1];
-	std::string vmIp = jobInfos[2];
-	std::string vmId = jobInfos[3];
+  // Get job infos
+  ListStrings jobInfos = getJobInfos(jobDescr, 4);
+  std::string pid = jobInfos[0];
+  std::string vmUser = jobInfos[1];
+  std::string vmIp = jobInfos[2];
+  std::string vmId = jobInfos[3];
 
-	SSHJobExec sshEngine(vmUser, vmIp);
-	std::string statusFile = "/tmp/"+jobDescr;
-	sshEngine.execCmd("ps -o pid= -p " + pid +" | wc -l >"+statusFile, false);
+  SSHJobExec sshEngine(vmUser, vmIp);
+  std::string statusFile = "/tmp/"+jobDescr;
+  sshEngine.execCmd("ps -o pid= -p " + pid +" | wc -l >"+statusFile, false);
 
-	int status = vishnu::STATE_RUNNING;
-	int count = vishnu::getStatusValue(statusFile);
-	if( count == 0) {
-		// stop the virtual machine to release the resources
-		releaseResources(vmId);
-		status = vishnu::STATE_COMPLETED;
-	}
+  int status = vishnu::STATE_RUNNING;
+  int count = vishnu::getStatusValue(statusFile);
+  if( count == 0) {
+    // stop the virtual machine to release the resources
+    releaseResources(vmId);
+    status = vishnu::STATE_COMPLETED;
+  }
 
-	vishnu::deleteFile(statusFile.c_str());
+  vishnu::deleteFile(statusFile.c_str());
 
-	return status;
+  return status;
 }
 
 /**
@@ -197,18 +197,18 @@ DeltaCloudServer::getJobState(const std::string& jobDescr) {
 time_t
 DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 
-	initialize(); // Initialize the Cloud API
-	ListStrings jobInfos = getJobInfos(jobDescr, 2); // Get the job information
-	deltacloud_instance instance; // Get the instance
-	if (deltacloud_get_instance_by_id(mcloudApi, jobInfos[1].c_str(), &instance) < 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
-	}
+  initialize(); // Initialize the Cloud API
+  ListStrings jobInfos = getJobInfos(jobDescr, 2); // Get the job information
+  deltacloud_instance instance; // Get the instance
+  if (deltacloud_get_instance_by_id(mcloudApi, jobInfos[1].c_str(), &instance) < 0) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+  }
   long long startTime = 0;
   try {
     startTime = vishnu::convertToTimeType(instance.launch_time);
   } catch (...) {} // leave 0
-	deltacloud_free_instance(&instance);
-	finalize();
+  deltacloud_free_instance(&instance);
+  finalize();
   return startTime;
 }
 
@@ -221,8 +221,8 @@ DeltaCloudServer::getJobStartTime(const std::string& jobDescr) {
 TMS_Data::ListQueues*
 DeltaCloudServer::listQueues(const std::string& optQueueName) {
 
-	//TODO The semantic is no yet defined
-	return new TMS_Data::ListQueues();
+  //TODO The semantic is no yet defined
+  return new TMS_Data::ListQueues();
 }
 
 
@@ -232,17 +232,17 @@ DeltaCloudServer::listQueues(const std::string& optQueueName) {
  * \param ignoredIds the list of job ids to ignore
  */
 void DeltaCloudServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-		const std::vector<std::string>& ignoredIds) { }
+                                      const std::vector<std::string>& ignoredIds) { }
 
 
 int
 create_plugin_instance(void **instance) {
-	try {
-		*instance = new DeltaCloudServer;
-	} catch (const std::bad_alloc& e) {
-		return 1;
-	}
-	return PLUGIN_OK;
+  try {
+    *instance = new DeltaCloudServer;
+  } catch (const std::bad_alloc& e) {
+    return 1;
+  }
+  return PLUGIN_OK;
 }
 
 
@@ -251,22 +251,22 @@ create_plugin_instance(void **instance) {
  */
 void DeltaCloudServer::initialize(void) {
 
-	if(mcloudEndpoint.empty()) {
-		mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
-	}
-	if(mcloudUser.empty()) {
-		mcloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
-	}
-	if(mcloudUserPassword.empty()) {
-		mcloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
-	}
-	mcloudApi =  new deltacloud_api;
-	if (deltacloud_initialize(mcloudApi,
-			const_cast<char*>(mcloudEndpoint.c_str()),
-			const_cast<char*>(mcloudUser.c_str()),
-			const_cast<char*>(mcloudUserPassword.c_str())) < 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
-	}
+  if(mcloudEndpoint.empty()) {
+    mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+  }
+  if(mcloudUser.empty()) {
+    mcloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+  }
+  if(mcloudUserPassword.empty()) {
+    mcloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+  }
+  mcloudApi =  new deltacloud_api;
+  if (deltacloud_initialize(mcloudApi,
+                            const_cast<char*>(mcloudEndpoint.c_str()),
+                            const_cast<char*>(mcloudUser.c_str()),
+                            const_cast<char*>(mcloudUserPassword.c_str())) < 0) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(deltacloud_get_last_error_string()));
+  }
 }
 
 
@@ -276,19 +276,19 @@ void DeltaCloudServer::initialize(void) {
  */
 void DeltaCloudServer::releaseResources(const std::string & vmid) {
 
-	initialize(); // Initialize delta cloud
-	deltacloud_instance instance; // Get the instance
-	if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-				(boost::format("Get instance failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
-	}
-	std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
-	if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
-		throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-        (boost::format("Deleting the virtual machine failed (%1%)")%deltacloud_get_last_error_string()).str());
-	}
-	deltacloud_free_instance(&instance);
-	finalize();
+  initialize(); // Initialize delta cloud
+  deltacloud_instance instance; // Get the instance
+  if (deltacloud_get_instance_by_id(mcloudApi, vmid.c_str(), &instance) < 0) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             (boost::format("Get instance failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
+  }
+  std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
+  if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             (boost::format("Deleting the virtual machine failed (%1%)")%deltacloud_get_last_error_string()).str());
+  }
+  deltacloud_free_instance(&instance);
+  finalize();
 }
 
 /**
@@ -298,21 +298,21 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
  */
 ListStrings DeltaCloudServer::getJobInfos(const std::string jobDescr, const int & numParams) {
 
-	ListStrings jobInfos;
-	boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
-	if(jobInfos.size() != numParams) {
-		throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
-        "Expects "+vishnu::convertToString(numParams)+" parameters following the pattern param1@param2...");
-	}
-	return jobInfos;
+  ListStrings jobInfos;
+  boost::split(jobInfos, jobDescr, boost::is_any_of("@"));
+  if(jobInfos.size() != numParams) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Bad job description "+std::string(jobDescr)+ "\n"
+                             "Expects "+vishnu::convertToString(numParams)+" parameters following the pattern param1@param2...");
+  }
+  return jobInfos;
 }
 
 /**
  * \brief Function for cleaning up the allocated dynamic data structure
  */
 void DeltaCloudServer::finalize() {
-	deltacloud_free(mcloudApi);
-	delete mcloudApi;
+  deltacloud_free(mcloudApi);
+  delete mcloudApi;
 }
 
 /**
@@ -320,10 +320,10 @@ void DeltaCloudServer::finalize() {
  * \param: params The list of params
  */
 void DeltaCloudServer::cleanUpParams(std::vector<deltacloud_create_parameter>& params) {
-	for(int i=0; i< params.size(); i++) {
-		free(params[i].name);
-		free(params[i].value);
-	}
+  for(int i=0; i< params.size(); i++) {
+    free(params[i].name);
+    free(params[i].value);
+  }
 }
 
 /**
@@ -331,34 +331,34 @@ void DeltaCloudServer::cleanUpParams(std::vector<deltacloud_create_parameter>& p
  * \param specificParamss The string containing the list of parameters
  */
 void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams) {
-	ListStrings listParams;
-	boost::split(listParams, specificParams, boost::is_any_of(" "));
-	for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); it++) {
-		size_t pos = it->find("=");
-		if (pos != std::string::npos) {
-			std::string param = it->substr(0, pos);
-			std::string value = it->substr(pos+1, std::string::npos);
-			if (param == "endpoint") {
-				mcloudEndpoint = value;
-			} else if (param == "user") {
-				mcloudUser = value;
-			} else if (param == "user-password") {
-				mcloudUserPassword = value;
-			} else if (param == "vm-image") {
-				mvmImageId = value;
-			} else if (param == "vm-user") {
-				mvmUser = value;
-			} else if (param == "vm-key") {
-				mvmUserKey = value;
-			} else if (param == "vm-flavor") {
-				mvmFlavor = value;
-			} else if (param == "nfs-server") {
-				mnfsServer = value;
-			} else if (param == "nfs-mountpoint") {
-				mnfsMountPoint = value;
-			} else {
-				throw TMSVishnuException(ERRCODE_INVALID_PARAM, param);
-			}
-		}
-	}
+  ListStrings listParams;
+  boost::split(listParams, specificParams, boost::is_any_of(" "));
+  for (ListStrings::iterator it = listParams.begin(); it != listParams.end(); ++it) {
+    size_t pos = it->find("=");
+    if (pos != std::string::npos) {
+      std::string param = it->substr(0, pos);
+      std::string value = it->substr(pos+1, std::string::npos);
+      if (param == "endpoint") {
+        mcloudEndpoint = value;
+      } else if (param == "user") {
+        mcloudUser = value;
+      } else if (param == "user-password") {
+        mcloudUserPassword = value;
+      } else if (param == "vm-image") {
+        mvmImageId = value;
+      } else if (param == "vm-user") {
+        mvmUser = value;
+      } else if (param == "vm-key") {
+        mvmUserKey = value;
+      } else if (param == "vm-flavor") {
+        mvmFlavor = value;
+      } else if (param == "nfs-server") {
+        mnfsServer = value;
+      } else if (param == "nfs-mountpoint") {
+        mnfsMountPoint = value;
+      } else {
+        throw TMSVishnuException(ERRCODE_INVALID_PARAM, param);
+      }
+    }
+  }
 }

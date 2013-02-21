@@ -430,7 +430,7 @@ UserServer::exist(bool flagForChangePwd) {
 bool
 UserServer::isAuthenticate(bool flagForChangePwd) {
 
-  bool existUser = false;
+  bool existUser;
   AuthenticatorFactory authFactory;
   Authenticator *authenticatorInstance = authFactory.getAuthenticatorInstance();
 
