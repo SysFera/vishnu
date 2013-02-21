@@ -89,6 +89,7 @@ static void fill_sMap()
   (*sMap)["getListOfQueues"] = "TMS";
   (*sMap)["jobOutputGetResult"] = "TMS";
   (*sMap)["jobOutputGetCompletedJobs"] = "TMS";
+  (*sMap)["getListOfJobs_all"] = "TMS";
   (*sMap)["addWork"] = "TMS";
   /* IMS services */
   (*sMap)["int_exportCommands"] = "IMS";
@@ -140,7 +141,7 @@ get_module(const std::string& service) {
   std::size_t pos = service.find("@");
   ServiceMap::const_iterator it;
   fill_sMap();
-  
+
   if (std::string::npos != pos) {
     it = sMap->find(service.substr(0, pos));
   } else {
