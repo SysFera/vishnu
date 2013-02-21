@@ -28,7 +28,10 @@
 #include "SystemException.hpp"
 #include "UserException.hpp"
 #include "ExecConfiguration.hpp"
-
+#include "TMSServices.hpp"
+#include "UMSServices.hpp"
+#include "IMSServices.hpp"
+#include "FMSServices.hpp"
 
 // private declarations
 int
@@ -43,97 +46,29 @@ boost::shared_ptr<ServiceMap> sMap;
 static const int PROFILE_ELT_NB = 4;
 
 
-static void fill_sMap()
-{
-  sMap = boost::shared_ptr<ServiceMap>( new ServiceMap);
+static void
+fill_sMap() {
+  unsigned int nb;
+  sMap = boost::shared_ptr<ServiceMap>(new ServiceMap);
   /* UMS services */
-  (*sMap)["sessionConnect"] = "UMS";
-  (*sMap)["sessionReconnect"] = "UMS";
-  (*sMap)["sessionClose"] = "UMS";
-  (*sMap)["userCreate"] = "UMS";
-  (*sMap)["userUpdate"] = "UMS";
-  (*sMap)["userDelete"] = "UMS";
-  (*sMap)["userPasswordChange"] = "UMS";
-  (*sMap)["userPasswordReset"] = "UMS";
-  (*sMap)["machineCreate"] = "UMS";
-  (*sMap)["machineUpdate"] = "UMS";
-  (*sMap)["machineDelete"] = "UMS";
-  (*sMap)["localAccountCreate"] = "UMS";
-  (*sMap)["localAccountUpdate"] = "UMS";
-  (*sMap)["localAccountDelete"] = "UMS";
-  (*sMap)["configurationSave"] = "UMS";
-  (*sMap)["configurationRestore"] = "UMS";
-  (*sMap)["optionValueSet"] = "UMS";
-  (*sMap)["optionValueSetDefault"] = "UMS";
-  (*sMap)["sessionList"] = "UMS";
-  (*sMap)["localAccountList"] = "UMS";
-  (*sMap)["machineList"] = "UMS";
-  (*sMap)["commandList"] = "UMS";
-  (*sMap)["optionValueList"] = "UMS";
-  (*sMap)["userList"] = "UMS";
-  (*sMap)["restore"] = "UMS";
-  (*sMap)["authSystemCreate"] = "UMS";
-  (*sMap)["authSystemUpdate"] = "UMS";
-  (*sMap)["authSystemDelete"] = "UMS";
-  (*sMap)["authSystemList"] = "UMS";
-  (*sMap)["authAccountCreate"] = "UMS";
-  (*sMap)["authAccountUpdate"] = "UMS";
-  (*sMap)["authAccountDelete"] = "UMS";
-  (*sMap)["authAccountList"] = "UMS";
+  for (nb = 0; nb < NB_SRV_UMS; nb++) {
+    (*sMap)[SERVICES_UMS[nb]] = "UMS";
+  }
+
   /* TMS services */
-  (*sMap)["jobSubmit"] = "TMS";
-  (*sMap)["jobCancel"] = "TMS";
-  (*sMap)["jobInfo"] = "TMS";
-  (*sMap)["getListOfJobs"] = "TMS";
-  (*sMap)["getJobsProgression"] = "TMS";
-  (*sMap)["getListOfQueues"] = "TMS";
-  (*sMap)["jobOutputGetResult"] = "TMS";
-  (*sMap)["jobOutputGetCompletedJobs"] = "TMS";
-  (*sMap)["getListOfJobs_all"] = "TMS";
-  (*sMap)["jobSubmit_autom"] = "TMS";
-  (*sMap)["addWork"] = "TMS";
+  for (nb = 0; nb < NB_SRV_TMS; nb++) {
+    (*sMap)[SERVICES_TMS[nb]] = "TMS";
+  }
+
   /* IMS services */
-  (*sMap)["int_exportCommands"] = "IMS";
-  (*sMap)["int_getMetricCurentValue"] = "IMS";
-  (*sMap)["int_getMetricHistory"] = "IMS";
-  (*sMap)["int_getProcesses"] = "IMS";
-  (*sMap)["int_setSystemInfo"] = "IMS";
-  (*sMap)["int_setSystemThreshold"] = "IMS";
-  (*sMap)["int_getSystemThreshold"] = "IMS";
-  (*sMap)["int_defineUserIdentifier"] = "IMS";
-  (*sMap)["int_defineJobIdentifier"] = "IMS";
-  (*sMap)["int_defineTransferIdentifier"] = "IMS";
-  (*sMap)["int_defineMachineIdentifier"] = "IMS";
-  (*sMap)["int_loadShed"] = "IMS";
-  (*sMap)["int_setUpdateFrequency"] = "IMS";
-  (*sMap)["int_getUpdateFrequency"] = "IMS";
-  (*sMap)["int_restart"] = "IMS";
-  (*sMap)["int_stop"] = "IMS";
-  (*sMap)["int_getSystemInfo"] = "IMS";
-  (*sMap)["int_defineAuthIdentifier"] = "IMS";
-  (*sMap)["int_defineWorkIdentifier"] = "IMS";
+  for (nb = 0; nb < NB_SRV_IMS; nb++) {
+    (*sMap)[SERVICES_IMS[nb]] = "IMS";
+  }
+
   /* FMS services */
-  (*sMap)["FileCopyAsync"] = "FMS";
-  (*sMap)["FileMoveAsync"] = "FMS";
-  (*sMap)["FileMove"] = "FMS";
-  (*sMap)["FileCopy"] = "FMS";
-  (*sMap)["FileGetInfos"] = "FMS";
-  (*sMap)["FileChangeGroup"] = "FMS";
-  (*sMap)["FileChangeMode"] = "FMS";
-  (*sMap)["FileHead"] = "FMS";
-  (*sMap)["FileContent"] = "FMS";
-  (*sMap)["FileCreate"] = "FMS";
-  (*sMap)["DirCreate"] = "FMS";
-  (*sMap)["FileRemove"] = "FMS";
-  (*sMap)["DirRemove"] = "FMS";
-  (*sMap)["FileTail"] = "FMS";
-  (*sMap)["DirList"] = "FMS";
-  (*sMap)["RemoteFileCopyAsync"] = "FMS";
-  (*sMap)["RemoteFileMoveAsync"] = "FMS";
-  (*sMap)["RemoteFileCopy"] = "FMS";
-  (*sMap)["RemoteFileMove"] = "FMS";
-  (*sMap)["FileTransfersList"] = "FMS";
-  (*sMap)["FileTransferStop"] = "FMS";
+  for (nb = 0; nb < NB_SRV_FMS; nb++) {
+    (*sMap)[SERVICES_FMS[nb]] = "FMS";
+  }
 }
 
 
