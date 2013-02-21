@@ -61,7 +61,7 @@ static struct option long_options[] = {
 struct IsEndByQuote {
 
   char mquote;
-  IsEndByQuote(const char quote):mquote(quote){};
+  IsEndByQuote(const char quote):mquote(quote) {};
 
   bool operator()(const string& str) {
     return (str.size() > 1 && *(str.end() - 1) == mquote);
@@ -76,17 +76,17 @@ bool cleanString(string& str, const char& quote) {
 
   bool begIsClean = false;
   bool endIsClean = false;
-  if (!str.empty()){
-    if (*(str.begin())==quote){
+  if (!str.empty()) {
+    if (*(str.begin())==quote) {
       str.replace(str.begin(), str.begin()+1, "");
       begIsClean = true;
     }
-    if (*(str.end()-1)==quote){
+    if (*(str.end()-1)==quote) {
       str.replace(str.end()-1, str.end(), "");
       endIsClean = true;
     }
     // erase all white space at a begining
-    while(boost::algorithm::starts_with(str, " ")){
+    while(boost::algorithm::starts_with(str, " ")) {
        str.erase(0,1);
     };
   }
@@ -153,7 +153,7 @@ getTimeToKens(const std::string& timeFormat, const char& separator=':') {
     endPosToken = beginPosToken-1;
     beginPosToken = timeFormat.rfind(separator, endPosToken);
     //last token
-    if (beginPosToken==std::string::npos){
+    if (beginPosToken==std::string::npos) {
       timeTokens.push_back(timeFormat.substr(0, endPosToken+1));
     }
   }
@@ -164,7 +164,7 @@ getTimeToKens(const std::string& timeFormat, const char& separator=':') {
 /**
  * \brief Constructor
  */
-LSFParser::LSFParser(){
+LSFParser::LSFParser() {
 }
 
 time_t
@@ -338,14 +338,12 @@ bool LSFParser::isNumerical(const std::string& value) {
 
 std::vector<std::string>
 LSFParser::convertScriptIntoArgv(const char* pathTofile,
-                                 const std::string& BATCH_PREFIX){
-
+                                 const std::string& BATCH_PREFIX) {
   ifstream fileStream;
   string line;
 
   fileStream.open (pathTofile);
 
-  static std::map<size_t, pair<string,string> > tab;
   std::string cmd;
   vector<string> tokens;
   std::string tmpLine="";
@@ -358,7 +356,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
       getline(fileStream, line);
 
       //Treating of the escape character int the script content
-      if (boost::algorithm::ends_with(boost::algorithm::erase_all_copy(line, " "),"\\")){
+      if (boost::algorithm::ends_with(boost::algorithm::erase_all_copy(line, " "),"\\")) {
         escapePos = line.rfind("\\");
         if (escapePos!=std::string::npos) {
           tmpLine += line.substr(0, escapePos);
@@ -375,7 +373,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
       }
 
       // erase all white space until # (excluded)
-      while(boost::algorithm::starts_with(line, " ")){
+      while(boost::algorithm::starts_with(line, " ")) {
         line.erase(0,1);
       };
 
@@ -385,7 +383,7 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
         continue;
       }
 
-      if (boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), BATCH_PREFIX)){
+      if (boost::algorithm::starts_with(boost::algorithm::erase_all_copy(line," "), BATCH_PREFIX)) {
 
         pos = line.find(BATCH_PREFIX.substr(1));//skip the character # in  BATCH_PREFIX
         line = line.substr(pos+BATCH_PREFIX.size()-1);
@@ -427,10 +425,10 @@ LSFParser::convertScriptIntoArgv(const char* pathTofile,
     argvStr = *iter;
     if (isStartByQuote(argvStr, '\"')) {
       quote = '\"';
-    } else if (isStartByQuote(argvStr, '\'')){
+    } else if (isStartByQuote(argvStr, '\'')) {
       quote = '\'';
     }
-    if (quote!='\0'){
+    if (quote!='\0') {
       std::vector<std::string>::iterator found_iter;
       std::vector<std::string>::iterator beg_iter=iter;
       found_iter = std::find_if(beg_iter, end, IsEndByQuote(quote));
@@ -526,10 +524,10 @@ LSFParser::parse_file(const char* pathTofile, struct submit* req) {
           stream_procs.str(procsStr);
           stream_procs >> min_proc_str;
           min_proc_str = procsStr.substr(0,procsStr.find(separator));
-          if (procsStr.find(separator)+1!=std::string::npos){
+          if (procsStr.find(separator)+1!=std::string::npos) {
             max_proc_str = procsStr.substr(procsStr.find(separator)+1);
           }
-          if (!isNumerical(min_proc_str) || !isNumerical(max_proc_str)){
+          if (!isNumerical(min_proc_str) || !isNumerical(max_proc_str)) {
             throw UMSVishnuException(ERRCODE_INVALID_PARAM, errHead+std::string(optarg)+"is an invalid"
                 " value for -n option. Correct format is -n min_processors[,max_processors]");
           }
@@ -979,7 +977,7 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
   std::vector<std::string>::iterator iter;
   for(iter=tokensArgs.begin(); iter!=tokensArgs.end(); ++iter) {
       //to treat #% -vishnuNbNodesAndCpuPerNode=x:y
-      if ((pos=(*iter).find(nodesAndCpuPerNodeSyntax))!=std::string::npos){
+      if ((pos=(*iter).find(nodesAndCpuPerNodeSyntax))!=std::string::npos) {
          std::string nbNodesAndCpuPerNode = (*iter).substr(pos+nodesAndCpuPerNodeSyntax.size());
          cleanString(nbNodesAndCpuPerNode,'\"');
          cleanString(nbNodesAndCpuPerNode,'\'');
@@ -1007,7 +1005,7 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
           }
       }
       //To treat cpu syntax
-      if ((pos=(*iter).find(cpuSyntax))!=std::string::npos){
+      if ((pos=(*iter).find(cpuSyntax))!=std::string::npos) {
          std::string cpuStr = (*iter).substr(pos+cpuSyntax.size());
          int cpu;
          if (isNumerical(cpuStr)) {
@@ -1063,5 +1061,5 @@ LSFParser::searchAndConvertVishnuScriptGenSyntax(const char* pathTofile, struct 
 /**
  * \brief Destructor
  */
-LSFParser::~LSFParser(){
+LSFParser::~LSFParser() {
 }

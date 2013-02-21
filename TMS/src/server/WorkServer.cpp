@@ -56,8 +56,6 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
 
-  std::string vishnuid;
-
   //std::string appId = "1";
   //std::string projectId = "1";
   std::string timestamp = "CURRENT_TIMESTAMP";
@@ -68,8 +66,6 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   if (userServer.exist()) {
     //if the user is an admin
     if (userServer.isAdmin()) {
-
-      vishnuid = convertToString(vishnuId);
 
       //Generation of workid
       idWorkGenerated = vishnu::getObjectId(vishnuId,
