@@ -20,21 +20,8 @@ static const int ERRCODE_CLI_ERROR_RUNTIME = 16;
  * \brief This class represents the exception due to a user misuse
  * \class UserException
  */
-class UserException :
-  public VishnuException {
-public:
-
-private :
-protected :
-  /**
-   * \brief Function to initialize all the generic messages
-   * \fn void initMsg()
-   */
-  void
-  initMsg();
-
+class UserException :  public VishnuException {
 public :
-
   /**
    * \brief Default constructor
    * \fn UserException()
@@ -69,6 +56,14 @@ public :
    */
   std::string
   getMsg() const;
+
+protected :
+  /**
+   * \brief Function to initialize all the generic messages
+   * \fn void initMsg()
+   */
+  void
+  initMsg();
 };
 
 #endif // VISHNUEXCEPTION
