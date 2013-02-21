@@ -19,50 +19,10 @@
 #include "DbConfiguration.hpp"
 #include "AuthenticatorConfiguration.hpp"
 #include "SeD.hpp"
-
-
-/**
- * \brief Number of service in UMS
- */
-#define NB_SRV 33
+#include "UMSServices.hpp"
 
 class Database;
 class Authenticator;
-
-static const char* SRV[NB_SRV] = {
-  "sessionConnect",  // 0
-  "sessionReconnect",  // 1
-  "sessionClose",  // 2
-  "userCreate",  // 3
-  "userUpdate",  // 4
-  "userDelete",  // 5
-  "userPasswordChange",  // 6
-  "userPasswordReset",  // 7
-  "machineCreate",  // 8
-  "machineUpdate",  // 9
-  "machineDelete",  // 10
-  "localAccountCreate",  // 11
-  "localAccountUpdate",  // 12
-  "localAccountDelete",  // 13
-  "configurationSave",  // 14
-  "configurationRestore",  // 15
-  "optionValueSet",  // 16
-  "optionValueSetDefault",  // 17
-  "sessionList",  // 18
-  "localAccountList",  // 19
-  "machineList",  // 20
-  "commandList",  // 21
-  "optionValueList",  // 22
-  "userList",  // 23
-  "restore",  // 24
-  "authSystemCreate",  // 25
-  "authSystemUpdate",  // 26
-  "authSystemDelete",  // 27
-  "authSystemList",  // 28
-  "authAccountCreate",  // 29
-  "authAccountUpdate",  // 30
-  "authAccountDelete",  // 31
-  "authAccountList"};  // 32
 
 /**
  * \class ServerUMS

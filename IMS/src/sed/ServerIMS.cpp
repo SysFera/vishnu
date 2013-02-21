@@ -139,23 +139,23 @@ ServerIMS::~ServerIMS() {
 
 void
 ServerIMS::initMap(std::string mid) {
-  mcb[SRV[0]] = solveExport;
-  mcb[std::string(SRV[1])+"@"+mid] = solveCurMetric;
-  mcb[SRV[2]] = solveOldMetric;
-  mcb[SRV[3]] = solvePS;
-  mcb[SRV[4]] = solveSetSysInfo;
-  mcb[SRV[5]] = solveSetThreshold;
-  mcb[SRV[6]] = solveGetThreshold;
-  mcb[SRV[7]] = solveSetUID;
-  mcb[SRV[8]] = solveSetJID;
-  mcb[SRV[9]] = solveSetTID;
-  mcb[SRV[10]] = solveSetMID;
-  mcb[std::string(SRV[11])+"@"+mid] = solveLoadShed;
-  mcb[SRV[13]] = solveGetUpFreq;
-  mcb[SRV[12]] = solveSetUpFreq;
-  mcb[std::string(SRV[14])+"@"+mid] = solveRestart;
-  mcb[std::string(SRV[15])+"@"+mid] = solveStop;
-  mcb[SRV[16]] = solveGetSysInfo;
-  mcb[SRV[17]] = solveSetAID;
-  mcb[SRV[18]] = solveSetWID;
+  mcb[SERVICES_IMS[0]] = solveExport;
+  mcb[std::string(SERVICES_IMS[1])+"@"+mid] = solveCurMetric;
+  mcb[SERVICES_IMS[2]] = solveOldMetric;
+  mcb[SERVICES_IMS[3]] = solvePS;
+  mcb[SERVICES_IMS[4]] = solveSetSysInfo;
+  mcb[SERVICES_IMS[5]] = solveSetThreshold;
+  mcb[SERVICES_IMS[6]] = solveGetThreshold;
+  mcb[SERVICES_IMS[7]] = solveSetUID;
+  mcb[SERVICES_IMS[8]] = solveSetJID;
+  mcb[SERVICES_IMS[9]] = solveSetTID;
+  mcb[SERVICES_IMS[10]] = solveSetMID;
+  mcb[std::string(SERVICES_IMS[11])+"@"+mid] = solveLoadShed;
+  mcb[SERVICES_IMS[13]] = solveGetUpFreq;
+  mcb[SERVICES_IMS[12]] = solveSetUpFreq;
+  mcb[std::string(SERVICES_IMS[14])+"@"+mid] = solveRestart;
+  mcb[std::string(SERVICES_IMS[15])+"@"+mid] = solveStop;
+  mcb[SERVICES_IMS[16]] = solveGetSysInfo;
+  mcb[SERVICES_IMS[17]] = solveSetAID;
+  mcb[SERVICES_IMS[18]] = solveSetWID;
 }

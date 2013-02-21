@@ -18,27 +18,10 @@
 #include "SeD.hpp"
 #include "SessionServer.hpp"
 #include "tmsUtils.hpp"
+#include "TMSServices.hpp"
 
 class Database;
 
-/**
- * \brief Number of service in TMS
- */
-#define NB_SRV 11
-
-static const char* SERVICES[NB_SRV] = {
-  "jobSubmit",
-  "jobCancel",
-  "jobInfo",
-  "getListOfJobs",
-  "getJobsProgression",
-  "getListOfQueues",
-  "jobOutputGetResult",
-  "jobOutputGetCompletedJobs",
-  "getListOfJobs_all",
-  "jobSubmit_autom",
-  "addwork"
-};
 
 /**
  * \class ServerTMS
