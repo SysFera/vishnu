@@ -39,14 +39,13 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms )
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_tms_at )
 {
-  BOOST_REQUIRE_EQUAL(get_module("jobSubmit@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("jobCancel@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("jobInfo@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("getListOfJobs@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("getJobsProgression@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("getListOfQueues@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("jobOutputGetResult@cluster"), "TMS");
-  BOOST_REQUIRE_EQUAL(get_module("jobOutputGetCompletedJobs@cluster"), "TMS");
+  unsigned int nb;
+  for (nb = 0; nb < NB_SRV_TMS; nb++) {
+    if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+      BOOST_MESSAGE("Checking module " << SERVICES_TMS[nb] << "@cluster");
+      BOOST_REQUIRE_EQUAL(get_module(std::string(SERVICES_TMS[nb]) + "@cluster"), "TMS");
+    }
+  }
 }
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
@@ -60,10 +59,13 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
 
 BOOST_AUTO_TEST_CASE( my_test_get_n_ims_at )
 {
-  BOOST_REQUIRE_EQUAL(get_module("int_getMetricCurentValue@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_loadShed@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_restart@cluster"), "IMS");
-  BOOST_REQUIRE_EQUAL(get_module("int_stop@cluster"), "IMS");
+  unsigned int nb;
+  for (nb = 0; nb < NB_SRV_IMS; nb++) {
+    if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
+      BOOST_MESSAGE("Checking module " << SERVICES_IMS[nb] << "@cluster");
+      BOOST_REQUIRE_EQUAL(get_module(std::string(SERVICES_IMS[nb]) + "@cluster"), "IMS");
+    }
+  }
 }
 
 BOOST_AUTO_TEST_CASE( my_test_get_b_mod )

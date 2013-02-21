@@ -17,6 +17,8 @@
 #include "CommonParser.hpp"
 #include "FileParser.hpp"
 #include "UMSServices.hpp"
+#include "TMSServices.hpp"
+#include "IMSServices.hpp"
 #include "FMSServices.hpp"
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
@@ -124,42 +126,28 @@ Annuary::fillServices(std::vector< std::string> &services,
                       const std::string& mid) {
   boost::lock_guard<boost::recursive_mutex> lock(mutex);
   unsigned int nb;
+  std::string tmpserv;
+
   if (name == "UMS") {
     for (nb = 0; nb < NB_SRV_UMS; nb++) {
       services.push_back(SERVICES_UMS[nb]);
     }
   } else if (name == "TMS") {
-    services.push_back("jobSubmit@"+mid) ;
-    services.push_back("jobCancel@"+mid) ;
-    services.push_back("jobInfo@"+mid) ;
-    services.push_back("getListOfJobs@"+mid) ;
-    services.push_back("getJobsProgression@"+mid) ;
-    services.push_back("getListOfQueues@"+mid) ;
-    services.push_back("jobOutputGetResult@"+mid) ;
-    services.push_back("jobOutputGetCompletedJobs@"+mid) ;
-    services.push_back("getListOfJobs_all") ;
-    services.push_back("jobSubmit_autom") ;
-    services.push_back("addwork") ;
+    for (nb = 0; nb < NB_SRV_TMS; nb++) {
+      tmpserv = SERVICES_TMS[nb];
+      if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
+    }
   } else if (name == "IMS") {
-    services.push_back("int_exportCommands") ;
-    services.push_back("int_getMetricCurentValue@"+mid) ;
-    services.push_back("int_getMetricHistory") ;
-    services.push_back("int_getProcesses") ;
-    services.push_back("int_setSystemInfo") ;
-    services.push_back("int_setSystemThreshold") ;
-    services.push_back("int_getSystemThreshold") ;
-    services.push_back("int_defineUserIdentifier") ;
-    services.push_back("int_defineJobIdentifier") ;
-    services.push_back("int_defineTransferIdentifier") ;
-    services.push_back("int_defineMachineIdentifier") ;
-    services.push_back("int_loadShed@"+mid) ;
-    services.push_back("int_setUpdateFrequency") ;
-    services.push_back("int_getUpdateFrequency") ;
-    services.push_back("int_restart@"+mid) ;
-    services.push_back("int_stop@"+mid) ;
-    services.push_back("int_getSystemInfo") ;
-    services.push_back("int_defineAuthIdentifier") ;
-    services.push_back("int_defineWorkIdentifier") ;
+    for (nb = 0; nb < NB_SRV_IMS; nb++) {
+      tmpserv = SERVICES_IMS[nb];
+      if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
+    }
   } else if (name == "FMS") {
     for (nb = 0; nb < NB_SRV_FMS; nb++) {
       services.push_back(SERVICES_FMS[nb]);

@@ -35,5 +35,27 @@ static const char* SERVICES_IMS[NB_SRV_IMS] = {
   "int_defineWorkIdentifier" // 18
 };
 
+static const bool MACHINE_SPECIC_SERVICES_IMS[NB_SRV_IMS] = {
+  false,  // 0
+  true,   // 1
+  false,  // 2
+  false,  // 3
+  false,  // 4
+  false,  // 5
+  false,  // 6
+  false,  // 7
+  false,  // 8
+  false,  // 9
+  false,  // 10
+  true,   // 11
+  false,  // 12
+  false,  // 13
+  true,   // 14
+  true,   // 15
+  false,  // 16
+  false,  // 17
+  false   // 18
+};
+
 
 #endif  // _IMSSERVICES_HPP_
