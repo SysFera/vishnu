@@ -209,6 +209,7 @@ Annuary::fillServices(std::vector< std::string> &services,
     services.push_back("RemoteFileCopy") ;
     services.push_back("RemoteFileMove") ;
     services.push_back("FileTransfersList") ;
+    services.push_back("FileTransferStop") ;
     } else { // Routage
     services.push_back("routage");
   }
