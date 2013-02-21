@@ -90,6 +90,7 @@ static void fill_sMap()
   (*sMap)["jobOutputGetResult"] = "TMS";
   (*sMap)["jobOutputGetCompletedJobs"] = "TMS";
   (*sMap)["getListOfJobs_all"] = "TMS";
+  (*sMap)["jobSubmit_autom"] = "TMS";
   (*sMap)["addWork"] = "TMS";
   /* IMS services */
   (*sMap)["int_exportCommands"] = "IMS";
