@@ -52,7 +52,8 @@ BatchFactory::getBatchServerInstance(int batchType,
                                      const std::string &batchVersion) {
   BatchServer *instance(NULL);
   std::string libname = "vishnu-tms-";
-  std::string realBatchVersion = batchVersion;
+  // batchVersion is set to n/a when not applicable but MUST be not be taken into account when loading the lib
+  std::string realBatchVersion = (batchVersion!="n/a")? batchVersion : "";
 
   switch(batchType){
   case TORQUE:

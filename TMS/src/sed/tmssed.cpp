@@ -107,7 +107,7 @@ int main(int argc, char* argv[], char* envp[]) {
   int interval = 1;
   BatchType batchType ;
   std::string batchTypeStr;
-  std::string batchVersion = "n/a";
+  std::string batchVersion = "";
   std::string machineId;
   std::string remoteBinDirectory;
   std::string defaultBatchConfig;
