@@ -175,11 +175,6 @@ int main(int argc, char* argv[], char* envp[]) {
           batchVersion != "2.4") {
         versError = "2.2, 2.3 and 2.4";
       }
-
-      if (batchVersion == "2.4") {
-        // SLURM 2.4 uses the same API as 2.3
-        batchVersion = "2.3";
-      }
       break;
     }
     case LSF: {
