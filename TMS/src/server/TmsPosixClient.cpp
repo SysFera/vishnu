@@ -174,10 +174,9 @@ reqInfo(const char* jobId, struct trameJob *response) {
 
   resultat = reqSend(name_sock, &req, &ret);
 
-  if (ret.status == 0) {
+  if (ret.status == 0 && resultat >= 0) {
     *response = ret.data.info;
     return 0;
   }
   return -1;
 }
-
