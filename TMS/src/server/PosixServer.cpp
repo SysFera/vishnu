@@ -110,9 +110,7 @@ PosixServer::getJobState(const std::string& jobId){
 time_t
 PosixServer::getJobStartTime(const std::string& jobId){
   struct trameJob resultat;
-  int ret;
-
-  ret = reqInfo(jobId.c_str(), &resultat);
+  reqInfo(jobId.c_str(), &resultat);
   return resultat.startTime;
 }
 
@@ -156,4 +154,3 @@ create_plugin_instance(void **instance) {
 
   return PLUGIN_OK;
 }
-

@@ -364,7 +364,6 @@ solveGetThreshold(diet_profile_t* pb){
   string retErr = "";
   int mapperkey;
   string cmd;
-  std::string empty("");
 
   diet_string_get(pb,0, sessionKey);
   diet_string_get(pb,1, treeOpSer);

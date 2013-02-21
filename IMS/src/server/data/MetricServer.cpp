@@ -247,9 +247,9 @@ MetricServer::getCurMet(){
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListMetric_ptr mlistObject = ecoreFactory->createListMetric();
   IMS_Data::Metric_ptr met;
-  double disk = 0.0;
-  double cpu  = 0.0;
-  double mem  = 0.0;
+  double disk;
+  double cpu;
+  double mem;
   ptime p =  second_clock::local_time();
 
   sigar_file_system_usage_t fsu;
