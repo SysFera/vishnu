@@ -470,15 +470,14 @@ void Job::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
     case ::TMS_Data::TMS_DataPackage::JOB__WORKID:
         return m_workId != 0;
     case ::TMS_Data::TMS_DataPackage::JOB__USERID:
-    return m_userId != "";
+        return m_userId != "";
     case ::TMS_Data::TMS_DataPackage::JOB__VMID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_vmId);
+        return m_vmId != "";
     case ::TMS_Data::TMS_DataPackage::JOB__VMIP:
-return    m_vmIp != "";
+        return m_vmIp != "";
 
-}
-throw "Error";
+    }
+    throw "Error";
 }
 
 void Job::eUnset(::ecore::EInt _featureID)

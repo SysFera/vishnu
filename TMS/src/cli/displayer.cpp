@@ -4,6 +4,7 @@
 #include "utilVishnu.hpp"
 #include "displayer.hpp"
 #include "constants.hpp"
+#include "tmsUtils.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -59,49 +60,49 @@ displayJob(TMS_Data::Job& j){
   cout << " Session              : " << j.getSessionId() << endl;
   cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
   cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;	
+  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
   cout << "\n Output dir (remote)  : " << j.getOutputDir();
 
   boost::posix_time::ptime pt;
-	cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
-	if(j.getVmId().size() > 0) {
-		cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
-	}
-	cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-	cout << "\n User                 : " << j.getUserId();
-	cout << "\n Session              : " << j.getSessionId();
-	cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
-	cout << "\n Job name             : " << j.getJobName();
-	cout << "\n Job path             : " << j.getJobPath();
-	cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
-	cout << "\n CPU per Node         : " << j.getNbCpus();
-	cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
-	cout << "\n Status               : " << convertJobStateToString(j.getStatus());
+  cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
+  if(j.getVmId().size() > 0) {
+    cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
+  }
+  cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
+  cout << "\n User                 : " << j.getUserId();
+  cout << "\n Session              : " << j.getSessionId();
+  cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
+  cout << "\n Job name             : " << j.getJobName();
+  cout << "\n Job path             : " << j.getJobPath();
+  cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
+  cout << "\n CPU per Node         : " << j.getNbCpus();
+  cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
+  cout << "\n Status               : " << vishnu::convertJobStateToString(j.getStatus());
   if(j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
-		cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
+    cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
   } else  {
-		cout << "\n Submit date          : UNDEFINED";
+    cout << "\n Submit date          : UNDEFINED";
   }
 
   if(j.getEndDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getEndDate()));
-		cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
+    cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
   } else {
-		cout << "\n End date             : UNDEFINED";
+    cout << "\n End date             : UNDEFINED";
   }
-	cout << "\n Owner                : " << j.getOwner();
-	cout << "\n Queue                : " << j.getJobQueue();
-	cout << "\n Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit());
-	cout << "\n Group name           : " << j.getGroupName();
-	cout << "\n Description          : " << j.getJobDescription();
+  cout << "\n Owner                : " << j.getOwner();
+  cout << "\n Queue                : " << j.getJobQueue();
+  cout << "\n Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit());
+  cout << "\n Group name           : " << j.getGroupName();
+  cout << "\n Description          : " << j.getJobDescription();
   if(j.getMemLimit() > 0) {
-		cout << "\n Max memory           : " << j.getMemLimit();
+    cout << "\n Max memory           : " << j.getMemLimit();
   } else {
-		cout << "\n Max memory           : UNDEFINED";
+    cout << "\n Max memory           : UNDEFINED";
   }
-	cout << "\n Nodes                : " << j.getNbNodes();
-	cout << "\n NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode();
+  cout << "\n Nodes                : " << j.getNbNodes();
+  cout << "\n NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode();
   cout << endl;
 }
 
@@ -144,7 +145,7 @@ displayProgress(Progression& p){
     cout << " End time  : UNDEFINED" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
-  cout << " Status    : " << convertJobStateToString(p.getStatus()) << endl;
+  cout << " Status    : " << vishnu::convertJobStateToString(p.getStatus()) << endl;
   cout << endl;
 }
 
@@ -226,45 +227,6 @@ displaySubmit(TMS_Data::Job job){
   cout << "Job Id     : " << job.getJobId() << endl;
 }
 
-/**
- * \brief  function to convert job status into string
- * \param state: The state of job
- * \return The converted state value
- */
-std::string convertJobStateToString(const int& state) {
-
-  string stateStr;
-  switch(state) {
-	case vishnu::STATE_SUBMITTED:
-    stateStr = "SUBMITTED";
-    break;
-	case vishnu::STATE_QUEUED:
-    stateStr = "QUEUED";
-    break;
-	case vishnu::STATE_WAITING:
-    stateStr = "WAITING";
-    break;
-	case vishnu::STATE_RUNNING:
-    stateStr = "RUNNING";
-    break;
-	case vishnu::STATE_COMPLETED:
-		stateStr = "COMPLETED";
-    break;
-	case vishnu::STATE_CANCELLED:
-    stateStr = "CANCELLED";
-    break;
-	case vishnu::STATE_DOWNLOADED:
-    stateStr = "DOWNLOADED";
-		break;
-	case vishnu::STATE_UNDEFINED:
-		stateStr = "UNDEFINED";
-    break;
-  default:
-    stateStr = "UNDEFINED";
-    break;
-  }
-  return stateStr;
-}
 
 /**
  * \brief  function to convert job priority into string
@@ -486,7 +448,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     maxQueueSize = std::max(maxQueueSize, queue.size());
 
     status = (listJobs.getJobs().get(i))->getStatus();
-    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+    maxStatusSize = std::max(maxStatusSize, vishnu::convertJobStateToString(status).size());
 
     priority = (listJobs.getJobs().get(i))->getJobPrio();
     maxPrioritySize = std::max(maxPrioritySize, convertJobPriorityToString(priority).size()+3);
@@ -528,7 +490,7 @@ operator<<(std::ostream& os, ListJobs& listJobs) {
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWorkIdSize+2) << left << workId_;
     os << setw(maxOwnerSize+2) << left << owner;
-    os << setw(maxStatusSize+2) << left << convertJobStateToString(status);
+    os << setw(maxStatusSize+2) << left << vishnu::convertJobStateToString(status);
     os << setw(maxQueueSize+2) << left << queue;
     ostringstream oss;
     oss << priority  << "(" << convertJobPriorityToString(priority) << ")";
@@ -603,7 +565,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     }
 
     status = (listProgress.getProgress().get(i))->getStatus();
-    maxStatusSize = std::max(maxStatusSize, convertJobStateToString(status).size());
+    maxStatusSize = std::max(maxStatusSize, vishnu::convertJobStateToString(status).size());
 
     percent = (listProgress.getProgress().get(i))->getPercent();
     maxPercentSize = std::max(maxPercentSize, convertToString(percent).size());
@@ -648,7 +610,7 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     } else {
       os << setw(maxEndTimeSize+2) << left <<  " --- ";
     }
-    os << setw(maxStatusSize+2) << left <<  convertJobStateToString(status);
+    os << setw(maxStatusSize+2) << left <<  vishnu::convertJobStateToString(status);
     ostringstream oss;
     oss <<  percent << "%";
     os << setw(maxPercentSize+2) << left << oss.str() ;

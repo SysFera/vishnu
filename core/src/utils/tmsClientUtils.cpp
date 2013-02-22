@@ -5,25 +5,89 @@
  *      Author: Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
  */
 
-
+#include "tmsUtils.hpp"
 #include "api_ums.hpp"
 #include "api_fms.hpp"
 #include "api_tms.hpp"
 #include "TMS_Data.hpp"
-#include <boost/filesystem.hpp>
-#include <boost/format.hpp>
 #include "utilVishnu.hpp"
-#include "tmsClientUtils.hpp"
+#include "constants.hpp"
+#include "cliError.hpp"
+#include <boost/format.hpp>
+#include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
 
 using namespace std;
 namespace bfs = boost::filesystem;
+
+
+/**
+ * \brief Function to parse textual or file parameters
+ * \param IN opt A structure containing the set of submitted options
+ * \param OUT paramsStr a string containing all of parameters
+ * \param IN paramOptName the name of the option for a single parameter
+ * \param IN paramsVector a vector of parameters
+ * \return true if all parameters are syntaxicaly valid
+ */
+int
+vishnu::validateParameters(const boost::shared_ptr<Options> & opt,
+                           std::string & paramsStr,
+                           const std::string & paramOptName,
+                           const ListStrings & paramsVector) {
+
+  if (opt->count(paramOptName)) {
+    paramsStr = opt->get<std::string>(paramOptName);
+  }
+
+  // Append other parameters in paramStr
+  for(ListStrings::const_iterator it = paramsVector.begin();
+      it != paramsVector.end(); ++it) {
+    paramsStr += " " + *it;
+  }
+
+  //Now check the syntax of parameters and set them suitable for VISHNU
+  ListStrings paramsVecBuffer;
+  boost::trim(paramsStr);
+  boost::split(paramsVecBuffer, paramsStr, boost::is_space(), boost::token_compress_on);
+
+  paramsStr = ""; // Reinitialization for outpout
+  for(ListStrings::iterator it = paramsVecBuffer.begin();
+      it != paramsVecBuffer.end(); ++it) {
+    size_t pos = (*it).find("=");
+    if (pos == 0 || pos == std::string::npos || pos == (*it).size() - 1) {
+      std::cerr << "Uncompleted definition for the parameter : '" << *it << "'\n";
+      return CLI_ERROR_INVALID_PARAMETER;
+    }
+
+    std::string paramName = (*it).substr(0, pos); // Keep the parameter name in upper case
+    std::string paramValue = (*it).substr(pos+1, std::string::npos);
+
+    // Check whether the parameter is duplicate
+    if (paramsStr.size()) {
+      size_t start(0);
+      while (pos = paramsStr.find(paramName + "=", start),
+             pos != std::string::npos) {
+        if (pos == 0 || paramsStr[pos-1] == char(' ')) {
+          std::cerr << "Duplicate parameter : '" << paramName << "'\n";
+          return CLI_ERROR_INVALID_PARAMETER;
+        }
+        start = pos + paramName.size();
+      }
+      paramsStr += " ";
+    }
+    // Append the parameter
+    paramsStr += paramName + "=" + paramValue;
+  }
+  return 0;
+}
+
+
 /**
  * \brief Function to get the hostname of a machine id
  *  \param Id of the machine
  */
-std::string getMachineName(const std::string& sessionKey, const std::string& machineId) {
+std::string vishnu::getMachineName(const std::string& sessionKey, const std::string& machineId) {
 
   UMS_Data::ListMachines machines;
   UMS_Data::ListMachineOptions mopts;
@@ -46,9 +110,9 @@ std::string getMachineName(const std::string& sessionKey, const std::string& mac
  * \param startPos: Position of the file
  * \return Throw exception on error
  */
-void copyFiles(const std::string& sessionKey,
+void vishnu::copyFiles(const std::string& sessionKey,
                const std::string& srcMid,
-               const ListStrings& rfiles,
+               const std::vector<std::string>& rfiles,
                const std::string& ldestDir,
                const CpFileOptions& copts,
                std::string& missingFiles,
@@ -75,18 +139,16 @@ void copyFiles(const std::string& sessionKey,
  * \return The copied file or throw exception on error
  */
 std::string
-genericFileCopier(const std::string& sessionKey,
+vishnu::genericFileCopier(const std::string& sessionKey,
                   const std::string& srcMachineId,
                   const std::string& srcPath,
                   const std::string& destMachineId,
                   const std::string& destPath,
                   const CpFileOptions& copts) {
-  string src;
-  string dest;
-
+  string src = "";
+  string dest = "";
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
   dest = destMachineId.empty()? destPath : destMachineId+":"+destPath;
-
   if (vishnu::cp(sessionKey, src, dest, copts) != 0) {
     string srcMachine = (srcMachineId.size() != 0)? getMachineName(sessionKey, srcMachineId) : "localhost";
     string destMachine = (destMachineId.size() != 0)? getMachineName(sessionKey, destMachineId) : "localhost";
@@ -104,7 +166,7 @@ genericFileCopier(const std::string& sessionKey,
  * \return A string describing the destination file. The function throw exception on error
  */
 std::string
-sendInputFiles(const std::string& sessionKey,
+vishnu::sendInputFiles(const std::string& sessionKey,
                const std::string& srcFiles,
                const std::string& destMachineId,
                const CpFileOptions& copts) {
@@ -144,7 +206,7 @@ sendInputFiles(const std::string& sessionKey,
  * \return the selected machine or raises an exception on error
  */
 std::string
-findMachine(const std::string& sessionKey,
+vishnu::findMachine(const std::string& sessionKey,
             const TMS_Data::LoadCriterion_ptr& criterion) {
 
   // First list all active machines where we have a local account
@@ -184,7 +246,7 @@ findMachine(const std::string& sessionKey,
  * \param the criteria of (number of waiting jobs, running jobs and total jobs)
  */
 long
-getMachineLoadPerformance(const string& sessionKey,
+vishnu::getMachineLoadPerformance(const string& sessionKey,
                           const UMS_Data::Machine_ptr& machine,
                           const TMS_Data::LoadCriterion_ptr& criterion) {
 
@@ -220,3 +282,5 @@ getMachineLoadPerformance(const string& sessionKey,
   }
   return load ;
 }
+
+

@@ -10,6 +10,7 @@
 
 #include <sstream>
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp"
 
 /**
  * \class Env

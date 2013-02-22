@@ -73,7 +73,8 @@ namespace vishnu {
     STATE_RUNNING=4,
     STATE_COMPLETED=5,
     STATE_CANCELLED=6,
-    STATE_DOWNLOADED=7
+    STATE_DOWNLOADED=7,
+    STATE_FAILED=8
   } job_status_t;
 
 

@@ -326,6 +326,7 @@ add_library(vishnu-core ${config_SRCS}
   ${TMS_Data_SRCS}
   ${IMS_Data_SRCS}
   ${FMS_Data_SRCS}
+  ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
 )
 
 target_link_libraries(vishnu-core

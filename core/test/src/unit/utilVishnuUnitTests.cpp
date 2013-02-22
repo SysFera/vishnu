@@ -3,6 +3,7 @@
 #include <sstream>
 #include <map>
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp"
 
 BOOST_AUTO_TEST_SUITE( utilVishnu_unit_tests )
 

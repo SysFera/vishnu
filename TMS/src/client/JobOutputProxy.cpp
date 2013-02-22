@@ -8,7 +8,7 @@
 #include <boost/format.hpp>
 #include "utilVishnu.hpp"
 #include "api_fms.hpp"
-#include "tmsClientUtils.hpp"
+#include "tmsUtils.hpp"
 
 namespace bfs = boost::filesystem;
 using namespace vishnu;
@@ -92,7 +92,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
     string line;
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     if(!getline(fdescStream, line)) {
@@ -104,7 +104,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
     int nbFiles = lineVec.size();
     std::string missingFiles = "";
     if (nbFiles > 0 && line.size() >0) {
-      copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, missingFiles, 0);
+      vishnu::copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, missingFiles, 0);
       std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
       jobResult.setOutputPath(moutDir+"/"+fileName);
       jobResult.setErrorPath(moutDir+"/"+fileName);
@@ -185,7 +185,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   copts.setTrCommand(0); // for using scp
 
   try {
-    genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     int numJob = 0;
     string line;
@@ -198,7 +198,7 @@ JobOutputProxy::getCompletedJobsOutput() {
       std::string baseDir = (moutDir.size()!=0)? bfs::absolute(moutDir).string() : bfs::path(bfs::current_path()).string();
       std::string targetDir = baseDir + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
       vishnu::createOutputDir(targetDir);
-      copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
+      vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
       listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
       if (!missingFiles.empty()) {
         vishnu::saveInFile(targetDir+"/MISSINGS", missingFiles);

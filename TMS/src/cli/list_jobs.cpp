@@ -14,6 +14,8 @@
 #include "sessionUtils.hpp"
 #include <boost/bind.hpp>
 #include "displayer.hpp"
+#include "constants.hpp"
+#include <boost/format.hpp>
 
 namespace po = boost::program_options;
 
@@ -124,8 +126,8 @@ main (int argc, char* argv[]) {
   string configFile;
   string sessionKey;
   string machineId;
-  string statusStr = "";
-  int status;
+  string stateStr = "";
+  int state;
   std::string fromDate;
   std::string toDate;
 
@@ -145,16 +147,16 @@ main (int argc, char* argv[]) {
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeListJobOp(argv[0],
-                                               fjid,
-                                               fnbCpu,
-                                               fromDate,
-                                               toDate,
-                                               fown,
-                                               statusStr,
-                                               fpriority,
-                                               fqueue,
-                                               fmutlStatus,
-                                               fworkId,
+      fjid,
+      fnbCpu,
+      fromDate,
+      toDate,
+      fown,
+      stateStr,
+      fpriority,
+      fqueue,
+      fmutlStatus,
+      fworkId,
                                                configFile);
 
   opt->add("isBatchJob,b",
@@ -192,45 +194,48 @@ main (int argc, char* argv[]) {
       return 0;
     }
 
-    if (statusStr.size()!=0) {
-      size_t pos = statusStr.find_first_not_of("0123456789");
+    if (stateStr.size()!=0) {
+      size_t pos = stateStr.find_first_not_of("0123456789");
       if (pos!=std::string::npos) {
-        if (statusStr.size() == 1) {
-          switch(statusStr[0]) {
+        if (stateStr.size() == 1) {
+          switch(stateStr[0]) {
           case 'S' :
-            status = 1;
+            state = vishnu::STATE_SUBMITTED;
             break;
           case 'Q' :
-            status = 2;
+            state = vishnu::STATE_QUEUED;
             break;
           case 'W' :
-            status = 3;
+            state = vishnu::STATE_WAITING;
             break;
           case 'R' :
-            status = 4;
+            state = vishnu::STATE_RUNNING;
             break;
           case 'T' :
-            status = 5;
+            state = vishnu::STATE_COMPLETED;
             break;
           case 'C' :
-            status = 6;
+            state = vishnu::STATE_CANCELLED;
             break;
           case 'D' :
-            status = 7;
+            state = vishnu::STATE_DOWNLOADED;
+            break;
+          case 'F' :
+            state = vishnu::STATE_FAILED;
             break;
           default:
-            status = -1;
+            state = vishnu::STATE_UNDEFINED;
             break;
           }
         }
-        if ((statusStr.size() > 1) || (status == -1)) {
-          std::cerr << "Unknown job status " << statusStr << std::endl;
-          return 0;
+        if (stateStr.size() > 1 || state < 0) {
+          std::cerr <<  (boost::format("Unknown job state: %1%")%stateStr).str();
+          return CLI_ERROR_INVALID_PARAMETER;
         }
       } else {
-        status = convertToInt(statusStr);
+        state = convertToInt(stateStr);
       }
-      jobOp.setStatus(status);
+      jobOp.setStatus(state);
     }
     //convert the date in long format
     if (opt->count("fromSubmitDate")) {
@@ -249,7 +254,6 @@ main (int argc, char* argv[]) {
       jobOp.setListAll(true);
     }
 
-    // initializing DIET
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);
       return  CLI_ERROR_DIET ;
@@ -259,13 +263,12 @@ main (int argc, char* argv[]) {
     sessionKey = getLastSessionKey(getppid());
 
     // DIET call : submit
-    if (false == sessionKey.empty()) {
+    if (!sessionKey.empty()) {
       printSessionKeyMessage();
       listJobs(sessionKey, machineId, job, jobOp);
     }
-
     if (jobOp.getOwner().size() == 0 && jobOp.getJobId().size() == 0  && jobOp.getNbCpu() <= 0
-       && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 && !jobOp.isListAll()) {
+        && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 && !jobOp.isListAll()) {
       std::cout << job << std::endl;
     } else {
       displayListJobs(job);
