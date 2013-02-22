@@ -8,7 +8,7 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <boost/filesystem.hpp>
-#include "tmsClientUtils.hpp"
+#include "tmsUtils.hpp"
 
 using namespace std;
 namespace bfs=boost::filesystem;
@@ -42,7 +42,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 	// first check if it's an automatic submission
 	// if yes, select a machine according to the load criterion
 	if(mmachineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-		mmachineId = findMachine(sessionKey, options_.getCriterion());
+    mmachineId = vishnu::findMachine(sessionKey, options_.getCriterion());
 	}
 
 	// now create and initialize the service profile
@@ -71,7 +71,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 	CpFileOptions copts;
 	copts.setIsRecursive(true) ;
 	copts.setTrCommand(0);
-	string inputFiles = sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
+  string inputFiles = vishnu::sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
 	options_.setFileParams(inputFiles);
 
 	::ecorecpp::serializer::serializer _ser;

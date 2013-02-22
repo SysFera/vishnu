@@ -26,6 +26,7 @@
 #include "DbFactory.hpp"
 #include "zhelpers.hpp"
 #include "CommServer.hpp"
+#include "tmsUtils.hpp"
 
 #include <signal.h>
 

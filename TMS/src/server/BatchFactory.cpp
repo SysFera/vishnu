@@ -9,7 +9,7 @@
 #include <string>
 #include <boost/format.hpp>
 #include <iostream>
-
+#include "tmsUtils.hpp"
 #include "SharedLibrary.hh"
 
 

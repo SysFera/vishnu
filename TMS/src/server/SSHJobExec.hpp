@@ -10,6 +10,7 @@
 
 #include <string>
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp"
 
 /**
  * \class SSHJobExec

@@ -9,6 +9,8 @@
 #include <boost/thread.hpp>
 #include "tmsTestUtils.hpp"
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp"
+
 using namespace std;
 namespace bp = boost::process;
 
@@ -510,7 +512,7 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     }
     
   }
-  vishnu::createTmpFile(scriptchar, content);
+  vishnu::saveInFile(scriptchar, content);
   std:string ret(scriptchar);
 
   return ret;

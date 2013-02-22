@@ -12,6 +12,7 @@
 #include <string>
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
+#include "tmsUtils.hpp"
 /**
  * \class JobServer
  * \brief JobServer class implementation

@@ -39,7 +39,7 @@ JobServer::JobServer(const SessionServer& sessionServer,
   if (msedConfig) {
     std::string value;
     msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, value);
-    mbatchType = convertToBatchType(value);
+    mbatchType = vishnu::convertToBatchType(value);
     if (mbatchType != DELTACLOUD) {
       msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, value);
       mbatchVersion = value;

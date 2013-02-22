@@ -28,6 +28,7 @@
 #include "JobProxy.hpp"
 #include "JobOutputProxy.hpp"
 #include "WorkProxy.hpp"
+#include "tmsUtils.hpp"
 
 /**
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
