@@ -11,6 +11,7 @@
 #include "utilVishnu.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilServer.hpp"
+#include "tmsUtils.hpp"
 
 using namespace vishnu;
 
@@ -197,7 +198,7 @@ TMSMapper::decodeSubmit(vector<unsigned int> separator, const string& msg){
 	l = ac->getWallTime();
 	if (l>0){
 		res += " -t ";
-		res += convertWallTimeToString(l);
+    res += vishnu::convertWallTimeToString(l);
 	}
 	l = ac->getMemory();
 	if (l>0){

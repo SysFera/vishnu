@@ -11,6 +11,7 @@
 
 #include "SessionServer.hpp"
 #include "ListQueues.hpp"
+#include "tmsUtils.hpp"
 
 /**
  * \class ListQueuesServer

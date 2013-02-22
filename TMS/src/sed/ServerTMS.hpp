@@ -17,6 +17,7 @@
 #include "MapperRegistry.hpp"
 #include "SeD.hpp"
 #include "SessionServer.hpp"
+#include "tmsUtils.hpp"
 
 class Database;
 

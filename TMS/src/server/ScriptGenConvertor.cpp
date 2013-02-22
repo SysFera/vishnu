@@ -11,6 +11,7 @@
 
 #include "ScriptGenConvertor.hpp"
 #include "UserException.hpp"
+#include "tmsUtils.hpp"
 
 namespace ba=boost::algorithm;
 

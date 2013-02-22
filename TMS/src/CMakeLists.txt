@@ -20,15 +20,20 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
 set(client_SRCS client/JobProxy.cpp
   client/JobOutputProxy.cpp
   client/WorkProxy.cpp
-  client/tmsClientUtils.cpp
-)
+  ${UTILVISHNU_SOURCE_DIR}/tmsClientUtils.cpp)
 
-set(cli_SRCS cli/displayer.cpp)
+set(cli_SRCS
+  cli/displayer.cpp
+  ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
 
 set(api_SRCS api/api_tms.cpp)
 set(api_HEADERS api/api_tms.hpp)
 
-add_library(vishnu-tms-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
+add_library(vishnu-tms-client
+  ${client_SRCS}
+  ${cli_SRCS}
+  ${api_SRCS})
+
 target_link_libraries(vishnu-tms-client
   ${Boost_LIBRARIES}
   emf4cpp-vishnu
@@ -63,7 +68,7 @@ if (COMPILE_SERVERS)
     ${USED_BATCH_INCLUDE_DIR}
     ${TESTVISHNU_SOURCE_DIR}/../third-party)
   
-  set(slave_SRCS slave/slave.cpp)
+  set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
     ${Boost_LIBRARIES}
@@ -98,6 +103,7 @@ if (COMPILE_SERVERS)
     server/Env.cpp
     server/WorkServer.cpp
     utils/SharedLibrary.cc
+    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
     )
  if(WIN32)
    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)

@@ -15,6 +15,7 @@
 #include "displayer.hpp"
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
+#include "tmsUtils.hpp"
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;

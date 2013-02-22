@@ -93,70 +93,72 @@ public:
       addTimeRequest("submitDate", submitDateStr, sqlRequest, "<=");
     }
 
-    //To check the job status
+    //Check the job status
     if (options->getStatus() != -1) {
-      //To check the job status options
-      checkJobStatus(options->getStatus());
-      //To add the number of the cpu to the request
-      addOptionRequest("job.status", convertToString(options->getStatus()), sqlRequest);
+      checkJobStatus(options->getStatus()); //check the job state options
+      addOptionRequest("job.status", convertToString(options->getStatus()), sqlRequest); //Append the amount of the cpu
     } else {
       if (options->getJobId().empty() && options->getMultipleStatus().empty()) {
-        sqlRequest.append(" and job.status < 5 ");
+        sqlRequest.append(" and job.status < "+vishnu::convertToString(vishnu::STATE_DOWNLOADED));
       }
     }
 
     if(!options->getMultipleStatus().empty()) {
-      bool error = false;
-      std::string invalidState;
       std::string multStat = options->getMultipleStatus();
       std::string::iterator iter;
       std::string::iterator beg = multStat.begin();
       std::string::iterator end = multStat.end();
       std::vector<std::string> vec;
-      for(iter=beg; iter!=end; ++iter) {
+      for (iter=beg; iter!=end; ++iter) {
         switch(*iter) {
-        case 'S':case '1':
-          vec.push_back("job.status=1");
+        case 'S':
+        case 48+vishnu::STATE_SUBMITTED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_SUBMITTED));
           break;
-        case 'Q':case '2':
-          vec.push_back("job.status=2");
+        case 'Q':
+        case 48+vishnu::STATE_QUEUED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_QUEUED));
           break;
-        case 'W':case '3':
-          vec.push_back("job.status=3");
+        case 'W':
+        case 48+vishnu::STATE_WAITING:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_WAITING));
           break;
-        case 'R':case '4':
-          vec.push_back("job.status=4");
+        case 'R':
+        case 48+vishnu::STATE_RUNNING:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_RUNNING));
           break;
-        case 'T':case '5':
-          vec.push_back("job.status=5");
+        case 'T':
+        case 48+vishnu::STATE_COMPLETED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_COMPLETED));
           break;
-        case 'C':case '6':
-          vec.push_back("job.status=6");
+        case 'C':
+        case 48+vishnu::STATE_CANCELLED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_CANCELLED));
           break;
-        case 'D':case '7':
-          vec.push_back("job.status=7");
+        case 'D':
+        case 48+vishnu::STATE_DOWNLOADED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_DOWNLOADED));
+          break;
+        case 'F':
+        case 48+vishnu::STATE_FAILED:
+          vec.push_back("job.status="+vishnu::convertToString(vishnu::STATE_FAILED));
           break;
         default:
-          error = true;
-          invalidState = *iter;
+          throw UserException(ERRCODE_INVALID_PARAM,
+                              (boost::format("Unknown job state: %1%")%*iter).str());
           break;
         }
-
-        if(error) {
-          throw UserException(ERRCODE_INVALID_PARAM, invalidState+" is an invalid state.");
-        }
       }
+      std::cout << "HEREE\n";
       std::vector<std::string>::iterator vec_iter;
-      if(!vec.empty()){
+      if (!vec.empty()) {
         sqlRequest.append(" and ("+*vec.begin());
-        for(vec_iter=vec.begin()+1; vec_iter!=vec.end(); ++vec_iter) {
-
+        for (vec_iter=vec.begin()+1; vec_iter!=vec.end(); ++vec_iter) {
           sqlRequest.append(" or "+*vec_iter);
         }
         sqlRequest.append(")");
       }
     }
-
     //To check the job priority
     if (options->getPriority() != -1) {
       //To check the job priority options
@@ -179,7 +181,6 @@ public:
 
       addOptionRequest("jobQueue", options->getQueue(), sqlRequest);
     }
-
     if(options->getWorkId() >= 0 ) {
       long long int wid = options->getWorkId()  ;
       addIntegerOptionRequest("workId", wid, sqlRequest);
@@ -194,13 +195,13 @@ public:
   TMS_Data::ListJobs*
   list() {
     std::string sqlListOfJobs =
-      "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, workId, jobPath,"
-      " outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, owner, jobQueue,"
-      " wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid "
-      "FROM job, vsession, users "
-      "WHERE vsession.numsessionid=job.vsession_numsessionid"
-      " AND vsession.users_numuserid=users.numuserid"
-      " AND job.status > 0 ";
+        "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, workId, jobPath,"
+        " outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, owner, jobQueue,"
+        " wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid "
+        "FROM job, vsession, users "
+        "WHERE vsession.numsessionid=job.vsession_numsessionid"
+        " AND vsession.users_numuserid=users.numuserid"
+        " AND job.status > 0 ";
 
     if(mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0) {
       sqlListOfJobs.append(" and job.submitMachineId='"+mmachineId+"'");
@@ -264,9 +265,9 @@ public:
         job->setNbCpus(convertToInt(*(++ii)));
         job->setJobWorkingDir(*(++ii));
         jobStatus = convertToInt(*(++ii));
-        if(jobStatus==4) {
+        if (jobStatus == vishnu::STATE_RUNNING) {
           nbRunningJobs++;
-        } else if(jobStatus >= 1 && jobStatus <= 3) {
+        } else if(jobStatus >= vishnu::STATE_SUBMITTED && jobStatus <= vishnu::STATE_WAITING) {
           nbWaitingJobs++;
         }
         job->setStatus(jobStatus);
@@ -302,16 +303,17 @@ public:
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
       boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType, batchVersion));
 
-      if(mlistObject != NULL) {
+      if (mlistObject != NULL) {
         std::vector<std::string>::const_iterator iter = ignoredIds.begin();
-        for(unsigned int i = 0; i < mlistObject->getJobs().size(); i++) {
-          if(iter!=ignoredIds.end()){
+        for (unsigned int i = 0; i < mlistObject->getJobs().size(); i++) {
+          if (iter != ignoredIds.end()){
             (mlistObject->getJobs().get(i))->setJobId(*iter);
             int state = batchServer->getJobState(*iter);
             ++iter;
-            if(state!=-1 && (mlistObject->getJobs().get(i))->getStatus()!=5 &&
-               (mlistObject->getJobs().get(i))->getStatus()!=6 &&
-               (mlistObject->getJobs().get(i))->getStatus()!=7) {
+            if (state != vishnu::STATE_UNDEFINED &&
+                (mlistObject->getJobs().get(i))->getStatus()!=vishnu::STATE_COMPLETED &&
+                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_CANCELLED &&
+                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_DOWNLOADED) {
               (mlistObject->getJobs().get(i))->setStatus(state);
             }
           }

@@ -64,7 +64,7 @@ SSHJobExec::SSHJobExec(const std::string& user,
   msubmitOptionsSerialized(submitOptionsSerialized)
 {
   if (batchVersion.empty()) {
-    mbatchVersion = "-";  // mbatchVersion must never be empty
+    mbatchVersion = "n/a";  // batchVersion MUST be not empty otherwise the call to the slave will failed
   } else {
     mbatchVersion = batchVersion;
   }

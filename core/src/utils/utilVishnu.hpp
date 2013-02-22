@@ -29,36 +29,7 @@
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 namespace bfs = boost::filesystem;
-
-/**
- * \enum BatchType
- * \brief The type of the Batch
- */
-typedef enum {
-  TORQUE = 0,/*!< For TORQUE batch type */
-  LOADLEVELER = 1,/*!< For LOADLEVELER batch type */
-  SLURM = 2, /*!< For SLURM batch type */
-  LSF = 3, /*!< For LSF batch type */
-  SGE = 4, /*!< For SGE batch type */
-  PBSPRO = 5, /*!< For PBS Pro batch type */
-  DELTACLOUD = 6, /*!< For DELTACLOUD batch type */
-  POSIX = 7, /*!< For POSIX batch type */
-  UNDEFINED = 8 /*!< IF batch type is not defined*/
-} BatchType;
-
-/**
- * \enum LoadType
- * \brief The type of the scheduling criteria
- */
-typedef enum {
-  NBWAITINGJOBS = 0,
-  NBJOBS = 1,
-  NBRUNNINGJOBS = 2
-} LoadType;
-
-static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
-static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
-typedef std::vector<std::string> ListStrings ;
+typedef std::vector<std::string> ListStrings;
 static const int UNDEFINED_VALUE=-1;
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
@@ -199,41 +170,6 @@ boostMoveFile(const std::string& src, const std::string& dest,  const std::strin
 bool
 isNumericalValue(const std::string& value);
 
-/**
- * \brief Function a given walltime into string
- * \param walltime The walltime to convert
- * \return the walltime converted to string
- */
-std::string
-convertWallTimeToString(const long& walltime);
-
-/**
- * \brief Function a given walltime into seconds
- *
- * walltime can be of the following format:
- * - it can start and/or end by '"'
- * - each value is separated by ':'
- * - possible values represent:
- *   - days
- *   - hours
- *   - minutes
- *   - seconds
- * in the form [days:][hours:][minutes:]seconds
- *  (element between square brackets are optional)
- *
- * \param walltime The walltime to convert
- * \return the walltime converted to seconds
- */
-long
-convertStringToWallTime(const std::string& walltime);
-
-/**
- * \brief Function to check the job status
- * \param status the status of the job
- * \return raises an exception on error
- */
-void
-checkJobStatus(const int& status);
 
 /**
  * \brief Return all the IP of the machines (IPV4, except 127.0.0.1)
@@ -257,13 +193,6 @@ setIP(std::string& name, std::string IP);
 bool
 isNotIP(std::string name);
 
-/**
- * \brief Function to check the job priority
- * \param priority the priority of the job
- * \return raises an exception on error
- */
-void
-checkJobPriority(const int& priority);
 
 /**
  * \brief Function to check the job nbNodesAndCpuPerNode
@@ -302,37 +231,6 @@ convertLocaltimeINUTCtime(const time_t& localtime);
  */
 long
 diffLocaltimeUTCtime();
-
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- * \param file_content The content of the file
- */
-void
-createTmpFile(char* fileName, const std::string& file_content);
-
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- * \param content The content of the file
- */
-void
-saveInFile(const std::string & fileName, const std::string& content);
-
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- * \param missingDesc The content of the file
- */
-void
-recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
-
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- */
-void
-createTmpFile(char* fileName);
 
 /**
  * \brief Function to delete file
@@ -404,52 +302,6 @@ checkEmptyString(const std::string& str,
                  const std::string& compMsg);
 
 /**
- * \brief Function to parse textual or file parameters
- * \param IN opt A structure containing the set of submitted options
- * \param OUT paramStr a string containing all of parameters
- * \param IN paramOptName the name of the option for a single parameter
- * \param IN paramsVector a vector of parameters
- * \return true if all parameters are syntaxicaly valid
- */
-int
-validateParameters(const boost::shared_ptr<Options> & opt,
-                   std::string & paramsStr,
-                   const std::string & paramOptName,
-                   const std::vector<std::string> & paramsVector);
-
-
-/**
- * \brief Function to list file containing in a directory
- * \param fileNames the names of files containing in the directory
- * \param dirPath The path of the directory
- * \return true on success and false if not
- * */
-bool
-appendFilesFromDir(std::ostringstream & fileNames, const std::string & dirPath);
-
-
-/**
- * \brief Function to get the list of output files related to a job
- * \param result : The Job Result
- * \param appendJobId : Determine whether or not append the job id before the files lists
- * \return The list of files
- * Throw exception on error
- * */
-std::string
-getResultFiles(const TMS_Data::JobResult & result,
-               const bool & appendJobId);
-
-
-
-/**
- * \brief Function to create a directory
- * \param dirPath The path of the directory
- * Throw exception on error
- * */
-void
-createOutputDir(std::string& dirPath);
-
-/**
  * \brief Function to create a unique file suffix with the current time
  * \return tha suffix created
  * */
@@ -480,15 +332,6 @@ parseVersion(const std::string& version);
  */
 void
 sourceFile(const std::string& filePath);
-
-
-/**
- * \brief Function to convert a string to a batch type
- * \param  batchName the name of the batch type
- * \return BatchType value of the corresponding string.
- */
-BatchType
-convertToBatchType(const std::string& batchName);
 
 } //END NAMESPACE
 
