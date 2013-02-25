@@ -11,6 +11,7 @@
 
 #include "utilIMS.hpp"
 #include "utilVishnu.hpp"
+#include "IMSServices.hpp"
 
 int
 vishnu::exportCommands(const std::string& sessionKey,
@@ -44,7 +45,7 @@ vishnu::getMetricCurrentValue(const std::string& sessionKey,
          UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_getMetricCurentValue@"+machineId;
+  string name = std::string(SERVICES_IMS[INT_GETMETRICCURENTVALUE]) + "@" + machineId;
   QueryProxy<IMS_Data::CurMetricOp, IMS_Data::ListMetric>
     query(op, sessionProxy, name, machineId);
 
@@ -73,7 +74,7 @@ vishnu::getMetricHistory(const std::string& sessionKey,
          UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_getMetricHistory";
+  string name = SERVICES_IMS[INT_GETMETRICHISTORY];
   //To check the metric value
   checkMetricHistoryValue(op.getType());
 
@@ -105,7 +106,7 @@ vishnu::getProcesses(const std::string& sessionKey,
          UserException, SystemException) {
 
   SessionProxy sessionProxy(sessionKey);
-  string name = "int_getProcesses";
+  string name = SERVICES_IMS[INT_GETPROCESSES];
   QueryProxy<IMS_Data::ProcessOp, IMS_Data::ListProcesses>
     query(op, sessionProxy, name);
 

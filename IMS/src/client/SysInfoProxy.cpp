@@ -5,6 +5,7 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "QueryProxy.hpp"
+#include "IMSServices.hpp"
 
 using namespace vishnu;
 
@@ -29,7 +30,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   std::string errorInfo;
 
 
-  std::string serviceName = "int_setSystemInfo";
+  std::string serviceName = SERVICES_IMS[INT_SETSYSTEMINFO];
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
@@ -60,7 +61,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -79,7 +80,7 @@ int
 SysInfoProxy::getSystemInfo(IMS_Data::ListSysInfo& listSysInfo,
                             const IMS_Data::SysInfoOp& options) {
 
-  std::string name = "int_getSystemInfo";
+  std::string name = SERVICES_IMS[INT_GETSYSTEMINFO];
   QueryProxy<IMS_Data::SysInfoOp, IMS_Data::ListSysInfo>
   query(options, msessionProxy, name);
 

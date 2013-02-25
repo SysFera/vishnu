@@ -2,6 +2,8 @@
 #include "UserException.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
+#include "IMSServices.hpp"
+
 using namespace vishnu;
 
 ObjectIdProxy::ObjectIdProxy(const SessionProxy& session): msessionProxy(session) {
@@ -13,7 +15,7 @@ ObjectIdProxy::~ObjectIdProxy() {
 void
 ObjectIdProxy::setUID(string fmt) {
   try {
-    defineCall("int_defineUserIdentifier", fmt);
+    defineCall(SERVICES_IMS[INT_DEFINEUSERIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad user format");
     throw (e);
@@ -23,7 +25,7 @@ ObjectIdProxy::setUID(string fmt) {
 void
 ObjectIdProxy::setMID(string fmt) {
   try {
-    defineCall("int_defineMachineIdentifier", fmt);
+    defineCall(SERVICES_IMS[INT_DEFINEMACHINEIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad machine format");
     throw (e);
@@ -33,7 +35,7 @@ ObjectIdProxy::setMID(string fmt) {
 void
 ObjectIdProxy::setTID(string fmt) {
   try {
-    defineCall ("int_defineJobIdentifier", fmt);
+    defineCall (SERVICES_IMS[INT_DEFINEJOBIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad task format");
     throw (e);
@@ -43,7 +45,7 @@ ObjectIdProxy::setTID(string fmt) {
 void
 ObjectIdProxy::setFID(string fmt) {
   try {
-    defineCall ("int_defineTransferIdentifier", fmt);
+    defineCall (SERVICES_IMS[INT_DEFINETRANSFERIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad file transfert format");
     throw (e);
@@ -53,7 +55,7 @@ ObjectIdProxy::setFID(string fmt) {
 void
 ObjectIdProxy::setAID(string fmt) {
   try {
-    defineCall ("int_defineAuthIdentifier", fmt);
+    defineCall (SERVICES_IMS[INT_DEFINEAUTHIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad authentication format");
     throw (e);
@@ -63,7 +65,7 @@ ObjectIdProxy::setAID(string fmt) {
 void
 ObjectIdProxy::setWID(string fmt) {
   try {
-    defineCall ("int_defineWorkIdentifier", fmt);
+    defineCall (SERVICES_IMS[INT_DEFINEWORKIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad authentication format");
     throw (e);
@@ -99,7 +101,7 @@ ObjectIdProxy::defineCall(string name, string fmt) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);

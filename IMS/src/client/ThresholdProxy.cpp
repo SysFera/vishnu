@@ -5,6 +5,7 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "QueryProxy.hpp"
+#include "IMSServices.hpp"
 
 using namespace vishnu;
 
@@ -28,7 +29,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
   std::string sessionKey;
   std::string errorInfo;
 
-  std::string serviceName = "int_setSystemThreshold";
+  std::string serviceName = SERVICES_IMS[INT_SETSYSTEMTHRESHOLD];
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
@@ -78,7 +79,7 @@ int
 ThresholdProxy::getSystemThreshold(IMS_Data::ListThreshold& listSysThreshold,
                    const IMS_Data::ThresholdOp& options) {
 
-  std::string name = "int_getSystemThreshold";
+  std::string name = SERVICES_IMS[INT_GETSYSTEMTHRESHOLD];
   QueryProxy<IMS_Data::ThresholdOp, IMS_Data::ListThreshold>
   query(options, msessionProxy, name);
 
