@@ -4,6 +4,8 @@
 #include "FileProxyFactory.hpp"
 #include "SessionProxy.hpp"
 #include "utilClient.hpp"
+#include "FMSServices.hpp"
+
 using namespace FMS_Data;
 using namespace UMS_Data;
 using namespace std;
@@ -71,7 +73,7 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
   diet_profile_t* profile = NULL;
 
   std::string errorInfo = "";
-  std::string serviceName = "FileTransferStop";
+  std::string serviceName = SERVICES_FMS[FILETRANSFERSTOP];
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
 
@@ -102,7 +104,7 @@ int FileTransferProxy::stopThread(const StopTransferOptions& options) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

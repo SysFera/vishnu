@@ -30,6 +30,7 @@
 #include "FMSVishnuException.hpp"
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
+#include "FMSServices.hpp"
 
 using namespace std;
 using namespace FMS_Data;
@@ -106,7 +107,8 @@ LocalFileProxy::transferFile(const string& dest,
 
   std::string sessionKey=this->getSession().getSessionKey();
 
-  bool isAsyncTransfer = (serviceName.compare("FileCopyAsync") == 0 || serviceName.compare("FileMoveAsync") == 0);
+  bool isAsyncTransfer = (serviceName == SERVICES_FMS[FILECOPYASYNC]
+                          || serviceName == SERVICES_FMS[FILEMOVEASYNC]);
   if(!isAsyncTransfer) {
     profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
   } else {
@@ -166,14 +168,14 @@ int
 LocalFileProxy::cp(const string& dest,
                    const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
-  return transferFile(dest, options, "FileCopy", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[FILECOPY], fileTransfer);
 
 }
 
 int
 LocalFileProxy::mv(const string& dest, const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
-  return  transferFile(dest, options, "FileMove", fileTransfer);
+  return  transferFile(dest, options, SERVICES_FMS[FILEMOVE], fileTransfer);
 
 }
 
@@ -181,12 +183,12 @@ int
 LocalFileProxy::cpAsync(const std::string& dest,
                         const CpFileOptions& options,
                         FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "FileCopyAsync", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[FILECOPYASYNC], fileTransfer);
 }
 
 int
 LocalFileProxy::mvAsync(const std::string& dest,
                         const CpFileOptions& options,
                         FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "FileMoveAsync", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[FILEMOVEASYNC], fileTransfer);
 }

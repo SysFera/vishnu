@@ -110,65 +110,65 @@ ServerFMS::initMap() {
   int (*functionPtr)(diet_profile_t*);
 
   functionPtr = solveTransferFile<File::copy,File::async>;
-  mcb[SERVICES_FMS[0]] = functionPtr;
+  mcb[SERVICES_FMS[FILECOPYASYNC]] = functionPtr;
 
   functionPtr = solveTransferFile<File::move,File::async>;
-  mcb[SERVICES_FMS[1]] = functionPtr;
+  mcb[SERVICES_FMS[FILEMOVEASYNC]] = functionPtr;
 
   functionPtr = solveTransferFile<File::move,File::sync>;
-  mcb[SERVICES_FMS[2]] = functionPtr;
+  mcb[SERVICES_FMS[FILEMOVE]] = functionPtr;
 
   functionPtr = solveTransferFile<File::copy,File::sync>;
-  mcb[SERVICES_FMS[3]] = functionPtr;
+  mcb[SERVICES_FMS[FILECOPY]] = functionPtr;
 
   functionPtr = get_infos;
-  mcb[SERVICES_FMS[4]] = functionPtr;
+  mcb[SERVICES_FMS[FILEGETINFOS]] = functionPtr;
 
   functionPtr = solveChangeGroup;
-  mcb[SERVICES_FMS[5]] = functionPtr;
+  mcb[SERVICES_FMS[FILECHANGEGROUP]] = functionPtr;
 
   functionPtr = solveChangeMode;
-  mcb[SERVICES_FMS[6]] = functionPtr;
+  mcb[SERVICES_FMS[FILECHANGEMODE]] = functionPtr;
 
   functionPtr = headFile;
-  mcb[SERVICES_FMS[7]] = functionPtr;
+  mcb[SERVICES_FMS[FILEHEAD]] = functionPtr;
 
   functionPtr = contentFile;
-  mcb[SERVICES_FMS[8]] = functionPtr;
+  mcb[SERVICES_FMS[FILECONTENT]] = functionPtr;
 
   functionPtr = solveCreateFile;
-  mcb[SERVICES_FMS[9]] = functionPtr;
+  mcb[SERVICES_FMS[FILECREATE]] = functionPtr;
 
   functionPtr = solveCreateDir;
-  mcb[SERVICES_FMS[10]] = functionPtr;
+  mcb[SERVICES_FMS[DIRCREATE]] = functionPtr;
 
   functionPtr = solveRemoveFile;
-  mcb[SERVICES_FMS[11]] = functionPtr;
+  mcb[SERVICES_FMS[FILEREMOVE]] = functionPtr;
 
   functionPtr = solveRemoveDir;
-  mcb[SERVICES_FMS[12]] = functionPtr;
+  mcb[SERVICES_FMS[DIRREMOVE]] = functionPtr;
 
   functionPtr = tailFile;
-  mcb[SERVICES_FMS[13]] = functionPtr;
+  mcb[SERVICES_FMS[FILETAIL]] = functionPtr;
 
   functionPtr = solveListDir;
-  mcb[SERVICES_FMS[14]] = functionPtr;
+  mcb[SERVICES_FMS[DIRLIST]] = functionPtr;
 
   functionPtr = solveTransferRemoteFile<File::copy,File::async>;
-  mcb[SERVICES_FMS[15]] = functionPtr;
+  mcb[SERVICES_FMS[REMOTEFILECOPYASYNC]] = functionPtr;
 
   functionPtr = solveTransferRemoteFile<File::move,File::async>;
-  mcb[SERVICES_FMS[16]] = functionPtr;
+  mcb[SERVICES_FMS[REMOTEFILEMOVEASYNC]] = functionPtr;
 
   functionPtr = solveTransferRemoteFile<File::copy,File::sync>;
-  mcb[SERVICES_FMS[17]] = functionPtr;
+  mcb[SERVICES_FMS[REMOTEFILECOPY]] = functionPtr;
 
   functionPtr = solveTransferRemoteFile<File::move,File::sync>;
-  mcb[SERVICES_FMS[18]] = functionPtr;
+  mcb[SERVICES_FMS[REMOTEFILEMOVE]] = functionPtr;
 
   functionPtr = solveGetListOfFileTransfers;
-  mcb[SERVICES_FMS[19]] = functionPtr;
+  mcb[SERVICES_FMS[FILETRANSFERSLIST]] = functionPtr;
 
   functionPtr = solveFileTransferStop;
-  mcb[SERVICES_FMS[20]] = functionPtr;
+  mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
 }
