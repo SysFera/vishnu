@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "LocalAccountProxy.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
@@ -36,10 +37,10 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   std::string msg = "call of function diet_string_set is rejected ";
 
   if(isNewLocalAccount) {
-    profile = diet_profile_alloc("localAccountCreate", 1, 1, 3);
+    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTCREATE], 1, 1, 3);
   }
   else {
-    profile = diet_profile_alloc("localAccountUpdate", 1, 1, 2);
+    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTUPDATE], 1, 1, 2);
   }
 
   sessionKey = msessionProxy.getSessionKey();
@@ -84,7 +85,7 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -100,8 +101,8 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
  * \fn  int add()
  * \return raises an exception on error
  */
-int LocalAccountProxy::add()
-{
+int
+LocalAccountProxy::add() {
   return _addLocalAccountInformation();
 }
 
@@ -120,8 +121,8 @@ int LocalAccountProxy::update()
  * \fn  int deleteLocalAccount()
  * \return raises an exception on error
  */
-int LocalAccountProxy::deleteLocalAccount()
-{
+int
+LocalAccountProxy::deleteLocalAccount() {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userId;
@@ -129,7 +130,7 @@ int LocalAccountProxy::deleteLocalAccount()
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("localAccountDelete", 2, 2, 3);
+  profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTDELETE], 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
   userId = mlocalAccount.getUserId();
   machineId = mlocalAccount.getMachineId();
@@ -158,7 +159,7 @@ int LocalAccountProxy::deleteLocalAccount()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -175,8 +176,8 @@ int LocalAccountProxy::deleteLocalAccount()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy LocalAccountProxy::getSessionProxy() const
-{
+SessionProxy
+LocalAccountProxy::getSessionProxy() const {
   return msessionProxy;
 }
 
@@ -186,7 +187,8 @@ SessionProxy LocalAccountProxy::getSessionProxy() const
  * \return the VISHNU ssh public Key
  * \return raises an exception on error
  */
-std::string LocalAccountProxy::getSshPublicKey() const {
+std::string
+LocalAccountProxy::getSshPublicKey() const {
   return msshPublicKey;
 }
 
@@ -194,6 +196,5 @@ std::string LocalAccountProxy::getSshPublicKey() const {
  * \fn ~LocalAccountProxy()
  * \brief Destructor, raises an exception on error
  */
-LocalAccountProxy::~LocalAccountProxy()
-{
+LocalAccountProxy::~LocalAccountProxy() {
 }

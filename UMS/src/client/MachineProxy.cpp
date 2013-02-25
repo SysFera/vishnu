@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "MachineProxy.hpp"
 #include "utilsClient.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn MachineProxy(const UMS_Data::Machine& machine,
@@ -34,7 +35,7 @@ MachineProxy::add() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc("machineCreate", 1, 1, 3);
+  addProfile = diet_profile_alloc(SERVICES_UMS[MACHINECREATE], 1, 1, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -71,7 +72,7 @@ MachineProxy::add() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -104,7 +105,7 @@ MachineProxy::update() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  updateProfile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+  updateProfile = diet_profile_alloc(SERVICES_UMS[MACHINEUPDATE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -136,7 +137,7 @@ MachineProxy::update() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -160,7 +161,7 @@ MachineProxy::deleteMachine() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  deleteProfile = diet_profile_alloc("machineDelete", 1, 1, 2);
+  deleteProfile = diet_profile_alloc(SERVICES_UMS[MACHINEDELETE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   machineId = mmachine.getMachineId();
 
@@ -184,7 +185,7 @@ MachineProxy::deleteMachine() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

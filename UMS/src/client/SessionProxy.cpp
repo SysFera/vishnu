@@ -17,6 +17,7 @@
 #include "utilsClient.hpp"
 #include "vishnu_version.hpp"
 #include "utilVishnu.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn explicit SessionProxy(const std::string& sessionKey)
@@ -159,9 +160,9 @@ SessionProxy::_connect(const UserProxy& user, bool connect,
     ::ecorecpp::serializer::serializer _ser;
     //To serialize the options object in to optionsToString
     optionsToString =  _ser.serialize_str(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
-    profile = diet_profile_alloc("sessionConnect", 5, 5, 7);
+    profile = diet_profile_alloc(SERVICES_UMS[SESSIONCONNECT], 5, 5, 7);
   } else {
-    profile = diet_profile_alloc("sessionReconnect", 5, 5, 7);
+    profile = diet_profile_alloc(SERVICES_UMS[SESSIONRECONNECT], 5, 5, 7);
   }
 
   //IN Parameters
@@ -212,7 +213,7 @@ SessionProxy::_connect(const UserProxy& user, bool connect,
       raiseDietMsgException(msg);
     }
   } else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -274,7 +275,7 @@ SessionProxy::close() {
 
   std::string sessionKey =  msessionKey;
 
-  diet_profile_t* profile = diet_profile_alloc("sessionClose", 0, 0, 1);
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[SESSIONCLOSE], 0, 0, 1);
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
@@ -290,7 +291,7 @@ SessionProxy::close() {
       raiseDietMsgException(msg);
     }
   } else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

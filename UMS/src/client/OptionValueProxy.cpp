@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "OptionValueProxy.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn OptionValueProxy(const UMS_Data::OptionValue& optionValue,
@@ -26,8 +27,8 @@ OptionValueProxy::OptionValueProxy(const UMS_Data::OptionValue& optionValue, con
  * \param defaultValue to select the call of configureOption() or configureOption() function
  * \return raises an exception on error
  */
-int OptionValueProxy::setOptionValue(bool defaultValue)
-{
+int
+OptionValueProxy::setOptionValue(bool defaultValue) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string optionValueToString;
@@ -35,10 +36,10 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
   std::string msg = "call of function diet_string_set is rejected ";
 
   if(defaultValue) {
-    profile = diet_profile_alloc("optionValueSetDefault", 1, 1, 2);
+    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESETDEFAULT], 1, 1, 2);
   }
   else {
-    profile = diet_profile_alloc("optionValueSet", 1, 1, 2);
+    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESET], 1, 1, 2);
   }
   sessionKey = msessionProxy.getSessionKey();
 
@@ -66,7 +67,7 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -82,8 +83,8 @@ int OptionValueProxy::setOptionValue(bool defaultValue)
  * \fn  int configureOption()
  * \return raises an exception on error
  */
-int OptionValueProxy::configureOption()
-{
+int
+OptionValueProxy::configureOption() {
   return setOptionValue(false);
 }
 
@@ -92,8 +93,8 @@ int OptionValueProxy::configureOption()
  * \fn  int configureDefaultOption()
  * \return raises an exception on error
  */
-int OptionValueProxy::configureDefaultOption()
-{
+int
+OptionValueProxy::configureDefaultOption() {
   return setOptionValue();
 }
 
@@ -103,8 +104,8 @@ int OptionValueProxy::configureDefaultOption()
  * \return OptionValue object encapsulates the information of the machine
  * \return raises an exception on error
  */
-UMS_Data::OptionValue OptionValueProxy::getData()
-{
+UMS_Data::OptionValue
+OptionValueProxy::getData() {
   return moptionValue;
 }
 
@@ -114,8 +115,8 @@ UMS_Data::OptionValue OptionValueProxy::getData()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy OptionValueProxy::getSessionProxy()
-{
+SessionProxy
+OptionValueProxy::getSessionProxy() {
   return msessionProxy;
 }
 
