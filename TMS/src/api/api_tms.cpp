@@ -151,8 +151,6 @@ vishnu::listJobs(const std::string& sessionKey,
                  ListJobs& listOfJobs,
                  const ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
-<<<<<<< HEAD
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -177,7 +175,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listOfJobs.setNbWaitingJobs(0);
   for (int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getListOfJobs@";
+    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
     serviceName.append(machine->getMachineId());
     SessionProxy sessionProxy(sessionKey);
 
@@ -212,71 +210,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     }
   }
   return 0;
-=======
-	checkEmptyString(sessionKey, "The session key");
-	checkEmptyString(machineId, "The machine id");
-
-	UMS_Data::ListMachines machines;
-	UMS_Data::Machine_ptr machine;
-	if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) == 0) {
-		// First list all machines where we have a local account
-		UMS_Data::ListMachineOptions mopts;
-		mopts.setListAllMachine(false);
-		mopts.setMachineId("");
-		listMachines(sessionKey, machines, mopts) ;
-	} else {
-		// Here the list of machine will contain only a single machine
-		machine = new UMS_Data::Machine();
-		machine->setMachineId(machineId);
-		machines.getMachines().push_back(machine);
-	}
-
-	// Now iterate through all the machines to list jobs according to the query filter
-    listOfJobs.setNbJobs(0);
-    listOfJobs.setNbRunningJobs(0);
-    listOfJobs.setNbWaitingJobs(0);
-	for(int i=0; i< machines.getMachines().size(); i++) {
-	  machine = machines.getMachines().get(i) ;
-	  std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
-	  serviceName.append(machine->getMachineId());
-	  SessionProxy sessionProxy(sessionKey);
-
-	  //To check the job status options
-	  checkJobStatus(options.getStatus());
-	  //To check the job priority options
-	  checkJobPriority(options.getPriority());
-
-	  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-	  query(options, sessionProxy, serviceName, machine->getMachineId());
-
-	  TMS_Data::ListJobs* listJobs_ptr = NULL;
-	  try {
-	    listJobs_ptr = query.list();
-	  } catch(...) {
-		// This means the machine is not active
-		// or we don't have a local account on it
-		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
-			throw ;
-		} else {
-			continue ;
-		}
-	  }
-	  if(listJobs_ptr != NULL) {
-	    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-	    for(unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
-	      TMS_Data::Job_ptr job = ecoreFactory->createJob();
-          //To copy the content and not the pointer
-	      *job = *listJobs_ptr->getJobs().get(j);
-	      listOfJobs.getJobs().push_back(job);
-	    }
-	      listOfJobs.setNbJobs(listOfJobs.getNbJobs()+listJobs_ptr->getJobs().size());
-	      listOfJobs.setNbRunningJobs(listOfJobs.getNbRunningJobs()+listJobs_ptr->getNbRunningJobs());
-	      listOfJobs.setNbWaitingJobs(listOfJobs.getNbWaitingJobs()+listJobs_ptr->getNbWaitingJobs());
-	      delete listJobs_ptr;
-	  }
-	}
-	return 0;
->>>>>>> use service names defined in TMSServices.hpp
 }
 
 /**
@@ -293,8 +226,6 @@ vishnu::getJobProgress(const std::string& sessionKey,
                        ListProgression& listOfProgress,
                        const ProgressOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
-<<<<<<< HEAD
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -318,7 +249,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listOfProgress.setNbJobs(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getJobsProgression@";
+    std::string serviceName = std::string(SERVICES_TMS[GETJOBSPROGRESSION]) + "@";
     serviceName.append(machine->getMachineId());
 
     SessionProxy sessionProxy(sessionKey);
@@ -352,65 +283,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   }
 
   return 0;
-=======
-	checkEmptyString(sessionKey, "The session key");
-	checkEmptyString(machineId, "The machine id");
-
-	UMS_Data::ListMachines machines;
-	UMS_Data::Machine_ptr machine;
-
-	if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) == 0) {
-		// First list all machines where we have a local account
-		UMS_Data::ListMachineOptions mopts;
-		mopts.setListAllMachine(false);
-		mopts.setMachineId("");
-		listMachines(sessionKey, machines, mopts) ;
-	} else {
-		// Here the list of machine will contain only a single machine
-		machine = new UMS_Data::Machine();
-		machine->setMachineId(machineId);
-		machines.getMachines().push_back(machine);
-	}
-
-	// Now iterate through all the machines to list queues according to the query filter
-	listOfProgress.setNbJobs(0);
-	for(int i=0; i< machines.getMachines().size(); i++) {
-	  machine = machines.getMachines().get(i) ;
-	  std::string serviceName = std::string(SERVICES_TMS[GETJOBSPROGRESSION]) + "@";
-	  serviceName.append(machine->getMachineId());
-
-	  SessionProxy sessionProxy(sessionKey);
-	  QueryProxy<TMS_Data::ProgressOptions, TMS_Data::ListProgression>
-	  query(options, sessionProxy, serviceName, machine->getMachineId());
-
-	  TMS_Data::ListProgression* listProgression_ptr = NULL ;
-	  try {
-		  listProgression_ptr = query.list();
-	  } catch(...) {
-		// This means the machine is not active
-		// or we don't have a local account on it
-		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
-			throw ;
-		} else {
-			continue ;
-		}
-	  }
-
-	  if(listProgression_ptr != NULL) {
-		TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listProgression_ptr->getProgress().size(); i++) {
-			TMS_Data::Progression_ptr progression = ecoreFactory->createProgression();
-			//To copy the content and not the pointer
-			*progression = *listProgression_ptr->getProgress().get(i);
-			listOfProgress.getProgress().push_back(progression);
-		}
-		listOfProgress.setNbJobs(listOfProgress.getNbJobs()+listProgression_ptr->getProgress().size());
-		delete listProgression_ptr;
-	  }
-	}
-
-	return 0;
->>>>>>> use service names defined in TMSServices.hpp
 }
 
 /**
@@ -427,8 +299,6 @@ vishnu::listQueues(const std::string& sessionKey,
                    ListQueues& listofQueues,
                    const std::string& queueName)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
-<<<<<<< HEAD
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -451,7 +321,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listofQueues.setNbQueues(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getListOfQueues@";
+    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFQUEUES]) + "@";
     serviceName.append(machine->getMachineId());
 
     SessionProxy sessionProxy(sessionKey);
@@ -484,64 +354,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     }
   }
   return 0;
-=======
-	checkEmptyString(sessionKey, "The session key");
-	checkEmptyString(machineId, "The machine id");
-
-	UMS_Data::ListMachines machines;
-	UMS_Data::Machine_ptr machine;
-
-	if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) == 0) {
-		// First list all the machines where we have a local account
-		UMS_Data::ListMachineOptions mopts;
-		mopts.setListAllMachine(false);
-		mopts.setMachineId("");
-		listMachines(sessionKey, machines, mopts) ;
-	} else {
-		machine = new UMS_Data::Machine();
-		machine->setMachineId(machineId);
-		machines.getMachines().push_back(machine);
-	}
-
-	// Now iterate through all the machines to list queues according to the query filter
-	listofQueues.setNbQueues(0);
-	for(int i=0; i< machines.getMachines().size(); i++) {
-	  machine = machines.getMachines().get(i) ;
-	  std::string serviceName = std::string(SERVICES_TMS[GETLISTOFQUEUES]) + "@";
-	  serviceName.append(machine->getMachineId());
-
-	  SessionProxy sessionProxy(sessionKey);
-	  QueryProxy<std::string, TMS_Data::ListQueues>
-	  query(queueName, sessionProxy, serviceName, machine->getMachineId());
-
-	  TMS_Data::ListQueues* listQueues_ptr = NULL ;
-	  try {
-		  listQueues_ptr = query.list();
-	  } catch(...) {
-		// This means the machine is not active
-		// or we don't have a local account on it
-		if(machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD) != 0) {
-			throw ;
-		} else {
-			continue ;
-		}
-	  }
-
-	  if(listQueues_ptr != NULL) {
-	    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-		for(unsigned int i = 0; i < listQueues_ptr->getQueues().size(); i++) {
-		  TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
-		  //To copy the content and not the pointer
-		  *queue = *listQueues_ptr->getQueues().get(i);
-		  listofQueues.getQueues().push_back(queue);
-		}
-		listofQueues.setNbQueues(listofQueues.getNbQueues()+listQueues_ptr->getQueues().size());
-		delete listQueues_ptr;
-	  }
-	}
-	return 0;
->>>>>>> use service names defined in TMSServices.hpp
-
 }
 
 /**

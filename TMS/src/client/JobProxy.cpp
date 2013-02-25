@@ -9,7 +9,6 @@
 #include <boost/algorithm/string/find.hpp>
 #include <boost/filesystem.hpp>
 #include "tmsUtils.hpp"
-#include "tmsClientUtils.hpp"
 #include "TMSServices.hpp"
 
 using namespace std;
@@ -36,104 +35,14 @@ JobProxy::JobProxy(const SessionProxy& session,
  */
 int
 JobProxy::submitJob(const std::string& scriptContent,
-<<<<<<< HEAD
-		const TMS_Data::SubmitOptions& options) {
-
-	string sessionKey = msessionProxy.getSessionKey().c_str();
-	TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
-
-	// first check if it's an automatic submission
-	// if yes, select a machine according to the load criterion
-	if(mmachineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-    mmachineId = vishnu::findMachine(sessionKey, options_.getCriterion());
-	}
-
-	// now create and initialize the service profile
-	string serviceName = "jobSubmit@";
-	serviceName.append(mmachineId);
-	diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
-	std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-
-	//IN Parameters
-	if (diet_string_set(submitJobProfile,0, sessionKey.c_str())) {
-		msgErrorDiet += "with sessionKey parameter "+sessionKey;
-		raiseDietMsgException(msgErrorDiet);
-	}
-
-	if (diet_string_set(submitJobProfile,1, mmachineId.c_str())) {
-		msgErrorDiet += "with machineId parameter "+mmachineId;
-		raiseDietMsgException(msgErrorDiet);
-	}
-
-	if (diet_string_set(submitJobProfile,2, scriptContent.c_str())) {
-		msgErrorDiet += "with optionsInString parameter "+scriptContent;
-		raiseDietMsgException(msgErrorDiet);
-	}
-
-	// Send input files, if there is any one
-	CpFileOptions copts;
-	copts.setIsRecursive(true) ;
-	copts.setTrCommand(0);
-  string inputFiles = vishnu::sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
-	options_.setFileParams(inputFiles);
-
-	::ecorecpp::serializer::serializer _ser;
-	string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
-
-	if (diet_string_set(submitJobProfile,3, optionsToString.c_str())) {
-		msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
-		raiseDietMsgException(msgErrorDiet);
-	}
-
-	_ser.resetSerializer();
-	string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str();
-
-	if (diet_string_set(submitJobProfile,4, jobToString.c_str())) {
-		msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-		raiseDietMsgException(msgErrorDiet);
-	}
-
-	//OUT Parameters
-	diet_string_set(submitJobProfile,5);
-	diet_string_set(submitJobProfile,6);
-
-        // FIXME: do it before setting parameter 3
-        std::string cresultMsg;
-        std::string errorInfo;
-	if(!diet_call(submitJobProfile)) {
-		if(diet_string_get(submitJobProfile,5, cresultMsg)){
-			msgErrorDiet += " by receiving User serialized  message";
-			raiseDietMsgException(msgErrorDiet);
-		}
-		if(diet_string_get(submitJobProfile,6, errorInfo)){
-			msgErrorDiet += " by receiving errorInfo message";
-			raiseDietMsgException(msgErrorDiet);
-		}
-	} else {
-		raiseDietMsgException("DIET call failure");
-	}
-
-	/*To raise a vishnu exception if the receiving message is not empty*/
-	raiseExceptionIfNotEmptyMsg(errorInfo);
-
-	TMS_Data::Job_ptr job_ptr = NULL;
-	string serializedJob = string(cresultMsg) ;
-	parseEmfObject(serializedJob, job_ptr);
-	mjob = *job_ptr;
-	delete job_ptr;
-
-	diet_profile_free(submitJobProfile);
-	return 0;
-=======
                     const TMS_Data::SubmitOptions& options) {
-
   string sessionKey = msessionProxy.getSessionKey().c_str();
   TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
 
   // first check if it's an automatic submission
   // if yes, select a machine according to the load criterion
   if(mmachineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
-    mmachineId = findMachine(sessionKey, options_.getCriterion());
+    mmachineId = vishnu::findMachine(sessionKey, options_.getCriterion());
   }
 
   // now create and initialize the service profile
@@ -162,7 +71,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
-  string inputFiles = sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
+  string inputFiles = vishnu::sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
   options_.setFileParams(inputFiles);
 
   ::ecorecpp::serializer::serializer _ser;
@@ -212,7 +121,6 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   diet_profile_free(submitJobProfile);
   return 0;
->>>>>>> use service names defined in TMSServices.hpp
 }
 
 /**
