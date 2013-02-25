@@ -124,7 +124,7 @@ int JobServer::submitJob(const std::string& scriptContent,
         optionsref.setFileParams(fileparams);
       }
     } else {
-      scriptPath = "/tmp/" + bfs::unique_path("job_script%%%%%%").string();
+      scriptPath = boost::filesystem::temp_directory_path().string()+"/"+ bfs::unique_path("job_script%%%%%%").string();
       std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
       workingDir = (!optionsref.getWorkingDir().size())? home : optionsref.getWorkingDir() ;
     }
