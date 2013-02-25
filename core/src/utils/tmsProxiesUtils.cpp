@@ -1,14 +1,11 @@
 /*
- * tmsClientUtils.cpp
+ * tmsProxiesUtils.cpp
  *
  *  Created on: 23 juil. 2012
  *      Author: Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
  */
 
 #include "tmsUtils.hpp"
-#include "api_ums.hpp"
-#include "api_fms.hpp"
-#include "api_tms.hpp"
 #include "TMS_Data.hpp"
 #include "utilVishnu.hpp"
 #include "constants.hpp"
