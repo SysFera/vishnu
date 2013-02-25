@@ -10,9 +10,32 @@
 
 
 /**
- * \brief Number of service in FMS
+ * \brief FMS services enumeration
  */
-static const unsigned int NB_SRV_FMS = 21;
+typedef enum {
+  FILECOPYASYNC = 0,
+  FILEMOVEASYNC,
+  FILEMOVE,
+  FILECOPY,
+  FILEGETINFOS,
+  FILECHANGEGROUP,
+  FILECHANGEMODE,
+  FILEHEAD,
+  FILECONTENT,
+  FILECREATE,
+  DIRCREATE,
+  FILEREMOVE,
+  DIRREMOVE,
+  FILETAIL,
+  DIRLIST,
+  REMOTEFILECOPYASYNC,
+  REMOTEFILEMOVEASYNC,
+  REMOTEFILECOPY,
+  REMOTEFILEMOVE,
+  FILETRANSFERSLIST,
+  FILETRANSFERSTOP,
+  NB_SRV_FMS  // MUST always be the last
+} fms_service_t;
 
 static const char* SERVICES_FMS[NB_SRV_FMS] = {
   "FileCopyAsync",  // 0
