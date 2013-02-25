@@ -12,6 +12,7 @@
 #include "SystemException.hpp"
 #include "UtilsProxy.hpp"
 #include "utilsClient.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn  UtilsProxy()
@@ -93,7 +94,7 @@ UtilsProxy::restore() {
     if (strcmp(tmp, "")==0){
       break;
     }
-    profile = diet_profile_alloc("restore", 0, 0, 1);
+    profile = diet_profile_alloc(SERVICES_UMS[RESTORE], 0, 0, 1);
     //IN Parameters
     diet_string_set(profile,0, tmp);
     //OUT Parameters
@@ -101,10 +102,10 @@ UtilsProxy::restore() {
     delete [] tmp;
     if(!diet_call(profile)){
       if(diet_string_get(profile,1, errorInfo)) {
-        raiseDietMsgException("DIET call failure");
+        raiseDietMsgException("VISHNU call failure");
       }
     } else {
-      raiseDietMsgException("DIET call failure");
+      raiseDietMsgException("VISHNU call failure");
     }
     raiseExceptionIfNotEmptyMsg(errorInfo);
   }

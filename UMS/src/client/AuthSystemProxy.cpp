@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "AuthSystemProxy.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \param authSystem The object which encapsulates the user aythentication system
@@ -32,7 +33,7 @@ AuthSystemProxy::add() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("authSystemCreate", 1, 1, 3);
+  profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMCREATE], 1, 1, 3);
 
   sessionKey = msessionProxy.getSessionKey();
 
@@ -67,7 +68,7 @@ AuthSystemProxy::add() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -99,7 +100,7 @@ AuthSystemProxy::update() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("authSystemUpdate", 1, 1, 2);
+  profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMUPDATE], 1, 1, 2);
 
   sessionKey = msessionProxy.getSessionKey();
 
@@ -128,7 +129,7 @@ AuthSystemProxy::update() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -152,7 +153,7 @@ AuthSystemProxy::deleteAuthSystem()
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("authSystemDelete", 1, 1, 2);
+  profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMDELETE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   sysId = mauthSystem.getAuthSystemId();
 
@@ -176,7 +177,7 @@ AuthSystemProxy::deleteAuthSystem()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
