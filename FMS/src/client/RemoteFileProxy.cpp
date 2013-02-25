@@ -44,13 +44,14 @@ RemoteFileProxy::~RemoteFileProxy() {
 }
 
 /* Returns true if the file informations are up to date. */
-bool RemoteFileProxy::isUpToDate() const {
+bool
+RemoteFileProxy::isUpToDate() const {
   return upToDate;
 }
 
 /* Get the informations about this remote file. Call the DIET service. */
-void RemoteFileProxy::getInfos() const {
-
+void
+RemoteFileProxy::getInfos() const {
   diet_profile_t* getInfosProfile;
   std::string fileStatInString = "";
   std::string errMsg = "";
@@ -117,7 +118,8 @@ void RemoteFileProxy::getInfos() const {
 }
 
 /* Copy operator. */
-RemoteFileProxy& RemoteFileProxy::operator=(const RemoteFileProxy& file) {
+RemoteFileProxy&
+RemoteFileProxy::operator=(const RemoteFileProxy& file) {
   FileProxy::operator=(file);
   localUser = file.localUser;
   upToDate = file.isUpToDate();
@@ -128,7 +130,8 @@ RemoteFileProxy& RemoteFileProxy::operator=(const RemoteFileProxy& file) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::chgrp(const string& group) {
+int
+RemoteFileProxy::chgrp(const string& group) {
   diet_profile_t* chgrpProfile;
   std::string errMsg = "";
   std::string serviceName("FileChangeGroup");
@@ -184,7 +187,8 @@ int RemoteFileProxy::chgrp(const string& group) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::chmod(const mode_t mode) {
+int
+RemoteFileProxy::chmod(const mode_t mode) {
   diet_profile_t* chmodProfile;
   std::string errMsg = "";
   std::string serviceName("FileChangeMode");
@@ -247,7 +251,8 @@ int RemoteFileProxy::chmod(const mode_t mode) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-string RemoteFileProxy::head(const HeadOfFileOptions& options) {
+string
+RemoteFileProxy::head(const HeadOfFileOptions& options) {
   std::string result;
   std::string fileHead = "";
   std::string errMsg = "";
@@ -319,7 +324,8 @@ string RemoteFileProxy::head(const HeadOfFileOptions& options) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-string RemoteFileProxy::getContent() {
+string
+RemoteFileProxy::getContent() {
   std::string fileContent ="";
   std::string errMsg = "";
   diet_profile_t* getContentProfile;
@@ -378,7 +384,8 @@ string RemoteFileProxy::getContent() {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::mkfile(const mode_t mode) {
+int
+RemoteFileProxy::mkfile(const mode_t mode) {
   diet_profile_t* mkfileProfile;
   std::string errMsg = "";
   std::string serviceName("FileCreate");
@@ -433,7 +440,8 @@ int RemoteFileProxy::mkfile(const mode_t mode) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
+int
+RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_profile_t* mkdirProfile;
   std::string errMsg = "";
   std::string serviceName("DirCreate");
@@ -495,7 +503,8 @@ int RemoteFileProxy::mkdir(const CreateDirOptions& options) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::rm(const RmFileOptions& options) {
+int
+RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_profile_t* rmProfile;
   std::string errMsg = "";
   std::string serviceName("FileRemove");
@@ -555,7 +564,8 @@ int RemoteFileProxy::rm(const RmFileOptions& options) {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-int RemoteFileProxy::rmdir() {
+int
+RemoteFileProxy::rmdir() {
   diet_profile_t* rmdirProfile;
   std::string errMsg = "";
   std::string serviceName("DirRemove");
@@ -610,7 +620,8 @@ int RemoteFileProxy::rmdir() {
  * If something goes wrong, throw a raiseDietMsgException containing
  * the error message.
  */
-string RemoteFileProxy::tail(const TailOfFileOptions& options) {
+string
+RemoteFileProxy::tail(const TailOfFileOptions& options) {
   string result;
   std::string fileTail = "";
   std::string errMsg = "";
@@ -661,12 +672,12 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
   }
 
   if(diet_string_get(tailProfile, 5, fileTail)){
-     msgErrorDiet += " by receiving fileTail message";
+    msgErrorDiet += " by receiving fileTail message";
     raiseDietMsgException(msgErrorDiet);
   }
 
   if(diet_string_get(tailProfile, 6, errMsg)){
-      msgErrorDiet += " by receiving errorInfo message";
+    msgErrorDiet += " by receiving errorInfo message";
     raiseDietMsgException(msgErrorDiet);
   }
 
@@ -682,8 +693,8 @@ string RemoteFileProxy::tail(const TailOfFileOptions& options) {
  * the error message.
  */
 
-FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
-
+FMS_Data::DirEntryList*
+RemoteFileProxy::ls(const LsDirOptions& options) const {
   FMS_Data::DirEntryList* result;
   std::string errMsg = "";
   std::string ls = "";
@@ -754,32 +765,31 @@ FMS_Data::DirEntryList* RemoteFileProxy::ls(const LsDirOptions& options) const {
 
 
 template <class TypeOfOption>
-int RemoteFileProxy::transferFile(const std::string& dest,
-                                  const TypeOfOption& options,
-                                  const std::string& serviceName,
-                                  FileTransfer& fileTransfer){
-
+int
+RemoteFileProxy::transferFile(const std::string& dest,
+                              const TypeOfOption& options,
+                              const std::string& serviceName,
+                              FileTransfer& fileTransfer){
   string destHost = FileProxy::extHost(dest);
   string localUser = "";
   bfs::path destPath(FileProxy::extName(dest));
 
   if (destHost.compare("localhost") == 0 || !vishnu::isNotIP(destHost)) {
-
-	  // The destination is local:  get its full qualified host name
+    // The destination is local:  get its full qualified host name
     if (vishnu::isNotIP(destHost)){
-	  destHost =vishnu::getLocalMachineName("22");
+      destHost =vishnu::getLocalMachineName("22");
     }
 
-	  uid_t uid = getuid();
-	  struct passwd*  pw = getpwuid(uid);
-	  localUser = pw->pw_name;
+    uid_t uid = getuid();
+    struct passwd*  pw = getpwuid(uid);
+    localUser = pw->pw_name;
 
-	  if(dest.compare(".")==0){
-		  destPath=bfs::current_path();
-	  }
+    if(dest.compare(".")==0){
+      destPath=bfs::current_path();
+    }
 
 // build a complete local path
-	  bfs::system_complete(destPath);
+    bfs::system_complete(destPath);
 
   }
 
@@ -851,27 +861,30 @@ int RemoteFileProxy::transferFile(const std::string& dest,
 
   }
 
-return 0;
+  return 0;
 }
 
-int RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
+int
+RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
   return transferFile(dest, options, "RemoteFileCopy", fileTransfer);
 }
 
-int RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
+int
+RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
   return transferFile(dest, options, "RemoteFileMove", fileTransfer);
 }
 
-int RemoteFileProxy::cpAsync(const std::string& dest,
-                             const CpFileOptions& options,
-                             FileTransfer& fileTransfer) {
+int
+RemoteFileProxy::cpAsync(const std::string& dest,
+                         const CpFileOptions& options,
+                         FileTransfer& fileTransfer) {
   return transferFile(dest, options, "RemoteFileCopyAsync", fileTransfer);
 }
 
-int RemoteFileProxy::mvAsync(const std::string& dest,
-                             const CpFileOptions& options,
-                             FileTransfer& fileTransfer) {
+intRemoteFileProxy::mvAsync(const std::string& dest,
+                            const CpFileOptions& options,
+                            FileTransfer& fileTransfer) {
   return transferFile(dest, options, "RemoteFileMoveAsync", fileTransfer);
 }
