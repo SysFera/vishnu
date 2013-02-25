@@ -18,21 +18,6 @@
 using namespace std;
 using namespace FMS_Data;
 namespace ba=boost::algorithm;
-/// DIET profile construction.
-
-//diet_profile_desc_t* getInfosProfile() {
-//  diet_profile_desc_t* result;
-//
-//  result = diet_profile_desc_alloc("FileGetInfos", 3, 3, 5);
-//  diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 5), DIET_STRING, DIET_CHAR);
-//
-//  return result;
-//}
 
 /* get information DIET callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */

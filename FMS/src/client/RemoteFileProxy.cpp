@@ -15,6 +15,7 @@
 #include "LocalFileProxy.hpp"
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
+#include "FMSServices.hpp"
 
 using namespace std;
 using namespace FMS_Data;
@@ -55,7 +56,7 @@ RemoteFileProxy::getInfos() const {
   diet_profile_t* getInfosProfile;
   std::string fileStatInString = "";
   std::string errMsg = "";
-  std::string serviceName("FileGetInfos");
+  std::string serviceName(SERVICES_FMS[FILEGETINFOS]);
   std::string sessionKey=this->getSession().getSessionKey();
 
   getInfosProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
@@ -134,7 +135,7 @@ int
 RemoteFileProxy::chgrp(const string& group) {
   diet_profile_t* chgrpProfile;
   std::string errMsg = "";
-  std::string serviceName("FileChangeGroup");
+  std::string serviceName(SERVICES_FMS[FILECHANGEGROUP]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -191,7 +192,7 @@ int
 RemoteFileProxy::chmod(const mode_t mode) {
   diet_profile_t* chmodProfile;
   std::string errMsg = "";
-  std::string serviceName("FileChangeMode");
+  std::string serviceName(SERVICES_FMS[FILECHANGEMODE]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -257,7 +258,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
   std::string fileHead = "";
   std::string errMsg = "";
   diet_profile_t* headProfile;
-  std::string serviceName("FileHead");
+  std::string serviceName(SERVICES_FMS[FILEHEAD]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -329,7 +330,7 @@ RemoteFileProxy::getContent() {
   std::string fileContent ="";
   std::string errMsg = "";
   diet_profile_t* getContentProfile;
-  std::string serviceName("FileContent");
+  std::string serviceName(SERVICES_FMS[FILECONTENT]);
   std::string sessionKey=this->getSession().getSessionKey();
 
   getContentProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
@@ -388,7 +389,7 @@ int
 RemoteFileProxy::mkfile(const mode_t mode) {
   diet_profile_t* mkfileProfile;
   std::string errMsg = "";
-  std::string serviceName("FileCreate");
+  std::string serviceName(SERVICES_FMS[FILECREATE]);
 
   std::string sessionKey=this->getSession().getSessionKey();
 
@@ -444,7 +445,7 @@ int
 RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_profile_t* mkdirProfile;
   std::string errMsg = "";
-  std::string serviceName("DirCreate");
+  std::string serviceName(SERVICES_FMS[DIRCREATE]);
 
   std::string sessionKey=this->getSession().getSessionKey();
 
@@ -507,7 +508,7 @@ int
 RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_profile_t* rmProfile;
   std::string errMsg = "";
-  std::string serviceName("FileRemove");
+  std::string serviceName(SERVICES_FMS[FILEREMOVE]);
 
   std::string sessionKey=this->getSession().getSessionKey();
 
@@ -568,7 +569,7 @@ int
 RemoteFileProxy::rmdir() {
   diet_profile_t* rmdirProfile;
   std::string errMsg = "";
-  std::string serviceName("DirRemove");
+  std::string serviceName(SERVICES_FMS[DIRREMOVE]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -627,7 +628,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   std::string errMsg = "";
   diet_profile_t* tailProfile;
 
-  std::string serviceName("FileTail");
+  std::string serviceName(SERVICES_FMS[FILETAIL]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -700,7 +701,7 @@ RemoteFileProxy::ls(const LsDirOptions& options) const {
   std::string ls = "";
   diet_profile_t* lsProfile;
 
-  std::string serviceName("DirList");
+  std::string serviceName(SERVICES_FMS[DIRLIST]);
   std::string sessionKey=this->getSession().getSessionKey();
 
 
@@ -802,7 +803,8 @@ RemoteFileProxy::transferFile(const std::string& dest,
 
   std::string sessionKey=this->getSession().getSessionKey();
 
-  bool isAsyncTransfer = (serviceName.compare("RemoteFileCopyAsync")==0 || serviceName.compare("RemoteFileMoveAsync")==0);
+  bool isAsyncTransfer = (serviceName == SERVICES_FMS[REMOTEFILECOPYASYNC]
+                          || serviceName == SERVICES_FMS[REMOTEFILEMOVEASYNC]);
   if(!isAsyncTransfer) {
     transferFileProfile = diet_profile_alloc(serviceName.c_str(), 6, 6, 7);
   } else {
@@ -867,24 +869,25 @@ RemoteFileProxy::transferFile(const std::string& dest,
 int
 RemoteFileProxy::cp(const std::string& dest, const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
-  return transferFile(dest, options, "RemoteFileCopy", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[REMOTEFILECOPY], fileTransfer);
 }
 
 int
 RemoteFileProxy::mv(const std::string& dest, const CpFileOptions& options) {
   FileTransfer fileTransfer; //empty fileTransfer info, the cp function not fills this object structure
-  return transferFile(dest, options, "RemoteFileMove", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[REMOTEFILEMOVE], fileTransfer);
 }
 
 int
 RemoteFileProxy::cpAsync(const std::string& dest,
                          const CpFileOptions& options,
                          FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "RemoteFileCopyAsync", fileTransfer);
+  return transferFile(dest, options, SERVICES_FMS[REMOTEFILECOPYASYNC], fileTransfer);
 }
 
-intRemoteFileProxy::mvAsync(const std::string& dest,
-                            const CpFileOptions& options,
-                            FileTransfer& fileTransfer) {
-  return transferFile(dest, options, "RemoteFileMoveAsync", fileTransfer);
+int
+RemoteFileProxy::mvAsync(const std::string& dest,
+                         const CpFileOptions& options,
+                         FileTransfer& fileTransfer) {
+  return transferFile(dest, options, SERVICES_FMS[REMOTEFILEMOVEASYNC], fileTransfer);
 }
