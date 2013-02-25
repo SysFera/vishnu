@@ -63,23 +63,6 @@ TorqueServer::submit(const char* scriptPath,
    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
-  std::string nbNodesStr;
-  if(!options.getNbNodesAndCpuPerNode().empty()) {
-    size_t posNbNodes = (options.getNbNodesAndCpuPerNode()).find(":");
-    if(posNbNodes!=std::string::npos) {
-      nbNodesStr = (options.getNbNodesAndCpuPerNode()).substr(0, posNbNodes);
-    }
-  } else {
-    int nbCpu;
-    int nbNodes;
-    nbNodes = getTorqueNbNodesInScript(scriptPath, nbCpu);
-    if(nbNodes==-1) {
-      nbNodes=1;
-    }
-    std::ostringstream osNbnodes;
-    osNbnodes << nbNodes;
-    nbNodesStr = osNbnodes.str();
-  }
 
   destination[0] = '\0';
   serverOut[0] = '\0';
