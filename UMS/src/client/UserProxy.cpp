@@ -16,8 +16,8 @@
  * \password the user password
  * \brief Constructor, raises an exception on error
  */
-UserProxy::UserProxy(const  std::string& userId, const std::string& password)
-{
+UserProxy::UserProxy(const  std::string& userId,
+                     const std::string& password) {
   muser.setUserId(userId);
   muser.setPassword(password);
   msessionProxy = NULL;
@@ -29,8 +29,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(SessionProxy session):
-  msessionProxy(&session)
-{
+  msessionProxy(&session) {
 }
 
 /**
@@ -39,8 +38,7 @@ UserProxy::UserProxy(SessionProxy session):
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(const UMS_Data::User& user):
-  muser(user)
-{
+  muser(user) {
   msessionProxy = NULL;
 }
 
@@ -50,8 +48,8 @@ UserProxy::UserProxy(const UMS_Data::User& user):
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::add(UMS_Data::User& user)
-{
+int
+UserProxy::add(UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string errorInfo;
@@ -114,8 +112,8 @@ int UserProxy::add(UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::update(const UMS_Data::User& user)
-{
+int
+UserProxy::update(const UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userToString;
@@ -167,9 +165,8 @@ int UserProxy::update(const UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::deleteUser(const UMS_Data::User& user)
-{
-
+int
+UserProxy::deleteUser(const UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userId;
@@ -217,9 +214,9 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
  * \param newPassword the new password of the user
  * \return raises an exception on error
  */
-int UserProxy::changePassword(const std::string& password, const std::string& newPassword)
-{
-
+int
+UserProxy::changePassword(const std::string& password,
+                          const std::string& newPassword) {
   diet_profile_t* profile = NULL;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
@@ -284,9 +281,8 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::resetPassword(UMS_Data::User& user)
-{
-
+int
+UserProxy::resetPassword(UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string tmpPassword;
   std::string errorInfo;
@@ -340,8 +336,8 @@ int UserProxy::resetPassword(UMS_Data::User& user)
  * \return User object encapsulates the information of the user
  * \return raises an exception on error
  */
-UMS_Data::User UserProxy::getData() const
-{
+UMS_Data::User
+UserProxy::getData() const {
   return muser;
 }
 
@@ -351,8 +347,8 @@ UMS_Data::User UserProxy::getData() const
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy UserProxy::getSessionProxy() const
-{
+SessionProxy
+UserProxy::getSessionProxy() const {
   return  *msessionProxy;
 }
 
@@ -360,6 +356,5 @@ SessionProxy UserProxy::getSessionProxy() const
  * \fn ~UserProxy()
  * \brief Destructor, raises an exception on error
  */
-UserProxy::~UserProxy()
-{
+UserProxy::~UserProxy() {
 }
