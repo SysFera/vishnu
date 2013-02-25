@@ -5,6 +5,7 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "QueryProxy.hpp"
+#include "IMSServices.hpp"
 
 using namespace vishnu;
 
@@ -31,7 +32,7 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
   std::string errorInfo;
   std::string fileContent;
 
-  std::string serviceName = "int_exportCommands";
+  std::string serviceName = SERVICES_IMS[INT_EXPORTCOMMANDS];
 
   profile = diet_profile_alloc(serviceName.c_str(), 3, 3, 5);
   sessionKey = msessionProxy.getSessionKey();
@@ -79,7 +80,7 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

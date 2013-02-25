@@ -139,23 +139,23 @@ ServerIMS::~ServerIMS() {
 
 void
 ServerIMS::initMap(std::string mid) {
-  mcb[SERVICES_IMS[0]] = solveExport;
-  mcb[std::string(SERVICES_IMS[1])+"@"+mid] = solveCurMetric;
-  mcb[SERVICES_IMS[2]] = solveOldMetric;
-  mcb[SERVICES_IMS[3]] = solvePS;
-  mcb[SERVICES_IMS[4]] = solveSetSysInfo;
-  mcb[SERVICES_IMS[5]] = solveSetThreshold;
-  mcb[SERVICES_IMS[6]] = solveGetThreshold;
-  mcb[SERVICES_IMS[7]] = solveSetUID;
-  mcb[SERVICES_IMS[8]] = solveSetJID;
-  mcb[SERVICES_IMS[9]] = solveSetTID;
-  mcb[SERVICES_IMS[10]] = solveSetMID;
-  mcb[std::string(SERVICES_IMS[11])+"@"+mid] = solveLoadShed;
-  mcb[SERVICES_IMS[13]] = solveGetUpFreq;
-  mcb[SERVICES_IMS[12]] = solveSetUpFreq;
-  mcb[std::string(SERVICES_IMS[14])+"@"+mid] = solveRestart;
-  mcb[std::string(SERVICES_IMS[15])+"@"+mid] = solveStop;
-  mcb[SERVICES_IMS[16]] = solveGetSysInfo;
-  mcb[SERVICES_IMS[17]] = solveSetAID;
-  mcb[SERVICES_IMS[18]] = solveSetWID;
+  mcb[SERVICES_IMS[INT_EXPORTCOMMANDS]] = solveExport;
+  mcb[std::string(SERVICES_IMS[INT_GETMETRICCURENTVALUE])+"@"+mid] = solveCurMetric;
+  mcb[SERVICES_IMS[INT_GETMETRICHISTORY]] = solveOldMetric;
+  mcb[SERVICES_IMS[INT_GETPROCESSES]] = solvePS;
+  mcb[SERVICES_IMS[INT_SETSYSTEMINFO]] = solveSetSysInfo;
+  mcb[SERVICES_IMS[INT_SETSYSTEMTHRESHOLD]] = solveSetThreshold;
+  mcb[SERVICES_IMS[INT_GETSYSTEMTHRESHOLD]] = solveGetThreshold;
+  mcb[SERVICES_IMS[INT_DEFINEUSERIDENTIFIER]] = solveSetUID;
+  mcb[SERVICES_IMS[INT_DEFINEJOBIDENTIFIER]] = solveSetJID;
+  mcb[SERVICES_IMS[INT_DEFINETRANSFERIDENTIFIER]] = solveSetTID;
+  mcb[SERVICES_IMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
+  mcb[std::string(SERVICES_IMS[INT_LOADSHED])+"@"+mid] = solveLoadShed;
+  mcb[SERVICES_IMS[INT_SETUPDATEFREQUENCY]] = solveGetUpFreq;
+  mcb[SERVICES_IMS[INT_GETUPDATEFREQUENCY]] = solveSetUpFreq;
+  mcb[std::string(SERVICES_IMS[INT_RESTART])+"@"+mid] = solveRestart;
+  mcb[std::string(SERVICES_IMS[INT_STOP])+"@"+mid] = solveStop;
+  mcb[SERVICES_IMS[INT_GETSYSTEMINFO]] = solveGetSysInfo;
+  mcb[SERVICES_IMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
+  mcb[SERVICES_IMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
 }
