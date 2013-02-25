@@ -20,7 +20,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
 set(client_SRCS client/JobProxy.cpp
   client/JobOutputProxy.cpp
   client/WorkProxy.cpp
-  ${UTILVISHNU_SOURCE_DIR}/tmsClientUtils.cpp)
+  ${UTILVISHNU_SOURCE_DIR}/tmsProxiesUtils.cpp)
 
 set(cli_SRCS
   cli/displayer.cpp
