@@ -9,6 +9,7 @@ include_directories(client api
   ${VERSION_MANAGER_SOURCE_DIR}
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/UMS/src/sed
   )
 
 set(client_SRCS client/SessionProxy.cpp

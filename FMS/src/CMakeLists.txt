@@ -9,6 +9,7 @@ include_directories(client api
   ${Boost_INCLUDE_DIRS}
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/FMS/src/sed
 )
 
 set(client_SRCS client/FileProxy

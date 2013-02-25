@@ -12,7 +12,9 @@ include_directories(client api
   ${COMMUNICATION_INCLUDE_DIR}
   ${UMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
-  ${CONFIG_SOURCE_DIR})
+  ${CONFIG_SOURCE_DIR}
+  ${VISHNU_SOURCE_DIR}/TMS/src/sed
+)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
   ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
