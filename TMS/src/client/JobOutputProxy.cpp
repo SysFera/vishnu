@@ -9,6 +9,8 @@
 #include "utilVishnu.hpp"
 #include "api_fms.hpp"
 #include "tmsUtils.hpp"
+#include "tmsClientUtils.hpp"
+#include "TMSServices.hpp"
 
 namespace bfs = boost::filesystem;
 using namespace vishnu;
@@ -36,7 +38,7 @@ JobOutputProxy::JobOutputProxy( const SessionProxy& session,
 TMS_Data::JobResult
 JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
-  std::string serviceName = "jobOutputGetResult@";
+  std::string serviceName = std::string(SERVICES_TMS[JOBOUTPUTGETRESULT]) + "@";
   serviceName.append(mmachineId);
 
   diet_profile_t* getJobOutPutProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
@@ -69,7 +71,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
   //Call the Server
   if (diet_call(getJobOutPutProfile)) {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   std::string routputInfo;
   if (diet_string_get(getJobOutPutProfile,4, routputInfo)){
@@ -130,7 +132,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   std::string sessionKey;
   TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
 
-  std::string serviceName = "jobOutputGetCompletedJobs@";
+  std::string serviceName = std::string(SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]) + "@";
   serviceName.append(mmachineId);
 
   getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
@@ -159,7 +161,7 @@ JobOutputProxy::getCompletedJobsOutput() {
 
   //Call the Server
   if( diet_call(getCompletedJobsOutputProfile)) {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   std::string routputInfo;
   if (diet_string_get(getCompletedJobsOutputProfile,3, routputInfo) ){
