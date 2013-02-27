@@ -311,7 +311,7 @@ the VISHNU installation procedure and the way to use it.
 <chapter>
 <title>Installation and usage</title>
 <para>
-VISHNU is primarly designed to facilitate the access to high-performance computing resources by providing the following services:
+VISHNU is designed to easy the access to high-performance computing resources. To do that it provides the following services:
 <itemizedlist>
 <listitem>
 <para>User management services (UMS): authentication and session management.</para>
