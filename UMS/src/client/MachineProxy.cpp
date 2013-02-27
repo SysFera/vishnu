@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "MachineProxy.hpp"
 #include "utilsClient.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn MachineProxy(const UMS_Data::Machine& machine,
@@ -15,9 +16,9 @@
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
  */
-MachineProxy::MachineProxy(const UMS_Data::Machine& machine, const SessionProxy& session):
-  mmachine(machine), msessionProxy(session)
-{
+MachineProxy::MachineProxy(const UMS_Data::Machine& machine,
+                           const SessionProxy& session):
+  mmachine(machine), msessionProxy(session) {
 }
 
 /**
@@ -25,9 +26,8 @@ MachineProxy::MachineProxy(const UMS_Data::Machine& machine, const SessionProxy&
  * \fn  int add()
  * \return raises an exception on error
  */
-int MachineProxy::add()
-{
-
+int
+MachineProxy::add() {
   diet_profile_t* addProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
@@ -35,7 +35,7 @@ int MachineProxy::add()
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc("machineCreate", 1, 1, 3);
+  addProfile = diet_profile_alloc(SERVICES_UMS[MACHINECREATE], 1, 1, 3);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -72,7 +72,7 @@ int MachineProxy::add()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -97,15 +97,15 @@ int MachineProxy::add()
  * \fn  int update()
  * \return raises an exception on error
  */
-int MachineProxy::update()
-{
+int
+MachineProxy::update() {
   diet_profile_t* updateProfile = NULL;
   std::string sessionKey;
   std::string machineToString;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  updateProfile = diet_profile_alloc("machineUpdate", 1, 1, 2);
+  updateProfile = diet_profile_alloc(SERVICES_UMS[MACHINEUPDATE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -137,7 +137,7 @@ int MachineProxy::update()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -153,15 +153,15 @@ int MachineProxy::update()
  * \fn  int deleteMachine()
  * \return raises an exception on error
  */
-int MachineProxy::deleteMachine()
-{
+int
+MachineProxy::deleteMachine() {
   diet_profile_t* deleteProfile = NULL;
   std::string sessionKey;
   std::string machineId;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  deleteProfile = diet_profile_alloc("machineDelete", 1, 1, 2);
+  deleteProfile = diet_profile_alloc(SERVICES_UMS[MACHINEDELETE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   machineId = mmachine.getMachineId();
 
@@ -185,7 +185,7 @@ int MachineProxy::deleteMachine()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -202,8 +202,8 @@ int MachineProxy::deleteMachine()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy MachineProxy::getSessionProxy()
-{
+SessionProxy
+MachineProxy::getSessionProxy() {
   return msessionProxy;
 }
 
@@ -213,8 +213,8 @@ SessionProxy MachineProxy::getSessionProxy()
  * \return Machine object encapsulates the information of the machine
  * \return raises an exception on error
  */
-UMS_Data::Machine MachineProxy::getData()
-{
+UMS_Data::Machine
+MachineProxy::getData() {
   return mmachine;
 }
 
@@ -222,6 +222,5 @@ UMS_Data::Machine MachineProxy::getData()
  * \fn ~MachineProxy()
  * \brief Destructor, raises an exception on error
  */
-MachineProxy::~MachineProxy()
-{
+MachineProxy::~MachineProxy() {
 }

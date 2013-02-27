@@ -12,8 +12,6 @@
 /**
  * \brief Number of services in FMS
  */
-#define NB_SRV 22
-
 #include "DIET_client.h"
 #include "FMSMapper.hpp"
 #include "MapperRegistry.hpp"

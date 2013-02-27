@@ -16,7 +16,10 @@
 #include "utilVishnu.hpp"
 #include "CommonParser.hpp"
 #include "FileParser.hpp"
-
+#include "UMSServices.hpp"
+#include "TMSServices.hpp"
+#include "IMSServices.hpp"
+#include "FMSServices.hpp"
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
   : mservers(serv) {}
@@ -122,95 +125,34 @@ Annuary::fillServices(std::vector< std::string> &services,
                       const std::string& name,
                       const std::string& mid) {
   boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  unsigned int nb;
+  std::string tmpserv;
+
   if (name == "UMS") {
-    services.push_back("sessionConnect") ;
-    services.push_back("sessionReconnect") ;
-    services.push_back("sessionClose") ;
-    services.push_back("userCreate") ;
-    services.push_back("userUpdate") ;
-    services.push_back("userDelete") ;
-    services.push_back("userPasswordChange") ;
-    services.push_back("userPasswordReset") ;
-    services.push_back("machineCreate") ;
-    services.push_back("machineUpdate") ;
-    services.push_back("machineDelete") ;
-    services.push_back("localAccountCreate") ;
-    services.push_back("localAccountUpdate") ;
-    services.push_back("localAccountDelete") ;
-    services.push_back("configurationSave") ;
-    services.push_back("configurationRestore") ;
-    services.push_back("optionValueSet") ;
-    services.push_back("optionValueSetDefault") ;
-    services.push_back("sessionList") ;
-    services.push_back("localAccountList") ;
-    services.push_back("machineList") ;
-    services.push_back("commandList") ;
-    services.push_back("optionValueList") ;
-    services.push_back("userList") ;
-    services.push_back("restore") ;
-    services.push_back("authSystemCreate") ;
-    services.push_back("authSystemUpdate") ;
-    services.push_back("authSystemDelete") ;
-    services.push_back("authSystemList") ;
-    services.push_back("authAccountCreate") ;
-    services.push_back("authAccountUpdate") ;
-    services.push_back("authAccountDelete") ;
-    services.push_back("authAccountList") ;
+    for (nb = 0; nb < NB_SRV_UMS; nb++) {
+      services.push_back(SERVICES_UMS[nb]);
+    }
   } else if (name == "TMS") {
-    services.push_back("jobSubmit@"+mid) ;
-    services.push_back("jobCancel@"+mid) ;
-    services.push_back("jobInfo@"+mid) ;
-    services.push_back("getListOfJobs@"+mid) ;
-    services.push_back("getJobsProgression@"+mid) ;
-    services.push_back("getListOfQueues@"+mid) ;
-    services.push_back("jobOutputGetResult@"+mid) ;
-    services.push_back("jobOutputGetCompletedJobs@"+mid) ;
-    services.push_back("getListOfJobs_all") ;
-    services.push_back("jobSubmit_autom") ;
-    services.push_back("addwork") ;
+    for (nb = 0; nb < NB_SRV_TMS; nb++) {
+      tmpserv = SERVICES_TMS[nb];
+      if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
+    }
   } else if (name == "IMS") {
-    services.push_back("int_exportCommands") ;
-    services.push_back("int_getMetricCurentValue@"+mid) ;
-    services.push_back("int_getMetricHistory") ;
-    services.push_back("int_getProcesses") ;
-    services.push_back("int_setSystemInfo") ;
-    services.push_back("int_setSystemThreshold") ;
-    services.push_back("int_getSystemThreshold") ;
-    services.push_back("int_defineUserIdentifier") ;
-    services.push_back("int_defineJobIdentifier") ;
-    services.push_back("int_defineTransferIdentifier") ;
-    services.push_back("int_defineMachineIdentifier") ;
-    services.push_back("int_loadShed@"+mid) ;
-    services.push_back("int_setUpdateFrequency") ;
-    services.push_back("int_getUpdateFrequency") ;
-    services.push_back("int_restart@"+mid) ;
-    services.push_back("int_stop@"+mid) ;
-    services.push_back("int_getSystemInfo") ;
-    services.push_back("int_defineAuthIdentifier") ;
-    services.push_back("int_defineWorkIdentifier") ;
+    for (nb = 0; nb < NB_SRV_IMS; nb++) {
+      tmpserv = SERVICES_IMS[nb];
+      if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
+    }
   } else if (name == "FMS") {
-    services.push_back("FileCopyAsync") ;
-    services.push_back("FileMoveAsync") ;
-    services.push_back("FileMove") ;
-    services.push_back("FileCopy") ;
-    services.push_back("FileGetInfos") ;
-    services.push_back("FileChangeGroup") ;
-    services.push_back("FileChangeMode") ;
-    services.push_back("FileHead") ;
-    services.push_back("FileContent") ;
-    services.push_back("FileCreate") ;
-    services.push_back("DirCreate") ;
-    services.push_back("FileRemove") ;
-    services.push_back("DirRemove") ;
-    services.push_back("FileTail") ;
-    services.push_back("DirList") ;
-    services.push_back("RemoteFileCopyAsync") ;
-    services.push_back("RemoteFileMoveAsync") ;
-    services.push_back("RemoteFileCopy") ;
-    services.push_back("RemoteFileMove") ;
-    services.push_back("FileTransfersList") ;
-    services.push_back("FileTransferStop") ;
-    } else { // Routage
+    for (nb = 0; nb < NB_SRV_FMS; nb++) {
+      services.push_back(SERVICES_FMS[nb]);
+    }
+  } else { // Routage
     services.push_back("routage");
   }
 }

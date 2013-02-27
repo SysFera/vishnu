@@ -12,6 +12,10 @@ include_directories(
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/communication/
   ${VISHNU_SOURCE_DIR}/communication/dispatcher
+  ${VISHNU_SOURCE_DIR}/TMS/src/sed
+  ${VISHNU_SOURCE_DIR}/UMS/src/sed
+  ${VISHNU_SOURCE_DIR}/FMS/src/sed
+  ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${Boost_INCLUDE_DIR}
 )
 

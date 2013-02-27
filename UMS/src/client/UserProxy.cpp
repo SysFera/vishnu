@@ -9,6 +9,7 @@
 #include "utilsClient.hpp"
 #include "vishnu_version.hpp"
 #include "utilVishnu.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \fn  UserProxy(const std::string& userId, const std::string& password)
@@ -16,8 +17,8 @@
  * \password the user password
  * \brief Constructor, raises an exception on error
  */
-UserProxy::UserProxy(const  std::string& userId, const std::string& password)
-{
+UserProxy::UserProxy(const  std::string& userId,
+                     const std::string& password) {
   muser.setUserId(userId);
   muser.setPassword(password);
   msessionProxy = NULL;
@@ -29,8 +30,7 @@ UserProxy::UserProxy(const  std::string& userId, const std::string& password)
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(SessionProxy session):
-  msessionProxy(&session)
-{
+  msessionProxy(&session) {
 }
 
 /**
@@ -39,8 +39,7 @@ UserProxy::UserProxy(SessionProxy session):
  * \brief Constructor, raises an exception on error
  */
 UserProxy::UserProxy(const UMS_Data::User& user):
-  muser(user)
-{
+  muser(user) {
   msessionProxy = NULL;
 }
 
@@ -50,15 +49,15 @@ UserProxy::UserProxy(const UMS_Data::User& user):
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::add(UMS_Data::User& user)
-{
+int
+UserProxy::add(UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string errorInfo;
   std::string userInString;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("userCreate", 1, 1, 3);
+  profile = diet_profile_alloc(SERVICES_UMS[USERCREATE], 1, 1, 3);
   sessionKey = msessionProxy->getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -89,7 +88,7 @@ int UserProxy::add(UMS_Data::User& user)
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -114,15 +113,15 @@ int UserProxy::add(UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::update(const UMS_Data::User& user)
-{
+int
+UserProxy::update(const UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userToString;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("userUpdate", 1, 1, 2);
+  profile = diet_profile_alloc(SERVICES_UMS[USERUPDATE], 1, 1, 2);
 
   sessionKey = msessionProxy->getSessionKey();
 
@@ -150,7 +149,7 @@ int UserProxy::update(const UMS_Data::User& user)
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -167,16 +166,15 @@ int UserProxy::update(const UMS_Data::User& user)
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::deleteUser(const UMS_Data::User& user)
-{
-
+int
+UserProxy::deleteUser(const UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userId;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("userDelete", 1, 1, 2);
+  profile = diet_profile_alloc(SERVICES_UMS[USERDELETE], 1, 1, 2);
   sessionKey = msessionProxy->getSessionKey();
   userId = user.getUserId();
 
@@ -200,7 +198,7 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -217,9 +215,9 @@ int UserProxy::deleteUser(const UMS_Data::User& user)
  * \param newPassword the new password of the user
  * \return raises an exception on error
  */
-int UserProxy::changePassword(const std::string& password, const std::string& newPassword)
-{
-
+int
+UserProxy::changePassword(const std::string& password,
+                          const std::string& newPassword) {
   diet_profile_t* profile = NULL;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
@@ -234,7 +232,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
     //To serialize the version object in to versionToString
     versionToString =  _ser.serialize_str(versionObj);
   }
-  profile = diet_profile_alloc("userPasswordChange", 3, 3, 4);
+  profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDCHANGE], 3, 3, 4);
 
   //IN Parameters
   if(diet_string_set(profile,0, muser.getUserId().c_str())) {
@@ -267,7 +265,7 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -284,15 +282,14 @@ int UserProxy::changePassword(const std::string& password, const std::string& ne
  * \param user The object which encapsulates the user information
  * \return raises an exception on error
  */
-int UserProxy::resetPassword(UMS_Data::User& user)
-{
-
+int
+UserProxy::resetPassword(UMS_Data::User& user) {
   diet_profile_t* profile = NULL;
   std::string tmpPassword;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("userPasswordReset", 1, 1, 3);
+  profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDRESET], 1, 1, 3);
 
   //IN Parameters
   if (diet_string_set(profile, 0, msessionProxy->getSessionKey())) {
@@ -320,7 +317,7 @@ int UserProxy::resetPassword(UMS_Data::User& user)
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -340,8 +337,8 @@ int UserProxy::resetPassword(UMS_Data::User& user)
  * \return User object encapsulates the information of the user
  * \return raises an exception on error
  */
-UMS_Data::User UserProxy::getData() const
-{
+UMS_Data::User
+UserProxy::getData() const {
   return muser;
 }
 
@@ -351,8 +348,8 @@ UMS_Data::User UserProxy::getData() const
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy UserProxy::getSessionProxy() const
-{
+SessionProxy
+UserProxy::getSessionProxy() const {
   return  *msessionProxy;
 }
 
@@ -360,6 +357,5 @@ SessionProxy UserProxy::getSessionProxy() const
  * \fn ~UserProxy()
  * \brief Destructor, raises an exception on error
  */
-UserProxy::~UserProxy()
-{
+UserProxy::~UserProxy() {
 }

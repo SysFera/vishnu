@@ -291,26 +291,26 @@ ServerTMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
   functionPtr = solveSubmitJob;
-  mcb[string(SERVICES[0])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[JOBSUBMIT])+"@"+mid] = functionPtr;
   functionPtr = solveCancelJob;
-  mcb[string(SERVICES[1])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[JOBCANCEL])+"@"+mid] = functionPtr;
   functionPtr = solveJobInfo;
-  mcb[string(SERVICES[2])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[JOBINFO])+"@"+mid] = functionPtr;
   functionPtr = solveGetListOfJobs;
-  mcb[string(SERVICES[3])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[GETLISTOFJOBS])+"@"+mid] = functionPtr;
   functionPtr = solveGetListOfJobsProgression;
-  mcb[string(SERVICES[4])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[GETJOBSPROGRESSION])+"@"+mid] = functionPtr;
   functionPtr = solveListOfQueues;
-  mcb[string(SERVICES[5])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[GETLISTOFQUEUES])+"@"+mid] = functionPtr;
   functionPtr = solveJobOutPutGetResult;
-  mcb[string(SERVICES[6])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[JOBOUTPUTGETRESULT])+"@"+mid] = functionPtr;
   functionPtr = solveJobOutPutGetCompletedJobs;
-  mcb[string(SERVICES[7])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS])+"@"+mid] = functionPtr;
   // Remove ?
   functionPtr = solveGetListOfJobs;
-  mcb[SERVICES[8]] = functionPtr;
+  mcb[SERVICES_TMS[GETLISTOFJOBS_ALL]] = functionPtr;
   functionPtr = solveSubmitJob;
-  mcb[SERVICES[9]] = functionPtr;
+  mcb[SERVICES_TMS[JOBSUBMIT_AUTOM]] = functionPtr;
   functionPtr = solveAddWork;
-  mcb[SERVICES[10]] = functionPtr;
+  mcb[SERVICES_TMS[ADDWORK]] = functionPtr;
 }

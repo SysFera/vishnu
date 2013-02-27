@@ -1,6 +1,7 @@
 #include "MetricProxy.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
+#include "IMSServices.hpp"
 
 using namespace std;
 using namespace vishnu;
@@ -16,7 +17,7 @@ MetricProxy::setUpFreq(int freq) {
   diet_profile_t* profile = NULL;
   string sessionKey;
   string errorInfo;
-  std::string serviceName = "int_setUpdateFrequency";
+  std::string serviceName = SERVICES_IMS[INT_SETUPDATEFREQUENCY];
   string msgErrorDiet;
 
   profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
@@ -40,7 +41,7 @@ MetricProxy::setUpFreq(int freq) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -51,7 +52,7 @@ MetricProxy::getUpFreq() {
   diet_profile_t* profile = NULL;
   string sessionKey;
   string errorInfo;
-  std::string serviceName = "int_getUpdateFrequency";
+  std::string serviceName = SERVICES_IMS[INT_GETUPDATEFREQUENCY];
   string str;
   string msgErrorDiet;
 
@@ -77,7 +78,7 @@ MetricProxy::getUpFreq() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);

@@ -5,6 +5,8 @@
 #include "utilVishnu.hpp"
 #include "TMS_Data.hpp"
 #include "api_fms.hpp"
+#include "IMSServices.hpp"
+#include "TMSServices.hpp"
 
 using namespace vishnu;
 
@@ -40,7 +42,7 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
   std::string sessionKey;
   std::string errorInfo;
 
-  std::string serviceName = "int_restart@"+mmachineId;
+  std::string serviceName = std::string(SERVICES_IMS[INT_RESTART]) + "@" + mmachineId;
 
   restartProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
@@ -76,7 +78,7 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -98,7 +100,7 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
   std::string sessionKey;
   std::string errorInfo;
 
-  std::string serviceName = "int_stop@"+mmachineId;
+  std::string serviceName = std::string(SERVICES_IMS[INT_STOP]) + "@" + mmachineId;
 
   stopProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
@@ -133,7 +135,7 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -174,7 +176,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     std::string sessionKey;
     std::string errorInfo;
 
-     std::string serviceName = "int_loadShed@"+mmachineId;
+    std::string serviceName = std::string(SERVICES_IMS[INT_LOADSHED]) + "@" + mmachineId;
     loadShedProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
     sessionKey = msessionProxy.getSessionKey();
 
@@ -205,7 +207,7 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
       }
     }
     else {
-      raiseDietMsgException("DIET call failure");
+      raiseDietMsgException("VISHNU call failure");
     }
 
     /*To raise a vishnu exception if the receiving message is not empty*/
@@ -240,7 +242,7 @@ ProcessCtlProxy::cancelTMS() {
   diet_profile_t* cancelTMSProfile = NULL;
   std::string sessionKey;
   std::string errorInfo;
-  std::string serviceName = "jobCancel_";
+  std::string serviceName = std::string(SERVICES_TMS[JOBCANCEL]) + "@";
   TMS_Data::Job job;
   job.setJobId("all");
 
@@ -280,7 +282,7 @@ ProcessCtlProxy::cancelTMS() {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

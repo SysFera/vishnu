@@ -13,6 +13,8 @@ include_directories(client api utils
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
   ${XMLRPC_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/IMS/src/sed
+  ${VISHNU_SOURCE_DIR}/TMS/src/sed
 )
 
 

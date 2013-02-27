@@ -21,6 +21,7 @@
 #include "NetrcReader.hpp"
 #include "AuthSystemProxy.hpp"
 #include "AuthAccountProxy.hpp"
+#include "UMSServices.hpp"
 
 using namespace std;
 
@@ -763,7 +764,7 @@ vishnu::listSessions(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListSessionOptions,
              UMS_Data::ListSessions> query(options, sessionProxy,
-                                           "sessionList");
+                                           SERVICES_UMS[SESSIONLIST]);
 
   UMS_Data::ListSessions* listSession_ptr = query.list();
 
@@ -800,7 +801,7 @@ vishnu::listLocalAccounts(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListLocalAccOptions,
              UMS_Data::ListLocalAccounts> query(options, sessionProxy,
-                                                "localAccountList");
+                                                SERVICES_UMS[LOCALACCOUNTLIST]);
 
   UMS_Data::ListLocalAccounts* listLocalAcc_ptr = query.list();
 
@@ -836,7 +837,7 @@ vishnu::listMachines(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListMachineOptions,
              UMS_Data::ListMachines> query(options, sessionProxy,
-                                           "machineList");
+                                           SERVICES_UMS[MACHINELIST]);
   UMS_Data::ListMachines* listMachine_ptr = query.list();
 
   if (listMachine_ptr) {
@@ -870,7 +871,7 @@ vishnu::listHistoryCmd(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListCmdOptions,
              UMS_Data::ListCommands> query(options, sessionProxy,
-                                           "commandList");
+                                           SERVICES_UMS[COMMANDLIST]);
 
   UMS_Data::ListCommands* listCommands_ptr = query.list();
 
@@ -904,7 +905,7 @@ vishnu::listOptions(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListOptOptions,
              UMS_Data::ListOptionsValues> query(options, sessionProxy,
-                                                "optionValueList");
+                                                SERVICES_UMS[OPTIONVALUELIST]);
 
   UMS_Data::ListOptionsValues* listOptValues_ptr = query.list();
 
@@ -939,7 +940,8 @@ vishnu::listUsers(const std::string& sessionKey,
   throw(UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListUsersOptions,
-             UMS_Data::ListUsers> query(listOptions, sessionProxy, "userList");
+             UMS_Data::ListUsers> query(listOptions, sessionProxy,
+                                        SERVICES_UMS[USERLIST]);
 
   UMS_Data::ListUsers* listUsers_ptr = query.list();
 
@@ -1083,7 +1085,7 @@ vishnu::listAuthSystems(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListAuthSysOptions,
              UMS_Data::ListAuthSystems> query(options, sessionProxy,
-                                              "authSystemList");
+                                              SERVICES_UMS[AUTHSYSTEMLIST]);
 
   UMS_Data::ListAuthSystems* list = query.list();
 
@@ -1190,7 +1192,7 @@ vishnu::listAuthAccounts(const std::string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
   QueryProxy<UMS_Data::ListAuthAccOptions,
              UMS_Data::ListAuthAccounts> query(options, sessionProxy,
-                                               "authAccountList");
+                                               SERVICES_UMS[AUTHACCOUNTLIST]);
 
   UMS_Data::ListAuthAccounts* list = query.list();
 

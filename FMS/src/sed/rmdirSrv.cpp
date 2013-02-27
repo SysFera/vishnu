@@ -16,21 +16,6 @@
 
 using namespace std;
 
-
-/* DIET profile construction.
- * Use the serverHostname global variable to create the service name. */
-//diet_profile_desc_t* getRemoveDirProfile() {
-//  diet_profile_desc_t* result = diet_profile_desc_alloc("DirRemove", 3, 3, 4);
-//
-//  diet_generic_desc_set(diet_param_desc(result, 0), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 1), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 2), DIET_STRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 3), DIET_PARAMSTRING, DIET_CHAR);
-//  diet_generic_desc_set(diet_param_desc(result, 4), DIET_STRING, DIET_CHAR);
-//
-//  return result;
-//}
-//
 /* mkdir DIET callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */

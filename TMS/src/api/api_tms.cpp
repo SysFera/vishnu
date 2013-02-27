@@ -29,6 +29,8 @@
 #include "JobOutputProxy.hpp"
 #include "WorkProxy.hpp"
 #include "tmsUtils.hpp"
+#include "TMSServices.hpp"
+
 
 /**
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
@@ -149,7 +151,6 @@ vishnu::listJobs(const std::string& sessionKey,
                  ListJobs& listOfJobs,
                  const ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -174,7 +175,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listOfJobs.setNbWaitingJobs(0);
   for (int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getListOfJobs@";
+    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
     serviceName.append(machine->getMachineId());
     SessionProxy sessionProxy(sessionKey);
 
@@ -225,7 +226,6 @@ vishnu::getJobProgress(const std::string& sessionKey,
                        ListProgression& listOfProgress,
                        const ProgressOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -249,7 +249,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listOfProgress.setNbJobs(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getJobsProgression@";
+    std::string serviceName = std::string(SERVICES_TMS[GETJOBSPROGRESSION]) + "@";
     serviceName.append(machine->getMachineId());
 
     SessionProxy sessionProxy(sessionKey);
@@ -299,7 +299,6 @@ vishnu::listQueues(const std::string& sessionKey,
                    ListQueues& listofQueues,
                    const std::string& queueName)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
-
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
@@ -322,7 +321,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listofQueues.setNbQueues(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = "getListOfQueues@";
+    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFQUEUES]) + "@";
     serviceName.append(machine->getMachineId());
 
     SessionProxy sessionProxy(sessionKey);
@@ -355,7 +354,6 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     }
   }
   return 0;
-
 }
 
 /**

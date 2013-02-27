@@ -9,6 +9,7 @@
 #include "WorkProxy.hpp"
 #include "utilsClient.hpp"
 #include "TMS_Data.hpp"
+#include "TMSServices.hpp"
 
 /**
  * \param work The object which encapsulates the information of the work
@@ -35,7 +36,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
 
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc("addwork", 2, 2, 4);
+  addProfile = diet_profile_alloc(SERVICES_TMS[ADDWORK], 2, 2, 4);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -77,7 +78,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -100,15 +101,15 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
  * \brief Function to update work description
  * \return raises an exception on error
  */
-int WorkProxy::update()
-{
+int
+WorkProxy::update() {
   diet_profile_t* updateProfile = NULL;
   std::string sessionKey;
   std::string workToString;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  updateProfile = diet_profile_alloc("workUpdate", 1, 1, 2);
+  updateProfile = diet_profile_alloc(SERVICES_TMS[WORKUPDATE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -135,7 +136,7 @@ int WorkProxy::update()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -150,15 +151,15 @@ int WorkProxy::update()
  * \brief Function to remove a work
  * \return raises an exception on error
  */
-int WorkProxy::deleteWork()
-{
+int
+WorkProxy::deleteWork() {
   diet_profile_t* deleteProfile = NULL;
   std::string sessionKey;
   std::string workId;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  deleteProfile = diet_profile_alloc("workDelete", 1, 1, 2);
+  deleteProfile = diet_profile_alloc(SERVICES_TMS[WORKDELETE], 1, 1, 2);
   sessionKey = msessionProxy.getSessionKey();
   workId = mwork.getWorkId();
 
@@ -182,7 +183,7 @@ int WorkProxy::deleteWork()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -198,8 +199,8 @@ int WorkProxy::deleteWork()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
-SessionProxy WorkProxy::getSessionProxy()
-{
+SessionProxy
+WorkProxy::getSessionProxy() {
   return msessionProxy;
 }
 
@@ -208,8 +209,8 @@ SessionProxy WorkProxy::getSessionProxy()
  * \return Work object encapsulates the information of the work
  * \return raises an exception on error
  */
-TMS_Data::Work WorkProxy::getData()
-{
+TMS_Data::Work
+WorkProxy::getData() {
   return mwork;
 }
 
@@ -217,6 +218,5 @@ TMS_Data::Work WorkProxy::getData()
  * \fn ~WorkProxy()
  * \brief Destructor, raises an exception on error
  */
-WorkProxy::~WorkProxy()
-{
+WorkProxy::~WorkProxy() {
 }

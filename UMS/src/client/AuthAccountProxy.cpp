@@ -7,6 +7,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilsClient.hpp"
 #include "AuthAccountProxy.hpp"
+#include "UMSServices.hpp"
 
 /**
  * \param authAccount The object which encapsulates the user Acccount information
@@ -60,7 +61,7 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -78,7 +79,7 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
 int
 AuthAccountProxy::add()
 {
-  return _addAuthAccountInformation("authAccountCreate");
+  return _addAuthAccountInformation(SERVICES_UMS[AUTHACCOUNTCREATE]);
 }
 
 /**
@@ -88,7 +89,7 @@ AuthAccountProxy::add()
 int
 AuthAccountProxy::update()
 {
-  return _addAuthAccountInformation("authAccountUpdate");
+  return _addAuthAccountInformation(SERVICES_UMS[AUTHACCOUNTUPDATE]);
 }
 
 /**
@@ -105,7 +106,7 @@ AuthAccountProxy::deleteAuthAccount()
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc("authAccountDelete", 2, 2, 3);
+  profile = diet_profile_alloc(SERVICES_UMS[AUTHACCOUNTDELETE], 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
   userId = mauthAccount.getUserId();
   sysId = mauthAccount.getAuthSystemId();
@@ -134,7 +135,7 @@ AuthAccountProxy::deleteAuthAccount()
     }
   }
   else {
-    raiseDietMsgException("DIET call failure");
+    raiseDietMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
