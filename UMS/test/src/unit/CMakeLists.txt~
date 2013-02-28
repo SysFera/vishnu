@@ -1,10 +1,5 @@
-include_directories(
-    ${VISHNU_SOURCE_DIR}/UMS/src/client
-)
 
 include(UnitTest)
-unit_test(utilsClientUnitTests vishnu-ums-client)
-
 if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
 
 include_directories(
@@ -18,7 +13,7 @@ include_directories(
     ${AUTHENTICATOR_INCLUDE_DIR})
 
 
-  set(server_SRCS_mock ${VISHNU_SOURCE_DIR}/UMS/src/server/SessionServer.cpp
+  set(server_SRCS_mock server/SessionServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/UserServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/MachineClientServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/OptionValueServer.cpp
