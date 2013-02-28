@@ -1,4 +1,4 @@
 #define BOOST_TEST_DYN_LINK
 
-#define BOOST_TEST_MODULE "UMS test"
+#define BOOST_TEST_MODULE "TMS tests"
 #include <boost/test/unit_test.hpp>
