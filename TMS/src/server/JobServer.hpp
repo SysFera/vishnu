@@ -90,7 +90,7 @@ public:
    */
   void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
-private:
+protected:
 
   /**
    * \brief Function to scan VISHNU error message
@@ -127,6 +127,7 @@ private:
   void
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
+private:
   /**
    * \brief job data structure
    */
@@ -166,7 +167,8 @@ private:
    * \brief Holds the level of debug
    */
   int mdebugLevel;
-
+  
+protected:
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
