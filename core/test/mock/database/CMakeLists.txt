@@ -5,3 +5,57 @@ add_library(mockDb
   DbFactory.cpp
   MockDatabase.cpp
   )
+if(COMPILE_SERVERS)
+
+  include_directories(${Boost_INCLUDE_DIRS}
+  ${VISHNU_SOURCE_DIR}/core/src/config ${VISHNU_SOURCE_DIR}/core/src/exception
+  ${VISHNU_SOURCE_DIR}/core/src/utils
+  ${VISHNU_SOURCE_DIR}/core/src/emfdata
+  ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp
+  ${UMS_SERVER_SOURCE_DIR}
+  ${TMS_SERVER_SOURCE_DIR}
+  ${IMS_SERVER_SOURCE_DIR}
+  ${FMS_SERVER_SOURCE_DIR}
+  ${PROJECT_BINARY_DIR}
+  ${DATABASE_INCLUDE_DIR}
+  ${AUTHENTICATOR_INCLUDE_DIR}
+  ${VERSION_MANAGER_SOURCE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
+  ${VISHNU_SOURCE_DIR}/core/test/mock/database/
+  )
+  set(utils_server_SRCS ${VISHNU_SOURCE_DIR}/core/src/utils/utilServer.cpp
+  #    utils/Logger.cpp
+      )
+
+  if ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+    include_directories(${LDAP_PROXY_SOURCE_DIR})
+    set(authenticator_SRCS
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorConfiguration.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorFactory.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/Authenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/UMSAuthenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/LDAPAuthenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/UMSLDAPAuthenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/LDAPUMSAuthenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/ldap/LDAPProxy.cpp)
+  else ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+    set(authenticator_SRCS
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorConfiguration.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorFactory.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/Authenticator.cpp
+    ${VISHNU_SOURCE_DIR}/core/src/authenticator/UMSAuthenticator.cpp)
+  endif ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+
+  include_directories(${UMS_EMF_DATA_DIR})
+  set (version_manager_SRCS
+       ${VISHNU_SOURCE_DIR}/core/src/version/VersionManager.cpp)
+
+  add_library(vishnu-core-server-mock ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
+  set_target_properties(vishnu-core-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
+  install(TARGETS vishnu-core-server-mock DESTINATION ${LIB_INSTALL_DIR})
+  target_link_libraries(vishnu-core-server-mock vishnu-core mockDb)
+  install(PROGRAMS ${VISHNU_SOURCE_DIR}/core/src/utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
+
+
+
+endif()
