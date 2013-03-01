@@ -46,7 +46,6 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
       ${VISHNU_SOURCE_DIR}/TMS/src/server/ListQueuesServer.cpp
       ${VISHNU_SOURCE_DIR}/TMS/src/server/JobOutputServer.cpp
       ${VISHNU_SOURCE_DIR}/TMS/src/server/ScriptGenConvertor.cpp
-      ${VISHNU_SOURCE_DIR}/TMS/src/server/Env.cpp
       ${VISHNU_SOURCE_DIR}/TMS/src/server/WorkServer.cpp
       ${VISHNU_SOURCE_DIR}/TMS/src/utils/SharedLibrary.cc
       ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp

@@ -10,12 +10,17 @@
 #include "utilVishnu.hpp"
 #include "constants.hpp"
 #include "SystemException.hpp"
+#include "TMSVishnuException.hpp"
+
 #include <boost/regex.hpp>
 #include <boost/format.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <fstream>
+
+static const unsigned int MAXPATHLEN = 255;   // make this larger if you need to.
+
 
 /**
  * \brief Function to convert a string to a batch type
@@ -289,6 +294,7 @@ vishnu::createOutputDir(std::string& dirPath) {
   }
 }
 
+
 /**
  * \brief Function to create temporary file
  * \param fileName The name of the file to create
@@ -330,4 +336,288 @@ vishnu::recordMissingFiles(const std::string & fileName,
   }
   file.close();
 
+}
+
+
+
+
+/**
+ * \brief To get the full path to the current executable
+ */
+// TODO: this method is not portable
+// TODO: this method does not use boost
+std::string
+vishnu::getCurrentBinaryDir() {
+  int length;
+  char fullpath[MAXPATHLEN];
+  
+  /* /proc/self is a symbolic link to the process-ID subdir
+   * of /proc, e.g. /proc/4323 when the pid of the process
+   * of this program is 4323.
+   *
+   * Inside /proc/<pid> there is a symbolic link to the
+   * executable that is running as this <pid>.  This symbolic
+   * link is called "exe".
+   *
+   * So if we read the path where the symlink /proc/self/exe
+   * points to we have the full path of the executable.
+   */
+  
+  length = readlink("/proc/self/exe", fullpath, sizeof(fullpath));
+  
+  // Catch some errors
+  if (length < 0) {
+    std::cerr << "Error resolving symlink /proc/self/exe.\n";
+    exit(1);
+  }
+  if (length >= MAXPATHLEN) {
+    std::cerr << "Path too long. Truncated.\n";
+    exit(1);
+  }
+  
+  /* I don't know why, but the string this readlink() function
+   * returns is appended with a '@'.
+   */
+  fullpath[length] = '\0';       // Strip '@' off the end.
+  
+  // remove the executable name to get only the directory
+  std::string execFullPath = fullpath;
+  std::string execDir = execFullPath.substr(0,execFullPath.find_last_of("/"));
+  
+  return execDir;
+}
+
+/**
+ * \brief Function to replace some environment variables in a string
+ * \param scriptContent The string content to modify
+ * \param batchType The Batch Type
+ */
+void
+vishnu::replaceEnvVariables(std::string& scriptContent, const BatchType& batchType ) {
+  size_t pos;
+  std::string fileName = bfs::unique_path("/tmp/NODELIST_%%%%%%").string();
+  switch(batchType) {
+  case TORQUE:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    break;
+  case PBSPRO:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+    break;
+  case LOADLEVELER:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LOADL_STEP_ID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$LOADL_STEP_ID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LOADL_JOB_NAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LOADL_JOB_NAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$LOADL_HOSTFILE");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$LOADL_HOSTFILE");
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
+    break;
+
+  case SLURM:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$SLURM_JOB_ID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$SLURM_JOB_ID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$SLURM_JOB_NAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$SLURM_JOB_NAME");
+    //To replace SLURM_JOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$SLURM_JOB_NUM_NODES");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$SLURM_JOB_NUM_NODES");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+    pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+    if(pos!=std::string::npos) {
+      pos = scriptContent.rfind("\n", pos-1);
+      scriptContent.insert(pos+1, "echo $SLURM_JOB_NODELIST > "+fileName+"\n");
+      std::string tmp = "echo $SLURM_JOB_NODELIST > "+fileName+"\n";
+      scriptContent.insert(pos+1+tmp.size(), "sed -i 's/,/\\n/g' "+fileName+"\n");
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+      scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
+    }
+    break;
+
+  case LSF:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LSB_JOBID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$LSB_JOBID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LSB_JOBNAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LSB_JOBNAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+    pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+    if(pos!=std::string::npos) {
+      pos = scriptContent.rfind("\n", pos-1);
+      scriptContent.insert(pos+1, "echo $LSB_HOSTS > "+fileName+"\n");
+      std::string tmp = "echo $LSB_HOSTS > "+fileName+"\n";
+      scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+      //To replace VISHNU_BATCHJOB_NUM_NODES
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat "+fileName+" | sort | uniq | wc -l)");
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat "+fileName+" | sort | uniq | wc -l)");
+      scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
+    }
+    break;
+  case SGE:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$JOB_ID");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$JOB_ID");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$JOB_NAME");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$JOB_NAME");
+    //To replace VISHNU_BATCHJOB_NODEFILE
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+    pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+    if(pos!=std::string::npos) {
+      pos = scriptContent.rfind("\n", pos-1);
+      scriptContent.insert(pos+1, "echo $HOSTNAME > "+fileName+"\n");
+      std::string tmp = "echo $HOSTNAME > "+fileName+"\n";
+      scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
+      replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+      replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+    }
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
+    break;
+
+  case DELTACLOUD:
+    //To replace VISHNU_BATCHJOB_ID
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");
+    //To replace VISHNU_BATCHJOB_NAME
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
+    //To replace VISHNU_BATCHJOB_NUM_NODES. Depends on the number of nodes in VISHNU_BATCHJOB_NODEFILE
+    //Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
+    replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+    replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+    break;
+
+  default:
+    break;
+  }
+}
+
+
+/**
+ * \brief Function to replace all occurences in a string
+ * \param scriptContent The string to modify
+ * \param oldValue The value to replace
+ * \param newValue The new value
+ */
+
+void
+vishnu::replaceAllOccurences(std::string& scriptContent,
+                          const std::string& oldValue,
+                          const std::string& newValue) {
+  boost::replace_all(scriptContent, oldValue, newValue);
+}
+
+/**
+ * \brief function to set parameters appearing in a script
+ * \param scriptContent The string to modify
+ * \param \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+ */
+void
+vishnu::setParams(std::string& scriptContent,
+               const std::string & params) {
+  std::string paramName;
+  std::string paramValue;
+  size_t pos;
+  ListStrings paramsVec;
+
+  std::string& refParams = const_cast<std::string&>(params);
+  boost::trim(refParams);
+  boost::split(paramsVec, refParams, boost::is_any_of(" "));
+  for (ListStrings::iterator it = paramsVec.begin(); it != paramsVec.end(); ++it) {
+    pos = it->find("=");
+    if (pos != std::string::npos) {
+      paramName = it->substr(0, pos);
+      paramValue = it->substr(pos+1, std::string::npos);
+      replaceAllOccurences(scriptContent, "$" + paramName, paramValue);
+      replaceAllOccurences(scriptContent, "${" + paramName + "}", paramValue);
+    }
+  }
+}
+
+/**
+ * \brief Function to set environment variables according to parameters
+ * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+ */
+void
+vishnu::setParamsEnvVars(const std::string& params) {
+  std::string param;
+  size_t pos, pos1, pos2;
+
+  pos1 = 0;
+  while (pos2 = params.find(" ", pos1), pos2 != std::string::npos) {
+    param = params.substr(pos1, pos2);
+    pos = param.find("=");
+    if (pos != std::string::npos) {
+      setenv(param.substr(0, pos).c_str(),
+             param.substr(pos + 1, std::string::npos).c_str(), 1);
+    }
+    pos1 = pos2 + 1;
+  }
+  param = params.substr(pos1, std::string::npos); //last token
+  pos = param.find("=");
+  if (pos != std::string::npos ) {
+    setenv(param.substr(0, pos).c_str(),
+           param.substr(pos+1, std::string::npos).c_str(), 1);
+  }
+}
+
+
+/**
+ * \brief Function to retrieve an environment variable
+ * \param name The name of the variable
+ * \param optional tell whether the parameter is optional or not
+ * \param defaultValue give the default value return when the variable is optional
+ * \return the value of the environment variable or throw exception is the variable is set and is not optional
+ */
+std::string
+vishnu::getVar(const std::string& name,
+            const bool & optional,
+            const std::string defaultValue) {
+
+  std::string value = defaultValue;
+  char* cvalue = getenv(name.c_str());
+  if (cvalue != NULL) {
+    value = std::string(cvalue);
+  } else if (!optional) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             "Missing parameter " +name);
+  }
+
+  return value;
 }

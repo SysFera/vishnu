@@ -531,16 +531,16 @@ std::string vishnu::moveFileData(const std::string& fileparam, std::string dir) 
 /**
  *  \brief Function to create a working directory. The working directory needs rwxt permissions
  *  \param path the path of the working directory
+ *  \param isWorkingdir tell whether the directory will be a working directory
  */
-void vishnu::createWorkingDir(const std::string& path) {
+void vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
   try {
     bfs::create_directories(path);
-    // The working directory needs rwxt permissions
-    if (0 != chmod(path.c_str(),
+    if (isWorkingdir && chmod(path.c_str(),  // a working directory has the permissions rwxt
                   S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
                   |S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
                   |S_IROTH|S_IWOTH|S_IXOTH // RWX for other
-                  |S_ISVTX) ) {       // Striclky bit
+                  |S_ISVTX) != 0) {       // Sticky bit
       throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the working directory "
                             + path) ;
     }
