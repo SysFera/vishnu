@@ -608,7 +608,6 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
   if(!res) {
 
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
-    job.setJobId(vishnu::convertToString(jobId));
     job.setBatchJobId(vishnu::convertToString(jobId));
     job.setOutputPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path
     job.setErrorPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path

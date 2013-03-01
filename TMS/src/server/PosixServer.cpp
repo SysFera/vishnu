@@ -62,7 +62,6 @@ PosixServer::submit(const char* scriptPath,
 
   job.setOutputPath(std::string(resultat.outPutPath));
   job.setBatchJobId(std::string(resultat.jobId));
-  job.setJobId(std::string(resultat.jobId));
 
   job.setErrorPath(std::string(resultat.errorPath));
   job.setWallClockLimit(resultat.maxTime);

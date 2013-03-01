@@ -555,7 +555,6 @@ LSFServer::convertLSFPrioToVishnuPrio(const uint32_t& prio) {
 void
 LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
 
-  job.setJobId(lsb_jobid2str(jobInfo->jobId));
   job.setBatchJobId(lsb_jobid2str(jobInfo->jobId));
   job.setStatus(convertLSFStateToVishnuState(jobInfo->status));
   if(jobInfo->submit.jobName!=NULL){

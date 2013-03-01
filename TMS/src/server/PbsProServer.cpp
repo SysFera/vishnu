@@ -137,7 +137,7 @@ PbsProServer::submit(const char* scriptPath,
   if(p_status!=NULL) {
     fillJobInfo(job, p_status);
   }
-  job.setJobId(std::string(jobId));
+  job.setBatchJobId(std::string(jobId));
 
   return 0;
 }

@@ -213,9 +213,6 @@ int JobServer::submitJob(const std::string& scriptContent,
 
     mjob.setSubmitMachineId(mmachineId);
     mjob.setSubmitMachineName(machineName);
-    mjob.setJobId(vishnuJobId);
-    mjob.setBatchJobId(mjob.getJobId()); // do this before mjob.setJobId()
-    mjob.setJobId(vishnuJobId);
 
     string scriptContentStr = std::string(convertedScript);
     size_t pos = scriptContentStr.find("'");

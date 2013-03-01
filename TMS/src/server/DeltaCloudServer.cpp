@@ -127,7 +127,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 
   job.setBatchJobId(vishnu::convertToString(jobPid));
   job.setJobName("PID_"+job.getBatchJobId());
-  job.setJobId(vishnu::convertToString(jobPid));
+  job.setBatchJobId(vishnu::convertToString(jobPid));
   job.setVmId(instance.id);
   job.setStatus(vishnu::STATE_SUBMITTED);
   job.setVmIp(instance.private_addresses->address);

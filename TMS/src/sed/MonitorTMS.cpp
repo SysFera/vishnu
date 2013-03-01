@@ -107,23 +107,22 @@ MonitorTMS::run() {
         continue;
       }
 
-      std::string jobDescr = "";
-      std::string jobId = "";
-      std::string vmIp = "";
-      std::string vmId = "";
+      std::string jobId;
+	  std::string batchJobId;
+      std::string vmIp;
+      std::string vmId;
       std::vector<std::string> buffer;
       std::vector<std::string>::iterator item;
 
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
         buffer.clear();
         buffer = result->get(i);
-        item = buffer.begin(); jobId = *item;
-        ++item; jobDescr = *item;
+        item = buffer.begin(); 
+		jobId = *item;
+        ++item; batchJobId = *item;
         ++item; vmIp = *item;
         ++item; vmId = *item;
-        if (mbatchType == DELTACLOUD) {
-          jobDescr += "@"+vmUser+"@"+vmIp+"@"+vmId;
-        }
+		std::string jobDescr = (mbatchType == DELTACLOUD)? batchJobId+"@"+vmUser+"@"+vmIp+"@"+vmId : batchJobId;
         try {
           state = batchServer->getJobState(jobDescr);
           if (state != vishnu::STATE_UNDEFINED) {

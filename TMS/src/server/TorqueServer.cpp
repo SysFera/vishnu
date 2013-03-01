@@ -139,7 +139,7 @@ TorqueServer::submit(const char* scriptPath,
   if(p_status!=NULL) {
     fillJobInfo(job, p_status);
   }
-  job.setJobId(std::string(jobId));
+  job.setBatchJobId(std::string(jobId));
 
   return 0;
 }
@@ -642,7 +642,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   } // end while
 
   // Creating job
-  job.setJobId(jobid);
   job.setBatchJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);

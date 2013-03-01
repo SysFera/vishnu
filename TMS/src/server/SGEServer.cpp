@@ -332,7 +332,7 @@ SGEServer::submit(const char* scriptPath,
   }
 
   job.setStatus(getJobState(jobid));
-  job.setJobId(jobid);
+  job.setBatchJobId(jobid);
 
   drmaa_errno = drmaa_delete_job_template(jt, diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
