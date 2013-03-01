@@ -43,14 +43,12 @@ class SSHJobExec {
 
      /**
      * \brief Function to execute command by using ssh
-     * \param slaveDirectory the path to the command executable
      * \param serviceName the name of the service to execute
      * \param script_path the path to script to submit
      * \return raises an exception on error
      */
     void
-    sshexec(const std::string& slaveDirectory,
-            const std::string& serviceName,
+    sshexec(const std::string& serviceName,
             const std::string& script_path="");
 
     /**

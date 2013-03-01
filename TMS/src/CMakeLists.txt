@@ -102,7 +102,6 @@ if (COMPILE_SERVERS)
     server/ListQueuesServer.cpp
     server/JobOutputServer.cpp
     server/ScriptGenConvertor.cpp
-    server/Env.cpp
     server/WorkServer.cpp
     utils/SharedLibrary.cc
     ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
@@ -170,9 +169,9 @@ if (COMPILE_SERVERS)
   endif()
   
   # always compile posix server
-  add_library(vishnu-tms-posix1.0 ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix1.0 ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
-  install(TARGETS vishnu-tms-posix1.0 DESTINATION ${LIB_INSTALL_DIR})
+  add_library(vishnu-tms-posix ${POSIXSERVER})
+  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
+  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
 
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})

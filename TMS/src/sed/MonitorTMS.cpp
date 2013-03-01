@@ -13,9 +13,9 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "MonitorTMS.hpp"
-#include "Env.hpp"
+
 #include <csignal>
-#include "Env.hpp"
+
 #include <boost/format.hpp>
 
 /**
@@ -94,7 +94,7 @@ MonitorTMS::run() {
 
   std::string vmUser = "root";
   if (mbatchType == DELTACLOUD) {
-    vmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root");
+    vmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], true, "root");
   }
 
   BatchFactory factory;

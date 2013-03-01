@@ -16,7 +16,6 @@
 #include "common.h"
 #include <vector>
 #include "constants.hpp"
-#include "Env.hpp"
 #include "utilServer.hpp"
 
 
@@ -52,24 +51,24 @@ DeltaCloudServer::submit(const char* scriptPath,
   retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
 
   // Get configuration parameters
-  //FIXME: possibly memory leak if Env::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
+  //FIXME: possibly memory leak if vishnu::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
   if (mvmImageId.empty()) {
-    mvmImageId = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
+    mvmImageId = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_IMAGE], false);
   }
   if (mvmFlavor.empty()) {
-    mvmFlavor = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
+    mvmFlavor = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_DEFAULT_FLAVOR], false);
   }
   if (mvmUser.empty()) {
-    mvmUser = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
+    mvmUser = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER], false);
   }
   if (mvmUserKey.empty()) {
-    mvmUserKey = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
+    mvmUserKey = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
   }
   if (mnfsServer.empty()) {
-    mnfsServer = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+    mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
   }
   if(mnfsMountPoint.empty()) {
-    mnfsMountPoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+    mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
   }
   // Set the parameters of the virtual machine instance
   std::vector<deltacloud_create_parameter> params;
@@ -252,13 +251,13 @@ create_plugin_instance(void **instance) {
 void DeltaCloudServer::initialize(void) {
 
   if(mcloudEndpoint.empty()) {
-    mcloudEndpoint = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
+    mcloudEndpoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_ENDPOINT], false);
   }
   if(mcloudUser.empty()) {
-    mcloudUser= Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
+    mcloudUser= vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER], false);
   }
   if(mcloudUserPassword.empty()) {
-    mcloudUserPassword = Env::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
+    mcloudUserPassword = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_USER_PASSWORD], false);
   }
   mcloudApi =  new deltacloud_api;
   if (deltacloud_initialize(mcloudApi,
