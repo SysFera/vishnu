@@ -44,10 +44,8 @@ NetrcReader::NetrcReader(const std::string& path) : mpath(path) {}
   */
 void
 NetrcReader::read(map<size_t, pair<string,string> > &auth, const string& machineName) {
-  NetrcReader netrcReader;
-  netrcReader.check();
-
-  auth = netrcReader.getNetrcInfo(machineName);
+  this->check();
+  auth = this->getNetrcInfo(machineName);
 }
 
 
