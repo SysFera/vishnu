@@ -67,25 +67,24 @@ bool
 NetrcReader::searchValueFromKey(const string& key,
                                 string& value,
                                 vector<string>& tokens,
-                                std::map<size_t, pair<string,string> >& tab,
+                                std::map<size_t, pair<string, string> >& tab,
                                 const size_t machine_pos) {
-
   vector<string>::iterator beg = tokens.begin();
   vector<string>::iterator end = tokens.end();
-  size_t size = end-beg;
+  size_t size = end - beg;
 
-  if (machine_pos < size ) {
-    vector<string>::iterator iter = find(beg+machine_pos, end, key);
+  if (machine_pos < size) {
+    vector<string>::iterator iter = find(beg + machine_pos, end, key);
     value = "";
 
-    if (iter!=end) {
+    if (iter != end) {
       vector<string>::iterator keyIter = iter;
-      size_t keyPos = keyIter-beg;
+      size_t keyPos = keyIter - beg;
       ++iter;
-      if (iter!=end) {
+      if (iter != end) {
         value = *iter;
       }
-      tab[keyPos] = make_pair<string,string>(key, value);
+      tab[keyPos] = make_pair<string, string>(key, value);
       return true;
     }
   }
@@ -141,8 +140,9 @@ NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab,
   std::map<size_t, pair<string,string> >::iterator iter;
   std::map<size_t, pair<string,string> >::iterator end = tab.end();
   bool machineNameIsNotFound = true;
-  for(iter = tab.begin(); iter!=tab.end(); ++iter) {
-    if (iter->second == pair<string,string> ("machine", machineName)) {
+
+  for(iter = tab.begin(); iter != tab.end(); ++iter) {
+    if (iter->second == pair<string, string> ("machine", machineName)) {
       if (machineNameIsNotFound) {
         machineNameIsNotFound = false;
       }
@@ -176,9 +176,8 @@ NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab,
   */
 void
 NetrcReader::check() {
-
   struct stat fileStat;
-  boost::filesystem::path file (mpath);
+  boost::filesystem::path file(mpath);
 
   // Check the existence of file
   if (!boost::filesystem::exists(file)) {
@@ -190,11 +189,12 @@ NetrcReader::check() {
     throw UserException(ERRCODE_INVALID_PARAM, "The file " + mpath + " is not a regular file");
   }
 
-  //check if the file is empty
+  // Check if the file is empty
   if (boost::filesystem::is_empty(file)) {
     throw UserException(ERRCODE_INVALID_PARAM, "The file " + mpath + " is empty");
   }
 
+  // Check permissions
   if (stat(mpath.c_str(), &fileStat)) {
     throw UserException(ERRCODE_INVALID_PARAM,
                         "There is problems to get the permissions of the file: " + mpath);
@@ -203,7 +203,7 @@ NetrcReader::check() {
   std::ostringstream out;
   out << oct << fileStat.st_mode;
 
-  if (out.str().compare("100600") != 0) {
+  if (out.str() != "100600") {
       throw UserException(ERRCODE_INVALID_PARAM,
                         "The permissions of the file: " + mpath + " should be 600");
   }
@@ -217,7 +217,6 @@ NetrcReader::check() {
   */
 map<size_t, pair<string,string> >&
 NetrcReader::getNetrcInfo(const std::string& machineName) {
-
   ifstream infile;
   string line;
   string machineValue;
@@ -232,7 +231,7 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
   if (infile.is_open()) {
     while (!infile.eof()) {
       getline(infile, line);
-      fileContent = fileContent+ " "+line;
+      fileContent = fileContent +  " " + line;
     }
     infile.close();
 
@@ -251,24 +250,23 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
     vector<string>::iterator beg = tokens.begin();
     vector<string>::iterator end = tokens.end();
 
-    while(machinePos < tokensize) {
-
+    while (machinePos < tokensize) {
       machineTest = searchValueFromKey("machine", machineValue, tokens, tab, machinePos);
-      iter = find(beg+machinePos, end, "machine");
+      iter = find(beg + machinePos, end, "machine");
       if (machineValue.empty()) {
-        machinePos = (iter-beg)+1;
+        machinePos = (iter - beg) + 1;
       } else {
-        machinePos = (iter-beg)+2;
+        machinePos = (iter - beg) + 2;
       }
 
       loginTest = searchValueFromKey("login", loginValue, tokens, tab, machinePos);
-      iter = find(beg+machinePos, end, "login");
-      size_t tmp = iter-beg;
+      iter = find(beg + machinePos, end, "login");
+      size_t tmp = iter - beg;
       if (tmp <= machinePos) {
         if (loginValue.empty()) {
-          machinePos +=1;
+          machinePos += 1;
         } else {
-          machinePos +=2;
+          machinePos += 2;
         }
       }
 
@@ -277,11 +275,9 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
         break;
       }
     }
-//    return getIdentifiers(tab, machineName);
-//    return tab;
+
     return analyze(tab, machineName);
-  }
-  else {
+  } else {
     throw UserException(ERRCODE_INVALID_PARAM,
                         "The file: " + mpath + " can not be opened");
   }
