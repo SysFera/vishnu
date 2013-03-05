@@ -4,7 +4,7 @@
 /**
  * \file common.hpp
  * \brief This file defines convenients include file for the all VISHNU command line
- * interface 
+ * interface
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -24,6 +24,6 @@
 /**
  * \brief Contains a generic error message for required parameter missed
  */
-const std::string requiredParamMsg="required parameter is missing";
+const std::string REQUIREDPARAMMSG = "required parameter is missing";
 
 #endif
