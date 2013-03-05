@@ -72,14 +72,6 @@ class NetrcReader {
                         std::map<size_t, pair<string,string> >& tab,
                         const size_t machine_pos);
 
-    /**
-    * \brief Function to get the login and the password associated to a specific machine from a map
-    * \param tab a table in which the couple key and value are registered
-    * \param machineName the machine name used for searching the couple
-    * \return the login and password associated to the corresponding machineName
-    */
-    pair<string,string>
-    getIdentifiers(std::map<size_t, pair<string,string> >& tab, const string& machineName);
 
     /**
      * \brief Function to get the login and the password associated to a specific machine
