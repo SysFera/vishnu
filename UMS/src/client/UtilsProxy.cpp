@@ -13,13 +13,13 @@
 #include "UtilsProxy.hpp"
 #include "utilsClient.hpp"
 #include "UMSServices.hpp"
+#include "DIET_client.h"
 
 /**
  * \fn  UtilsProxy()
  * \brief Constructor, default constructor
  */
-UtilsProxy::UtilsProxy()
-{
+UtilsProxy::UtilsProxy() {
   mcfg  = NULL;
   margc = 0;
   margv = NULL;
@@ -35,8 +35,7 @@ UtilsProxy::UtilsProxy()
  * \brief Constructor
  */
 UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
-  mcfg(cfg), margc(argc), margv(argv)
-{
+  mcfg(cfg), margc(argc), margv(argv) {
 }
 
 /**
@@ -45,8 +44,7 @@ UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
  * \brief Constructor
  */
 UtilsProxy::UtilsProxy(const std::string& filePath):
-  mfilePath(filePath)
-{
+  mfilePath(filePath) {
   mcfg = NULL;
   margc = 0;
   margv = NULL;
@@ -79,29 +77,32 @@ UtilsProxy::initialize() {
  */
 int
 UtilsProxy::restore() {
-
   int READSIZE = 1000;
   diet_profile_t* profile = NULL;
   std::ifstream file(mfilePath.c_str(), std::ios::in);
   std::string errorInfo;
-  if(!file) {
+
+  if (!file) {
     return -1;
   }
+
   // While all has not been read
   while (-1 != file.tellg()){
     char* tmp = new char[READSIZE];
     file.getline(tmp, READSIZE);
-    if (strcmp(tmp, "")==0){
+    if (strcmp(tmp, "") == 0){
       break;
     }
+
     profile = diet_profile_alloc(SERVICES_UMS[RESTORE], 0, 0, 1);
     //IN Parameters
     diet_string_set(profile,0, tmp);
     //OUT Parameters
     diet_string_set(profile,1);
     delete [] tmp;
-    if(!diet_call(profile)){
-      if(diet_string_get(profile,1, errorInfo)) {
+
+    if (!diet_call(profile)) {
+      if (diet_string_get(profile, 1, errorInfo)) {
         raiseDietMsgException("VISHNU call failure");
       }
     } else {
@@ -117,6 +118,4 @@ UtilsProxy::restore() {
  * \fn ~UtilsProxy()
  * \brief Destructor, raises an exception on error
  */
-UtilsProxy::~UtilsProxy()
-{
-}
+UtilsProxy::~UtilsProxy() {}
