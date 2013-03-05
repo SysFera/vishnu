@@ -28,6 +28,9 @@ ums_test(ums_automTest4)
 ums_test(ums_automTest5)
 
 
+# Unit tests
+add_subdirectory(unit)
+
 
 ## Currently disabled, not maintained since a while
 # add_executable(ums_stresser stress.cpp)
