@@ -21,7 +21,6 @@
 #include "ConfigurationProxy.hpp"
 #include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
-#include "UtilsProxy.hpp"
 #include "utilVishnu.hpp"
 
 //TMS include

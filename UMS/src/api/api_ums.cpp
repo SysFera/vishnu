@@ -1230,19 +1230,3 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv) {
 void
 vishnu::vishnuFinalize(){
 }
-
-
-#ifdef BUILD_TESTING
-/**
- * \brief Function to initialize the database
- * \param filePath the file
- * \return an error code
- */
-int
-vishnu::restore(const std::string& filePath) {
-  UtilsProxy utilsProxy(filePath) ;
-
-  return utilsProxy.restore();
-}
-
-#endif

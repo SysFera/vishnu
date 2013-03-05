@@ -1,3 +1,9 @@
+/**
+ * \file vishnuTestUtils.hpp
+ * \brief This file contains a few utilities for tests.
+ * \author  Benjamin Isnard (benjamin.isnard@sysfera.com)
+ * \date May 2011
+ */
 #ifndef VISHNUTESTUTILS_HPP
 #define VISHNUTESTUTILS_HPP
 
@@ -5,9 +11,11 @@
 #include <fstream>
 #include <boost/test/unit_test.hpp>
 #include "api_ums.hpp"
+#include "DIET_client.h"
+#include "UMSServices.hpp"
+#include "utilClient.hpp"
 
 class VishnuConnection {
-
 public:
   VishnuConnection(const std::string& uid,
                    const std::string& upwd,
@@ -64,4 +72,47 @@ int createFile(const std::string& filePath) {
   return 0;
 }
 
-#endif
+/**
+ * \brief Function to initialize the database
+ * \fn  int restore()
+ * \return an error code
+ */
+int
+restore(const std::string& filePath) {
+  int READSIZE = 1000;
+  diet_profile_t* profile = NULL;
+  std::ifstream file(filePath.c_str(), std::ios::in);
+  std::string errorInfo;
+
+  if (!file) {
+    return -1;
+  }
+
+  // While all has not been read
+  while (-1 != file.tellg()) {
+    char* tmp = new char[READSIZE];
+    file.getline(tmp, READSIZE);
+    if (strcmp(tmp, "") == 0){
+      break;
+    }
+
+    profile = diet_profile_alloc(SERVICES_UMS[RESTORE], 0, 0, 1);
+    //IN Parameters
+    diet_string_set(profile, 0, tmp);
+    //OUT Parameters
+    diet_string_set(profile, 1);
+    delete [] tmp;
+
+    if (!diet_call(profile)) {
+      if (diet_string_get(profile, 1, errorInfo)) {
+        raiseDietMsgException("VISHNU call failure");
+      }
+    } else {
+      raiseDietMsgException("VISHNU call failure");
+    }
+    raiseExceptionIfNotEmptyMsg(errorInfo);
+  }
+  return 0;
+}
+
+#endif  // VISHNUTESTUTILS_HPP

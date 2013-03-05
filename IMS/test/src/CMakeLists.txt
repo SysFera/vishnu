@@ -24,6 +24,8 @@ include_directories(
   ${FMS_TEST_SOURCE_DIR}
   ${TMS_TEST_SOURCE_DIR}
   ${IMS_UTIL_DIR}
+  ${VISHNU_SOURCE_DIR}/UMS/src/sed
+  ${VISHNU_SOURCE_DIR}/communication
   )
 
 
