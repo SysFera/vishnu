@@ -11,15 +11,16 @@
  * \brief Function to check if a text is empty
  * \param text The text to check
  * \param comMsg The complementary message to print
- * \param execpetionType The type of exception to raise
+ * \param exceptionType The type of exception to raise
  * \return raises an exception on error
  */
-void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType) {
-
-  if(text.size()==0) {
-    throw UMSVishnuException(execpetionType, compMsg);
+void
+checkIfTextIsEmpty(const std::string& text,
+                   const std::string& compMsg,
+                   const int& exceptionType) {
+  if (text.empty()) {
+    throw UMSVishnuException(exceptionType, compMsg);
   }
-
 }
 
 /**
@@ -27,11 +28,9 @@ void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, con
  * \param mail The email to check
  * \return raises an exception on error
  */
-void checkEmail(const std::string& mail) {
-
-  if(mail.find("@")==std::string::npos) {
+void
+checkEmail(const std::string& mail) {
+  if (mail.find("@") == std::string::npos) {
     throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS);
   }
-
 }
-

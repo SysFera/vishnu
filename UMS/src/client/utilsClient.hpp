@@ -20,27 +20,31 @@
  * \fn  inline void errMsg(const std::string& msg)
  * \param msg to print
  */
-inline void errMsg(const std::string& msg) {
-  std::cerr << "Error line " << __LINE__-1  << " in file " << __FILE__ << " with message: ";
-  std::cerr << std::endl;
-  std::cerr << msg << std::endl;
+inline void
+errMsg(const std::string& msg) {
+  std::cerr << "Error line " << __LINE__-1  << " in file " << __FILE__
+            << " with message:\n" << msg << "\n";
 }
 
 /**
  * \brief Function to check if a text is empty
  * \param text The text to check
  * \param compMsg The complementary message to print
- * \param execpetionType The type of exception to raise
+ * \param exceptionType The type of exception to raise
  * \exception raises an exception on error
  */
-void checkIfTextIsEmpty(const std::string& text, const std::string& compMsg, const int& execpetionType);
+void
+checkIfTextIsEmpty(const std::string& text,
+                   const std::string& compMsg,
+                   const int& exceptionType);
 
 /**
  * \brief Function to check if an email is valid
  * \param mail The email to check
  * \return raises an exception on error
  */
-void checkEmail(const std::string& mail);
+void
+checkEmail(const std::string& mail);
 
 
 #endif
