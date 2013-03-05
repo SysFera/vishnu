@@ -22,7 +22,6 @@
 
 //Vishnu Headers
 #include "QueryProxy.hpp"
-#include "UtilsProxy.hpp"
 #include "utilVishnu.hpp"
 
 

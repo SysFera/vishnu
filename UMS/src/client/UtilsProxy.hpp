@@ -7,6 +7,7 @@
 #ifndef _UTILS_PROXY_H_
 #define _UTILS_PROXY_H_
 
+#include <string>
 
 /**
  * \brief The class with the utilitaries function (not in the cli api)
@@ -46,16 +47,9 @@ public:
   int
   initialize();
 
-#ifdef BUILD_TESTING
   /**
-   * \brief Function to initialize the database
-   * \fn int restore()
-   * \return an error code
+   * Destructor
    */
-  int
-  restore();
-#endif
-
   ~UtilsProxy();
 
 private:
