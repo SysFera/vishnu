@@ -141,7 +141,7 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
   }
   catch(po::required_option& e){// a required parameter is missing
 
-    usage(*opt,"[options] optionName value ",requiredParamMsg);
+    usage(*opt,"[options] optionName value ",REQUIREDPARAMMSG);
 
     return CLI_ERROR_MISSING_PARAMETER;
   }

@@ -18,9 +18,8 @@ class Options;
  * \param size: The number of '-' to diplay
  * \param os The output stream in which the display will be done.
  */
-
 void
-setFill(int size, std::ostream& os) ;
+setFill(int size, std::ostream& os);
 
 /**
  * \brief Helper function to display a session
@@ -28,9 +27,6 @@ setFill(int size, std::ostream& os) ;
  * \param session: The session to display
  * \return The output stream in which the session has been printed
  */
-
-
-
 std::ostream&
 operator<<(std::ostream& os, const UMS_Data::Session_ptr& session);
 
@@ -40,7 +36,6 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session);
  * \param listSession: The list to display
  * \return The output stream in which the list of sessions has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListSessions& listSession);
 
@@ -50,8 +45,6 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession);
  * \param account: The local account  to display
  * \return The output stream in which the local account has been printed
  */
-
-
 std::ostream&
 operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
 
@@ -61,7 +54,6 @@ operator<<(std::ostream& os, const UMS_Data::LocalAccount_ptr& account);
  * \param lsLocalAccounts: The list to display
  * \return The output stream in which the list of local accounts has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
 
@@ -71,7 +63,6 @@ operator<<(std::ostream& os, UMS_Data::ListLocalAccounts& lsLocalAccounts);
  * \param authSystem: The authentication system  to display
  * \return The output stream in which the authentication system has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem);
 
@@ -81,7 +72,6 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem);
  * \param lsAuthSystems: The list to display
  * \return The output stream in which the list of authentication systems has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems);
 
@@ -92,7 +82,6 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems);
  * \param authAccount: The authentication account  to display
  * \return The output stream in which the authentication account has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount);
 
@@ -102,7 +91,6 @@ operator<<(std::ostream& os, const UMS_Data::AuthAccount_ptr& authAccount);
  * \param lsAuthAccounts: The list to display
  * \return The output stream in which the list of authentication accounts has been printed
  */
-
 std::ostream&
 operator<<(std::ostream& os, UMS_Data::ListAuthAccounts& lsAuthAccounts);
 

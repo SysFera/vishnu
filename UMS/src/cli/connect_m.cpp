@@ -159,7 +159,7 @@ int main (int ac, char* av[]){
 
 //  catch(po::required_option& e){// a required parameter is missing
 //
-//    usage(*opt,"[options] ",requiredParamMsg);
+//    usage(*opt,"[options] ",REQUIREDPARAMMSG);
 //
 //    return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
 //  }
