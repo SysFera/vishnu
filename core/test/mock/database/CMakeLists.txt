@@ -27,7 +27,7 @@ if(COMPILE_SERVERS)
   #    utils/Logger.cpp
       )
 
-  if ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+  if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     include_directories(${LDAP_PROXY_SOURCE_DIR})
     set(authenticator_SRCS
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorConfiguration.cpp
@@ -38,13 +38,14 @@ if(COMPILE_SERVERS)
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/UMSLDAPAuthenticator.cpp
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/LDAPUMSAuthenticator.cpp
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/ldap/LDAPProxy.cpp)
-  else ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+    set(AUTH_LIBS ${LDAP_LIBRARIES})
+  else ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     set(authenticator_SRCS
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorConfiguration.cpp
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorFactory.cpp
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/Authenticator.cpp
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/UMSAuthenticator.cpp)
-  endif ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+  endif ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
 
   include_directories(${UMS_EMF_DATA_DIR})
   set (version_manager_SRCS
@@ -52,5 +53,5 @@ if(COMPILE_SERVERS)
 
   add_library(vishnu-core-server-mock ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-core-server-mock vishnu-core mockDb)
+  target_link_libraries(vishnu-core-server-mock vishnu-core mockDb ${AUTH_LIBS})
 endif()
