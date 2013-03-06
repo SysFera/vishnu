@@ -1,6 +1,6 @@
 /**
  * \file stope_file_transfer.cpp
- * This file defines the VISHNU stop file transfer command 
+ * This file defines the VISHNU stop file transfer command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -29,7 +29,7 @@ using namespace vishnu;
  * \param fuserId: The user identifier
  */
 boost::shared_ptr<Options>
-makeStopFileTrOpt(string pgName, 
+makeStopFileTrOpt(string pgName,
     string& configFile,
     boost::function1<void, string>& ftransferId,
     boost::function1<void, string>& ffromMachineId,
@@ -63,7 +63,7 @@ makeStopFileTrOpt(string pgName,
 
 
 int main (int argc, char* argv[]){
-  
+
   int ret; // Return value
 
   /******* Parsed value containers ****************/
@@ -85,14 +85,14 @@ int main (int argc, char* argv[]){
 
  // Parse the cli and setting the options found
   ret = cmd.parse(env_name_mapper());
-  
+
   if (ret != CLI_SUCCESS){
     helpUsage(*opt,"[options]");
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);  
+  checkVishnuConfig(*opt);
   if ( opt->count("help")){
     helpUsage(*opt,"[options] ");
     return 0;
@@ -110,9 +110,8 @@ int main (int argc, char* argv[]){
     // get the sessionKey
     sessionKey=getLastSessionKey(getppid());
 
-    // DIET call 
+    // DIET call
     if(false==sessionKey.empty()){
-      printSessionKeyMessage();
       stopFileTransfer(sessionKey, stopFileTransferOptions);
     }
   } catch(VishnuException& e){// catch all Vishnu runtime error

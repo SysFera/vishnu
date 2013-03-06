@@ -240,16 +240,6 @@ diffLocaltimeUTCtime();
 int
 deleteFile(const char* fileName);
 
-
-/**
- * \brief Function to display the session key
- */
-inline void
-printSessionKeyMessage() {
-  // can be used to display a message containing the current session key
-  ;
-}
-
 /**
  * \brief Function to check the metric value
  * \param metric: the metric value
