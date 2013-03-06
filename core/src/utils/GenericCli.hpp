@@ -60,8 +60,6 @@ class GenericCli {
 
           // DIET call
           if(false==sessionKey.empty()){
-            printSessionKeyMessage();
-
             //call of the api fuction
             int ret =function(sessionKey);
 

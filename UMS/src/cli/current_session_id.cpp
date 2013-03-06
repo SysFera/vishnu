@@ -32,7 +32,6 @@ int main (int ac, char* av[]){
 
   // DIET call
   if(false==sessionId.empty()){
-    printSessionKeyMessage();
     std::cout << "current sessionId: " <<  sessionId << "\n";
     return VISHNU_OK;
   }

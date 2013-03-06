@@ -341,7 +341,6 @@ int main (int argc, char* argv[]){
 
     // DIET call : submit
     if(false==sessionKey.empty()){
-      printSessionKeyMessage();
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }
     displaySubmit(job);

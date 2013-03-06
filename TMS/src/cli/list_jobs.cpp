@@ -264,7 +264,6 @@ main (int argc, char* argv[]) {
 
     // DIET call : submit
     if (!sessionKey.empty()) {
-      printSessionKeyMessage();
       listJobs(sessionKey, machineId, job, jobOp);
     }
     if (jobOp.getOwner().size() == 0 && jobOp.getJobId().size() == 0  && jobOp.getNbCpu() <= 0
