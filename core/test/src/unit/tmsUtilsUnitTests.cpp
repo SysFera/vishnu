@@ -139,5 +139,26 @@ BOOST_AUTO_TEST_CASE( test_convertJobStateToString_b )
   BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_FAILED + 10), "UNDEFINED");
 }
 
+BOOST_AUTO_TEST_CASE( test_convertWallTimeToString_n )
+{
+  long one_second  = 1;
+  long ten_seconds = 10;
+  long one_minute  = 60;
+  long ten_minutes = one_minute * 10;
+  long one_hour    = one_minute * 60;
+  long ten_hours   = one_hour * 10;
+  long one_day     = one_hour * 24;
+  long ten_days    = one_day * 10;
+
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(one_second), "00:00:01");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(ten_seconds), "00:00:10");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(one_minute), "00:01:00");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(ten_minutes), "00:10:00");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(one_hour), "01:00:00");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(ten_hours), "10:00:00");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(one_day), "01:00:00:00");
+  BOOST_REQUIRE_EQUAL(vishnu::convertWallTimeToString(ten_days), "10:00:00:00");
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
