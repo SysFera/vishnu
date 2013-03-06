@@ -306,36 +306,6 @@ vishnu::isNumericalValue(const std::string& value) {
   return ret;
 }
 
-
-/**
- * \brief Function to check the job nbNodesAndCpuPerNode
- * \param nbNodesAndNbCpuPerNode the number of nodes and cpu per node
- * \return raises an exception on error
- */
-void
-vishnu::checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode) {
-  if(nbNodesAndCpuPerNode.size()) {
-    size_t posNbNodes;
-    try {
-      posNbNodes = nbNodesAndCpuPerNode.find(":");
-      if(posNbNodes!=std::string::npos) {
-
-        std::string nbNodes = nbNodesAndCpuPerNode.substr(0, posNbNodes);
-        isNumericalValue(nbNodes);
-
-        std::string cpuPerNode = nbNodesAndCpuPerNode.substr(posNbNodes+1);
-        isNumericalValue(cpuPerNode);
-      } else {
-        throw UserException(ERRCODE_INVALID_PARAM,
-                            ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
-      }
-    } catch(UserException& ue) {
-      throw UserException(ERRCODE_INVALID_PARAM,
-                          ("Invalid NbNodesAndNbCpuPerNode value: "+nbNodesAndCpuPerNode));
-    }
-  }
-}
-
 /**
  * \brief Function to get current time in seconds (UTC)
  * \return the time as the number of seconds since the Epoch, 1970-01-01 00:00:00 +0000 (UTC)
@@ -659,4 +629,3 @@ vishnu::sourceFile(const std::string& filePath) {
     }
   }
 }
-
