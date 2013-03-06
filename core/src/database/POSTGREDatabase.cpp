@@ -4,10 +4,12 @@
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 31/01/2011
  */
-#include <sstream>
-#include <iostream>
-#include <boost/scoped_ptr.hpp>
 #include "POSTGREDatabase.hpp"
+
+#include <sstream>
+#include <vector>
+#include <boost/scoped_ptr.hpp>
+
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 

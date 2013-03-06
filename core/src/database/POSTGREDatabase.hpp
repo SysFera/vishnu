@@ -8,10 +8,14 @@
 #ifndef _POSTGREDATABASE_H_
 #define _POSTGREDATABASE_H_
 
-#include "Database.hpp"
-#include "DbConfiguration.hpp"
-#include "libpq-fe.h"
+#include <string>
 #include <pthread.h>
+
+#include "Database.hpp"
+#include "DatabaseResult.hpp"
+#include "DbConfiguration.hpp"
+
+#include "libpq-fe.h"
 
 /**
  * \class POSTGREDatabase

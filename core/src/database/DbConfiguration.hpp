@@ -9,6 +9,7 @@
 #define _DBCONFIGURATION_HPP_
 
 #include "ExecConfiguration.hpp"
+#include "UserException.hpp"
 
 /**
  * \class DbConfiguration

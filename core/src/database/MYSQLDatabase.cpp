@@ -1,11 +1,14 @@
 /**
- * \file MYSQLDatabase.cc
+ * \file MYSQLDatabase.cpp
  * \brief This file implements the SQL database.
  * \author Kevin Coulomb (kevin.coulomb@sysfera.com)
  * \date 15/12/10
  */
 #include "MYSQLDatabase.hpp"
+
 #include <boost/scoped_ptr.hpp>
+#include <vector>
+
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 #include "errmsg.h"

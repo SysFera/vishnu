@@ -2,13 +2,11 @@
  * \file ExecConfiguration.cpp
  */
 
-#include <regex.h>
-#include <stdexcept>
-#include <unistd.h>
-#include <boost/algorithm/string.hpp>
 #include "ExecConfiguration.hpp"
+
+#include <boost/algorithm/string.hpp>
+
 #include "constants.hpp"
-#include <unistd.h>
 
 
 using namespace std;

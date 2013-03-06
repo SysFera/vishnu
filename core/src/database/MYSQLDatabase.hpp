@@ -8,7 +8,13 @@
 #ifndef _MYSDLDATABASE_H_
 #define _MYSQLDATABASE_H_
 
+#include <string>
+#include <pthread.h>
+
 #include "Database.hpp"
+#include "DatabaseResult.hpp"
+#include "DbConfiguration.hpp"
+
 #include "mysql.h"
 
 /**

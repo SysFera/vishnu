@@ -5,14 +5,13 @@
  * \author Haikel Guemar <hguemar@sysfera.com>
  */
 
-#include <cctype>
+#include "FileParser.hpp"
+
 #include <algorithm>
 #include <fstream>
-#include <sstream>
 #include <boost/algorithm/string.hpp>
 
 #include "CommonParser.hpp"
-#include "FileParser.hpp"
 
 FileParser::FileParser() {
 }

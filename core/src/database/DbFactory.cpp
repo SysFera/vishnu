@@ -5,8 +5,8 @@
  * \date 15/12/10
  */
 
-#include <iostream>
 #include "DbFactory.hpp"
+
 #include "SystemException.hpp"
 #ifdef USE_POSTGRES
 #include "POSTGREDatabase.hpp"
@@ -14,7 +14,6 @@
 #ifdef USE_MYSQL
 #include "MYSQLDatabase.hpp"
 #endif
-//#include "OracleDatabase.hpp"
 
 Database* DbFactory::mdb = NULL; //%RELAX<MISRA_0_1_3> Used in this file
 
@@ -31,22 +30,22 @@ DbFactory::createDatabaseInstance(DbConfiguration config)
     throw SystemException(ERRCODE_DBERR, "Database instance already initialized");
   }
   switch (config.getDbType()){
-    case DbConfiguration::POSTGRESQL :
+  case DbConfiguration::POSTGRESQL :
 #ifdef USE_POSTGRES
-      mdb = new POSTGREDatabase(config);
+    mdb = new POSTGREDatabase(config);
 #else
-      throw SystemException(ERRCODE_DBERR, "PostgreSQL is not enabled (re-compile with ENABLE_POSTGRES)");
+    throw SystemException(ERRCODE_DBERR, "PostgreSQL is not enabled (re-compile with ENABLE_POSTGRES)");
 #endif
-      break;
-    case DbConfiguration::ORACLE:
-      break;
-    case DbConfiguration::MYSQL:
+    break;
+  case DbConfiguration::MYSQL:
 #ifdef USE_MYSQL
-      mdb = new MYSQLDatabase(config);
+    mdb = new MYSQLDatabase(config);
 #else
-      throw SystemException(ERRCODE_DBERR, "MySQL is not enabled (re-compile with ENABLE_MYSQL)");
+    throw SystemException(ERRCODE_DBERR, "MySQL is not enabled (re-compile with ENABLE_MYSQL)");
 #endif
-      break;
+    break;
+  case DbConfiguration::ORACLE:
+    // Intentional fallthrough, Oracle is not managed
   default:
     throw SystemException(ERRCODE_DBERR, "Database instance type unknown or not managed");
   }
@@ -60,4 +59,3 @@ Database* DbFactory::getDatabaseInstance()
   }
   return mdb;
 }
-
