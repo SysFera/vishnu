@@ -85,11 +85,7 @@ main(int ac, char* av[]) {
 
     storeLastSession(session,getppid()); // store sessionKey into $HOME/.vishnu/sessions
     std::cout << "sessionId: " << session.getSessionId() << "\n";
-
-    printSuccessMessage();
-
-
-  }// End of try bloc
+  }  // End of try bloc
 
 
   catch(po::required_option& e){// a required parameter is missing

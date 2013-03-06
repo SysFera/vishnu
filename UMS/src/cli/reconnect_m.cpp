@@ -99,10 +99,6 @@ int main (int ac, char* av[]){
     // store the session information
 
     storeLastSession(session,getppid());
-
-    printSuccessMessage();
-
-
   }// End of try bloc
 
   catch(VishnuException& e){// catch all Vishnu runtime error
@@ -127,5 +123,3 @@ int main (int ac, char* av[]){
   // }}RELAX<CODEREDUCER>
 
 }// end of main
-
-

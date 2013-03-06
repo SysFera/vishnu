@@ -58,18 +58,14 @@ class GenericCli {
           // get the sessionKey
           std::string sessionKey=getLastSessionKey(getppid());
 
-          // DIET call 
+          // DIET call
           if(false==sessionKey.empty()){
             printSessionKeyMessage();
-            
+
             //call of the api fuction
             int ret =function(sessionKey);
 
-            if (VISHNU_OK == ret){
-            printSuccessMessage();
-            } 
             return ret;
-
           }
           errorUsage(av[0],"cannot retrieve sessionKey");
           return CLI_ERROR_RUNTIME;
@@ -116,12 +112,7 @@ class GenericCli {
 
           //call of the api fuction
           int ret =function();
-
-          if (VISHNU_OK == ret) {
-            printSuccessMessage(); 
-        }
-        return ret;
-
+          return ret;
         } catch(VishnuException& e){// catch all Vishnu runtime error
           std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
           errorUsage(av[0], msg,EXECERROR);
@@ -135,14 +126,14 @@ class GenericCli {
 
 
     /**
-     * \brief To parse command line options 
+     * \brief To parse command line options
      * \param opt the description of the command line options
      * \param isEmpty To check if command line does not contain option
      * \param ac The number of command line arguments
-     * \param av The command line arguments 
+     * \param av The command line arguments
      * \param signature The signature of the command
      */
-    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[], 
+    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[],
         const std::string& signature="") {
 
       CLICmd cmd = CLICmd (ac, av, opt);
@@ -177,4 +168,4 @@ class GenericCli {
     }
 };
 
-#endif 
+#endif
