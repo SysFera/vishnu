@@ -99,7 +99,7 @@ public:
       addOptionRequest("job.status", convertToString(options->getStatus()), sqlRequest); //Append the amount of the cpu
     } else {
       if (options->getJobId().empty() && options->getMultipleStatus().empty()) {
-        sqlRequest.append(" and job.status < "+vishnu::convertToString(vishnu::STATE_DOWNLOADED));
+        sqlRequest.append(" and job.status < "+vishnu::convertToString(vishnu::STATE_COMPLETED));
       }
     }
 
