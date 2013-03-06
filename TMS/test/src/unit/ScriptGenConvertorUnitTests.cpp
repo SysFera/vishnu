@@ -144,7 +144,7 @@ BOOST_AUTO_TEST_CASE( test_parseFile_sucess )
   ScriptGenConvertor scriptGenConvertor(0, generic_Script);
   std::string errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
 }
 BOOST_AUTO_TEST_CASE( test_parseFile_error1 )
 {
@@ -174,7 +174,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_Torque )
   ScriptGenConvertor scriptGenConvertor_Torque(0, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_Torque.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_Torque.getConvertedScript();
   BOOST_CHECK_EQUAL(script,torque_Script);
 
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_LL )
   ScriptGenConvertor scriptGenConvertor_LL(1, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_LL.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_LL.getConvertedScript();
   BOOST_CHECK_EQUAL(script,ll_Script);
 }
@@ -199,7 +199,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_Slurm )
   ScriptGenConvertor scriptGenConvertor_SLURM(2, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_SLURM.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_SLURM.getConvertedScript();
   BOOST_CHECK_EQUAL(script,slurm_Script);
 }
@@ -211,7 +211,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_LSF )
   ScriptGenConvertor scriptGenConvertor_LSF(3, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_LSF.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_LSF.getConvertedScript();
   BOOST_CHECK_EQUAL(script,lsf_Script);
 }
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_SGE )
   ScriptGenConvertor scriptGenConvertor_SGE(4, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_SGE.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_SGE.getConvertedScript();
   BOOST_CHECK_EQUAL(script,sge_Script);
 }
@@ -235,7 +235,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_PBSPRO )
   ScriptGenConvertor scriptGenConvertor_PBSPRO(5, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_PBSPRO.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_PBSPRO.getConvertedScript();
   BOOST_CHECK_EQUAL(script,pbs_Script);
 }
@@ -247,7 +247,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_DELTACLOU )
   ScriptGenConvertor scriptGenConvertor_DELTACLOUD(6, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_DELTACLOUD.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_DELTACLOUD.getConvertedScript();
   BOOST_CHECK_EQUAL(script,deltacloud_Script);
 }
@@ -259,7 +259,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_POSIX )
   ScriptGenConvertor scriptGenConvertor_POSIX(7, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_POSIX.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_POSIX.getConvertedScript();
   BOOST_CHECK_EQUAL(script,posix_Script);
 }
@@ -270,8 +270,8 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDEFINED )
   std::string script="";
   ScriptGenConvertor scriptGenConvertor_UNDEFINED(-1, generic_Script);
   errormsg="";
-  BOOST_CHECK_EQUAL(scriptGenConvertor_UNDEFINED.parseFile(errormsg),0);
-  BOOST_CHECK(errormsg=="");
+  BOOST_CHECK_EQUAL(scriptGenConvertor_UNDEFINED.parseFile(errormsg), 0);
+  BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_UNDEFINED.getConvertedScript();
   BOOST_CHECK_EQUAL(script,generic_Script);
 }
