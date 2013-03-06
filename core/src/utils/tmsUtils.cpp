@@ -91,6 +91,7 @@ vishnu::convertJobStateToString(const int& state) {
 
 /**
  * \brief Function a given walltime into string
+ * in the form [days:]hours:minutes:seconds (each on two digits)
  * \param walltime The walltime to convert
  * \return the walltime converted to string
  */
