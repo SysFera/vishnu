@@ -71,7 +71,6 @@ main(int argc, char* argv[], char* envp[]) {
   struct sigaction action;
   string UMSTYPE = "umssed";
   string mid;
-  string cfg;
   string uri;
   string uridispatcher;
 
@@ -126,19 +125,10 @@ main(int argc, char* argv[], char* envp[]) {
 
 
     // Initialize the DIET SeD
-    try {
-      std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(UMSTYPE, config, cfg, ls);
-    } catch (VishnuException& e) {
-      std::cout << "failed to register with err" << e.what()  << std::endl;
-    }
-
     if (!res) {
-      ZMQServerStart(server, uri);
-      unregisterSeD(UMSTYPE, config);
+      initSeD(UMSTYPE, config, uri, server);
     } else {
       std::cerr << "There was a problem during services initialization\n";
-      unregisterSeD(UMSTYPE, config);
       exit(1);
     }
   } else if (pid == 0) {

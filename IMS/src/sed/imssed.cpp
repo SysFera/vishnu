@@ -89,7 +89,6 @@ main(int argc, char* argv[], char* envp[]) {
   string IMSTYPE = "imssed";
   struct sigaction action;
   string mid;
-  string cfg;
   string uri;
 
   if (argc < 2) {
@@ -119,7 +118,6 @@ main(int argc, char* argv[], char* envp[]) {
   }
 
   // Initialize the IMS Server (Opens a connection to the database)
-//  ServerIMS* server = ServerIMS::getInstance();
   boost::shared_ptr<ServerIMS> server(ServerIMS::getInstance());
 
   res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
@@ -130,33 +128,20 @@ main(int argc, char* argv[], char* envp[]) {
   thread thr2(bind(&HM::run, &hm));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   //Declaration of signal handler, to remove script children
-   action.sa_handler = controlSignal;
-   sigemptyset (&(action.sa_mask));
-   action.sa_flags = 0;
-   sigaction (SIGCHLD, &action, NULL);
+  action.sa_handler = controlSignal;
+  sigemptyset (&(action.sa_mask));
+  action.sa_flags = 0;
+  sigaction (SIGCHLD, &action, NULL);
 
-  // Initialize the DIET SeD
-  try {
-    std::vector<std::string> ls = server.get()->getServices();
-    registerSeD(IMSTYPE, config, cfg, ls);
-  } catch (VishnuException& e) {
-    std::cout << "failed to register with err" << e.what()  << std::endl;
-  }
-
+  // Initialize the IMS server
   if (!res) {
-    ZMQServerStart(server, uri);
-    unregisterSeD(IMSTYPE, config);
-    pid_t pid = getpid();
-    kill(pid, SIGINT);
+    initSeD(IMSTYPE, config, uri, server);
   } else {
     std::cerr << "There was a problem during services initialization\n";
-    unregisterSeD(IMSTYPE, config);
     exit(1);
   }
 
-  // To avoid quitting to fast in case of problems
-  while(1){
-    sleep(1000);
-  }
+  thr2.join();
+
   return res;
 }

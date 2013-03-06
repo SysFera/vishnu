@@ -1,4 +1,7 @@
 #include "CommServer.hpp"
+
+#include <boost/shared_ptr.hpp>
+
 #include "Database.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
@@ -8,9 +11,10 @@
 #include "DIET_client.h"
 #include "Server.hpp"
 #include "zhelpers.hpp"
+#include "SeD.hpp"
 
 int
-unregisterSeD(std::string type, ExecConfiguration config) {
+unregisterSeD(const std::string& type, const ExecConfiguration& config) {
   return 0;
 }
 
@@ -24,8 +28,8 @@ validateUri(const std::string & uri) {
 }
 
 int
-registerSeD(std::string type, ExecConfiguration config,
-            std::string& cfg, std::vector<std::string>& services) {
+registerSeD(const std::string& type, const ExecConfiguration& config,
+            std::vector<std::string>& services) {
   std::string uri;
   std::string mid;
   std::string uridispatcher;
@@ -84,4 +88,19 @@ registerSeD(std::string type, ExecConfiguration config,
   std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
 
   return 0;
+}
+
+void
+initSeD(const std::string& type, const ExecConfiguration& config,
+        const std::string& uri, boost::shared_ptr<SeD> server) {
+  // Initialize the DIET SeD
+  try {
+    std::vector<std::string> ls = server.get()->getServices();
+    registerSeD(type, config, ls);
+  } catch (VishnuException& e) {
+    std::cout << "failed to register with err" << e.what()  << std::endl;
+  }
+
+  ZMQServerStart(server, uri);
+  unregisterSeD(type, config);
 }

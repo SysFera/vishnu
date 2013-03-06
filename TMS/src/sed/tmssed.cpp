@@ -113,7 +113,6 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string remoteBinDirectory;
   std::string defaultBatchConfig;
   string TMSTYPE = "tmssed";
-  string cfg;
   string uri;
 
   if (argc != 2) {
@@ -229,10 +228,6 @@ int main(int argc, char* argv[], char* envp[]) {
         exit(1);
       }
 
-      //Initialize the TMS Server
-      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, config);
-
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 
       // check the machine
@@ -244,20 +239,13 @@ int main(int argc, char* argv[], char* envp[]) {
         delete machine;
       }
 
-      // Initialize the DIET SeD
-      try {
-        std::vector<std::string> ls = server.get()->getServices();
-        registerSeD(TMSTYPE, *config, cfg, ls);
-      } catch (VishnuException& e) {
-        std::cout << "failed to register with err" << e.what()  << std::endl;
-      }
-
+      //Initialize the TMS Server
+      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
+      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, config);
       if (!res) {
-        ZMQServerStart(server, uri);
-        unregisterSeD(TMSTYPE, *config);
+        initSeD(TMSTYPE, *config, uri, server);
       } else {
-        std::cerr << "\nAn error occurred when initializing the services\n\n";
-        unregisterSeD(TMSTYPE, *config);
+        std::cerr << "There was a problem during services initialization\n";
         exit(1);
       }
     } catch (VishnuException& e) {
