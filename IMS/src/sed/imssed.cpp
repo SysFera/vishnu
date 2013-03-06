@@ -124,8 +124,6 @@ main(int argc, char* argv[], char* envp[]) {
 
   res = server->init(vishnuId, dbConfig, sendmailScriptPath, mid);
 
-  std::vector<std::string> ls = server.get()->getServices();
-  registerSeD(IMSTYPE, config, cfg, ls);
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);
@@ -138,6 +136,13 @@ main(int argc, char* argv[], char* envp[]) {
    sigaction (SIGCHLD, &action, NULL);
 
   // Initialize the DIET SeD
+  try {
+    std::vector<std::string> ls = server.get()->getServices();
+    registerSeD(IMSTYPE, config, cfg, ls);
+  } catch (VishnuException& e) {
+    std::cout << "failed to register with err" << e.what()  << std::endl;
+  }
+
   if (!res) {
     ZMQServerStart(server, uri);
     unregisterSeD(IMSTYPE, config);
@@ -145,8 +150,10 @@ main(int argc, char* argv[], char* envp[]) {
     kill(pid, SIGINT);
   } else {
     std::cerr << "There was a problem during services initialization\n";
+    unregisterSeD(IMSTYPE, config);
     exit(1);
   }
+
   // To avoid quitting to fast in case of problems
   while(1){
     sleep(1000);

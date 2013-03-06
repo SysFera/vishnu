@@ -83,9 +83,15 @@ main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
 
-      std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(FMSTYPE, config, cfg, ls);
+
       // Initialize the DIET SeD
+      try {
+        std::vector<std::string> ls = server.get()->getServices();
+        registerSeD(FMSTYPE, config, cfg, ls);
+      } catch (VishnuException& e) {
+        std::cout << "failed to register with err" << e.what()  << std::endl;
+      }
+
       if (!res) {
         ZMQServerStart(server, uri);
         unregisterSeD(FMSTYPE, config);

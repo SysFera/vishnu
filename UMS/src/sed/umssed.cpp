@@ -118,6 +118,14 @@ main(int argc, char* argv[], char* envp[]) {
     boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
     res = server->init(vishnuId, dbConfig, sendmailScriptPath, authenticatorConfig);
 
+    //Declaration of signal handler
+    action.sa_handler = controlSignal;
+    sigemptyset (&(action.sa_mask));
+    action.sa_flags = 0;
+    sigaction (SIGCHLD, &action, NULL);
+
+
+    // Initialize the DIET SeD
     try {
       std::vector<std::string> ls = server.get()->getServices();
       registerSeD(UMSTYPE, config, cfg, ls);
@@ -125,22 +133,15 @@ main(int argc, char* argv[], char* envp[]) {
       std::cout << "failed to register with err" << e.what()  << std::endl;
     }
 
-    //Declaration of signal handler
-    action.sa_handler = controlSignal;
-    sigemptyset (&(action.sa_mask));
-    action.sa_flags = 0;
-    sigaction (SIGCHLD, &action, NULL);
-
-    // Initialize the DIET SeD
     if (!res) {
       ZMQServerStart(server, uri);
       unregisterSeD(UMSTYPE, config);
     } else {
       std::cerr << "There was a problem during services initialization\n";
+      unregisterSeD(UMSTYPE, config);
       exit(1);
     }
-  }
-  else if (pid == 0) {
+  } else if (pid == 0) {
     // Initialize the UMS Monitor (Opens a connection to the database)
     MonitorUMS monitor;
     dbConfig.setDbPoolSize(1);
