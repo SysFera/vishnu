@@ -1,6 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include "tmsUtils.hpp"
+#include "constants.hpp"
 
 BOOST_AUTO_TEST_SUITE( tmsUtils_unit_tests )
 
@@ -118,6 +119,24 @@ BOOST_AUTO_TEST_CASE( test_convertToBatchType_b )
 {
   BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType(""), UNDEFINED);
   BOOST_REQUIRE_EQUAL(vishnu::convertToBatchType("pouet"), UNDEFINED);
+}
+
+BOOST_AUTO_TEST_CASE( test_convertJobStateToString_n )
+{
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_UNDEFINED), "UNDEFINED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_SUBMITTED), "SUBMITTED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_QUEUED), "QUEUED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_WAITING), "WAITING");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_RUNNING), "RUNNING");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_COMPLETED), "COMPLETED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_CANCELLED), "CANCELLED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_DOWNLOADED), "DOWNLOADED");
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_FAILED), "FAILED");
+}
+
+BOOST_AUTO_TEST_CASE( test_convertJobStateToString_b )
+{
+  BOOST_REQUIRE_EQUAL(vishnu::convertJobStateToString(vishnu::STATE_FAILED + 10), "UNDEFINED");
 }
 
 
