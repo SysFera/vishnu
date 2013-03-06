@@ -452,6 +452,7 @@ if(COMPILE_SERVERS)
     authenticator/UMSLDAPAuthenticator.cpp
     authenticator/LDAPUMSAuthenticator.cpp
     authenticator/ldap/LDAPProxy.cpp)
+   set(AUTH_LIBS ${LDAP_LIBRARIES})
   else ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     set(authenticator_SRCS
     authenticator/AuthenticatorConfiguration.cpp
@@ -467,7 +468,7 @@ if(COMPILE_SERVERS)
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
-  target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS})
+  target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS} ${AUTH_LIBS})
 
   install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
 endif()
