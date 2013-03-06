@@ -92,37 +92,80 @@ static const std::string notgeneric_Script = std::string("#!/bin/sh\n")+
 
 BOOST_AUTO_TEST_SUITE( ScriptGenConvertor_unit_tests )
 
-BOOST_AUTO_TEST_CASE( test_scriptIsGeneric )
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_true )
 {
   ScriptGenConvertor scriptGenConvertor(0, generic_Script);
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor.scriptIsGeneric(), true);
+  BOOST_CHECK_EQUAL(scriptGenConvertor.scriptIsGeneric(), true);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false )
+{
   ScriptGenConvertor scriptGenConvertor_bad(0, notgeneric_Script);
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_Torque )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(0, torque_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_LL )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(1, ll_Script);;
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_Slurm )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(2, slurm_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_LSF )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(3, lsf_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_SGE )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(4, sge_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_PBSPRO )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(5, pbs_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
+}
+BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_DELTACLOUD )
+{
+  ScriptGenConvertor scriptGenConvertor_bad(6, deltacloud_Script);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.scriptIsGeneric(), false);
 }
 
 
-BOOST_AUTO_TEST_CASE( test_parseFile )
+BOOST_AUTO_TEST_CASE( test_parseFile_sucess )
 {
   ScriptGenConvertor scriptGenConvertor(0, generic_Script);
   std::string errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
-  
+}
+BOOST_AUTO_TEST_CASE( test_parseFile_error1 )
+{
   ScriptGenConvertor scriptGenConvertor_bad(0, generic_bad_Script);
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_bad.parseFile(errormsg),-1);
+  std::string errormsg="";
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad.parseFile(errormsg),-1);
   std::string error = "Error : Invalid argument vishnu_erromy_first_job_gen.err at line 4 in your script file\n";
-  BOOST_REQUIRE_EQUAL(errormsg,error);
-
+  BOOST_CHECK_EQUAL(errormsg,error);
+}
+BOOST_AUTO_TEST_CASE( test_parseFile_error2 )
+{
   ScriptGenConvertor scriptGenConvertor_bad_key(0, generic_bad_Key_Script);
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_bad_key.parseFile(errormsg),-1);
-  error = "Error : Invalid argument vishnu_bad_key at line 4 in your script file\n";
-  BOOST_REQUIRE_EQUAL(errormsg,error);
-  
+  std::string errormsg="";
+  BOOST_CHECK_EQUAL(scriptGenConvertor_bad_key.parseFile(errormsg),-1);
+  std::string error = "Error : Invalid argument vishnu_bad_key at line 4 in your script file\n";
+  BOOST_CHECK_EQUAL(errormsg,error);
   
 }
 
 
-BOOST_AUTO_TEST_CASE( test_getConvertedScript )
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_Torque )
 {
   
   std::string errormsg="";
@@ -130,81 +173,110 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript )
   
   ScriptGenConvertor scriptGenConvertor_Torque(0, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_Torque.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_Torque.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_Torque.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,torque_Script);
-
+  BOOST_CHECK_EQUAL(script,torque_Script);
+  
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_LL )
+{
+  
+  std::string errormsg="";
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_LL(1, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_LL.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_LL.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_LL.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,ll_Script);
-
+  BOOST_CHECK_EQUAL(script,ll_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_Slurm )
+{
+  
+  std::string errormsg="";
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_SLURM(2, generic_Script);
   errormsg="";  
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_SLURM.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_SLURM.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_SLURM.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,slurm_Script);
-
+  BOOST_CHECK_EQUAL(script,slurm_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_LSF )
+{
+  
+  std::string errormsg="";
+  std::string script="";  
   ScriptGenConvertor scriptGenConvertor_LSF(3, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_LSF.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_LSF.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_LSF.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,lsf_Script);
+  BOOST_CHECK_EQUAL(script,lsf_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_SGE )
+{
   
+  std::string errormsg="";
+  std::string script=""; 
   ScriptGenConvertor scriptGenConvertor_SGE(4, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_SGE.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_SGE.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_SGE.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,sge_Script);
-
-
+  BOOST_CHECK_EQUAL(script,sge_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_PBSPRO )
+{
+  
+  std::string errormsg="";
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_PBSPRO(5, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_PBSPRO.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_PBSPRO.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_PBSPRO.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,pbs_Script);
-
+  BOOST_CHECK_EQUAL(script,pbs_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_DELTACLOU )
+{
+  
+  std::string errormsg="";
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_DELTACLOUD(6, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_DELTACLOUD.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_DELTACLOUD.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_DELTACLOUD.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,deltacloud_Script);
+  BOOST_CHECK_EQUAL(script,deltacloud_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_POSIX )
+{
   
+  std::string errormsg="";
+  std::string script="";  
   ScriptGenConvertor scriptGenConvertor_POSIX(7, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_POSIX.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_POSIX.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_POSIX.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,posix_Script);
-
+  BOOST_CHECK_EQUAL(script,posix_Script);
+}
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDIFINED )
+{
+  
+  std::string errormsg="";
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_UNDIFINED(-1, generic_Script);
   errormsg="";
-  BOOST_REQUIRE_EQUAL(scriptGenConvertor_UNDIFINED.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_UNDIFINED.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_UNDIFINED.getConvertedScript();
-  BOOST_REQUIRE_EQUAL(script,generic_Script);
-
+  BOOST_CHECK_EQUAL(script,generic_Script);
+}
     
   
   
-}
-
-
-
-
-
-
-
-
-
-
-
 BOOST_AUTO_TEST_SUITE_END()
+
