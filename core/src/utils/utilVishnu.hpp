@@ -240,14 +240,6 @@ diffLocaltimeUTCtime();
 int
 deleteFile(const char* fileName);
 
-/**
- * \brief Function to print success message
- */
-inline void
-printSuccessMessage() {
-  // can be used to display a message when vishnu service was performed successfully
-  ;
-}
 
 /**
  * \brief Function to display the session key

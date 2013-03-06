@@ -1,6 +1,6 @@
 /**
  * \file current_session_id.cpp
- * This file defines the VISHNU get current session_id command 
+ * This file defines the VISHNU get current session_id command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -30,15 +30,13 @@ int main (int ac, char* av[]){
   // get the sessionId
   std::string sessionId=getLastSessionId(getppid());
 
-  // DIET call 
+  // DIET call
   if(false==sessionId.empty()){
     printSessionKeyMessage();
     std::cout << "current sessionId: " <<  sessionId << "\n";
-
-      printSuccessMessage();
     return VISHNU_OK;
-
   }
+
   errorUsage(av[0],"cannot retrieve sessionId");
   return ERRCODE_CLI_ERROR_RUNTIME;
 
@@ -57,6 +55,3 @@ int main (int ac, char* av[]){
 
 
 }// end of main
-
-
-

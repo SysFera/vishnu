@@ -345,7 +345,6 @@ int main (int argc, char* argv[]){
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }
     displaySubmit(job);
-    printSuccessMessage();
   } catch(VishnuException& except){// catch all Vishnu runtime error
     std::string  submitErrmsg = except.getMsg() + " [" + except.getMsgComp() + "]";
     errorUsage(bfs::basename(bfs::path(argv[0])), submitErrmsg, EXECERROR);

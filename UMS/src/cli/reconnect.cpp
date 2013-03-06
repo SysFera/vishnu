@@ -1,6 +1,6 @@
 /**
  * \file reconnect.cpp
- * This file defines the VISHNU reconnect command 
+ * This file defines the VISHNU reconnect command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -47,8 +47,8 @@ int main (int ac, char* av[]){
            sessionId,1);
 
   opt->setPosition("sessionId",1);
- 
-  
+
+
   opt->add("password,w","To give the password ",CONFIG,password );
 
   try {
@@ -89,14 +89,14 @@ int main (int ac, char* av[]){
 
     /************** Call UMS reconnect service *******************************/
 
-    cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running  
+    cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
     // initializing DIET
-   
+
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
       errorUsage(av[0],dietErrorMsg,EXECERROR);
-    
+
       return  ERRCODE_CLI_ERROR_DIET ;
 
     }
@@ -107,16 +107,12 @@ int main (int ac, char* av[]){
 
     //storeLastSession(session.getSessionKey(),session.getClosePolicy(),getppid());
     storeLastSession(session,getppid());
-    
-    printSuccessMessage();
-
-
-  }// End of try bloc
+  }  // End of try bloc
 
   catch(po::required_option& e){//  a required parameter is missing
 
     usage(*opt,"[options] sessionId",REQUIREDPARAMMSG);
-   
+
     return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
   }
 
@@ -152,5 +148,3 @@ int main (int ac, char* av[]){
   // }}RELAX<CODEREDUCER>
 
 }// end of main
-
-
