@@ -50,9 +50,9 @@ class ProcessCtlProxy {
   stop(const IMS_Data::SupervisorOp& op);
 
   /**
-  * \brief Function to get the refresh period
-  * \param loadShedType the type of the load shedding mode (SOFT or HARD)
-  * \return raises an exception on error
+  * \brief Function to shed the load of a machine
+  * \param loadShedType The type of load shedding, HARD or SOFT. HARD stops all whereas SOFT stops jobs but they can be restarted later
+  * \return raises an exception on error, or returns 0 if no error occured
   */
   int
   loadShed(IMS_Data::LoadShedType loadShedType);
