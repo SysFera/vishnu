@@ -348,7 +348,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
     TMS_Data::JobResult result = jobOutputServer.getJobOutput();
     string jobFiles =  vishnu::getResultFiles(result, false) ;
-    string outputInfo = bfs::unique_path("/tmp/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
+    string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
     vishnu::saveInFile(outputInfo, jobFiles);
 
     diet_string_set(pb,4, outputInfo);
@@ -497,7 +497,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
       ostringstream missingFiles ; missingFiles.clear() ;
       ossFileName << vishnu::getResultFiles(*completedJobsOutput->getResults().get(i), true);
     }
-    string outputInfo = bfs::unique_path("/tmp/vishnu-outdescr%%%%%%%").string();
+    string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string()+"/vishnu-outdescr%%%%%%%").string();
     vishnu::saveInFile(outputInfo, ossFileName.str());
 
     diet_string_set(pb,3, outputInfo.c_str());
