@@ -8,14 +8,14 @@
 #ifndef _LDAP_PROXY_H
 #define _LDAP_PROXY_H
 
-#include <iostream>
+#include <string>
+
 extern "C" {
-# include <ldap.h>
-# include <lber.h>
+#include <ldap.h>
+#include <lber.h>
 }
 
 static const int desired_version = LDAP_VERSION3;
-using namespace std;
 
 /**
  * \class LDAPProxy
@@ -34,12 +34,12 @@ class LDAPProxy {
   * \param clientCtrls A list of LDAP client controls
   * \brief Constructor
   */
-  explicit LDAPProxy(const string& uri,
-                     const string& userName,
-                     const string& authMechanism,
-                     const string& password,
-                     LDAPControl* serverCtrls=NULL,
-                     LDAPControl* clientCtrls=NULL
+  explicit LDAPProxy(const std::string& uri,
+                     const std::string& userName,
+                     const std::string& authMechanism,
+                     const std::string& password,
+                     LDAPControl* serverCtrls = NULL,
+                     LDAPControl* clientCtrls = NULL
                     );
 
   /**
@@ -48,7 +48,7 @@ class LDAPProxy {
   * \return If the connection was a succes or an error code
   */
   int
-  connectLDAP(const string& ldapbase);
+  connectLDAP(const std::string& ldapbase);
 
   /**
     * \brief Destructor
@@ -62,7 +62,7 @@ class LDAPProxy {
  * \param res  the base string with $USERNAME replaced by the login
  */
   void
-  extract(const string& base, string& res);
+  extract(const std::string& base, std::string& res);
 
 /**
  * \brief Perform the bind to the ldap object
@@ -70,7 +70,7 @@ class LDAPProxy {
  * \return 0 on success (same as ldap_bind)
  */
   int
-  bind(string& fullUserPath);
+  bind(std::string& fullUserPath);
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
@@ -83,19 +83,19 @@ class LDAPProxy {
   /**
   * \brief The LDAP uri by of the form host:port
   */
-   string muri;
+   std::string muri;
   /**
   * \brief the distinguished name of the entry used to bind
   */
-   string muserName;
+   std::string muserName;
   /**
   * \brief the authentication method used
   */
-   string mauthMechanism;
+   std::string mauthMechanism;
    /**
   * \brief the credential to use for authentication
   */
-   string mpwd;
+   std::string mpwd;
 
 /**
  * \brief the server controls

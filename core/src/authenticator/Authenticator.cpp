@@ -5,11 +5,10 @@
  * \date 15/12/11
  */
 
-#include <iostream>
 #include "Authenticator.hpp"
 
-Authenticator::Authenticator(){
+Authenticator::Authenticator() {
 }
 
-Authenticator::~Authenticator(){
+Authenticator::~Authenticator() {
 }

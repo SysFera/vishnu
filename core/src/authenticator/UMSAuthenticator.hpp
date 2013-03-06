@@ -8,9 +8,7 @@
 #ifndef _UMSAUTHENTICATOR_H_
 #define _UMSAUTHENTICATOR_H_
 
-#include <iostream>
 #include "Authenticator.hpp"
-using namespace std;
 
 /**
  * \class UMSAuthenticator
@@ -41,4 +39,3 @@ public :
 
 
 #endif // _UMSAUTHENTICATOR_H_
-

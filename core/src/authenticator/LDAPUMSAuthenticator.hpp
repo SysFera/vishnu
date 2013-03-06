@@ -8,9 +8,7 @@
 #ifndef _LDAPUMSAUTHENTICATOR_H_
 #define _LDAPUMSAUTHENTICATOR_H_
 
-#include <iostream>
 #include "Authenticator.hpp"
-using namespace std;
 
 /**
  * \class LDAPUMSAuthenticator
@@ -41,4 +39,3 @@ public :
 
 
 #endif // _LDAPUMSAUTHENTICATOR_H_
-

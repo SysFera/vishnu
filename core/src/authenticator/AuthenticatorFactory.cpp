@@ -5,7 +5,6 @@
  * \date 15/12/11
  */
 
-#include <iostream>
 #include "AuthenticatorFactory.hpp"
 #include "UMSAuthenticator.hpp"
 #include "SystemException.hpp"
@@ -69,4 +68,3 @@ AuthenticatorFactory::getAuthenticatorInstance()
   }
   return mauth;
 }
-

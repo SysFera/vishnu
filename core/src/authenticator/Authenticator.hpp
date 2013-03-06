@@ -8,16 +8,13 @@
 #ifndef _AUTHENTICATOR_H_
 #define _AUTHENTICATOR_H_
 
-#include <iostream>
 #include "UMS_Data.hpp"
-using namespace std;
 
 /**
  * \class Authenticator
  * \brief Authenticator
  */
-class Authenticator{
-
+class Authenticator {
 public :
   /**
    * \brief Constructor

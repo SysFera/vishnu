@@ -8,9 +8,7 @@
 #ifndef _LDAPAUTHENTICATOR_H_
 #define _LDAPAUTHENTICATOR_H_
 
-#include <iostream>
 #include "Authenticator.hpp"
-using namespace std;
 
 /**
  * \class LDAPAuthenticator
@@ -41,4 +39,3 @@ public :
 
 
 #endif // _LDAPAUTHENTICATOR_H_
-
