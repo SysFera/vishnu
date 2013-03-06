@@ -557,7 +557,7 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
     size_t pos3 = 0;
     pos3 = params.find(" ");
     if(pos3 != std::string::npos) {
-      std::string lineoption = directive +" "+ params.substr(pos1, pos2-pos1) + sep +  params.substr(pos2+1, pos3-pos2) + "\n";
+      std::string lineoption = directive +" "+ params.substr(pos1, pos2-pos1) + sep +  params.substr(pos2+1, pos3-pos2-1) + "\n";
       insertOptionLine(lineoption, scriptContent, directive);
       params.erase(0, pos3);
       boost::algorithm::trim_left(params);
