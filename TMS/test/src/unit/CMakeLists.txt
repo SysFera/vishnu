@@ -61,6 +61,6 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
   install(TARGETS vishnu-tms-server-mock DESTINATION ${LIB_INSTALL_DIR})
 
   unit_test(JobServerUnitTests vishnu-tms-server-mock)
-  #unit_test(ParserUnitTests vishnu-tms-server)
+
 
 endif()
