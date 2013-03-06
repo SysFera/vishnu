@@ -5,6 +5,7 @@
  * \date February 2011
  */
 #include "utilsClient.hpp"
+#include <boost/regex.hpp>
 #include "utilVishnu.hpp"
 
 /**
@@ -30,7 +31,10 @@ checkIfTextIsEmpty(const std::string& text,
  */
 void
 checkEmail(const std::string& mail) {
-  if (mail.find("@") == std::string::npos) {
+  // Regex taken from http://www.regular-expressions.info/email.html
+  boost::regex reg("^[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\\.)+[A-Z]{2,6}?", boost::regex::icase);
+
+  if (!boost::regex_match(mail, reg)) {
     throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS);
   }
 }

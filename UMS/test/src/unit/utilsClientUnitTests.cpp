@@ -50,4 +50,10 @@ BOOST_AUTO_TEST_CASE( test_checkEmail_b3 )
   BOOST_REQUIRE_THROW(checkEmail(email3), UMSVishnuException);
 }
 
+BOOST_AUTO_TEST_CASE( test_checkEmail_b4 )
+{
+  std::string email3 = "john@aol...com";
+  BOOST_REQUIRE_THROW(checkEmail(email3), UMSVishnuException);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
