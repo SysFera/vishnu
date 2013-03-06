@@ -23,7 +23,7 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "SSHJobExec.hpp"
-#include "Env.hpp"
+
 #include <boost/format.hpp>
 
 #define CLEANUP_SUBMITTING_DATA(debugLevel) if (!debugLevel) { \
@@ -111,14 +111,12 @@ SSHJobExec::checkSshParams() {
 
 /**
  * \brief Function to execute command by using ssh
- * \param slaveDirectory the path to the command executable
  * \param serviceName the name of the service to execute
  * \param script_path the path to script to submit
  * \return raises an exception on error
  */
 void
-SSHJobExec::sshexec(const std::string& slaveDirectory,
-                    const std::string& serviceName,
+SSHJobExec::sshexec(const std::string& serviceName,
                     const std::string& script_path) {
   checkSshParams();
   std::string jobSerializedPath;
@@ -154,6 +152,7 @@ SSHJobExec::sshexec(const std::string& slaveDirectory,
   std::string errorPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/errorPath%%%%%%").string();
   std::string stderrFilePath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/stderr%%%%%%").string();
 
+  std::string slaveDirectory = vishnu::getCurrentBinaryDir();
   cmd << slaveDirectory << "/tmsSlave "
       << serviceName << " "
       << convertBatchTypeToString(mbatchType) << " "

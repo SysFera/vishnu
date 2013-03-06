@@ -45,77 +45,76 @@ static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
 
 namespace vishnu
 {
-/**
+  /**
  * \brief Function to convert a string to a batch type
  * \param  batchName the name of the batch type
  * \return BatchType value of the corresponding string.
  */
-BatchType
-convertToBatchType(const std::string& batchName);
+  BatchType
+  convertToBatchType(const std::string& batchName);
 
 
-/**
+  /**
  * \brief  function to convert job status into string
  * \param state: The state of job
  * \return The converted state value
  */
-std::string
-convertJobStateToString(const int& state);
+  std::string
+  convertJobStateToString(const int& state);
+
+  /**
+   * \brief Function a given walltime into string
+   * \param walltime The walltime to convert
+   * \return the walltime converted to string
+   */
+  std::string
+  convertWallTimeToString(const long& walltime);
+
+
+  /**
+   * \brief Function a given walltime into seconds
+   *
+   * walltime can be of the following format:
+   * - it can start and/or end by '"'
+   * - each value is separated by ':'
+   * - possible values represent:
+   *   - days
+   *   - hours
+   *   - minutes
+   *   - seconds
+   * in the form [days:][hours:][minutes:]seconds
+   *  (element between square brackets are optional)
+   *
+   * \param walltime The walltime to convert
+   * \return the walltime converted to seconds
+   */
+  long
+  convertStringToWallTime(const std::string& walltime);
+
+
+  /**
+   * \brief Function to check the job status
+   * \param status the status of the job
+   * \return raises an exception on error
+   */
+  void
+  checkJobStatus(const int& status);
+
+  /**
+   * \brief Function to check the job priority
+   * \param priority the priority of the job
+   * \return raises an exception on error
+   */
+  void
+  checkJobPriority(const int& priority);
 
 /**
- * \brief Function a given walltime into string
- * in the form [days:]hours:minutes:seconds (each on two digits)
- * \param walltime The walltime to convert
- * \return the walltime converted to string
- */
-std::string
-convertWallTimeToString(const long& walltime);
-
-
-/**
- * \brief Function a given walltime into seconds
- *
- * walltime can be of the following format:
- * - it can start and/or end by '"'
- * - each value is separated by ':'
- * - possible values represent:
- *   - days
- *   - hours
- *   - minutes
- *   - seconds
- * in the form [days:][hours:][minutes:]seconds
- *  (element between square brackets are optional)
- *
- * \param walltime The walltime to convert
- * \return the walltime converted to seconds
- */
-long
-convertStringToWallTime(const std::string& walltime);
-
-
-/**
- * \brief Function to check the job status
- * \param status the status of the job
- * \return raises an exception on error
- */
-void
-checkJobStatus(const int& status);
-
-/**
- * \brief Function to check the job priority
- * \param priority the priority of the job
- * \return raises an exception on error
- */
-void
-checkJobPriority(const int& priority);
-
-/**
- * \brief Function to check the job nbNodesAndCpuPerNode
- * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
- * \return raises an exception on error
- */
-void
-checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
+   * \brief Function to check the job nbNodesAndCpuPerNode
+   * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
+   * \return raises an exception on error
+   */
+  void
+  checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
 
 /**
  * \brief Function to parse textual or file parameters
@@ -153,11 +152,13 @@ createOutputDir(std::string& dirPath);
 
 /**
  * \brief Function to get the hostname of a machine id
- *  \param Id of the machine
+ * \param sessionKey The session key
+ *  \param machineId Id of the machine
  */
 inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
 
-/**
+
+  /**
  * \brief Function to copy a list of remote files to a local directory
  * \param srcMid : Id of the remote machine
  * \param rfiles : List of the files to copy
@@ -222,27 +223,78 @@ findMachine(const std::string& sessionKey,
  * \param pb the request profile
  * \param the criteria of (number of waiting jobs, running jobs and total jobs)
  */
-static long
-getMachineLoadPerformance(const std::string& sessionKey,
-                          const UMS_Data::Machine_ptr& machine,
-                          const TMS_Data::LoadCriterion_ptr& criterion);
+  static long
+  getMachineLoadPerformance(const std::string& sessionKey,
+                            const UMS_Data::Machine_ptr& machine,
+                            const TMS_Data::LoadCriterion_ptr& criterion);
 
 
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- * \param content The content of the file
- */
-void
-saveInFile(const std::string & fileName, const std::string& content);
+  /**
+   * \brief Function to create temporary file
+   * \param fileName The name of the file to create
+   * \param content The content of the file
+   */
+  void
+  saveInFile(const std::string & fileName, const std::string& content);
 
-/**
- * \brief Function to create temporary file
- * \param fileName The name of the file to create
- * \param missingDesc The content of the file
- */
-void
-recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
+  /**
+   * \brief Function to create temporary file
+   * \param fileName The name of the file to create
+   * \param missingDesc The content of the file
+   */
+  void
+  recordMissingFiles(const std::string & fileName, const std::string& missingDesc);
+
+  /**
+   * \brief Function to get the current binary directory
+   */
+  std::string
+  getCurrentBinaryDir();
+
+  /**
+   * \brief Function to replace all occurences in a string
+   * \param scriptContent The string to modify
+   * \param oldValue The value to replace
+   * \param newValue The new value
+   */
+  void
+  replaceAllOccurences(std::string& scriptContent,
+                       const std::string& oldValue,
+                       const std::string& newValue);
+  
+  /**
+   * \brief Function to replace some environment variables in a string
+   * \param scriptContent The string content to modify
+   */
+  void
+  replaceEnvVariables(std::string& scriptContent, const BatchType& batchType);
+  
+  /**
+   * \brief function to set parameters appearing in a script
+   * \param scriptContent The string to modify
+   * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+   */
+  void
+  setParams(std::string& scriptContent, const std::string& params);
+  
+  /**
+   * \brief Function to set environment variables accordinf to parameters
+   * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
+   */
+  void
+  setParamsEnvVars(const std::string& params);
+  
+  /**
+   * \brief Function to retrieve an environment variable
+   * \param name The name of the variable
+   * \param optional tell whether the parameter is optional or not
+   * \param defaultValue give the default value return when the variable is optional
+   * \return the value of the environment variable or throw exception is the variable is set and is not optional
+   */
+  std::string
+  getVar(const std::string& name,
+         const bool & optional = true,
+         const std::string defaultValue = "");
 } //END NAMESPACE
 
 #endif // TMSUTILS_HPP

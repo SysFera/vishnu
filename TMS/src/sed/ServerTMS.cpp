@@ -81,14 +81,6 @@ ServerTMS::getMachineId() const {
   return mmachineId;
 }
 
-/**
- * \brief To get the slave binary directory
- * \return path to the binary tmsSlave
- */
-string
-ServerTMS::getSlaveDirectory() const {
-  return mslaveBinDir;
-}
 
 /**
  * \brief To get the main configuration
@@ -119,7 +111,6 @@ ServerTMS::getDefaultBatchOption() const {
  * \param dbConfig  The configuration of the database
  * \param machineId the id of the machine
  * \param batchType The type of the batch scheduler
- * \param slaveBinDir  the directory that contains the slave binary
  * \param sedConfig A pointer to the SeD configuration
  * \return raises an exception on error
  */
@@ -128,16 +119,12 @@ ServerTMS::init(int& vishnuId,
                 DbConfiguration& dbConfig,
                 const std::string& machineId,
                 BatchType batchType,
-                const std::string& slaveBinDir,
                 const ExecConfiguration_Ptr sedConfig) {
 
   setenv("VISHNU_DEBUG_LEVEL", vishnu::convertToString(mdebugLevel).c_str(), 0);
 
   //set the machineId
   mmachineId = machineId;
-
-  //initialization of the slave directory
-  mslaveBinDir = slaveBinDir;
 
   // initialize the SeD configuration object
   msedConfig = sedConfig;

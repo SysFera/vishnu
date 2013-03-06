@@ -289,7 +289,8 @@ namespace vishnu {
 	/**
 	 *  \brief Function to create a working directory. The working directory needs rwxt permissions
 	 *  \param path the path of the working directory
+         *  \param isWorkingdir tell whether the directory will be a working directory
 	 */
-	void createWorkingDir(const std::string& path);
+	void createDir(const std::string& path, const bool& isWorkingdir=false);
 }
 #endif //_UTILSERVER_H_

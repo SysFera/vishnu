@@ -39,13 +39,11 @@ public:
    * \param scriptContent the content of the script
    * \param options the options to submit job
    * \param vishnuId The VISHNU identifier
-   * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
-  int submitJob(const std::string& scriptContent,
-                const TMS_Data::SubmitOptions& options,
+  int submitJob(std::string& scriptContent,
+                TMS_Data::SubmitOptions& options,
                 const int& vishnuId,
-                const std::string& slaveDirectory,
                 const std::vector<std::string>& defaultBatchOption);
 
   /**
@@ -55,10 +53,9 @@ public:
 
   /**
    * \brief Function to cancel job
-   * \param slaveDirectory the path to the TMS slave executable
    * \return raises an exception on error
    */
-  int cancelJob(const std::string& slaveDirectory);
+  int cancelJob();
 
   /**
    * \brief Function to get job information
@@ -90,7 +87,7 @@ public:
    */
   void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
-private:
+protected:
 
   /**
    * \brief Function to scan VISHNU error message
@@ -127,6 +124,7 @@ private:
   void
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
+private:
   /**
    * \brief job data structure
    */
@@ -166,14 +164,15 @@ private:
    * \brief Holds the level of debug
    */
   int mdebugLevel;
-
+  
+protected:
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
   * \param dirSuffix the suffix of the output dir
   * \param content the script content to be update which the generated path
   */
-  void setOutputDir(const std::string& parentDir,
+  void computeOutputDir(const std::string& parentDir,
                     const std::string & dirSuffix,
                     std::string & content);
 
@@ -195,6 +194,39 @@ private:
    * \brief Function to save the encapsulated job into the database
    */
   void recordJob2db();
+
+  /**
+   * \brief Function to get the hostname of a machine id
+   *  \param machineId Id of the machine
+   * \return The machine name or throw exception on error
+   */
+  std::string getMachineName(const std::string& machineId);
+
+  /**
+   * \brief Function to set the Working Directory
+   * \param options the options to submit job
+   * \param suffix the suffix of the working directory
+   * \return the script path
+   */
+  std::string computeWorkingDir(TMS_Data::SubmitOptions& options, const std::string& suffix);
+  /**
+   * \brief Function to process the script with options
+   * \param the script content
+   * \param options the options to submit job
+   * \param defaultBatchOption The default batch options
+   * \return the processed script content
+   */
+  std::string processScript(std::string& scriptContent,
+                            TMS_Data::SubmitOptions& options,
+                            const std::vector<std::string>& defaultBatchOption,
+                            const std::string& machineName);
+  /**
+   * \brief Function to deserialize job
+   * \param jobSerialized the Serialized job
+   */
+  
+  void deserializeJob(std::string jobSerialized);
+  
 };
 
 #endif

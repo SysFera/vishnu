@@ -99,8 +99,7 @@ solveSubmitJob(diet_profile_t* pb) {
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
 
     int vishnuId = server->getVishnuId();
-    std::string slaveDirectory = server->getSlaveDirectory();
-    jobServer.submitJob(scriptContent, *submitOptions, vishnuId, slaveDirectory, server->getDefaultBatchOption());
+    jobServer.submitJob(scriptContent, *submitOptions, vishnuId, server->getDefaultBatchOption());
     *job = jobServer.getData();
 
     ::ecorecpp::serializer::serializer _ser;
@@ -164,7 +163,7 @@ solveCancelJob(diet_profile_t* pb) {
 
     ServerTMS* server = ServerTMS::getInstance();
     JobServer jobServer(sessionServer, machineId, *job, server->getSedConfig());
-    jobServer.cancelJob(server->getSlaveDirectory());
+    jobServer.cancelJob();
 
     diet_string_set(pb,3, errorInfo.c_str());
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
@@ -348,7 +347,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     JobOutputServer jobOutputServer(sessionServer, machineId, *jobResult);
     TMS_Data::JobResult result = jobOutputServer.getJobOutput();
     string jobFiles =  vishnu::getResultFiles(result, false) ;
-    string outputInfo = bfs::unique_path("/tmp/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
+    string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
     vishnu::saveInFile(outputInfo, jobFiles);
 
     diet_string_set(pb,4, outputInfo);
@@ -497,7 +496,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
       ostringstream missingFiles ; missingFiles.clear() ;
       ossFileName << vishnu::getResultFiles(*completedJobsOutput->getResults().get(i), true);
     }
-    string outputInfo = bfs::unique_path("/tmp/vishnu-outdescr%%%%%%%").string();
+    string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string()+"/vishnu-outdescr%%%%%%%").string();
     vishnu::saveInFile(outputInfo, ossFileName.str());
 
     diet_string_set(pb,3, outputInfo.c_str());

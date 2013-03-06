@@ -13,18 +13,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <iomanip>
-
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-
-//EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
-
 #include "TMS_Data.hpp"
-
 #include "DIET_client.h"
-
 #include "utilServer.hpp"
 #include "BatchServer.hpp"
 #include "VishnuException.hpp"
@@ -32,7 +26,8 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
-#include "Env.hpp"
+#include "tmsUtils.hpp"
+
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespac
 using namespace std;
@@ -121,6 +116,10 @@ main(int argc, char* argv[], char* envp[]) {
       std::string options  = vishnu::get_file_content(optionsPath);
       if(!parseEmfObject(std::string(options), submitOptions)) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
+      }
+      if (!job->getOutputDir().empty()) {
+        bool isWorkingDir = (batchType == DELTACLOUD)? true : false;
+        vishnu::createDir(job->getOutputDir(), isWorkingDir); // Create the output directory
       }
       //Submits the job
       if (batchServer->submit(jobScriptPath, *submitOptions, *job)!=0) {

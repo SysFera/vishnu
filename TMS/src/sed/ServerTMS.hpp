@@ -37,7 +37,6 @@ public :
      * \param machineId the id of the machine
      * \param batchType The type of the batch scheduler*
      * \param batchType the type of batch scheduler
-     * \param slaveBinDir  the directory that contains the slave binary
      * \return raises an exception on error
      */
   int
@@ -45,7 +44,6 @@ public :
        DbConfiguration & dbConfig,
        const std::string & machineId,
        BatchType batchType,
-       const std::string & slaveBinDir,
        const ExecConfiguration_Ptr sedConfig);
 
   /**
@@ -93,12 +91,6 @@ public :
   std::string
   getMachineId() const;
 
-  /**
-     * \brief To get the slave binary directory
-     * \return path to the binary tmsSlave
-     */
-  std::string
-  getSlaveDirectory() const;
 
   /**
      * \brief To get the Default Batch Options

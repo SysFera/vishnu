@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include "TMSVishnuException.hpp"
 
-#include "Env.hpp"
+#include "tmsUtils.hpp"
 
 std::string jobId = "$VISHNU_BATCHJOB_ID";
 std::string jobId2 = "${VISHNU_BATCHJOB_ID}";
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE( test_replaceAllOccurences_n )
 
   std::string scriptModif = "SOLDIER #1:\nYou've got two empty halves of apple and you're bangin' 'em together.\nARTHUR:\nSo? We have ridden since the snows of winter covered this land, through the kingdom of Mercia, through--\nSOLDIER #1:\nWhere'd you get the apples?\nARTHUR:\nWe found them.";
 
-  Env::replaceAllOccurences(script, "coconut", "apple");
+  vishnu::replaceAllOccurences(script, "coconut", "apple");
 
   BOOST_REQUIRE_EQUAL(script, scriptModif);
 }
@@ -38,17 +38,17 @@ BOOST_AUTO_TEST_CASE( test_getVar_n )
 
   unsetenv(envVar.c_str());
 
-  BOOST_REQUIRE_NO_THROW((val = Env::getVar(envVar, true, defaultValue)));
+  BOOST_REQUIRE_NO_THROW((val = vishnu::getVar(envVar, true, defaultValue)));
   BOOST_REQUIRE_EQUAL(val, defaultValue);
 
   setenv(envVar.c_str(), value.c_str(), 1);
-  BOOST_REQUIRE_NO_THROW((val = Env::getVar(envVar, true, defaultValue)));
+  BOOST_REQUIRE_NO_THROW((val = vishnu::getVar(envVar, true, defaultValue)));
   BOOST_REQUIRE_EQUAL(val, value);
 
-  BOOST_REQUIRE_NO_THROW((val = Env::getVar(envVar, false, defaultValue)));
+  BOOST_REQUIRE_NO_THROW((val = vishnu::getVar(envVar, false, defaultValue)));
   BOOST_REQUIRE_EQUAL(val, value);
 
-  BOOST_REQUIRE_NO_THROW((val = Env::getVar(envVar, false)));
+  BOOST_REQUIRE_NO_THROW((val = vishnu::getVar(envVar, false)));
   BOOST_REQUIRE_EQUAL(val, value);
 
   unsetenv(envVar.c_str());
@@ -64,7 +64,7 @@ BOOST_AUTO_TEST_CASE( test_getVar_b )
 
   unsetenv(envVar.c_str());
 
-  BOOST_REQUIRE_THROW((val = Env::getVar(envVar, false, defaultValue)), TMSVishnuException);
+  BOOST_REQUIRE_THROW((val = vishnu::getVar(envVar, false, defaultValue)), TMSVishnuException);
 }
 
 

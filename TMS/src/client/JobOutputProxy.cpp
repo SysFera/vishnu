@@ -93,7 +93,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
     string line;
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     if(!getline(fdescStream, line)) {
@@ -186,7 +186,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   copts.setTrCommand(0); // for using scp
 
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", "/tmp", copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     int numJob = 0;
     string line;
