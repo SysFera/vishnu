@@ -5,8 +5,10 @@
  * \date 15/12/11
  */
 
-#include <iostream>
 #include "UMSLDAPAuthenticator.hpp"
+
+#include <string>
+
 #include "LDAPAuthenticator.hpp"
 #include "UMSAuthenticator.hpp"
 #include "UMSVishnuException.hpp"
@@ -30,7 +32,7 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
   bool excepfound = false;
 
   //The password changed on the authenticate of UMS that is why the clear version is saved
-  string ldapPassword = user.getPassword();
+  std::string ldapPassword = user.getPassword();
   //To avoid to return an exception when the first authenticator failed
   try {
     authenticated = umsAuthenticator.authenticate(user);
@@ -63,4 +65,3 @@ UMSLDAPAuthenticator::authenticate(UMS_Data::User& user) {
     return authenticated;
   }
 }
-

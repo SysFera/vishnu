@@ -4,9 +4,10 @@
  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
  * \date 31/01/2011
  */
+#include "DatabaseResult.hpp"
+
 #include <sstream>
 #include <iostream>
-#include "DatabaseResult.hpp"
 
 /**
 * \fn DatabaseResult()

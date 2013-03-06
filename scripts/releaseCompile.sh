@@ -59,8 +59,7 @@ run_cmd cmake -DCOMPILE_UMS=ON \
 -DBUILD_TESTING=ON \
 -DENABLE_JAVA=ON \
 -DENABLE_PYTHON=ON \
--DENABLE_SWIG=OFF \
--DENABLE_REPORTS=ON .. 
+-DENABLE_SWIG=OFF .. 
 run_cmd make -j 4
 
 # cleanup

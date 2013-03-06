@@ -1,6 +1,20 @@
+/**
+ * @file   CommonParser.cpp
+ * @author hguemar <hguemar@sysfera.com>
+ * @date   Mon Jan 31 11:48:12 2011
+ *
+ * @brief
+ * @internal
+ *
+ */
 
-#include <boost/algorithm/string.hpp>
 #include "CommonParser.hpp"
+
+#include <iostream>
+#include <ostream>
+#include <string>
+#include <map>
+#include <boost/algorithm/string.hpp>
 
 #ifdef DEBUG
 std::ostream debug(std::cerr.rdbuf());

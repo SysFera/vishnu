@@ -69,7 +69,7 @@ typedef enum {
  * BSD file systems used the same structure for large and small
  * partition type.
  */
-#if FS_32 | BSD_LIKE_SYSTEM
+#if BSD_LIKE_SYSTEM
 typedef struct stat file_stat_t;
 typedef off_t file_size_t;
 #define STAT(path, buf) stat((path), (buf))

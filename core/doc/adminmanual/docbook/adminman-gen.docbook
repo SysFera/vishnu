@@ -656,7 +656,7 @@
           </listitem>
           <listitem>
             <para>
-              VISHNU_USE_LDAP permet d'activer le support LDAP pour l'authentification. Cette option est désactivée par défaut.
+              ENABLE_LDAP permet d'activer le support LDAP pour l'authentification. Cette option est désactivée par défaut.
             </para>
           </listitem>
           <listitem>
@@ -1003,7 +1003,7 @@
         par exemple, vous devez installer les paquets suivants: <emphasis>slapd,
           libldap-2.4-2, libldap2-dev</emphasis> et <emphasis>ldap-utils</emphasis></para>
       <para>Pour pouvoir utiliser l'authentification avec LDAP, le flag de compilation
-        VISHNU_USE_LDAP doit être activé à la compilation. Une fois VISHNU compilé,
+        ENABLE_LDAP doit être activé à la compilation. Une fois VISHNU compilé,
         une option de configuration du serveur UMS doit être mise dans le fichier de
         configuration. Cette option est nommée 'authenticationType' et peut actuellement
         supporter 4 valeurs :

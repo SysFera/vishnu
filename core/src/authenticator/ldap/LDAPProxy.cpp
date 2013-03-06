@@ -1,6 +1,19 @@
+/**
+  * \file LDAPProxy.cpp
+  * \brief This file contains the VISHNU LDAPProxy class.
+  * \author Eugène PAMBA CAPO-CHICHI (eugene.capochichi@sysfera.com)
+  * \date March 2011
+  */
+
 #include "LDAPProxy.hpp"
+
+#include <string>
+
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
+
+using namespace std;
+
 
 /**
 * \param uri The LDAP uri by of the form host:port

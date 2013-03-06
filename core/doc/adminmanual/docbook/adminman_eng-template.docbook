@@ -517,7 +517,7 @@
 	  </listitem>
 	  <listitem>
 	    <para>
-	      VISHNU_USE_LDAP, to activate the LDAP support to authenticate (OFF by default).
+	      ENABLE_LDAP, to activate the LDAP support to authenticate (OFF by default).
 	    </para>
 	  </listitem>
           <listitem>
@@ -729,7 +729,7 @@ Only one database is necessary for all the components of a VISHNU infrastructure
     <section>
       <title>Use LDAP</title>
       <para>We also assume here that you have a LDAP installation ready to use. Otherwise refer to the LDAP documentation to learn how to install it. On some GNU/Linux distribution, you may also install that from your package manager. On Debian systems, you need to install the following packages: <emphasis>slapd, libldap-2.4-2, libldap2-dev</emphasis> and <emphasis>ldap-utils</emphasis>.</para>
-      <para>To install with LDAP authentication support, the flag VISHNU_USE_LDAP must be enabled at the compilation time. Once the installation is completed, you need to set the parameter 'authenticationType' from the UMS configuration file accordingly. Possible values of this parameter are:
+      <para>To install with LDAP authentication support, the flag ENABLE_LDAP must be enabled at the compilation time. Once the installation is completed, you need to set the parameter 'authenticationType' from the UMS configuration file accordingly. Possible values of this parameter are:
         <itemizedlist>
 	  <listitem>
             <para>

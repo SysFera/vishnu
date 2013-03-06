@@ -49,7 +49,6 @@ main(int argc, char* argv[], char* envp[]) {
   DbConfiguration dbConfig(config);
   string FMSTYPE = "fmssed";
   string mid;
-  string cfg;
   string uri;
 
   if (argc != 2) {
@@ -83,15 +82,12 @@ main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
       res = server->init(vishnuId, dbConfig);
 
-      std::vector<std::string> ls = server.get()->getServices();
-      registerSeD(FMSTYPE, config, cfg, ls);
+
       // Initialize the DIET SeD
       if (!res) {
-        ZMQServerStart(server, uri);
-        unregisterSeD(FMSTYPE, config);
+        initSeD(FMSTYPE, config, uri, server);
       } else {
         std::cerr << "There was a problem during services initialization\n";
-        unregisterSeD(FMSTYPE, config);
         exit(1);
       }
     } catch (VishnuException& e) {

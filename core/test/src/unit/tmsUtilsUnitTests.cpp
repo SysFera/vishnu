@@ -29,7 +29,6 @@ BOOST_AUTO_TEST_CASE( test_checkJobPrio_n )
   BOOST_MESSAGE("Test check job priority OK");
 }
 
-// TODO move
 BOOST_AUTO_TEST_CASE( test_checkJobnbnodecpu_n )
 {
   std::string input_1 = "1:1";

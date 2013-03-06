@@ -12,10 +12,9 @@
 #define _COMMON_PARSER_HH_
 
 #include <functional>
-#include <iostream>
 #include <map>
 #include <string>
-#include <vector>
+#include <ostream>
 
 /**
  * @brief A flux to store a debug message

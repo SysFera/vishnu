@@ -5,9 +5,11 @@
  * \date 15/12/11
  */
 
-#include <iostream>
-#include <boost/scoped_ptr.hpp>
 #include "UMSAuthenticator.hpp"
+
+#include <string>
+#include <boost/scoped_ptr.hpp>
+
 #include "DatabaseResult.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
@@ -31,4 +33,3 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getFirstElement().size() != 0);
 }
-

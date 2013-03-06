@@ -9,7 +9,6 @@
 #define _ABSTRACTDATABASE_H_
 
 #include <string>
-#include <vector>
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
 

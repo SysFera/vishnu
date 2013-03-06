@@ -5,17 +5,16 @@
  * \date 15/12/11
  */
 
-#include <iostream>
 #include "LDAPUMSAuthenticator.hpp"
 #include "LDAPAuthenticator.hpp"
 #include "UMSAuthenticator.hpp"
 #include "UMSVishnuException.hpp"
 #include "SystemException.hpp"
 
-LDAPUMSAuthenticator::LDAPUMSAuthenticator(){
+LDAPUMSAuthenticator::LDAPUMSAuthenticator() {
 }
 
-LDAPUMSAuthenticator::~LDAPUMSAuthenticator(){
+LDAPUMSAuthenticator::~LDAPUMSAuthenticator() {
 }
 
 bool
@@ -44,8 +43,7 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
 
   if (authenticated) {
     return authenticated;
-  }
-  else {
+  } else {
    authenticated = umsAuthenticator.authenticate(user);
     //if the user is not authenticated
     if (!authenticated) {
@@ -60,4 +58,3 @@ LDAPUMSAuthenticator::authenticate(UMS_Data::User& user) {
     return authenticated;
   }
 }
-

@@ -5,9 +5,12 @@
  * \date 15/12/11
  */
 
-#include <iostream>
-#include <boost/scoped_ptr.hpp>
 #include "LDAPAuthenticator.hpp"
+
+#include <string>
+#include <vector>
+#include <boost/scoped_ptr.hpp>
+
 #include "ldap/LDAPProxy.hpp"
 #include "DatabaseResult.hpp"
 #include "DbFactory.hpp"
@@ -90,4 +93,3 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
   }
   return authenticated;
 }
-

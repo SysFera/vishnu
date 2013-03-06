@@ -5,10 +5,10 @@
 #ifndef _EXECCONFIGURATION_HPP_
 #define _EXECCONFIGURATION_HPP_
 
-#include <cstring>
-#include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
+#include <exception>
 
 #include "constants.hpp"
 #include "CommonParser.hpp"
@@ -71,7 +71,7 @@ public:
    * \param filePath  full path of the configuration filePath
    */
   void
-  initFromFile(std::string filePath) throw (UserException,std::exception);
+  initFromFile(std::string filePath) throw (UserException, std::exception);
 
   /**
    * \brief Get the value of a configuration parameter
