@@ -24,47 +24,47 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
                                        const std::string& scriptGenContent):
   mbatchType(batchType), mscriptGenContent(scriptGenContent)
 {
-	if(mbatchType==LOADLEVELER) {
+  if(mbatchType==LOADLEVELER) {
 
-		mconversionTable[group]                = "# @ group=";
-		mconversionTable[workingDir]           = "# @ initialdir=";
-		mconversionTable[jobName]              = "# @ job_name=";
-		mconversionTable[jobOutput]            = "# @ output=";
-		mconversionTable[jobError]             = "# @ error=";
-		mconversionTable[jobWallClockLimit]    = "# @ wall_clock_limit=";
-		mconversionTable[cpuTime]              = "# @ cpu_limit= ";
-		mconversionTable[nbCpu]                = "# @ "; //special case
-		mconversionTable[nbNodesAndCpuPerNode] = "# @ ";//special case
-		mconversionTable[mem]                  = "# @ data_limit=";//a voir
-		mconversionTable[mailNotification]     = "# @ notification=";//special case
-		mconversionTable[mailNotifyUser]       = "# @ notify_user=";
+    mconversionTable[group]                = "# @ group=";
+    mconversionTable[workingDir]           = "# @ initialdir=";
+    mconversionTable[jobName]              = "# @ job_name=";
+    mconversionTable[jobOutput]            = "# @ output=";
+    mconversionTable[jobError]             = "# @ error=";
+    mconversionTable[jobWallClockLimit]    = "# @ wall_clock_limit=";
+    mconversionTable[cpuTime]              = "# @ cpu_limit= ";
+    mconversionTable[nbCpu]                = "# @ "; //special case
+    mconversionTable[nbNodesAndCpuPerNode] = "# @ ";//special case
+    mconversionTable[mem]                  = "# @ data_limit=";//a voir
+    mconversionTable[mailNotification]     = "# @ notification=";//special case
+    mconversionTable[mailNotifyUser]       = "# @ notify_user=";
     mconversionTable[queue]                = "# @ class=";
 
-		mconversionTable[loadLevelerSec]       = "";
-		mconversionTable[commandSec]           = "";
-		mconversionTable[torqueSec]            = "";
-		mendScript                             = "# @ queue";
+    mconversionTable[loadLevelerSec]       = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript                             = "# @ queue";
 
-	} else if(mbatchType==TORQUE) {
+  } else if(mbatchType==TORQUE) {
 
-		mconversionTable[group]                = "#PBS -W group_list=";
-		mconversionTable[workingDir]           = "#PBS -d ";
-		mconversionTable[jobName]              = "#PBS -N ";
-		mconversionTable[jobOutput]            = "#PBS -o ";
-		mconversionTable[jobError]             = "#PBS -e ";
-		mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
-		mconversionTable[cpuTime]              = "#PBS -l cput=";
-		mconversionTable[nbCpu]                = "## PBS -l "; //special case
-		mconversionTable[nbNodesAndCpuPerNode] = "#PBS -l "; //special case
-		mconversionTable[mem]                  = "#PBS -l mem=";
-		mconversionTable[mailNotification]     = "#PBS -m "; //special case
-		mconversionTable[mailNotifyUser]       = "#PBS -M ";
-		mconversionTable[queue]                = "#PBS -q ";
+    mconversionTable[group]                = "#PBS -W group_list=";
+    mconversionTable[workingDir]           = "#PBS -d ";
+    mconversionTable[jobName]              = "#PBS -N ";
+    mconversionTable[jobOutput]            = "#PBS -o ";
+    mconversionTable[jobError]             = "#PBS -e ";
+    mconversionTable[jobWallClockLimit]    = "#PBS -l walltime=";
+    mconversionTable[cpuTime]              = "#PBS -l cput=";
+    mconversionTable[nbCpu]                = "## PBS -l "; //special case
+    mconversionTable[nbNodesAndCpuPerNode] = "#PBS -l "; //special case
+    mconversionTable[mem]                  = "#PBS -l mem=";
+    mconversionTable[mailNotification]     = "#PBS -m "; //special case
+    mconversionTable[mailNotifyUser]       = "#PBS -M ";
+    mconversionTable[queue]                = "#PBS -q ";
 
-		mconversionTable[loadLevelerSec]       = "";
-		mconversionTable[commandSec]           = "";
-		mconversionTable[torqueSec]            = "";
-		mendScript="";
+    mconversionTable[loadLevelerSec]       = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
 
   }else if(mbatchType==PBSPRO) {
 
@@ -89,65 +89,65 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 
   } else if(mbatchType==SLURM) {
 
-		mconversionTable[group]                = "#SBATCH --gid=";
-		mconversionTable[workingDir]           = "#SBATCH -D ";
-		mconversionTable[jobName]              = "#SBATCH -J ";
-		mconversionTable[jobOutput]            = "#SBATCH -o ";
-		mconversionTable[jobError]             = "#SBATCH -e ";
-		mconversionTable[jobWallClockLimit]    = "#SBATCH -t ";
-		mconversionTable[cpuTime]              = "#SBATCH -t ";
-		mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
-		mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
-		mconversionTable[mem]                  = "#SBATCH --mem=";
+    mconversionTable[group]                = "#SBATCH --gid=";
+    mconversionTable[workingDir]           = "#SBATCH -D ";
+    mconversionTable[jobName]              = "#SBATCH -J ";
+    mconversionTable[jobOutput]            = "#SBATCH -o ";
+    mconversionTable[jobError]             = "#SBATCH -e ";
+    mconversionTable[jobWallClockLimit]    = "#SBATCH -t ";
+    mconversionTable[cpuTime]              = "#SBATCH -t ";
+    mconversionTable[nbCpu]                = "#SBATCH --mincpus=";
+    mconversionTable[nbNodesAndCpuPerNode] = "#SBATCH "; //spacial case
+    mconversionTable[mem]                  = "#SBATCH --mem=";
     mconversionTable[mailNotification]     = "#SBATCH --mail-type=";//special case;
-		mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
-		mconversionTable[queue]                = "#SBATCH -p ";
+    mconversionTable[mailNotifyUser]       = "#SBATCH --mail-user=";
+    mconversionTable[queue]                = "#SBATCH -p ";
 
-		mconversionTable[slurmSec]             = "";
-		mconversionTable[commandSec]           = "";
-		mconversionTable[torqueSec]            = "";
-		mendScript="";
+    mconversionTable[slurmSec]             = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
 
-	} else if(mbatchType==LSF) {
+  } else if(mbatchType==LSF) {
 
-		mconversionTable[group]                = "#BSUB -G ";
-		mconversionTable[workingDir]           = "#BSUB -cwd ";
-		mconversionTable[jobName]              = "#BSUB -J ";
-		mconversionTable[jobOutput]            = "#BSUB -o ";
-		mconversionTable[jobError]             = "#BSUB -e ";
-		mconversionTable[jobWallClockLimit]    = "#% -vishnuWaillClockLimit="; //spacial case: treated in LSFParser
-		mconversionTable[cpuTime]              = "#BSUB -c ";
-		mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
-		mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
-		mconversionTable[mem]                  = "#BSUB -M ";
-                mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser
-		mconversionTable[mailNotifyUser]       = "#BSUB -u ";
-		mconversionTable[queue]                = "#BSUB -q ";
+    mconversionTable[group]                = "#BSUB -G ";
+    mconversionTable[workingDir]           = "#BSUB -cwd ";
+    mconversionTable[jobName]              = "#BSUB -J ";
+    mconversionTable[jobOutput]            = "#BSUB -o ";
+    mconversionTable[jobError]             = "#BSUB -e ";
+    mconversionTable[jobWallClockLimit]    = "#% -vishnuWaillClockLimit="; //spacial case: treated in LSFParser
+    mconversionTable[cpuTime]              = "#BSUB -c ";
+    mconversionTable[nbCpu]                = "#% -vishnuCpu=";  //spacial case: treated in LSFParser
+    mconversionTable[nbNodesAndCpuPerNode] = "#% -vishnuNbNodesAndCpuPerNode="; //spacial case: treated in LSFParser
+    mconversionTable[mem]                  = "#BSUB -M ";
+    mconversionTable[mailNotification]     = "#% -vishnuMailNofication="; //special case; treated in LSFParser
+    mconversionTable[mailNotifyUser]       = "#BSUB -u ";
+    mconversionTable[queue]                = "#BSUB -q ";
 
-		mconversionTable[lsfSec]             = "";
-		mconversionTable[commandSec]           = "";
-		mendScript="";
+    mconversionTable[lsfSec]             = "";
+    mconversionTable[commandSec]           = "";
+    mendScript="";
 
-	} else if (mbatchType==SGE){
+  } else if (mbatchType==SGE){
 
-		mconversionTable[group]                = "";
-		mconversionTable[workingDir]           = "#$ -wd ";
-		mconversionTable[jobName]              = "#$ -N ";
-		mconversionTable[jobOutput]            = "#$ -o ";
-		mconversionTable[jobError]             = "#$ -e ";
-		mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
-		mconversionTable[cpuTime]              = "#$ -l s_cpu=";
-		mconversionTable[nbCpu]                = "";
-		mconversionTable[nbNodesAndCpuPerNode] = "";
-		mconversionTable[mem]                  = "#$ -l s_vmem=";
-		mconversionTable[mailNotification]     = "#$ -m "; //special case
-		mconversionTable[mailNotifyUser]       = "#$ -M ";
-		mconversionTable[queue]                = "#$ -q ";
+    mconversionTable[group]                = "";
+    mconversionTable[workingDir]           = "#$ -wd ";
+    mconversionTable[jobName]              = "#$ -N ";
+    mconversionTable[jobOutput]            = "#$ -o ";
+    mconversionTable[jobError]             = "#$ -e ";
+    mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
+    mconversionTable[cpuTime]              = "#$ -l s_cpu=";
+    mconversionTable[nbCpu]                = "";
+    mconversionTable[nbNodesAndCpuPerNode] = "";
+    mconversionTable[mem]                  = "#$ -l s_vmem=";
+    mconversionTable[mailNotification]     = "#$ -m "; //special case
+    mconversionTable[mailNotifyUser]       = "#$ -M ";
+    mconversionTable[queue]                = "#$ -q ";
 
-		mconversionTable[sgeSec]               = "";
-		mconversionTable[commandSec]           = "";
-		mconversionTable[torqueSec]            = "";
-		mendScript="";
+    mconversionTable[sgeSec]               = "";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "";
+    mendScript="";
   } else if (mbatchType==POSIX) {
     mconversionTable[group]                = "#% vishnu_group=";
     mconversionTable[workingDir]           = "#% vishnu_working_dir=";
@@ -168,27 +168,27 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
   } else if (mbatchType==DELTACLOUD) {
-       //TODO
-		mconversionTable[workingDir]           = "#";
-		mconversionTable[jobName]              = "#";
-		mconversionTable[jobOutput]            = "#";
-		mconversionTable[jobError]             = "#";
-		mconversionTable[jobWallClockLimit]    = "#";
-		mconversionTable[cpuTime]              = "#";
-		mconversionTable[nbCpu]                = "#";
-		mconversionTable[nbNodesAndCpuPerNode] = "#";
-		mconversionTable[mem]                  = "#";
-		mconversionTable[mailNotification]     = "#"; //special case
-		mconversionTable[mailNotifyUser]       = "#";
-		mconversionTable[queue]                = "#";
+    //TODO
+    mconversionTable[workingDir]           = "#";
+    mconversionTable[jobName]              = "#";
+    mconversionTable[jobOutput]            = "#";
+    mconversionTable[jobError]             = "#";
+    mconversionTable[jobWallClockLimit]    = "#";
+    mconversionTable[cpuTime]              = "#";
+    mconversionTable[nbCpu]                = "#";
+    mconversionTable[nbNodesAndCpuPerNode] = "#";
+    mconversionTable[mem]                  = "#";
+    mconversionTable[mailNotification]     = "#"; //special case
+    mconversionTable[mailNotifyUser]       = "#";
+    mconversionTable[queue]                = "#";
 
-		mconversionTable[sgeSec]               = "#";
-		mconversionTable[commandSec]           = "";
-		mconversionTable[torqueSec]            = "#";
-		mendScript="";
-	} else {
-		std::cerr << "Unknown Batch type\n";
-	}
+    mconversionTable[sgeSec]               = "#";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "#";
+    mendScript="";
+  } else {
+    std::cerr << "Unknown Batch type\n";
+  }
 
 }
 
@@ -198,23 +198,23 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
 void
 ScriptGenConvertor::initializeTableOfSymbols() {
 
-	mtableOfSymbols.push_back(group);
-	mtableOfSymbols.push_back(workingDir);
-	mtableOfSymbols.push_back(jobName);
-	mtableOfSymbols.push_back(jobOutput);
-	mtableOfSymbols.push_back(jobError);
-	mtableOfSymbols.push_back(jobWallClockLimit);
-	mtableOfSymbols.push_back(cpuTime);
-	mtableOfSymbols.push_back(nbCpu);
-	mtableOfSymbols.push_back(nbNodesAndCpuPerNode);
-	mtableOfSymbols.push_back(mem);
-        mtableOfSymbols.push_back(mailNotification);
-	mtableOfSymbols.push_back(mailNotifyUser);
-	mtableOfSymbols.push_back(queue);
+  mtableOfSymbols.push_back(group);
+  mtableOfSymbols.push_back(workingDir);
+  mtableOfSymbols.push_back(jobName);
+  mtableOfSymbols.push_back(jobOutput);
+  mtableOfSymbols.push_back(jobError);
+  mtableOfSymbols.push_back(jobWallClockLimit);
+  mtableOfSymbols.push_back(cpuTime);
+  mtableOfSymbols.push_back(nbCpu);
+  mtableOfSymbols.push_back(nbNodesAndCpuPerNode);
+  mtableOfSymbols.push_back(mem);
+  mtableOfSymbols.push_back(mailNotification);
+  mtableOfSymbols.push_back(mailNotifyUser);
+  mtableOfSymbols.push_back(queue);
 
-	mtableOfSymbols.push_back(loadLevelerSec);
-	mtableOfSymbols.push_back(torqueSec);
-	mtableOfSymbols.push_back(commandSec);
+  mtableOfSymbols.push_back(loadLevelerSec);
+  mtableOfSymbols.push_back(torqueSec);
+  mtableOfSymbols.push_back(commandSec);
 }
 
 /**
@@ -225,170 +225,170 @@ ScriptGenConvertor::initializeTableOfSymbols() {
 int
 ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
-	/*To initialize the table of symbols*/
-	initializeTableOfSymbols();
+  /*To initialize the table of symbols*/
+  initializeTableOfSymbols();
 
-	std::istringstream imscriptGenContent(mscriptGenContent);
+  std::istringstream imscriptGenContent(mscriptGenContent);
 
-	std::string line;
-	std::string key;
-	std::string value;
-	std::string linebuf;
-	size_t pos;
+  std::string line;
+  std::string key;
+  std::string value;
+  std::string linebuf;
+  size_t pos;
 
-        std::vector<std::string>::iterator iter;
-	int numline = 0;
-	std::string tmpLine="";
-	size_t escapePos;
-	bool escapeFound = false;
+  std::vector<std::string>::iterator iter;
+  int numline = 0;
+  std::string tmpLine="";
+  size_t escapePos;
+  bool escapeFound = false;
 
-	while(!imscriptGenContent.eof()) {
+  while(!imscriptGenContent.eof()) {
 
-		getline(imscriptGenContent, line);
+    getline(imscriptGenContent, line);
 
-		numline +=1;
-		//Treating of the escape character int the script content
-		if(ba::ends_with(ba::erase_all_copy(line, " "),"\\")){
-			escapePos = line.rfind("\\");
-			if(escapePos!=std::string::npos) {
-				tmpLine += line.substr(0, escapePos);
-				escapeFound = true;
-				continue;
-			}
-		}
+    numline +=1;
+    //Treating of the escape character int the script content
+    if(ba::ends_with(ba::erase_all_copy(line, " "),"\\")){
+      escapePos = line.rfind("\\");
+      if(escapePos!=std::string::npos) {
+        tmpLine += line.substr(0, escapePos);
+        escapeFound = true;
+        continue;
+      }
+    }
 
-		if(escapeFound) {
-			tmpLine +=line;
-			line = tmpLine;
-			escapeFound = false;
-			tmpLine = "";
-		}
+    if(escapeFound) {
+      tmpLine +=line;
+      line = tmpLine;
+      escapeFound = false;
+      tmpLine = "";
+    }
 
-		/*search # character*/
-		pos = line.find('#');
+    /*search # character*/
+    pos = line.find('#');
 
-		if(pos == string::npos) {
-			linebuf=ba::erase_all_copy(line," ");
-			if(linebuf.empty()) {
-				continue;
-			} else {
-				key=commandSec;
-				mjobDescriptor.push_back (make_pair(key,line));
-			}
-		}
+    if(pos == string::npos) {
+      linebuf=ba::erase_all_copy(line," ");
+      if(linebuf.empty()) {
+        continue;
+      } else {
+        key=commandSec;
+        mjobDescriptor.push_back (make_pair(key,line));
+      }
+    }
 
-		line = line.erase(0, pos); // erase all character until # (excluded)
+    line = line.erase(0, pos); // erase all character until # (excluded)
 
-		// treats the specific directives here
-		// LOADLEVELER
-		if(ba::starts_with( ba::erase_all_copy(line," "),"#@")){
-			if (mbatchType==LOADLEVELER){
-				key=loadLevelerSec;;
-				mjobDescriptor.push_back (make_pair(key,line));
-			} else{
-				continue;
-			}
-		}
-		// TORQUE
-		if(ba::starts_with(line,"#PBS")){
-			if (mbatchType==TORQUE){
-				key=torqueSec;
-				mjobDescriptor.push_back (make_pair(key,line));
-			} else {
-				continue;
-			}
-		}
-		// SLURM
-		if(ba::starts_with(line,"#SBATCH")){
-			if (mbatchType==SLURM){
-				key=slurmSec;
-				mjobDescriptor.push_back (make_pair(key,line));
-			} else {
-				continue;
-			}
-		}
+    // treats the specific directives here
+    // LOADLEVELER
+    if(ba::starts_with( ba::erase_all_copy(line," "),"#@")){
+      if (mbatchType==LOADLEVELER){
+        key=loadLevelerSec;;
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else{
+        continue;
+      }
+    }
+    // TORQUE
+    if(ba::starts_with(line,"#PBS")){
+      if (mbatchType==TORQUE){
+        key=torqueSec;
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else {
+        continue;
+      }
+    }
+    // SLURM
+    if(ba::starts_with(line,"#SBATCH")){
+      if (mbatchType==SLURM){
+        key=slurmSec;
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else {
+        continue;
+      }
+    }
 
-		// treats the specific directives here
-		//LSF
-		if(ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
-			if (mbatchType==LSF){
-				key=lsfSec;;
-				mjobDescriptor.push_back (make_pair(key,line));
-			} else{
-				continue;
-			}
-		}
-		// SHEBANG
-		if(ba::starts_with(line,"#!")){
-			key=commandSec;
-			mjobDescriptor.push_back (make_pair(key,line));
-		}
+    // treats the specific directives here
+    //LSF
+    if(ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
+      if (mbatchType==LSF){
+        key=lsfSec;;
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else{
+        continue;
+      }
+    }
+    // SHEBANG
+    if(ba::starts_with(line,"#!")){
+      key=commandSec;
+      mjobDescriptor.push_back (make_pair(key,line));
+    }
 
-		/*remove % character*/
-		if(!ba::starts_with(ba::erase_all_copy(line," "),"#%")){
-			continue;
-		}
+    /*remove % character*/
+    if(!ba::starts_with(ba::erase_all_copy(line," "),"#%")){
+      continue;
+    }
 
-		pos = line.find('%');
+    pos = line.find('%');
 
-		if(pos == string::npos) {
-			continue;
-		}
-		line = line.erase(0, pos+1);
+    if(pos == string::npos) {
+      continue;
+    }
+    line = line.erase(0, pos+1);
 
-		/* Extract key, value*/
-		pos = line.find('=');
-		if(pos == string::npos) {
-			ba::erase_all(line, " ");
-			if (line.empty()) {
-				continue;
-			}
-			/*transform to lower case */
-			std::string line_tolower(line);
-			std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
-			iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), line_tolower);
-			if(iter==mtableOfSymbols.end()) {
-				ostringstream os_error;
-				os_error << "Error : Invalid argument " << line << " at line " << numline << " in your script file" << std::endl;
-				errorMessage = os_error.str();
-				return -1;
-			}
-			continue;
-		}
+    /* Extract key, value*/
+    pos = line.find('=');
+    if(pos == string::npos) {
+      ba::erase_all(line, " ");
+      if (line.empty()) {
+        continue;
+      }
+      /*transform to lower case */
+      std::string line_tolower(line);
+      std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
+      iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), line_tolower);
+      if(iter==mtableOfSymbols.end()) {
+        ostringstream os_error;
+        os_error << "Error : Invalid argument " << line << " at line " << numline << " in your script file" << std::endl;
+        errorMessage = os_error.str();
+        return -1;
+      }
+      continue;
+    }
 
-		key = line.substr(0, pos);
-		ba::erase_all(key, " ");
+    key = line.substr(0, pos);
+    ba::erase_all(key, " ");
 
-		if (key.empty()) {
-			continue;
-		}
+    if (key.empty()) {
+      continue;
+    }
 
-		/*transform to lower case */
-		std::string key_tolower(key);
-		std::transform(key.begin(), key.end(), key_tolower.begin(), ::tolower);
+    /*transform to lower case */
+    std::string key_tolower(key);
+    std::transform(key.begin(), key.end(), key_tolower.begin(), ::tolower);
 
-		iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
-		if(iter==mtableOfSymbols.end()) {
-			ostringstream os_error;
-			os_error << "Error : Invalid argument " << key << " at line " << numline << " in your script file" << std::endl;
-			errorMessage = os_error.str();
-			return -1;
-		}
+    iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
+    if(iter==mtableOfSymbols.end()) {
+      ostringstream os_error;
+      os_error << "Error : Invalid argument " << key << " at line " << numline << " in your script file" << std::endl;
+      errorMessage = os_error.str();
+      return -1;
+    }
 
-		value = line.substr(pos+1);
+    value = line.substr(pos+1);
 
-		while((value[0]==' ')) {
-			value.erase(0,1);
-		}
+    while((value[0]==' ')) {
+      value.erase(0,1);
+    }
 
-		/*transform to lower case */
-		std::transform(key.begin(), key.end(), key.begin(), ::tolower);
+    /*transform to lower case */
+    std::transform(key.begin(), key.end(), key.begin(), ::tolower);
 
-		mjobDescriptor.push_back(make_pair(key,value));
+    mjobDescriptor.push_back(make_pair(key,value));
 
-	}
+  }
 
-	return 0;
+  return 0;
 }
 
 /**
@@ -397,148 +397,148 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 std::string
 ScriptGenConvertor::getConvertedScript() {
 
-	std::string result ;
-	std::string key, value;
-	std::string torqueNodes;
-	bool torqueNodeIsAdd = false;
-	std::vector< pair<std::string, std::string> >::const_iterator iter;
-	for(iter = mjobDescriptor.begin(); iter!=mjobDescriptor.end(); ++iter) {
+  std::string result ;
+  std::string key, value;
+  std::string torqueNodes;
+  bool torqueNodeIsAdd = false;
+  std::vector< pair<std::string, std::string> >::const_iterator iter;
+  for(iter = mjobDescriptor.begin(); iter!=mjobDescriptor.end(); ++iter) {
 
-		key =  iter->first;
-		value = iter->second;
+    key =  iter->first;
+    value = iter->second;
 
-		//Special case
-		if(key.compare(nbNodesAndCpuPerNode)==0) {
+    //Special case
+    if(key.compare(nbNodesAndCpuPerNode)==0) {
 
-			if(!value.empty()){
-				if(*(value.begin())=='\"'){
-					value.replace(value.begin(), value.begin()+1, "");
-				}
-				if(*(value.end()-1)=='\"'){
-					value.replace(value.end()-1, value.end(), "");
-				}
-			}
+      if(!value.empty()){
+        if(*(value.begin())=='\"'){
+          value.replace(value.begin(), value.begin()+1, "");
+        }
+        if(*(value.end()-1)=='\"'){
+          value.replace(value.end()-1, value.end(), "");
+        }
+      }
 
-			size_t posNbNodes = value.find(":");
-			if(posNbNodes!=std::string::npos) {
-				std::string nbNodes = value.substr(0, posNbNodes);
-				std::string cpuPerNode = value.substr(posNbNodes+1);
+      size_t posNbNodes = value.find(":");
+      if(posNbNodes!=std::string::npos) {
+        std::string nbNodes = value.substr(0, posNbNodes);
+        std::string cpuPerNode = value.substr(posNbNodes+1);
 
-				if(mbatchType==LOADLEVELER) {
-					value = " node="+nbNodes+"\n";
-					value += "# @ tasks_per_node=1\n";
-					value += "# @ tasks_affinity = core(1) \n";
-					value += " @ cpus_per_node = "+cpuPerNode+"\n";
-				} else if(mbatchType==TORQUE) {
-					value = " nodes="+nbNodes+":ppn="+cpuPerNode;
-				} else if(mbatchType==SLURM) {
-					value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode;
-				}
-			}
-		}
-		//Special case
-		if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
-			value ="# @ tasks_per_node = 1 \n";
-			value +="# @ tasks_affinity = core(1) \n";
-			value +="# @ cpus_per_node = "+nbCpu+"\n";
-		}
+        if(mbatchType==LOADLEVELER) {
+          value = " node="+nbNodes+"\n";
+          value += "# @ tasks_per_node=1\n";
+          value += "# @ tasks_affinity = core(1) \n";
+          value += " @ cpus_per_node = "+cpuPerNode+"\n";
+        } else if(mbatchType==TORQUE) {
+          value = " nodes="+nbNodes+":ppn="+cpuPerNode;
+        } else if(mbatchType==SLURM) {
+          value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode;
+        }
+      }
+    }
+    //Special case
+    if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
+      value ="# @ tasks_per_node = 1 \n";
+      value +="# @ tasks_affinity = core(1) \n";
+      value +="# @ cpus_per_node = "+nbCpu+"\n";
+    }
 
-		//Special case
-		if(mbatchType==TORQUE && key.compare(nbCpu)==0) {
-			std::istringstream imscriptGenContent(mscriptGenContent);
-			std::string line;
-			bool ppnNotDefined=true;;
-			while(!imscriptGenContent.eof()) {
-				getline(imscriptGenContent, line);
-				size_t pos = line.find("#PBS");
-				if(pos!=std::string::npos) {
-					size_t posL = line.find("-l", pos);
-					if(posL!=std::string::npos){
-						if(line.find("nodes=", pos)!=std::string::npos) {
-							line = line.substr(posL+2);
-							ppnNotDefined = false;
-							findAndReplace(":ppn=", value, line);
-							torqueNodes += "#PBS -l "+line+"\n";
-						}
-					}
-				}
-			}
-			if(ppnNotDefined){
-				value = " nodes=1:ppn="+value;
-			}
-		}
+    //Special case
+    if(mbatchType==TORQUE && key.compare(nbCpu)==0) {
+      std::istringstream imscriptGenContent(mscriptGenContent);
+      std::string line;
+      bool ppnNotDefined=true;;
+      while(!imscriptGenContent.eof()) {
+        getline(imscriptGenContent, line);
+        size_t pos = line.find("#PBS");
+        if(pos!=std::string::npos) {
+          size_t posL = line.find("-l", pos);
+          if(posL!=std::string::npos){
+            if(line.find("nodes=", pos)!=std::string::npos) {
+              line = line.substr(posL+2);
+              ppnNotDefined = false;
+              findAndReplace(":ppn=", value, line);
+              torqueNodes += "#PBS -l "+line+"\n";
+            }
+          }
+        }
+      }
+      if(ppnNotDefined){
+        value = " nodes=1:ppn="+value;
+      }
+    }
 
-		//Special case
-		if(mbatchType==TORQUE && key.compare(commandSec)==0){
-			if(!torqueNodes.empty() && !torqueNodeIsAdd){
-				result += torqueNodes;
-				torqueNodeIsAdd = true;
-			}
-		}
+    //Special case
+    if(mbatchType==TORQUE && key.compare(commandSec)==0){
+      if(!torqueNodes.empty() && !torqueNodeIsAdd){
+        result += torqueNodes;
+        torqueNodeIsAdd = true;
+      }
+    }
 
-		//Special case
-		if(key.compare(mailNotification)==0) {
+    //Special case
+    if(key.compare(mailNotification)==0) {
 
-			bool notificationIsNotValid = false;
-			if(mbatchType==LOADLEVELER) {
-				if(value.compare("BEGIN")==0) {
-					value= "start";
-				} else if(value.compare("END")==0) {
-					value = "complete";
-				} else if(value.compare("ERROR")==0) {
-					value = "error";
-				} else if(value.compare("ALL")==0) {
-					value= "always";
-				} else {
-					notificationIsNotValid = true;
-				}
-			} else if(mbatchType==TORQUE) {
-				if(value.compare("BEGIN")==0) {
-					value= "b";
-				} else if(value.compare("END")==0) {
-					value = "e";
-				} else if(value.compare("ERROR")==0) {
-					value = "a";
-				} else if(value.compare("ALL")==0) {
-					value= "abe";
-				} else {
-					notificationIsNotValid = true;
-				}
-			} else if(mbatchType==SLURM) {
-				if(value.compare("BEGIN")==0) {
-					value= "BEGIN";
-				} else if(value.compare("END")==0) {
-					value = "END";
-				} else if(value.compare("ERROR")==0) {
-					value = "FAIL";
-				} else if(value.compare("ALL")==0) {
-					value= "ALL";
-				} else {
-					notificationIsNotValid = true;
-				}
-			} else if(mbatchType==SGE){
-				if(value.compare("BEGIN")==0) {
-					value= "b";
-				} else if(value.compare("END")==0) {
-					value = "e";
-				} else if(value.compare("ERROR")==0) {
-					value = "a";
-				} else if(value.compare("ALL")==0) {
-					value= "abe";
-				} else {
-					notificationIsNotValid = true;
-				}
-			}
+      bool notificationIsNotValid = false;
+      if(mbatchType==LOADLEVELER) {
+        if(value.compare("BEGIN")==0) {
+          value= "start";
+        } else if(value.compare("END")==0) {
+          value = "complete";
+        } else if(value.compare("ERROR")==0) {
+          value = "error";
+        } else if(value.compare("ALL")==0) {
+          value= "always";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==TORQUE) {
+        if(value.compare("BEGIN")==0) {
+          value= "b";
+        } else if(value.compare("END")==0) {
+          value = "e";
+        } else if(value.compare("ERROR")==0) {
+          value = "a";
+        } else if(value.compare("ALL")==0) {
+          value= "abe";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==SLURM) {
+        if(value.compare("BEGIN")==0) {
+          value= "BEGIN";
+        } else if(value.compare("END")==0) {
+          value = "END";
+        } else if(value.compare("ERROR")==0) {
+          value = "FAIL";
+        } else if(value.compare("ALL")==0) {
+          value= "ALL";
+        } else {
+          notificationIsNotValid = true;
+        }
+      } else if(mbatchType==SGE){
+        if(value.compare("BEGIN")==0) {
+          value= "b";
+        } else if(value.compare("END")==0) {
+          value = "e";
+        } else if(value.compare("ERROR")==0) {
+          value = "a";
+        } else if(value.compare("ALL")==0) {
+          value= "abe";
+        } else {
+          notificationIsNotValid = true;
+        }
+      }
 
-			if(notificationIsNotValid) {
-				throw UserException(ERRCODE_INVALID_PARAM, value+" is an invalid notification type:"+" consult the vishnu user manuel");
-			}
-		}
+      if(notificationIsNotValid) {
+        throw UserException(ERRCODE_INVALID_PARAM, value+" is an invalid notification type:"+" consult the vishnu user manuel");
+      }
+    }
 
-		result += mconversionTable[key]  + value + "\n";
-	}
+    result += mconversionTable[key]  + value + "\n";
+  }
 
-	return result+mendScript;
+  return result+mendScript;
 }
 
 /**
@@ -549,37 +549,37 @@ ScriptGenConvertor::getConvertedScript() {
  */
 void
 ScriptGenConvertor::findAndReplace(const std::string& ppn,
-		const std::string& nbCpuStr,
-		std::string& str){
+                                   const std::string& nbCpuStr,
+                                   std::string& str){
 
-	size_t pos = str.find(ppn);
-	while(pos!=std::string::npos) {
-		std::string oldPPNValue;
-		size_t posFirstChar = str.find_first_not_of("0123456789", pos+ppn.size());
-		if(posFirstChar!=std::string::npos) {
-			oldPPNValue = str.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
-		} else {
-			oldPPNValue =  str.substr(pos+ppn.size());
-		}
-		str.replace(pos+ppn.size(), oldPPNValue.size(), nbCpuStr);
-		pos = str.find(ppn, pos+1);
-	}
+  size_t pos = str.find(ppn);
+  while(pos!=std::string::npos) {
+    std::string oldPPNValue;
+    size_t posFirstChar = str.find_first_not_of("0123456789", pos+ppn.size());
+    if(posFirstChar!=std::string::npos) {
+      oldPPNValue = str.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
+    } else {
+      oldPPNValue =  str.substr(pos+ppn.size());
+    }
+    str.replace(pos+ppn.size(), oldPPNValue.size(), nbCpuStr);
+    pos = str.find(ppn, pos+1);
+  }
 
-	char delim = '+';
-	size_t begin = 0;
-	size_t end = str.find(delim);
-	if(end==std::string::npos) {
-		findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
-	}
-	while(end!=std::string::npos) {
-		findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
-		begin = end+1;
-		end = str.find(delim, begin);
-		//last token
-		if(end==std::string::npos){
-			findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
-		}
-	}
+  char delim = '+';
+  size_t begin = 0;
+  size_t end = str.find(delim);
+  if(end==std::string::npos) {
+    findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+  }
+  while(end!=std::string::npos) {
+    findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+    begin = end+1;
+    end = str.find(delim, begin);
+    //last token
+    if(end==std::string::npos){
+      findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
+    }
+  }
 }
 
 /**
@@ -592,23 +592,23 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
  */
 void
 ScriptGenConvertor::findAndInsert(const std::string& oldValue,
-		const std::string& newValue,
-		const size_t& begin,
-		size_t& end,
-		std::string& str) {
+                                  const std::string& newValue,
+                                  const size_t& begin,
+                                  size_t& end,
+                                  std::string& str) {
 
-	std::string substr;
-	if(end!=std::string::npos) {
-		substr = str.substr(begin, end-begin);
-	} else {
-		substr = str.substr(begin);
-	}
-	if(substr.find(oldValue)==std::string::npos) {
-		str.insert(begin+substr.size(), newValue);
-		if(end!=std::string::npos) {
-			end += newValue.size();
-		}
-	}
+  std::string substr;
+  if(end!=std::string::npos) {
+    substr = str.substr(begin, end-begin);
+  } else {
+    substr = str.substr(begin);
+  }
+  if(substr.find(oldValue)==std::string::npos) {
+    str.insert(begin+substr.size(), newValue);
+    if(end!=std::string::npos) {
+      end += newValue.size();
+    }
+  }
 }
 
 
@@ -618,13 +618,13 @@ ScriptGenConvertor::findAndInsert(const std::string& oldValue,
 bool
 ScriptGenConvertor::scriptIsGeneric() {
 
-	std::string modifiedScript(mscriptGenContent);
-	std::transform(mscriptGenContent.begin(), mscriptGenContent.end(), modifiedScript.begin(), ::tolower);
-	modifiedScript = ba::erase_all_copy(modifiedScript," ");
-	if(modifiedScript.find("#%"+prefix)!=std::string::npos){
-		return true;
-	}
-	return false;
+  std::string modifiedScript(mscriptGenContent);
+  std::transform(mscriptGenContent.begin(), mscriptGenContent.end(), modifiedScript.begin(), ::tolower);
+  modifiedScript = ba::erase_all_copy(modifiedScript," ");
+  if(modifiedScript.find("#%"+prefix)!=std::string::npos){
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -641,13 +641,13 @@ ScriptGenConvertor::~ScriptGenConvertor() {
  */
 boost::shared_ptr<ScriptGenConvertor>
 vishnuScriptGenConvertor(const int batchType,
-		const std::string& scriptGenContent) {
+                         const std::string& scriptGenContent) {
 
-	boost::shared_ptr< ScriptGenConvertor> scriptGenConvertor(new ScriptGenConvertor(batchType, scriptGenContent));
-	string parse_error ;
-	if(scriptGenConvertor->parseFile(parse_error)==-1) {
-		std::string errorMessage = "Can't generate this generic script content \n"+parse_error ;
-		throw UserException(ERRCODE_INVALID_PARAM, errorMessage);
-	} ;
-	return scriptGenConvertor;
+  boost::shared_ptr< ScriptGenConvertor> scriptGenConvertor(new ScriptGenConvertor(batchType, scriptGenContent));
+  string parse_error ;
+  if(scriptGenConvertor->parseFile(parse_error)==-1) {
+    std::string errorMessage = "Can't generate this generic script content \n"+parse_error ;
+    throw UserException(ERRCODE_INVALID_PARAM, errorMessage);
+  } ;
+  return scriptGenConvertor;
 }
