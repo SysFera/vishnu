@@ -81,7 +81,7 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setWorkId(options.getWorkId());
     mjob.setOutputDir("");
     std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-                       
+
     if (options.isPosix()) {
       mbatchType = POSIX;
     }
@@ -89,7 +89,7 @@ int JobServer::submitJob(std::string& scriptContent,
     std::string scriptPath = computeWorkingDir(options,suffix);
     if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
       computeOutputDir(options.getWorkingDir(), suffix, scriptContent);
-    } 
+    }
     ::ecorecpp::serializer::serializer optSer;
     ::ecorecpp::serializer::serializer jobSer;
     std::string submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
@@ -158,7 +158,7 @@ int JobServer::submitJob(std::string& scriptContent,
     succeed = false;
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
   }
-  
+
   if (!succeed) {
     throw TMSVishnuException(errCode, mjob.getJobId()+": "+errMsg);
   }
@@ -546,7 +546,7 @@ std::string JobServer::getBatchDirective(std::string& seperator) const {
  */
 void JobServer::treatSpecificParams(const std::string& specificParams,
                                     std::string& scriptContent) {
-  
+
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
   size_t pos1 = 0;
@@ -628,7 +628,7 @@ std::string JobServer::getMachineName(const std::string& machineId){
  * \brief Function to set the Working Directory
  * \param options the options to submit job
  * \param suffix the suffix of the working directory
- * \return the script path 
+ * \return the script path
  */
 std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const std::string& suffix)
 {
@@ -640,7 +640,7 @@ std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const
     string inputDir =  workingDir + "/INPUT";
     scriptPath = inputDir + "/script.xsh";
     vishnu::createDir(workingDir, true); // create the working directory
-    vishnu::createDir(inputDir, true); // create the working directory
+    vishnu::createDir(inputDir, true); // create the input directory
     string directory = "";
     try {
       directory = vishnu::moveFileData(options.getFileParams(), inputDir);
@@ -674,8 +674,8 @@ void JobServer::deserializeJob(std::string jobSerialized)
   }
   mjob = *job;
   delete job;
-  
 }
+
 /**
  * \brief Function to process the script with options
  * \param the script content
@@ -689,11 +689,11 @@ std::string JobServer::processScript(std::string& scriptContent,
                                      const std::string& machineName)
 {
   std::string convertedScript;
-  
+
   vishnu::replaceEnvVariables(scriptContent, mbatchType);
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
-  
+
   if(options.getTextParams().size()) {
     vishnu::setParams(scriptContent, options.getTextParams()) ;
   }
@@ -719,6 +719,6 @@ std::string JobServer::processScript(std::string& scriptContent,
     vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", mjob.getOutputDir()+"/NODEFILE");
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
   }
-    
+
   return convertedScript;
 }

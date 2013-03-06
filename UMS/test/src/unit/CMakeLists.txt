@@ -7,7 +7,7 @@ unit_test(utilsClientUnitTests vishnu-ums-client)
 
 if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
 
-include_directories(
+  include_directories(
     ${CONFIG_SOURCE_DIR}
     ${DATABASE_INCLUDE_DIR}
     ${DATA_BASE_INCLUDE_DIR}
@@ -32,8 +32,6 @@ include_directories(
 
   add_library(vishnu-ums-server-mock ${server_SRCS_mock})
   set_target_properties(vishnu-ums-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS vishnu-ums-server-mock DESTINATION ${LIB_INSTALL_DIR})
 
   target_link_libraries(vishnu-ums-server-mock vishnu-core vishnu-core-server-mock ${CMAKE_DL_LIBS})
-
 endif()

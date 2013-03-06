@@ -52,10 +52,5 @@ if(COMPILE_SERVERS)
 
   add_library(vishnu-core-server-mock ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS vishnu-core-server-mock DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server-mock vishnu-core mockDb)
-  install(PROGRAMS ${VISHNU_SOURCE_DIR}/core/src/utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
-
-
-
 endif()

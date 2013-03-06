@@ -42,7 +42,7 @@ static const std::string lsf_Script = std::string("#!/bin/sh\n")+
                                       "#BSUB -e my_first_job_gen.err\n"+
                                       "#% -vishnuMailNofication=BEGIN\n"+
                                       "#% -vishnuWaillClockLimit=01:00:00\n";
-                                      
+
 static const std::string sge_Script = std::string("#!/bin/sh\n")+
                                       "#$ -N first_job\n"+
                                       "#$ -o my_first_job_gen.out\n"+
@@ -56,21 +56,21 @@ static const std::string pbs_Script = std::string("#!/bin/sh\n")+
                                       "#PBS -e my_first_job_gen.err\n"+
                                       "#PBS -m BEGIN\n"+
                                       "#PBS -l walltime=01:00:00\n";
-                                      
+
 static const std::string deltacloud_Script = std::string("#!/bin/sh\n")+
                                           "#first_job\n"+
                                           "#my_first_job_gen.out\n"+
                                           "#my_first_job_gen.err\n"+
                                           "#BEGIN\n"+
                                           "#01:00:00\n";
-                                      
+
 static const std::string posix_Script = std::string("#!/bin/sh\n")+
                                               "#% vishnu_job_name=first_job\n"+
                                               "#% vishnu_output=my_first_job_gen.out\n"+
                                               "#% vishnu_error=my_first_job_gen.err\n"+
                                               "##BEGIN\n"+
-                                              "#% vishnu_wallclocklimit=01:00:00\n";                                      
-                                          
+                                              "#% vishnu_wallclocklimit=01:00:00\n";
+
 static const std::string generic_bad_Script = std::string("#!/bin/sh\n")+
                                               "#s vishnu_job_name first_job\n"+
                                               "#s vishnu_output=my_first_job_gen.out\n"+
@@ -88,7 +88,7 @@ static const std::string notgeneric_Script = std::string("#!/bin/sh\n")+
                                               "#$ -N mySGEjobName\n"+
                                               "#$ -o mySGEJob-$JOB_ID.out\n"+
                                               "#$ -e mySGEJob-$JOB_ID.err\n";
-                                              
+
 
 BOOST_AUTO_TEST_SUITE( ScriptGenConvertor_unit_tests )
 
@@ -161,27 +161,27 @@ BOOST_AUTO_TEST_CASE( test_parseFile_error2 )
   BOOST_CHECK_EQUAL(scriptGenConvertor_bad_key.parseFile(errormsg),-1);
   std::string error = "Error : Invalid argument vishnu_bad_key at line 4 in your script file\n";
   BOOST_CHECK_EQUAL(errormsg,error);
-  
+
 }
 
 
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_Torque )
 {
-  
+
   std::string errormsg="";
   std::string script="";
-  
+
   ScriptGenConvertor scriptGenConvertor_Torque(0, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_Torque.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_Torque.getConvertedScript();
   BOOST_CHECK_EQUAL(script,torque_Script);
-  
+
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_LL )
 {
-  
+
   std::string errormsg="";
   std::string script="";
   ScriptGenConvertor scriptGenConvertor_LL(1, generic_Script);
@@ -193,11 +193,11 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_LL )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_Slurm )
 {
-  
+
   std::string errormsg="";
   std::string script="";
   ScriptGenConvertor scriptGenConvertor_SLURM(2, generic_Script);
-  errormsg="";  
+  errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_SLURM.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
   script = scriptGenConvertor_SLURM.getConvertedScript();
@@ -205,9 +205,9 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_Slurm )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_LSF )
 {
-  
+
   std::string errormsg="";
-  std::string script="";  
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_LSF(3, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_LSF.parseFile(errormsg),0);
@@ -217,9 +217,9 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_LSF )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_SGE )
 {
-  
+
   std::string errormsg="";
-  std::string script=""; 
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_SGE(4, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_SGE.parseFile(errormsg),0);
@@ -229,7 +229,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_SGE )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_PBSPRO )
 {
-  
+
   std::string errormsg="";
   std::string script="";
   ScriptGenConvertor scriptGenConvertor_PBSPRO(5, generic_Script);
@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_PBSPRO )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_DELTACLOU )
 {
-  
+
   std::string errormsg="";
   std::string script="";
   ScriptGenConvertor scriptGenConvertor_DELTACLOUD(6, generic_Script);
@@ -253,9 +253,9 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_DELTACLOU )
 }
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_POSIX )
 {
-  
+
   std::string errormsg="";
-  std::string script="";  
+  std::string script="";
   ScriptGenConvertor scriptGenConvertor_POSIX(7, generic_Script);
   errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor_POSIX.parseFile(errormsg),0);
@@ -263,20 +263,19 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_POSIX )
   script = scriptGenConvertor_POSIX.getConvertedScript();
   BOOST_CHECK_EQUAL(script,posix_Script);
 }
-BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDIFINED )
+BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDEFINED )
 {
-  
+
   std::string errormsg="";
   std::string script="";
-  ScriptGenConvertor scriptGenConvertor_UNDIFINED(-1, generic_Script);
+  ScriptGenConvertor scriptGenConvertor_UNDEFINED(-1, generic_Script);
   errormsg="";
-  BOOST_CHECK_EQUAL(scriptGenConvertor_UNDIFINED.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(scriptGenConvertor_UNDEFINED.parseFile(errormsg),0);
   BOOST_CHECK(errormsg=="");
-  script = scriptGenConvertor_UNDIFINED.getConvertedScript();
+  script = scriptGenConvertor_UNDEFINED.getConvertedScript();
   BOOST_CHECK_EQUAL(script,generic_Script);
 }
-    
-  
-  
-BOOST_AUTO_TEST_SUITE_END()
 
+
+
+BOOST_AUTO_TEST_SUITE_END()

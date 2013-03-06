@@ -13,13 +13,12 @@
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "tmsUtils.hpp"
+
 /**
  * \class JobServer
  * \brief JobServer class implementation
  */
-class JobServer
-{
-
+class JobServer {
 public:
   /**
   * \param sessionServer The object which encapsulates the session information
@@ -124,48 +123,6 @@ protected:
   void
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
-private:
-  /**
-   * \brief job data structure
-   */
-  TMS_Data::Job mjob;
-
-  /**
-   * \brief The object which encapsulates the session information
-   */
-  SessionServer msessionServer;
-
-  /**
-   * \brief The machine identifier
-   */
-  std::string mmachineId;
-
-  /**
-   * \brief The type of the batch scheduler
-   */
-  BatchType mbatchType;
-
-  /**
-   * \brief The type of the batch scheduler
-   */
-  std::string mbatchVersion;
-
-  /**
-   * \brief An instance of vishnu database
-   */
-  Database *mdatabaseVishnu;
-
-  /**
-  * \brief The configuration of the SeD
-  */
-  ExecConfiguration_Ptr msedConfig;
-
-  /**
-   * \brief Holds the level of debug
-   */
-  int mdebugLevel;
-  
-protected:
   /**
   * \brief Function to set the path of output directory
   * \param parentDir The directory in which to create the output dir
@@ -224,9 +181,49 @@ protected:
    * \brief Function to deserialize job
    * \param jobSerialized the Serialized job
    */
-  
+
   void deserializeJob(std::string jobSerialized);
-  
+
+private:
+  /**
+   * \brief job data structure
+   */
+  TMS_Data::Job mjob;
+
+  /**
+   * \brief The object which encapsulates the session information
+   */
+  SessionServer msessionServer;
+
+  /**
+   * \brief The machine identifier
+   */
+  std::string mmachineId;
+
+  /**
+   * \brief The type of the batch scheduler
+   */
+  BatchType mbatchType;
+
+  /**
+   * \brief The type of the batch scheduler
+   */
+  std::string mbatchVersion;
+
+  /**
+   * \brief An instance of vishnu database
+   */
+  Database *mdatabaseVishnu;
+
+  /**
+  * \brief The configuration of the SeD
+  */
+  ExecConfiguration_Ptr msedConfig;
+
+  /**
+   * \brief Holds the level of debug
+   */
+  int mdebugLevel;
 };
 
 #endif

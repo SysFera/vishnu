@@ -6,10 +6,8 @@ include_directories(
 
 include(UnitTest)
 if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
-  unit_test(POSIXParserUnitTests ${POSIX_TEST_LIB})
+  unit_test(POSIXParserUnitTests vishnu-tms-posix)
   unit_test(EnvUnitTests vishnu-tms-server)
-
-
   unit_test(ScriptGenConvertorUnitTests vishnu-tms-server )
 
 
@@ -58,9 +56,6 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
   add_library(vishnu-tms-server-mock ${server_mock_SRCS})
   set_target_properties(vishnu-tms-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server-mock vishnu-ums-server-mock mockDb)
-  install(TARGETS vishnu-tms-server-mock DESTINATION ${LIB_INSTALL_DIR})
 
   unit_test(JobServerUnitTests vishnu-tms-server-mock)
-
-
 endif()

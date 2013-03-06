@@ -194,7 +194,6 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
   if (torque OR ll OR lsf OR slurm OR sge OR pbs OR deltacloud)
     set(posix 1)
   endif()
-  set (POSIX_TEST_LIB vishnu-tms-posix1.0)
   
   if ( NOT (torque OR ll OR lsf OR slurm OR sge OR pbs OR deltacloud OR posix) )
     message(FATAL_ERROR "VISHNU_BATCH must be either TORQUE, LL, SLURM, LSF, SGE, PBS, DELTACLOUD or POSIX")
