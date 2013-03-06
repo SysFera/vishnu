@@ -108,7 +108,13 @@ namespace vishnu
   void
   checkJobPriority(const int& priority);
 
-  
+/**
+   * \brief Function to check the job nbNodesAndCpuPerNode
+   * \param nbNodesAndCpuPerNode the number of nodes and cpu per node
+   * \return raises an exception on error
+   */
+  void
+  checkJobNbNodesAndNbCpuPerNode(const std::string& nbNodesAndCpuPerNode);
 
 /**
  * \brief Function to parse textual or file parameters
