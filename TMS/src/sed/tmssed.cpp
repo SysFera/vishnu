@@ -62,7 +62,6 @@ int main(int argc, char* argv[], char* envp[]) {
   std::string batchTypeStr;
   std::string batchVersion = "";
   std::string machineId;
-  std::string remoteBinDirectory;
   std::string defaultBatchConfig;
   string TMSTYPE = "tmssed";
   string uri;
@@ -192,7 +191,7 @@ int main(int argc, char* argv[], char* envp[]) {
 
       //Initialize the TMS Server
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId, batchType, remoteBinDirectory, config);
+      res = server->init(vishnuId, dbConfig, machineId, batchType, config);
       if (!res) {
         initSeD(TMSTYPE, *config, uri, server);
       } else {
