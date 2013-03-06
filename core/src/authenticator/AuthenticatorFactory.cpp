@@ -38,21 +38,21 @@ AuthenticatorFactory::createAuthenticatorInstance(AuthenticatorConfiguration Aut
 #ifdef USE_LDAP
     mauth = new LDAPAuthenticator();
 #else
-    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with ENABLE_LDAP)");
 #endif
     break;
   case AuthenticatorConfiguration::UMSLDAP :
 #ifdef USE_LDAP
     mauth = new UMSLDAPAuthenticator();
 #else
-    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with ENABLE_LDAP)");
 #endif
     break;
   case AuthenticatorConfiguration::LDAPUMS :
 #ifdef USE_LDAP
     mauth = new LDAPUMSAuthenticator();
 #else
-    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with VISHNU_USE_LDAP)");
+    throw SystemException(ERRCODE_AUTHENTERR, "LDAP is not enabled (re-compile with ENABLE_LDAP)");
 #endif
     break;
   default:

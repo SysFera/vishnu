@@ -441,7 +441,7 @@ if(COMPILE_SERVERS)
     set(DB_LIBS ${DATABASE_LIBS})
   endif()
 
-  if ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+  if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     include_directories(${LDAP_PROXY_SOURCE_DIR})
     set(authenticator_SRCS
     authenticator/AuthenticatorConfiguration.cpp
@@ -452,13 +452,13 @@ if(COMPILE_SERVERS)
     authenticator/UMSLDAPAuthenticator.cpp
     authenticator/LDAPUMSAuthenticator.cpp
     authenticator/ldap/LDAPProxy.cpp)
-  else ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+  else ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     set(authenticator_SRCS
     authenticator/AuthenticatorConfiguration.cpp
     authenticator/AuthenticatorFactory.cpp
     authenticator/Authenticator.cpp
     authenticator/UMSAuthenticator.cpp)
-  endif ((OPENSSL_FOUND) AND (VISHNU_USE_LDAP) AND (LDAP_FOUND))
+  endif ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
 
   include_directories(${UMS_EMF_DATA_DIR})
   set (version_manager_SRCS

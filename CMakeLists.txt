@@ -72,7 +72,7 @@ endif()
 set(VISHNU_BATCH "POSIX" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
 set(VISHNU_BATCH_VERSION "1" CACHE path "Version of the batch scheduler")
 
-option(VISHNU_USE_LDAP   "Build VISHNU with LDAP support...")
+option(ENABLE_LDAP   "Build VISHNU with LDAP support...")
 
 if (COMPILE_UMS AND COMPILE_TMS AND COMPILE_FMS AND COMPILE_IMS)
   set(COMPILE_ALL_MODULES 1)
@@ -358,7 +358,7 @@ endif(COMPILE_TMS AND COMPILE_SERVERS)
 ######################################################################
 #                                LDAP                                #
 ######################################################################
-if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
+if (ENABLE_LDAP AND COMPILE_SERVERS)
   #To check if the module UMS is activated
   if (COMPILE_UMS)
     find_package(LDAP)
@@ -376,7 +376,7 @@ if (VISHNU_USE_LDAP AND COMPILE_SERVERS)
   else (COMPILE_UMS)
     message("To use LDAP, the UMS module must be activated.")
   endif (COMPILE_UMS)
-endif(VISHNU_USE_LDAP AND COMPILE_SERVERS)
+endif(ENABLE_LDAP AND COMPILE_SERVERS)
 
 
 

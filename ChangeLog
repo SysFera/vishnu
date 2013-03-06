@@ -2,6 +2,9 @@
 | VISHNU 3.0.0 |
 +--------------+
 * Fixed a few bugs: #348, #414, #424, #454
+* Option VISHNU_USE_LDAP in cmake has been renamed ENABLE_LDAP to be more
+	consistent with the other options (ENABLE_JAVA, ENABLE_MYSQL,
+	ENABLE_POSTGRESQL, ENABLE_PYTHON, ENABLE_SWIG)
 	
 +----------------------+
 | VISHNU 3.0.0 - Beta2 |
