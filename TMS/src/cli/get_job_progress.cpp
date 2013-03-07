@@ -32,14 +32,14 @@ struct JobProgressFunc {
   {};
 
   int operator()(std::string sessionKey) {
-    TMS_Data::ListProgression prog; 
+    TMS_Data::ListProgression prog;
     int res = getJobProgress(sessionKey, mmachineId, prog, mprogOp);
     if(mprogOp.getJobId().size()==0 && mprogOp.getJobOwner().size()==0) {
       std::cout << prog << std::endl;
     } else {
       displayJobProgress(prog);
     }
- 
+
     return res;
   }
 };
@@ -54,7 +54,7 @@ struct JobProgressFunc {
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
-makeGetJobProgOp(string pgName, 
+makeGetJobProgOp(string pgName,
 		 boost::function1<void, string>& fjid,
 		 boost::function1<void, string>& fown,
 		 string& configFile){
@@ -81,7 +81,7 @@ makeGetJobProgOp(string pgName,
 
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -93,7 +93,7 @@ int main (int argc, char* argv[]){
   boost::function1<void,string> fjid(boost::bind(&TMS_Data::ProgressOptions::setJobId,boost::ref(progOp),_1));
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ProgressOptions::setJobOwner,boost::ref(progOp),_1));
 
-     
+
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, configFile);
 
@@ -105,7 +105,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   JobProgressFunc jobProgressFunc(machineId, progOp);

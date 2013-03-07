@@ -42,7 +42,7 @@ struct JobOutputJobFunc {
 
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -62,7 +62,7 @@ int main (int argc, char* argv[]){
      "The outputh dir of the job output",
      CONFIG,
      outDir);
-   
+
   // All cli obligatory parameters
   opt->add("machineId,m",
 	   "represents the id of the machine",
@@ -78,10 +78,10 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId jobId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   JobOutputJobFunc jobOutputFunc(machineId, jobId, outDir);
   return GenericCli().run(jobOutputFunc, configFile, argc, argv);
-  
+
 }

@@ -1,6 +1,6 @@
 /**
  * \file list_queues.cpp
- * This file defines the VISHNU list queues command 
+ * This file defines the VISHNU list queues command
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -38,14 +38,14 @@ struct ListQueuesFunc {
     } else {
       std::cout << queue << std::endl;
     }
-  
+
       return res;
   }
 };
 
-int 
+int
 main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -65,7 +65,7 @@ main (int argc, char* argv[]){
           "An option for listing all information of the given\n"
           "queue name",
           CONFIG,
-          queueName); 
+          queueName);
 
   // All cli obligatory parameters
   opt->setPosition("machineId",1);
@@ -76,7 +76,7 @@ main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   ListQueuesFunc listQueueFunc(machineId, queueName);

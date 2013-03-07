@@ -261,14 +261,14 @@ int main (int argc, char* argv[]){
     ret = cmd.parse(env_name_mapper());
 
     if (ret != CLI_SUCCESS){
-      helpUsage(*opt,"[options] machineId script");
+      helpUsage(*opt);
       return ret;
     }
 
     // PreProcess (adapt some parameters if necessary)
     checkVishnuConfig(*opt);
     if (opt->count("help")) {
-      helpUsage(*opt,"[options] machineId script");
+      helpUsage(*opt);
       return 0;
     }
 
