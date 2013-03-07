@@ -149,10 +149,10 @@ void Options::add(const std::string& name,
 
 template<>
 void Options::add(const std::string& name,
-    const std::string& desc,
-    const Group_type& group,
-    boost::function1<void, bool>& userFunc,
-    int required) {
+                  const std::string& desc,
+                  const Group_type& group,
+                  boost::function1<void, bool>& userFunc,
+                  int required) {
   po::options_description tmp_options;
   po::typed_value<bool>* optionvalue=po::bool_switch()->notifier(userFunc);
 
@@ -274,10 +274,22 @@ operator<< (std::ostream & os, const Options & opt) {
          .add(opt.config_options)
          .add(opt.env_options);
 
-  os << visible << endl;
+  os << visible << "\n";
 
   return os;
 }
+
+std::string
+Options::getPositionalOptString() const {
+  std::string optS = "";
+
+  for (int i = 0; i < position.max_total_count(); i++) {
+    optS += position.name_for_position(i) + " ";
+  }
+
+  return optS;
+}
+
 
 /**
  * \brief  The default destructor
