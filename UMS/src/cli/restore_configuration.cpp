@@ -53,7 +53,7 @@ int main (int ac, char* av[]){
       filePath,
       1);
 
-  opt->setPosition("filePath",-1);
+  opt->setPosition("filePath", 1);
 
 
   CLICmd cmd = CLICmd (ac, av, opt);

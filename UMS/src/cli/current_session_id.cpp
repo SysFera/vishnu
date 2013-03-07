@@ -19,25 +19,26 @@ using namespace std;
 using namespace vishnu;
 
 
-int main (int ac, char* av[]){
-
-
-
+int main (int ac, char* av[]) {
   /**************** Describe options *************/
   try{
-  boost::shared_ptr< Options> opt(new Options(av[0]) );
+    boost::shared_ptr< Options> opt(new Options(av[0]));
 
-  // get the sessionId
-  std::string sessionId=getLastSessionId(getppid());
+    bool isEmpty;
+    //To process list options
+    GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  // DIET call
-  if(false==sessionId.empty()){
-    std::cout << "current sessionId: " <<  sessionId << "\n";
-    return VISHNU_OK;
-  }
+    // get the sessionId
+    std::string sessionId=getLastSessionId(getppid());
 
-  errorUsage(av[0],"cannot retrieve sessionId");
-  return ERRCODE_CLI_ERROR_RUNTIME;
+    // DIET call
+    if (false == sessionId.empty()){
+      std::cout << "current sessionId: " <<  sessionId << "\n";
+      return VISHNU_OK;
+    }
+
+    errorUsage(av[0],"cannot retrieve sessionId");
+    return ERRCODE_CLI_ERROR_RUNTIME;
 
   } catch(VishnuException& e){// catch all Vishnu runtime error
     std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
@@ -51,6 +52,4 @@ int main (int ac, char* av[]){
     errorUsage(av[0],e.what());
     return ERRCODE_CLI_ERROR_RUNTIME;
   }
-
-
 }// end of main
