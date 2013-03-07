@@ -143,19 +143,19 @@ class GenericCli {
         int ret = cmd.parse(env_name_mapper());
 
         if (ret != VISHNU_OK){
-          helpUsage(*opt,"[option] "+signature);
+          helpUsage(*opt, signature);
           exit(ret);
         }
 
         // PreProcess (adapt some parameters if necessary)
         checkVishnuConfig(*opt);
         if ( opt->count("help")){
-          helpUsage(*opt,"[option] "+signature);
+          helpUsage(*opt, signature);
           exit(VISHNU_OK);
         }
       }
       catch(po::error& e){ // catch all other bad parameter errors
-        helpUsage(*opt,"[option] "+signature);
+        helpUsage(*opt, signature);
         exit(ERRCODE_INVALID_PARAM);
       }
       catch(std::exception& e){// catch all std runtime error

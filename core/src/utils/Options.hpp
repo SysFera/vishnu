@@ -285,6 +285,13 @@ public:
   operator<<(std::ostream &os,const Options & opt);
 
   /**
+   * \brief returns a string with all positional parameters in the correct order
+   * \return the positional parameters separated by spaces. e.g., "param1 param2... paramn"
+   */
+  std::string
+  getPositionalOptString() const;
+
+  /**
    * \brief The default destructor
    */
 
