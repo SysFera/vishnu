@@ -283,8 +283,12 @@ std::string
 Options::getPositionalOptString() const {
   std::string optS = "";
 
-  for (int i = 0; i < position.max_total_count(); i++) {
-    optS += position.name_for_position(i) + " ";
+  if (numeric_limits<unsigned>::max() == position.max_total_count()) {
+    optS += position.name_for_position(0) + "... ";
+  } else {
+    for (unsigned int i = 0; i < position.max_total_count(); i++) {
+      optS += position.name_for_position(i) + " ";
+    }
   }
 
   return optS;
