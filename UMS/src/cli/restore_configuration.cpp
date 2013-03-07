@@ -1,6 +1,6 @@
 /**
  * \file restore_configuration.cpp
- * This file defines the VISHNU restore configuration command 
+ * This file defines the VISHNU restore configuration command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -62,14 +62,14 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] filePath");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] filePath");
+    helpUsage(*opt);
     return 0;
   }
 
@@ -77,5 +77,3 @@ int main (int ac, char* av[]){
   return GenericCli().run(restconfigFunc, configFile, ac, av);
 
 }// end of main
-
-

@@ -1,6 +1,6 @@
 /**
  * \file update_authentication_account.cpp
- * This file defines the VISHNU update authentication account command 
+ * This file defines the VISHNU update authentication account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -31,7 +31,7 @@ struct UpdateAuthenticationAccountFunc {
 
 
      int res=updateAuthAccount(sessionKey,mauthAccount);
-    
+
      return res;
   }
 };
@@ -47,15 +47,15 @@ int main (int ac, char* av[]){
   /********** EMF data ************/
 
   UMS_Data::AuthAccount authAccount;
-  
+
   /******** Callback functions ******************/
 
   StringcallBackType fAuthSystemId( boost::bind(&UMS_Data::AuthAccount::setAuthSystemId,boost::ref(authAccount),_1));
-  
+
   StringcallBackType fUserId( boost::bind(&UMS_Data::AuthAccount::setUserId,boost::ref(authAccount),_1));
-  
+
   StringcallBackType fAcLogin( boost::bind(&UMS_Data::AuthAccount::setAcLogin,boost::ref(authAccount),_1));
- 
+
 
 
   /**************** Describe options *************/
@@ -68,14 +68,14 @@ CLICmd cmd = CLICmd (ac, av, opt);
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt," [options] authSystemId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt," [options] authSystemId ");
+    helpUsage(*opt);
     return 0;
   }
 
@@ -83,4 +83,3 @@ CLICmd cmd = CLICmd (ac, av, opt);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-

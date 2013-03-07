@@ -1,6 +1,6 @@
 /**
  * \file reset_password.cpp
- * This file defines the VISHNU reset password command 
+ * This file defines the VISHNU reset password command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -52,14 +52,14 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] userId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] userId");
+    helpUsage(*opt);
     return 0;
   }
   std::string tmpPassword;
@@ -67,5 +67,3 @@ int main (int ac, char* av[]){
   return GenericCli().run(resetPassWordFunc, configFile, ac, av);
 
 }// end of main
-
-

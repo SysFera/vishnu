@@ -66,7 +66,7 @@ int main (int ac, char* av[]){
 
 		checkVishnuConfig(*opt);
     if ( opt->count("help")){
-      helpUsage(*opt,"[option] ");
+      helpUsage(*opt);
       exit(VISHNU_OK);
     }
 

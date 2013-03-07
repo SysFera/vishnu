@@ -29,7 +29,7 @@ struct DeleteUserFunc {
   {};
 
   int operator()(std::string sessionKey) {
-      
+
     int res = deleteUser(sessionKey,mUserId);
 
     return res;
@@ -58,22 +58,18 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"userId");
+    helpUsage(*opt);
     return 0;
   }
 
   DeleteUserFunc delFunc(userId);
-  return GenericCli().run(delFunc, configFile, ac, av); 
+  return GenericCli().run(delFunc, configFile, ac, av);
 
 }// end of main
-
-
-
-

@@ -66,14 +66,14 @@ int main (int ac, char* av[]) {
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS) {
-    helpUsage(*opt, "name URI authLogin authPassword userPasswordEncryption type");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if (opt->count("help")) {
-    helpUsage(*opt,"name URI authLogin authPassword userPasswordEncryption type");
+    helpUsage(*opt);
     return 0;
   }
 

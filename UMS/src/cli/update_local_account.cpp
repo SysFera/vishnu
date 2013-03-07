@@ -22,7 +22,7 @@ using namespace vishnu;
 struct UpdateLocalAccountFunc {
 
   UMS_Data::LocalAccount mupAcLogin;
-  
+
   UpdateLocalAccountFunc(UMS_Data::LocalAccount upAcLogin): mupAcLogin(upAcLogin)
   {};
 
@@ -60,21 +60,21 @@ int main (int ac, char* av[]){
                                                          fAcLogin,fSshKeyPath,fHomeDirectory);
 
   CLICmd cmd = CLICmd (ac, av, opt);
-  
+
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId machineId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"userId machineId");
+    helpUsage(*opt);
     return 0;
   }
- 
+
   UpdateLocalAccountFunc apiFunc(upAcLogin);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
