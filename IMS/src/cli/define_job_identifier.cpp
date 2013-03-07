@@ -19,7 +19,7 @@ using namespace std;
 using namespace vishnu;
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string newJobFormat;
@@ -28,10 +28,10 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   DefineIdentifierFunc<JOB> jobIdFunc(newJobFormat);
   return GenericCli().run(jobIdFunc, configFile, argc, argv);
- 
+
 }

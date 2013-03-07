@@ -82,7 +82,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "processName machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   StopFunc stopFunc(machineId, op);

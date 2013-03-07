@@ -115,7 +115,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   MetricHistoryFunc metricHistoryFunc(mid, op, opt, startTime, endTime);
