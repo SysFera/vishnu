@@ -26,6 +26,8 @@ main (int ac, char* av[]) {
   string userId;
   string password;
 
+  // FIXME: this code does not use Options but instead parses av... :-(
+
   /*********** In parameters **********************/
   UMS_Data::ListUsers listUsers;
   UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();

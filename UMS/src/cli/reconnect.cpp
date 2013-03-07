@@ -58,7 +58,7 @@ int main (int ac, char* av[]) {
     if(0==opt->count("password") && 1==opt->count("userId")){
       password= vishnu::takePassword("password: ");
     } else if (1==opt->count("password") && 0==opt->count("userId")){
-      errorUsage(av[0], "missiong parameter: userId ");
+      errorUsage(av[0], "missing parameter: userId ");
       return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
     }
 
