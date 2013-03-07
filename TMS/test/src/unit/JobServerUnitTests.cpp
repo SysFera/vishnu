@@ -241,7 +241,7 @@ BOOST_AUTO_TEST_CASE( test_scanErrorMessage_bad_error_code )
   int code;
   jobserver.scanErrorMessageMock(bad_error_code, code, message);
   BOOST_CHECK_EQUAL(message, " access");
-  BOOST_CHECK_EQUAL(code, 0);
+  BOOST_CHECK_EQUAL(code, ERRCODE_INVEXCEP);
 }
 
 BOOST_AUTO_TEST_CASE(test_insertOptionLine)
