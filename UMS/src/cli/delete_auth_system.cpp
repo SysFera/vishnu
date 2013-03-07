@@ -77,14 +77,14 @@ CLICmd cmd = CLICmd (ac, av, opt);
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[option] authSystemId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[option] authSystemId");
+    helpUsage(*opt);
     return 0;
   }
 
@@ -93,4 +93,3 @@ CLICmd cmd = CLICmd (ac, av, opt);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-

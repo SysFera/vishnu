@@ -112,12 +112,12 @@ int main (int ac, char* av[]){
       } // end if substitute
       else if (isHelp(tmp)){
         counter++;
-        helpUsage(*opt,"[option] ");
+        helpUsage(*opt);
         return 0;
       } else { // is a couple userid followed by password
         // If the second component isn't present
         if (counter+1>=ac) {
-          helpUsage(*opt,"[option] ");
+          helpUsage(*opt);
           return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
         }
         UMS_Data::User_ptr user = ecoreFactory->createUser();

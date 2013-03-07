@@ -1,6 +1,6 @@
 /**
  * \file delete_authentication_account.cpp
- * This file defines the VISHNU delete authentication account command 
+ * This file defines the VISHNU delete authentication account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -82,14 +82,14 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt," [options] authSystemId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] authSystemId");
+    helpUsage(*opt);
     return 0;
   }
 
@@ -97,4 +97,3 @@ int main (int ac, char* av[]){
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-

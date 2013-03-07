@@ -59,7 +59,7 @@ int main (int ac, char* av[]){
 
     configFile = string(getenv("VISHNU_CONFIG_FILE"));
     if (ac<2) {
-      helpUsage(*opt,"[option] ");
+      helpUsage(*opt);
       return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
     }
 
@@ -74,7 +74,7 @@ int main (int ac, char* av[]){
     while (counter<ac) {
       string tmp(av[counter]);
       if (counter+1>=ac) {
-        helpUsage(*opt,"[option] ");
+        helpUsage(*opt);
         return ERRCODE_CLI_ERROR_MISSING_PARAMETER;
       }
       UMS_Data::User_ptr user = ecoreFactory->createUser();

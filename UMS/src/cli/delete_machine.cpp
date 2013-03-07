@@ -1,6 +1,6 @@
 /**
  * \file delete_machine.cpp
- * This file defines the VISHNU delete_machine command 
+ * This file defines the VISHNU delete_machine command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -62,20 +62,18 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"machineId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"machineId");
+    helpUsage(*opt);
     return 0;
   }
 
   DeleteMachineFunc delFunc(machineId);
-  return GenericCli().run(delFunc, configFile, ac, av); 
+  return GenericCli().run(delFunc, configFile, ac, av);
 
 }// end of main
-
-

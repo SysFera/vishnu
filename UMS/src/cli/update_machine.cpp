@@ -1,6 +1,6 @@
 /**
  * \file update_machine.cpp
- * This file defines the VISHNU update machine command 
+ * This file defines the VISHNU update machine command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -55,7 +55,7 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fName( boost::bind(&UMS_Data::Machine::setName,boost::ref(upMachine),_1));
 
   boost::function1<void,string> fSite( boost::bind(&UMS_Data::Machine::setSite,boost::ref(upMachine),_1));
-  
+
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::Machine::setMachineId,boost::ref(upMachine),_1));
 
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(upMachine),_1));
@@ -87,14 +87,14 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"machineId");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"machineId");
+    helpUsage(*opt);
     return 0;
   }
 
@@ -117,5 +117,3 @@ int main (int ac, char* av[]){
   }
 
 }// end of main
-
-

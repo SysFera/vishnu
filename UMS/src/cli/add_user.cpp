@@ -1,6 +1,6 @@
 /**
  * \file add_user.cpp
- * This file defines the VISHNU add user command 
+ * This file defines the VISHNU add user command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -32,7 +32,7 @@ struct AddUserFunc {
 
 
      int res=addUser(sessionKey,mnewUser);
-    
+
       cout <<"The user identifier is " << mnewUser.getUserId() << endl;
 
     return res;
@@ -69,19 +69,18 @@ int main (int ac, char* av[]){
   int ret = cmd.parse(env_name_mapper());
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"firstname lastname privilege email");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"firstname lastname privilege email");
+    helpUsage(*opt);
     return 0;
   }
- 
+
   AddUserFunc apiFunc(newUser);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-
