@@ -78,7 +78,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId value type handler");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //To set the corresponding values to the object systemThreshold
   systemThreshold.setMachineId(machineId);
@@ -89,4 +89,3 @@ int main (int argc, char* argv[]){
   SetSysThresholdFunc setSysThresholdFunc(systemThreshold);
   return GenericCli().run(setSysThresholdFunc, configFile, argc, argv);
 }
-

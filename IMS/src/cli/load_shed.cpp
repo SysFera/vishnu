@@ -78,10 +78,9 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId loadShedType \n\nloadShedType values: 1 for HARD and 2 for SOFT");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv, "loadShedType values: 1 for HARD and 2 for SOFT");
 
   //call of the api function
   LoadShedFunc loadShedFunc(loadShedType, machineId);
   return GenericCli().run(loadShedFunc, configFile, argc, argv);
 }
-

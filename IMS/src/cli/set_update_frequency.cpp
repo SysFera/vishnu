@@ -32,7 +32,7 @@ struct SetUpdateFreqFunc {
 };
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string freq;
@@ -55,10 +55,9 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "freq");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   SetUpdateFreqFunc setUpdateFreqFunc(freq);
-  return GenericCli().run(setUpdateFreqFunc, configFile, argc, argv); 
+  return GenericCli().run(setUpdateFreqFunc, configFile, argc, argv);
 }
-

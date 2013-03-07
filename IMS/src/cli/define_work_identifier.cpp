@@ -29,11 +29,10 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   DefineIdentifierFunc<WORK>  workIdFunc(newAuthFormat);
   return GenericCli().run(workIdFunc, configFile, argc, argv);
 
 }
-
