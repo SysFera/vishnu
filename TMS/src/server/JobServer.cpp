@@ -445,8 +445,12 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
   if (pos!=std::string::npos) {
     std::string codeInString = errorInfo.substr(0,pos);
     if (codeInString.size()!=0) {
-      std::istringstream isCode(codeInString);
-      isCode >> code;
+      try {
+        code = boost::lexical_cast<int>(codeInString);
+      }
+      catch(boost::bad_lexical_cast &){
+        code = ERRCODE_INVEXCEP;
+      }
       message = errorInfo.substr(pos+1);
     }
   }
