@@ -36,7 +36,7 @@ struct CancelJobFunc {
 
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -65,13 +65,13 @@ int main (int argc, char* argv[]){
 	   HIDDEN,
 	   cancelJobId,1);
   opt->setPosition("jobId",1);
- 
+
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId jobId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   CancelJobFunc cancelJobFunc(machineId, cancelJobId);
-  return GenericCli().run(cancelJobFunc, configFile, argc, argv); 
+  return GenericCli().run(cancelJobFunc, configFile, argc, argv);
 
 }

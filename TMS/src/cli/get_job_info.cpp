@@ -1,6 +1,6 @@
 /**
  * \file get_job_info.cpp
- * This file defines the VISHNU get job info command 
+ * This file defines the VISHNU get job info command
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com) and Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -33,15 +33,15 @@ struct InfoJobFunc {
   int operator()(std::string sessionKey) {
      TMS_Data::Job job;
      int res = getJobInfo(sessionKey, mmachineId, mjobId, job);
-     displayJob(job); 
+     displayJob(job);
      return res;
   }
 };
 
 
-int 
+int
 main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -68,13 +68,13 @@ main (int argc, char* argv[]){
 	   HIDDEN,
 	   jobId,1);
   opt->setPosition("jobId",1);
- 
+
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId jobId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   InfoJobFunc infoJobFunc(machineId, jobId);
   return GenericCli().run(infoJobFunc, configFile, argc, argv);
- 
+
 }

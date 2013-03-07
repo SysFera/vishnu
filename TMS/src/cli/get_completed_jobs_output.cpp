@@ -33,14 +33,14 @@ struct JobResultsFunc {
   int operator()(std::string sessionKey) {
     TMS_Data::ListJobResults jobResults;
     int res = getCompletedJobsOutput(sessionKey, mmachineId, jobResults, moutDir);
-    displayAllJobOutput(jobResults); 
+    displayAllJobOutput(jobResults);
     return res;
   }
 };
 
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
@@ -69,7 +69,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   JobResultsFunc jobResultsFunc(machineId, outDir);
