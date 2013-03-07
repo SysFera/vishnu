@@ -1,6 +1,6 @@
 /**
  * \file mkdir.cpp
- * This file defines the VISHNU create directory command 
+ * This file defines the VISHNU create directory command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -24,7 +24,7 @@ using namespace vishnu;
 using namespace FMS_Data;
 
 int main (int ac, char* av[]){
-  
+
  /******* Parsed value containers ****************/
   string configFile;
   string path;
@@ -38,16 +38,16 @@ int main (int ac, char* av[]){
   opt->add("isRecursive,p",
       "It specifies when the make directory command is recursive (make the parent directory if needed) or not.",
       CONFIG);
-  
+
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
- 
+  GenericCli().processListOpt( opt, isEmpty,ac,av);
+
   // Parse the cli and setting the options found
 
   if(opt->count("isRecursive")){
     mkdirOptions.setIsRecursive(true);
-  } 
-  
+  }
+
   FileActionFunc<CREATEDIR,FMS_Data::CreateDirOptions> apiFunc(path,mkdirOptions);
   return GenericCli().run(apiFunc, configFile, ac, av);
 

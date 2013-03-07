@@ -61,7 +61,7 @@ main (int ac, char* av[]) {
       fNline);
 
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
+  GenericCli().processListOpt( opt, isEmpty,ac,av);
   HeadOfFileFunc apiFunc(path,hofOptions);
 
   return GenericCli().run(apiFunc, configFile, ac, av);

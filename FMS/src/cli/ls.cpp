@@ -1,6 +1,6 @@
 /**
  * \file ls.cpp
- * This file defines the VISHNU list dir command 
+ * This file defines the VISHNU list dir command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -43,11 +43,11 @@ struct ListDirFunc {
       for(unsigned int i = 0; i < dirContent.getDirEntries().size(); i++) {
 
         std::cout <<  (dirContent.getDirEntries().get(i))->getPath() <<"\n";
-      } 
+      }
 
     }else{
 
-      cout << dirContent << "\n"; 
+      cout << dirContent << "\n";
     }
     return res;
   }
@@ -55,14 +55,14 @@ struct ListDirFunc {
 
 
 int main (int ac, char* av[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string path;
-   
+
   /********** EMF data ************/
   FMS_Data::LsDirOptions lsDirOptions;
-  
+
   /**************** Describe options *************/
 
 
@@ -78,7 +78,7 @@ int main (int ac, char* av[]){
 
 
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
+  GenericCli().processListOpt( opt, isEmpty,ac,av);
 
 
  if ( opt->count("allFiles")){
@@ -90,7 +90,7 @@ int main (int ac, char* av[]){
   }
 
  ListDirFunc apiFunc(path,lsDirOptions);
-  
+
  return GenericCli().run(apiFunc, configFile, ac, av);
 
 }
