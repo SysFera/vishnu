@@ -29,99 +29,97 @@ using namespace std;
  */
 
 
-boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & configFile,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword,EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType,StringcallBackType& fLdapBase,int type){
-
-
+boost::shared_ptr<Options>
+makeAuthSystemOptions(std::string pgName, std::string &configFile,
+                      StringcallBackType& fName, StringcallBackType& fURI,
+                      StringcallBackType& fAuthLogin,
+                      StringcallBackType& fAuthPassword,
+                      EncryptioncallBackType&fUserPasswordEncryption,
+                      AuthcallBackType& fType,
+                      StringcallBackType& fLdapBase, int type) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
-
-  opt->add("configFile,c",
-      "VISHNU configuration file",
-      ENV,
-      configFile);
-
+  opt->add("configFile,c", "VISHNU configuration file",
+           ENV, configFile);
 
   Group_type group=CONFIG;
 
-
-  if(type){// type =0 for "update function" and type=1 for "add function"
-
+  if(type) {// type =0 for "update function" and type=1 for "add function"
     group=HIDDEN;
   }
 
   opt->add("name,n",
-      "corresponds to the user-authentication system's",
-      group,
-      fName,
-      type);
+           "corresponds to the user-authentication system's",
+           group,
+           fName,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("name",1);
   }
 
   opt->add("URI,i",
-      "the URI of the user-authentication systems (by"
-      "the form host:port for LDAP)",
-      group,
-      fURI,
-      type);
+           "the URI of the user-authentication systems (by"
+           "the form host:port for LDAP)",
+           group,
+           fURI,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("URI",1);
   }
 
   opt->add("authLogin,u",
-      "the login used to connect to the"
-      "user-authentication system",
-      group,
-      fAuthLogin,
-      type);
+           "the login used to connect to the"
+           "user-authentication system",
+           group,
+           fAuthLogin,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("authLogin",1);
   }
 
   opt->add("authPassword,w",
-      "the password used to connect to the"
-      "user-authentication system",
-      group,
-      fAuthPassword,
-      type);
+           "the password used to connect to the"
+           "user-authentication system",
+           group,
+           fAuthPassword,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("authPassword",1);
   }
 
 
   opt->add("userPasswordEncryption,e",
-      "represents the encryption method used to encrypt"
-      "user's password",
-      group,
-      fUserPasswordEncryption,
-      type);
+           "represents the encryption method used to encrypt"
+           "user's password",
+           group,
+           fUserPasswordEncryption,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("userPasswordEncryption",1);
   }
 
 
   opt->add("type,t",
-      "represents the type of the user-authentication systems",
-      group,
-      fType,
-      type);
+           "represents the type of the user-authentication systems",
+           group,
+           fType,
+           type);
 
-  if (type){
+  if (type) {
     opt->setPosition("type",1);
   }
 
   opt->add("ldapBase,b",
-      "is an option for user-authentication system based"
-      "on LDAP which specifies the DN of the root entry",
-      CONFIG,
-      fLdapBase);
+           "is an option for user-authentication system based"
+           "on LDAP which specifies the DN of the root entry",
+           CONFIG,
+           fLdapBase);
 
 
   return opt;
-
 }
