@@ -160,7 +160,7 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
   ret = cmd.parse(FMS_env_name_mapper());
 
   if (opt->count("help")) {
-    helpUsage(*opt,"[options] src dest");
+    helpUsage(*opt);
     exit(0);
   }
 
@@ -195,7 +195,7 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
 
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options] src dest");
+    helpUsage(*opt);
     exit (ret);
   }
 

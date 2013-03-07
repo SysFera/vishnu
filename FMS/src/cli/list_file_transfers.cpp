@@ -162,14 +162,14 @@ int main (int ac, char* av[]) {
   }
 
   if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"[options]");
+    helpUsage(*opt);
     return ret;
   }
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
   if ( opt->count("help")){
-    helpUsage(*opt,"[options] ");
+    helpUsage(*opt);
     return 0;
   }
 

@@ -76,7 +76,7 @@ opt->add("path,p",
   opt->setPosition("path",1);
 
 bool isEmpty;
-GenericCli().processListOpt( opt, isEmpty,argc,argv,"path");
+GenericCli().processListOpt( opt, isEmpty,argc,argv);
 
 }
 

@@ -62,7 +62,7 @@ int main (int argc, char* argv[]){
   opt->setPosition("path",1);
 
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,argc,argv,"mode path");
+  GenericCli().processListOpt( opt, isEmpty,argc,argv);
   ChangeFileModeFunc apiFunc(path,mode);
   return GenericCli().run(apiFunc, configFile, argc, argv);
 

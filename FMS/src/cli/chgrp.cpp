@@ -59,7 +59,7 @@ int main (int argc, char* argv[]){
   opt->setPosition("path",1);
 
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,argc,argv,"group path");
+  GenericCli().processListOpt( opt, isEmpty,argc,argv);
   ChangeFileGroupFunc apiFunc(path,group);
   return GenericCli().run(apiFunc, configFile, argc, argv);
 
