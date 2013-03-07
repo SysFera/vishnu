@@ -6,6 +6,10 @@
 */
 
 #include "AuthAccountServer.hpp"
+
+#include <boost/format.hpp>
+#include <string>
+
 #include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
 
@@ -28,59 +32,8 @@ mauthAccount(account), msessionServer(session) {
 */
 int
 AuthAccountServer::add() {
-
-  std::string numAuthSystem;
-  std::string numUser;
-  std::string sqlInsert = "insert into authaccount (authsystem_authsystemid, users_numuserid, "
-  "aclogin) values ";
-
-  //Creation of the object user
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-
-  //Creation of the object authSystem
-  UMS_Data::AuthSystem *authSystem = new UMS_Data::AuthSystem();
-  authSystem->setAuthSystemId(mauthAccount->getAuthSystemId());
-  AuthSystemServer authSystemServer(authSystem);
-
-  //if the user exists
-  if (userServer.exist()) {
-    //To check the authAccount userId
-    checkAuthAccountUserId(userServer);
-    //if the if the user-authentication system exists and it is not locked
-    if (authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'"
-      " and status=1").size() != 0) {
-      //To get the database number id of the user-authentication
-      numAuthSystem = authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'");
-      //To get the database number id of the user
-      numUser = userServer.getAttribut("where userid='"+mauthAccount->getUserId()+"'");
-      //if the authentification account does not exist
-      if (!exist(numAuthSystem, numUser)) {
-
-        if (!isLoginUsed(numAuthSystem, mauthAccount->getAcLogin())) {
-
-          //The sql code to insert the authentification account on the database
-          mdatabaseVishnu->process(sqlInsert + "('"+numAuthSystem+"', '"+numUser+"', '"+mauthAccount->getAcLogin()+"')");
-        }
-        else {
-          throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
-        }
-      }//END if the authentification account does not exist
-      else {
-        UMSVishnuException e (ERRCODE_AUTH_ACCOUNT_EXIST);
-        throw e;
-      }
-    } //End if the user-authentication system exists and it is not locked
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM);
-      throw e;
-    }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
-  }
-  return 0;
+  std::string sqlCommand = "insert into authaccount (authsystem_authsystemid, users_numuserid, aclogin) values ('%1%', '%2%', '%3%')";
+  return addOrUpdate(sqlCommand, false);
 }
 
 /**
@@ -90,9 +43,22 @@ AuthAccountServer::add() {
 */
 int
 AuthAccountServer::update() {
+  std::string sqlCommand = "UPDATE authaccount SET aclogin='%3%' where authsystem_authsystemid=%1% and users_numuserid=%2%;";
+  return addOrUpdate(sqlCommand, true);
+}
+
+/**
+ * \ brief Function to add a new account or update an existing one
+ * \param sql the sql command to create or update the account.
+ *            This string must contain 3 boost format parameters:
+ *            authsystem_authsystemid=%1%, users_numuserid=%2% and aclogin=%3%
+ * \param update if true then this is an update, false creates a new account
+ * \return raises an exception on error
+ */
+int
+AuthAccountServer::addOrUpdate(const std::string &sql, bool update) {
   std::string numAuthSystem;
   std::string numUser;
-  std::string sqlCommand = "";
 
   //Creation of the object use
   UserServer userServer = UserServer(msessionServer);
@@ -110,31 +76,37 @@ AuthAccountServer::update() {
 
     //if the user-authentication system exists and it is not locked
     if (authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'"
-      " and status=1").size() != 0) {
+                                     " and status=1").size() != 0) {
 
       //To get the database number id of the machine
       numAuthSystem =authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'");
       //To get the database number id of the user
       numUser = userServer.getAttribut("where userid='"+mauthAccount->getUserId()+"'");
 
-      //if the authentification account exists
-      if (exist(numAuthSystem, numUser)) {
-
+      // If we update we need the account to exist
+      // if we don't update we need the account not to exist
+      if ((!update && !exist(numAuthSystem, numUser))
+          || (update && exist(numAuthSystem, numUser))) {
         //check if the acLogin is not already used
         if (isLoginUsed(numAuthSystem, mauthAccount->getAcLogin())) {
           throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
         }
 
-        //if a new acLogin has been defined
-        if (mauthAccount->getAcLogin().size() != 0) {
-        sqlCommand.append("UPDATE authaccount SET aclogin='"+mauthAccount->getAcLogin()+"'"
-        " where authsystem_authsystemid="+numAuthSystem+" and users_numuserid="+numUser+";");
+        /* If we create a new account, then we need to execute the sql command
+         * thus sqlCommand needs to be not empty.
+         * If we update, then we need the AcLogin to be not empty.
+         */
+        std::string sqlCommand = "";
+        if (!update
+            || (update && mauthAccount->getAcLogin().size() != 0)) {
+          sqlCommand = sql;
         }
 
         //If there is a change
         if (!sqlCommand.empty()) {
-            mdatabaseVishnu->process(sqlCommand.c_str());
-          }
+          boost::format(sqlCommand) % numAuthSystem % numUser % mauthAccount->getAcLogin();
+          mdatabaseVishnu->process(sqlCommand);
+        }
       }//END if the authentification account exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_ACCOUNT);
@@ -152,6 +124,7 @@ AuthAccountServer::update() {
   }
   return 0;
 }
+
 
 /**
 * \brief Function to delete a VISHNU authAccount
