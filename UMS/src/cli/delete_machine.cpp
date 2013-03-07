@@ -54,7 +54,7 @@ int main (int ac, char* av[]){
           HIDDEN,
           machineId,1);
 
-  opt->setPosition("machineId",-1);
+  opt->setPosition("machineId", 1);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 

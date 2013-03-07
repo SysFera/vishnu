@@ -44,7 +44,7 @@ int main (int ac, char* av[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,configFile);
 
-  opt->setPosition("userId",-1);
+  opt->setPosition("userId", 1);
 
   CLICmd cmd = CLICmd (ac, av, opt);
 

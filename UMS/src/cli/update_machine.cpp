@@ -74,7 +74,7 @@ int main (int ac, char* av[]){
            fMachineId,
            1);
 
-  opt->setPosition("machineId",-1);
+  opt->setPosition("machineId", 1);
 
   opt->add("status,t",
            "The status of the machine",

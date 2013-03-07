@@ -70,7 +70,7 @@ int main (int ac, char* av[]){
            1);
 
 
-  opt->setPosition("userId",-1);
+  opt->setPosition("userId", 1);
 
   CLICmd cmd = CLICmd (ac, av, opt);
    // Parse the cli and setting the options found

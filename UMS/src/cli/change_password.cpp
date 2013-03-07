@@ -60,7 +60,7 @@ int main (int ac, char* av[]){
           HIDDEN,
           userId,
           1);
-  opt->setPosition("userId",-1);
+  opt->setPosition("userId", 1);
 
    CLICmd cmd = CLICmd (ac, av, opt);
 
@@ -74,13 +74,12 @@ int main (int ac, char* av[]){
 
   // PreProcess (adapt some parameters if necessary)
   checkVishnuConfig(*opt);
-  if ( opt->count("help")){
+  if (opt->count("help")) {
     helpUsage(*opt);
     return 0;
   }
 
   ChgPassWordFunc chPwdFunc(userId);
+
   return GenericCli().runWithoutSessionKey(chPwdFunc, configFile, ac, av);
-
-
 }// end of main
