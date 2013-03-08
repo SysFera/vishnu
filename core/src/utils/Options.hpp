@@ -319,7 +319,7 @@ private:
    * \brief Hidden option description
    */
 
-  po::options_description hidden_options ;
+  po::options_description hidden_options;
 
   /**
    * \brief environment variable option description
