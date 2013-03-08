@@ -54,7 +54,7 @@ boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string
 
 
   opt->add("acLogin,l",
-      " represents the login of the user on the associated "
+      "represents the login of the user on the associated "
       "user-authentication system",
       group,
       fAcLogin,
@@ -66,7 +66,7 @@ boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string
 
 
   opt->add("userId,u",
-      "represents an admin option to add a local"
+      "represents an admin option to add a local "
       "user-authentication configuration of a specific user",
       CONFIG,
       fUserId);
@@ -75,7 +75,3 @@ boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string
   return opt;
 
 }
-
-
-
-
