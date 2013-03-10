@@ -20,64 +20,40 @@ using namespace std;
 using namespace vishnu;
 
 struct AddAuthenticationAccountFunc {
-
   UMS_Data::AuthAccount mnewAuthAccount;
 
-  AddAuthenticationAccountFunc(const UMS_Data::AuthAccount& newAuthAccount ):
+  AddAuthenticationAccountFunc(const UMS_Data::AuthAccount& newAuthAccount):
      mnewAuthAccount(newAuthAccount)
   {};
 
   int operator()(std::string sessionKey) {
+    int res=addAuthAccount(sessionKey,mnewAuthAccount);
 
-
-     int res=addAuthAccount(sessionKey,mnewAuthAccount);
-
-     return res;
+    return res;
   }
 };
 
 
-int main (int ac, char* av[]){
-
-
+int
+main (int ac, char* av[]) {
   /******* Parsed value containers ****************/
-
   string configFile;
 
   /********** EMF data ************/
-
   UMS_Data::AuthAccount newAuthAccount;
 
   /******** Callback functions ******************/
-
   StringcallBackType fAuthSystemId( boost::bind(&UMS_Data::AuthAccount::setAuthSystemId,boost::ref(newAuthAccount),_1));
-
   StringcallBackType fUserId( boost::bind(&UMS_Data::AuthAccount::setUserId,boost::ref(newAuthAccount),_1));
-
   StringcallBackType fAcLogin( boost::bind(&UMS_Data::AuthAccount::setAcLogin,boost::ref(newAuthAccount),_1));
 
 
-
   /**************** Describe options *************/
+  boost::shared_ptr<Options> opt= makeAuthAccountOptions(av[0],configFile, fAuthSystemId,fUserId,fAcLogin,1);
 
-boost::shared_ptr<Options> opt= makeAuthAccountOptions(av[0],configFile, fAuthSystemId,fUserId,fAcLogin,1);
-
-CLICmd cmd = CLICmd (ac, av, opt);
-
- // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   AddAuthenticationAccountFunc apiFunc(newAuthAccount);
   return GenericCli().run(apiFunc, configFile, ac, av);

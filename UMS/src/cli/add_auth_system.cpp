@@ -59,23 +59,9 @@ int main (int ac, char* av[]) {
                                                         fUserPasswordEncryption,
                                                         fType, fLdapBase, 1);
 
-
-  CLICmd cmd = CLICmd (ac, av, opt);
-
-  // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS) {
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if (opt->count("help")) {
-    helpUsage(*opt);
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   AddAuthenticationSystemFunc apiFunc(newAuthsystem);
 

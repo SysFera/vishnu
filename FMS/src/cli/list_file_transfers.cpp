@@ -120,11 +120,10 @@ int main (int ac, char* av[]) {
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeListFileTransferTrOpt(av[0], configFile, ftranferId, ffromMachineId, fuserId, statusStr);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
 
- // Parse the cli and setting the options found
-    ret = cmd.parse(env_name_mapper());
-
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   if (statusStr.size() != 0) {
     int status = -1;
@@ -161,20 +160,7 @@ int main (int ac, char* av[]) {
     lsFileTransferOptions.setStatus(status);
   }
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
-
   // Process command
  ListFileTransferFunc apiFunc( lsFileTransferOptions);
  return GenericCli().run(apiFunc, configFile, ac, av);
-
 }

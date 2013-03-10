@@ -5,7 +5,7 @@
  */
 
 
-#include "CLICmd.hpp"
+#include "GenericCli.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
@@ -252,26 +252,12 @@ int main (int argc, char* argv[]){
            CONFIG);
 
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   // Process command
   try {
-
-    // Parse the cli and setting the options found
-    ret = cmd.parse(env_name_mapper());
-
-    if (ret != CLI_SUCCESS){
-      helpUsage(*opt);
-      return ret;
-    }
-
-    // PreProcess (adapt some parameters if necessary)
-    checkVishnuConfig(*opt);
-    if (opt->count("help")) {
-      helpUsage(*opt);
-      return 0;
-    }
-
     if (opt->count("posix")) {
       subOp.setPosix(true);
     }

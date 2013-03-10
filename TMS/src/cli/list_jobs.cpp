@@ -5,17 +5,18 @@
  */
 
 
-#include "CLICmd.hpp"
+#include <boost/bind.hpp>
+#include <boost/format.hpp>
+
+#include "GenericCli.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "sessionUtils.hpp"
-#include <boost/bind.hpp>
 #include "displayer.hpp"
 #include "constants.hpp"
-#include <boost/format.hpp>
 
 namespace po = boost::program_options;
 
@@ -174,26 +175,12 @@ main (int argc, char* argv[]) {
            machineId,1);
   opt->setPosition("machineId",1);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   // Process command
   try {
-
-    // Parse the cli and setting the options found
-    ret = cmd.parse(env_name_mapper());
-
-    if (ret != CLI_SUCCESS) {
-      helpUsage(*opt);
-      return ret;
-    }
-
-    // PreProcess (adapt some parameters if necessary)
-    checkVishnuConfig(*opt);
-    if ( opt->count("help")) {
-      helpUsage(*opt);
-      return 0;
-    }
-
     if (stateStr.size()!=0) {
       size_t pos = stateStr.find_first_not_of("0123456789");
       if (pos!=std::string::npos) {

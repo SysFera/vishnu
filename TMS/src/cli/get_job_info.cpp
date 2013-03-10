@@ -5,7 +5,6 @@
  */
 
 
-#include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
@@ -76,5 +75,4 @@ main (int argc, char* argv[]){
   //call of the api function
   InfoJobFunc infoJobFunc(machineId, jobId);
   return GenericCli().run(infoJobFunc, configFile, argc, argv);
-
 }

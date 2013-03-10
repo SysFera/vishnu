@@ -12,8 +12,8 @@
 #define FILETRANSFERUTILS_HH
 
 
-#include<iostream>
-#include<boost/shared_ptr.hpp>
+#include <iostream>
+#include <boost/shared_ptr.hpp>
 
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
@@ -23,48 +23,11 @@
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "cmdArgs.hpp"
-#include "CLICmd.hpp"
-class Options;
+#include "GenericCli.hpp"
 
-using namespace std;
+
+
 using namespace vishnu;
-
-
-
-/**
- * \brief a environment variable name mapper
- *
- * For each environment variable, the name_mapper function
- * is called to obtain the option name. If it returns empty string
- * the variable is ignored.
- */
-struct FMS_env_name_mapper{
-
-  /**
-   * Mapper operator for environnement variable
-   * \param name The environment variable name
-   * \return The name used in the program
-   */
-
-  std::string operator ()(std::string name){
-
-    std::string result= "";
-
-    if (name=="VISHNU_CONFIG_FILE") {
-
-      result="configFile";
-    }
-
-    if (name=="VISHNU_TRANSFER_CMD") {
-
-      result="trCommand";
-    }
-
-    return result;
-  }
-};
-
-
 
 
 /**
@@ -78,36 +41,36 @@ struct FMS_env_name_mapper{
  */
 boost::shared_ptr<Options>
 makeTransferCommandOptions(string pgName,
-    string& configFile,
-    string& trCmdStr,
-    string& src,
-    string& dest){
+                           string& configFile,
+                           string& trCmdStr,
+                           string& src,
+                           string& dest){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
   opt->add("configFile,c",
-      "VISHNU configuration file",
-      ENV,
-      configFile);
+           "VISHNU configuration file",
+           ENV,
+           configFile);
 
   opt->add("trCommand,t",
-      "The command to use to perform file transfer. The different values  are:\n"
-      "O or scp: for SCP transfer\n"
-      "1 or rsync: for RSYNC transfer\n",
-      ENV,
-      trCmdStr);
+           "The command to use to perform file transfer. The different values  are:\n"
+           "O or scp: for SCP transfer\n"
+           "1 or rsync: for RSYNC transfer\n",
+           ENV,
+           trCmdStr);
 
   opt->add("src,s",
-      "The source file to copy following the pattern [host:]file path.",
-      HIDDEN,
-      src,1);
+           "The source file to copy following the pattern [host:]file path.",
+           HIDDEN,
+           src,1);
   opt->setPosition("src",1);
 
   opt->add("dest,d",
-      "The path of the destination file.",
-      HIDDEN,
-      dest,1);
+           "The path of the destination file.",
+           HIDDEN,
+           dest,1);
   opt->setPosition("dest",1);
 
   return opt;
@@ -150,25 +113,13 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
 
   if (transferType == CP) {
     opt->add("isRecursive,r",
-        "It specifies when the copy is recursive (case of directory) or not.",
-        CONFIG);
+             "It specifies when the copy is recursive (case of directory) or not.",
+             CONFIG);
   }
 
-  CLICmd cmd (argc, argv, opt);
-
-  // Parse the cli and setting the options found
-  ret = cmd.parse(FMS_env_name_mapper());
-
-  if (opt->count("help")) {
-    helpUsage(*opt);
-    exit(0);
-  }
-
-
-
-  // Check for vishnu config file
-
-  checkVishnuConfig(*opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
 
   if (trCmdStr.size() != 0) {
@@ -193,16 +144,9 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
     cpFileOptions.setTrCommand(trCmd);
   }
 
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    exit (ret);
-  }
-
   if (opt->count("isRecursive")){
     cpFileOptions.setIsRecursive(true);
   }
-
 }
 
 
@@ -254,14 +198,10 @@ struct TransferAsyncFunc {
    */
   int operator()(const std::string& sessionKey) {
     int res;
-    if (transferType==MV){
-
-      res=amv(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
-
-    }else {
-
-
-      res=acp(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+    if (transferType == MV) {
+      res = amv(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+    } else {
+      res = acp(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
     }
 
     std::cout << "The transfer identifier is " << mtransferInfo.getTransferId() << std::endl;
@@ -309,13 +249,10 @@ struct TransferSyncFunc {
 
   int operator()(const std::string& sessionKey) {
     int res;
-    if (transferType==MV){
-
-      res=mv(sessionKey, msrc, mdest, mcpFileOptions);
-
-    }else {
-
-      res=cp(sessionKey, msrc, mdest, mcpFileOptions);
+    if (transferType == MV){
+      res = mv(sessionKey, msrc, mdest, mcpFileOptions);
+    } else {
+      res = cp(sessionKey, msrc, mdest, mcpFileOptions);
     }
 
     return res;

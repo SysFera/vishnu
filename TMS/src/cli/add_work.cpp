@@ -188,24 +188,11 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt= makeWorkOptions(av[0], configFile, fapp, fsub, fpri, fown, fest, fdesc, fpro, fmac, fcpu,0);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
- // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
 
   AddWorkFunc apiFunc(newWork, newWorkop);
   return GenericCli().run(apiFunc, configFile, ac, av);
-
 }// end of main
