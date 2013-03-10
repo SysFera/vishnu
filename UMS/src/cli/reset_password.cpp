@@ -34,10 +34,7 @@ struct ResetPassWordFunc {
 };
 
 int main (int ac, char* av[]){
-
-
   string userId;
-
   string configFile;
 
 
@@ -46,24 +43,11 @@ int main (int ac, char* av[]){
 
   opt->setPosition("userId", 1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
   std::string tmpPassword;
   ResetPassWordFunc resetPassWordFunc(userId, tmpPassword);
   return GenericCli().run(resetPassWordFunc, configFile, ac, av);
-
-}// end of main
+}  // end of main

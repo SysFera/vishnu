@@ -66,28 +66,12 @@ int main (int ac, char* av[]){
       authSystemId,
       1);
 
-    opt->setPosition("authSystemId",1);
+  opt->setPosition("authSystemId",1);
 
 
-
-
-CLICmd cmd = CLICmd (ac, av, opt);
-
- // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
-
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   DeleteAuthenticationSystemFunc apiFunc(authSystemId);
   return GenericCli().run(apiFunc, configFile, ac, av);

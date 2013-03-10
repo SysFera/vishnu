@@ -5,7 +5,6 @@
  */
 
 
-#include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
@@ -14,6 +13,7 @@
 #include "sessionUtils.hpp"
 #include "FMS_Data.hpp"
 #include <boost/bind.hpp>
+#include "GenericCli.hpp"
 
 namespace po = boost::program_options;
 
@@ -81,26 +81,12 @@ int main (int argc, char* argv[]){
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt= makeStopFileTrOpt(argv[0], configFile, ftranferId, ffromMachineId, fuserId);
 
-  CLICmd cmd = CLICmd (argc, argv, opt);
-
- // Parse the cli and setting the options found
-  ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   // Process command
   try {
-
     // initializing DIET
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
       errorUsage(argv[0],dietErrorMsg,EXECERROR);

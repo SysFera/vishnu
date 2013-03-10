@@ -74,10 +74,6 @@ int main (int ac, char* av[]){
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
 
   /********  Process **************************/
 
@@ -89,18 +85,10 @@ int main (int ac, char* av[]){
 
   /********  Process **************************/
 
-    if (opt->count("adminListOption")){
-
+    if (opt->count("adminListOption")) {
       listOptions.setAdminListOption(true);
     }
 
-    checkVishnuConfig(*opt);
-
-    if ( opt->count("help")){
-      helpUsage (*opt);
-
-      return 0;
-    }
 
     //convert the date in long format
 

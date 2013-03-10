@@ -81,27 +81,13 @@ int main (int ac, char* av[]){
            CONFIG,
            fStatus);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
-
- // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt);
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt);
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
 
-  try{
-
-    if(opt->count("sshPublicKeyFile")){
+  try {
+    if (opt->count("sshPublicKeyFile")){
       // read the public key file from the public key path and set the neMachine
       upMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
     }
@@ -109,11 +95,8 @@ int main (int ac, char* av[]){
     UpDateMachineFunc upFunc(upMachine);
     return GenericCli().run(upFunc, configFile, ac, av);
 
-  } catch(std::exception& e){
-
+  } catch(std::exception& e) {
     errorUsage(av[0],e.what());
-
     return CLI_ERROR_RUNTIME;
   }
-
 }// end of main

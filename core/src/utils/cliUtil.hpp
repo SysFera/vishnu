@@ -31,6 +31,10 @@ struct env_name_mapper {
       result = "configFile";
     }
 
+    if ("VISHNU_TRANSFER_CMD" == name) {
+      result="trCommand";
+    }
+
     return result;
   }
 };
