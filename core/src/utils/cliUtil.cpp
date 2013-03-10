@@ -7,15 +7,18 @@ using namespace std;
 /**
  * \brief helper function to display help about a specific command
  * \param opt: describes all options allowed by the command
- * \param signature: defines the usage of the command
+ * \param signature: an optional message that is added to the help
+ *                   message bellow the signature of the command
  */
 void
 helpUsage(const Options& opt,const string& signature) {
   cout << boost::format("\nVersion: %1%\n\n"
-                        "Usage: %2% %3%\n\n"
-                        "%4%\n")
+                        "Usage: %2% [options] %3%\n"
+                        "%4%\n"
+                        "%5%\n")
     % VISHNU_VERSION
     % opt.getConfiguration()->getPgName()
+    % opt.getPositionalOptString()
     % signature
     % opt;
 }

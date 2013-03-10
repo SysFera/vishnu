@@ -68,7 +68,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId sedType");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   restartOp.setName(type);
   //call of the api function

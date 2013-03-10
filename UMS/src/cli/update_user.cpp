@@ -70,26 +70,12 @@ int main (int ac, char* av[]){
            1);
 
 
-  opt->setPosition("userId",-1);
+  opt->setPosition("userId", 1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
-   // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"UserId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"UserId");
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   UpDateUserFunc upFunc(upUser);
   return GenericCli().run(upFunc, configFile, ac, av);
-
-
 }// end of main

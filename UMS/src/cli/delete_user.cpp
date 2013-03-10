@@ -29,7 +29,7 @@ struct DeleteUserFunc {
   {};
 
   int operator()(std::string sessionKey) {
-      
+
     int res = deleteUser(sessionKey,mUserId);
 
     return res;
@@ -50,30 +50,13 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt=makeConnectOptions(av[0],userId,1,configFile);
 
-  opt->setPosition("userId",-1);
+  opt->setPosition("userId", 1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
-
-  // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"userId");
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   DeleteUserFunc delFunc(userId);
-  return GenericCli().run(delFunc, configFile, ac, av); 
+  return GenericCli().run(delFunc, configFile, ac, av);
 
 }// end of main
-
-
-
-

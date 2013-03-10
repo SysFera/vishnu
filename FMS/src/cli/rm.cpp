@@ -1,6 +1,6 @@
 /**
  * \file rm.cpp
- * This file defines the VISHNU remove file command 
+ * This file defines the VISHNU remove file command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -25,7 +25,7 @@ using namespace vishnu;
 using namespace FMS_Data;
 
 int main (int ac, char* av[]){
-  
+
 
   /******* Parsed value containers ****************/
   string configFile;
@@ -36,14 +36,14 @@ int main (int ac, char* av[]){
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
-  
+
   opt->add("isRecursive,r",
       "It specifies when the remove command is recursive (case of directory) or not.",
       CONFIG);
-  
+
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
- 
+  GenericCli().processListOpt( opt, isEmpty,ac,av);
+
   // Parse the cli and setting the options found
 
   if(opt->count("isRecursive")){

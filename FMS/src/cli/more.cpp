@@ -48,7 +48,7 @@ main (int ac, char* av[]) {
   boost::shared_ptr<Options> opt(makeRemoteCommandOpt(av[0],configFile,path));
 
   bool isEmpty;
-  GenericCli().processListOpt( opt, isEmpty,ac,av," path");
+  GenericCli().processListOpt( opt, isEmpty,ac,av);
   ContentOfFileFunc apiFunc(path);
   return GenericCli().run(apiFunc, configFile, ac, av);
 

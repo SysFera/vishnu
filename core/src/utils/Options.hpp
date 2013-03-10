@@ -275,7 +275,7 @@ public:
 
   /**
    * \brief to print the set of options allowed by a command
-   * \param os: Where options wiil be printed.
+   * \param os: Where options will be printed.
    * \param opt: the options to print.
    * \return the stream where the options are printed.
    */
@@ -283,6 +283,13 @@ public:
   friend
   std::ostream&
   operator<<(std::ostream &os,const Options & opt);
+
+  /**
+   * \brief returns a string with all positional parameters in the correct order
+   * \return the positional parameters separated by spaces. e.g., "param1 param2... paramn"
+   */
+  std::string
+  getPositionalOptString() const;
 
   /**
    * \brief The default destructor
@@ -312,7 +319,7 @@ private:
    * \brief Hidden option description
    */
 
-  po::options_description hidden_options ;
+  po::options_description hidden_options;
 
   /**
    * \brief environment variable option description
@@ -335,9 +342,21 @@ private:
    * \param tmp_options: the set of options to group
    * \param group      : the group to set
    */
-
   void
   setGroup (const po::options_description& tmp_options, const Group_type& group);
+
+  /**
+   * \brief prints the name and description of a parameter
+   * \param name the name of the parameter
+   * \param desc the description of the parameter
+   * \param nameMaxSize the maximum number of character the name can
+   *  be printed on (used to add the correct number of spaces to align
+   *  descriptions of several parameters)
+   * \param os the stream where the parameter will be printed on
+   */
+  void
+  printParams(const std::string &name, const std::string &desc,
+              unsigned int nameMaxSize, std::ostream &os) const;
 };
 
 /**

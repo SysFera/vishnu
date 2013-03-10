@@ -1,6 +1,6 @@
 /**
  * \file add_local_account.cpp
- * This file defines the VISHNU add local account command 
+ * This file defines the VISHNU add local account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -80,26 +80,11 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,configFile,fMachineId,
       fAcLogin,fSshKeyPath,fHomeDirectory,1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId machineId acLogin sshKeyPath homeDirectory");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"userId machineId acLogin sshKeyPath homeDirectory");
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   AddLocalAccountFunc apiFunc(newAcLogin);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-
-
-
-

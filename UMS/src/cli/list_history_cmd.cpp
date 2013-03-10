@@ -1,6 +1,6 @@
 /**
  * \file list_histoty_cmd.cpp
- * This file defines the VISHNU list history command 
+ * This file defines the VISHNU list history command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -74,10 +74,6 @@ int main (int ac, char* av[]){
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  if ( opt->count("help")){
-    helpUsage(*opt,"[option]");
-    return 0;
-  }
 
   /********  Process **************************/
 
@@ -89,21 +85,12 @@ int main (int ac, char* av[]){
 
   /********  Process **************************/
 
-    if (opt->count("adminListOption")){
-
+    if (opt->count("adminListOption")) {
       listOptions.setAdminListOption(true);
     }
 
-    checkVishnuConfig(*opt);
 
-    if ( opt->count("help")){
-
-      helpUsage (*opt," [options]  ");
-
-      return 0;
-    }
-
-    //convert the date in long format 
+    //convert the date in long format
 
     if(opt->count("startDateOption")){
       listOptions.setStartDateOption(string_to_time_t(startDateOption));
@@ -117,6 +104,3 @@ int main (int ac, char* av[]){
   ListCommandsFunc listFunc(listCmd,listOptions, full);
   return GenericCli().run(listFunc, configFile, ac, av);
 }// end of main
-
-
-  

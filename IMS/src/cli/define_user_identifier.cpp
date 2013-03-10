@@ -20,7 +20,7 @@ using namespace std;
 using namespace vishnu;
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string newUserFormat;
@@ -29,11 +29,10 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "format");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   DefineIdentifierFunc<USER>  userIdFunc(newUserFormat);
-  return GenericCli().run(userIdFunc, configFile, argc, argv); 
+  return GenericCli().run(userIdFunc, configFile, argc, argv);
 
 }
-

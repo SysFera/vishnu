@@ -2,13 +2,18 @@
 #define GENERIC_CLI_HPP
 
 
+#include <boost/bind.hpp>
+#include <boost/shared_ptr.hpp>
+#include <string>
+
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
-//#include "cliError.hpp"
 #include "UserException.hpp"
 #include "cliUtil.hpp"
 #include "sessionUtils.hpp"
-#include <boost/bind.hpp>
+#include "Options.hpp"
+#include "api_ums.hpp"  // for vishnuInitialize
+
 
 namespace po = boost::program_options;
 
@@ -131,38 +136,37 @@ class GenericCli {
      * \param av The command line arguments
      * \param signature The signature of the command
      */
-    void processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty, int ac, char*  av[],
-        const std::string& signature="") {
-
+    void
+    processListOpt(const boost::shared_ptr<Options>& opt, bool& isEmpty,
+                   int ac, char*  av[],
+                   const std::string& signature = "") {
       CLICmd cmd = CLICmd (ac, av, opt);
+
       try {
-        opt->parse_cli(ac,av);
+        opt->parse_cli(ac, av);
 
         isEmpty=opt->empty();//if no value was given in the command line
         // Parse the cli and setting the options found
         int ret = cmd.parse(env_name_mapper());
 
-        if (ret != VISHNU_OK){
-          helpUsage(*opt,"[option] "+signature);
+        if (ret != VISHNU_OK) {
+          helpUsage(*opt, signature);
           exit(ret);
         }
 
         // PreProcess (adapt some parameters if necessary)
         checkVishnuConfig(*opt);
-        if ( opt->count("help")){
-          helpUsage(*opt,"[option] "+signature);
+        if (opt->count("help")) {
+          helpUsage(*opt, signature);
           exit(VISHNU_OK);
         }
-      }
-      catch(po::error& e){ // catch all other bad parameter errors
-        helpUsage(*opt,"[option] "+signature);
+      } catch(po::error& e) { // catch all other bad parameter errors
+        helpUsage(*opt, signature);
         exit(ERRCODE_INVALID_PARAM);
-      }
-      catch(std::exception& e){// catch all std runtime error
+      } catch(std::exception& e) {// catch all std runtime error
         errorUsage(av[0],e.what());
         exit(ERRCODE_INVALID_PARAM);
       }
-
     }
 };
 

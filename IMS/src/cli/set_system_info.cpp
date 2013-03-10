@@ -73,7 +73,7 @@ int main (int argc, char* argv[]){
   /******** Callback functions ******************/
   boost::function1<void,long> fMemory (boost::bind(&IMS_Data::SystemInfo::setMemory,boost::ref(sysInfo),_1));
   boost::function1<void,long> fDiskSpace (boost::bind(&IMS_Data::SystemInfo::setDiskSpace,boost::ref(sysInfo),_1));
-  
+
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeSystemInfoOpt(argv[0], fMemory, fDiskSpace, configFile);
 
@@ -86,7 +86,7 @@ int main (int argc, char* argv[]){
 
   bool isEmpty;
   //To process list options
-  GenericCli().processListOpt(opt, isEmpty, argc, argv, "machineId");
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   sysInfo.setMachineId(machineId);
   //call of the api function
@@ -94,4 +94,3 @@ int main (int argc, char* argv[]){
   return GenericCli().run(setSysInfoFunc, configFile, argc, argv);
 
 }
-

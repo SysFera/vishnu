@@ -31,6 +31,10 @@ struct env_name_mapper {
       result = "configFile";
     }
 
+    if ("VISHNU_TRANSFER_CMD" == name) {
+      result="trCommand";
+    }
+
     return result;
   }
 };
@@ -47,10 +51,11 @@ typedef enum {
 /**
  * \brief helper function to display help about a specific command
  * \param opt: describes all options allowed by the command
- * \param signature: defines the usage of the command
+ * \param signature: an optional message that is added to the help
+ *                   message bellow the signature of the command
  */
 void
-helpUsage(const Options& opt, const std::string& signature);
+helpUsage(const Options& opt, const std::string& signature = "");
 
 /**
  * \brief helper function to display error about a specific command

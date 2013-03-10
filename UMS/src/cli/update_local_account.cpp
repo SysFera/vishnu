@@ -22,7 +22,7 @@ using namespace vishnu;
 struct UpdateLocalAccountFunc {
 
   UMS_Data::LocalAccount mupAcLogin;
-  
+
   UpdateLocalAccountFunc(UMS_Data::LocalAccount upAcLogin): mupAcLogin(upAcLogin)
   {};
 
@@ -59,22 +59,10 @@ int main (int ac, char* av[]){
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,configFile,fMachineId,
                                                          fAcLogin,fSshKeyPath,fHomeDirectory);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
-  
-  int ret = cmd.parse(env_name_mapper());
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId machineId");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"userId machineId");
-    return 0;
-  }
- 
   UpdateLocalAccountFunc apiFunc(upAcLogin);
   return GenericCli().run(apiFunc, configFile, ac, av);
 

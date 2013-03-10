@@ -149,10 +149,10 @@ void Options::add(const std::string& name,
 
 template<>
 void Options::add(const std::string& name,
-    const std::string& desc,
-    const Group_type& group,
-    boost::function1<void, bool>& userFunc,
-    int required) {
+                  const std::string& desc,
+                  const Group_type& group,
+                  boost::function1<void, bool>& userFunc,
+                  int required) {
   po::options_description tmp_options;
   po::typed_value<bool>* optionvalue=po::bool_switch()->notifier(userFunc);
 
@@ -257,27 +257,100 @@ Options::count(const std::string& key) const {
   return (vm.count(key));
 }
 
+  /**
+   * \brief prints the name and description of a parameter
+   * \param name the name of the parameter
+   * \param desc the description of the parameter
+   * \param nameMaxSize the maximum number of character the name can
+   *  be printed on (used to add the correct number of spaces to align
+   *  descriptions of several parameters)
+   * \param os the stream where the parameter will be printed on
+   */
+void
+Options::printParams(const std::string &name, const std::string &desc,
+                     unsigned int nameMaxSize, std::ostream &os) const {
+  static const unsigned int default_line_length(80);
+  static const unsigned int foffset = 2;
+  static const unsigned int moffset = 3;
+  std::string ret = "";
+  std::string tmp = desc;
+  unsigned int posfirstchar = nameMaxSize + foffset + moffset;
+  unsigned int maxLen = default_line_length - posfirstchar;
+
+  size_t pos = tmp.rfind(" ", maxLen);
+  while (pos != std::string::npos && (tmp.size() > maxLen)) {
+    ret += tmp.substr(0, pos) + "\n" + std::string(posfirstchar, ' ');
+    tmp = tmp.substr(pos + 1);
+    pos = tmp.rfind(" ", maxLen);
+  }
+  ret += tmp;
+
+  os << std::string(foffset, ' ') << name
+     << std::string(nameMaxSize - name.size() + moffset, ' ')
+     << ret << "\n\n";
+}
+
 
 /**
  * \brief to print the set of options allowed by a command
- * \param os: Where options wiil be printed.
+ * \param os: Where options will be printed.
  * \param opt: the options to print.
  * \return the stream where the options are printed.
  */
-
-
 std::ostream&
 operator<< (std::ostream & os, const Options & opt) {
-  po::options_description visible("Allowed options");
+  po::option_description param;
+  std::string name;
+  unsigned int maxSize(0);
 
+  // First print parameters
+  os << "Parameters:\n";
+
+  if (numeric_limits<unsigned>::max() == opt.position.max_total_count()) {
+    name = opt.position.name_for_position(0);
+    param = opt.hidden_options.find(name, true);
+    opt.printParams(name, param.description(), maxSize, os);
+  } else {
+    unsigned int i;
+    for (i = 0; i < opt.position.max_total_count(); i++) {
+      if (maxSize < opt.position.name_for_position(i).size()) {
+        maxSize = opt.position.name_for_position(i).size();
+      }
+    }
+
+    for (i = 0; i < opt.position.max_total_count(); i++) {
+      name = opt.position.name_for_position(i);
+      param = opt.hidden_options.find(name, true);
+      opt.printParams(name, param.description(), maxSize, os);
+    }
+  }
+
+  // Now Print options
+  po::options_description visible("Allowed options");
   visible.add(opt.generic_options)
          .add(opt.config_options)
          .add(opt.env_options);
 
-  os << visible << endl;
+  os << visible << "\n";
 
   return os;
 }
+
+std::string
+Options::getPositionalOptString() const {
+  std::string optS = "";
+
+  if (numeric_limits<unsigned>::max() == position.max_total_count()) {
+    optS += position.name_for_position(0) + "... ";
+  } else {
+    for (unsigned int i = 0; i < position.max_total_count(); i++) {
+      optS += position.name_for_position(i) + " ";
+    }
+  }
+
+  return optS;
+}
+
 
 /**
  * \brief  The default destructor

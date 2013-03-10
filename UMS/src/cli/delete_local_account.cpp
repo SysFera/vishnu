@@ -1,6 +1,6 @@
 /**
  * \file delete_local_account.cpp
- * This file defines the VISHNU delete local account command 
+ * This file defines the VISHNU delete local account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
@@ -60,28 +60,11 @@ int main (int ac, char* av[]){
 
   opt->setPosition("machineId",1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
- 
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"userId machineId ");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-
-  if ( opt->count("help")){
-    helpUsage(*opt,"userId machineId ");
-    return 0;
-  }
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
   DeleteLocalAccountFunc apiFunc(userId,machineId);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-
-
-
-

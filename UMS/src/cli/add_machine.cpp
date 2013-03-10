@@ -1,18 +1,17 @@
 /**
  * \file add_machine.cpp
- * This file defines the VISHNU add machine command 
+ * This file defines the VISHNU add machine command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "utils.hpp"
-#include "cliUtil.hpp"
-#include "machineUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
 #include <boost/bind.hpp>
 
+#include "utils.hpp"
 #include "GenericCli.hpp"
+#include "machineUtils.hpp"
+#include "cliUtil.hpp"
+#include "sessionUtils.hpp"
+#include "utilVishnu.hpp"
 
 namespace po = boost::program_options;
 
@@ -58,26 +57,11 @@ int main (int ac, char* av[]){
 
   boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
 
-  CLICmd cmd = CLICmd (ac, av, opt);
+  bool isEmpty;
+  //To process list options
+  GenericCli().processListOpt(opt, isEmpty, ac, av);
 
- // Parse the cli and setting the options found
-  int ret = cmd.parse(env_name_mapper());
-
-  if (ret != CLI_SUCCESS){
-    helpUsage(*opt,"name site language sshPublicKeyFile machineDescription");
-    return ret;
-  }
-
-  // PreProcess (adapt some parameters if necessary)
-  checkVishnuConfig(*opt);
-  if ( opt->count("help")){
-    helpUsage(*opt,"name site language sshPublicKeyFile machineDescription");
-    return 0;
-  }
- 
   AddMachineFunc apiFunc(sshPublicKeyPath, newMachine);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-
-
