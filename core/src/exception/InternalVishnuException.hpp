@@ -6,6 +6,7 @@
 #ifndef __INTERNALVISHNUEXCEPTION__
 #define __INTERNALVISHNUEXCEPTION__
 
+#include <string>
 #include "SystemException.hpp"
 
 static const int INNBERR = 5;
@@ -46,7 +47,7 @@ public:
   std::string getMsg();
 
 
-  
+
 };
 
 #endif // InternalVishnuException

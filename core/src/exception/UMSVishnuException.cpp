@@ -1,5 +1,8 @@
 #include "UMSVishnuException.hpp"
 
+#include "VishnuException.hpp"
+
+
 UMSVishnuException::UMSVishnuException(const UMSVishnuException& e):UserException(e){
   mtype = VishnuException::UMS;
   initMsg();

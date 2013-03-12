@@ -2,6 +2,10 @@
 #include <string>
 #include <boost/format.hpp>
 #include "utilClient.hpp"
+#include "UMSVishnuException.hpp"
+#include "TMSVishnuException.hpp"
+#include "FMSVishnuException.hpp"
+#include "IMSVishnuException.hpp"
 
 BOOST_AUTO_TEST_SUITE( utilClient_unit_tests )
 

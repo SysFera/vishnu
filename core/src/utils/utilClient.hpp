@@ -8,19 +8,15 @@
 #define  _utilClient_H_
 
 #include <string>
+#include <exception>
 #include <cstring>
-#include <iostream>
-#include <sstream>
 
 //EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 
 #include "SystemException.hpp"
-#include "UMSVishnuException.hpp"
-#include "TMSVishnuException.hpp"
-#include "IMSVishnuException.hpp"
-#include "FMSVishnuException.hpp"
+
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program

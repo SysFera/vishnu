@@ -6,10 +6,9 @@
 #ifndef __CLICMD__
 #define __CLICMD__
 
+#include <boost/smart_ptr/shared_ptr.hpp>
 #include "Options.hpp"
-#include "cliError.hpp"
 
-using namespace std;
 
 /**
  * \brief This class represents the class to parse the cli

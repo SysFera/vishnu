@@ -10,6 +10,7 @@
 #include "api_fms.hpp"
 #include "tmsUtils.hpp"
 #include "TMSServices.hpp"
+#include "TMSVishnuException.hpp"
 
 namespace bfs = boost::filesystem;
 using namespace vishnu;

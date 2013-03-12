@@ -1,5 +1,5 @@
 #include "TMSVishnuException.hpp"
-
+#include "VishnuException.hpp"          // for VishnuException, etc
 
 TMSVishnuException::TMSVishnuException(const TMSVishnuException& e):UserException(e){
   mtype = VishnuException::TMS;

@@ -11,6 +11,8 @@
 #include "FMS_Data/CpFileOptions.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
 #include "UMS_Data/Machine.hpp"
+
+#include "Options.hpp"
 #include "utilVishnu.hpp"
 
 
@@ -261,14 +263,14 @@ findMachine(const std::string& sessionKey,
   replaceAllOccurences(std::string& scriptContent,
                        const std::string& oldValue,
                        const std::string& newValue);
-  
+
   /**
    * \brief Function to replace some environment variables in a string
    * \param scriptContent The string content to modify
    */
   void
   replaceEnvVariables(std::string& scriptContent, const BatchType& batchType);
-  
+
   /**
    * \brief function to set parameters appearing in a script
    * \param scriptContent The string to modify
@@ -276,14 +278,14 @@ findMachine(const std::string& sessionKey,
    */
   void
   setParams(std::string& scriptContent, const std::string& params);
-  
+
   /**
    * \brief Function to set environment variables accordinf to parameters
    * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...
    */
   void
   setParamsEnvVars(const std::string& params);
-  
+
   /**
    * \brief Function to retrieve an environment variable
    * \param name The name of the variable

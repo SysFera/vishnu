@@ -6,6 +6,7 @@
 #ifndef __FMSVISHNUEXCEPTION__
 #define __FMSVISHNUEXCEPTION__
 
+#include <string>
 #include "UserException.hpp"
 
 // Definitions of FMS specific error codes

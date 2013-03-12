@@ -1,4 +1,5 @@
 #include "VishnuException.hpp"
+
 #include <sstream>
 
 template <class T>

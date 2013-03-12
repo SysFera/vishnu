@@ -10,16 +10,18 @@
 #define OPTIONS_HPP
 
 //C++ standard library
-#include <typeinfo>
+#include <iterator>                     // for ostream_iterator
+#include <string>                       // for string
+#include <vector>                       // for vector
 #include <iostream>
 
 // Boost Headers
 #include <boost/program_options.hpp>
-#include <boost/function.hpp>
+#include <boost/function.hpp>  // for function1
 #include <boost/shared_ptr.hpp>
 
 namespace po = boost::program_options;
-class Options;
+
 
 /**
  * \class Configuration

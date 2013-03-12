@@ -7,11 +7,12 @@
 
 #include "FileParser.hpp"
 
-#include <algorithm>
 #include <fstream>
-#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/trim.hpp>  // for trim
+#include <map>
 
 #include "CommonParser.hpp"
+#include "UserException.hpp"  // for ERRCODE_FILENOTFOUND, etc
 
 FileParser::FileParser() {
 }

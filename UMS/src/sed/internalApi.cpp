@@ -44,8 +44,8 @@ solveSessionConnect(diet_profile_t* pb) {
   MachineClientServer machineClientServer =  MachineClientServer(clientKey, clientHostname);
   SessionServer sessionServer;
 
-  ConnectOptions_ptr connectOpt = NULL;
-  Version_ptr versionClient = NULL;
+  UMS_Data::ConnectOptions_ptr connectOpt = NULL;
+  UMS_Data::Version_ptr versionClient = NULL;
   UMS_Data::Version_ptr versionServer = NULL;
 
   try {
@@ -121,7 +121,7 @@ solveSessionReconnect(diet_profile_t* pb) {
 
   SessionServer sessionServer;
   sessionServer.getData().setSessionId(sessionId);
-  Version_ptr versionClient = NULL;
+  UMS_Data::Version_ptr versionClient = NULL;
   UMS_Data::Version_ptr versionServer = NULL;
 
   try {
@@ -224,7 +224,7 @@ solveUserCreate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
-  User_ptr user = NULL;
+  UMS_Data::User_ptr user = NULL;
 
   try {
     //MAPPER CREATION
@@ -293,7 +293,7 @@ solveUserUpdate(diet_profile_t* pb) {
   SessionServer sessionServer = SessionServer(sessionKey);
   UserServer userServer = UserServer(sessionServer);
 
-  User_ptr user = NULL;
+  UMS_Data::User_ptr user = NULL;
 
   try {
      //MAPPER CREATION
@@ -405,7 +405,7 @@ solveUserPasswordChange(diet_profile_t* pb) {
   diet_string_get(pb,3, version);
 
   UserServer userServer = UserServer(userId, password);
-  Version_ptr versionClient = NULL;
+  UMS_Data::Version_ptr versionClient = NULL;
   UMS_Data::Version_ptr versionServer = NULL;
 
   try {
@@ -510,7 +510,7 @@ solveMachineCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  Machine_ptr machine = NULL;
+  UMS_Data::Machine_ptr machine = NULL;
 
   try {
     std::string msgComp = "The ssh public key file content is invalid";
@@ -576,7 +576,7 @@ solveMachineUpdate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  Machine_ptr machine = NULL;
+  UMS_Data::Machine_ptr machine = NULL;
 
   try {
     //MAPPER CREATION
@@ -690,7 +690,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  LocalAccount_ptr localAccount = NULL;
+  UMS_Data::LocalAccount_ptr localAccount = NULL;
 
   try {
     //MAPPER CREATION
@@ -750,7 +750,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   diet_string_get(pb,1, laccountSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-  LocalAccount_ptr localAccount = NULL;
+  UMS_Data::LocalAccount_ptr localAccount = NULL;
 
   try {
 
@@ -924,7 +924,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
   diet_string_get(pb,1, configurationSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-  Configuration_ptr configuration = NULL;
+  UMS_Data::Configuration_ptr configuration = NULL;
 
   try {
 
@@ -1263,7 +1263,7 @@ solveSystemAuthCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  AuthSystem_ptr authSystem = NULL;
+  UMS_Data::AuthSystem_ptr authSystem = NULL;
 
   try {
     //MAPPER CREATION
@@ -1327,7 +1327,7 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   diet_string_get(pb,1, authSystemSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-  AuthSystem_ptr authSystem = NULL;
+  UMS_Data::AuthSystem_ptr authSystem = NULL;
 
   try {
 
@@ -1453,7 +1453,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  AuthAccount_ptr authAccount = NULL;
+  UMS_Data::AuthAccount_ptr authAccount = NULL;
 
   try {
     //MAPPER CREATION
@@ -1512,7 +1512,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
-  AuthAccount_ptr authAccount = NULL;
+  UMS_Data::AuthAccount_ptr authAccount = NULL;
 
   try {
     //MAPPER CREATION

@@ -6,6 +6,7 @@
 #ifndef __IMSVISHNUEXCEPTION__
 #define __IMSVISHNUEXCEPTION__
 
+#include <string>
 #include "UserException.hpp"
 
 // Definitions of IMS specific error codes

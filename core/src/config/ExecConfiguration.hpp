@@ -12,7 +12,6 @@
 
 #include "constants.hpp"
 #include "CommonParser.hpp"
-#include "FileParser.hpp"
 #include "UserException.hpp"
 
 /**
