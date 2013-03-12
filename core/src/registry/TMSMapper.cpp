@@ -17,6 +17,7 @@
 #include "tmsUtils.hpp"
 
 using namespace vishnu;
+using namespace std;
 
 TMSMapper::TMSMapper(){
 };

@@ -11,7 +11,6 @@
 #include <iostream>
 #include "Version.hpp"
 
-using namespace std;
 
 /**
  * \class VersionManager

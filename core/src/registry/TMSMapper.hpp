@@ -8,13 +8,13 @@
 #ifndef __TMSMAPPER__HH__
 #define __TMSMAPPER__HH__
 
-#include <map>
+#include <string>
+#include <vector>
 
 #include "Mapper.hpp"
 #include "MapperRegistry.hpp"
 
 
-using namespace std;
 
 /**
  * \brief Submit job key
@@ -61,11 +61,11 @@ class TMSMapper : Mapper{
 public :
   /**
    * \brief Constructor
-   * \fn TMSMapper(MapperRegistry* reg, string name)
+   * \fn TMSMapper(MapperRegistry* reg, std::string name)
    * \param reg Registry to register
    * \param name Name to use to register
    */
-  TMSMapper(MapperRegistry* reg, string name);
+  TMSMapper(MapperRegistry* reg, std::string name);
   /**
    * \brief Default constructor
    * \fn TMSMapper()
@@ -94,131 +94,131 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand(const int& key,string& command)
+   * \fn virtual int getCommand(const int& key,std::string& command)
    * \param key The key to use
    * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const int& key,string& command);
+  getCommand(const int& key,std::string& command);
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey(const string& command, int& key)
+   * \fn virtual int getKey(const std::string& command, int& key)
    * \param command The 'key' to use
    * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, int& key);
+  getKey(const std::string& command, int& key);
 
   /**
    * \brief Function to add an element to code
-   * \fn  virtual int code(const string& cmd, unsigned int code = 0)
-   * \param cmd The string to add
-   * \param code If 0, the code is created, otherwize it is the key in the map to add the string
+   * \fn  virtual int code(const std::string& cmd, unsigned int code = 0)
+   * \param cmd The std::string to add
+   * \param code If 0, the code is created, otherwize it is the key in the map to add the std::string
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
    */
   virtual int
-  code(const string& cmd, unsigned int code = 0);
+  code(const std::string& cmd, unsigned int code = 0);
 
   /**
-   * \brief To get, from a coded string, the cli like command that made it
-   * \fn virtual string decode (const string& msg);
-   * \param msg The coded string
+   * \brief To get, from a coded std::string, the cli like command that made it
+   * \fn virtual std::string decode (const std::string& msg);
+   * \param msg The coded std::string
    * \return The cli like command
    */
-  virtual string
-  decode (const string& msg);
+  virtual std::string
+  decode (const std::string& msg);
 
 protected:
   /**
-   * \brief To decode the submit call sequence of the string returned by finalize
-   * \fn string decodeSubmit(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the submit call sequence of the std::string returned by finalize
+   * \fn std::string decodeSubmit(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeSubmit(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeSubmit(std::vector<unsigned int> separator, const std::string& msg);
   /**
-   * \brief To decode the add work call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the add work call sequence of the std::string returned by finalize
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeAddWork(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeAddWork(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get progression call sequence of the string returned by finalize
-   * \fn string decodeProg(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get progression call sequence of the std::string returned by finalize
+   * \fn std::string decodeProg(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeProg(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeProg(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get queue call sequence of the string returned by finalize
-   * \fn string decodeQueue(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get queue call sequence of the std::string returned by finalize
+   * \fn std::string decodeQueue(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeQueue(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeQueue(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get list job call sequence of the string returned by finalize
-   * \fn string decodeListJob(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get list job call sequence of the std::string returned by finalize
+   * \fn std::string decodeListJob(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeListJob(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeListJob(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get output call sequence of the string returned by finalize
-   * \fn string decodeOutput(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get output call sequence of the std::string returned by finalize
+   * \fn std::string decodeOutput(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeOutput(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeOutput(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get all output call sequence of the string returned by finalize
-   * \fn string decodeCompletedJob(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get all output call sequence of the std::string returned by finalize
+   * \fn std::string decodeCompletedJob(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeCompletedJob(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeCompletedJob(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the cancel call sequence of the string returned by finalize
-   * \fn string decodeCancel(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the cancel call sequence of the std::string returned by finalize
+   * \fn std::string decodeCancel(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeCancel(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeCancel(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
-   * \brief To decode the get job info call sequence of the string returned by finalize
-   * \fn string decodeJobInfo(vector<unsigned int> separator, const string& msg)
-   * \param separator A vector containing the position of the separator in the message msg
+   * \brief To decode the get job info call sequence of the std::string returned by finalize
+   * \fn std::string decodeJobInfo(std::vector<unsigned int> separator, const std::string& msg)
+   * \param separator A std::vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
    */
-  virtual string
-  decodeJobInfo(vector<unsigned int> separator, const string& msg);
+  virtual std::string
+  decodeJobInfo(std::vector<unsigned int> separator, const std::string& msg);
 private:
 };
 
