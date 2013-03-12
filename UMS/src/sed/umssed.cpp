@@ -1,6 +1,7 @@
 #include <csignal>
 #include <sys/wait.h>
 #include <fstream>
+#include <string>
 #include "ServerUMS.hpp"
 #include "MonitorUMS.hpp"
 #include "ExecConfiguration.hpp"
@@ -18,6 +19,7 @@
 #include "CommServer.hpp"
 
 using namespace vishnu;
+using namespace std;
 
 /**
  * \brief To show how to use the sed
