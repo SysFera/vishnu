@@ -18,6 +18,7 @@
 #include "utilServer.hpp"
 
 using namespace vishnu;
+using namespace std;
 
 UMSMapper::UMSMapper(){
 };

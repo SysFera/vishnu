@@ -18,9 +18,6 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 /**
  * \brief A generic class to handle some command line operations like run a
  * function
@@ -54,7 +51,7 @@ class GenericCli {
 
           // initializing DIET
 
-          if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
+          if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 
@@ -107,7 +104,7 @@ class GenericCli {
 
           // initializing DIET
 
-          if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
+          if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
             errorUsage(av[0],dietErrorMsg,EXECERROR);
 

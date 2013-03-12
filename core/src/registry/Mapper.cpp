@@ -1,5 +1,10 @@
 #include "Mapper.hpp"
 
+#include <map>
+
+using namespace std;
+
+
 Mapper::Mapper(MapperRegistry* reg){
   mreg = reg;
   pthread_mutex_init(&mutex, NULL);

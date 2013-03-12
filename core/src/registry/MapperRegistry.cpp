@@ -1,5 +1,9 @@
 #include "MapperRegistry.hpp"
 
+#include <map>
+
+using namespace std;
+
 
 MapperRegistry* MapperRegistry::mreg = NULL; //%RELAX<MISRA_0_1_3> Used in this file
 

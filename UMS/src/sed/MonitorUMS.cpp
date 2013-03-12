@@ -12,6 +12,9 @@
 #include "AuthenticatorFactory.hpp"
 #include "Authenticator.hpp"
 
+using namespace std;
+
+
 /**
 * \brief Constructor, raises an exception on error
 * \fn ServerUMS(std::string cfg)

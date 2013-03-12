@@ -10,11 +10,12 @@
 #define __MAPPERREGISTRY__HH__
 
 #include <map>
+#include <string>
 
 #include "SystemException.hpp"
 #include "Mapper.hpp"
 
-using namespace std;
+
 class Mapper;
 /**
  * \class MapperRegistry

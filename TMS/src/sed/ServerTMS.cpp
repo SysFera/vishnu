@@ -22,6 +22,9 @@
 #include <string>
 #include <vector>
 
+using namespace std;
+
+
 //{{RELAX<MISRA_0_1_3> Because these variables are used this class
 ServerTMS *ServerTMS::minstance = NULL;
 TMSMapper *ServerTMS::mmapper = NULL;
