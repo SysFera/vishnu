@@ -7,6 +7,8 @@
 
 #include <boost/scoped_ptr.hpp>
 
+#include <string>
+
 #include "ServerIMS.hpp"
 #include "utilServer.hpp"
 #include "IMSMapper.hpp"
@@ -16,6 +18,7 @@
 
 
 using namespace vishnu;
+using namespace std;
 
 // {{RELAX<MISRA_0_1_3> Three static variables
 ServerIMS *ServerIMS::minstance       = NULL;

@@ -7,13 +7,19 @@
  */
 
 #include "FMSMapper.hpp"
+
+#include <map>
+
 #include "FMS_Data.hpp"
 #include "FMS_Data_forward.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include "FMSVishnuException.hpp"
 
+
+
 using namespace vishnu;
+using namespace std;
 
 FMSMapper::FMSMapper(){
 };

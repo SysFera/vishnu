@@ -9,13 +9,12 @@
 #ifndef __FMSMAPPER__HH__
 #define __FMSMAPPER__HH__
 
-#include <map>
+#include <string>
+#include <vector>
 
 #include "Mapper.hpp"
 #include "MapperRegistry.hpp"
 
-
-using namespace std;
 
 /**
  * \brief Create file key
@@ -95,11 +94,11 @@ class FMSMapper : Mapper{
 public :
   /**
    * \brief Constructor
-   * \fn FMSMapper(MapperRegistry* reg, string name)
+   * \fn FMSMapper(MapperRegistry* reg, std::string name)
    * \param reg Registry to register
    * \param name Name to use to register
    */
-  FMSMapper(MapperRegistry* reg, string name);
+  FMSMapper(MapperRegistry* reg, std::string name);
   /**
    * \brief Default constructor
    * \fn FMSMapper()
@@ -123,42 +122,42 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand(const int& key,string& command)
+   * \fn virtual int getCommand(const int& key,std::string& command)
    * \param key The key to use
    * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getCommand(const int& key,string& command);
+  getCommand(const int& key,std::string& command);
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey(const string& command, int& key)
+   * \fn virtual int getKey(const std::string& command, int& key)
    * \param command The 'key' to use
    * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
    */
   virtual int
-  getKey(const string& command, int& key);
+  getKey(const std::string& command, int& key);
 
   /**
    * \brief Function to add an element to code
-   * \fn  virtual int code(const string& cmd, unsigned int code = 0)
+   * \fn  virtual int code(const std::string& cmd, unsigned int code = 0)
    * \param cmd The string to add
    * \param code If 0, the code is created, otherwize it is the key in the map to add the string
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
    */
   virtual int
-  code(const string& cmd, unsigned int code = 0);
+  code(const std::string& cmd, unsigned int code = 0);
 
   /**
    * \brief To get, from a coded string, the cli like command that made it
-   * \fn virtual string decode (const string& msg);
+   * \fn virtual std::string decode (const std::string& msg);
    * \param msg The coded string
    * \return The cli like command
    */
-  virtual string
-  decode (const string& msg);
+  virtual std::string
+  decode (const std::string& msg);
 
 protected:
 
@@ -168,8 +167,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeCreateFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeCreateFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the create dir call sequence of the string returned by finalize
@@ -177,8 +176,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeCreateDir(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeCreateDir(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the remove file call sequence of the string returned by finalize
@@ -186,8 +185,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeRemoveFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeRemoveFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the remove dir call sequence of the string returned by finalize
@@ -195,8 +194,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeRemoveDir(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeRemoveDir(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the change group call sequence of the string returned by finalize
@@ -204,8 +203,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeChGrp(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeChGrp(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the change mode call sequence of the string returned by finalize
@@ -213,8 +212,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeChMod(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeChMod(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the head of file call sequence of the string returned by finalize
@@ -222,8 +221,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeHeadOfFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeHeadOfFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the tail of file call sequence of the string returned by finalize
@@ -231,8 +230,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeTailOfFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeTailOfFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the content of file call sequence of the string returned by finalize
@@ -240,8 +239,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeContentOfFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeContentOfFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the list dir call sequence of the string returned by finalize
@@ -249,8 +248,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeListDir(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeListDir(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the copy file call sequence of the string returned by finalize
@@ -258,8 +257,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeCopyFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeCopyFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the copy async file call sequence of the string returned by finalize
@@ -267,8 +266,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeCopyAsyncFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeCopyAsyncFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the move file call sequence of the string returned by finalize
@@ -276,8 +275,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeMoveFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeMoveFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the move async file call sequence of the string returned by finalize
@@ -285,8 +284,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeMoveAsyncFile(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeMoveAsyncFile(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the stop file transfer call sequence of the string returned by finalize
@@ -294,8 +293,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeStopFileTransfer(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeStopFileTransfer(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the list file transfers call sequence of the string returned by finalize
@@ -303,8 +302,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeListFileTransfers(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeListFileTransfers(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To decode the get file info call sequence of the string returned by finalize
@@ -312,8 +311,8 @@ protected:
    * \param msg The message to decode
    * \return The cli like close command
    */
-  string
-    decodeGetFileInfo(vector<unsigned int> separator, const string& msg);
+  std::string
+    decodeGetFileInfo(std::vector<unsigned int> separator, const std::string& msg);
 
 private:
 };

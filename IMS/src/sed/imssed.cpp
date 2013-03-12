@@ -1,6 +1,7 @@
 #include <csignal>
 #include <sys/wait.h>
 #include <fstream>
+#include <string>
 #include "ServerIMS.hpp"
 #include "ExecConfiguration.hpp"
 #include "DbConfiguration.hpp"
@@ -22,6 +23,8 @@
 
 using namespace vishnu;
 using namespace boost;
+using namespace std;
+
 /**
  * \mainpage IMS
  *
