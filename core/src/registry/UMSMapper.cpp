@@ -325,7 +325,7 @@ UMSMapper::decodeAddAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  LocalAccount_ptr ac = NULL;
+  UMS_Data::LocalAccount_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -357,7 +357,7 @@ UMSMapper::decodeAddAuthAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_AUTHACC))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  AuthAccount_ptr ac = NULL;
+  UMS_Data::AuthAccount_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -389,7 +389,7 @@ UMSMapper::decodeAddAuthSys(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_AUTHSYS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  AuthSystem_ptr ac = NULL;
+  UMS_Data::AuthSystem_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -430,7 +430,7 @@ UMSMapper::decodeUpAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  LocalAccount_ptr ac = NULL;
+  UMS_Data::LocalAccount_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -471,7 +471,7 @@ UMSMapper::decodeUpAuthAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_AUTHACC))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  AuthAccount_ptr ac = NULL;
+  UMS_Data::AuthAccount_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -506,7 +506,7 @@ UMSMapper::decodeUpAuthSys(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_AUTHSYS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  AuthSystem_ptr ac = NULL;
+  UMS_Data::AuthSystem_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -616,7 +616,7 @@ UMSMapper::decodeListAuthAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_AUTHACC))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListAuthAccOptions_ptr ac = NULL;
+  UMS_Data::ListAuthAccOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -651,7 +651,7 @@ UMSMapper::decodeListAuthSys(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_AUTHSYS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListAuthSysOptions_ptr ac = NULL;
+  UMS_Data::ListAuthSysOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -700,7 +700,7 @@ UMSMapper::decodeRestoreConf(vector<unsigned int> separator, const string& msg){
   a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
   ecorecpp::parser::parser parser;
-  Configuration_ptr ac = NULL;
+  UMS_Data::Configuration_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -723,7 +723,7 @@ UMSMapper::decodeAddM(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_ADD_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  Machine_ptr ac = NULL;
+  UMS_Data::Machine_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -753,7 +753,7 @@ UMSMapper::decodeUpM(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_UPDATE_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  Machine_ptr ac = NULL;
+  UMS_Data::Machine_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -819,7 +819,7 @@ UMSMapper::decodeListAcc(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_LOCAL_ACCOUNT))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListLocalAccOptions_ptr ac = NULL;
+  UMS_Data::ListLocalAccOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -854,7 +854,7 @@ UMSMapper::decodeListM(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_MACHINE))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListMachineOptions_ptr ac = NULL;
+  UMS_Data::ListMachineOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -891,7 +891,7 @@ UMSMapper::decodeListH(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_HISTORY_CMD))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListCmdOptions_ptr ac = NULL;
+  UMS_Data::ListCmdOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -942,7 +942,7 @@ UMSMapper::decodeListOp(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_OPTIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListOptOptions_ptr ac = NULL;
+  UMS_Data::ListOptOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -977,7 +977,7 @@ UMSMapper::decodeListUser(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_USERS))->second;
   a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListUsersOptions_ptr ac = NULL;
+  UMS_Data::ListUsersOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -1009,7 +1009,7 @@ UMSMapper::decodeListSession(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_LIST_SESSIONS))->second;
   a    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  ListSessionOptions_ptr ac = NULL;
+  UMS_Data::ListSessionOptions_ptr ac = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(a)), ac)) {
@@ -1081,7 +1081,7 @@ UMSMapper::decodeConfDefaultOp(vector<unsigned int> separator, const string& msg
   string u;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  OptionValue_ptr opt = NULL;
+  UMS_Data::OptionValue_ptr opt = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(u)), opt)) {
@@ -1115,7 +1115,7 @@ UMSMapper::decodeConfOp(vector<unsigned int> separator, const string& msg){
   res += (mmap.find(VISHNU_CONFIGURE_OPTION))->second;
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
 
-  OptionValue_ptr opt = NULL;
+  UMS_Data::OptionValue_ptr opt = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(u)), opt)) {
@@ -1146,7 +1146,7 @@ UMSMapper::getU(string serial){
   string res = string("");
   string tmp;
 
-  User_ptr user = NULL;
+  UMS_Data::User_ptr user = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(serial)), user)) {
@@ -1190,7 +1190,7 @@ UMSMapper::getUupdate(string serial){
   string res = string("");
   string tmp;
 
-  User_ptr user = NULL;
+  UMS_Data::User_ptr user = NULL;
 
   //To parse the object serialized
   if(!parseEmfObject(std::string(std::string(serial)), user)) {

@@ -1,14 +1,27 @@
 #include "sessionUtils.hpp"
-#include "cliError.hpp"
-#include <boost/archive/archive_exception.hpp>
-#include <stdexcept>
+
+
+//  Boost archives
+#include <boost/archive/binary_iarchive.hpp>
+#include <boost/archive/binary_oarchive.hpp>
+
+// To serialize a std::list
+#include <boost/serialization/list.hpp>
+#include <boost/serialization/nvp.hpp>
+
 #include <cstdlib>
+#include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+
 #include "UMSVishnuException.hpp"
+#include "VishnuException.hpp"
 #include "UserException.hpp"
+
 namespace bfs = boost::filesystem;
 namespace bs = boost::serialization;
+using namespace boost::archive;
+
 
 
 /**
@@ -68,7 +81,7 @@ SessionEntry::getClosePolicy()const{
 }
 
 /**
- * \brief To get the session id 
+ * \brief To get the session id
  * \return The session id
  */
 
@@ -147,11 +160,11 @@ saveIntoFile(SessionContainer& allSessions, const char* file){
 template <class T>
 void
 getFromFile(SessionContainer& allSessions, const char* file){
-  
+
   std::ifstream ifile(file);
 
   T ar(ifile);
- 
+
   ar >> bs::make_nvp("sessions",allSessions);
 
   ifile.close();
@@ -225,7 +238,7 @@ getLastSession(const std::string& terminal){
   if(allSessions.empty()){
 
     //std::cerr <<"There is no open session in this terminal\n";
-  
+
     //exit (CLI_ERROR_NO_SESSION);
     throw UserException (ERRCODE_CLI_ERROR_NO_SESSION,"There is no open session in this terminal");
 
@@ -372,7 +385,7 @@ getLastSessionKey(int ppid){
 }
 
 /**
- * \brief To get the last session identifier 
+ * \brief To get the last session identifier
  * \param ppid: The identifier of the terminal as process in which the session
  * had been open
  * \return The identifier of the last session open from the terminal
@@ -399,7 +412,7 @@ getLastSessionId(int ppid){
  * \brief To remove the bad session keys stored in the session file
  * \param ppid : The process identifier of the terminal in which the session had
  * been open.
- */ 
+ */
 void
 removeBadSessionKeyFromFile(int ppid){
 
@@ -423,4 +436,3 @@ checkBadSessionKeyError(const VishnuException& e){
 return( (e.getMsgI()==ERRCODE_SESSIONKEY_NOT_FOUND) || e.getMsgI()==ERRCODE_SESSIONKEY_EXPIRED   );
 
 }
-

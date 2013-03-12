@@ -1,5 +1,9 @@
 #include "CLICmd.hpp"
-#include "UserException.hpp" 
+
+#include <boost/program_options.hpp>
+
+#include "VishnuException.hpp"          // for VISHNU_OK
+#include "UserException.hpp"
 
 CLICmd::CLICmd(int argc, char** argv, boost::shared_ptr<Options> op):margc(argc), margv(argv), mop(op){
 }
@@ -20,4 +24,3 @@ CLICmd::parse(const func1 & s){
   }
   return VISHNU_OK;
 }
-

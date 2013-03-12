@@ -1,6 +1,7 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include "tmsUtils.hpp"
+#include "UserException.hpp"
 #include "constants.hpp"
 
 BOOST_AUTO_TEST_SUITE( tmsUtils_unit_tests )

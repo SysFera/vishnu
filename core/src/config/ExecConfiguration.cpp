@@ -7,7 +7,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include "constants.hpp"
-
+#include "FileParser.hpp"
 
 using namespace std;
 

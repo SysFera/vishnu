@@ -6,10 +6,9 @@
 #ifndef __VISHNUEXCEPTION__
 #define __VISHNUEXCEPTION__
 
-#include <iostream>
-#include <cstdlib>
 #include <exception>
 #include <map>
+#include <string>
 
 /**
  * \brief If everything is ok , no need to define exception so

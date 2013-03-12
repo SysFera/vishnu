@@ -10,11 +10,10 @@
 
 #include "CommonParser.hpp"
 
-#include <iostream>
+#include <boost/algorithm/string/trim.hpp>
 #include <ostream>
 #include <string>
-#include <map>
-#include <boost/algorithm/string.hpp>
+
 
 #ifdef DEBUG
 std::ostream debug(std::cerr.rdbuf());

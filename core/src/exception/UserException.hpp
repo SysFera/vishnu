@@ -6,6 +6,7 @@
 #ifndef __USEREXCEPTION__
 #define __USEREXCEPTION__
 
+#include <string>
 #include "VishnuException.hpp"
 
 // RESERVED CODES FROM 10 TO 19

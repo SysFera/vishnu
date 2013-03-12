@@ -7,6 +7,8 @@
 
 #include "AuthenticatorConfiguration.hpp"
 #include <algorithm>
+#include <iostream>
+
 using namespace std;
 
 /**
@@ -43,4 +45,3 @@ void AuthenticatorConfiguration::check() throw (UserException)
     "Invalid authentication mode. Supported mode are: 'UMS', 'LDAP', 'UMSLDAP' or 'LDAPUMS'");
   }
 }
-

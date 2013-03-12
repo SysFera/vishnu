@@ -1,4 +1,5 @@
 #include "IMSVishnuException.hpp"
+#include "VishnuException.hpp"
 
 using namespace std;
 

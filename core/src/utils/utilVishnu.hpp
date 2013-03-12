@@ -10,30 +10,24 @@
 #define _UTILVISHNU_H_
 
 #include <iostream>
-#include <sstream>
+#include <string>
+#include <vector>
+#include <ctime>
 
-#include <boost/random/mersenne_twister.hpp>
-#include <boost/random/uniform_int.hpp>
-#include <boost/random/variate_generator.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
-#include <boost/date_time/local_time/local_time.hpp>
-#include "Options.hpp"
-#include "TMS_Data.hpp"
-
-#include "FMSVishnuException.hpp"
 #include <boost/filesystem.hpp>
 #include <boost/thread/shared_mutex.hpp>
+
 #include "UMS_Data.hpp"
 
-using namespace boost::posix_time;
-using namespace boost::gregorian;
 namespace bfs = boost::filesystem;
+
 typedef std::vector<std::string> ListStrings;
+
 static const int UNDEFINED_VALUE=-1;
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
 static const int ACTIVE_STATUS=1;
+
 /**
  * \brief Function to encrypt data and password
  * \param clef is the data to be encrypted

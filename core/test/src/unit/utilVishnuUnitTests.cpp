@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 #include <map>
+
+#include "UserException.hpp"
 #include "utilVishnu.hpp"
 
 BOOST_AUTO_TEST_SUITE( utilVishnu_unit_tests )

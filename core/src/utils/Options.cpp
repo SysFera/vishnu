@@ -1,13 +1,11 @@
 #include "Options.hpp"
 
+#include <boost/program_options/detail/parsers.hpp>
+#include <boost/program_options/parsers.hpp>
+#include <limits>                       // for numeric_limits
 #include <string>
-#include <list>
-#include <map>
-#include <iostream>
 #include <fstream>
-#include <sstream>
-#include <stdexcept>
-#include <algorithm>
+
 
 using namespace std;
 namespace po=boost::program_options;

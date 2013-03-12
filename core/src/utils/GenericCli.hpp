@@ -6,6 +6,7 @@
 #include <boost/shared_ptr.hpp>
 #include <string>
 
+#include "cliError.hpp"
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "UserException.hpp"

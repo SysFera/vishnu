@@ -6,6 +6,7 @@
 #ifndef __UMSVISHNUEXCEPTION__
 #define __UMSVISHNUEXCEPTION__
 
+#include <string>
 #include "UserException.hpp"
 
 

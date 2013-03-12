@@ -10,7 +10,6 @@
 #include <map>
 #include <string>
 
-#include "UserException.hpp"
 #include "CommonParser.hpp"
 
 /**

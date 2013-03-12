@@ -6,6 +6,7 @@
 #ifndef __TMSVISHNUEXCEPTION__
 #define __TMSVISHNUEXCEPTION__
 
+#include <string>
 #include "UserException.hpp"
 
 // Definitions of TMS specific error codes
