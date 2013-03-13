@@ -6,6 +6,7 @@
 #include "LLServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp" // For convertStringToWallTime
 
 using namespace vishnu;
 using namespace std;
@@ -32,7 +33,7 @@ LLServer::submit(const char* scriptPath,
 
   //Puts the options values into the scriptPath
   processOptions(scriptPath, options);
-  
+
 
   LL_job llJobInfo;
   if(llsubmit(const_cast<char*>(scriptPath), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {

@@ -21,6 +21,7 @@ extern "C" {
 #include "PbsProServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp" // For convertStringToWallTime
 
 using namespace std;
 using namespace vishnu;

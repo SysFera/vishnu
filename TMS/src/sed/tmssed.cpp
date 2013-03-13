@@ -178,6 +178,16 @@ int main(int argc, char* argv[], char* envp[]) {
         exit(1);
       }
 
+      //Initialize the TMS Server    ----- MUST BE DONE BEFORE CREATING INSTANCE
+      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
+      res = server->init(vishnuId, dbConfig, machineId, batchType, config);
+      if (!res) {
+        initSeD(TMSTYPE, *config, uri, server);
+      } else {
+        std::cerr << "There was a problem during services initialization\n";
+        exit(1);
+      }
+
       UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
 
       // check the machine
@@ -189,15 +199,6 @@ int main(int argc, char* argv[], char* envp[]) {
         delete machine;
       }
 
-      //Initialize the TMS Server
-      boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
-      res = server->init(vishnuId, dbConfig, machineId, batchType, config);
-      if (!res) {
-        initSeD(TMSTYPE, *config, uri, server);
-      } else {
-        std::cerr << "There was a problem during services initialization\n";
-        exit(1);
-      }
     } catch (VishnuException& e) {
       std::cerr << e.what() << "\n";
       exit(1);

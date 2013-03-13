@@ -22,6 +22,7 @@ extern "C" {
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "constants.hpp"
+#include "tmsUtils.hpp" // For convertStringToWallTime
 
 using namespace std;
 using namespace vishnu;

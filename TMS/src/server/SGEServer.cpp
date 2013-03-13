@@ -33,6 +33,7 @@ extern "C" {
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp" // For convertStringToWallTime
 
 #include "SGEConfig.hpp"
 using namespace std;

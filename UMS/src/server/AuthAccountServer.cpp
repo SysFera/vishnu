@@ -104,7 +104,7 @@ AuthAccountServer::addOrUpdate(const std::string &sql, bool update) {
 
         //If there is a change
         if (!sqlCommand.empty()) {
-          boost::format(sqlCommand) % numAuthSystem % numUser % mauthAccount->getAcLogin();
+          sqlCommand = (boost::format(sqlCommand) % numAuthSystem % numUser % mauthAccount->getAcLogin()).str();
           mdatabaseVishnu->process(sqlCommand);
         }
       }//END if the authentification account exists

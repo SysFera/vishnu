@@ -25,6 +25,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "LSFParser.hpp"
+#include "tmsUtils.hpp" // For convertStringToWallTime
 
 using namespace std;
 using namespace vishnu;
