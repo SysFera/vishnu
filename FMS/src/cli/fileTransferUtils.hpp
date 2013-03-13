@@ -28,9 +28,6 @@
 
 
 
-using namespace vishnu;
-
-
 /**
  * \brief To build options for the VISHNU copy of file command
  * \param pgName The name of the command
@@ -140,7 +137,7 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
         exit (CLI_ERROR_INVALID_PARAMETER);
       }
     } else {
-      trCmd = convertToInt(trCmdStr);
+      trCmd = vishnu::convertToInt(trCmdStr);
     }
     cpFileOptions.setTrCommand(trCmd);
   }
@@ -190,7 +187,9 @@ struct TransferAsyncFunc {
    * \param transferInfo The file transfer complete information
    * \param cpFileOptions The file transfer options
    */
-  TransferAsyncFunc(const std::string& src,const std::string& dest,const FMS_Data::FileTransfer& transferInfo,const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
+  TransferAsyncFunc(const std::string& src, const std::string& dest,
+                    const FMS_Data::FileTransfer& transferInfo,
+                    const FMS_Data::CpFileOptions& cpFileOptions ):msrc(src),mdest(dest), mtransferInfo(transferInfo), mcpFileOptions (cpFileOptions) {};
 
   /**
    * \brief () operator
@@ -200,9 +199,9 @@ struct TransferAsyncFunc {
   int operator()(const std::string& sessionKey) {
     int res;
     if (transferType == MV) {
-      res = amv(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+      res = vishnu::amv(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
     } else {
-      res = acp(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
+      res = vishnu::acp(sessionKey, msrc, mdest, mtransferInfo, mcpFileOptions);
     }
 
     std::cout << "The transfer identifier is " << mtransferInfo.getTransferId() << std::endl;
@@ -251,9 +250,9 @@ struct TransferSyncFunc {
   int operator()(const std::string& sessionKey) {
     int res;
     if (transferType == MV){
-      res = mv(sessionKey, msrc, mdest, mcpFileOptions);
+      res = vishnu::mv(sessionKey, msrc, mdest, mcpFileOptions);
     } else {
-      res = cp(sessionKey, msrc, mdest, mcpFileOptions);
+      res = vishnu::cp(sessionKey, msrc, mdest, mcpFileOptions);
     }
 
     return res;

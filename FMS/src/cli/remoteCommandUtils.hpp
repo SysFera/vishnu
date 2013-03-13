@@ -24,10 +24,9 @@
 #include "cmdArgs.hpp"
 #include "CLICmd.hpp"
 #include "GenericCli.hpp"
+
 class Options;
 
-using namespace std;
-using namespace vishnu;
 
 /**
  * \brief To build options for the VISHNU command line
@@ -37,9 +36,9 @@ using namespace vishnu;
  * \return  The built command
  */
 boost::shared_ptr<Options>
-makeRemoteCommandOpt(string pgName,
-           string& configFile,
-           string& path){
+makeRemoteCommandOpt(std::string pgName,
+           std::string& configFile,
+           std::string& path){
 
 
   boost::shared_ptr<Options> opt=processOpt(pgName, configFile);
@@ -118,7 +117,7 @@ struct FileApiCommand<CREATEFILE,NoOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path,const NoOptions& options ){
 
-return  touch(sessionKey,path);
+return  vishnu::touch(sessionKey,path);
 
 }
 };
@@ -139,7 +138,7 @@ struct FileApiCommand<CREATEDIR,FMS_Data::CreateDirOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::CreateDirOptions& options ){
 
-return  mkdir(sessionKey,path,options);
+return  vishnu::mkdir(sessionKey,path,options);
 
 }
 };
@@ -158,7 +157,7 @@ struct FileApiCommand<REMOVEFILE,FMS_Data::RmFileOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const FMS_Data::RmFileOptions& options ){
 
-return  rm(sessionKey,path,options);
+return  vishnu::rm(sessionKey,path,options);
 
 }
 };
@@ -177,7 +176,7 @@ struct FileApiCommand<REMOVEDIR,NoOptions> {
    */
 static const int api (const std::string& sessionKey,const std::string& path, const NoOptions& options ){
 
-return  rmdir(sessionKey,path);
+return  vishnu::rmdir(sessionKey,path);
 
 }
 };
