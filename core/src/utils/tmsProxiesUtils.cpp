@@ -114,7 +114,7 @@ void vishnu::copyFiles(const std::string& sessionKey,
                const std::string& srcMid,
                const std::vector<std::string>& rfiles,
                const std::string& ldestDir,
-               const CpFileOptions& copts,
+               const FMS_Data::CpFileOptions& copts,
                std::string& missingFiles,
                const int& startPos) {
   missingFiles.clear();
@@ -144,7 +144,7 @@ vishnu::genericFileCopier(const std::string& sessionKey,
                   const std::string& srcPath,
                   const std::string& destMachineId,
                   const std::string& destPath,
-                  const CpFileOptions& copts) {
+                  const FMS_Data::CpFileOptions& copts) {
   string src = "";
   string dest = "";
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
@@ -169,7 +169,7 @@ std::string
 vishnu::sendInputFiles(const std::string& sessionKey,
                const std::string& srcFiles,
                const std::string& destMachineId,
-               const CpFileOptions& copts) {
+               const FMS_Data::CpFileOptions& copts) {
 
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
@@ -282,5 +282,3 @@ vishnu::getMachineLoadPerformance(const string& sessionKey,
   }
   return load ;
 }
-
-

@@ -1,6 +1,6 @@
 /**
  * \file FMSDisplayer.hpp
- * This file defines the VISHNU  FMS FMSDisplayer functions 
+ * This file defines the VISHNU  FMS FMSDisplayer functions
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -9,33 +9,34 @@
 #define _FMS_DISPLAYER_
 
 #include "api_fms.hpp"
+#include "FMS_Data.hpp"
 
 /**
  * \brief Helper function to display the information of a file
- * \param os The output stream in which the list will be printed 
+ * \param os The output stream in which the list will be printed
  * \param fileStat The inode information
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, FileStat& fileStat);
+operator<<(std::ostream& os, FMS_Data::FileStat& fileStat);
 
 /**
  * \brief Helper function to display the information of a file
- * \param os The output stream in which the list will be printed 
+ * \param os The output stream in which the list will be printed
  * \param dirEntry The directory entry  information
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, DirEntry& dirEntry);
+operator<<(std::ostream& os, FMS_Data::DirEntry& dirEntry);
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param dirEntrylist: The file info list
  * \return The output stream in which the list of file information has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, DirEntryList& dirEntrylist);
+operator<<(std::ostream& os, FMS_Data::DirEntryList& dirEntrylist);
 
 
 
@@ -44,21 +45,21 @@ operator<<(std::ostream& os, DirEntryList& dirEntrylist);
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
- * \param fileTransfer: The content of a file transfer 
+ * \param os: The output stream in which the list will be printed
+ * \param fileTransfer: The content of a file transfer
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, FileTransfer& fileTransfer);
+operator<<(std::ostream& os, FMS_Data::FileTransfer& fileTransfer);
 
 /**
  * \brief Helper function to display the information of a file
- * \param os: The output stream in which the list will be printed 
+ * \param os: The output stream in which the list will be printed
  * \param fileTransferlist: The file transfer list
  * \return The output stream in which the list of users has been printed
  */
 std::ostream&
-operator<<(std::ostream& os, FileTransferList& fileTransferlist);
+operator<<(std::ostream& os, FMS_Data::FileTransferList& fileTransferlist);
 
 /**
  * \brief function to convert mode value to string

@@ -1,6 +1,6 @@
 /**
  * \file acp.cpp
- * This file defines the VISHNU copy async file command 
+ * This file defines the VISHNU copy async file command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -26,7 +26,7 @@ using namespace vishnu;
 
 
 int main (int argc, char* argv[]){
-  
+
 
   /******* Parsed value containers ****************/
   string configFile;
@@ -34,7 +34,7 @@ int main (int argc, char* argv[]){
   string dest;
 
   /************* Output value *********************/
-  FileTransfer transferInfo;
+  FMS_Data::FileTransfer transferInfo;
 
    /********** EMF data ************/
   FMS_Data::CpFileOptions cpFileOptions;
@@ -43,8 +43,6 @@ int main (int argc, char* argv[]){
   copyParseOptions ( argc, argv,configFile,src,dest,cpFileOptions,CP);
 
   TransferAsyncFunc<CP> apiFunc(src, dest, transferInfo, cpFileOptions);
- 
+
   return GenericCli().run(apiFunc, configFile, argc, argv);
 }
-
-

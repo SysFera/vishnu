@@ -10,19 +10,17 @@
 // C++ Headers
 #include <string>
 
+#include <sys/types.h>
+
 #include "UserException.hpp"
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
-#include <sys/types.h>
 //FMS data  declarations
-#include <FMS_Data.hpp>
+#include "FMS_Data.hpp"
 
 
-// Namespaces area
-using namespace FMS_Data;
-
-namespace vishnu{
+namespace vishnu {
 
   /**
    * \brief create a new remote file
@@ -63,7 +61,9 @@ namespace vishnu{
    * \param options contains the options
    * \return 0 if everything is OK, another value otherwise
    */
-  int cp(const std::string& sessionKey,const std::string& src, const std::string& dest, const CpFileOptions& options= CpFileOptions())
+int cp(const std::string& sessionKey, const std::string& src,
+       const std::string& dest,
+       const FMS_Data::CpFileOptions& options= FMS_Data::CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -76,8 +76,9 @@ namespace vishnu{
    * \param options contains options used to perform the file transfer
    * \return 0 if everything is OK, another value otherwise
    */
-  int acp(const std::string& sessionKey,const std::string& src, const std::string& dest,
-      FileTransfer& transferInfo, const CpFileOptions& options = CpFileOptions())
+int acp(const std::string& sessionKey,const std::string& src, const std::string& dest,
+        FMS_Data::FileTransfer& transferInfo,
+        const FMS_Data::CpFileOptions& options = FMS_Data::CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -88,7 +89,9 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the maximum number of lines to get)
    * \return 0 if everything is OK, another value otherwise
    */
-  int head(const std::string& sessionKey,const std::string& path, std::string& contentOfFile, const HeadOfFileOptions& options = HeadOfFileOptions())
+  int head(const std::string& sessionKey,const std::string& path,
+           std::string& contentOfFile,
+           const FMS_Data::HeadOfFileOptions& options = FMS_Data::HeadOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -111,7 +114,9 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
 
-  int ls(const std::string& sessionKey,const std::string& path, DirEntryList& dirContent,const LsDirOptions& options=LsDirOptions())
+  int ls(const std::string& sessionKey,const std::string& path,
+         FMS_Data::DirEntryList& dirContent,
+         const FMS_Data::LsDirOptions& options = FMS_Data::LsDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -121,7 +126,8 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the recursive creation)
    * \return 0 if everything is OK, another value otherwise
    */
-  int mkdir(const std::string& sessionKey,const std::string& path,const CreateDirOptions& options= CreateDirOptions())
+  int mkdir(const std::string& sessionKey,const std::string& path,
+            const FMS_Data::CreateDirOptions& options = FMS_Data::CreateDirOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -132,7 +138,9 @@ namespace vishnu{
    * \param options   contains the options used to perform the service (like the transfer command :scp or rsync)
    * \return 0 if everything is OK, another value otherwise
    */
-  int mv(const std::string& sessionKey,const std::string& src, const std::string& dest, const CpFileOptions& options= CpFileOptions() )
+  int mv(const std::string& sessionKey,const std::string& src,
+         const std::string& dest,
+         const FMS_Data::CpFileOptions& options= FMS_Data::CpFileOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -146,7 +154,8 @@ namespace vishnu{
    * \return 0 if everything is OK, another value otherwise
    */
   int amv(const std::string& sessionKey,const std::string& src, const std::string& dest,
-      FileTransfer& transferInfo, const CpFileOptions& options= CpFileOptions())
+      FMS_Data::FileTransfer& transferInfo,
+          const FMS_Data::CpFileOptions& options= FMS_Data::CpFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /** remove a file
@@ -155,7 +164,8 @@ namespace vishnu{
    * \param options contains options used to perform the remove file function
    \return 0 if everything is OK, another value otherwise
    */
-  int rm(const std::string& sessionKey,const std::string& path,const RmFileOptions& options= RmFileOptions())
+  int rm(const std::string& sessionKey,const std::string& path,
+         const FMS_Data::RmFileOptions& options= FMS_Data::RmFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -176,7 +186,9 @@ namespace vishnu{
    * \param contentOfFile  an user-allocated buffer to store the result
    * \return 0 if everything is OK, another value otherwise
    */
-  int tail(const std::string& sessionKey,const std::string& path, std::string& contentOfFile,const TailOfFileOptions& options = TailOfFileOptions())
+  int tail(const std::string& sessionKey,const std::string& path,
+           std::string& contentOfFile,
+           const FMS_Data::TailOfFileOptions& options = FMS_Data::TailOfFileOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
   /**
@@ -186,7 +198,8 @@ namespace vishnu{
    * \param filesInfo  the file informations
    * \return 0 if everything is OK, another value otherwise
    */
-  int stat(const std::string& sessionKey,const std::string& path, FileStat& filesInfo)
+  int stat(const std::string& sessionKey,const std::string& path,
+           FMS_Data::FileStat& filesInfo)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -197,7 +210,8 @@ namespace vishnu{
    *          amv )
    \return 0 if everything is OK, another value otherwise
    */
-  int stopFileTransfer(const std::string& sessionKey,const StopTransferOptions& options = StopTransferOptions() )
+  int stopFileTransfer(const std::string& sessionKey,
+                       const FMS_Data::StopTransferOptions& options = FMS_Data::StopTransferOptions() )
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
@@ -209,7 +223,9 @@ namespace vishnu{
    amv)
    \return 0 if everything is OK, another value otherwise
    */
-  int listFileTransfers(const std::string& sessionKey,FileTransferList& fileTransferList, const LsTransferOptions& options = LsTransferOptions())
+  int listFileTransfers(const std::string& sessionKey,
+                        FMS_Data::FileTransferList& fileTransferList,
+                        const FMS_Data::LsTransferOptions& options = FMS_Data::LsTransferOptions())
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 
