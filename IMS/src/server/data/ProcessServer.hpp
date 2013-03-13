@@ -8,12 +8,11 @@
 #ifndef __PROCESSSERVER__HH__
 #define __PROCESSSERVER__HH__
 
+#include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
-
-using namespace std;
 
 /**
  * \class ProcessServer
@@ -59,7 +58,7 @@ public:
    * \fn  string getCommandName()
    * \return The the name of the query command line
    */
-  string getCommandName();
+  std::string getCommandName();
   /**
    * \brief To update the database with a process connexion
    * \param proc: The process that has just connected
@@ -110,7 +109,7 @@ public:
    * \return True if Pname represents an IMS SeD
    */
   bool
-  isIMSSeD(string Pname);
+  isIMSSeD(std::string Pname);
   /**
    * \brief Return true if the process with a diet name Pname is of type IMS
    * \param machine:  The vishnu machine id
@@ -118,7 +117,7 @@ public:
    * \return True if no process on this machine and of this type are down
    */
   bool
-  checkStopped(string machine, string type);
+  checkStopped(std::string machine, std::string type);
   /**
    * \brief To get the script content from the machineId and dietName
    * \param p: Process to fill
@@ -138,13 +137,13 @@ public:
    * \param acclog: Account login of the user 'root' on the machine
    */
   void
-  getHost(string mmid, string &hostname, string& acclog);
+  getHost(std::string mmid, std::string &hostname, std::string& acclog);
 
   /**
    * \brief Return the last actif ims server
    * \return The last updated running IMS sed
    */
-  string
+  std::string
   getElectedMid();
   /**
    * \brief Get the URI associated to the supervisor process for the server (located in dietname field in DB)
@@ -174,7 +173,7 @@ private:
   /**
    * \brief The name of the command
    */
-  string mcommandName;
+  std::string mcommandName;
 };
 
 #endif

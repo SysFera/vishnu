@@ -9,6 +9,7 @@
 #ifndef __PROCESSCTL__HH__
 #define __PROCESSCTL__HH__
 
+#include <string>
 #include "data/ProcessServer.hpp"
 
 
@@ -21,7 +22,7 @@ public:
   /**
    * \brief Constructor
    */
-  ProcessCtl(string mid, UserServer user);
+  ProcessCtl(std::string mid, UserServer user);
   /**
    * \brief Destructor
    */
@@ -32,7 +33,7 @@ public:
    * \return True if Pname represents an IMS SeD
    */
   bool
-  isIMSSeD(string Pname);
+  isIMSSeD(std::string Pname);
   /**
    * \brief To relaunch a process
    * \param op: Options for restarting
@@ -40,7 +41,7 @@ public:
    * \param isAPI: If called with the external API or not
    */
   void
-  restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI = true);
+  restart(IMS_Data::SupervisorOp_ptr op, std::string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
    * \brief op The supervision options
@@ -78,7 +79,7 @@ private:
   /**
    * \brief The machine id
    */
-  string mmid;
+  std::string mmid;
   /**
    * \brief A user server
    */
@@ -86,4 +87,3 @@ private:
 };
 
 #endif
-

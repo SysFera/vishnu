@@ -8,6 +8,7 @@
 #ifndef __SHELLEXPORTER__HH__
 #define __SHELLEXPORTER__HH__
 
+#include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
@@ -43,7 +44,7 @@ public:
    * \return Succes, an error code otherwise
    */
   int
-  exporte(string oldSession, string &content);
+  exporte(std::string oldSession, std::string &content);
 protected:
 private:
   /**
@@ -52,20 +53,19 @@ private:
    * \return False is the session does not exist or is open
    */
   bool
-  isClosed(string sid);
+  isClosed(std::string sid);
   /**
    * \brief Check if the user is allowed to get the list of commands
    */
   bool
-  isAllowed(string oldSession, UserServer muser);
+  isAllowed(std::string oldSession, UserServer muser);
   /**
    * \brief To get the name of the mapper for the shell
    */
-  string
+  std::string
   getMapperName(int type);
 
 };
 
 
 #endif
-

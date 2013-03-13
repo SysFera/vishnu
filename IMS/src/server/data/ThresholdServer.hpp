@@ -8,12 +8,12 @@
 #ifndef __THRESHOLDSERVER__HH__
 #define __THRESHOLDSERVER__HH__
 
+#include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
 
-using namespace std;
 
 /**
  * \class ThresholdServer
@@ -57,7 +57,7 @@ private:
    * \param nmid: The numerical machine id (out)
    */
   void
-  getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid);
+  getUserAndMachine(IMS_Data::Threshold_ptr tree, std::string &nuid, std::string &nmid);
   /**
    * \brief Check if a threshold of this type on this machine is already defined
    * \param tree: The threshold
@@ -84,4 +84,3 @@ private:
 };
 
 #endif // threshold server
-

@@ -5,6 +5,8 @@
 #include "IMSServices.hpp"
 
 using namespace vishnu;
+using namespace std;
+
 
 ObjectIdProxy::ObjectIdProxy(const SessionProxy& session): msessionProxy(session) {
 }

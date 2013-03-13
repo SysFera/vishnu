@@ -12,6 +12,7 @@
 
 
 #include<iostream>
+#include<string>
 #include<boost/shared_ptr.hpp>
 
 #include <ecore.hpp> // Ecore metamodel
@@ -22,10 +23,9 @@
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "CLICmd.hpp"
+
 class Options;
 
-using namespace std;
-using namespace vishnu;
 
 /**
  * \brief To build options for the VISHNU copy of file command
@@ -35,10 +35,9 @@ using namespace vishnu;
  * \return The built option
  */
 boost::shared_ptr<Options>
-makeDefineIdentifierOptions(string pgName,
-    string& configFile,
-    string& newFormat){
-
+makeDefineIdentifierOptions(std::string pgName,
+                            std::string& configFile,
+                            std::string& newFormat) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -98,22 +97,22 @@ struct DefineIdentifierFunc {
     int res = -1;
     switch(defineIdentifierType) {
       case JOB:
-        res = defineJobIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineJobIdentifier(sessionKey, mnewFormat);
         break;
       case MACHINE:
-        res = defineMachineIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineMachineIdentifier(sessionKey, mnewFormat);
         break;
       case TRANSFER:
-        res = defineTransferIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineTransferIdentifier(sessionKey, mnewFormat);
         break;
       case USER:
-        res = defineUserIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineUserIdentifier(sessionKey, mnewFormat);
         break;
       case AUTH:
-        res = defineAuthIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineAuthIdentifier(sessionKey, mnewFormat);
         break;
       case WORK:
-        res = defineWorkIdentifier(sessionKey, mnewFormat);
+        res = vishnu::defineWorkIdentifier(sessionKey, mnewFormat);
         break;
       default:
         break;
@@ -125,6 +124,3 @@ struct DefineIdentifierFunc {
 
 
 #endif
-
-
-
