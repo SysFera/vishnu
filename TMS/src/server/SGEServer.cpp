@@ -249,7 +249,7 @@ SGEServer::submit(const char* scriptPath,
 
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     std::string jobErrorPathStr = jobErrorPath;
-    Env(SGE).replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
+    vishnu::replaceAllOccurences(jobErrorPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobErrorPathStr, "$")){
       drmaa_exit(NULL, 0);
       throw UserException(ERRCODE_INVALID_PARAM,
@@ -291,7 +291,7 @@ SGEServer::submit(const char* scriptPath,
                                     diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
     std::string jobOutputPathStr = jobOutputPath;
-    Env(SGE).replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
+    vishnu::replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
       drmaa_exit(NULL, 0);
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another environment variable than $JOB_ID.\n");
