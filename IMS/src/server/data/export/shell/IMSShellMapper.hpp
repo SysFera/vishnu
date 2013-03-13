@@ -10,10 +10,11 @@
 
 
 #include "IMSMapper.hpp"
+
+#include <string>
+
 #include "MapperRegistry.hpp"
 #include "utilVishnu.hpp"
-
-using namespace std;
 
 
 
@@ -28,7 +29,7 @@ public :
    * \param reg Registry to be linked to
    * \param name Name of the mapper
    */
-  IMSShellMapper(MapperRegistry* reg, string name);
+  IMSShellMapper(MapperRegistry* reg, std::string name);
   /**
    * \brief Default constructor
    */

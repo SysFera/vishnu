@@ -6,6 +6,9 @@
  */
 
 #include "TMSShellMapper.hpp"
+
+#include <string>
+
 #include "TMS_Data.hpp"
 #include "TMS_Data_forward.hpp"
 #include "UserServer.hpp"
@@ -25,5 +28,5 @@ TMSShellMapper::TMSShellMapper(){
 TMSShellMapper::~TMSShellMapper(){
 };
 
-TMSShellMapper::TMSShellMapper(MapperRegistry* reg, string na):TMSMapper(reg, na) {
+TMSShellMapper::TMSShellMapper(MapperRegistry* reg, std::string na):TMSMapper(reg, na) {
 }

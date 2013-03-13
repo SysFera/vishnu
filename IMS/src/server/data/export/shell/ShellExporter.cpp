@@ -1,4 +1,8 @@
 #include "ShellExporter.hpp"
+
+#include <string>
+#include <vector>
+
 #include "utilServer.hpp"
 #include "IMSVishnuException.hpp"
 #include "Mapper.hpp"
@@ -27,9 +31,9 @@ ShellExporter::~ShellExporter() {
 }
 
 int
-ShellExporter::exporte(string oldSession, string &content){
-  vector<string>::iterator iter;
-  vector<string> line;
+ShellExporter::exporte(std::string oldSession, std::string &content){
+  std::vector<std::string>::iterator iter;
+  std::vector<std::string> line;
 
   // Init the script
   content = "#!/bin/sh";
@@ -46,7 +50,7 @@ ShellExporter::exporte(string oldSession, string &content){
   }
 
   // The request, ordered by starttime (=submission)
-  string req = "SELECT command.ctype, command.description, command.starttime from "
+  std::string req = "SELECT command.ctype, command.description, command.starttime from "
     " command, vsession where vsession.numsessionid=command.vsession_numsessionid and "
     " vsession.vsessionid='"+oldSession+"' order by starttime asc";
 
@@ -72,12 +76,12 @@ ShellExporter::exporte(string oldSession, string &content){
 }
 
 bool
-ShellExporter::isClosed(string sid) {
+ShellExporter::isClosed(std::string sid) {
   bool res = false;
   if (sid.size() < 1) {
     return res;
   }
-  string req = "select * from vsession where vsessionid ='"+sid+"' and state='0'";
+  std::string req = "select * from vsession where vsessionid ='"+sid+"' and state='0'";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     res = (result->getNbTuples()>0);
@@ -88,9 +92,9 @@ ShellExporter::isClosed(string sid) {
 }
 
 bool
-ShellExporter::isAllowed(string oldSession, UserServer muser) {
+ShellExporter::isAllowed(std::string oldSession, UserServer muser) {
   bool res = false;
-  string req = "select * from vsession, users where vsession.vsessionid='"+oldSession+"' and vsession.users_numuserid=users.numuserid and users.userid='"+muser.getData().getUserId()+"'";
+  std::string req = "select * from vsession, users where vsession.vsessionid='"+oldSession+"' and vsession.users_numuserid=users.numuserid and users.userid='"+muser.getData().getUserId()+"'";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     res = (result->getNbTuples()>0);
@@ -100,9 +104,9 @@ ShellExporter::isAllowed(string oldSession, UserServer muser) {
   return res;
 }
 
-string
+std::string
 ShellExporter::getMapperName(int type) {
-  string shellMapperName;
+  std::string shellMapperName;
   switch (type) {
   case UMS:
      shellMapperName = UMSSHELLMAPPERNAME;

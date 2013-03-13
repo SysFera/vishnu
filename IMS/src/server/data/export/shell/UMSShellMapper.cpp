@@ -6,6 +6,9 @@
  */
 
 #include "UMSShellMapper.hpp"
+
+#include <string>
+
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
 #include "UserServer.hpp"
@@ -25,5 +28,5 @@ UMSShellMapper::UMSShellMapper(){
 UMSShellMapper::~UMSShellMapper(){
 };
 
-UMSShellMapper::UMSShellMapper(MapperRegistry* reg, string na):UMSMapper(reg, na) {
+UMSShellMapper::UMSShellMapper(MapperRegistry* reg, std::string na):UMSMapper(reg, na) {
 }
