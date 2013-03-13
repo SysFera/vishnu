@@ -10,6 +10,7 @@
 #include <sstream>
 #include <algorithm>
 #include <limits>
+#include <iomanip>
 
 #include <boost/algorithm/string.hpp>
 
@@ -209,7 +210,7 @@ void SlurmServer::replaceSymbolInToJobPath(std::string& path) {
           width = SLURM_MAX_WIDTH;
         }
         path.erase(pos0, widthStr.size()+2);//remove symbol[0]+width+symbol[1]
-        os << setfill('0') << setw(width) << iter->second;
+        os << std::setfill('0') << std::setw(width) << iter->second;
         path.insert(pos0, os.str());
       } else {
         if((widthStr.substr(0,1)).find_first_not_of("0123456789")==std::string::npos){
