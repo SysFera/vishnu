@@ -8,6 +8,7 @@
 
 using namespace std;
 using namespace vishnu;
+using namespace TMS_Data;
 
 /**
  * \brief To display the output of all job
@@ -623,4 +624,3 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 
   return os;
 }
-

@@ -7,8 +7,6 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 
-using namespace std;
-
 
 
 struct VishnuConnexion{
@@ -17,12 +15,12 @@ struct VishnuConnexion{
 //addUser();
 //changePassword();
 //addMachine();
-VishnuConnexion(const string& uid, const string& upwd, const UMS_Data::ConnectOptions& co=UMS_Data::ConnectOptions());
+  VishnuConnexion(const std::string& uid, const std::string& upwd, const UMS_Data::ConnectOptions& co=UMS_Data::ConnectOptions());
 
 
 ~VishnuConnexion();
 
-string getConnexion();
+  std::string getConnexion();
 
 
 
@@ -33,7 +31,7 @@ std::string mupwd;
 bool open;
 };
 
-bool operator== (const Job& lJob,const Job& rJob );
+bool operator== (const TMS_Data::Job& lJob,const TMS_Data::Job& rJob );
 
 std::string findValue(const std::string& content, const std::string& key);
 
