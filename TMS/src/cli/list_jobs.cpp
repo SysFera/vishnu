@@ -48,7 +48,7 @@ makeListJobOp(string pgName,
               string& toDate,
               boost::function1<void, string>& fowner,
               string& status,
-              boost::function1<void, JobPriority>& fpriority,
+              boost::function1<void, TMS_Data::JobPriority>& fpriority,
               boost::function1<void, string>& fqueue,
               boost::function1<void, string>& fmutlStatus,
               boost::function1<void, long long>& fworkId,
@@ -139,7 +139,7 @@ main (int argc, char* argv[]) {
   boost::function1<void,string> fjid(boost::bind(&TMS_Data::ListJobsOptions::setJobId,boost::ref(jobOp),_1));
   boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::ListJobsOptions::setNbCpu,boost::ref(jobOp),_1));
   boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
-  boost::function1<void,JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
+  boost::function1<void,TMS_Data::JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
   boost::function1<void,string> fmutlStatus(boost::bind(&TMS_Data::ListJobsOptions::setMultipleStatus,boost::ref(jobOp),_1));
   boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::ListJobsOptions::setWorkId,boost::ref(jobOp),_1));

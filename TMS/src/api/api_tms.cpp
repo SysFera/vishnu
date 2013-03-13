@@ -31,6 +31,9 @@
 #include "TMSServices.hpp"
 
 
+using namespace TMS_Data;
+
+
 /**
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
  * \param sessionKey : The session key

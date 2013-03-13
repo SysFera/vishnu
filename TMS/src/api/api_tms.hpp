@@ -18,7 +18,6 @@
 
 #include "TMS_Data.hpp"
 
-using namespace TMS_Data;
 
 namespace vishnu {
   /**
@@ -34,8 +33,8 @@ namespace vishnu {
   submitJob(const std::string& sessionKey,
             const std::string& machineId,
             const std::string& scriptFilePath,
-            Job& jobInfo,
-            const SubmitOptions& options=SubmitOptions())
+            TMS_Data::Job& jobInfo,
+            const TMS_Data::SubmitOptions& options = TMS_Data::SubmitOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
@@ -44,8 +43,8 @@ namespace vishnu {
  */
   int
   addWork(const std::string& sessionKey,
-          Work& newWork,
-          const AddWorkOptions& options=AddWorkOptions())
+          TMS_Data::Work& newWork,
+          const TMS_Data::AddWorkOptions& options = TMS_Data::AddWorkOptions())
     throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
@@ -74,7 +73,7 @@ namespace vishnu {
   getJobInfo(const std::string& sessionKey,
              const std::string& machineId,
              const std::string& jobId,
-             Job& jobInfos)
+             TMS_Data::Job& jobInfos)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -88,8 +87,8 @@ namespace vishnu {
   int
   listJobs(const std::string& sessionKey,
            const std::string& machineId,
-           ListJobs& listOfJobs,
-           const ListJobsOptions& options=ListJobsOptions())
+           TMS_Data::ListJobs& listOfJobs,
+           const TMS_Data::ListJobsOptions& options = TMS_Data::ListJobsOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -103,8 +102,8 @@ namespace vishnu {
   int
   getJobProgress(const std::string& sessionKey,
                  const std::string& machineId,
-                 ListProgression& listOfProgress,
-                 const ProgressOptions& options=ProgressOptions())
+                 TMS_Data::ListProgression& listOfProgress,
+                 const TMS_Data::ProgressOptions& options = TMS_Data::ProgressOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -118,8 +117,8 @@ namespace vishnu {
   int
   listQueues(const std::string& sessionKey,
              const std::string& machineId,
-             ListQueues& listofQueues,
-             const std::string& queueName=std::string())
+             TMS_Data::ListQueues& listofQueues,
+             const std::string& queueName = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
@@ -136,7 +135,7 @@ namespace vishnu {
   getJobOutput(const std::string& sessionKey,
                const std::string& machineId,
                const std::string& jobId,
-               JobResult& outputInfo,
+               TMS_Data::JobResult& outputInfo,
                const std::string& outDir = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
@@ -152,7 +151,7 @@ namespace vishnu {
   int
   getCompletedJobsOutput(const std::string& sessionKey,
                    const std::string& machineId,
-                   ListJobResults& listOfResults,
+                   TMS_Data::ListJobResults& listOfResults,
                    const std::string& outDir = std::string())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 

@@ -90,7 +90,7 @@ static std::string torque_output_Script = std::string("#!/bin/sh\n")+
                                         "echo \"#BATCH_NUM_NODES:\"\n"+
                                         "echo \"Output directory test\" > $VISHNU_OUTPUT_DIR/TMS_res\n"+
                                         "sleep 300 \n";
-static std::string torque_Bad_Script = std::string("#!/bin/sh\n")+                                        
+static std::string torque_Bad_Script = std::string("#!/bin/sh\n")+
                                         "#PBS -q badQueueWWQQCCQCQXQ\n";
 static std::string slurm_Fast_Script = std::string("#!/bin/sh\n")+
                                        "#SBATCH -J myFristJob\n"+
@@ -187,7 +187,7 @@ static std::string lsf_Fast_Script = std::string("#!/bin/sh\n")+
                                       "echo \"CORRESPONDING JOB OUTPUT ENVIRONMENT VARIABLES!....\"\n"+
                                       "echo \"#BATCH_JOB_ID:\"$LSB_JOBID\n"+
                                       "echo \"#BATCH_JOB_NAME:\" $LSB_JOBNAME\n";
-      
+
 static std::string lsf_Wait_Script = std::string("#!/bin/sh\n")+
                                       "#BSUB -J myLSFjobName\n"+
                                       "#BSUB -o myLSFJob-%J.out\n"+
@@ -386,7 +386,7 @@ string VishnuConnexion::getConnexion(){
 }
 
 
-bool operator== (const Job& lJob,const Job& rJob ){
+bool operator== (const TMS_Data::Job& lJob,const TMS_Data::Job& rJob ){
 
   return ( (lJob.getJobId() == rJob.getJobId())
         && (lJob.getSubmitMachineId() == rJob.getSubmitMachineId())
@@ -405,7 +405,7 @@ bool operator== (const Job& lJob,const Job& rJob ){
 }
 
 std::string findValue(const std::string& content, const std::string& key) {
- 
+
   size_t pos = content.rfind(key);
   std::string tmp = content.substr(pos+key.size());
   std::istringstream iss(tmp);
@@ -439,7 +439,7 @@ getFileContent(const std::string& filePath){
 std::string generateTmpScript(std::string& batchtype, std::string scriptType){
 
 
-  
+
   bfs::path tempdir = boost::filesystem::temp_directory_path();
 
   std::string scriptpath = tempdir.string() + "/test_scriptXXXXXX";
@@ -451,12 +451,12 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     if (scriptType == "fast"){
       content = torque_Fast_Script;
     } else if (scriptType == "bad"){
-      content = torque_Bad_Script; 
+      content = torque_Bad_Script;
     } else if (scriptType == "wait"){
-      content = torque_Wait_Script;      
+      content = torque_Wait_Script;
     } else if (scriptType == "output"){
       content = torque_output_Script;
-    } 
+    }
   } else if (batchtype == "SLURM"){
     if (scriptType == "fast"){
       content = slurm_Fast_Script;
@@ -467,7 +467,7 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     } else if (scriptType == "output"){
       content = slurm_output_Script;
     }
-    
+
   } else if (batchtype == "LSF"){
     if (scriptType == "fast"){
       content = lsf_Fast_Script;
@@ -488,7 +488,7 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     }else if (scriptType == "output"){
       content = sge_output_Script;
     }
-    
+
   } else if (batchtype == "LL"){
     if (scriptType == "fast"){
       content = ll_Fast_Script;
@@ -499,7 +499,7 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     } else if (scriptType == "output"){
       content = ll_output_Script;
     }
-    
+
   } else if (batchtype == "generic"){
     if (scriptType == "fast"){
       content = generic_Fast_Script;
@@ -510,16 +510,11 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     } else if (scriptType == "output"){
       content = generic_Output_Script;
     }
-    
+
   }
   vishnu::saveInFile(scriptchar, content);
   std:string ret(scriptchar);
 
   return ret;
-  
+
 }
-
-
-
-
-

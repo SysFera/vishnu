@@ -221,7 +221,7 @@ int main (int argc, char* argv[]){
   vector<string> fileParamsVector ;
   std::string loadCriterionStr;
   /*********** Out parameters *********************/
-  Job job;
+  TMS_Data::Job job;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
