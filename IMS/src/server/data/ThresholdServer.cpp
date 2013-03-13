@@ -1,4 +1,8 @@
 #include "ThresholdServer.hpp"
+
+#include <string>
+#include <vector>
+
 #include "DbFactory.hpp"
 #include "IMSVishnuException.hpp"
 
@@ -22,9 +26,9 @@ ThresholdServer::~ThresholdServer() {
 void
 ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
   bool insert = true;
-  string request;
-  string nuid;
-  string nmid;
+  std::string request;
+  std::string nuid;
+  std::string nmid;
 
   // Check if the user is an admin
   if (!msession.isAdmin()){
@@ -66,9 +70,9 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
 IMS_Data::ListThreshold_ptr
 ThresholdServer::getThreshold() {
   // Basic request
-  string req = "SELECT typet, value, machineid, userid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
-  vector<string> results = vector<string>();
-  vector<string>::iterator iter;
+  std::string req = "SELECT typet, value, machineid, userid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
+  std::vector<std::string> results = std::vector<std::string>();
+  std::vector<std::string>::iterator iter;
 
   if (!msession.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "get threshold is an admin function. A user cannot call it");
@@ -77,7 +81,7 @@ ThresholdServer::getThreshold() {
   // Adding option to request
   if(mop.getMachineId().compare("")) {
     // Check machine mid correct
-    string reqnmid = "SELECT nummachineid from machine where  machineid='"+mop.getMachineId()+"'";
+    std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -114,7 +118,7 @@ ThresholdServer::getThreshold() {
 
 bool
 ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
-  string req = "SELECT nummachineid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
+  std::string req = "SELECT nummachineid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
   req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+"'";
   try {
     // Executing the request and getting the results
@@ -127,9 +131,9 @@ ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
 
 
 void
-ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, string &nuid, string &nmid) {
-  string req = "SELECT nummachineid from machine where machineid='"+tree->getMachineId()+"'";
-  vector<string>::iterator iter;
+ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, std::string &nuid, std::string &nmid) {
+  std::string req = "SELECT nummachineid from machine where machineid='"+tree->getMachineId()+"'";
+  std::vector<std::string>::iterator iter;
   std::vector<std::string> tmp;
 
   int privil;

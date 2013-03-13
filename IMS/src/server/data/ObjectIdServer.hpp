@@ -8,13 +8,13 @@
 #ifndef __OBJECTIDSERVER__HH__
 #define __OBJECTIDSERVER__HH__
 
+#include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "Database.hpp"
 
-using namespace std;
 
 /**
  * \class ObjectIdServer
@@ -34,32 +34,32 @@ public:
    * \brief To set the format of a user
    */
   void
-  setUID(string fmt);
+  setUID(std::string fmt);
   /**
    * \brief To set the format of a file transfer
    */
   void
-  setFID(string fmt);
+  setFID(std::string fmt);
   /**
    * \brief To set the format of a task
    */
   void
-  setTID(string fmt);
+  setTID(std::string fmt);
   /**
    * \brief To set the format of a machine
    */
   void
-  setMID(string fmt);
+  setMID(std::string fmt);
   /**
    * \brief To set the format of an authentication system id
    */
   void
-  setAID(string fmt);
+  setAID(std::string fmt);
   /**
    * \brief To set the format of a work id
    */
   void
-  setWID(string fmt);
+  setWID(std::string fmt);
 protected:
 private:
   /**
@@ -68,7 +68,7 @@ private:
    * \return true if the string fmt contains the '$cpt' substring
    */
   bool
-  containCpt(string fmt);
+  containCpt(std::string fmt);
   /**
    * \brief The id of vishnu
    */

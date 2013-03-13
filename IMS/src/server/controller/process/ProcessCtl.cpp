@@ -1,16 +1,20 @@
 #include "ProcessCtl.hpp"
-#include "IMSVishnuException.hpp"
-#include "IMS_Data.hpp"
-#include "IMS_Data_forward.hpp"
 
 #include <cstdlib>
 #include <string>
+#include <vector>
 #include <iostream>
 #include <xmlrpc-c/girerr.hpp>
 #include <xmlrpc-c/base.hpp>
 #include <xmlrpc-c/client_simple.hpp>
 
-ProcessCtl::ProcessCtl(string mid, UserServer user): mp(user),
+
+#include "IMSVishnuException.hpp"
+#include "IMS_Data.hpp"
+#include "IMS_Data_forward.hpp"
+
+
+ProcessCtl::ProcessCtl(std::string mid, UserServer user): mp(user),
                                                      mmid(mid),
                                                      muser(user){
 }
@@ -19,13 +23,13 @@ ProcessCtl::~ProcessCtl() {
 }
 
 bool
-ProcessCtl::isIMSSeD(string Pname) {
+ProcessCtl::isIMSSeD(std::string Pname) {
   return mp.isIMSSeD(Pname);
 }
 
 void
-ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI) {
-  string type;
+ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, std::string machineTo, bool isAPI) {
+  std::string type;
   mop = *op;
   if (isAPI) {
     if (!muser.isAdmin()) {
@@ -55,7 +59,7 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, string machineTo, bool isAPI)
 
 void
 ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
-  string name;
+  std::string name;
   mop = *op;
   if (!muser.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");
@@ -77,7 +81,7 @@ ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
 
 void
 ProcessCtl::RPCCall(std::string methodName){
-  string const serverUrl(mop.getURI()+"/RPC2");
+  std::string const serverUrl(mop.getURI()+"/RPC2");
   xmlrpc_c::clientSimple myClient;
   xmlrpc_c::value result;
   try{
@@ -104,7 +108,7 @@ ProcessCtl::loadShed(int type) {
 
 void
 ProcessCtl::stopAll() {
-  vector<IMS_Data::Process_ptr> ims;
+  std::vector<IMS_Data::Process_ptr> ims;
   if (mmid.compare("")==0) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid empty machine id");
   }

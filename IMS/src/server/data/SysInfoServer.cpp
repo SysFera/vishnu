@@ -1,4 +1,8 @@
 #include "SysInfoServer.hpp"
+
+#include <string>
+#include <vector>
+
 #include "DbFactory.hpp"
 #include "IMSVishnuException.hpp"
 
@@ -20,12 +24,12 @@ SysInfoServer::~SysInfoServer() {
 
 IMS_Data::ListSysInfo_ptr
 SysInfoServer::getSysInfo() {
-  string req = "SELECT diskspace, machineid, memory from machine WHERE vishnu_vishnuid='"+convertToString(mvishnuId)+"'";
-  vector<string> results = vector<string>();
-  vector<string>::iterator iter;
+  std::string req = "SELECT diskspace, machineid, memory from machine WHERE vishnu_vishnuid='"+convertToString(mvishnuId)+"'";
+  std::vector<std::string> results = std::vector<std::string>();
+  std::vector<std::string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
-    string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mop.getMachineId()+"'";
+    std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mop.getMachineId()+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -74,13 +78,13 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
-  string reqnmid = "SELECT nummachineid from machine where  machineid ='"+sys->getMachineId()+"'";
+  std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+sys->getMachineId()+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
   }
 
-  string request = "update machine set ";
+  std::string request = "update machine set ";
   if (sys->getDiskSpace() < 0 || sys->getMemory() < 0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
   }
@@ -106,4 +110,3 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw(e);
   }
 }
-

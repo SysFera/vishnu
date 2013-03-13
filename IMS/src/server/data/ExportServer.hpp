@@ -8,13 +8,13 @@
 #ifndef __EXPORTSERVER__HH__
 #define __EXPORTSERVER__HH__
 
+#include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
 #include "IMS_Data.hpp"
 #include "Database.hpp"
 #include "UserServer.hpp"
 
-using namespace std;
 
 /**
  * \class ExportServer
@@ -38,13 +38,13 @@ public:
    * \param content: The content of the export (OUT)
    * \return Return if the export was a SUCCESS
    */
-  virtual int 
-  exporte(string oldSession, string &content) = 0;
+  virtual int
+  exporte(std::string oldSession, std::string &content) = 0;
 protected:
   /**
    * \brief To get the name of the mapper for the shell
    */
-  virtual string
+  virtual std::string
   getMapperName(int type) = 0;
   /**
    * \brief The user

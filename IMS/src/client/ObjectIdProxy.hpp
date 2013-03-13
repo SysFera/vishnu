@@ -8,10 +8,10 @@
 #ifndef __OBJECTIDPROXY__HH__
 #define __OBJECTIDPROXY__HH__
 
+#include <string>
 #include "IMS_Data.hpp"
 #include "SessionProxy.hpp"
 
-using namespace std;
 
 /**
  * \class ObjectIdProxy
@@ -32,39 +32,39 @@ public:
    * \brief To set the format of the user
    */
   void
-  setUID(string fmt);
+  setUID(std::string fmt);
   /**
    * \brief To set the format of the machine
    */
   void
-  setMID(string fmt);
+  setMID(std::string fmt);
   /**
    * \brief To set the format of the task
    */
   void
-  setTID(string fmt);
+  setTID(std::string fmt);
   /**
    * \brief To set the format of the file transfer
    */
   void
-  setFID(string fmt);
+  setFID(std::string fmt);
   /**
    * \brief To set the format of the authentication system
    */
   void
-  setAID(string fmt);
+  setAID(std::string fmt);
   /**
    * \brief To set the format of the work
    */
   void
-  setWID(string fmt);
+  setWID(std::string fmt);
 protected :
 private :
   /**
    * \brief To factoryze the diet call code
    */
   void
-  defineCall(string name, string fmt) ;
+  defineCall(std::string name, std::string fmt) ;
   /**
   * \brief The object to manipulate the session data
   */
