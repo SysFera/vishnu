@@ -4782,7 +4782,7 @@ values can be obtained using the vishnu_list_machine command).
         <refpurpose>displays  the content of a remote directory</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.ls</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>DirEntryList <parameter>dirContent</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, dirContent=VISHNU.ls</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>string <parameter>path</parameter></paramdef><paramdef>LsDirOptions <parameter>options</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>
@@ -5509,7 +5509,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <refpurpose>displays the history of all file transfers submitted by User.</refpurpose>
       </refnamediv>
       <refsynopsisdiv>
-        <funcsynopsis><funcprototype><funcdef><function>ret=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>FileTransferList <parameter>fileTransferList</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
+        <funcsynopsis><funcprototype><funcdef><function>ret, fileTransferList=VISHNU.listFileTransfers</function></funcdef><paramdef>string <parameter>sessionKey</parameter></paramdef><paramdef>LsTransferOptions <parameter>options = LsTransferOptions()</parameter></paramdef></funcprototype></funcsynopsis>
       </refsynopsisdiv>
       <refsect1 id="description">
         <title>DESCRIPTION</title>

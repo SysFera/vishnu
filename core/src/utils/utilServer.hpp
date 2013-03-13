@@ -265,32 +265,44 @@ namespace vishnu {
     return true;
   }
 
-	/**
-	 * \brief Function to parse a system error message
-	 * \param errorMsg the error message
-	 * \return the parsed message
-	 */
-	std::string parseErrorMessage (const std::string& errorMsg);
+  /**
+   * \brief Function to parse a system error message
+   * \param errorMsg the error message
+   * \return the parsed message
+   */
+  std::string
+  parseErrorMessage (const std::string& errorMsg);
 
-	/**
-	 * \brief Return the status value from file
-	 * \param file The status file
-	 * \return the int value
-	 */
-	int getStatusValue (const std::string& file);
+  /**
+   * \brief Return the status value from file
+   * \param file The status file
+   * \return the int value
+   */
+  int
+  getStatusValue (const std::string& file);
 
-	/**
-	 *  \brief Function to move the file parameters to a given directory
-	 *  \param fileparam a list of key=value
-	 *  \param dir the directory where we create
-	 */
-	std::string moveFileData(const std::string& fileparams, std::string dir);
+  /**
+   *  \brief Function to move the file parameters to a given directory
+   *  \param fileparam a list of key=value
+   *  \param dir the directory where we create
+   */
+  std::string
+  moveFileData(const std::string& fileparams, std::string dir);
 
-	/**
-	 *  \brief Function to create a working directory. The working directory needs rwxt permissions
-	 *  \param path the path of the working directory
-         *  \param isWorkingdir tell whether the directory will be a working directory
-	 */
-	void createDir(const std::string& path, const bool& isWorkingdir=false);
+  /**
+   *  \brief Function to create a working directory. The working directory needs rwxt permissions
+   *  \param path the path of the working directory
+   *  \param isWorkingdir tell whether the directory will be a working directory
+   */
+  void
+  createDir(const std::string& path, const bool& isWorkingdir=false);
+  /**
+   * \brief Show the version of vishnu
+   * \param server The server to display the version
+   */
+  int
+  showVersion(std::string server);
+
+
 }
 #endif //_UTILSERVER_H_
