@@ -1,13 +1,13 @@
 '\" t
 .\"     Title: vishnu_configure_default_option
 .\"    Author:  SysFera SA <info@sysfera.com>
-.\" Generator: DocBook XSL Stylesheets v1.76.1 <http://docbook.sf.net/>
+.\" Generator: DocBook XSL Stylesheets v1.78.0 <http://docbook.sf.net/>
 .\"      Date: January 2013
 .\"    Manual: UMS Command reference
-.\"    Source: VISHNU 3.0beta
+.\"    Source: VISHNU 3.0.0 beta2
 .\"  Language: English
 .\"
-.TH "VISHNU_CONFIGURE_DEF" "1" "January 2013" "VISHNU 3.0beta" "UMS Command reference"
+.TH "VISHNU_CONFIGURE_DEF" "1" "January 2013" "VISHNU 3.0.0 beta2" "UMS Command reference"
 .\" -----------------------------------------------------------------
 .\" * Define some portability stuff
 .\" -----------------------------------------------------------------
@@ -34,7 +34,7 @@ vishnu_configure_default_option \- configures a default option value
 \fBvishnu_configure_default_option\fR [\fB\-h\fR] \fIoptionName\fR \fIvalue\fR
 .SH "DESCRIPTION"
 .PP
-Options in VISHNU corresponds to parameters of some VISHNU commands (e\&.g\&. the close policy for vishnu_connect) that can be preset in the user configuration stored by the VISHNU system\&. This command allows an administrator to configure the default value of an option; this is the value that will be applied when the user has no configuration defined for that option using the vishnu_configure_option command\&.
+Options in VISHNU corresponds to parameters of some VISHNU commands (e\&.g\&. the close policy for vishnu_connect) that can be preset in the user configuration stored by the VISHNU system\&. This command allows an administrator to configure the default value of an option; this is the value that will be applied when the user has no configuration defined for that option using the vishnu_configure_option command\&. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)
 .SH "OPTIONS"
 .PP
 \fB\-h \fR\fB\fIhelp\fR\fR
