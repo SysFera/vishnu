@@ -74,7 +74,7 @@ int solveRemoveFile(diet_profile_t* profile) {
           ff.setSSHServer(machineName);
 	  boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-	  RmFileOptions_ptr options_ptr= NULL;
+	  FMS_Data::RmFileOptions_ptr options_ptr= NULL;
 	  if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
 		throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
 	  }

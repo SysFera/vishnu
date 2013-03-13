@@ -16,7 +16,6 @@
 #include "SessionServer.hpp"
 #include "StringToDirEntry.hh"
 
-using namespace FMS_Data;
 /**
  * \brief Main File class. Encapsulates all the files attributes.
  * Defines the common operation on files (local or remote)
@@ -42,7 +41,7 @@ class File {
     /**
      * \brief The inode information of the file
      */
-    mutable FileStat mfileStat;
+    mutable FMS_Data::FileStat mfileStat;
 
   protected:
     /**
@@ -142,7 +141,7 @@ class File {
        * \brief To get the inode information of the file
        * \return the file inode information
        */
-    const FileStat& getFileStat() const;
+    const FMS_Data::FileStat& getFileStat() const;
 
       /**
        * \brief To get the path of the file
@@ -203,7 +202,7 @@ class File {
      * \brief To get the file type
      * \return the file type
      */
-    FileType getType() const;
+    FMS_Data::FileType getType() const;
 
     /**
      * \brief To get the host type of the file
@@ -264,13 +263,13 @@ class File {
        * \param options the options object
        * \return the first lines of the file
        */
-    virtual std::string head(const HeadOfFileOptions& options)=0;
+    virtual std::string head(const FMS_Data::HeadOfFileOptions& options)=0;
       /**
        * \brief To get the last lines of the file
        * \param options the options object
        * \return the last lines of the file
        */
-    virtual std::string tail(const TailOfFileOptions& options) = 0;
+    virtual std::string tail(const FMS_Data::TailOfFileOptions& options) = 0;
       /**
        * \brief To get the content of the file
        * \return the content of the file
@@ -287,7 +286,7 @@ class File {
        * \param options create directory options
        * \return 0 if the command succeeds, an error code otherwise
        */
-      virtual int mkdir(const CreateDirOptions& options) = 0;
+      virtual int mkdir(const FMS_Data::CreateDirOptions& options) = 0;
       /**
        * \brief To remove a file
        * \param options remove directory options
@@ -304,7 +303,7 @@ class File {
        * \param options the list options
        * \return the content of the directory
        */
-    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const = 0;
+    virtual FMS_Data::DirEntryList* ls(const FMS_Data::LsDirOptions& options) const = 0;
 
       /**
        * \brief To copy the file
@@ -312,14 +311,14 @@ class File {
        * \param options the copy options
        * \return 0 if the command succeeds, an error code otherwise
        */
-    virtual int cp(const std::string& path, const CpFileOptions& options) = 0;
+    virtual int cp(const std::string& path, const FMS_Data::CpFileOptions& options) = 0;
     /**
      * \brief To move the file
      * \param path the move destination
      * \param options the move options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mv(const std::string& path, const CpFileOptions& options) = 0;
+    virtual int mv(const std::string& path, const FMS_Data::CpFileOptions& options) = 0;
 
     /**
      * \brief a useful function to extract the host name from path

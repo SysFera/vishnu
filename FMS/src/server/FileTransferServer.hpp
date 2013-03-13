@@ -114,7 +114,7 @@ class TransferExec{
  */
     void setLastExecStatus(const int& status) const;
 /**
- * \brief To perform a the transfer command 
+ * \brief To perform a the transfer command
  * \param cmd the transfer command to perform
  * \return The command output or error
  */
@@ -171,7 +171,7 @@ class TransferExec{
 };
 
 /**
- * \brief The main class to handle file transfer 
+ * \brief The main class to handle file transfer
  */
 
 class FileTransferServer{
@@ -208,7 +208,7 @@ class FileTransferServer{
  * \param destMachineName the destination machine name
  * \param  options the transfer options
  * \return 0 if the service succeeds or an error code otherwise
- */ 
+ */
 
     int addCpThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
@@ -221,7 +221,7 @@ class FileTransferServer{
  * \param destMachineName the destination machine name
  * \param  options the transfer options
  * \return 0 if the service succeeds or an error code otherwise
- */ 
+ */
 
 
 
@@ -236,7 +236,7 @@ class FileTransferServer{
  * \param destMachineName the destination machine name
  * \param  options the transfer options
  * \return 0 if the service succeeds or an error code otherwise
- */ 
+ */
 
 
     int  addMvThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
@@ -250,7 +250,7 @@ class FileTransferServer{
  * \param destMachineName the destination machine name
  * \param  options the transfer options
  * \return 0 if the service succeeds or an error code otherwise
- */ 
+ */
     int  addMvAsyncThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
 
 /**
@@ -258,20 +258,20 @@ class FileTransferServer{
  * \param options the stop file transfer options
  * \return 0 if the service succeeds or an error code otherwise
  */
- 
 
-    int stopThread(const StopTransferOptions& options);
+
+    int stopThread(const FMS_Data::StopTransferOptions& options);
   /**
    * \brief Get The file transfer information
    * \return The file transfer information
-   */  
-    const FMS_Data::FileTransfer& getFileTransfer() const; 
-    
+   */
+    const FMS_Data::FileTransfer& getFileTransfer() const;
+
   /**
    * \brief Update The file transfer information
    * \param fileTransfer The new file transfer information
-   */  
-    void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const; 
+   */
+    void setFileTransfer( const FMS_Data::FileTransfer& fileTransfer) const;
 /**
  * \brief Get A database instance to store file transfer information
  * \return the database instance
@@ -280,25 +280,25 @@ class FileTransferServer{
   /**
    * \brief Update the ssh port
    * \param sshPort The new ssh port
-   */  
+   */
     static void setSSHPort(const unsigned int sshPort);
-    
+
   /**
    * \brief Update the ssh command
    * \param sshCommand The new ssh command
-   */  
+   */
     static void setSSHCommand(const std::string& sshCommand);
 
   /**
    * \brief Get the ssh port
    * \return the ssh port
-   */  
+   */
     static const unsigned int getSSHPort();
-    
+
   /**
    * \brief Get the ssh command
    * \return the ssh command
-   */  
+   */
     static const std::string& getSSHCommand( );
     /**
      * \brief To remove some characters from string
@@ -316,8 +316,8 @@ class FileTransferServer{
     * \param name the option name
     * \param value the option value
     * \param request the sql request to modify
-    */ 
-    static void addOptionRequest(const std::string& name, const std::string& value, std::string& request);  
+    */
+    static void addOptionRequest(const std::string& name, const std::string& value, std::string& request);
 
     /**
     * \brief To check if the user identifier exists
@@ -337,8 +337,8 @@ class FileTransferServer{
       * \param outputMsg the output message
       * \return the cleaned  output message
       */
-    static std::string cleanOutputMsg(const std::string& outputMsg); 
-  
+    static std::string cleanOutputMsg(const std::string& outputMsg);
+
   private:
 /**
  * \brief To wait until the end of the file transfer
@@ -347,10 +347,10 @@ class FileTransferServer{
    /**
     * \brief To get the client machine name and userId from database
     * \param name to store the client machine name
-    * \param userId to store the userId 
+    * \param userId to store the userId
     */
-   
-    void getUserInfo(std::string& name, std::string& userId); 
+
+    void getUserInfo(std::string& name, std::string& userId);
 /**
  * \brief acommon add transfer function used by the other add transfer function
  * \param srcUser the source user
@@ -360,9 +360,9 @@ class FileTransferServer{
  * \param destMachineName the destination machine name
  * \param  options the transfer options
  * \return 0 if the service succeeds or an error code otherwise
- */ 
+ */
     int addTransferThread(const std::string& srcUser,const std::string& srcMachineName, const std::string& srcUserKey, const std::string& destUser, const std::string& destMachineName,const FMS_Data::CpFileOptions& options);
- 
+
  /**
   * \brief To perform a copy transfer
   * \param transferExec the information about the transfer
@@ -375,14 +375,14 @@ class FileTransferServer{
   * \param trCmd the transfer command
   */
     void move(const TransferExec& transferExec, const std::string& trCmd);
-    
+
  /**
   * \brief To stop a  transfer
   * \param transferid the transfer identifier
   * \param pid the transfer process identifier
   * \return 0 if the process succeeds or an error code otherwise
   */
-    
+
     int stopThread(const std::string& transferid,const int& pid);
     /**
      * \brief To process database query options
@@ -395,7 +395,7 @@ class FileTransferServer{
     * \param processId the transfer process identifier
     * \param errorMsg the eventual file transfer execution error message
     */
-   
+
     void logIntoDatabase(int processId=-1,const std::string& errorMsg="");
     /**
      * \brief To Update file transfer data
@@ -403,7 +403,7 @@ class FileTransferServer{
     void updateData();
     /**
      * \brief To Update file transfer data in database
-     * \param status the last execution status 
+     * \param status the last execution status
      * \param transferId the transfer identifier
      * \param errorMsg the eventual file transfer execution error message
      */
@@ -425,7 +425,7 @@ class FileTransferServer{
  */
     SessionServer msessionServer;
 /**
- * \brief A mutex to synchronise several transfer threads 
+ * \brief A mutex to synchronise several transfer threads
  */
     boost::mutex mmutex;
 /**

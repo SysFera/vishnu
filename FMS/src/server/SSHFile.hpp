@@ -237,14 +237,14 @@ class SSHFile : public File {
      * \param options the options object
      * \return the first lines of the file
      */
-    virtual std::string head(const HeadOfFileOptions& options);
+    virtual std::string head(const FMS_Data::HeadOfFileOptions& options);
 
     /**
      * \brief To get the last lines of the file
      * \param options the options object
      * \return the last lines of the file
      */
-    virtual std::string tail(const TailOfFileOptions& options);
+    virtual std::string tail(const FMS_Data::TailOfFileOptions& options);
     /**
      * \brief To get the content of the file
      * \return the content of the file
@@ -261,7 +261,7 @@ class SSHFile : public File {
      * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mkdir(const CreateDirOptions& options);
+    virtual int mkdir(const FMS_Data::CreateDirOptions& options);
     /**
      * \brief To remove a file
      * \param options The file deletion options
@@ -279,7 +279,7 @@ class SSHFile : public File {
      * \return the content of the directory
      */
     //virtual std::list<std::string> ls(const LsDirOptions& options) const;
-    virtual  FMS_Data::DirEntryList*  ls(const LsDirOptions& options) const;
+    virtual  FMS_Data::DirEntryList*  ls(const FMS_Data::LsDirOptions& options) const;
 
     /**
      * \brief To copy the file
@@ -287,14 +287,14 @@ class SSHFile : public File {
      * \param options the copy options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int cp(const std::string& path, const CpFileOptions& options);
+    virtual int cp(const std::string& path, const FMS_Data::CpFileOptions& options);
     /**
      * \brief To move the file
      * \param path the move destination
      * \param options the move options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mv(const std::string& path, const CpFileOptions& options);
+    virtual int mv(const std::string& path, const FMS_Data::CpFileOptions& options);
 
 };
 

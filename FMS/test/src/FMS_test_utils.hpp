@@ -27,11 +27,7 @@
 #include "utilVishnu.hpp"
 #include "vishnuTestUtils.hpp"
 
-// namespaces declaration and  aliases
-using namespace std;
-using namespace UMS_Data;
-using namespace FMS_Data;
-using namespace vishnu;
+
 namespace ba = boost::assign;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
@@ -44,16 +40,16 @@ namespace bfs= boost::filesystem;
  * \param names       the strings to search for (vector)
  * \return true if all names are found within the directory long content
  */
-bool areFoundInDir(const string& sessionKey,
-                   const string& dirFullPath,
-                   const vector<string>& names) {
-  DirEntryList dirContent;
-  LsDirOptions lsOptions;
+bool areFoundInDir(const std::string& sessionKey,
+                   const std::string& dirFullPath,
+                   const std::vector<std::string>& names) {
+  FMS_Data::DirEntryList dirContent;
+  FMS_Data::LsDirOptions lsOptions;
   lsOptions.setLongFormat(true);
-  BOOST_REQUIRE( ls(sessionKey, dirFullPath, dirContent) ==0  );
+  BOOST_REQUIRE( vishnu::ls(sessionKey, dirFullPath, dirContent) ==0  );
   bool areFound = true;
   unsigned int i;
-  for (vector<string>::const_iterator iterNames = names.begin();
+  for (std::vector<std::string>::const_iterator iterNames = names.begin();
     iterNames != names.end();
     ++iterNames) {
       bool isFound = false;
@@ -75,9 +71,9 @@ bool areFoundInDir(const string& sessionKey,
  * \param name        the string to search for
  * \return true name is found within the directory long content
  */
-bool isFoundInDir(const string& sessionKey,
-                  const string& dirFullPath,
-                  const string& name) {
+bool isFoundInDir(const std::string& sessionKey,
+                  const std::string& dirFullPath,
+                  const std::string& name) {
   return areFoundInDir(sessionKey, dirFullPath, ba::list_of(name));
 }
 /**
@@ -86,8 +82,8 @@ bool isFoundInDir(const string& sessionKey,
  * \param name        the string to search for
  * \return true name is found within the directory long content
  */
-bool isFoundInLocalDir(const string& dirLocalPath,
-                       const string& name) {
+bool isFoundInLocalDir(const std::string& dirLocalPath,
+                       const std::string& name) {
   bfs::path dir(dirLocalPath);
   bfs::directory_iterator end_iter;
   if ( bfs::exists(dir) && bfs::is_directory(dir)) {
@@ -107,9 +103,9 @@ bool isFoundInLocalDir(const string& dirLocalPath,
  * \param suffixes  the vector of strings
  * \return the modified vector of strings (prefix + suffixes[i])
  */
-vector<string>&
-addPrefix(const string& prefix, vector<string>& suffixes) {
-  for (vector<string>::iterator iter = suffixes.begin();
+std::vector<std::string>&
+addPrefix(const std::string& prefix, std::vector<std::string>& suffixes) {
+  for (std::vector<std::string>::iterator iter = suffixes.begin();
     iter != suffixes.end();
     ++iter  )
     {
@@ -124,19 +120,19 @@ addPrefix(const string& prefix, vector<string>& suffixes) {
  * \param remoteFullPath  the destination full path (directory)
  */
 void
-createRemoteFiles(const string& sessionKey,
-                  const vector<string>& localFilePaths,
-                  const string& remoteFullPath) {
-  for (vector<string>::const_iterator iter = localFilePaths.begin();
+createRemoteFiles(const std::string& sessionKey,
+                  const std::vector<std::string>& localFilePaths,
+                  const std::string& remoteFullPath) {
+  for (std::vector<std::string>::const_iterator iter = localFilePaths.begin();
     iter != localFilePaths.end();
     ++iter) {
-    const string& localFilePath = *iter;
+    const std::string& localFilePath = *iter;
     createFile<1>(localFilePath);
     BOOST_MESSAGE("CreateRemoteFile: " << localFilePath);
-    string errorMsg =  "Could not copy file ";
+    std::string errorMsg =  "Could not copy file ";
     errorMsg.append(localFilePath);
     errorMsg.append(" on remote host");
-    BOOST_REQUIRE_MESSAGE(cp(sessionKey, localFilePath, remoteFullPath) == 0,
+    BOOST_REQUIRE_MESSAGE(vishnu::cp(sessionKey, localFilePath, remoteFullPath) == 0,
       errorMsg);
   }
 }
@@ -152,21 +148,21 @@ createRemoteFiles(const string& sessionKey,
  */
 
 int
-waitAsyncCopy(const string& sessionKey, const FileTransfer& transferInfo) {
+waitAsyncCopy(const std::string& sessionKey, const FMS_Data::FileTransfer& transferInfo) {
   unsigned int        pollCounter = 10;
   bool                terminated = false;
-  LsTransferOptions   options;
-  FileTransferList    fileTransferList;
+  FMS_Data::LsTransferOptions   options;
+  FMS_Data::FileTransferList    fileTransferList;
   options.setTransferId(transferInfo.getTransferId());
   while (!terminated && pollCounter--) {
-    if (listFileTransfers(sessionKey, fileTransferList, options) != 0) {
+    if (vishnu::listFileTransfers(sessionKey, fileTransferList, options) != 0) {
       BOOST_MESSAGE("ERROR: Could not retrieve file transfer information");
       return -1;
     }
     if (fileTransferList.getFileTransfers().size() == 1) {
-      FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
+      FMS_Data::FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
       if (ft->getStatus() != STATUS_INPROGRESS) {
-        BOOST_MESSAGE("Async transfer is terminated! - status = " + convertToString(ft->getStatus()));
+        BOOST_MESSAGE("Async transfer is terminated! - status = " + vishnu::convertToString(ft->getStatus()));
         if (ft->getStatus() == STATUS_FAILED) {
           BOOST_MESSAGE("Transfer failed message: " + ft->getErrorMsg());
         }

@@ -18,7 +18,6 @@
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
 #include "FMSConstants.hpp"
-using namespace FMS_Data;
 
 
 /**
@@ -44,7 +43,7 @@ private:
   /**
    * \brief The inode information of the file
    */
-  mutable FileStat mfileStat;
+  mutable FMS_Data::FileStat mfileStat;
 
 protected:
   /**
@@ -52,7 +51,7 @@ protected:
    * \param fileStat the new inode information
    */
   void
-  setFileStat(const FileStat& fileStat)const;
+  setFileStat(const FMS_Data::FileStat& fileStat) const;
   /**
    * \brief To update the path  of the file
    * \param path the new path
@@ -113,7 +112,7 @@ public:
    * \brief To get the inode information of the file
    * \return the file inode information
    */
-  const FileStat&
+  const FMS_Data::FileStat&
   getFileStat() const;
 
   /**
@@ -170,7 +169,7 @@ public:
    * \return the first lines of the file
    */
   virtual std::string
-  head(const HeadOfFileOptions& options) = 0;
+  head(const FMS_Data::HeadOfFileOptions& options) = 0;
 
   /**
    * \brief To get the last lines of the file
@@ -178,7 +177,7 @@ public:
    * \return the last lines of the file
    */
   virtual std::string
-  tail(const TailOfFileOptions& options) = 0;
+  tail(const FMS_Data::TailOfFileOptions& options) = 0;
 
   /**
    * \brief To get the content of the file
@@ -200,7 +199,7 @@ public:
    * \return 0 if the command succeeds, an error code otherwise
    */
   virtual int
-  mkdir(const CreateDirOptions& options) = 0;
+  mkdir(const FMS_Data::CreateDirOptions& options) = 0;
 
   /**
    * \brief To remove a file
@@ -208,7 +207,7 @@ public:
    * \return 0 if the command succeeds, an error code otherwise
    */
   virtual int
-  rm(const RmFileOptions& options) = 0;
+  rm(const FMS_Data::RmFileOptions& options) = 0;
 
   /**
    * \brief To remove an empty directory
@@ -223,7 +222,7 @@ public:
    * \return the content of the directory
    */
   virtual FMS_Data::DirEntryList*
-  ls(const LsDirOptions& options) const = 0;
+  ls(const FMS_Data::LsDirOptions& options) const = 0;
   /**
    * \brief To copy the file
    * \param dest the copy destination
@@ -231,7 +230,7 @@ public:
    * \return 0 if the command succeeds, an error code otherwise
    */
   virtual int
-  cp(const std::string& dest, const CpFileOptions& options) = 0;
+  cp(const std::string& dest, const FMS_Data::CpFileOptions& options) = 0;
 
   /**
    * \brief To move the file
@@ -240,7 +239,7 @@ public:
    * \return 0 if the command succeeds, an error code otherwise
    */
   virtual int
-  mv(const std::string& dest, const CpFileOptions& options) = 0;
+  mv(const std::string& dest, const FMS_Data::CpFileOptions& options) = 0;
 
   /**
    * \brief To copy the file in asynchronous mode
@@ -251,8 +250,8 @@ public:
    */
   virtual int
   cpAsync(const std::string& dest,
-          const CpFileOptions& options,
-          FileTransfer& fileTransfer) = 0;
+          const FMS_Data::CpFileOptions& options,
+          FMS_Data::FileTransfer& fileTransfer) = 0;
 
   /**
    * \brief To move the file in asynchronous mode
@@ -263,8 +262,8 @@ public:
    */
   virtual int
   mvAsync(const std::string& dest,
-          const CpFileOptions& options,
-          FileTransfer& fileTransfer) = 0;
+          const FMS_Data::CpFileOptions& options,
+          FMS_Data::FileTransfer& fileTransfer) = 0;
 
   /**
    * \brief a useful function to extract the host name from path
