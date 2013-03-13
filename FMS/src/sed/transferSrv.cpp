@@ -50,7 +50,7 @@ solveFileTransferStop(diet_profile_t* pb) {
 
   try {
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_stop_file_transfer");
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -66,10 +66,10 @@ solveFileTransferStop(diet_profile_t* pb) {
     fileTransferServer->stopThread(*options_ptr);
 
     diet_string_set(pb,2, errorInfo.c_str());
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
       finishError =  fe.what();
       finishError +="\n";

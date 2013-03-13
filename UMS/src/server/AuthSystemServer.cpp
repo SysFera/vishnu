@@ -9,6 +9,8 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 
+using namespace vishnu;
+
 /**
 * \brief Constructor
 * \fn AuthSystemServer(AuthSystem authsystem, SessionServer session)

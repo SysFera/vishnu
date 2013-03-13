@@ -47,8 +47,8 @@ public:
   * \param endTime The end time of command
   * \return raises an exception on error
   */
-	int
-	record(CmdType cmdType,
+  int
+  record(vishnu::CmdType cmdType,
          vishnu::CmdStatus cmdStatus,
          std::string newVishnuObjectID = " ",
          std::string startTime = "CURRENT_TIMESTAMP",

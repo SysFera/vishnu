@@ -34,9 +34,6 @@
 
 class UserServer;
 
-using namespace vishnu;
-using namespace boost::posix_time;
-using namespace boost::gregorian;
 
 /**
 * \class SessionServer
@@ -140,8 +137,8 @@ public:
   */
   int
   finish (std::string cmdDescription,
-          CmdType cmdType,
-          CmdStatus cmdStatus,
+          vishnu::CmdType cmdType,
+          vishnu::CmdStatus cmdStatus,
           std::string newVishnuObjectID = "");
 
   private:

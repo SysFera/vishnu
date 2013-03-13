@@ -99,7 +99,7 @@ public:
       //To check the file status
       checkStatus(options->getStatus());
       //To add the status on the request
-      addOptionRequest("status", convertToString(options->getStatus()), sqlRequest);
+      addOptionRequest("status", vishnu::convertToString(options->getStatus()), sqlRequest);
     } else {
       if(onlyProgressFile) {
         addOptionRequest("status", "0", sqlRequest);
@@ -150,7 +150,7 @@ public:
 
 
           filetransfer->setTransferId(*iter);
-          int trStatus=convertToInt(*(++iter));
+          int trStatus=vishnu::convertToInt(*(++iter));
           filetransfer->setStatus((trStatus >=0&& trStatus<5 ? trStatus:4));
           filetransfer->setUserId(*(++iter));
           filetransfer->setClientMachineId(*(++iter));
@@ -165,11 +165,11 @@ public:
           filetransfer->setSize(boost::lexical_cast<file_size_t>(*(++iter)));
           //convert the endDate into UTC date
           std::string tmpTime = *(++iter);
-          startTime = convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
+          startTime = vishnu::convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
           filetransfer->setStart_time(startTime);
           filetransfer->setErrorMsg(*(++iter));
           // Check the transfer Command enum value
-          int trCommand=convertToInt(*(++iter));
+          int trCommand=vishnu::convertToInt(*(++iter));
 
           filetransfer->setTrCommand( (trCommand >=0&& trCommand<3 ? trCommand:2) );
           mlistObject->getFileTransfers().push_back(filetransfer);

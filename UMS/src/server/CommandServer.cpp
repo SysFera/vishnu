@@ -9,6 +9,7 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 
+using namespace vishnu;
 
 /**
 * \brief Constructor
@@ -96,5 +97,3 @@ CommandServer::isRunning() {
 */
 CommandServer::~CommandServer() {
 }
-
-

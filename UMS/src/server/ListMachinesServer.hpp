@@ -138,7 +138,7 @@ public:
           machine->setMachineId(*ii);
           machine->setName(*(++ii));
           machine->setSite(*(++ii));
-          machine->setStatus(convertToInt(*(++ii)));
+          machine->setStatus(vishnu::convertToInt(*(++ii)));
           machine->setLanguage(*(++ii));
           machine->setMachineDescription(*(++ii));
 

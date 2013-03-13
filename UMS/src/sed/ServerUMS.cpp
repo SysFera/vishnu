@@ -22,6 +22,9 @@ Authenticator *ServerUMS::mauthenticator = NULL;
 
 //}}RELAX<MISRA_0_1_3>
 
+using namespace vishnu;
+
+
 /**
  * \brief To get the unique instance of the server
  */

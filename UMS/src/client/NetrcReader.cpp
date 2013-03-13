@@ -17,6 +17,9 @@
 #include "NetrcReader.hpp"
 #include "UserException.hpp"
 
+using namespace std;
+
+
 /**
   * \fn NetrcReader(std::string path)
   * \brief Constructor
@@ -33,7 +36,7 @@ NetrcReader::NetrcReader() {
   * \param path  The path until the netrc file
   * \brief Constructor
   */
-NetrcReader::NetrcReader(const std::string& path) : mpath(path) {}
+NetrcReader::NetrcReader(const string& path) : mpath(path) {}
 
 /**
   * \brief Function to read the netrc file for getting the login and the password for
@@ -67,7 +70,7 @@ bool
 NetrcReader::searchValueFromKey(const string& key,
                                 string& value,
                                 vector<string>& tokens,
-                                std::map<size_t, pair<string, string> >& tab,
+                                map<size_t, pair<string, string> >& tab,
                                 const size_t machine_pos) {
   vector<string>::iterator beg = tokens.begin();
   vector<string>::iterator end = tokens.end();
@@ -99,11 +102,11 @@ NetrcReader::searchValueFromKey(const string& key,
   * \return The analyszed tab
   */
 map<size_t, pair<string,string> >&
-NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab,
+NetrcReader::analyze(map<size_t, pair<string,string> >& tab,
                      const string& machineName) {
-  static std::map<size_t, pair<string,string> > analyzedTab;
-  std::map<size_t, pair<string,string> >::iterator iter;
-  std::map<size_t, pair<string,string> >::iterator end = tab.end();
+  static map<size_t, pair<string,string> > analyzedTab;
+  map<size_t, pair<string,string> >::iterator iter;
+  map<size_t, pair<string,string> >::iterator end = tab.end();
   bool machineNameIsNotFound = true;
 
   for(iter = tab.begin(); iter != tab.end(); ++iter) {
@@ -116,13 +119,13 @@ NetrcReader::analyze(std::map<size_t, pair<string,string> >& tab,
         throw UserException(ERRCODE_INVALID_PARAM,
             "The login is undefined. The password must follow the login");
       }
-      std::string login = (iter->second).second;
+      string login = (iter->second).second;
       analyzedTab[iter->first] = pair<string, string>("login", login);
       ++iter; //go to to the next element
       if (iter == end  || (iter->second).first.compare("password") != 0) {
         throw UserException(ERRCODE_INVALID_PARAM, "The password is undefined");
       }
-      std::string password = (iter->second).second;
+      string password = (iter->second).second;
       analyzedTab[iter->first] = pair<string, string>("password", password);
     }
   }
@@ -165,7 +168,7 @@ NetrcReader::check() {
                         "There is problems to get the permissions of the file: " + mpath);
   }
 
-  std::ostringstream out;
+  ostringstream out;
   out << oct << fileStat.st_mode;
 
   if (out.str() != "100600") {
@@ -181,7 +184,7 @@ NetrcReader::check() {
   * \return the corresponding couple (login, password)
   */
 map<size_t, pair<string,string> >&
-NetrcReader::getNetrcInfo(const std::string& machineName) {
+NetrcReader::getNetrcInfo(const string& machineName) {
   ifstream infile;
   string line;
   string machineValue;
@@ -190,8 +193,8 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
 
   infile.open (mpath.c_str());
 
-  static std::map<size_t, pair<string,string> > tab;
-  std::string fileContent;
+  static map<size_t, pair<string,string> > tab;
+  string fileContent;
 
   if (infile.is_open()) {
     while (!infile.eof()) {
@@ -201,8 +204,8 @@ NetrcReader::getNetrcInfo(const std::string& machineName) {
     infile.close();
 
     vector<string> tokens;
-    std::istringstream iss(fileContent);
-    std::copy(istream_iterator<string>(iss),
+    istringstream iss(fileContent);
+    copy(istream_iterator<string>(iss),
               istream_iterator<string>(),
               back_inserter<vector<string> >(tokens));
 

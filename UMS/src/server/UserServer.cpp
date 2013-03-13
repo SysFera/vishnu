@@ -14,6 +14,9 @@
 #include "utilServer.hpp"
 #include "AuthenticatorFactory.hpp"
 
+using namespace vishnu;
+
+
 /**
 * \brief Constructor
 * \fn UserServer(std::string userId, std::string password)

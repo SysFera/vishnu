@@ -9,6 +9,11 @@
 #include "CommandServer.hpp"
 #include "DbFactory.hpp"
 
+
+using namespace vishnu;
+using namespace boost::posix_time;
+// using namespace boost::gregorian;
+
 /**
 * \brief Constructor
 * \fn SessionServer()

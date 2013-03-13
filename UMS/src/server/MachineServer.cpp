@@ -11,6 +11,9 @@
 #include "utilServer.hpp"
 #include <boost/format.hpp>
 
+
+using namespace vishnu;
+
 /**
 * \brief Constructor
 * \fn MachineServer(UMS_Data::Machine*& machine)

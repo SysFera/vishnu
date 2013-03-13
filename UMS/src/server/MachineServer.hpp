@@ -20,8 +20,6 @@
 #include "UMS_Data_forward.hpp"
 
 
-using namespace vishnu;
-
 
 /**
 * \class MachineServer
@@ -95,14 +93,14 @@ public:
   getPublicKey();
 
   /**
-   * \brief Function to get the machine 
-   * \return The name of the machine 
+   * \brief Function to get the machine
+   * \return The name of the machine
    */
   std::string getMachineName();
 
   /**
    * \brief Function to check the machineId
-   * \return raises an exception 
+   * \return raises an exception
    */
   void checkMachine();
 

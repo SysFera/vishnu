@@ -12,6 +12,9 @@
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
 
+using namespace vishnu;
+
+
 /**
  * \param session The object which encapsulates the session information
  * \param machineid The machine identifier

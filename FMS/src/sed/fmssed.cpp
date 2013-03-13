@@ -1,4 +1,5 @@
 #include <csignal>
+#include <string>
 #include <sys/wait.h>
 #include <sys/types.h>
 #include <fstream>
@@ -47,9 +48,9 @@ main(int argc, char* argv[], char* envp[]) {
   int interval = 1;
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
-  string FMSTYPE = "fmssed";
-  string mid;
-  string uri;
+  std::string FMSTYPE = "fmssed";
+  std::string mid;
+  std::string uri;
 
   if (argc != 2) {
     return usage(argv[0]);

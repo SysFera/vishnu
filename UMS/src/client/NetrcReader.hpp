@@ -11,9 +11,8 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <string>
 
-
-using namespace std;
 
 /**
  * \class NetrcReader
@@ -43,7 +42,7 @@ class NetrcReader {
      * \return the corresponding couple (login, password)
      */
     void
-    read(map<size_t, pair<string,string> >& auth, const string& machineName = "vishnu");
+    read(std::map<size_t, std::pair<std::string,std::string> >& auth, const std::string& machineName = "vishnu");
 
     /**
      * \fn ~NetrcReader()
@@ -66,10 +65,10 @@ class NetrcReader {
       * \return true if the value has found else found
       */
     bool
-    searchValueFromKey( const string& key,
-                        string& value,
-                        vector<string>& tokens,
-                        std::map<size_t, pair<string,string> >& tab,
+    searchValueFromKey( const std::string& key,
+                        std::string& value,
+                        std::vector<std::string>& tokens,
+                        std::map<size_t, std::pair<std::string,std::string> >& tab,
                         const size_t machine_pos);
 
 
@@ -79,8 +78,8 @@ class NetrcReader {
      * \param machineName the name of the machine
      * \return all the corresponding couple (login, password)
      */
-    map<size_t, pair<string,string> >&
-    getNetrcInfo(const string& machineName);
+  std::map<size_t, std::pair<std::string,std::string> >&
+    getNetrcInfo(const std::string& machineName);
 
     /**
      * \brief Function to check the validity of the netrc file
@@ -96,8 +95,8 @@ class NetrcReader {
      * \param machineName the machine name used for searching the couple
      * \return The analyzed tab
      */
-    map<size_t, pair<string,string> >&
-     analyze(std::map<size_t, pair<string,string> >& tab, const string& machineName);
+  std::map<size_t, std::pair<std::string,std::string> >&
+  analyze(std::map<size_t, std::pair<std::string,std::string> >& tab, const std::string& machineName);
 
     /////////////////////////////////
     // Attributes
@@ -106,7 +105,7 @@ class NetrcReader {
     /**
      * \brief The path until the netrc file
      */
-    string mpath;
+    std::string mpath;
 
 };
 #endif
