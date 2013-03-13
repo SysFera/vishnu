@@ -1,7 +1,7 @@
 /**
  * \file ScriptGenConvertor.hpp
  * \brief This file contains the VISHNU ScriptGenConvertor class.
- * \authors Ibrahima Cisse (ibrahima.cisse@sysfera.com) and 
+ * \authors Ibrahima Cisse (ibrahima.cisse@sysfera.com) and
  * Daouda Traore (daouda.traore@sysfera.com)
  * \date May 2011
  */
@@ -26,9 +26,8 @@
 
 #include "utilVishnu.hpp"
 
-using namespace std;
 
-//The generic script syntaxe 
+//The generic script syntaxe
 static std::string prefix = "vishnu";
 static const std::string group               = prefix+"_group";
 static const std::string workingDir          = prefix+"_working_dir";
@@ -60,37 +59,37 @@ class ScriptGenConvertor {
   public :
 
     /**
-     * \brief Constructor 
+     * \brief Constructor
      * \param batchType the type of the batch scheduler
      * \param scriptGenContent the generic script to convert
      */
-    ScriptGenConvertor(const int batchType, 
+    ScriptGenConvertor(const int batchType,
                        const std::string&  scriptGenContent);
 
     /**
-     * \brief Function to parse the generic script 
+     * \brief Function to parse the generic script
      * \param errorMessage is the message of the errors occured during the parsing
-     * \return 0 if success, -1 if if failure 
-     */ 
-    int 
+     * \return 0 if success, -1 if if failure
+     */
+    int
     parseFile(std::string& errorMessage);
 
     /**
-     * \brief Function to return the converted script 
-     */ 
-    std::string 
+     * \brief Function to return the converted script
+     */
+    std::string
     getConvertedScript();
 
     /**
-     * \brief Function to initialize the generic script syntax 
+     * \brief Function to initialize the generic script syntax
      */
-    void 
-    initializeTableOfSymbols(); 
+    void
+    initializeTableOfSymbols();
 
     /**
      * \brief Function to check if the script is generic
      */
-    bool 
+    bool
     scriptIsGeneric();
 
     /**
@@ -113,7 +112,7 @@ class ScriptGenConvertor {
 
     /**
      * \brief Function to insert some additional content (newValue)
-     * \param oldValue oldValue to replace 
+     * \param oldValue oldValue to replace
      * \param newValue new value to insert
      * \param begin The begin position of the substring in str
      * \param end The end position of the substring in str
@@ -125,48 +124,48 @@ class ScriptGenConvertor {
           const size_t& begin,
           size_t& end,
           std::string& str);
-    
+
     /**
-     * \brief The type of the batch scheduler 
+     * \brief The type of the batch scheduler
      */
     const int mbatchType;
-    
+
     /**
-     * \brief The generic script 
+     * \brief The generic script
      */
     const std::string mscriptGenContent;
 
     /**
-     * \brief The vector containing the batch scheduler directive syntaxes 
+     * \brief The vector containing the batch scheduler directive syntaxes
      *  converted and theirs value
      */
-    std::vector< pair<std::string, std::string> > mjobDescriptor;
-  
+    std::vector< std::pair<std::string, std::string> > mjobDescriptor;
+
     /**
-     * \brief The map containing the generic script directive key word and 
-     * its correspond value for each batch scheduler  
-     */ 
+     * \brief The map containing the generic script directive key word and
+     * its correspond value for each batch scheduler
+     */
     std::map<std::string, std::string>  mconversionTable;
-  
+
     /**
      * \brief The table contanining the generic script syntaxe
-     */ 
+     */
     std::vector<std::string> mtableOfSymbols;
-  
+
     /**
-     * \brief The end key word of the converted script 
-     */ 
+     * \brief The end key word of the converted script
+     */
     std::string mendScript;
 };
 
 /**
- * \brief Function to return the generic script convertor 
+ * \brief Function to return the generic script convertor
  * \param batchType The type of the batch scheduler
  * \param scriptGenContent The content of the script to convert
  * \return The generic script convertor
  */
-boost::shared_ptr<ScriptGenConvertor>  
-vishnuScriptGenConvertor(const int batchType, 
+boost::shared_ptr<ScriptGenConvertor>
+vishnuScriptGenConvertor(const int batchType,
                          const std::string& scriptGenContent);
 
 #endif

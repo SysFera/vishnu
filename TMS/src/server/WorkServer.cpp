@@ -70,7 +70,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
       //Generation of workid
       idWorkGenerated = vishnu::getObjectId(vishnuId,
                                             "formatidwork",
-                                            WORK,
+                                            vishnu::WORK,
                                             mwork->getSubject());
 
       //if the work id is generated
@@ -87,15 +87,15 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
           sqlUpdate+="date_created="+timestamp+", ";
           sqlUpdate+="date_started="+timestamp+", ";
           sqlUpdate+="description='"+mwork->getDescription()+"', ";
-          sqlUpdate+="done_ratio="+convertToString(mwork->getDoneRatio())+", ";
+          sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
           sqlUpdate+="due_date="+timestamp+", ";
-          sqlUpdate+="estimated_hours="+convertToString(mwork->getEstimatedHour())+", ";
+          sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
           sqlUpdate+="last_updated="+timestamp+", ";
           sqlUpdate+="machine_id="+machineId+", ";
-          sqlUpdate+="nbcpus="+convertToString(mwork->getNbCPU())+", ";
+          sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
           sqlUpdate+="owner_id='"+owner+"', ";
-          sqlUpdate+="priority="+convertToString(mwork->getPriority())+", ";
-          sqlUpdate+="status="+convertToString(mwork->getStatus())+", ";
+          sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
+          sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
           sqlUpdate+="subject='"+mwork->getSubject()+"' ";
           sqlUpdate+="WHERE identifier='"+mwork->getWorkId()+"';";
 

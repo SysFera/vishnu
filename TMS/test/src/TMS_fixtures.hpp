@@ -13,8 +13,6 @@
 #include "api_ums.hpp"
 #include "api_tms.hpp"
 #include "ExecConfiguration.hpp"
-using namespace std;
-using namespace vishnu;
 
 
 
@@ -38,7 +36,7 @@ public:
     // Name of the test executable
     mav[0]= (char*)"./tms_automTest";
     // Client configuration file
-    string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
     mav[1]= (char*)vishnuClientTestConfigPath.c_str();
 
@@ -48,7 +46,7 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
-    string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
     std::string key = "TEST_TMS_MACHINE_IDS";
     ExecConfiguration tmsConfiguration;
     tmsConfiguration.initFromFile(vishnuTestSetupPath);

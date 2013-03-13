@@ -20,7 +20,6 @@
 #include "TMS_Data_forward.hpp"
 
 
-using namespace vishnu;
 
 
 /**

@@ -267,7 +267,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     /*search # character*/
     pos = line.find('#');
 
-    if(pos == string::npos) {
+    if(pos == std::string::npos) {
       linebuf=ba::erase_all_copy(line," ");
       if(linebuf.empty()) {
         continue;
@@ -331,14 +331,14 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     pos = line.find('%');
 
-    if(pos == string::npos) {
+    if(pos == std::string::npos) {
       continue;
     }
     line = line.erase(0, pos+1);
 
     /* Extract key, value*/
     pos = line.find('=');
-    if(pos == string::npos) {
+    if(pos == std::string::npos) {
       ba::erase_all(line, " ");
       if (line.empty()) {
         continue;
@@ -348,7 +348,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
       iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), line_tolower);
       if(iter==mtableOfSymbols.end()) {
-        ostringstream os_error;
+        std::ostringstream os_error;
         os_error << "Error : Invalid argument " << line << " at line " << numline << " in your script file" << std::endl;
         errorMessage = os_error.str();
         return -1;
@@ -369,7 +369,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
     if(iter==mtableOfSymbols.end()) {
-      ostringstream os_error;
+      std::ostringstream os_error;
       os_error << "Error : Invalid argument " << key << " at line " << numline << " in your script file" << std::endl;
       errorMessage = os_error.str();
       return -1;
@@ -401,7 +401,7 @@ ScriptGenConvertor::getConvertedScript() {
   std::string key, value;
   std::string torqueNodes;
   bool torqueNodeIsAdd = false;
-  std::vector< pair<std::string, std::string> >::const_iterator iter;
+  std::vector< std::pair<std::string, std::string> >::const_iterator iter;
   for(iter = mjobDescriptor.begin(); iter!=mjobDescriptor.end(); ++iter) {
 
     key =  iter->first;
@@ -644,7 +644,7 @@ vishnuScriptGenConvertor(const int batchType,
                          const std::string& scriptGenContent) {
 
   boost::shared_ptr< ScriptGenConvertor> scriptGenConvertor(new ScriptGenConvertor(batchType, scriptGenContent));
-  string parse_error ;
+  std::string parse_error ;
   if(scriptGenConvertor->parseFile(parse_error)==-1) {
     std::string errorMessage = "Can't generate this generic script content \n"+parse_error ;
     throw UserException(ERRCODE_INVALID_PARAM, errorMessage);
