@@ -10,10 +10,9 @@
 
 #include "UMS_fixtures.hpp"
 #include <boost/test/unit_test.hpp>
+#include <string>
 #include "api_ums.hpp"
 #include "api_fms.hpp"
-using namespace std;
-using namespace vishnu;
 
 
 class FMSSeDFixture : public UMSSeDFixture {
@@ -25,7 +24,7 @@ public:
     // Name of the test executable
     mav[0]= (char*)"./fms_automTest";
     // Client configuration file
-    string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
     mav[1]= (char*)vishnuClientTestConfigPath.c_str();
 
@@ -44,7 +43,7 @@ public:
     m_test_fms_host2 = setupConfig2.find("TEST_FMS_HOST2")->second;
     m_test_fms_dir1 = setupConfig2.find("TEST_FMS_HOST1_WORKING_DIR")->second;
     m_test_fms_dir2 = setupConfig2.find("TEST_FMS_HOST2_WORKING_DIR")->second;
-    m_test_fms_user_login = m_test_ums_user_vishnu_login; 
+    m_test_fms_user_login = m_test_ums_user_vishnu_login;
     m_test_fms_user_pwd = m_test_ums_user_vishnu_pwd;
     m_test_fms_user_local_group =  setupConfig2.find("TEST_FMS_USER_LOCAL_GROUP")->second;
 

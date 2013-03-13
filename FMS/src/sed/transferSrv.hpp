@@ -177,7 +177,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
 
 
-    CpFileOptions* options_ptr= NULL;
+    FMS_Data::CpFileOptions* options_ptr= NULL;
     if(!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }
@@ -382,7 +382,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     }
 
 
-    CpFileOptions_ptr options_ptr= NULL;
+    FMS_Data::CpFileOptions_ptr options_ptr= NULL;
     if (!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Copy: CpFileOptions object is not well built");
     }

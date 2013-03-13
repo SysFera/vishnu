@@ -11,7 +11,7 @@
 #include <sys/types.h>
 
 #include "File.hpp"
-using namespace FMS_Data;
+
 /* Include all the services headers. */
 #include "getInfosSrv.hpp"
 #include "chgrpSrv.hpp"

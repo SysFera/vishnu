@@ -48,7 +48,7 @@ class RemoteFileProxy : public FileProxy {
       int transferFile(const std::string& dest,
           const TypeOfOption& options,
           const std::string& serviceName,
-          FileTransfer& fileTransfer);
+          FMS_Data::FileTransfer& fileTransfer);
 
   public:
 
@@ -108,13 +108,13 @@ class RemoteFileProxy : public FileProxy {
      * \param options the options object
      * \return the first lines of the file
      */
-    virtual std::string head(const HeadOfFileOptions& options);
+    virtual std::string head(const FMS_Data::HeadOfFileOptions& options);
     /**
      * \brief To get the last lines of the file
      * \param options the options object
      * \return the last lines of the file
      */
-    virtual std::string tail(const TailOfFileOptions& options);
+    virtual std::string tail(const FMS_Data::TailOfFileOptions& options);
     /**
      * \brief To get the content of the file
      * \return the content of the file
@@ -131,14 +131,14 @@ class RemoteFileProxy : public FileProxy {
      * \param options the directory creation options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mkdir(const CreateDirOptions& options);
+    virtual int mkdir(const FMS_Data::CreateDirOptions& options);
 
     /**
      * \brief To remove a file
      * \param options the remove file options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int rm(const RmFileOptions& options);
+    virtual int rm(const FMS_Data::RmFileOptions& options);
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
@@ -150,14 +150,14 @@ class RemoteFileProxy : public FileProxy {
      * \return the content of the directory
      */
     //   virtual std::list<std::string> ls(const LsDirOptions& options) const;
-    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const ;
+    virtual FMS_Data::DirEntryList* ls(const FMS_Data::LsDirOptions& options) const ;
     /**
      * \brief To copy the file
      * \param dest the copy destination
      * \param options the copy options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int cp(const std::string& dest, const CpFileOptions& options);
+    virtual int cp(const std::string& dest, const FMS_Data::CpFileOptions& options);
 
     /**
      * \brief To move the file
@@ -165,7 +165,7 @@ class RemoteFileProxy : public FileProxy {
      * \param options the move options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mv(const std::string& dest, const CpFileOptions& options);
+    virtual int mv(const std::string& dest, const FMS_Data::CpFileOptions& options);
 
     /**
      * \brief To copy the file in asynchronous mode
@@ -174,7 +174,7 @@ class RemoteFileProxy : public FileProxy {
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+    virtual int cpAsync(const std::string& dest, const FMS_Data::CpFileOptions& options, FMS_Data::FileTransfer& fileTransfer);
 
     /**
      * \brief To move the file in asynchronous mode
@@ -183,7 +183,7 @@ class RemoteFileProxy : public FileProxy {
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+    virtual int mvAsync(const std::string& dest, const FMS_Data::CpFileOptions& options, FMS_Data::FileTransfer& fileTransfer);
 
 };
 

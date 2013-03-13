@@ -219,7 +219,7 @@ SSHFile::chmod(const mode_t mode) {
 
 /* Get the file head through ssh. */
 string
-SSHFile::head(const HeadOfFileOptions& options) {
+SSHFile::head(const FMS_Data::HeadOfFileOptions& options) {
   int nline = options.getNline();
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
@@ -288,7 +288,7 @@ SSHFile::mkfile(const mode_t mode) {
 
 /* Create a directory through ssh. */
 int
-SSHFile::mkdir(const CreateDirOptions& options) {
+SSHFile::mkdir(const FMS_Data::CreateDirOptions& options) {
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
@@ -317,7 +317,7 @@ SSHFile::mkdir(const CreateDirOptions& options) {
 
 /* Remove the file through ssh. */
 int
-SSHFile::rm(const RmFileOptions& options) {
+SSHFile::rm(const FMS_Data::RmFileOptions& options) {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
   pair<string,string> rmResult;
@@ -366,7 +366,7 @@ SSHFile::rmdir() {
 
 /* Get the file tail through ssh. */
 string
-SSHFile::tail(const TailOfFileOptions& options) {
+SSHFile::tail(const FMS_Data::TailOfFileOptions& options) {
   int nline=options.getNline();
   ostringstream os;
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
@@ -390,7 +390,7 @@ SSHFile::tail(const TailOfFileOptions& options) {
 
 /* Get the files and subdirectory of this directory through ssh. */
 FMS_Data::DirEntryList*
-SSHFile::ls(const LsDirOptions& options) const {
+SSHFile::ls(const FMS_Data::LsDirOptions& options) const {
   SSHExec ssh(sshCommand, scpCommand, sshHost, sshPort, sshUser, sshPassword,
               sshPublicKey, sshPrivateKey);
 
@@ -445,8 +445,8 @@ SSHFile::ls(const LsDirOptions& options) const {
 
 /* mv the file through scp. */
 int
-SSHFile::mv(const string& dest, const CpFileOptions& options) {
-  CpFileOptions tmpOptions (options);
+SSHFile::mv(const string& dest, const FMS_Data::CpFileOptions& options) {
+  FMS_Data::CpFileOptions tmpOptions (options);
 
   if (!exists()) { //if the file does not exist
     throw FMSVishnuException(ERRCODE_INVALID_PATH,getErrorMsg());
@@ -461,7 +461,7 @@ SSHFile::mv(const string& dest, const CpFileOptions& options) {
   }
 
   cp(dest,tmpOptions);
-  RmFileOptions rmOptions;
+  FMS_Data::RmFileOptions rmOptions;
   rmOptions.setIsRecursive("true");
   int result=rm(rmOptions);
 
@@ -472,7 +472,7 @@ SSHFile::mv(const string& dest, const CpFileOptions& options) {
 
 /* Transfer the file through scp or rsync. */
 int
-SSHFile::cp(const string& dest, const CpFileOptions& options ) {
+SSHFile::cp(const string& dest, const FMS_Data::CpFileOptions& options ) {
   boost::scoped_ptr<FileTransferCommand> tr (FileTransferCommand::getCopyCommand(getSession(),options) );
   string trCmd= tr->getCommand();
 

@@ -74,7 +74,7 @@ int solveCreateDir(diet_profile_t* profile) {
     ff.setSSHServer(machineName);
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-    CreateDirOptions_ptr options_ptr= NULL;
+    FMS_Data::CreateDirOptions_ptr options_ptr= NULL;
  if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_create_dir: CreateDirOptions object is not well built");
     }

@@ -78,7 +78,7 @@ int solveListDir(diet_profile_t* profile) {
 
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-    LsDirOptions_ptr options_ptr= NULL;
+    FMS_Data::LsDirOptions_ptr options_ptr= NULL;
     if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_LsDir: LsDirOptions object is not well built");
     }

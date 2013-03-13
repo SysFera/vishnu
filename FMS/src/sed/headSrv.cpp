@@ -77,7 +77,7 @@ int headFile(diet_profile_t* profile) {
     ff.setSSHServer(machineName);
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-    HeadOfFileOptions_ptr options_ptr= NULL;
+    FMS_Data::HeadOfFileOptions_ptr options_ptr= NULL;
     if(!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
     }

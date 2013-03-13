@@ -10,7 +10,6 @@
 #include <boost/cstdint.hpp>
 #include "FMS_Data_forward.hpp"
 #include "FMS_Data.hpp"
-using namespace FMS_Data;
 
 
 static const mode_t defaultFileAccessMode=420;

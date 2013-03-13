@@ -36,27 +36,27 @@ class LocalFileProxy : public FileProxy {
      * \return 0 if the function succeeds or an error code otherwise
      */
     template <class typeofoption>
-      int transferFile(const std::string& dest, 
+      int transferFile(const std::string& dest,
           const typeofoption& options,
           const std::string& servicename,
-          FileTransfer& fileTransfer);
+          FMS_Data::FileTransfer& fileTransfer);
 
   public:
 
     /**
      * \brief The default constructor
-     */ 
+     */
     LocalFileProxy();
     /**
      * \brief Another constructor taking two parameters
      * \param sessionProxy  the session object proxy
      * \param path the path of the file
-     */ 
+     */
     LocalFileProxy(const SessionProxy& sessionProxy,const std::string& path);
     /**
      * \brief Another constructor by reference
-     * \param file the other file 
-     */ 
+     * \param file the other file
+     */
     explicit LocalFileProxy(const LocalFileProxy& file);
 
     /**
@@ -90,16 +90,16 @@ class LocalFileProxy : public FileProxy {
     virtual int chmod(const mode_t mode) {return 0; }
     /**
      * \brief To get the first lines of the file
-     * \param options the options object 
+     * \param options the options object
      * \return the first lines of the file
      */
-    virtual std::string head(const HeadOfFileOptions& options) {return std::string(""); }
+    virtual std::string head(const FMS_Data::HeadOfFileOptions& options) {return std::string(""); }
     /**
      * \brief To get the last lines of the file
-     * \param options the options object 
+     * \param options the options object
      * \return the last lines of the file
      */
-    virtual std::string tail(const TailOfFileOptions& options) { return std::string("");}
+    virtual std::string tail(const FMS_Data::TailOfFileOptions& options) { return std::string("");}
     /**
      * \brief To get the content of the file
      * \return the content of the file
@@ -109,67 +109,67 @@ class LocalFileProxy : public FileProxy {
      * \brief To create a new file
      * \param mode the access permission of the file
      * \return 0 if the command succeeds, an error code otherwise
-     */ 
+     */
     virtual int mkfile(const mode_t mode=defaultFileAccessMode) {return 0; }
     /**
      * \brief To create a new directory
      * \param options the create directory options
      * \return 0 if the command succeeds, an error code otherwise
-     */ 
-    virtual int mkdir(const CreateDirOptions& options) {return 0; }
+     */
+    virtual int mkdir(const FMS_Data::CreateDirOptions& options) {return 0; }
     /**
      * \brief To remove a file
-       * \param options the remove file options  
+       * \param options the remove file options
      * \return 0 if the command succeeds, an error code otherwise
-     */ 
-    virtual int rm(const RmFileOptions& options) {return 0; }
+     */
+    virtual int rm(const FMS_Data::RmFileOptions& options) {return 0; }
     /**
      * \brief To remove an empty directory
      * \return 0 if the command succeeds, an error code otherwise
-     */ 
+     */
     virtual int rmdir() {return 0;  }
 
     /**
-     * \brief To copy the file 
+     * \brief To copy the file
      * \param dest the copy destination
-     * \param options the copy options  
+     * \param options the copy options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int cp(const std::string& dest, const CpFileOptions& options);
+    virtual int cp(const std::string& dest, const FMS_Data::CpFileOptions& options);
 
     /**
-     * \brief To move the file 
+     * \brief To move the file
      * \param dest the move destination
-     * \param options the move options  
+     * \param options the move options
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mv(const std::string& dest, const CpFileOptions& options);
+    virtual int mv(const std::string& dest, const FMS_Data::CpFileOptions& options);
 
     /**
-     * \brief To copy the file in asynchronous mode 
+     * \brief To copy the file in asynchronous mode
      * \param dest the copy destination
-     * \param options the copy options  
+     * \param options the copy options
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int cpAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+    virtual int cpAsync(const std::string& dest, const FMS_Data::CpFileOptions& options, FMS_Data::FileTransfer& fileTransfer);
 
     /**
-     * \brief To move the file in asynchronous mode 
+     * \brief To move the file in asynchronous mode
      * \param dest the move destination
-     * \param options the move options  
+     * \param options the move options
      * \param fileTransfer information about the transfer like its identifier
      * \return 0 if the command succeeds, an error code otherwise
      */
-    virtual int mvAsync(const std::string& dest, const CpFileOptions& options, FileTransfer& fileTransfer);
+    virtual int mvAsync(const std::string& dest, const FMS_Data::CpFileOptions& options, FMS_Data::FileTransfer& fileTransfer);
 
     /**
      * \brief To list the content of a directory
-     * \param options the list options 
+     * \param options the list options
      * \return the content of the directory
-     */ 
+     */
    // virtual std::list<std::string> ls(const LsDirOptions& options) const { std::list<std::string>(); }
-    virtual FMS_Data::DirEntryList* ls(const LsDirOptions& options) const { return NULL; }
+    virtual FMS_Data::DirEntryList* ls(const FMS_Data::LsDirOptions& options) const { return NULL; }
 };
 
 #endif
