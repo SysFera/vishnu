@@ -1,6 +1,6 @@
 /**
  * \file amv.cpp
- * This file defines the VISHNU move async file command 
+ * This file defines the VISHNU move async file command
  * \author Daouda Traore (daouda.traore@sysfera.com)
  */
 
@@ -28,14 +28,14 @@ using namespace vishnu;
 
 
 int main (int argc, char* argv[]){
-  
+
   /******* Parsed value containers ****************/
   string configFile;
   string src;
   string dest;
 
   /******* Output value ****************/
-  FileTransfer transferInfo;
+  FMS_Data::FileTransfer transferInfo;
 
    /********** EMF data ************/
   FMS_Data::CpFileOptions cpFileOptions;
@@ -46,5 +46,3 @@ int main (int argc, char* argv[]){
 
   return GenericCli().run(apiFunc, configFile, argc, argv);
 }
-
-

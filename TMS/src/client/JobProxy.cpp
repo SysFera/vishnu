@@ -68,7 +68,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   }
 
   // Send input files, if there is any one
-  CpFileOptions copts;
+  FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
   string inputFiles = vishnu::sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;

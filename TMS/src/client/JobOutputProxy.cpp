@@ -90,7 +90,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   }
   jobResult.setOutputDir(moutDir);
 
-  CpFileOptions copts;
+  FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
@@ -182,7 +182,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   }
   parseEmfObject(listJobResultInString, listJobResults_ptr); /*To build the listJobResults_ptr */
 
-  CpFileOptions copts;
+  FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
 
