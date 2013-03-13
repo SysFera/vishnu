@@ -14,6 +14,7 @@
 #include "DbFactory.hpp"
 #include "zhelpers.hpp"
 #include "Server.hpp"
+#include "vishnu_version.hpp"
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -487,7 +488,8 @@ vishnu::parseErrorMessage (const std::string& errorMsg) {
  * \param file The status file
  * \return the int value
  */
-int vishnu::getStatusValue (const std::string& file) {
+int
+vishnu::getStatusValue (const std::string& file) {
 
   std::string content = vishnu::get_file_content(file);
   size_t pos = content.find("\n");
@@ -500,7 +502,8 @@ int vishnu::getStatusValue (const std::string& file) {
  *  \param dir the directory where we create the links
  *  \return the string of the directory to which the link was created
  */
-std::string vishnu::moveFileData(const std::string& fileparam, std::string dir) {
+std::string
+vishnu::moveFileData(const std::string& fileparam, std::string dir) {
   std::string directory="";
   std::string file="";
   size_t pos = fileparam.find("=");
@@ -533,7 +536,8 @@ std::string vishnu::moveFileData(const std::string& fileparam, std::string dir) 
  *  \param path the path of the working directory
  *  \param isWorkingdir tell whether the directory will be a working directory
  */
-void vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
+void
+vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
   try {
     bfs::create_directories(path);
     if (isWorkingdir && chmod(path.c_str(),  // a working directory has the permissions rwxt
@@ -547,4 +551,10 @@ void vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
   } catch (bfs::filesystem_error &ex) {
     throw SystemException(ERRCODE_INVDATA, ex.what());
   }
+}
+
+int
+vishnu::showVersion(std::string server){
+  std::cout << " The current version of the " << server << " is " << VISHNU_VERSION << std::endl;
+  return EXIT_SUCCESS;
 }
