@@ -13,7 +13,6 @@
 #include <vector>
 
 #include <pthread.h>
-#include "MapperRegistry.hpp"
 
 class MapperRegistry;
 

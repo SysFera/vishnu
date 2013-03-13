@@ -1,10 +1,16 @@
 #include "SeD.hpp"
+
 #include <iostream>
+#include <algorithm>                    // for transform
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <iterator>                     // for back_insert_iterator, etc
+#include <utility>                      // for pair
+
+#include "Worker.hpp"                   // for serverWorkerSockets
 #include "zhelpers.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
 #include "zmq.hpp"
 #include "SeDWorker.hpp"
 

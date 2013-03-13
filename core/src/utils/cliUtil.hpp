@@ -1,7 +1,10 @@
-#include "Options.hpp"
-
 #ifndef CORECLIUTIL_HPP
 #define CORECLIUTIL_HPP
+
+#include <string>
+
+class Options;
+
 
 /**
  * \brief Contains a generic diet error message

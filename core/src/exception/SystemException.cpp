@@ -1,5 +1,8 @@
 #include "SystemException.hpp"
 
+#include <map>                          // for map
+#include <utility>                      // for pair
+
 
 SystemException::SystemException():VishnuException(){initMsg();}
 

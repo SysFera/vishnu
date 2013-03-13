@@ -1,9 +1,11 @@
 #include "CLICmd.hpp"
 
-#include <boost/program_options.hpp>
-
 #include "VishnuException.hpp"          // for VISHNU_OK
 #include "UserException.hpp"
+
+namespace boost { namespace program_options { class error; } }
+namespace boost { namespace program_options { class required_option; } }
+
 
 CLICmd::CLICmd(int argc, char** argv, boost::shared_ptr<Options> op):margc(argc), margv(argv), mop(op){
 }

@@ -1,4 +1,5 @@
 #include "Annuary.hpp"
+
 #include <algorithm>
 #include <string>
 #include <boost/bind.hpp>
@@ -6,16 +7,11 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/thread/locks.hpp>
-#include <cstdio>
-#include <cstring>
 #include <iterator>
 #include <iostream>
-#include <string>
 #include <sstream>
-#include <fstream>
-#include "utilVishnu.hpp"
-#include "CommonParser.hpp"
-#include "FileParser.hpp"
+
+#include "Server.hpp"                   // for Server
 #include "UMSServices.hpp"
 #include "TMSServices.hpp"
 #include "IMSServices.hpp"

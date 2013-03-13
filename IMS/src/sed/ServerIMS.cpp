@@ -11,6 +11,7 @@
 
 #include "ServerIMS.hpp"
 #include "utilServer.hpp"
+#include "utilVishnu.hpp"
 #include "IMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "internalApiIMS.hpp"

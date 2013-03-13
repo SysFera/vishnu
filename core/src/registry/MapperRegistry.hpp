@@ -13,10 +13,10 @@
 #include <string>
 
 #include "SystemException.hpp"
-#include "Mapper.hpp"
 
 
 class Mapper;
+
 /**
  * \class MapperRegistry
  * \brief Registry of all the mapper

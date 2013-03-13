@@ -1,5 +1,9 @@
 #include "IMSVishnuException.hpp"
-#include "VishnuException.hpp"
+
+#include <map>                          // for map
+#include <utility>                      // for pair
+
+#include "VishnuException.hpp"          // for VishnuException, etc
 
 using namespace std;
 

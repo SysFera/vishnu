@@ -1,5 +1,8 @@
 #include "UserException.hpp"
 
+#include <map>                          // for map
+#include <utility>                      // for pair
+
 
 UserException::UserException():VishnuException(){ initMsg();}
 

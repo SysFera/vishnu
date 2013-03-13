@@ -1,6 +1,7 @@
 #include "Mapper.hpp"
-
 #include <map>
+#include <utility>                      // for pair
+#include "SystemException.hpp"          // for ERRCODE_SYSTEM, etc
 
 using namespace std;
 

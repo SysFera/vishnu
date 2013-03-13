@@ -12,6 +12,7 @@
 #include "MachineServer.hpp"
 
 #include "FMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 using namespace std;
 

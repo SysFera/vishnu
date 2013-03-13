@@ -1,6 +1,6 @@
 #include "MapperRegistry.hpp"
-
 #include <map>
+#include "VishnuException.hpp"          // for VishnuException, etc
 
 using namespace std;
 

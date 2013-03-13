@@ -6,16 +6,29 @@
  */
 
 #include "UMSMapper.hpp"
+
+#include <pthread.h>                    // for pthread_mutex_lock, etc
+#include <boost/date_time/posix_time/conversion.hpp>  // for from_time_t
+#include <boost/date_time/posix_time/ptime.hpp>  // for ptime
+#include <boost/date_time/posix_time/time_formatters.hpp>
+#include <map>                          // for map, _Rb_tree_iterator, etc
+#include <utility>                      // for pair
+
+
 #include "UMS_Data.hpp"
 #include "UMS_Data_forward.hpp"
-#include "UserServer.hpp"
-#include "SessionServer.hpp"
-#include "MachineServer.hpp"
-#include "LocalAccountServer.hpp"
-#include "ConfigurationServer.hpp"
-#include "QueryServer.hpp"
-#include "CommandServer.hpp"
-#include "utilServer.hpp"
+#include "utilServer.hpp"               // for parseEmfObject
+
+#include "Mapper.hpp"
+#include "MapperRegistry.hpp"
+#include "SystemException.hpp"          // for ERRCODE_SYSTEM, etc
+#include "UMSVishnuException.hpp"       // for UMSVishnuException
+#include "UserException.hpp"            // for ERRCODE_INVALID_PARAM
+#include "ecore_forward.hpp"            // for EString
+#include "ecorecpp/parser/parser.hpp"   // for parser
+#include "utilVishnu.hpp"               // for convertToString, etc
+
+
 
 using namespace vishnu;
 using namespace std;

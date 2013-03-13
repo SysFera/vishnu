@@ -7,12 +7,22 @@
 
 #include "TMSMapper.hpp"
 
-#include <boost/date_time/posix_time/posix_time.hpp>
+#include <pthread.h>                    // for pthread_mutex_lock, etc
+#include <boost/date_time/posix_time/conversion.hpp>  // for from_time_t
+#include <boost/date_time/posix_time/ptime.hpp>  // for ptime
+#include <boost/date_time/posix_time/time_formatters.hpp>
+#include <map>                          // for map, _Rb_tree_iterator, etc
+#include <utility>                      // for pair
+
+#include "Mapper.hpp"
+#include "MapperRegistry.hpp"
+#include "SystemException.hpp"          // for SystemException, etc
+#include "ecore_forward.hpp"            // for EString, ELong
+
 
 #include "TMS_Data.hpp"
 #include "TMS_Data_forward.hpp"
 #include "utilVishnu.hpp"
-#include "TMSVishnuException.hpp"
 #include "utilServer.hpp"
 #include "tmsUtils.hpp"
 
