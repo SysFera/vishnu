@@ -6,6 +6,9 @@
  */
 
 #include "IMSShellMapper.hpp"
+
+#include <string>
+
 #include "IMS_Data.hpp"
 #include "IMS_Data_forward.hpp"
 #include "UserServer.hpp"
@@ -25,5 +28,5 @@ IMSShellMapper::IMSShellMapper(){
 IMSShellMapper::~IMSShellMapper(){
 };
 
-IMSShellMapper::IMSShellMapper(MapperRegistry* reg, string na):IMSMapper(reg, na) {
+IMSShellMapper::IMSShellMapper(MapperRegistry* reg, std::string na):IMSMapper(reg, na) {
 }

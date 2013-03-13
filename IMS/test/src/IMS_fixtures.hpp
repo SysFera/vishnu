@@ -8,13 +8,14 @@
 #define _IMS_FIXTURES_HPP_
 
 #include "TMS_fixtures.hpp"
+
+#include <string>
+#include <map>
 #include <boost/test/unit_test.hpp>
 #include "api_tms.hpp"
 #include "api_ums.hpp"
 #include "api_ims.hpp"
 #include "FileParser.hpp"
-using namespace std;
-using namespace vishnu;
 
 
 
@@ -34,7 +35,7 @@ public:
     // Name of the test executable
     mav[0]= (char*)"./ims_automTest";
     // Client configuration file
-    string dietClientConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    std::string dietClientConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     mav[1]= (char*) dietClientConfigPath.c_str();
 
     if (vishnu::vishnuInitialize(mav[1], mac, mav)) {
@@ -43,7 +44,7 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
 
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
-    string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
     FileParser fileparser(vishnuTestSetupPath.c_str());
     std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
 

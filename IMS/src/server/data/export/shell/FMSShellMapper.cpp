@@ -6,6 +6,9 @@
  */
 
 #include "FMSShellMapper.hpp"
+
+#include <string>
+
 #include "FMS_Data.hpp"
 #include "FMS_Data_forward.hpp"
 #include "UserServer.hpp"
@@ -25,5 +28,5 @@ FMSShellMapper::FMSShellMapper(){
 FMSShellMapper::~FMSShellMapper(){
 };
 
-FMSShellMapper::FMSShellMapper(MapperRegistry* reg, string na):FMSMapper(reg, na) {
+FMSShellMapper::FMSShellMapper(MapperRegistry* reg, std::string na):FMSMapper(reg, na) {
 }
