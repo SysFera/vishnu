@@ -13,6 +13,7 @@
 
 
 #include <iostream>
+#include <string>
 #include <boost/shared_ptr.hpp>
 
 #include <ecore.hpp> // Ecore metamodel
@@ -40,11 +41,11 @@ using namespace vishnu;
  * \return The built option
  */
 boost::shared_ptr<Options>
-makeTransferCommandOptions(string pgName,
-                           string& configFile,
-                           string& trCmdStr,
-                           string& src,
-                           string& dest){
+makeTransferCommandOptions(std::string pgName,
+                           std::string& configFile,
+                           std::string& trCmdStr,
+                           std::string& src,
+                           std::string& dest){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -103,7 +104,7 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
                   FMS_Data::CpFileOptions& cpFileOptions,
                   TransferType transferType) {
   int ret; // Return value
-  string trCmdStr;
+  std::string trCmdStr;
 
   // build transfer command options
   boost::shared_ptr<Options> opt(makeTransferCommandOptions(argv[0],
