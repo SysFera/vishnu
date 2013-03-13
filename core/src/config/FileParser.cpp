@@ -7,12 +7,13 @@
 
 #include "FileParser.hpp"
 
-#include <fstream>
 #include <boost/algorithm/string/trim.hpp>  // for trim
-#include <map>
+#include <fstream>                      // for operator<<, basic_ostream, etc
+#include <map>                          // for _Rb_tree_iterator, map, etc
+#include <utility>                      // for pair
 
-#include "CommonParser.hpp"
-#include "UserException.hpp"  // for ERRCODE_FILENOTFOUND, etc
+#include "CommonParser.hpp"             // for Splitter, OptionMap, debug
+#include "UserException.hpp"            // for ERRCODE_FILENOTFOUND, etc
 
 FileParser::FileParser() {
 }

@@ -7,8 +7,19 @@
 
 #include "IMSMapper.hpp"
 
-#include <boost/date_time/posix_time/posix_time.hpp>
 #include <map>
+#include <pthread.h>                    // for pthread_mutex_lock, etc
+#include <boost/date_time/posix_time/conversion.hpp>  // for from_time_t
+#include <boost/date_time/posix_time/ptime.hpp>  // for ptime
+#include <boost/date_time/posix_time/time_formatters.hpp>
+#include <utility>                      // for pair
+
+#include "Mapper.hpp"
+#include "MapperRegistry.hpp"
+#include "SystemException.hpp"          // for ERRCODE_SYSTEM, etc
+#include "UserException.hpp"            // for ERRCODE_INVALID_PARAM
+#include "ecore_forward.hpp"            // for ELong
+
 
 #include "utilVishnu.hpp"
 #include "IMS_Data.hpp"

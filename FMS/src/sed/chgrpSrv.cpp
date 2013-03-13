@@ -13,6 +13,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "FMSMapper.hpp"
+#include "MapperRegistry.hpp"
 
 using namespace std;
 

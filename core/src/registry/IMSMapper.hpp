@@ -12,9 +12,8 @@
 #include <vector>
 
 #include "Mapper.hpp"
-#include "MapperRegistry.hpp"
 
-
+class MapperRegistry;
 
 /**
  * \brief To export commands

@@ -1,6 +1,8 @@
 #include "constants.hpp"
+
 #include <boost/assign/list_of.hpp>     // for generic_list, map_list_of, etc
-#include <map>
+#include <map>                          // for map
+#include <utility>                      // for pair
 
 namespace vishnu {
 

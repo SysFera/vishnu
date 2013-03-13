@@ -29,9 +29,10 @@
 #include <boost/algorithm/string/find.hpp>
 #include <boost/lexical_cast.hpp>
 
-#include <stdexcept>
+#include <exception>
 #include <sstream>
 #include <ctime>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <cstring>

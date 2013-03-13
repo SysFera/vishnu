@@ -6,27 +6,25 @@
 //
 
 #include "DIET_client.h"
-#include <cstdio>
-#include <cstring>
+
 #include <iostream>
 #include <iterator>
 #include <map>
 #include <string>
 #include <sstream>
 #include <vector>
-#include <boost/algorithm/string/regex.hpp>
-#include <boost/algorithm/string/classification.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/trim.hpp>
-#include <boost/algorithm/string/predicate.hpp>
-#include <boost/assign/list_of.hpp>
+#include <algorithm>                    // for copy, transform
+#include <stdexcept>                    // for out_of_range
+#include <utility>                      // for pair
+#include <boost/algorithm/string/predicate.hpp>  // for starts_with
+#include <boost/algorithm/string/regex.hpp>  // for split_regex
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include "utilVishnu.hpp"
+#include <zmq.hpp>                      // for context_t
+
+#include "constants.hpp"                // for ::DISP_URIADDR, etc
 #include "zhelpers.hpp"
-#include "Server.hpp"
 #include "SystemException.hpp"
-#include "UserException.hpp"
 #include "ExecConfiguration.hpp"
 #include "TMSServices.hpp"
 #include "UMSServices.hpp"

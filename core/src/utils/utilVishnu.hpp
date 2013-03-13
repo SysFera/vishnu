@@ -17,7 +17,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/thread/shared_mutex.hpp>
 
-#include "UMS_Data.hpp"
+#include "UMS_Data_forward.hpp"         // for Version_ptr
 
 namespace bfs = boost::filesystem;
 

@@ -1,5 +1,8 @@
 #include "InternalVishnuException.hpp"
-#include "VishnuException.hpp"
+
+#include <map>                          // for map
+
+#include "VishnuException.hpp"          // for VishnuException, etc
 
 InternalVishnuException::InternalVishnuException(InternalVishnuException& e):SystemException(e){
   mtype = VishnuException::INTERNAL;

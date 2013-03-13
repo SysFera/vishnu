@@ -9,12 +9,19 @@
 #include "FMSMapper.hpp"
 
 #include <map>
+#include <pthread.h>                    // for pthread_mutex_lock, etc
+#include <utility>                      // for pair
+
+#include "Mapper.hpp"
+#include "MapperRegistry.hpp"
+#include "SystemException.hpp"          // for SystemException, etc
+#include "ecore_forward.hpp"            // for EString, EInt
+
 
 #include "FMS_Data.hpp"
 #include "FMS_Data_forward.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
-#include "FMSVishnuException.hpp"
 
 
 

@@ -1,4 +1,8 @@
 #include "TMSVishnuException.hpp"
+
+#include <map>                          // for map
+#include <utility>                      // for pair
+
 #include "VishnuException.hpp"          // for VishnuException, etc
 
 TMSVishnuException::TMSVishnuException(const TMSVishnuException& e):UserException(e){

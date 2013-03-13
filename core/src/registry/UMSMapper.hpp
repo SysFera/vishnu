@@ -12,9 +12,8 @@
 #include <vector>
 
 #include "Mapper.hpp"
-#include "MapperRegistry.hpp"
-#include "utilVishnu.hpp"
 
+class MapperRegistry;
 
 /**
  * \brief Connection key

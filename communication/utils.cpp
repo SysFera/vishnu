@@ -1,4 +1,5 @@
 #include "utils.hpp"
+#include <iostream>                     // for operator<<, cerr, ostream
 
 
 ThreadPool::ThreadPool()

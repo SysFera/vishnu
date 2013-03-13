@@ -1,6 +1,8 @@
 #include "cliUtil.hpp"
-#include "vishnu_version.hpp"
 #include <boost/format.hpp>
+#include <stdexcept>                    // for runtime_error
+#include "Options.hpp"                  // for Options, Configuration, etc
+#include "vishnu_version.hpp"           // for VISHNU_VERSION
 
 
 using namespace std;

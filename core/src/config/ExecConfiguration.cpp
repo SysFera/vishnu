@@ -4,10 +4,14 @@
 
 #include "ExecConfiguration.hpp"
 
-#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/classification.hpp>  // for is_any_of
+#include <boost/algorithm/string/detail/classification.hpp>
+#include <boost/algorithm/string/split.hpp>  // for split
+#include <boost/iterator/iterator_facade.hpp>  // for operator!=
+#include <boost/range/iterator_range_core.hpp>  // for operator==
 
-#include "constants.hpp"
-#include "FileParser.hpp"
+#include "FileParser.hpp"               // for FileParser
+#include "constants.hpp"                // for param_t, param_type_t, etc
 
 using namespace std;
 
