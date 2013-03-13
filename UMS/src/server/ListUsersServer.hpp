@@ -96,7 +96,7 @@ public:
   UMS_Data::ListUsers* list() {
 
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-                              "where not userid='"+ ROOTUSERNAME +"'";
+    "where not userid='"+ vishnu::ROOTUSERNAME +"'";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -123,9 +123,9 @@ public:
         user->setPassword(*(++ii));
         user->setFirstname(*(++ii));
         user->setLastname(*(++ii));
-        user->setPrivilege(convertToInt(*(++ii)));
+        user->setPrivilege(vishnu::convertToInt(*(++ii)));
         user->setEmail(*(++ii));
-        user->setStatus(convertToInt(*(++ii)));
+        user->setStatus(vishnu::convertToInt(*(++ii)));
 
         mlistObject->getUsers().push_back(user);
         }

@@ -57,7 +57,7 @@ MonitorUMS::init(int vishnuId,
   AuthenticatorFactory authfactory;
   mauthenticator = authfactory.createAuthenticatorInstance(authenticatorConfig);
 
-  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+convertToString(vishnuId));
+  std::string sqlCommand("SELECT * FROM vishnu where vishnuid="+vishnu::convertToString(vishnuId));
 
   try {
     /*connection to the database*/

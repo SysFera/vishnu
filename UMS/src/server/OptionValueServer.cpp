@@ -11,6 +11,8 @@
 #include "DatabaseResult.hpp"
 #include "utilVishnu.hpp"
 
+using namespace vishnu;
+
 /**
 * \brief Constructor
 * \fn OptionValueServer()

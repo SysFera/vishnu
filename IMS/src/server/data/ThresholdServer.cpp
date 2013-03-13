@@ -54,9 +54,9 @@ ThresholdServer::setThreshold(IMS_Data::Threshold_ptr tree) {
 
   //  Create the insert or update sequence
   if (insert) {
-    request = "INSERT INTO threshold (users_numuserid, machine_nummachineid, typet, value) VALUES ('"+nuid+"', '"+nmid+"', '"+convertToString(tree->getType())+"', '"+convertToString(tree->getValue())+"')";
+    request = "INSERT INTO threshold (users_numuserid, machine_nummachineid, typet, value) VALUES ('"+nuid+"', '"+nmid+"', '"+vishnu::convertToString(tree->getType())+"', '"+vishnu::convertToString(tree->getValue())+"')";
   } else {
-    request = "UPDATE threshold set users_numuserid='"+nuid+"', value='"+convertToString(tree->getValue())+"' WHERE typet='"+convertToString(tree->getType())+"' AND machine_nummachineid='"+nmid+"'";
+    request = "UPDATE threshold set users_numuserid='"+nuid+"', value='"+vishnu::convertToString(tree->getValue())+"' WHERE typet='"+vishnu::convertToString(tree->getType())+"' AND machine_nummachineid='"+nmid+"'";
   }
   // Call the database
   try{
@@ -88,10 +88,10 @@ ThresholdServer::getThreshold() {
     }
     req += " AND machineid='"+mop.getMachineId()+"'";
   }
-  if(mop.getMetricType()==1 || // cpuuse
-     mop.getMetricType()==2 || // free disk
-     mop.getMetricType()==3) { // free memory
-    req += " AND typet='"+convertToString(mop.getMetricType())+"'";
+  if (mop.getMetricType() == 1 || // cpuuse
+      mop.getMetricType() == 2 || // free disk
+      mop.getMetricType() == 3) { // free memory
+    req += " AND typet='" + vishnu::convertToString(mop.getMetricType()) + "'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListThreshold_ptr mlistObject = ecoreFactory->createListThreshold();
@@ -104,8 +104,8 @@ ThresholdServer::getThreshold() {
       results = result->get(i);
       iter = results.begin();
       IMS_Data::Threshold_ptr tree = ecoreFactory->createThreshold();
-      tree->setType(convertToInt(*(iter)));
-      tree->setValue(convertToInt(*(iter+1)));
+      tree->setType(vishnu::convertToInt(*(iter)));
+      tree->setValue(vishnu::convertToInt(*(iter+1)));
       tree->setMachineId(*(iter+2));
       tree->setHandler(*(iter+3));
       mlistObject->getThreshold().push_back(tree);
@@ -119,7 +119,7 @@ ThresholdServer::getThreshold() {
 bool
 ThresholdServer::checkExist(IMS_Data::Threshold_ptr tree) {
   std::string req = "SELECT nummachineid from threshold, machine, users WHERE threshold.machine_nummachineid = machine.nummachineid AND users.numuserid=threshold.users_numuserid ";
-  req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+convertToString(tree->getType())+"'";
+  req += "AND machine.machineid ='"+tree->getMachineId()+"' AND threshold.typet='"+vishnu::convertToString(tree->getType())+"'";
   try {
     // Executing the request and getting the results
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
@@ -160,7 +160,7 @@ ThresholdServer::getUserAndMachine(IMS_Data::Threshold_ptr tree, std::string &nu
     tmp = result->get(0);
     iter = tmp.begin();
     nuid = (*(iter));
-    privil = convertToInt((*(iter+1)));
+    privil = vishnu::convertToInt((*(iter+1)));
     // If not an admin
     if (privil == 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid handler for the threshold, it must be an admin");

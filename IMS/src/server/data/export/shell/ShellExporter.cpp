@@ -63,7 +63,7 @@ ShellExporter::exporte(std::string oldSession, std::string &content){
     iter = line.begin();
     //MAPPER CREATION
     try {
-      CmdType type = static_cast<CmdType>(convertToInt(*iter));
+      vishnu::CmdType type = static_cast<vishnu::CmdType>(vishnu::convertToInt(*iter));
       Mapper* mapper = MapperRegistry::getInstance()->getMapper(getMapperName(type));
     content += mapper->decode(*(++iter));
     } catch (SystemException &e) {
@@ -108,16 +108,16 @@ std::string
 ShellExporter::getMapperName(int type) {
   std::string shellMapperName;
   switch (type) {
-  case UMS:
+  case vishnu::UMS:
      shellMapperName = UMSSHELLMAPPERNAME;
      break;
-  case TMS:
+  case vishnu::TMS:
      shellMapperName = TMSSHELLMAPPERNAME;
      break;
-  case FMS:
+  case vishnu::FMS:
      shellMapperName = FMSSHELLMAPPERNAME;
      break;
-  case IMS:
+  case vishnu::IMS:
      shellMapperName = IMSSHELLMAPPERNAME;
      break;
   default:

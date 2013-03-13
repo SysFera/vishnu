@@ -95,7 +95,7 @@ MonitorFMS::run() {
           pid = *iter;
           ++iter;
           try {
-            if(false==process_exists(vishnu::convertToString(pid))) {
+            if(false==vishnu::process_exists(vishnu::convertToString(pid))) {
               sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
               mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
             }

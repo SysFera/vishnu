@@ -164,9 +164,9 @@ protected:
       return 0;
     }
 
-    boost::posix_time::ptime pt(time_from_string(date));
+    boost::posix_time::ptime pt(boost::posix_time::time_from_string(date));
     boost::posix_time::ptime epoch(boost::gregorian::date(1970,1,1));
-    time_duration::sec_type time = (pt - epoch).total_seconds();
+    boost::posix_time::time_duration::sec_type time = (pt - epoch).total_seconds();
 
     return (long long) time_t(time);
 

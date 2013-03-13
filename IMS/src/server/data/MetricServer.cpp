@@ -250,7 +250,7 @@ MetricServer::getCurMet(){
   double disk;
   double cpu;
   double mem;
-  ptime p =  second_clock::local_time();
+  boost::posix_time::ptime p =  boost::posix_time::second_clock::local_time();
 
   sigar_file_system_usage_t fsu;
   sigar_file_system_usage_get(sigar, "/", &fsu);

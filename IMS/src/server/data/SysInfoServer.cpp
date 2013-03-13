@@ -24,7 +24,7 @@ SysInfoServer::~SysInfoServer() {
 
 IMS_Data::ListSysInfo_ptr
 SysInfoServer::getSysInfo() {
-  std::string req = "SELECT diskspace, machineid, memory from machine WHERE vishnu_vishnuid='"+convertToString(mvishnuId)+"'";
+  std::string req = "SELECT diskspace, machineid, memory from machine WHERE vishnu_vishnuid='"+vishnu::convertToString(mvishnuId)+"'";
   std::vector<std::string> results = std::vector<std::string>();
   std::vector<std::string>::iterator iter;
 
@@ -49,12 +49,12 @@ SysInfoServer::getSysInfo() {
         if ((*(iter)).empty()) {
           sys->setDiskSpace(-1);
         } else {
-          sys->setDiskSpace(convertToInt(*(iter)));
+          sys->setDiskSpace(vishnu::convertToInt(*(iter)));
         }
         if ((*(iter+2)).empty()) {
           sys->setMemory(-1);
         } else {
-          sys->setMemory(convertToInt(*(iter+2)));
+          sys->setMemory(vishnu::convertToInt(*(iter+2)));
         }
 	sys->setMachineId(*(iter+1));
 	mlistObject->getSysInfo().push_back(sys);
@@ -89,19 +89,19 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid negative value");
   }
   if (sys->getDiskSpace()>0) {
-    request += "  diskspace ="+convertToString(sys->getDiskSpace());
+    request += "  diskspace ="+vishnu::convertToString(sys->getDiskSpace());
     added = true;
   }
   if (sys->getMemory()>0) {
     if (added) {
       request += ",";
     }
-    request += "  memory ="+convertToString(sys->getMemory());
+    request += "  memory ="+vishnu::convertToString(sys->getMemory());
   }
   request += " where  machineid ='"+sys->getMachineId()+"'";
 
   request += " AND vishnu_vishnuid=";
-  request += convertToString(mvishnuId);
+  request += vishnu::convertToString(mvishnuId);
 
   try{
     mdatabase->process(request.c_str());

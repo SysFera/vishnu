@@ -12,6 +12,8 @@
 #include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
 
+using namespace vishnu;
+
 /**
  * \brief Constructor
  * \fn ConfigurationServer(SessionServer session)

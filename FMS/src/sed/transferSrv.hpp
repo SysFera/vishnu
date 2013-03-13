@@ -25,7 +25,6 @@
 
 #include "FileTransferServer.hpp"
 
-using namespace std;
 
 
 /**
@@ -125,7 +124,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   try {
 
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
 
     if (transferMode==File::sync){
 
@@ -161,7 +160,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     MachineServer machineServer(machine);
 
     // check the machine
-    if (isNotIP(destHost)){
+    if (vishnu::isNotIP(destHost)){
       machineServer.checkMachine();
     }
 
@@ -170,7 +169,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     delete machine;
 
     // get the acLogin
-    if (isNotIP(destHost)){
+    if (vishnu::isNotIP(destHost)){
       destUser = UserServer(sessionServer).getUserAccountLogin(destHost);
     } else {
       destUser = destHost;
@@ -226,11 +225,11 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
 
     }
     //To register the command
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
   } catch (VishnuException& err) {
     try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
       finishError =  fe.what();
       finishError +="\n";
@@ -288,17 +287,17 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
   try {
 
-    string destUserLogin(destUser);
-    string destMachineName(destHost);
+    std::string destUserLogin(destUser);
+    std::string destMachineName(destHost);
     SessionServer sessionServer (sessionKey);
 
     //MAPPER CREATION
-    string destCpltPath = destPath;
+    std::string destCpltPath = destPath;
     if(destUser.size()==0){
       destCpltPath = destHost + ":" + destPath;
     }
 
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
 
 
     if (transferMode==File::sync){
@@ -338,12 +337,12 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     MachineServer srcMachineServer(machine);
 
     // check the source machine
-    if (isNotIP(srcHost)){
+    if (vishnu::isNotIP(srcHost)){
       srcMachineServer.checkMachine();
     }
 
     // get the source machineName
-    if (isNotIP(srcHost)){
+    if (vishnu::isNotIP(srcHost)){
       srcMachineName = srcMachineServer.getMachineName();
     } else {
       srcMachineName = srcHost;
@@ -352,7 +351,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     delete machine;
 
     // get the source machine user login
-    if (isNotIP(srcHost)){
+    if (vishnu::isNotIP(srcHost)){
       srcUserLogin = UserServer(sessionServer).getUserAccountLogin(srcHost);
     } else {
       srcUserLogin = destUser;
@@ -366,7 +365,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
       MachineServer destMachineServer(machine);
 
       // check the destination machine
-      if (isNotIP(destHost)){
+      if (vishnu::isNotIP(destHost)){
         destMachineServer.checkMachine();
       }
 
@@ -375,7 +374,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
       delete machine;
 
       // get the destination  machine user login
-      if (isNotIP(destHost)){
+      if (vishnu::isNotIP(destHost)){
         destUserLogin = UserServer(sessionServer).getUserAccountLogin(destHost);
       } else {
         destUserLogin = destUser;
@@ -432,11 +431,11 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     }
 
     //To register the command
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
   } catch (VishnuException& err) {
     try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
       finishError =  fe.what();
       finishError +="\n";
@@ -493,7 +492,7 @@ solveGenerique(diet_profile_t* pb) {
 
   try {
     //To parse the object serialized
-    if(!parseEmfObject(optionValueSerialized, options)) {
+    if (!vishnu::parseEmfObject(optionValueSerialized, options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
@@ -501,7 +500,7 @@ solveGenerique(diet_profile_t* pb) {
   QueryType query(options, sessionServer);
 
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code(query.getCommandName());
     mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -517,10 +516,10 @@ solveGenerique(diet_profile_t* pb) {
     //OUT Parameter
     diet_string_set(pb,2, listSerialized.c_str());
     diet_string_set(pb,3);
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
       finishError =  fe.what();
       finishError +="\n";

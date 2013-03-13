@@ -147,8 +147,8 @@ public:
 			ii = results.begin();
 
 			UMS_Data::Command_ptr command = ecoreFactory->createCommand();
-			CmdType currentCmdType = static_cast<CmdType>(convertToInt(*ii));
-			command->setCommandId(convertCmdType(static_cast<CmdType>(currentCmdType)));
+			vishnu::CmdType currentCmdType = static_cast<vishnu::CmdType>(vishnu::convertToInt(*ii));
+			command->setCommandId(convertCmdType(static_cast<vishnu::CmdType>(currentCmdType)));
 			command->setSessionId(*(++ii));
 			command->setMachineId(*(++ii));
 			//MAPPER CREATION
@@ -157,7 +157,7 @@ public:
 			command->setCmdDescription(description);
 			command->setCmdStartTime(convertToTimeType(*(++ii)));
 			command->setCmdEndTime(convertToTimeType(*(++ii)));
-			command->setStatus(convertToInt(*(++ii)));
+			command->setStatus(vishnu::convertToInt(*(++ii)));
 
 			mlistObject->getCommands().push_back(command);
 		}
@@ -180,20 +180,20 @@ public:
 	 * \param type The type to convert
 	 * \return The corresponding string
 	 */
-	std::string convertCmdType(CmdType type) {
+	std::string convertCmdType(vishnu::CmdType type) {
 
 		std::string cmd;
 		switch(type) {
-		case UMS :
+		case vishnu::UMS :
 			cmd = "UMS";
 			break;
-		case TMS :
+		case vishnu::TMS :
 			cmd = "TMS";
 			break;
-		case FMS :
+		case vishnu::FMS :
 			cmd = "FMS";
 			break;
-		case IMS :
+		case vishnu::IMS :
 			cmd = "IMS";
 			break;
 		default:
@@ -210,21 +210,21 @@ public:
 	 * \return The corresponding mapper name
 	 */
 	std::string
-	convertypetoMapperName(CmdType type) {
+	convertypetoMapperName(vishnu::CmdType type) {
 
 		std::string mapperName;
 		switch(type) {
-		case UMS :
-			mapperName = UMSMAPPERNAME;
+		case vishnu::UMS :
+			mapperName = vishnu::UMSMAPPERNAME;
 			break;
-		case TMS :
-			mapperName = TMSMAPPERNAME;
+		case vishnu::TMS :
+			mapperName = vishnu::TMSMAPPERNAME;
 			break;
-		case FMS :
-			mapperName = FMSMAPPERNAME;
+		case vishnu::FMS :
+			mapperName = vishnu::FMSMAPPERNAME;
 			break;
-		case IMS :
-			mapperName = IMSMAPPERNAME;
+		case vishnu::IMS :
+			mapperName = vishnu::IMSMAPPERNAME;
 			break;
 		default:
 			mapperName = "Uknown Mapper Name";

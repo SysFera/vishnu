@@ -147,15 +147,15 @@ public:
         authSystem->setURI(*(++ii));
         std::string authLogin(*(++ii));
         std::string authPassword(*(++ii));
-        int userPasswordEncryption(convertToInt(*(++ii)));
-        int type(convertToInt(*(++ii)));
+        int userPasswordEncryption(vishnu::convertToInt(*(++ii)));
+        int type(vishnu::convertToInt(*(++ii)));
         if (mfullInfo) {
           authSystem->setAuthLogin(authLogin);
           authSystem->setAuthPassword(authPassword);
           authSystem->setUserPasswordEncryption(userPasswordEncryption);
           authSystem->setType(type);
         }
-        authSystem->setStatus(convertToInt(*(++ii)));
+        authSystem->setStatus(vishnu::convertToInt(*(++ii)));
         authSystem->setLdapBase(*(++ii));
         mlistObject->getAuthSystems().push_back(authSystem);
         }

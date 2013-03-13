@@ -152,20 +152,20 @@ FileTransferServer::logIntoDatabase(int processId,
   std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
 
   std::string sqlUpdate="UPDATE filetransfer set ";
-  sqlUpdate+="vsession_numsessionid="+numsession+",";
-  sqlUpdate+="userId='"+mfileTransfer.getUserId()+"',";
-  sqlUpdate+="clientMachineId='"+mfileTransfer.getClientMachineId()+"',";
-  sqlUpdate+="sourceMachineId='"+mfileTransfer.getSourceMachineId()+"',";
-  sqlUpdate+="destinationMachineId='"+mfileTransfer.getDestinationMachineId()+"',";
-  sqlUpdate+="sourceFilePath='"+mfileTransfer.getSourceFilePath()+"',";
-  sqlUpdate+="destinationFilePath='"+mfileTransfer.getDestinationFilePath()+"',";
-  sqlUpdate+="status="+convertToString(mfileTransfer.getStatus())+",";
-  sqlUpdate+="fileSize="+convertToString(mfileTransfer.getSize())+",";
-  sqlUpdate+="trCommand="+convertToString(mfileTransfer.getTrCommand())+",";
-  sqlUpdate+="processid="+convertToString(processId)+",";
-  sqlUpdate+="errorMsg='"+errorMsgCleaned+"',";
+  sqlUpdate+="vsession_numsessionid=" + numsession + ",";
+  sqlUpdate+="userId='" + mfileTransfer.getUserId() + "',";
+  sqlUpdate+="clientMachineId='" + mfileTransfer.getClientMachineId() + "',";
+  sqlUpdate+="sourceMachineId='" + mfileTransfer.getSourceMachineId() + "',";
+  sqlUpdate+="destinationMachineId='" + mfileTransfer.getDestinationMachineId() + "',";
+  sqlUpdate+="sourceFilePath='" + mfileTransfer.getSourceFilePath() + "',";
+  sqlUpdate+="destinationFilePath='" + mfileTransfer.getDestinationFilePath() + "',";
+  sqlUpdate+="status=" + vishnu::convertToString(mfileTransfer.getStatus()) + ",";
+  sqlUpdate+="fileSize=" + vishnu::convertToString(mfileTransfer.getSize()) + ",";
+  sqlUpdate+="trCommand=" + vishnu::convertToString(mfileTransfer.getTrCommand()) + ",";
+  sqlUpdate+="processid=" + vishnu::convertToString(processId) + ",";
+  sqlUpdate+="errorMsg='" + errorMsgCleaned + "',";
   sqlUpdate+="startTime=CURRENT_TIMESTAMP ";
-  sqlUpdate+="WHERE transferid='"+mfileTransfer.getTransferId()+"';";
+  sqlUpdate+="WHERE transferid='" + mfileTransfer.getTransferId() + "';";
 
 
   FileTransferServer::getDatabaseInstance()->process(sqlUpdate);
@@ -180,7 +180,7 @@ FileTransferServer::updateData() {
 
   std::string vishnuFileTransferId = vishnu::getObjectId(mvishnuId,
                                                          "formatidfiletransfer",
-                                                         FILETRANSFERT,
+                                                         vishnu::FILETRANSFERT,
                                                          clientMachineName);
 
   mfileTransfer.setClientMachineId(clientMachineName);
@@ -337,7 +337,7 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
                                  const std::string& errorMsg) {
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+vishnu::convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
     + " and status<>2";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 }
@@ -537,7 +537,7 @@ FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options) {
         iter = results.begin();
         transferid = *iter;
         ++iter;
-        pid = convertToInt(*iter);
+        pid = vishnu::convertToInt(*iter);
         stopThread(transferid,pid);
         ++iter;
       }
@@ -740,7 +740,7 @@ TransferExec::setLastExecStatus(const int& lastExecStatus) const {
 void
 TransferExec::updatePid(const int& pid) const {
   setProcessId(pid);
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET processid="+convertToString(pid)+" where transferId='"+getTransferId()+"'";
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET processid="+vishnu::convertToString(pid)+" where transferId='"+getTransferId()+"'";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 }
 

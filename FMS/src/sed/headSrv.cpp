@@ -48,7 +48,7 @@ int headFile(diet_profile_t* profile) {
   try {
 
     //MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(FMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_head_of_file");
     mapper->code(host + ":" + path, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
@@ -85,10 +85,10 @@ int headFile(diet_profile_t* profile) {
 	result = file->head(*options_ptr);
 
     //To register the command
-    sessionServer.finish(cmd, FMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& err) {
     try {
-      sessionServer.finish(cmd, FMS, vishnu::CMDFAILED);
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
       finishError =  fe.what();
       finishError +="\n";

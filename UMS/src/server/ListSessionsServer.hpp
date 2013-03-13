@@ -178,9 +178,9 @@ public:
             session->setSessionId(*(ii));
             session->setUserId(*(++ii));
             session->setSessionKey(*(++ii));
-            session->setStatus(convertToInt(*(++ii)));
-            session->setClosePolicy(convertToInt(*(++ii)));
-            session->setTimeout(convertToInt(*(++ii)));
+            session->setStatus(vishnu::convertToInt(*(++ii)));
+            session->setClosePolicy(vishnu::convertToInt(*(++ii)));
+            session->setTimeout(vishnu::convertToInt(*(++ii)));
             session->setDateLastConnect(convertToTimeType(*(++ii)));
             session->setDateCreation(convertToTimeType(*(++ii)));
             session->setDateClosure(convertToTimeType(*(++ii)));
