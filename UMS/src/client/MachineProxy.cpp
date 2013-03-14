@@ -4,9 +4,17 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date February 2011
  */
-#include "UMSVishnuException.hpp"
+
 #include "MachineProxy.hpp"
-#include "utilsClient.hpp"
+
+#include <string>                       // for string, allocator, etc
+
+#include "DIET_client.h"                // for diet_string_set, etc
+#include "UserException.hpp"            // for ERRCODE_INVALID_PARAM
+#include "ecorecpp/serializer/serializer.hpp"  // for serializer
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
+
+#include "UMSVishnuException.hpp"
 #include "UMSServices.hpp"
 
 /**

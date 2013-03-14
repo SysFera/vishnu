@@ -9,22 +9,9 @@
  */
 
 /* Posix headers */
-#include <cerrno>
+#include <string>                       // for string
 #include <fcntl.h>
-#include <cstdio>
-#include <cstring>
-#include <csignal>
-#include <syslog.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-/* C standard library */
-#include <cstdlib>
-/* C++ standard library */
-#include <iostream>
-#include <list>
-#include <sstream>
-#include <stdexcept>
+
 /* Boost headers */
 #include <boost/scoped_ptr.hpp>
 #include <boost/filesystem.hpp>
@@ -34,6 +21,7 @@
 #include <boost/interprocess/sync/file_lock.hpp>
 #include <boost/thread/thread.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+
 namespace bfs = boost::filesystem;
 namespace bi = boost::interprocess;
 namespace btt = boost::this_thread;
@@ -44,7 +32,7 @@ namespace bpt = boost::posix_time;
  * \param pid The given pid
  * \return True if the pid exists
  */
-bool 
+bool
 pid_exists(const std::string& pid);
 
 /**
@@ -53,7 +41,7 @@ pid_exists(const std::string& pid);
  * \param ac: The number of command parameters
  * \param av: The names of parameters
  */
-void 
+void
 deleter(char* configFile,int ac,char* av[]);
 
 /**
@@ -63,7 +51,7 @@ deleter(char* configFile,int ac,char* av[]);
  * \param av: The names of parameters
  */
 
-void 
+void
 cleaner(char* configFile,int ac,char* av[]);
 
 #endif

@@ -7,18 +7,18 @@
 
 
 
-#include "Options.hpp"
-
-#include "connectUtils.hpp"
 #include "localAccountUtils.hpp"
-#include<iostream>
+#include "Options.hpp"
+#include "connectUtils.hpp"
+
 using namespace std;
+
 /**
  * \brief To build options for the VISHNU local account commands
  * \param pgName : The name of the command
  * \param fUserId: The user identifier option callback
  * \param configFile: Represents the VISHNU config file
- * \param fMachineId: The machine identifier option callback 
+ * \param fMachineId: The machine identifier option callback
  * \param fAcLogin: The user login option callback
  * \param fSshKeyPath: The user ssh key path option callback
  * \param fHomeDirectory: The user home directory option callback
@@ -89,9 +89,3 @@ makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
 
 
 }
-
-
-
-
-
-

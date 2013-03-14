@@ -7,9 +7,6 @@
 #ifndef _AUTH_SYSTEM_PROXY_H_
 #define _AUTH_SYSTEM_PROXY_H_
 
-#include <string>
-#include <iostream>
-
 #include "SessionProxy.hpp"
 #include "AuthSystem.hpp"
 

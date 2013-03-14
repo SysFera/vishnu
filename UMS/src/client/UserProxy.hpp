@@ -7,17 +7,15 @@
 #ifndef _USER_PROXY_H_
 #define _USER_PROXY_H_
 
-#include <string>
 #include <iostream>
 
-#include "SessionProxy.hpp"
 #include "User.hpp"
 
 class SessionProxy;
 
 /**
- * \class UserProxy 
- * \brief UserProxy class implementation 
+ * \class UserProxy
+ * \brief UserProxy class implementation
  */
 class UserProxy
 {
@@ -25,71 +23,71 @@ class UserProxy
   public:
 
     /**
-     * \fn  UserProxy(const std::string& userId, const std::string& password) 
+     * \fn  UserProxy(const std::string& userId, const std::string& password)
      * \param userId the user identifier
-     * \param password the user password 
+     * \param password the user password
      * \brief Constructor, raises an exception on error
-     */	
+     */
     UserProxy(const std::string& userId, const std::string& password);
     /**
-     * \fn explicit UserProxy(SessionProxy session) 
+     * \fn explicit UserProxy(SessionProxy session)
      * \param session The object which encapsulates the session information (ex: identifier of the session)
      * \brief Constructor, raises an exception on error
      */
     explicit UserProxy(SessionProxy session);
     /**
-     * \fn explicit UserProxy(const UMS_Data::User& user) 
-     * \param user The object which encapsulates the user information 
+     * \fn explicit UserProxy(const UMS_Data::User& user)
+     * \param user The object which encapsulates the user information
      * \brief Constructor, raises an exception on error
      */
     explicit UserProxy(const UMS_Data::User& user);
     /**
-     * \brief Function to add new user 
+     * \brief Function to add new user
      * \fn  int add(UMS_Data::User& user)
      * \param user The object which encapsulates the user information
      * \return raises an exception on error
      */
     int add(UMS_Data::User& newUser);
     /**
-     * \brief Function to update user information 
+     * \brief Function to update user information
      * \fn  int update(const UMS_Data::User& user)
      * \param user The object which encapsulates the user information
      * \return raises an exception on error
      */
     int update(const UMS_Data::User& user);
     /**
-     * \brief Function to remove user information 
-     * \fn  int deleteUser(const UMS_Data::User& user) 
+     * \brief Function to remove user information
+     * \fn  int deleteUser(const UMS_Data::User& user)
      * \param user The object which encapsulates the user information
      * \return raises an exception on error
      */
     int deleteUser(const UMS_Data::User& user);
     /**
-     * \brief Function to change user password 
-     * \fn  int changePassword(const std::string& oldPassword, const std::string& newPassword) 
+     * \brief Function to change user password
+     * \fn  int changePassword(const std::string& oldPassword, const std::string& newPassword)
      * \param oldPassword the old password of the user
-     * \param newPassword the new password of the user 
+     * \param newPassword the new password of the user
      * \return raises an exception on error
      */
     int changePassword(const std::string& oldPassword, const std::string& newPassword);
     /**
-     * \brief Function to reset user password 
+     * \brief Function to reset user password
      * \fn  int resetPassword(UMS_Data::User& user)
-     * \param user The object which encapsulates the user information 
+     * \param user The object which encapsulates the user information
      * \return raises an exception on error
      */
     int resetPassword(UMS_Data::User& user);
     /**
-     * \brief Function get user information 
+     * \brief Function get user information
      * \fn  UMS_Data::User getData() const
-     * \return User object encapsulates the information of the user 
+     * \return User object encapsulates the information of the user
      * \return raises an exception on error
      */
     UMS_Data::User getData() const;
     /**
-     * \brief Function get SessionProxy object which contains the VISHNU session identifier 
+     * \brief Function get SessionProxy object which contains the VISHNU session identifier
      * \fn SessionProxy getSessionProxy() const
-     * \return a SessionProy object which contains the VISHNU session information 
+     * \return a SessionProy object which contains the VISHNU session information
      * \return raises an exception on error
      */
     SessionProxy getSessionProxy() const;
@@ -97,7 +95,7 @@ class UserProxy
     /**
      * \fn ~UserProxy()
      * \brief Destructor, raises an exception on error
-     */	
+     */
     ~UserProxy();
 
   private:
@@ -107,7 +105,7 @@ class UserProxy
     /////////////////////////////////
 
     /**
-     * \brief The object which encapsulates the user information 
+     * \brief The object which encapsulates the user information
      */
     UMS_Data::User muser;
     /**

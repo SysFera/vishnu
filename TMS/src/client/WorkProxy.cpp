@@ -10,6 +10,8 @@
 #include "utilsClient.hpp"
 #include "TMS_Data.hpp"
 #include "TMSServices.hpp"
+#include "DIET_client.h"
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
 
 /**
  * \param work The object which encapsulates the information of the work

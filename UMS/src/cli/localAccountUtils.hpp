@@ -10,13 +10,9 @@
 #define LOCALACCOUNTUTILS__HH
 
 
-//VISHNU Headers
 
-#include "common.hpp"
-
-//Boost Headers
-
-#include<boost/function.hpp>
+#include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>  // for shared_ptr
 
 
 class Options;
@@ -55,6 +51,3 @@ makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
 
 
 #endif
-
-
-

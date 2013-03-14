@@ -22,6 +22,8 @@
 #include "AuthSystemProxy.hpp"
 #include "AuthAccountProxy.hpp"
 #include "UMSServices.hpp"
+#include "UMSVishnuException.hpp"
+#include "UserProxy.hpp"
 
 using namespace std;
 

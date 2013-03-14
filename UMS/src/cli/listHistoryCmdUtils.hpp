@@ -10,14 +10,12 @@
 #ifndef LISTHISTORYCMDUTILS__HH
 #define LISTHISTORYCMDUTILS__HH
 
-//VISHNU Headers
 
-#include "common.hpp"
-
-//Boost Headers
-
+#include <boost/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 #include<boost/function.hpp>
 
+#include "UMS_Data.hpp"
 
 
 class Options;
@@ -32,7 +30,7 @@ boost::function1<void,std::string> StringcallBackType;
 
 /**
  * \brief The close policy option callback type
- * 
+ *
  */
 
 typedef
@@ -40,7 +38,7 @@ boost::function1<void,UMS_Data::SessionCloseType> ClosePolicycallBackType;
 
 /**
  * \brief The status option callback type
- * 
+ *
  */
 
 typedef
@@ -51,7 +49,7 @@ boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
  * \brief A convenient function type taking a integer  parameter and
  * without return value
  */
-typedef  
+typedef
 boost::function1<void,int> IntcallBackType;
 
 
@@ -78,6 +76,3 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,
 
 
 #endif
-
-
-

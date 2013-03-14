@@ -1,16 +1,14 @@
 /**
  * \file userUtils.cpp
- * \brief This file defines useful functions and types for the VISHNU user commands 
+ * \brief This file defines useful functions and types for the VISHNU user commands
  *  command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-
+#include "userUtils.hpp"
+#include <sstream>                      // for basic_stringbuf<>::int_type, etc
 #include "Options.hpp"
 
-#include "connectUtils.hpp"
-#include "userUtils.hpp"
-#include<iostream>
 using namespace std;
 
 /**
@@ -102,9 +100,3 @@ makeUserOptions(std::string pgName,std::string & configFile,
 
 
 }
-
-
-
-
-
-

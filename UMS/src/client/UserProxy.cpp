@@ -5,8 +5,17 @@
  * \date February 2011
  */
 #include "UserProxy.hpp"
+
+#include "DIET_client.h"                // for diet_string_set, etc
+#include "SessionProxy.hpp"             // for SessionProxy
+#include "UserException.hpp"            // for ERRCODE_INVALID_PARAM
+#include "Version.hpp"                  // for Version
+#include "ecore_forward.hpp"            // for EString
+#include "ecorecpp/serializer/serializer.hpp"  // for serializer
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
+
+
 #include "UMSVishnuException.hpp"
-#include "utilsClient.hpp"
 #include "vishnu_version.hpp"
 #include "utilVishnu.hpp"
 #include "UMSServices.hpp"

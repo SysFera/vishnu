@@ -7,6 +7,7 @@
 #include "api_fms.hpp"
 #include "IMSServices.hpp"
 #include "TMSServices.hpp"
+#include "DIET_client.h"
 
 using namespace vishnu;
 

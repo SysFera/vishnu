@@ -1,16 +1,29 @@
 /**
  * \file configureOptionUtils.hpp
- * \brief This file declare useful functions and types for the VISHNU configure 
+ * \brief This file declare useful functions and types for the VISHNU configure
  * option command
  * \author Ibrahima Cissé (ibrahima.cisse@sysfera.com)
  */
 
+
+#include <stdlib.h>                     // for exit
+#include <unistd.h>                     // for getppid
+#include <boost/bind.hpp>
+#include <boost/program_options/errors.hpp>  // for error, etc
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+
+#include "common.hpp"
+#include "OptionValue.hpp"              // for OptionValue
+#include "VishnuException.hpp"          // for VishnuException
+#include "api_ums.hpp"                  // for vishnuInitialize
+#include "cliError.hpp"                 // for CLI_ERROR_DIET, etc
+#include "sessionUtils.hpp"             // for checkBadSessionKeyError, etc
+
 #include "configureOptionUtils.hpp"
 #include "Options.hpp"
 #include "cliUtil.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
-#include <boost/bind.hpp>
 
 using namespace vishnu;
 
@@ -115,9 +128,9 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
   // initializing DIET
 
   if (vishnuInitialize(const_cast<char*>(const_cast<char*>(configFile.c_str())), ac, av)) {
-   
+
     errorUsage(av[0],dietErrorMsg,EXECERROR);
-    
+
     exit(CLI_ERROR_DIET);
   }
 
@@ -182,11 +195,3 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
 
 }// end of main
-
-
-
-
-
-
-
-

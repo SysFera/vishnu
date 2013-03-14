@@ -6,6 +6,8 @@
  * \date December 2011
  */
 
+#include "NetrcReader.hpp"
+
 #include <fstream>
 #include <sstream>
 #include <vector>
@@ -14,7 +16,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <sys/stat.h>
-#include "NetrcReader.hpp"
+
 #include "UserException.hpp"
 
 using namespace std;

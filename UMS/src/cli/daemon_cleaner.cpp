@@ -3,6 +3,26 @@
 #include <boost/foreach.hpp>
 #include <fstream>
 
+#include <sys/types.h>                  // for pid_t
+#include <syslog.h>                     // for syslog, LOG_ERR
+#include <unistd.h>                     // for fork, getpid
+#include <boost/date_time/posix_time/posix_time_duration.hpp>
+#include <boost/filesystem/fstream.hpp>  // for ofstream
+#include <boost/filesystem/operations.hpp>  // for directory_iterator, etc
+#include <boost/filesystem/path.hpp>    // for path
+#include <boost/interprocess/sync/file_lock.hpp>  // for file_lock
+#include <boost/interprocess/sync/lock_options.hpp>
+#include <boost/interprocess/sync/scoped_lock.hpp>  // for scoped_lock
+#include <boost/iterator/iterator_facade.hpp>  // for iterator_facade, etc
+#include <boost/mpl/bool.hpp>           // for bool_
+#include <boost/mpl/bool_fwd.hpp>       // for false_
+#include <csignal>                      // for kill
+#include <cstdlib>                      // for exit, EXIT_SUCCESS, getenv, etc
+#include <iostream>                     // for basic_ostream, etc
+#include <list>                         // for list
+#include "VishnuException.hpp"          // for VishnuException
+
+
 #include "sessionUtils.hpp"
 #include "utilVishnu.hpp"
 #include "api_ums.hpp"

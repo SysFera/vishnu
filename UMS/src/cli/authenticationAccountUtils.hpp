@@ -10,19 +10,9 @@
 #define AUTHENTICATIONACCOUNTUTILS_HPP
 
 
-#include<iostream>
-#include<boost/shared_ptr.hpp>
-
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
-#include "UMS_Data.hpp"
-
-
-//Boost Headers
-
-#include<boost/function.hpp>
-
-
+#include <boost/shared_ptr.hpp>
+#include <boost/function.hpp>
+#include <string>                       // for string
 
 
 class Options;
@@ -50,6 +40,3 @@ typedef  boost::function1<void,std::string> StringcallBackType;
 boost::shared_ptr<Options> makeAuthAccountOptions(std::string pgName,std::string & configFile,StringcallBackType& fAuthSytemId,StringcallBackType& fUserId, StringcallBackType& fAcLogin, int type=0);
 
 #endif
-
-
-

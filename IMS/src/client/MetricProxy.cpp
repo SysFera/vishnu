@@ -2,6 +2,7 @@
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
 #include "IMSServices.hpp"
+#include "DIET_client.h"
 
 using namespace std;
 using namespace vishnu;

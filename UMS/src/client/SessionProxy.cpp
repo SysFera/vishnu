@@ -4,17 +4,23 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date February 2011
  */
+#include "SessionProxy.hpp"
+
 #include <string>
-#include <vector>
-#include <list>
 #include <iostream>
 #include <fstream>
 #include <unistd.h>
 
-#include "SessionProxy.hpp"
+#include "DIET_client.h"                // for diet_string_set, etc
+#include "User.hpp"                     // for User
+#include "UserException.hpp"            // for ERRCODE_INVALID_PARAM
+#include "Version.hpp"                  // for Version
+#include "UMS_Data.hpp"
+#include "ecore_forward.hpp"            // for EString
+#include "ecorecpp/serializer/serializer.hpp"  // for serializer
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
 #include "UserProxy.hpp"
 #include "UMSVishnuException.hpp"
-#include "utilsClient.hpp"
 #include "vishnu_version.hpp"
 #include "utilVishnu.hpp"
 #include "UMSServices.hpp"

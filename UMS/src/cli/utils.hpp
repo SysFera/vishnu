@@ -8,10 +8,8 @@
 #ifndef CLIUTILS_HPP
 #define CLIUTILS_HPP
 
-#include "UMS_Data.hpp"
 #include <iostream>
-class Options;
-
+#include "UMS_Data.hpp"
 
 /**
  * \brief Display a '-' caracter

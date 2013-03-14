@@ -10,6 +10,11 @@
 #include <string>
 #include <iostream>
 
+#include <ecore.hpp>
+#include <ecorecpp.hpp>
+
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "DIET_client.h"
 #include "utilsClient.hpp"
 #include "SessionProxy.hpp"
 

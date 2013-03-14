@@ -10,6 +10,7 @@
 #include <boost/filesystem.hpp>
 #include "tmsUtils.hpp"
 #include "TMSServices.hpp"
+#include "DIET_client.h"
 
 using namespace std;
 namespace bfs=boost::filesystem;

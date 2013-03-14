@@ -5,8 +5,12 @@
  * \date February 2011
  */
 #include "utilsClient.hpp"
+
+#include <algorithm>                    // for min, fill
 #include <boost/regex.hpp>
-#include "utilVishnu.hpp"
+#include <vector>                       // for vector
+
+#include "UMSVishnuException.hpp"       // for UMSVishnuException, etc
 
 /**
  * \brief Function to check if a text is empty

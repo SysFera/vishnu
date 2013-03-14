@@ -8,15 +8,13 @@
 #define _CONFIGURATION_PROXY_H_
 
 #include <string>
-#include <iostream>
-#include <fstream>
 
 #include "SessionProxy.hpp"
 #include "Configuration.hpp"
 
 /**
- * \class ConfigurationProxy 
- * \brief ConfigurationProxy class implementation 
+ * \class ConfigurationProxy
+ * \brief ConfigurationProxy class implementation
  */
 class ConfigurationProxy
 {
@@ -34,40 +32,40 @@ class ConfigurationProxy
     /**
      * \fn ConfigurationProxy(UMS_Data::Configuration* config,
      *                        const SessionProxy& session)
-     * \param config The object which encapsulates the configuration description 
+     * \param config The object which encapsulates the configuration description
      * \param session The object which encapsulates the session information (ex: identifier of the session)
      * \brief Constructor, raises an exception on error
      */
     ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session);
     /**
-     * \brief Function to save the configuration of VISHNU 
+     * \brief Function to save the configuration of VISHNU
      * \fn  int save()
      * \return raises an exception on error
      */
     int save();
     /**
-     * \brief Function to restore the configuration of VISHNU from a file 
+     * \brief Function to restore the configuration of VISHNU from a file
      * \fn  int restoreFromFile()
      * \return raises an exception on error
      */
     int restoreFromFile();
     /**
-     * \brief Function to restore the configuration of VISHNU from an object (Data) 
+     * \brief Function to restore the configuration of VISHNU from an object (Data)
      * \fn  int restoreFromData()
      * \return raises an exception on error
      */
     int restoreFromData();
     /**
-     * \brief Function get the saved configuration of VISHNU 
+     * \brief Function get the saved configuration of VISHNU
      * \fn  UMS_Data::Configuration* getData()
-     * \return saved configuration 
+     * \return saved configuration
      * \return raises an exception on error
      */
     UMS_Data::Configuration* getData();
     /**
-     * \brief Function get SessionProxy object which contains the VISHNU session identifier 
-     * \fn SessionProxy getSessionProxy() 
-     * \return a SessionProy object which contains the VISHNU session information 
+     * \brief Function get SessionProxy object which contains the VISHNU session identifier
+     * \fn SessionProxy getSessionProxy()
+     * \return a SessionProy object which contains the VISHNU session information
      * \return raises an exception on error
      */
     SessionProxy getSessionProxy();
@@ -79,9 +77,9 @@ class ConfigurationProxy
 
   private:
     /**
-     * \brief Function to combine restoreFromFile() and restoreFromData() into one function 
+     * \brief Function to combine restoreFromFile() and restoreFromData() into one function
      * \fn  int restore(bool fromFile=true)
-     * \param fromFile To select the call of restoreFromFile or restoreFromData function 
+     * \param fromFile To select the call of restoreFromFile or restoreFromData function
      * \return raises an exception on error
      */
     int restore(bool fromFile=true);
@@ -92,7 +90,7 @@ class ConfigurationProxy
 
     /**
      * \brief A pointer on the Configuration object
-     */ 
+     */
     UMS_Data::Configuration *mconfiguration;
     /**
      * \brief The SessionProxy object containing the encrypted identifier of the session

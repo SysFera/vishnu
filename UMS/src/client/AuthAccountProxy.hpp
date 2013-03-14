@@ -8,7 +8,6 @@
 #define _AUTH_ACCOUNT_PROXY_H_
 
 #include <string>
-#include <iostream>
 
 #include "SessionProxy.hpp"
 #include "AuthAccount.hpp"
