@@ -1,17 +1,17 @@
 /**
  * \file close.cpp
- * This file defines the VISHNU close command 
+ * This file defines the VISHNU close command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
+#include <unistd.h>                     // for getppid
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 
-
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include "GenericCli.hpp"
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options, ::ENV
+#include "api_ums.hpp"                  // for close
+#include "sessionUtils.hpp"             // for getSessionLocation, etc
 
 namespace po = boost::program_options;
 
@@ -22,13 +22,13 @@ struct CloseFunc {
 
 
   int operator()(std::string sessionKey) {
-    
+
     int res = close(sessionKey);
-      
+
     std::string sessionFile=getSessionLocation(getppid());
-      
+
     removeLastSession(sessionFile);
-    
+
     return res;
   }
 };
@@ -51,11 +51,8 @@ int main (int ac, char* av[]){
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
- 
+
   CloseFunc apiFunc;
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main
-
-
-

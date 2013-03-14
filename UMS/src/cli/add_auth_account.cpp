@@ -4,15 +4,17 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "authenticationAccountUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
 #include <boost/bind.hpp>
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 
+#include "AuthAccount.hpp"              // for AuthAccount
+#include "api_ums.hpp"                  // for addAuthAccount
+#include "authenticationAccountUtils.hpp"
 #include "GenericCli.hpp"
+
+class Options;
 
 namespace po = boost::program_options;
 

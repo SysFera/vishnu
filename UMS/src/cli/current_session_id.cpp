@@ -5,15 +5,19 @@
  */
 
 
+#include <unistd.h>                     // for getppid
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <iostream>                     // for operator<<, basic_ostream, etc
+#include <string>                       // for allocator, operator+, etc
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include "GenericCli.hpp"
-#include "UserException.hpp"
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options
+#include "UserException.hpp"            // for ERRCODE_CLI_ERROR_RUNTIME
+#include "VishnuException.hpp"          // for VishnuException, VISHNU_OK
+#include "cliUtil.hpp"                  // for errorUsage, ::EXECERROR
+#include "sessionUtils.hpp"             // for checkBadSessionKeyError, etc
 
-namespace po = boost::program_options;
 
 using namespace std;
 using namespace vishnu;

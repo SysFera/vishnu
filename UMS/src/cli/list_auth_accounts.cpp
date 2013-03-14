@@ -4,16 +4,21 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include <boost/bind.hpp>
-#include "utilVishnu.hpp"
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for ostream, cout, endl
+#include <string>                       // for string
 
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "ListAuthAccOptions.hpp"       // for ListAuthAccOptions
+#include "ListAuthAccounts.hpp"         // for ListAuthAccounts
+#include "Options.hpp"                  // for Options, ::CONFIG, ::ENV
+#include "api_ums.hpp"                  // for listAuthAccounts
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "utils.hpp"                    // for operator<<
 
 using namespace std;
 using namespace vishnu;
@@ -110,5 +115,3 @@ int main (int ac, char* av[]){
   ListAuthenticationAccountsFunc listAuthenticationAccountsFunc (lsAuthAccounts, listOptions, full);
   return GenericCli().run(listAuthenticationAccountsFunc, configFile, ac, av);
 }// end of main
-
-

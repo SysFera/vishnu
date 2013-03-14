@@ -5,16 +5,19 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "localAccountUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include <boost/bind.hpp>
-#include "GenericCli.hpp"
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "LocalAccount.hpp"             // for LocalAccount
+#include "api_ums.hpp"                  // for updateLocalAccount
+#include "localAccountUtils.hpp"        // for makeLocalAccountOptions
+
+class Options;
 
 using namespace std;
 using namespace vishnu;

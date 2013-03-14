@@ -4,16 +4,21 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
-#include "sessionUtils.hpp"
-#include<boost/bind.hpp>
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for ostream, cout, endl
+#include <string>                       // for string
 
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "ListOptOptions.hpp"           // for ListOptOptions
+#include "ListOptionsValues.hpp"        // for ListOptionsValues
+#include "Options.hpp"                  // for Options, ::CONFIG, ::ENV
+#include "api_ums.hpp"                  // for listOptions
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "utils.hpp"                    // for operator<<
 
 using namespace std;
 using namespace vishnu;
@@ -111,7 +116,3 @@ int main (int ac, char* av[]){
   ListOptionsFunc listFunc(lsOptionsValues,lsOptions, full);
   return GenericCli().run(listFunc, configFile, ac, av);
 }// end of main
-
-
-
- 

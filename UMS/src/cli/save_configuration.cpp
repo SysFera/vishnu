@@ -1,20 +1,18 @@
 /**
  * \file save_configuration.cpp
- * This file defines the VISHNU save configuration command 
+ * This file defines the VISHNU save configuration command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
 
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for basic_ostream, operator<<, etc
+#include <string>                       // for string, operator<<
 
-
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include "Configuration.hpp"            // for Configuration
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options, ::ENV
+#include "api_ums.hpp"                  // for saveConfiguration
 
 using namespace std;
 using namespace vishnu;
@@ -53,7 +51,7 @@ int main (int ac, char* av[]){
           "VISHNU configuration file",
           ENV,
           configFile);
-  
+
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
@@ -62,5 +60,3 @@ int main (int ac, char* av[]){
   return GenericCli().run(configFunc, configFile, ac, av);
 
 }// end of main
-
-

@@ -11,6 +11,7 @@
 #include <boost/filesystem/fstream.hpp>
 #include <sys/types.h>
 #include <boost/shared_ptr.hpp>
+#include <signal.h>
 
 #include "MachineServer.hpp"
 #include "ServerTMS.hpp"
@@ -27,8 +28,8 @@
 #include "zhelpers.hpp"
 #include "CommServer.hpp"
 #include "tmsUtils.hpp"
+#include "utilServer.hpp"
 
-#include <signal.h>
 
 
 using namespace std;

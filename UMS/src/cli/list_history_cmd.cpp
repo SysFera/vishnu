@@ -4,16 +4,22 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-
-#include "common.hpp"
-#include "listHistoryCmdUtils.hpp"
-#include "sessionUtils.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
-#include<boost/bind.hpp>
-#include "GenericCli.hpp"
-namespace po = boost::program_options;
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for ostream, cout, endl
+#include <string>                       // for string
+#include "GenericCli.hpp"               // for GenericCli
+#include "ListCmdOptions.hpp"           // for ListCmdOptions
+#include "ListCommands.hpp"             // for ListCommands
+#include "Options.hpp"                  // for Options
+#include "api_ums.hpp"                  // for listHistoryCmd
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "listHistoryCmdUtils.hpp"      // for makeListHistoryCmdOptions
+#include "utilVishnu.hpp"               // for string_to_time_t
+#include "utils.hpp"                    // for operator<<
 
 using namespace std;
 using namespace vishnu;

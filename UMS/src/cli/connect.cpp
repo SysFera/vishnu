@@ -4,16 +4,33 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "connectUtils.hpp"
-#include "sessionUtils.hpp"
-#include <boost/bind.hpp>
-#include "daemon_cleaner.hpp"
-#include "utilVishnu.hpp"
-#include "UMSVishnuException.hpp"
+#include <stdlib.h>                     // for exit
+#include <unistd.h>                     // for getppid
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/program_options/errors.hpp>  // for error, etc
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <iostream>                     // for operator<<, basic_ostream, etc
+#include <sstream>                      // for basic_stringbuf<>::int_type, etc
+#include <string>                       // for string, allocator, etc
+
+#include "ConnectOptions.hpp"           // for ConnectOptions
+#include "Options.hpp"                  // for Options, ::CONFIG, ::ENV
+#include "Session.hpp"                  // for Session
+#include "UMSVishnuException.hpp"       // for ERRCODE_TEMPORARY_PASSWORD
 #include "UserException.hpp"
+#include "VishnuException.hpp"          // for VishnuException, VISHNU_OK
+#include "api_ums.hpp"                  // for connect, vishnuInitialize
+#include "cliUtil.hpp"                  // for errorUsage, ::EXECERROR, etc
+#include "common.hpp"                   // for REQUIREDPARAMMSG
+#include "connectUtils.hpp"             // for UMS_env_name_mapper, etc
+#include "daemon_cleaner.hpp"           // for cleaner
+#include "ecore_forward.hpp"            // for EInt
+#include "sessionUtils.hpp"             // for storeLastSession
+#include "utilVishnu.hpp"               // for takePassword
 
 namespace po = boost::program_options;
 

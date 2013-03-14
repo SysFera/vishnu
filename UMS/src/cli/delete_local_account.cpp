@@ -4,16 +4,12 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include "connectUtils.hpp"
-#include "utilVishnu.hpp"
-
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options, ::HIDDEN
+#include "api_ums.hpp"                  // for deleteLocalAccount
+#include "connectUtils.hpp"             // for makeConnectOptions
 
 using namespace std;
 using namespace vishnu;
