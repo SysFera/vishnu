@@ -79,7 +79,7 @@ main(int argc, char* argv[], char* envp[]) {
   }
   if (std::string(argv[1]) == "-v" ||
       std::string(argv[1]) == "--v"){
-    return showVersion("tmssed");
+    return showVersion("umssed");
   }
 
   // Read the configuration
