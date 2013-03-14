@@ -8,12 +8,8 @@
 #define  _utilsClient_H_
 
 #include <string>
-#include <cstring>
 #include <iostream>
-#include <sstream>
 
-#include "utilClient.hpp"
-#include "UMSVishnuException.hpp"
 
 /**
  * \brief Function to print an error message and the line and file where this error has been occured

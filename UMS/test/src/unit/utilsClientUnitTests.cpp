@@ -1,7 +1,8 @@
 #include <boost/test/unit_test.hpp>
 #include <string>
 #include "utilsClient.hpp"
-
+#include "UserException.hpp"
+#include "UMSVishnuException.hpp"
 
 BOOST_AUTO_TEST_SUITE( utilsClient_unit_tests )
 

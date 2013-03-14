@@ -5,11 +5,12 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "Options.hpp"
+#include <boost/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 
-#include "connectUtils.hpp"
+#include "Options.hpp"
 #include "localAccountUtils.hpp"
-#include<iostream>
+
 using namespace std;
 
 
@@ -108,9 +109,3 @@ boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackT
 
 
 }
-
-
-
-
-
-

@@ -7,15 +7,12 @@
 #ifndef _OPTION_VALUE_PROXY_H_
 #define _OPTION_VALUE_PROXY_H_
 
-#include <string>
-#include <iostream>
-
 #include "SessionProxy.hpp"
 #include "OptionValue.hpp"
 
 /**
- * \class OptionValueProxy 
- * \brief OptionValueProxy class implementation 
+ * \class OptionValueProxy
+ * \brief OptionValueProxy class implementation
  */
 class OptionValueProxy
 {
@@ -25,34 +22,34 @@ class OptionValueProxy
     /**
      * \fn OptionValueProxy(const UMS_Data::OptionValue& optionValue,
      *                      const SessionProxy& session)
-     * \param optionValue The object which encapsulates the information of the option 
+     * \param optionValue The object which encapsulates the information of the option
      * \param session The object which encapsulates the session information (ex: identifier of the session)
      * \brief Constructor, raises an exception on error
      */
     OptionValueProxy(const UMS_Data::OptionValue& optionValue, const SessionProxy& session);
     /**
-     * \brief Function to configure an option of the user 
+     * \brief Function to configure an option of the user
      * \fn  int configureOption()
      * \return raises an exception on error
      */
     int configureOption();
     /**
-     * \brief Function to configure a default option value 
-     * \fn  int configureDefaultOption() 
+     * \brief Function to configure a default option value
+     * \fn  int configureDefaultOption()
      * \return raises an exception on error
      */
     int configureDefaultOption();
     /**
-     * \brief Function get option information 
+     * \brief Function get option information
      * \fn  UMS_Data::OptionValue getData()
-     * \return OptionValue object encapsulates the information of the machine 
+     * \return OptionValue object encapsulates the information of the machine
      * \return raises an exception on error
      */
     UMS_Data::OptionValue getData();
     /**
-     * \brief Function get SessionProxy object which contains the VISHNU session identifier 
-     * \fn SessionProxy getSessionProxy() 
-     * \return a SessionProy object which contains the VISHNU session information 
+     * \brief Function get SessionProxy object which contains the VISHNU session identifier
+     * \fn SessionProxy getSessionProxy()
+     * \return a SessionProy object which contains the VISHNU session information
      * \return raises an exception on error
      */
     SessionProxy getSessionProxy();
@@ -65,9 +62,9 @@ class OptionValueProxy
   private:
 
     /**
-     * \brief Function to combine configureOption() and configureDefaultOption() into one function 
-     * \fn  int setOptionValue(bool defaultValue=true); 
-     * \param defaultValue to select the call of configureOption() or configureOption() function 
+     * \brief Function to combine configureOption() and configureDefaultOption() into one function
+     * \fn  int setOptionValue(bool defaultValue=true);
+     * \param defaultValue to select the call of configureOption() or configureOption() function
      * \return raises an exception on error
      */
     int setOptionValue(bool defaultValue=true);
@@ -77,7 +74,7 @@ class OptionValueProxy
     /////////////////////////////////
 
     /**
-     * \brief The object which encapsulates the option information 
+     * \brief The object which encapsulates the option information
      */
     UMS_Data::OptionValue moptionValue;
     /**

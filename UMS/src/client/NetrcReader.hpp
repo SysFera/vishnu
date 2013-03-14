@@ -12,7 +12,7 @@
 #include <vector>
 #include <map>
 #include <string>
-
+#include <utility>                      // for pair
 
 /**
  * \class NetrcReader

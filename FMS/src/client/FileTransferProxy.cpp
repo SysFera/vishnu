@@ -5,6 +5,7 @@
 #include "SessionProxy.hpp"
 #include "utilClient.hpp"
 #include "FMSServices.hpp"
+#include "DIET_client.h"
 
 using namespace FMS_Data;
 using namespace UMS_Data;

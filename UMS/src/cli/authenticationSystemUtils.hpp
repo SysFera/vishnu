@@ -10,20 +10,11 @@
 #define AUTHENTICATIONSYSTEMUTILS_HPP
 
 
-#include<iostream>
-#include<boost/shared_ptr.hpp>
-
-#include <ecore.hpp> // Ecore metamodel
-#include <ecorecpp.hpp> // EMF4CPP utils
-#include "UMS_Data.hpp"
-
-
-//Boost Headers
-
 #include<boost/function.hpp>
+#include<boost/shared_ptr.hpp>
+#include <string>                       // for string
 
-
-
+#include "UMS_Data.hpp"
 
 class Options;
 
@@ -84,6 +75,3 @@ typedef  boost::function1<void,UMS_Data::StatusType> StatuscallBackType;
 boost::shared_ptr<Options> makeAuthSystemOptions(std::string pgName,std::string & configFile,StringcallBackType& fName,StringcallBackType& fURI, StringcallBackType& fAuthLogin,StringcallBackType& fAuthPassword, EncryptioncallBackType&fUserPasswordEncryption,AuthcallBackType& fType, StringcallBackType& fLdapBase,int type=0);
 
 #endif
-
-
-

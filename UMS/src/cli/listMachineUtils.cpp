@@ -6,12 +6,9 @@
  */
 
 
-
 #include "Options.hpp"
-
-#include "connectUtils.hpp"
 #include "listMachineUtils.hpp"
-#include<iostream>
+
 using namespace std;
 
 
@@ -51,9 +48,3 @@ makeListMachineOptions(std::string pgName,StringcallBackType& fUserId,
 
   return opt;
 }
-
-
-
-
-
-

@@ -6,6 +6,7 @@
 #include "utilVishnu.hpp"
 #include "QueryProxy.hpp"
 #include "IMSServices.hpp"
+#include "UserException.hpp"
 
 using namespace vishnu;
 

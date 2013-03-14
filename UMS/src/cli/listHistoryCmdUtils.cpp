@@ -8,9 +8,8 @@
 
 
 #include "Options.hpp"
-
 #include "listHistoryCmdUtils.hpp"
-#include<iostream>
+
 using namespace std;
 
 /**
@@ -23,7 +22,7 @@ using namespace std;
  * \param endDateOption: The end date option
  * \return The description of all options allowed by the command
  */
-boost::shared_ptr<Options> 
+boost::shared_ptr<Options>
 makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::string & configFile,
                           StringcallBackType& fSessionId,
                           std::string& startDateOption,
@@ -71,8 +70,3 @@ makeListHistoryCmdOptions(std::string pgName,StringcallBackType& fUserId,std::st
   return opt;
 
 }
-
-
-
-
-

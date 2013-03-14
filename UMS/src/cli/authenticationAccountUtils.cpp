@@ -5,10 +5,10 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include<iostream>
 #include "authenticationAccountUtils.hpp"
-#include "Options.hpp"
 #include <string>
+#include "Options.hpp"
+
 using namespace std;
 
 

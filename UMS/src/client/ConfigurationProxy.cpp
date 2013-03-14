@@ -6,8 +6,12 @@
  */
 #include "ConfigurationProxy.hpp"
 
-#include "UMSVishnuException.hpp"
-#include "utilsClient.hpp"
+#include <fstream>                      // for ofstream, basic_ostream
+
+#include "Configuration.hpp"            // for Configuration
+#include "DIET_client.h"                // for diet_string_set, etc
+#include "ecorecpp/serializer/serializer.hpp"  // for serializer
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
 #include "utilVishnu.hpp"
 #include "UMSServices.hpp"
 

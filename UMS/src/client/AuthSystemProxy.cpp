@@ -4,9 +4,14 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date February 2011
  */
-#include "UMSVishnuException.hpp"
-#include "utilsClient.hpp"
+
 #include "AuthSystemProxy.hpp"
+
+#include <string>                       // for string, allocator, etc
+
+#include "DIET_client.h"                // for diet_string_set, etc
+#include "ecorecpp/serializer/serializer.hpp"  // for serializer
+#include "utilClient.hpp"               // for raiseDietMsgException, etc
 #include "UMSServices.hpp"
 
 /**

@@ -5,24 +5,37 @@
  */
 
 
-
+#include "utils.hpp"
 
 #include <iostream>
-#include "boost/date_time/posix_time/posix_time.hpp"
 #include <algorithm>
 #include <string>
-#include <cstdlib>
 #include <iomanip>
-#include <stdexcept>
-#include "utils.hpp"
-#include "SessionProxy.hpp"
-#include "MachineProxy.hpp"
-#include "LocalAccountProxy.hpp"
-#include "ConfigurationProxy.hpp"
-#include "Options.hpp"
+#include <boost/date_time/posix_time/conversion.hpp>  // for from_time_t
+#include <boost/date_time/posix_time/ptime.hpp>  // for ptime
+#include <boost/date_time/posix_time/time_formatters.hpp>
+#include <sstream>
+
+#include "AuthAccount.hpp"              // for AuthAccount
+#include "AuthSystem.hpp"               // for AuthSystem
+#include "Command.hpp"                  // for Command
+#include "ListAuthAccounts.hpp"         // for ListAuthAccounts
+#include "ListAuthSystems.hpp"          // for ListAuthSystems
+#include "ListCommands.hpp"             // for ListCommands
+#include "ListLocalAccounts.hpp"        // for ListLocalAccounts
+#include "ListMachines.hpp"             // for ListMachines
+#include "ListOptionsValues.hpp"        // for ListOptionsValues
+#include "ListSessions.hpp"             // for ListSessions
+#include "ListUsers.hpp"                // for ListUsers
+#include "LocalAccount.hpp"             // for LocalAccount
+#include "Machine.hpp"                  // for Machine
+#include "OptionValue.hpp"              // for OptionValue
+#include "Session.hpp"                  // for Session
+#include "User.hpp"                     // for User
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+
+
 using namespace std;
-
-
 
 
 /**

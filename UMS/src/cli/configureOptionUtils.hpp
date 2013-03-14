@@ -1,6 +1,6 @@
 /**
  * \file configureOptionUtils.hpp
- * \brief This file declare useful functions and types for the VISHNU configure 
+ * \brief This file declare useful functions and types for the VISHNU configure
  * option command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -8,13 +8,13 @@
 #ifndef CONFIGUREOPTIONUTILS__HH
 #define CONFIGUREOPTIONUTILS__HH
 
-//VISHNU Headers
-
-#include "cliUtil.hpp"
-#include "common.hpp"
-#include "sessionUtils.hpp"
-//Boost Headers
 #include <boost/function.hpp>
+#include <string>                       // for string
+
+#include "UMS_Data.hpp"
+
+class Options;
+
 
 
 /**
@@ -28,12 +28,12 @@ boost::function1<void,std::string> StringcallBackType;
 
 
 /**
- * \brief Another convenient function type to handle the callback 
- * 
+ * \brief Another convenient function type to handle the callback
+ *
  */
 
 
-typedef  
+typedef
 boost::function2<int,const std::string&,const UMS_Data::OptionValue&> ConfigureCallBackType;
 
 /**
@@ -65,6 +65,3 @@ commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[] , const Confi
 
 
 #endif
-
-
-

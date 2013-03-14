@@ -1,6 +1,6 @@
 /**
  * \file userUtils.hpp
- * \brief This file declares useful functions and types for the VISHNU user commands 
+ * \brief This file declares useful functions and types for the VISHNU user commands
  *  command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -10,14 +10,11 @@
 #define USERUTILS__HH
 
 
-//VISHNU Headers
+#include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
 
-#include "common.hpp"
-
-//Boost Headers
-
-#include<boost/function.hpp>
-
+#include "UMS_Data.hpp"
 
 class Options;
 
@@ -48,7 +45,7 @@ boost::function1<void,UMS_Data::PrivilegeType> privilegeCallBackType;
  */
 
 
-boost::shared_ptr<Options> 
+boost::shared_ptr<Options>
 makeUserOptions(std::string pgName,std::string & configFile,
                 privilegeCallBackType & fPrivilege, StringcallBackType& fFirstname,
                 StringcallBackType& fLastName, StringcallBackType & fEmail, int type=0);
@@ -59,6 +56,3 @@ makeUserOptions(std::string pgName,std::string & configFile,
 
 
 #endif
-
-
-
