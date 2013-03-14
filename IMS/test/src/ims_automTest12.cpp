@@ -51,6 +51,7 @@ static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 BOOST_FIXTURE_TEST_SUITE(export_command, IMSSeDFixture)
 
+#ifdef COMPILE_TMS
 //Test category 1
 //I3-B: export and replay commands
 BOOST_AUTO_TEST_CASE(export_command_normal_call)
@@ -135,6 +136,8 @@ BOOST_AUTO_TEST_CASE(export_command_normal_call)
     }
   }
 }
+
+#endif // COMPILE_TMS
 
 //I3-E1: export and replay commands with bad old session Id
 BOOST_AUTO_TEST_CASE(export_command_bad_old_session_Id_call) {

@@ -28,6 +28,12 @@ if(COMPILE_SERVERS)
       )
 
   if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
+    # we add compilation variable definitions only on required files
+    set_source_files_properties(
+      authenticator/AuthenticatorFactory.cpp
+      PROPERTIES COMPILE_FLAGS "-DUSE_LDAP"
+      )
+
     include_directories(${LDAP_PROXY_SOURCE_DIR})
     set(authenticator_SRCS
     ${VISHNU_SOURCE_DIR}/core/src/authenticator/AuthenticatorConfiguration.cpp

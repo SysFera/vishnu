@@ -13,6 +13,7 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
 
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
   add_definitions(-DMODULE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
+
   include_directories(
     ${VISHNU_SOURCE_DIR}/TMS/src/posix_parser
     ${VISHNU_SOURCE_DIR}/TMS/src/server

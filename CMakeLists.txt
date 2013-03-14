@@ -114,6 +114,23 @@ if(APPLE)
 endif()
 
 
+######################################################################
+#                                LDAP                                #
+######################################################################
+if (ENABLE_LDAP)
+  find_package(LDAP)
+  if (LDAP_FOUND)
+    find_package(OpenSSL)
+    if (OPENSSL_FOUND)
+      set(LDAP_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/authenticator/ldap)
+    else (OPENSSL_FOUND)
+      message("Openssl is not found.")
+    endif(OPENSSL_FOUND)
+  else (LDAP_FOUND)
+    message("LDAP is not found. You must install OpenLDAP: slapd 2.4.21.")
+  endif(LDAP_FOUND)
+endif(ENABLE_LDAP)
+
 
 ######################################################################
 #                             DATABASES                              #
@@ -121,7 +138,6 @@ endif()
 if (ENABLE_POSTGRESQL)
   find_package(POSTGRESQL)
   if (POSTGRESQL_FOUND)
-    add_definitions(-DUSE_POSTGRES)
     set(DATABASE_LIBS ${DATABASE_LIBS} ${POSTGRESQL_LIB})
     set(DATABASE_INCLUDE_DIR ${DATABASE_INCLUDE_DIR} ${POSTGRESQL_INCLUDE_DIR})
   else (POSTGRESQL_FOUND)
@@ -149,7 +165,6 @@ endif (ENABLE_ORACLE)
 SET (ORACLE_FOUND false)
 
 if (ENABLE_MYSQL)
-  add_definitions(-DUSE_MYSQL)
   find_package(MYSQL)
   if (MYSQL_FOUND)
     set(DATABASE_LIBS ${DATABASE_LIBS} ${MYSQL_LIB})
@@ -169,31 +184,6 @@ if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
 endif()
 
 
-
-
-
-######################################################################
-#                                LDAP                                #
-######################################################################
-if (ENABLE_LDAP AND COMPILE_SERVERS)
-  #To check if the module UMS is activated
-  if (COMPILE_UMS)
-    find_package(LDAP)
-    if (LDAP_FOUND)
-      find_package(OpenSSL)
-      if (OPENSSL_FOUND)
-        set(LDAP_PROXY_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/authenticator/ldap)
-        add_definitions(-DUSE_LDAP)
-      else (OPENSSL_FOUND)
-        message("Openssl is not found.")
-      endif(OPENSSL_FOUND)
-    else (LDAP_FOUND)
-      message("LDAP is not found. You must install OpenLDAP: slapd 2.4.21.")
-    endif(LDAP_FOUND)
-  else (COMPILE_UMS)
-    message("To use LDAP, the UMS module must be activated.")
-  endif (COMPILE_UMS)
-endif(ENABLE_LDAP AND COMPILE_SERVERS)
 
 
 
@@ -303,8 +293,6 @@ add_subdirectory(core/deps)
 
 
 if (BUILD_TESTING)
-  add_definitions(-DBUILD_TESTING)
-
   # Common directories for tests
   set(TEST_BIN_PATH "${PROJECT_BINARY_DIR}/bin" CACHE STRING "Contains binaries for tests")
   mark_as_advanced(TEST_BIN_PATH)
@@ -318,7 +306,6 @@ add_subdirectory(communication)
 if(COMPILE_UMS)
   add_subdirectory(UMS/src)
   add_subdirectory(UMS/doc/man)
-  add_definitions(-DCOMPILE_UMS)
   if (BUILD_TESTING)
     add_subdirectory(UMS/test/src)
     set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
@@ -330,7 +317,6 @@ endif (COMPILE_UMS)
 if(COMPILE_FMS)
   add_subdirectory(FMS/src)
   add_subdirectory(FMS/doc/man)
-  add_definitions(-DCOMPILE_FMS)
   if (BUILD_TESTING)
       add_subdirectory(FMS/test/src)
       set(FMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/test/src)
@@ -340,7 +326,6 @@ endif (COMPILE_FMS)
 if(COMPILE_TMS)
   add_subdirectory(TMS/src)
   add_subdirectory(TMS/doc/man)
-  add_definitions(-DCOMPILE_TMS)
   if (BUILD_TESTING)
     add_subdirectory(TMS/test/src)
     set(TMS_TEST_SOURCE_DIR ${VISHNU_SOURCE_DIR}/TMS/test/src)
@@ -352,7 +337,6 @@ if(COMPILE_IMS)
     find_package(XMLRPC)
     find_package(Sigar REQUIRED)
   endif()
-  add_definitions(-DCOMPILE_IMS)
   add_subdirectory(IMS/src)
   add_subdirectory(IMS/doc/man)
   if (BUILD_TESTING)
