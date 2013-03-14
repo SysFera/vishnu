@@ -15,7 +15,6 @@ include_directories(
   ${IMS_CLIENT_PROXY_SOURCE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${DATABASE_INCLUDE_DIR}
   ${PROJECT_BINARY_DIR}/include
   ${TESTVISHNU_SOURCE_DIR}
   ${TESTVISHNU_SOURCE_DIR}/../third-party
@@ -42,9 +41,22 @@ ims_test(ims_automTest7)
 ims_test(ims_automTest8)
 ims_test(ims_automTest9)
 ims_test(ims_automTest10)
-ims_test(ims_automTest11)
+
 ims_test(ims_automTest12)
 ims_test(ims_automTest13)
+
+if (COMPILE_TMS)
+  ims_test(ims_automTest11)
+
+  # we cannot use set_source_files_properties here, as it only
+  # works on targets defined in this CMakeLists.txt
+  # (here defined by the macro ims_test)
+  add_definitions("-DCOMPILE_TMS")
+  target_link_libraries(ims_automTest11 vishnu-tms-client)
+  target_link_libraries(ims_automTest7 vishnu-tms-client)
+  target_link_libraries(ims_automTest12 vishnu-tms-client)
+endif (COMPILE_TMS)
+
 
 
 ## Currently disabled, not maintained since a while

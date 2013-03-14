@@ -103,8 +103,12 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     if (NOT (version OR version2 OR version3) )
       message (FATAL_ERROR "Invalid SLURM version, supported are: 2.2, 2.3 or 2.4")
     endif()
-    
-    add_definitions(-DHAVE_SLURM_${batch_version_tmp})
+
+    # we add compilation variable definitions only on required files
+    set_source_files_properties(
+      ${SLURMSERVER}
+      PROPERTIES COMPILE_FLAGS "-DHAVE_SLURM_${batch_version_tmp}"
+      )    
     
     find_package(SLURM)
     if (SLURM_FOUND)

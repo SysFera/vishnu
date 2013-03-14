@@ -1,3 +1,20 @@
+if(COMPILE_FMS)
+  # we add compilation variable definitions only on required files
+  set_source_files_properties(
+    client/ProcessCtlProxy.cpp
+    PROPERTIES COMPILE_FLAGS "-DCOMPILE_FMS"
+    )
+endif (COMPILE_FMS)
+
+if(COMPILE_TMS)
+  # we add compilation variable definitions only on required files
+  set_source_files_properties(
+    client/ProcessCtlProxy.cpp
+    PROPERTIES COMPILE_FLAGS "-DCOMPILE_TMS"
+    )
+endif (COMPILE_TMS)
+
+
 include_directories(client api utils
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 

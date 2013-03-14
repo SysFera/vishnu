@@ -51,6 +51,7 @@ static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
 BOOST_FIXTURE_TEST_SUITE(define_identifier, IMSSeDFixture)
 
+#ifdef COMPILE_TMS
 //IA3-B: Define the identifier normal call
 //Define User/Machine/Job/FileTransfer identifier: normal call
 BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
@@ -113,6 +114,7 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
     BOOST_CHECK(false);
   }
 }
+#endif // COMPILE_TMS
 
 //IA3-E1: Define the identifier with bad format
 //Define User/Machine/Job/FileTransfer identifier: bad format

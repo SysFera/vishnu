@@ -431,36 +431,52 @@ if(COMPILE_SERVERS)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
-    include_directories(${MYSQL_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
+
+    # we add compilation variable definitions only on required files
+    set_source_files_properties(
+      database/DbFactory.cpp
+      PROPERTIES COMPILE_FLAGS "-DUSE_MYSQL"
+      )
   endif()
 
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
     set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
-    include_directories(${DATABASE_INCLUDE_DIR})
     set(DB_LIBS ${DATABASE_LIBS})
+
+    # we add compilation variable definitions only on required files
+    set_source_files_properties(
+      database/DbFactory.cpp
+      PROPERTIES COMPILE_FLAGS "-DUSE_POSTGRES"
+      )
   endif()
 
   if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
-    include_directories(${LDAP_PROXY_SOURCE_DIR})
+    # we add compilation variable definitions only on required files
+    set_source_files_properties(
+      authenticator/AuthenticatorFactory.cpp
+      PROPERTIES COMPILE_FLAGS "-DUSE_LDAP"
+      )
+
     set(authenticator_SRCS
-    authenticator/AuthenticatorConfiguration.cpp
-    authenticator/AuthenticatorFactory.cpp
-    authenticator/Authenticator.cpp
-    authenticator/UMSAuthenticator.cpp
-    authenticator/LDAPAuthenticator.cpp
-    authenticator/UMSLDAPAuthenticator.cpp
-    authenticator/LDAPUMSAuthenticator.cpp
-    authenticator/ldap/LDAPProxy.cpp)
-   set(AUTH_LIBS ${LDAP_LIBRARIES})
+      authenticator/AuthenticatorConfiguration.cpp
+      authenticator/AuthenticatorFactory.cpp
+      authenticator/Authenticator.cpp
+      authenticator/UMSAuthenticator.cpp
+      authenticator/LDAPAuthenticator.cpp
+      authenticator/UMSLDAPAuthenticator.cpp
+      authenticator/LDAPUMSAuthenticator.cpp
+      authenticator/ldap/LDAPProxy.cpp)
+
+    set(AUTH_LIBS ${LDAP_LIBRARIES})
   else ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     set(authenticator_SRCS
-    authenticator/AuthenticatorConfiguration.cpp
-    authenticator/AuthenticatorFactory.cpp
-    authenticator/Authenticator.cpp
-    authenticator/UMSAuthenticator.cpp)
+      authenticator/AuthenticatorConfiguration.cpp
+      authenticator/AuthenticatorFactory.cpp
+      authenticator/Authenticator.cpp
+      authenticator/UMSAuthenticator.cpp)
   endif ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
-
+ 
   include_directories(${UMS_EMF_DATA_DIR})
   set (version_manager_SRCS
        version/VersionManager.cpp)

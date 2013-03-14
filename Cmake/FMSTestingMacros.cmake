@@ -45,7 +45,6 @@ macro( fms_test NAME )
       ${FMS_CLIENT_PROXY_SOURCE_DIR}
       ${EMF4CPP_INCLUDE_DIR}
       ${VISHNU_EXCEPTION_INCLUDE_DIR}
-      ${DATABASE_INCLUDE_DIR}
       ${Boost_INCLUDE_DIRS}
       ${PROJECT_BINARY_DIR}/include
       ${UMS_TEST_DIR}

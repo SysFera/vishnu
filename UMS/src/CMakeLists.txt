@@ -61,12 +61,10 @@ endif()
 if(COMPILE_SERVERS)
   include_directories(
     ${CONFIG_SOURCE_DIR}
-    ${DATABASE_INCLUDE_DIR}
     ${DATA_BASE_INCLUDE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
     ${Boost_INCLUDE_DIRS}
     ${REGISTRY_SOURCE_DIR}
-    ${LDAP_PROXY_SOURCE_DIR}
     ${AUTHENTICATOR_INCLUDE_DIR})
 
   set(sed_SRCS sed/umssed.cpp
