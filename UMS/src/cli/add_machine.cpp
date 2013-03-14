@@ -4,14 +4,21 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include <boost/bind.hpp>
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for basic_ostream, operator<<, etc
+#include <string>                       // for string, operator<<
 
-#include "utils.hpp"
-#include "GenericCli.hpp"
-#include "machineUtils.hpp"
-#include "cliUtil.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
+#include "GenericCli.hpp"               // for GenericCli
+#include "Machine.hpp"                  // for Machine
+#include "api_ums.hpp"                  // for addMachine
+#include "machineUtils.hpp"             // for makeMachineOptions
+#include "utilVishnu.hpp"               // for get_file_content
+
+class Options;
 
 namespace po = boost::program_options;
 

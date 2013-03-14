@@ -3,18 +3,36 @@
  * This file defines the VISHNU connect command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
+#include <stdlib.h>                     // for getenv
+#include <unistd.h>                     // for getppid
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/lexical_cast.hpp>       // for lexical_cast
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <iostream>                     // for operator<<, basic_ostream, etc
+#include <sstream>                      // for basic_stringbuf<>::int_type, etc
+#include <stdexcept>                    // for out_of_range
+#include <string>                       // for string, allocator, etc
 
-#include <stdlib.h>
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "connectUtils.hpp"
-#include "sessionUtils.hpp"
-#include <boost/bind.hpp>
-#include "daemon_cleaner.hpp"
-#include "utilVishnu.hpp"
-#include "UMSVishnuException.hpp"
-#include "UserException.hpp"
+#include "ConnectOptions.hpp"           // for ConnectOptions
+#include "ListUsers.hpp"                // for ListUsers
+#include "Options.hpp"                  // for ::CONFIG, Options, ::ENV
+#include "Session.hpp"                  // for Session
+#include "UMSVishnuException.hpp"       // for ERRCODE_TEMPORARY_PASSWORD
+#include "UMS_DataFactory.hpp"          // for UMS_DataFactory
+#include "User.hpp"                     // for User
+#include "UserException.hpp"            // for ERRCODE_CLI_ERROR_DIET, etc
+#include "VishnuException.hpp"          // for VishnuException
+#include "api_ums.hpp"                  // for connect, vishnuInitialize
+#include "cliUtil.hpp"                  // for errorUsage, helpUsage, etc
+#include "connectUtils.hpp"             // for makeConnectOptions
+#include "daemon_cleaner.hpp"           // for cleaner
+#include "ecore_forward.hpp"            // for EInt
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "sessionUtils.hpp"             // for storeLastSession
 
 using namespace std;
 using namespace vishnu;

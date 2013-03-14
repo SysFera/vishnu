@@ -1,20 +1,25 @@
 /**
  * \file list_local_accounts.cpp
- * This file defines the VISHNU list local account command 
+ * This file defines the VISHNU list local account command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "listMachineUtils.hpp"
-#include "sessionUtils.hpp"
-#include <boost/bind.hpp>
-#include "utilVishnu.hpp"
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for ostream, cout, endl
+#include <string>                       // for string
 
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "ListLocalAccOptions.hpp"      // for ListLocalAccOptions
+#include "ListLocalAccounts.hpp"        // for ListLocalAccounts
+#include "Options.hpp"                  // for Options, ::CONFIG
+#include "api_ums.hpp"                  // for listLocalAccounts
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "listMachineUtils.hpp"         // for makeListMachineOptions
+#include "utils.hpp"                    // for operator<<
 
 using namespace std;
 using namespace vishnu;
@@ -84,5 +89,3 @@ int main (int ac, char* av[]){
    ListLocalAccountFunc listAccountFunc(lsLocalAccount, listOptions, full);
   return GenericCli().run(listAccountFunc, configFile, ac, av);
 }// end of main
-
-

@@ -5,16 +5,23 @@
  */
 
 
-
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
+#include <stdlib.h>                     // for getenv
+#include <boost/bind.hpp>           // for arg
+#include <boost/filesystem/operations.hpp>  // for create_directories, etc
+#include <boost/filesystem/path.hpp>    // for path
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for basic_ostream, ofstream, etc
+#include <string>                       // for string, operator+, etc
+#include "LocalAccount.hpp"             // for LocalAccount
+#include "api_ums.hpp"                  // for addLocalAccount
+#include "ecore_forward.hpp"            // for EString
 #include "localAccountUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include <boost/bind.hpp>
-#include <boost/filesystem.hpp>
 #include "GenericCli.hpp"
+
+class Options;
+
 namespace po = boost::program_options;
 
 using namespace std;

@@ -1,4 +1,3 @@
-
 /**
  * \file delete_user.cpp
  * This file defines the VISHNU delete_user command
@@ -6,16 +5,12 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "connectUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include<boost/bind.hpp>
-
-#include "GenericCli.hpp"
-namespace po = boost::program_options;
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <string>                       // for string
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options
+#include "api_ums.hpp"                  // for deleteUser
+#include "connectUtils.hpp"             // for makeConnectOptions
 
 using namespace std;
 using namespace vishnu;

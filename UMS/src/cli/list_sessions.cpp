@@ -5,16 +5,25 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
-#include "listHistoryCmdUtils.hpp"
-#include<boost/bind.hpp>
-#include "sessionUtils.hpp"
-#include "GenericCli.hpp"
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for ostream, cout, endl
+#include <sstream>                      // for basic_stringbuf<>::int_type, etc
+#include <string>                       // for string
 
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "ListSessionOptions.hpp"       // for ListSessionOptions
+#include "ListSessions.hpp"             // for ListSessions
+#include "Options.hpp"                  // for Options, ::CONFIG
+#include "api_ums.hpp"                  // for listSessions
+#include "ecore_forward.hpp"            // for EInt
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "listHistoryCmdUtils.hpp"      // for makeListHistoryCmdOptions
+#include "utilVishnu.hpp"               // for string_to_time_t
+#include "utils.hpp"                    // for operator<<
 
 using namespace std;
 using namespace vishnu;

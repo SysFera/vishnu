@@ -4,15 +4,25 @@
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
 
-#include <stdlib.h>
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "connectUtils.hpp"
-#include "sessionUtils.hpp"
-#include "daemon_cleaner.hpp"
-#include "utilVishnu.hpp"
+#include <stdlib.h>                     // for getenv
+#include <unistd.h>                     // for getppid
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <string>                       // for string, allocator, etc
+
+#include "ListUsers.hpp"                // for ListUsers
+#include "Options.hpp"                  // for Options, ::CONFIG, ::HIDDEN
+#include "Session.hpp"                  // for Session
+#include "UMS_DataFactory.hpp"          // for UMS_DataFactory
+#include "User.hpp"                     // for User
 #include "UserException.hpp"
+#include "VishnuException.hpp"          // for VishnuException
+#include "api_ums.hpp"                  // for reconnect, vishnuInitialize
+#include "cliUtil.hpp"                  // for errorUsage, helpUsage, etc
+#include "connectUtils.hpp"             // for makeConnectOptions
+#include "daemon_cleaner.hpp"           // for cleaner
+#include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "sessionUtils.hpp"             // for storeLastSession
 
 using namespace std;
 using namespace vishnu;

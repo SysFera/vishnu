@@ -1,12 +1,7 @@
-#include <boost/program_options.hpp>
-#include "configureOptionUtils.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "utilVishnu.hpp"
-#include "Options.hpp"
-#include "api_ums.hpp"
-
-namespace po = boost::program_options;
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include "Options.hpp"                  // for Options
+#include "api_ums.hpp"                  // for configureOption
+#include "configureOptionUtils.hpp"     // for commonConfigure
 
 using namespace std;
 using namespace vishnu;

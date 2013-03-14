@@ -5,15 +5,20 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "userUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include<boost/bind.hpp>
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for basic_ostream, operator<<, etc
+#include <string>                       // for string, operator<<
 
-#include "GenericCli.hpp"
+#include "GenericCli.hpp"               // for GenericCli
+#include "User.hpp"                     // for User
+#include "api_ums.hpp"                  // for addUser
+#include "userUtils.hpp"                // for makeUserOptions
+
+class Options;
 
 namespace po = boost::program_options;
 

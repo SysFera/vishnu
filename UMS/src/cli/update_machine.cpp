@@ -5,18 +5,23 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "machineUtils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include <boost/bind.hpp>
+#include <boost/bind/arg.hpp>           // for arg
+#include <boost/bind.hpp>          // for bind_t, bind
+#include <boost/function.hpp>  // for function1
+#include <boost/ref.hpp>                // for reference_wrapper, ref
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <exception>                    // for exception
+#include <sstream>                      // for basic_stringbuf<>::int_type, etc
+#include <string>                       // for string
 
-#include "api_ums.hpp"
-#include "GenericCli.hpp"
-
-namespace po = boost::program_options;
+#include "GenericCli.hpp"               // for GenericCli
+#include "Machine.hpp"                  // for Machine
+#include "Options.hpp"                  // for Options, ::CONFIG, ::HIDDEN
+#include "api_ums.hpp"                  // for updateMachine
+#include "cliError.hpp"                 // for CLI_ERROR_RUNTIME
+#include "cliUtil.hpp"                  // for errorUsage
+#include "machineUtils.hpp"             // for makeMachineOptions
+#include "utilVishnu.hpp"               // for get_file_content
 
 using namespace std;
 using namespace vishnu;

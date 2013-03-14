@@ -5,12 +5,15 @@
  */
 
 
-#include "common.hpp"
-#include "cliUtil.hpp"
-#include "utils.hpp"
-#include "sessionUtils.hpp"
-#include "utilVishnu.hpp"
-#include "GenericCli.hpp"
+#include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
+#include <iostream>                     // for operator<<, basic_ostream, etc
+#include <string>                       // for string, operator==, etc
+
+#include "GenericCli.hpp"               // for GenericCli
+#include "Options.hpp"                  // for Options, ::ENV, ::HIDDEN
+#include "api_ums.hpp"                  // for changePassword
+#include "cliError.hpp"                 // for CLI_ERROR_INVALID_PARAMETER
+#include "utilVishnu.hpp"               // for takePassword
 
 namespace po = boost::program_options;
 
