@@ -42,14 +42,14 @@ void
 controlSignal (int signum) {
   int res;
   switch (signum) {
-    case SIGCHLD:
+  case SIGCHLD:
+    res = waitpid (-1, NULL, WNOHANG);
+    while (res > 0) {
       res = waitpid (-1, NULL, WNOHANG);
-      while (res > 0) {
-        res = waitpid (-1, NULL, WNOHANG);
-      }
-      break;
-    default:
-     break;
+    }
+    break;
+  default:
+    break;
   }
 }
 
@@ -97,59 +97,52 @@ main(int argc, char* argv[], char* envp[]) {
       exit(1);
     }
     authenticatorConfig.check();
-    if (authenticatorConfig.getAuthenType() != AuthenticatorConfiguration::UMS) {
-      #ifndef USE_LDAP
-        std::cerr << "Error: this authentification type uses LDAP and "
-                  << "this server has not been compiled with LDAP library\n";
+
+    // Fork a child for UMS monitoring
+    pid_t pid;
+    pid_t ppid;
+    pid = fork();
+
+    if (pid > 0) {
+      //Initialize the UMS Server (Opens a connection to the database)
+      boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
+      res = server->init(vishnuId, dbConfig, sendmailScriptPath, authenticatorConfig);
+
+      //Declaration of signal handler
+      action.sa_handler = controlSignal;
+      sigemptyset (&(action.sa_mask));
+      action.sa_flags = 0;
+      sigaction (SIGCHLD, &action, NULL);
+
+
+      // Initialize the DIET SeD
+      if (!res) {
+        initSeD(UMSTYPE, config, uri, server);
+      } else {
+        std::cerr << "There was a problem during services initialization\n";
         exit(1);
-      #endif
+      }
+    } else if (pid == 0) {
+      // Initialize the UMS Monitor (Opens a connection to the database)
+      MonitorUMS monitor;
+      dbConfig.setDbPoolSize(1);
+      monitor.init(vishnuId, dbConfig, authenticatorConfig);
+      ppid = getppid();
+
+      while(kill(ppid,0) == 0) {
+        monitor.run();
+      }
+    } else {
+      std::cerr << "There was a problem to initialize the server\n";
+      exit(1);
     }
   } catch (UserException& e) {
-    std::cerr << e.what() << "\n";
+    std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
-  }catch (std::exception& e) {
+  } catch (std::exception& e) {
     std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
 
-
-  // Fork a child for UMS monitoring
-  pid_t pid;
-  pid_t ppid;
-  pid = fork();
-
-  if (pid > 0) {
-    //Initialize the UMS Server (Opens a connection to the database)
-    boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
-    res = server->init(vishnuId, dbConfig, sendmailScriptPath, authenticatorConfig);
-
-    //Declaration of signal handler
-    action.sa_handler = controlSignal;
-    sigemptyset (&(action.sa_mask));
-    action.sa_flags = 0;
-    sigaction (SIGCHLD, &action, NULL);
-
-
-    // Initialize the DIET SeD
-    if (!res) {
-      initSeD(UMSTYPE, config, uri, server);
-    } else {
-      std::cerr << "There was a problem during services initialization\n";
-      exit(1);
-    }
-  } else if (pid == 0) {
-    // Initialize the UMS Monitor (Opens a connection to the database)
-    MonitorUMS monitor;
-    dbConfig.setDbPoolSize(1);
-    monitor.init(vishnuId, dbConfig, authenticatorConfig);
-    ppid = getppid();
-
-    while(kill(ppid,0) == 0) {
-      monitor.run();
-    }
-  } else {
-    std::cerr << "There was a problem to initialize the server\n";
-    exit(1);
-  }
   return res;
 }
