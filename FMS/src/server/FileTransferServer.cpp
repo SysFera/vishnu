@@ -64,7 +64,6 @@ FileTransferServer::addOptionRequest(const std::string& name,
 
 /**
  * \brief Function to check if a given user identifier exists
- * \fn void checkUserId(std::string userId)
  * \param userId the user identifier
  * \return raises an exception on error
  */
