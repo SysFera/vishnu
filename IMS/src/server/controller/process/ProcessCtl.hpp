@@ -44,7 +44,7 @@ public:
   restart(IMS_Data::SupervisorOp_ptr op, std::string machineTo, bool isAPI = true);
   /**
    * \brief To stop a process
-   * \brief op The supervision options
+   * \param op The supervision options
    */
   void
   stop(IMS_Data::SupervisorOp_ptr op);

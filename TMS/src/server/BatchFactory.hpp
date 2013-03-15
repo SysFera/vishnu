@@ -34,7 +34,7 @@ class BatchFactory
 
     /**
      * \brief Function to create a batchServer.
-     * \param batchType The type of batchServer to create
+     * \param BatchType The type of batchServer to create
      * \param batchVersion The version of batchServer to create
      * \return an instance of BatchServer, or NULL
      */

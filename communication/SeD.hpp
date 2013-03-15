@@ -26,7 +26,7 @@ public:
 
   /**
    * \brief To call a function upon receiving a request
-   * \param profile The profile of the service
+   * \param prof The profile of the service
    * \return the error code of the function
    */
   virtual int

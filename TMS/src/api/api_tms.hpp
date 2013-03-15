@@ -38,9 +38,13 @@ namespace vishnu {
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
-/**
- * \TODO
- */
+ /**
+  * \brief Add a work
+  * \param sessionKey the session key
+  * \param newWork the work to add
+  * \param options the options to add the work
+  * \return an exception on error, 0 otherwize
+  */
   int
   addWork(const std::string& sessionKey,
           TMS_Data::Work& newWork,

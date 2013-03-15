@@ -120,10 +120,10 @@ namespace vishnu
 
 /**
  * \brief Function to parse textual or file parameters
- * \param IN opt A structure containing the set of submitted options
- * \param OUT paramStr a string containing all of parameters
- * \param IN paramOptName the name of the option for a single parameter
- * \param IN paramsVector a vector of parameters
+ * \param opt A structure containing the set of submitted options
+ * \param paramsStr a string containing all of parameters
+ * \param paramOptName the name of the option for a single parameter
+ * \param paramsVector a vector of parameters
  * \return true if all parameters are syntaxicaly valid
  */
 int
@@ -155,19 +155,21 @@ createOutputDir(std::string& dirPath);
 /**
  * \brief Function to get the hostname of a machine id
  * \param sessionKey The session key
- *  \param machineId Id of the machine
+ * \param machineId Id of the machine
+ * \return the name of the machine
  */
 inline std::string getMachineName(const std::string& sessionKey, const std::string& machineId);
 
 
-  /**
+/**
  * \brief Function to copy a list of remote files to a local directory
- * \param srcMid : Id of the remote machine
- * \param rfiles : List of the files to copy
- * \param ldestDir : Destination directory on the local machine
- * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \param sessionKey the session key
+ * \param srcMid Id of the remote machine
+ * \param rfiles List of the files to copy
+ * \param ldestDir Destination directory on the local machine
+ * \param copts Copy option (false => non recursive, 0 => scp)
  * \param missingFiles: The list of missing files*
- * \param startPos : Position of the file
+ * \param startPos Position of the file
  * \return Throw exception on error
  */
 void copyFiles(const std::string& sessionKey,
@@ -180,11 +182,12 @@ void copyFiles(const std::string& sessionKey,
 
 /**
  * \brief Function to copy a remote file to a local directory
- * \param srcMachineId : Id of the source machine
- * \param srcPath : Path of the source file
- * \param destMachineId : Id of the destination machine
- * \param destPath : The destination path (may be a directory)
- * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \param sessionKey the session key
+ * \param srcMachineId Id of the source machine
+ * \param srcPath Path of the source file
+ * \param destMachineId Id of the destination machine
+ * \param destPath The destination path (may be a directory)
+ * \param copts Copy option (false => non recursive, 0 => scp)
  * \return The copied file or throw exception on error
  */
 std::string
@@ -198,9 +201,10 @@ genericFileCopier(const std::string& sessionKey,
 
 /**
  * \brief Function to copy a remote file to a local directory
- * \param srcFiles : String describing the source files
- * \param destMachineId : Id of the destination machine
- * \param copts : Copy option (false => non recursive, 0 => scp)
+ * \param sessionKey the session key
+ * \param srcFiles String describing the source files
+ * \param destMachineId Id of the destination machine
+ * \param copts Copy option (false => non recursive, 0 => scp)
  * \return A string describing the destination file. The function throw exception on error
  */
 std::string
@@ -211,8 +215,8 @@ sendInputFiles(const std::string& sessionKey,
 
 /**
  * \brief Function to select a machine for automatic submission
- * \param pb is a structure which corresponds to the descriptor of a profile
- * \param The selection criterion
+ * \param sessionKey the session key
+ * \param criterion The selection criterion
  * \return the selected machine or raises an exception on error
  */
 std::string
@@ -266,7 +270,8 @@ findMachine(const std::string& sessionKey,
 
   /**
    * \brief Function to replace some environment variables in a string
-   * \param scriptContent The string content to modify
+   * \param scriptContent the string content to modify
+   * \param batchType the type of the batch scheduler
    */
   void
   replaceEnvVariables(std::string& scriptContent, const BatchType& batchType);

@@ -40,10 +40,11 @@ class UserProxy
     explicit UserProxy(const UMS_Data::User& user);
     /**
      * \brief Function to add new user
-     * \param user The object which encapsulates the user information
+     * \param newUser The object which encapsulates the user information
      * \return raises an exception on error
      */
-    int add(UMS_Data::User& newUser);
+    int
+    add(UMS_Data::User& newUser);
     /**
      * \brief Function to update user information
      * \param user The object which encapsulates the user information

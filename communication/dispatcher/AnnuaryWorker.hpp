@@ -1,3 +1,9 @@
+/**
+ * \file AnnuaryWorker.hpp
+ * \brief This file contains the implementation of the workers for the annuary class
+ * \author Haikel Guemar (haikel.guemar@sysfera.com)
+ * \date January 2013
+ */
 #ifndef _ANNUARYWORKERS_HPP_
 #define _ANNUARYWORKERS_HPP_
 
@@ -7,30 +13,57 @@
 #include "Annuary.hpp"
 
 /**
- * @class Base class for workers having an Annuary
+ * \class AnnuaryWorker
+ * \brief Base class for workers having an Annuary
  */
 class AnnuaryWorker : public Worker {
 public:
+  /**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param uriInproc the uri for the inproc commands
+   * \param id the id of the worker
+   * \param ann the annuary it is linked
+   */
   explicit AnnuaryWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
                          boost::shared_ptr<Annuary> ann)
     : Worker(ctx, uriInproc, id), mann_(ann) {}
 
 protected:
+  /**
+   * \brief The annuary it is working for
+   */
   boost::shared_ptr<Annuary> mann_;
 };
 
 
 
 
+/**
+ * \class ServiceWorker
+ * \brief Base class for workers realizing a service
+ */
 class ServiceWorker : public AnnuaryWorker {
 public:
+  /**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param uriInproc the uri for the inproc commands
+   * \param id the id of the worker
+   * \param ann the annuary it is linked
+   */
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
                          boost::shared_ptr<Annuary> ann)
     : AnnuaryWorker(ctx, uriInproc, id, ann) {}
 
 private:
+  /**
+   * \brief Call the function
+   * \param data the serialized data containing the funcion and its parameters
+   * \return the serialized data (out data are updated)
+   */
   std::string
   doCall(std::string& data) {
     using boost::format;
@@ -51,6 +84,11 @@ private:
     }
   }
 
+  /**
+   * \brief Elect a server
+   * \param serv list of eligible servers
+   * \return the choosen one
+   */
   std::string
   elect(const std::vector<boost::shared_ptr<Server> >& serv){
     if (serv.empty()) {
@@ -62,15 +100,30 @@ private:
 };
 
 
-
+/**
+ * \class SubscriptionWorker
+ * \brief Worker handling the subscription to the Annuary
+ */
 class SubscriptionWorker : public AnnuaryWorker {
 public:
+  /**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param uriInproc the uri for the inproc commands
+   * \param id the id of the worker
+   * \param ann the annuary it is linked
+   */
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
                               const std::string& uriInproc, int id,
                               boost::shared_ptr<Annuary> ann)
     : AnnuaryWorker(ctx, uriInproc, id, ann) {}
 
 private:
+  /**
+   * \brief Call the function
+   * \param data the serialized data containing the funcion and its parameters
+   * \return the serialized data (out data are updated)
+   */
   std::string
   doCall(std::string& data) {
     int mode = boost::lexical_cast<int>(data.substr(0,1));

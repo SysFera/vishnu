@@ -1,3 +1,9 @@
+/**
+ * \file Worker.hpp
+ * \brief This file contains the definition of the base class for the workers
+ * \author Haikel Guemar (haikel.guemar@sysfera.com)
+ * \date January 2013
+ */
 #ifndef _WORKER_HPP_
 #define _WORKER_HPP_
 
@@ -6,15 +12,16 @@
 
 
 /**
- * @class Base class for workers
+ * \class Worker
+ * \brief Base class for workers
  */
 class Worker {
 public:
   /**
-   * @brief Constructor
-   * @param ctx zmq context
-   * @param uriInproc URI to be used to connect the socket
-   * @param id worker's identifier
+   * \brief Constructor
+   * \param ctx zmq context
+   * \param uriInproc URI to be used to connect the socket
+   * \param id worker's identifier
    */
   explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
                   const std::string& uriInproc, int id)
@@ -22,7 +29,7 @@ public:
 
 
   /**
-   * @brief Main loop. receives data and deal with it if it isn't empty
+   * \brief Main loop. receives data and deal with it if it isn't empty
    * Uses protected method doCall to provide implementation specific
    * behavior when recieving data.
    */
@@ -51,9 +58,11 @@ public:
 
 
 protected:
-  /** @brief method to provide implementation specific behavior
+  /**
+   * \brief method to provide implementation specific behavior
    * to handle received data.
-   * @param data a string containing the data
+   * \param data a string containing the data
+   * \return the updated data
    */
   virtual std::string
   doCall(std::string& data) = 0;
@@ -65,13 +74,14 @@ protected:
 
 
 
-/** @brief templated method to create two sockets: a router and dealer
+/**
+ * \brief templated method to create two sockets: a router and dealer
  * and, creates a pool of threads of workers to handle the requests
- *
- * @param serverUri URI of the server socket (ROUTER)
- * @param workerUri URI of the worker socket (DEALER)
- * @param nbThreads number of threads in the pool
- * @param params Worker specific parameter
+ * \param serverUri URI of the server socket (ROUTER)
+ * \param workerUri URI of the worker socket (DEALER)
+ * \param nbThreads number of threads in the pool
+ * \param params Worker specific parameter
+ * \return 0 on success, an error code otherwize
  */
 template<typename WorkerType,
          typename WorkerParam>

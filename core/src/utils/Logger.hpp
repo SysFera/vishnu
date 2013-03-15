@@ -1,5 +1,5 @@
 /*
- * Logger.hpp
+ * \file Logger.hpp
 # ------------------------------------------------------------------------ #
 # Copyright (c) 2010-2012 Rodrigue Chakode (rodrigue.chakode@ngrt4n.com)   #
 # Last Update : 22-12-2012                                                 #
@@ -28,6 +28,10 @@
 #include <string>
 #include <streambuf>
 
+/**
+ * \enum LogPriority
+ * \brief The priority of the messages
+ */
 enum LogPriority {
     kLogEmerg   = LOG_EMERG,   // system is unusable
     kLogAlert   = LOG_ALERT,   // action must be taken immediately
@@ -41,6 +45,10 @@ enum LogPriority {
 
 std::ostream& operator<< (std::ostream& os, const LogPriority& log_priority);
 
+/**
+ * \class Logger
+ * \brief Base class for the loggers
+ */
 class Logger : public std::basic_streambuf<char, std::char_traits<char> > {
 public:
     explicit Logger(std::string ident, int facility);

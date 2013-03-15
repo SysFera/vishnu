@@ -78,10 +78,11 @@ virtual ~Database();
   flush(int transactionID) = 0;
 /**
  * \brief To get a unique id
- * \param table: The table to use to generate the id
- * \param fields: The fields of the table
- * \param val: The values of the fields to insert
- * \param tid: The transaction id
+ * \param table The table to use to generate the id
+ * \param fields The fields of the table
+ * \param val The values of the fields to insert
+ * \param tid The transaction id
+ * \param primary the primary key on the table
  * \return A new integer never returned by this function
  */
   virtual int

@@ -10,6 +10,10 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
+/**
+ * \class Server
+ * \brief Root class definition for a server
+ */
 class Server {
 public:
 
