@@ -46,7 +46,6 @@ public:
   ~ProcessServer();
   /**
    * \brief Function to list query information
-   * \fn IMS_Data::ListProcesses* list()
    * \return The pointer to the ListOject containing list information
    * \return raises an exception on error
    */
@@ -55,7 +54,6 @@ public:
 
   /**
    * \brief Function to get the name of the query command line
-   * \fn  string getCommandName()
    * \return The the name of the query command line
    */
   std::string getCommandName();

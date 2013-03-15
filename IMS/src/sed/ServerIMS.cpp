@@ -40,7 +40,6 @@ ServerIMS::getInstance() {
 
 /**
  * \brief To get the vishnuId
- * \fn int getVishnuId()
  * \return the path of the configuration file
  */
 int
@@ -50,7 +49,6 @@ ServerIMS::getVishnuId() {
 
 /**
  * \brief To get the path to the sendmail script
- * \fn std::string getSendmailScriptPath()
  * \return the path of the configuration file
  */
 std::string
@@ -60,7 +58,6 @@ ServerIMS::getSendmailScriptPath() {
 
 /**
  * \brief Constructor (private)
- * \fn ServerIMS()
  */
 ServerIMS::ServerIMS()  {;}
 
@@ -120,7 +117,6 @@ ServerIMS::init(int vishnuId,
 }
 
 /**
-* \fn ~ServerIMS()
 * \brief Destructor, raises an exception on error
 */
 ServerIMS::~ServerIMS() {
