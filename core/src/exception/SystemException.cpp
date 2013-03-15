@@ -40,7 +40,7 @@ SystemException::getTypeS() const{
 
 void
 SystemException::initMsg(){
-  mp.insert(std::pair<int, std::string>(ERRCODE_DIET, std::string("Vishnu encountered problems (Service bus failure)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_COMMUNICATION, std::string("Vishnu encountered problems (communication failure)")));
   mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Vishnu encountered problems (Database error)")));
   mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Vishnu encountered problems (Database connection)")));
   mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu encountered problems (System)")));

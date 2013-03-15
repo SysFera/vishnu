@@ -39,7 +39,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   //IN Parameters
   if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -48,7 +48,7 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
 
   if (diet_string_set(profile,1, systemInfoToString.c_str())) {
     msgErrorDiet += "with SystemInfo parameter ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -57,11 +57,11 @@ SysInfoProxy::setSystemInfo(IMS_Data::SystemInfo systemInfo) {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,2, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

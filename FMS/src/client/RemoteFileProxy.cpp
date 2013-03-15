@@ -65,22 +65,22 @@ RemoteFileProxy::getInfos() const {
   //IN Parameters
   if(diet_string_set(getInfosProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getInfosProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getInfosProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getInfosProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -88,18 +88,18 @@ RemoteFileProxy::getInfos() const {
   diet_string_set(getInfosProfile, 5);
 
   if (diet_call(getInfosProfile)) {
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(getInfosProfile, 4, fileStatInString)){
     msgErrorDiet += " by receiving FileStat serialized  content";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
 
   if(diet_string_get(getInfosProfile, 5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (!fileStatInString.empty()) {
@@ -128,7 +128,7 @@ RemoteFileProxy::operator=(const RemoteFileProxy& file) {
 }
 
 /* Call the change group DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -144,38 +144,38 @@ RemoteFileProxy::chgrp(const string& group) {
   //IN Parameters
   if(diet_string_set(chgrpProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chgrpProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chgrpProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chgrpProfile, 3, getHost().c_str())){
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chgrpProfile, 4, group.c_str())){
     msgErrorDiet += "with group parameter "+group;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(chgrpProfile, 5);
 
   if (diet_call(chgrpProfile)) {
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(chgrpProfile, 5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -185,7 +185,7 @@ RemoteFileProxy::chgrp(const string& group) {
 }
 
 /* Call the change mode DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -202,22 +202,22 @@ RemoteFileProxy::chmod(const mode_t mode) {
   //IN Parameters
   if(diet_string_set(chmodProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chmodProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chmodProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(chmodProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ostringstream os;
@@ -226,20 +226,20 @@ RemoteFileProxy::chmod(const mode_t mode) {
 
   if(diet_string_set(chmodProfile, 4, modeInString.c_str())){
     msgErrorDiet += " by receiving mode parameter "+modeInString;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(chmodProfile, 5);
 
 
   if (diet_call(chmodProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   //Output parameter
   if(diet_string_get(chmodProfile, 5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -249,7 +249,7 @@ RemoteFileProxy::chmod(const mode_t mode) {
 }
 
 /* Call the file head DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 string
@@ -268,22 +268,22 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
   //IN Parameters
   if(diet_string_set(headProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(headProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(headProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(headProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -293,25 +293,25 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
 
   if(diet_string_set(headProfile, 4, optionsToString.c_str())){
     msgErrorDiet += " by receiving head of file options values ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(headProfile, 5);
   diet_string_set(headProfile, 6);
 
   if (diet_call(headProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   //Output parameter
   if(diet_string_get(headProfile, 5, fileHead)){
     msgErrorDiet += " by receiving fileHead message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_get(headProfile, 6, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -322,7 +322,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
 }
 
 /* Call the file getContent DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 string
@@ -339,39 +339,39 @@ RemoteFileProxy::getContent() {
   //IN Parameters
   if(diet_string_set(getContentProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getContentProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getContentProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(getContentProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(getContentProfile, 4);
   diet_string_set(getContentProfile, 5);
 
   if (diet_call(getContentProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(getContentProfile, 4, fileContent)){
     msgErrorDiet += " by receiving fileContent message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_get(getContentProfile, 5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -382,7 +382,7 @@ RemoteFileProxy::getContent() {
 }
 
 /* Call the mkfile DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -400,33 +400,33 @@ RemoteFileProxy::mkfile(const mode_t mode) {
   //IN Parameters
   if(diet_string_set(mkfileProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkfileProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkfileProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkfileProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(mkfileProfile, 4);
 
   if (diet_call(mkfileProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(mkfileProfile, 4, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -438,7 +438,7 @@ RemoteFileProxy::mkfile(const mode_t mode) {
 }
 
 /* Call the mkdir DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -457,22 +457,22 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   //IN Parameters
   if(diet_string_set(mkdirProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkdirProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkdirProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(mkdirProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -483,12 +483,12 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_string_set(mkdirProfile, 5);
 
   if (diet_call(mkdirProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(mkdirProfile, 5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -501,7 +501,7 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
 
 
 /* Call the remove file DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -519,22 +519,22 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
   //IN Parameters
   if(diet_string_set(rmProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -546,12 +546,12 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_string_set(rmProfile,5);
 
   if (diet_call(rmProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(rmProfile,5, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -562,7 +562,7 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
 }
 
 /* Call the remove directory DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 int
@@ -579,33 +579,33 @@ RemoteFileProxy::rmdir() {
   //IN Parameters
   if(diet_string_set(rmdirProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmdirProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmdirProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(rmdirProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(rmdirProfile, 4);
 
   if (diet_call(rmdirProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(rmdirProfile, 4, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -618,7 +618,7 @@ RemoteFileProxy::rmdir() {
 }
 
 /* Call the file tail DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 string
@@ -638,22 +638,22 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   //IN Parameters
   if(diet_string_set(tailProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(tailProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(tailProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(tailProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -662,24 +662,24 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
 
   if(diet_string_set(tailProfile, 4, optionsToString.c_str())){
     msgErrorDiet += " by receiving tail of file options values ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(tailProfile, 5);
   diet_string_set(tailProfile, 6);
 
   if (diet_call(tailProfile)){
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(diet_string_get(tailProfile, 5, fileTail)){
     msgErrorDiet += " by receiving fileTail message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_get(tailProfile, 6, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -690,7 +690,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
 }
 
 /* Call the ls DIET server.
- * If something goes wrong, throw a raiseDietMsgException containing
+ * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
 
@@ -711,22 +711,22 @@ RemoteFileProxy::ls(const LsDirOptions& options) const {
   //IN Parameters
   if(diet_string_set(lsProfile, 0, sessionKey.c_str())){
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(lsProfile, 1, getPath().c_str())){
     msgErrorDiet += "with file path parameter "+getPath();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(lsProfile, 2, localUser.c_str())){
     msgErrorDiet += "with local user parameter "+localUser;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_set(lsProfile, 3, getHost().c_str())) {
     msgErrorDiet += "with host parameter "+getHost();
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -735,25 +735,25 @@ RemoteFileProxy::ls(const LsDirOptions& options) const {
 
   if(diet_string_set(lsProfile, 4, optionsToString.c_str())){
     msgErrorDiet += "with directory content option values ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   diet_string_set(lsProfile, 5);
   diet_string_set(lsProfile, 6);
 
   if (diet_call(lsProfile)) {
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   //Output parameters
   if(diet_string_get(lsProfile, 5, ls)){
     msgErrorDiet += " by receiving directory content information";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if(diet_string_get(lsProfile, 6, errMsg)){
     msgErrorDiet += " by receiving errorInfo message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   /*To raise a vishnu exception if the received message is not empty*/
@@ -841,7 +841,7 @@ RemoteFileProxy::transferFile(const std::string& dest,
   }
 
   if (diet_call(transferFileProfile)) {
-    raiseDietMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("error while contacting the file management service");
   }
 
   if(!isAsyncTransfer) {

@@ -14,10 +14,8 @@
 using namespace vishnu;
 
 /**
-* \brief Constructor
-* \fn OptionValueServer()
-*/
-
+ * \brief Constructor
+ */
 OptionValueServer::OptionValueServer() {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -25,22 +23,20 @@ OptionValueServer::OptionValueServer() {
   msessionServer = NULL;
 }
 /**
-* \brief Constructor
-* \fn OptionValueServer(UMS_Data::OptionValue optionvalue)
-* \param optionvalue the option data structure
-* \param sessionServer The object to manipulate session
-*/
+ * \brief Constructor
+ * \param optionvalue the option data structure
+ * \param sessionServer The object to manipulate session
+ */
 OptionValueServer::OptionValueServer(UMS_Data::OptionValue*& optionvalue, SessionServer session):
 moptionValue(optionvalue) , msessionServer(&session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 /**
-* \brief Function to configure options on the database
-* \fn    int configureOption()
-* \param defaultOptions the flag to get data from defauts options table
-* \return  raises an exception on error
-*/
+ * \brief Function to configure options on the database
+ * \param defaultOptions the flag to get data from defauts options table
+ * \return  raises an exception on error
+ */
 int
 OptionValueServer::configureOption(bool defaultOptions) {
   std::string sqlCommand;
@@ -129,28 +125,25 @@ OptionValueServer::configureOption(bool defaultOptions) {
   return 0;
 }
 /**
-* \brief Destructor
-* \fn  ~OptionValueServer()
-*/
+ * \brief Destructor
+ */
 OptionValueServer::~OptionValueServer() {
 }
 /**
-* \brief Function to get option data structure
-* \fn UMS_Data::OptionValue getData()
-* \return  The user data structure
-*/
+ * \brief Function to get option data structure
+ * \return  The user data structure
+ */
 UMS_Data::OptionValue*
 OptionValueServer::getData() {
   return moptionValue;
 }
 /**
-* \brief Function to get option information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname, defaultOptions);
-* \param condition The condition of the select request
-* \param attrname the name of the attribut to get
-* \param defaultOptions the flag to get data from defauts options table
-* \return the value of the attribut or empty string if no results
-*/
+ * \brief Function to get option information from the database vishnu
+ * \param condition The condition of the select request
+ * \param attrname the name of the attribut to get
+ * \param defaultOptions the flag to get data from defauts options table
+ * \return the value of the attribut or empty string if no results
+ */
 std::string
 OptionValueServer::getAttribut(std::string condition, std::string attrname, bool defaultOptions) {
   std::string sqlCommand;
@@ -187,10 +180,9 @@ OptionValueServer::getOptionValueForUser(std::string numuserId, std::string opti
 }
 
 /**
-* \brief Function to check the value for a specific option
-* \fn bool isCorrectValue()
-* \return  true if the option value is correct else false
-*/
+ * \brief Function to check the value for a specific option
+ * \return  true if the option value is correct else false
+ */
 bool
 OptionValueServer::isCorrectValue() {
 

@@ -20,20 +20,17 @@ class CommandServer {
 public:
   /**
   * \brief Constructor
-  * \fn CommandServer(SessionServer session)
   * \param session The object which encapsulates session data
   */
   CommandServer(SessionServer session);
   /**
   * \brief Constructor
-  * \fn CommandServer(std::string cmd, SessionServer session)
   * \param cmd The cmd launched by the user
   * \param session The object which encapsulates session data
   */
 	CommandServer(std::string cmd, SessionServer session);
   /**
   * \brief Function to get the command description
-  * \fn    std::string getCommand()
   * \return the current command
   */
   std::string
@@ -55,14 +52,12 @@ public:
          std::string endTime = "CURRENT_TIMESTAMP");
   /**
   * \brief Function to check if commands are running
-  * \fn    bool isRunning()
   * \return true if commands are running else false
   */
   bool
   isRunning();
   /**
   * \brief Destructor
-  * \fn    ~CommandServer()
   */
 	~CommandServer();
 

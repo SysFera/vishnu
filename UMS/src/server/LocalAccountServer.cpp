@@ -10,7 +10,6 @@
 
 /**
 * \brief Constructor
-* \fn LocalAccountServer(LocalAccount account, SessionServer session)
 * \param account The LocalAccount data structure
 * \param session The object which encapsulates session data
 */
@@ -22,7 +21,6 @@ mlocalAccount(account), msessionServer(session) {
 
 /**
 * \brief Function to add a new VISHNU localAccount
-* \fn int add()
 * \return raises an exception on error
 */
 int
@@ -96,7 +94,6 @@ LocalAccountServer::add() {
 
 /**
 * \brief Function to update a VISHNU localAccount
-* \fn int update()
 * \return raises an exception on error
 */
 int
@@ -185,7 +182,6 @@ LocalAccountServer::update() {
 
 /**
 * \brief Function to delete a VISHNU localAccount
-* \fn int deleteLocalAccount()
 * \return raises an exception on error
 */
 int
@@ -249,7 +245,6 @@ LocalAccountServer::deleteLocalAccount() {
   return 0;
 }
 /**
-* \fn ~LocalAccountServer
 * \brief Destructor
 */
 LocalAccountServer::~LocalAccountServer() {
@@ -257,7 +252,6 @@ LocalAccountServer::~LocalAccountServer() {
 }
 /**
 * \brief Function to get localAccount information
-* \fn UMS_Data::LocalAccount getData()
 * \return  The LocalAccount data structure
 */
 UMS_Data::LocalAccount *
@@ -266,7 +260,6 @@ LocalAccountServer::getData() {
 }
 /**
 * \brief Function to get localAccount information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname);
 * \param condition The condition of the select request
 * \param attrname the name of the attribut to get
 * \return the value of the attribut or empty string if no results
@@ -281,7 +274,6 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
 
 /**
 * \brief Function to check localAccount on database
-* \fn bool exist()
 * \return true if the localAccount exists else false
 */
 bool
@@ -312,7 +304,6 @@ LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
 
 /**
 * \brief Function to get the content of the public ssh generated
-* \fn std::string getPublicKey()
 * \return The content of the ssh public key generated
 */
 std::string

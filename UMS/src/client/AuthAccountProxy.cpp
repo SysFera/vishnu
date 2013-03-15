@@ -8,7 +8,7 @@
 
 #include "DIET_client.h"                // for diet_string_set, diet_call, etc
 #include "ecorecpp/serializer/serializer.hpp"  // for serializer
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 
 #include "UMSServices.hpp"
 
@@ -47,11 +47,11 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, authAccountToString)) {
     msg += "with authAccountToString parameter "+authAccountToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -60,11 +60,11 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -117,15 +117,15 @@ AuthAccountProxy::deleteAuthAccount()
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, sysId)) {
     msg += "with systemId parameter "+sysId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 2, userId)) {
     msg += "with userId parameter "+userId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -134,11 +134,11 @@ AuthAccountProxy::deleteAuthAccount()
   if(!diet_call(profile)) {
     if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -151,7 +151,6 @@ AuthAccountProxy::deleteAuthAccount()
 
 /**
  * \brief Function get SessionProxy object which contains the VISHNU session identifier
- * \fn SessionProxy getSessionProxy()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */

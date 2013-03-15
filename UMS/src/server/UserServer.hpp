@@ -28,91 +28,79 @@ class SessionServer;
 class UserServer {
 public:
   /**
-  * \brief Constructor
-  * \fn UserServer(std::string userId, std::string password)
-  * \param userId The userId of the user
-  * \param password The password of the user
-  */
+   * \brief Constructor
+   * \param userId The userId of the user
+   * \param password The password of the user
+   */
   UserServer(std::string userId, std::string password);
   /**
-  * \brief Constructor
-  * \fn UserServer(const UMS_Data::User& user)
-  * \param user The user data structure
-  */
+   * \brief Constructor
+   * \param user The user data structure
+   */
   UserServer(const UMS_Data::User& user);
   /**
-  * \brief Constructor
-  * \fn UserServer(SessionServer sessionServer)
-  * \param sessionServer The object to manipulate session
-  */
+   * \brief Constructor
+   * \param sessionServer The object to manipulate session
+   */
   UserServer(SessionServer sessionServer);
   /**
-  * \brief Function to add a new VISHNU user
-  * \fn int add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath)
-  * \param user The user data structure
-  * \param vishnuId The identifier of the vishnu instance
-  * \param sendmailScriptPath The path to the script for sending emails
-  * \return raises an exception on error
-  */
+   * \brief Function to add a new VISHNU user
+   * \param user The user data structure
+   * \param vishnuId The identifier of the vishnu instance
+   * \param sendmailScriptPath The path to the script for sending emails
+   * \return raises an exception on error
+   */
   int
   add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath);
   /**
-  * \brief Function to update user information
-  * \fn int update(UMS_Data::User* user)
-  * \param user The user data structure
-  * \return raises an exception on error
-  */
+   * \brief Function to update user information
+   * \param user The user data structure
+   * \return raises an exception on error
+   */
   int
   update(UMS_Data::User* user);
   /**
-  * \brief Function to delete VISHNU user
-  * \fn int deleteUser(UMS_Data::User user)
-  * \param user The user data structure
-  * \return raises an exception on error
-  */
+   * \brief Function to delete VISHNU user
+   * \param user The user data structure
+   * \return raises an exception on error
+   */
   int
   deleteUser(UMS_Data::User user);
   /**
-  * \brief Function to change VISHNU user password
-  * \fn int changePassword(std::string newPassword)
-  * \param newPassword The new password of the user
-  * \return raises an exception on error
-  */
+   * \brief Function to change VISHNU user password
+   * \param newPassword The new password of the user
+   * \return raises an exception on error
+   */
   int
   changePassword(std::string newPassword);
   /**
-  * \brief Function to change VISHNU user password
-  * \fn int resetPassword(UMS_Data::User& user, std::string sendmailScriptPath)
-  * \param user The user data structure
-  * \param sendmailScriptPath The path to the script for sending emails
-  * \return raises an exception on error
-  */
+   * \brief Function to change VISHNU user password
+   * \param user The user data structure
+   * \param sendmailScriptPath The path to the script for sending emails
+   * \return raises an exception on error
+   */
   int
   resetPassword(UMS_Data::User& user, std::string sendmailScriptPath);
   /**
-  * \fn ~UserServer()
-  * \brief Destructor
-  */
+   * \brief Destructor
+   */
   ~UserServer();
   /**
-  * \brief Function to get user information
-  * \fn UMS_Data::User getData()
-  * \return  The user data structure
-  */
+   * \brief Function to get user information
+   * \return  The user data structure
+   */
   UMS_Data::User
   getData();
   /**
-  * \brief Function to initialize user data for constructor with sessionServer
-  * \fn init()
-  */
+   * \brief Function to initialize user data for constructor with sessionServer
+   */
   void
   init();
   /**
-  * \brief Function to check user on database
-  * \fn bool exist(bool flagForChangePwd)
-  * \param flagForChangePwd A flag to check the password state
-  * \return true if the password state has not to be checked else false
-  */
+   * \brief Function to check user on database
+   * \param flagForChangePwd A flag to check the password state
+   * \return true if the password state has not to be checked else false
+   */
   bool
   exist(bool flagForChangePwd = false);
   /**
@@ -123,36 +111,32 @@ public:
   bool
   isAuthenticate(bool flagForChangePwd = false);
   /**
-  * \brief Function to check the VISHNU user privilege
-  * \fn bool isAdmin()
-  * \return true if the user is an admin else false
-  */
+   * \brief Function to check the VISHNU user privilege
+   * \return true if the user is an admin else false
+   */
   bool
   isAdmin();
   /**
-  * \brief Function to check the user attribut value
-  * \fn bool isAttributOk(std::string attributName, int valueOk)
-  * \param attributName The name of the attribut to check
-  * \param valueOk the value which will be compare to attribut name value
-  * \return true if the attributName value is valueOk
-  */
+   * \brief Function to check the user attribut value
+   * \param attributName The name of the attribut to check
+   * \param valueOk the value which will be compare to attribut name value
+   * \return true if the attributName value is valueOk
+   */
   bool
   isAttributOk(std::string attributName, int valueOk);//return if the password state ok
   /**
-  * \brief Function to get user information from the database vishnu
-  * \fn getAttribut(std::string condition, std::string attrname);
-  * \param condition The condition of the select request
-  * \param attrname the name of the attribut to get
-  * \return the value of the attribut or empty string if no results
-  */
+   * \brief Function to get user information from the database vishnu
+   * \param condition The condition of the select request
+   * \param attrname the name of the attribut to get
+   * \return the value of the attribut or empty string if no results
+   */
   std::string
   getAttribut(std::string condition, std::string attrname = "numuserid");
   /**
-  * \brief Function to check a userId
-  * \fn bool existuserId(std::string userId)
-  * \param userId The userId to check
-  * \return true if the userId exists
-  */
+   * \brief Function to check a userId
+   * \param userId The userId to check
+   * \return true if the userId exists
+   */
   bool
   existuserId(std::string userId);
 
@@ -197,12 +181,11 @@ private:
   // Functions
   /////////////////////////////////
   /**
-  * \brief Function to generate a password
-  * \fn generatePassword(std::string value1, std::string value2)
-  * \param value1 a string used to generate the password
-  * \param value2 a string used to generate the password
-  * \return an encrypted message
-  */
+   * \brief Function to generate a password
+   * \param value1 a string used to generate the password
+   * \param value2 a string used to generate the password
+   * \return an encrypted message
+   */
   std::string
   generatePassword(std::string value1, std::string value2);
 
@@ -230,10 +213,10 @@ private:
   getMailContent(const UMS_Data::User& user, bool flagAdduser);
 
   /**
-  * \brief Function to check the user state (locked or not) and to
-  * verify the password state
-  * \param flagForChangePwd A flag to check the password state
-  */
+   * \brief Function to check the user state (locked or not) and to
+   * verify the password state
+   * \param flagForChangePwd A flag to check the password state
+   */
   void
   CheckUserState(bool flagForChangePwd);
 

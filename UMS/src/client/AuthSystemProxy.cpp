@@ -11,7 +11,7 @@
 
 #include "DIET_client.h"                // for diet_string_set, etc
 #include "ecorecpp/serializer/serializer.hpp"  // for serializer
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 #include "UMSServices.hpp"
 
 /**
@@ -49,11 +49,11 @@ AuthSystemProxy::add() {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, authSystemToString)) {
     msg += "with authSystemToString parameter "+authSystemToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -64,16 +64,16 @@ AuthSystemProxy::add() {
 
     if(diet_string_get(profile,2, authSystemInString)) {
       msg += "with authSystemInString parameter " + authSystemInString;
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
 
     if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -116,11 +116,11 @@ AuthSystemProxy::update() {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, authSystemToString)) {
     msg += "with authSystemToString parameter "+authSystemToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -130,11 +130,11 @@ AuthSystemProxy::update() {
 
     if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -165,11 +165,11 @@ AuthSystemProxy::deleteAuthSystem()
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, sysId)) {
     msg += "with systemId parameter "+sysId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -178,11 +178,11 @@ AuthSystemProxy::deleteAuthSystem()
   if(!diet_call(profile)) {
     if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -203,7 +203,6 @@ AuthSystemProxy::getData() const {
 }
 /**
  * \brief Function get SessionProxy object which contains the VISHNU session identifier
- * \fn SessionProxy getSessionProxy()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */

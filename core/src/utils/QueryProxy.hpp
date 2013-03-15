@@ -13,7 +13,7 @@
 #include <ecore.hpp>
 #include <ecorecpp.hpp>
 
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 #include "DIET_client.h"
 #include "utilsClient.hpp"
 #include "SessionProxy.hpp"
@@ -233,18 +233,18 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   //If the query uses the machineId (machineId not null)
   if (!mmachineId.empty()) {
     if (diet_string_set(profile, 1, mmachineId)) {
       msg += "with machineId parameter "+mmachineId;
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
 
     if (diet_string_set(profile, 2, queryParmetersToString)) {
       msg += "with queryParmetersToString parameter "+queryParmetersToString;
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
 
     //OUT Parameters
@@ -254,19 +254,19 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
     if (!diet_call(profile)) {
       if (diet_string_get(profile,3, listObjectInString)){
         msg += "by receiving listObjectInString message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
       if (diet_string_get(profile,4, errorInfo)){
         msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
     } else {
-      raiseDietMsgException("Bus initialization failure");
+      raiseCommunicationMsgException("Bus initialization failure");
     }
   } else {
     if (diet_string_set(profile, 1, queryParmetersToString)) {
       msg += "with queryParmetersToString parameter "+queryParmetersToString;
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
 
     //OUT Parameters
@@ -276,19 +276,19 @@ ListObject* QueryProxy<QueryParameters, ListObject>::list() {
     if (!diet_call(profile)) {
       if (diet_string_get(profile,2, listObjectInString)){
         msg += "by receiving listObjectInString message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
 
       if (diet_string_get(profile,3, errorInfo)){
         msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
     } else {
-      raiseDietMsgException("Bus call failure");
+      raiseCommunicationMsgException("Bus call failure");
     }
   }
 
-  /*CTo check the receiving message error*/
+  /* To check the receiving message error */
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   //To parse List object serialized

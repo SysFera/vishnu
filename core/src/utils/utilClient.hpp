@@ -20,10 +20,9 @@
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
- * \fn void raiseDietMsgException(const std::string& msg)
  * \param msg to spread
  */
-void raiseDietMsgException(const std::string& msg);
+void raiseCommunicationMsgException(const std::string& msg);
 
 /**
  * \brief Function to split the receiving message into error code and message error

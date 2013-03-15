@@ -18,9 +18,8 @@
 
 
 /**
- * \fn ListUsersServer(const SessionServer session)
- * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
+ * \param session The object which encapsulates the session information (ex: identifier of the session)
  */
 ListUsersServer::ListUsersServer(const SessionServer& session):
 msessionServer(session)
@@ -31,11 +30,9 @@ msessionServer(session)
 }
 
 /**
- * \fn ListUsersServer(const std::string& option
- *                     const SessionServer& session)
+ * \brief Constructor, raises an exception on error
  * \param option The ListUsersServer option
  * \param session The object which encapsulates the session information (ex: identifier of the session)
- * \brief Constructor, raises an exception on error
  */
 ListUsersServer::ListUsersServer(const UMS_Data::ListUsersOptions_ptr& option, const SessionServer& session):
 moption(option), msessionServer(session)
@@ -47,15 +44,13 @@ moption(option), msessionServer(session)
 
 /**
  * \brief Function to treat the ListUsersServer options
- * \fn void processOptions(UserServer userServer,
- *                         const std::string& options
- *                         std::string& sqlRequest)
  * \param userServer the object which encapsulates user information
  * \param optionsListUsersServer option
  * \param sqlRequest the sql data base request
  * \return raises an exception on error
  */
-void ListUsersServer::processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest)
+void
+ListUsersServer::processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest)
 {
   if(!userServer.isAdmin()) {
     UMSVishnuException e (ERRCODE_NO_ADMIN);
@@ -75,11 +70,11 @@ void ListUsersServer::processOptions(UserServer userServer, const UMS_Data::List
 
 /**
  * \brief Function to list machines information
- * \fn UMS_Data::ListUsers* list()
  * \return The pointer to the UMS_Data::ListUsers containing users information
  * \return raises an exception on error
  */
-ListUsers* ListUsersServer::list()
+ListUsers*
+ListUsersServer::list()
 {
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
                               "where not userid='"+ ROOTUSERNAME +"'";
@@ -125,7 +120,6 @@ ListUsers* ListUsersServer::list()
 }
 
 /**
- * \fn ~ListUsersServer()
  * \brief Destructor, raises an exception on error
  */
 ListUsersServer::~ListUsersServer()

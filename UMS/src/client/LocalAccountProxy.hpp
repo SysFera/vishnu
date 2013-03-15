@@ -22,47 +22,39 @@ class LocalAccountProxy
   public:
 
     /**
-     * \fn LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
-     *                       const SessionProxy& session)
+     * \brief Constructor, raises an exception on error
      * \param localAccount The object which encapsulates the user Acccount information
      * \param session The object which encapsulates the session information (ex: identifier of the session)
-     * \brief Constructor, raises an exception on error
      */
     LocalAccountProxy(const UMS_Data::LocalAccount& localAccount, const SessionProxy& session);
     /**
      * \brief Function to add a new local user configuration
-     * \fn  int add()
      * \return raises an exception on error
      */
     int add();
     /**
      * \brief Function to update a new local user configuration
-     * \fn  int update()
      * \return raises an exception on error
      */
     int update();
     /**
      * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
-     * \fn  int deleteLocalAccount()
      * \return raises an exception on error
      */
     int deleteLocalAccount();
     /**
      * \brief Function get SessionProxy object which contains the VISHNU session identifier
-     * \fn SessionProxy getSessionProxy() const
      * \return a SessionProy object which contains the VISHNU session information
      * \return raises an exception on error
      */
     SessionProxy getSessionProxy() const;
     /**
      * \brief Function get the VISHNU ssh public key
-     * \fn std::string getSshPublicKey() const
      * \return the VISHNU ssh public Key
      * \return raises an exception on error
      */
     std::string getSshPublicKey() const;
     /**
-     * \fn ~LocalAccountProxy()
      * \brief Destructor, raises an exception on error
      */
     ~LocalAccountProxy();
@@ -71,7 +63,6 @@ class LocalAccountProxy
 
     /**
      * \brief Function to combine add() and update() into one function
-     * \fn  int _addLocalAccountInformation(bool isNewLocalAccount=true);
      * \param isNewLocalAccount to select the call of add or update function
      * \return raises an exception on error
      */

@@ -9,9 +9,9 @@
 
 BOOST_AUTO_TEST_SUITE( utilClient_unit_tests )
 
-BOOST_AUTO_TEST_CASE( test_raiseDietMsgException_n )
+BOOST_AUTO_TEST_CASE( test_raiseCommunicationMsgException_n )
 {
-  BOOST_REQUIRE_THROW(raiseDietMsgException("youhouuuu"), SystemException)
+  BOOST_REQUIRE_THROW(raiseCommunicationMsgException("youhouuuu"), SystemException)
 }
 
 BOOST_AUTO_TEST_CASE( test_raiseExceptionIfNotEmptyMsg_n_emptyMsg )

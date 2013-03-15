@@ -49,19 +49,19 @@ class GenericCli {
 
         try{
 
-          // initializing DIET
+          // initializing VISHNU
 
           if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
-            errorUsage(av[0],dietErrorMsg,EXECERROR);
+            errorUsage(av[0],communicationErrorMsg,EXECERROR);
 
-            return  ERRCODE_CLI_ERROR_DIET ;
+            return  ERRCODE_CLI_ERROR_COMMUNICATION ;
           }
 
           // get the sessionKey
           std::string sessionKey=getLastSessionKey(getppid());
 
-          // DIET call
+          // VISHNU call
           if(false==sessionKey.empty()){
             //call of the api fuction
             int ret =function(sessionKey);
@@ -102,13 +102,13 @@ class GenericCli {
 
         try{
 
-          // initializing DIET
+          // initializing VISHNU
 
           if (vishnu::vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
-            errorUsage(av[0],dietErrorMsg,EXECERROR);
+            errorUsage(av[0],communicationErrorMsg,EXECERROR);
 
-            return  ERRCODE_CLI_ERROR_DIET ;
+            return  ERRCODE_CLI_ERROR_COMMUNICATION ;
           }
 
           //call of the api fuction

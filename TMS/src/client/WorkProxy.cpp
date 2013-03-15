@@ -11,7 +11,7 @@
 #include "TMS_Data.hpp"
 #include "TMSServices.hpp"
 #include "DIET_client.h"
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 
 /**
  * \param work The object which encapsulates the information of the work
@@ -54,15 +54,15 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
   //IN Parameters
   if (diet_string_set(addProfile,0, sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(addProfile,1, workToString.c_str())) {
     msg += "with workToString parameter "+workToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(addProfile,2, optionsToString.c_str())) {
     msg += "with workToString parameter "+workToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -72,15 +72,15 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
   if (!diet_call(addProfile)) {
     if (diet_string_get(addProfile,3, workInString)){
       msg += "by receiving Work serialized  message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
     if (diet_string_get(addProfile,4, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -121,11 +121,11 @@ WorkProxy::update() {
   //IN Parameters
   if (diet_string_set(updateProfile,0, sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(updateProfile,1, workToString.c_str())) {
     msg += "with workToString parameter "+workToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -134,11 +134,11 @@ WorkProxy::update() {
   if (!diet_call(updateProfile)) {
     if (diet_string_get(updateProfile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -168,11 +168,11 @@ WorkProxy::deleteWork() {
   //IN Parameters
   if (diet_string_set(deleteProfile,0, sessionKey.c_str())) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(deleteProfile,1, workId.c_str())) {
     msg += "with workId parameter "+workId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -181,11 +181,11 @@ WorkProxy::deleteWork() {
   if (!diet_call(deleteProfile)) {
     if (diet_string_get(deleteProfile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

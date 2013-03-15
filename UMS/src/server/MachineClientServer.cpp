@@ -12,11 +12,10 @@
 #include "utilVishnu.hpp"
 
 /**
-* \brief Constructor
-* \fn MachineClientServer(std::string sshKey, std::string host)
-* \param sshKey The ssh key of the client machine
-* \param host The name of the client host
-*/
+ * \brief Constructor
+ * \param sshKey The ssh key of the client machine
+ * \param host The name of the client host
+ */
 MachineClientServer::MachineClientServer(const std::string& sshKey,
                                          const std::string& host)
   : mmachineSSHKey(sshKey), mhostname(host) {
@@ -25,11 +24,11 @@ MachineClientServer::MachineClientServer(const std::string& sshKey,
 }
 
 /**
-* \brief Function to record the client machine on the database
-* \fn int recordMachineClient()
-* \return raises an exception on error
-*/
-int MachineClientServer::recordMachineClient() {
+ * \brief Function to record the client machine on the database
+ * \return raises an exception on error
+ */
+int
+MachineClientServer::recordMachineClient() {
 
   //If the machine is not on the database
   if (!exist()) {
@@ -46,10 +45,9 @@ int MachineClientServer::recordMachineClient() {
 }
 
 /**
-* \brief Function to get the id number of the client machine
-* \fn std::string getId()
-* \return raises an exception on error
-*/
+ * \brief Function to get the id number of the client machine
+ * \return raises an exception on error
+ */
 std::string
 MachineClientServer::getId() {
 
@@ -61,24 +59,23 @@ MachineClientServer::getId() {
   return result->getFirstElement();
 }
 /**
-* \brief Function to get the ssh key of the client machine
-* \fn std::string getSSHKey()
-* \return raises an exception on error
-*/
-std::string MachineClientServer::getSSHKey() const{
+ * \brief Function to get the ssh key of the client machine
+ * \return raises an exception on error
+ */
+std::string
+MachineClientServer::getSSHKey() const{
   return mmachineSSHKey;
 }
 
 /**
-* \brief Function to get the hostname of the client machine
-* \fn std::string getHost()
-* \return raises an exception on error
-*/
-std::string MachineClientServer::getHost() const{
+ * \brief Function to get the hostname of the client machine
+ * \return raises an exception on error
+ */
+std::string
+MachineClientServer::getHost() const{
   return mhostname;
 }
 /**
-* \fn ~MachineClientServer()
 * \brief Destructor
 */
 MachineClientServer::~MachineClientServer() {
@@ -86,9 +83,9 @@ MachineClientServer::~MachineClientServer() {
 
 /**
 * \brief Function to check the client machine on the database
-* \fn bool exist()
 * \return true if the machine exists on the database else false
 */
-bool MachineClientServer::exist(){
+bool
+MachineClientServer::exist(){
   return (getId().size() != 0);
 }

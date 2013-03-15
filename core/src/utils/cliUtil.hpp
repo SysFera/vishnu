@@ -7,9 +7,9 @@ class Options;
 
 
 /**
- * \brief Contains a generic diet error message
+ * \brief Contains a generic communication error message
  */
-const std::string dietErrorMsg = "Bus initialization failed !";
+const std::string communicationErrorMsg = "Communication bus initialization failed !";
 
 /**
  * \struct env_name_mapper

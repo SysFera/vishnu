@@ -30,7 +30,6 @@ class ListCommandsServer: public QueryServer<UMS_Data::ListCmdOptions, UMS_Data:
 public:
 
 	/**
-	 * \fn ListCommandsServer(const SessionServer session)
 	 * \param session The object which encapsulates the session information (ex: identifier of the session)
 	 * \brief Constructor, raises an exception on error
 	 */
@@ -40,11 +39,9 @@ public:
 		mcommandName ="vishnu_list_history_cmd";
 		}
 	/**
-	 * \fn ListCommandsServer(UMS_Data::ListCmdOptions_ptr params,
-	 *                        const SessionServer& session)
+	 * \brief Constructor, raises an exception on error
 	 * \param params The object which encapsulates the information of ListCommandsServer options
 	 * \param session The object which encapsulates the session information (ex: identifier of the session)
-	 * \brief Constructor, raises an exception on error
 	 */
 	ListCommandsServer(UMS_Data::ListCmdOptions_ptr params, const SessionServer& session):
 		QueryServer<UMS_Data::ListCmdOptions, UMS_Data::ListCommands>(params, session)
@@ -54,15 +51,13 @@ public:
 
 	/**
 	 * \brief Function to treat the ListCommandsServer options
-	 * \fn void processOptions(UserServer userServer,
-	 *                         const UMS_Data::ListCmdOptions_ptr& options,
-	 *                         std::string& sqlRequest)
 	 * \param userServer the object which encapsulates user information
 	 * \param options the object which contains the ListCommandsServer options values
 	 * \param sqlRequest the sql data base request
 	 * \return raises an exception on error
 	 */
-	void processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest)
+	void
+        processOptions(UserServer userServer, const UMS_Data::ListCmdOptions_ptr& options, std::string& sqlRequest)
 	{
 		boost::posix_time::ptime pt;
 		size_t userIdSize = options->getUserId().size();
@@ -108,7 +103,6 @@ public:
 
 	/**
 	 * \brief Function to list commands information
-	 * \fn UMS_Data::ListCommands* list()
 	 * \return The pointer to the UMS_Data::ListCommands containing commands information
 	 * \return raises an exception on error
 	 */
@@ -166,7 +160,6 @@ public:
 
 	/**
 	 * \brief Function to get the name of the ListCommandsServer command line
-	 * \fn std::string getCommandName()
 	 * \return The the name of the ListCommandsServer command line
 	 */
 	std::string getCommandName()
@@ -176,7 +169,6 @@ public:
 
 	/**
 	 * \brief To convert the command type in string
-	 * \fn std::string convertCmdType(CmdType type)
 	 * \param type The type to convert
 	 * \return The corresponding string
 	 */
@@ -205,7 +197,6 @@ public:
 
 	/**
 	 * \brief To convert the command type to the corresponding Mapper name
-	 * \fn std::string convertypetoMapperName(CmdType type)
 	 * \param type The type to convert
 	 * \return The corresponding mapper name
 	 */
@@ -234,7 +225,6 @@ public:
 	}
 
 	/**
-	 * \fn ~ListCommandsServer()
 	 * \brief Destructor, raises an exception on error
 	 */
 	~ListCommandsServer()
