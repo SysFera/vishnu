@@ -22,13 +22,11 @@ class NetrcReader {
 
   public:
     /**
-     * \fn NetrcReader(std::string path)
      * \brief Constructor
      */
     NetrcReader();
 
     /**
-     * \fn NetrcReader(std::string path)
      * \param path  The path until the netrc file
      * \brief Constructor
      */
@@ -45,7 +43,6 @@ class NetrcReader {
     read(std::map<size_t, std::pair<std::string,std::string> >& auth, const std::string& machineName = "vishnu");
 
     /**
-     * \fn ~NetrcReader()
      * \brief Destructor
      */
     ~NetrcReader();
@@ -83,7 +80,6 @@ class NetrcReader {
 
     /**
      * \brief Function to check the validity of the netrc file
-     * \fn  void check()
      * \return raises an exception on error
      */
     void

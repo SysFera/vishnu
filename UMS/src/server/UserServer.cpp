@@ -18,11 +18,10 @@ using namespace vishnu;
 
 
 /**
-* \brief Constructor
-* \fn UserServer(std::string userId, std::string password)
-* \param userId The userId of the user
-* \param password The password of the user
-*/
+ * \brief Constructor
+ * \param userId The userId of the user
+ * \param password The password of the user
+ */
 UserServer::UserServer(std::string userId, std::string password) {
   DbFactory factory;
   muser.setUserId(userId);
@@ -32,10 +31,9 @@ UserServer::UserServer(std::string userId, std::string password) {
 }
 
 /**
-* \brief Constructor
-* \fn UserServer(const UMS_Data::User& user)
-* \param user The user data structure
-*/
+ * \brief Constructor
+ * \param user The user data structure
+ */
 UserServer::UserServer(const UMS_Data::User& user):muser(user) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -43,23 +41,21 @@ UserServer::UserServer(const UMS_Data::User& user):muser(user) {
 }
 
 /**
-* \brief Constructor
-* \fn UserServer(SessionServer sessionServer)
-* \param sessionServer The object to manipulate session
-*/
+ * \brief Constructor
+ * \param sessionServer The object to manipulate session
+ */
 UserServer::UserServer(SessionServer sessionServer): msessionServer(&sessionServer) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
 
 /**
-* \brief Function to add a new VISHNU user
-* \fn int add(UMS_Data::User*& user, int vishnuId)
-* \param user The user data structure
-* \param vishnuId The identifier of the vishnu instance
-* \param sendmailScriptPath The path to the script for sending emails
-* \return raises an exception on error
-*/
+ * \brief Function to add a new VISHNU user
+ * \param user The user data structure
+ * \param vishnuId The identifier of the vishnu instance
+ * \param sendmailScriptPath The path to the script for sending emails
+ * \return raises an exception on error
+ */
 int
 UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptPath) {
   std::string pwd;
@@ -125,11 +121,10 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 }//END: add(UMS_Data::User*& user)
 
 /**
-* \brief Function to update user information
-* \fn int update(UMS_Data::User*& user)
-* \param user The user data structure
-* \return raises an exception on error
-*/
+ * \brief Function to update user information
+ * \param user The user data structure
+ * \return raises an exception on error
+ */
 int
 UserServer::update(UMS_Data::User *user) {
   std::string sqlCommand = "";
@@ -205,11 +200,10 @@ UserServer::update(UMS_Data::User *user) {
 } //END: update(UMS_Data::User *user)
 
 /**
-* \brief Function to delete VISHNU user
-* \fn int deleteUser(UMS_Data::User user)
-* \param user The user data structure
-* \return raises an exception on error
-*/
+ * \brief Function to delete VISHNU user
+ * \param user The user data structure
+ * \return raises an exception on error
+ */
 int
 UserServer::deleteUser(UMS_Data::User user) {
 
@@ -246,11 +240,10 @@ UserServer::deleteUser(UMS_Data::User user) {
 }//END: deleteUser(UMS_Data::User user)
 
 /**
-* \brief Function to change VISHNU user password
-* \fn int changePassword(std::string newPassword)
-* \param newPassword The new password of the user
-* \return raises an exception on error
-*/
+ * \brief Function to change VISHNU user password
+ * \param newPassword The new password of the user
+ * \return raises an exception on error
+ */
 int
 UserServer::changePassword(std::string newPassword) {
   std::string sqlChangePwd;
@@ -291,12 +284,11 @@ UserServer::changePassword(std::string newPassword) {
 }//END: changePassword(std::string newPassword)
 
 /**
-* \brief Function to change VISHNU user password
-* \fn int resetPassword(UMS_Data::User user, std::string sendmailScriptPath)
-* \param user The user data structure
-* \param sendmailScriptPath The path to the script for sending emails
-* \return raises an exception on error
-*/
+ * \brief Function to change VISHNU user password
+ * \param user The user data structure
+ * \param sendmailScriptPath The path to the script for sending emails
+ * \return raises an exception on error
+ */
 int
 UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) {
   std::string sqlResetPwd;
@@ -353,25 +345,22 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
 }//END: resetPassword(UMS_Data::User user)
 
 /**
-* \fn ~UserServer()
-* \brief Destructor
-*/
+ * \brief Destructor
+ */
 UserServer::~UserServer() {
 }
 /**
-* \brief Function to get user information
-* \fn UMS_Data::User getData()
-* \return  The user data structure
-*/
+ * \brief Function to get user information
+ * \return  The user data structure
+ */
 UMS_Data::User
 UserServer::getData() {
   return muser;
 }
 
 /**
-* \brief Function to initialize user data for constructor with sessionServer
-* \fn init()
-*/
+ * \brief Function to initialize user data for constructor with sessionServer
+ */
 void
 UserServer::init(){
   std::string numUser;
@@ -409,11 +398,10 @@ UserServer::init(){
   }//END If the userId and password have not been defined
 } //END: void init()
 /**
-* \brief Function to check user on database
-* \fn bool exist(bool flagForChangePwd)
-* \param flagForChangePwd A flag to check the password state
-* \return true if the password state has not to be checked else false
-*/
+ * \brief Function to check user on database
+ * \param flagForChangePwd A flag to check the password state
+ * \return true if the password state has not to be checked else false
+ */
 bool
 UserServer::exist(bool flagForChangePwd) {
   //if the user is on the database
@@ -446,10 +434,9 @@ UserServer::isAuthenticate(bool flagForChangePwd) {
 
 
 /**
-* \brief Function to check the VISHNU user privilege
-* \fn bool isAdmin()
-* \return true if the user is an admin else false
-*/
+ * \brief Function to check the VISHNU user privilege
+ * \return true if the user is an admin else false
+ */
 bool
 UserServer::isAdmin() {
 
@@ -458,12 +445,11 @@ UserServer::isAdmin() {
 }
 
 /**
-* \brief Function to check the user attribut value
-* \fn bool isAttributOk(std::string attributName, int valueOk)
-* \param attributName The name of the attribut to check
-* \param valueOk the value which will be compare to attribut name value
-* \return true if the attributName value is valueOk
-*/
+ * \brief Function to check the user attribut value
+ * \param attributName The name of the attribut to check
+ * \param valueOk the value which will be compare to attribut name value
+ * \return true if the attributName value is valueOk
+ */
 bool
 UserServer::isAttributOk(std::string attributName, int valueOk) {
     return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and "
@@ -471,12 +457,11 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
 }
 
 /**
-* \brief Function to get user information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname);
-* \param condition The condition of the select request
-* \param attrname the name of the attribut to get
-* \return the value of the attribut or empty string if no results
-*/
+ * \brief Function to get user information from the database vishnu
+ * \param condition The condition of the select request
+ * \param attrname the name of the attribut to get
+ * \return the value of the attribut or empty string if no results
+ */
 std::string UserServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
@@ -484,11 +469,10 @@ std::string UserServer::getAttribut(std::string condition, std::string attrname)
 }
 
 /**
-* \brief Function to check a userId
-* \fn bool existuserId(std::string userId)
-* \param userId The userId to check
-* \return true if the userId exists
-*/
+ * \brief Function to check a userId
+ * \param userId The userId to check
+ * \return true if the userId exists
+ */
 bool
 UserServer::existuserId(std::string userId) {
 
@@ -509,12 +493,11 @@ UserServer::existuserId(std::string userId) {
 }
 
 /**
-* \brief Function to generate a password
-* \fn generatePassword(std::string value1, std::string value2)
-* \param value1 a string used to generate the password
-* \param value2 a string used to generate the password
-* \return an encrypted message
-*/
+ * \brief Function to generate a password
+ * \param value1 a string used to generate the password
+ * \param value2 a string used to generate the password
+ * \return an encrypted message
+ */
 std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
 

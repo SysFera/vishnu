@@ -18,7 +18,7 @@
 #include "OptionValue.hpp"              // for OptionValue
 #include "VishnuException.hpp"          // for VishnuException
 #include "api_ums.hpp"                  // for vishnuInitialize
-#include "cliError.hpp"                 // for CLI_ERROR_DIET, etc
+#include "cliError.hpp"                 // for CLI_ERROR_COMMUNICATION, etc
 #include "sessionUtils.hpp"             // for checkBadSessionKeyError, etc
 
 #include "configureOptionUtils.hpp"
@@ -125,13 +125,13 @@ int commonConfigure(boost::shared_ptr<Options> opt, int ac, char* av[], const Co
 
   /************** Call UMS connect service *******************************/
 
-  // initializing DIET
+  // initializing VISHNU
 
   if (vishnuInitialize(const_cast<char*>(const_cast<char*>(configFile.c_str())), ac, av)) {
 
-    errorUsage(av[0],dietErrorMsg,EXECERROR);
+    errorUsage(av[0],communicationErrorMsg,EXECERROR);
 
-    exit(CLI_ERROR_DIET);
+    exit(CLI_ERROR_COMMUNICATION);
   }
 
 

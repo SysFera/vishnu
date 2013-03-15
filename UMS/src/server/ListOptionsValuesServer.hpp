@@ -28,9 +28,8 @@ class ListOptionsValuesServer: public QueryServer<UMS_Data::ListOptOptions, UMS_
 public:
 
   /**
-   * \fn ListOptionsValuesServer(const SessionServer session)
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListOptionsValuesServer(const SessionServer session):
     QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(session)
@@ -38,11 +37,9 @@ public:
     mcommandName = "vishnu_list_options";
   }
   /**
-   * \fn ListOptionsValuesServer(UMS_Data::ListOptOptions_ptr params,
-   *                             const SessionServer& session)
+   * \brief Constructor, raises an exception on error
    * \param params The object which encapsulates the information of ListOptionsValuesServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
    */
   ListOptionsValuesServer(UMS_Data::ListOptOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(params, session)
@@ -52,15 +49,13 @@ public:
 
   /**
    * \brief Function to treat the ListOptionsValuesServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListOptOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListOptionsValuesServer options values
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListOptOptions_ptr& options, std::string& sqlRequest)
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListOptOptions_ptr& options, std::string& sqlRequest)
   {
       std::string sqlListofOptionValues = "SELECT description, value, userid from optionu, optionvalue, users"
                                      " where optionu.numoptionid=optionvalue.optionu_numoptionid and"
@@ -100,11 +95,11 @@ public:
 
   /**
    * \brief Function to list options values information
-   * \fn UMS_Data::ListOptionsValues* list()
    * \return The pointer to the UMS_Data::ListOptionsValues containing options values information
    * \return raises an exception on error
    */
-  UMS_Data::ListOptionsValues* list() {
+  UMS_Data::ListOptionsValues*
+  list() {
     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
 
     std::vector<std::string>::iterator ii;
@@ -145,17 +140,16 @@ public:
   }
 
    /**
-   * \brief Function to get the name of the ListOptionsValuesServer command line
-   * \fn std::string getCommandName()
-   * \return The the name of the ListOptionsValuesServer command line
-   */
-  std::string getCommandName()
+    * \brief Function to get the name of the ListOptionsValuesServer command line
+    * \return The the name of the ListOptionsValuesServer command line
+    */
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
 
   /**
-   * \fn ~ListOptionsValuesServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListOptionsValuesServer()

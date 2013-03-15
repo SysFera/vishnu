@@ -52,12 +52,12 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
   //IN Parameters
   if (diet_string_set(restartProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(restartProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -66,7 +66,7 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
 
   if (diet_string_set(restartProfile,2, restartOpToString.c_str())) {
     msgErrorDiet += "with SystemInfo parameter ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -75,11 +75,11 @@ ProcessCtlProxy::restart(const IMS_Data::SupervisorOp& options) {
   if(!diet_call(restartProfile)) {
     if(diet_string_get(restartProfile,3, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -110,7 +110,7 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
   //IN Parameters
   if (diet_string_set(stopProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser2;
@@ -118,12 +118,12 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
 
   if (diet_string_set(stopProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with process parameter ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(stopProfile,2, opToString.c_str())) {
     msgErrorDiet += "with option stop parameter ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -132,11 +132,11 @@ ProcessCtlProxy::stop(const IMS_Data::SupervisorOp& op) {
   if(!diet_call(stopProfile)) {
     if(diet_string_get(stopProfile,3, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -185,17 +185,17 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     //IN Parameters
     if (diet_string_set(loadShedProfile,0, sessionKey.c_str())) {
       msgErrorDiet += "with sessionKey parameter "+sessionKey;
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
 
     if (diet_string_set(loadShedProfile,1, mmachineId.c_str())) {
       msgErrorDiet += "with machineId parameter "+mmachineId;
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
 
     if (diet_string_set(loadShedProfile,2, convertToString(loadShedType).c_str())) {
       msgErrorDiet += "with SystemInfo parameter ";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
 
     //OUT Parameters
@@ -204,11 +204,11 @@ ProcessCtlProxy::loadShed(IMS_Data::LoadShedType loadShedType) {
     if(!diet_call(loadShedProfile)) {
       if(diet_string_get(loadShedProfile,3, errorInfo)){
 	msgErrorDiet += " by receiving errorInfo message";
-	raiseDietMsgException(msgErrorDiet);
+	raiseCommunicationMsgException(msgErrorDiet);
       }
     }
     else {
-      raiseDietMsgException("VISHNU call failure");
+      raiseCommunicationMsgException("VISHNU call failure");
     }
 
     /*To raise a vishnu exception if the receiving message is not empty*/
@@ -256,12 +256,12 @@ ProcessCtlProxy::cancelTMS() {
   //IN Parameters
   if (diet_string_set(cancelTMSProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(cancelTMSProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -270,7 +270,7 @@ ProcessCtlProxy::cancelTMS() {
 
   if (diet_string_set(cancelTMSProfile,2, jobToString.c_str())) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -279,11 +279,11 @@ ProcessCtlProxy::cancelTMS() {
   if(!diet_call(cancelTMSProfile)) {
     if(diet_string_get(cancelTMSProfile,3, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

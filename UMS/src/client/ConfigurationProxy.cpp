@@ -11,17 +11,15 @@
 #include "Configuration.hpp"            // for Configuration
 #include "DIET_client.h"                // for diet_string_set, etc
 #include "ecorecpp/serializer/serializer.hpp"  // for serializer
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 #include "utilVishnu.hpp"
 #include "UMSServices.hpp"
 
 
 /**
- * \fn ConfigurationProxy(const std::string& filePath,
- *                        const SessionProxy& session)
+ * \brief Constructor, raises an exception on error
  * \param filePath The file containing the configuration (serialized)
  * \param session The object which encapsulates the session information (ex: identifier of the session)
- * \brief Constructor, raises an exception on error
  */
 ConfigurationProxy::ConfigurationProxy(const std::string& filePath, const SessionProxy& session):
   msessionProxy(session), mfilePath(filePath)
@@ -30,11 +28,9 @@ ConfigurationProxy::ConfigurationProxy(const std::string& filePath, const Sessio
 }
 
 /**
- * \fn ConfigurationProxy(UMS_Data::Configuration* config,
- *                        const SessionProxy& session)
+ * \brief Constructor, raises an exception on error
  * \param config The object which encapsulates the configuration description
  * \param session The object which encapsulates the session information (ex: identifier of the session)
- * \brief Constructor, raises an exception on error
  */
 ConfigurationProxy::ConfigurationProxy(UMS_Data::Configuration* config, const SessionProxy& session):
   mconfiguration(config), msessionProxy(session)
@@ -43,7 +39,6 @@ ConfigurationProxy::ConfigurationProxy(UMS_Data::Configuration* config, const Se
 
 /**
  * \brief Function to save the configuration of VISHNU
- * \fn  int save()
  * \return raises an exception on error
  */
 int
@@ -62,7 +57,7 @@ ConfigurationProxy::save() {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -72,15 +67,15 @@ ConfigurationProxy::save() {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,1, configurationInString)){
       msg += "by receiving configurationInString message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
     if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -107,7 +102,6 @@ ConfigurationProxy::save() {
 
 /**
  * \brief Function to combine restoreFromFile() and restoreFromData() into one function
- * \fn  int restore(bool fromFile=true)
  * \param fromFile To select the call of restoreFromFile or restoreFromData function
  * \return raises an exception on error
  */
@@ -134,11 +128,11 @@ ConfigurationProxy::restore(bool fromFile) {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, configurationInString)) {
     msg += "with configurationInString parameter " + configurationInString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   //OUT Parameters
   diet_string_set(profile,2);
@@ -146,11 +140,11 @@ ConfigurationProxy::restore(bool fromFile) {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,2, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -163,7 +157,6 @@ ConfigurationProxy::restore(bool fromFile) {
 
 /**
  * \brief Function to restore the configuration of VISHNU from a file
- * \fn  int restoreFromFile()
  * \return raises an exception on error
  */
 int
@@ -173,7 +166,6 @@ ConfigurationProxy::restoreFromFile() {
 
 /**
  * \brief Function to restore the configuration of VISHNU from an object (Data)
- * \fn  int restoreFromFile()
  * \return raises an exception on error
  */
 int
@@ -183,7 +175,6 @@ ConfigurationProxy::restoreFromData() {
 
 /**
  * \brief Function get the saved configuration of VISHNU
- * \fn  UMS_Data::Configuration* getData()
  * \return saved configuration
  * \return raises an exception on error
  */
@@ -194,7 +185,6 @@ ConfigurationProxy::getData() {
 
 /**
  * \brief Function get SessionProxy object which contains the VISHNU session identifier
- * \fn SessionProxy getSessionProxy()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
@@ -204,7 +194,6 @@ ConfigurationProxy::getSessionProxy() {
 }
 
 /**
- * \fn ~ConfigurationProxy()
  * \brief Destructor, raises an exception on error
  */
 ConfigurationProxy::~ConfigurationProxy() {

@@ -26,42 +26,36 @@ class ConfigurationServer {
 public:
   /**
   * \brief Constructor
-  * \fn ConfigurationServer(SessionServer session)
   * \param session The object which encapsulates session data
   */
   ConfigurationServer(SessionServer session);
   /**
   * \brief Constructor
-  * \fn ConfigurationServer(UMS_Data::Configuration*& configuration, SessionServer session);
   * \param configuration The Configuration data structure
   * \param session The object which encapsulates session data
   */
   ConfigurationServer(UMS_Data::Configuration*& configuration, SessionServer session);
   /**
   * \brief Function to save a VISHNU configuration
-  * \fn int save()
   * \return raises an exception on error
   */
   int
   save();
   /**
   * \brief Function to restore a VISHNU configuration
-  * \fn int restore(int vishnuId)
   * \param vishnuId The identifier of the vishnu instance
   * \return raises an exception on error
   */
   int
   restore(int vishnuId);
   /**
-  * \fn ~ConfigurationServer()
-  * \brief Destructor
-  */
+   * \brief Destructor
+   */
   ~ConfigurationServer();
   /**
-  * \brief Function to get Configuration data structure
-  * \fn UMS_Data::Configuration*  getData()
-  * \return  The LocalAccount data structure
-  */
+   * \brief Function to get Configuration data structure
+   * \return  The LocalAccount data structure
+   */
   UMS_Data::Configuration*
   getData();
 
@@ -87,43 +81,41 @@ private:
   // Functions
   /////////////////////////////////
   /**
-  * \brief Function to get the sql code of users from a VISHNU configuration
-  * \fn std::string userToSql(UMS_Data::User_ptr user, int vishnuId)
-  * \param user The user object
-  * \param vishnuId The identifier of the vishnu instance
-  * \return the sql code containing the sql code of users
-  */
+   * \brief Function to get the sql code of users from a VISHNU configuration
+   * \param user The user object
+   * \param vishnuId The identifier of the vishnu instance
+   * \return the sql code containing the sql code of users
+   */
   std::string
   userToSql(UMS_Data::User_ptr user, int vishnuId);
   /**
-  * \brief Function to get the sql code of machines from a VISHNU configuration
-  * \fn std::string machineToSql(UMS_Data::Machine_ptr machine, int vishnuId)
-  * \param machine The machine object
-  * \param vishnuId The identifier of the vishnu instance
-  * \return the sql code containing the sql code of machines
-  */
+   * \brief Function to get the sql code of machines from a VISHNU configuration
+   * \param machine The machine object
+   * \param vishnuId The identifier of the vishnu instance
+   * \return the sql code containing the sql code of machines
+   */
   std::string
   machineToSql(UMS_Data::Machine_ptr machine, int vishnuId);
   /**
-  * \brief Function to get the sql code of machines description from a VISHNU configuration
-  * \param machine The machine object
-  * \return the sql code containing the sql code of machines description
-  */
+   * \brief Function to get the sql code of machines description from a VISHNU configuration
+   * \param machine The machine object
+   * \return the sql code containing the sql code of machines description
+   */
   std::string
   machineDescToSql(UMS_Data::Machine_ptr machine);
   /**
-  * \brief Function to get the sql code of user-authentication system from a VISHNU configuration
-  * \param authsystem The authSystem object
-  * \param vishnuId The identifier of the vishnu instance
-  * \return the sql code containing the sql code of authentication systems
-  */
+   * \brief Function to get the sql code of user-authentication system from a VISHNU configuration
+   * \param authsystem The authSystem object
+   * \param vishnuId The identifier of the vishnu instance
+   * \return the sql code containing the sql code of authentication systems
+   */
   std::string
   authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId);
   /**
-  * \brief Function to get the sql code of machines description from a VISHNU configuration
-  * \param authsystem The authSystem object
-  * \return the sql code containing the sql code of authentication systems based on ldap
-  */
+   * \brief Function to get the sql code of machines description from a VISHNU configuration
+   * \param authsystem The authSystem object
+   * \return the sql code containing the sql code of authentication systems based on ldap
+   */
   std::string
   ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem);
 };

@@ -10,15 +10,13 @@
 #include "DIET_client.h"                // for diet_string_set, etc
 
 #include "ecorecpp/serializer/serializer.hpp"  // for serializer
-#include "utilClient.hpp"               // for raiseDietMsgException, etc
+#include "utilClient.hpp"               // for raiseCommunicationMsgException, etc
 #include "UMSServices.hpp"
 
 /**
- * \fn LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
- *                       const SessionProxy& session)
+ * \brief Constructor, raises an exception on error
  * \param localAccount The object which encapsulates the user Acccount information
  * \param session The object which encapsulates the session information (ex: identifier of the session)
- * \brief Constructor, raises an exception on error
  */
 LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
                                      const SessionProxy& session)
@@ -26,7 +24,6 @@ LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
 
 /**
  * \brief Function to combine add() and update() into one function
- * \fn  int _addLocalAccountInformation(bool isNewMachine=true);
  * \param isNewLocalAccount to select the call of add or update function
  * \return raises an exception on error
  */
@@ -56,11 +53,11 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, localAccountToString)) {
     msg += "with localAccountToString parameter "+localAccountToString;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -73,23 +70,23 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
     if(isNewLocalAccount) {
       if(diet_string_get(profile,2, sshPublicKey)){
         msg += "by receiving sshPluciKey content";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
       if(diet_string_get(profile,3, errorInfo)){
         msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
       msshPublicKey = sshPublicKey;
     }
     else {
       if(diet_string_get(profile,2, errorInfo)){
         msg += "by receiving errorInfo message";
-        raiseDietMsgException(msg);
+        raiseCommunicationMsgException(msg);
       }
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -102,7 +99,6 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
 /**
  * \brief Function to add a new local user configuration
- * \fn  int add()
  * \return raises an exception on error
  */
 int
@@ -112,7 +108,6 @@ LocalAccountProxy::add() {
 
 /**
  * \brief Function to update a new local user configuration
- * \fn  int update()
  * \return raises an exception on error
  */
 int LocalAccountProxy::update()
@@ -122,7 +117,6 @@ int LocalAccountProxy::update()
 
 /**
  * \brief Function to removes a local user configuration (for a given user on a given machine) from VISHNU
- * \fn  int deleteLocalAccount()
  * \return raises an exception on error
  */
 int
@@ -142,15 +136,15 @@ LocalAccountProxy::deleteLocalAccount() {
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 1, userId)) {
     msg += "with userId parameter "+userId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
   if (diet_string_set(profile, 2, machineId)) {
     msg += "with machineId parameter "+machineId;
-    raiseDietMsgException(msg);
+    raiseCommunicationMsgException(msg);
   }
 
   //OUT Parameters
@@ -159,11 +153,11 @@ LocalAccountProxy::deleteLocalAccount() {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,3, errorInfo)){
       msg += "by receiving errorInfo message";
-      raiseDietMsgException(msg);
+      raiseCommunicationMsgException(msg);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -176,7 +170,6 @@ LocalAccountProxy::deleteLocalAccount() {
 
 /**
  * \brief Function get SessionProxy object which contains the VISHNU session identifier
- * \fn SessionProxy getSessionProxy()
  * \return a SessionProy object which contains the VISHNU session information
  * \return raises an exception on error
  */
@@ -187,7 +180,6 @@ LocalAccountProxy::getSessionProxy() const {
 
 /**
  * \brief Function get the VISHNU ssh public key
- * \fn std::string getSshPublicKey() const
  * \return the VISHNU ssh public Key
  * \return raises an exception on error
  */
@@ -197,7 +189,6 @@ LocalAccountProxy::getSshPublicKey() const {
 }
 
 /**
- * \fn ~LocalAccountProxy()
  * \brief Destructor, raises an exception on error
  */
 LocalAccountProxy::~LocalAccountProxy() {

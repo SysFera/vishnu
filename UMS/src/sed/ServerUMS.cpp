@@ -38,7 +38,6 @@ ServerUMS::getInstance() {
 
 /**
  * \brief To get the vishnuId
- * \fn int getVishnuId()
  * \return the path of the configuration file
  */
 int
@@ -48,7 +47,6 @@ ServerUMS::getVishnuId() const {
 
 /**
  * \brief To get the path to the sendmail script
- * \fn std::string getSendmailScriptPath()
  * \return the path of the configuration file
  */
 std::string
@@ -58,14 +56,12 @@ ServerUMS::getSendmailScriptPath() const {
 
 /**
  * \brief Constructor (private)
- * \fn ServerUMS()
  */
 ServerUMS::ServerUMS() {
 }
 
 /**
  * \brief To initialize the UMS server with individual parameters
- * \fn int init(std::string vishnuid)
  * \param vishnuId The id of the vishnu configuration registered in the database
  * \param dbConfig  The configuration of the database
  * \param sendmailScriptPath The path to the script for sending emails
@@ -121,7 +117,6 @@ ServerUMS::init(int vishnuId,
 }
 
 /**
- * \fn ~ServerUMS()
  * \brief Destructor, raises an exception on error
  */
 ServerUMS::~ServerUMS() {

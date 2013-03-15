@@ -23,7 +23,6 @@ using namespace std;
 
 /**
  * \brief To show how to use the sed
- * \fn int usage(char* cmd)
  * \param cmd The name of the program
  * \return Always 1
  */
@@ -55,7 +54,6 @@ controlSignal (int signum) {
 
 /**
  * \brief The main function
- * \fn int main(int argc, char* argv[], char* envp[])
  * \param argc Number of parameter
  * \param argv List of argument
  * \param envp Array of environment variables

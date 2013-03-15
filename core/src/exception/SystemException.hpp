@@ -12,7 +12,7 @@
 // RESERVED CODES FROM 1 TO 9 plus negative values
 // TODO describe the error codes
 static const int ERRCODE_AUTHENTERR = -1;
-static const int ERRCODE_DIET = 1;
+static const int ERRCODE_COMMUNICATION = 1;
 static const int ERRCODE_DBERR = 2;
 static const int ERRCODE_DBCONN = 3;
 static const int ERRCODE_SYSTEM = 4;

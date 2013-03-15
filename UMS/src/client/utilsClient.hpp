@@ -13,7 +13,6 @@
 
 /**
  * \brief Function to print an error message and the line and file where this error has been occured
- * \fn  inline void errMsg(const std::string& msg)
  * \param msg to print
  */
 inline void

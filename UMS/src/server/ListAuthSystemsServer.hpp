@@ -55,7 +55,8 @@ public:
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest) {
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListAuthSysOptions_ptr& options, std::string& sqlRequest) {
 
 
     mfullInfo = options->isListFullInfo();
@@ -112,7 +113,6 @@ public:
 
  /**
   * \brief Function to list machines information
-  * \fn UMS_Data::ListAuthSystems* list()
   * \return The pointer to the UMS_Data::ListAuthSystems containing users information
   * \return raises an exception on error
   */
@@ -172,16 +172,15 @@ public:
 
   /**
    * \brief Function to get the name of the ListAuthSystemsServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListAuthSystemsServer command line
    */
-  std::string getCommandName()
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
 
   /**
-   * \fn ~ListAuthSystemsServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListAuthSystemsServer() { }

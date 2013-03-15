@@ -16,32 +16,26 @@
 class UtilsProxy {
 public:
   /**
-   * \fn  UtilsProxy()
    * \brief Constructor, default constructor
    */
   UtilsProxy();
 
   /**
-   * \fn UtilsProxy(char* cfg,
-   *                int argc,
-   *                char** argv)
+   * \brief Constructor
    * \param cfg The SYSFERA-DS configuration file
    * \param argc The number of arguments of the program
    * \param argv The list of arguments
-   * \brief Constructor
    */
   UtilsProxy(char* cfg, int argc, char** argv);
 
   /**
-   * \fn UtilsProxy(const std::string& filePath)
-   * \param filePath The file used by the restore function
    * \brief Constructor
+   * \param filePath The file used by the restore function
    */
   UtilsProxy(const std::string& filePath);
 
   /**
    * \brief Function to initialize the SYSFERA-DS configuration
-   * \fn  int initialize()
    * \return 0 if success else 1 if error
    */
   int

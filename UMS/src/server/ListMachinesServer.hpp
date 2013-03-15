@@ -29,9 +29,8 @@ class ListMachinesServer: public QueryServer<UMS_Data::ListMachineOptions, UMS_D
 public:
 
   /**
-   * \fn ListMachinesServer(const SessionServer session)
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListMachinesServer(const SessionServer session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
@@ -39,11 +38,9 @@ public:
     mcommandName = "vishnu_list_machines";
   }
   /**
-   * \fn ListMachinesServer(UMS_Data::ListMachineOptions_ptr params,
-   *                        const SessionServer& session)
+   * \brief Constructor, raises an exception on error
    * \param params The object which encapsulates the information of ListMachinesServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
    */
   ListMachinesServer(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
   QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
@@ -53,15 +50,13 @@ public:
 
   /**
    * \brief Function to treat the ListMachinesServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListMachineOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListMachinesServer options values
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest)
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest)
   {
     std::string sqlListofMachinesWithJointure = "SELECT machineid, name, site, machine.status, lang, description, userid "
     " from machine, description, account, users where machine.nummachineid = description.machine_nummachineid "
@@ -106,7 +101,6 @@ public:
 
  /**
   * \brief Function to list machines information
-  * \fn UMS_Data::ListMachines* list()
   * \return The pointer to the UMS_Data::ListMachines containing machines information
   * \return raises an exception on error
   */
@@ -155,16 +149,15 @@ public:
 
   /**
    * \brief Function to get the name of the ListMachinesServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListMachinesServer command line
    */
-  std::string getCommandName()
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
 
   /**
-   * \fn ~ListMachinesServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListMachinesServer()

@@ -42,17 +42,17 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
   //IN Parameters
   if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(profile,1, oldSessionId.c_str())) {
     msgErrorDiet += "with oldSessionId parameter "+oldSessionId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(profile,2, filename.c_str())) {
     msgErrorDiet += "with filename parameter "+filename;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -61,7 +61,7 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 
   if (diet_string_set(profile,3, exportOptToString.c_str())) {
     msgErrorDiet += "with Export options parameter ";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -72,16 +72,16 @@ ExporterProxy::exportCmd(const std::string& oldSessionId,
 
     if(diet_string_get(profile,4, fileContent)){
       msgErrorDiet += " by receiving the file content";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
 
     if(diet_string_get(profile,5, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

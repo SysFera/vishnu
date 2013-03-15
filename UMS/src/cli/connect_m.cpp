@@ -156,12 +156,12 @@ int main (int ac, char* av[]){
 
     cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
-    // initializing DIET
+    // initializing vishnu
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), ac, av)) {
 
-      errorUsage(av[0],dietErrorMsg,EXECERROR);
+      errorUsage(av[0],communicationErrorMsg,EXECERROR);
 
-      return  ERRCODE_CLI_ERROR_DIET ;
+      return  ERRCODE_CLI_ERROR_COMMUNICATION ;
     }
 
     connect(listUsers, session, connectOpt);// call the api extern connect service to get a session key

@@ -26,58 +26,50 @@ class LocalAccountServer {
 public:
   /**
   * \brief Constructor
-  * \fn LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session)
   * \param account The LocalAccount data structure
   * \param session The object which encapsulates session data
   */
   LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session);
   /**
   * \brief Function to add a new VISHNU localAccount
-  * \fn int add()
   * \return raises an exception on error
   */
   int
   add();
   /**
   * \brief Function to update a VISHNU localAccount
-  * \fn int update()
   * \return raises an exception on error
   */
   int
   update();
   /**
-* \brief Function to delete a VISHNU localAccount
-* \fn int deleteLocalAccount()
-* \return raises an exception on error
-*/
+   * \brief Function to delete a VISHNU localAccount
+   * \return raises an exception on error
+   */
   int
   deleteLocalAccount();
   /**
-  * \fn ~LocalAccountServer
-  * \brief Destructor,
-  */
+   * \brief Destructor,
+   */
   ~LocalAccountServer();
   /**
   * \brief Function to get localAccount data structure
-  * \fn UMS_Data::LocalAccount getData()
   * \return  The LocalAccount data structure
   */
   UMS_Data::LocalAccount*
   getData();
   /**
-  * \brief Function to get localAccount information from the database vishnu
-  * \fn getAttribut(std::string condition, std::string attrname);
-  * \param condition The condition of the select request
-  * \param attrname the name of the attribut to get
-  * \return the value of the attribut or empty string if no results
-  */
+   * \brief Function to get localAccount information from the database vishnu
+   * \param condition The condition of the select request
+   * \param attrname the name of the attribut to get
+   * \return the value of the attribut or empty string if no results
+   */
   std::string
   getAttribut(std::string condition, std::string attrname = "numaccountid");
   /**
-  * \brief Function to get the content of the public ssh generated
-  * \fn std::string getPublicKey()
-  * \return The content of the ssh public key generated
-  */
+   * \brief Function to get the content of the public ssh generated
+   * \return The content of the ssh public key generated
+   */
   std::string
   getPublicKey();
 
@@ -106,18 +98,16 @@ private:
   // Functions
   /////////////////////////////////
   /**
-  * \brief Function to generate a private/public ssh key
-  * \fn std::string generateKey()
-  */
+   * \brief Function to generate a private/public ssh key
+   */
   std::string
   generateKey();
   /**
-  * \brief Function to check localAccount on database
-  * \fn bool exist(std::string idmachine, std::string iduser)
-  * \param idmachine The id of the machine
-  * \param iduser The id of the user
-  * \return true if the localAccount exists else false
-  */
+   * \brief Function to check localAccount on database
+   * \param idmachine The id of the machine
+   * \param iduser The id of the user
+   * \return true if the localAccount exists else false
+   */
   bool
   exist(std::string idmachine, std::string iduser);
   /**
