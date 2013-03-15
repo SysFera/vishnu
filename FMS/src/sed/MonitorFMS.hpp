@@ -25,7 +25,6 @@ explicit  MonitorFMS(int interval = 1);
 
   /**
    * \brief Destructor
-   * \fn ~MonitorFMS()
    */
   ~MonitorFMS();
 

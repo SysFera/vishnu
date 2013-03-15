@@ -53,7 +53,6 @@ ServerFMS::ServerFMS()  {
 
 /**
  * \brief To initialize the FMS server with individual parameters
- * \fn int init(std::string vishnuid)
  * \param vishnuId The id of the vishnu configuration registered in the database
  * \param dbConfig  The configuration of the database
  * \return an error code (0 if success and 1 if an error occurs)
