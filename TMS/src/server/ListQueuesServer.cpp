@@ -16,9 +16,8 @@
 
 
 /**
- * \fn ListQueuesServer(const SessionServer session)
- * \param session The object which encapsulates the session information (ex: identifier of the session)
  * \brief Constructor, raises an exception on error
+ * \param session The object which encapsulates the session information (ex: identifier of the session)
  */
 ListQueuesServer::ListQueuesServer(const SessionServer& session,
                                    const std::string& machineId,
@@ -33,7 +32,6 @@ ListQueuesServer::ListQueuesServer(const SessionServer& session,
 
 /**
  * \brief Function to list machines information
- * \fn TMS_Data::ListQueues* list()
  * \return The pointer to the TMS_Data::ListQueues containing users information
  * \return raises an exception on error
  */
@@ -43,7 +41,6 @@ TMS_Data::ListQueues* ListQueuesServer::list()
 }
 
 /**
- * \fn ~ListQueuesServer()
  * \brief Destructor, raises an exception on error
  */
 ListQueuesServer::~ListQueuesServer()

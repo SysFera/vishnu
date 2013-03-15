@@ -217,7 +217,6 @@ WorkProxy::getData() {
 }
 
 /**
- * \fn ~WorkProxy()
  * \brief Destructor, raises an exception on error
  */
 WorkProxy::~WorkProxy() {

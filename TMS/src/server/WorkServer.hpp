@@ -71,7 +71,6 @@ public:
   getData();
   /**
   * \brief Function to get work information from the database vishnu
-  * \fn getAttribut(std::string condition, std::string attrname);
   * \param condition The condition of the select request
   * \param attrname the name of the attribut to get
   * \return the value of the attribut or empty string if no results
