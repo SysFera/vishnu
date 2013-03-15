@@ -19,26 +19,22 @@ class DatabaseResult{
 public :
   /**
    * \brief Function to print the database results
-   * \fn    print()
    */
   void
   print();
   /**
    * \brief Function to print the attributes names
-   * \fn    printAttributesNames()
    */
   void
   printAttributesNames();
   /**
    * \brief To get the number of tuples
-   * \fn size_t getNbTuples() const
    * \return 0 on success, an error code otherwise
    */
   size_t
   getNbTuples() const;
   /**
    * \brief To get the number of fields
-   * \fn size_t getNbFields() const
    * \return 0 on success, an error code otherwise
    */
   size_t
@@ -46,7 +42,6 @@ public :
 
   /**
    * \brief To get a specific results using its position
-   * \fn std::vector<std::string> get(size_t position) const
    * \param position The position of the request
    * \return the tuple associated to the postion
    */
@@ -54,27 +49,22 @@ public :
   get(size_t position) const;
   /**
    * \brief To get the number of fields
-   * \fn std::vector<std::vector<std::string> > getResults() const
-
    * \return all results
    */
   std::vector<std::vector<std::string> >
   getResults() const;
   /**
    * \brief To get the first attribut value of the first element
-   * \fn std::string getFirstElement() const
    * \return the first attribut value of the first element
    */
    std::string
    getFirstElement() const;
   /**
-   * \fn DatabaseResult(std::vector<std::vector<std::string> > res, std::vector<std::string> namesAttributes)
    * \brief Constructor, raises an exception on error
    */
   DatabaseResult(const std::vector<std::vector<std::string> >& res,
                  const std::vector<std::string>& namesAttributes);
   /**
-   * \fn ~DatabaseResult()
    * \brief Destructor, raises an exception on error
    */
  ~DatabaseResult();

@@ -21,27 +21,22 @@ protected:
 public:
   /**
    * \brief Default constructor
-   * \fn InternalVishnuException()
    */
   InternalVishnuException();
   /**
    * \brief Copy constructor
-   * \fn InternalVishnuException(InternalVishnuException& e)
    */
   InternalVishnuException(InternalVishnuException& e);
   /**
    * \brief Constructor
-   * \fn InternalVishnuException(int msg, std::string msgComp)
    */
   InternalVishnuException(int msg, std::string msgComp);
   /**
    * \brief Default constructor
-   * \fn ~InternalVishnuException() throw()
    */
   ~InternalVishnuException() throw(){};
   /**
    * \brief Function to get the generic message in the Internal part depending on the inherited mval integer
-   * \fn std::string getMsg()
    * \return Returns the corresponding generic message
    */
   std::string getMsg();

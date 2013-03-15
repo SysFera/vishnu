@@ -35,20 +35,17 @@ public :
 
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   int
   connect();
 
   /**
-   * \fn POSTGREDatabase(DbConfiguration dbConfig)
    * \brief Constructor, raises an exception on error
    */
   POSTGREDatabase(DbConfiguration dbConfig);
 
   /**
-   * \fn ~POSTGREDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~POSTGREDatabase();
@@ -161,7 +158,6 @@ private :
 
   /**
    * \brief To disconnect from the database
-   * \fn int disconnect()
    * \return raises an exception on error
    */
   int

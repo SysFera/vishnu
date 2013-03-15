@@ -64,7 +64,6 @@ convertToString(T val) {
 
 /**
  * \brief Function to convert a given date into correspondant long value
- * \fn long long convertToTimeType(std::string date)
  * \param date The date to convert
  * \return The converted value
  */
@@ -99,7 +98,6 @@ cryptPassword(const std::string& salt, const std::string& password, bool encrypt
 
 /**
  * \brief Function to get a random number
- * \fn    int generateNumbers()
  * \return the number generated
  */
 int

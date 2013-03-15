@@ -45,7 +45,6 @@ public:
   CLICmd(int argc, char** argv, boost::shared_ptr<Options> op);
   /**
    * \brief Default destructor
-   * \fn ~CLICmd()
    */
   ~CLICmd();
 };

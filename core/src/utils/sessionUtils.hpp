@@ -36,7 +36,6 @@ class SessionEntry{
 
     /**
      * \brief A default constructor
-     * \fn explicit SessionEntry(int closePolicy_=0)
      * \param closePolicy_: the close session type with default value equal to 0
      */
 

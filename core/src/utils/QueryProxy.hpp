@@ -100,7 +100,6 @@ public:
 
   /**
    * \brief Function to list QueryProxy information
-   * \fn  ListObject* list()
    * \return The pointer to the ListOject containing list information
    * \return raises an exception on error
    */
@@ -108,7 +107,6 @@ public:
   list();
 
   /**
-   * \fn ~QueryProxy()
    * \brief Destructor, raises an exception on error
    */
   ~QueryProxy();
@@ -208,7 +206,6 @@ QueryProxy<QueryParameters, ListObject>::getMachineId() const {
 
 /**
  * \brief Function to list QueryProxy information
- * \fn  ListObject* QueryProxy<QueryParameters, ListObject>::list()
  * \return The pointer to the ListOject containing list information
  * \return raises an exception on error
  */

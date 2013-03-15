@@ -25,34 +25,28 @@ class UserException :  public VishnuException {
 public :
   /**
    * \brief Default constructor
-   * \fn UserException()
    */
   UserException();
   /**
    * \brief Copy constructor
-   * \fn UserException(const UserException& e)
    */
   UserException(const UserException& e);
   /**
    * \brief Constructor
-   * \fn UserException(int msg, std::string msgComp = "")
    */
   UserException(int msg, std::string msgComp = "");
   /**
    * \brief Default destructor
-   * \fn ~UserException() throw()
    */
   virtual ~UserException() throw(){};
   /**
    * \brief Function to get the exception type in string
-   * \fn std::string getTypeS() const
    * \return Returns the type of the exception
    */
   std::string
   getTypeS() const;
   /**
    * \brief To get the generic message
-   * \fn std::string getMsg() const
    * \return Returns the message
    */
   std::string
@@ -61,7 +55,6 @@ public :
 protected :
   /**
    * \brief Function to initialize all the generic messages
-   * \fn void initMsg()
    */
   void
   initMsg();

@@ -20,12 +20,10 @@ class AuthenticatorFactory{
 public :
   /**
    * \brief Constructor
-   * \fn AuthenticatorFactory()
    */
   AuthenticatorFactory();
   /**
    * \brief Destructor
-   * \fn ~AuthenticatorFactory()
    */
   ~AuthenticatorFactory();
   /**

@@ -29,10 +29,9 @@ class QueryServer
 public:
 
    /**
-   * \fn QueryServer(const SessionServer& session)
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
-   */
+    * \brief Constructor, raises an exception on error
+    * \param session The object which encapsulates the session information (ex: identifier of the session)
+    */
   explicit
   QueryServer(const SessionServer& session):
     mparameters(NULL), msessionServer(session)
@@ -43,11 +42,9 @@ public:
   }
 
   /**
-   * \fn QueryServer(QueryParameters* params,
-   *                 const SessionServer& session)
+   * \brief Constructor, raises an exception on error
    * \param params The object which encapsulates the information of query options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
    */
   QueryServer(QueryParameters *params, const SessionServer& session):
     mparameters(params), msessionServer(session)
@@ -60,7 +57,6 @@ public:
 
   /**
    * \brief Function to list query information
-   * \fn virtual ListObject* list() = 0
    * \return The pointer to the ListOject containing list information
    * \return raises an exception on error
    */
@@ -68,7 +64,6 @@ public:
 
   /**
    * \brief Function to get the name of the query command line
-   * \fn  virtual std::string getCommandName() = 0
    * \return The the name of the query command line
    */
   virtual std::string getCommandName() = 0;
@@ -83,7 +78,6 @@ public:
 protected:
   /**
    * \brief Function to add sql resquest "and condition" to a given request
-   * \fn void addOptionRequest(const std::string& name, const std::string& value, std::string& request)
    * \param name The column name of the data base table
    * \param value The value to search in the given column
    * \param request The request
@@ -95,7 +89,6 @@ protected:
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
-   * \fn void addIntegerOptionRequest(const std::string& name, T& value, std::string& request)
    * \param name The column name of the data base table
    * \param value The integer value to search in the given column
    * \param request the request
@@ -110,7 +103,6 @@ protected:
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
-   * \fn void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp)
    * \param name The column name of the data base table
    * \param value The integer value to search in the given column
    * \param request the request
@@ -126,7 +118,6 @@ protected:
 
   /**
    * \brief Function to add sql resquest "where condition" to a given request
-   * \fn void addCondition(const std::string& name, const std::string& value, std::string& request)
    * \param name The column name of the data base table
    * \param value The value to search in the given column
    * \param request The request
@@ -138,7 +129,6 @@ protected:
 
   /**
    * \brief Function to add sql resquest "where condition" which contain an integer value to a given request
-   * \fn void addIntegerCondition(const std::string& name, T& value, std::string& request)
    * \param name The column name of the data base table
    * \param value The integer value to search in the given column
    * \param request the request
@@ -153,7 +143,6 @@ protected:
 
   /**
    * \brief Function to convert a given date into correspondant long value
-   * \fn long long convertToTimeType(std::string date)
    * \param date The date to convert
    * \return The converted value
    */
@@ -174,7 +163,6 @@ protected:
 
   /**
    * \brief Function to check if a given user identifier exists
-   * \fn void checkUserId(std::string userId)
    * \param userId the user identifier
    * \return raises an exception on error
    */
@@ -188,7 +176,6 @@ protected:
 
   /**
    * \brief Function to check if a given machine identifier exists
-   * \fn void checkMachineId(std::string machineId)
    * \param machineId the machine identifier
    */
   void checkMachineId(std::string machineId) {
@@ -201,7 +188,6 @@ protected:
 
   /**
    * \brief Function to check if a given machine client identifier exists
-   * \fn void checkClientMachineName(std::string clmachineId)
    * \param clmachineId the machine client identifier
    */
   void checkClientMachineName(std::string clmachineId) {
@@ -214,7 +200,6 @@ protected:
 
   /**
    * \brief Function to check if a given option name exists
-   * \fn void checkOptionName(std::string name)
    * \param name The name of the option
    * \return raises an exception on error
    */
@@ -228,7 +213,6 @@ protected:
 
   /**
    * \brief Function to check if a given session identifier exists
-   * \fn void checkSessionId(std::string sessionId)
    * \param sessionId the session identifier
    */
   void checkSessionId(std::string sessionId) {
@@ -241,7 +225,6 @@ protected:
 
   /**
    * \brief Function to check a status value
-   * \fn void void checkStatus(const int& status)
    * \param status The status to check
    */
   void checkStatus(const int& status) {
@@ -252,7 +235,6 @@ protected:
 
   /**
    * \brief Function to check a close policy value
-   * \fn void checkClosePolicy(const int& closePolicy)
    * \param closePolicy The closePolicy value to check
    */
   void checkClosePolicy(const int& closePolicy) {

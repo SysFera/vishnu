@@ -19,12 +19,10 @@ class LDAPUMSAuthenticator : public Authenticator {
 public :
   /**
    * \brief Constructor
-   * \fn LDAPUMSAuthenticator()
    */
   LDAPUMSAuthenticator();
   /**
    * \brief Destructor
-   * \fn ~LDAPUMSAuthenticator()
    */
   ~LDAPUMSAuthenticator();
    /**

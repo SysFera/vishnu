@@ -17,7 +17,6 @@ using namespace std;
 
 /**
  * \brief Function to process the request in the database
- * \fn    int process(std::string request)
  * \param request The request to process
  * \return raises an exception on error
  */
@@ -48,7 +47,6 @@ POSTGREDatabase::process(std::string request, int transacId){
 
 /**
  * \brief To make a connection to the database
- * \fn int connect()
  * \return raises an exception on error
  */
 int
@@ -82,7 +80,6 @@ POSTGREDatabase::connect(){
 }
 
 /**
- * \fn Database()
  * \brief Constructor
  */
 POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
@@ -97,7 +94,6 @@ POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
 }
 
 /**
- * \fn ~Database()
  * \brief Destructor
  */
 POSTGREDatabase::~POSTGREDatabase(){
@@ -108,7 +104,6 @@ POSTGREDatabase::~POSTGREDatabase(){
 
 /**
  * \brief To disconnect from the database
- * \fn disconnect()
  * \return 0
  */
 int
@@ -126,7 +121,6 @@ POSTGREDatabase::disconnect(){
 
 /**
  * \brief To get the result of a select request
- * \fn DatabaseResult* getResult()
  * \param request The request to process
  * \return An object which encapsulates the database results
  */

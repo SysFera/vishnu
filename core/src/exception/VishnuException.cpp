@@ -41,10 +41,9 @@ VishnuException::getMsgI() const{
 }
 
 /**
-* \brief Function to get the string associated to SystemException
-* \fn    buildExceptionString()
-* \return a serialized format of the exception
-*/
+ * \brief Function to get the string associated to SystemException
+ * \return a serialized format of the exception
+ */
 std::string
 VishnuException::buildExceptionString() const {
   std::string errorInfo;
