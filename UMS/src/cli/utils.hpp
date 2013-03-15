@@ -1,5 +1,5 @@
 /**
- * \file utils.hpp
+ * \file cli/utils.hpp
  * \brief this file contains a declaration of helper functions used by the command line interface
  * \authors Daouda Traore (daouda.traore@sysfera.com) and Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */

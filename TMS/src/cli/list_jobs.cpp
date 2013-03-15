@@ -242,14 +242,14 @@ main (int argc, char* argv[]) {
     }
 
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
-      errorUsage(argv[0],dietErrorMsg,EXECERROR);
-      return  CLI_ERROR_DIET ;
+      errorUsage(argv[0],communicationErrorMsg,EXECERROR);
+      return  CLI_ERROR_COMMUNICATION ;
     }
 
     // get the sessionKey
     sessionKey = getLastSessionKey(getppid());
 
-    // DIET call : submit
+    // VISHNU call : submit
     if (!sessionKey.empty()) {
       listJobs(sessionKey, machineId, job, jobOp);
     }

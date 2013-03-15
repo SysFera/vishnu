@@ -55,7 +55,6 @@ public:
   int
   deleteAuthSystem();
   /**
-  * \fn ~AuthSystemServer
   * \brief Destructor,
   */
   ~AuthSystemServer();
@@ -96,7 +95,6 @@ private:
   /////////////////////////////////
  /**
   * \brief Function to check the user-authentication system on database
-  * \fn bool exist()
   * \return true if the user-authentication system exists else false
   */
   bool

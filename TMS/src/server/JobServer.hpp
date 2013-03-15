@@ -38,12 +38,14 @@ public:
    * \param scriptContent the content of the script
    * \param options the options to submit job
    * \param vishnuId The VISHNU identifier
+   * \param defaultBatchOption the default options on the batch scheduler
    * \return raises an exception on error
    */
-  int submitJob(std::string& scriptContent,
-                TMS_Data::SubmitOptions& options,
-                const int& vishnuId,
-                const std::vector<std::string>& defaultBatchOption);
+  int
+  submitJob(std::string& scriptContent,
+            TMS_Data::SubmitOptions& options,
+            const int& vishnuId,
+            const std::vector<std::string>& defaultBatchOption);
 
   /**
    * \brief Destructor
@@ -54,24 +56,28 @@ public:
    * \brief Function to cancel job
    * \return raises an exception on error
    */
-  int cancelJob();
+  int
+  cancelJob();
 
   /**
    * \brief Function to get job information
    * \return The job data structure
    */
-  TMS_Data::Job getJobInfo();
+  TMS_Data::Job
+  getJobInfo();
 
   /**
    * \brief Function to get job data
    * \return The job data structure
    */
-  TMS_Data::Job getData();
+  TMS_Data::Job
+  getData();
 
   /**
    * \brief To set the main configuration
    */
-  void setSedConfig(ExecConfiguration_Ptr sedConfig);
+  void
+  setSedConfig(ExecConfiguration_Ptr sedConfig);
 
   /**
    * \brief To get the main configuration
@@ -84,7 +90,8 @@ public:
    * \brief Set the debug level
    * \param debugLevel The debug level
    */
-  void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
+  void
+  setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
 protected:
 
@@ -95,20 +102,22 @@ protected:
    * \param message The message associeted to the error code
    * \return raises an exception on erroor
    */
-  void scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
+  void
+  scanErrorMessage(const std::string& errorInfo, int& code, std::string& message);
 
   /**
    * \brief Function to convert a given date into correspondant long value
-   * \fn long long convertToTimeType(std::string date)
    * \param date The date to convert
    * \return The converted value
    */
-  long long convertToTimeType(std::string date);
+  long long
+  convertToTimeType(std::string date);
 
   /**
    * \brief Function to treat the default submission options
-   * \param scriptOptions The list of the option value
-   * \param cmdsOptions The list of the option value
+   * \param defaultBatchOption The list of the option value
+   * \param content The content of the option
+   * \param key The key for the option
    * \return raises an exception on error
    */
   void
@@ -118,6 +127,7 @@ protected:
    * \brief Function to insert option line into string
    * \param optionLineToInsert the option to insert
    * \param content The buffer containing the inserted option
+   * \param key The key to insert
    * \return raises an exception on error
    */
   void
@@ -129,35 +139,42 @@ protected:
   * \param dirSuffix the suffix of the output dir
   * \param content the script content to be update which the generated path
   */
-  void computeOutputDir(const std::string& parentDir,
-                    const std::string & dirSuffix,
-                    std::string & content);
+  void
+  computeOutputDir(const std::string& parentDir,
+                   const std::string & dirSuffix,
+                   std::string & content);
 
   /*
    * \brief Return the directive associated to the batch scheduler
    * \param seperator Hold the seperator used to define parameter
+   * \return the directive associated to the batch scheduler
    */
-  std::string getBatchDirective(std::string& seperator) const;
+  std::string
+  getBatchDirective(std::string& seperator) const;
 
   /**
    * \brief Set specific parameters for job submission
    * \param specificParams The string containing the list of parameters
    * \param scriptContent The content of the script when required
    */
-  void treatSpecificParams(const std::string& specificParams, std::string& scriptContent);
+  void
+  treatSpecificParams(const std::string& specificParams,
+                      std::string& scriptContent);
 
 
   /**
    * \brief Function to save the encapsulated job into the database
    */
-  void recordJob2db();
+  void
+  recordJob2db();
 
   /**
    * \brief Function to get the hostname of a machine id
-   *  \param machineId Id of the machine
+   * \param machineId Id of the machine
    * \return The machine name or throw exception on error
    */
-  std::string getMachineName(const std::string& machineId);
+  std::string
+  getMachineName(const std::string& machineId);
 
   /**
    * \brief Function to set the Working Directory
@@ -165,24 +182,28 @@ protected:
    * \param suffix the suffix of the working directory
    * \return the script path
    */
-  std::string computeWorkingDir(TMS_Data::SubmitOptions& options, const std::string& suffix);
+  std::string
+  computeWorkingDir(TMS_Data::SubmitOptions& options,
+                    const std::string& suffix);
   /**
    * \brief Function to process the script with options
-   * \param the script content
+   * \param scriptContent the script content
    * \param options the options to submit job
    * \param defaultBatchOption The default batch options
+   * \param machineName the name of the machine
    * \return the processed script content
    */
-  std::string processScript(std::string& scriptContent,
-                            TMS_Data::SubmitOptions& options,
-                            const std::vector<std::string>& defaultBatchOption,
-                            const std::string& machineName);
+  std::string
+  processScript(std::string& scriptContent,
+                TMS_Data::SubmitOptions& options,
+                const std::vector<std::string>& defaultBatchOption,
+                const std::string& machineName);
   /**
    * \brief Function to deserialize job
    * \param jobSerialized the Serialized job
    */
-
-  void deserializeJob(std::string jobSerialized);
+  void
+  deserializeJob(std::string jobSerialized);
 
 private:
   /**

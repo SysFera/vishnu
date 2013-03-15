@@ -42,7 +42,7 @@ namespace {
 int
 Annuary::add(const std::string& name, const std::string& uri,
              const std::vector<std::string>& services) {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   is_server helper(name, uri);
   std::vector<boost::shared_ptr<Server> >::iterator it =
     std::find_if(mservers.begin(), mservers.end(), helper);
@@ -55,7 +55,7 @@ Annuary::add(const std::string& name, const std::string& uri,
 
 int
 Annuary::remove(const std::string& name, const std::string& uri) {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   is_server helper(name, uri);
   mservers.erase(std::remove_if(mservers.begin(), mservers.end(), helper),
                  mservers.end());
@@ -66,7 +66,7 @@ Annuary::remove(const std::string& name, const std::string& uri) {
 // Note: we're using copy elision optimization here, no useless copy
 std::vector<boost::shared_ptr<Server> >
 Annuary::get(const std::string& service) {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   std::vector<boost::shared_ptr<Server> > res;
 
   if (service.empty()) {
@@ -82,7 +82,7 @@ Annuary::get(const std::string& service) {
 
 void
 Annuary::print() {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   if (!mservers.empty()) {
     std::cerr << "\n==== Initial startup services ====\n";
     std::vector<boost::shared_ptr<Server> >::const_iterator it;
@@ -103,7 +103,7 @@ Annuary::print() {
  */
 void
 Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   BOOST_FOREACH(const std::string& entry, cfgInfo) {
     std::istringstream iss(entry);
     std::string uri;
@@ -120,7 +120,7 @@ void
 Annuary::fillServices(std::vector< std::string> &services,
                       const std::string& name,
                       const std::string& mid) {
-  boost::lock_guard<boost::recursive_mutex> lock(mutex);
+  boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   unsigned int nb;
   std::string tmpserv;
 

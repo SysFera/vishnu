@@ -230,9 +230,10 @@ getUpdateFrequency(const std::string& sessionKey, int freq)
 
 /**
  * \brief To stop a vishnu process
- * \param sessionKey: The session key gotten after connection
- * \param proc: The vishnu process to stop
- * \return int : an error code
+ * \param sessionKey The session key gotten after connection
+ * \param machineId The vishnu machine
+ * \param op the option
+ * \return 0 on success or throws an exception
  */
 int
 stop(const std::string& sessionKey,

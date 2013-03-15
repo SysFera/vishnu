@@ -20,10 +20,9 @@
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
- * \fn void raiseDietMsgException(const std::string& msg)
  * \param msg to spread
  */
-void raiseDietMsgException(const std::string& msg);
+void raiseCommunicationMsgException(const std::string& msg);
 
 /**
  * \brief Function to split the receiving message into error code and message error
@@ -32,7 +31,6 @@ void raiseDietMsgException(const std::string& msg);
  * 100 <= error code < 200 -> throws TMSVishnuException
  * 200 <= error code < 300 -> throws FMSVishnuException
  * 300 <= error code < 400 -> throws IMSVishnuException
- * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg)
  * \param msg to split
  */
 void raiseExceptionIfNotEmptyMsg(const std::string& msg);

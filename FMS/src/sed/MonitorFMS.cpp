@@ -25,7 +25,6 @@ MonitorFMS::MonitorFMS(int interval) {
 
 /**
 * \brief Destructor
-* \fn ~MonitorFMS()
 */
 
 MonitorFMS::~MonitorFMS() {

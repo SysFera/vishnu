@@ -25,7 +25,6 @@ public :
 
   /**
    * \brief Destructor
-   * \fn ~MonitorTMS()
    */
   ~MonitorTMS();
 

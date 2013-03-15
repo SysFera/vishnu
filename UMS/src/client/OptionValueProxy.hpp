@@ -20,41 +20,34 @@ class OptionValueProxy
   public:
 
     /**
-     * \fn OptionValueProxy(const UMS_Data::OptionValue& optionValue,
-     *                      const SessionProxy& session)
+     * \brief Constructor, raises an exception on error
      * \param optionValue The object which encapsulates the information of the option
      * \param session The object which encapsulates the session information (ex: identifier of the session)
-     * \brief Constructor, raises an exception on error
      */
     OptionValueProxy(const UMS_Data::OptionValue& optionValue, const SessionProxy& session);
     /**
      * \brief Function to configure an option of the user
-     * \fn  int configureOption()
      * \return raises an exception on error
      */
     int configureOption();
     /**
      * \brief Function to configure a default option value
-     * \fn  int configureDefaultOption()
      * \return raises an exception on error
      */
     int configureDefaultOption();
     /**
      * \brief Function get option information
-     * \fn  UMS_Data::OptionValue getData()
      * \return OptionValue object encapsulates the information of the machine
      * \return raises an exception on error
      */
     UMS_Data::OptionValue getData();
     /**
      * \brief Function get SessionProxy object which contains the VISHNU session identifier
-     * \fn SessionProxy getSessionProxy()
      * \return a SessionProy object which contains the VISHNU session information
      * \return raises an exception on error
      */
     SessionProxy getSessionProxy();
     /**
-     * \fn ~OptionValueProxy()
      * \brief Destructor, raises an exception on error
      */
     ~OptionValueProxy();
@@ -63,7 +56,6 @@ class OptionValueProxy
 
     /**
      * \brief Function to combine configureOption() and configureDefaultOption() into one function
-     * \fn  int setOptionValue(bool defaultValue=true);
      * \param defaultValue to select the call of configureOption() or configureOption() function
      * \return raises an exception on error
      */

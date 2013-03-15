@@ -46,8 +46,7 @@ public:
   /**
    * \brief Remove the server called name listening on port at address of the annuary
    * \param name The name of the server (e.g. UMS, TMS, dispatcher)
-   * \param port The port the server is listening
-   * \param port The address the server is running
+   * \param uri The uri of the annuary
    * \return 0 on success, an error code otherwise
    */
   int
@@ -96,11 +95,14 @@ private :
                const std::string& mid);
 
   /**
-   * \param The servers
+   * \brief The servers
    */
   std::vector<boost::shared_ptr<Server> > mservers;
 
-  mutable boost::recursive_mutex mutex;
+  /**
+   * \brief mutex to lock the annuary
+   */
+  mutable boost::recursive_mutex mmutex;
 };
 
 #endif // __ANNUARY__H__

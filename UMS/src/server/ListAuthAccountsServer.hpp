@@ -30,7 +30,6 @@ class ListAuthAccountsServer: public QueryServer<UMS_Data::ListAuthAccOptions, U
 public:
 
   /**
-   * \fn ListAuthAccountsServer(const SessionServer session)
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
@@ -40,8 +39,6 @@ public:
     mcommandName = "vishnu_list_auth_accounts";
   }
   /**
-   * \fn ListAuthAccountsServer(UMS_Data::ListAuthAccOptions_ptr params,
-   *                             const SessionServer& session)
    * \param params The object which encapsulates the information of ListAuthAccountsServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
@@ -54,15 +51,13 @@ public:
 
   /**
    * \brief Function to treat the ListAuthAccountsServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListAuthAccOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListAuthAccountsServer options
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& sqlRequest)
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& sqlRequest)
   {
      std::string sqlListofAuthAccountInitial = sqlRequest;
 
@@ -102,11 +97,11 @@ public:
 
   /**
    * \brief Function to list locoal accounts information
-   * \fn UMS_Data::ListAuthAccounts* list()
    * \return The pointer to the UMS_Data::ListAuthAccounts containing auth accounts information
    * \return raises an exception on error
    */
-  UMS_Data::ListAuthAccounts* list()
+  UMS_Data::ListAuthAccounts*
+  list()
   {
     std::string sqlListofAuthAccount = "SELECT authsystemid, userid, aclogin "
     " from authaccount, authsystem, users where authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid";
@@ -150,16 +145,15 @@ public:
 
   /**
    * \brief Function to get the name of the ListAuthAccountsServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListAuthAccountsServer command line
    */
-  std::string getCommandName()
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
 
   /**
-   * \fn ~ListAuthAccountsServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListAuthAccountsServer()
@@ -174,8 +168,8 @@ public:
 
 
   /**
-  * \brief The name of the ListAuthAccountsServer command line
-  */
+   * \brief The name of the ListAuthAccountsServer command line
+   */
   std::string mcommandName;
 
 };

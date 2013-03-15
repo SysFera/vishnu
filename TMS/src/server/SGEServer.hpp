@@ -94,6 +94,7 @@ class SGEServer : public BatchServer
      * \param scriptPath The job script path
      * \param options the object which contains the SubmitOptions options values
      * \param cmdsOptions The list of the option value
+     * \param jobt the template of the job
      * \return raises an exception on error
      */
     void

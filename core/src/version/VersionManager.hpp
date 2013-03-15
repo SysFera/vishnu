@@ -28,7 +28,6 @@ public :
                  const UMS_Data::Version_ptr& server);
   /**
    * \brief Destructor
-   * \fn ~VersionManager()
    */
   ~VersionManager();
   /**

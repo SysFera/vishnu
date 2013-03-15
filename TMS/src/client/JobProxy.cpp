@@ -14,7 +14,6 @@
 
 using namespace std;
 namespace bfs=boost::filesystem;
-typedef vector<string> ListStrings ;
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The id of the machine
@@ -55,17 +54,17 @@ JobProxy::submitJob(const std::string& scriptContent,
   //IN Parameters
   if (diet_string_set(submitJobProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(submitJobProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(submitJobProfile,2, scriptContent.c_str())) {
     msgErrorDiet += "with optionsInString parameter "+scriptContent;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   // Send input files, if there is any one
@@ -80,7 +79,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   if (diet_string_set(submitJobProfile,3, optionsToString.c_str())) {
     msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   _ser.resetSerializer();
@@ -88,7 +87,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   if (diet_string_set(submitJobProfile,4, jobToString.c_str())) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -101,14 +100,14 @@ JobProxy::submitJob(const std::string& scriptContent,
   if(!diet_call(submitJobProfile)) {
     if(diet_string_get(submitJobProfile,5, cresultMsg)){
       msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
     if(diet_string_get(submitJobProfile,6, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   } else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -144,12 +143,12 @@ JobProxy::cancelJob() {
   //IN Parameters
   if (diet_string_set(cancelJobProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(cancelJobProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
@@ -158,7 +157,7 @@ JobProxy::cancelJob() {
 
   if (diet_string_set(cancelJobProfile,2, jobToString.c_str())) {
     msgErrorDiet += "with jobInString parameter "+jobToString;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -167,11 +166,11 @@ JobProxy::cancelJob() {
   if(!diet_call(cancelJobProfile)) {
     if(diet_string_get(cancelJobProfile,3, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
@@ -204,12 +203,12 @@ JobProxy::getJobInfo() {
   //IN Parameters
   if (diet_string_set(getJobInfoProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(getJobInfoProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
 
@@ -219,7 +218,7 @@ JobProxy::getJobInfo() {
 
   if (diet_string_set(getJobInfoProfile,2, jobToString.c_str())) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -229,15 +228,15 @@ JobProxy::getJobInfo() {
   if(!diet_call(getJobInfoProfile)) {
     if(diet_string_get(getJobInfoProfile,3, jobInString)){
       msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
     if(diet_string_get(getJobInfoProfile,4, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/

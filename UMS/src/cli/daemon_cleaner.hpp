@@ -28,7 +28,6 @@ namespace btt = boost::this_thread;
 namespace bpt = boost::posix_time;
 /**
  * \brief Check if the pid exists
- * \fn bool pid_exists(const std::string& pid)
  * \param pid The given pid
  * \return True if the pid exists
  */

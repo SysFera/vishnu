@@ -21,14 +21,12 @@ class MonitorUMS {
 public :
   /**
    * \brief Constructor, raises an exception on error
-   * \fn MonitorUMS(int interval)
    * \param interval The interval in seconds to check the database
    */
   explicit MonitorUMS(int interval = 1);
 
   /**
    * \brief Destructor
-   * \fn ~MonitorUMS()
    */
   ~MonitorUMS();
 
@@ -44,7 +42,6 @@ public :
 
    /**
    * \brief To launch the UMS Monitor
-   * \fn int run()
    * \return raises an exception
    */
   int

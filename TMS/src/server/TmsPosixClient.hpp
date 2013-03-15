@@ -1,5 +1,5 @@
 /**
- * \file TmsPosicClient.hpp
+ * \file TmsPosixClient.hpp
  * \brief This file contains the data and the clients for the posix parser.
  * \author Olivier Mornard (olivier.mornard@sysfera.com)
  * \date January 2013
@@ -43,7 +43,7 @@ static const char* SV_SOCK =  "tms-posix-socket-";
 
 /**
  * \brief The states of the processes for the posix server
- * \enum jobb_state
+ * \enum job_state_t
  */
 enum job_state_t { DEAD=0, RUNNING, WAITING, TERMINATED, ZOMBIE, KILL, KILL9 } ;
 
@@ -128,7 +128,7 @@ struct Request {
   char req[8];
 /**
  * \brief union containing the data for the request
- * \union req_data
+ * \union requestData
  */
   union requestData {
 /**
@@ -202,7 +202,7 @@ struct Response {
   int status;
 /**
  * \brief the data for the response
- * \union res_data
+ * \union responseData
  */
   union responseData {
 /**
@@ -263,7 +263,7 @@ reqCancel(const char *jobId);
  * \return 0 on success
  */
 int
-reqInfo(const char *jobId, struct trameJob *reponse);
+reqInfo(const char *jobId, struct trameJob *response);
 
 /**
  * \brief function to launch the daemon that will handle the jobs for a given user

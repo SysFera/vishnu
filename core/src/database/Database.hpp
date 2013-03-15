@@ -29,7 +29,6 @@ public :
   process(std::string request, int transacId = -1) = 0;
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   virtual int
@@ -50,9 +49,8 @@ public :
   getDbType() = 0;
 
     /**
-   * \fn ~Database()
-   * \brief Destructor, raises an exception on error
-   */
+     * \brief Destructor, raises an exception on error
+     */
 virtual ~Database();
 /**
  * \brief Start a transaction
@@ -80,10 +78,11 @@ virtual ~Database();
   flush(int transactionID) = 0;
 /**
  * \brief To get a unique id
- * \param table: The table to use to generate the id
- * \param fields: The fields of the table
- * \param val: The values of the fields to insert
- * \param tid: The transaction id
+ * \param table The table to use to generate the id
+ * \param fields The fields of the table
+ * \param val The values of the fields to insert
+ * \param tid The transaction id
+ * \param primary the primary key on the table
  * \return A new integer never returned by this function
  */
   virtual int
@@ -91,7 +90,6 @@ virtual ~Database();
 
 protected :
   /**
-   * \fn Database()
    * \brief Constructor, raises an exception on error
    */
   Database();
@@ -99,7 +97,6 @@ protected :
 private :
   /**
    * \brief To disconnect from the database
-   * \fn virtual int disconnect() = 0
    * \return raises an exception on error
    */
   virtual int

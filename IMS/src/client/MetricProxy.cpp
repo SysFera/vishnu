@@ -26,11 +26,11 @@ MetricProxy::setUpFreq(int freq) {
   //IN Parameters
   if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   if (diet_string_set(profile,1, convertToString(freq).c_str())) {
     msgErrorDiet += "with frequency parameter "+freq;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
@@ -38,11 +38,11 @@ MetricProxy::setUpFreq(int freq) {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,2, errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
@@ -62,7 +62,7 @@ MetricProxy::getUpFreq() {
   //IN Parameters
   if (diet_string_set(profile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
    //OUT Parameters
@@ -71,15 +71,15 @@ MetricProxy::getUpFreq() {
   if(!diet_call(profile)) {
     if(diet_string_get(profile,1, str)){
       msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
     if(diet_string_get(profile,2, errorInfo)){
       msgErrorDiet += " by receiving User serialized  message";
-      raiseDietMsgException(msgErrorDiet);
+      raiseCommunicationMsgException(msgErrorDiet);
     }
   }
   else {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
   /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);

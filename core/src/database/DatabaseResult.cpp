@@ -10,25 +10,22 @@
 #include <iostream>
 
 /**
-* \fn DatabaseResult()
-* \brief Constructor, raises an exception on error
-*/
+ * \brief Constructor, raises an exception on error
+ */
 DatabaseResult::DatabaseResult(const std::vector<std::vector<std::string> >& res,
                                const std::vector<std::string>& namesAttributes)
   : fields(0), tuples(0), results(res), attributesNames(namesAttributes) {}
 
 /**
-* \fn ~DatabaseResult()
-* \brief Destructor, raises an exception on error
-*/
+ * \brief Destructor, raises an exception on error
+ */
 DatabaseResult::~DatabaseResult() {}
 
 /**
-* \brief Function to print the database results
-* \fn    print()
-* \param request The request to process
-* \return 0 on success, an error code otherwise
-*/
+ * \brief Function to print the database results
+ * \param request The request to process
+ * \return 0 on success, an error code otherwise
+ */
 void
 DatabaseResult::print() {
   std::vector<std::string> tmp;
@@ -51,11 +48,10 @@ DatabaseResult::print() {
 
 }
 /**
-* \brief Function to print the attributes names
-* \fn    print()
-* \param request The request to process
-* \return 0 on success, an error code otherwise
-*/
+ * \brief Function to print the attributes names
+ * \param request The request to process
+ * \return 0 on success, an error code otherwise
+ */
 void
 DatabaseResult::printAttributesNames() {
   std::vector<std::string>::iterator ii;
@@ -67,7 +63,6 @@ DatabaseResult::printAttributesNames() {
 }
 /**
  * \brief To get the number of tuples
- * \fn size_t getNbTuples()
  * \return 0 on success, an error code otherwise
  */
 size_t
@@ -75,21 +70,19 @@ DatabaseResult::getNbTuples() const{
 return results.size();
 }
 /**
-* \brief To get the number of fields
-* \fn getNbFields()
-* \return 0 on success, an error code otherwise
-*/
+ * \brief To get the number of fields
+ * \return 0 on success, an error code otherwise
+ */
 size_t
 DatabaseResult::getNbFields() const{
   return attributesNames.size();
 }
 
 /**
-* \brief To get a specific results using its position
-* \fn get(size_t position);
-* \param position The position of the request
-* \return the tuple associated to the postion
-*/
+ * \brief To get a specific results using its position
+ * \param position The position of the request
+ * \return the tuple associated to the postion
+ */
 std::vector<std::string>
 DatabaseResult::get(size_t position) const{
 
@@ -107,20 +100,18 @@ DatabaseResult::get(size_t position) const{
   }
 }
 /**
-* \brief To get the number of fields
-* \fn get();
-* \return all results
-*/
+ * \brief To get the number of fields
+ * \return all results
+ */
 std::vector<std::vector<std::string> >
 DatabaseResult::getResults() const{
   return results;
 }
 
 /**
-* \brief To get the first attribut value of the first element
-* \fn std::string getFirstElement();
-* \return the first attribut value of the first element
-*/
+ * \brief To get the first attribut value of the first element
+ * \return the first attribut value of the first element
+ */
 std::string
 DatabaseResult::getFirstElement() const {
   std::vector<std::string>::iterator ii;

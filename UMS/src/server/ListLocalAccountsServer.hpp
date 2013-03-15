@@ -28,9 +28,8 @@ class ListLocalAccountsServer: public QueryServer<UMS_Data::ListLocalAccOptions,
 public:
 
   /**
-   * \fn ListLocalAccountsServer(const SessionServer session)
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListLocalAccountsServer(const SessionServer session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(session)
@@ -38,11 +37,9 @@ public:
     mcommandName = "vishnu_list_local_accounts";
   }
   /**
-   * \fn ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params,
-   *                             const SessionServer& session)
+   * \brief Constructor, raises an exception on error
    * \param params The object which encapsulates the information of ListLocalAccountsServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
    */
   ListLocalAccountsServer(UMS_Data::ListLocalAccOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListLocalAccOptions, UMS_Data::ListLocalAccounts>(params, session)
@@ -52,9 +49,6 @@ public:
 
   /**
    * \brief Function to treat the ListLocalAccountsServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListLocalAccOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListLocalAccountsServer options
    * \param sqlRequest the sql data base request
@@ -100,7 +94,6 @@ public:
 
   /**
    * \brief Function to list locoal accounts information
-   * \fn UMS_Data::ListLocalAccounts* list()
    * \return The pointer to the UMS_Data::ListLocalAccounts containing local accounts information
    * \return raises an exception on error
    */
@@ -152,7 +145,6 @@ public:
 
   /**
    * \brief Function to get the name of the ListLocalAccountsServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListLocalAccountsServer command line
    */
   std::string getCommandName()
@@ -161,7 +153,6 @@ public:
   }
 
   /**
-   * \fn ~ListLocalAccountsServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListLocalAccountsServer()

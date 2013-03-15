@@ -48,22 +48,22 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   //IN Parameters
   if ( diet_string_set(getJobOutPutProfile,0, sessionKey.c_str()) ) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   if ( diet_string_set(getJobOutPutProfile,1, mmachineId.c_str()) ) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
   ::ecorecpp::serializer::serializer _ser;
   string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
   if ( diet_string_set(getJobOutPutProfile,2, jobResultToString.c_str()) ) {
     msgErrorDiet += "with the job result parameter " + jobResultToString;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   if (diet_string_set(getJobOutPutProfile,3, moutDir.c_str())) {
     msgErrorDiet += "with outDir parameter "+moutDir;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameter
@@ -71,12 +71,12 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
 
   //Call the Server
   if (diet_call(getJobOutPutProfile)) {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
   std::string routputInfo;
   if (diet_string_get(getJobOutPutProfile,4, routputInfo)){
     msgErrorDiet += " by receiving outputInfo";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   if (routputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
@@ -142,17 +142,17 @@ JobOutputProxy::getCompletedJobsOutput() {
   //IN Parameters
   if (diet_string_set(getCompletedJobsOutputProfile,0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(getCompletedJobsOutputProfile,1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   if (diet_string_set(getCompletedJobsOutputProfile,2, moutDir.c_str())) {
     msgErrorDiet += "with outDir parameter "+moutDir;
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
@@ -161,12 +161,12 @@ JobOutputProxy::getCompletedJobsOutput() {
 
   //Call the Server
   if( diet_call(getCompletedJobsOutputProfile)) {
-    raiseDietMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU call failure");
   }
   std::string routputInfo;
   if (diet_string_get(getCompletedJobsOutputProfile,3, routputInfo) ){
     msgErrorDiet += " by receiving outputInfo";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   if (routputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
@@ -178,7 +178,7 @@ JobOutputProxy::getCompletedJobsOutput() {
   std::string listJobResultInString;
   if (diet_string_get(getCompletedJobsOutputProfile,4, listJobResultInString)) {
     msgErrorDiet += " by receiving User serialized  message";
-    raiseDietMsgException(msgErrorDiet);
+    raiseCommunicationMsgException(msgErrorDiet);
   }
   parseEmfObject(listJobResultInString, listJobResults_ptr); /*To build the listJobResults_ptr */
 

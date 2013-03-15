@@ -13,7 +13,6 @@ using namespace vishnu;
 
 /**
 * \brief Constructor
-* \fn AuthSystemServer(AuthSystem authsystem, SessionServer session)
 * \param authsystem The AuthSystem data structure
 */
 AuthSystemServer::AuthSystemServer(UMS_Data::AuthSystem*& authsystem):
@@ -24,7 +23,6 @@ mauthsystem(authsystem) {
 
 /**
 * \brief Constructor
-* \fn AuthSystemServer(AuthSystem authsystem, SessionServer session)
 * \param authsystem The AuthSystem data structure
 * \param session The object which encapsulates session data
 */
@@ -36,7 +34,6 @@ mauthsystem(authsystem), msessionServer(session) {
 
 /**
 * \brief Function to add a new VISHNU authsystem
-* \fn int add()
 * \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
@@ -101,7 +98,6 @@ AuthSystemServer::add(int vishnuId) {
 
 /**
 * \brief Function to update a VISHNU authsystem
-* \fn int update()
 * \return raises an exception on error
 */
 int
@@ -217,7 +213,6 @@ AuthSystemServer::update() {
 
 /**
 * \brief Function to delete a VISHNU authsystem
-* \fn int deleteAuthSystem()
 * \return raises an exception on error
 */
 int
@@ -255,7 +250,6 @@ AuthSystemServer::deleteAuthSystem() {
   return 0;
 }
 /**
-* \fn ~AuthSystemServer
 * \brief Destructor
 */
 AuthSystemServer::~AuthSystemServer() {
@@ -263,7 +257,6 @@ AuthSystemServer::~AuthSystemServer() {
 }
 /**
 * \brief Function to get authsystem information
-* \fn UMS_Data::AuthSystem getData()
 * \return  The AuthSystem data structure
 */
 UMS_Data::AuthSystem *
@@ -272,7 +265,6 @@ AuthSystemServer::getData() {
 }
 /**
 * \brief Function to get authsystem information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname);
 * \param condition The condition of the select request
 * \param attrname the name of the attribut to get
 * \return the value of the attribut or empty string if no results
@@ -287,7 +279,6 @@ AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
 
 /**
 * \brief Function to check the user-authentication system on database
-* \fn bool exist()
 * \return true if the authsystem exists else false
 */
 bool

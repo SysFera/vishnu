@@ -316,16 +316,16 @@ int main (int argc, char* argv[]){
       subOp.setFileParams(paramStr) ;
     }
 
-    // initializing DIET
+    // initializing VISHNU
     if (vishnuInitialize(const_cast<char*>(configFile.c_str()), argc, argv)) {
-      errorUsage(argv[0], dietErrorMsg, EXECERROR);
-      return  CLI_ERROR_DIET ;
+      errorUsage(argv[0], communicationErrorMsg, EXECERROR);
+      return  CLI_ERROR_COMMUNICATION ;
     }
 
     // get the sessionKey
     sessionKey=getLastSessionKey(getppid());
 
-    // DIET call : submit
+    // vishnu call : submit
     if(false==sessionKey.empty()){
       submitJob(sessionKey, machineId, scriptPath, job, subOp);
     }

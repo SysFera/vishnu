@@ -35,20 +35,17 @@ public :
 
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   int
   connect();
 
   /**
-   * \fn POSTGREDatabase(DbConfiguration dbConfig)
    * \brief Constructor, raises an exception on error
    */
   POSTGREDatabase(DbConfiguration dbConfig);
 
   /**
-   * \fn ~POSTGREDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~POSTGREDatabase();
@@ -98,6 +95,7 @@ public :
  * \param fields: The fields of the table
  * \param val: The values of the fields to insert
  * \param tid: The transaction id
+ * \param primary the primary key on the table
  * \return A new integer never returned by this function
  */
   virtual int
@@ -161,7 +159,6 @@ private :
 
   /**
    * \brief To disconnect from the database
-   * \fn int disconnect()
    * \return raises an exception on error
    */
   int

@@ -23,7 +23,6 @@ using namespace std;
 
 
 /**
-  * \fn NetrcReader(std::string path)
   * \brief Constructor
   */
 NetrcReader::NetrcReader() {
@@ -34,7 +33,6 @@ NetrcReader::NetrcReader() {
 
 
 /**
-  * \fn NetrcReader(std::string path)
   * \param path  The path until the netrc file
   * \brief Constructor
   */
@@ -55,7 +53,6 @@ NetrcReader::read(map<size_t, pair<string,string> > &auth, const string& machine
 
 
 /**
- * \fn ~NetrcReader
  * \brief Destructor
  */
 NetrcReader::~NetrcReader() {}
@@ -141,7 +138,6 @@ NetrcReader::analyze(map<size_t, pair<string,string> >& tab,
 
 /**
   * \brief Function to check the validity of the netrc file
-  * \fn  void check()
   * \return raises an exception on error
   */
 void

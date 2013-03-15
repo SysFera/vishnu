@@ -21,6 +21,9 @@
 
 namespace bfs = boost::filesystem;
 
+/**
+ * \brief Define a type for lists of strings (used in TMS)
+ */
 typedef std::vector<std::string> ListStrings;
 
 static const int UNDEFINED_VALUE=-1;
@@ -64,7 +67,6 @@ convertToString(T val) {
 
 /**
  * \brief Function to convert a given date into correspondant long value
- * \fn long long convertToTimeType(std::string date)
  * \param date The date to convert
  * \return The converted value
  */
@@ -99,7 +101,6 @@ cryptPassword(const std::string& salt, const std::string& password, bool encrypt
 
 /**
  * \brief Function to get a random number
- * \fn    int generateNumbers()
  * \return the number generated
  */
 int
@@ -183,6 +184,7 @@ setIP(std::string& name, std::string IP);
 /**
  * \brief Tells if the string is an IP address
  * \param name The string to test
+ * \return true is it is not an IPv4 address
  */
 bool
 isNotIP(std::string name);

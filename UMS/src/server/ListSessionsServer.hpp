@@ -28,9 +28,8 @@ class ListSessionsServer: public QueryServer<UMS_Data::ListSessionOptions, UMS_D
 public:
 
   /**
-   * \fn ListSessionsServer(const SessionServer session)
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
+   * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListSessionsServer(const SessionServer session):
     QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(session)
@@ -38,11 +37,9 @@ public:
    mcommandName = "vishnu_list_sessions";
   }
   /**
-   * \fn ListSessionsServer(const UMS_Data::ListSessionOptions_ptr params,
-   *                        const SessionServer& session)
+   * \brief Constructor, raises an exception on error
    * \param params The object which encapsulates the information of ListSessionsServer options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
    */
   ListSessionsServer(UMS_Data::ListSessionOptions_ptr params, const SessionServer& session):
     QueryServer<UMS_Data::ListSessionOptions, UMS_Data::ListSessions>(params, session)
@@ -52,15 +49,13 @@ public:
 
   /**
    * \brief Function to treat the listSessionServer options
-   * \fn void processOptions(UserServer userServer,
-   *                         const UMS_Data::ListSessionOptions_ptr& options,
-   *                         std::string& sqlRequest)
    * \param userServer the object which encapsulates user information
    * \param options the object which contains the ListSessionServer options values
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListSessionOptions_ptr& options, std::string& sqlRequest)
   {
      boost::posix_time::ptime pt;
      size_t userIdSize = options->getUserId().size();
@@ -142,11 +137,11 @@ public:
 
   /**
    * \brief Function to list sessions information
-   * \fn UMS_Data::ListSessions* list()
    * \return The pointer to the UMS_Data::ListSessions containing sessions information
    * \return raises an exception on error
    */
-  UMS_Data::ListSessions* list()
+  UMS_Data::ListSessions*
+  list()
   {
     std::string sqlListOfSessions = "SELECT vsessionid, userid, sessionkey, state, closepolicy, timeout, lastconnect, "
     "creation, closure, authid from vsession, users where vsession.users_numuserid=users.numuserid";
@@ -200,16 +195,15 @@ public:
 
   /**
    * \brief Function to get the name of the ListSessionsServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListSessionsServer command line
    */
-  std::string getCommandName()
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
 
   /**
-   * \fn ~ListSessionsServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListSessionsServer()

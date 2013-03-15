@@ -14,11 +14,10 @@
 #include "DbFactory.hpp"
 
 /**
-* \brief Constructor
-* \fn AuthAccountServer(AuthAccount account, SessionServer session)
-* \param account The AuthAccount data structure
-* \param session The object which encapsulates session data
-*/
+ * \brief Constructor
+ * \param account The AuthAccount data structure
+ * \param session The object which encapsulates session data
+ */
 AuthAccountServer::AuthAccountServer(UMS_Data::AuthAccount*& account, SessionServer& session):
 mauthAccount(account), msessionServer(session) {
   DbFactory factory;
@@ -26,10 +25,9 @@ mauthAccount(account), msessionServer(session) {
 }
 
 /**
-* \brief Function to add a new VISHNU authAccount
-* \fn int add()
-* \return raises an exception on error
-*/
+ * \brief Function to add a new VISHNU authAccount
+ * \return raises an exception on error
+ */
 int
 AuthAccountServer::add() {
   std::string sqlCommand = "insert into authaccount (authsystem_authsystemid, users_numuserid, aclogin) values ('%1%', '%2%', '%3%')";
@@ -37,10 +35,9 @@ AuthAccountServer::add() {
 }
 
 /**
-* \brief Function to update a VISHNU authAccount
-* \fn int update()
-* \return raises an exception on error
-*/
+ * \brief Function to update a VISHNU authAccount
+ * \return raises an exception on error
+ */
 int
 AuthAccountServer::update() {
   std::string sqlCommand = "UPDATE authaccount SET aclogin='%3%' where authsystem_authsystemid=%1% and users_numuserid=%2%;";
@@ -127,10 +124,9 @@ AuthAccountServer::addOrUpdate(const std::string &sql, bool update) {
 
 
 /**
-* \brief Function to delete a VISHNU authAccount
-* \fn int deleteAuthAccount()
-* \return raises an exception on error
-*/
+ * \brief Function to delete a VISHNU authAccount
+ * \return raises an exception on error
+ */
 int
 AuthAccountServer::deleteAuthAccount() {
 
@@ -185,27 +181,24 @@ AuthAccountServer::deleteAuthAccount() {
   return 0;
 }
 /**
-* \fn ~AuthAccountServer
-* \brief Destructor
-*/
+ * \brief Destructor
+ */
 AuthAccountServer::~AuthAccountServer() {
 }
 /**
-* \brief Function to get authAccount information
-* \fn UMS_Data::AuthAccount getData()
-* \return  The AuthAccount data structure
-*/
+ * \brief Function to get authAccount information
+ * \return  The AuthAccount data structure
+ */
 UMS_Data::AuthAccount *
 AuthAccountServer::getData() {
   return mauthAccount;
 }
 /**
-* \brief Function to get authAccount information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname);
-* \param condition The condition of the select request
-* \param attrname the name of the attribut to get
-* \return the value of the attribut or empty string if no results
-*/
+ * \brief Function to get authAccount information from the database vishnu
+ * \param condition The condition of the select request
+ * \param attrname the name of the attribut to get
+ * \return the value of the attribut or empty string if no results
+ */
 std::string
 AuthAccountServer::getAttribut(std::string condition, std::string attrname) {
 

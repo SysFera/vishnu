@@ -1,3 +1,9 @@
+/**
+ * \file handlers.hpp
+ * \brief This file contains the definition of the handlers used for the communication layers
+ * \author Haikel Guemar (haikel.guemar@sysfera.com)
+ * \date January 2013
+ */
 #ifndef _HANDLERS_HPP_
 #define _HANDLERS_HPP_
 
@@ -5,31 +11,54 @@
 #include "AnnuaryWorker.hpp"
 
 
+/**
+ * \struct InternalEndPoint
+ * \brief Get the endpoint for the subscribers
+ */
 template<typename T>
 struct InternalEndpoint {
+  /**
+   * \brief Return the value of the endpoint
+   */
   static std::string value() { return ""; };
 };
 
 template<>
 struct InternalEndpoint<SubscriptionWorker> {
+  /**
+   * \brief Return the value of the endpoint
+   */
   static std::string value() { return "inproc://vishnuSubcriberWorker"; };
 };
 
 template<>
 struct InternalEndpoint<ServiceWorker> {
+  /**
+   * \brief Return the value of the endpoint
+   */
   static std::string value() { return "inproc://vishnuServiceWorker"; };
 };
 
 
 /**
- * @class generic handler parameterized by its Worker class
+ * \class Handler
+ * \brief generic handler parameterized by its Worker class
  */
 template<typename Worker>
 class Handler {
 public:
+  /**
+   * \brief Constructor
+   * \param uri the uri for the handler
+   * \param ann the annuary
+   * \param nbThread the number of threads to use
+   */
   Handler(const std::string& uri, boost::shared_ptr<Annuary> ann, int nbThread)
     : muri(uri), mann(ann), nbThread(nbThread) {}
 
+  /**
+   * \brief To run the handler
+   */
   void
   run() {
     serverWorkerSockets<Worker,
@@ -40,13 +69,27 @@ public:
   }
 
 private:
+  /**
+   * \brief The uri
+   */
   const std::string muri;
+  /**
+   * \brief The annuary
+   */
   boost::shared_ptr<Annuary> mann;
+  /**
+   * \brief The number of threads to use
+   */
   int nbThread;
 };
 
-
+/**
+ * \brief Handler for the clients
+ */
 typedef Handler<ServiceWorker> ClientHandler;
+/**
+ * \brief Handler for the servers
+ */
 typedef Handler<SubscriptionWorker> ServerHandler;
 
 #endif /* _HANDLERS_HPP_ */

@@ -16,7 +16,6 @@ using namespace vishnu;
 
 /**
 * \brief Constructor
-* \fn MachineServer(UMS_Data::Machine*& machine)
 * \param machine The machine data structure
 */
 MachineServer::MachineServer(UMS_Data::Machine*& machine):
@@ -28,7 +27,6 @@ mmachine(machine)
 
 /**
 * \brief Constructor
-* \fn MachineServer(UMS_Data::Machine*& machine, SessionServer& session)
 * \param machine The machine data structure
 * \param session The object which encapsulates session data
 */
@@ -41,7 +39,6 @@ mmachine(machine), msessionServer(session)
 
 /**
 * \brief Function to add a new VISHNU machine
-* \fn int add(int vishnuId)
 * \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
@@ -106,7 +103,6 @@ MachineServer::add(int vishnuId) {
 
 /**
 * \brief Function to update a VISHNU machine
-* \fn int update()
 * \return raises an exception on error
 */
 int
@@ -189,7 +185,6 @@ MachineServer::update() {
 
 /**
 * \brief Function to delete a VISHNU machine
-* \fn int deleteMachine()
 * \return raises an exception on error
 */
 int
@@ -223,7 +218,6 @@ MachineServer::deleteMachine() {
 } //END: deleteMachine()
 
 /**
-* \fn ~MachineServer()
 * \brief Destructor
 */
 MachineServer::~MachineServer() {
@@ -231,7 +225,6 @@ MachineServer::~MachineServer() {
 
 /**
 * \brief Function to get machine information
-* \fn UMS_Data::Machine* getData()
 * \return  The user data structure
 */
 UMS_Data::Machine*
@@ -241,7 +234,6 @@ MachineServer::getData() {
 
 /**
 * \brief Function to get machine information from the database vishnu
-* \fn getAttribut(std::string condition, std::string attrname);
 * \param condition The condition of the select request
 * \param attrname the name of the attribut to get
 * \return the value of the attribut or empty string if no results
@@ -257,7 +249,6 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
 
 /**
 * \brief Function to get the content of the public ssh key
-* \fn std::string getPublicKey()
 * \return The content of the ssh public key
 */
 std::string

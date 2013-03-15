@@ -43,48 +43,6 @@ solveGetListOfFileTransfers(diet_profile_t* pb);
 int
 solveFileTransferStop(diet_profile_t* pb);
 
-/**
- * \brief Function to build the File transfer (local to remote) service profile
- * \param serviceName the name of the service
- * \return the service profile
- */
-
-//diet_profile_desc_t* getTransferFileProfile(const std::string& serviceName);
-//
-///**
-// * \brief Function to build the asynchronous File transfer (local to remote) service profile
-// * \param serviceName the name of the service
-// * \return the service profile
-// */
-//diet_profile_desc_t* getTransferFileAsyncProfile(const std::string& serviceName);
-//
-///**
-// * \brief Function to build the File transfer (remote to local) service profile
-// * \param serviceName the name of the service
-// * \return the service profile
-// */
-//diet_profile_desc_t* getTransferRemoteFileProfile(const std::string& serviceName);
-//
-///**
-// * \brief Function to build the File transfer (remote to local) service profile
-// * \param serviceName the name of the service
-// * \return the service profile
-// */
-//diet_profile_desc_t* getTransferRemoteFileAsyncProfile(const std::string& serviceName);
-//
-///**
-// * \brief Function to build the File transfer list service profile
-// * \return the service profile
-// */
-//
-//diet_profile_desc_t* getFileTransfersListProfile();
-//
-///**
-// * \brief Function to build the File transfer stop service profile
-// * \return the service profile description
-// */
-//diet_profile_desc_t* getFileTransferStopProfile();
-
 
 /**
  * \brief Implementation of file transfer (local to remote) solve function

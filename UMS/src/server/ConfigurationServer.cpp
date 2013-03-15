@@ -16,7 +16,6 @@ using namespace vishnu;
 
 /**
  * \brief Constructor
- * \fn ConfigurationServer(SessionServer session)
  * \param session The object which encapsulates session data
  */
 ConfigurationServer::ConfigurationServer(SessionServer session):msessionServer(session) {
@@ -27,7 +26,6 @@ ConfigurationServer::ConfigurationServer(SessionServer session):msessionServer(s
 }
 /**
  * \brief Constructor
- * \fn ConfigurationServer(Configuration*& configuration, SessionServer session);
  * \param configuration The Configuration data structure
  * \param session The object which encapsulates session data
  */
@@ -39,7 +37,6 @@ ConfigurationServer::ConfigurationServer(UMS_Data::Configuration*& configuration
 
 /**
  * \brief Function to save a VISHNU configuration
- * \fn int save()
  * \return raises an exception on error
  */
 int
@@ -191,7 +188,6 @@ ConfigurationServer::save() {
 
 /**
  * \brief Function to restore a VISHNU configuration
- * \fn int restore(int vishnuId)
  * \param vishnuId The identifier of the vishnu instance
  * \return raises an exception on error
  */
@@ -292,7 +288,6 @@ int ConfigurationServer::restore(int vishnuId) {
 }
 
 /**
- * \fn ~ConfigurationServer()
  * \brief Destructor
 */
 ConfigurationServer::~ConfigurationServer() {
@@ -300,7 +295,6 @@ ConfigurationServer::~ConfigurationServer() {
 }
 /**
  * \brief Function to get Configuration data structure
- * \fn UMS_Data::Configuration*  getData()
  * \return  The LocalAccount data structure
  */
 UMS_Data::Configuration*
@@ -310,7 +304,6 @@ ConfigurationServer::getData() {
 
 /**
  * \brief Function to get the sql code of users from a VISHNU configuration
- * \fn std::string userToSql(UMS_Data::User_ptr user, int vishnuId)
  * \param vishnuId The identifier of the vishnu instance
  * \return the sql code containing the sql code of users
  */
@@ -330,7 +323,6 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 
 /**
  * \brief Function to get the sql code of machines from a VISHNU configuration
- * \fn std::string machineToSql(UMS_Data::Machine_ptr machine, int vishnuId)
  * \param machine The machine object
  * \param vishnuId The identifier of the vishnu instance
  * \return the sql code containing the sql code of machines
@@ -349,7 +341,6 @@ ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
 
 /**
  * \brief Function to get the sql code of machines description from a VISHNU configuration
- * \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
  * \return the sql code containing the sql code of machines description
  */
 std::string
@@ -368,12 +359,11 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
 }
 
 /**
-* \brief Function to get the sql code of user-authentication system from a VISHNU configuration
-* \fn authSystemToSql(UMS_Data::AuthSystem_ptr authSystem, int vishnuId)
-* \param authSystem The authSystem object
-* \param vishnuId The identifier of the vishnu instance
-* \return the sql code containing the sql code of authentication systems
-*/
+ * \brief Function to get the sql code of user-authentication system from a VISHNU configuration
+ * \param authSystem The authSystem object
+ * \param vishnuId The identifier of the vishnu instance
+ * \return the sql code containing the sql code of authentication systems
+ */
 std::string
 ConfigurationServer::authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId) {
   std::string sqlInsert= "insert into authsystem (vishnu_vishnuid, "
@@ -391,11 +381,10 @@ ConfigurationServer::authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vi
 }
 
 /**
-* \brief Function to get the sql code of machines description from a VISHNU configuration
-* \fn std::string machineDescToSql(UMS_Data::Machine_ptr machine)
-* \param authSystem The authSystem object
-* \return the sql code containing the sql code of authentication systems based on ldap
-*/
+ * \brief Function to get the sql code of machines description from a VISHNU configuration
+ * \param authSystem The authSystem object
+ * \return the sql code containing the sql code of authentication systems based on ldap
+ */
 std::string
 ConfigurationServer::ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem) {
 

@@ -17,7 +17,6 @@ using namespace std;
 
 /**
 * \brief Constructor, raises an exception on error
-* \fn ServerUMS(std::string cfg)
 * \param interval The interval to check the database
 */
 MonitorUMS::MonitorUMS(int interval) {
@@ -28,7 +27,6 @@ mauthenticator = NULL;
 
 /**
 * \brief Destructor
-* \fn ~MonitorUMS()
 */
 
 MonitorUMS::~MonitorUMS() {
@@ -40,7 +38,6 @@ MonitorUMS::~MonitorUMS() {
 
 /**
 * \brief To initialize the UMS monitor with individual parameters instead of configuration file
-* \fn int init(int vishnuId, int dbType, std::string dbHost, std::string dbUsername, std::string dbPassword)
 * \param vishnuId The password of the root user vishnu_user for the connection with the database
 * \param dbConfig The configuration of the database
 * \param authenticatorConfig The configuration of the authenticator
@@ -76,7 +73,6 @@ MonitorUMS::init(int vishnuId,
 
 /**
 * \brief To launch the UMS Monitor
-* \fn int run()
 * \return raises an exception
 */
 int

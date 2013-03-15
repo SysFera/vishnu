@@ -60,7 +60,8 @@ public:
    * \param sqlRequest the sql data base request
    * \return raises an exception on error
    */
-  void processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest) {
+  void
+  processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest) {
 
 
   if(!userServer.isAdmin()) {
@@ -89,7 +90,6 @@ public:
 
  /**
   * \brief Function to list machines information
-  * \fn UMS_Data::ListUsers* list()
   * \return The pointer to the UMS_Data::ListUsers containing users information
   * \return raises an exception on error
   */
@@ -142,10 +142,10 @@ public:
 
   /**
    * \brief Function to get the name of the ListUsersServer command line
-   * \fn std::string getCommandName()
    * \return The the name of the ListUsersServer command line
    */
-  std::string getCommandName()
+  std::string
+  getCommandName()
   {
     return mcommandName;
   }
@@ -153,7 +153,6 @@ public:
 
 
   /**
-   * \fn ~ListUsersServer()
    * \brief Destructor, raises an exception on error
    */
   ~ListUsersServer() { }

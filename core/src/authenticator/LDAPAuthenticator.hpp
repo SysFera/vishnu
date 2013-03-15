@@ -19,12 +19,10 @@ class LDAPAuthenticator : public Authenticator {
 public :
   /**
    * \brief Constructor
-   * \fn LDAPAuthenticator()
    */
   LDAPAuthenticator();
   /**
    * \brief Destructor
-   * \fn ~LDAPAuthenticator()
    */
   ~LDAPAuthenticator();
    /**

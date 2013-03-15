@@ -22,7 +22,7 @@ UserException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_CONFIGNOTFOUND, std::string("Undefined configuration parameter")));
   mp.insert(std::pair<int, std::string>(ERRCODE_CLI_ERROR_NO_SESSION, std::string("Session key not found")));
   mp.insert(std::pair<int, std::string>(ERRCODE_CLI_ERROR_MISSING_PARAMETER, std::string("Missing parameters")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_CLI_ERROR_DIET, std::string("Vishnu initialization failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_CLI_ERROR_COMMUNICATION, std::string("Vishnu initialization failed")));
   mp.insert(std::pair<int, std::string>(ERRCODE_CLI_ERROR_RUNTIME, std::string("Undefined error")));
 }
 

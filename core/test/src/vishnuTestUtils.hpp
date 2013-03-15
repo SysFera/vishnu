@@ -105,10 +105,10 @@ restore(const std::string& filePath) {
 
     if (!diet_call(profile)) {
       if (diet_string_get(profile, 1, errorInfo)) {
-        raiseDietMsgException("VISHNU call failure");
+        raiseCommunicationMsgException("VISHNU call failure");
       }
     } else {
-      raiseDietMsgException("VISHNU call failure");
+      raiseCommunicationMsgException("VISHNU call failure");
     }
     raiseExceptionIfNotEmptyMsg(errorInfo);
   }

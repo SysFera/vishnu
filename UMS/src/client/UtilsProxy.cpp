@@ -12,7 +12,6 @@
 #include "DIET_client.h"
 
 /**
- * \fn  UtilsProxy()
  * \brief Constructor, default constructor
  */
 UtilsProxy::UtilsProxy() {
@@ -22,20 +21,16 @@ UtilsProxy::UtilsProxy() {
 }
 
 /**
- * \fn UtilsProxy(char* cfg,
- *                int argc,
- char** argv)
+ * \brief Constructor
  * \param cfg The SYSFERA-DS configuration file
  * \param argc The number of arguments of the program
  * \param argv The list of arguments
- * \brief Constructor
  */
 UtilsProxy::UtilsProxy(char* cfg, int argc, char** argv):
   mcfg(cfg), margc(argc), margv(argv) {
 }
 
 /**
- * \fn UtilsProxy(const std::string& filePath)
  * \param filePath The SYSFERA-DS configuration file
  * \brief Constructor
  */
@@ -48,7 +43,6 @@ UtilsProxy::UtilsProxy(const std::string& filePath):
 
 /**
  * \brief Function to initialize the SYSFERA-DS configuration
- * \fn  int initialize()
  * \return 0 or GRPC code if success else raises an exception if error
  */
 int
@@ -57,17 +51,16 @@ UtilsProxy::initialize() {
   try {
     res = diet_initialize(mcfg, margc, margv);
   } catch (...) {
-    throw SystemException(ERRCODE_DIET, "Internal communication exception");
+    throw SystemException(ERRCODE_COMMUNICATION, "Internal communication exception");
   }
   if (res == -1) {
-    throw SystemException(ERRCODE_DIET, "Bus initialization failure");
+    throw SystemException(ERRCODE_COMMUNICATION, "Bus initialization failure");
   }
   return res;
 }
 
 
 /**
- * \fn ~UtilsProxy()
  * \brief Destructor, raises an exception on error
  */
 UtilsProxy::~UtilsProxy() {}

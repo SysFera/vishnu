@@ -1,3 +1,9 @@
+/**
+ * \file zhelpers.hpp
+ * \brief This file contains a set of helpers for zmq
+ * \author Haikel Guemar (haikel.guemar@sysfera.com)
+ * \date January 2013
+ */
 #ifndef _ZHELPERS_HPP_
 #define _ZHELPERS_HPP_
 
@@ -11,20 +17,29 @@
 
 #include "utils.hpp"
 
+/**
+ * \brief The default timeout value used to comunicate
+ */
 const int DEFAULT_TIMEOUT = 120; // seconds
 
 /**
- * @class wraps zmq::socket_t to simplify its use
+ * \class Socket
+ * \brief wraps zmq::socket_t to simplify its use
  * with std::string
  */
 class Socket : public zmq::socket_t, public boost::noncopyable {
 public:
+  /**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param type The type of the socket
+   */
   Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
 
   /**
-   * @brief set linger period for socket shutdown
-   * @param linger linger time (default: -1 means infinite)
-   * @returns true if it succeeded
+   * \brief set linger period for socket shutdown
+   * \param linger linger time (default: -1 means infinite)
+   * \returns true if it succeeded
    */
   bool
   setLinger(int linger = -1) {
@@ -37,10 +52,10 @@ public:
   }
 
   /**
-   * @brief wraps zmq::socket_t connect
-   * @param addr connection uri
-   * @return void
-   * @throw error_t if it fails
+   * \brief wraps zmq::socket_t connect
+   * \param addr connection uri
+   * \return void
+   * \throw error_t if it fails
    */
   void
   connect(const std::string& addr) {
@@ -48,10 +63,10 @@ public:
   }
 
   /**
-   * @brief wraps zmq::socket_t connect
-   * @param addr connection uri
-   * @return void
-   * @throw error_t if it fails
+   * \brief wraps zmq::socket_t connect
+   * \param addr connection uri
+   * \return void
+   * \throw error_t if it fails
    */
   void
   connect(const char* addr) {
@@ -61,10 +76,10 @@ public:
   }
 
   /**
-   * @brief send data
-   * @param data string to be sent
-   * @param flags zmq flags
-   * @return true if it succeeded
+   * \brief send data
+   * \param data string to be sent
+   * \param flags zmq flags
+   * \return true if it succeeded
    */
   bool
   send(const std::string& data, int flags = 0) {
@@ -72,10 +87,10 @@ public:
   }
 
   /**
-   * @brief send data
-   * @param data buffer to be sent
-   * @param flags zmq flags
-   * @return true if it succeeded
+   * \brief send data
+   * \param data buffer to be sent
+   * \param flags zmq flags
+   * \return true if it succeeded
    */
   bool
   send(const char* data, int flags = 0) {
@@ -83,9 +98,9 @@ public:
   }
 
   /**
-   * @brief get response for server
-   * @param flags zmq flags
-   * @return message
+   * \brief get response for server
+   * \param flags zmq flags
+   * \return message
    */
   std::string
   get(int flags = 0) {
@@ -120,11 +135,11 @@ public:
 
 private:
   /**
-   * @brief internal method that sends message
-   * @param data buffer to be sent
-   * @param len size of the buffer
-   * @param flags zmq flags
-   * @return true if it succeeded
+   * \brief internal method that sends message
+   * \param data buffer to be sent
+   * \param len size of the buffer
+   * \param flags zmq flags
+   * \return true if it succeeded
    */
   bool
   send(const char* data, size_t len, int flags = 0) {
@@ -137,10 +152,17 @@ private:
 
 
 /**
- * @class implements the Lazy Pirate pattern, argh matey !
+ * \class LazyPirateClient
+ * \brief implements the Lazy Pirate pattern, argh matey !
  */
 class LazyPirateClient {
 public:
+  /**
+   * \brief Constructor
+   * \param ctx the zmq context
+   * \param addr the address to bind
+   * \param timeout the timeout before retrying to send the message
+   */
   LazyPirateClient(zmq::context_t& ctx, const std::string& addr,
                    const int timeout = DEFAULT_TIMEOUT)
     : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000) {
@@ -148,10 +170,10 @@ public:
   }
 
   /**
-   * @brief most of the pattern is implemented here
-   * @param data message to be sent
-   * @param retries number of retries
-   * @return true if it succeeded
+   * \brief most of the pattern is implemented here
+   * \param data message to be sent
+   * \param retries number of retries
+   * \return true if it succeeded
    */
   bool
   send(const std::string& data, int retries = 3) {
@@ -186,6 +208,9 @@ public:
     return false;
   }
 
+  /**
+   * \brief Get the message received
+   */
   std::string
   recv() const {
     return buff_;
@@ -193,6 +218,9 @@ public:
 
 
 private:
+  /**
+   * \brief Reset the connection
+   */
   void
   reset() {
     sock_.reset(new Socket(ctx_, ZMQ_REQ));
@@ -200,10 +228,25 @@ private:
     sock_->setLinger(0);
   }
 
+  /**
+   * \brief The address
+   */
   std::string addr_;
+  /**
+   * \brief The buffer storing the messages
+   */
   std::string buff_;
+  /**
+   * \brief The context
+   */
   zmq::context_t& ctx_;
+  /**
+   * \brief The socket
+   */
   boost::scoped_ptr<Socket> sock_;
+  /**
+   * \brief The timeout
+   */
   long timeout_;
 };
 
