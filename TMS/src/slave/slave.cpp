@@ -36,7 +36,6 @@ using namespace vishnu;
 
 /**
  * \brief To show how to use the slave
- * \fn int usage(char* cmd)
  * \param cmd The name of the program
  * \return Always 1
  */

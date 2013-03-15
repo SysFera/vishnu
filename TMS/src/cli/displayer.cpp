@@ -42,7 +42,6 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
 
 /**
  * \brief To display the job info
- * \fn void displayJob(Job& j)
  * \param j: The job to display the info
  */
 void
@@ -109,7 +108,6 @@ displayJob(TMS_Data::Job& j){
 
 /**
  * \brief To display the job info in a list
- * \fn void displayJobProgress(ListProgression& j)
  * \param j: The progression to display the info
  */
 void
@@ -121,7 +119,6 @@ displayJobProgress(ListProgression& j){
 
 /**
  * \brief To display the job info
- * \fn void displayJobProgress(Progression& p)
  * \param p: The progression to display the info
  */
 void
@@ -152,7 +149,6 @@ displayProgress(Progression& p){
 
 /**
  * \brief To display the list of jobs
- * \fn void displayListJobs(ListJobs& j)
  * \param j: The list of job to display
  */
 void
@@ -164,7 +160,6 @@ displayListJobs(ListJobs& j){
 
 /**
  * \brief To display the queues info
- * \fn void displayQueues(ListQueues& j)
  * \param j: The list of queues to display the info
  */
 void
@@ -176,8 +171,7 @@ displayQueues(ListQueues& j){
 
 /**
  * \brief To display the info about a queue
- * \fn void displayQueues(ListQueues& j)
- * \param j: The list of queues to display the info
+ * \param q: The list of queues to display the info
  */
 void
 displayQueue(Queue& q){
@@ -220,7 +214,6 @@ displayQueue(Queue& q){
 
 /**
  * \brief To display some basic job info after submit
- * \fn void displaySubmit(TMS_Data::Job job)
  * \param job: The job to submit data
  */
 void

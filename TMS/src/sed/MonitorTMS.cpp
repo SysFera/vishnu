@@ -29,7 +29,6 @@ MonitorTMS::MonitorTMS(int interval) {
 
 /**
  * \brief Destructor
- * \fn ~MonitorTMS()
  */
 
 MonitorTMS::~MonitorTMS() {
@@ -117,7 +116,7 @@ MonitorTMS::run() {
       for (size_t i = 0; i < result->getNbTuples(); ++i) {
         buffer.clear();
         buffer = result->get(i);
-        item = buffer.begin(); 
+        item = buffer.begin();
 		jobId = *item;
         ++item; batchJobId = *item;
         ++item; vmIp = *item;

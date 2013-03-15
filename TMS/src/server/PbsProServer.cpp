@@ -516,7 +516,6 @@ PbsProServer::convertPbsProPrioToVishnuPrio(const int& prio) {
 
 /**
  * \brief Function To fill the info concerning a job
- * \fn void fillJobInfo(TMS_Data::Job_ptr job, struct batch_status *p)
  * \param job: The job to fill
  * \param p: The batch status structure containing the job info
  */

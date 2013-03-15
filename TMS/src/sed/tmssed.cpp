@@ -38,7 +38,6 @@ using namespace std;
 
 /**
  * \brief To show how to use the sed
- * \fn int usage(char* cmd)
  * \param cmd The name of the program
  * \return Always 1
  */

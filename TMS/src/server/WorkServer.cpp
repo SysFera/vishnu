@@ -33,7 +33,6 @@ WorkServer::WorkServer(TMS_Data::Work*& work, SessionServer& session)
 
 /**
 * \brief Function to add a new VISHNU work
-* \fn int add(int vishnuId)
 * \param vishnuId The identifier of the vishnu instance
 * \return raises an exception on error
 */
@@ -124,126 +123,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   return 0;
 } //END: add()
 
-//
-//  /**
-//  * \brief Function to update a VISHNU work
-//  * \return raises an exception on error
-//  */
-//  int
-//  WorkServer::update() {
-//
-//    std::string sqlCommand = "";
-//
-//
-//
-//    UserServer userServer = UserServer(msessionServer);
-//    userServer.init();
-//
-//    //if the user exists
-//    if (userServer.exist()) {
-//      //if the user is an admin
-//      if (userServer.isAdmin()) {
-//
-//        //if the work to update exists
-//        if (getAttribut("where workid='"+mwork->getWorkId()+"'").size() != 0) {
-//
-//          //if a new work name has been defined
-//          if (mwork->getName().size() != 0) {
-//            sqlCommand.append("UPDATE work SET name='"+mmachine->getName()+"'\
-//            where machineId='"+mmachine->getWorkId()+"';");
-//          }
-//
-//          //if a new site has been defined
-//          if (mmachine->getSite().size() != 0) {
-//            sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
-//            where machineId='"+mmachine->getWorkId()+"';");
-//          }
-//
-//          //If a new status has been defined
-//          if (mmachine->getStatus() != UNDEFINED_VALUE) {
-//            sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
-//            " where machineId='"+mmachine->getWorkId()+"';");
-//          }
-//
-//          //if a new ssh public key has been defined
-//          if (mmachine->getSshPublicKey().size() != 0) {
-//            sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'"
-//            " where machineId='"+mmachine->getWorkId()+"';");
-//          }
-//
-//          //if a new language has been defined
-//          if (mmachine->getLanguage().size() != 0) {
-//            sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'"
-//            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getWorkId()+"'")+"';");
-//          }
-//
-//          //if a new machine description has been defined
-//          if (mmachine->getWorkDescription().size() != 0) {
-//            sqlCommand.append("UPDATE description SET description='"+mmachine->getWorkDescription()+"'"
-//            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getWorkId()+"'")+"';");
-//          }
-//
-//          //If there is a change
-//          if (!sqlCommand.empty()) {
-//            mdatabaseVishnu->process(sqlCommand.c_str());
-//          }
-//
-//        } //End if the machine to update exists
-//        else {
-//          UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-//          throw e;
-//        }
-//
-//      } //End if the user is an admin
-//      else {
-//          UMSVishnuException e (ERRCODE_NO_ADMIN);
-//          throw e;
-//      }
-//    }//End if the user exists
-//    else {
-//      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-//      throw e;
-//    }
-//    return 0;
-//  } //END: update()
-//
-//  /**
-//  * \brief Function to delete a VISHNU machine
-//  * \fn int deleteWork()
-//  * \return raises an exception on error
-//  */
-//  int
-//  WorkServer::deleteWork() {
-//
-//    UserServer userServer = UserServer(msessionServer);
-//    userServer.init();
-//    //if the user exists
-//    if (userServer.exist()) {
-//      //if the user is an admin
-//      if (userServer.isAdmin()) {
-//        //if the machine to update exists
-//        if (getAttribut("where machineid='"+mmachine->getWorkId()+"'").size() != 0) {
-//          mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getWorkId()+"'");
-//        } //End if the machine to update exists
-//        else {
-//          UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-//          throw e;
-//        }
-//      } //End if the user is an admin
-//      else {
-//        UMSVishnuException e (ERRCODE_NO_ADMIN);
-//        throw e;
-//      }
-//    }//End if the user exists
-//    else {
-//      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-//      throw e;
-//    }
-//    return 0;
-//  } //END: deleteWork()
-//
 /**
-* \fn ~WorkServer()
 * \brief Destructor
 */
 WorkServer::~WorkServer() {
