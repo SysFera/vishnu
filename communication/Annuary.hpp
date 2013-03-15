@@ -96,11 +96,14 @@ private :
                const std::string& mid);
 
   /**
-   * \param The servers
+   * \brief The servers
    */
   std::vector<boost::shared_ptr<Server> > mservers;
 
-  mutable boost::recursive_mutex mutex;
+  /**
+   * \brief mutex to lock the annuary
+   */
+  mutable boost::recursive_mutex mmutex;
 };
 
 #endif // __ANNUARY__H__
