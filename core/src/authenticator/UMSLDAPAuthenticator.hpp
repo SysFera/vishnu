@@ -19,12 +19,10 @@ class UMSLDAPAuthenticator : public Authenticator {
 public :
   /**
    * \brief Constructor
-   * \fn UMSLDAPAuthenticator()
    */
   UMSLDAPAuthenticator();
   /**
    * \brief Destructor
-   * \fn ~UMSLDAPAuthenticator()
    */
   ~UMSLDAPAuthenticator();
    /**

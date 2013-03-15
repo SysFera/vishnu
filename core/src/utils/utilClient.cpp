@@ -26,7 +26,6 @@ void raiseCommunicationMsgException(const std::string& msg) {
 
 /**
  * \brief Function to split the receiving message into error code and message error
- * \fn void raiseExceptionIfNotEmptyMsg(const std::string& msg)
  * \param msg to split
  * \return raises an exception on error
  */

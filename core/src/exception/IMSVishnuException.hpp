@@ -39,7 +39,6 @@ class IMSVishnuException: public UserException{
 
   /**
    * \brief Function to initialize all UMS generic messages
-   * \fn void initMsg()
    */
   void
   initMsg();

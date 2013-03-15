@@ -22,7 +22,6 @@ class OracleDatabase : public Database {
 public :
   /**
    * \brief Function to process the request in the database
-   * \fn    int process(std::string request)
    * \param request The request to process
    * \return raises an exception on error
    */
@@ -31,7 +30,6 @@ public :
 
   /**
    * \brief To start a transaction with the database
-   * \fn int startTransaction(std::string request)
    * \param request The series of requests to process
    * \return raises an exception on error
    */
@@ -40,17 +38,11 @@ public :
 
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   int
   connect();
   /**
-   * \fn OracleDatabase(std::string hostname,
-   *		         std::string username,
-   * 	 	         std::string pwd,
-   *	 	         std::string database = "",
-   *	 	         unsigned int port = 0)
    * \param hostname The name of the host to connect
    * \param username The username to connect to the database
    * \param pwd      The password to connect to the database
@@ -65,14 +57,12 @@ public :
                  unsigned int port = 0);
 
   /**
-   * \fn ~OracleDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~OracleDatabase();
 
   /**
    * \brief To set the db to use
-   * \fn int setDatabase(std::string db)
    * \param db The name of the database to use
    * \return 0 raises an exception on error
    */
@@ -81,7 +71,6 @@ public :
 
   /**
   * \brief To get the result of a select request
-  * \fn DatabaseResult* getResult(std::string request)
   * \param request The request to process
   * \return An object which encapsulates the database results
   */
@@ -141,7 +130,6 @@ private :
 
   /**
    * \brief To disconnect from the database
-   * \fn int disconnect()
    * \return raises an exception on error
    */
   int

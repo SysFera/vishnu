@@ -12,7 +12,6 @@ using namespace vishnu;
 
 /**
  * \brief Function to process the request in the database
- * \fn    int process(string request)
  * \param request The request to process
  * \return raises an exception on error
  */
@@ -35,7 +34,6 @@ OracleDatabase::process(string req){
 
 /**
  * \brief To start a transaction with the database
- * \fn int startTransaction(string request)
  * \param request The series of requests to process
  * \return raises an exception on error
  */
@@ -47,7 +45,6 @@ OracleDatabase::startTransaction(string request){
 
 /**
  * \brief To make a connection to the database
- * \fn int connect()
  * \return raises an exception on error
  */
 int
@@ -67,7 +64,6 @@ OracleDatabase::connect(){
 }
 
 /**
- * \fn Database()
  * \brief Constructor
  */
 OracleDatabase::OracleDatabase(string hostname,
@@ -80,7 +76,6 @@ OracleDatabase::OracleDatabase(string hostname,
 }
 
 /**
- * \fn ~Database()
  * \brief Destructor
  */
 OracleDatabase::~OracleDatabase(){
@@ -89,7 +84,6 @@ OracleDatabase::~OracleDatabase(){
 
 /**
  * \brief To disconnect from the database
- * \fn disconnect()
  * \return 0
  */
 int
@@ -115,7 +109,6 @@ OracleDatabase::setDatabase(string db){
 
 /**
  * \brief To get the result of a select request
- * \fn DatabaseResult* getResult()
  * \param request The request to process
  * \return An object which encapsulates the database results
  */

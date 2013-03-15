@@ -68,7 +68,6 @@ using namespace boost::gregorian;
 
 /**
  * \brief Function to convert a given date into correspondant long value
- * \fn long long convertToTimeType(std::string date)
  * \param date The date to convert
  * \return The converted value
  */
@@ -124,7 +123,6 @@ vishnu::convertToLong(const std::string& sval) {
 
 /**
  * \brief To crypt a password
- * \fn std::string cryptPassword(const std::string& salt, const std::string password)
  * \param salt The salt to use to crypt
  * \param password The password to crypt
  * \param encrypted The flag for password encryption
@@ -144,7 +142,6 @@ vishnu::cryptPassword(const std::string& salt, const std::string& password, bool
 
 /**
  * \brief Function to get a random number
- * \fn    int generate_numbers()
  * \return the number generated
  */
 int

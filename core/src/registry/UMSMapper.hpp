@@ -153,24 +153,20 @@ class UMSMapper : Mapper{
 public :
   /**
    * \brief Constructor
-   * \fn UMSMapper(MapperRegistry* reg, string name)
    * \param reg Registry to be linked to
    * \param name Name of the mapper
    */
   UMSMapper(MapperRegistry* reg, std::string name);
   /**
    * \brief Default constructor
-   * \fn UMSMapper()
    */
   UMSMapper();
   /**
    * \brief Destructor
-   * \fn ~UMSMapper()
    */
   ~UMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
-   * \fn virtual int registerMapper()
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -178,7 +174,6 @@ public :
 
   /**
    * \brief To unregister a mapper in the list of active mapper
-   * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -186,7 +181,6 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand(const int& key,string& command)
    * \param key The key to use
    * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
@@ -196,7 +190,6 @@ public :
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey(const std::string& command, int& key)
    * \param command The 'key' to use
    * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
@@ -206,7 +199,6 @@ public :
 
   /**
    * \brief Function to add an element to code
-   * \fn  virtual int code(const std::string& cmd, unsigned int code = 0)
    * \param cmd The std::string to add
    * \param code If 0, the code is created, otherwize it is the key in the map to add the string
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
@@ -216,7 +208,6 @@ public :
 
   /**
    * \brief To get, from a coded string, the cli like command that made it
-   * \fn virtual std::string decode (const std::string& msg);
    * \param msg The coded string
    * \return The cli like command
    */
@@ -228,7 +219,6 @@ protected:
 
   /**
    * \brief To decode the close call sequence of the string returned by finalize
-   * \fn std::string decodeClose(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like close command
@@ -238,7 +228,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeAddUser(vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like add user command
@@ -248,7 +237,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeUpUser(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like update user command
@@ -258,7 +246,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeDelUser(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like delete user command
@@ -322,7 +309,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeChangePwd(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like change password command
@@ -332,7 +318,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeResetPwd(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like reset password command
@@ -342,7 +327,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeAddAcc(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like add account command
@@ -352,7 +336,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeUpAcc(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like update account command
@@ -362,7 +345,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeDelAcc(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like delete account command
@@ -372,7 +354,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeSaveConf(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like save configuration command
@@ -382,7 +363,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeRestoreConf(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like crestore configuration command
@@ -392,7 +372,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeAddM(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like add machine command
@@ -402,7 +381,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeUpM(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like update machine command
@@ -412,7 +390,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeDelM(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like delete machine command
@@ -422,7 +399,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListAcc(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list account command
@@ -450,7 +426,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListM(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list machine command
@@ -460,7 +435,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListH(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list history command
@@ -470,7 +444,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListOp(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list option command
@@ -480,7 +453,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListUser(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list user command
@@ -490,7 +462,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeListSession(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like list session command
@@ -500,7 +471,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeConfDefaultOp(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like configure default option command
@@ -510,7 +480,6 @@ protected:
 
   /**
    * \brief To decode the add user call sequence of the string returned by finalize
-   * \fn std::string decodeConfOp(std::vector<unsigned int> separator, const std::string& msg)
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
    * \return The cli like configure option command
@@ -521,7 +490,6 @@ protected:
 
   /**
    * \brief To deserialize the serial string, make a user objet, and get the values in the same string
-   * \fn std::string getU(std::string serial)
    * \param serial The serialized object
    * \return A string containing the user fields in the right order
    */
@@ -530,7 +498,6 @@ protected:
 
   /**
    *\brief To deserialize the serial string, make a user objet, and get the values in the same string
-   *\fn std::string getUupdate(std::string serial)
    *\param serial The serialized object
    *\return A string containing the user fields in the right order
    */

@@ -33,19 +33,16 @@ public :
   process(std::string request, int transacId = -1);
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   int
   connect();
   /**
    * \brief Constructor, raises an exception on error
-   * \fn MYSQLDatabase(DbConfiguration dbConfig)
    * \param dbConfig  the configuration of the database client
    */
   MYSQLDatabase(DbConfiguration dbConfig);
   /**
-   * \fn ~MYSQLDatabase()
    * \brief Destructor, raises an exception on error
    */
   ~MYSQLDatabase();
@@ -101,7 +98,6 @@ public :
 private :
   /**
    * \brief To get a valid connexion
-   * \fn MYSQL* getConnection(int& pos)
    * \param pos The position of the connection gotten in the pool
    * \return A valid and free connection
    */
@@ -109,7 +105,6 @@ private :
 
   /**
    * \brief To release a connexion
-   * \fn void releaseConnection(int pos)
    * \param pos The position of the connection to release
    */
   void releaseConnection(int pos);
@@ -148,7 +143,6 @@ private :
   /////////////////////////////////
   /**
    * \brief To disconnect from the database
-   * \fn disconnect()
    * \return 0 on success, an error code otherwise
    */
   int

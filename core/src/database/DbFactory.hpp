@@ -21,12 +21,10 @@ class DbFactory{
 public :
   /**
    * \brief Constructor
-   * \fn DbFactory()
    */
   DbFactory();
   /**
    * \brief Destructor
-   * \fn ~DbFactory()
    */
   ~DbFactory();
   /**

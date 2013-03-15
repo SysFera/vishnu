@@ -100,7 +100,6 @@ MYSQLDatabase::process(string request, int transacId){
 }
 /**
  * \brief To make a connection to the database
- * \fn int connect()
  * \return raises an exception on error
  */
 int
@@ -121,7 +120,6 @@ MYSQLDatabase::connect(){
 	return SUCCESS;
 }
 /**
- * \fn MYSQLDatabase(DbConfiguration dbConfig)
  * \brief Constructor, raises an exception on error
  */
 MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
@@ -136,7 +134,6 @@ MYSQLDatabase::MYSQLDatabase(DbConfiguration dbConfig)
 }
 
 /**
- * \fn ~Database()
  * \brief Destructor, raises an exception on error
  */
 MYSQLDatabase::~MYSQLDatabase(){
@@ -146,7 +143,6 @@ MYSQLDatabase::~MYSQLDatabase(){
 }
 /**
  * \brief To disconnect from the database
- * \fn disconnect()
  * \return 0 on success, an error code otherwise
  */
 int

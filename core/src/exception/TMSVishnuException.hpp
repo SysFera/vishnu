@@ -28,7 +28,6 @@ class TMSVishnuException: public UserException{
   public:
   /**
    * \brief Default constructor
-   * \fn TMSVishnuException()
    */
   TMSVishnuException();
   /**
@@ -44,13 +43,11 @@ class TMSVishnuException: public UserException{
   TMSVishnuException(int msg, std::string msgComp= "");
   /**
    * \brief Default constructor
-   * \fn ~TMSVishnuException()
    */
   ~TMSVishnuException() throw (){};
 
   /**
    * \brief Function to initialize all UMS generic messages
-   * \fn void initMsg()
    */
   void
   initMsg();

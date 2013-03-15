@@ -18,12 +18,10 @@ class Authenticator {
 public :
   /**
    * \brief Constructor
-   * \fn Authenticator()
    */
   Authenticator();
   /**
    * \brief Destructor
-   * \fn ~Authenticator()
    */
   virtual ~Authenticator();
    /**

@@ -29,7 +29,6 @@ public :
   process(std::string request, int transacId = -1) = 0;
   /**
   * \brief To make a connection to the database
-  * \fn int connect()
   * \return raises an exception on error
   */
   virtual int
@@ -50,9 +49,8 @@ public :
   getDbType() = 0;
 
     /**
-   * \fn ~Database()
-   * \brief Destructor, raises an exception on error
-   */
+     * \brief Destructor, raises an exception on error
+     */
 virtual ~Database();
 /**
  * \brief Start a transaction
@@ -91,7 +89,6 @@ virtual ~Database();
 
 protected :
   /**
-   * \fn Database()
    * \brief Constructor, raises an exception on error
    */
   Database();
@@ -99,7 +96,6 @@ protected :
 private :
   /**
    * \brief To disconnect from the database
-   * \fn virtual int disconnect() = 0
    * \return raises an exception on error
    */
   virtual int

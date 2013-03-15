@@ -94,19 +94,16 @@ class FMSMapper : Mapper{
 public :
   /**
    * \brief Constructor
-   * \fn FMSMapper(MapperRegistry* reg, std::string name)
    * \param reg Registry to register
    * \param name Name to use to register
    */
   FMSMapper(MapperRegistry* reg, std::string name);
   /**
    * \brief Default constructor
-   * \fn FMSMapper()
    */
   FMSMapper();
   /**
    * \brief To register a mapper in the list of active mapper
-   * \fn virtual int registerMapper()
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -114,7 +111,6 @@ public :
 
   /**
    * \brief To unregister a mapper in the list of active mapper
-   * \fn virtual int unregisterMapper()
    * \return 0 on success, an error code otherwise
    */
   virtual int
@@ -122,7 +118,6 @@ public :
 
   /**
    * \brief To get the command corresponding to a key
-   * \fn virtual int getCommand(const int& key,std::string& command)
    * \param key The key to use
    * \param command OUT, the command corresponding to the key
    * \return 0 on success, an error code otherwise
@@ -132,7 +127,6 @@ public :
 
   /**
    * \brief To get the key corresponding to a command
-   * \fn virtual int getKey(const std::string& command, int& key)
    * \param command The 'key' to use
    * \param key OUT, the key corresponding to the command
    * \return 0 on success, an error code otherwise
@@ -142,7 +136,6 @@ public :
 
   /**
    * \brief Function to add an element to code
-   * \fn  virtual int code(const std::string& cmd, unsigned int code = 0)
    * \param cmd The string to add
    * \param code If 0, the code is created, otherwize it is the key in the map to add the string
    * \return if param code = 0, the assigned code to add other element to the same item, otherwize return 0
@@ -152,7 +145,6 @@ public :
 
   /**
    * \brief To get, from a coded string, the cli like command that made it
-   * \fn virtual std::string decode (const std::string& msg);
    * \param msg The coded string
    * \return The cli like command
    */
