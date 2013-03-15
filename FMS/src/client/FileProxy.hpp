@@ -9,7 +9,6 @@
 #define FILEPROXY_HH
 
 #include <string>
-#include <list>
 
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -25,59 +24,12 @@
  *  Defines the common operation on files (local or remote)
  */
 class FileProxy {
-private:
-  /**
-   * \brief The host of the file
-   */
-  std::string mhost;
-
-  /**
-   * \brief To check if the file exists
-   */
-  mutable bool exist;
-
-  /**
-   * \brief The session object proxy
-   */
-  SessionProxy msessionProxy;
-  /**
-   * \brief The inode information of the file
-   */
-  mutable FMS_Data::FileStat mfileStat;
-
-protected:
-  /**
-   * \brief To update the inode information of the file
-   * \param fileStat the new inode information
-   */
-  void
-  setFileStat(const FMS_Data::FileStat& fileStat) const;
-  /**
-   * \brief To update the path  of the file
-   * \param path the new path
-   */
-  void
-  setPath(const std::string& path);
-
-  /**
-   * \brief To update the host  of the file
-   * \param host the new host
-   */
-  void
-  setHost(const std::string& host);
-
-  /**
-   * \brief To updata the file existence flag
-   * \param exist the new file existence flag
-   */
-  void
-  exists(const bool exist) const;
-
 public:
   /**
    * \brief The default constructor
    */
   FileProxy();
+
   /**
    * \brief Another constructor taking two parameters
    * \param sessionProxy  the session object proxy
@@ -85,11 +37,13 @@ public:
    */
   FileProxy(const SessionProxy& sessionProxy,
             const std::string& path);
+
   /**
    * \brief Another constructor by reference
    * \param fileProxy the other file
    */
   explicit FileProxy(const FileProxy& fileProxy);
+
   /**
    * \brief The default destructor
    */
@@ -100,7 +54,8 @@ public:
    * \param fileProxy the object to assign
    * \return the new assigned file
    */
-  FileProxy& operator=(const FileProxy& fileProxy);
+  FileProxy&
+  operator=(const FileProxy& fileProxy);
 
   /**
    * \brief To get session proxy object
@@ -108,6 +63,7 @@ public:
    */
   const SessionProxy&
   getSession() const;
+
   /**
    * \brief To get the inode information of the file
    * \return the file inode information
@@ -135,6 +91,7 @@ public:
    */
   bool
   exists() const;
+
   /**
    * \brief To check if the file information is up to date
    * \return true if the file is already updated, false otherwise
@@ -163,6 +120,7 @@ public:
    */
   virtual int
   chmod(const mode_t mode) = 0;
+
   /**
    * \brief To get the first lines of the file
    * \param options the options object
@@ -185,6 +143,7 @@ public:
    */
   virtual std::string
   getContent() = 0;
+
   /**
    * \brief To create a new file
    * \param mode the access permission of the file
@@ -223,6 +182,7 @@ public:
    */
   virtual FMS_Data::DirEntryList*
   ls(const FMS_Data::LsDirOptions& options) const = 0;
+
   /**
    * \brief To copy the file
    * \param dest the copy destination
@@ -280,6 +240,55 @@ public:
    */
   static std::string
   extName(const std::string& path);
+
+protected:
+  /**
+   * \brief To update the inode information of the file
+   * \param fileStat the new inode information
+   */
+  void
+  setFileStat(const FMS_Data::FileStat& fileStat) const;
+
+  /**
+   * \brief To update the path  of the file
+   * \param path the new path
+   */
+  void
+  setPath(const std::string& path);
+
+  /**
+   * \brief To update the host  of the file
+   * \param host the new host
+   */
+  void
+  setHost(const std::string& host);
+
+  /**
+   * \brief To update the file existence flag
+   * \param exist the new file existence flag
+   */
+  void
+  exists(const bool exist) const;
+
+private:
+  /**
+   * \brief The host of the file
+   */
+  std::string mhost;
+
+  /**
+   * \brief To check if the file exists
+   */
+  mutable bool exist;
+
+  /**
+   * \brief The session object proxy
+   */
+  SessionProxy msessionProxy;
+  /**
+   * \brief The inode information of the file
+   */
+  mutable FMS_Data::FileStat mfileStat;
 };
 
 
