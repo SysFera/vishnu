@@ -14,7 +14,6 @@
 
 using namespace std;
 namespace bfs=boost::filesystem;
-typedef vector<string> ListStrings ;
 /**
  * \param session The object which encapsulates the session information
  * \param machineId The id of the machine
