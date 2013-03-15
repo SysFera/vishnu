@@ -38,12 +38,14 @@ public:
    * \param scriptContent the content of the script
    * \param options the options to submit job
    * \param vishnuId The VISHNU identifier
+   * \param defaultBatchOption the default options on the batch scheduler
    * \return raises an exception on error
    */
-  int submitJob(std::string& scriptContent,
-                TMS_Data::SubmitOptions& options,
-                const int& vishnuId,
-                const std::vector<std::string>& defaultBatchOption);
+  int
+  submitJob(std::string& scriptContent,
+            TMS_Data::SubmitOptions& options,
+            const int& vishnuId,
+            const std::vector<std::string>& defaultBatchOption);
 
   /**
    * \brief Destructor
@@ -113,8 +115,9 @@ protected:
 
   /**
    * \brief Function to treat the default submission options
-   * \param scriptOptions The list of the option value
-   * \param cmdsOptions The list of the option value
+   * \param defaultBatchOption The list of the option value
+   * \param content The content of the option
+   * \param key The key for the option
    * \return raises an exception on error
    */
   void
@@ -124,6 +127,7 @@ protected:
    * \brief Function to insert option line into string
    * \param optionLineToInsert the option to insert
    * \param content The buffer containing the inserted option
+   * \param key The key to insert
    * \return raises an exception on error
    */
   void
@@ -143,6 +147,7 @@ protected:
   /*
    * \brief Return the directive associated to the batch scheduler
    * \param seperator Hold the seperator used to define parameter
+   * \return the directive associated to the batch scheduler
    */
   std::string
   getBatchDirective(std::string& seperator) const;
@@ -182,9 +187,10 @@ protected:
                     const std::string& suffix);
   /**
    * \brief Function to process the script with options
-   * \param the script content
+   * \param scriptContent the script content
    * \param options the options to submit job
    * \param defaultBatchOption The default batch options
+   * \param machineName the name of the machine
    * \return the processed script content
    */
   std::string

@@ -54,16 +54,16 @@ class SSHJobExec {
     /**
      * \brief Function to execute a script remotely
      * \param scriptPath the path to script to submit
-     * \param nfsServer: The NFS server
-     * \param nfsMountPointthe mount point on the NFS server
+     * \param nfsServer the NFS server
+     * \param nfsMountPoint the mount point on the NFS server
      * \param workDir The wordking directory of the job
      * \return raises an exception on error
      */
    int
    execRemoteScript(const std::string& scriptPath,
-		   		const std::string & nfsServer="",
-		   		const std::string nfsMountPoint="",
-				const std::string & workDir="");
+                    const std::string & nfsServer="",
+                    const std::string nfsMountPoint="",
+                    const std::string & workDir="");
 
     /**
      * \brief Function to copy files from remote machine
@@ -82,6 +82,7 @@ class SSHJobExec {
     /**
      * \brief Function to copy files from remote machine
      * \param path the path of the file
+     * \param dest the destination of the file
      * \return raises an exception on error
      */
     int
@@ -93,6 +94,7 @@ class SSHJobExec {
      * \param background: Tell whether launch the script is background
      * \param outDir the directory when the output will be stored
      * \param pid: return value containing the pid of the of the running background process
+     * \return 0 on success
      */
     int
     execCmd(const std::string& cmd,

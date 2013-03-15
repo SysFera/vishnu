@@ -36,7 +36,7 @@ public :
      * \param dbConfig  The configuration of the database
      * \param machineId the id of the machine
      * \param batchType The type of the batch scheduler*
-     * \param batchType the type of batch scheduler
+     * \param sedConfig the configuration of the server
      * \return raises an exception on error
      */
   int
@@ -150,6 +150,7 @@ private :
      * \brief Function to get the default Batch submission options
      * \param configPath The job script path
      * \param defaultOptions The list of the option value
+     * \param batchKey key indicating the batch scheduler
      * \return raises an exception on error
      */
   void

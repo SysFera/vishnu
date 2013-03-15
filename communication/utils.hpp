@@ -1,3 +1,9 @@
+/**
+ * \file communication/utils.hpp
+ * \brief this file contains a declaration of helper functions used by the communication layer
+ * \authors Kevin Coulomb (kevin.coulomb@sysfera.com)
+ */
+
 #ifndef _UTILS_HPP_
 #define _UTILS_HPP_
 
@@ -7,6 +13,9 @@
 #include <boost/thread.hpp>
 #include <boost/version.hpp>
 
+/**
+ * \brief Definition of a task
+ */
 typedef boost::function0<void> Task;
 
 namespace threadsafe {
@@ -87,6 +96,10 @@ public:
    */
   ~ThreadPool();
 
+  /**
+   * \brief add a function to a task
+   * \param f function to call
+   */
   template<typename Callable>
   void
   submit(Callable f) {

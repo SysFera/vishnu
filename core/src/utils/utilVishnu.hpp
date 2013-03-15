@@ -21,6 +21,9 @@
 
 namespace bfs = boost::filesystem;
 
+/**
+ * \brief Define a type for lists of strings (used in TMS)
+ */
 typedef std::vector<std::string> ListStrings;
 
 static const int UNDEFINED_VALUE=-1;
@@ -181,6 +184,7 @@ setIP(std::string& name, std::string IP);
 /**
  * \brief Tells if the string is an IP address
  * \param name The string to test
+ * \return true is it is not an IPv4 address
  */
 bool
 isNotIP(std::string name);

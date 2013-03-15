@@ -93,7 +93,7 @@ public:
   /**
    * \brief Get the values of a configuration parameter
    * \param[in]  param
-   * \param[out] value the list of result
+   * \param[out] values the list of result
    * \return param has been set or not
    */
   bool
@@ -101,8 +101,8 @@ public:
 
   /**
    * \brief Get the values of a configuration parameter
-   * \param[in]  key
-   * \param[out] value the list of result
+   * \param[in]  key the key
+   * \param[out] values the list of result
    * \return values has been set or not
    */
   bool
@@ -137,5 +137,8 @@ protected:
   ConfigMap mconfig;
 };
 
+/**
+ * \brief Define the exec configuration pointer type
+ */
 typedef ExecConfiguration* ExecConfiguration_Ptr;
 #endif /* _EXECCONFIGURATION_HPP_ */

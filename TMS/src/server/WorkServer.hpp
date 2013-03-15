@@ -43,6 +43,7 @@ public:
   /**
   * \brief Function to add a new VISHNU work
   * \param vishnuId The identifier of the vishnu instance
+  * \param op the options of the work
   * \return raises an exception on error
   */
   int

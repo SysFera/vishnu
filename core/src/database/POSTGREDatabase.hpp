@@ -95,6 +95,7 @@ public :
  * \param fields: The fields of the table
  * \param val: The values of the fields to insert
  * \param tid: The transaction id
+ * \param primary the primary key on the table
  * \return A new integer never returned by this function
  */
   virtual int

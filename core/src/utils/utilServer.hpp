@@ -282,9 +282,10 @@ namespace vishnu {
   getStatusValue (const std::string& file);
 
   /**
-   *  \brief Function to move the file parameters to a given directory
-   *  \param fileparam a list of key=value
-   *  \param dir the directory where we create
+   * \brief Function to move the file parameters to a given directory
+   * \param fileparams a list of key=value
+   * \param dir the directory where we create
+   * \return the new directory containing the file
    */
   std::string
   moveFileData(const std::string& fileparams, std::string dir);
@@ -299,6 +300,7 @@ namespace vishnu {
   /**
    * \brief Show the version of vishnu
    * \param server The server to display the version
+   * \return EXIT_SUCCESS
    */
   int
   showVersion(std::string server);

@@ -1,8 +1,8 @@
 /*
- * DeltaCloudServer.hpp
- *
- *  Created on: 27 nov. 2012
- *      Author: r
+ * \file DeltaCloudServer.hpp
+ * \brief This file contains the implementation of the delta cloud batch scheduler interface in vishnu
+ * \author Rodrigue Chakode (rodrigue.chakode@sysfera.com)
+ * \date November 2012
  */
 
 #ifndef DELTACLOUDSERVER_HPP_
@@ -13,7 +13,10 @@
 #include "utilVishnu.hpp"
 #include "libdeltacloud/libdeltacloud.h"
 
-
+/**
+ * \class DeltaCloudServer
+ * \brief The implementation of the delta cloud interfacage as a batch scheduler
+ */
 class DeltaCloudServer : public BatchServer {
 public:
 	DeltaCloudServer();
@@ -35,7 +38,7 @@ public:
 
 	/**
 	 * \brief Function to cancel job
-	 * \param jobDescr the description of the job in the form of jobId@vmId
+	 * \param jobDescr the description of the job in the form of jobId\@vmId
 	 * \return raises an exception on error
 	 */
 	int
@@ -71,8 +74,9 @@ public:
 	 * \param listOfJobs the ListJobs structure to fill
 	 * \param ignoredIds the list of job ids to ignore
 	 */
-	void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-			const std::vector<std::string>& ignoredIds=std::vector<std::string>());
+	void
+        fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+                       const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
 private:
 	/**
@@ -129,38 +133,44 @@ private:
 	 * \brief Function for initializing the deltacloud API
 	 * return: throw exception on error
 	 */
-	void initialize(void);
+	void
+        initialize(void);
 
 	/**
 	 * \brief Function for cleaning up the allocated dynamic data structure
 	 */
-	void finalize();
+	void
+        finalize();
 
 	/**
 	 * \brief Function for cleaning up virtual machine
 	 * \param vmid The id of the virtual machine
 	 */
-	void releaseResources(const std::string & vmid);
+	void
+        releaseResources(const std::string & vmid);
 
 	/**
 	 * \brief Function for cleaning up a deltacloud params list
-	 * \param jobDescr The description of the job in the form of param1@param2@...
+	 * \param jobDescr The description of the job in the form of param1\@param2@...
 	 * \param numParams The number of expected parameters
-	 * return ListStrings aka a vector of string parameters or throw exception on error
+	 * \return ListStrings aka a vector of string parameters or throw exception on error
 	 */
-	ListStrings getJobInfos(const std::string jobDescr, const int & numParams);
+	ListStrings
+        getJobInfos(const std::string jobDescr, const int & numParams);
 
 	/**
 	 * \brief Function for cleaning up a deltacloud params list
-	 * \param: params The list of params
+	 * \param params The list of params
 	 */
-	void cleanUpParams(std::vector<deltacloud_create_parameter>& params);
+	void
+        cleanUpParams(std::vector<deltacloud_create_parameter>& params);
 
 	/**
 	 * \brief To retrieve specific submission parameters
-	 * \param specificParamss The string containing the list of parameters
+	 * \param specificParams The string containing the list of parameters
 	 */
-	void retrieveSpecificParams(const std::string& specificParams);
+	void
+        retrieveSpecificParams(const std::string& specificParams);
 };
 
 #endif /* DELTACLOUDSERVER_HPP_ */

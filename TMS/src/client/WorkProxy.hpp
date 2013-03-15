@@ -14,8 +14,8 @@
 #include "Work.hpp"
 
 /**
- * \class MachineProxy
- * \brief MachineProxy class implementation
+ * \class WorkProxy
+ * \brief WorkProxy class implementation
  */
 class WorkProxy
 {
@@ -30,6 +30,7 @@ class WorkProxy
     WorkProxy(const TMS_Data::Work& work, const SessionProxy& session);
     /**
      * \brief Function to add a new machine
+     * \param op the options of the work
      * \return raises an exception on error
      */
   int add(const TMS_Data::AddWorkOptions& op);
