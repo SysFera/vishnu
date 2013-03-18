@@ -32,6 +32,7 @@ LLServer::submit(const char* scriptPath,
                  TMS_Data::Job& job, char** envp) {
 
   //Puts the options values into the scriptPath
+  replaceEnvVariables(scriptPath);
   processOptions(scriptPath, options);
 
 
@@ -231,13 +232,7 @@ LLServer::processOptions(const char* scriptPath,
           };
         }
       }
-    }
-
-    if(optionLineToInsert.size()!=0) {
-      ofstream ofs(scriptPath);
-      ofs << content;
-      ofs.close();
-    }
+    }   
   }
 }
 
@@ -998,6 +993,30 @@ LLServer::getLLResourceValue(const char* file,
   cleanResourceValue >> resourceValue;
 
   return resourceValue;
+}
+
+/**
+ * \brief Function to replace some environment varia*bles in a string
+ * \param scriptpath The script path to modify
+ */
+void LLServer::replaceEnvVariables(const char* scriptPath){
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  //To replace VISHNU_BATCHJOB_ID
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LOADL_STEP_ID");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$LOADL_STEP_ID");
+  //To replace VISHNU_BATCHJOB_NAME
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LOADL_JOB_NAME");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LOADL_JOB_NAME");
+  //To replace VISHNU_BATCHJOB_NODEFILE
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$LOADL_HOSTFILE");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$LOADL_HOSTFILE");
+  //To replace VISHNU_BATCHJOB_NUM_NODES
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
+  
+  ofstream ofs(scriptPath);
+  ofs << scriptContent;
+  ofs.close();
 }
 
 

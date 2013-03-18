@@ -54,6 +54,7 @@ PbsProServer::submit(const char* scriptPath,
 
   std::vector<std::string> cmdsOptions;
   //processes the options
+  replaceEnvVariables(scriptPath);
   processOptions(scriptPath, options, cmdsOptions);
 
   argc = cmdsOptions.size()+2;
@@ -1318,6 +1319,30 @@ PbsProServer::queuesResourceMin(const std::string& optqueueName) {
   }
   listQueuesResourceMin->setNbQueues(listQueuesResourceMin->getQueues().size());
   return listQueuesResourceMin;
+}
+
+/**
+ * \brief Function to replace some environment varia*bles in a string
+ * \param scriptpath The script path to modify
+ */
+void PbsProServer::replaceEnvVariables(const char* scriptPath){
+
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  //To replace VISHNU_BATCHJOB_ID
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$PBS_JOBID");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$PBS_JOBID");
+  //To replace VISHNU_BATCHJOB_NAME
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$PBS_JOBNAME");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$PBS_JOBNAME");
+  //To replace VISHNU_BATCHJOB_NODEFILE
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", "$PBS_NODEFILE");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$PBS_NODEFILE");
+  //To replace VISHNU_BATCHJOB_NUM_NODES
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $PBS_NODEFILE | sort | uniq | wc -l)");
+  ofstream ofs(scriptPath);
+  ofs << scriptContent;
+  ofs.close();
 }
 
 /**
