@@ -269,14 +269,7 @@ findMachine(const std::string& sessionKey,
                        const std::string& newValue);
 
   /**
-   * \brief Function to replace some environment variables in a string
-   * \param scriptContent the string content to modify
-   * \param batchType the type of the batch scheduler
-   */
-  void
-  replaceEnvVariables(std::string& scriptContent, const BatchType& batchType);
 
-  /**
    * \brief function to set parameters appearing in a script
    * \param scriptContent The string to modify
    * \param params a list of parameters in the form of PARAM1=value1  PARAM2=value2 ...

@@ -141,6 +141,12 @@ class SGEServer : public BatchServer
     /*void
     replaceSymbolInToJobPath(std::string& path); */
 
+    /**
+     * \brief Function to replace some environment varia*bles in a string
+     * \param scriptpath The script path to modify
+     */
+    void replaceEnvVariables(const char* scriptPath);
+
 
     /**
      * \brief ListQueues returned

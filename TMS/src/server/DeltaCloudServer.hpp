@@ -32,13 +32,13 @@ public:
    */
   int
   submit(const char* scriptPath,
-         const TMS_Data::SubmitOptions& options,
-         TMS_Data::Job& job,
-         char** envp=NULL);
+      const TMS_Data::SubmitOptions& options,
+      TMS_Data::Job& job,
+      char** envp=NULL);
 
   /**
    * \brief Function to cancel job
-   * \param jobDescr the description of the job in the form of jobId\@vmId
+   * \param jobDescr the description of the job in the form of jobId@vmId
    * \return raises an exception on error
    */
   int
@@ -74,9 +74,8 @@ public:
    * \param listOfJobs the ListJobs structure to fill
    * \param ignoredIds the list of job ids to ignore
    */
-  void
-  fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-                 const std::vector<std::string>& ignoredIds=std::vector<std::string>());
+  void fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
+      const std::vector<std::string>& ignoredIds=std::vector<std::string>());
 
 private:
   /**
@@ -115,8 +114,8 @@ private:
   std::string mvmUser;
 
   /**
-  * \brief Holds the virtual machine keyname
-  */
+   * \brief Holds the virtual machine keyname
+   */
   std::string mvmUserKey;
 
   /**
