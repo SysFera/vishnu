@@ -149,7 +149,6 @@ public:
           break;
         }
       }
-      std::cout << "HEREE\n";
       std::vector<std::string>::iterator vec_iter;
       if (!vec.empty()) {
         sqlRequest.append(" and ("+*vec.begin());
