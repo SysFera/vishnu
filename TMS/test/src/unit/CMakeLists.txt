@@ -35,6 +35,9 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
     ${VISHNU_SOURCE_DIR}/core/test/mock/database/
     ${VISHNU_SOURCE_DIR}/TMS/src/utils/
     ${VISHNU_SOURCE_DIR}/UMS/src/server/
+    ${VISHNU_SOURCE_DIR}/TMS/src/sed/
+    ${REGISTRY_SOURCE_DIR}
+
   )
 
   set(server_mock_SRCS
@@ -57,6 +60,28 @@ if(COMPILE_CLIENT_CLI AND COMPILE_SERVERS)
   add_library(vishnu-tms-server-mock ${server_mock_SRCS})
   set_target_properties(vishnu-tms-server-mock PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server-mock vishnu-ums-server-mock mockDb)
+  set(sed_mock_SRCS ${VISHNU_SOURCE_DIR}/TMS/src/sed/tmssed.cpp
+    ${VISHNU_SOURCE_DIR}/TMS/src/sed/ServerTMS.cpp
+    ${VISHNU_SOURCE_DIR}/TMS/src/sed/internalApi.cpp
+    ${VISHNU_SOURCE_DIR}/TMS/src/sed/MonitorTMS.cpp
+    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
+    )
+  add_library(tmssed-mock ${sed_mock_SRCS})
+  target_link_libraries(tmssed-mock
+    ${Boost_LIBRARIES}
+    mockDb
+    vishnu-core
+    ${LIBCRYPT_LIB}
+    vishnu-core-server
+    vishnu-ums-server-mock
+    vishnu-tms-server-mock
+    vishnu-tms-client
+    ${LDAP_LIBRARIES}
+    emf4cpp-vishnu
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+    ${USED_BATCH_LIB})
 
   unit_test(JobServerUnitTests vishnu-tms-server-mock)
+  unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock)
 endif()

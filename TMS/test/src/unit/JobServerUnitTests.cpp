@@ -180,7 +180,6 @@ static const std::string generic_Script = std::string("#!/bin/sh\n")+
                                               "#% vishnu_error=my_first_job_gen.err\n"+
                                               "#% vishnu_mailNotification= BEGIN\n"+
                                               "#% vishnu_wallclocklimit=01:00:00\n"+
-                                              "echo $VISHNU_BATCHJOB_NODEFILE\n"+
                                               "echo $VISHNU_SUBMIT_MACHINE_NAME\n";
                                               
 static const std::string generic_Script_Torque = std::string("#!/bin/sh\n")+
@@ -190,7 +189,6 @@ static const std::string generic_Script_Torque = std::string("#!/bin/sh\n")+
                                               "#PBS -m b\n"+
                                               "#PBS -l walltime=01:00:00\n"+
                                               "#PBS I am Toto\n"+
-                                              "echo $PBS_NODEFILE\n"+
                                               "echo machine_1\n";
                                         
                                         
