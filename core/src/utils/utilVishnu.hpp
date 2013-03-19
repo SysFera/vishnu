@@ -184,7 +184,7 @@ setIP(std::string& name, std::string IP);
 /**
  * \brief Tells if the string is an IP address
  * \param name The string to test
- * \return true is it is not an IPv4 address
+ * \return true is it is not an IPv4 or IPv6 address
  */
 bool
 isNotIP(std::string name);
