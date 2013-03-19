@@ -147,7 +147,6 @@ template <typename T> T SwigValueInit() {
 
 /* Python.h has to appear first */
 #include <Python.h>
-#include <stddef.h>
 
 /* -----------------------------------------------------------------------------
  * swigrun.swg
@@ -36190,16 +36189,16 @@ SWIGINTERN PyObject *Swig_var_ERRCODE_CLI_ERROR_MISSING_PARAMETER_get(void) {
 }
 
 
-SWIGINTERN int Swig_var_ERRCODE_CLI_ERROR_DIET_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ERRCODE_CLI_ERROR_DIET is read-only.");
+SWIGINTERN int Swig_var_ERRCODE_CLI_ERROR_COMMUNICATION_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable ERRCODE_CLI_ERROR_COMMUNICATION is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *Swig_var_ERRCODE_CLI_ERROR_DIET_get(void) {
+SWIGINTERN PyObject *Swig_var_ERRCODE_CLI_ERROR_COMMUNICATION_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(ERRCODE_CLI_ERROR_DIET));
+  pyobj = SWIG_From_int(static_cast< int >(ERRCODE_CLI_ERROR_COMMUNICATION));
   return pyobj;
 }
 
@@ -36426,16 +36425,16 @@ SWIGINTERN PyObject *Swig_var_ERRCODE_AUTHENTERR_get(void) {
 }
 
 
-SWIGINTERN int Swig_var_ERRCODE_DIET_set(PyObject *) {
-  SWIG_Error(SWIG_AttributeError,"Variable ERRCODE_DIET is read-only.");
+SWIGINTERN int Swig_var_ERRCODE_COMMUNICATION_set(PyObject *) {
+  SWIG_Error(SWIG_AttributeError,"Variable ERRCODE_COMMUNICATION is read-only.");
   return 1;
 }
 
 
-SWIGINTERN PyObject *Swig_var_ERRCODE_DIET_get(void) {
+SWIGINTERN PyObject *Swig_var_ERRCODE_COMMUNICATION_get(void) {
   PyObject *pyobj = 0;
   
-  pyobj = SWIG_From_int(static_cast< int >(ERRCODE_DIET));
+  pyobj = SWIG_From_int(static_cast< int >(ERRCODE_COMMUNICATION));
   return pyobj;
 }
 
@@ -44493,10 +44492,10 @@ SWIG_init(void) {
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CONFIGNOTFOUND",Swig_var_ERRCODE_CONFIGNOTFOUND_get, Swig_var_ERRCODE_CONFIGNOTFOUND_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CLI_ERROR_NO_SESSION",Swig_var_ERRCODE_CLI_ERROR_NO_SESSION_get, Swig_var_ERRCODE_CLI_ERROR_NO_SESSION_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CLI_ERROR_MISSING_PARAMETER",Swig_var_ERRCODE_CLI_ERROR_MISSING_PARAMETER_get, Swig_var_ERRCODE_CLI_ERROR_MISSING_PARAMETER_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CLI_ERROR_DIET",Swig_var_ERRCODE_CLI_ERROR_DIET_get, Swig_var_ERRCODE_CLI_ERROR_DIET_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CLI_ERROR_COMMUNICATION",Swig_var_ERRCODE_CLI_ERROR_COMMUNICATION_get, Swig_var_ERRCODE_CLI_ERROR_COMMUNICATION_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_CLI_ERROR_RUNTIME",Swig_var_ERRCODE_CLI_ERROR_RUNTIME_get, Swig_var_ERRCODE_CLI_ERROR_RUNTIME_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_AUTHENTERR",Swig_var_ERRCODE_AUTHENTERR_get, Swig_var_ERRCODE_AUTHENTERR_set);
-  SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_DIET",Swig_var_ERRCODE_DIET_get, Swig_var_ERRCODE_DIET_set);
+  SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_COMMUNICATION",Swig_var_ERRCODE_COMMUNICATION_get, Swig_var_ERRCODE_COMMUNICATION_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_DBERR",Swig_var_ERRCODE_DBERR_get, Swig_var_ERRCODE_DBERR_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_DBCONN",Swig_var_ERRCODE_DBCONN_get, Swig_var_ERRCODE_DBCONN_set);
   SWIG_addvarlink(SWIG_globals(),(char*)"ERRCODE_SYSTEM",Swig_var_ERRCODE_SYSTEM_get, Swig_var_ERRCODE_SYSTEM_set);
