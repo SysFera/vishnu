@@ -55,3 +55,5 @@ fms_test(fms_automTest17)
 #   vishnu-ums-client
 #   vishnu-fms-client)
 
+
+add_subdirectory(unit)
