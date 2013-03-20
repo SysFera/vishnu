@@ -49,7 +49,7 @@ BOOST_AUTO_TEST_CASE( test_initFromFile_multiplevalues )
 BOOST_AUTO_TEST_CASE( test_initFromFile_noFile )
 {
   ExecConfigurationMock sedConfig;
-  BOOST_CHECK_THROW(sedConfig.initFromFile("badfile"); , UserException );
+  BOOST_CHECK_THROW(sedConfig.initFromFile("badfile") , UserException );
   
 }
 
