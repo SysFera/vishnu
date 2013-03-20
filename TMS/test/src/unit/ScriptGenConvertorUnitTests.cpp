@@ -88,6 +88,14 @@ static const std::string notgeneric_Script = std::string("#!/bin/sh\n")+
                                               "#$ -N mySGEjobName\n"+
                                               "#$ -o mySGEJob-$JOB_ID.out\n"+
                                               "#$ -e mySGEJob-$JOB_ID.err\n";
+                                              
+static const std::string badBatch_script = std::string("#!/bin/sh\n")+                                              
+                                              "#first_job\n"+
+                                              "#my_first_job_gen.out\n"+
+                                              "#my_first_job_gen.err\n"+
+                                              "#BEGIN\n"+
+                                              "#01:00:00\n";
+                                              
 
 
 BOOST_AUTO_TEST_SUITE( ScriptGenConvertor_unit_tests )
@@ -273,7 +281,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDEFINED )
   BOOST_CHECK_EQUAL(scriptGenConvertor_UNDEFINED.parseFile(errormsg), 0);
   BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_UNDEFINED.getConvertedScript();
-  BOOST_CHECK_EQUAL(script,generic_Script);
+  BOOST_CHECK_EQUAL(script,badBatch_script);
 }
 
 
