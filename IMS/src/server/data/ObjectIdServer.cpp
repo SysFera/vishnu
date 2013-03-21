@@ -1,6 +1,7 @@
 #include "ObjectIdServer.hpp"
 
 #include <string>
+#include <boost/algorithm/string.hpp>
 
 #include "DbFactory.hpp"
 
@@ -13,137 +14,33 @@ ObjectIdServer::ObjectIdServer(const UserServer session):msession(session) {
 ObjectIdServer::~ObjectIdServer() {
 }
 
+
+/**
+ * \brief To set the format of an entry
+ */
 void
-ObjectIdServer::setUID(std::string fmt) {
+ObjectIdServer::setformat(std::string fmt, std::string entry){
   if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define user id  format is an admin function. A user cannot call it");
+    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define "+entry+ "id  format is an admin function. A user cannot call it");
   }
+  boost::trim(entry);
   if (!containCpt(fmt)) {
     throw UserException(10, "Invalid format, it does not contain any counter. ");
   }
   if (fmt.find_first_of('@')!=std::string::npos) {
     throw UserException(10, "Invalid format, it cannot contain the @ character. ");
   }
-  std::string request = "update  vishnu set  formatiduser ='"+fmt+"' where  vishnuid ='";
+  std::string request = "update  vishnu set  formatid"+entry+" ='"+fmt+"' where  vishnuid ='";
   request += vishnu::convertToString(mvishnuId);
   request += "'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the user format to "+fmt);
+    e.appendMsgComp("Failed to set the "+entry+" format to "+fmt);
     throw(e);
   }
 }
 
-void
-ObjectIdServer::setFID(std::string fmt) {
-  if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define file transfer id  format is an admin function. A user cannot call it");
-  }
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
-  if (fmt.find_first_of('@')!=std::string::npos) {
-    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
-  }
-  std::string request = "update  vishnu set  formatidfiletransfer ='"+fmt+"' where  vishnuid ='";
-  request += vishnu::convertToString(mvishnuId);
-  request += "'";
-  try{
-    mdatabase->process(request.c_str());
-  }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the file format to "+fmt);
-    throw(e);
-  }
-}
-
-void
-ObjectIdServer::setTID(std::string fmt) {
-  if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define task id  format is an admin function. A user cannot call it");
-  }
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
-  if (fmt.find_first_of('@')!=std::string::npos) {
-    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
-  }
-  std::string request = "update  vishnu set  formatidjob ='"+fmt+"' where  vishnuid ='";
-  request += vishnu::convertToString(mvishnuId);
-  request += "'";
-  try{
-    mdatabase->process(request.c_str());
-  }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the task format to "+fmt);
-    throw(e);
-  }
-}
-
-void
-ObjectIdServer::setMID(std::string fmt) {
-  if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define machine id  format is an admin function. A user cannot call it");
-  }
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
-  if (fmt.find_first_of('@')!=std::string::npos) {
-    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
-  }
-  std::string request = "update  vishnu set  formatidmachine ='"+fmt+"' where  vishnuid='";
-  request += vishnu::convertToString(mvishnuId);
-  request += "'";
-  try{
-    mdatabase->process(request.c_str());
-  }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the machine format to "+fmt);
-    throw(e);
-  }
-}
-
-void
-ObjectIdServer::setAID(std::string fmt) {
-  if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define authentication id  format is an admin function. A user cannot call it");
-  }
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
-  if (fmt.find_first_of('@')!=std::string::npos) {
-    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
-  }
-  std::string request = "update  vishnu set  formatidauth ='"+fmt+"' where  vishnuid='";
-  request += vishnu::convertToString(mvishnuId);
-  request += "'";
-  try{
-    mdatabase->process(request.c_str());
-  }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the machine format to "+fmt);
-    throw(e);
-  }
-}
-
-void
-ObjectIdServer::setWID(std::string fmt) {
-  if (!msession.isAdmin()){
-    throw UMSVishnuException(ERRCODE_NO_ADMIN, "define authentication id  format is an admin function. A user cannot call it");
-  }
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
-  if (fmt.find_first_of('@')!=std::string::npos) {
-    throw UserException(10, "Invalid format, it cannot contain the @ character. ");
-  }
-  std::string request = "update  vishnu set  formatidwork ='"+fmt+"' where  vishnuid='";
-  request += vishnu::convertToString(mvishnuId);
-  request += "'";
-  try{
-    mdatabase->process(request.c_str());
-  }catch(SystemException& e){
-    e.appendMsgComp("Failed to set the machine format to "+fmt);
-    throw(e);
-  }
-}
 
 
 bool
