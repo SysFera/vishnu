@@ -66,9 +66,9 @@ BOOST_AUTO_TEST_CASE( test_processOptions_FromSubmitDate )
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
-  options->setFromSubmitDate(85456999999999950);
+  options->setFromSubmitDate(1121211221); 
   listJobServer.processOptions(options, test_sql);
-  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate >= '2012-Nov-01 06:59:42' and job.status < 5");
+  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate >= '2005-Jul-13 00:33:41' and job.status < 5");
   
 }
 
@@ -92,9 +92,9 @@ BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
-  options->setToSubmitDate(85456999999999950);
+  options->setToSubmitDate(1121211221);
   listJobServer.processOptions(options, test_sql);
-  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate <= '2012-Nov-01 06:59:42' and job.status < 5");
+  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate <= '2005-Jul-13 00:33:41' and job.status < 5");
   
 }
 
