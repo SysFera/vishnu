@@ -696,7 +696,6 @@ std::string JobServer::processScript(std::string& scriptContent,
 {
   std::string convertedScript;
 
-  vishnu::replaceEnvVariables(scriptContent, mbatchType);
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 

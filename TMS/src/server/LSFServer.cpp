@@ -88,6 +88,7 @@ LSFServer::submit(const char* scriptPath,
     return -1;
   };
   //processes the vishnu options
+  replaceEnvVariables(scriptPath);
   processOptions(scriptPath, options, &req);
 
   if(req.outFile!=NULL) {
@@ -296,6 +297,7 @@ LSFServer::processOptions(const char* scriptPath,
     req->options |=SUB_QUEUE;
     req->queue = strdup(queuesList.c_str());
   }
+  
 
 }
 
@@ -761,6 +763,40 @@ void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
 }
 
+/**
+ * \brief Function to replace some environment varia*bles in a string
+ * \param scriptpath The script path to modify
+ */
+void LSFServer::replaceEnvVariables(const char* scriptPath){
+
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  size_t pos;
+  std::string fileName = bfs::unique_path("/tmp/NODELIST_%%%%%%").string();
+  //To replace VISHNU_BATCHJOB_ID
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$LSB_JOBID");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$LSB_JOBID");
+  //To replace VISHNU_BATCHJOB_NAME
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$LSB_JOBNAME");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$LSB_JOBNAME");
+  //To replace VISHNU_BATCHJOB_NODEFILE
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+  pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+  if(pos!=std::string::npos) {
+    pos = scriptContent.rfind("\n", pos-1);
+    scriptContent.insert(pos+1, "echo $LSB_HOSTS > "+fileName+"\n");
+    std::string tmp = "echo $LSB_HOSTS > "+fileName+"\n";
+    scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
+    vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+    vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+    //To replace VISHNU_BATCHJOB_NUM_NODES
+    vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat "+fileName+" | sort | uniq | wc -l)");
+    vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat "+fileName+" | sort | uniq | wc -l)");
+    scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
+  }
+  ofstream ofs(scriptPath);
+  ofs << scriptContent;
+  ofs.close();
+}
 /**
  * \brief Destructor
  */

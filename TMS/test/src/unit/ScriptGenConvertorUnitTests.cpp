@@ -11,15 +11,27 @@ static const std::string generic_Script = std::string("#!/bin/sh\n")+
                                               "#% vishnu_output=my_first_job_gen.out\n"+
                                               "#% vishnu_error=my_first_job_gen.err\n"+
                                               "#% vishnu_mailNotification= BEGIN\n"+
+                                              "#% vishnu_wallclocklimit=01:00:00\n"+
+                                              "#PBS -N first_job\n"+
+                                              "#@ job_name=first_job\n"+
+                                              "#SBATCH -J first_job\n"+
+                                              "#BSUB -J first_job\n"+
+                                              "#$ -N first_job\n";
+
+static const std::string generic_Script_multipleline = std::string("#!/bin/sh\n")+
+                                              "#% vishnu_job_name=first_job\\\\\n"+
+                                              "_multiplelines\n"+
+                                              "#% vishnu_output=my_first_job_gen.out\n"+
+                                              "#% vishnu_error=my_first_job_gen.err\n"+
+                                              "#% vishnu_mailNotification= BEGIN\n"+
                                               "#% vishnu_wallclocklimit=01:00:00\n";
-
-
 static const std::string torque_Script = std::string("#!/bin/sh\n")+
                                           "#PBS -N first_job\n"+
                                           "#PBS -o my_first_job_gen.out\n"+
                                           "#PBS -e my_first_job_gen.err\n"+
                                           "#PBS -m b\n"+
-                                          "#PBS -l walltime=01:00:00\n";
+                                          "#PBS -l walltime=01:00:00\n"+
+                                          "#PBS -N first_job\n";
 
 static const std::string ll_Script = std::string("#!/bin/sh\n")+
                                       "# @ job_name=first_job\n"+
@@ -27,6 +39,7 @@ static const std::string ll_Script = std::string("#!/bin/sh\n")+
                                       "# @ error=my_first_job_gen.err\n"+
                                       "# @ notification=start\n"+
                                       "# @ wall_clock_limit=01:00:00\n"+
+                                      "#@ job_name=first_job\n"+
                                       "# @ queue";
 
 static const std::string slurm_Script = std::string("#!/bin/sh\n")+
@@ -34,28 +47,32 @@ static const std::string slurm_Script = std::string("#!/bin/sh\n")+
                                       "#SBATCH -o my_first_job_gen.out\n"+
                                       "#SBATCH -e my_first_job_gen.err\n"+
                                       "#SBATCH --mail-type=BEGIN\n"+
-                                      "#SBATCH -t 01:00:00\n";
+                                      "#SBATCH -t 01:00:00\n"+
+                                      "#SBATCH -J first_job\n";
 
 static const std::string lsf_Script = std::string("#!/bin/sh\n")+
                                       "#BSUB -J first_job\n"+
                                       "#BSUB -o my_first_job_gen.out\n"+
                                       "#BSUB -e my_first_job_gen.err\n"+
                                       "#% -vishnuMailNofication=BEGIN\n"+
-                                      "#% -vishnuWaillClockLimit=01:00:00\n";
+                                      "#% -vishnuWaillClockLimit=01:00:00\n"+
+                                      "#BSUB -J first_job\n";
 
 static const std::string sge_Script = std::string("#!/bin/sh\n")+
                                       "#$ -N first_job\n"+
                                       "#$ -o my_first_job_gen.out\n"+
                                       "#$ -e my_first_job_gen.err\n"+
                                       "#$ -m b\n"+
-                                      "#$ -l s_rt=01:00:00\n";
+                                      "#$ -l s_rt=01:00:00\n"+
+                                      "#$ -N first_job\n";
 
 static const std::string pbs_Script = std::string("#!/bin/sh\n")+
                                       "#PBS -N first_job\n"+
                                       "#PBS -o my_first_job_gen.out\n"+
                                       "#PBS -e my_first_job_gen.err\n"+
                                       "#PBS -m BEGIN\n"+
-                                      "#PBS -l walltime=01:00:00\n";
+                                      "#PBS -l walltime=01:00:00\n"+
+                                      "#PBS -N first_job\n";
 
 static const std::string deltacloud_Script = std::string("#!/bin/sh\n")+
                                           "#first_job\n"+
@@ -88,6 +105,14 @@ static const std::string notgeneric_Script = std::string("#!/bin/sh\n")+
                                               "#$ -N mySGEjobName\n"+
                                               "#$ -o mySGEJob-$JOB_ID.out\n"+
                                               "#$ -e mySGEJob-$JOB_ID.err\n";
+                                              
+static const std::string badBatch_script = std::string("#!/bin/sh\n")+                                              
+                                              "#first_job\n"+
+                                              "#my_first_job_gen.out\n"+
+                                              "#my_first_job_gen.err\n"+
+                                              "#BEGIN\n"+
+                                              "#01:00:00\n";
+                                              
 
 
 BOOST_AUTO_TEST_SUITE( ScriptGenConvertor_unit_tests )
@@ -142,6 +167,14 @@ BOOST_AUTO_TEST_CASE( test_scriptIsGeneric_false_DELTACLOUD )
 BOOST_AUTO_TEST_CASE( test_parseFile_sucess )
 {
   ScriptGenConvertor scriptGenConvertor(0, generic_Script);
+  std::string errormsg="";
+  BOOST_CHECK_EQUAL(scriptGenConvertor.parseFile(errormsg),0);
+  BOOST_CHECK_EQUAL(errormsg, "");
+}
+
+BOOST_AUTO_TEST_CASE( test_parseFile_sucess_multipleline )
+{
+  ScriptGenConvertor scriptGenConvertor(0, generic_Script_multipleline);
   std::string errormsg="";
   BOOST_CHECK_EQUAL(scriptGenConvertor.parseFile(errormsg),0);
   BOOST_CHECK_EQUAL(errormsg, "");
@@ -273,7 +306,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_UNDEFINED )
   BOOST_CHECK_EQUAL(scriptGenConvertor_UNDEFINED.parseFile(errormsg), 0);
   BOOST_CHECK_EQUAL(errormsg, "");
   script = scriptGenConvertor_UNDEFINED.getConvertedScript();
-  BOOST_CHECK_EQUAL(script,generic_Script);
+  BOOST_CHECK_EQUAL(script,badBatch_script);
 }
 
 

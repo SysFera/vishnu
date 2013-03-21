@@ -188,6 +188,23 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mendScript="";
   } else {
     std::cerr << "Unknown Batch type\n";
+    mconversionTable[workingDir]           = "#";
+    mconversionTable[jobName]              = "#";
+    mconversionTable[jobOutput]            = "#";
+    mconversionTable[jobError]             = "#";
+    mconversionTable[jobWallClockLimit]    = "#";
+    mconversionTable[cpuTime]              = "#";
+    mconversionTable[nbCpu]                = "#";
+    mconversionTable[nbNodesAndCpuPerNode] = "#";
+    mconversionTable[mem]                  = "#";
+    mconversionTable[mailNotification]     = "#"; //special case
+    mconversionTable[mailNotifyUser]       = "#";
+    mconversionTable[queue]                = "#";
+    
+    mconversionTable[sgeSec]               = "#";
+    mconversionTable[commandSec]           = "";
+    mconversionTable[torqueSec]            = "#";
+    mendScript="";
   }
 
 }
@@ -289,9 +306,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
         continue;
       }
     }
-    // TORQUE
+    // TORQUE and PBS
     if(ba::starts_with(line,"#PBS")){
-      if (mbatchType==TORQUE){
+      if ((mbatchType==TORQUE) || (mbatchType==PBSPRO)){
         key=torqueSec;
         mjobDescriptor.push_back (make_pair(key,line));
       } else {
@@ -301,6 +318,16 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     // SLURM
     if(ba::starts_with(line,"#SBATCH")){
       if (mbatchType==SLURM){
+        key=slurmSec;
+        mjobDescriptor.push_back (make_pair(key,line));
+      } else {
+        continue;
+      }
+    }
+
+    // SGE
+    if(ba::starts_with(line,"#$")){
+      if (mbatchType==SGE){
         key=slurmSec;
         mjobDescriptor.push_back (make_pair(key,line));
       } else {

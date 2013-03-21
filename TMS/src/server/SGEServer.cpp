@@ -96,7 +96,6 @@ SGEServer::submit(const char* scriptPath,
   }
 
   std::string scriptContent = vishnu::get_file_content(scriptPath);
-
   std::istringstream iss(scriptContent);
   std::string line;
   std::string scriptoption;
@@ -179,6 +178,7 @@ SGEServer::submit(const char* scriptPath,
 
                              "SGE ERROR: "+std::string(diagnosis));
   }
+  replaceEnvVariables(scriptPath);
   processOptions(scriptPath,options,cmdsOptions,jt);
 
   for(int i=0; i < cmdsOptions.size(); i++) {
@@ -780,19 +780,7 @@ SGEServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back("s_rt="+vishnu::convertWallTimeToString(options.getWallTime()));
 
   }
-  /*if(options.getNbCpu()!=-1) {l
 
-    cmdsOptions.push_back("-l");
-
-    string format = getFormatedCpuPerNode(options.getNbCpu(), scriptPath);
-
-    if(!format.empty()) {
-      cmdsOptions.push_back(format);
-    } else {
-      cmdsOptions.push_back("nodes=1:ppn="+vishnu::convertToString(options.getNbCpu()));
-    }
-
-  }*/
   if(options.getMemory()!=-1) {
     cmdsOptions.push_back(" -l ");
     std::ostringstream os_str;
@@ -822,11 +810,6 @@ SGEServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back(options.getMailNotifyUser());
   }
 
-  /*if(options.getGroup()!="") {
-    cmdsOptions.push_back("-W");
-    cmdsOptions.push_back("group_list="+options.getGroup());
-  }*/
-
   if(options.getWorkingDir()!="") {
     drmaa_errno = drmaa_set_attribute(jobt,DRMAA_WD,
                                       options.getWorkingDir().c_str(),diagnosis,
@@ -836,15 +819,49 @@ SGEServer::processOptions(const char* scriptPath,
                                "SGE ERROR: "+std::string(diagnosis));
 
     }
-    /*cmdsOptions.push_back(" -wd ");
-    cmdsOptions.push_back(options.getWorkingDir());*/
+
   }
 
   if(options.getCpuTime()!="") {
     cmdsOptions.push_back(" -l ");
     cmdsOptions.push_back("s_cpu="+options.getCpuTime());
   }
+  
 
+}
+
+/**
+ * \brief Function to replace some environment varia*bles in a string
+ * \param scriptpath The script path to modify
+ */
+void SGEServer::replaceEnvVariables(const char* scriptPath){
+  size_t pos;
+  std::string fileName = bfs::unique_path("/tmp/NODELIST_%%%%%%").string();
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  //To replace VISHNU_BATCHJOB_ID
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$JOB_ID");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$JOB_ID");
+  //To replace VISHNU_BATCHJOB_NAME
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$JOB_NAME");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$JOB_NAME");
+  //To replace VISHNU_BATCHJOB_NODEFILE
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", "$VISHNU_BATCHJOB_NODEFILE");
+  pos = scriptContent.find("$VISHNU_BATCHJOB_NODEFILE");
+  if(pos!=std::string::npos) {
+    pos = scriptContent.rfind("\n", pos-1);
+    scriptContent.insert(pos+1, "echo $HOSTNAME > "+fileName+"\n");
+    std::string tmp = "echo $HOSTNAME > "+fileName+"\n";
+    scriptContent.insert(pos+1+tmp.size(), "sed -i 's/ /\\n/g' "+fileName+"\n");
+    vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NODEFILE", fileName);
+    vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
+  }
+  //To replace VISHNU_BATCHJOB_NUM_NODES
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
+  
+  ofstream ofs(scriptPath);
+  ofs << scriptContent;
+  ofs.close();
 }
 
 int

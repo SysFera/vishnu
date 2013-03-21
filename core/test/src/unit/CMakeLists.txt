@@ -14,6 +14,7 @@ unit_test(utilVishnuUnitTests vishnu-core)
 unit_test(tmsUtilsUnitTests vishnu-core)
 unit_test(utilServerUnitTests vishnu-core-server vishnu-core)
 unit_test(utilClientUnitTests vishnu-core)
-
+unit_test(ExecConfigurationUnitTests vishnu-core-server vishnu-core)
+unit_test(FileParserUnitTests vishnu-core-server vishnu-core)
 endif()
 

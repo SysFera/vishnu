@@ -17,6 +17,7 @@
 #include <vector>
 #include "constants.hpp"
 #include "utilServer.hpp"
+#include "tmsUtils.hpp"
 
 
 DeltaCloudServer::DeltaCloudServer()
@@ -49,6 +50,8 @@ DeltaCloudServer::submit(const char* scriptPath,
 
   initialize(); // Initialize Delatacloud API
   retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
+  replaceEnvVariables(scriptPath);
+
 
   // Get configuration parameters
   //FIXME: possibly memory leak if vishnu::getVar through exception. We may need to catch that and free deltacloud API by calling finalize()
@@ -360,4 +363,27 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
       }
     }
   }
+}
+
+/**
+ * \brief Function to replace some environment varia*bles in a string
+ * \param scriptContent The string content to modify
+ */
+void DeltaCloudServer::replaceEnvVariables(const char* scriptPath){
+  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  
+  //To replace VISHNU_BATCHJOB_ID
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");
+  //To replace VISHNU_BATCHJOB_NAME
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NAME", "$(ps -o comm= -C -p $$)");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NAME}", "$(ps -o comm= -C -p $$)");
+  //To replace VISHNU_BATCHJOB_NUM_NODES. Depends on the number of nodes in VISHNU_BATCHJOB_NODEFILE
+  //Note: The variable VISHNU_BATCHJOB_NODEFILE is set later in JobServer
+  vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+  vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
+
+  ofstream ofs(scriptPath);
+  ofs << scriptContent;
+  ofs.close();
 }

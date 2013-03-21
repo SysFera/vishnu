@@ -20,6 +20,11 @@ DbConfiguration::DbConfiguration() :
 {
 }
 
+DbConfiguration::DbConfiguration(const ExecConfiguration& execConfig) :
+mdbType(MOCK), mdbPort(0),
+mdbPoolSize(defaultDbPoolSize)
+{
+}
 /**
  * \brief Check that the configuration is correct
  */

@@ -8,6 +8,7 @@
 #ifndef _DBCONFIGURATION_HPP_
 #define _DBCONFIGURATION_HPP_
 
+#include "ExecConfiguration.hpp"
 #include <string>
 
 /**
@@ -34,6 +35,8 @@ public:
    * \brief Constructor
    */
   DbConfiguration();
+
+  DbConfiguration(const ExecConfiguration& execConfig);
 
   /**
    * \brief Check that the configuration is correct
