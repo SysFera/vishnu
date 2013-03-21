@@ -31,35 +31,11 @@ public:
    */
   ~ObjectIdServer();
   /**
-   * \brief To set the format of a user
+   * \brief To set the format of an entry
    */
   void
-  setUID(std::string fmt);
-  /**
-   * \brief To set the format of a file transfer
-   */
-  void
-  setFID(std::string fmt);
-  /**
-   * \brief To set the format of a task
-   */
-  void
-  setTID(std::string fmt);
-  /**
-   * \brief To set the format of a machine
-   */
-  void
-  setMID(std::string fmt);
-  /**
-   * \brief To set the format of an authentication system id
-   */
-  void
-  setAID(std::string fmt);
-  /**
-   * \brief To set the format of a work id
-   */
-  void
-  setWID(std::string fmt);
+  setformat(std::string fmt, std::string entry);
+
 protected:
 private:
   /**

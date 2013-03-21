@@ -559,7 +559,7 @@ solveSetUID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setUID(fmt);
+    ob.setformat(fmt,"user");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
@@ -608,7 +608,7 @@ solveSetJID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setTID(fmt);
+    ob.setformat(fmt,"job");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
@@ -657,7 +657,7 @@ solveSetTID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setFID(fmt);
+    ob.setformat(fmt, "filetransfer");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
@@ -706,7 +706,7 @@ solveSetMID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setMID(fmt);
+    ob.setformat(fmt, "machine");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
@@ -755,7 +755,7 @@ solveSetAID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setAID(fmt);
+    ob.setformat(fmt, "auth");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
@@ -804,7 +804,7 @@ solveSetWID(diet_profile_t* pb){
     ObjectIdServer ob(userServer);
 
     // Listing the old metric
-    ob.setWID(fmt);
+    ob.setformat(fmt, "work");
     // Setting out diet param
     diet_string_set(pb,2, retErr.c_str());
 
