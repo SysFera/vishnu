@@ -12,6 +12,7 @@ static const std::string generic_Script = std::string("#!/bin/sh\n")+
                                               "#% vishnu_error=my_first_job_gen.err\n"+
                                               "#% vishnu_mailNotification= BEGIN\n"+
                                               "#% vishnu_wallclocklimit=01:00:00\n"+
+                                              "#% vishnu_nbnodesandcpupernode=2:3\n"+
                                               "#PBS -N first_job\n"+
                                               "#@ job_name=first_job\n"+
                                               "#SBATCH -J first_job\n"+
@@ -31,6 +32,7 @@ static const std::string torque_Script = std::string("#!/bin/sh\n")+
                                           "#PBS -e my_first_job_gen.err\n"+
                                           "#PBS -m b\n"+
                                           "#PBS -l walltime=01:00:00\n"+
+                                          "#PBS -l  nodes=2:ppn=3\n"+
                                           "#PBS -N first_job\n";
 
 static const std::string ll_Script = std::string("#!/bin/sh\n")+
@@ -39,6 +41,10 @@ static const std::string ll_Script = std::string("#!/bin/sh\n")+
                                       "# @ error=my_first_job_gen.err\n"+
                                       "# @ notification=start\n"+
                                       "# @ wall_clock_limit=01:00:00\n"+
+                                      "# @  node=2\n"+
+                                      "# @ tasks_per_node=1\n"+
+                                      "# @ tasks_affinity = core(1)\n"+
+                                      "# @ cpus_per_node = 3\n"+
                                       "#@ job_name=first_job\n"+
                                       "# @ queue";
 
@@ -48,6 +54,8 @@ static const std::string slurm_Script = std::string("#!/bin/sh\n")+
                                       "#SBATCH -e my_first_job_gen.err\n"+
                                       "#SBATCH --mail-type=BEGIN\n"+
                                       "#SBATCH -t 01:00:00\n"+
+                                      "#SBATCH  --nodes=2\n"+
+                                      "#SBATCH --mincpus=3\n"+
                                       "#SBATCH -J first_job\n";
 
 static const std::string lsf_Script = std::string("#!/bin/sh\n")+
@@ -56,6 +64,7 @@ static const std::string lsf_Script = std::string("#!/bin/sh\n")+
                                       "#BSUB -e my_first_job_gen.err\n"+
                                       "#% -vishnuMailNofication=BEGIN\n"+
                                       "#% -vishnuWaillClockLimit=01:00:00\n"+
+                                      "#% -vishnuNbNodesAndCpuPerNode=2:3\n"+
                                       "#BSUB -J first_job\n";
 
 static const std::string sge_Script = std::string("#!/bin/sh\n")+
@@ -64,6 +73,7 @@ static const std::string sge_Script = std::string("#!/bin/sh\n")+
                                       "#$ -e my_first_job_gen.err\n"+
                                       "#$ -m b\n"+
                                       "#$ -l s_rt=01:00:00\n"+
+                                      "#2:3\n"+
                                       "#$ -N first_job\n";
 
 static const std::string pbs_Script = std::string("#!/bin/sh\n")+
@@ -72,6 +82,7 @@ static const std::string pbs_Script = std::string("#!/bin/sh\n")+
                                       "#PBS -e my_first_job_gen.err\n"+
                                       "#PBS -m b\n"+
                                       "#PBS -l walltime=01:00:00\n"+
+                                      "#PBS -l  nodes=2:ppn=3\n"+
                                       "#PBS -N first_job\n";
 
 static const std::string deltacloud_Script = std::string("#!/bin/sh\n")+
@@ -79,14 +90,16 @@ static const std::string deltacloud_Script = std::string("#!/bin/sh\n")+
                                           "#my_first_job_gen.out\n"+
                                           "#my_first_job_gen.err\n"+
                                           "#BEGIN\n"+
-                                          "#01:00:00\n";
+                                          "#01:00:00\n"+
+                                          "#2:3\n";
 
 static const std::string posix_Script = std::string("#!/bin/sh\n")+
                                               "#% vishnu_job_name=first_job\n"+
                                               "#% vishnu_output=my_first_job_gen.out\n"+
                                               "#% vishnu_error=my_first_job_gen.err\n"+
                                               "##BEGIN\n"+
-                                              "#% vishnu_wallclocklimit=01:00:00\n";
+                                              "#% vishnu_wallclocklimit=01:00:00\n"+
+                                              "##2:3\n";
 
 static const std::string generic_bad_Script = std::string("#!/bin/sh\n")+
                                               "#s vishnu_job_name first_job\n"+
@@ -111,7 +124,8 @@ static const std::string badBatch_script = std::string("#!/bin/sh\n")+
                                               "#my_first_job_gen.out\n"+
                                               "#my_first_job_gen.err\n"+
                                               "#BEGIN\n"+
-                                              "#01:00:00\n";
+                                              "#01:00:00\n"+
+                                              "#2:3\n";
                                               
 
 
@@ -212,6 +226,7 @@ BOOST_AUTO_TEST_CASE( test_getConvertedScript_Torque )
   BOOST_CHECK_EQUAL(script,torque_Script);
 
 }
+
 BOOST_AUTO_TEST_CASE( test_getConvertedScript_LL )
 {
 

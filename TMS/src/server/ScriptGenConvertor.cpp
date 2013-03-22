@@ -137,8 +137,8 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[jobError]             = "#$ -e ";
     mconversionTable[jobWallClockLimit]    = "#$ -l s_rt=";
     mconversionTable[cpuTime]              = "#$ -l s_cpu=";
-    mconversionTable[nbCpu]                = "";
-    mconversionTable[nbNodesAndCpuPerNode] = "";
+    mconversionTable[nbCpu]                = "#";
+    mconversionTable[nbNodesAndCpuPerNode] = "#";
     mconversionTable[mem]                  = "#$ -l s_vmem=";
     mconversionTable[mailNotification]     = "#$ -m "; //special case
     mconversionTable[mailNotifyUser]       = "#$ -M ";
@@ -454,9 +454,9 @@ ScriptGenConvertor::getConvertedScript() {
         if (mbatchType==LOADLEVELER) {
           value = " node="+nbNodes+"\n";
           value += "# @ tasks_per_node=1\n";
-          value += "# @ tasks_affinity = core(1) \n";
-          value += " @ cpus_per_node = "+cpuPerNode+"\n";
-        } else if (mbatchType==TORQUE) {
+          value += "# @ tasks_affinity = core(1)\n";
+          value += "# @ cpus_per_node = "+cpuPerNode;
+        } else if ((mbatchType==TORQUE) || (mbatchType==PBSPRO)) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
         } else if (mbatchType==SLURM) {
           value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode;
@@ -465,8 +465,8 @@ ScriptGenConvertor::getConvertedScript() {
     }
     //Special case
     if (mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
-      value ="# @ tasks_per_node = 1 \n";
-      value +="# @ tasks_affinity = core(1) \n";
+      value ="# @ tasks_per_node = 1\n";
+      value +="# @ tasks_affinity = core(1)\n";
       value +="# @ cpus_per_node = "+nbCpu+"\n";
     }
 
