@@ -70,7 +70,7 @@ static const std::string pbs_Script = std::string("#!/bin/sh\n")+
                                       "#PBS -N first_job\n"+
                                       "#PBS -o my_first_job_gen.out\n"+
                                       "#PBS -e my_first_job_gen.err\n"+
-                                      "#PBS -m BEGIN\n"+
+                                      "#PBS -m b\n"+
                                       "#PBS -l walltime=01:00:00\n"+
                                       "#PBS -N first_job\n";
 

@@ -24,7 +24,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
                                        const std::string& scriptGenContent):
   mbatchType(batchType), mscriptGenContent(scriptGenContent)
 {
-  if(mbatchType==LOADLEVELER) {
+  if (mbatchType==LOADLEVELER) {
 
     mconversionTable[group]                = "# @ group=";
     mconversionTable[workingDir]           = "# @ initialdir=";
@@ -45,7 +45,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript                             = "# @ queue";
 
-  } else if(mbatchType==TORQUE) {
+  } else if (mbatchType==TORQUE) {
 
     mconversionTable[group]                = "#PBS -W group_list=";
     mconversionTable[workingDir]           = "#PBS -d ";
@@ -66,7 +66,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  }else if(mbatchType==PBSPRO) {
+  }else if (mbatchType==PBSPRO) {
 
     mconversionTable[group]                = "#PBS -W group_list=";
     mconversionTable[workingDir]           = "#PBS -d ";
@@ -87,7 +87,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  } else if(mbatchType==SLURM) {
+  } else if (mbatchType==SLURM) {
 
     mconversionTable[group]                = "#SBATCH --gid=";
     mconversionTable[workingDir]           = "#SBATCH -D ";
@@ -108,7 +108,7 @@ ScriptGenConvertor::ScriptGenConvertor(const int batchType,
     mconversionTable[torqueSec]            = "";
     mendScript="";
 
-  } else if(mbatchType==LSF) {
+  } else if (mbatchType==LSF) {
 
     mconversionTable[group]                = "#BSUB -G ";
     mconversionTable[workingDir]           = "#BSUB -cwd ";
@@ -265,16 +265,16 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     numline +=1;
     //Treating of the escape character int the script content
-    if(ba::ends_with(ba::erase_all_copy(line, " "),"\\")){
+    if (ba::ends_with(ba::erase_all_copy(line, " "),"\\")){
       escapePos = line.rfind("\\");
-      if(escapePos!=std::string::npos) {
+      if (escapePos!=std::string::npos) {
         tmpLine += line.substr(0, escapePos);
         escapeFound = true;
         continue;
       }
     }
 
-    if(escapeFound) {
+    if (escapeFound) {
       tmpLine +=line;
       line = tmpLine;
       escapeFound = false;
@@ -284,9 +284,9 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     /*search # character*/
     pos = line.find('#');
 
-    if(pos == std::string::npos) {
+    if (pos == std::string::npos) {
       linebuf=ba::erase_all_copy(line," ");
-      if(linebuf.empty()) {
+      if (linebuf.empty()) {
         continue;
       } else {
         key=commandSec;
@@ -298,7 +298,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     // treats the specific directives here
     // LOADLEVELER
-    if(ba::starts_with( ba::erase_all_copy(line," "),"#@")){
+    if (ba::starts_with( ba::erase_all_copy(line," "),"#@")){
       if (mbatchType==LOADLEVELER){
         key=loadLevelerSec;;
         mjobDescriptor.push_back (make_pair(key,line));
@@ -307,7 +307,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       }
     }
     // TORQUE and PBS
-    if(ba::starts_with(line,"#PBS")){
+    if (ba::starts_with(line,"#PBS")){
       if ((mbatchType==TORQUE) || (mbatchType==PBSPRO)){
         key=torqueSec;
         mjobDescriptor.push_back (make_pair(key,line));
@@ -316,7 +316,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       }
     }
     // SLURM
-    if(ba::starts_with(line,"#SBATCH")){
+    if (ba::starts_with(line,"#SBATCH")){
       if (mbatchType==SLURM){
         key=slurmSec;
         mjobDescriptor.push_back (make_pair(key,line));
@@ -326,7 +326,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     }
 
     // SGE
-    if(ba::starts_with(line,"#$")){
+    if (ba::starts_with(line,"#$")){
       if (mbatchType==SGE){
         key=slurmSec;
         mjobDescriptor.push_back (make_pair(key,line));
@@ -337,7 +337,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
 
     // treats the specific directives here
     //LSF
-    if(ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
+    if (ba::starts_with( ba::erase_all_copy(line," "),"#BSUB")){
       if (mbatchType==LSF){
         key=lsfSec;;
         mjobDescriptor.push_back (make_pair(key,line));
@@ -346,26 +346,26 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       }
     }
     // SHEBANG
-    if(ba::starts_with(line,"#!")){
+    if (ba::starts_with(line,"#!")){
       key=commandSec;
       mjobDescriptor.push_back (make_pair(key,line));
     }
 
     /*remove % character*/
-    if(!ba::starts_with(ba::erase_all_copy(line," "),"#%")){
+    if (!ba::starts_with(ba::erase_all_copy(line," "),"#%")){
       continue;
     }
 
     pos = line.find('%');
 
-    if(pos == std::string::npos) {
+    if (pos == std::string::npos) {
       continue;
     }
     line = line.erase(0, pos+1);
 
     /* Extract key, value*/
     pos = line.find('=');
-    if(pos == std::string::npos) {
+    if (pos == std::string::npos) {
       ba::erase_all(line, " ");
       if (line.empty()) {
         continue;
@@ -374,7 +374,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
       std::string line_tolower(line);
       std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
       iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), line_tolower);
-      if(iter==mtableOfSymbols.end()) {
+      if (iter==mtableOfSymbols.end()) {
         std::ostringstream os_error;
         os_error << "Error : Invalid argument " << line << " at line " << numline << " in your script file" << std::endl;
         errorMessage = os_error.str();
@@ -395,7 +395,7 @@ ScriptGenConvertor::parseFile(std::string& errorMessage) {
     std::transform(key.begin(), key.end(), key_tolower.begin(), ::tolower);
 
     iter = std::find(mtableOfSymbols.begin(), mtableOfSymbols.end(), key_tolower);
-    if(iter==mtableOfSymbols.end()) {
+    if (iter==mtableOfSymbols.end()) {
       std::ostringstream os_error;
       os_error << "Error : Invalid argument " << key << " at line " << numline << " in your script file" << std::endl;
       errorMessage = os_error.str();
@@ -435,53 +435,53 @@ ScriptGenConvertor::getConvertedScript() {
     value = iter->second;
 
     //Special case
-    if(key.compare(nbNodesAndCpuPerNode)==0) {
+    if (key.compare(nbNodesAndCpuPerNode)==0) {
 
-      if(!value.empty()){
-        if(*(value.begin())=='\"'){
+      if (!value.empty()){
+        if (*(value.begin())=='\"'){
           value.replace(value.begin(), value.begin()+1, "");
         }
-        if(*(value.end()-1)=='\"'){
+        if (*(value.end()-1)=='\"'){
           value.replace(value.end()-1, value.end(), "");
         }
       }
 
       size_t posNbNodes = value.find(":");
-      if(posNbNodes!=std::string::npos) {
+      if (posNbNodes!=std::string::npos) {
         std::string nbNodes = value.substr(0, posNbNodes);
         std::string cpuPerNode = value.substr(posNbNodes+1);
 
-        if(mbatchType==LOADLEVELER) {
+        if (mbatchType==LOADLEVELER) {
           value = " node="+nbNodes+"\n";
           value += "# @ tasks_per_node=1\n";
           value += "# @ tasks_affinity = core(1) \n";
           value += " @ cpus_per_node = "+cpuPerNode+"\n";
-        } else if(mbatchType==TORQUE) {
+        } else if (mbatchType==TORQUE) {
           value = " nodes="+nbNodes+":ppn="+cpuPerNode;
-        } else if(mbatchType==SLURM) {
+        } else if (mbatchType==SLURM) {
           value = " --nodes="+nbNodes+"\n#SBATCH --mincpus="+cpuPerNode;
         }
       }
     }
     //Special case
-    if(mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
+    if (mbatchType==LOADLEVELER && key.compare(nbCpu)==0) {
       value ="# @ tasks_per_node = 1 \n";
       value +="# @ tasks_affinity = core(1) \n";
       value +="# @ cpus_per_node = "+nbCpu+"\n";
     }
 
     //Special case
-    if(mbatchType==TORQUE && key.compare(nbCpu)==0) {
+    if (mbatchType==TORQUE && key.compare(nbCpu)==0) {
       std::istringstream imscriptGenContent(mscriptGenContent);
       std::string line;
       bool ppnNotDefined=true;;
       while(!imscriptGenContent.eof()) {
         getline(imscriptGenContent, line);
         size_t pos = line.find("#PBS");
-        if(pos!=std::string::npos) {
+        if (pos!=std::string::npos) {
           size_t posL = line.find("-l", pos);
-          if(posL!=std::string::npos){
-            if(line.find("nodes=", pos)!=std::string::npos) {
+          if (posL!=std::string::npos){
+            if (line.find("nodes=", pos)!=std::string::npos) {
               line = line.substr(posL+2);
               ppnNotDefined = false;
               findAndReplace(":ppn=", value, line);
@@ -490,74 +490,74 @@ ScriptGenConvertor::getConvertedScript() {
           }
         }
       }
-      if(ppnNotDefined){
+      if (ppnNotDefined){
         value = " nodes=1:ppn="+value;
       }
     }
 
     //Special case
-    if(mbatchType==TORQUE && key.compare(commandSec)==0){
-      if(!torqueNodes.empty() && !torqueNodeIsAdd){
+    if (mbatchType==TORQUE && key.compare(commandSec)==0){
+      if (!torqueNodes.empty() && !torqueNodeIsAdd){
         result += torqueNodes;
         torqueNodeIsAdd = true;
       }
     }
 
     //Special case
-    if(key.compare(mailNotification)==0) {
+    if (key.compare(mailNotification)==0) {
 
       bool notificationIsNotValid = false;
-      if(mbatchType==LOADLEVELER) {
-        if(value.compare("BEGIN")==0) {
+      if (mbatchType==LOADLEVELER) {
+        if (value.compare("BEGIN")==0) {
           value= "start";
-        } else if(value.compare("END")==0) {
+        } else if (value.compare("END")==0) {
           value = "complete";
-        } else if(value.compare("ERROR")==0) {
+        } else if (value.compare("ERROR")==0) {
           value = "error";
-        } else if(value.compare("ALL")==0) {
+        } else if (value.compare("ALL")==0) {
           value= "always";
         } else {
           notificationIsNotValid = true;
         }
-      } else if(mbatchType==TORQUE) {
-        if(value.compare("BEGIN")==0) {
+      } else if ((mbatchType == TORQUE) || (mbatchType == PBSPRO)) {
+        if (value.compare("BEGIN")==0) {
           value= "b";
-        } else if(value.compare("END")==0) {
+        } else if (value.compare("END")==0) {
           value = "e";
-        } else if(value.compare("ERROR")==0) {
+        } else if (value.compare("ERROR")==0) {
           value = "a";
-        } else if(value.compare("ALL")==0) {
+        } else if (value.compare("ALL")==0) {
           value= "abe";
         } else {
           notificationIsNotValid = true;
         }
-      } else if(mbatchType==SLURM) {
-        if(value.compare("BEGIN")==0) {
+      } else if (mbatchType==SLURM) {
+        if (value.compare("BEGIN")==0) {
           value= "BEGIN";
-        } else if(value.compare("END")==0) {
+        } else if (value.compare("END")==0) {
           value = "END";
-        } else if(value.compare("ERROR")==0) {
+        } else if (value.compare("ERROR")==0) {
           value = "FAIL";
-        } else if(value.compare("ALL")==0) {
+        } else if (value.compare("ALL")==0) {
           value= "ALL";
         } else {
           notificationIsNotValid = true;
         }
-      } else if(mbatchType==SGE){
-        if(value.compare("BEGIN")==0) {
+      } else if (mbatchType==SGE){
+        if (value.compare("BEGIN")==0) {
           value= "b";
-        } else if(value.compare("END")==0) {
+        } else if (value.compare("END")==0) {
           value = "e";
-        } else if(value.compare("ERROR")==0) {
+        } else if (value.compare("ERROR")==0) {
           value = "a";
-        } else if(value.compare("ALL")==0) {
+        } else if (value.compare("ALL")==0) {
           value= "abe";
         } else {
           notificationIsNotValid = true;
         }
       }
 
-      if(notificationIsNotValid) {
+      if (notificationIsNotValid) {
         throw UserException(ERRCODE_INVALID_PARAM, value+" is an invalid notification type:"+" consult the vishnu user manuel");
       }
     }
@@ -583,7 +583,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
   while(pos!=std::string::npos) {
     std::string oldPPNValue;
     size_t posFirstChar = str.find_first_not_of("0123456789", pos+ppn.size());
-    if(posFirstChar!=std::string::npos) {
+    if (posFirstChar!=std::string::npos) {
       oldPPNValue = str.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
     } else {
       oldPPNValue =  str.substr(pos+ppn.size());
@@ -595,7 +595,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
   char delim = '+';
   size_t begin = 0;
   size_t end = str.find(delim);
-  if(end==std::string::npos) {
+  if (end==std::string::npos) {
     findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
   }
   while(end!=std::string::npos) {
@@ -603,7 +603,7 @@ ScriptGenConvertor::findAndReplace(const std::string& ppn,
     begin = end+1;
     end = str.find(delim, begin);
     //last token
-    if(end==std::string::npos){
+    if (end==std::string::npos){
       findAndInsert(ppn, ppn+nbCpuStr, begin, end, str);
     }
   }
@@ -625,14 +625,14 @@ ScriptGenConvertor::findAndInsert(const std::string& oldValue,
                                   std::string& str) {
 
   std::string substr;
-  if(end!=std::string::npos) {
+  if (end!=std::string::npos) {
     substr = str.substr(begin, end-begin);
   } else {
     substr = str.substr(begin);
   }
-  if(substr.find(oldValue)==std::string::npos) {
+  if (substr.find(oldValue)==std::string::npos) {
     str.insert(begin+substr.size(), newValue);
-    if(end!=std::string::npos) {
+    if (end!=std::string::npos) {
       end += newValue.size();
     }
   }
@@ -648,7 +648,7 @@ ScriptGenConvertor::scriptIsGeneric() {
   std::string modifiedScript(mscriptGenContent);
   std::transform(mscriptGenContent.begin(), mscriptGenContent.end(), modifiedScript.begin(), ::tolower);
   modifiedScript = ba::erase_all_copy(modifiedScript," ");
-  if(modifiedScript.find("#%"+prefix)!=std::string::npos){
+  if (modifiedScript.find("#%"+prefix)!=std::string::npos){
     return true;
   }
   return false;
@@ -672,7 +672,7 @@ vishnuScriptGenConvertor(const int batchType,
 
   boost::shared_ptr< ScriptGenConvertor> scriptGenConvertor(new ScriptGenConvertor(batchType, scriptGenContent));
   std::string parse_error ;
-  if(scriptGenConvertor->parseFile(parse_error)==-1) {
+  if (scriptGenConvertor->parseFile(parse_error)==-1) {
     std::string errorMessage = "Can't generate this generic script content \n"+parse_error ;
     throw UserException(ERRCODE_INVALID_PARAM, errorMessage);
   } ;
