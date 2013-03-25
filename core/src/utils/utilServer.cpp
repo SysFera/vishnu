@@ -19,7 +19,6 @@
 #include "DbFactory.hpp"
 #include "SystemException.hpp"
 #include "DbFactory.hpp"
-#include "zhelpers.hpp"
 #include "Server.hpp"
 #include "vishnu_version.hpp"
 
