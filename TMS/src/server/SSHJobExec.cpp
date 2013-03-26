@@ -34,7 +34,7 @@
   vishnu::deleteFile(errorPath.c_str()); \
   }
 
-#define LOG(msg, logLevel) if (logLevel) std::clog << msg << "\n"
+#define LOG(msg, logLevel) if (logLevel) std::cout << msg << "\n"
 
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
@@ -392,7 +392,7 @@ SSHJobExec::execCmd(const std::string& cmd,
 
     sshCmd << "'" << cmd << " 1>"+outDir+"/stdout 2>"+outDir+"/stderr & echo $!' >" << pidFile;
   }
-
+  LOG(sshCmd.str(), mdebugLevel);
   if(system((sshCmd.str()).c_str())) {
     return -1;
   }
@@ -418,7 +418,6 @@ SSHJobExec::mountNfsDir(const std::string & host, const std::string point) {
   std::ostringstream cmd;
   cmd << "'mkdir "+point+" && "
       << "mount -t nfs -o rw,nolock,vers=3 "+host+":"+point+" "+point+"'";
-
   if(execCmd(cmd.str(), false)) { // run in foreground
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "mountNfsDir:: failed to mount the directory "+point);

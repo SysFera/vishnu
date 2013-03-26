@@ -149,6 +149,8 @@ int JobServer::submitJob(std::string& scriptContent,
   } catch (VishnuException& ex) {
     succeed = false;
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
+    boost::erase_all(errMsg, "'");
+    boost::erase_all(errMsg, "\"");
     mjob.setErrorPath(errMsg);
     mjob.setOutputPath("");
     mjob.setOutputDir("");

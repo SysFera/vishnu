@@ -97,7 +97,7 @@ DeltaCloudServer::submit(const char* scriptPath,
   if (deltacloud_create_instance(mcloudApi, mvmImageId.c_str(), &params[0], params.size(), &instid) < 0) {
     cleanUpParams(params); // cleanup allocated parameters
     finalize();
-    std::string msg = (boost::format("Unable to create instance=>%1%")%deltacloud_get_last_error_string()).str();
+    std::string msg = (boost::format("Unable to create instance: %1%")%deltacloud_get_last_error_string()).str();
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
   }
   cleanUpParams(params);  // cleanup allocated parameters
@@ -111,12 +111,12 @@ DeltaCloudServer::submit(const char* scriptPath,
   }
   vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
 
-  std::clog << boost::format("[TMS][INFO] Virtual machine started\n"
+  std::cout << boost::format("[TMS][INFO] Virtual machine started\n"
                              " ID: %1%\n"
                              " NAME: %2%\n"
                              " IP: %3%\n"
-                             " Startime: %4%")%instance.id%instance.name
-    %instance.private_addresses->address%instance.launch_time;
+                             " Startime: %4%\n")%instance.id%instance.name
+               %instance.private_addresses->address%instance.launch_time;
 
   // Create an ssh engine for the virtual machine & submit the script
   SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
@@ -284,7 +284,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              (boost::format("Get instance failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
   }
-  std::clog << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
+  std::cout << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
   if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              (boost::format("Deleting the virtual machine failed (%1%)")%deltacloud_get_last_error_string()).str());
