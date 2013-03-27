@@ -114,11 +114,17 @@ SSHFile::getInfos() const {
   file_size_t size;
   time_t atime, mtime, ctime;
 
-  fileStat = ssh.exec(STATCMD + getPath());
+  fileStat = ssh.exec(STATCMD_DEFAULT + getPath());
 
   if (fileStat.second.find("Warning")!= std::string::npos) {
-    fileStat = ssh.exec(STATCMD + getPath());
+    fileStat = ssh.exec(STATCMD_DEFAULT + getPath());
+  } else if (fileStat.second.find("illegal option")!= std::string::npos) {
+    fileStat = ssh.exec(STATCMD_BSD + getPath());
+    if (fileStat.second.find("Warning")!= std::string::npos) {
+      fileStat = ssh.exec(STATCMD_BSD + getPath());
+    }
   }
+
 
   if (fileStat.second.length() != 0) {
 
@@ -573,7 +579,7 @@ SSHExec::exec(const string& cmd) const {
        istream_iterator<string>(),
        back_inserter<vector<string> >(tokens));
 
-/**********************************************/
+  /**********************************************/
 
   char* argv[tokens.size() + 1];
   argv[tokens.size()] = NULL;

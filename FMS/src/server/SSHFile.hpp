@@ -15,14 +15,8 @@
 
 /* The stat command uses different syntax depending on the system type. */
 /* BSD and Mac OS X command differs from the Linux one. */
-#ifdef BSD_LIKE_SYSTEM
-#define STATCMD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
-#else
-/**
- * \brief An alias of stat command
- */
-#define STATCMD " LANG=C stat --format=\"%U %G %a %u %g %s %X %Y %Z %F\" "
-#endif
+#define STATCMD_DEFAULT "LANG=C stat --format \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
+#define STATCMD_BSD "LANG=C stat -f \"%Su %Sg %Lp %u %g %z %a %m %c %HT\" "
 
 /* Define the command to use through ssh. */
 /**
