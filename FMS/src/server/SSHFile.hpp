@@ -38,12 +38,8 @@
 /**
  * \brief An alias of ls command
  */
-#ifdef BSD_LIKE_SYSTEM
-#define LSCMD  " LANG=C ls -lT  "
-#else
-//#define LSCMD  " LANG=C ls -ln --time-style=full-iso "
-#define LSCMD  " LANG=C ls -l --time-style=\"+%Y-%m-%d %H:%M:%S %:::z\"  "
-#endif
+#define LSCMD_DEFAULT  " LANG=C ls -l --time-style=\"+%Y-%m-%d %H:%M:%S %:::z\"  "
+#define LSCMD_BSD  " LANG=C ls -lT  -D\"%Y-%m-%d %H:%M:%S %z\""
 
 /**
  * \brief An alias of mkdir command

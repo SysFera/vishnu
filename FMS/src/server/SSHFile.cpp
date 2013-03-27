@@ -405,17 +405,22 @@ SSHFile::ls(const FMS_Data::LsDirOptions& options) const {
   FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
   result = ecoreFactory->createDirEntryList();
 
-  string lsCmd(LSCMD);
+  string lsDefaultCmd(LSCMD_DEFAULT);
+  string lsBsdCmd(LSCMD_BSD);
 
   if (!exists()) {
     throw FMSVishnuException(ERRCODE_INVALID_PATH, getErrorMsg());
   }
 
   if (options.isAllFiles()) {
-    lsCmd.append("-a ");
+    lsDefaultCmd.append("-a ");
+    lsBsdCmd.append("-a ");
   }
 
-  lsResult = ssh.exec(lsCmd+getPath());
+  lsResult = ssh.exec(lsDefaultCmd+getPath());
+  if (lsResult.second.find("illegal option") != std::string::npos) {
+   lsResult = ssh.exec(lsBsdCmd+getPath());
+  }
 
   if (lsResult.second.length() != 0) {
     throw FMSVishnuException(ERRCODE_RUNTIME_ERROR,

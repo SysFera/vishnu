@@ -104,7 +104,7 @@ DeltaCloudServer::submit(const char* scriptPath,
 
   struct deltacloud_instance instance;
   if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
-    std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%")%instance.state).str();
+    std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%\n")%instance.state).str();
     deltacloud_instance_destroy(mcloudApi, &instance);
     finalize();
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
