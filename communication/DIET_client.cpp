@@ -35,7 +35,7 @@
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
-ExecConfiguration config;
+static ExecConfiguration config;
 
 typedef std::map<std::string, std::string> ServiceMap;
 boost::shared_ptr<ServiceMap> sMap;
