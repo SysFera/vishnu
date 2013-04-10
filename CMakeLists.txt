@@ -349,10 +349,12 @@ endif (COMPILE_IMS)
 ## KEEP AFTER VARIABLE DECLARATION
 # set dependencies
 if (ENABLE_PYTHON OR ENABLE_JAVA)
-  set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
-  set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
-  set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
-  set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
+  if (NOT ENABLE_SWIG)
+    set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
+    set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
+    set (COMPILE_TMS ON CACHE BOOL "We need to build TMS" FORCE)
+    set (COMPILE_IMS ON CACHE BOOL "We need to build IMS" FORCE)
+  endif(ENABLE_SWIG)
   add_subdirectory(swigAPI)
 endif(ENABLE_PYTHON OR ENABLE_JAVA)
 
