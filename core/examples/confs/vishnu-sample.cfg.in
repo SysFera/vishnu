@@ -41,6 +41,10 @@ databaseType=mysql
 #
 databaseHost=localhost
 
+# databasePort (OS<FMS,IMS,TMS,UMS>): Defines the port of the database server.
+#
+#databasePort=3306
+
 # databaseName (M<FMS,IMS,TMS,UMS>): Sets the name of the database instance
 #
 databaseName=vishnu
@@ -54,6 +58,11 @@ databaseUserName=vishnu_user
 # the database user
 #
 databaseUserPassword=vishnu_user
+
+# databaseConnectionsNb (OS<FMS,IMS,TMS,UMS>): Sets the size of the pool of
+# threads to handle database connexions
+#
+#databaseConnectionsNb=10
 
 
 ###############################################################################
@@ -216,5 +225,11 @@ vishnuMachineId=machine_1
 #
 timeout=120
 
-#urlSupervisor (M<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
+# urlSupervisor (M<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
+#
 urlSupervisor=http://127.0.0.1:9001
+
+# debugLevel (O): specifies the debug level. The higher the more debug information
+# you'll get. Default is 0.
+#
+# debugLevel=0
