@@ -2346,6 +2346,16 @@ UMS_DataPackage::UMS_DataPackage()
         m_StatusTypeEEnum->getELiterals().push_back(_el);
     }
 
+    {
+        ::ecore::EEnumLiteral_ptr _el = new ::ecore::EEnumLiteral();
+        // DELETED
+        _el->setName("DELETED");
+        _el->setValue(3);
+        _el->setLiteral("DELETED");
+        _el->setEEnum(m_StatusTypeEEnum);
+        m_StatusTypeEEnum->getELiterals().push_back(_el);
+    }
+
     // CommandStatusType
     m_CommandStatusTypeEEnum->setName("CommandStatusType");
     m_CommandStatusTypeEEnum->setSerializable(true);

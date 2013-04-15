@@ -564,6 +564,7 @@
     <eLiterals name="UNDEFINED" value="-1"/>
     <eLiterals name="INACTIVE" literal="INACTIVE"/>
     <eLiterals name="ACTIVE" value="1" literal="ACTIVE"/>
+    <eLiterals name="DELETED" value="2" literal="DELETED"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CommandStatusType" instanceTypeName="CommandStatusType">
     <eAnnotations source="Description">
