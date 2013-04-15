@@ -189,32 +189,8 @@ MachineServer::update() {
 */
 int
 MachineServer::deleteMachine() {
-
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-  //if the user exists
-  if (userServer.exist()) {
-    //if the user is an admin
-    if (userServer.isAdmin()) {
-      //if the machine to update exists
-      if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-        mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
-      } //End if the machine to update exists
-      else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-        throw e;
-      }
-    } //End if the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
-    }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
-  }
-  return 0;
+  mmachine->setStatus(DELETED_STATUS);
+  return update();
 } //END: deleteMachine()
 
 /**

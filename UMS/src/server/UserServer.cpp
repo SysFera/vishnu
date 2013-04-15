@@ -206,37 +206,8 @@ UserServer::update(UMS_Data::User *user) {
  */
 int
 UserServer::deleteUser(UMS_Data::User user) {
-
-  //If the user to delete is not the super VISHNU admin
-  if (user.getUserId().compare(ROOTUSERNAME) != 0) {
-    //If the user exists
-    if (exist()) {
-      if (isAdmin()) {
-        //if the user who will be deleted exist
-        if (getAttribut("where userid='"+user.getUserId()+"'").size() != 0) {
-          //Execution of the sql code to delete the user
-          mdatabaseVishnu->process("DELETE FROM users where userid='"+user.getUserId()+"'");
-        } // End if the user who will be deleted exist
-        else {
-          UMSVishnuException e (ERRCODE_UNKNOWN_USERID);
-          throw e;
-        }
-      } //END if the user is an admin
-      else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-      }
-    } //END if the user exists
-    else {
-      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-      throw e;
-    }
-  }//END If the user to delete is not the super VISHNU admin
-  else {
-    UserException e (ERRCODE_INVALID_PARAM, "It is not possible to delete this user. It is the VISHNU root user");
-    throw e;
-  }
-  return 0;
+  user.setStatus(DELETED_STATUS);
+  return update(&user);
 }//END: deleteUser(UMS_Data::User user)
 
 /**
@@ -405,7 +376,7 @@ UserServer::init(){
 bool
 UserServer::exist(bool flagForChangePwd) {
   //if the user is on the database
-  if (getAttribut("where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"'").size() != 0) {
+  if (getAttribut("where userid='"+muser.getUserId()+"'and pwd='"+muser.getPassword()+"' and status!="+vishnu::convertToString(DELETED_STATUS)).size() != 0) {
     CheckUserState(flagForChangePwd);
     return true;
   }//END if the user is on the database
