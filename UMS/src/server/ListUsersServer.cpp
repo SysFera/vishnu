@@ -77,7 +77,7 @@ ListUsers*
 ListUsersServer::list()
 {
   std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-                              "where not userid='"+ ROOTUSERNAME +"'";
+    "where not userid='"+ ROOTUSERNAME +"' and status !=" + vishnu::convertToString(DELETED_STATUS);
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;

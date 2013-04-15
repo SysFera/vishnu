@@ -30,6 +30,7 @@ static const int UNDEFINED_VALUE=-1;
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
 static const int ACTIVE_STATUS=1;
+static const int DELETED_STATUS=2;
 
 /**
  * \brief Function to encrypt data and password

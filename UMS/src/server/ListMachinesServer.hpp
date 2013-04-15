@@ -60,7 +60,7 @@ public:
   {
     std::string sqlListofMachinesWithJointure = "SELECT machineid, name, site, machine.status, lang, description, userid "
     " from machine, description, account, users where machine.nummachineid = description.machine_nummachineid "
-    " and account.machine_nummachineid=machine.nummachineid and account.users_numuserid=users.numuserid";
+      " and account.machine_nummachineid=machine.nummachineid and account.users_numuserid=users.numuserid and machine.status != "+vishnu::convertToString(DELETED_STATUS);
 
     std::string sqlListofMachinesIntial =  sqlRequest;
 
