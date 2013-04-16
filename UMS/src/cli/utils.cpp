@@ -665,7 +665,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxSiteSize+2) << left << site;
-     os << setw(8) << left << (status?"ACTIVE":"INACTIVE");
+     os << setw(8) << left << vishnu::statusToString(status);
      os << endl;
   }
 
@@ -857,13 +857,12 @@ operator<<(std::ostream& os, const UMS_Data::User_ptr& user) {
   int status = user->getStatus();
 
   std::string privilegeStr = (privilege?"ADMIN":"USER");
-  std::string statusStr = (status?"ACTIVE":"INACTIVE");
 
   os << "============ User for " << userId << "===========" << std::endl;
   os << setw(25) << right << "FirstName: " << firstName << endl;
   os << setw(25) << right << "LastName: " << lastName << endl;
   os << setw(25) << right << "Privilege: "  << privilege << " (" << privilegeStr << ")" << endl;
-  os << setw(25) << right << "Status: "  << status << " (" << statusStr << ")" << endl;
+  os << setw(25) << right << "Status: "  << status << " (" << vishnu::statusToString(status) << ")" << endl;
   os << setw(25) << right << "Mail: "  << email << endl ;
   os << setw(25) << right << "UserId: " << userId << endl;
 
@@ -923,7 +922,7 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      os << setw(maxLastnameSize+2) << left << lastname;
      os << setw(maxUserIdSize+2) << left << userId;
      os << setw(11) << left << privilege ;
-     os << setw(8) << left << (status?"ACTIVE":"INACTIVE") ;
+     os << setw(8) << left << vishnu::statusToString(status);
      os << endl;
 
   }
