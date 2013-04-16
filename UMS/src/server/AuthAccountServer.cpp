@@ -19,7 +19,7 @@
  * \param session The object which encapsulates session data
  */
 AuthAccountServer::AuthAccountServer(UMS_Data::AuthAccount*& account, SessionServer& session):
-mauthAccount(account), msessionServer(session) {
+  mauthAccount(account), msessionServer(session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -95,7 +95,7 @@ AuthAccountServer::addOrUpdate(const std::string &sql, bool update) {
          */
         std::string sqlCommand = "";
         if (!update
-            || (update && mauthAccount->getAcLogin().size() != 0)) {
+            || (update && !mauthAccount->getAcLogin().empty())) {
           sqlCommand = sql;
         }
 
@@ -148,8 +148,10 @@ AuthAccountServer::deleteAuthAccount() {
     checkAuthAccountUserId(userServer);
 
     //if the machine exists and it is not locked
-    if (authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'"
-      " and status=1").size() != 0) {
+    std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
+                                         " AND status=%2%"
+                                         )%mauthAccount->getAuthSystemId() %vishnu::STATUS_ACTIVE).str();
+    if (!(authSystemServer.getAttribut(sqlcond, "numauthsystemid").empty())) {
 
       //To get the database number id of the machine
       numAuthSystem = authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'");
@@ -158,11 +160,13 @@ AuthAccountServer::deleteAuthAccount() {
 
       //if the authentification account exists
       if (exist(numAuthSystem, numUser)) {
-
-        //To remove the authentification account from the database
-        mdatabaseVishnu->process("DELETE FROM authaccount "
-        "where authsystem_authsystemid="+numAuthSystem+" and users_numuserid="+numUser);
-
+        // Set status to DELETED instead of deleting the entry in the database
+        std::string sql = (boost::format("UPDATE authaccount"
+                                         " SET status=%1%"
+                                         " WHERE authsystem_authsystemid=%2%"
+                                         " AND users_numuserid=%3%"
+                                         )%vishnu::STATUS_DELETED %numAuthSystem %numUser).str();
+        mdatabaseVishnu->process(sql);
       }//END if the authentification account exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_ACCOUNT);
@@ -218,7 +222,12 @@ AuthAccountServer::exist(std::string idAuthSystem, std::string idUser) {
   if (idAuthSystem.empty() || idUser.empty()) {
     return false;
   }
-  return (getAttribut("where authsystem_authsystemid="+idAuthSystem+" and users_numuserid="+idUser).size() != 0);
+  std::string sqlcond = (boost::format("WHERE authsystem_authsystemid=%1%"
+                                       " AND users_numuserid = %2%"
+                                       " AND status != %3%"
+                                       )%idAuthSystem %idUser %vishnu::STATUS_DELETED).str();
+
+  return !(getAttribut(sqlcond, "authaccountid").empty());
 
 }
 
@@ -234,27 +243,31 @@ AuthAccountServer::isLoginUsed(std::string numAuthSystem, std::string acLogin) {
   if (numAuthSystem.empty() || acLogin.empty()) {
     return false;
   }
-  std::string numUser = getAttribut("where authsystem_authsystemid="+numAuthSystem+" and aclogin='"+acLogin+"'", "users_numuserid");
-  return !numUser.empty();
+  std::string sqlcond = (boost::format("WHERE authsystem_authsystemid=%1%"
+                                       " AND aclogin = '%2%'"
+                                       " AND status = %3%"
+                                       )%numAuthSystem %acLogin %vishnu::STATUS_ACTIVE).str();
+
+  return !(getAttribut(sqlcond, "users_numuserid").empty());
 }
 
- /**
+/**
 * \brief Function to check the authAccount userId
 * \return raises an exception on error
 */
 int
 AuthAccountServer::checkAuthAccountUserId(UserServer& userServer) {
   //If the authAccount is defined
-    if (!mauthAccount->getUserId().empty()) {
-      //If the user is not an administrator
-      if (!userServer.isAdmin()) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-      }
-    }//End If the authAccount is defined
-    else {
-      mauthAccount->setUserId(userServer.getData().getUserId());
+  if (!mauthAccount->getUserId().empty()) {
+    //If the user is not an administrator
+    if (!userServer.isAdmin()) {
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
     }
+  }//End If the authAccount is defined
+  else {
+    mauthAccount->setUserId(userServer.getData().getUserId());
+  }
 
-    return 0;
+  return 0;
 }

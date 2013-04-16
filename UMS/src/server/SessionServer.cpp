@@ -8,6 +8,7 @@
 #include "SessionServer.hpp"
 #include "CommandServer.hpp"
 #include "DbFactory.hpp"
+#include "boost/format.hpp"
 
 
 using namespace vishnu;
@@ -60,11 +61,11 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
       // if the user is admin
       if (user.isAdmin()) {
         numSubstituteUserId = user.getAttribut("where "
-        "userid='"+connectOpt->getSubstituteUserId()+"'");
+                                               "userid='"+connectOpt->getSubstituteUserId()+"'");
         //If the user to substitute exist
         if (user.existuserId(connectOpt->getSubstituteUserId())) {
-            numUserIdToconnect = numSubstituteUserId;
-            msession.setUserId(connectOpt->getSubstituteUserId());
+          numUserIdToconnect = numSubstituteUserId;
+          msession.setUserId(connectOpt->getSubstituteUserId());
         } //End If the user to substitute exist
         else {
           UMSVishnuException e(ERRCODE_UNKNOWN_USERID);
@@ -79,9 +80,9 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 
     //if there is not a numSubstituteUserId
     if (numUserIdToconnect.size() == 0) {
-        numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-        " and pwd='"+user.getData().getPassword()+"'");
-        msession.setUserId(user.getData().getUserId());
+      numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
+                                            " and pwd='"+user.getData().getPassword()+"'");
+      msession.setUserId(user.getData().getUserId());
     } //END if There is not a numSubstituteUserId
 
     generateSessionKey(user.getData().getUserId());
@@ -127,7 +128,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host,
         } //END if user is an admin
         else {
           existSessionKey = getSessionkey(host.getId(), user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-                                        " and pwd='"+user.getData().getPassword()+"'"));
+                                                                         " and pwd='"+user.getData().getPassword()+"'"));
         }
         //if there is no session key with the previous parameters
         if (existSessionKey == -1) {
@@ -178,7 +179,7 @@ SessionServer::close() {
         mdatabaseVishnu->process(sqlCommand.c_str());
         sqlCommand="";
         sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP"
-        " WHERE sessionkey='"+msession.getSessionKey()+"';");
+                          " WHERE sessionkey='"+msession.getSessionKey()+"';");
         mdatabaseVishnu->process(sqlCommand.c_str());
       }//END if no running commands
       else {
@@ -238,7 +239,7 @@ int
 SessionServer::saveConnection() {
 
   std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP"
-  " WHERE sessionkey='"+msession.getSessionKey()+"'";
+                           " WHERE sessionkey='"+msession.getSessionKey()+"'";
 
   mdatabaseVishnu->process(sqlCommand.c_str());
   return 0;
@@ -254,21 +255,21 @@ SessionServer::getSessionToclosebyTimeout() {
   std::string sqlCommand;
 
   switch(mdatabaseVishnu->getDbType()) {
-    case DbConfiguration::MYSQL:
-      sqlCommand = "SELECT sessionkey from vsession where "
-        " unix_timestamp(CURRENT_TIMESTAMP) - unix_timestamp(lastconnect) > timeout and state=1 "
-        " and closepolicy=1";
-      break;
-    case DbConfiguration::POSTGRESQL:
-      sqlCommand = "SELECT sessionkey from vsession where "
-        " EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 "
-        " and closepolicy=1";
-      break;
-    case DbConfiguration::ORACLE:
-      throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
-      break;
-    default:
-      break;
+  case DbConfiguration::MYSQL:
+    sqlCommand = "SELECT sessionkey from vsession where "
+                 " unix_timestamp(CURRENT_TIMESTAMP) - unix_timestamp(lastconnect) > timeout and state=1 "
+                 " and closepolicy=1";
+    break;
+  case DbConfiguration::POSTGRESQL:
+    sqlCommand = "SELECT sessionkey from vsession where "
+                 " EXTRACT( epoch FROM  CURRENT_TIMESTAMP ) - EXTRACT( epoch FROM lastconnect ) > timeout and state=1 "
+                 " and closepolicy=1";
+    break;
+  case DbConfiguration::ORACLE:
+    throw SystemException(ERRCODE_DBERR, "SessionServer::getSessionToclosebyTimeout: Oracle query not defined");
+    break;
+  default:
+    break;
   }
 
   result = mdatabaseVishnu->getResult(sqlCommand.c_str());
@@ -283,10 +284,12 @@ SessionServer::getSessionToclosebyTimeout() {
 int
 SessionServer::check() {
   int ret = -1;
-  std::string sqlCommand = "SELECT state, status, passwordstate from users, vsession "
-  "where users.numuserid = vsession.users_numuserid and vsession.sessionkey='"+msession.getSessionKey()+"'";
-
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  std::string sqlQuery = (boost::format("SELECT state, status, passwordstate"
+                                        " FROM users, vsession "
+                                        " WHERE users.numuserid = vsession.users_numuserid"
+                                        " AND vsession.sessionkey='%1%'"
+                                        " AND vsession.state<>%2%")%msession.getSessionKey()%vishnu::STATUS_DELETED).str();
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlQuery.c_str()));
   std::vector<std::string> tmp;
 
   //If the session key exists
@@ -363,7 +366,7 @@ SessionServer::generateSessionKey(std::string salt) {
 
   //for SHA1-512 encryption by using the userId as a salt
   std::string globalSalt = "$6$"+std::string(crypt(salt.c_str(),
-                                                  tmpSalt.c_str())).substr(tmpSalt.size())+"$";
+                                                   tmpSalt.c_str())).substr(tmpSalt.size())+"$";
 
   //SHA1-512 encryption of the salt encrypted using the md5 and the current time as the clef
   sessionKey = std::string(crypt(to_simple_string(now).c_str(), globalSalt.c_str()));
@@ -409,11 +412,11 @@ int
 SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
 
   std::string sqlInsert = "insert into vsession "
-  "(vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, "
-  "creation, sessionKey, state, closepolicy, timeout, authid) values ";
+                          "(vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, "
+                          "creation, sessionKey, state, closepolicy, timeout, authid) values ";
 
   std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+","
-  "CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+msession.getSessionKey()+"',");
+                                   "CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+msession.getSessionKey()+"',");
 
   values.append(convertToString(msession.getStatus())+",");
   values.append(convertToString(msession.getClosePolicy())+",");
@@ -479,27 +482,27 @@ SessionServer::getState(bool flagSessionId) {
 int
 SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool flagAdmin) {
 
-    std::string key = "";
-    std::string closePolicyStr = "";
+  std::string key = "";
+  std::string closePolicyStr = "";
 
-    //if the user is not an admin, the machine and the userid are checked
-    if (!flagAdmin) {
-      key = getAttribut("where vsessionid='"+msession.getSessionId()+"' "
-      "and clmachine_numclmachineid="+idmachine+" and users_numuserid="+iduser);
-    }
-    else {
-      key = getAttribut("where vsessionid='"+msession.getSessionId()+"'");
-    }
-    if (key.size() != 0) {
-      msession.setSessionKey(key);
-      //To get the close policy associated to the session
-      closePolicyStr =  getAttribut("where vsessionid='"+msession.getSessionId()+"'", "closepolicy");
-      msession.setClosePolicy(convertToInt(closePolicyStr));
-      return 0;
-    }
-    else {
-      return -1;
-    }
+  //if the user is not an admin, the machine and the userid are checked
+  if (!flagAdmin) {
+    key = getAttribut("where vsessionid='"+msession.getSessionId()+"' "
+                      "and clmachine_numclmachineid="+idmachine+" and users_numuserid="+iduser);
+  }
+  else {
+    key = getAttribut("where vsessionid='"+msession.getSessionId()+"'");
+  }
+  if (key.size() != 0) {
+    msession.setSessionKey(key);
+    //To get the close policy associated to the session
+    closePolicyStr =  getAttribut("where vsessionid='"+msession.getSessionId()+"'", "closepolicy");
+    msession.setClosePolicy(convertToInt(closePolicyStr));
+    return 0;
+  }
+  else {
+    return -1;
+  }
 }
 
 
@@ -516,31 +519,31 @@ SessionServer::solveConnectionMode(UMS_Data::ConnectOptions* connectOpt, std::st
   OptionValueServer optionValueServer;
 
   switch (connectOpt->getClosePolicy()) {
-    ////The closure mode is default
-    case 0:
-      msession.setClosePolicy(optionValueServer.getOptionValueForUser(numuserId, CLOSEPOLICY_OPT));
-        //If the policy is not 2 (CLOSE_ON_DISCONNECT)
-      if (msession.getClosePolicy() != 2) {
-        msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
-      }
+  ////The closure mode is default
+  case 0:
+    msession.setClosePolicy(optionValueServer.getOptionValueForUser(numuserId, CLOSEPOLICY_OPT));
+    //If the policy is not 2 (CLOSE_ON_DISCONNECT)
+    if (msession.getClosePolicy() != 2) {
+      msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
+    }
     break;
     //The closure mode is close on timeout
-    case 1:
-      msession.setClosePolicy(1);
-      if (connectOpt->getSessionInactivityDelay() != 0) {
-        msession.setTimeout(connectOpt->getSessionInactivityDelay());
-      } //END if the timeout is defined
-      else {
-        msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
-      }
+  case 1:
+    msession.setClosePolicy(1);
+    if (connectOpt->getSessionInactivityDelay() != 0) {
+      msession.setTimeout(connectOpt->getSessionInactivityDelay());
+    } //END if the timeout is defined
+    else {
+      msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
+    }
     break;
     //The closure mode is close on disconnect
-    case 2:
-      msession.setClosePolicy(2);
+  case 2:
+    msession.setClosePolicy(2);
     break;
 
-    default:
-      throw SystemException(ERRCODE_SYSTEM, "Invalid close policy value in SessionServer::solveConnectionMode");
+  default:
+    throw SystemException(ERRCODE_SYSTEM, "Invalid close policy value in SessionServer::solveConnectionMode");
   }
   return 0;
 }
@@ -558,18 +561,18 @@ SessionServer::disconnetToTimeout(UserServer user) {
 
   //To change the session close policy on CLOSE_ON_TIMEOUT on the database
   mdatabaseVishnu->process("UPDATE vsession SET closepolicy=1"
-  " WHERE sessionkey='"+msession.getSessionKey()+"';");
+                           " WHERE sessionkey='"+msession.getSessionKey()+"';");
 
   //To change the session close policy on CLOSE_ON_TIMEOUT on the msession object
   msession.setClosePolicy(1);
 
   numuserId = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-  " and pwd='"+user.getData().getPassword()+"'");
+                               " and pwd='"+user.getData().getPassword()+"'");
 
   //To get the timeout
   msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
   mdatabaseVishnu->process("UPDATE vsession SET timeout="+convertToString(msession.getTimeout())+
-  " WHERE sessionkey='"+msession.getSessionKey()+"';");
+                           " WHERE sessionkey='"+msession.getSessionKey()+"';");
 
   return 0;
 }
