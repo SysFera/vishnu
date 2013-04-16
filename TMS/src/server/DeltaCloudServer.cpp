@@ -369,7 +369,7 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
  * \brief Function to replace some environment varia*bles in a string
  * \param scriptContent The string content to modify
  */
-void DeltaCloudServer::replaceEnvVariables(const char* scriptPath){
+void DeltaCloudServer::replaceEnvVariables(const char* scriptPath) {
   std::string scriptContent = vishnu::get_file_content(scriptPath);
   
   //To replace VISHNU_BATCHJOB_ID
@@ -383,7 +383,7 @@ void DeltaCloudServer::replaceEnvVariables(const char* scriptPath){
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(wc -l ${VISHNU_BATCHJOB_NODEFILE} | cut -d' ' -f1)");
 
-  ofstream ofs(scriptPath);
+  std::ofstream ofs(scriptPath);
   ofs << scriptContent;
   ofs.close();
 }
