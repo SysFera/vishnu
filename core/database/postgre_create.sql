@@ -23,6 +23,16 @@
 -- Revision author      : Philippe Martinez <philippe.martinez@sysfera.com>
 -- Revision comment     : Vishnu database mutualization with the WebBoard
 
+-- Revision nb          : 1.5
+-- Revision date        : 12/07/12
+-- Revision author      : Amine Bsila <amine.bsila@sysfera.com>
+-- Revision comment     : Adds the columns vmId and vmIp in the table job
+
+-- Revision nb          : 1.6
+-- Revision date        : 14/04/13
+-- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
+-- Revision comment     : Added column status in tables account
+
 SET statement_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
@@ -45,7 +55,8 @@ CREATE TABLE account (
     home character varying(255),
     machine_nummachineid bigint NOT NULL,
     sshpathkey character varying(255),
-    users_numuserid bigint NOT NULL
+    users_numuserid bigint NOT NULL,
+    status integer
 );
 
 

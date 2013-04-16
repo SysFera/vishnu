@@ -23,6 +23,11 @@
 -- Revision author      : Amine Bsila <amine.bsila@sysfera.com>
 -- Revision comment     : Adds the columns vmId and vmIp in the table job
 
+-- Revision nb          : 1.6
+-- Revision date        : 14/04/13
+-- Revision author      : Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
+-- Revision comment     : Added column status in tables account
+
 
 USE vishnu;
 
@@ -51,6 +56,7 @@ CREATE TABLE `account` (
   `machine_nummachineid` bigint(20) NOT NULL,
   `sshpathkey` varchar(255) DEFAULT NULL,
   `users_numuserid` bigint(20) NOT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`numaccountid`),
   KEY `FKB9D38A2D1CFEDEFC` (`machine_nummachineid`),
   KEY `FKB9D38A2DA63719F2` (`users_numuserid`),
