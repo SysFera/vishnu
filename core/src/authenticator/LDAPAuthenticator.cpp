@@ -32,13 +32,16 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
 
   DbFactory factory;
   Database* databaseVishnu = factory.getDatabaseInstance();
-
-  std::string sqlCommand = "SELECT uri, authlogin, authpassword, ldapbase, authsystem.status, userid, pwd"
-                           " FROM ldapauthsystem, authsystem, authaccount, users "
-                           "where aclogin='"+user.getUserId()+"' and authsystem.authtype="+vishnu::convertToString(LDAPTYPE)
-                           +" and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and "
-                            "ldapauthsystem.authsystem_authsystemid=authsystem.numauthsystemid and "
-                            "authaccount.users_numuserid=users.numuserid";
+  std::string sqlCommand = (boost::format("SELECT uri, authlogin, authpassword, ldapbase, authsystem.status, userid, pwd"
+                                          " FROM ldapauthsystem, authsystem, authaccount, users"
+                                          " WHERE aclogin='%1%'"
+                                          " AND authsystem.authtype=%2%"
+                                          " AND authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
+                                          " AND ldapauthsystem.authsystem_authsystemid=authsystem.numauthsystemid"
+                                          " AND authaccount.users_numuserid=users.numuserid"
+                                          " AND authsystem.status<>%3%"
+                                          " AND users.status<>%4%"
+                                          )%user.getUserId() %LDAPTYPE %DELETED_STATUS %DELETED_STATUS).str();
 
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
 

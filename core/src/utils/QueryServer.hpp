@@ -12,12 +12,14 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/format.hpp>
 
 #include "SessionServer.hpp"
 #include "DbFactory.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
+#include "constants.hpp"
 
 /**
  * \class QueryServer
@@ -28,7 +30,7 @@ class QueryServer
 {
 public:
 
-   /**
+  /**
     * \brief Constructor, raises an exception on error
     * \param session The object which encapsulates the session information (ex: identifier of the session)
     */
@@ -94,12 +96,12 @@ protected:
    * \param request the request
    */
   template <class T>
-    void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
-      std::ostringstream osValue;
-      osValue << value;
-      request.append(" and "+name+"=");
-      request.append("'"+osValue.str()+"'");
-    }
+  void addIntegerOptionRequest(const std::string& name, T& value, std::string& request) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" and "+name+"=");
+    request.append("'"+osValue.str()+"'");
+  }
 
   /**
    * \brief Function to add sql resquest "and condition" which contain an integer value to a given request
@@ -109,12 +111,12 @@ protected:
    * \param comp The where statement
    */
   template <class T>
-    void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
-      std::ostringstream osValue;
-      osValue << value;
-      request.append(" and "+name+ " "+comp+" ");
-      request.append("'"+osValue.str()+"'");
-    }
+  void addTimeRequest(const std::string& name, T& value, std::string& request, std::string comp) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" and "+name+ " "+comp+" ");
+    request.append("'"+osValue.str()+"'");
+  }
 
   /**
    * \brief Function to add sql resquest "where condition" to a given request
@@ -134,12 +136,12 @@ protected:
    * \param request the request
    */
   template <class T>
-    void addIntegerCondition(const std::string& name, T& value, std::string& request) {
-      std::ostringstream osValue;
-      osValue << value;
-      request.append(" where "+name+"=");
-      request.append("'"+osValue.str()+"'");
-    }
+  void addIntegerCondition(const std::string& name, T& value, std::string& request) {
+    std::ostringstream osValue;
+    osValue << value;
+    request.append(" where "+name+"=");
+    request.append("'"+osValue.str()+"'");
+  }
 
   /**
    * \brief Function to convert a given date into correspondant long value
@@ -148,8 +150,8 @@ protected:
    */
   long long convertToTimeType(std::string date) {
     if(date.size()==0 ||
-        // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
-        date.find("0000-00-00")!=std::string::npos) {
+       // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
+       date.find("0000-00-00")!=std::string::npos) {
       return 0;
     }
 
@@ -167,7 +169,10 @@ protected:
    * \return raises an exception on error
    */
   void checkUserId(std::string userId) {
-    std::string sqlUserRequest = "SELECT userid from users where userid='"+userId+"'";
+    std::string sqlUserRequest = (boost::format("SELECT userid"
+                                                " FROM users"
+                                                " WHERE userid='%1%'"
+                                                " AND status<>%2%")%userId %vishnu::STATUS_DELETED).str();
     boost::scoped_ptr<DatabaseResult> user(mdatabaseVishnu->getResult(sqlUserRequest.c_str()));
     if(user->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
@@ -179,7 +184,10 @@ protected:
    * \param machineId the machine identifier
    */
   void checkMachineId(std::string machineId) {
-    std::string sqlMachineRequest = "SELECT machineid from machine where machineid='"+machineId+"'";
+    std::string sqlMachineRequest = (boost::format("SELECT machineid"
+                                                   " FROM machine"
+                                                   " WHERE machineid='%1%'"
+                                                   " AND status<>%2%")%machineId %vishnu::STATUS_DELETED).str();
     boost::scoped_ptr<DatabaseResult> machine(mdatabaseVishnu->getResult(sqlMachineRequest.c_str()));
     if(machine->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
@@ -191,7 +199,9 @@ protected:
    * \param clmachineId the machine client identifier
    */
   void checkClientMachineName(std::string clmachineId) {
-    std::string sqlclMachineRequest = "SELECT name from clmachine where name='"+clmachineId+"'";
+    std::string sqlclMachineRequest = (boost::format("SELECT name"
+                                                     " FROM name"
+                                                     " WHERE name='%1%'")%clmachineId).str();
     boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseVishnu->getResult(sqlclMachineRequest.c_str()));
     if(clmachine->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
@@ -204,7 +214,9 @@ protected:
    * \return raises an exception on error
    */
   void checkOptionName(std::string name) {
-    std::string sqlNameRequest = "SELECT description from optionu where description='"+name+"'";
+    std::string sqlNameRequest = (boost::format("SELECT description"
+                                                " FROM optionu"
+                                                " WHERE description='%1%'")%name).str();
     boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseVishnu->getResult(sqlNameRequest.c_str()));
     if(nameResults->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
@@ -216,7 +228,10 @@ protected:
    * \param sessionId the session identifier
    */
   void checkSessionId(std::string sessionId) {
-    std::string sqlSessionRequest = "SELECT vsessionid from vsession where vsessionid='"+sessionId+"'";
+    std::string sqlSessionRequest = (boost::format("SELECT vsessionid"
+                                                   " FROM vsession"
+                                                   " WHERE vsessionid='%1%'"
+                                                   " AND state<>%2%")%sessionId %vishnu::STATUS_DELETED).str();
     boost::scoped_ptr<DatabaseResult> session(mdatabaseVishnu->getResult(sqlSessionRequest.c_str()));
     if(session->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
@@ -249,26 +264,31 @@ protected:
    * \param jobId the job identifier
    */
   void
-    checkJobId(std::string jobId) {
-      std::string sqlJobRequest = "SELECT numjobid from job where jobId='"+jobId+"'";
-      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-      if(result->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
-      }
+  checkJobId(std::string jobId) {
+    std::string sqlJobRequest = (boost::format("SELECT numjobid"
+                                               " FROM job"
+                                               " WHERE jobId='%1%'")%jobId).str();
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+    if(result->getNbTuples() == 0) {
+      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
     }
+  }
 
-    /**
+  /**
    * \brief Function to check if a given authSystem identifier exists
    * \param authSystemId the authSystem identifier
    */
   void
-    checkAuthSystemId(std::string authSystemId) {
-      std::string sqlJobRequest = "SELECT authsystemid from authsystem where authsystemid='"+authSystemId+"'";
-      boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
-      if(result->getNbTuples() == 0) {
-        throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
-      }
+  checkAuthSystemId(std::string authSystemId) {
+    std::string sqlJobRequest = (boost::format("SELECT authsystemid"
+                                               " FROM authsystem"
+                                               " WHERE authsystemid='%1%'"
+                                               " AND status<>%2%")%authSystemId %vishnu::STATUS_DELETED).str();
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+    if(result->getNbTuples() == 0) {
+      throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
     }
+  }
 
 protected:
 
