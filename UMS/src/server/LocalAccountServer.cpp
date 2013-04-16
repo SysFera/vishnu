@@ -29,8 +29,6 @@ LocalAccountServer::add() {
 
   std::string numMachine;
   std::string numUser;
-  std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, "
-                          "aclogin, sshpathkey, home) values ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -58,37 +56,33 @@ LocalAccountServer::add() {
         if (!exist(numMachine, numUser)) {
 
           if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
-
             //The sql code to insert the localAccount on the database
-            mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', "
-                                     "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
-
+            std::string sqlCmd = (boost::format("INSERT INTO account (machine_nummachineid, "
+                                                  "        users_numuserid, aclogin, sshpathkey, home, status)"
+                                                  "VALUES ('%1%', '%2%', '%3%', '%4%', '%5%', %6%)")
+                                    %numMachine
+                                    %numUser
+                                    %mlocalAccount->getAcLogin()
+                                    %mlocalAccount->getSshKeyPath()
+                                    %mlocalAccount->getHomeDirectory()
+                                    %vishnu::STATUS_ACTIVE).str();
+            mdatabaseVishnu->process(sqlCmd);
             msshpublickey = machineServer.getAttribut("where "
                                                       "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
-          }
-          else {
+          } else {
             throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
           }
-
-        }//END if the local account does not exist
-        else {
-          UMSVishnuException e (ERRCODE_LOCAL_ACCOUNT_EXIST);
-          throw e;
+        } else {
+          throw UMSVishnuException (ERRCODE_LOCAL_ACCOUNT_EXIST);
         }
-      } //End if the machine exists and it is not locked
-      else {
-        UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
-        throw e;
+      } else {
+        throw UMSVishnuException (ERRCODE_UNUSABLE_MACHINE);
       }
-    }//End if the session key is for the owner of the local account or the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    } else {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
+  } else {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
   }
   return 0;
 }
