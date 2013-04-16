@@ -57,6 +57,7 @@
 #include "SystemException.hpp"
 #include "FMSVishnuException.hpp"
 #include "UMS_Data.hpp"
+#include "constants.hpp"
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 namespace bs=boost::system;
@@ -638,4 +639,30 @@ vishnu::sourceFile(const std::string& filePath) {
       setenv(variable.c_str(), value.c_str(), 0);
     }
   }
+}
+
+/**
+ * \brief  function to convert a status (locked, active...) to string
+ * \param status: The status to convert
+ * \return The corresponding string
+ */
+std::string
+vishnu::statusToString(const int& status) {
+
+  std::string str;
+  switch(status) {
+  case vishnu::STATUS_ACTIVE:
+    str = "ACTIVE";
+    break;
+  case vishnu::STATUS_LOCKED:
+    str = "LOCKED";
+    break;
+  case vishnu::STATUS_DELETED:
+    str = "DELETED";
+    break;
+  default:
+    str = "UNDEFINED";
+    break;
+  }
+  return str;
 }
