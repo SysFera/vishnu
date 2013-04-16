@@ -88,8 +88,8 @@ public:
      }
 
      int status = options->getStatus();
-     if (status == UNDEFINED_VALUE) {
-       status = 1;
+     if (status == vishnu::STATUS_UNDEFINED) {
+       status = vishnu::STATUS_ACTIVE;
      }
      //To check the status value
      checkStatus(status);

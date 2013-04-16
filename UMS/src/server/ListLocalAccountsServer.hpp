@@ -12,7 +12,8 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include "boost/date_time/posix_time/posix_time.hpp"
+#include <boost/date_time/posix_time/posix_time.hpp>
+#include <boost/format.hpp>
 
 #include "SessionServer.hpp"
 #include "ListLocalAccOptions.hpp"
@@ -56,39 +57,39 @@ public:
    */
   void processOptions(UserServer userServer, const UMS_Data::ListLocalAccOptions_ptr& options, std::string& sqlRequest)
   {
-     std::string sqlListofLocalAccountInitial = sqlRequest;
+    std::string sqlListofLocalAccountInitial = sqlRequest;
 
-     size_t userIdSize = options->getUserId().size();
-     size_t machineIdSize = options->getMachineId().size();
-     bool isListAll = options->isAdminListOption();
+    size_t userIdSize = options->getUserId().size();
+    size_t machineIdSize = options->getMachineId().size();
+    bool isListAll = options->isAdminListOption();
 
-     if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-     }
+    if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
+    }
 
-     if(!isListAll) {
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
-     }
-     //The admin option
-     if(userIdSize!=0) {
-        //To check if the user id is correct
-        checkUserId(options->getUserId());
+    if(!isListAll) {
+      addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+    }
+    //The admin option
+    if(userIdSize!=0) {
+      //To check if the user id is correct
+      checkUserId(options->getUserId());
 
+      sqlRequest=sqlListofLocalAccountInitial;
+      addOptionRequest("userid", options->getUserId(), sqlRequest);
+    }
+
+    if(machineIdSize!=0) {
+      //To check if the machine id is correct
+      checkMachineId(options->getMachineId());
+
+      if(!isListAll && userIdSize==0) {
         sqlRequest=sqlListofLocalAccountInitial;
-        addOptionRequest("userid", options->getUserId(), sqlRequest);
-     }
-
-     if(machineIdSize!=0) {
-        //To check if the machine id is correct
-        checkMachineId(options->getMachineId());
-
-        if(!isListAll && userIdSize==0) {
-          sqlRequest=sqlListofLocalAccountInitial;
-          addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
-        }
-        addOptionRequest("machineid", options->getMachineId(), sqlRequest);
-     }
+        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      }
+      addOptionRequest("machineid", options->getMachineId(), sqlRequest);
+    }
 
   }
 
@@ -99,9 +100,15 @@ public:
    */
   UMS_Data::ListLocalAccounts* list()
   {
-    std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
-    "from account, machine, users where account.machine_nummachineid=machine.nummachineid and "
-    "account.users_numuserid=users.numuserid";
+    std::string sqlListofLocalAccount = (boost::format("SELECT machineid, userid, aclogin, sshpathkey, home"
+                                                       " FROM account, machine, users"
+                                                       " WHERE account.machine_nummachineid=machine.nummachineid"
+                                                       " AND account.users_numuserid=users.numuserid"
+                                                       " AND users.status!=%1%"
+                                                       " AND machine.status!=%1%"
+                                                       " AND account.status!=%1%"
+                                                       )%vishnu::STATUS_DELETED).str();
+
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -159,9 +166,9 @@ public:
   {
   }
 
-  private:
+private:
 
-   /////////////////////////////////
+  /////////////////////////////////
   // Attributes
   /////////////////////////////////
 

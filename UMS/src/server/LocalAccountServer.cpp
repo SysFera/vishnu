@@ -7,6 +7,7 @@
 
 #include "LocalAccountServer.hpp"
 #include "DbFactory.hpp"
+#include <boost/format.hpp>
 
 /**
 * \brief Constructor
@@ -14,7 +15,7 @@
 * \param session The object which encapsulates session data
 */
 LocalAccountServer::LocalAccountServer(UMS_Data::LocalAccount*& account, SessionServer& session):
-mlocalAccount(account), msessionServer(session) {
+  mlocalAccount(account), msessionServer(session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -29,7 +30,7 @@ LocalAccountServer::add() {
   std::string numMachine;
   std::string numUser;
   std::string sqlInsert = "insert into account (machine_nummachineid, users_numuserid, "
-  "aclogin, sshpathkey, home) values ";
+                          "aclogin, sshpathkey, home) values ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -44,10 +45,10 @@ LocalAccountServer::add() {
   if (userServer.exist()) {
     //if the session key is for the owner of the local account or the user is an admin
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-      userServer.isAdmin()){
+        userServer.isAdmin()){
       //if the machine exists and it is not locked
       if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
-        " and status=1").size() != 0) {
+                                    " and status=1").size() != 0) {
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
         //To get the database number id of the user
@@ -60,10 +61,10 @@ LocalAccountServer::add() {
 
             //The sql code to insert the localAccount on the database
             mdatabaseVishnu->process(sqlInsert + "('"+numMachine+"', '"+numUser+"', '"+mlocalAccount->getAcLogin()+"', "
-            "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
+                                     "'"+mlocalAccount->getSshKeyPath()+"', '"+mlocalAccount->getHomeDirectory()+"')");
 
             msshpublickey = machineServer.getAttribut("where "
-            "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
+                                                      "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
           }
           else {
             throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
@@ -115,11 +116,11 @@ LocalAccountServer::update() {
   if (userServer.exist()) {
     //if the session key is for the owner of the local account or the user is an admin
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-      userServer.isAdmin()){
+        userServer.isAdmin()){
 
       //if the machine exists and it is not locked
       if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
-        " and status=1").size() != 0) {
+                                    " and status=1").size() != 0) {
 
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
@@ -136,20 +137,20 @@ LocalAccountServer::update() {
 
           //if a new acLogin has been defined
           if (mlocalAccount->getAcLogin().size() != 0) {
-          sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'"
-          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+            sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'"
+                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           //if a new sshpathkey has been defined
           if (mlocalAccount->getSshKeyPath().size() != 0) {
-          sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'"
-          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+            sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'"
+                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           //if a new home directory has been defined
           if (mlocalAccount->getHomeDirectory().size() != 0) {
-          sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'"
-          " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+            sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'"
+                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
           }
 
           //If there is a change
@@ -204,11 +205,11 @@ LocalAccountServer::deleteLocalAccount() {
   if (userServer.exist()) {
     //if the session key is for the owner of the local account or the user is an admin
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
-      userServer.isAdmin()){
+        userServer.isAdmin()){
 
       //if the machine exists and it is not locked
       if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
-        " and status=1").size() != 0) {
+                                    " and status=1").size() != 0) {
 
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
@@ -217,11 +218,13 @@ LocalAccountServer::deleteLocalAccount() {
 
         //if the local account exists
         if (exist(numMachine, numUser)) {
-
-          //To remove the local account from the database
-          mdatabaseVishnu->process("DELETE FROM account "
-          "where machine_nummachineid="+numMachine+" and users_numuserid="+numUser);
-
+          // Set status to DELETED instead of deleting the entry in the database
+          std::string sql = (boost::format("UPDATE account"
+                                           " SET status=%1%"
+                                           " WHERE machine_nummachineid=%2%"
+                                           " AND users_numuserid=%3%"
+                                           )%vishnu::STATUS_DELETED %numMachine %numUser).str();
+          mdatabaseVishnu->process(sql);
         }//END if the local account exists
         else {
           UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
@@ -279,12 +282,14 @@ LocalAccountServer::getAttribut(std::string condition, std::string attrname) {
 bool
 LocalAccountServer::exist(std::string idmachine, std::string iduser) {
 
-  if ((idmachine.size() > 0) && (iduser.size() > 0)) {
-    return (getAttribut("where machine_nummachineid="+idmachine+" and users_numuserid="+iduser).size() != 0);
-  }
-  else {
+  if (idmachine.empty() || iduser.empty()) {
     return false;
   }
+  std::string sqlcond = (boost::format("WHERE machine_nummachineid = %1%"
+                                       " AND users_numuserid=%2%"
+                                       " AND status != %3%"
+                                       )%idmachine %iduser %vishnu::STATUS_DELETED).str();
+  return !(getAttribut(sqlcond, "numaccountid").empty());
 }
 
 /**
@@ -295,11 +300,17 @@ LocalAccountServer::exist(std::string idmachine, std::string iduser) {
  */
 bool
 LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
+
   if (numMachine.empty() || acLogin.empty()) {
     return false;
   }
-  std::string numUser = getAttribut("where machine_nummachineid="+numMachine+" and aclogin='"+acLogin+"'", "users_numuserid");
-  return !numUser.empty();
+  std::string sqlcond = (boost::format("WHERE machine_nummachineid = %1%"
+                                       " AND aclogin='%2%'"
+                                       " AND status != %3%"
+                                       )%numMachine %acLogin %vishnu::STATUS_DELETED).str();
+
+  std::string numUser = getAttribut(sqlcond, "users_numuserid");
+  return !(numUser.empty());
 }
 
 /**
