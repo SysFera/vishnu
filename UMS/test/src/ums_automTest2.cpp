@@ -93,7 +93,6 @@ BOOST_AUTO_TEST_CASE( User_base )
     BOOST_CHECK  (listUsers(sess.getSessionKey(), *liu, liuo       )==0);
     BOOST_CHECK  (close    (sess.getSessionKey()                )==0);
     BOOST_CHECK (liu->getUsers().size()>0);
-    BOOST_CHECK (liu->getUsers()[0]->getUserId() == m_test_ums_admin_vishnu_login);
   }
 
   if (m_test_ums_authen_type.compare("LDAP") != 0) {
