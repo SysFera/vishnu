@@ -55,11 +55,10 @@ AuthSystemServer::add(int vishnuId) {
       mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
       // To check if the authentication id generated and the name to save do not exist,
       // except the authentication reserved by getObjectId
-      if (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'"
-                      " or name='"+mauthsystem->getName()+"'", "count(*)") == "1") {
-        //To active the user-authentication system
+      std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
+                                           " AND status IS NULL")%mauthsystem->getAuthSystemId()).str();
+      if (getAttribut(sqlcond, "count(*)") == "1") {
         mauthsystem->setStatus(vishnu::STATUS_ACTIVE);
-
         sqlUpdate+="name='"+mauthsystem->getName()+"',";
         sqlUpdate+="uri='"+mauthsystem->getURI()+"',";
         sqlUpdate+="authlogin='"+mauthsystem->getAuthLogin()+"',";
@@ -68,31 +67,26 @@ AuthSystemServer::add(int vishnuId) {
         sqlUpdate+="authtype="+convertToString(mauthsystem->getType())+",";
         sqlUpdate+="status="+convertToString(mauthsystem->getStatus())+" ";
         sqlUpdate+="WHERE authsystemid='"+mauthsystem->getAuthSystemId()+"';";
+
         mdatabaseVishnu->process(sqlUpdate);
 
         //If the Ldap base is defined and the type is ldap
         if (mauthsystem->getType() == LDAPTYPE ) { // LDAP
 
           numAuth = getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'");
-
-          mdatabaseVishnu->process("insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
-                                   "("+numAuth+ ", '"+mauthsystem->getLdapBase()+"')");
+          std::string sql = (boost::format("INSERT INTO ldapauthsystem (authsystem_authsystemid, ldapbase)"
+                                           " VALUES (%1%, '%2%')"
+                                           )%numAuth %mauthsystem->getLdapBase()).str();
+          mdatabaseVishnu->process(sql);
         }
-
-      }// End if the id generated does not exists
-      else {
-        UMSVishnuException e (ERRCODE_AUTH_SYSTEM_ALREADY_EXIST);
-        throw e;
+      } else {
+        throw UMSVishnuException (ERRCODE_AUTH_SYSTEM_ALREADY_EXIST);
       }
-    }//End if the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    } else {
+      throw UMSVishnuException (ERRCODE_NO_ADMIN);
     }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
+  } else {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
   }
   return 0;
 }
@@ -287,7 +281,10 @@ AuthSystemServer::getAttribut(std::string condition, std::string attrname) {
 */
 bool
 AuthSystemServer::exist() {
-  return (getAttribut("where authsystemid='"+mauthsystem->getAuthSystemId()+"'").size() != 0);
+  std::string sqlcond = (boost::format("WHERE authsystemid = '%1%'"
+                                       " AND status != %2%"
+                                       )%mauthsystem->getAuthSystemId() %vishnu::STATUS_DELETED).str();
+  return (!getAttribut(sqlcond, "numauthsystemid").empty());
 }
 
 

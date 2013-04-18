@@ -59,39 +59,39 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListAuthAccOptions_ptr& options, std::string& sqlRequest)
   {
-     std::string sqlListofAuthAccountInitial = sqlRequest;
+    std::string sqlListofAuthAccountInitial = sqlRequest;
 
-     size_t userIdSize = options->getUserId().size();
-     size_t authSystemIdSize = options->getAuthSystemId().size();
-     bool isListAll = options->isListAll();
+    size_t userIdSize = options->getUserId().size();
+    size_t authSystemIdSize = options->getAuthSystemId().size();
+    bool isListAll = options->isListAll();
 
-     if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-     }
-
-     //The admin option
-     if(userIdSize!=0) {
-        //To check if the user id is correct
-        checkUserId(options->getUserId());
-        sqlRequest=sqlListofAuthAccountInitial;
-        addOptionRequest("userid", options->getUserId(), sqlRequest);
-     }
-     else {
-       if(!isListAll) {
-        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
-     }
+    if ((!userServer.isAdmin()) && (userIdSize!=0 || isListAll)) {
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
     }
 
-     if(authSystemIdSize!=0) {
-        //To check if the machine id is correct
-        checkAuthSystemId(options->getAuthSystemId());
-        if(!isListAll && userIdSize==0) {
-          sqlRequest=sqlListofAuthAccountInitial;
-          addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
-        }
-        addOptionRequest("authsystemid", options->getAuthSystemId(), sqlRequest);
-     }
+    //The admin option
+    if(userIdSize!=0) {
+      //To check if the user id is correct
+      checkUserId(options->getUserId());
+      sqlRequest=sqlListofAuthAccountInitial;
+      addOptionRequest("userid", options->getUserId(), sqlRequest);
+    }
+    else {
+      if(!isListAll) {
+        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      }
+    }
+
+    if(authSystemIdSize!=0) {
+      //To check if the machine id is correct
+      checkAuthSystemId(options->getAuthSystemId());
+      if(!isListAll && userIdSize==0) {
+        sqlRequest=sqlListofAuthAccountInitial;
+        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      }
+      addOptionRequest("authsystemid", options->getAuthSystemId(), sqlRequest);
+    }
 
   }
 
@@ -103,8 +103,11 @@ public:
   UMS_Data::ListAuthAccounts*
   list()
   {
-    std::string sqlListofAuthAccount = "SELECT authsystemid, userid, aclogin "
-    " from authaccount, authsystem, users where authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid";
+    std::string sql = (boost::format("SELECT authsystemid, userid, aclogin"
+                                     " FROM authaccount, authsystem, users"
+                                     " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
+                                     "  AND authaccount.users_numuserid=users.numuserid"
+                                     "  AND authaccount.status!=%1%")%vishnu::STATUS_DELETED).str();
 
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
@@ -119,9 +122,9 @@ public:
     if (userServer.exist()) {
 
       //To process options
-      processOptions(userServer, mparameters, sqlListofAuthAccount);
+      processOptions(userServer, mparameters, sql);
 
-      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseVishnu->getResult(sqlListofAuthAccount.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseVishnu->getResult(sql.c_str()));
       if (ListofAuthAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofAuthAccount->getNbTuples(); ++i) {
           results.clear();
@@ -160,9 +163,9 @@ public:
   {
   }
 
-  private:
+private:
 
-   /////////////////////////////////
+  /////////////////////////////////
   // Attributes
   /////////////////////////////////
 

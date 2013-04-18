@@ -239,6 +239,7 @@ CREATE TABLE `authaccount` (
   `aclogin` varchar(255) DEFAULT NULL,
   `authsystem_authsystemid` bigint(20) NOT NULL,
   `users_numuserid` bigint(20) NOT NULL,
+  `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`authaccountid`),
   KEY `FK2C887F85A63719F2` (`users_numuserid`),
   KEY `FK2C887F85FC5A9563` (`authsystem_authsystemid`),

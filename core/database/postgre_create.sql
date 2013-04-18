@@ -217,7 +217,8 @@ CREATE TABLE authaccount (
     authaccountid bigint NOT NULL,
     aclogin character varying(255),
     authsystem_authsystemid bigint NOT NULL,
-    users_numuserid bigint NOT NULL
+    users_numuserid bigint NOT NULL,
+    status integer
 );
 
 
