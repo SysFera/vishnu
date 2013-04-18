@@ -33,6 +33,7 @@
 #include "Session.hpp"                  // for Session
 #include "User.hpp"                     // for User
 #include "ecorecpp/mapping/EList.hpp"   // for EList
+#include "utilVishnu.hpp"
 
 
 using namespace std;
@@ -102,7 +103,6 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   }
 
   int  status = session->getStatus();
-  std::string statusStr = (status?"ACTIVE":"INACTIVE");
   int  closePolicy = session->getClosePolicy();
   std::string closePolicyStr = (closePolicy==1?"CLOSE_ON_TIMEOUT":(closePolicy==2?"CLOSE_ON_DISCONNECT":"UNDEFINED"));
   int  timeOut = session->getTimeout();
@@ -114,7 +114,7 @@ operator<<(std::ostream& os, const UMS_Data::Session_ptr& session) {
   os << setw(25) << right << "DateLastConnect: "  << dateLastConnectStr << endl;
   os << setw(25) << right << "DateCreation: "  << dateCreateStr << endl ;
   os << setw(25) << right << "DateClosure: " << dateCloseStr << endl;
-  os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
+  os << setw(25) << right << "Status: " << status << " (" << vishnu::statusToString(session->getStatus()) << ")" << endl;
   os << setw(25) << right << "ClosePolicy: " << closePolicy << " (" << closePolicyStr << ")"  << endl;
   os << setw(25) << right << "TimeOut: " << timeOut << " seconds" << endl;
   os << setw(25) << right << "AuthId: " << authenId;
@@ -404,7 +404,6 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
   UMS_Data::AuthType type = authSystem->getType();
   std::string typeStr=convertAuthTypeToString(type);
   UMS_Data::StatusType status=authSystem->getStatus();
-  std::string statusStr = (status?"ACTIVE":"INACTIVE");
   std::string authLogin = authSystem->getAuthLogin();
   std::string authPassword = authSystem->getAuthPassword();
   UMS_Data::EncryptionMethod meth =authSystem->getUserPasswordEncryption();
@@ -416,9 +415,9 @@ operator<<(std::ostream& os, const UMS_Data::AuthSystem_ptr& authSystem){
   os << setw(25) << right << "URI: "  << URI << endl;
   os << setw(25) << right << "login: "  << authLogin << endl;
   os << setw(25) << right << "password: "  << authPassword << endl;
-  os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
-  os << setw(25) << right << "type: " << type << " (" << typeStr << ")" << endl;
-  os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")" << endl;
+  os << setw(25) << right << "Status: " << status << " (" << vishnu::statusToString(status) << ")\n";
+  os << setw(25) << right << "type: " << type << " (" << typeStr << ")\n";
+  os << setw(25) << right << "meth: " << meth << " (" << userPasswordEncryption<< ")\n";
 
   std::string ldapBase=authSystem->getLdapBase();
   if (false == ldapBase.empty()) {
@@ -467,7 +466,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
     maxLdapbaseSize = max(maxLdapbaseSize, ldapbase.size());
 
     status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
-    statusStr = (status?"ACTIVE":"INACTIVE");
+    statusStr = vishnu::statusToString(status);
     maxStatusSize = max(maxStatusSize, statusStr.size());
   }
 
@@ -494,8 +493,7 @@ operator<<(std::ostream& os, UMS_Data::ListAuthSystems& lsAuthSystems) {
 
     os << setw(maxLdapbaseSize+2) << left << ldapbase;
     status = (lsAuthSystems.getAuthSystems().get(i))->getStatus();
-    statusStr = (status?"ACTIVE":"INACTIVE");
-    os << setw(maxStatusSize+2) << left <<  statusStr;
+    os << setw(maxStatusSize+2) << left <<  vishnu::statusToString(status);
     os << endl;
   }
 
@@ -601,7 +599,6 @@ ostream&
   std::string descr = machine->getMachineDescription();
   std::string language = machine->getLanguage();
   int status = machine->getStatus();
-  std::string statusStr = (status?"ACTIVE":"INACTIVE");
 
   os << "============ Machine for " << name << "===========" << std::endl;
   os << setw(25) << right << "Name: " << name << endl;
@@ -609,7 +606,7 @@ ostream&
   os << setw(25) << right << "Site: "  << site << endl;
   os << setw(25) << right << "Description: "  << descr << endl ;
   os << setw(25) << right << "Language: " << language << endl;
-  os << setw(25) << right << "Status: " << status << " (" << statusStr << ")" << endl;
+  os << setw(25) << right << "Status: " << status << " (" << vishnu::statusToString(status) << ")" << endl;
 
 
  return os;
@@ -668,7 +665,7 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxMachineIdSize+2) << left << machineId;
      os << setw(maxSiteSize+2) << left << site;
-     os << setw(8) << left << (status?"ACTIVE":"INACTIVE");
+     os << setw(8) << left << vishnu::statusToString(status);
      os << endl;
   }
 
@@ -860,13 +857,12 @@ operator<<(std::ostream& os, const UMS_Data::User_ptr& user) {
   int status = user->getStatus();
 
   std::string privilegeStr = (privilege?"ADMIN":"USER");
-  std::string statusStr = (status?"ACTIVE":"INACTIVE");
 
   os << "============ User for " << userId << "===========" << std::endl;
   os << setw(25) << right << "FirstName: " << firstName << endl;
   os << setw(25) << right << "LastName: " << lastName << endl;
   os << setw(25) << right << "Privilege: "  << privilege << " (" << privilegeStr << ")" << endl;
-  os << setw(25) << right << "Status: "  << status << " (" << statusStr << ")" << endl;
+  os << setw(25) << right << "Status: "  << status << " (" << vishnu::statusToString(status) << ")" << endl;
   os << setw(25) << right << "Mail: "  << email << endl ;
   os << setw(25) << right << "UserId: " << userId << endl;
 
@@ -926,7 +922,7 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      os << setw(maxLastnameSize+2) << left << lastname;
      os << setw(maxUserIdSize+2) << left << userId;
      os << setw(11) << left << privilege ;
-     os << setw(8) << left << (status?"ACTIVE":"INACTIVE") ;
+     os << setw(8) << left << vishnu::statusToString(status);
      os << endl;
 
   }

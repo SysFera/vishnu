@@ -6,108 +6,116 @@
 #include <map>
 
 namespace vishnu {
-/**
+  /**
  * \brief Define a constant type
  */
-typedef enum {
-  NONE_PARAMETER,
-  BOOL_PARAMETER,
-  INT_PARAMETER,
-  ULONG_PARAMETER,
-  STRING_PARAMETER,
-  URI_PARAMETER
-} c_type_t ;
+  typedef enum {
+    NONE_PARAMETER,
+    BOOL_PARAMETER,
+    INT_PARAMETER,
+    ULONG_PARAMETER,
+    STRING_PARAMETER,
+    URI_PARAMETER
+  } c_type_t ;
 
-/**
+  /**
  * \brief Define a parameter type
  */
 
-typedef enum {
-  VISHNUID=0,
-  DBTYPE,
-  DBHOST,
-  DBPORT,
-  DBNAME,
-  DBUSERNAME,
-  DBPASSWORD,
-  SENDMAILSCRIPT,
-  BATCHTYPE,
-  BATCHVERSION,
-  MACHINEID,
-  TIMEOUT,
-  REMOTEBINDIR,
-  INTERVALMONITOR,
-  DBPOOLSIZE,
-  AUTHENTYPE,
-  DEFAULTBATCHCONFIGFILE,
-  URLSUPERVISOR,
-  DISP_URIADDR,
-  DISP_URISUBS,
-  DISP_NBTHREAD,
-  FMS_URIADDR,
-  IMS_URIADDR,
-  TMS_URIADDR,
-  UMS_URIADDR,
-  CLOUDENDPOINT,
-  DEBUG_LEVEL
-} param_type_t;
+  typedef enum {
+    VISHNUID=0,
+    DBTYPE,
+    DBHOST,
+    DBPORT,
+    DBNAME,
+    DBUSERNAME,
+    DBPASSWORD,
+    SENDMAILSCRIPT,
+    BATCHTYPE,
+    BATCHVERSION,
+    MACHINEID,
+    TIMEOUT,
+    REMOTEBINDIR,
+    INTERVALMONITOR,
+    DBPOOLSIZE,
+    AUTHENTYPE,
+    DEFAULTBATCHCONFIGFILE,
+    URLSUPERVISOR,
+    DISP_URIADDR,
+    DISP_URISUBS,
+    DISP_NBTHREAD,
+    FMS_URIADDR,
+    IMS_URIADDR,
+    TMS_URIADDR,
+    UMS_URIADDR,
+    CLOUDENDPOINT,
+    DEBUG_LEVEL
+  } param_type_t;
 
-/**
+  /**
  * \brief For cloud
  */
-typedef enum {
-  CLOUD_ENDPOINT,
-  CLOUD_USER,
-  CLOUD_USER_PASSWORD,
-  CLOUD_TENANT,
-  CLOUD_VM_IMAGE,
-  CLOUD_VM_USER,
-  CLOUD_VM_USER_KEY,
-  CLOUD_DEFAULT_FLAVOR,
-  CLOUD_NFS_SERVER,
-  CLOUD_NFS_MOUNT_POINT
-} cloud_env_vars_t;
+  typedef enum {
+    CLOUD_ENDPOINT,
+    CLOUD_USER,
+    CLOUD_USER_PASSWORD,
+    CLOUD_TENANT,
+    CLOUD_VM_IMAGE,
+    CLOUD_VM_USER,
+    CLOUD_VM_USER_KEY,
+    CLOUD_DEFAULT_FLAVOR,
+    CLOUD_NFS_SERVER,
+    CLOUD_NFS_MOUNT_POINT
+  } cloud_env_vars_t;
 
-/**
+  /**
  * \brief States of jobs
  */
-typedef enum {
-  STATE_UNDEFINED=0,
-  STATE_SUBMITTED=1,
-  STATE_QUEUED=2,
-  STATE_WAITING=3,
-  STATE_RUNNING=4,
-  STATE_COMPLETED=5,
-  STATE_CANCELLED=6,
-  STATE_DOWNLOADED=7,
-  STATE_FAILED=8
-} job_status_t;
+  typedef enum {
+    STATE_UNDEFINED=0,
+    STATE_SUBMITTED=1,
+    STATE_QUEUED=2,
+    STATE_WAITING=3,
+    STATE_RUNNING=4,
+    STATE_COMPLETED=5,
+    STATE_CANCELLED=6,
+    STATE_DOWNLOADED=7,
+    STATE_FAILED=8
+  } job_status_t;
 
+  /**
+   * \brief States of jobs
+   */
+  typedef enum {
+    STATUS_UNDEFINED=-1,
+    STATUS_LOCKED=0,
+    STATUS_ACTIVE=1,
+    STATUS_DELETED=2
+  } component_status_t;
 
-
-/**
+  /**
  * \brief A convenient data type to store a parameter
  */
-struct param_t {
-  /**
+  struct param_t {
+    /**
    * \brief key to retrieve the parameter
    */
-  param_type_t key;
-  /**
+    param_type_t key;
+    /**
    * \brief the value of the parameter
    */
-  const std::string value;
-  /**
+    const std::string value;
+    /**
    * \brief the type of the parameter
    */
-  c_type_t type;
-};
+    c_type_t type;
+  };
 
-/**
+  /**
  * \brief An array to store all parameters
  */
-extern param_t params[];  //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
-extern std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS;
+  extern param_t params[];  //%RELAX<MISRA_3_1_3> Because this table is defined in constants.cpp
+  extern std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS;
 }
 
 #endif /* _CONSTANTS_HPP_ */

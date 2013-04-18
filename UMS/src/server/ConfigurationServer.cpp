@@ -5,6 +5,7 @@
  * \date 31/01/2011
  */
 
+#include <boost/format.hpp>
 #include "ConfigurationServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
@@ -30,7 +31,7 @@ ConfigurationServer::ConfigurationServer(SessionServer session):msessionServer(s
  * \param session The object which encapsulates session data
  */
 ConfigurationServer::ConfigurationServer(UMS_Data::Configuration*& configuration, SessionServer session)
-:mconfiguration(configuration), msessionServer(session) {
+  :mconfiguration(configuration), msessionServer(session) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -42,21 +43,28 @@ ConfigurationServer::ConfigurationServer(UMS_Data::Configuration*& configuration
 int
 ConfigurationServer::save() {
 
-  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status from users "
-  "where not userid='"+ROOTUSERNAME+"'";
+  std::string sqlListofUsers = "SELECT userid, pwd, firstname, lastname, privilege, email, status "
+                               " FROM users "
+                               " WHERE not userid='"+ROOTUSERNAME+"'";
 
-  std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description from machine, description "
-  "where machine.nummachineid = description.machine_nummachineid";
+  std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description"
+                                  " FROM machine, description "
+                                  " WHERE machine.nummachineid = description.machine_nummachineid";
 
   std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
-  "from account, machine, users where account.machine_nummachineid=machine.nummachineid and "
-  "account.users_numuserid=users.numuserid";
+                                      " FROM account, machine, users"
+                                      " WHERE account.machine_nummachineid=machine.nummachineid "
+                                      "  AND account.users_numuserid=users.numuserid";
 
-  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status, ldapbase from authsystem, ldapauthsystem "
-                                     " where ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid";
+  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, "
+                                     "       userpwdencryption, authtype, authsystem.status, ldapauthsystem.ldapbase"
+                                     " FROM authsystem, ldapauthsystem "
+                                     " WHERE ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid";
 
   std::string sqlListofAuthAccounts = "SELECT authsystemid, userid, aclogin "
-    " from authaccount, authsystem, users where authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid";
+                                      " FROM authaccount, authsystem, users"
+                                      " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid "
+                                      "  AND authaccount.users_numuserid=users.numuserid";
 
   std::vector<std::string>::iterator ii;
   std::vector<std::string> results;
@@ -196,11 +204,30 @@ int ConfigurationServer::restore(int vishnuId) {
   std::string sqlCodeDescMachine = "";
   std::string sqlcodeAuthSystem = "";
   std::string sqlcodeLdapAuthSystem = "";
-  std::string cleanAllModelInfo  = "delete from parameter_value; delete from work; delete from project_machine;  delete from user_role; delete from project_role_permissions;"
-  "delete from project_member_project_role; delete from project_member; delete from project_role; delete from project_application; delete from notification;"
-  "delete from application_parameter; delete from application_version; delete from application; delete from project; delete from acl_entry;"
-  "delete from acl_object_identity; delete from acl_class; delete from acl_sid; delete from role; delete from global_project_role_permissions;"
-  "delete from global_project_role; delete from permission; delete from test_report; delete from permission_module; ";
+  std::string cleanAllModelInfo  = "DELETE FROM parameter_value;"
+                                   "DELETE FROM work; "
+                                   "DELETE FROM project_machine;"
+                                   "DELETE FROM user_role; "
+                                   "DELETE FROM project_role_permissions;"
+                                   "DELETE FROM project_member_project_role; "
+                                   "DELETE FROM project_member; "
+                                   "DELETE FROM project_role;"
+                                   "DELETE FROM project_application; "
+                                   "DELETE FROM notification;"
+                                   "DELETE FROM application_parameter; "
+                                   "DELETE FROM application_version; "
+                                   "DELETE FROM application; "
+                                   "DELETE FROM project; "
+                                   "DELETE FROM acl_entry;"
+                                   "DELETE FROM acl_object_identity; "
+                                   "DELETE FROM acl_class; "
+                                   "DELETE FROM acl_sid; "
+                                   "DELETE FROM role; "
+                                   "DELETE FROM global_project_role_permissions;"
+                                   "DELETE FROM global_project_role; "
+                                   "DELETE FROM permission; "
+                                   "DELETE FROM test_report; "
+                                   "DELETE FROM permission_module; ";
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
@@ -210,8 +237,12 @@ int ConfigurationServer::restore(int vishnuId) {
     //if the user exists
     if (userServer.exist()) {
 
-      mdatabaseVishnu->process(cleanAllModelInfo+" DELETE FROM users where not userid='"+ROOTUSERNAME+"';"
-      "DELETE FROM machine; DELETE FROM account; DELETE FROM authsystem; delete FROM authaccount;");
+      mdatabaseVishnu->process(cleanAllModelInfo+
+                               "DELETE FROM users WHERE not userid='"+ROOTUSERNAME+"';"
+                               "DELETE FROM machine;"
+                               "DELETE FROM account;"
+                               "DELETE FROM authsystem; "
+                               "DELETE FROM authaccount;");
 
       //To get all users
       for(unsigned int i = 0; i < mconfiguration->getListConfUsers().size(); i++) {
@@ -245,7 +276,7 @@ int ConfigurationServer::restore(int vishnuId) {
         localAccountServer.add();
       }
 
-       //To get all user-authentication systems
+      //To get all user-authentication systems
       for(unsigned int i = 0; i < mconfiguration->getListConfAuthSystems().size(); i++) {
         UMS_Data::AuthSystem_ptr authsystem = mconfiguration->getListConfAuthSystems().get(i);
         sqlcodeAuthSystem.append(authSystemToSql(authsystem, vishnuId));
@@ -310,15 +341,19 @@ ConfigurationServer::getData() {
 std::string
 ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 
-  std::string sqlInsert = "insert into users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
-  " privilege, email, passwordstate, status) values ";
-
-  //Remove 1 on status because of the storage of EMF litteral on file which is shifted of 1
-  return (sqlInsert + "(" + convertToString(vishnuId) +", "
-  "'"+user->getUserId()+"','"+user->getPassword()+"','"
-  + user->getFirstname()+"','"+user->getLastname()+"',"+
-  convertToString(user->getPrivilege()) +",'"+user->getEmail() +"', "
-  "1, "+convertToString(user->getStatus()-1)+");");
+  std::string sqlInsert = (boost::format("INSERT INTO users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
+                                         " privilege, email, passwordstate, status)"
+                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%', %6%, '%7%', %8%, %9%)")
+                           %vishnuId
+                           %user->getUserId()
+                           %user->getPassword()
+                           %user->getFirstname()
+                           %user->getLastname()
+                           %user->getPrivilege()
+                           %user->getEmail()
+                           %vishnu::STATUS_ACTIVE
+                           %convertToString(user->getStatus()-1)).str(); //Remove 1 on status because of EMF litteral storage
+  return sqlInsert;
 }
 
 /**
@@ -329,12 +364,15 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
  */
 std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
-  std::string sqlInsert = "insert into machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey) values ";
 
-  //Remove 1 on status because of the storage of EMF litteral on file which is shifted of 1
-  sqlInsert.append("("+convertToString(vishnuId)+",'"+machine->getName()+"'"
-  ",'"+ machine->getSite()+"','"+machine->getMachineId()+"',"
-  +convertToString(machine->getStatus()-1)+",'"+machine->getSshPublicKey() +"');");
+  std::string sqlInsert = (boost::format("INSERT INTO machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey)"
+                                         " VALUES (%1%, '%2%', '%3%', '%4%', %5%, '%6%'')")
+                           %vishnuId
+                           %machine->getName()
+                           %machine->getSite()
+                           %machine->getMachineId()
+                           %convertToString(machine->getStatus()-1) //Remove 1 on status because of EMF litteral storage
+                           %machine->getSshPublicKey()).str();
 
   return sqlInsert;
 }
@@ -350,9 +388,9 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
   MachineServer machineServer = MachineServer(machinetmp);
   std::string res;
   res = "insert into description (machine_nummachineid, lang, "
-  "description) values "
-  "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
-  "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');";
+        "description) values "
+        "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
+        "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');";
 
   delete machinetmp;
   return res;
@@ -367,16 +405,16 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
 std::string
 ConfigurationServer::authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vishnuId) {
   std::string sqlInsert= "insert into authsystem (vishnu_vishnuid, "
-  "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
-
+                         "authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status) values ";
   //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
+  std::cerr << sqlInsert << "\n";
   return (sqlInsert + "(" + convertToString(vishnuId)+", "
-                                  "'"+authsystem->getAuthSystemId()+"','"+authsystem->getName()+"','"
-                                  + authsystem->getURI()+"','"+authsystem->getAuthLogin()+"', '"+
-                                  authsystem->getAuthPassword() + "',"
-                                  +convertToString(authsystem->getUserPasswordEncryption()-1)+ ","
-                                  +convertToString(authsystem->getType()-1) +","
-                                  +convertToString(authsystem->getStatus()-1)+");");
+          "'"+authsystem->getAuthSystemId()+"','"+authsystem->getName()+"','"
+          + authsystem->getURI()+"','"+authsystem->getAuthLogin()+"', '"+
+          authsystem->getAuthPassword() + "',"
+          +convertToString(authsystem->getUserPasswordEncryption()-1)+ ","
+          +convertToString(authsystem->getType()-1) +","
+          +convertToString(authsystem->getStatus()-1)+");");
 
 }
 
@@ -392,12 +430,12 @@ ConfigurationServer::ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem) {
 
   //If the Ldap base is defined and the type is ldap
   if ((authsystem->getLdapBase().size() != 0)
-    //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
-    && ((authsystem->getType()-1) == LDAPTYPE) ) { // LDAP
+      //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
+      && ((authsystem->getType()-1) == LDAPTYPE) ) { // LDAP
 
     std::string numAuth = authSystemServer.getAttribut("where authsystemid='"+authsystem->getAuthSystemId()+"'");
     return (" insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
-                            "("+numAuth+", '"+authsystem->getLdapBase()+"');");
+            "("+numAuth+", '"+authsystem->getLdapBase()+"');");
   }
 
   return "";

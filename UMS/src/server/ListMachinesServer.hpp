@@ -33,7 +33,7 @@ public:
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListMachinesServer(const SessionServer session):
-  QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
+    QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(session)
   {
     mcommandName = "vishnu_list_machines";
   }
@@ -43,7 +43,7 @@ public:
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
   ListMachinesServer(UMS_Data::ListMachineOptions_ptr params, const SessionServer& session):
-  QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
+    QueryServer<UMS_Data::ListMachineOptions, UMS_Data::ListMachines>(params, session)
   {
     mcommandName = "vishnu_list_machines";
   }
@@ -58,12 +58,14 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListMachineOptions_ptr& options, std::string& sqlRequest)
   {
-    std::string sqlListofMachinesWithJointure = "SELECT machineid, name, site, machine.status, lang, description, userid "
-    " from machine, description, account, users where machine.nummachineid = description.machine_nummachineid "
-    " and account.machine_nummachineid=machine.nummachineid and account.users_numuserid=users.numuserid";
-
+    std::string sqlJoinLstMachines = (boost::format("SELECT machineid, name, site, machine.status,"
+                                                    "        lang, description, userid "
+                                                    " FROM machine, description, account, users"
+                                                    " WHERE machine.nummachineid = description.machine_nummachineid"
+                                                    " AND account.machine_nummachineid = machine.nummachineid "
+                                                    " AND account.users_numuserid = users.numuserid "
+                                                    " AND machine.status != %1%")%vishnu::STATUS_DELETED).str();
     std::string sqlListofMachinesIntial =  sqlRequest;
-
     size_t userIdSize = options->getUserId().size();
     size_t machineIdSize = options->getMachineId().size();
     bool isListAll = options->isListAllMachine();
@@ -74,8 +76,8 @@ public:
     }
 
     if(!isListAll) {
-       sqlRequest = sqlListofMachinesWithJointure;
-       addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      sqlRequest = sqlJoinLstMachines;
+      addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
     }
 
     //The admin option
@@ -83,7 +85,7 @@ public:
       //To check if the user id is correct
       checkUserId(options->getUserId());
 
-      sqlRequest = sqlListofMachinesWithJointure;
+      sqlRequest = sqlJoinLstMachines;
       addOptionRequest("userid", options->getUserId(), sqlRequest);
     }
 
@@ -92,22 +94,23 @@ public:
       checkMachineId(options->getMachineId());
 
       if(!isListAll && userIdSize==0) {
-         sqlRequest=sqlListofMachinesIntial;
+        sqlRequest=sqlListofMachinesIntial;
       }
       addOptionRequest("machineid", options->getMachineId(), sqlRequest);
     }
 
- }
+  }
 
- /**
+  /**
   * \brief Function to list machines information
   * \return The pointer to the UMS_Data::ListMachines containing machines information
   * \return raises an exception on error
   */
- UMS_Data::ListMachines* list() {
-    std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description from machine, description "
-    "where machine.nummachineid = description.machine_nummachineid";
-
+  UMS_Data::ListMachines* list() {
+      std::string sqlListofMachines = (boost::format("SELECT machineid, name, site, status, lang, description"
+                                                    " FROM machine, description"
+                                                    " WHERE machine.nummachineid = description.machine_nummachineid"
+                                                    " AND machine.status != %1%")%vishnu::STATUS_DELETED).str();
     std::vector<std::string>::iterator ii;
     std::vector<std::string> results;
     UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
@@ -164,9 +167,9 @@ public:
   {
   }
 
-  private:
+private:
 
-   /////////////////////////////////
+  /////////////////////////////////
   // Attributes
   /////////////////////////////////
 

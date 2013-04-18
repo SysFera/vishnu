@@ -170,6 +170,12 @@ private:
    */
   void
   retrieveSpecificParams(const std::string& specificParams);
+
+  /**
+   * \brief Function to replace some environment varia*bles in a string
+   * \param scriptContent The string content to modify
+   */
+  void replaceEnvVariables(const char* scriptPath);
 };
 
 #endif /* DELTACLOUDSERVER_HPP_ */

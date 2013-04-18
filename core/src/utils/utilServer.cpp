@@ -9,6 +9,7 @@
 
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/format.hpp>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
@@ -28,7 +29,13 @@ using namespace boost::posix_time;
 
 bool
 vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
-  std::string req = "select machineid from process where machineid='"+mid+"' and vishnuname='"+type+"' and dietname='"+urlsup+"'";
+
+  std::string req = (boost::format("SELECT machineid"
+                                   " FROM process"
+                                   " WHERE machineid='%1%'"
+                                   " AND vishnuname='%2%'"
+                                   " AND dietname='%3%'"
+                                   " AND pstatus<>%4%")%mid %type %urlsup %vishnu::STATUS_DELETED).str();
   DbFactory factory;
   Database *mdatabase;
   mdatabase = factory.getDatabaseInstance();
@@ -265,7 +272,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
     table="job";
     fields=" (job_owner_id, machine_id, workId, vsession_numsessionid) ";
     val= " ((select max(numuserid) from users), (select max(nummachineid) from machine),"
-      "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
+         "NULL, (select max(numsessionid) from vsession)) "; //FIXME insert invalid value then update it
     primary="numjobid";
     break;
   case FILETRANSFERT:
@@ -283,15 +290,15 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
   case WORK:
     //FIXME : no auto-increment field in work
     fields = " (application_id"
-      ",date_created,done_ratio, estimated_hours,identifier,"
-      "last_updated, nbcpus, owner_id, priority, "
-      "project_id, "
-      "start_date, status, subject) ";
+             ",date_created,done_ratio, estimated_hours,identifier,"
+             "last_updated, nbcpus, owner_id, priority, "
+             "project_id, "
+             "start_date, status, subject) ";
     val = " ((select min(id) from application_version),"
-      " CURRENT_TIMESTAMP, 1, 1.0, 't',"
-      " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
-      "(select min(id) from project), "
-      "CURRENT_TIMESTAMP, 1,'toto') ";
+          " CURRENT_TIMESTAMP, 1, 1.0, 't',"
+          " CURRENT_TIMESTAMP, 1, (select min(numuserid) from users), 1,"
+          "(select min(id) from project), "
+          "CURRENT_TIMESTAMP, 1,'toto') ";
     table = "work";
     primary="id";
     break;
@@ -445,7 +452,7 @@ vishnu::getObjectId(int vishnuId,
 
   if (format.size() != 0) {
     idGenerated =
-      getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+        getGeneratedName(format.c_str(), counter, type, stringforgeneration);
 
     if (idGenerated.size() != 0) {
     } else {
@@ -546,10 +553,10 @@ vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
   try {
     bfs::create_directories(path);
     if (isWorkingdir && chmod(path.c_str(),  // a working directory has the permissions rwxt
-                  S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
-                  |S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
-                  |S_IROTH|S_IWOTH|S_IXOTH // RWX for other
-                  |S_ISVTX) != 0) {       // Sticky bit
+                              S_IRUSR|S_IWUSR|S_IXUSR // RWX for owner
+                              |S_IRGRP|S_IWGRP|S_IXGRP // RWX for group
+                              |S_IROTH|S_IWOTH|S_IXOTH // RWX for other
+                              |S_ISVTX) != 0) {       // Sticky bit
       throw SystemException(ERRCODE_INVDATA, "Unable to set suitable permissions on the working directory "
                             + path) ;
     }

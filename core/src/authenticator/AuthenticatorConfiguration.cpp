@@ -27,7 +27,7 @@ void AuthenticatorConfiguration::check() throw (UserException)
 {
   string authenTypeStr;
   if (!mexecConfig.getConfigValue(vishnu::AUTHENTYPE, authenTypeStr)) {
-    std::cerr << "[INFO][UMS] The default authentication mode has been selected";
+    std::cerr << "[INFO][UMS] The default authentication mode has been selected\n";
     authenTypeStr = "UMS";
   }
 

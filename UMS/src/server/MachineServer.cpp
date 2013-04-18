@@ -19,7 +19,7 @@ using namespace vishnu;
 * \param machine The machine data structure
 */
 MachineServer::MachineServer(UMS_Data::Machine*& machine):
-mmachine(machine)
+  mmachine(machine)
 {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -31,7 +31,7 @@ mmachine(machine)
 * \param session The object which encapsulates session data
 */
 MachineServer::MachineServer(UMS_Data::Machine*& machine, SessionServer& session):
-mmachine(machine), msessionServer(session)
+  mmachine(machine), msessionServer(session)
 {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
@@ -67,7 +67,7 @@ MachineServer::add(int vishnuId) {
         //if the machineId does not exist
         if (getAttribut("where machineid='"+mmachine->getMachineId()+"'","count(*)") == "1") {
           //To active the machine status
-          mmachine->setStatus(ACTIVE_STATUS);
+          mmachine->setStatus(vishnu::STATUS_ACTIVE);
 
           sqlUpdate+="name='"+mmachine->getName()+"',";
           sqlUpdate+="site='"+mmachine->getSite()+"',";
@@ -121,42 +121,44 @@ MachineServer::update() {
     if (userServer.isAdmin()) {
 
       //if the machine to update exists
-      if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
+      std::string sqlcond = (boost::format("WHERE machineid = '%1%'"
+                                           " AND status != %2%")%mmachine->getMachineId() %vishnu::STATUS_DELETED).str();
+      if (!getAttribut(sqlcond, "nummachineid").empty()) {
 
         //if a new machine name has been defined
-        if (mmachine->getName().size() != 0) {
+        if (!mmachine->getName().empty()) {
           sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
-          where machineId='"+mmachine->getMachineId()+"';");
+                            where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //if a new site has been defined
-        if (mmachine->getSite().size() != 0) {
+        if (!mmachine->getSite().empty()) {
           sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
-          where machineId='"+mmachine->getMachineId()+"';");
+                            where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //If a new status has been defined
-        if (mmachine->getStatus() != UNDEFINED_VALUE) {
+        if (mmachine->getStatus() != vishnu::STATUS_UNDEFINED) {
           sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
-          " where machineId='"+mmachine->getMachineId()+"';");
+                            " where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //if a new ssh public key has been defined
-        if (mmachine->getSshPublicKey().size() != 0) {
+        if (!mmachine->getSshPublicKey().empty()) {
           sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'"
-          " where machineId='"+mmachine->getMachineId()+"';");
+                            " where machineId='"+mmachine->getMachineId()+"';");
         }
 
         //if a new language has been defined
-        if (mmachine->getLanguage().size() != 0) {
+        if (!mmachine->getLanguage().empty()) {
           sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'"
-          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+                            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         //if a new machine description has been defined
-        if (mmachine->getMachineDescription().size() != 0) {
+        if (!mmachine->getMachineDescription().empty()) {
           sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'"
-          " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+                            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         //If there is a change
@@ -172,8 +174,8 @@ MachineServer::update() {
 
     } //End if the user is an admin
     else {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
     }
   }//End if the user exists
   else {
@@ -189,32 +191,8 @@ MachineServer::update() {
 */
 int
 MachineServer::deleteMachine() {
-
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-  //if the user exists
-  if (userServer.exist()) {
-    //if the user is an admin
-    if (userServer.isAdmin()) {
-      //if the machine to update exists
-      if (getAttribut("where machineid='"+mmachine->getMachineId()+"'").size() != 0) {
-        mdatabaseVishnu->process("DELETE FROM machine where machineid='"+mmachine->getMachineId()+"'");
-      } //End if the machine to update exists
-      else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_MACHINE);
-        throw e;
-      }
-    } //End if the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
-    }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
-  }
-  return 0;
+  mmachine->setStatus(vishnu::STATUS_DELETED);
+  return update();
 } //END: deleteMachine()
 
 /**
@@ -274,11 +252,18 @@ MachineServer::getMachineName() {
 */
 void MachineServer::checkMachine() {
 
-  if(getAttribut("where machineid='"+mmachine->getMachineId()+"'").empty()){
+  std::string sqlcond ("");
+
+  sqlcond = (boost::format("WHERE machineid = '%1%'"
+                           " AND status != %2%")%mmachine->getMachineId() %vishnu::STATUS_DELETED).str();
+  if (getAttribut(sqlcond, "nummachineid").empty()){
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,
-                             (boost::format("The machine id %1% does not exist")%mmachine->getMachineId()).str());
+                             (boost::format("No machine with this id (%1%)")%mmachine->getMachineId()).str());
   }
-  if(getAttribut("where status=1 and  machineid='"+mmachine->getMachineId()+"'").size() == 0) {
+
+  sqlcond = (boost::format("WHERE machineid = '%1%'"
+                           " AND status = %2%")%mmachine->getMachineId() %vishnu::STATUS_LOCKED).str();
+  if(!getAttribut(sqlcond, "nummachineid").empty()) {
     throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);
   }
 }
