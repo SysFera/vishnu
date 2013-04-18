@@ -45,6 +45,9 @@ BOOST_AUTO_TEST_CASE( Machine_base )
 
   BOOST_MESSAGE(" Testing add machine UA6.1B"    );
   {
+
+    BOOST_MESSAGE(m_test_ums_admin_vishnu_login << " " << m_test_ums_admin_vishnu_pwd );
+
     BOOST_CHECK  (connect    (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     ma.setMachineId         (maid);
     ma.setName              (mana);

@@ -54,18 +54,17 @@ LocalAccountServer::add() {
 
         //if the local account does not exist
         if (!exist(numMachine, numUser)) {
-
           if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
             //The sql code to insert the localAccount on the database
             std::string sqlCmd = (boost::format("INSERT INTO account (machine_nummachineid, "
-                                                  "        users_numuserid, aclogin, sshpathkey, home, status)"
-                                                  "VALUES ('%1%', '%2%', '%3%', '%4%', '%5%', %6%)")
-                                    %numMachine
-                                    %numUser
-                                    %mlocalAccount->getAcLogin()
-                                    %mlocalAccount->getSshKeyPath()
-                                    %mlocalAccount->getHomeDirectory()
-                                    %vishnu::STATUS_ACTIVE).str();
+                                                "        users_numuserid, aclogin, sshpathkey, home, status)"
+                                                "VALUES ('%1%', '%2%', '%3%', '%4%', '%5%', %6%)")
+                                  %numMachine
+                                  %numUser
+                                  %mlocalAccount->getAcLogin()
+                                  %mlocalAccount->getSshKeyPath()
+                                  %mlocalAccount->getHomeDirectory()
+                                  %vishnu::STATUS_ACTIVE).str();
             mdatabaseVishnu->process(sqlCmd);
             msshpublickey = machineServer.getAttribut("where "
                                                       "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
@@ -93,11 +92,7 @@ LocalAccountServer::add() {
 */
 int
 LocalAccountServer::update() {
-  std::string numMachine;
-  std::string numUser;
-  std::string sqlCommand = "";
 
-  //Creation of the object use
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
 
@@ -112,65 +107,60 @@ LocalAccountServer::update() {
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
         userServer.isAdmin()){
 
-      //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
-                                    " and status=1").size() != 0) {
+      // Check if if the machine exists and is not locked
+      std::string sqlcond = (boost::format("WHERE machineid='%1%'"
+                                           " AND status=%2%"
+                                           )%mlocalAccount->getMachineId() %vishnu::STATUS_ACTIVE).str();
+      if (!(machineServer.getAttribut(sqlcond, "nummachineid").empty())) {
 
-        //To get the database number id of the machine
-        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
-        //To get the database number id of the user
-        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+        // Get the database number id of the machine
+        sqlcond = (boost::format("WHERE machineid='%1%'")%mlocalAccount->getMachineId()).str();
+        std::string numMachine = machineServer.getAttribut(sqlcond, "nummachineid");
+
+        // Get the database number id of the user
+        sqlcond = (boost::format("WHERE userid='%1%'")%mlocalAccount->getUserId()).str();
+        std::string  numUser = userServer.getAttribut(sqlcond, "numuserid");
 
         //if the local account exists
         if (exist(numMachine, numUser)) {
-
-          //check if the acLogin is not already used
-          if (isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
-            throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
-          }
-
+          std::string fields("");
           //if a new acLogin has been defined
-          if (mlocalAccount->getAcLogin().size() != 0) {
-            sqlCommand.append("UPDATE account SET aclogin='"+mlocalAccount->getAcLogin()+"'"
-                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          if (!mlocalAccount->getAcLogin().empty()) {
+            std::string curField = (boost::format("aclogin='%1%'")%mlocalAccount->getAcLogin()).str();
+            fields += (fields.empty())? curField : ","+curField;
           }
 
           //if a new sshpathkey has been defined
-          if (mlocalAccount->getSshKeyPath().size() != 0) {
-            sqlCommand.append("UPDATE account SET sshpathkey='"+mlocalAccount->getSshKeyPath()+"'"
-                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          if (!mlocalAccount->getSshKeyPath().empty()) {
+            std::string curField = (boost::format("sshpathkey='%1%'")%mlocalAccount->getSshKeyPath()).str();
+            fields += (fields.empty())? curField : ","+curField;
           }
 
           //if a new home directory has been defined
-          if (mlocalAccount->getHomeDirectory().size() != 0) {
-            sqlCommand.append("UPDATE account SET home='"+mlocalAccount->getHomeDirectory()+"'"
-                              " where machine_nummachineid="+numMachine+" and users_numuserid="+numUser+";");
+          if (!mlocalAccount->getHomeDirectory().empty()) {
+            std::string curField = (boost::format("home='%1%'")%mlocalAccount->getHomeDirectory()).str();
+            fields += (fields.empty())? curField : ","+curField;
           }
 
           //If there is a change
-          if (!sqlCommand.empty()) {
-            mdatabaseVishnu->process(sqlCommand.c_str());
+          if (!fields.empty()) {
+            std::string sql = (boost::format("UPDATE account "
+                                             " SET %1%"
+                                             " WHERE machine_nummachineid=%2%"
+                                             "   AND users_numuserid=%3%")%fields %numMachine %numUser).str();
+            mdatabaseVishnu->process(sql);
           }
-
-        }//END if the local account exists
-        else {
-          UMSVishnuException e (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
-          throw e;
+        } else {
+          throw UMSVishnuException (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
         }
-      } //End if the machine exists and it is not locked
-      else {
-        UMSVishnuException e (ERRCODE_UNUSABLE_MACHINE);
-        throw e;
+      } else {
+        throw UMSVishnuException (ERRCODE_UNUSABLE_MACHINE);
       }
-    }//if the session key is for the owner of the local account or the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
-      throw e;
+    } else {
+      throw UMSVishnuException (ERRCODE_SESSIONKEY_NOT_FOUND);
     }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
+  } else {
+    throw UMSVishnuException (ERRCODE_UNKNOWN_USER);
   }
   return 0;
 }
@@ -300,10 +290,10 @@ LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
   }
   std::string sqlcond = (boost::format("WHERE machine_nummachineid = %1%"
                                        " AND aclogin='%2%'"
-                                       " AND status != %3%"
-                                       )%numMachine %acLogin %vishnu::STATUS_DELETED).str();
+                                       " AND status = %3%"
+                                       )%numMachine %acLogin %vishnu::STATUS_ACTIVE).str();
 
-  std::string numUser = getAttribut(sqlcond, "users_numuserid");
+  std::string numUser = getAttribut(sqlcond, "numaccountid");
   return !(numUser.empty());
 }
 

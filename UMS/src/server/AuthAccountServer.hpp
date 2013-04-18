@@ -110,14 +110,11 @@ private:
   checkAuthAccountUserId(UserServer& userServer);
 
   /**
-   * \ brief Function to add a new account or update an existing one
-   * \param sql the sql command to create or update the account.
-   *            This string must contain 3 boost format parameters:
-   *            authsystem_authsystemid=%1%, users_numuserid=%2% and aclogin=%3%
+   * \brief Function to add a new account or update an existing one
    * \param update if true then this is an update, false creates a new account
    * \return raises an exception on error
    */
   int
-  addOrUpdate(const std::string &sql, bool update);
+  addOrUpdate(bool update);
 };
 #endif

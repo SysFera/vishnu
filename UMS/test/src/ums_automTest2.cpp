@@ -52,7 +52,9 @@ BOOST_AUTO_TEST_CASE( User_base )
 
   BOOST_MESSAGE(" Testing adding a user UA4-B");
   {
+    BOOST_MESSAGE(m_test_ums_admin_vishnu_login << " " << m_test_ums_admin_vishnu_pwd );
     BOOST_CHECK(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
+    BOOST_MESSAGE("FIN CONNECT "<< m_test_ums_admin_vishnu_login << " " << m_test_ums_admin_vishnu_pwd );
     BOOST_CHECK(addUser(sess.getSessionKey(), *use)==0);
     BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK(close        (sess.getSessionKey()     )==0);
@@ -67,7 +69,7 @@ BOOST_AUTO_TEST_CASE( User_base )
     use->setEmail(mail);
     BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
     BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
-   
+
   }
 
   
@@ -116,7 +118,7 @@ BOOST_AUTO_TEST_CASE( User_base )
       BOOST_CHECK    (changePassword(uid, np, pwd       )==0);
       BOOST_CHECK  (close        (sess.getSessionKey()                )==0);
     }
-  } 
+  }
   
 }
 
@@ -203,7 +205,7 @@ BOOST_AUTO_TEST_CASE( User_failure )
     
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK    (addUser(sess.getSessionKey(), *use      )==0);
-    BOOST_CHECK    (close        (sess.getSessionKey()               )==0);    
+    BOOST_CHECK    (close        (sess.getSessionKey()               )==0);
     BOOST_CHECK_THROW      (updateUser   (sess.getSessionKey(), *use        ), VishnuException);
     BOOST_CHECK  (connect      (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop)==0);
     BOOST_CHECK    (deleteUser   (sess.getSessionKey(), use->getUserId()     )==0);
@@ -258,7 +260,7 @@ BOOST_AUTO_TEST_CASE( User_failure )
   if (m_test_ums_authen_type.compare("LDAP") != 0) {
     std::string uid = m_test_ums_admin_vishnu_login;
     std::string pwd = m_test_ums_admin_vishnu_pwd;
-   
+
     // Change pwd bad uid
     BOOST_MESSAGE(" Testing change password bad uid U1.3.3E"    );
     {
@@ -267,7 +269,7 @@ BOOST_AUTO_TEST_CASE( User_failure )
       BOOST_CHECK_THROW    (changePassword("bad", pass, "newPwd"), VishnuException);
       
       BOOST_CHECK  (close         (sess.getSessionKey()                  )==0);
-     }
+    }
     // Change pwd bad pwd
     BOOST_MESSAGE(" Testing change password bad pwd U1.3.3E"    );
     {
