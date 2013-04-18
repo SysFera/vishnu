@@ -32,18 +32,18 @@ public:
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
-   ListAuthSystemsServer(const SessionServer& session):
-   QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(session), mcommandName("vishnu_list_auth_systems")
+  ListAuthSystemsServer(const SessionServer& session):
+    QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(session), mcommandName("vishnu_list_auth_systems")
   {
 
-    }
+  }
   /**
    * \param params The object which encapsulates the information of ListAuthSystemsServer  options
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
    */
   ListAuthSystemsServer(UMS_Data::ListAuthSysOptions_ptr params, const SessionServer& session):
-  QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(params,session), mcommandName("vishnu_list_auth_systems")
+    QueryServer<UMS_Data::ListAuthSysOptions, UMS_Data::ListAuthSystems>(params,session), mcommandName("vishnu_list_auth_systems")
   {
 
   }
@@ -63,8 +63,8 @@ public:
     //If the full option is defined, the user must be an admin
     if (mfullInfo) {
       if(!userServer.isAdmin()) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+        UMSVishnuException e (ERRCODE_NO_ADMIN);
+        throw e;
       }
     }
 
@@ -107,65 +107,67 @@ public:
       sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users, "
                         "authaccount where userid='"+userServer.getData().getUserId()+"'"
                         "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
-      );
+                        );
     }
   }
 
- /**
+  /**
   * \brief Function to list machines information
   * \return The pointer to the UMS_Data::ListAuthSystems containing users information
   * \return raises an exception on error
   */
   UMS_Data::ListAuthSystems* list() {
 
-  std::string sqlListofAuthSystems = "SELECT authsystemid, name, uri, authlogin, authpassword, userpwdencryption, authtype, status, ldapbase from authsystem, ldapauthsystem "
-                                     " where ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid ";
+    std::string sql = (boost::format("SELECT authsystemid, name, uri, authlogin, authpassword,"
+                                     "       userpwdencryption, authtype, authsystem.status, ldapbase "
+                                     " FROM  authsystem, ldapauthsystem"
+                                     " WHERE ldapauthsystem.authsystem_authsystemid = authsystem.numauthsystemid"
+                                     "  AND authsystem.status!=%1%")%vishnu::STATUS_DELETED).str();
+    std::vector<std::string>::iterator ii;
+    std::vector<std::string> results;
+    UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createListAuthSystems();
 
-  std::vector<std::string>::iterator ii;
-  std::vector<std::string> results;
-  UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-  mlistObject = ecoreFactory->createListAuthSystems();
+    //Creation of the object user
+    UserServer userServer = UserServer(msessionServer);
+    userServer.init();
+    //if the user exists
+    if (userServer.exist()) {
 
-  //Creation of the object user
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-  //if the user exists
-  if (userServer.exist()) {
-
-    processOptions(userServer, mparameters, sqlListofAuthSystems);
-    sqlListofAuthSystems.append(" order by authsystemid");
-    //To get the list of authSystems from the database
-    boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sqlListofAuthSystems.c_str()));
-    if (ListofAuthSystems->getNbTuples() != 0){
-      for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
-        results.clear();
-        results = ListofAuthSystems->get(i);
-        ii = results.begin();
-        UMS_Data::AuthSystem_ptr authSystem = ecoreFactory->createAuthSystem();
-        authSystem->setAuthSystemId(*ii);
-        authSystem->setName(*(++ii));
-        authSystem->setURI(*(++ii));
-        std::string authLogin(*(++ii));
-        std::string authPassword(*(++ii));
-        int userPasswordEncryption(vishnu::convertToInt(*(++ii)));
-        int type(vishnu::convertToInt(*(++ii)));
-        if (mfullInfo) {
-          authSystem->setAuthLogin(authLogin);
-          authSystem->setAuthPassword(authPassword);
-          authSystem->setUserPasswordEncryption(userPasswordEncryption);
-          authSystem->setType(type);
+      processOptions(userServer, mparameters, sql);
+      sql.append(" order by authsystemid");
+      //To get the list of authSystems from the database
+      boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sql.c_str()));
+      if (ListofAuthSystems->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofAuthSystems->get(i);
+          ii = results.begin();
+          UMS_Data::AuthSystem_ptr authSystem = ecoreFactory->createAuthSystem();
+          authSystem->setAuthSystemId(*ii);
+          authSystem->setName(*(++ii));
+          authSystem->setURI(*(++ii));
+          std::string authLogin(*(++ii));
+          std::string authPassword(*(++ii));
+          int userPasswordEncryption(vishnu::convertToInt(*(++ii)));
+          int type(vishnu::convertToInt(*(++ii)));
+          if (mfullInfo) {
+            authSystem->setAuthLogin(authLogin);
+            authSystem->setAuthPassword(authPassword);
+            authSystem->setUserPasswordEncryption(userPasswordEncryption);
+            authSystem->setType(type);
+          }
+          authSystem->setStatus(vishnu::convertToInt(*(++ii)));
+          authSystem->setLdapBase(*(++ii));
+          mlistObject->getAuthSystems().push_back(authSystem);
         }
-        authSystem->setStatus(vishnu::convertToInt(*(++ii)));
-        authSystem->setLdapBase(*(++ii));
-        mlistObject->getAuthSystems().push_back(authSystem);
-        }
+      }
     }
-  }
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
-  }
-  return mlistObject;
+    else {
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      throw e;
+    }
+    return mlistObject;
 
 
   }
@@ -185,9 +187,9 @@ public:
    */
   ~ListAuthSystemsServer() { }
 
- private:
+private:
 
-    /////////////////////////////////
+  /////////////////////////////////
   // Attributes
   /////////////////////////////////
 
