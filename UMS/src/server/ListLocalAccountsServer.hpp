@@ -104,10 +104,10 @@ public:
                                                        " FROM account, machine, users"
                                                        " WHERE account.machine_nummachineid=machine.nummachineid"
                                                        " AND account.users_numuserid=users.numuserid"
-                                                       " AND users.status!=%1%"
-                                                       " AND machine.status!=%1%"
-                                                       " AND account.status!=%1%"
-                                                       )%vishnu::STATUS_DELETED).str();
+                                                       " AND users.status=%1%"
+                                                       " AND machine.status=%1%"
+                                                       " AND account.status=%1%"
+                                                       )%vishnu::STATUS_ACTIVE).str();
 
 
     std::vector<std::string>::iterator ii;
