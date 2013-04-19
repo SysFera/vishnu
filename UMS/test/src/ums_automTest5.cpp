@@ -106,9 +106,7 @@ BOOST_AUTO_TEST_CASE( Authentication_base )
     aacc.setAuthSystemId(asys.getAuthSystemId());
     aacc.setUserId(m_test_ums_admin_vishnu_login);
     aacc.setAcLogin("toto");
-    BOOST_MESSAGE(aacc.getAuthSystemId() << " " << aacc.getUserId() << " " << aacc.getAcLogin());
     BOOST_CHECK(addAuthAccount(sess.getSessionKey(), aacc)==0);
-    BOOST_MESSAGE("FIN::::"<< aacc.getAuthSystemId() << " " << aacc.getUserId() << " " << aacc.getAcLogin());
     BOOST_CHECK(deleteAuthAccount(sess.getSessionKey(), aacc.getAuthSystemId(), aacc.getUserId())==0);
     BOOST_CHECK(close          (sess.getSessionKey()      )==0);
   }
@@ -155,23 +153,23 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
   ListAuthSystems_ptr lias  = ecoreFactory->createListAuthSystems();
   AuthAccount aacc;
   // FIXME: irrelevant test. The id is generated automatically and the name is not a key
-  //  // Add auth system already exist
-  //  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
-  //  {
-  //    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
-  //    asys.setName("ldap");
-  //    asys.setURI("httm://www.graal.ens-lyon.fr");
-  //    asys.setAuthLogin("toto");
-  //    asys.setAuthPassword("toto");
-  //    asys.setUserPasswordEncryption(enc);
-  //    AuthType tsys = 0;
-  //    StatusType ssys = 1;
-  //    asys.setType(tsys);
-  //    asys.setStatus(ssys);
-  //    asys.setLdapBase("$USERNAME.base");
-  //    BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
-  //    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
-  //  }
+  // Add auth system already exist
+  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+  {
+    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    asys.setName("ldap");
+    asys.setURI("httm://www.graal.ens-lyon.fr");
+    asys.setAuthLogin("toto");
+    asys.setAuthPassword("toto");
+    asys.setUserPasswordEncryption(enc);
+    AuthType tsys = 0;
+    StatusType ssys = 1;
+    asys.setType(tsys);
+    asys.setStatus(ssys);
+    asys.setLdapBase("$USERNAME.base");
+    BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+  }
 
   // Add auth system bad type
   BOOST_MESSAGE(" Testing add auth system bad Type UA8"    );
