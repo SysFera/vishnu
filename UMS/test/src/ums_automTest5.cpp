@@ -154,22 +154,22 @@ BOOST_AUTO_TEST_CASE( Authentication_failure )
   AuthAccount aacc;
   // FIXME: irrelevant test. The id is generated automatically and the name is not a key
   // Add auth system already exist
-  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
-  {
-    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
-    asys.setName("ldap");
-    asys.setURI("httm://www.graal.ens-lyon.fr");
-    asys.setAuthLogin("toto");
-    asys.setAuthPassword("toto");
-    asys.setUserPasswordEncryption(enc);
-    AuthType tsys = 0;
-    StatusType ssys = 1;
-    asys.setType(tsys);
-    asys.setStatus(ssys);
-    asys.setLdapBase("$USERNAME.base");
-    BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
-    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
-  }
+//  BOOST_MESSAGE(" Testing add auth system already exist UA8"    );
+//  {
+//    BOOST_CHECK  (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+//    asys.setName("ldap");
+//    asys.setURI("httm://www.graal.ens-lyon.fr");
+//    asys.setAuthLogin("toto");
+//    asys.setAuthPassword("toto");
+//    asys.setUserPasswordEncryption(enc);
+//    AuthType tsys = 0;
+//    StatusType ssys = 1;
+//    asys.setType(tsys);
+//    asys.setStatus(ssys);
+//    asys.setLdapBase("$USERNAME.base");
+//    BOOST_CHECK_THROW(addAuthSystem(sess.getSessionKey(), asys), VishnuException);
+//    BOOST_CHECK(close          (sess.getSessionKey()      )==0);
+//  }
 
   // Add auth system bad type
   BOOST_MESSAGE(" Testing add auth system bad Type UA8"    );
