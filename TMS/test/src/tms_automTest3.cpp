@@ -50,14 +50,14 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }  
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -118,21 +118,21 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
 
 BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
 {
-  
+
   BOOST_TEST_MESSAGE("Testing normal execution of the get jobs output function corresponding to use case T2.6 with the output directory" );
-  
-  
+
+
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
-  
+
     try {
       //Setting submitjob parameters
 
@@ -170,7 +170,12 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
       bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getErrorPath())) && bfs::is_directory(bfs::path(outputInfos.getOutputDir()));
 
       BOOST_CHECK( pathExist );
+//
+// FIXME
+// WHERE AND WHEN IS TMS_RES CREATED ? TEST FAILS BECAUSE I DON'T HAVE IT
+//
       std::string filepath =  outputInfos.getOutputDir()+"/TMS_res";
+      BOOST_MESSAGE(filepath);
       bool fileexist = bfs::exists(bfs::path(filepath));
       BOOST_CHECK( fileexist );
 
@@ -191,7 +196,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }  
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -205,14 +210,14 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_sessionKey)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -255,14 +260,14 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_machineId)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -304,16 +309,16 @@ BOOST_AUTO_TEST_CASE(get_job_output_unterminated)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
-    
+
 
     try {
       //Setting submitjob parameters

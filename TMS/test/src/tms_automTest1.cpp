@@ -59,15 +59,15 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
   string sessionKey=vc.getConnexion();
 
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
- 
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
       //Setting submitjob parameters
-      
+
       const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
       Job jobInfo;
       SubmitOptions subOptions;
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
       BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
-      
+
     } catch (VishnuException& e) {
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
@@ -166,6 +166,10 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
           jobOutputContent = oss.str();
           ifile.close();
 
+//
+// FIXME DO NOT WORK
+// GENERATED FILE DOES NOT CONTAIN THE VALUES : BIG FAILURE
+//
           vishnuEnvId = findValue(jobOutputContent, "#TEST_JOB_ID:");
           batchEnvId = findValue(jobOutputContent, "#BATCH_JOB_ID:");
           vishnuEnvName  = findValue(jobOutputContent, "#TEST_JOB_NAME:");
@@ -223,7 +227,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
 
  for(int i = 0; i < m_test_tms_machines.size();++i)
  {
-   
+
    std::string machineId= m_test_tms_machines.at(i).machine_id;
 
    //Setting submitjob parameters
@@ -282,7 +286,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
 
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
     //Setting submitjob parameters
     const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "bad");
@@ -294,7 +298,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
     BOOST_TEST_MESSAGE("***********************  submit a job: bad script content  ok!!!!*****************************");
 
   }
-  
+
 }
 
 // submit a job: bad parameters: bad script path
@@ -311,7 +315,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
 
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
     //Setting submitjob parameters
     const std::string scriptFilePath = "/home/ibrahima/Brouillon/";
@@ -319,7 +323,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
     SubmitOptions subOptions;
 
     BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
-  }  
+  }
 
 }
 
@@ -355,7 +359,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
     SubmitOptions subOptions;
     BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId1, scriptFilePathWaiting, jobInfo,subOptions),0 );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-    
+
     BOOST_CHECK_EQUAL(submitJob(sessionKey, autom, scriptFilePath, jobInfo2, subOptions),0 );
     BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo2.getJobId() );
 
@@ -398,7 +402,7 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
     Job jobInfo;
     SubmitOptions subOptions;
 
-    
+
     BOOST_CHECK_THROW(submitJob(sessionKey, autom, scriptFilePath, jobInfo,subOptions) ,VishnuException );
     BOOST_TEST_MESSAGE("*********************** automatic submit job for user with no local accounts  ok!!!!*****************************");
 
