@@ -77,13 +77,6 @@ public:
   std::string
   getAttribut(std::string condition, std::string attrname = "nummachineid");
   /**
-  * \brief Function to get the content of the public ssh key
-  * \return The content of the ssh public key
-  */
-  std::string
-  getPublicKey();
-
-  /**
    * \brief Function to get the machine
    * \return The name of the machine
    */
@@ -111,10 +104,5 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
-  /**
-  * \brief The content of the ssh public key
-  */
-  std::string msshpublickey;
-
 };
 #endif

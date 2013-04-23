@@ -353,8 +353,6 @@ UMSMapper::decodeAddAcc(vector<unsigned int> separator, const string& msg){
   res+=" ";
   res += ac->getAcLogin();
   res+=" ";
-  res += ac->getSshKeyPath();
-  res+=" ";
   res += ac->getHomeDirectory();
 
   if (ac != NULL) {
@@ -454,11 +452,6 @@ UMSMapper::decodeUpAcc(vector<unsigned int> separator, const string& msg){
   a = ac->getAcLogin();
   if (a.compare("")){
     res+=" -l ";
-    res+=a;
-  }
-  a = ac->getSshKeyPath();
-  if (a.compare("")){
-    res+=" -s ";
     res+=a;
   }
   a = ac->getHomeDirectory();
@@ -750,8 +743,6 @@ UMSMapper::decodeAddM(vector<unsigned int> separator, const string& msg){
   res += ac->getSite();
   res+=" ";
   res += ac->getLanguage();
-  res+=" ";
-  res += "SshPublicKey";
 
   if (ac != NULL) {
     delete ac;
@@ -800,11 +791,6 @@ UMSMapper::decodeUpM(vector<unsigned int> separator, const string& msg){
   a = ac->getLanguage();
   if (a.compare("")){
     res+=" -l ";
-    res+=a;
-  }
-  a = ac->getSshPublicKey();
-  if (a.compare("")){
-    res+=" -k ";
     res+=a;
   }
 

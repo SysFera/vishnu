@@ -696,7 +696,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
     localAccountServer.add();
 
     //OUT Parameters
-    diet_string_set(pb,2, localAccountServer.getPublicKey().c_str());
+    diet_string_set(pb,2, "");
     diet_string_set(pb,3);
     //To save the connection
     sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);

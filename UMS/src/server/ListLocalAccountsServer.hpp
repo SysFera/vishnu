@@ -100,7 +100,7 @@ public:
    */
   UMS_Data::ListLocalAccounts* list()
   {
-    std::string sqlListofLocalAccount = (boost::format("SELECT machineid, userid, aclogin, sshpathkey, home"
+    std::string sqlListofLocalAccount = (boost::format("SELECT machineid, userid, aclogin, home"
                                                        " FROM account, machine, users"
                                                        " WHERE account.machine_nummachineid=machine.nummachineid"
                                                        " AND account.users_numuserid=users.numuserid"
@@ -136,7 +136,6 @@ public:
           localAccount->setMachineId(*ii);
           localAccount->setUserId(*(++ii));
           localAccount->setAcLogin(*(++ii));
-          localAccount->setSshKeyPath(*(++ii));
           localAccount->setHomeDirectory(*(++ii));
 
           mlistObject->getAccounts().push_back(localAccount);

@@ -38,27 +38,6 @@ struct AddLocalAccountFunc {
     string sshPublicKey;
     int res=addLocalAccount(sessionKey,mnewAcLogin,sshPublicKey);// call the UMS add local account service
 
-    //To construct the file to save
-    boost::filesystem::path home_dir = getenv("HOME");
-    boost::filesystem::path  config_dir = home_dir;
-    config_dir /= ".vishnu";
-    config_dir /= "localAccountPublicKey";
-
-
-    if(!boost::filesystem::exists(config_dir)){
-      boost::filesystem::create_directories(config_dir);
-    }
-
-    std::string publicKeyName;
-    publicKeyName.append(config_dir.string()+"/");
-    publicKeyName.append(mnewAcLogin.getUserId());
-    publicKeyName.append("-"+mnewAcLogin.getMachineId());
-
-    ofstream os(publicKeyName.c_str());
-    os << sshPublicKey;
-
-    std::cout << "The ssh public key path is  " << publicKeyName << std::endl;
-
     return res;
   }
 };
@@ -78,14 +57,13 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fUserId( boost::bind(&UMS_Data::LocalAccount::setUserId,boost::ref(newAcLogin),_1));
   boost::function1<void,string> fMachineId( boost::bind(&UMS_Data::LocalAccount::setMachineId,boost::ref(newAcLogin),_1));
   boost::function1<void,string> fAcLogin( boost::bind(&UMS_Data::LocalAccount::setAcLogin,boost::ref(newAcLogin),_1));
-  boost::function1<void,string> fSshKeyPath( boost::bind(&UMS_Data::LocalAccount::setSshKeyPath,boost::ref(newAcLogin),_1));
   boost::function1<void,string> fHomeDirectory( boost::bind(&UMS_Data::LocalAccount::setHomeDirectory,boost::ref(newAcLogin),_1));
 
 
   /**************** Describe options *************/
 
   boost::shared_ptr<Options> opt=makeLocalAccountOptions(av[0], fUserId,configFile,fMachineId,
-      fAcLogin,fSshKeyPath,fHomeDirectory,1);
+      fAcLogin,fHomeDirectory,1);
 
   bool isEmpty;
   //To process list options
