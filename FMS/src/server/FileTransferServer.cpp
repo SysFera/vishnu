@@ -380,7 +380,7 @@ FileTransferServer::addCpThread(const std::string& srcUser,
   addTransferThread(srcUser,srcMachineName,srcUserKey, destUser, destMachineName, options);
   waitThread();
 
-  std:: string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
+  std::string errorMsg(getErrorFromDatabase(mfileTransfer.getTransferId()));
 
   if (false == errorMsg.empty()) {
     throw FMSVishnuException (ERRCODE_RUNTIME_ERROR,errorMsg);

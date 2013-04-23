@@ -36,14 +36,14 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing directory creation UC F1.CR2-B");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
@@ -66,12 +66,12 @@ BOOST_AUTO_TEST_CASE(CreateDir_Base)
     BOOST_REQUIRE( touch(sessionKey, fileFullPath) == 0 );
     // Cleanup
     BOOST_REQUIRE( rm(sessionKey, fileFullPath) == 0);
-    
-    // check 3 :recursive directory creation 
+
+    // check 3 :recursive directory creation
     CreateDirOptions mkdirOptions;
     mkdirOptions.setIsRecursive (true);
-    BOOST_CHECK_EQUAL( mkdir(sessionKey, recursiveDirFullPath1,mkdirOptions),0); 
-    // Check 4: list content of parent directory 
+    BOOST_CHECK_EQUAL( mkdir(sessionKey, recursiveDirFullPath1,mkdirOptions),0);
+    // Check 4: list content of parent directory
     isNewDirFound = isFoundInDir(sessionKey,dirFullPath1 , newSubDirName);
     BOOST_REQUIRE(isNewDirFound);
     RmFileOptions rmOptions;
@@ -89,14 +89,14 @@ BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing directory creation errors UC F1.CR2-E");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
@@ -118,10 +118,10 @@ BOOST_AUTO_TEST_CASE(CreateDir_Exceptions)
     BOOST_CHECK_THROW( mkdir(sessionKey, invalidMachineFullPath), VishnuException);
 
 // E4 case: recursive directories creation
-// assert dirFullPath1 is not in baseDirFullPath1 
+// assert dirFullPath1 is not in baseDirFullPath1
     bool isNewDirFound = isFoundInDir(sessionKey, baseDirFullPath1,dirFullPath1);
     BOOST_REQUIRE(!isNewDirFound);
-BOOST_CHECK_THROW( mkdir(sessionKey, recursiveDirFullPath1),VishnuException ); 
+BOOST_CHECK_THROW( mkdir(sessionKey, recursiveDirFullPath1),VishnuException );
 
 
   } catch (VishnuException& e) {
