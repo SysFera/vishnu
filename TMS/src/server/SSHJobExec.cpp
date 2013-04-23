@@ -175,7 +175,7 @@ SSHJobExec::sshexec(const std::string& serviceName,
   // Check if something went false
   if (ret) {
     if (merrorInfo.find("password") != std::string::npos) {
-      merrorInfo.append(" You must copy the VISHNU publickey in your authorized_keys file.");
+      merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
     }
     if (WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
       merrorInfo.append("==> SLURM ERROR");
@@ -187,29 +187,31 @@ SSHJobExec::sshexec(const std::string& serviceName,
     LOG(merrorInfo, mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
-
-  // The command has been executed successfully
-  std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
-  TMS_Data::Job_ptr job = NULL;
-  if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-    ::ecorecpp::serializer::serializer _ser;
-    mjobSerialized = _ser.serialize_str(job);
-    wellSubmitted = true;
-    delete job;
-  } else {
-    merrorInfo.append("SSHJobExec::sshexec: job object is not well built");
-    CLEANUP_SUBMITTING_DATA(mdebugLevel);
-    LOG(merrorInfo, mdebugLevel);
-    throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
-  }
-  errorMsgIsSet = true;
-  if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
-    merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
-    if (mbatchType==LOADLEVELER) {
-      merrorInfo.append("\n==>LOADLEVELER ERROR");
+// THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
+  if (serviceName.compare("SUBMIT")==0) {  // set specific arguments for submit job
+    // The command has been executed successfully
+    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
+    TMS_Data::Job_ptr job = NULL;
+    if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
+      ::ecorecpp::serializer::serializer _ser;
+      mjobSerialized = _ser.serialize_str(job);
+      wellSubmitted = true;
+      delete job;
+    } else {
+      merrorInfo.append("SSHJobExec::sshexec: job object is not well built");
+      CLEANUP_SUBMITTING_DATA(mdebugLevel);
+      LOG(merrorInfo, mdebugLevel);
+      throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
     }
-    if (mbatchType==LSF) {
-      merrorInfo.append("\n==>LSF ERROR");
+    errorMsgIsSet = true;
+    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
+      if (mbatchType==LOADLEVELER) {
+        merrorInfo.append("\n==>LOADLEVELER ERROR");
+      }
+      if (mbatchType==LSF) {
+        merrorInfo.append("\n==>LSF ERROR");
+      }
     }
   }
   LOG(merrorInfo, mdebugLevel); merrorInfo.clear();
