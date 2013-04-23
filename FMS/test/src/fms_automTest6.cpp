@@ -36,14 +36,14 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing file info display UC F1.DI5-B");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Base)
     BOOST_REQUIRE( vishnu::stat(sessionKey, fileFullPath1, stat) == 0);
     // To check the success
     BOOST_CHECK( stat.getSize() == 10240 );
-    
+
     // Cleanup
     BOOST_CHECK( rm(sessionKey, fileFullPath1) == 0);
     vishnu::deleteFile(localFilePath.c_str());
@@ -74,14 +74,14 @@ BOOST_AUTO_TEST_CASE(GetFileInfo_Exceptions)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing file info display errors UC F1.DI5-E");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();

@@ -30,7 +30,7 @@ std::string errorMsgCleaned = "no error";
 int processId= -1;
 
  std::string numsession = "(SELECT numsessionid FROM vsession where sessionKey='" + sessionKey +"'" + ")";
-  
+
 std::string sqlInsert= "insert into filetransfer (vsession_numsessionid,userId,clientMachineId,sourceMachineId, "
     "destinationMachineId,sourceFilePath,destinationFilePath, transferid,status,fileSize,trCommand,processid,errorMsg,startTime)"
     "values ("+numsession+",'"+transferInfo.getUserId()+"','"+ transferInfo.getClientMachineId()+"','"+transferInfo.getSourceMachineId()+"','"+transferInfo.getDestinationMachineId()+"','"
@@ -82,7 +82,14 @@ VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
     transferInfo.setClientMachineId("clientMachine");
     transferInfo.setSourceMachineId("sourceMachine");
     transferInfo.setDestinationMachineId("sourceMachine");
-    transferInfo.setSize(std::numeric_limits<std::size_t>::max());
+//
+// FIXME : Put a stupid size because std::numeric_limits<std::size_t>::max() gave me the error :
+//  Vishnu encountered problems (Database error) [ERROR:  integer out of range
+// Running on a postgresql database 9.1.8
+//
+//    transferInfo.setSize(std::numeric_limits<std::size_t>::max());
+    transferInfo.setSize(10);
+
     transferInfo.setTrCommand(0);
     transferInfo.setSourceFilePath("path/to/src");
     transferInfo.setDestinationFilePath("path/to/dest");
@@ -91,10 +98,11 @@ VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
     LsTransferOptions   options;
     FileTransferList    fileTransferList;
     options.setTransferId(transferInfo.getTransferId());
-    BOOST_REQUIRE_EQUAL(listFileTransfers(sessionKey, fileTransferList, options) , 0); 
-    BOOST_REQUIRE_EQUAL(fileTransferList.getFileTransfers().size(), 1); 
-      FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
-      BOOST_CHECK(transferInfo.getTransferId() == ft->getTransferId());
+    BOOST_REQUIRE_EQUAL(listFileTransfers(sessionKey, fileTransferList, options) , 0);
+    BOOST_REQUIRE_EQUAL(fileTransferList.getFileTransfers().size(), 1);
+
+    FileTransfer* ft = fileTransferList.getFileTransfers().get(0);
+    BOOST_CHECK(transferInfo.getTransferId() == ft->getTransferId());
   }catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);

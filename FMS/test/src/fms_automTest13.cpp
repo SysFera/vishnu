@@ -33,14 +33,14 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Base)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing asynchronous copy of files UC F2.CP2-B");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
@@ -96,14 +96,14 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
   std::string newDirName = "Test_FMS_Dir";
   std::string newSubDirName = "Test_FMS_Sub_Dir";
   std::string baseDirFullPath1 = m_test_fms_host1 + ":" + m_test_fms_dir1;
-  std::string baseDirFullPath2 = m_test_fms_host1 + ":" + m_test_fms_dir2;
+  std::string baseDirFullPath2 = m_test_fms_host2 + ":" + m_test_fms_dir2;
   std::string fileFullPath1 = baseDirFullPath1 + "/" + newFileName;
   std::string fileFullPath2 = baseDirFullPath2 + "/" + newFileName;
   std::string dirFullPath1 = baseDirFullPath1 + "/" + newDirName;
   std::string recursiveDirFullPath1 = dirFullPath1 + "/" +  newSubDirName;
   std::string dirFullPath2 = baseDirFullPath2 + "/" + newDirName;
   std::string localFilePath = m_test_fms_working_dir + "/" + newFileName;
-  
+
   BOOST_TEST_MESSAGE("Testing asynchronous copy of files errors UC F2.CP2-E");
   VishnuConnection vc(m_test_fms_user_login, m_test_fms_user_pwd);
   string sessionKey=vc.getSessionKey();
@@ -121,22 +121,19 @@ BOOST_AUTO_TEST_CASE(AsyncCopyFile_Exceptions)
     BOOST_CHECK_THROW( acp(sessionKey, invalidFullPath, baseDirFullPath1, transferInfo), VishnuException);
     // E2 case - wrong destination path
     BOOST_MESSAGE("Check wrong destination path");
-    string invalidFullPath2 = baseDirFullPath1 + slash + invalidDir + slash;
+    string invalidFullPath2 = baseDirFullPath2 + slash + invalidDir + slash;
     BOOST_REQUIRE( acp(sessionKey, localFilePath, invalidFullPath2, transferInfo) == 0);
-    BOOST_MESSAGE("Launched transfer: " + transferInfo.getTransferId());
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to source path
     BOOST_MESSAGE("Check unaccessible source path");
     string noAccessLocalPath = "/etc/ssh/ssh_host_dsa_key";
     string noAccessFullPath = m_test_fms_host1 + sep + noAccessLocalPath;
     BOOST_REQUIRE( acp(sessionKey, noAccessFullPath, baseDirFullPath1, transferInfo) == 0);
-    BOOST_MESSAGE("Launched transfer: " + transferInfo.getTransferId());
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E3 case - no access to remote path
     BOOST_MESSAGE("Check unaccessible destination path");
     string noAccessRemotePath = m_test_fms_host1 + sep + "/root";
     BOOST_REQUIRE( acp(sessionKey, localFilePath, noAccessRemotePath, transferInfo) == 0);
-    BOOST_MESSAGE("Launched transfer: " + transferInfo.getTransferId());
     BOOST_REQUIRE( waitAsyncCopy(sessionKey, transferInfo) == STATUS_FAILED );
     // E4 case
     BOOST_MESSAGE("Check invalid machine");
