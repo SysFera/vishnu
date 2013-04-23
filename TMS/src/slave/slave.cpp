@@ -69,6 +69,7 @@ main(int argc, char* argv[], char* envp[]) {
   BatchType batchType;
   std::string batchVersion;
 
+
   if(argc < 6) { // Too few arguments
     usage(argv[0]);
   }
@@ -85,8 +86,6 @@ main(int argc, char* argv[], char* envp[]) {
     slaveJobFile = argv[6];
     optionsPath = argv[7];
     jobScriptPath = argv[8];
-  } else if (action == "CANCEL") {
-    usage(argv[0]);
   }
 
   if(batchType == UNDEFINED) {
