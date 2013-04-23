@@ -57,17 +57,14 @@ LocalAccountServer::add() {
           if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
             //The sql code to insert the localAccount on the database
             std::string sqlCmd = (boost::format("INSERT INTO account (machine_nummachineid, "
-                                                "        users_numuserid, aclogin, sshpathkey, home, status)"
-                                                "VALUES ('%1%', '%2%', '%3%', '%4%', '%5%', %6%)")
+                                                "        users_numuserid, aclogin, home, status)"
+                                                "VALUES ('%1%', '%2%', '%3%', '%4%', %5%)")
                                   %numMachine
                                   %numUser
                                   %mlocalAccount->getAcLogin()
-                                  %mlocalAccount->getSshKeyPath()
                                   %mlocalAccount->getHomeDirectory()
                                   %vishnu::STATUS_ACTIVE).str();
             mdatabaseVishnu->process(sqlCmd);
-            msshpublickey = machineServer.getAttribut("where "
-                                                      "machineid='"+mlocalAccount->getMachineId()+"'", "sshpublickey");
           } else {
             throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
           }
@@ -130,11 +127,6 @@ LocalAccountServer::update() {
             fields += (fields.empty())? curField : ","+curField;
           }
 
-          //if a new sshpathkey has been defined
-          if (!mlocalAccount->getSshKeyPath().empty()) {
-            std::string curField = (boost::format("sshpathkey='%1%'")%mlocalAccount->getSshKeyPath()).str();
-            fields += (fields.empty())? curField : ","+curField;
-          }
 
           //if a new home directory has been defined
           if (!mlocalAccount->getHomeDirectory().empty()) {
@@ -297,11 +289,3 @@ LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
   return !(numUser.empty());
 }
 
-/**
-* \brief Function to get the content of the public ssh generated
-* \return The content of the ssh public key generated
-*/
-std::string
-LocalAccountServer::getPublicKey() {
-  return msshpublickey;
-}

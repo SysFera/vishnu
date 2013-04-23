@@ -48,8 +48,6 @@ int main (int ac, char* av[]){
 
   string configFile;
 
-  std::string sshPublicKeyPath;
-
   /********** EMF data ************/
 
   UMS_Data::Machine upMachine;
@@ -70,7 +68,7 @@ int main (int ac, char* av[]){
   boost::function1<void,UMS_Data::StatusType> fStatus( boost::bind(&UMS_Data::Machine::setStatus,boost::ref(upMachine),_1));
 
   // Describe options
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,sshPublicKeyPath,fMachineDescription);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,fMachineDescription);
 
 
   opt->add("machineId",
@@ -92,11 +90,6 @@ int main (int ac, char* av[]){
 
 
   try {
-    if (opt->count("sshPublicKeyFile")){
-      // read the public key file from the public key path and set the neMachine
-      upMachine.setSshPublicKey(get_file_content(sshPublicKeyPath));
-    }
-
     UpDateMachineFunc upFunc(upMachine);
     return GenericCli().run(upFunc, configFile, ac, av);
 

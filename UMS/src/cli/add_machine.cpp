@@ -27,15 +27,13 @@ using namespace vishnu;
 
 struct AddMachineFunc {
 
-  std::string msshPublicKeyPath;
   UMS_Data::Machine mnewMachine;
 
-  AddMachineFunc(std::string sshPublicKeyPath, UMS_Data::Machine newMachine):
-    msshPublicKeyPath(sshPublicKeyPath), mnewMachine(newMachine)
+  AddMachineFunc(UMS_Data::Machine newMachine):
+    mnewMachine(newMachine)
   {};
 
   int operator()(std::string sessionKey) {
-    mnewMachine.setSshPublicKey(get_file_content(msshPublicKeyPath));
     int res = addMachine(sessionKey,mnewMachine);
     cout << "The machine identifier is " << mnewMachine.getMachineId() << endl;
     return res;
@@ -49,7 +47,6 @@ int main (int ac, char* av[]){
 
   string configFile;
 
-  std::string sshPublicKeyPath;
 
 
   /********** EMF data ************/
@@ -62,13 +59,13 @@ int main (int ac, char* av[]){
   boost::function1<void,string> fLanguage( boost::bind(&UMS_Data::Machine::setLanguage,boost::ref(newMachine),_1));
   boost::function1<void,string> fMachineDescription( boost::bind(&UMS_Data::Machine::setMachineDescription,boost::ref(newMachine),_1));
 
-  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,sshPublicKeyPath,fMachineDescription,1);
+  boost::shared_ptr<Options> opt= makeMachineOptions(av[0], fName,configFile, fSite,fLanguage,fMachineDescription,1);
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, ac, av);
 
-  AddMachineFunc apiFunc(sshPublicKeyPath, newMachine);
+  AddMachineFunc apiFunc(newMachine);
   return GenericCli().run(apiFunc, configFile, ac, av);
 
 }// end of main

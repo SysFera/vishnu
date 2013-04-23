@@ -47,11 +47,11 @@ ConfigurationServer::save() {
                                " FROM users "
                                " WHERE not userid='"+ROOTUSERNAME+"'";
 
-  std::string sqlListofMachines = "SELECT machineid, name, site, status, sshpublickey, lang, description"
+  std::string sqlListofMachines = "SELECT machineid, name, site, status, lang, description"
                                   " FROM machine, description "
                                   " WHERE machine.nummachineid = description.machine_nummachineid";
 
-  std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, sshpathkey, home "
+  std::string sqlListofLocalAccount = "SELECT machineid, userid, aclogin, home "
                                       " FROM account, machine, users"
                                       " WHERE account.machine_nummachineid=machine.nummachineid "
                                       "  AND account.users_numuserid=users.numuserid";
@@ -115,7 +115,6 @@ ConfigurationServer::save() {
           machine->setSite(*(++ii));
           //Add 1 on status because of the storage of EMF litteral on file which is shifted
           machine->setStatus(1+convertToInt(*(++ii)));
-          machine->setSshPublicKey(*(++ii));
           machine->setLanguage(*(++ii));
           machine->setMachineDescription(*(++ii));
           mconfiguration->getListConfMachines().push_back(machine);
@@ -135,7 +134,6 @@ ConfigurationServer::save() {
           localAccount->setMachineId(*ii);
           localAccount->setUserId(*(++ii));
           localAccount->setAcLogin(*(++ii));
-          localAccount->setSshKeyPath(*(++ii));
           localAccount->setHomeDirectory(*(++ii));
           mconfiguration->getListConfLocalAccounts().push_back(localAccount);
         }
@@ -365,14 +363,14 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
 
-  std::string sqlInsert = (boost::format("INSERT INTO machine (vishnu_vishnuid, name, site, machineid, status, sshpublickey)"
-                                         " VALUES (%1%, '%2%', '%3%', '%4%', %5%, '%6%'')")
+  std::string sqlInsert = (boost::format("INSERT INTO machine (vishnu_vishnuid, name, site, machineid, status)"
+                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%')")
                            %vishnuId
                            %machine->getName()
                            %machine->getSite()
                            %machine->getMachineId()
-                           %convertToString(machine->getStatus()-1) //Remove 1 on status because of EMF litteral storage
-                           %machine->getSshPublicKey()).str();
+                           %convertToString(machine->getStatus()-1)).str(); //Remove 1 on status because of EMF litteral storage
+
 
   return sqlInsert;
 }

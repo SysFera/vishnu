@@ -20,7 +20,6 @@ using namespace std;
  * \param configFile: Represents the VISHNU config file
  * \param fMachineId: The machine identifier option callback
  * \param fAcLogin: The user login option callback
- * \param fSshKeyPath: The user ssh key path option callback
  * \param fHomeDirectory: The user home directory option callback
  * \param type: Indicates if it is an add or an update command, 0 means update, and 1 means add
  * \return The description of all options allowed by the command
@@ -29,7 +28,7 @@ using namespace std;
 boost::shared_ptr<Options>
 makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
                         std::string & configFile, StringcallBackType & fMachineId,
-                        StringcallBackType& fAcLogin, StringcallBackType& fSshKeyPath,
+                        StringcallBackType& fAcLogin,
                         StringcallBackType & fHomeDirectory, int type){
 
   boost::shared_ptr<Options> opt=makeConnectOptions(pgName,fUserId,1,configFile);
@@ -62,16 +61,6 @@ makeLocalAccountOptions(std::string pgName,StringcallBackType& fUserId,
 
   if (type){
     opt->setPosition("acLogin",1);
-  }
-
-  opt->add("sshKeyPath,s",
-           "The path of the ssh key of the user on the associated machine",
-           group,
-           fSshKeyPath,
-           type);
-
-  if (type){
-    opt->setPosition("sshKeyPath",1);
   }
 
   opt->add("homeDirectory,d",

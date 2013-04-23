@@ -71,9 +71,8 @@ MachineServer::add(int vishnuId) {
 
           sqlUpdate+="name='"+mmachine->getName()+"',";
           sqlUpdate+="site='"+mmachine->getSite()+"',";
-          sqlUpdate+="status="+convertToString(mmachine->getStatus())+",";
-          sqlUpdate+="sshpublickey='"+mmachine->getSshPublicKey()+"' ";
-          sqlUpdate+="where machineid='"+mmachine->getMachineId()+"';";
+          sqlUpdate+="status="+convertToString(mmachine->getStatus());
+          sqlUpdate+=" where machineid='"+mmachine->getMachineId()+"';";
           mdatabaseVishnu->process(sqlUpdate);
 
           mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, description) values ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",'"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
@@ -140,12 +139,6 @@ MachineServer::update() {
         //If a new status has been defined
         if (mmachine->getStatus() != vishnu::STATUS_UNDEFINED) {
           sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
-                            " where machineId='"+mmachine->getMachineId()+"';");
-        }
-
-        //if a new ssh public key has been defined
-        if (!mmachine->getSshPublicKey().empty()) {
-          sqlCommand.append("UPDATE machine SET sshpublickey='"+mmachine->getSshPublicKey()+"'"
                             " where machineId='"+mmachine->getMachineId()+"';");
         }
 
@@ -223,15 +216,6 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM machine "+condition);
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
-}
-
-/**
-* \brief Function to get the content of the public ssh key
-* \return The content of the ssh public key
-*/
-std::string
-MachineServer::getPublicKey() {
-  return msshpublickey;
 }
 
 /**

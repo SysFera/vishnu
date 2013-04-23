@@ -66,12 +66,6 @@ public:
    */
   std::string
   getAttribut(std::string condition, std::string attrname = "numaccountid");
-  /**
-   * \brief Function to get the content of the public ssh generated
-   * \return The content of the ssh public key generated
-   */
-  std::string
-  getPublicKey();
 
 private:
   /////////////////////////////////
@@ -89,19 +83,10 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
-  /**
-  * \brief The content of the ssh public key generated
-  */
-  std::string msshpublickey;
 
   /////////////////////////////////
   // Functions
   /////////////////////////////////
-  /**
-   * \brief Function to generate a private/public ssh key
-   */
-  std::string
-  generateKey();
   /**
    * \brief Function to check localAccount on database
    * \param idmachine The id of the machine

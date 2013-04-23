@@ -588,17 +588,17 @@ UserServer::getUserAccountLogin(const std::string& machineId) {
   std::string numUser("");
   std::string acLogin("");
   sqlcond = (boost::format("WHERE machineid = '%1%'"
-                           " AND status == %2%")%localAccount.getData()->getMachineId() %vishnu::STATUS_ACTIVE).str();
+                           " AND status = %2%")%localAccount.getData()->getMachineId() %vishnu::STATUS_ACTIVE).str();
   numMachine = machineServer.getAttribut(sqlcond, "nummachineid");
 
   sqlcond = (boost::format("WHERE userid = '%1%'"
-                           " AND status == %2%")%localAccount.getData()->getUserId() %vishnu::STATUS_ACTIVE).str();
+                           " AND status = %2%")%localAccount.getData()->getUserId() %vishnu::STATUS_ACTIVE).str();
   numUser = getAttribut(sqlcond, "numuserid");
 
   if ((numMachine.size() > 0) && (numUser.size() > 0)) {
     sqlcond = (boost::format("WHERE machine_nummachineid = %1%"
                              " AND users_numuserid=%2%"
-                             " AND status == %3%")%numMachine %numUser %vishnu::STATUS_ACTIVE).str();
+                             " AND status = %3%")%numMachine %numUser %vishnu::STATUS_ACTIVE).str();
     acLogin = localAccount.getAttribut(sqlcond, "aclogin");
   }
 

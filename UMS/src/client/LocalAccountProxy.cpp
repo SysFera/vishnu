@@ -33,7 +33,6 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
   diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string localAccountToString;
-  std::string sshPublicKey;
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
@@ -68,15 +67,10 @@ LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
   if(!diet_call(profile)) {
     if(isNewLocalAccount) {
-      if(diet_string_get(profile,2, sshPublicKey)){
-        msg += "by receiving sshPluciKey content";
-        raiseCommunicationMsgException(msg);
-      }
       if(diet_string_get(profile,3, errorInfo)){
         msg += "by receiving errorInfo message";
         raiseCommunicationMsgException(msg);
       }
-      msshPublicKey = sshPublicKey;
     }
     else {
       if(diet_string_get(profile,2, errorInfo)){
@@ -176,16 +170,6 @@ LocalAccountProxy::deleteLocalAccount() {
 SessionProxy
 LocalAccountProxy::getSessionProxy() const {
   return msessionProxy;
-}
-
-/**
- * \brief Function get the VISHNU ssh public key
- * \return the VISHNU ssh public Key
- * \return raises an exception on error
- */
-std::string
-LocalAccountProxy::getSshPublicKey() const {
-  return msshPublicKey;
 }
 
 /**

@@ -21,7 +21,6 @@ using namespace std;
  * \param configFile : Represents the VISHNU config file
  * \param fSite : The site name option callback
  * \param fLanguage : The language option callback
- * \param sshPublicKeyPath : The user ssh key path option
  * \param fMachineDescription : The machine description option callback
  * \param type : Indicates if it is an add or an update command, 0 means update, and 1 means add
  * \return The description of all options allowed by the command
@@ -30,7 +29,7 @@ using namespace std;
 
 boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackType& fName,std::string & configFile,
                                               StringcallBackType & fSite, StringcallBackType& fLanguage,
-                                              std::string& sshPublicKeyPath, StringcallBackType& fMachineDescription,int type){
+                                              StringcallBackType& fMachineDescription,int type){
 
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -78,17 +77,6 @@ boost::shared_ptr<Options> makeMachineOptions(std::string pgName,StringcallBackT
 
   if (type){
     opt->setPosition("language",1);
-  }
-
-  opt->add("sshPublicKeyFile,k",
-           "The the path to the SSH public key used by VISHNU to access local user accounts",
-           group,
-           sshPublicKeyPath,
-           type);
-
-  if(type){
-
-    opt->setPosition("sshPublicKeyFile",1);
   }
 
   opt->add("machineDescription,d",
