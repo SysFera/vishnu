@@ -1,3 +1,8 @@
+include_directories(${Boost_INCLUDE_DIRS}
+  ${VISHNU_SOURCE_DIR}/core/src/config
+  ${VISHNU_SOURCE_DIR}/core/src/exception
+  )
+
 add_library(mockDb
   Database.cpp
   DatabaseResult.cpp
@@ -5,11 +10,11 @@ add_library(mockDb
   DbFactory.cpp
   MockDatabase.cpp
   )
+
+target_link_libraries(mockDb vishnu-core)
 if(COMPILE_SERVERS)
 
-  include_directories(${Boost_INCLUDE_DIRS}
-  ${VISHNU_SOURCE_DIR}/core/src/config ${VISHNU_SOURCE_DIR}/core/src/exception
-  ${VISHNU_SOURCE_DIR}/core/src/utils
+  include_directories(${VISHNU_SOURCE_DIR}/core/src/utils
   ${VISHNU_SOURCE_DIR}/core/src/emfdata
   ${VISHNU_SOURCE_DIR}/core/deps/emf4cpp
   ${UMS_SERVER_SOURCE_DIR}
