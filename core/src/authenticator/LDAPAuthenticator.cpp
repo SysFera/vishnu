@@ -10,6 +10,7 @@
 #include <string>
 #include <vector>
 #include <boost/scoped_ptr.hpp>
+#include <boost/format.hpp>
 
 #include "ldap/LDAPProxy.hpp"
 #include "DatabaseResult.hpp"
@@ -41,7 +42,7 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
                                           " AND authaccount.users_numuserid=users.numuserid"
                                           " AND authsystem.status<>%3%"
                                           " AND users.status<>%4%"
-                                          )%user.getUserId() %LDAPTYPE %DELETED_STATUS %DELETED_STATUS).str();
+                              )%user.getUserId() %LDAPTYPE %vishnu::STATUS_DELETED %vishnu::STATUS_DELETED).str();
 
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
 
@@ -66,7 +67,7 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
     userid = *(++ii);
     pwd = *(++ii);
 
-    if (vishnu::convertToInt(authSystemStatus) != ACTIVE_STATUS) {
+    if (vishnu::convertToInt(authSystemStatus) != vishnu::STATUS_ACTIVE) {
       UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM, "It is locked");
       throw e;
     }
