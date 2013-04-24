@@ -1,6 +1,9 @@
 +--------------+
 | VISHNU 3.0.0 |
 +--------------+
+* Fixed a bug with cancel (tms), *cp, *mv (fms)
+* Remove deprecated parameters from account and machine (ssh keys)
+* Remove database sql delete, now a status deleted is used
 * Fixed a few bugs: #348, #414, #424, #454
 * Option VISHNU_USE_LDAP in cmake has been renamed ENABLE_LDAP to be more
 	consistent with the other options (ENABLE_JAVA, ENABLE_MYSQL,
