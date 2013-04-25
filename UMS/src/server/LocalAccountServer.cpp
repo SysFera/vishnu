@@ -52,6 +52,11 @@ LocalAccountServer::add() {
         //To get the database number id of the user
         numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
 
+        if (numUser.empty()) {
+          throw UMSVishnuException (ERRCODE_UNKNOWN_USERID,
+                                    "User '" + mlocalAccount->getUserId() + "' does not exist");
+        }
+
         //if the local account does not exist
         if (!exist(numMachine, numUser)) {
           if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
@@ -288,4 +293,3 @@ LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
   std::string numUser = getAttribut(sqlcond, "numaccountid");
   return !(numUser.empty());
 }
-
