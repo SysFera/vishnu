@@ -5744,6 +5744,10 @@
               <entry><para>ACTIVE</para></entry>
               <entry><para>1</para></entry>
             </row>
+            <row>
+              <entry><para>DELETED</para></entry>
+              <entry><para>2</para></entry>
+            </row>
           </tbody>
         </tgroup>
       </informaltable>

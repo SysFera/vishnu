@@ -13,7 +13,7 @@
       </address>
     </author>
     <title>User Manual</title>
-    <date>January 2013</date>
+    <date>april 2013</date>
     <copyright>
       <year>2013</year>
       <holder>SysFera SA</holder>
@@ -51,7 +51,7 @@ data to be ensured and,  more generally, to use and operate it in the
 same conditions as regards security.</para>
     </legalnotice>
     <productname>VISHNU</productname>
-    <releaseinfo>3.0.0 beta2</releaseinfo>
+    <releaseinfo>3.0.0</releaseinfo>
   </info>
   <reference>
     <title>UMS Command reference</title>
@@ -1723,7 +1723,7 @@ The session's status is either 0 (inactive) or 1 (active).</para>
             <term><option>-t <replaceable>status</replaceable></option></term>
             <listitem>
               <para>specifies the status of the sessions which will be listed.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>

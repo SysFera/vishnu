@@ -2375,7 +2375,7 @@ The value must be an integer. Predefined values are: 0 (USER), 1 (ADMIN).</para>
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>represents the status of the user (LOCKED or ACTIVE).
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
         </variablelist>
@@ -3049,7 +3049,7 @@ have to add it to the authorized keys of their own account on the machine.</para
             <term><option>-t <replaceable>status</replaceable></option></term>
             <listitem>
               <para>represents the status of the machine.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -3671,7 +3671,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (LDAP).</
             <term><option>-s <replaceable>status</replaceable></option></term>
             <listitem>
               <para>represents the status of the user-authentication system.
-The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE).</para>
+The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE), 1 (ACTIVE), 2 (DELETED).</para>
             </listitem>
           </varlistentry>
           <varlistentry>
