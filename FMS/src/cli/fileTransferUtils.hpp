@@ -100,7 +100,6 @@ copyParseOptions (int argc, char* argv[],std::string& configFile,
                   std::string& src, std::string& dest,
                   FMS_Data::CpFileOptions& cpFileOptions,
                   TransferType transferType) {
-  int ret; // Return value
   std::string trCmdStr;
 
   // build transfer command options

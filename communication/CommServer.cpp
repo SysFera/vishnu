@@ -35,7 +35,7 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
   std::string mid;
   std::string uridispatcher;
   std::string urlsup;
-  int timeout;
+  int timeout = 10;
 
   // Getting the machine id
   config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);

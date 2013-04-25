@@ -56,7 +56,6 @@ JobOutputServer::getJobOutput() {
 	msessionServer.check();
 
 	std::string acLogin;
-	std::string machineName;
 	std::string outputPath;
 	std::string errorPath;
 	std::string owner;
@@ -79,7 +78,6 @@ JobOutputServer::getJobOutput() {
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
-	machineName = machineServer.getMachineName();
 	delete machine;
 
 	if(sqlResult->getNbTuples() == 0) {
@@ -142,7 +140,6 @@ JobOutputServer::getCompletedJobsOutput() {
 	UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
 	machine->setMachineId(mmachineId);
 	MachineServer machineServer(machine);
-	std::string machineName = machineServer.getMachineName();
 	delete machine;
 
 	std::string outputPath;

@@ -29,7 +29,6 @@ ProcessCtl::isIMSSeD(std::string Pname) {
 
 void
 ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, std::string machineTo, bool isAPI) {
-  std::string type;
   mop = *op;
   if (isAPI) {
     if (!muser.isAdmin()) {
@@ -59,7 +58,6 @@ ProcessCtl::restart(IMS_Data::SupervisorOp_ptr op, std::string machineTo, bool i
 
 void
 ProcessCtl::stop(IMS_Data::SupervisorOp_ptr op) {
-  std::string name;
   mop = *op;
   if (!muser.isAdmin()){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "stop is an admin function. A user cannot call it");

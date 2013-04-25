@@ -103,7 +103,6 @@ struct ListFileTransferFunc {
 
 
 int main (int ac, char* av[]) {
-  int ret; // Return value
 
   /******* Parsed value containers ****************/
   string configFile;
