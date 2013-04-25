@@ -432,24 +432,19 @@ if(COMPILE_SERVERS)
   if(MYSQL_FOUND AND ENABLE_MYSQL)
     set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
-
-    # we add compilation variable definitions only on required files
-    set_source_files_properties(
-      database/DbFactory.cpp
-      PROPERTIES COMPILE_FLAGS "-DUSE_MYSQL"
-      )
+    set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_MYSQL")
   endif()
 
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
     set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
-
-    # we add compilation variable definitions only on required files
-    set_source_files_properties(
-      database/DbFactory.cpp
-      PROPERTIES COMPILE_FLAGS "-DUSE_POSTGRES"
-      )
+    set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_POSTGRES")
   endif()
+  # we add compilation variable definitions only on required files
+  set_source_files_properties(
+    database/DbFactory.cpp
+    PROPERTIES COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS}"
+    )
 
   if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
     # we add compilation variable definitions only on required files

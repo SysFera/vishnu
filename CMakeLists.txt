@@ -35,13 +35,15 @@ if (POSTGRESQL_FOUND)
   option(ENABLE_POSTGRESQL "compile with postgresql support" ON)
 else (POSTGRESQL_FOUND)
   option(ENABLE_POSTGRESQL "compile with postgresql support" OFF)
-  find_package(MYSQL)
-  if (MYSQL_FOUND)
-    option(ENABLE_MYSQL "compile with mysql support" ON)
-  else (MYSQL_FOUND)
-    option(ENABLE_MYSQL "compile with mysql support" OFF)
-  endif(MYSQL_FOUND)
 endif(POSTGRESQL_FOUND)
+
+find_package(MYSQL)
+if (MYSQL_FOUND)
+  option(ENABLE_MYSQL "compile with mysql support" ON)
+else (MYSQL_FOUND)
+  option(ENABLE_MYSQL "compile with mysql support" OFF)
+endif(MYSQL_FOUND)
+
 
 # COMPILE_UMS option set to ON by default
 option(COMPILE_UMS "compile the module UMS" ON)
