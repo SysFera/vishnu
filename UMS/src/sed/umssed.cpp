@@ -72,7 +72,6 @@ main(int argc, char* argv[], char* envp[]) {
   string UMSTYPE = "umssed";
   string mid;
   string uri;
-  string uridispatcher;
 
   if (argc != 2) {
     return usage(argv[0]);
