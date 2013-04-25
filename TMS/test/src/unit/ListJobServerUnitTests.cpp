@@ -28,10 +28,10 @@ BOOST_AUTO_TEST_CASE( test_processOptions_no_options )
   std::string machineId;
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
-  
+
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   listJobServer.processOptions(options, test_sql);
-  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5");  
+  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5");
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_nbCpu )
@@ -40,7 +40,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_nbCpu )
   std::string machineId;
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
-  
+
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setNbCpu(3);
   listJobServer.processOptions(options, test_sql);
@@ -66,10 +66,12 @@ BOOST_AUTO_TEST_CASE( test_processOptions_FromSubmitDate )
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
-  options->setFromSubmitDate(1121211221); 
+  time_t test = 1121211221;
+  options->setFromSubmitDate(test);
   listJobServer.processOptions(options, test_sql);
-  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate >= '2005-Jul-13 00:33:41' and job.status < 5");
-  
+  std::string tmp = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
+  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate >= '"+tmp+"' and job.status < 5");
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_Bad_FromSubmitDate )
@@ -82,7 +84,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_Bad_FromSubmitDate )
   options->setFromSubmitDate(-1);
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
@@ -92,10 +94,12 @@ BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
   ListJobServer listJobServer(session, machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
-  options->setToSubmitDate(1121211221);
+  time_t test = 1121211221;
+  options->setToSubmitDate(test);
   listJobServer.processOptions(options, test_sql);
-  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate <= '2005-Jul-13 00:33:41' and job.status < 5");
-  
+  std::string tmp = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
+  BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate <= '"+tmp+"' and job.status < 5");
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_Bad_ToSubmitDate )
@@ -108,7 +112,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_Bad_ToSubmitDate )
   options->setFromSubmitDate(-1);
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_JobState )
@@ -121,7 +125,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobState )
   options->setStatus(5);
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status='5'");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobState )
@@ -132,7 +136,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobState )
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setStatus(-5);
-  BOOST_CHECK_THROW(listJobServer.processOptions(options, test_sql) , UserException );  
+  BOOST_CHECK_THROW(listJobServer.processOptions(options, test_sql) , UserException );
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_multiple_JobState )
@@ -168,7 +172,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobPriority )
   options->setPriority(2);
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5 and jobPrio='2'");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobPriority )
@@ -192,7 +196,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobOwner )
   options->setOwner("Unit");
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5 and owner='Unit'");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_WorkId )
@@ -205,7 +209,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_WorkId )
   options->setWorkId(2);
   listJobServer.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and job.status < 5 and workId='2'");
-  
+
 }
 
 /*BOOST_AUTO_TEST_CASE( test_list )
@@ -216,7 +220,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_WorkId )
   options->setWorkId(2);
   ListJobServer listJobServer(options, session, machineId);
   listJobServer.list();
- 
+
 }*/
 
 
