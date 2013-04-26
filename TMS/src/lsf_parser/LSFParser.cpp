@@ -19,6 +19,7 @@
 #include "TMSVishnuException.hpp"
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
+#include "tmsUtils.hpp"
 
 #include "LSFParser.hpp"
 #include <lsf/lsbatch.h>
