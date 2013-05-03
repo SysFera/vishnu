@@ -129,7 +129,8 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
  */
 int
 UserServer::update(UMS_Data::User *user) {
-  std::string sqlCommand = "";
+  std::string sqlCommand = "UPDATE users SET";
+  std::string comma="";
   if (exist()) {
     if (isAdmin()) {
       //if the user whose information will be updated exists
@@ -137,20 +138,22 @@ UserServer::update(UMS_Data::User *user) {
 
         //if a new fisrtname has been defined
         if (!user->getFirstname().empty()) {
-          sqlCommand.append("UPDATE users SET firstname='"+user->getFirstname()+"'"
-                            " where userid='"+user->getUserId()+"';");
+          sqlCommand.append(" firstname='"+user->getFirstname()+"'");
+          comma=",";
         }
 
         //if a new lastname has been defined
         if (!user->getLastname().empty()) {
-          sqlCommand.append("UPDATE users SET lastname='"+user->getLastname()+"'"
-          " where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
+          sqlCommand.append(comma + " lastname='"+user->getLastname()+"'");
+          comma=",";
+          
         }
 
         //if a new email has been defined
         if (!user->getEmail().empty()) {
-          sqlCommand.append("UPDATE users SET email='"+user->getEmail()+"'"
-          " where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
+          sqlCommand.append(comma+" email='"+user->getEmail()+"'");
+          comma=",";
+         
         }
 
         //If a new status has been defined
@@ -159,22 +162,25 @@ UserServer::update(UMS_Data::User *user) {
           if (user->getStatus() == vishnu::STATUS_LOCKED) {
             //if the user is not already locked
             if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != vishnu::STATUS_LOCKED) {
-              sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
-              " where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
+              sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
+              comma=",";
+              
             } else {
               throw UMSVishnuException (ERRCODE_USER_ALREADY_LOCKED);
             }
           } else {
-            sqlCommand.append("UPDATE users SET status="+convertToString(user->getStatus())+""
-            " where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
+            sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
+            comma=",";
+            
           }
         }
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
-          sqlCommand.append("UPDATE users SET privilege="+convertToString(user->getPrivilege())+""
-          " where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
+          (comma+" privilege="+convertToString(user->getPrivilege())+" ");
+          comma=",";
+         
         }
-
+        sqlCommand.append(" where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
         //If there is a change
         if (!sqlCommand.empty()) {
           mdatabaseVishnu->process(sqlCommand.c_str());
