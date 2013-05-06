@@ -185,7 +185,14 @@ MachineServer::update() {
 int
 MachineServer::deleteMachine() {
   mmachine->setStatus(vishnu::STATUS_DELETED);
-  return update();
+  int ret = update();
+  if (ret == 0){
+    std::string sqlUpdate = "update account, machine set account.status="+
+        convertToString(vishnu::STATUS_DELETED)+
+        " where machine.nummachineid=account.machine_nummachineid and machine.machineid='"+mmachine->getMachineId()+"';";
+        
+    return mdatabaseVishnu->process(sqlUpdate.c_str());
+  }
 } //END: deleteMachine()
 
 /**
