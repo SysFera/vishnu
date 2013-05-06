@@ -205,7 +205,13 @@ UserServer::update(UMS_Data::User *user) {
 int
 UserServer::deleteUser(UMS_Data::User user) {
   user.setStatus(vishnu::STATUS_DELETED);
-  return update(&user);
+  int ret = update(&user);
+  if (ret == 0){
+    std::string sqlUpdate = "update account, users set account.status="+
+    convertToString(vishnu::STATUS_DELETED)+
+    " where users.numuserid=account.users_numuserid and users.userid='"+user.getUserId()+"';";
+    return mdatabaseVishnu->process(sqlUpdate.c_str());
+  }
 }//END: deleteUser(UMS_Data::User user)
 
 /**
