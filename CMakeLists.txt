@@ -210,9 +210,9 @@ set(VERSION_MANAGER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/version)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${PROJECT_BINARY_DIR}/vishnu_version.hpp)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core/examples/confs/vishnu-sample.cfg.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contrib/vishnu-sample.cfg.in
     ${PROJECT_BINARY_DIR}/vishnu-sample.cfg)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/core/examples/confs/supervisord-sample.cfg.in
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/contrib/supervisord-sample.cfg.in
     ${PROJECT_BINARY_DIR}/supervisord-sample.cfg)
 #UMS
 set(UMS_EMF_DATA_DIR ${EMF_DATA_DIR}/UMS_Data)
