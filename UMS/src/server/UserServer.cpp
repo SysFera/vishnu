@@ -207,11 +207,15 @@ UserServer::deleteUser(UMS_Data::User user) {
   user.setStatus(vishnu::STATUS_DELETED);
   int ret = update(&user);
   if (ret == 0){
-    std::string sqlUpdate = "update account, users set account.status="+
-    convertToString(vishnu::STATUS_DELETED)+
-    " where users.numuserid=account.users_numuserid and users.userid='"+user.getUserId()+"';";
+    std::string sqlUpdate = (boost::format("UPDATE account, users SET account.status='%1%' "
+                                           " WHERE users.numuserid=account.users_numuserid and users.userid='%2%';"
+                                          )
+                            %vishnu::STATUS_DELETED
+                            %user.getUserId()  
+                            ).str();
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }
+  return ret;
 }//END: deleteUser(UMS_Data::User user)
 
 /**

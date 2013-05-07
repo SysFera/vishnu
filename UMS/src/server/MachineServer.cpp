@@ -187,12 +187,17 @@ MachineServer::deleteMachine() {
   mmachine->setStatus(vishnu::STATUS_DELETED);
   int ret = update();
   if (ret == 0){
-    std::string sqlUpdate = "update account, machine set account.status="+
-        convertToString(vishnu::STATUS_DELETED)+
-        " where machine.nummachineid=account.machine_nummachineid and machine.machineid='"+mmachine->getMachineId()+"';";
+
+    std::string sqlUpdate = (boost::format("update account, machine set account.status='%1%' "
+                                           " where machine.nummachineid=account.machine_nummachineid and machine.machineid='%2%';"
+                            )
+                            %vishnu::STATUS_DELETED
+                            %mmachine->getMachineId()
+                            ).str();    
         
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }
+  return ret;
 } //END: deleteMachine()
 
 /**
