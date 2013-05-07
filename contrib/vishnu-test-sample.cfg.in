@@ -1,0 +1,37 @@
+s is a sample setup file for VISHNU tests
+# Copyright (c) SysFera SA
+# Last update: 04/02/2013
+#
+#Definitions
+#FMS: File Management System
+#IMS: Information Management System
+#TMS: Task Management System
+#UMS: User Management System
+###############################################################################
+#Common Parameters
+###############################################################################
+TEST_VISHNU_MACHINEID1=machine_1
+TEST_WORKING_DIR=/home/absila/machine_1
+TEST_ROOT_VISHNU_LOGIN=root
+TEST_ROOT_VISHNU_PWD=vishnu_user
+TEST_ADMIN_VISHNU_LOGIN=admin_1
+TEST_ADMIN_VISHNU_PWD=admin
+TEST_USER_VISHNU_LOGIN=user_1
+TEST_USER_VISHNU_PWD=toto
+###############################################################################
+#UMS Related Parameters
+###############################################################################
+TEST_UMS_AUTHEN_TYPE=UMS
+###############################################################################
+#FMS Specfic Parameters
+###############################################################################
+TEST_FMS_HOST1=machine_1
+TEST_FMS_HOST2=machine_2
+TEST_FMS_HOST1_WORKING_DIR=/home/absila/machine_2
+TEST_FMS_HOST2_WORKING_DIR=/home/absila/machine_3
+TEST_FMS_USER_LOCAL_GROUP=test;
+###############################################################################
+# TMS Related Parameters
+###############################################################################
+TEST_TMS_MACHINE_IDS=machine_1 SLURM;machine_2 SLURM
+
