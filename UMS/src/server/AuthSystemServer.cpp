@@ -229,6 +229,15 @@ AuthSystemServer::deleteAuthSystem() {
                                          " WHERE authsystemid='%2%'"
                                          )%vishnu::STATUS_DELETED %mauthsystem->getAuthSystemId()).str();
         mdatabaseVishnu->process(sql);
+
+// Deleting all the auth account when the auth system is deleted
+        sql = (boost::format("UPDATE authaccount, authsystem"
+                             " SET authaccount.status=%1%"
+                             " WHERE authsystemid='%2%'"
+                             " AND authsystem.numauthsystemid=authaccount.authsystem_authsystemid"
+                 )%vishnu::STATUS_DELETED %mauthsystem->getAuthSystemId()).str();
+        mdatabaseVishnu->process(sql);
+
       } //End if the user-authentication system exists
       else {
         UMSVishnuException e (ERRCODE_UNKNOWN_AUTH_SYSTEM);
