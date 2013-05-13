@@ -107,6 +107,7 @@ public:
                                      " FROM authaccount, authsystem, users"
                                      " WHERE authaccount.authsystem_authsystemid=authsystem.numauthsystemid"
                                      "  AND authaccount.users_numuserid=users.numuserid"
+                                     "  AND authsystem.status!=%1%"
                                      "  AND authaccount.status!=%1%")%vishnu::STATUS_DELETED).str();
 
     std::vector<std::string>::iterator ii;
