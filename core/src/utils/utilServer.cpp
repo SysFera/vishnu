@@ -567,13 +567,10 @@ vishnu::createDir(const std::string& path, const bool& isWorkingdir) {
 
 int
 vishnu::showVersion(std::string server){
-  std::string end;
+  std::string batchInfo("");
   if (server == "tmssed"){
-    end = std::string(" with batch ") + std::string(VISHNU_BATCH_SCHEDULER) + std::string(" ") + std::string(VISHNU_BATCH_SCHEDULER_VERSION) + std::string(" \n");
-  } else {
-    end = " \n";
+    batchInfo = (boost::format("\n%1% %2%")%VISHNU_BATCH_SCHEDULER%VISHNU_BATCH_SCHEDULER_VERSION).str();
   }
-
-  std::cout << " The current version of the " << server << " is " << VISHNU_VERSION << end;
+  std::cout << (boost::format("%1% %2%%3%\n")%server%VISHNU_VERSION%batchInfo).str();
   return EXIT_SUCCESS;
 }
