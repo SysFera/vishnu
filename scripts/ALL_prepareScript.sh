@@ -107,7 +107,6 @@ copy_dir contrib
 create_dir core
 copy_dir core/src core/
 copy_dir core/test core/
-copy_dir core/examples core/
 
 # Copy sql scripts
 create_dir core/database
