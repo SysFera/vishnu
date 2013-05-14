@@ -57,7 +57,6 @@ run_cmd mkdir -p deliverables/
 remove_files deliverables/*
 run_cmd mkdir -p deliverables/src
 run_cmd mkdir -p deliverables/doc
-run_cmd mkdir -p deliverables/debs
 run_cmd mkdir -p deliverables/tests
 
 # create releasepath
@@ -66,7 +65,6 @@ run_cmd mkdir -p $releasePath
 
 remove_files deliverables/src/*
 remove_files deliverables/doc/*
-remove_files deliverables/debs/*
 remove_files deliverables/tests/*
 
 
