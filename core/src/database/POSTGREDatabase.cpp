@@ -57,9 +57,8 @@ POSTGREDatabase::connect() {
   if ((mconfig.getDbPort() != 0)) {
     pgPort = vishnu::convertToString(mconfig.getDbPort());
   } else {
-    pgPort = "5432";
+    pgPort = "5432"; //default port
   }
-
   std::string sslOptions = "";
   if (mconfig.getUseSsl()) {
     sslOptions = (boost::format("sslmode=verify-ca sslrootcert=%1%")%mconfig.getSslCaFile()).str();
