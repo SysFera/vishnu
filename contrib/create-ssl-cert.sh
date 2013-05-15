@@ -1,13 +1,19 @@
 #!/bin/bash
+# Copyright SysFera SA
+# Last update : 15-05-2013
+
+# Before running this scrit, adapt the following environment variables
+# to suit your needs.
+
+CERT_PASSWD=certpasswd                          # Sets the certificate password
+SERVER_DN="/DC=com/DC=sysfera/CN=mysql-server"  # Sets the server distinguish name
+CLIENT_DN="/DC=com/DC=sysfera/CN=mysql-client"  # Sets the client distinguish name
+OUTPUT_DIR=mysql-ssl                            # Sets the output directory
 
 set -e
-CERT_PASSWD=certpasswd
-SERVER_DN="/DC=com/DC=sysfera/CN=mysql-server"
-CLIENT_DN="/DC=com/DC=sysfera/CN=mysql-client"
-
 echo "Create clean environment.................................."
-rm -rf mysql-ssl
-mkdir mysql-ssl && cd mysql-ssl
+rm -rf ${OUTPUT_DIR}
+mkdir ${OUTPUT_DIR} && cd ${OUTPUT_DIR}
 
 echo "Generate the server certificate..........................."
 openssl req -x509 -newkey rsa:1024 \
