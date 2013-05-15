@@ -105,18 +105,6 @@ public:
    */
   std::string getSslCaFile() { return msslCaFile; }
 
-  /**
-   * \brief Gets the value of the property msslCertFile
-   * \return the value of the property msslCertFile
-   */
-  std::string getSslCertFile() { return msslCertFile; }
-
-  /**
-   * \brief Gets the value of the property msslKeyFile
-   * \return the value of the property msslKeyFile
-   */
-  std::string getSslKeyFile() { return msslKeyFile; }
-
 protected:
 
   /////////////////////////////////
@@ -172,16 +160,6 @@ protected:
    * \brief Sets SSL CA file path
    */
   std::string msslCaFile;
-
-  /**
-   * \brief Sets SSL certificate file path
-   */
-  std::string msslCertFile;
-
-  /**
-   * \brief Sets SSL key file path
-   */
-  std::string msslKeyFile;
 
 };
 
