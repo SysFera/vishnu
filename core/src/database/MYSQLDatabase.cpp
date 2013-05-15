@@ -53,17 +53,6 @@ MYSQLDatabase::process(string request, int transacId){
       throw SystemException(ERRCODE_DBERR, dbErrorMsg(conn));
     }
     connectPoolIndex(reqPos);  // try to reinitialise the socket
-    //    if (mysql_real_connect(&(mpool[reqPos].mmysql),
-    //                           mconfig.getDbHost().c_str(),
-    //                           mconfig.getDbUserName().c_str(),
-    //                           mconfig.getDbUserPassword().c_str(),
-    //                           mconfig.getDbName().c_str(),
-    //                           mconfig.getDbPort(),
-    //                           NULL,
-    //                           CLIENT_MULTI_STATEMENTS|CLIENT_SSL) ==NULL) {
-    //      throw SystemException(ERRCODE_DBERR, "Cannot reconnect to the DB"
-    //                            + dbErrorMsg(&(mpool[reqPos].mmysql)));
-    //    }
     res=mysql_real_query(conn, request.c_str (), request.length());
     if (res) {
       // Could not execute the query

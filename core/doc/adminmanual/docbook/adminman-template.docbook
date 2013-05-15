@@ -1779,7 +1779,7 @@ travers d'une socket unix.
 Par défaut, les connexions à une base de données MySQL et MySQL sont en claire, c'est-à-dire non chriffrées. Ceci peut constituer un facteur de vulnérabilité majeur. Afin d'accroître la fiabilité des connexions, MySQL et PostGreSQL supportent tous les deux des chriffrements SSL. Les versions de VISHNU ultérieures à 3.0.0 supportent à la fois des connexions chriffrées et des connexions en claire. Cette section présente comment configurer les accès chiffrés à des bases de données MySQL et PostGreSQL. 
 </para>
 <para>
-Avant d'aller plus loin,  notons que le chiffrement entre le client et le serveur de base de données se base sur des certificats SSL. Pour plus de détails sur les certificats, vous pouvez consulter la documentation en ligne sur le site d'OpenSSL :  <ulink url="http://www.openssl.org/docs/">http://www.openssl.org/docs/</ulink>.  Le script <emphasis>create-ssl-cert.sh</emphasis> fourni avec VISHNU permet de créer rapidement des certificats autosignés. Avant de l'exécuter, editez le script pour adapter le mot de passe du certificat ainsi que les paramètres liés au serveur et au client pour lesquels le certificat sera généré. 
+Avant d'aller plus loin,  notons que le chiffrement entre le client et le serveur de base de données se base sur des certificats SSL. Ceci requiert l'installation d'openssl à la fois sur le système client et sur le système serveur et que ce support soit activé au moment de la construction de MySQL ou de PostgreSQL. Pour plus de détails sur SSL, vous pouvez consulter la documentation en ligne sur le site d'OpenSSL :  <ulink url="http://www.openssl.org/docs/">http://www.openssl.org/docs/</ulink>.  Le script <emphasis>create-ssl-cert.sh</emphasis> fourni avec VISHNU permet de créer rapidement des certificats autosignés aussi bien pour le client que le serveur. Avant de l'exécuter, editez le script pour adapter le mot de passe du certificat ainsi que les paramètres liés au serveur et au client pour lesquels le certificat sera généré. 
 </para>
 <section>
 <title>MySQL et SSL</title>
@@ -1838,7 +1838,7 @@ Si une erreur se produit, alors le binaire n'a pas été compilé avec le suppor
 <section>
 <title>Activer le support SSL dans MySQL</title>
 <para>
-Pour activer le support SSL sur le serveur MySQL, vous devez indiquer un certificat, la clé privé du serveur et l'autorité de certification. Le certificat peut être autosigné ou signé par une autotité de certification.
+Pour activer le support SSL sur le serveur MySQL, vous devez indiquer un certificat, la clé privé du serveur et les certificats de l'autorité de confiance. Le certificat peut être autosigné ou signé par une autotité de certification.
 </para>
 <para>
 Une fois que vous disposez des différentes entités du certificat, la configuration de MySQL est assez simple.
@@ -1859,7 +1859,7 @@ ssl-key=/opt/etc/sysfera/mysql-ssl/server-key.pem
 ]]>
 </programlisting>
 <para>
-Adapter les chemins en fonction de l'emplacement où vous avez stocké les différentes entités. Le paramètre <emphasis>ssl-ca</emphasis> doit pointer vers l'emplacement où vous avez stocké le fichier de l'autorité de certification, <emphasis>ssl-cert</emphasis> doit pointer vers l'emplacement où vous avez stocké le certificat, tandis que le paramètre <emphasis>ssl-key</emphasis>  doit pointer vers l'emplacement où vous avez stocké la clé privé du certificat.
+Adapter les chemins en fonction de l'emplacement où vous avez stocké les différentes entités. Le paramètre <emphasis>ssl-ca</emphasis> doit pointer vers l'emplacement où vous avez stocké le fichier des certificats de l'autorité de confiance, <emphasis>ssl-cert</emphasis> doit pointer vers l'emplacement où vous avez stocké le certificat du serveur, tandis que le paramètre <emphasis>ssl-key</emphasis>  doit pointer vers l'emplacement où vous avez stocké la clé privé du serveur.
 </para>
 <itemizedlist>
 <listitem>
@@ -1946,7 +1946,7 @@ databaseSslKey=/opt/etc/sysfera/mysql-ssl/client-key.pem
 ]]>
 </programlisting>
 <para>
-Lorsque le paramètre <emphasis>databaseUseSsl</emphasis> a une valeur non-nulle, on indique à VISHNU de se connecter à MySQL en mode sécurisé. Les autres paramètres <emphasis>databaseSsl*</emphasis>  doivent alors être fournis. <emphasis>databaseSslCa</emphasis> indique l'autorité de certification, <emphasis>databaseSslCert</emphasis> indique le certificat client, tandis que <emphasis>databaseSslKey</emphasis> indique la clé privée du client.
+Lorsque le paramètre <emphasis>databaseUseSsl</emphasis> a une valeur non-nulle, on indique à VISHNU de se connecter à MySQL en mode sécurisé. Les autres paramètres <emphasis>databaseSsl*</emphasis>  doivent alors être fournis. <emphasis>databaseSslCa</emphasis> indique l'emplacement des certificats de l'autorité de confiance, <emphasis>databaseSslCert</emphasis> indique le certificat client, tandis que <emphasis>databaseSslKey</emphasis> indique la clé privée du client.
 </para>
 </section>
 </section>
