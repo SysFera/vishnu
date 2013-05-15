@@ -233,7 +233,7 @@ AuthSystemServer::deleteAuthSystem() {
 // Deleting all the auth account when the auth system is deleted
         sql = (boost::format("UPDATE authaccount, authsystem"
                              " SET authaccount.status=%1%"
-                             " WHERE authsystemid='%2%'"
+                             " WHERE authsystem.authsystemid='%2%'"
                              " AND authsystem.numauthsystemid=authaccount.authsystem_authsystemid"
                  )%vishnu::STATUS_DELETED %mauthsystem->getAuthSystemId()).str();
         mdatabaseVishnu->process(sql);
