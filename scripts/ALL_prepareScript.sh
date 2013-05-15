@@ -57,7 +57,6 @@ run_cmd mkdir -p deliverables/
 remove_files deliverables/*
 run_cmd mkdir -p deliverables/src
 run_cmd mkdir -p deliverables/doc
-run_cmd mkdir -p deliverables/debs
 run_cmd mkdir -p deliverables/tests
 
 # create releasepath
@@ -66,7 +65,6 @@ run_cmd mkdir -p $releasePath
 
 remove_files deliverables/src/*
 remove_files deliverables/doc/*
-remove_files deliverables/debs/*
 remove_files deliverables/tests/*
 
 
@@ -199,11 +197,11 @@ create_dir UMS/test/
 copy_dir UMS/test/src UMS/test/
 
 # Copy test reports in release
-run_cmd mkdir -p $pathrel/../tests/report
+run_cmd mkdir -p $pathrel/../testReports
 
-copy_rel_file UMS/test/testReports/\*\.pdf ../tests/report/
-copy_rel_file UMS/test/testReports/\*\.docbook ../tests/report/
-copy_rel_file UMS/test/testReports/\*\.html ../tests/report/
+copy_rel_file UMS/test/testReports/\*\.pdf ../testReports/
+copy_rel_file UMS/test/testReports/\*\.docbook ../testReports/
+copy_rel_file UMS/test/testReports/\*\.html ../testReports/
 
 # Copy test plans in release
 run_cmd mkdir -p $pathrel/../doc/concept/images
@@ -238,9 +236,9 @@ copy_dir  TMS/doc/man/man1 TMS/doc/man/
 copy_dir  TMS/doc/man/man3 TMS/doc/man/
 
 # Copy tests in release
-copy_rel_file TMS/test/testReports/\*\.pdf ../tests/report/
-copy_rel_file TMS/test/testReports/\*\.docbook ../tests/report/
-copy_rel_file TMS/test/testReports/\*\.html ../tests/report/
+copy_rel_file TMS/test/testReports/\*\.pdf ../testReports/
+copy_rel_file TMS/test/testReports/\*\.docbook ../testReports/
+copy_rel_file TMS/test/testReports/\*\.html ../testReports/
 
 # Copy test plans in release
 copy_rel_file TMS/test/testPlan/\*\.pdf ../doc/concept/
@@ -274,9 +272,9 @@ copy_dir FMS/doc/man/man1 FMS/doc/man/
 copy_dir FMS/doc/man/man3 FMS/doc/man/
 
 # Copy tests in release
-copy_rel_file FMS/test/testReports/\*\.pdf ../tests/report/
-copy_rel_file FMS/test/testReports/\*\.docbook ../tests/report/
-copy_rel_file FMS/test/testReports/\*\.html ../tests/report/
+copy_rel_file FMS/test/testReports/\*\.pdf ../testReports/
+copy_rel_file FMS/test/testReports/\*\.docbook ../testReports/
+copy_rel_file FMS/test/testReports/\*\.html ../testReports/
 
 # Copy test plans in release
 copy_rel_file FMS/test/testPlan/\*\.pdf ../doc/concept/
@@ -309,9 +307,9 @@ copy_dir IMS/doc/man/man1 IMS/doc/man/
 copy_dir IMS/doc/man/man3 IMS/doc/man/
 
 # Copy tests in release
-copy_rel_file IMS/test/testReports/\*\.pdf ../tests/report/
-copy_rel_file IMS/test/testReports/\*\.docbook ../tests/report/
-copy_rel_file IMS/test/testReports/\*\.html ../tests/report/
+copy_rel_file IMS/test/testReports/\*\.pdf ../testReports/
+copy_rel_file IMS/test/testReports/\*\.docbook ../testReports/
+copy_rel_file IMS/test/testReports/\*\.html ../testReports/
 
 # Copy test plans in release
 copy_rel_file IMS/test/testPlan/\*\.pdf ../doc/concept/
