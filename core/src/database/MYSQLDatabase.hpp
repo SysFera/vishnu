@@ -32,20 +32,30 @@ public :
   int
   process(std::string request, int transacId = -1);
   /**
-  * \brief To make a connection to the database
+  * \brief To make a create a pool of MySQL connections
   * \return raises an exception on error
   */
   int
   connect();
+
+  /**
+  * \brief To make a connection to the database and store the return db handler to a given pool's index
+  * \param poolIdx the index in connexion pool
+  * \return raises an exception on error
+  */
+  void connectPoolIndex(const int& poolIdx);
+
   /**
    * \brief Constructor, raises an exception on error
    * \param dbConfig  the configuration of the database client
    */
   MYSQLDatabase(DbConfiguration dbConfig);
+
   /**
    * \brief Destructor, raises an exception on error
    */
   ~MYSQLDatabase();
+
   /**
   * \brief To get the result of a select request
   * \param request The request to process
@@ -54,37 +64,42 @@ public :
   */
   DatabaseResult*
   getResult(std::string request, int transacId = -1);
+
   /**
    * \brief To get the type of database
    * \return An enum identifying the type of database
    */
   DbConfiguration::db_type_t
-  getDbType() { return DbConfiguration::MYSQL; };
-/**
+  getDbType() { return DbConfiguration::MYSQL; }
+
+  /**
  * \brief Start a transaction
  * \return The transaction ID
  */
   virtual int
   startTransaction();
-/**
+
+  /**
  * \brief End a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   endTransaction(int transactionID);
-/**
+
+  /**
  * \brief Cancel a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   cancelTransaction(int transactionID);
-/**
+
+  /**
  * \brief To commit a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   flush(int transactionID);
-/**
+  /**
  * \brief To get a unique id
  * \param table: The table to use to generate the id
  * \param fields: The fields of the table

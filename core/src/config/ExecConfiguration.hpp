@@ -52,7 +52,6 @@ T simple_cast(const S& arg) {
   std::stringstream buffer;
   buffer << arg;
   buffer >> output;
-
   return output;
 }
 
