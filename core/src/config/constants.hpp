@@ -49,7 +49,11 @@ namespace vishnu {
     TMS_URIADDR,
     UMS_URIADDR,
     CLOUDENDPOINT,
-    DEBUG_LEVEL
+    DEBUG_LEVEL,
+    DB_USE_SSL,
+    DB_SSL_CA_FILE,
+    DB_SSL_CERT_FILE,
+    DB_SSL_KEY_FILE
   } param_type_t;
 
   /**

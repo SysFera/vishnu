@@ -74,7 +74,7 @@ public:
    */
   const std::string& getDbUserName() const { return mdbUserName; }
 
-   /**
+  /**
    * \brief Get the database user password to connect to the database
    * \return database user password
    */
@@ -92,6 +92,30 @@ public:
    * \return nb of connections in the connection pool
    */
   unsigned getDbPoolSize() { return mdbPoolSize; }
+
+  /**
+   * \brief Gets the value of the property museSsl
+   * \return the value of the property museSsl
+   */
+  bool getUseSsl() { return museSsl; }
+
+  /**
+   * \brief Gets the value of the property msslCaFile
+   * \return the value of the property msslCaFile
+   */
+  std::string getSslCaFile() { return msslCaFile; }
+
+  /**
+   * \brief Gets the value of the property msslCertFile
+   * \return the value of the property msslCertFile
+   */
+  std::string getSslCertFile() { return msslCertFile; }
+
+  /**
+   * \brief Gets the value of the property msslKeyFile
+   * \return the value of the property msslKeyFile
+   */
+  std::string getSslKeyFile() { return msslKeyFile; }
 
 protected:
 
@@ -138,6 +162,26 @@ protected:
    * \brief Attribute number of db connections in the pool
    */
   unsigned mdbPoolSize;
+
+  /**
+   * \brief Sets whether to use SSL
+   */
+  bool museSsl;
+
+  /**
+   * \brief Sets SSL CA file path
+   */
+  std::string msslCaFile;
+
+  /**
+   * \brief Sets SSL certificate file path
+   */
+  std::string msslCertFile;
+
+  /**
+   * \brief Sets SSL key file path
+   */
+  std::string msslKeyFile;
 
 };
 
