@@ -77,16 +77,18 @@ POSTGREDatabase::connect() {
                           %mconfig.getDbUserName()
                           %sslOptions
                           ).str();
+
   for (int i=0;i<mconfig.getDbPoolSize();i++) {
+
     if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
+
       mpool[i].mconn = PQconnectdb(conninfo.c_str());
 
       if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
         throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(mpool[i].mconn)));
       }
       misConnected = true;
-    }
-    else {
+    } else {
       throw SystemException(ERRCODE_DBCONN, "The database is already connected");
     }
   }
