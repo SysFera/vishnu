@@ -56,9 +56,9 @@ void DbConfiguration::check() throw (UserException)
     mexecConfig.getRequiredConfigValue<std::string>(vishnu::DB_SSL_KEY_FILE, msslKeyFile);
 
     // For logging
-    std::cerr << (boost::format("[VISHNU][INFO] Expecting cyphered database connections...\n"
+    std::cerr << boost::format("[VISHNU][INFO] Expecting cyphered database connections...\n"
                                 "  > CA: %1%\n"
                                 "  > Certficate: %2%\n"
-                                "  > Key: %3%\n")%msslCaFile%msslCertFile%msslKeyFile).str();
+                                "  > Key: %3%\n")%msslCaFile%msslCertFile%msslKeyFile;
   }
 }
