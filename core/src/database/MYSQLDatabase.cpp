@@ -112,9 +112,9 @@ MYSQLDatabase::connectPoolIndex(const int& poolIdx) {
   if (mconfig.getUseSsl()) {
     ssl_flag = CLIENT_SSL;
     mysql_ssl_set(&(mpool[poolIdx].mmysql),
-                  mconfig.getSslKeyFile().c_str(),
-                  mconfig.getSslCertFile().c_str(),
-                  mconfig.getSslCaFile().c_str(),
+                  NULL,
+                  NULL,
+                  (mconfig.getSslCaFile().empty()? NULL : mconfig.getSslCaFile().c_str()),
                   NULL,
                   NULL);
   }

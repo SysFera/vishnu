@@ -51,9 +51,7 @@ namespace vishnu {
     CLOUDENDPOINT,
     DEBUG_LEVEL,
     DB_USE_SSL,
-    DB_SSL_CA_FILE,
-    DB_SSL_CERT_FILE,
-    DB_SSL_KEY_FILE
+    DB_SSL_CA_FILE
   } param_type_t;
 
   /**
