@@ -27,7 +27,7 @@ BOOST_AUTO_TEST_CASE( Connect_base )
   Session sess;
   ConnectOptions cop;
   SessionCloseType sct = 1;
-  std::string sub  = "";
+  std::string sub;
   cop.setClosePolicy(sct);
   cop.setSessionInactivityDelay(4);
   cop.setSubstituteUserId(sub);
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
   Session sess;
   ConnectOptions cop;
   SessionCloseType sct = 1;
-  std::string sub  = "";
+  std::string sub;
   cop.setClosePolicy(sct);
   cop.setSessionInactivityDelay(4);
   cop.setSubstituteUserId(sub);

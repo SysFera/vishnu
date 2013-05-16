@@ -38,15 +38,6 @@ public:
   std::string m_test_ums_user_vishnu_machineid;
 
   UMSSeDFixture() {
-
-    m_test_ums_authen_type="";
-    m_test_ums_root_vishnu_login="";
-    m_test_ums_root_vishnu_pwd="";
-    m_test_ums_admin_vishnu_login="";
-    m_test_ums_admin_vishnu_pwd="";
-    m_test_ums_user_vishnu_login="";
-    m_test_ums_user_vishnu_pwd="";
-    m_test_ums_user_vishnu_machineid="";
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     int argc = 2;
     char* argv[argc];
