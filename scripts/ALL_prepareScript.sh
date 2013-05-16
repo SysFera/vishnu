@@ -57,7 +57,7 @@ run_cmd mkdir -p deliverables/
 remove_files deliverables/*
 run_cmd mkdir -p deliverables/src
 run_cmd mkdir -p deliverables/doc
-run_cmd mkdir -p deliverables/tests
+run_cmd mkdir -p deliverables/testReports
 
 # create releasepath
 releasePath=deliverables/release/VISHNU_v$NO_VERSION
@@ -65,7 +65,7 @@ run_cmd mkdir -p $releasePath
 
 remove_files deliverables/src/*
 remove_files deliverables/doc/*
-remove_files deliverables/tests/*
+remove_files deliverables/testReports/*
 
 
 # Generate all documentation
@@ -423,7 +423,7 @@ run_cmd cp /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
 change_dir $pathrel
 change_dir ..
 run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc
-run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_tests.tgz tests
+run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_tests.tgz testReports
 
 # Prepare release note
 change_dir $vishnuDir
