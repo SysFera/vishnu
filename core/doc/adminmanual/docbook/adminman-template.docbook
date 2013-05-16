@@ -301,6 +301,23 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>32</revnumber>
+<date>14/05/2013</date>
+<authorinitials>R. Chakode</authorinitials>
+<revdescription>
+<para>Ajout documentation pour le chiffrement des connexions à la base de données MySQL </para>
+</revdescription>
+</revision>
+
+<revision>
+<revnumber>33</revnumber>
+<date>16/05/2013</date>
+<authorinitials>R. Chakode</authorinitials>
+<revdescription>
+<para>Ajout documentation pour le chiffrement des connexions à la base de données PostGreSQL </para>
+</revdescription>
+</revision>
 </revhistory>
 </info>
 <chapter>
@@ -1774,7 +1791,7 @@ travers d'une socket unix.
 </section>
 
 <section>
-<title>Chriffrement des connexions à la base de données</title>
+<title>Chiffrement des connexions à la base de données</title>
 <para>
 Par défaut, les communications avec la base de données VISHNU est non chiffrée. Ceci peut constituer un facteur de vulnérabilité majeur. Afin d'améliorer la sécurité des communications entre VISHNU et la données de données, il est possible, depuis les versions de VISHNU ultérieures à 3.0.0, de configurer les SeDs pour communiquer avec le serveur de base de données via des connexions SSL. Ceci permet de crypter les communications avec la base de données, mais nécessite que le système de base de données sous-jacent supporte ce type de connexion.
 </para>
@@ -1938,7 +1955,7 @@ $ mysql -u secure_user -p \
 <section>
 <title>PostGreSQL et SSL</title>
 <para>
-Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de PostGreSQL disponible disponible ici <ulink url="http://docs.postgresqlfr.org/8.3/libpq-ssl.html">http://docs.postgresqlfr.org/8.3/libpq-ssl.html</ulink> (pour le client), et ici <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink> (pour le serveur). Les étapes de la procédure comportent :
+Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de PostGreSQL disponible ici <ulink url="http://docs.postgresqlfr.org/8.3/libpq-ssl.html">http://docs.postgresqlfr.org/8.3/libpq-ssl.html</ulink> (pour le client), et ici <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink> (pour le serveur). Les étapes de la procédure comportent :
 <itemizedlist>
 <listitem>
 <para>
@@ -1993,7 +2010,7 @@ Si toutes les vérifications sont correctes, vous pouvez passer à la configurat
 L'activation du support SSL dans PostGreSQL est assez simple :
 </para>
 <para>
-Premièrement, éditez le fichier de configuration (<literal>PostgreSQL.conf</literal>)et positionner le paramètre <literal>ssl</literal> à  <literal>on</literal>
+Premièrement, éditez le fichier de configuration (<literal>PostgreSQL.conf</literal>)et positionnez le paramètre <literal>ssl</literal> à  <literal>on</literal>
 </para>
 <programlisting>
 <![CDATA[
@@ -2005,21 +2022,21 @@ Ensuite :
 <itemizedlist>
 <listitem>
 <para>
-Le certificat du serveur doit être nommé <literal>server.crt</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. A noter que le fichier doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+Le certificat du serveur doit être nommé <literal>server.crt</literal> et placé dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. A noter que le fichier doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
 </para>
 </listitem>
 <listitem>
 <para>
-La clé privé du certificat doit être nommée <literal>server.key</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit également appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+La clé privé du certificat doit être nommée <literal>server.key</literal> et placée dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit également appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
 </para>
 </listitem>
 <listitem>
 <para>
-La fichier contenant les certificats de l'autorité doit est être nommé  <literal>root.crt</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>644</literal>.
+Le fichier contenant les certificats de l'autorité doit est être nommé  <literal>root.crt</literal> et placé dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>644</literal>.
 </para>
 </listitem>
 </itemizedlist>
-Si vous souhaitez avoir plus de détails ou mettre oeuvre des configurations avancées comme la prise en charge des certificats revoqués, vous pouvez consulter la documentation officielle disponible à cette adresse <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink>.
+Si vous souhaitez avoir plus de détails ou mettre en oeuvre des configurations avancées comme la prise en charge des certificats revoqués, vous pouvez consulter la documentation officielle disponible à cette adresse <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink>.
 </para>
 <para>
 Une fois les configurations terminées, redémarrez le serveur PostGreSQL.
@@ -2034,7 +2051,7 @@ Contrairement à MySQL, vous n'avez pas besoin d'avoir des droits spécifiques p
 <itemizedlist>
 <listitem>
 <para>
-Premièrement, de copier le fichier contenant les certificats de l'autorité (si certificat autosigné) dans l'emplacement <literal>~/.postgresql/root.crt</literal> depuis le dossier personnel de l'utilisateur. En notant que ce fichier doit avoir les droits d'accès <literal>644</literal>.
+Premièrement, de copier le fichier contenant les certificats de l'autorité dans l'emplacement <literal>~/.postgresql/root.crt</literal> depuis le dossier personnel de l'utilisateur. En notant que ce fichier doit avoir les droits d'accès <literal>644</literal>.
 </para>
 </listitem>
 <listitem>
