@@ -53,11 +53,9 @@ POSTGREDatabase::process(std::string request, int transacId){
 int
 POSTGREDatabase::connect() {
 
-  std::string pgPort = "";
+  std::string pgPort = "5432"; //PostGreSQL default port
   if ((mconfig.getDbPort() != 0)) {
     pgPort = vishnu::convertToString(mconfig.getDbPort());
-  } else {
-    pgPort = "5432"; //default port
   }
   std::string sslOptions = "";
   if (mconfig.getUseSsl()) {
