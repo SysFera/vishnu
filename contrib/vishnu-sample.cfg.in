@@ -64,6 +64,16 @@ databaseUserPassword=vishnu_user
 #
 #databaseConnectionsNb=10
 
+# databaseUseSsl (OS<FMS,IMS,TMS,UMS>): Sets whether to use SSL-ciphered connection
+# Set to non-zero value to enable SSL connection.
+#
+#databaseUseSsl=0
+
+# databaseSslCa (OS<FMS,IMS,TMS,UMS>): Sets the path to the authority certificates
+# This parameter is necessary only when the parameter databaseUseSsl is set to non-zero
+#
+#databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
+
 
 ###############################################################################
 #                Dispatcher Related Parameters                                #
