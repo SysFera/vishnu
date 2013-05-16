@@ -71,7 +71,7 @@ if (COMPILE_TMS)
 endif()
 
 
-set(VISHNU_BATCH "POSIX" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX)")
+set(VISHNU_BATCH "POSIX" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX, DELTACLOUD)")
 set(VISHNU_BATCH_VERSION "1" CACHE path "Version of the batch scheduler")
 
 option(ENABLE_LDAP   "Build VISHNU with LDAP support...")
