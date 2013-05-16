@@ -7,7 +7,6 @@
 
 CERT_PASSWD=certpasswd                          # Sets the certificate password
 SERVER_DN="/DC=com/DC=sysfera/CN=mysql-server"  # Sets the server distinguish name
-CLIENT_DN="/DC=com/DC=sysfera/CN=mysql-client"  # Sets the client distinguish name
 OUTPUT_DIR=mysql-ssl                            # Sets the output directory
 
 set -e
@@ -24,18 +23,9 @@ echo "Generate the server key..................................."
 openssl rsa -in server-key-enc.pem -out server-key.pem \
        -passin pass:${CERT_PASSWD} -passout pass:
 
-echo "Generate the client certificate..........................."
-openssl req -x509 -newkey rsa:1024 \
-       -keyout client-key-enc.pem -out client-cert.pem \
-       -subj ${CLIENT_DN} -passout pass:${CERT_PASSWD}
-
-echo "Generate the client key................................."
-openssl rsa -in client-key-enc.pem -out client-key.pem \
-       -passin pass:${CERT_PASSWD} -passout pass:
-
-# Combine the client and server certificates into the CA certificates file:
-cat server-cert.pem client-cert.pem > ca-cert.pem
+# Create the CA certification file:
+cat server-cert.pem > ca.pem
         
 echo "Verify the certificate................................."
 sleep 2
-openssl verify -CAfile ca-cert.pem server-cert.pem client-cert.pem
+openssl verify -CAfile ca.pem server-cert.pem

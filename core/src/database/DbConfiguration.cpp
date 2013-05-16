@@ -8,6 +8,7 @@
 #include "DbConfiguration.hpp"
 #include <iostream>
 #include <boost/format.hpp>
+#include <cstdlib>
 
 using namespace std;
 
@@ -51,14 +52,12 @@ void DbConfiguration::check() throw (UserException)
   // SSL params
   mexecConfig.getConfigValue<bool>(vishnu::DB_USE_SSL, museSsl);
   if (museSsl) {
-    mexecConfig.getRequiredConfigValue<std::string>(vishnu::DB_SSL_CA_FILE, msslCaFile);
-    mexecConfig.getRequiredConfigValue<std::string>(vishnu::DB_SSL_CERT_FILE, msslCertFile);
-    mexecConfig.getRequiredConfigValue<std::string>(vishnu::DB_SSL_KEY_FILE, msslKeyFile);
-
+    bool caset = mexecConfig.getConfigValue<std::string>(vishnu::DB_SSL_CA_FILE, msslCaFile);
+    if (!caset && (dbTypeStr == "postgresql")){
+      msslCaFile = std::string(getenv("HOME"))+"/.postgresql/root.crt";
+    }
     // For logging
-    std::cerr << boost::format("[VISHNU][INFO] Expecting cyphered database connections...\n"
-                                "  > CA: %1%\n"
-                                "  > Certficate: %2%\n"
-                                "  > Key: %3%\n")%msslCaFile%msslCertFile%msslKeyFile;
+    std::cerr << boost::format("[VISHNU][INFO] Expecting ciphered database connections...\n"
+                               "  > CA: %1%\n")%msslCaFile;
   }
 }

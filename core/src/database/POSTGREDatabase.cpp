@@ -12,6 +12,7 @@
 
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
+#include <boost/format.hpp>
 
 using namespace std;
 
@@ -50,29 +51,44 @@ POSTGREDatabase::process(std::string request, int transacId){
  * \return raises an exception on error
  */
 int
-POSTGREDatabase::connect(){
-  int i;
-  for (i=0;i<mconfig.getDbPoolSize();i++) {
+POSTGREDatabase::connect() {
+
+  std::string pgPort = "";
+  if ((mconfig.getDbPort() != 0)) {
+    pgPort = vishnu::convertToString(mconfig.getDbPort());
+  } else {
+    pgPort = "5432"; //default port
+  }
+  std::string sslOptions = "";
+  if (mconfig.getUseSsl()) {
+    sslOptions = (boost::format("sslmode=verify-ca sslrootcert=%1%")%mconfig.getSslCaFile()).str();
+  }
+  std::string conninfo = (boost::format("host=%1% "
+                                        "port=%2% "
+                                        "dbname=%3% "
+                                        "user=%4% "
+                                        "password=%5% "
+                                        "%6%"
+                                        )
+                          %mconfig.getDbHost()
+                          %pgPort
+                          %mconfig.getDbName()
+                          %mconfig.getDbUserPassword()
+                          %mconfig.getDbUserName()
+                          %sslOptions
+                          ).str();
+
+  for (int i=0;i<mconfig.getDbPoolSize();i++) {
+
     if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
-      std::ostringstream out;
-      if (mconfig.getDbPort() != 0) {
-        out << mconfig.getDbPort();
-      }
-      // Make a connection to the database
-      mpool[i].mconn = PQsetdbLogin(mconfig.getDbHost().c_str(),
-                                    out.str().c_str(),
-                                    "",
-                                    "",
-                                    mconfig.getDbName().c_str(),
-                                    mconfig.getDbUserName().c_str(),
-                                    mconfig.getDbUserPassword().c_str());
+
+      mpool[i].mconn = PQconnectdb(conninfo.c_str());
 
       if (PQstatus(mpool[i].mconn) != CONNECTION_OK) {
         throw SystemException(ERRCODE_DBCONN, std::string(PQerrorMessage(mpool[i].mconn)));
       }
       misConnected = true;
-    }
-    else {
+    } else {
       throw SystemException(ERRCODE_DBCONN, "The database is already connected");
     }
   }
@@ -83,7 +99,7 @@ POSTGREDatabase::connect(){
  * \brief Constructor
  */
 POSTGREDatabase::POSTGREDatabase(DbConfiguration dbConfig)
- : Database(), mconfig(dbConfig), misConnected(false) {
+  : Database(), mconfig(dbConfig), misConnected(false) {
   int i;
   mpool = new pool_t[mconfig.getDbPoolSize()];
   for (i=0;i<mconfig.getDbPoolSize();i++){
@@ -173,8 +189,8 @@ PGconn* POSTGREDatabase::getConnection(int& id){
       locked = pthread_mutex_trylock(&(mpool[i].mmutex));
       // If lock fails-> the mutex was taken before trylock call
       if (locked) {
-      // Try next connexion
-      continue;
+        // Try next connexion
+        continue;
       }
       else {
         mpool[i].mused=true;
