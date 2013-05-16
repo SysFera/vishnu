@@ -41,10 +41,10 @@ public:
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
     int argc = 2;
     char* argv[argc];
-    std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
+    const std::string vishnuClientTestConfigPath = getenv("VISHNU_CLIENT_TEST_CONFIG_FILE");
     BOOST_REQUIRE( vishnuClientTestConfigPath.size() !=0  );
-    argv[0]= (char*)"./automTest";
-    argv[1]= (char*) vishnuClientTestConfigPath.c_str();
+    argv[0] = const_cast<char*>("./automTest");
+    argv[1] = const_cast<char*>(vishnuClientTestConfigPath.c_str());
 
     if (vishnu::vishnuInitialize(argv[1], argc, argv)) {
       BOOST_TEST_MESSAGE( "Error in diet_initialize... (using config: "
