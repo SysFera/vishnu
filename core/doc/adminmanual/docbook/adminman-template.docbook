@@ -1776,39 +1776,37 @@ travers d'une socket unix.
 <section>
 <title>Chriffrement des connexions à la base de données</title>
 <para>
-Par défaut, les connexions à une base de données MySQL et MySQL sont en claire, c'est-à-dire non chriffrées. Ceci peut constituer un facteur de vulnérabilité majeur. Afin d'accroître la fiabilité des connexions, MySQL et PostGreSQL supportent tous les deux des chriffrements SSL. Les versions de VISHNU ultérieures à 3.0.0 supportent à la fois des connexions chriffrées et des connexions en claire. Cette section présente comment configurer les accès chiffrés à des bases de données MySQL et PostGreSQL. 
+Par défaut, les communications avec la base de données VISHNU est non chiffrée. Ceci peut constituer un facteur de vulnérabilité majeur. Afin d'améliorer la sécurité des communications entre VISHNU et la données de données, il est possible, depuis les versions de VISHNU ultérieures à 3.0.0, de configurer les SeDs pour communiquer avec le serveur de base de données via des connexions SSL. Ceci permet de crypter les communications avec la base de données, mais nécessite que le système de base de données sous-jacent supporte ce type de connexion.
 </para>
 <para>
-Avant d'aller plus loin, notons que le chiffrement entre le client et le serveur de base de données se base sur des certificats SSL. Ceci requiert l'installation d'openssl à la fois sur le système client et sur le système serveur et que ce support soit activé au moment de la construction de MySQL ou de PostgreSQL. Pour plus de détails sur SSL, vous pouvez consulter la documentation en ligne sur le site d'OpenSSL : <ulink url="http://www.openssl.org/docs/">http://www.openssl.org/docs/</ulink>. Le script <emphasis>create-ssl-cert.sh</emphasis> fourni avec VISHNU permet de créer rapidement des certificats autosignés. Avant de l'exécuter, éditez le script pour adapter le mot de passe du certificat ainsi que les paramètres liés au nom du serveur pour lequel le certificat sera généré. 
+Aussi bien MySQl que PostGreSQL disposent d'un support natif pour l'utilisation de connexions ssl. Le chiffrement entre un client et le serveur de base de données se base sur des certificats OpenSSL <ulink url="http://www.openssl.org/">http://www.openssl.org/</ulink>. Cette section présente comment activer les connexions SSL entre VISHNU et les bases de données MySQL et PostGreSQL. 
+</para>
+<para>
+Avant d'aller plus loin, vous pouvez consulter la documentation sur OpenSSL pour plus d'information sur le chiffrement et les certificats. <ulink url="http://www.openssl.org/docs/">http://www.openssl.org/docs/</ulink>. Le script <emphasis>create-ssl-cert.sh</emphasis> fourni avec VISHNU permet de créer rapidement des certificats autosignés. Avant d'exécuter le script, éditez le pour adapter le mot de passe du certificat ainsi que les paramètres liés au nom du serveur pour lequel le certificat sera généré. 
 </para>
 <section>
 <title>MySQL et SSL</title>
 <para>
-Les étapes de configuration de MySQL sont tirées de la documentation officielle disponible à cette adresse : <ulink url="http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html">http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html</ulink>. Les étapes de la procédure comportent :
+Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de MySQL disponible à cette adresse : <ulink url="http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html">http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html</ulink>. Les étapes de la procédure comportent :
 <itemizedlist>
 <listitem>
 <para>
-Vérification la compatibilité de MySQL avec le support SSL
+La vérification de la disponibilité du support d'OpenSSL dans MySQL
 </para>
 </listitem>
 <listitem>
 <para>
-Génération de certificats autosignés (optionnel)
+La génération de certificats autosignés (optionnel)
 </para>
 </listitem>
 <listitem>
 <para>
-Configuration de MySQL avec SSL
+L'activation du support SSL au niveau du serveur MySQL
 </para>
 </listitem>
 <listitem>
 <para>
-Test de connexion avec SSL
-</para>
-</listitem>
-<listitem>
-<para>
-Configurer VISHNU pour se connecter en SSL à MySQL
+Le test de connexion en SSL
 </para>
 </listitem>
 </itemizedlist>
@@ -1816,10 +1814,9 @@ Configurer VISHNU pour se connecter en SSL à MySQL
 
 
 <section>
-<title>Vérifier la disponibilité du support SSL dans MySQL</title>
+<title>Vérifier que MySQL a été compilé avec le support SSL</title>
 <para>
-Les binaires et les librairies client et serveur MySQL doivent avoir été compilés avec le support SSL. 
-Sinon, vous devez réinstaller MySQL. Les étapes suivantes indiquent comment vérifier la disponibilité du support SSL :
+Les binaires et les librairies client et serveur MySQL doivent avoir été compilés avec le support d'OpenSSL. Si ce n'est pas votre cas, vous devez réinstaller MySQL. Les étapes suivantes indiquent comment vérifier la disponibilité du support d'OpenSSL :
 </para>
 <itemizedlist>
 <listitem>
@@ -1840,13 +1837,14 @@ Si une erreur se produit, alors le binaire n'a pas été compilé avec le suppor
 </listitem>
 </itemizedlist>
 </section>
+
 <section>
-<title>Activer le support SSL dans MySQL</title>
+<title>Activer le support SSL dans le serveur MySQL</title>
 <para>
-Pour activer le support SSL sur le serveur MySQL, vous devez indiquer un certificat, la clé privé du serveur et les certificats de l'autorité de confiance. Le certificat peut être autosigné ou signé par une autotité de certification.
+Pour activer le support SSL sur le serveur MySQL, vous devez indiquer un certificat, la clé privé du serveur et les certificats de l'autorité de confiance (optionnel, mais requis si le certificat est autosigné). Le certificat peut être autosigné ou signé par une autotité de certification.
 </para>
 <para>
-Une fois que vous disposez des différentes entités du certificat, la configuration de MySQL est assez simple.
+Une fois que vous disposez des différentes entités du certificat, la configuration de MySQL est assez simple :
 </para>
 <itemizedlist>
 <listitem>
@@ -1906,13 +1904,14 @@ Si le support SSL a été correctement activé, vous devez avoir une sortie comm
 Les valeurs des paramètres ssl_ca, ssl_cert et ssl_key doivent être conformes à votre configuration. 
 </para>
 </section>
+
 <section>
-<title>Droits d'accès à la base de données VISHNU</title>
+<title>Tester la connexion en SSL à MySQL</title>
 <para>
-La connexion par SSL à une base de données MySQL nécessite des privilèges spécifiques activées par le biais de l'option <literal>REQUIRE SSL</literal> de la commande <literal>GRANT</literal>. 
+La connexion en SSL à une base de données MySQL nécessite que l'utilisateur MySQL ait dispose des privilèges spécifiques (<literal>REQUIRE SSL</literal>). Ce privilège est activé lors de l'attribution des rôles à l'utilisateur par le biais de la commande <literal>GRANT</literal>. 
 </para>
 <para>
-Soit l'exemple ci-dessous : 
+Exemple : 
 </para>
 <programlisting>
 <![CDATA[
@@ -1922,10 +1921,10 @@ mysql> GRANT SELECT ON vishnu.*
 ]]>
 </programlisting>
 <para>
-L'utilisateur 'secure_user' ne pourra se connecter à la base de donnée 'vishnu' qu'en mode SSL. De même si l'option REQUIRE SSL est omise, seul le mode de connexion par défaut sera activé. Même si le support SSL a été activé dans le serveur. 
+Cette commande indique que l'utilisateur 'secure_user' ne pourra se connecter à la base de donnée 'vishnu' qu'en mode SSL. Si l'option <literal>REQUIRE SSL</literal> est omise, seul le mode de connexion par défaut sera activé. Même si le support SSL a été activé au niveau du serveur. 
 </para>
 <para>
-Lors de la connexion, le client doit présenter un certificat valide. La commande ci-dessous illustre comment cela se fait en ligne de commande.
+Pour se connecter à la base de données, il suffit d'exécuter la commande suivante. L'option <emphasis>--ssl-ca</emphasis> n'est requise que si le certificat a été autosigné ou a été généré par une autorité de certification non reconnue. 
 </para>
 <programlisting>
 <![CDATA[
@@ -1934,11 +1933,134 @@ $ mysql -u secure_user -p \
 ]]>
 </programlisting>
 </section>
+</section>
 
 <section>
-<title>Configurer VISHNU pour se connecter en SSL à MySQL</title>
+<title>PostGreSQL et SSL</title>
 <para>
-Une fois MySQL configuré pour fonctionner en SSL, vous devez ajouter les lignes suivantes dans le fichier de configuration de VISHNU pour lui indiquer les paramètres de connexion en SSL à la base de données.
+Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de PostGreSQL disponible disponible ici <ulink url="http://docs.postgresqlfr.org/8.3/libpq-ssl.html">http://docs.postgresqlfr.org/8.3/libpq-ssl.html</ulink> (pour le client), et ici <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink> (pour le serveur). Les étapes de la procédure comportent :
+<itemizedlist>
+<listitem>
+<para>
+La vérification de la disponibilité du support d'OpenSSL dans PostGreSQL
+</para>
+</listitem>
+<listitem>
+<para>
+La génération de certificats autosignés (optionnel)
+</para>
+</listitem>
+<listitem>
+<para>
+L'activation du support SSL au niveau du serveur PostGreSQL
+</para>
+</listitem>
+<listitem>
+<para>
+Le test de connexion en SSL
+</para>
+</listitem>
+</itemizedlist>
+</para>
+
+<section>
+<title>Vérifier que PostGreSQL a été compilé avec le support SSL</title>
+<para>
+Coté serveur, vous devez vérifier que le binaire <emphasis>postmaster</emphasis> est lié à la bibliothèque d'OpenSSL (<emphasis>libssl</emphasis>). Pour le faire, vous pouvez utiliser la commande suivante à partir d'une console.
+</para>
+<programlisting>
+<![CDATA[
+$ ldd /path/to/postmaster  | grep ssl
+]]>
+</programlisting>
+
+<para>
+De même, coté client, assurer vous que la bibliothèque <emphasis>libpq</emphasis> est liée à <emphasis>libssl</emphasis>. Pour le faire, vous pouvez utiliser la commande suivante à partir d'une console.
+</para>
+<programlisting>
+<![CDATA[
+$ ldd /path/to/libpq.so  | grep ssl
+]]>
+</programlisting>
+<para>
+Si toutes les vérifications sont correctes, vous pouvez passer à la configuration. Sinon vous devez reinstaller PostGreSQL en activant le support d'OpenSSL lors de la compilation (<literal>./configure --with-openssl</literal>).
+</para>
+</section>
+
+<section>
+<title>Activer le support SSL dans le serveur PostGreSQL</title>
+<para>
+L'activation du support SSL dans PostGreSQL est assez simple :
+</para>
+<para>
+Premièrement, éditez le fichier de configuration (<literal>PostgreSQL.conf</literal>)et positionner le paramètre <literal>ssl</literal> à  <literal>on</literal>
+</para>
+<programlisting>
+<![CDATA[
+ssl=on
+]]>
+</programlisting>
+<para>
+Ensuite :
+<itemizedlist>
+<listitem>
+<para>
+Le certificat du serveur doit être nommé <literal>server.crt</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. A noter que le fichier doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+</para>
+</listitem>
+<listitem>
+<para>
+La clé privé du certificat doit être nommée <literal>server.key</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit également appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+</para>
+</listitem>
+<listitem>
+<para>
+La fichier contenant les certificats de l'autorité doit est être nommé  <literal>root.crt</literal> et placer dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>644</literal>.
+</para>
+</listitem>
+</itemizedlist>
+Si vous souhaitez avoir plus de détails ou mettre oeuvre des configurations avancées comme la prise en charge des certificats revoqués, vous pouvez consulter la documentation officielle disponible à cette adresse <ulink url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink>.
+</para>
+<para>
+Une fois les configurations terminées, redémarrez le serveur PostGreSQL.
+</para>
+</section>
+
+
+<section>
+<title>Tester la connexion en SSL à PostGreSQL</title>
+<para>
+Contrairement à MySQL, vous n'avez pas besoin d'avoir des droits spécifiques pour se connecter en SSL. Il vous suffit :
+<itemizedlist>
+<listitem>
+<para>
+Premièrement, de copier le fichier contenant les certificats de l'autorité (si certificat autosigné) dans l'emplacement <literal>~/.postgresql/root.crt</literal> depuis le dossier personnel de l'utilisateur. En notant que ce fichier doit avoir les droits d'accès <literal>644</literal>.
+</para>
+</listitem>
+<listitem>
+<para>
+Ensuite, d'ajouter l'option <literal>"sslmode=verify-ca"</literal> lorsque vous vous connectez à PostGreSQL. Voir l'exemple ci-dessous.
+</para>
+</listitem>
+</itemizedlist>
+</para>
+
+<programlisting>
+<![CDATA[
+$ psql -U postgres "sslmode=verify-ca"
+]]>
+</programlisting>
+<para>
+Si tout se passe bien, alors vous pouvez terminer la configuration en activant les options nécessaires dans VISHNU.
+</para>
+</section>
+</section>
+
+
+<section>
+<title>Configurer VISHNU pour se connecter en SSL à une base de données</title>
+<para>
+Une fois MySQL ou PostGreSQL a été configuré pour fonctionner en SSL, il suffit d'ajouter les lignes suivantes dans le fichier de configuration de VISHNU pour indiquer les paramètres de connexion en SSL.
 </para>
 <programlisting>
 <![CDATA[
@@ -1947,18 +2069,12 @@ databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
 ]]>
 </programlisting>
 <para>
-Lorsque le paramètre <emphasis>databaseUseSsl</emphasis> a une valeur non-nulle, on indique à VISHNU de se connecter à MySQL en mode sécurisé. Optionnel, le paramètre<emphasis>databaseSslCa</emphasis> indique l'emplacement des certificats de l'autorité de confiance. Il n'est utile que dans le cas des certificats autosignés.
+Si le paramètre <emphasis>databaseUseSsl</emphasis> a une valeur non-nulle, on indique à VISHNU de se connecter à la base de données en mode chiffré. Optionnel, le paramètre<emphasis>databaseSslCa</emphasis> indique l'emplacement des certificats de l'autorité de confiance. Il n'est utile que dans le cas des certificats autosignés ou signés par une autorité de certification non reconnue.  Pour PostGreSQL, l'option <emphasis>databaseSslCa</emphasis> peut ne pas être indiquée. Dans ce cas, le chemin par défaut (<literal>~/.postgresql/root.crt</literal>) sera considéré. 
 </para>
-</section>
-</section>
-
-<section>
-<title>PostGreSQL et SSL</title>
 <para>
-TODO
+Une fois la configuration terminée, redémarrez les services. Les communications avec la base de données se feront dorénavant en mode chiffré. 
 </para>
 </section>
-
 </section>
 </chapter>
 
