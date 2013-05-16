@@ -7,6 +7,8 @@
 #ifndef _WORKER_HPP_
 #define _WORKER_HPP_
 
+#include <iostream>
+
 #include "zhelpers.hpp"
 #include "utils.hpp"
 
