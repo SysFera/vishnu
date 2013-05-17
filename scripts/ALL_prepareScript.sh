@@ -11,7 +11,7 @@
 # 31/01/13 : do not need the external eclipse_1 repository anymore.
 #
 
-if [ $# -lt 1 ]; then
+if [ $# -ne 0 ] && [ $1 -ne 1 ]; then
   echo "Usage: " $0 " <generator_dir>"
   echo " if generator_dir is given, the documentation will be generated"
   exit 1
