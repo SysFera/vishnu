@@ -38,7 +38,11 @@ namespace vishnu {
     /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER},
     /* [25] */ {DEBUG_LEVEL, "debugLevel", INT_PARAMETER},
     /* [26] */ {DB_USE_SSL, "databaseUseSsl", BOOL_PARAMETER},
-    /* [27] */ {DB_SSL_CA_FILE, "databaseSslCa", STRING_PARAMETER}
+    /* [27] */ {DB_SSL_CA_FILE, "databaseSslCa", STRING_PARAMETER},
+    /* [28] */ {VISHNU_USE_SSL, "vishnuUseSsl", BOOL_PARAMETER},
+    /* [29] */ {VISHNU_SSL_CA_FILE, "vishnuSslCa", STRING_PARAMETER},
+    /* [30] */ {SERVER_PRIVATE_KEY, "serverPrivateKey", STRING_PARAMETER},
+    /* [31] */ {SERVER_SSL_CERTICATE, "serverSslCertificate", STRING_PARAMETER}
   };
 
 
