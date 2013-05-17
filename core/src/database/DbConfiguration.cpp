@@ -50,8 +50,8 @@ void DbConfiguration::check() throw (UserException)
   mexecConfig.getConfigValue<unsigned>(vishnu::DBPOOLSIZE, mdbPoolSize);
 
   // SSL params
-  mexecConfig.getConfigValue<bool>(vishnu::DB_USE_SSL, museSsl);
-  if (museSsl) {
+  bool ret = mexecConfig.getConfigValue<bool>(vishnu::DB_USE_SSL, museSsl);
+  if (ret && museSsl) {
     bool caset = mexecConfig.getConfigValue<std::string>(vishnu::DB_SSL_CA_FILE, msslCaFile);
     if (!caset && (dbTypeStr == "postgresql")){
       msslCaFile = std::string(getenv("HOME"))+"/.postgresql/root.crt";
