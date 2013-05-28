@@ -265,6 +265,9 @@ my_serialize(diet_profile_t* prof) {
     res << prof->params[i] << "$$$";
   }
   res << prof->params[(prof->OUT)] << "$$$";
+
+  /*Crypt message before returning */
+
   return res.str();
 }
 
