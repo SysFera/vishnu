@@ -40,7 +40,7 @@ namespace vishnu {
     /* [26] */ {DB_USE_SSL, "databaseUseSsl", BOOL_PARAMETER},
     /* [27] */ {DB_SSL_CA_FILE, "databaseSslCa", STRING_PARAMETER},
     /* [28] */ {USE_SSL, "useSsl", BOOL_PARAMETER},
-    /* [29] */ {SSL_CA_FILE, "sslCa", STRING_PARAMETER},
+    /* [29] */ {SERVER_PUBLIC_KEY, "serverPublicKey", STRING_PARAMETER},
     /* [30] */ {SERVER_PRIVATE_KEY, "serverPrivateKey", STRING_PARAMETER},
     /* [31] */ {SERVER_SSL_CERTICATE, "serverSslCertificate", STRING_PARAMETER}
   };

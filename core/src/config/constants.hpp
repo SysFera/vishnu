@@ -53,7 +53,7 @@ namespace vishnu {
     DB_USE_SSL,
     DB_SSL_CA_FILE,
     USE_SSL,
-    SSL_CA_FILE,
+    SERVER_PUBLIC_KEY,
     SERVER_PRIVATE_KEY,
     SERVER_SSL_CERTICATE
     

@@ -2,135 +2,125 @@
 
 using namespace std;
 
-SslCryptoClient::SslCryptoClient() {
-
-    publicKey = NULL;
-
+SslCryptoClient::SslCryptoClient() : SslCrypto() {
+  key = NULL;
 }
 
-SslCryptoServer::SslCryptoServer() {
-
-
-    privateKey = NULL;
-
+SslCryptoServer::SslCryptoServer() : SslCrypto() {
+  key = NULL;
 }
 
-SslCryptoClient::SslCryptoClient(string& pubKey) {
-    publicKey = NULL;
-
-    setPubKey(pubKey);
+SslCryptoClient::SslCryptoClient(string& pubKey) : SslCrypto() {
+  key = NULL;
+  setKey(pubKey);
 }
 
-SslCryptoServer::SslCryptoServer(string& privkey) {
-
-    privateKey = NULL;
-
-    setPrivKey(privkey);
+SslCryptoServer::SslCryptoServer(string& privkey)  : SslCrypto() {
+  key = NULL;
+  setKey(privkey);
 }
 
 SslCryptoClient::~SslCryptoClient() {
-    RSA_free(publicKey);
+  RSA_free(key);
 }
 
 SslCryptoServer::~SslCryptoServer() {
-    RSA_free(privateKey);
+  RSA_free(key);
 
 }
 
-int SslCryptoServer::encryptPriv(std::string msg, unsigned char **encMsg) {
-    return encryptPriv(msg.c_str(), msg.size(), encMsg);
+int SslCryptoServer::encrypt(std::string msg, unsigned char **encMsg) {
+  return encrypt(msg.c_str(), msg.size(), encMsg);
 }
 
-int SslCryptoServer::encryptPriv(const char *msg, size_t msgLen, unsigned char **encMsg) {
+int SslCryptoServer::encrypt(const char *msg, size_t msgLen, unsigned char **encMsg) {
 
-    *encMsg = (unsigned char*)malloc(RSA_size(privateKey));
-    if(encMsg == NULL) {
-        return -1;
-    }
+  *encMsg = (unsigned char*)malloc(RSA_size(key));
+  if(encMsg == NULL) {
+    return -1;
+  }
 
-    return  RSA_private_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, privateKey, RSA_PKCS1_PADDING);
+  return  RSA_private_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);
 }
 
-int SslCryptoClient::encryptPub(std::string msg, unsigned char **encMsg)
+int SslCryptoClient::encrypt(std::string msg, unsigned char **encMsg)
 {
-    return encryptPub(msg.c_str(), msg.size(), encMsg);
+  return encrypt(msg.c_str(), msg.size(), encMsg);
 }
 
-int SslCryptoClient::encryptPub(const char *msg, size_t msgLen, unsigned char **encMsg)
+int SslCryptoClient::encrypt(const char *msg, size_t msgLen, unsigned char **encMsg)
 {
 
-    *encMsg = (unsigned char*)malloc(RSA_size(publicKey));
-    if(encMsg == NULL) {
-        return -1;
-    }
+  *encMsg = (unsigned char*)malloc(RSA_size(key));
+  if(encMsg == NULL) {
+    return -1;
+  }
 
-    return  RSA_public_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, publicKey, RSA_PKCS1_PADDING);
+  return  RSA_public_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);
 }
 
-std::string SslCryptoClient::decryptPub(unsigned char *encMsg, size_t encMsgLen)
+std::string SslCryptoClient::decrypt(unsigned char *encMsg, size_t encMsgLen)
 {
-    char **decMsg = NULL;
-    decryptPub(encMsg, encMsgLen, decMsg);
-    return string(*decMsg);
+  char **decMsg = NULL;
+  decrypt(encMsg, encMsgLen, decMsg);
+  return string(*decMsg);
 }
 
-int SslCryptoClient::decryptPub(unsigned char *encMsg, size_t encMsgLen, char **decMsg)
+int SslCryptoClient::decrypt(unsigned char *encMsg, size_t encMsgLen, char **decMsg)
 {
-    *decMsg = (char*)malloc(encMsgLen + EVP_MAX_IV_LENGTH);
-    if(decMsg == NULL) {
-        return -1;
-    }
+  *decMsg = (char*)malloc(encMsgLen + EVP_MAX_IV_LENGTH);
+  if(decMsg == NULL) {
+    return -1;
+  }
 
-    return RSA_public_decrypt(encMsgLen, encMsg, reinterpret_cast<unsigned char *>(*decMsg), publicKey, RSA_PKCS1_PADDING);
-
-}
-
-std::string SslCryptoServer::decryptPriv(unsigned char *encMsg, size_t encMsgLen) {
-    char **decMsg = NULL;
-    decryptPriv(encMsg, encMsgLen, decMsg);
-    return string(*decMsg);
-}
-
-int SslCryptoServer::decryptPriv(unsigned char *encMsg, size_t encMsgLen, char **decMsg) {
-
-    *decMsg = (char*)malloc(encMsgLen + EVP_MAX_IV_LENGTH);
-    if(decMsg == NULL) {
-        return -1;
-    }
-
-    return RSA_private_decrypt(encMsgLen, encMsg, reinterpret_cast<unsigned char *>(*decMsg), privateKey, RSA_PKCS1_PADDING);
-
+  return RSA_public_decrypt(encMsgLen, encMsg, reinterpret_cast<unsigned char *>(*decMsg), key, RSA_PKCS1_PADDING);
 
 }
 
+std::string SslCryptoServer::decrypt(unsigned char *encMsg, size_t encMsgLen) {
+  char **decMsg = NULL;
+  decrypt(encMsg, encMsgLen, decMsg);
+  return string(*decMsg);
+}
+
+int SslCryptoServer::decrypt(unsigned char *encMsg, size_t encMsgLen, char **decMsg) {
+
+  *decMsg = (char*)malloc(encMsgLen + EVP_MAX_IV_LENGTH);
+  if(decMsg == NULL) {
+    return -1;
+  }
+
+  return RSA_private_decrypt(encMsgLen, encMsg, reinterpret_cast<unsigned char *>(*decMsg), key, RSA_PKCS1_PADDING);
 
 
+}
 
-int SslCryptoServer::setPrivKey(std::string &privKey)
+
+int SslCryptoServer::setKey(std::string &privKey)
 {
-    FILE *file;
-    file = fopen(privKey.c_str(),"r");
+  FILE *file;
+  file = fopen(privKey.c_str(),"r");
 
-    if(file){
-        privateKey = PEM_read_RSAPrivateKey(file, &privateKey,NULL,NULL);
-        return 0;
-    } else{
-        return -1;
-    }
+  if(file){
+    key = PEM_read_RSAPrivateKey(file, &key,NULL,NULL);
+    return 0;
+  } else{
+    return -1;
+  }
 
 }
 
 
-int SslCryptoClient::setPubKey(std::string &pubKey)
+int SslCryptoClient::setKey(std::string &pubKey)
 {
-    FILE *file;
-    file = fopen(pubKey.c_str(),"r");
+  FILE *file;
+  file = fopen(pubKey.c_str(),"r");
 
-    if(file){
-        publicKey = PEM_read_RSA_PUBKEY(file, &publicKey,NULL,NULL);
-        return 0;
-    } else{
-        return -1;
-    }
+  if(file){
+    key = PEM_read_RSA_PUBKEY(file, &key,NULL,NULL);
+    return 0;
+  } else{
+    return -1;
+  }
 
 }
