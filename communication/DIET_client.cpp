@@ -125,10 +125,10 @@ diet_string_set(diet_profile_t* prof, int pos,
 }
 
 void
-sendProfile(diet_profile_t* prof, const std::string& uri) {
+sendProfile(diet_profile_t* prof, const std::string& uri, SslCryptoClient* cipher) {
   zmq::context_t ctx(1);
 
-  LazyPirateClient lpc(ctx, uri, getTimeout());
+  LazyPirateClient lpc(ctx, uri, cipher, getTimeout());
   std::string resultSerialized = my_serialize(prof);
   if (!lpc.send(resultSerialized)) {
     std::cerr << "E: request failed, exiting ...\n";
@@ -205,13 +205,22 @@ diet_call(diet_profile_t* prof) {
   if (uri == "") {
     uri = disp;
   }
-  return diet_call_gen(prof, uri);
+
+  bool useSsl = false;
+  std::string pubKey;
+  SslCryptoClient* cipher = NULL;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, pubKey);
+    cipher = new SslCryptoClient(pubKey);
+  }
+
+  return diet_call_gen(prof, uri, cipher);
 }
 
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri) {
+diet_call_gen(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher) {
   zmq::context_t ctx(5);
-  LazyPirateClient lpc(ctx, uri, getTimeout());
+  LazyPirateClient lpc(ctx, uri, cipher, getTimeout());
 
   std::string s1 = my_serialize(prof);
   if (!lpc.send(s1)) {

@@ -2,6 +2,7 @@
 #define __SED__H__
 
 #include "DIET_client.h"
+#include "sslhelpers.hpp"
 #include <map>
 #include <string>
 #include <vector>
@@ -47,7 +48,9 @@ protected:
 };
 
 int
-ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri);
+ZMQServerStart(boost::shared_ptr<SeD> server,
+               const std::string& uri,
+               SslCryptoServer* cipher);
 
 
 #endif // __SED__H__
