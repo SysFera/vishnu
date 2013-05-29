@@ -8,67 +8,62 @@
 #include <string>
 
 
-
-
-class SslCryptoClient {
+class SslCrypto {
 public:
-    SslCryptoClient();
+  SslCrypto() {}
 
-    SslCryptoClient(std::string& pubKey);
+  virtual int encrypt(std::string msg, unsigned char **encMsg) = 0;
 
-    ~SslCryptoClient();
+  virtual int encrypt(const char *msg, size_t msgLen, unsigned char **encMsg) = 0;
 
+  virtual std::string decrypt(unsigned char *encMsg, size_t encMsgLen) = 0;
 
-    int encryptPub(std::string msg, unsigned char **encMsg);
+  virtual int decrypt(unsigned char *encMsg, size_t encMsgLen, char **decMsg) = 0;
 
-    int encryptPub(const char *msg, size_t msgLen, unsigned char **encMsg);
-
-
-
-    std::string decryptPub(unsigned char *encMsg, size_t encMsgLen);
-
-    int decryptPub(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
-
-
-    unsigned char* getPubKey();
-
-
-private:
-
-    int setPubKey(std::string& pubKey);
-
-    RSA *publicKey;
-
-
-
+protected:
+  virtual int setKey(std::string& key) = 0;
+  RSA *key;
 };
 
-class SslCryptoServer {
+class SslCryptoClient : public SslCrypto {
 public:
-    SslCryptoServer();
+  SslCryptoClient();
 
-    SslCryptoServer(std::string& privateKey);
+  SslCryptoClient(std::string& pubKey);
 
-    ~SslCryptoServer();
-
-    int encryptPriv(std::string msg, unsigned char **encMsg);
-
-    int encryptPriv(const char *msg, size_t msgLen, unsigned char **encMsg);
+  ~SslCryptoClient();
 
 
-    std::string decryptPriv(unsigned char *encMsg, size_t encMsgLen);
+  int encrypt(std::string msg, unsigned char **encMsg);
 
-    int decryptPriv(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
+  int encrypt(const char *msg, size_t msgLen, unsigned char **encMsg);
 
+  std::string decrypt(unsigned char *encMsg, size_t encMsgLen);
 
-    unsigned char* getPriKey();
+  int decrypt(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
 
-private:
+protected:
+  int setKey(std::string& pubKey);
+};
 
-    int setPrivKey(std::string& privKey);
-    RSA *privateKey;
+class SslCryptoServer : public SslCrypto {
+public:
+  SslCryptoServer();
 
+  SslCryptoServer(std::string& privateKey);
 
+  ~SslCryptoServer();
+
+  int encrypt(std::string msg, unsigned char **encMsg);
+
+  int encrypt(const char *msg, size_t msgLen, unsigned char **encMsg);
+
+  std::string decrypt(unsigned char *encMsg, size_t encMsgLen);
+
+  int decrypt(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
+
+protected:
+  int setKey(std::string& privKey);
 };
 
 

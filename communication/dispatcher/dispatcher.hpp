@@ -67,11 +67,11 @@ private:
   /**
    * \brief The handlers of the clients
    */
-  boost::scoped_ptr<ClientHandler> clientHandler;
+  boost::scoped_ptr<Handler4Clients> clientHandler;
   /**
    * \brief The handlers of the servers
    */
-  boost::scoped_ptr<ServerHandler> serverHandler;
+  boost::scoped_ptr<Handler4Servers> serverHandler;
   /**
    * \brief The uri for dealing services
    */

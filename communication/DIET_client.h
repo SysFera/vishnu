@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include "sslhelpers.hpp"
 
 
 /**
@@ -74,7 +75,7 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri);
+diet_call_gen(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher);
 
 /**
  * \brief Overload of DIET function, get the value of a string in the profile

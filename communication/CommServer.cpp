@@ -29,8 +29,10 @@ validateUri(const std::string & uri) {
 }
 
 int
-registerSeD(const std::string& type, const ExecConfiguration& config,
-            std::vector<std::string>& services) {
+registerSeD(const std::string& type,
+            const ExecConfiguration& config,
+            std::vector<std::string>& services,
+            SslCryptoClient* cipher) {
   std::string uri;
   std::string mid;
   std::string uridispatcher;
@@ -74,7 +76,7 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
   }
 
   zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, uridispatcher, timeout);
+  LazyPirateClient lpc(ctx, uridispatcher, cipher, timeout);
 
   boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
   // prefix with 1 to say registering the sed
@@ -94,14 +96,27 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
 void
 initSeD(const std::string& type, const ExecConfiguration& config,
         const std::string& uri, boost::shared_ptr<SeD> server) {
+
+  std::string rsaPubkey;
+  std::string rsaPrivkey;
+  SslCryptoServer* serverCipher = NULL;
+  SslCryptoClient* clientCipher = NULL;
+  bool useSsl = false;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, rsaPubkey);
+    serverCipher = new SslCryptoServer(rsaPrivkey);
+    clientCipher = new SslCryptoClient(rsaPubkey);
+  }
+
   // Initialize the DIET SeD
   try {
     std::vector<std::string> ls = server.get()->getServices();
-    registerSeD(type, config, ls);
+    registerSeD(type, config, ls, clientCipher);
   } catch (VishnuException& e) {
     std::cout << "failed to register with err" << e.what()  << std::endl;
   }
 
-  ZMQServerStart(server, uri);
+  ZMQServerStart(server, uri, serverCipher);
   unregisterSeD(type, config);
 }
