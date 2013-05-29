@@ -100,6 +100,14 @@ else (LIBCRYPT_FOUND)
 endif(LIBCRYPT_FOUND)
 
 
+find_package(LIBOPENSSL)
+if (LIBOPENSSL_FOUND)
+else (LIBOPENSSL_FOUND)
+
+  set(LIBOPENSSL_INCLUDE_DIR "" cache path "LIBCRYPT installation path")
+endif(LIBOPENSSL_FOUND)
+
+
 find_package(Boost 1.46
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 

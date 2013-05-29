@@ -25,6 +25,7 @@ add_library(zmq_helper
   Server.cpp
   SeD.cpp
   utils.cpp
+  sslhelpers.cpp
   ${utils_server_SRCS}
 )
 
@@ -32,6 +33,7 @@ target_link_libraries (zmq_helper
   ${ZMQ_LIBRARIES}
   ${Boost_LIBRARIES}
   vishnu-core
+  ${LIBCRYPT_LIB}
 )
 
 # --------------------------------------------------------------------------
@@ -47,6 +49,7 @@ if(COMPILE_SERVERS)
     ${Boost_LIBRARIES}
     zmq_helper
     vishnu-core
+    ${LIBCRYPT_LIB}
     )
   
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})

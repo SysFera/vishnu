@@ -4,25 +4,20 @@
 #include <openssl/rsa.h>
 #include <openssl/pem.h>
 #include <openssl/err.h>
-#include <stdio.h>
-#include <string.h>
+
+#include <string>
 
 
 
 
-class SslCrypto {
+class SslCryptoClient {
 public:
-    SslCrypto();
+    SslCryptoClient();
 
-    SslCrypto(string& pubKey);
+    SslCryptoClient(std::string& pubKey);
 
-    SslCrypto(string& privateKey);
+    ~SslCryptoClient();
 
-    ~SslCrypto();
-
-    int encryptPriv(std::string msg, unsigned char **encMsg);
-
-    int encryptPriv(const char *msg, size_t msgLen, unsigned char **encMsg);
 
     int encryptPub(std::string msg, unsigned char **encMsg);
 
@@ -34,25 +29,48 @@ public:
 
     int decryptPub(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
 
+
+    unsigned char* getPubKey();
+
+
+private:
+
+    int setPubKey(std::string& pubKey);
+
+    RSA *publicKey;
+
+
+
+};
+
+class SslCryptoServer {
+public:
+    SslCryptoServer();
+
+    SslCryptoServer(std::string& privateKey);
+
+    ~SslCryptoServer();
+
+    int encryptPriv(std::string msg, unsigned char **encMsg);
+
+    int encryptPriv(const char *msg, size_t msgLen, unsigned char **encMsg);
+
+
     std::string decryptPriv(unsigned char *encMsg, size_t encMsgLen);
 
     int decryptPriv(unsigned char *encMsg, size_t encMsgLen, char **decMsg);
 
-    unsigned char* getPubKey();
 
     unsigned char* getPriKey();
 
 private:
 
-    int setPubKey(string& pubKey);
-    int setPrivKey(string& privKey);
-    EVP_PKEY *publicKey;
-    EVP_PKEY *privateKey;
+    int setPrivKey(std::string& privKey);
+    RSA *privateKey;
 
-    EVP_CIPHER_CTX *encryptCtx;
-    EVP_CIPHER_CTX *decryptCtx;
 
 };
+
 
 
 
