@@ -1,3 +1,4 @@
+#include <iostream>
 #include "sslhelpers.hpp"
 
 using namespace std;
@@ -35,9 +36,14 @@ int SslCryptoServer::encrypt(std::string msg, unsigned char **encMsg) {
 
 int SslCryptoServer::encrypt(const char *msg, size_t msgLen, unsigned char **encMsg) {
 
-  *encMsg = (unsigned char*)malloc(RSA_size(key));
-  if(encMsg == NULL) {
-    return -1;
+  if(key !=NULL)
+  {
+    *encMsg = (unsigned char*)malloc(RSA_size(key));
+    if(encMsg == NULL) {
+      return -1;
+    }
+  } else {
+    std::cout << "private key is NULL \n";
   }
 
   return  RSA_private_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);
@@ -50,11 +56,15 @@ int SslCryptoClient::encrypt(std::string msg, unsigned char **encMsg)
 
 int SslCryptoClient::encrypt(const char *msg, size_t msgLen, unsigned char **encMsg)
 {
-
-  *encMsg = (unsigned char*)malloc(RSA_size(key));
-  if(encMsg == NULL) {
-    return -1;
+  if(key != NULL){
+    *encMsg = (unsigned char*)malloc(RSA_size(key));
+    if(encMsg == NULL) {
+      return -1;
+    }
+  } else {
+    std::cout << "public key is NULL \n";
   }
+
 
   return  RSA_public_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);
 }
@@ -103,6 +113,7 @@ int SslCryptoServer::setKey(std::string &privKey)
 
   if(file){
     key = PEM_read_RSAPrivateKey(file, &key,NULL,NULL);
+    std::cout << "setting private key, File is " << privKey << " and the key is " << key << "\n";
     return 0;
   } else{
     return -1;
@@ -117,7 +128,8 @@ int SslCryptoClient::setKey(std::string &pubKey)
   file = fopen(pubKey.c_str(),"r");
 
   if(file){
-    key = PEM_read_RSA_PUBKEY(file, &key,NULL,NULL);
+    key = (RSA *)PEM_read_RSAPublicKey(file, &key,NULL,NULL);
+    std::cout << "setting public key, File is " << pubKey << " and the key is " << key << "\n";
     return 0;
   } else{
     return -1;
