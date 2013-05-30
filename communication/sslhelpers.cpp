@@ -36,17 +36,44 @@ int SslCryptoServer::encrypt(std::string msg, unsigned char **encMsg) {
 
 int SslCryptoServer::encrypt(const char *msg, size_t msgLen, unsigned char **encMsg) {
 
+  unsigned char *rsaSymKey;
+  int rsaSymKeyLen;
+  unsigned char *rsaIV;
+
+  EVP_CIPHER_CTX *rsaEncryptCtx;
+
+
+  if(!EVP_SealInit(rsaEncryptCtx, EVP_aes_128_cbc(), &rsaSymKey, &rsaSymKeyLen, rsaIV, &key, 1)) {
+          return FAILURE;
+      }
+
+      if(!EVP_SealUpdate(rsaEncryptCtx, *encMsg + encMsgLen, (int*)&blockLen, (const unsigned char*)msg, (int)msgLen)) {
+          return FAILURE;
+      }
+      encMsgLen += blockLen;
+
+      if(!EVP_SealFinal(rsaEncryptCtx, *encMsg + encMsgLen, (int*)&blockLen)) {
+          return FAILURE;
+      }
+      encMsgLen += blockLen;
+
+      EVP_CIPHER_CTX_cleanup(rsaEncryptCtx);
+
+      return (int)encMsgLen;
+
+  /*
+
   if(key !=NULL)
   {
     *encMsg = (unsigned char*)malloc(RSA_size(key));
-    if(encMsg == NULL) {
+    if(*encMsg == NULL) {
       return -1;
     }
   } else {
     std::cout << "private key is NULL \n";
   }
 
-  return  RSA_private_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);
+  return  RSA_private_encrypt(msgLen, reinterpret_cast<const unsigned char *>(msg), *encMsg, key, RSA_PKCS1_PADDING);*/
 }
 
 int SslCryptoClient::encrypt(std::string msg, unsigned char **encMsg)
@@ -58,7 +85,7 @@ int SslCryptoClient::encrypt(const char *msg, size_t msgLen, unsigned char **enc
 {
   if(key != NULL){
     *encMsg = (unsigned char*)malloc(RSA_size(key));
-    if(encMsg == NULL) {
+    if(*encMsg == NULL) {
       return -1;
     }
   } else {
@@ -112,7 +139,8 @@ int SslCryptoServer::setKey(std::string &privKey)
   file = fopen(privKey.c_str(),"r");
 
   if(file){
-    key = PEM_read_RSAPrivateKey(file, &key,NULL,NULL);
+    RSA* privKey = PEM_read_RSAPrivateKey(file, &privKey,NULL,NULL);
+    EVP_PKEY_assign_RSA(key, privKey);
     std::cout << "setting private key, File is " << privKey << " and the key is " << key << "\n";
     return 0;
   } else{
@@ -128,8 +156,8 @@ int SslCryptoClient::setKey(std::string &pubKey)
   file = fopen(pubKey.c_str(),"r");
 
   if(file){
-    key = (RSA *)PEM_read_RSAPublicKey(file, &key,NULL,NULL);
-    std::cout << "setting public key, File is " << pubKey << " and the key is " << key << "\n";
+    RSA* pubKey = PEM_read_RSA_PUBKEY(file, &pubKey,NULL,NULL);
+    EVP_PKEY_assign_RSA(key, pubKey);
     return 0;
   } else{
     return -1;
