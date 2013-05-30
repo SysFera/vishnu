@@ -50,7 +50,7 @@ protected:
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
                const std::string& uri,
-               SslCryptoServer* cipher);
+               SslCrypto* cipher);
 
 
 #endif // __SED__H__

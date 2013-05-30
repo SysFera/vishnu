@@ -38,7 +38,7 @@ validateUri(const std::string & uri);
  */
 int
 registerSeD(const std::string& type, const ExecConfiguration& config,
-            std::vector<std::string>& services, SslCryptoClient* cipher);
+            std::vector<std::string>& services, SslCrypto* cipher);
 
 /**
  * \brief initSeD registers services and starts the SeD

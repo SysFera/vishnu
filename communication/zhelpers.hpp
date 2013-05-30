@@ -130,7 +130,7 @@ public:
     char* decData;
     int decDataLength = message.size();
     if (cipher != NULL) {
-      decDataLength = cipher->decrypt(reinterpret_cast<unsigned char*>(message.data()), decDataLength, &decData);
+      decDataLength = cipher->aesDecrypt(reinterpret_cast<unsigned char*>(message.data()), decDataLength, &decData);
     } else {
       decData = static_cast<char*>(message.data());
     }
@@ -157,7 +157,7 @@ private:
     unsigned char* encData;
     int encDataLength = len;
     if (cipher != NULL) {
-      encDataLength = cipher->encrypt(data, len, &encData);
+      encDataLength = cipher->aesEncrypt(data, len, &encData);
     } else {
       char* tmp = const_cast<char*>(data);
       encData = reinterpret_cast<unsigned char*>(tmp);
