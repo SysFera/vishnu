@@ -22,7 +22,7 @@ public:
 
 protected:
   virtual int setKey(std::string& key) = 0;
-  RSA *key;
+  EVP_PKEY *key;
 };
 
 class SslCryptoClient : public SslCrypto {
