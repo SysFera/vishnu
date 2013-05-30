@@ -125,7 +125,7 @@ diet_string_set(diet_profile_t* prof, int pos,
 }
 
 void
-sendProfile(diet_profile_t* prof, const std::string& uri, SslCryptoClient* cipher) {
+sendProfile(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher) {
   zmq::context_t ctx(1);
 
   LazyPirateClient lpc(ctx, uri, cipher, getTimeout());
@@ -191,7 +191,7 @@ diet_call(diet_profile_t* prof) {
     disp = dispv[0];
   }
 
-  if (uri == "" && disp == "") {
+  if (uri.empty() && disp.empty()) {
     // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
     // No module or server found
     // throw SystemException(ERRCODE_SYSTEM,
@@ -208,10 +208,10 @@ diet_call(diet_profile_t* prof) {
 
   bool useSsl = false;
   std::string pubKey;
-  SslCryptoClient* cipher = NULL;
+  SslCrypto* cipher = NULL;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, pubKey);
-    cipher = new SslCryptoClient(pubKey);
+    cipher = new SslCrypto(pubKey, SIDE_CLIENT); //FIXME: use public key
   }
 
   return diet_call_gen(prof, uri, cipher);

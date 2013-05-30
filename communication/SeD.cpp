@@ -65,7 +65,7 @@ public:
                      boost::shared_ptr<SeD> server,
                      int id,
                      const std::string& queue,
-                     SslCryptoServer* cipher)
+                     SslCrypto* cipher)
     : ctx_(ctx), server_(server), id_(id),  queue_(queue), cipher_(cipher) {
   }
 
@@ -114,14 +114,14 @@ private:
   /**
    * \brief The cipher
    */
-  SslCryptoServer* cipher_;
+  SslCrypto* cipher_;
 };
 
 
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
                const std::string& uri,
-               SslCryptoServer* cipher) {
+               SslCrypto* cipher) {
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
   const int NB_THREADS = 5;
 

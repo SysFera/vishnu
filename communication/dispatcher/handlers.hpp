@@ -56,7 +56,7 @@ public:
   Handler(const std::string& uri,
           boost::shared_ptr<Annuary> ann,
           int nbThread,
-          SslCryptoServer* ciph)
+          SslCrypto* ciph)
     : muri(uri), mann(ann), nbThread(nbThread), cipher(ciph) {}
 
   /**
@@ -88,7 +88,7 @@ private:
   /**
    * \brief The cipher
    */
-  SslCryptoServer* cipher;
+  SslCrypto* cipher;
 };
 
 /**

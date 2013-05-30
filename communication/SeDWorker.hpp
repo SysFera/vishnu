@@ -26,7 +26,7 @@ public:
   explicit SeDWorker(boost::shared_ptr<zmq::context_t> ctx,
                      const std::string& uriInproc, int id,
                      boost::shared_ptr<SeD> server,
-                     SslCryptoServer* cipher)
+                     SslCrypto* cipher)
     : Worker(ctx, uriInproc, id, cipher), server_(server) {
   }
 
