@@ -33,6 +33,5 @@ find_path(OPENSSL_INCLUDE_DIR
 if (OPENSSL_LIB)
   set(OPENSSL_FOUND "Yes")
   mark_as_advanced(OPENSSL_INCLUDE_DIR)
- message ("Found ${OPENSSL_LIB}")
   mark_as_advanced(OPENSSL_LIB)
 endif()

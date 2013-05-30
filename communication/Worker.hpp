@@ -108,7 +108,7 @@ serverWorkerSockets(const std::string& serverUri,
                     const std::string& workerUri,
                     int nbThreads,
                     WorkerParam params,
-                    SslCryptoServer* cipher) {
+                    SslCrypto* cipher) {
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);

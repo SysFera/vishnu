@@ -12,7 +12,7 @@
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
 
-static const int SUCCESS =  0;
+static const int SUCCESS = 0;
 /**
  * \class Database
  * \brief This class describes a database

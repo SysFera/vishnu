@@ -57,7 +57,7 @@ public:
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
                          boost::shared_ptr<Annuary> ann,
-                         SslCryptoServer* cipher)
+                         SslCrypto* cipher)
     : AnnuaryWorker(ctx, uriInproc, id, ann, cipher) {}
 
 private:
@@ -118,7 +118,7 @@ public:
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
                               const std::string& uriInproc, int id,
                               boost::shared_ptr<Annuary> ann,
-                              SslCryptoServer* cipher)
+                              SslCrypto* cipher)
     : AnnuaryWorker(ctx, uriInproc, id, ann, cipher) {}
 
 private:

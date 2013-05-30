@@ -32,7 +32,7 @@ int
 registerSeD(const std::string& type,
             const ExecConfiguration& config,
             std::vector<std::string>& services,
-            SslCryptoClient* cipher) {
+            SslCrypto* cipher) {
   std::string uri;
   std::string mid;
   std::string uridispatcher;
@@ -97,14 +97,14 @@ initSeD(const std::string& type, const ExecConfiguration& config,
 
   std::string rsaPubkey;
   std::string rsaPrivkey;
-  SslCryptoServer* serverCipher = NULL;
-  SslCryptoClient* clientCipher = NULL;
+  SslCrypto* serverCipher = NULL;
+  SslCrypto* clientCipher = NULL;
   bool useSsl = false;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, rsaPubkey);
-    serverCipher = new SslCryptoServer(rsaPrivkey);
-    clientCipher = new SslCryptoClient(rsaPubkey);
+    serverCipher = new SslCrypto(rsaPrivkey, SIDE_SERVER);
+    clientCipher = new SslCrypto(rsaPubkey, SIDE_CLIENT);
   }
 
   // Initialize the DIET SeD
