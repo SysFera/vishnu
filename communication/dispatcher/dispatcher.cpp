@@ -62,13 +62,19 @@ Dispatcher::configureAnnuary() {
 
 void
 Dispatcher::configureHandlers() {
-  clientHandler.reset(new ClientHandler(uriAddr, ann, nthread));
-  serverHandler.reset(new ServerHandler(uriSubs, ann, nthread));
+  std::string rsaPrivKey;
+  SslCrypto* cipher = NULL;
+  bool useSsl = false;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivKey);
+    cipher = new SslCrypto(rsaPrivKey, SIDE_SERVER);
+  }
 
-  boost::thread th1(boost::bind(&ClientHandler::run,
-                                clientHandler.get()));
-  boost::thread th2(boost::bind(&ServerHandler::run,
-                                serverHandler.get()));
+  clientHandler.reset(new Handler4Clients(uriAddr, ann, nthread, cipher));
+  serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, cipher));
+
+  boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
+  boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
 
   th1.join();
   th2.join();

@@ -11,6 +11,7 @@
 
 #include "zhelpers.hpp"
 #include "utils.hpp"
+#include "sslhelpers.hpp"
 
 
 /**
@@ -26,8 +27,10 @@ public:
    * \param id worker's identifier
    */
   explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
-                  const std::string& uriInproc, int id)
-    : ctx_(ctx), uriInproc_(uriInproc), id_(id) {}
+                  const std::string& uriInproc,
+                  int id,
+                  SslCrypto* ciph)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id), cipher(ciph) {}
 
 
   /**
@@ -37,7 +40,7 @@ public:
    */
   void
   operator()() {
-    Socket socket(*ctx_, ZMQ_REP);
+    Socket socket(*ctx_, ZMQ_REP, cipher);
     socket.connect(uriInproc_.c_str());
     std::string data;
 
@@ -69,9 +72,22 @@ protected:
   virtual std::string
   doCall(std::string& data) = 0;
 
-  boost::shared_ptr<zmq::context_t> ctx_;  /**< zmq context */
-  std::string uriInproc_;  /**< worker id */
-  int id_;  /**< worker id */
+  /**
+   * \brief zmq context
+   */
+  boost::shared_ptr<zmq::context_t> ctx_;
+  /**
+   * \brief The worker inproc uri
+   */
+  std::string uriInproc_;
+  /**
+   * \brief Worker id
+   */
+  int id_;
+  /**
+   * \brief The cipher
+   */
+  SslCrypto* cipher;
 };
 
 
@@ -91,7 +107,8 @@ int
 serverWorkerSockets(const std::string& serverUri,
                     const std::string& workerUri,
                     int nbThreads,
-                    WorkerParam params) {
+                    WorkerParam params,
+                    SslCrypto* cipher) {
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
@@ -116,7 +133,7 @@ serverWorkerSockets(const std::string& serverUri,
   // Create our pool of threads
   ThreadPool pool(nbThreads);
   for (int i = 0; i < nbThreads; ++i) {
-    pool.submit(WorkerType(context, workerUri, i, params));
+    pool.submit(WorkerType(context, workerUri, i, params, cipher));
   }
 
   // connect our workers threads to our server via a queue

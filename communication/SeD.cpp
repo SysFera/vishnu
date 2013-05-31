@@ -62,13 +62,16 @@ SeD::getServices() {
 class ZMQWorker {
 public:
   explicit ZMQWorker(boost::shared_ptr<zmq::context_t> ctx,
-                     boost::shared_ptr<SeD> server, int id, const std::string& queue)
-    : ctx_(ctx), server_(server), id_(id),  queue_(queue) {
+                     boost::shared_ptr<SeD> server,
+                     int id,
+                     const std::string& queue,
+                     SslCrypto* cipher)
+    : ctx_(ctx), server_(server), id_(id),  queue_(queue), cipher_(cipher) {
   }
 
   void
   operator()() {
-    Socket socket(*ctx_, ZMQ_REP);
+    Socket socket(*ctx_, ZMQ_REP, cipher_);
     socket.connect(queue_.c_str());
     std::string data;
     while (true) {
@@ -92,21 +95,39 @@ public:
   }
 
 private:
-  boost::shared_ptr<zmq::context_t> ctx_; /**< zmq context */
-  boost::shared_ptr<SeD> server_; /**< Server implementation */
-  int id_; /**< worker id */
+  /**
+   * \brief zmq context
+   */
+  boost::shared_ptr<zmq::context_t> ctx_;
+  /**
+   * \brief Server implementation
+   */
+  boost::shared_ptr<SeD> server_;
+  /**
+   * \brief worker id
+   */
+  int id_;
+  /**
+   * \brief The cipher
+   */
   std::string queue_;
+  /**
+   * \brief The cipher
+   */
+  SslCrypto* cipher_;
 };
 
 
 int
-ZMQServerStart(boost::shared_ptr<SeD> server, const std::string& uri) {
+ZMQServerStart(boost::shared_ptr<SeD> server,
+               const std::string& uri,
+               SslCrypto* cipher) {
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
-  const int NB_THREADS = 50;
+  const int NB_THREADS = 5;
 
   return serverWorkerSockets<SeDWorker,
                              boost::shared_ptr<SeD> >(uri,
                                                       WORKER_INPROC_QUEUE,
                                                       NB_THREADS,
-                                                      server);
+                                                      server, cipher);
 }

@@ -100,6 +100,9 @@ else (LIBCRYPT_FOUND)
 endif(LIBCRYPT_FOUND)
 
 
+find_package(OPENSSL)
+
+
 find_package(Boost 1.46
   REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
 

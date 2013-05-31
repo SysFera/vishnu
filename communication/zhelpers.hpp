@@ -18,6 +18,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "utils.hpp"
+#include "sslhelpers.hpp"
 
 /**
  * \brief The default timeout value used to comunicate
@@ -36,7 +37,7 @@ public:
    * \param ctx the zmq context
    * \param type The type of the socket
    */
-  Socket(zmq::context_t& ctx, int type) : zmq::socket_t(ctx, type) {}
+  Socket(zmq::context_t& ctx, int type, SslCrypto* ciph) : zmq::socket_t(ctx, type), cipher(ciph) {}
 
   /**
    * \brief set linger period for socket shutdown
@@ -126,16 +127,23 @@ public:
       throw zmq::error_t();
     }
 
-
-    const char *dat = static_cast<const char*>(message.data());
-    // check that we receive or not a null-terminated string aka C strings
-    size_t sz = message.size();
-    const char* pos = dat + sz;
-
-    return std::string(dat, pos);
+    char* decData;
+    int decDataLength = message.size();
+    if (cipher != NULL) {
+      decDataLength = cipher->aesDecrypt(reinterpret_cast<unsigned char*>(message.data()), decDataLength, &decData);
+    } else {
+      decData = static_cast<char*>(message.data());
+    }
+    const char* pos = decData + decDataLength;
+    return std::string(static_cast<const char*>(decData), pos);
   }
 
 private:
+  /**
+      *\brief Pointer to the encryption object
+    */
+  SslCrypto* cipher;
+
   /**
    * \brief internal method that sends message
    * \param data buffer to be sent
@@ -145,8 +153,18 @@ private:
    */
   bool
   send(const char* data, size_t len, int flags = 0) {
-    zmq::message_t msg(len);
-    memcpy(msg.data(), data, len);
+
+    unsigned char* encData;
+    int encDataLength = len;
+    if (cipher != NULL) {
+      encDataLength = cipher->aesEncrypt(data, len, &encData);
+    } else {
+      char* tmp = const_cast<char*>(data);
+      encData = reinterpret_cast<unsigned char*>(tmp);
+    }
+
+    zmq::message_t msg(encDataLength);
+    memcpy(msg.data(), encData, encDataLength);
 
     return socket_t::send(msg, flags);
   }
@@ -165,9 +183,11 @@ public:
    * \param addr the address to bind
    * \param timeout the timeout before retrying to send the message
    */
-  LazyPirateClient(zmq::context_t& ctx, const std::string& addr,
+  LazyPirateClient(zmq::context_t& ctx,
+                   const std::string& addr,
+                   SslCrypto* ciph,
                    const int timeout = DEFAULT_TIMEOUT)
-    : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000) {
+    : addr_(addr), ctx_(ctx), timeout_(timeout * 1000000), cipher(ciph) {
     reset();
   }
 
@@ -225,7 +245,7 @@ private:
    */
   void
   reset() {
-    sock_.reset(new Socket(ctx_, ZMQ_REQ));
+    sock_.reset(new Socket(ctx_, ZMQ_REQ, cipher));
     sock_->connect(addr_);
     sock_->setLinger(0);
   }
@@ -250,6 +270,11 @@ private:
    * \brief The timeout
    */
   long timeout_;
+
+  /**
+      *\brief Pointer to the encryption object
+    */
+  SslCrypto* cipher;
 };
 
 

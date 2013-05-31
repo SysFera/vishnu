@@ -125,10 +125,10 @@ diet_string_set(diet_profile_t* prof, int pos,
 }
 
 void
-sendProfile(diet_profile_t* prof, const std::string& uri) {
+sendProfile(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher) {
   zmq::context_t ctx(1);
 
-  LazyPirateClient lpc(ctx, uri, getTimeout());
+  LazyPirateClient lpc(ctx, uri, cipher, getTimeout());
   std::string resultSerialized = my_serialize(prof);
   if (!lpc.send(resultSerialized)) {
     std::cerr << "E: request failed, exiting ...\n";
@@ -191,7 +191,7 @@ diet_call(diet_profile_t* prof) {
     disp = dispv[0];
   }
 
-  if (uri == "" && disp == "") {
+  if (uri.empty() && disp.empty()) {
     // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
     // No module or server found
     // throw SystemException(ERRCODE_SYSTEM,
@@ -205,13 +205,22 @@ diet_call(diet_profile_t* prof) {
   if (uri == "") {
     uri = disp;
   }
-  return diet_call_gen(prof, uri);
+
+  bool useSsl = false;
+  std::string pubKey;
+  SslCrypto* cipher = NULL;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, pubKey);
+    cipher = new SslCrypto(pubKey, SIDE_CLIENT); //FIXME: use public key
+  }
+
+  return diet_call_gen(prof, uri, cipher);
 }
 
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri) {
+diet_call_gen(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher) {
   zmq::context_t ctx(5);
-  LazyPirateClient lpc(ctx, uri, getTimeout());
+  LazyPirateClient lpc(ctx, uri, cipher, getTimeout());
 
   std::string s1 = my_serialize(prof);
   if (!lpc.send(s1)) {
@@ -265,6 +274,9 @@ my_serialize(diet_profile_t* prof) {
     res << prof->params[i] << "$$$";
   }
   res << prof->params[(prof->OUT)] << "$$$";
+
+  /*Crypt message before returning */
+
   return res.str();
 }
 

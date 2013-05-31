@@ -27,8 +27,9 @@ public:
    */
   explicit AnnuaryWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
-                         boost::shared_ptr<Annuary> ann)
-    : Worker(ctx, uriInproc, id), mann_(ann) {}
+                         boost::shared_ptr<Annuary> ann,
+                         SslCrypto* cipher)
+    : Worker(ctx, uriInproc, id, cipher), mann_(ann) {}
 
 protected:
   /**
@@ -55,8 +56,9 @@ public:
    */
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
                          const std::string& uriInproc, int id,
-                         boost::shared_ptr<Annuary> ann)
-    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
+                         boost::shared_ptr<Annuary> ann,
+                         SslCrypto* cipher)
+    : AnnuaryWorker(ctx, uriInproc, id, ann, cipher) {}
 
 private:
   /**
@@ -75,7 +77,7 @@ private:
     std::string uriServer = elect(serv);
 
     if (!uriServer.empty()) {
-      diet_call_gen(profile.get(), uriServer);
+      diet_call_gen(profile.get(), uriServer, cipher);
       return my_serialize(profile.get());
     } else {
       return str(format("error %1%: the service %2% is not available")
@@ -115,8 +117,9 @@ public:
    */
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
                               const std::string& uriInproc, int id,
-                              boost::shared_ptr<Annuary> ann)
-    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
+                              boost::shared_ptr<Annuary> ann,
+                              SslCrypto* cipher)
+    : AnnuaryWorker(ctx, uriInproc, id, ann, cipher) {}
 
 private:
   /**

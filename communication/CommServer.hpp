@@ -10,6 +10,7 @@
 #include <boost/shared_ptr.hpp>
 #include "ExecConfiguration.hpp"
 #include "SeD.hpp"
+#include "sslhelpers.hpp"
 
 /**
  * \brief Function to unregister a server (from the annuary and database)
@@ -37,7 +38,7 @@ validateUri(const std::string & uri);
  */
 int
 registerSeD(const std::string& type, const ExecConfiguration& config,
-            std::vector<std::string>& services);
+            std::vector<std::string>& services, SslCrypto* cipher);
 
 /**
  * \brief initSeD registers services and starts the SeD

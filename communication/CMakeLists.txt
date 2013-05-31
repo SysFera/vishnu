@@ -17,6 +17,8 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/FMS/src/sed
   ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${Boost_INCLUDE_DIR}
+  ${OPENSSL_INCLUDE_DIR}
+
 )
 
 add_library(zmq_helper
@@ -25,6 +27,7 @@ add_library(zmq_helper
   Server.cpp
   SeD.cpp
   utils.cpp
+  sslhelpers.cpp
   ${utils_server_SRCS}
 )
 
@@ -32,6 +35,8 @@ target_link_libraries (zmq_helper
   ${ZMQ_LIBRARIES}
   ${Boost_LIBRARIES}
   vishnu-core
+  ${LIBCRYPTO_LIB}
+  ${OPENSSL_LIB}
 )
 
 # --------------------------------------------------------------------------
@@ -47,6 +52,7 @@ if(COMPILE_SERVERS)
     ${Boost_LIBRARIES}
     zmq_helper
     vishnu-core
+    ${OPENSSL_LIB}
     )
   
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
