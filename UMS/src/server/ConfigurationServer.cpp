@@ -225,6 +225,7 @@ int ConfigurationServer::restore(int vishnuId) {
                                    "DELETE FROM global_project_role; "
                                    "DELETE FROM permission; "
                                    "DELETE FROM test_report; "
+                                   "DELETE FROM job; "
                                    "DELETE FROM permission_module; ";
 
   //Creation of the object user
@@ -341,7 +342,7 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
 
   std::string sqlInsert = (boost::format("INSERT INTO users (vishnu_vishnuid, userid, pwd, firstname, lastname,"
                                          " privilege, email, passwordstate, status)"
-                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%', %6%, '%7%', %8%, %9%)")
+                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%', %6%, '%7%', %8%, %9%);")
                            %vishnuId
                            %user->getUserId()
                            %user->getPassword()
@@ -364,7 +365,7 @@ std::string
 ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
 
   std::string sqlInsert = (boost::format("INSERT INTO machine (vishnu_vishnuid, name, site, machineid, status)"
-                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%')")
+                                         " VALUES (%1%, '%2%', '%3%', '%4%', '%5%');")
                            %vishnuId
                            %machine->getName()
                            %machine->getSite()
