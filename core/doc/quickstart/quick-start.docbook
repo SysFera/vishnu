@@ -87,20 +87,6 @@
       </itemizedlist>
     </section>
     
-    <!--<section>
-      <title>References</title>
-      <para><itemizedlist>
-          <listitem>
-            <para>[D1.1b]: VISHNU "Spécifications techniques des besoins"</para>
-          </listitem>
-          <listitem>
-            <para>[DIETMAN]: DIET User's Manual v2.8 (available with the DIET distribution at http://graal.ens-lyon.fr/~diet)</para>
-          </listitem>
-        <listitem>
-          <para>[VISHNU_API] VISHNU API : Document that contain the VISHNU API description and all the datatypes used..</para>
-        </listitem>
-      </itemizedlist></para>
-    </section> -->
     
   </chapter>
   

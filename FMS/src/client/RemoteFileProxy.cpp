@@ -50,7 +50,7 @@ RemoteFileProxy::isUpToDate() const {
   return upToDate;
 }
 
-/* Get the informations about this remote file. Call the DIET service. */
+/* Get the informations about this remote file. Call the Vishnu service. */
 void
 RemoteFileProxy::getInfos() const {
   diet_profile_t* getInfosProfile;
@@ -127,7 +127,7 @@ RemoteFileProxy::operator=(const RemoteFileProxy& file) {
   return *this;
 }
 
-/* Call the change group DIET server.
+/* Call the change group Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -184,7 +184,7 @@ RemoteFileProxy::chgrp(const string& group) {
   return 0;
 }
 
-/* Call the change mode DIET server.
+/* Call the change mode Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -248,7 +248,7 @@ RemoteFileProxy::chmod(const mode_t mode) {
   return 0;
 }
 
-/* Call the file head DIET server.
+/* Call the file head Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -321,7 +321,7 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
   return result;
 }
 
-/* Call the file getContent DIET server.
+/* Call the file getContent Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -381,7 +381,7 @@ RemoteFileProxy::getContent() {
   return fileContent;
 }
 
-/* Call the mkfile DIET server.
+/* Call the mkfile Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -437,7 +437,7 @@ RemoteFileProxy::mkfile(const mode_t mode) {
   return 0;
 }
 
-/* Call the mkdir DIET server.
+/* Call the mkdir Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -500,7 +500,7 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
 }
 
 
-/* Call the remove file DIET server.
+/* Call the remove file Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -561,7 +561,7 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
   return 0;
 }
 
-/* Call the remove directory DIET server.
+/* Call the remove directory Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -617,7 +617,7 @@ RemoteFileProxy::rmdir() {
 
 }
 
-/* Call the file tail DIET server.
+/* Call the file tail Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */
@@ -689,7 +689,7 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   return result;
 }
 
-/* Call the ls DIET server.
+/* Call the ls Vishnu server.
  * If something goes wrong, throw a raiseCommunicationMsgException containing
  * the error message.
  */

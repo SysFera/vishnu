@@ -18,7 +18,7 @@ using namespace std;
 
 /* Global variables defined in the server.cc file. */
 
-/* tail DIET callback function. Proceed to the group change using the
+/* tail Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n last lines of a file to the client application. */
 int solveListDir(diet_profile_t* profile) {

@@ -19,7 +19,7 @@ using namespace std;
 
 
 
-/* get Content  DIET callback function.
+/* get Content  Vishnu callback function.
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int contentFile(diet_profile_t* profile) {

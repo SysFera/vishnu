@@ -103,7 +103,7 @@ public:
   stopAllProcesses(IMS_Data::Process_ptr proc);
   /**
    * \brief Return true if the process with a diet name Pname is of type IMS
-   * \param Pname: DIET name of the process
+   * \param Pname: Vishnu name of the process
    * \return True if Pname represents an IMS SeD
    */
   bool

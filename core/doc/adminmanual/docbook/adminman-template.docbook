@@ -401,9 +401,9 @@ de VISHNU. Cf. chapitre 4 du document [ARCH].</para>
 <title>Terminologies</title>
 <itemizedlist>
 <listitem>
-<para>Sysfera-DS : Désigne la suite de logiciel open source développé par SysFera
+<para>Sysfera-DS : Désigne la suite logiciel développée par SysFera
 pour simplifier et l'utilisation des ressources de calcul à grande échelle.
-La suite comprend VISHNU, SysFera WebBoard et DIET.
+La suite comprend VISHNU et le WebBoard.
 </para>
 </listitem>
 <listitem>
