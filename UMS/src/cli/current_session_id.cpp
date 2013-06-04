@@ -35,7 +35,7 @@ int main (int ac, char* av[]) {
     // get the sessionId
     std::string sessionId=getLastSessionId(getppid());
 
-    // DIET call
+    // Vishnu call
     if (false == sessionId.empty()){
       std::cout << "current sessionId: " <<  sessionId << "\n";
       return VISHNU_OK;

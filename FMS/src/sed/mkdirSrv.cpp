@@ -19,7 +19,7 @@ using namespace std;
 
 
 
-/* mkdir DIET callback function. Proceed to the group change using the
+/* mkdir Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */
 int solveCreateDir(diet_profile_t* profile) {

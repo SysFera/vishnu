@@ -94,7 +94,7 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
 void
 initSeD(const std::string& type, const ExecConfiguration& config,
         const std::string& uri, boost::shared_ptr<SeD> server) {
-  // Initialize the DIET SeD
+  // Initialize the Vishnu SeD
   try {
     std::vector<std::string> ls = server.get()->getServices();
     registerSeD(type, config, ls);

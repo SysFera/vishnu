@@ -19,7 +19,7 @@ using namespace std;
 using namespace FMS_Data;
 namespace ba = boost::algorithm;
 
-/* get information DIET callback function. Proceed to the group change using the
+/* get information Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* The function returns all the information about a file:
  *  - The local owner

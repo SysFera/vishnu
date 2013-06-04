@@ -116,7 +116,7 @@ main(int argc, char* argv[], char* envp[]) {
     std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
-  // Check DIET Configuration file
+  // Check Vishnu Configuration file
   if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
     std::cerr << "Error: cannot open sendmail script file" << "\n";
     exit(1);

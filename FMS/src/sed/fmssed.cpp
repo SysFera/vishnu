@@ -87,7 +87,7 @@ main(int argc, char* argv[], char* envp[]) {
       res = server->init(vishnuId, dbConfig);
 
 
-      // Initialize the DIET SeD
+      // Initialize the Vishnu SeD
       if (!res) {
         initSeD(FMSTYPE, config, uri, server);
       } else {

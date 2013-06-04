@@ -112,7 +112,7 @@ main(int argc, char* argv[], char* envp[]) {
       sigaction (SIGCHLD, &action, NULL);
 
 
-      // Initialize the DIET SeD
+      // Initialize the Vishnu SeD
       if (!res) {
         initSeD(UMSTYPE, config, uri, server);
       } else {

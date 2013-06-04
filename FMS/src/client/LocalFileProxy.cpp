@@ -75,7 +75,7 @@ LocalFileProxy::isUpToDate() const {
 
 /* Copy the local file to remote destination. */
 /* The function proceed to the file copy by itself if the
- * destination is a local path. Otherwise it calls the DIET service.
+ * destination is a local path. Otherwise it calls the Vishnu service.
  */
 template <class TypeOfOption>
 int

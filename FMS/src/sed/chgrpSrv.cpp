@@ -19,7 +19,7 @@ using namespace std;
 
 
 
-/* change group DIET callback function. Proceed to the group change using the
+/* change group Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* Returns the n first line of the file to the client application. */
 int solveChangeGroup (diet_profile_t* profile) {

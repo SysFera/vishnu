@@ -60,7 +60,7 @@ ThresholdProxy::setSystemThreshold(IMS_Data::Threshold systemThreshold) {
     }
   }
   else {
-    raiseCommunicationMsgException("DIET call failure");
+    raiseCommunicationMsgException("Vishnu call failure");
   }
 
   /*To raise a vishnu exception if the receiving message is not empty*/
