@@ -9,6 +9,7 @@
 #include "UserServer.hpp"
 #include "DbFactory.hpp"
 #include "DatabaseResult.hpp"
+#include "RequestFactory.hpp"
 #include "LocalAccountServer.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
@@ -146,14 +147,14 @@ UserServer::update(UMS_Data::User *user) {
         if (!user->getLastname().empty()) {
           sqlCommand.append(comma + " lastname='"+user->getLastname()+"'");
           comma=",";
-          
+
         }
 
         //if a new email has been defined
         if (!user->getEmail().empty()) {
           sqlCommand.append(comma+" email='"+user->getEmail()+"'");
           comma=",";
-         
+
         }
 
         //If a new status has been defined
@@ -164,21 +165,21 @@ UserServer::update(UMS_Data::User *user) {
             if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != vishnu::STATUS_LOCKED) {
               sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
               comma=",";
-              
+
             } else {
               throw UMSVishnuException (ERRCODE_USER_ALREADY_LOCKED);
             }
           } else {
             sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
             comma=",";
-            
+
           }
         }
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
           (comma+" privilege="+convertToString(user->getPrivilege())+" ");
           comma=",";
-         
+
         }
         sqlCommand.append(" where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
         //If there is a change
@@ -207,11 +208,10 @@ UserServer::deleteUser(UMS_Data::User user) {
   user.setStatus(vishnu::STATUS_DELETED);
   int ret = update(&user);
   if (ret == 0){
-    std::string sqlUpdate = (boost::format("UPDATE account, users SET account.status='%1%' "
-                                           " WHERE users.numuserid=account.users_numuserid and users.userid='%2%';"
-                                          )
+    std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_USERS);
+    std::string sqlUpdate = (boost::format(req)
                             %vishnu::STATUS_DELETED
-                            %user.getUserId()  
+                            %user.getUserId()
                             ).str();
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }

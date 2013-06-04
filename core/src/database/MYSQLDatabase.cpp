@@ -351,3 +351,8 @@ MYSQLDatabase::generateId(string table, string fields, string val, int tid, std:
   }
   return convertToInt(*iter);
 }
+
+string
+MYSQLDatabase::getRequest(const int key){
+  return mmysqlfact.get(key);
+}
