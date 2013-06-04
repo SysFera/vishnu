@@ -87,6 +87,14 @@ virtual ~Database();
  */
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid, std::string primary) = 0;
+/**
+ * \brief To get a request from a request file based on a key
+ * \param key the key indicating the request to get
+ * \return the corresponding sql request
+ */
+  virtual std::string
+  getRequest(const int key) = 0;
+
 
 protected :
   /**

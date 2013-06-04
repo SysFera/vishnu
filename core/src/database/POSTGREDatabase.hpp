@@ -14,6 +14,7 @@
 #include "Database.hpp"
 #include "DatabaseResult.hpp"
 #include "DbConfiguration.hpp"
+#include "PGSQLRequestFactory.hpp"
 
 #include "libpq-fe.h"
 
@@ -100,6 +101,13 @@ public :
  */
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid, std::string primary);
+/**
+ * \brief To get a request from a request file based on a key
+ * \param key the key indicating the request to get
+ * \return the corresponding sql request
+ */
+  virtual std::string
+  getRequest(const int key);
 
 private :
 
@@ -152,6 +160,10 @@ private :
    * \brief If the connection is right
    */
   bool misConnected;
+  /**
+   * \brief Request factory
+   */
+  PGSQLRequestFactory mpgfact;
 
   /////////////////////////////////
   // Functions

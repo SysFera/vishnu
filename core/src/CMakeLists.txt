@@ -423,20 +423,24 @@ if(COMPILE_SERVERS)
     database/DbConfiguration.cpp
     database/DbFactory.cpp
     database/Database.cpp
-    database/DatabaseResult.cpp)
+    database/DatabaseResult.cpp
+    database/RequestFactory.cpp
+    )
 
   set(utils_server_SRCS utils/utilServer.cpp 
 #    utils/Logger.cpp
     )
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
-    set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp)
+    set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp
+      database/MYSQLRequestFactory.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
     set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_MYSQL")
   endif()
 
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
-    set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp)
+    set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp
+      database/PGSQLRequestFactory.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
     set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_POSTGRES")
   endif()

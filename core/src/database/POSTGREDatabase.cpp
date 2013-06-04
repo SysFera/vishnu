@@ -259,3 +259,9 @@ POSTGREDatabase::generateId(string table, string fields, string val, int tid, st
   }
   return vishnu::convertToInt(*iter);
 }
+
+string
+POSTGREDatabase::getRequest(const int key){
+  return mpgfact.get(key);
+}
+
