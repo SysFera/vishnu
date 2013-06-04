@@ -7,6 +7,7 @@
 
 #include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
+#include "RequestFactory.hpp"
 #include "utilVishnu.hpp"
 #include <boost/format.hpp>
 
@@ -231,11 +232,9 @@ AuthSystemServer::deleteAuthSystem() {
         mdatabaseVishnu->process(sql);
 
 // Deleting all the auth account when the auth system is deleted
-        sql = (boost::format("UPDATE authaccount, authsystem"
-                             " SET authaccount.status=%1%"
-                             " WHERE authsystem.authsystemid='%2%'"
-                             " AND authsystem.numauthsystemid=authaccount.authsystem_authsystemid"
-                 )%vishnu::STATUS_DELETED %mauthsystem->getAuthSystemId()).str();
+        std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_AUTHACCOUNT_WITH_AUTHSYSTEM);
+        sql = (boost::format(req)
+               %vishnu::STATUS_DELETED %mauthsystem->getAuthSystemId()).str();
         mdatabaseVishnu->process(sql);
 
       } //End if the user-authentication system exists

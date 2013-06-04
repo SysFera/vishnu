@@ -19,6 +19,14 @@
  * whereas postgresql accept whereas and can't stand "update t1, t2"
  */
 const int VR_UPDATE_ACCOUNT_WITH_USERS = 1;
+/**
+ * \brief Request for updating account according to machine key
+ */
+const int VR_UPDATE_ACCOUNT_WITH_MACHINE = 2;
+/**
+ * \brief Request for updating authaccount according to authsystem key
+ */
+const int VR_UPDATE_AUTHACCOUNT_WITH_AUTHSYSTEM = 3;
 
 
 /**

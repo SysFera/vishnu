@@ -7,6 +7,7 @@
 
 #include "MachineServer.hpp"
 #include "DbFactory.hpp"
+#include "RequestFactory.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
 #include <boost/format.hpp>
@@ -188,13 +189,12 @@ MachineServer::deleteMachine() {
   int ret = update();
   if (ret == 0){
 
-    std::string sqlUpdate = (boost::format("update account, machine set account.status='%1%' "
-                                           " where machine.nummachineid=account.machine_nummachineid and machine.machineid='%2%';"
-                            )
+    std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_MACHINE);
+    std::string sqlUpdate = (boost::format(req)
                             %vishnu::STATUS_DELETED
                             %mmachine->getMachineId()
-                            ).str();    
-        
+                            ).str();
+
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }
   return ret;
