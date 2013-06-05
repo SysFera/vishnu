@@ -201,6 +201,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
         BOOST_TEST_MESSAGE("*********************** batchEnvName=" << batchEnvName);
         BOOST_TEST_MESSAGE("*********************** jobSubmitMachineName=" << job.getSubmitMachineName());
 
+// TODO FAIL WITH TORQUE / POSIX WITH STUPID RESULTS
         BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
 
         BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");

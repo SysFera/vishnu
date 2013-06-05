@@ -499,8 +499,11 @@ std::string generateTmpScript(std::string& batchtype, std::string scriptType){
     } else if (scriptType == "output"){
       content = ll_output_Script;
     }
+// TODO :
+// WTF no default case ? What is this 'generic' BS type ?
+// Where is posix batch case ?
 
-  } else if (batchtype == "generic"){
+  } else {
     if (scriptType == "fast"){
       content = generic_Fast_Script;
     } else if (scriptType == "bad"){
