@@ -257,7 +257,6 @@ int JobServer::cancelJob()
   std::string initialJobId;
   std::string jobId;
   std::string owner;
-  int status;
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
   acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
@@ -296,6 +295,8 @@ int JobServer::cancelJob()
 
   boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
   if (sqlCancelResult->getNbTuples() != 0) {
+    int status;
+
     for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
       results.clear();
       results = sqlCancelResult->get(i);

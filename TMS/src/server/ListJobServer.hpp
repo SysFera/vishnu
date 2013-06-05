@@ -237,13 +237,14 @@ public:
     boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlListOfJobs.c_str()));
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
-    int jobStatus;
     std::string batchJobId;
     time_t submitDate;
     time_t endDate;
     std::vector<std::string> ignoredIds;
 
-    if (ListOfJobs->getNbTuples() != 0){
+    if (ListOfJobs->getNbTuples() != 0) {
+      int jobStatus;
+
       for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
         results.clear();
         results = ListOfJobs->get(i);
@@ -264,11 +265,13 @@ public:
         job->setNbCpus(vishnu::convertToInt(*(++ii)));
         job->setJobWorkingDir(*(++ii));
         jobStatus = vishnu::convertToInt(*(++ii));
+
         if (jobStatus == vishnu::STATE_RUNNING) {
           nbRunningJobs++;
         } else if(jobStatus >= vishnu::STATE_SUBMITTED && jobStatus <= vishnu::STATE_WAITING) {
           nbWaitingJobs++;
         }
+
         job->setStatus(jobStatus);
         //convert the endDate into UTC date
         submitDate = vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++ii)));

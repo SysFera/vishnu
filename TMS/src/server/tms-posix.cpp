@@ -66,7 +66,7 @@ checkJobs() {
   int taille;
   bool checkIn5s = false;
   vector<struct trameJob>::iterator it;
- 
+
   taille = Board.size();
 
   // End of Daemon ?
@@ -81,7 +81,7 @@ checkJobs() {
   if (taille != Board.size()) {
     checkIn5s = true;
   }
- 
+
   // Manage Processes states
   for (it = Board.begin(); it != Board.end(); ++it) {
     if (it->state == KILL) {
@@ -158,7 +158,7 @@ timeStatement() {
       }
     }
   }
- 
+
   if (futur != 0) {
     alarm(futur);
   }
@@ -274,7 +274,6 @@ execCommand( const boost::filesystem::path &command,
   std::string commandLine;
   std::string envJobId;
   pid_t pid;
-  int fd;
 
   args[1] = const_cast<char *>("/bin/sh");
   args[2] = const_cast<char*>("-c");
@@ -295,6 +294,8 @@ execCommand( const boost::filesystem::path &command,
   memset(current->jobId, 0, sizeof current->jobId);
 
   if ((pid = fork()) == 0) {
+    int fd;
+
     envJobId = boost::lexical_cast<string>(geteuid());
     envJobId.push_back('-');
     envJobId.append(boost::lexical_cast<string>(getpid()));
@@ -347,18 +348,18 @@ openSocketServer(const char* socketName) {
   struct sockaddr_un addr;
   struct stat info;
   int ret;
-  int ret2;
-  int sv_errno;
-  const char* stest = "COUCOU";
-  char rtest[128];
 
   ret = stat(socketName, &info);
   if (ret == 0) {
-    ret2 = reqEcho(stest,rtest);
-    if (ret2==0) {
+    const char* stest = "COUCOU";
+    char rtest[128];
+
+    int ret2 = reqEcho(stest, rtest);
+    if (ret2 == 0) {
       return -3;
     }
   } else if (ret < 0) {
+    int sv_errno;
     sv_errno = errno;
 
     if (sv_errno != ENOENT) {
@@ -644,4 +645,3 @@ launchDaemon() {
   }
   unlink(name_sock);
 }
-
