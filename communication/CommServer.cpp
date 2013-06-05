@@ -31,8 +31,7 @@ validateUri(const std::string & uri) {
 int
 registerSeD(const std::string& type,
             const ExecConfiguration& config,
-            std::vector<std::string>& services,
-            SslCrypto* cipher) {
+            std::vector<std::string>& services) {
   std::string uri;
   std::string mid;
   std::string uridispatcher;
@@ -58,33 +57,38 @@ registerSeD(const std::string& type,
     config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
   }
 
-  // Check that the uri does not contain *
+  /* Validate the uri and registry the SeD if not yet the case */
   validateUri(uridispatcher);
-
-  // Register in database
   if (vishnu::isNew(urlsup, mid, type)) {
-    std::string request = "insert into process (dietname, launchscript, machineid, pstatus, uptime, vishnuname) values ('"+urlsup+"','"+config.scriptToString()+"','"+mid+"','"+vishnu::convertToString(vishnu::PRUNNING)+"',CURRENT_TIMESTAMP, '"+type+"')";
     try {
       DbFactory factory;
       Database* database = factory.getDatabaseInstance();
+
+      std::string request = (boost::format("INSERT INTO process (dietname, launchscript,"
+                                           "            machineid, pstatus, uptime, vishnuname)"
+                                           " VALUES ('%1%','%2%','%3%',%4%,CURRENT_TIMESTAMP, '%5%')")
+                             %urlsup
+                             %config.scriptToString()
+                             %mid
+                             %vishnu::convertToString(vishnu::PRUNNING)
+                             %type
+                             ).str();
+
       database->process(request.c_str());
-    } catch (SystemException& e) {
-      if (type.compare("umssed")!=0){
-        throw (e);
-      }
+    } catch (...) {
+      if (type == "umssed") { throw; }
     }
   }
 
   zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, uridispatcher, cipher, timeout);
+  LazyPirateClient lpc(ctx, uridispatcher, timeout);
 
-  boost::shared_ptr<Server> s = boost::shared_ptr<Server> (new Server(type, services, uri));
-  // prefix with 1 to say registering the sed
-  std::string req = "1" + s.get()->toString();
-
+  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(type, services, uri));
+  std::string req = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
+  std::cerr << boost::format("[INFO] sendind-> %1%\n")%req;
   if (!lpc.send(req)) {
-    std::cerr << "W: failed to register in the naming service\n";
-    return -1; //instead of exiting
+    std::cerr << "[WARNING] failed to register in the naming service\n";
+    return -1; // Dont throw exception
   }
   std::string response = lpc.recv();
 
@@ -92,29 +96,48 @@ registerSeD(const std::string& type,
 }
 
 void
-initSeD(const std::string& type, const ExecConfiguration& config,
-        const std::string& uri, boost::shared_ptr<SeD> server) {
+initSeD(const std::string& type,
+        const ExecConfiguration& config,
+        const std::string& uri,
+        boost::shared_ptr<SeD> server) {
 
-  std::string rsaPubkey;
+  const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%type).str();
   std::string rsaPrivkey;
-  SslCrypto* serverCipher = NULL;
-  SslCrypto* clientCipher = NULL;
+  std::string sslCertificate;
   bool useSsl = false;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
-    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PUBLIC_KEY, rsaPubkey);
-    serverCipher = new SslCrypto(rsaPrivkey, SIDE_SERVER);
-    clientCipher = new SslCrypto(rsaPubkey, SIDE_CLIENT);
+    config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
   }
-
-  // Initialize the DIET SeD
-  try {
-    std::vector<std::string> ls = server.get()->getServices();
-    registerSeD(type, config, ls, clientCipher);
-  } catch (VishnuException& e) {
-    std::cout << "failed to register with err" << e.what()  << std::endl;
+  pid_t pid = fork();
+  if (pid > 0) {
+    try {
+      std::vector<std::string> services = server.get()->getServices();
+      registerSeD(type, config, services);
+    } catch (VishnuException& e) {
+      std::cout << "Failed to register the SeD. " << e.what()  << std::endl;
+    }
+    ZMQServerStart(server, IPC_URI);
+    unregisterSeD(type, config);
+  } else if (pid == 0) {
+    /* Intializing the SSL service */
+    int sslPort = getPortFromUri(uri);
+    if (sslPort <= 0 ) {
+      sslPort = DEFAULT_SSL_PORT;
+    }
+    TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
+    try {
+      tlsHandler.run();
+    } catch(VishnuException& ex) {
+      std::cerr << boost::format("[ERROR] %1%")%ex.what();
+      abort();
+    } catch(...) {
+      std::cerr << "[ERROR] unknown error when starting TLS server\n";
+      abort();
+    }
+  } else {
+    std::cerr << "[ERROR] There was a problem to initialize the SeD";
+    exit(1);
   }
-
-  ZMQServerStart(server, uri, serverCipher);
-  unregisterSeD(type, config);
 }
+

@@ -28,9 +28,8 @@ public:
    */
   explicit Worker(boost::shared_ptr<zmq::context_t> ctx,
                   const std::string& uriInproc,
-                  int id,
-                  SslCrypto* ciph)
-    : ctx_(ctx), uriInproc_(uriInproc), id_(id), cipher(ciph) {}
+                  int id)
+    : ctx_(ctx), uriInproc_(uriInproc), id_(id) {}
 
 
   /**
@@ -40,7 +39,7 @@ public:
    */
   void
   operator()() {
-    Socket socket(*ctx_, ZMQ_REP, cipher);
+    Socket socket(*ctx_, ZMQ_REP);
     socket.connect(uriInproc_.c_str());
     std::string data;
 
@@ -84,10 +83,6 @@ protected:
    * \brief Worker id
    */
   int id_;
-  /**
-   * \brief The cipher
-   */
-  SslCrypto* cipher;
 };
 
 
@@ -107,8 +102,7 @@ int
 serverWorkerSockets(const std::string& serverUri,
                     const std::string& workerUri,
                     int nbThreads,
-                    WorkerParam params,
-                    SslCrypto* cipher) {
+                    WorkerParam params) {
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
@@ -133,7 +127,7 @@ serverWorkerSockets(const std::string& serverUri,
   // Create our pool of threads
   ThreadPool pool(nbThreads);
   for (int i = 0; i < nbThreads; ++i) {
-    pool.submit(WorkerType(context, workerUri, i, params, cipher));
+    pool.submit(WorkerType(context, workerUri, i, params));
   }
 
   // connect our workers threads to our server via a queue

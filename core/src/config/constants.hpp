@@ -55,8 +55,8 @@ namespace vishnu {
     USE_SSL,
     SERVER_PUBLIC_KEY,
     SERVER_PRIVATE_KEY,
-    SERVER_SSL_CERTICATE
-    
+    SERVER_SSL_CERTICATE,
+    SSL_CA
   } param_type_t;
 
   /**
