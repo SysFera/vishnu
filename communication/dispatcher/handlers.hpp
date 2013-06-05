@@ -55,9 +55,8 @@ public:
    */
   Handler(const std::string& uri,
           boost::shared_ptr<Annuary> ann,
-          int nbThread,
-          SslCrypto* ciph)
-    : muri(uri), mann(ann), nbThread(nbThread), cipher(ciph) {}
+          int nbThread)
+    : muri(uri), mann(ann), nbThread(nbThread) {}
 
   /**
    * \brief To run the handler
@@ -68,8 +67,7 @@ public:
                         boost::shared_ptr<Annuary> >(muri,
                                                      InternalEndpoint<Worker>::value(),
                                                      nbThread,
-                                                     mann,
-                                                     cipher);
+                                                     mann);
   }
 
 private:
@@ -85,10 +83,6 @@ private:
    * \brief The number of threads to use
    */
   int nbThread;
-  /**
-   * \brief The cipher
-   */
-  SslCrypto* cipher;
 };
 
 /**

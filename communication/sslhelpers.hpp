@@ -5,9 +5,15 @@
 #include <openssl/pem.h>
 #include <openssl/aes.h>
 #include <openssl/err.h>
+#include <openssl/bio.h>
+#include <openssl/ssl.h>
 #include <stdio.h>
 #include <string>
 #include <string.h>
+#include <boost/shared_ptr.hpp>
+
+#include "zhelpers.hpp"
+#include "DIET_client.h"
 
 #define DEBUG
 
@@ -33,8 +39,11 @@
 #define KEY_SERVER_PUB 1
 #define KEY_CLIENT_PUB 2
 
-#define SIDE_CLIENT 0
-#define SIDE_SERVER 1
+const int SIDE_CLIENT = 0;
+const int SIDE_SERVER = 1;
+
+const int MAX_SSL_MSG = 2048;
+const int DEFAULT_SSL_PORT = 5580;
 
 class SslCrypto {
 public:
@@ -60,8 +69,8 @@ public:
 
 private:
   int encSide; /* server vs client */
-  EVP_PKEY *serverKeypair;
-  EVP_PKEY *clientPubKey;
+  EVP_PKEY *keypair;
+  EVP_PKEY *publicKey;
 
   EVP_CIPHER_CTX* rsaEncryptCtx;
   EVP_CIPHER_CTX* aesEncryptCtx;
@@ -79,8 +88,119 @@ private:
   size_t encryptLen;
 
   int init(size_t rsaKeyLen, size_t aesKeyLen);
-  int genTestClientKey(int keyLen);
   int setKey(std::string& key, int side);
+};
+
+
+class TlsServer {
+
+public:
+  TlsServer(const std::string& privKey,
+            const std::string cert,
+            int port,
+            const std::string& internalSrvUri)
+    : listeningPort(port),
+      privateKey(privKey),
+      certificate(cert),
+      internalServiceUri(internalSrvUri)
+  { }
+
+  ~TlsServer() {};
+
+  void run(void);
+
+  std::string getErrorMsg(void) const { return errorMsg; }
+
+private:
+  /**
+   * \brief listening port
+  */
+  int listeningPort;
+
+  /**
+   * \brief  path to server private key
+  */
+  std::string privateKey;
+
+  /**
+   * \brief  path to the certificate
+  */
+  std::string certificate;
+
+  /**
+   * \brief Secret key used for communication
+  */
+  std::string secretKey;
+
+  /**
+   * @brief The internal uri to connect to the service
+   */
+  std::string internalServiceUri;
+
+  /**
+   * @brief error
+   */
+  std::string errorMsg;
+};
+
+class TlsClient {
+
+public:
+
+  TlsClient(const std::string& host,
+            int port = DEFAULT_SSL_PORT,
+            const std::string& ca = "")
+    : serverAddr(host),
+      serverPort(port),
+      cafile(ca),
+      peerPublicKey(NULL)
+  {
+  }
+
+  /**
+   * @brief send
+   */
+  int
+  send(const std::string& data);
+
+  /**
+   * @brief recv
+   * @return
+   */
+  std::string getData(void) const { return data; }
+
+  std::string getErrorMsg(void) const { return errorMsg; }
+
+private:
+  /**
+   * \brief Server address
+  */
+  const std::string serverAddr;
+
+  /**
+   * \brief The listening port on the server
+  */
+  int serverPort;
+
+  /**
+   * \brief  path to the CA file
+  */
+  std::string cafile;
+
+  /**
+   * \brief Server public key
+  */
+  EVP_PKEY *peerPublicKey;
+
+  /**
+   * \brief Message received from server
+  */
+  std::string data;
+
+  /**
+   * @brief error
+   */
+  std::string errorMsg;
 };
 
 #endif

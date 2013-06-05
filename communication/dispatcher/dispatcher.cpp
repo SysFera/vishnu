@@ -67,11 +67,10 @@ Dispatcher::configureHandlers() {
   bool useSsl = false;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivKey);
-    cipher = new SslCrypto(rsaPrivKey, SIDE_SERVER);
   }
 
-  clientHandler.reset(new Handler4Clients(uriAddr, ann, nthread, cipher));
-  serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, cipher));
+  clientHandler.reset(new Handler4Clients(uriAddr, ann, nthread));
+  serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread));
 
   boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
   boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
