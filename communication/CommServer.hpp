@@ -38,7 +38,7 @@ validateUri(const std::string & uri);
  */
 int
 registerSeD(const std::string& type, const ExecConfiguration& config,
-            std::vector<std::string>& services, SslCrypto* cipher);
+            std::vector<std::string>& services);
 
 /**
  * \brief initSeD registers services and starts the SeD
@@ -50,6 +50,7 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
 void
 initSeD(const std::string& type, const ExecConfiguration& config,
         const std::string& uri, boost::shared_ptr<SeD> server);
+
 
 
 #endif  // __COMMSERVER__HH__

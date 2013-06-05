@@ -75,7 +75,7 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri, SslCrypto* cipher);
+diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 /**
  * \brief Overload of DIET function, get the value of a string in the profile
@@ -94,6 +94,13 @@ diet_string_get(diet_profile_t* prof, int pos, std::string& value);
  */
 int
 diet_profile_free(diet_profile_t* prof);
+
+/**
+ * @brief getTimeout
+ * @return
+ */
+int
+getTimeout();
 
 /**
  * \brief To deserialize a profile
@@ -121,6 +128,23 @@ my_serialize(diet_profile_t* prof);
  */
 int
 diet_initialize(const char* cfg, int argc, char** argv);
+
+
+/**
+ * @brief Get port number from a given uri
+ * @param uri : the uri address
+ * @return the port number
+ */
+int
+getPortFromUri(const std::string& uri);
+
+/**
+ * @brief getHostFromUrl
+ * @param uri
+ * @return
+ */
+std::string
+getHostFromUri(const std::string& uri);
 
 
 #endif // __DIETMOCK__
