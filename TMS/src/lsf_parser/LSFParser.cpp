@@ -297,7 +297,6 @@ LSFParser::convertWallTimeToTime(const std::string& date,
                                  const std::string& compErrMsg) {
   int wallTime;
   int minute = -1;
-  int hour   = -1;
 
   std::string errMsg = "illegal time  option value "+date+":";
   vector<std::string> tokens = getTimeToKens(date);
@@ -317,7 +316,7 @@ LSFParser::convertWallTimeToTime(const std::string& date,
   wallTime = minute;
   //day
   if (tokens.size() >= 2) {
-    hour = vishnu::convertToInt(tokens[1]);
+    int hour = vishnu::convertToInt(tokens[1]);
     wallTime += hour*60;
   }
 

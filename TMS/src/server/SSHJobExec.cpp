@@ -123,7 +123,6 @@ SSHJobExec::sshexec(const std::string& serviceName,
   std::string submitOptionsSerializedPath;
   std::string jobUpdateSerializedPath;
   std::string cmdDetails;
-  bool wellSubmitted = false;
 
   jobSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobSerialized%%%%%%").string();
   vishnu::saveInFile(jobSerializedPath, mjobSerialized);
@@ -187,7 +186,9 @@ SSHJobExec::sshexec(const std::string& serviceName,
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
 // THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
-  if (serviceName.compare("SUBMIT")==0) {  // set specific arguments for submit job
+  if (serviceName.compare("SUBMIT") == 0) {  // set specific arguments for submit job
+    bool wellSubmitted = false;
+
     // The command has been executed successfully
     std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
     TMS_Data::Job_ptr job = NULL;
