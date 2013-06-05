@@ -17,14 +17,23 @@
  * The syntax between mysql and postgresql is not compatible
  * mysql allows "update t1, t2 set ..." and does not accept from keywords
  * whereas postgresql accept whereas and can't stand "update t1, t2"
+ * This request needs 2 arguments to be replaced, the first one is
+ * the status of the account, the second is the userid corresponding to
+ * the account
  */
 const int VR_UPDATE_ACCOUNT_WITH_USERS = 1;
 /**
  * \brief Request for updating account according to machine key
+ * This request needs 2 arguments to be replaced, the first one is
+ * the status of the account, the second is the machineid corresponding to
+ * the account
  */
 const int VR_UPDATE_ACCOUNT_WITH_MACHINE = 2;
 /**
  * \brief Request for updating authaccount according to authsystem key
+ * This request needs 2 arguments to be replaced, the first one is
+ * the status of the authaccount, the second is the authsystemid corresponding to
+ * the account
  */
 const int VR_UPDATE_AUTHACCOUNT_WITH_AUTHSYSTEM = 3;
 
