@@ -124,7 +124,6 @@ SSHJobExec::sshexec(const std::string& serviceName,
   std::string jobUpdateSerializedPath;
   std::string cmdDetails;
   bool wellSubmitted = false;
-  bool errorMsgIsSet = false;
 
   jobSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobSerialized%%%%%%").string();
   vishnu::saveInFile(jobSerializedPath, mjobSerialized);
@@ -203,8 +202,7 @@ SSHJobExec::sshexec(const std::string& serviceName,
       LOG(merrorInfo, mdebugLevel);
       throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
     }
-    errorMsgIsSet = true;
-    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false) && (errorMsgIsSet==false)) {
+    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false)) {
       merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
       if (mbatchType==LOADLEVELER) {
         merrorInfo.append("\n==>LOADLEVELER ERROR");
