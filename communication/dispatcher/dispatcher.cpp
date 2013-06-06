@@ -63,7 +63,6 @@ Dispatcher::configureAnnuary() {
 void
 Dispatcher::configureHandlers() {
   std::string rsaPrivKey;
-  SslCrypto* cipher = NULL;
   bool useSsl = false;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivKey);
