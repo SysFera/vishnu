@@ -120,51 +120,51 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
-        //Setting submitjob parameters
+      //Setting submitjob parameters
 
-        const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
+      const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
 
-        //To get the content of the script
-        std::string scriptContent;
+      //To get the content of the script
+      std::string scriptContent;
 
-        BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
+      BOOST_TEST_MESSAGE("************ The Script is " << scriptFilePath );
 
-        Job jobInfo;
-        SubmitOptions subOptions;
-        BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+      Job jobInfo;
+      SubmitOptions subOptions;
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
 
-        BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
+      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
-        Job job;
+      Job job;
+      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+
+      while (5!=job.getStatus()){
+
+        bpt::seconds sleepTime(5);
+        boost::this_thread::sleep(sleepTime);
+
         getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+      }
 
-        while (5!=job.getStatus()){
-
-          bpt::seconds sleepTime(5);
-          boost::this_thread::sleep(sleepTime);
-
-          getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
-        }
-
-        JobResult outputInfos;
-        BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, m_test_tms_working_dir),0  );
-        BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
-        std::string jobOutputPath = outputInfos.getOutputPath();
-          //To get the content of the output
-        std::string jobOutputContent;
-        std::string vishnuEnvId;
-        std::string batchEnvId;
-        std::string vishnuEnvName;
-        std::string batchEnvName;
+      JobResult outputInfos;
+      BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, m_test_tms_working_dir),0  );
+      BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
+      std::string jobOutputPath = outputInfos.getOutputPath();
+      //To get the content of the output
+      std::string jobOutputContent;
+      std::string vishnuEnvId;
+      std::string batchEnvId;
+      std::string vishnuEnvName;
+      std::string batchEnvName;
 
 
-        std::string envSubmitMachine;
-        std::ifstream ifile (jobOutputPath.c_str());
-        if (ifile.is_open()) {
-          std::ostringstream oss;
-          oss << ifile.rdbuf();
-          jobOutputContent = oss.str();
-          ifile.close();
+      std::string envSubmitMachine;
+      std::ifstream ifile (jobOutputPath.c_str());
+      if (ifile.is_open()) {
+        std::ostringstream oss;
+        oss << ifile.rdbuf();
+        jobOutputContent = oss.str();
+        ifile.close();
 
 //    //
 //    // FIXME DO NOT WORK
@@ -203,20 +203,21 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 //
 //    // TODO FAIL WITH TORQUE / POSIX WITH STUPID RESULTS
 //            BOOST_REQUIRE((vishnuEnvId==batchEnvId) && (vishnuEnvName==batchEnvName) && (envSubmitMachine==job.getSubmitMachineName()));
-
-        BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");
-
-        bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
-
-        bfs::remove (bfs::path(outputInfos.getOutputPath()));
-        bfs::remove (bfs::path(outputInfos.getErrorPath()));
-        bfs::path script(scriptFilePath.c_str());
-        BOOST_CHECK(bfs::remove_all(script)==1);
-
-      } catch (VishnuException& e) {
-        BOOST_MESSAGE(e.what());
-        BOOST_CHECK(false);
       }
+
+      BOOST_TEST_MESSAGE("***********************  submit a job: normal call2   ok!!!!*****************************");
+
+      bool pathExist=bfs::exists(bfs::path(outputInfos.getOutputPath())) &&  bfs::exists(bfs::path(outputInfos.getOutputPath()));
+
+      bfs::remove (bfs::path(outputInfos.getOutputPath()));
+      bfs::remove (bfs::path(outputInfos.getErrorPath()));
+      bfs::path script(scriptFilePath.c_str());
+      BOOST_CHECK(bfs::remove_all(script)==1);
+
+    } catch (VishnuException& e) {
+      BOOST_MESSAGE(e.what());
+      BOOST_CHECK(false);
+    }
   }
 }
 //
