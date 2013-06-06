@@ -79,7 +79,7 @@ public:
           std::cerr << boost::format("E: %1%\n") % error.what();
           continue;
         }
-        std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
+//        std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
         // Deserialize and call UMS Method
         if (!data.empty()) {
             boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
