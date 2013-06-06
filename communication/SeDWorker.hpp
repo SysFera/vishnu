@@ -38,8 +38,11 @@ private:
   std::string
   doCall(std::string& data) {
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-    server_->call(profile.get());
-    // Send reply back to client
+    int ret = server_->call(profile.get());
+    if (ret != 0) {
+      std::cerr << boost::format("[ERROR] call(profile.get()) returned %1%."
+                                 " See the previous error for details.\n")%ret;
+    }
     return my_serialize(profile.get());
   }
 

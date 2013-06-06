@@ -320,10 +320,10 @@ void TlsServer::run()
   }
 
   /* Setup the SSL BIO as server */
-  SSL* ssl;
-  BIO* sslBio = BIO_new_ssl(ctx,0);
+  SSL* ssl = NULL;
+  sslBio = BIO_new_ssl(ctx,0);
   BIO_get_ssl(sslBio, &ssl);
-  if(!ssl) {
+  if(ssl == NULL) {
     errorMsg = (boost::format("Can't locate SSL pointer.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
@@ -347,15 +347,14 @@ void TlsServer::run()
     throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
   }
 
-
   /* Now wait for incoming connections */
-  char msg[MAX_SSL_MSG];
-  while (1) {
+//  while (1) {
+    //FIXME: infinite loop when there are fails
     if(BIO_do_accept(acceptBio) <= 0) { /* Wait for new connection */
       errorMsg = (boost::format("Failed connecting a client.\n%1%"
                                 )%ERR_error_string(ERR_get_error(), NULL)).str();
       std::cerr << errorMsg << "\n";
-      continue;
+//      continue;
     }
 
     sslBio = BIO_pop(acceptBio);
@@ -366,29 +365,38 @@ void TlsServer::run()
       errorMsg = (boost::format("SSL handshake.\n%1%"
                                 )%ERR_error_string(ERR_get_error(), NULL)).str();
       std::cerr << errorMsg << "\n";
-      continue;
+//      continue;
     }
 
-    /* Then receive message */
-    int len = BIO_gets(sslBio, msg, MAX_SSL_MSG);
-    if (len <= 0) {
+    recvMsg();
+
+    if (!data.empty()) {
+      std::string reply;
+      zlpc.send(data); /* Forward the message to the service handler */
+
+      reply = zlpc.recv();
+      reply.append("\n\n"); /* necessary for the communication protocol between server and clients */
+      int len = BIO_write(sslBio, reply.c_str(), reply.size());
+
+      std::cout << boost::format("[INFO] %1%/%2% bytes written\n")%len%reply.size();
+    } else {
       errorMsg = (boost::format("[ERROR] Empty message reveived.\n%1%"
                                 )%ERR_error_string(ERR_get_error(), NULL)).str();
       std::cerr << errorMsg << "\n";
-      continue;
+//      continue;
     }
+//  }
+}
 
-    /* Forward the message to the service handler */
-    zlpc.send(std::string(msg, len));
-
-    /* Retrive result and forward it to the client */
-    std::string reply = zlpc.recv();
-    BIO_puts(sslBio, reply.c_str());
+void TlsServer::recvMsg()
+{
+  char msgBuf[MSG_CHUNK_SIZE];
+  data.clear();
+  int len;
+  while ((len = BIO_gets(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0) {
+    if((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
+    data.append(std::string(msgBuf, len));
   }
-
-  /* Flush buffer and free BIO object */
-  BIO_flush(sslBio);
-  BIO_free_all(sslBio);
 }
 
 
@@ -419,7 +427,7 @@ TlsClient::send(const std::string& reqData)
 
   /* Setup the SSL BIO as client */
   SSL* ssl;
-  BIO* sslBio = BIO_new_ssl_connect(sslctx);
+  sslBio = BIO_new_ssl_connect(sslctx);
   BIO_get_ssl(sslBio, &ssl);
   if(!ssl) {
     errorMsg = (boost::format("Can't locate SSL pointer.\n%1%"
@@ -439,21 +447,18 @@ TlsClient::send(const std::string& reqData)
     return -1;
   }
 
-  /* Verify certificate */
   if(SSL_get_verify_result(ssl) != X509_V_OK) {
     errorMsg = (boost::format("Failed verifying the server certificate.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
   }
 
-  /* Do the handshake */
   if(BIO_do_handshake(sslBio) <= 0) {
     errorMsg = (boost::format("Failed establishing SSL connection.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
   }
 
-  /* Retrieve server certificate */
   X509* peerCert = SSL_get_peer_certificate(ssl);;
   if (peerCert == NULL) {
     errorMsg = (boost::format("Failed getting peer certificate key.\n%1%"
@@ -461,37 +466,24 @@ TlsClient::send(const std::string& reqData)
     return -1;
   }
 
-  /* Retriving server public key */
-  peerPublicKey = X509_get_pubkey(peerCert);
-  if (peerPublicKey == NULL) {
-    errorMsg = (boost::format("Failed getting server public key.\n%1%"
-                              )%ERR_error_string(ERR_get_error(), NULL)).str();
-    return -1;
-  }
+  int len;
+  len = BIO_puts(sslBio, reqData.c_str());
+  std::cout << boost::format("[INFO] %1%/%2% bytes sent\n")%len%reqData.size();
 
-  /* Now send the request data */
-  int len = BIO_puts(sslBio, reqData.c_str());
-  if (len != reqData.size()) {
-    errorMsg = (boost::format("Can't send message to server.\n%1%"
-                              )%ERR_error_string(ERR_get_error(), NULL)).str();
-    return -1;
-  } else {
-    // For logging
-    std::cerr << boost::format("[INFO] %1% bytes sent\n")%len;
-  }
+  recvMsg();
 
-  char reply[MAX_SSL_MSG];
-  len = BIO_read(sslBio, reply, MAX_SSL_MSG);
-  if (len <= 0) {
-    errorMsg = (boost::format("Empty message received.\n%1%"
-                              )%ERR_error_string(ERR_get_error(), NULL)).str();
-    return -1;
-  }
-
-  data = std::string(reply, len);
-  /* Free BIO object */
-  BIO_free_all(sslBio);
-
+  std::cout << boost::format("[INFO] %1% read")%data.size();
 
   return 0;
+}
+
+void TlsClient::recvMsg()
+{
+  char msgBuf[MSG_CHUNK_SIZE];
+  data.clear();
+  int len;
+  while ((len = BIO_read(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0) {
+    if((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
+    data.append(std::string(msgBuf, len));
+  }
 }

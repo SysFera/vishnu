@@ -129,7 +129,7 @@ initSeD(const std::string& type,
     try {
       tlsHandler.run();
     } catch(VishnuException& ex) {
-      std::cerr << boost::format("[ERROR] %1%")%ex.what();
+      std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
       abort();
     } catch(...) {
       std::cerr << "[ERROR] unknown error when starting TLS server\n";
