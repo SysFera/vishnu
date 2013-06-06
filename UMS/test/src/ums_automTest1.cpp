@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE( Connect_base )
   UMS_DataFactory_ptr ecoreFactory = UMS_DataFactory::_instance();
   ListSessions_ptr li = ecoreFactory->createListSessions();
   ListSessionOptions opt;
-    
+
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   {
     BOOST_CHECK  (connect    (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
@@ -43,7 +43,7 @@ BOOST_AUTO_TEST_CASE( Connect_base )
     BOOST_CHECK  (close      (sess.getSessionKey()                )==0);
 
   }
-  
+
   BOOST_MESSAGE(" Testing normal connection U1-B1" );
   {
     User_ptr u1  = ecoreFactory->createUser();
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( Connect_base )
     BOOST_CHECK  (close      (sess.getSessionKey()                )==0);
 
   }
-  
+
   BOOST_MESSAGE(" Testing normal connection using the .netrc file U1.1-B2" );
   {
     std::string homebefore = getenv("HOME");
@@ -75,18 +75,18 @@ BOOST_AUTO_TEST_CASE( Connect_base )
     bfs::path netrc(netrcpath.c_str());
     BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
-      
+
   }
 
 
   // ReConnect normal call
   BOOST_MESSAGE(" Testing normal reconnection U1.5-B-1" );
-  {   
+  {
     // -> connect
     BOOST_CHECK  (connect    (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
     BOOST_REQUIRE  (listSessions(sess.getSessionKey(), *li , opt      )==0);
     // -> and then reconnect normal
-    std::string rec = li->getSessions()[0]->getSessionId();
+    std::string rec = sess.getSessionId();
     BOOST_CHECK(reconnect  (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, rec, sess)==0);
     BOOST_CHECK(listSessions(sess.getSessionKey(), *li , opt     )==0);
 
@@ -109,11 +109,11 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
   std::string homebefore = getenv("HOME");
   bfs::path tempdir = boost::filesystem::temp_directory_path();
 
-  
+
   BOOST_MESSAGE(" Testing with bad uid U1-E1" );
   BOOST_CHECK_THROW  (connect    ("bad", m_test_ums_admin_vishnu_pwd, sess, cop), VishnuException);
   BOOST_CHECK_THROW  (listSessions(sess.getSessionKey()  , *li , opt     ), VishnuException);
-  
+
   // Connect with bad pwd
   BOOST_MESSAGE(" Testing bad pwd U1-E2");
   BOOST_CHECK_THROW  (connect    (m_test_ums_admin_vishnu_login, "bad", sess, cop), VishnuException);
@@ -132,8 +132,8 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
   BOOST_REQUIRE(setenv("HOME", tempdir.c_str(), 1)==0);
   BOOST_CHECK_THROW (connect("", "", sess, cop ), VishnuException);
   BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
-  
-  
+
+
   BOOST_MESSAGE(" Testing connection with bad netrc file permissions U1.1-E4" );
   {
     string netrcpath = string(tempdir.c_str()) + "/.netrc";
@@ -158,7 +158,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     bfs::path netrc(netrcpath.c_str());
     BOOST_REQUIRE(bfs::remove_all(netrc)==1);
     BOOST_REQUIRE(setenv("HOME", homebefore.c_str(), 1)==0);
-    
+
   }
 
   BOOST_MESSAGE(" Testing connection with no login defined on netrc file U1.1-E6" );
@@ -223,7 +223,7 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
     BOOST_CHECK_THROW  (connect    (*liuc, sess, cop ), VishnuException);
   }
 
-  
+
   BOOST_MESSAGE(" Testing close a closed session U1.2-E2");
   BOOST_CHECK_THROW(close(sess.getSessionKey()), VishnuException);
 
@@ -240,6 +240,6 @@ BOOST_AUTO_TEST_CASE( Connect_failure )
   BOOST_CHECK_THROW  (reconnect(m_test_ums_admin_vishnu_login, "bad", sid, sess), VishnuException);
   BOOST_CHECK  (close      (sess.getSessionKey()                )==0);
 
-  
+
 }
 BOOST_AUTO_TEST_SUITE_END()
