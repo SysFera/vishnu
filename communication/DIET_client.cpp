@@ -283,7 +283,7 @@ ssl_call_gen(diet_profile_t* prof,
     std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
     return -1;
   }
-  std::string response = tlsClient.getData();
+  std::string response = tlsClient.recv();
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   if (!tmp) {
     std::cerr << boost::format("E: %1%...\n")%response;
