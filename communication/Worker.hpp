@@ -49,7 +49,7 @@ public:
         std::cerr << boost::format("E: %1%\n") % error.what();
         continue;
       }
-      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
+//      std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
       // Deserialize and call Method
       if (!data.empty()) {
         std::string resultSerialized = doCall(data);
