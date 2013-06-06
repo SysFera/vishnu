@@ -12,6 +12,7 @@
 
 #include "AuthSystemServer.hpp"
 #include "DbFactory.hpp"
+#include "RequestFactory.hpp"
 
 /**
  * \brief Constructor
@@ -52,6 +53,11 @@ AuthAccountServer::addOrUpdate(bool update) {
   std::string numAuthSystem;
   std::string numUser;
 
+  // Variables used to store the template sql request
+  // from factory and the full request
+  std::string req;
+  std::string sqlcond;
+
   //Creation of the object use
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -67,14 +73,17 @@ AuthAccountServer::addOrUpdate(bool update) {
     checkAuthAccountUserId(userServer);
 
     //if the user-authentication system exists and it is not locked
-    std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
-                                         " AND status=%2%"
-                                         )%mauthAccount->getAuthSystemId() %vishnu::STATUS_ACTIVE).str();
+    req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_AND_STATUS);
+    sqlcond = (boost::format(req)%mauthAccount->getAuthSystemId() %vishnu::STATUS_ACTIVE).str();
     if (!authSystemServer.getAttribut(sqlcond).empty()) {
       //To get the database number id of the machine
-      numAuthSystem =authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'");
+      req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYSID);
+      sqlcond = (boost::format(req)%mauthAccount->getAuthSystemId()).str();
+      numAuthSystem =authSystemServer.getAttribut(sqlcond);
       //To get the database number id of the user
-      numUser = userServer.getAttribut("where userid='"+mauthAccount->getUserId()+"'");
+      req = mdatabaseVishnu->getRequest(VR_COND_USERID);
+      sqlcond = (boost::format(req)%mauthAccount->getUserId()).str();
+      numUser = userServer.getAttribut(sqlcond);
 
       // Check input data
       if ((!update && !exist(numAuthSystem, numUser)) || (update && exist(numAuthSystem, numUser))) {
@@ -84,19 +93,16 @@ AuthAccountServer::addOrUpdate(bool update) {
         }
         std::string sql = ("");
         if (update) {
-          sql = (boost::format("UPDATE authaccount "
-                               " SET aclogin='%1%'"
-                               " WHERE authsystem_authsystemid=%2%"
-                               " AND users_numuserid=%3%"
-                               )
+          req = mdatabaseVishnu->getRequest(VR_UPDATE_AUTHACCOUNT_LOGIN_WITH_AUTHSYSTEM_AND_USER);
+          sql = (boost::format(req)
                  %mauthAccount->getAcLogin()
                  %numAuthSystem
                  %numUser
                  ).str();
+
         } else if (!mauthAccount->getAcLogin().empty()) {
-          sql = (boost::format("INSERT INTO authaccount (authsystem_authsystemid, users_numuserid, aclogin, status) "
-                               "VALUES ('%1%', '%2%', '%3%', %4%)"
-                               )
+          req = mdatabaseVishnu->getRequest(VR_INSERT_AUTHACCOUNT);
+          sql = (boost::format(req)
                  %numAuthSystem
                  %numUser
                  %mauthAccount->getAcLogin()
@@ -126,6 +132,11 @@ AuthAccountServer::deleteAuthAccount() {
   std::string numAuthSystem;
   std::string numUser;
 
+  // Variables used to store the template sql request
+  // from factory and the full request
+  std::string req;
+  std::string sqlcond;
+
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
@@ -141,23 +152,28 @@ AuthAccountServer::deleteAuthAccount() {
     checkAuthAccountUserId(userServer);
 
     //if the machine exists and it is not locked
-    std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
-                                         " AND status=%2%"
-                                         )%mauthAccount->getAuthSystemId() %vishnu::STATUS_ACTIVE).str();
+    req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_AND_STATUS);
+    sqlcond = (boost::format(req)
+               %mauthAccount->getAuthSystemId()
+               %vishnu::STATUS_ACTIVE).str();
     if (!(authSystemServer.getAttribut(sqlcond, "numauthsystemid").empty())) {
       //To get the database number id of the machine
-      numAuthSystem = authSystemServer.getAttribut("where authsystemid='"+mauthAccount->getAuthSystemId()+"'");
+      req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYSID);
+      sqlcond = (boost::format(req)%mauthAccount->getAuthSystemId()).str();
+      numAuthSystem = authSystemServer.getAttribut(sqlcond);
       //To get the database number id of the user
-      numUser = userServer.getAttribut("where userid='"+mauthAccount->getUserId()+"'");
+      req = mdatabaseVishnu->getRequest(VR_COND_USERID);
+      sqlcond = (boost::format(req)
+                 %mauthAccount->getUserId()).str();
+      numUser = userServer.getAttribut(sqlcond);
 
       //if the authentification account exists
       if (exist(numAuthSystem, numUser)) {
         // Set status to DELETED instead of deleting the entry in the database
-        std::string sql = (boost::format("UPDATE authaccount"
-                                         " SET status=%1%"
-                                         " WHERE authsystem_authsystemid=%2%"
-                                         " AND users_numuserid=%3%"
-                                         )%vishnu::STATUS_DELETED %numAuthSystem %numUser).str();
+        req = mdatabaseVishnu->getRequest(VR_UPDATE_AUTHACCOUNT_STATUS_WITH_AUTHSYSTEM_AND_USER);
+        std::string sql = (boost::format(req)
+                           %vishnu::STATUS_DELETED
+                           %numAuthSystem %numUser).str();
         mdatabaseVishnu->process(sql);
       } else { //END if the authentification account exists
         throw UMSVishnuException (ERRCODE_UNKNOWN_AUTH_ACCOUNT);
@@ -191,8 +207,10 @@ AuthAccountServer::getData() {
  */
 std::string
 AuthAccountServer::getAttribut(std::string condition, std::string attrname) {
-
-  std::string sqlCommand("SELECT "+attrname+" FROM authaccount "+condition);
+  std::string req = mdatabaseVishnu->getRequest(VR_SELECT_AUTHACCOUNT);
+  std::string sqlCommand = (boost::format(req)
+                            %attrname
+                            %condition).str();
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 }
@@ -208,10 +226,11 @@ AuthAccountServer::exist(std::string idAuthSystem, std::string idUser) {
   if (idAuthSystem.empty() || idUser.empty()) {
     return false;
   }
-  std::string sqlcond = (boost::format("WHERE authsystem_authsystemid=%1%"
-                                       " AND users_numuserid = %2%"
-                                       " AND status != %3%"
-                                       )%idAuthSystem %idUser %vishnu::STATUS_DELETED).str();
+  std::string req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_USER_STATUS);
+  std::string sqlcond = (boost::format(req)
+                         %idAuthSystem
+                         %idUser
+                         %vishnu::STATUS_DELETED).str();
 
   return !(getAttribut(sqlcond, "authaccountid").empty());
 
@@ -229,10 +248,11 @@ AuthAccountServer::isLoginUsed(std::string numAuthSystem, std::string acLogin) {
   if (numAuthSystem.empty() || acLogin.empty()) {
     return false;
   }
-  std::string sqlcond = (boost::format("WHERE authsystem_authsystemid=%1%"
-                                       " AND aclogin = '%2%'"
-                                       " AND status = %3%"
-                                       )%numAuthSystem %acLogin %vishnu::STATUS_ACTIVE).str();
+  std::string req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_LOGIN_STATUS);
+  std::string sqlcond = (boost::format(req)
+                         %numAuthSystem
+                         %acLogin
+                         %vishnu::STATUS_ACTIVE).str();
 
   return !(getAttribut(sqlcond, "users_numuserid").empty());
 }
