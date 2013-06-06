@@ -196,13 +196,9 @@ public:
       sock_->send(data);
       bool expect_reply(true);
 
-
-      std::cout << "HERE>>> " << addr_ << "TIMEOUT " << timeout_<<"\n";
       while (expect_reply) {
         zmq::pollitem_t items[] = { {*sock_, 0, ZMQ_POLLIN, 0} };
-        std::cout << "HERE2>>> " << addr_ <<"\n";
         zmq::poll(&items[0], 1, timeout_);
-        std::cout << "HERE3>>> " << addr_ <<"\n";
 
         if (items[0].revents & ZMQ_POLLIN) {
           buff_ = sock_->get();

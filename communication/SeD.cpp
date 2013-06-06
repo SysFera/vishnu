@@ -43,9 +43,8 @@ SeD::call(diet_profile_t* profile) {
     rv = fn(profile);
   } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
-    std::cerr << boost::format("%1%\n") % e.what();
+    std::cerr << boost::format("[ERROR] %1%\n") % e.what();
   }
-
   return rv;
 }
 
@@ -78,23 +77,25 @@ public:
     socket.connect(queue_.c_str());
     std::string data;
     while (true) {
-        data.clear();
-        try {
-          data = socket.get();
-        } catch (zmq::error_t &error) {
-          std::cerr << boost::format("E: %1%\n") % error.what();
-          continue;
-        }
-//        std::cout << boost::format("Worker %1% | Recv: %2% | Size: %3%\n")% id_ % data % data.length();
-        // Deserialize and call UMS Method
-        if (!data.empty()) {
-            boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-            server_->call(profile.get());
-            // Send reply back to client
-            std::string resultSerialized = my_serialize(profile.get());
-            socket.send(resultSerialized);
-          }
+      data.clear();
+      try {
+        data = socket.get();
+      } catch (zmq::error_t &error) {
+        std::cerr << boost::format("E: %1%\n") % error.what();
+        continue;
       }
+
+      // Deserialize and call UMS Method
+      if (!data.empty()) {
+        boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+
+        //FIXME: deal with possibly error
+        server_->call(profile.get());
+        // Send reply back to client
+        std::string resultSerialized = my_serialize(profile.get());
+        socket.send(resultSerialized);
+      }
+    }
   }
 
 private:
@@ -128,8 +129,8 @@ ZMQServerStart(boost::shared_ptr<SeD> server,
   const int NB_THREADS = 5;
 
   return serverWorkerSockets<SeDWorker,
-                             boost::shared_ptr<SeD> >(uri,
-                                                      WORKER_INPROC_QUEUE,
-                                                      NB_THREADS,
-                                                      server);
+      boost::shared_ptr<SeD> >(uri,
+                               WORKER_INPROC_QUEUE,
+                               NB_THREADS,
+                               server);
 }

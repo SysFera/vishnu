@@ -1,12 +1,13 @@
 #include "VishnuException.hpp"
 
+#include <boost/format.hpp>
 #include <sstream>
 
 template <class T>
 std::string convertToString(T val) {
-    std::ostringstream out;
-    out << val;
-    return out.str();
+  std::ostringstream out;
+  out << val;
+  return out.str();
 }
 
 VishnuException::VishnuException() : mtype(VishnuException::NONE), mval(-1) {}
@@ -21,12 +22,8 @@ VishnuException::VishnuException(int msg, std::string msgComp)
 const char*
 VishnuException::what() const throw()
 {
-  mfullMsg = "VISHNU Error " + convertToString(getMsgI());
-  mfullMsg += " : ";
-  mfullMsg += getMsg();
-  mfullMsg += " [";
-  mfullMsg += mmsgc;
-  mfullMsg += " ]";
+  mfullMsg = (boost::format("FAIL %1%: %2% [%3%]"
+                            )%convertToString(getMsgI())%getMsg()%mmsgc).str();
   return mfullMsg.c_str();
 }
 

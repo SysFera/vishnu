@@ -133,6 +133,7 @@ ServerUMS::~ServerUMS() {
 
 void
 ServerUMS::initMap() {
+
   int (*functionPtr)(diet_profile_t*);
 
   functionPtr = solveSessionConnect;
