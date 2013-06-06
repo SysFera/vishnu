@@ -428,7 +428,16 @@ vishnu::mv(const string& sessionKey, const string& src,
 
   }
 
-  // FIXME: wtf? throw before return ?
+  // Unreachable code, but it is logical.
+  // Due to conception, all API function return an int, for
+  // compilator, we need to return something
+  // This function tries to copy from various IP of the client
+  // They are all tested, in the end, if the copy could not
+  // be done, we return an exception. The success case is above
+  // with the lines if (result == 0) return result;
+  // We could test if result != 0 here before throwing, but it
+  // would be useless because to reach this case result must be
+  // different from zero
   throw e;
   return result;
 }
