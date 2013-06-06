@@ -40,15 +40,15 @@ SystemException::getTypeS() const{
 
 void
 SystemException::initMsg(){
-  mp.insert(std::pair<int, std::string>(ERRCODE_COMMUNICATION, std::string("Vishnu encountered problems (communication failure)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Vishnu encountered problems (Database error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Vishnu encountered problems (Database connection)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("Vishnu encountered problems (System)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Vishnu encountered problems (Component)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("Vishnu encountered problems (Mapper)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_INVDATA, std::string("Vishnu encountered problems (Data error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SSH, std::string("Vishnu encountered problems (SSH error)")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_AUTHENTERR, std::string("Vishnu encountered problems (Authenticator error)")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_COMMUNICATION, std::string("Communication failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBERR, std::string("Database query failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_DBCONN, std::string("Database connection failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SYSTEM, std::string("VISHNU system failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVCOMP, std::string("Unknown component")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVMAPPER, std::string("VISHNU Mapper failed")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_INVDATA, std::string("Data error")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SSH, std::string("SSH error")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_AUTHENTERR, std::string("Authentication error")));
 }
 
 std::string
