@@ -32,9 +32,9 @@ int
 registerSeD(const std::string& type,
             const ExecConfiguration& config,
             std::vector<std::string>& services) {
-  std::string uri;
+  std::string uriSed;
   std::string mid;
-  std::string uridispatcher;
+  std::string uriDispatcher;
   std::string urlsup;
   int timeout = 10;
 
@@ -45,20 +45,20 @@ registerSeD(const std::string& type,
     timeout = 10;
   }
 
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uridispatcher);
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
   config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
   if (type == "fmssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uriSed);
   } else  if (type == "imssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uriSed);
   } else  if (type == "tmssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uriSed);
   } else { // presumably UMS
-    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uriSed);
   }
 
   /* Validate the uri and registry the SeD if not yet the case */
-  validateUri(uridispatcher);
+  validateUri(uriDispatcher);
   if (vishnu::isNew(urlsup, mid, type)) {
     try {
       DbFactory factory;
@@ -80,17 +80,54 @@ registerSeD(const std::string& type,
     }
   }
 
-  zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, uridispatcher, timeout);
+  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(type, services, uriSed));
+  std::string requestData = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
 
-  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(type, services, uri));
-  std::string req = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
-  std::cerr << boost::format("[INFO] sendind-> %1%\n")%req;
-  if (!lpc.send(req)) {
-    std::cerr << "[WARNING] failed to register in the naming service\n";
-    return -1; // Dont throw exception
+  std::string response;
+  bool useSsl = false;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+
+    std::string cafile;
+    config.getRequiredConfigValue<std::string>(vishnu::SSL_CA, cafile);
+
+    std::string host;
+    int port;
+    host = getHostFromUri(uriDispatcher);
+    if (host.empty()) {
+      std::cerr << boost::format("[ERROR] *** Incorrect host address from the service uri (%1%) ***\n")%uriDispatcher;
+      abort();
+    }
+
+    port = getPortFromUri(uriDispatcher);
+    if (port <= 0 ) {
+      std::cerr << boost::format("[ERROR] *** Incorrect port from the service uri (%1%) ***\n")%uriDispatcher;
+      abort();
+    }
+
+    std::cout << boost::format("[INFO] Registrying to %1%:%2%\n")%host%port;
+
+    TlsClient tlsClient(host, port, cafile);
+    requestData.append("\n\n");  /* required for the internal protocol */
+
+    if (tlsClient.send(requestData) == 0) {
+      response = tlsClient.recv();
+    } else {
+      std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
+      return -1;
+    }
+
+  } else {
+    zmq::context_t ctx(1);
+    LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+    std::cerr << boost::format("[INFO] sendind-> %1%\n")%requestData;
+    if (!lpc.send(requestData)) {
+      std::cerr << "[WARNING] failed to register in the naming service\n";
+      return -1; // Dont throw exception
+    }
+    response = lpc.recv();
   }
-  std::string response = lpc.recv();
+
+  //For logging
 
   return 0;
 }
@@ -115,29 +152,31 @@ initSeD(const std::string& type,
       std::vector<std::string> services = server.get()->getServices();
       registerSeD(type, config, services);
     } catch (VishnuException& e) {
-      std::cout << "Failed to register the SeD. " << e.what()  << std::endl;
+      std::cout << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
     }
     ZMQServerStart(server, IPC_URI);
     unregisterSeD(type, config);
   } else if (pid == 0) {
-    /* Intializing the SSL service */
+    /* Intializing the TLS listener */
     int sslPort = getPortFromUri(uri);
     if (sslPort <= 0 ) {
-      sslPort = DEFAULT_SSL_PORT;
+      std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uri;
+      abort();
     }
     TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
     try {
       tlsHandler.run();
     } catch(VishnuException& ex) {
-      std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+      std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
       abort();
     } catch(...) {
-      std::cerr << "[ERROR] unknown error when starting TLS server\n";
+      //std::cerr << "[ERROR] *** Unknown error starting the TLS service ***%1%\n";
+      std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsHandler.getErrorMsg();
       abort();
     }
   } else {
-    std::cerr << "[ERROR] There was a problem to initialize the SeD";
-    exit(1);
+    std::cerr << "[ERROR] *** Problem initializing the service ***\n";
+    abort();
   }
 }
 
