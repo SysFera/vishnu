@@ -7,7 +7,7 @@
 
 CERT_PASSWD=certpasswd                          # Sets the certificate password
 SERVER_DN="/DC=com/DC=sysfera/CN=mysql-server"  # Sets the server distinguish name
-OUTPUT_DIR=mysql-ssl                            # Sets the output directory
+OUTPUT_DIR=cert                          # Sets the output directory
 
 set -e
 echo "Create clean environment.................................."

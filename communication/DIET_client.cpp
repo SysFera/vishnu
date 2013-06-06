@@ -278,6 +278,7 @@ ssl_call_gen(diet_profile_t* prof,
   TlsClient tlsClient(host, port, cafile);
 
   std::string s1 = my_serialize(prof);
+  s1.append("\n\n");  /* necessary to detect the end of data on the server part */
   if (tlsClient.send(s1)) {
     std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
     return -1;

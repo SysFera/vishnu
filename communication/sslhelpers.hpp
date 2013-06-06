@@ -42,7 +42,7 @@
 const int SIDE_CLIENT = 0;
 const int SIDE_SERVER = 1;
 
-const int MAX_SSL_MSG = 2048;
+const int MSG_CHUNK_SIZE = 2048;
 const int DEFAULT_SSL_PORT = 5580;
 
 class SslCrypto {
@@ -105,9 +105,14 @@ public:
       internalServiceUri(internalSrvUri)
   { }
 
-  ~TlsServer() {};
+  ~TlsServer() {
+    BIO_flush(sslBio);
+    BIO_free_all(sslBio);
+  }
 
   void run(void);
+
+  void run2(void);
 
   std::string getErrorMsg(void) const { return errorMsg; }
 
@@ -141,6 +146,21 @@ private:
    * @brief error
    */
   std::string errorMsg;
+
+  /**
+   * @brief data
+   */
+  std::string data;
+
+  /**
+   * @brief sslBio
+   */
+  BIO* sslBio;
+
+  /**
+   * @brief recvMsg
+   */
+  void recvMsg(void);
 };
 
 class TlsClient {
@@ -152,9 +172,12 @@ public:
             const std::string& ca = "")
     : serverAddr(host),
       serverPort(port),
-      cafile(ca),
-      peerPublicKey(NULL)
+      cafile(ca)
   {
+  }
+
+  ~TlsClient() {
+    BIO_free_all(sslBio);
   }
 
   /**
@@ -188,9 +211,9 @@ private:
   std::string cafile;
 
   /**
-   * \brief Server public key
-  */
-  EVP_PKEY *peerPublicKey;
+   * @brief sslBio
+   */
+  BIO* sslBio;
 
   /**
    * \brief Message received from server
@@ -201,6 +224,11 @@ private:
    * @brief error
    */
   std::string errorMsg;
+
+  /**
+   * @brief recvMsg
+   */
+  void recvMsg(void);
 };
 
 #endif
