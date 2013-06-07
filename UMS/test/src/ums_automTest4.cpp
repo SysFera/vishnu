@@ -77,12 +77,15 @@ BOOST_AUTO_TEST_CASE( Machine_base )
   BOOST_MESSAGE(" Testing normal list machine UA6.3B" );
   {
     BOOST_CHECK  (connect     (m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
+    liom.setListAllMachine(true);
     BOOST_CHECK  (listMachines(sess.getSessionKey(), *lim, liom      )==0);
     BOOST_CHECK  (close       (sess.getSessionKey()                 )==0);
     BOOST_CHECK (lim->getMachines().size() > 0);
-    if (lim->getMachines().size()>0) {
-      BOOST_CHECK((lim->getMachines()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
-    }
+    // Irrelevant test, if you have various machines you can't know which one will be returned as the first
+    // by this test, and the basic user may not have access to this machine
+//    if (lim->getMachines().size()>0) {
+//      BOOST_CHECK((lim->getMachines()[0]->getMachineId()).compare(m_test_ums_user_vishnu_machineid) == 0);
+//    }
   }
 
 
