@@ -36,6 +36,7 @@ public:
   std::string m_test_ums_user_vishnu_login;
   std::string m_test_ums_user_vishnu_pwd;
   std::string m_test_ums_user_vishnu_machineid;
+  UMS_Data::Configuration mconf ;
 
   UMSSeDFixture() {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
@@ -68,7 +69,11 @@ public:
     m_test_ums_user_vishnu_pwd = setupConfig.find("TEST_USER_VISHNU_PWD")->second;
     m_test_ums_user_vishnu_machineid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second;
 
-    
+
+    UMS_Data::ConnectOptions cop;
+    UMS_Data::Session sess;
+    vishnu::connect(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd, sess, cop );
+    vishnu::saveConfiguration(sess.getSessionKey(), mconf);
 
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==");
@@ -76,6 +81,11 @@ public:
 
 
   ~UMSSeDFixture() {
+    UMS_Data::ConnectOptions cop;
+    UMS_Data::Session sess;
+    vishnu::connect(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd, sess, cop );
+    vishnu::restoreConfiguration(sess.getSessionKey(), mconf.getFilePath());
+
     BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: UMSSeDFixture ==" );
     BOOST_TEST_MESSAGE( "== Test teardown [END]: UMSSeDFixture ==" );
   }
