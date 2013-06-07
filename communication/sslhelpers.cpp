@@ -52,9 +52,11 @@ void TlsServer::run()
   std::string addr = (boost::format("0.0.0.0:%1%")%listeningPort).str();
   BIO* acceptBio = BIO_new_accept(const_cast<char*>(addr.c_str()));
   if (acceptBio == NULL) {
-    errorMsg = (boost::format("Failed initilizing TLS listener (%1%).\n%2%"
+    errorMsg = (boost::format("Failed binding for client connections (%1%).\n%2%"
                               )%addr%ERR_error_string(ERR_get_error(), NULL)).str();
     throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
+  } else {
+    std::cout << boost::format("[INFO] TLS socket bound (%1%)\n")%addr;
   }
 
   BIO_set_accept_bios(acceptBio, clientBioHandler);
@@ -136,11 +138,13 @@ TlsClient::send(const std::string& reqData)
     return -1;
   }
 
-  /* Load trust store */
-  if(! SSL_CTX_load_verify_locations(sslctx, cafile.c_str(), NULL)) {
-    errorMsg = (boost::format("Failed loading trust store.\n%1%"
-                              )%ERR_error_string(ERR_get_error(), NULL)).str();
-    return -1;
+  /* Load trust store if set */
+  if (!cafile.empty()) {
+    if(! SSL_CTX_load_verify_locations(sslctx, cafile.c_str(), NULL)) {
+      errorMsg = (boost::format("Failed loading trust store.\n%1%"
+                                )%ERR_error_string(ERR_get_error(), NULL)).str();
+      return -1;
+    }
   }
 
   /* Setup the SSL BIO as client */

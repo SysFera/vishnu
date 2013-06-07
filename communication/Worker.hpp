@@ -110,19 +110,18 @@ serverWorkerSockets(const std::string& serverUri,
   // bind the sockets
   try {
     socket_server.bind(serverUri.c_str());
+    std::cerr << boost::format("[INFO] ZMQ socket bound (%1%)\n") % serverUri;
   } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("E: zmq socket_server (%1%) binding failed (%2%)\n") % serverUri % e.what();
+    std::cerr << boost::format("[ERROR] zmq socket_server (%1%) binding failed (%2%)\n") % serverUri % e.what();
     return 1;
   }
 
   try {
     socket_workers.bind(workerUri.c_str());
   } catch (const zmq::error_t& e) {
-    std::cerr << boost::format("E: zmq socket_worker (%1%) binding failed (%2%)\n") % workerUri % e.what();
+    std::cerr << boost::format("[ERROR] zmq socket_worker (%1%) binding failed (%2%)\n") % workerUri % e.what();
     return 1;
   }
-
-  std::cout << boost::format("I: listening... (%1%)\n") % serverUri;
 
   // Create our pool of threads
   ThreadPool pool(nbThreads);

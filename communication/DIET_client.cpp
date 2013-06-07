@@ -235,7 +235,7 @@ diet_call(diet_profile_t* prof) {
   std::string cafile;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
   {
-    config.getRequiredConfigValue<std::string>(vishnu::SSL_CA, cafile);
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
     return ssl_call_gen(prof, getHostFromUri(uri), getPortFromUri(uri), cafile);
   }
 
