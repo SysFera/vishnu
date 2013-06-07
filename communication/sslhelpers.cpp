@@ -98,7 +98,7 @@ void TlsServer::run()
         std::cout << boost::format("[WARNING] %1%/%2% bytes written\n")%len%reply.size();
       }
     } else {
-      std::cerr << boost::format("[ERROR] Empty message reveived.\n%1%\n"
+      std::cerr << boost::format("[WARNING] Empty message reveived.\n%1%\n"
                                  )%ERR_error_string(ERR_get_error(), NULL);
     }
     BIO_free_all(clientBioHandler);
@@ -187,7 +187,7 @@ TlsClient::send(const std::string& reqData)
   int len;
   len = BIO_puts(sslBio, reqData.c_str());
   if (len <= 0 && !reqData.empty()) {
-    std::cout << boost::format("[INFO] %1%/%2% bytes sent\n")%len%reqData.size();
+    std::cout << boost::format("[WARNING] %1%/%2% bytes sent\n")%len%reqData.size();
   }
 
   return 0;
