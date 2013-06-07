@@ -106,8 +106,8 @@ registerSeD(const std::string& type,
     config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
 
     /* Logging */
-    std::cerr << boost::format("[INFO] Registration address to %1%:%2% with TLS\n"
-                               " > TLS trust store %3%\n") %host %port %cafile;
+    std::cerr << boost::format("[INFO] Registration address: %1%:%2% with TLS\n"
+                               "       > Certifcate trust store (CA): %3%\n") %host %port %cafile;
 
 
     /* Now create a TLS client and go ahead */
