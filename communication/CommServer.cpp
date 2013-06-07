@@ -140,44 +140,49 @@ initSeD(const std::string& type,
         boost::shared_ptr<SeD> server) {
 
   const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%type).str();
-  std::string rsaPrivkey;
-  std::string sslCertificate;
+
+  try {
+    std::vector<std::string> services = server.get()->getServices();
+    registerSeD(type, config, services);
+  } catch (VishnuException& e) {
+    std::cout << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
+  }
+
   bool useSsl = false;
-  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) &&  useSsl) {
-    config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
-    config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
-  }
-  pid_t pid = fork();
-  if (pid > 0) {
-    try {
-      std::vector<std::string> services = server.get()->getServices();
-      registerSeD(type, config, services);
-    } catch (VishnuException& e) {
-      std::cout << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
-    }
-    ZMQServerStart(server, IPC_URI);
-    unregisterSeD(type, config);
-  } else if (pid == 0) {
-    /* Intializing the TLS listener */
-    int sslPort = getPortFromUri(uri);
-    if (sslPort <= 0 ) {
-      std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uri;
-      abort();
-    }
-    TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
-    try {
-      tlsHandler.run();
-    } catch(VishnuException& ex) {
-      std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
-      abort();
-    } catch(...) {
-      //std::cerr << "[ERROR] *** Unknown error starting the TLS service ***%1%\n";
-      std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsHandler.getErrorMsg();
-      abort();
-    }
+  if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
+      ! useSsl) { /* TLS dont required */
+    ZMQServerStart(server, uri);
   } else {
-    std::cerr << "[ERROR] *** Problem initializing the service ***\n";
-    abort();
+    pid_t pid = fork();
+    if (pid > 0) {
+      ZMQServerStart(server, IPC_URI);
+    } else if (pid == 0) {
+
+      /* Intializing the TLS listener if necessary */
+      int sslPort = getPortFromUri(uri);
+      if (sslPort <= 0 ) {
+        std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uri;
+        abort();
+      }
+      std::string rsaPrivkey;
+      std::string sslCertificate;
+      config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
+      config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
+      TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
+      try {
+        tlsHandler.run();
+      } catch(VishnuException& ex) {
+        std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
+        abort();
+      } catch(...) {
+        std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsHandler.getErrorMsg();
+        abort();
+      }
+    } else {
+      std::cerr << "[ERROR] *** Problem initializing the service ***\n";
+      abort();
+    }
   }
+  unregisterSeD(type, config);
 }
 
