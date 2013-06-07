@@ -1,3 +1,11 @@
+/**
+ * \file sslhelpers.hpp
+ * \brief This file contains the definition of the base classes (client/server) for the TLS
+ * \author Rodrigue Chakode (rodrigue.chakode@sysfera.com)
+ * \date May 2013
+ */
+
+
 #include <boost/format.hpp>
 #include <boost/make_shared.hpp>
 #include <iostream>
@@ -6,7 +14,12 @@
 #include "SystemException.hpp"
 #include "utilVishnu.hpp"
 
-void TlsServer::run()
+
+/**
+ * @brief TlsServer::run
+ */
+void
+TlsServer::run()
 {
   /* Initialize the OpenSSL Library */
   SSL_library_init();
@@ -107,8 +120,11 @@ void TlsServer::run()
   }
 }
 
-
-void TlsServer::recvMsg()
+/**
+ * @brief TlsServer::recvMsg
+ */
+void
+TlsServer::recvMsg()
 {
   char msgBuf[MSG_CHUNK_SIZE];
   data.clear();
@@ -119,7 +135,11 @@ void TlsServer::recvMsg()
   }
 }
 
-
+/**
+ * @brief TlsClient::send
+ * @param reqData
+ * @return
+ */
 int
 TlsClient::send(const std::string& reqData)
 {
@@ -201,13 +221,18 @@ TlsClient::send(const std::string& reqData)
  * @brief recv
  * @return
  */
-std::string TlsClient::recv(void)
+std::string
+TlsClient::recv(void)
 {
   recvMsg();
   return data;
 }
 
-void TlsClient::recvMsg()
+/**
+ * @brief TlsClient::recvMsg
+ */
+void
+TlsClient::recvMsg()
 {
   char msgBuf[MSG_CHUNK_SIZE];
   data.clear();
