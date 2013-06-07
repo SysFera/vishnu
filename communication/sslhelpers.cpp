@@ -16,7 +16,7 @@ void TlsServer::run()
 
   // Creating a SSL context
   SSL_CTX* ctx = SSL_CTX_new(SSLv23_server_method());
-  if(!ctx) {
+  if (ctx == NULL) {
     ERR_print_errors_fp(stderr);
     errorMsg = (boost::format("Failed getting SSL_CTX.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
@@ -36,7 +36,7 @@ void TlsServer::run()
   SSL* ssl = NULL;
   clientBioHandler = BIO_new_ssl(ctx,0);
   BIO_get_ssl(clientBioHandler, &ssl);
-  if(ssl == NULL) {
+  if (ssl == NULL) {
     errorMsg = (boost::format("Can't locate SSL pointer.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
@@ -60,7 +60,7 @@ void TlsServer::run()
   }
 
   BIO_set_accept_bios(acceptBio, clientBioHandler);
-  if(BIO_do_accept(acceptBio) <= 0) {
+  if (BIO_do_accept(acceptBio) <= 0) {
     errorMsg = (boost::format("Failed starting the TLS listener (%1%).\n%2%"
                               )%addr%ERR_error_string(ERR_get_error(), NULL)).str();
     throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
@@ -72,7 +72,7 @@ void TlsServer::run()
 
   /* Now wait for incoming connections */
   while (1) {
-    if(BIO_do_accept(acceptBio) <= 0) { /* Wait for new connection */
+    if (BIO_do_accept(acceptBio) <= 0) { /* Wait for new connection */
       errorMsg = (boost::format("Failed connecting a client.\n%1%"
                                 )%ERR_error_string(ERR_get_error(), NULL)).str();
       throw SystemException(ERRCODE_COMMUNICATION, errorMsg);
@@ -132,7 +132,7 @@ TlsClient::send(const std::string& reqData)
 
   // Creating a SSL context
   SSL_CTX* sslctx = SSL_CTX_new(SSLv23_client_method());
-  if(!sslctx) {
+  if (sslctx == NULL) {
     errorMsg = (boost::format("Failed getting SSL_CTX.\n%1%")
                 %ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
@@ -151,7 +151,7 @@ TlsClient::send(const std::string& reqData)
   SSL* ssl;
   sslBio = BIO_new_ssl_connect(sslctx);
   BIO_get_ssl(sslBio, &ssl);
-  if(!ssl) {
+  if (ssl == NULL) {
     errorMsg = (boost::format("Can't locate SSL pointer.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
@@ -163,19 +163,19 @@ TlsClient::send(const std::string& reqData)
   /* Now connect to server */
   std::string addr = (boost::format("%1%:%2%")%serverAddr%serverPort).str();
   BIO_set_conn_hostname(sslBio, const_cast<char*>(addr.c_str()));
-  if(BIO_do_connect(sslBio) <= 0) {
+  if (BIO_do_connect(sslBio) <= 0) {
     errorMsg = (boost::format("Failed connecting to server (%1%).\n%2%"
                               )%addr%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
   }
 
-  if(SSL_get_verify_result(ssl) != X509_V_OK) {
+  if (SSL_get_verify_result(ssl) != X509_V_OK) {
     errorMsg = (boost::format("Failed verifying the server certificate.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
   }
 
-  if(BIO_do_handshake(sslBio) <= 0) {
+  if (BIO_do_handshake(sslBio) <= 0) {
     errorMsg = (boost::format("Failed establishing SSL connection.\n%1%"
                               )%ERR_error_string(ERR_get_error(), NULL)).str();
     return -1;
@@ -213,7 +213,7 @@ void TlsClient::recvMsg()
   data.clear();
   int len;
   while ((len = BIO_read(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0) {
-    if((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
+    if ((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
     data.append(std::string(msgBuf, len));
   }
 }
