@@ -1,3 +1,10 @@
+/**
+ * \file sslhelpers.hpp
+ * \brief This file contains the definition of the base classes (client/server) for the TLS
+ * \author Rodrigue Chakode (rodrigue.chakode@sysfera.com)
+ * \date May 2013
+ */
+
 #ifndef _SSLHELPER_HPP
 #define _SSLHELPER_HPP
 
@@ -17,6 +24,9 @@
 
 const int MSG_CHUNK_SIZE = 2048;
 
+/**
+ * @brief The TlsServer class
+ */
 class TlsServer {
 
 public:
@@ -32,9 +42,18 @@ public:
 
   ~TlsServer() {}
 
-  void run(void);
+  /**
+   * @brief run
+   */
+  void
+  run(void);
 
-  std::string getErrorMsg(void) const { return errorMsg; }
+  /**
+   * @brief getErrorMsg
+   * @return
+   */
+  std::string
+  getErrorMsg(void) const { return errorMsg; }
 
 private:
   /**
@@ -110,9 +129,11 @@ public:
    * @brief recv
    * @return
    */
-  std::string recv(void);
+  std::string
+  recv(void);
 
-  std::string getErrorMsg(void) const { return errorMsg; }
+  std::string
+  getErrorMsg(void) const { return errorMsg; }
 
 private:
   /**
@@ -148,7 +169,8 @@ private:
   /**
    * @brief recvMsg
    */
-  void recvMsg(void);
+  void
+  recvMsg(void);
 };
 
 #endif
