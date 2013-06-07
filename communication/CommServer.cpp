@@ -104,18 +104,16 @@ registerSeD(const std::string& type,
       abort();
     }
 
-    std::cout << boost::format("[INFO] Registrying to %1%:%2%\n")%host%port;
-
+    std::cerr << boost::format("[INFO] Registrying to %1%:%2%\n")%host%port;
     TlsClient tlsClient(host, port, cafile);
-    requestData.append("\n\n");  /* required for the internal protocol */
 
+    requestData.append("\n\n");      /* required for the internal protocol */
     if (tlsClient.send(requestData) == 0) {
       response = tlsClient.recv();
     } else {
-      std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
+      std::cerr << boost::format("[ERROR] Registration failed [%1%]\n")%tlsClient.getErrorMsg();
       return -1;
     }
-
   } else {
     zmq::context_t ctx(1);
     LazyPirateClient lpc(ctx, uriDispatcher, timeout);
@@ -126,8 +124,6 @@ registerSeD(const std::string& type,
     }
     response = lpc.recv();
   }
-
-  //For logging
 
   return 0;
 }
