@@ -123,7 +123,6 @@ registerSeD(const std::string& type,
   } else {
     zmq::context_t ctx(1);
     LazyPirateClient lpc(ctx, uriDispatcher, timeout);
-    std::cerr << boost::format("[INFO] sendind-> %1%\n")%requestData;
     if (!lpc.send(requestData)) {
       std::cerr << "[WARNING] failed to register in the naming service\n";
       return -1; // Dont throw exception
