@@ -80,13 +80,11 @@ registerSeD(const std::string& type, const ExecConfiguration& config,
   // prefix with 1 to say registering the sed
   std::string req = "1" + s.get()->toString();
 
-  std::cout << "sending " << req << std::endl;
   if (!lpc.send(req)) {
     std::cerr << "W: failed to register in the naming service\n";
     return -1; //instead of exiting
   }
   std::string response = lpc.recv();
-  std::cout << "response received: ->" << response << "<- ," << response.length() <<  "\n";
 
   return 0;
 }
