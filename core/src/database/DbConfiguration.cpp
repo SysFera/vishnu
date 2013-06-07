@@ -60,7 +60,7 @@ void DbConfiguration::check() throw (UserException)
       msslCaFile = std::string(getenv("HOME"))+"/.postgresql/root.crt";
     }
     // For logging
-    std::cerr << boost::format("[VISHNU][INFO] Expecting ciphered database connections...\n"
-                               "  > CA: %1%\n")%msslCaFile;
+    std::cerr << boost::format("[INFO] Expecting ciphered database connections...\n"
+                               "      > Certifcate trust store (CA): %1%\n")%msslCaFile;
   }
 }
