@@ -87,9 +87,6 @@ registerSeD(const std::string& type,
   bool useSsl = false;
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
 
-    std::string cafile;
-    config.getRequiredConfigValue<std::string>(vishnu::SSL_CA, cafile);
-
     std::string host;
     int port;
     host = getHostFromUri(uriDispatcher);
@@ -104,7 +101,16 @@ registerSeD(const std::string& type,
       abort();
     }
 
-    std::cerr << boost::format("[INFO] Registrying to %1%:%2%\n")%host%port;
+    /* Get TLS trust store if set */
+    std::string cafile;
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+
+    /* Logging */
+    std::cerr << boost::format("[INFO] Registration address to %1%:%2% with TLS\n"
+                               " > TLS trust store %3%\n") %host %port %cafile;
+
+
+    /* Now create a TLS client and go ahead */
     TlsClient tlsClient(host, port, cafile);
 
     requestData.append("\n\n");      /* required for the internal protocol */

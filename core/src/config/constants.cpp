@@ -46,7 +46,6 @@ namespace vishnu {
     /* [32] */ {SSL_CA, "sslCa", STRING_PARAMETER}
   };
 
-
   std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of
                                                             (CLOUD_ENDPOINT, "VISHNU_CLOUD_ENDPOINT")
                                                             (CLOUD_USER, "VISHNU_CLOUD_USER")
