@@ -310,6 +310,22 @@ suppression du chapite lié aux web services</para></revdescription>
 
 <para>Ajout documentation pour le support des gestionnaires de cloud</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>32</revnumber>
+        <date>14/05/2013</date>
+        <authorinitials>R. Chakode</authorinitials>
+        <revdescription>
+
+<para>Ajout documentation pour le chiffrement des connexions à la base de données MySQL </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>33</revnumber>
+        <date>16/05/2013</date>
+        <authorinitials>R. Chakode</authorinitials>
+        <revdescription>
+
+<para>Ajout documentation pour le chiffrement des connexions à la base de données PostGreSQL </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -387,9 +403,9 @@ de VISHNU. Cf. chapitre 4 du document [ARCH].</para>
       <title>Terminologies</title>
       <itemizedlist>
         <listitem>
-          <para>Sysfera-DS : Désigne la suite de logiciel open source développé par SysFera
+          <para>Sysfera-DS : Désigne la suite logiciel développée par SysFera
 pour simplifier et l'utilisation des ressources de calcul à grande échelle.
-La suite comprend VISHNU, SysFera WebBoard et DIET.
+La suite comprend VISHNU et le WebBoard.
 </para>
         </listitem>
         <listitem>
@@ -879,7 +895,8 @@ $INSTALL_PREFIX/etc : contient des exemples de fichiers de configuration.
 le répertoire core/database du package d'installation VISHNU. Seules des bases
 de données PostgreSQL ou MySQL sont actuellement supportées. Une seule base de
 données est nécessaire et suffisante pour l'ensemble des composants d'une
-infrastructure VISHNU (UMS, TMS, IMS et IMS).</para>
+infrastructure VISHNU (UMS, TMS, IMS et IMS).
+</para>
     <section>
       <title>Utiliser une base de données MySQL</title>
       <para>Nous supposons ici que vous avez déjà une installation de MySQL opérationnelle.
@@ -924,7 +941,8 @@ les données de la base.
       <title>Utiliser une base de données PostGreSQL</title>
       <para>Nous supposons également que vous avez déjà une installation de PostGreSQL
 opérationnelle. Si ce n'est pas le cas, référez-vous à la documentation officielle pour
-procéder à l'installation.</para>
+procéder à l'installation.
+</para>
       <para>Vous devez également disposer des droits d'administration sur cette installation
 (accès en tant qu'utilisateur système 'postgres').
 </para>
@@ -959,23 +977,69 @@ suivantes à partir de votre serveur PostGreSQL :
 </para>
     </section>
     <section>
-      <title>Utilisation de TMS en mode natif: TMS Posix Shell</title>
+      <title>Bases de données distantes et Parefeu</title>
       <para>
-Après installation, il est possible d'utiliser les fonctionnalités de TMS sur une machine
-ne possédant pas de batch scheduler sous-jacent. Pour ce faire, il faut mettre le batch
-scheduler à la valeur &quot;POSIX&quot; lors de la compilation. Le flag dans le fichier de configuration
-du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de
-VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé,
-et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch
-posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler
-auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment
-3 processus 'tmssed' dans le cas d'un batch scheduler classique, un premier qui est le
-serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés
-par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données
-à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les
-annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
-tournera, pourra controller les jobs, et fournir des informations au moniteur au
-travers d'une socket unix.
+VISHNU repose sur une base de données. Les serveurs de VISHNU ont besoin de
+s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les
+ports accessibles entre différentes machines (cas fréquent dans un réseau
+local), il n'y a généralement pas de problème pour se connecter à une base
+de données distante en spécifiant correctement le databaseHost dans les
+fichiers de configuration des éléments de VISHNU.
+Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas
+de réseaux complexes avec du NAT par exemple, il est souvent plus facile de
+passer par des tunnels ssh pour encapsuler les connexions vers la base de
+données.
+</para>
+      <para>
+Supposons par exemple que la base de données soit sur une machine A et que le SeD VISHNU se trouve sur une machine B. Supposons aussi que le port d'écoute de la base de données est 3306.
+Ainsi, selon la machine à partir de laquelle le tunnel est crée, nous pouvons avoir deux cas de figure.
+</para>
+      <itemizedlist>
+        <listitem>
+          <para>
+Si le tunnel est ouvert depuis la machine A vers la machine B, on parlera de tunnel &quot;reverse&quot;. A partir de la machine A, il suffit s'exécuter une commande de la forme :
+&quot;reverse&quot;) :
+</para>
+          <para>
+ssh -t -t -R 3306:localhost:3306 user@B
+</para>
+        </listitem>
+        <listitem>
+          <para>
+Si le tunnel est ouvert depuis la machine B vers la machine A, on parlera de tunnel &quot;forward&quot;. A partir de la machine B, il suffit s'exécuter une commande de la forme :
+</para>
+          <para>
+ssh -t -t -L 3306:localhost:3306 user@A
+</para>
+        </listitem>
+      </itemizedlist>
+      <para>Pour tester que le tunnel fonctionne, placez-vous sur la machine B et connectez-vous à MySQL :
+</para>
+      <programlisting>
+mysql -u vishnu_user -h 127.0.0.1 -p
+</programlisting>
+      <para>
+Après avoir tapé le mot de passe, vous devriez vous retrouver connecté
+sur la base de données sur la machine A.
+
+Il ne vous reste plus qu'à configurer le fichier de configuration de
+l'élément VISHNU avec les éléments suivants (à adapter en fonction de votre
+configuration) :
+</para>
+      <programlisting>
+databaseType=mysql
+databaseHost=127.0.0.1
+databaseName=vishnu
+databaseUserName=vishnu_user
+databaseUserPassword=vishnu_user
+databaseConnectionsNb=5
+</programlisting>
+      <para>
+Attention : si vous utilisez localhost comme nom de machine pour vous connecter
+à la base de données, vous risquez de rencontrer des problèmes si mysql est installé
+sur B. En effet, mysql tente de se connecter en utilisant une socket linux
+(généralement /var/run/mysqld/mysqld.sock), au lieu de tenter de se connecter
+à une machine distante. Utilisez bien 127.0.0.1 pour databaseHost.
 </para>
     </section>
     <section>
@@ -1015,77 +1079,6 @@ LDAP : Authentifie uniquement en utilisant LDAP
 </para>
           </listitem>
         </itemizedlist>
-</para>
-    </section>
-    <section>
-      <title>Utilisation d'une base de données distante</title>
-      <para>
-VISHNU repose sur une base de données. Les serveurs de VISHNU ont besoin de
-s'y connecter pour fonctionner. Lorsqu'il n'y a aucune restriction sur les
-ports accessibles entre différentes machines (cas fréquent dans un réseau
-local), il n'y a généralement pas de problème pour se connecter à une base
-de données distante en spécifiant correctement le databaseHost dans les
-fichiers de configuration des éléments de VISHNU.
-Dans le cas où il y a des restrictions sur les ports ouverts, ou dans le cas
-de réseaux complexes avec du NAT par exemple, il est souvent plus facile de
-passer par des tunnels ssh pour encapsuler les connexions vers la base de
-données.
-
-Nous avons deux cas différents pour ouvrir le tunnel. Supposons que la
-base de donnéesx soit sur une machine A, et l'élément Vishnu sur une machine B.
-Nous pouvons ouvrir le tunnel depuis A ou depuis B (parfois seule une de
-ces deux configuration est possible dans le cas où le ssh ne passe que dans
-un sens).
-Nous supposons que le port d'écoute de la base de données est 3306.
-</para>
-      <itemizedlist>
-        <listitem>
-          <para>
-Ouverture depuis la machine A vers la machine B, il faut ouvrir un tunnel
-&quot;reverse&quot; :
-</para>
-          <para>
-ssh -t -t -R 3306:localhost:3306 user@B
-</para>
-        </listitem>
-        <listitem>
-          <para>
-Ouverture depuis la machine B vers la machine A, il faut ouvrir un tunnel
-&quot;forward&quot; :
-</para>
-          <para>
-ssh -t -t -L 3306:localhost:3306 user@A
-</para>
-        </listitem>
-      </itemizedlist>
-      <para>Il convient maintenant de tester la connexion à la base de données.
-Sur la machine B, essayez de vous connecter avec la commande suivante :
-</para>
-      <programlisting>
-mysql -u vishnu_user -h 127.0.0.1 -p
-</programlisting>
-      <para>
-Après avoir tapé le mot de passe, vous devriez vous retrouver connecté
-sur la base de données sur la machine A.
-
-Il ne vous reste plus qu'à configurer le fichier de configuration de
-l'élément VISHNU avec les éléments suivants (à adapter en fonction de votre
-configuration) :
-</para>
-      <programlisting>
-databaseType=mysql
-databaseHost=127.0.0.1
-databaseName=vishnu
-databaseUserName=vishnu_user
-databaseUserPassword=vishnu_user
-databaseConnectionsNb=5
-</programlisting>
-      <para>
-Attention : si vous utilisez localhost comme nom de machine pour vous connecter
-à la base de données, vous risquez de rencontrer des problèmes si mysql est installé
-sur B. En effet, mysql tente de se connecter en utilisant une socket linux
-(généralement /var/run/mysqld/mysqld.sock), au lieu de tenter de se connecter
-à une machine distante. Utilisez bien 127.0.0.1 pour databaseHost.
 </para>
     </section>
   </chapter>
@@ -1392,7 +1385,6 @@ serverurl=http://127.0.0.1:9001
 ; ip_address:port specifier, *:port for all if
 [inet_http_server]
 port=127.0.0.1:9001
-
 </programlisting>
       </section>
       <section>
@@ -1751,6 +1743,317 @@ Sur le client, un affichage doit signaler que le service a réussi. Dans le term
       <title>Les scripts de démarage automatique</title>
       <para>Des scripts de démarage sont préparés pour pouvoir exécuter automatiquement les serveurs VISHNU.
 Les scripts sont installés lors de l'installation des serveurs dans install/etc/ (ou dans /etc si c'est installé dans /usr).</para>
+    </section>
+  </chapter>
+  <chapter>
+    <title>Options de configuration avancées</title>
+    <section>
+      <title>TMS en mode natif</title>
+      <para>
+Après installation, il est possible d'utiliser les fonctionnalités de TMS sur une machine
+ne possédant pas de batch scheduler. Ce mode de fonctionnement natif est appelé TMS Posix Shell. Le type de batch scheduler associé est 'POSIX'.
+</para>
+      <para>
+Lors de la compilation, ce module est activé automatiquement et indépendamment du batch scheduler sélectionné. Il est également possible de ne compiler que ce module en choississant 'POSIX' comme bacth scheduler lors de la compilation. Le flag dans le fichier de configuration du serveur TMS sera également POSIX. Il faut noter que lors de la compilation de VISHNU pour un batch scheduler classique, ce pseudo batch est automatiquement compilé, et l'utilisateur peut lors du submit explicitement demander à soumettre sur le batch posix en utilisant l'option -p. Sinon, c'est systématiquement le vrai batch scheduler auquel vishnu soumet. Cela implique que d'un point de vue système, vishnu a constamment 3 processus 'tmssed' dans le cas d'un batch scheduler classique, un premier qui est le serveur réalisant les services, et les 2 autres correspondent à des moniteurs utilisés par vishnu (pour interroger les batchs schedulers sous-jacents) pour avoir les données à jour associées aux jobs. De plus, afin de gérer les jobs utilisateurs et pouvoir les annuler, pour chaque utilisateur ayant un job, cet utilisateur aura un démon qui
+tournera, pourra controller les jobs, et fournir des informations au moniteur au
+travers d'une socket unix.
+</para>
+    </section>
+    <section>
+      <title>Chiffrement des connexions à la base de données</title>
+      <para>
+Par défaut, les communications avec la base de données VISHNU est non chiffrée. Ceci peut constituer un facteur de vulnérabilité majeur. Afin d'améliorer la sécurité des communications entre VISHNU et la données de données, il est possible, depuis les versions de VISHNU ultérieures à 3.0.0, de configurer les SeDs pour communiquer avec le serveur de base de données via des connexions SSL. Ceci permet de crypter les communications avec la base de données, mais nécessite que le système de base de données sous-jacent supporte ce type de connexion.
+</para>
+      <para>
+Aussi bien MySQl que PostGreSQL disposent d'un support natif pour l'utilisation de connexions ssl. Le chiffrement entre un client et le serveur de base de données se base sur des certificats OpenSSL <ulink
+            url="http://www.openssl.org/">http://www.openssl.org/</ulink>. Cette section présente comment activer les connexions SSL entre VISHNU et les bases de données MySQL et PostGreSQL. 
+</para>
+      <para>
+Avant d'aller plus loin, vous pouvez consulter la documentation sur OpenSSL pour plus d'information sur le chiffrement et les certificats. <ulink
+            url="http://www.openssl.org/docs/">http://www.openssl.org/docs/</ulink>. Le script <emphasis>create-ssl-cert.sh</emphasis> fourni avec VISHNU permet de créer rapidement des certificats autosignés. Avant d'exécuter le script, éditez le pour adapter le mot de passe du certificat ainsi que les paramètres liés au nom du serveur pour lequel le certificat sera généré. 
+</para>
+      <section>
+        <title>MySQL et SSL</title>
+        <para>
+Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de MySQL disponible à cette adresse : <ulink
+              url="http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html">http://dev.mysql.com/doc/refman/5.0/en/ssl-connections.html</ulink>. Les étapes de la procédure comportent :
+<itemizedlist>
+            <listitem>
+              <para>
+La vérification de la disponibilité du support d'OpenSSL dans MySQL
+</para>
+            </listitem>
+            <listitem>
+              <para>
+La génération de certificats autosignés (optionnel)
+</para>
+            </listitem>
+            <listitem>
+              <para>
+L'activation du support SSL au niveau du serveur MySQL
+</para>
+            </listitem>
+            <listitem>
+              <para>
+Le test de connexion en SSL
+</para>
+            </listitem>
+          </itemizedlist>
+</para>
+        <section>
+          <title>Vérifier que MySQL a été compilé avec le support SSL</title>
+          <para>
+Les binaires et les librairies client et serveur MySQL doivent avoir été compilés avec le support d'OpenSSL. Si ce n'est pas votre cas, vous devez réinstaller MySQL. Les étapes suivantes indiquent comment vérifier la disponibilité du support d'OpenSSL :
+</para>
+          <itemizedlist>
+            <listitem>
+              <para>
+Coté serveur, exécuter la commande suivante : <literal>$ mysqld --ssl --help</literal>
+</para>
+              <para>
+Si une erreur se produit, alors le binaire n'a pas été compilé avec le support SSL. 
+</para>
+            </listitem>
+            <listitem>
+              <para>
+Coté client, exécuter la commande suivante : <literal>$ mysql --ssl --help</literal>
+</para>
+              <para>
+Si une erreur se produit, alors le binaire n'a pas été compilé avec le support SSL. 
+</para>
+            </listitem>
+          </itemizedlist>
+        </section>
+        <section>
+          <title>Activer le support SSL dans le serveur MySQL</title>
+          <para>
+Pour activer le support SSL sur le serveur MySQL, vous devez indiquer un certificat, la clé privé du serveur et les certificats de l'autorité de confiance (optionnel, mais requis si le certificat est autosigné). Le certificat peut être autosigné ou signé par une autotité de certification.
+</para>
+          <para>
+Une fois que vous disposez des différentes entités du certificat, la configuration de MySQL est assez simple :
+</para>
+          <itemizedlist>
+            <listitem>
+              <para>
+Editez le fichier de configuration de MySQL et indiquer les entités du certificat dans la section <emphasis>[mysqld]</emphasis>.
+</para>
+            </listitem>
+          </itemizedlist>
+          <programlisting>
+<![CDATA[
+[mysqld]
+ssl-ca=/opt/etc/sysfera/mysql-ssl/ca.pem
+ssl-cert=/opt/etc/sysfera/mysql-ssl/server-cert.pem
+ssl-key=/opt/etc/sysfera/mysql-ssl/server-key.pem
+]]>
+</programlisting>
+          <para>
+Adapter les chemins en fonction de l'emplacement où vous avez stocké les différentes entités. Le paramètre <emphasis>ssl-ca</emphasis> doit pointer vers l'emplacement où vous avez stocké le fichier des certificats de l'autorité de confiance, <emphasis>ssl-cert</emphasis> doit pointer vers l'emplacement où vous avez stocké le certificat du serveur, tandis que le paramètre <emphasis>ssl-key</emphasis> doit pointer vers l'emplacement où vous avez stocké la clé privé du serveur.
+</para>
+          <itemizedlist>
+            <listitem>
+              <para>
+Redemarrer MySQL et vérifier que le support SSL a correctement été activé :
+</para>
+              <itemizedlist>
+                <listitem>
+                  <para>
+Lancez un terminal et connectez-vous à MySQL en tant que super-utilisateur (root) : 
+<literal>$ mysql -u root -p</literal>
+</para>
+                </listitem>
+                <listitem>
+                  <para>
+Vérifier que le module SSL a été correctement chargé :
+<literal>mysql> show variables with '%ssl%'</literal>
+</para>
+                  <para>
+Si le support SSL a été correctement activé, vous devez avoir une sortie comme celle affichée ci-dessous :
+</para>
+                </listitem>
+              </itemizedlist>
+            </listitem>
+          </itemizedlist>
+          <programlisting>
+<![CDATA[
++---------------+--------------------------------------------+
+| Variable_name | Value                                      |
++---------------+--------------------------------------------+
+| have_ssl      | YES                                        |
+| ssl_ca        | /opt/etc/sysfera/mysql-ssl/ca.pem          |
+| ssl_cert      | /opt/etc/sysfera/mysql-ssl/server-cert.pem |
+| ssl_key       | /opt/etc/sysfera/mysql-ssl/server-key.pem  |
++---------------+--------------------------------------------+
+]]>
+</programlisting>
+          <para>
+Les valeurs des paramètres ssl_ca, ssl_cert et ssl_key doivent être conformes à votre configuration. 
+</para>
+        </section>
+        <section>
+          <title>Tester la connexion en SSL à MySQL</title>
+          <para>
+La connexion en SSL à une base de données MySQL nécessite que l'utilisateur MySQL ait dispose des privilèges spécifiques (<literal>REQUIRE SSL</literal>). Ce privilège est activé lors de l'attribution des rôles à l'utilisateur par le biais de la commande <literal>GRANT</literal>. 
+</para>
+          <para>
+Exemple : 
+</para>
+          <programlisting>
+<![CDATA[
+mysql> GRANT SELECT ON vishnu.* 
+       TO 'secure_user'@'127.0.0.1' 
+       IDENTIFIED BY 'password' REQUIRE SSL;
+]]>
+</programlisting>
+          <para>
+Cette commande indique que l'utilisateur 'secure_user' ne pourra se connecter à la base de donnée 'vishnu' qu'en mode SSL. Si l'option <literal>REQUIRE SSL</literal> est omise, seul le mode de connexion par défaut sera activé. Même si le support SSL a été activé au niveau du serveur. 
+</para>
+          <para>
+Pour se connecter à la base de données, il suffit d'exécuter la commande suivante. L'option <emphasis>--ssl-ca</emphasis> n'est requise que si le certificat a été autosigné ou a été généré par une autorité de certification non reconnue. 
+</para>
+          <programlisting>
+<![CDATA[
+$ mysql -u secure_user -p \
+  --ssl-ca=/opt/etc/sysfera/mysql-ssl/ca.pem
+]]>
+</programlisting>
+        </section>
+      </section>
+      <section>
+        <title>PostGreSQL et SSL</title>
+        <para>
+Les étapes de configuration décrit dans cette section sont tirées de la documentation officielle de PostGreSQL disponible ici <ulink
+              url="http://docs.postgresqlfr.org/8.3/libpq-ssl.html">http://docs.postgresqlfr.org/8.3/libpq-ssl.html</ulink> (pour le client), et ici <ulink
+              url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink> (pour le serveur). Les étapes de la procédure comportent :
+<itemizedlist>
+            <listitem>
+              <para>
+La vérification de la disponibilité du support d'OpenSSL dans PostGreSQL
+</para>
+            </listitem>
+            <listitem>
+              <para>
+La génération de certificats autosignés (optionnel)
+</para>
+            </listitem>
+            <listitem>
+              <para>
+L'activation du support SSL au niveau du serveur PostGreSQL
+</para>
+            </listitem>
+            <listitem>
+              <para>
+Le test de connexion en SSL
+</para>
+            </listitem>
+          </itemizedlist>
+</para>
+        <section>
+          <title>Vérifier que PostGreSQL a été compilé avec le support SSL</title>
+          <para>
+Coté serveur, vous devez vérifier que le binaire <emphasis>postmaster</emphasis> est lié à la bibliothèque d'OpenSSL (<emphasis>libssl</emphasis>). Pour le faire, vous pouvez utiliser la commande suivante à partir d'une console.
+</para>
+          <programlisting>
+<![CDATA[
+$ ldd /path/to/postmaster  | grep ssl
+]]>
+</programlisting>
+          <para>
+De même, coté client, assurer vous que la bibliothèque <emphasis>libpq</emphasis> est liée à <emphasis>libssl</emphasis>. Pour le faire, vous pouvez utiliser la commande suivante à partir d'une console.
+</para>
+          <programlisting>
+<![CDATA[
+$ ldd /path/to/libpq.so  | grep ssl
+]]>
+</programlisting>
+          <para>
+Si toutes les vérifications sont correctes, vous pouvez passer à la configuration. Sinon vous devez reinstaller PostGreSQL en activant le support d'OpenSSL lors de la compilation (<literal>./configure --with-openssl</literal>).
+</para>
+        </section>
+        <section>
+          <title>Activer le support SSL dans le serveur PostGreSQL</title>
+          <para>
+L'activation du support SSL dans PostGreSQL est assez simple :
+</para>
+          <para>
+Premièrement, éditez le fichier de configuration (<literal>PostgreSQL.conf</literal>)et positionnez le paramètre <literal>ssl</literal> à  <literal>on</literal>
+</para>
+          <programlisting>
+<![CDATA[
+ssl=on
+]]>
+</programlisting>
+          <para>
+Ensuite :
+<itemizedlist>
+              <listitem>
+                <para>
+Le certificat du serveur doit être nommé <literal>server.crt</literal> et placé dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. A noter que le fichier doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+</para>
+              </listitem>
+              <listitem>
+                <para>
+La clé privé du certificat doit être nommée <literal>server.key</literal> et placée dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit également appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>600</literal>.
+</para>
+              </listitem>
+              <listitem>
+                <para>
+Le fichier contenant les certificats de l'autorité doit est être nommé  <literal>root.crt</literal> et placé dans le repertoire de données (<emphasis>data</emphasis>) de PostGreSQL. Il doit appartenir à l'utilisateur <emphasis>postgres</emphasis> et avoir les droits d'accès <literal>644</literal>.
+</para>
+              </listitem>
+            </itemizedlist>
+Si vous souhaitez avoir plus de détails ou mettre en oeuvre des configurations avancées comme la prise en charge des certificats revoqués, vous pouvez consulter la documentation officielle disponible à cette adresse <ulink
+                url="http://docs.postgresqlfr.org/8.3/ssl-tcp.html">http://docs.postgresqlfr.org/8.3/ssl-tcp.html</ulink>.
+</para>
+          <para>
+Une fois les configurations terminées, redémarrez le serveur PostGreSQL.
+</para>
+        </section>
+        <section>
+          <title>Tester la connexion en SSL à PostGreSQL</title>
+          <para>
+Contrairement à MySQL, vous n'avez pas besoin d'avoir des droits spécifiques pour se connecter en SSL. Il vous suffit :
+<itemizedlist>
+              <listitem>
+                <para>
+Premièrement, de copier le fichier contenant les certificats de l'autorité dans l'emplacement <literal>~/.postgresql/root.crt</literal> depuis le dossier personnel de l'utilisateur. En notant que ce fichier doit avoir les droits d'accès <literal>644</literal>.
+</para>
+              </listitem>
+              <listitem>
+                <para>
+Ensuite, d'ajouter l'option <literal>&quot;sslmode=verify-ca&quot;</literal> lorsque vous vous connectez à PostGreSQL. Voir l'exemple ci-dessous.
+</para>
+              </listitem>
+            </itemizedlist>
+</para>
+          <programlisting>
+<![CDATA[
+$ psql -U postgres "sslmode=verify-ca"
+]]>
+</programlisting>
+          <para>
+Si tout se passe bien, alors vous pouvez terminer la configuration en activant les options nécessaires dans VISHNU.
+</para>
+        </section>
+      </section>
+      <section>
+        <title>Configurer VISHNU pour se connecter en SSL à une base de données</title>
+        <para>
+Une fois MySQL ou PostGreSQL a été configuré pour fonctionner en SSL, il suffit d'ajouter les lignes suivantes dans le fichier de configuration de VISHNU pour indiquer les paramètres de connexion en SSL.
+</para>
+        <programlisting>
+<![CDATA[
+databaseUseSsl=1
+databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
+]]>
+</programlisting>
+        <para>
+Si le paramètre <emphasis>databaseUseSsl</emphasis> a une valeur non-nulle, on indique à VISHNU de se connecter à la base de données en mode chiffré. Optionnel, le paramètre<emphasis>databaseSslCa</emphasis> indique l'emplacement des certificats de l'autorité de confiance. Il n'est utile que dans le cas des certificats autosignés ou signés par une autorité de certification non reconnue.  Pour PostGreSQL, l'option <emphasis>databaseSslCa</emphasis> peut ne pas être indiquée. Dans ce cas, le chemin par défaut (<literal>~/.postgresql/root.crt</literal>) sera considéré. 
+</para>
+        <para>
+Une fois la configuration terminée, redémarrez les services. Les communications avec la base de données se feront dorénavant en mode chiffré. 
+</para>
+      </section>
     </section>
   </chapter>
   <chapter>
