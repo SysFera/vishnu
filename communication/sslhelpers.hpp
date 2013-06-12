@@ -14,9 +14,9 @@
 #include <openssl/err.h>
 #include <openssl/bio.h>
 #include <openssl/ssl.h>
-#include <stdio.h>
+#include <cstdio>
 #include <string>
-#include <string.h>
+#include <cstring>
 #include <boost/shared_ptr.hpp>
 
 #include "zhelpers.hpp"

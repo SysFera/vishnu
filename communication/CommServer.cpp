@@ -92,6 +92,8 @@ registerSeD(const std::string& type,
     host = getHostFromUri(uriDispatcher);
     if (host.empty()) {
       std::cerr << boost::format("[ERROR] *** Incorrect host address from the service uri (%1%) ***\n")%uriDispatcher;
+      /* %RELAX<MISRA_18_0_3> Because this error occurs in the forked process,
+       * abort allows to exit the whole program, intstead of having defunct process. */
       abort();
     }
 
