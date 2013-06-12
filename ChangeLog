@@ -1,4 +1,10 @@
 +--------------+
+| VISHNU 3.1.0 |
++--------------+
+* Add SSL communication possibility with DB and zmq
+* New mechanism to externalize SQL request
+
++--------------+
 | VISHNU 3.0.0 |
 +--------------+
 * Fixed a bug with cancel (tms), *cp, *mv (fms)
