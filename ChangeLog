@@ -1,7 +1,7 @@
 +--------------+
 | VISHNU 3.1.0 |
 +--------------+
-* Add SSL communication possibility with DB and zmq
+* Added support for SSL communication with DB and zmq
 * New mechanism to externalize SQL request
 
 +--------------+
