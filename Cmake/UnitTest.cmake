@@ -29,15 +29,17 @@ function( unit_test NAME )
     TestRunner.cpp )
   include_directories( ${Boost_INCLUDE_DIRS}
     )
-  
   # link libraries
   target_link_libraries( ${NAME}
     ${Boost_LIBRARIES}
-    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+    ${OPENSSL_LIB}
+    )
 
 
   foreach(LIBT ${ARGN})
-    target_link_libraries( ${NAME} ${LIBT} )
+    target_link_libraries( ${NAME} ${LIBT} 
+      )
   endforeach()
   
   # test executable installation has not been tested yet -sic-

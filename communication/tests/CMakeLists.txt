@@ -32,10 +32,11 @@ target_link_libraries (test_zmq_helper
   fake_zmq
   ${Boost_LIBRARIES}
   vishnu-core
+  ${OPENSSL_LIB}
   )
 
 # register tests
-unit_test(LazyPirateUnitTests test_zmq_helper)
-unit_test(AnnuaryUnitTests test_zmq_helper)
-unit_test(ZMQServerUnitTests test_zmq_helper)
-unit_test(DIET_clientUnitTests test_zmq_helper)
+unit_test(LazyPirateUnitTests test_zmq_helper zmq_helper)
+unit_test(AnnuaryUnitTests test_zmq_helper zmq_helper)
+unit_test(ZMQServerUnitTests test_zmq_helper zmq_helper)
+unit_test(DIET_clientUnitTests test_zmq_helper zmq_helper)
