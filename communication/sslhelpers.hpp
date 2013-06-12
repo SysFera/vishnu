@@ -99,7 +99,8 @@ private:
   /**
    * @brief recvMsg
    */
-  void recvMsg(void);
+  void
+  recvMsg(void);
 };
 
 class TlsClient {
