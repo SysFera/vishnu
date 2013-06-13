@@ -207,7 +207,7 @@ Add the use of the .netrc file of the connection and the reconnection.
       </revision>
       <revision>
         <revnumber>21</revnumber>
-        <date>17/12/2013</date>
+        <date>17/12/2012</date>
         <authorinitials>SysFera</authorinitials>
         <revdescription>
 
@@ -220,6 +220,14 @@ Add the use of the .netrc file of the connection and the reconnection.
         <revdescription>
 
 <para>Added section related to advanced submissions on cloud resources </para></revdescription>
+      </revision>
+      <revision>
+        <revnumber>23</revnumber>
+        <date>13/06/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+
+<para>Added options for SSL support</para></revdescription>
       </revision>
     </revhistory>
     <copyright>
@@ -412,8 +420,25 @@ disp_uriAddr=tcp://127.0.0.1:5560
 ums_uriAddr=tcp://127.0.0.1:5555
 timeout=10
 </programlisting>
-        <para>If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher is found, an error is returned.
-retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retries for a client command)</para>
+        <para>
+If there is a server in the configuration file, it is always used, for instance if there is a TMS, it is used althought it does not corresponds the one with the machineid parameter given. If none is found, the dispatcher is used, if no corresponding server and no dispatcher is found, an error is returned.
+retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retries for a client command).
+</para>
+        <para>
+From the version 3.1.0, VISHNU support secured communications through SSL channels. To enable that, you need to compile the software with OpenSSL support, then enable the following configuration keys :
+</para>
+        <itemizedlist>
+          <listitem>
+            <para>
+<literal>useSsl=1</literal> : this key tells whether to enable SSL communications. If it's set with a non-zero value, the SSL mode will be enabled. Otherwise the SSL mode is disabled (default) 
+</para>
+          </listitem>
+          <listitem>
+            <para>
+<literal>sslCa=/path/to/cafile</literal> : optionnal, this points to the certificates of the authory of certification. This could be required if you are using a self-signed certificate.
+</para>
+          </listitem>
+        </itemizedlist>
       </section>
     </section>
     <section>
