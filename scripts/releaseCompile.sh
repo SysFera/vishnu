@@ -59,7 +59,8 @@ run_cmd cmake -DCOMPILE_UMS=ON \
 -DBUILD_TESTING=ON \
 -DENABLE_JAVA=ON \
 -DENABLE_PYTHON=ON \
--DENABLE_SWIG=OFF .. 
+-DENABLE_SWIG=OFF .. \
+-DOPENSSL_INCLUDE_DIR=/usr/include
 run_cmd make -j 4
 
 # cleanup
