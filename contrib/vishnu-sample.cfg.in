@@ -64,6 +64,28 @@ databaseUserPassword=vishnu_user
 #
 #databaseConnectionsNb=10
 
+# useSsl (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets whether to enable TLS connections
+# Set to a non-zero value to enable SSL connection.
+#
+#useSsl=0
+
+# serverSslCertificate (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets the path to the
+# server certificate
+# This parameter is required if the parameter useSsl is set to a non-zero value
+#
+#serverSslCertificate=/opt/etc/sysfera/cert/server-cert.pem
+
+# serverPrivateKey (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets the path to the
+# server private key
+# This parameter is required if the parameter useSsl is set to a non-zero value
+#
+#serverPrivateKey=/opt/etc/sysfera/cert/server-key.pem
+
+# sslCa (OS<Client>): Sets the path to the authority certificates
+# This parameter is optional and is only used by clients to valide the server certificate
+#
+#sslCa=/opt/etc/sysfera/cert/ca.pem
+
 # databaseUseSsl (OS<FMS,IMS,TMS,UMS>): Sets whether to use SSL-ciphered connection
 # Set to non-zero value to enable SSL connection.
 #
