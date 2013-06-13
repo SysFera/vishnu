@@ -17,7 +17,8 @@ mkdir ${OUTPUT_DIR} && cd ${OUTPUT_DIR}
 echo "Generate the server certificate..........................."
 openssl req -x509 -newkey rsa:1024 \
        -keyout server-key-enc.pem -out server-cert.pem \
-       -subj ${SERVER_DN} -passout pass:${CERT_PASSWD}
+       -subj ${SERVER_DN} -passout pass:${CERT_PASSWD} \
+       -days 3650
 
 echo "Generate the server key..................................."
 openssl rsa -in server-key-enc.pem -out server-key.pem \
