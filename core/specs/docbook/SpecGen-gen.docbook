@@ -275,8 +275,11 @@
                or triggering a programing language exception if the used interface is programmatic.</para>
           </listitem>
           <listitem>
-            <para><emphasis role="bold">Sysfera-DS</emphasis>: open-source middleware software used by Vishnu (former name
-              &quot;DIET&quot;)</para>
+            <para><emphasis role="bold">Sysfera-DS</emphasis>: is the software
+              suite developed by SysFera to simplify the usage of large scale
+              distributed computational resources. This software suite is
+              composed of VISHNU and the WebBoard.
+            </para>
           </listitem>
           <listitem>
             <para><emphasis role="bold">UML</emphasis>: Unified Modeling Language (current version: v2.3)</para>
