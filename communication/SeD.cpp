@@ -121,10 +121,19 @@ private:
   std::string queue_;
 };
 
-
+/**
+ * @brief ZMQServerStart
+ * @param server
+ * @param uri
+ * @param useSsl
+ * @param cafile
+ * @return
+ */
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
-               const std::string& uri) {
+               const std::string& uri,
+               bool useSsl,
+               const std::string& cafile) {
   const std::string WORKER_INPROC_QUEUE = "inproc://vishnu-sedworkers";
   const int NB_THREADS = 5;
 
@@ -132,5 +141,7 @@ ZMQServerStart(boost::shared_ptr<SeD> server,
       boost::shared_ptr<SeD> >(uri,
                                WORKER_INPROC_QUEUE,
                                NB_THREADS,
-                               server);
+                               server,
+                               useSsl,
+                               cafile);
 }

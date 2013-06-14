@@ -25,11 +25,23 @@ public:
    **/
   explicit SeDWorker(boost::shared_ptr<zmq::context_t> ctx,
                      const std::string& uriInproc, int id,
-                     boost::shared_ptr<SeD> server)
-    : Worker(ctx, uriInproc, id), server_(server) {
+                     boost::shared_ptr<SeD> server,
+                     bool usessl,
+                     const std::string& certCaFile)
+    : Worker(ctx, uriInproc, id), server_(server), useSsl(usessl), cafile(certCaFile) {
   }
 
 private:
+  /**
+   * \brief  path to the CA file
+  */
+  bool useSsl;
+
+  /**
+   * \brief  path to the CA file
+  */
+  std::string cafile;
+
   /**
    * \brief Call the function
    * \param data the serialized data containing the funcion and its parameters

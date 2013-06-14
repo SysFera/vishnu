@@ -46,19 +46,35 @@ protected:
  */
 class ServiceWorker : public AnnuaryWorker {
 public:
+
   /**
-   * \brief Constructor
-   * \param ctx the zmq context
-   * \param uriInproc the uri for the inproc commands
-   * \param id the id of the worker
-   * \param ann the annuary it is linked
+   * @brief Constructor
+   * @param ctx the zmq context
+   * @param uriInproc the uri for the inproc commands
+   * @param id the id of the worker
+   * @param ann the annuary it is linked
+   * @param usessl Sets whether to use SSL
+   * @param certCaFile Sets the SSL CA file
    */
   explicit ServiceWorker(boost::shared_ptr<zmq::context_t> ctx,
-                         const std::string& uriInproc, int id,
-                         boost::shared_ptr<Annuary> ann)
-    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
+                         const std::string& uriInproc,
+                         int id,
+                         boost::shared_ptr<Annuary> ann,
+                         bool usessl,
+                         const std::string& certCaFile)
+    : AnnuaryWorker(ctx, uriInproc, id, ann), useSsl(usessl), cafile(certCaFile) {}
 
 private:
+  /**
+   * \brief  path to the CA file
+  */
+  bool useSsl;
+
+  /**
+   * \brief  path to the CA file
+  */
+  std::string cafile;
+
   /**
    * \brief Call the function
    * \param data the serialized data containing the funcion and its parameters
@@ -75,7 +91,13 @@ private:
     std::string uriServer = elect(serv);
 
     if (!uriServer.empty()) {
-      diet_call_gen(profile.get(), uriServer);
+      if (useSsl) {
+        int port = getPortFromUri(uriServer);
+        std::string host = getHostFromUri(uriServer);
+        ssl_call_gen(profile.get(), host, port, cafile);
+      } else {
+        diet_call_gen(profile.get(), uriServer);
+      }
       return my_serialize(profile.get());
     } else {
       return str(format("error %1%: the service %2% is not available")
@@ -106,19 +128,33 @@ private:
  */
 class SubscriptionWorker : public AnnuaryWorker {
 public:
+
   /**
-   * \brief Constructor
-   * \param ctx the zmq context
-   * \param uriInproc the uri for the inproc commands
-   * \param id the id of the worker
-   * \param ann the annuary it is linked
+   * @brief SubscriptionWorker
+   * @param ctx
+   * @param uriInproc
+   * @param id
+   * @param ann
+   * @param usessl
+   * @param certCaFile
    */
   explicit SubscriptionWorker(boost::shared_ptr<zmq::context_t> ctx,
                               const std::string& uriInproc, int id,
-                              boost::shared_ptr<Annuary> ann)
-    : AnnuaryWorker(ctx, uriInproc, id, ann) {}
+                              boost::shared_ptr<Annuary> ann,
+                              bool usessl,
+                              const std::string& certCaFile)
+    : AnnuaryWorker(ctx, uriInproc, id, ann), useSsl(usessl), cafile(certCaFile) {}
 
 private:
+  /**
+   * \brief  path to the CA file
+  */
+  bool useSsl;
+
+  /**
+   * \brief  path to the CA file
+  */
+  std::string cafile;
   /**
    * \brief Call the function
    * \param data the serialized data containing the funcion and its parameters
@@ -134,7 +170,7 @@ private:
     if (mode == 1) {
       // adding a new server
       mann_->add(server->getName(), server->getURI(),
-                server->getServices());
+                 server->getServices());
     } else if (mode == 0) {
       mann_->remove(server->getName(), server->getURI());
     }

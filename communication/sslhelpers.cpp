@@ -94,7 +94,7 @@ TlsServer::run()
     clientBioHandler = BIO_pop(acceptBio);
 
     if (BIO_do_handshake(clientBioHandler) <= 0) {
-      std::cerr << boost::format("SSL handshake.\n%1%\n"
+      std::cerr << boost::format("Failed making SSL handshake.\n%1%\n"
                                  )%ERR_error_string(ERR_get_error(), NULL);
       continue;
     }

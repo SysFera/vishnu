@@ -47,6 +47,7 @@ struct InternalEndpoint<ServiceWorker> {
 template<typename Worker>
 class Handler {
 public:
+
   /**
    * \brief Constructor
    * \param uri the uri for the handler
@@ -55,8 +56,10 @@ public:
    */
   Handler(const std::string& uri,
           boost::shared_ptr<Annuary> ann,
-          int nbThread)
-    : muri(uri), mann(ann), nbThread(nbThread) {}
+          int nbThread,
+          bool usessl,
+          const std::string& certCaFile)
+    : muri(uri), mann(ann), nbThread(nbThread), useSsl(usessl), cafile(certCaFile) {}
 
   /**
    * \brief To run the handler
@@ -64,10 +67,12 @@ public:
   void
   run() {
     serverWorkerSockets<Worker,
-                        boost::shared_ptr<Annuary> >(muri,
-                                                     InternalEndpoint<Worker>::value(),
-                                                     nbThread,
-                                                     mann);
+        boost::shared_ptr<Annuary> >(muri,
+                                     InternalEndpoint<Worker>::value(),
+                                     nbThread,
+                                     mann,
+                                     useSsl,
+                                     cafile);
   }
 
 private:
@@ -75,14 +80,26 @@ private:
    * \brief The uri
    */
   const std::string muri;
+
   /**
    * \brief The annuary
    */
   boost::shared_ptr<Annuary> mann;
+
   /**
    * \brief The number of threads to use
    */
   int nbThread;
+
+  /**
+   * \brief  path to the CA file
+  */
+  bool useSsl;
+
+  /**
+   * \brief  path to the CA file
+  */
+  std::string cafile;
 };
 
 /**

@@ -153,11 +153,13 @@ initSeD(const std::string& type,
   bool useSsl = false;
   if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
       ! useSsl) { /* TLS dont required */
-    ZMQServerStart(server, uri);
+    ZMQServerStart(server, uri, false, "");
   } else {
     pid_t pid = fork();
     if (pid > 0) {
-      ZMQServerStart(server, IPC_URI);
+      std::string cafile;
+      config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+      ZMQServerStart(server, IPC_URI, useSsl, cafile);
     } else if (pid == 0) {
 
       /* Intializing the TLS listener if necessary */

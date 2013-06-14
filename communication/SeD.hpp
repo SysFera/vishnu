@@ -47,9 +47,19 @@ protected:
   CallbackMap mcb;
 };
 
+/**
+ * @brief ZMQServerStart
+ * @param server
+ * @param uri
+ * @param useSsl
+ * @param cafile
+ * @return
+ */
 int
 ZMQServerStart(boost::shared_ptr<SeD> server,
-               const std::string& uri);
+               const std::string& uri,
+               bool useSsl,
+               const std::string& cafile);
 
 
 #endif // __SED__H__

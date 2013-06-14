@@ -47,6 +47,7 @@ public:
       data.clear();
       try {
         data = socket.get();
+      std::cout <<"got message \n" << data <<"\n";
       } catch (zmq::error_t &error) {
         std::cerr << boost::format("E: %1%\n") % error.what();
         continue;
@@ -102,7 +103,9 @@ int
 serverWorkerSockets(const std::string& serverUri,
                     const std::string& workerUri,
                     int nbThreads,
-                    WorkerParam params) {
+                    WorkerParam params,
+                    bool useSsl,
+                    const std::string& cafile) {
   boost::shared_ptr<zmq::context_t> context(new zmq::context_t(1));
   zmq::socket_t socket_server(*context, ZMQ_ROUTER);
   zmq::socket_t socket_workers(*context, ZMQ_DEALER);
@@ -126,7 +129,11 @@ serverWorkerSockets(const std::string& serverUri,
   // Create our pool of threads
   ThreadPool pool(nbThreads);
   for (int i = 0; i < nbThreads; ++i) {
-    pool.submit(WorkerType(context, workerUri, i, params));
+    if (useSsl) {
+      pool.submit(WorkerType(context, workerUri, i, params, useSsl, cafile));
+    } else {
+      pool.submit(WorkerType(context, workerUri, i, params, false, ""));
+    }
   }
 
   // connect our workers threads to our server via a queue

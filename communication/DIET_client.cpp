@@ -33,29 +33,6 @@
 #include "utilVishnu.hpp"
 
 // private declarations
-/**
- * @brief diet_call_gen
- * @param prof
- * @param uri
- * @return
- */
-int
-diet_call_gen(diet_profile_t* prof, const std::string& uri);
-
-/**
- * @brief ssl_call_gen
- * @param prof
- * @param host
- * @param port
- * @param cafile
- * @return
- */
-int
-ssl_call_gen(diet_profile_t* prof,
-             const std::string& host,
-             const int& port,
-             const std::string& cafile);
-
 static ExecConfiguration config;
 
 typedef std::map<std::string, std::string> ServiceMap;

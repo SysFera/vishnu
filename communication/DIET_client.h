@@ -78,6 +78,20 @@ int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
 
 /**
+ * @brief ssl_call_gen
+ * @param prof
+ * @param host
+ * @param port
+ * @param cafile
+ * @return
+ */
+int
+ssl_call_gen(diet_profile_t* prof,
+             const std::string& host,
+             const int& port,
+             const std::string& cafile);
+
+/**
  * \brief Overload of DIET function, get the value of a string in the profile
  * \param prof profile
  * \param value the output value

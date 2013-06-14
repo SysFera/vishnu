@@ -65,26 +65,28 @@ Dispatcher::configureHandlers() {
 
   const std::string FRONTEND_IPC_URI = "ipc:///tmp/vishnu-disp.front.sock";
   const std::string BACKEND_IPC_URI = "ipc:///tmp/vishnu-disp.back.sock";
-  std::string rsaPrivkey;
-  std::string sslCertificate;
 
   bool useSsl = false;
   if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
       ! useSsl) { /* TLS dont required */
-    clientHandler.reset(new Handler4Clients(uriAddr, ann, nthread));
-    serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread));
+    clientHandler.reset(new Handler4Clients(uriAddr, ann, nthread, false, ""));
+    serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, false, ""));
     boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
     boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
     th1.join();
     th2.join();
-  } else {
+  } else { /* TLS required */
+    std::string rsaPrivkey;
+    std::string sslCertificate;
+    std::string sslCa;
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
     config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
+    config.getConfigValue<std::string>(vishnu::SSL_CA, sslCa);
 
     pid_t pid = fork();
     if (pid > 0) {
-      clientHandler.reset(new Handler4Clients(FRONTEND_IPC_URI, ann, nthread));
-      serverHandler.reset(new Handler4Servers(BACKEND_IPC_URI, ann, nthread));
+      clientHandler.reset(new Handler4Clients(FRONTEND_IPC_URI, ann, nthread, useSsl, sslCa));
+      serverHandler.reset(new Handler4Servers(BACKEND_IPC_URI, ann, nthread, useSsl, sslCa));
       boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
       boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
       th1.join();
