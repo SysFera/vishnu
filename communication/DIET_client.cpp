@@ -298,15 +298,15 @@ my_serialize(diet_profile_t* prof) {
   }
 
   std::stringstream res;
-  res << prof->name <<  "$$$"
-      << prof->IN << "$$$"
-      << prof->INOUT << "$$$"
-      << prof->OUT << "$$$";
+  res << prof->name <<  VISHNU_COMM_SEPARATOR
+      << prof->IN << VISHNU_COMM_SEPARATOR
+      << prof->INOUT << VISHNU_COMM_SEPARATOR
+      << prof->OUT << VISHNU_COMM_SEPARATOR;
 
   for (int i = 0; i<(prof->OUT); ++i) {
-    res << prof->params[i] << "$$$";
+    res << prof->params[i] << VISHNU_COMM_SEPARATOR;
   }
-  res << prof->params[(prof->OUT)] << "$$$";
+  res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
 
   /*Crypt message before returning */
 
@@ -323,7 +323,7 @@ my_deserialize(const std::string& prof) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string ");
   }
 
-  boost::algorithm::split_regex(vecString, prof, boost::regex("\\${3}"));
+  boost::algorithm::split_regex(vecString, prof, boost::regex(VISHNU_COMM_REGEX));
 
   // TODO: this is not "safe" as we can receive errors int "prof"
   // Currently, we check that the size of vecString is at least 4:

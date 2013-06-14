@@ -14,6 +14,8 @@
 #include "sslhelpers.hpp"
 
 
+#define VISHNU_COMM_SEPARATOR "$$##$$"
+#define VISHNU_COMM_REGEX     "\\${2}\\#{2}\\${2}"
 /**
  * \brief Overload of DIET structure
  */
