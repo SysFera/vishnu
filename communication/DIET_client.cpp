@@ -238,6 +238,11 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
     std::cerr << boost::format("[ERROR] %1%\n")%response;
     return 1;
   }
+// To signal a communication problem (bad server receive request)
+// Otherwize client does not get any error message
+  if (tmp->OUT == -1){
+    return 1;
+  }
 
   prof->IN = tmp->IN;
   prof->OUT = tmp->OUT;
@@ -306,7 +311,9 @@ my_serialize(diet_profile_t* prof) {
   for (int i = 0; i<(prof->OUT); ++i) {
     res << prof->params[i] << VISHNU_COMM_SEPARATOR;
   }
-  res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
+  if (prof->OUT>0){
+    res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
+  }
 
   /*Crypt message before returning */
 
