@@ -235,7 +235,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
 
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   if (!tmp) {
-    std::cerr << boost::format("E: %1%...\n")%response;
+    std::cerr << boost::format("[ERROR] %1%\n")%response;
     return 1;
   }
 
@@ -255,23 +255,27 @@ ssl_call_gen(diet_profile_t* prof,
   TlsClient tlsClient(host, port, cafile);
 
   std::string s1 = my_serialize(prof);
-  s1.append("\n\n");  /* necessary to detect the end of data on the server part */
+  s1.append(LAST_SSL_PAQUET);  /* needed for internal communication protocol */
   if (tlsClient.send(s1)) {
     std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
     return -1;
   }
   std::string response = tlsClient.recv();
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-  if (!tmp) {
-    std::cerr << boost::format("E: %1%...\n")%response;
-    return 1;
+  try {
+    boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
+    if (tmp) {
+      prof->IN = tmp->IN;
+      prof->OUT = tmp->OUT;
+      prof->INOUT = tmp->INOUT;
+      prof->params = tmp->params;
+      return 0;
+    } else {
+      std::cerr << boost::format("[ERROR] %1%\n")%response;
+    }
+  } catch (const VishnuException& ex) {
+    std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
   }
-
-  prof->IN = tmp->IN;
-  prof->OUT = tmp->OUT;
-  prof->INOUT = tmp->INOUT;
-  prof->params = tmp->params;
-  return 0;
+  return -1;
 }
 
 
@@ -334,6 +338,10 @@ my_deserialize(const std::string& prof) {
     res->OUT = boost::lexical_cast<int>(*(it++));
 
     std::copy(it, vecString.end(), std::back_inserter(res->params));
+
+    if (res->params.size() <= res->OUT) {
+      throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
+    }
   }
 
   return res;

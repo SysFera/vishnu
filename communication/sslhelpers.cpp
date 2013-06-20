@@ -5,8 +5,7 @@
  * \date May 2013
  */
 
-
-#include <boost/format.hpp>
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/make_shared.hpp>
 #include <iostream>
 
@@ -106,7 +105,7 @@ TlsServer::run()
       zlpc.send(data); /* Forward the message to the service handler */
 
       reply = zlpc.recv();
-      reply.append("\n\n"); /* necessary for the communication protocol between server and clients */
+      // reply.append(LAST_SSL_PAQUET);
       int len = BIO_write(clientBioHandler, reply.c_str(), reply.size());
       BIO_flush(clientBioHandler);
       if (len <= 0 && !reply.empty()) {
@@ -130,8 +129,12 @@ TlsServer::recvMsg()
   data.clear();
   int len;
   while ((len = BIO_gets(clientBioHandler, msgBuf, MSG_CHUNK_SIZE))> 0) {
-    if((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
-    data.append(std::string(msgBuf, len));
+    if (boost::algorithm::ends_with(msgBuf, END_OF_SSL_MSG) ||
+        boost::algorithm::ends_with(msgBuf, END2_OF_SSL_MSG)) {
+      break;
+    } else {
+      data.append(std::string(msgBuf, len));
+    }
   }
 }
 
@@ -238,7 +241,6 @@ TlsClient::recvMsg()
   data.clear();
   int len;
   while ((len = BIO_read(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0) {
-    if ((msgBuf[0] == '\r') || (msgBuf[0] == '\n')) break;
     data.append(std::string(msgBuf, len));
   }
 }
