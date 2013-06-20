@@ -1010,6 +1010,7 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_db_admin";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_db_admin";
+GRANT SELECT, INSERT, UPDATE, DELETE ON work TO "vishnu_db_admin";
 
 
 -- CREATE ROLE vishnu_user;
@@ -1034,3 +1035,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON process TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authaccount TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON authsystem TO "vishnu_user";
 GRANT SELECT, INSERT, UPDATE, DELETE ON ldapauthsystem TO "vishnu_user";
+GRANT SELECT, INSERT, UPDATE, DELETE ON work TO "vishnu_user";
