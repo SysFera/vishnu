@@ -9,6 +9,7 @@
 
 #include "Worker.hpp"
 #include "SeD.hpp"
+#include "SystemException.hpp"
 
 /**
  * \class SeDWorker
@@ -48,12 +49,12 @@ private:
    * \return the serialized data (out data are updated)
    */
   std::string
-  doCall(std::string& data) {
+  doCall(std::string& data) throw(VishnuException) {
     boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
     int ret = server_->call(profile.get());
     if (ret != 0) {
-      std::cerr << boost::format("[ERROR] call(profile.get()) returned %1%."
-                                 " See the previous error for details.\n")%ret;
+      std::string err = (boost::format("call(profile.get()) returned %1%\n")%ret).str();
+      throw SystemException(ERRCODE_INVDATA, err);
     }
     return my_serialize(profile.get());
   }

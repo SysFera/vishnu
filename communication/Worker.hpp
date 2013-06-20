@@ -12,7 +12,7 @@
 #include "zhelpers.hpp"
 #include "utils.hpp"
 #include "sslhelpers.hpp"
-
+#include "VishnuException.hpp"
 
 /**
  * \class Worker
@@ -47,7 +47,7 @@ public:
       data.clear();
       try {
         data = socket.get();
-      std::cout <<"got message \n" << data <<"\n";
+        std::cout <<"got message \n" << data <<"\n";
       } catch (zmq::error_t &error) {
         std::cerr << boost::format("E: %1%\n") % error.what();
         continue;
@@ -55,8 +55,13 @@ public:
 
       // Deserialize and call Method
       if (!data.empty()) {
-        std::string resultSerialized = doCall(data);
-        socket.send(resultSerialized);
+        try {
+          std::string resultSerialized = doCall(data);
+          socket.send(resultSerialized);
+        } catch (const VishnuException& ex) {
+          socket.send(ex.what());
+          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+        }
       }
     }
   }

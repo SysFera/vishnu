@@ -18,11 +18,15 @@
 #include <string>
 #include <cstring>
 #include <boost/shared_ptr.hpp>
+#include <boost/format.hpp>
 
 #include "zhelpers.hpp"
 #include "DIET_client.h"
 
 const int MSG_CHUNK_SIZE = 2048;
+const std::string END_OF_SSL_MSG = "$$>><<$$\n";
+const std::string END2_OF_SSL_MSG = "$$>><<$$";
+const std::string LAST_SSL_PAQUET=(boost::format("\n%1%")%END_OF_SSL_MSG).str();
 
 /**
  * @brief The TlsServer class

@@ -13,6 +13,7 @@
 #include "zhelpers.hpp"
 #include "zmq.hpp"
 #include "SeDWorker.hpp"
+#include "VishnuException.hpp"
 
 
 int
@@ -43,6 +44,7 @@ SeD::call(diet_profile_t* profile) {
     rv = fn(profile);
   } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
+    throw SystemException(ERRCODE_INVDATA, e.what());
     std::cerr << boost::format("[ERROR] %1%\n") % e.what();
   }
   return rv;
@@ -87,13 +89,15 @@ public:
 
       // Deserialize and call UMS Method
       if (!data.empty()) {
-        boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
-
-        //FIXME: deal with possibly error
-        server_->call(profile.get());
-        // Send reply back to client
-        std::string resultSerialized = my_serialize(profile.get());
-        socket.send(resultSerialized);
+        try {
+          boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
+          server_->call(profile.get()); //FIXME: deal with possibly error
+          std::string resultSerialized = my_serialize(profile.get());
+          socket.send(resultSerialized);
+        } catch (const VishnuException& ex) {
+          socket.send(ex.what());
+          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+        }
       }
     }
   }
