@@ -325,6 +325,16 @@ copy_rel_dir IMS/design/docbook/images/png ../doc/concept/images
 
 
 ###############################################################################
+#                                    CORE                                     #
+###############################################################################
+# Copy design in release
+copy_rel_file core/design/docbook/\*-gen\.pdf ../doc/concept/
+copy_rel_file core/design/docbook/\*-gen\.docbook ../doc/concept/
+copy_rel_file core/design/docbook/\*-gen\.html ../doc/concept/
+copy_rel_dir core/design/docbook/images/png ../doc/concept/images
+
+
+###############################################################################
 #                                   SPECIF                                    #
 ###############################################################################
 run_cmd mkdir -p $pathrel/../doc/specif/images
