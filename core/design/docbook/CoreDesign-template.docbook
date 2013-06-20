@@ -766,17 +766,6 @@
         </para>
 
         <figure>
-          <title>TMS job submission steps</title>
-          <mediaobject>
-            <imageobject>
-              <imagedata fileref="images/png/jobSubmitSequenceDiagram.png"
-                         align="center" scale="40"/>
-            </imageobject>
-          </mediaobject>
-        </figure>
-
-
-        <figure>
           <title>TMS submit job sequence diagram</title>
           <mediaobject>
             <imageobject>
