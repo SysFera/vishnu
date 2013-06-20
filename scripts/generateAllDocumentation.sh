@@ -103,6 +103,9 @@ generate_docbook ${PWD} ${PWD}/FMS/design/docbook/FmsDesign-template.docbook
 generate_docbook ${PWD} ${PWD}/IMS/design/docbook/ImsDesign-template.docbook
 generate_docbook ${PWD} ${PWD}/UMS/design/docbook/UmsDesign-template.docbook
 
+# Generate technical architecture from template
+generate_docbook ${PWD} ${PWD}/core/design/docbook/CoreDesign-template.docbook
+
 # Generate adminman from template
 generate_docbook ${PWD}/core/model ${PWD}/core/doc/adminmanual/docbook/adminman-template.docbook
 
