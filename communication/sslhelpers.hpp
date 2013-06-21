@@ -23,7 +23,7 @@
 #include "zhelpers.hpp"
 #include "DIET_client.h"
 
-const int MSG_CHUNK_SIZE = 2048;
+const int MSG_CHUNK_SIZE = 8096;
 const std::string END_OF_SSL_MSG = "$$>>><<<$$";
 
 /**
