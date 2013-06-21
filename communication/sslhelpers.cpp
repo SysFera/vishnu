@@ -101,16 +101,10 @@ TlsServer::run()
     recvMsg();
 
     if (!data.empty()) {
-      std::string reply;
       zlpc.send(data); /* Forward the message to the service handler */
-
-      reply = zlpc.recv();
-      // reply.append(LAST_SSL_PAQUET);
-      int len = BIO_write(clientBioHandler, reply.c_str(), reply.size());
-      BIO_flush(clientBioHandler);
-      if (len <= 0 && !reply.empty()) {
-        std::cout << boost::format("[WARNING] %1%/%2% bytes written\n")%len%reply.size();
-      }
+      std::vector<std::string> msgs;
+      msgs.push_back(zlpc.recv());
+      sendMsgs(msgs);
     } else {
       std::cerr << boost::format("[WARNING] Empty message reveived.\n%1%\n"
                                  )%ERR_error_string(ERR_get_error(), NULL);
@@ -128,15 +122,33 @@ TlsServer::recvMsg()
   char msgBuf[MSG_CHUNK_SIZE];
   data.clear();
   int len;
-  while ((len = BIO_gets(clientBioHandler, msgBuf, MSG_CHUNK_SIZE))> 0) {
-    if (boost::algorithm::ends_with(msgBuf, END_OF_SSL_MSG) ||
-        boost::algorithm::ends_with(msgBuf, END2_OF_SSL_MSG)) {
-      break;
-    } else {
-      data.append(std::string(msgBuf, len));
+  while ((len = BIO_gets(clientBioHandler, msgBuf, MSG_CHUNK_SIZE))> 0 &&
+         ! boost::algorithm::starts_with(msgBuf, END_OF_SSL_MSG)) {
+
+    data.append(std::string(msgBuf, len));
+  }
+}
+
+/**
+ * @brief TlsServer::sendMsgs
+ * @param msgs
+ */
+void
+TlsServer::sendMsgs(std::vector<std::string>& msgs)
+{
+  msgs.push_back(END_OF_SSL_MSG);
+  for (std::vector<std::string>::iterator msg=msgs.begin(), end=msgs.end(); msg!=end;++msg) {
+    msg->append("\n");
+    int len = BIO_write(clientBioHandler, msg->c_str(), msg->size());
+    BIO_flush(clientBioHandler);
+    if (len <= 0 && !msg->empty()) {
+      std::cout << boost::format("[WARNING] %1%/%2% bytes written\n")%len%msg->size();
     }
   }
 }
+
+
+
 
 /**
  * @brief TlsClient::send
@@ -211,11 +223,9 @@ TlsClient::send(const std::string& reqData)
     return -1;
   }
 
-  int len;
-  len = BIO_puts(sslBio, reqData.c_str());
-  if (len <= 0 && !reqData.empty()) {
-    std::cout << boost::format("[WARNING] %1%/%2% bytes sent\n")%len%reqData.size();
-  }
+  std::vector<std::string> msgs;
+  msgs.push_back(reqData);
+  sendMsgs(msgs);
 
   return 0;
 }
@@ -235,12 +245,35 @@ TlsClient::recv(void)
  * @brief TlsClient::recvMsg
  */
 void
-TlsClient::recvMsg()
-{
+TlsClient::recvMsg() {
+
   char msgBuf[MSG_CHUNK_SIZE];
   data.clear();
+
   int len;
-  while ((len = BIO_read(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0) {
+  while ((len = BIO_read(sslBio, msgBuf, MSG_CHUNK_SIZE))> 0 &&
+         ! boost::algorithm::starts_with(msgBuf, END_OF_SSL_MSG)) {
+
     data.append(std::string(msgBuf, len));
   }
 }
+
+
+/**
+ * @brief TlsClient::sendMsgs
+ * @param msgs
+ */
+void
+TlsClient::sendMsgs(std::vector<std::string>& msgs) {
+
+  msgs.push_back(END_OF_SSL_MSG);
+
+  for (std::vector<std::string>::iterator msg=msgs.begin(), end=msgs.end(); msg!=end;++msg) {
+    msg->append("\n");
+    int len = BIO_puts(sslBio, msg->c_str());
+    if (len <= 0 && !msg->empty()) {
+      std::cout << boost::format("[WARNING] %1%/%2% bytes sent\n")%len%msg->size();
+    }
+  }
+}
+
