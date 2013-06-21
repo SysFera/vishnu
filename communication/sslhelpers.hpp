@@ -23,8 +23,10 @@
 #include "zhelpers.hpp"
 #include "DIET_client.h"
 
-const int MSG_CHUNK_SIZE = 8096;
-const std::string END_OF_SSL_MSG = "$$>>><<<$$";
+namespace {
+  const int MSG_CHUNK_SIZE = 8096;
+  const std::string END_OF_SSL_MSG = "$$>>><<<$$";
+}
 
 /**
  * @brief The TlsServer class
