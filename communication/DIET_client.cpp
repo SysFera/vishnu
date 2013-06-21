@@ -254,12 +254,11 @@ ssl_call_gen(diet_profile_t* prof,
 
   TlsClient tlsClient(host, port, cafile);
 
-  std::string s1 = my_serialize(prof);
-  s1.append(LAST_SSL_PAQUET);  /* needed for internal communication protocol */
-  if (tlsClient.send(s1)) {
+  if (tlsClient.send( my_serialize(prof) )) {
     std::cerr << boost::format("[ERROR] %1%\n")%tlsClient.getErrorMsg();
     return -1;
   }
+
   std::string response = tlsClient.recv();
   try {
     boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
