@@ -13,9 +13,14 @@
 #include <boost/shared_ptr.hpp>
 #include "sslhelpers.hpp"
 
-
-#define VISHNU_COMM_SEPARATOR "$$##$$"
-#define VISHNU_COMM_REGEX     "\\${2}\\#{2}\\${2}"
+/**
+ * \brief Separator for zmq communication
+ */
+#define VISHNU_COMM_SEPARATOR "$$$$####$$$$"
+/**
+ * \brief Separator for zmq communication (regex form)
+ */
+#define VISHNU_COMM_REGEX     "\\${4}\\#{4}\\${4}"
 /**
  * \brief Overload of DIET structure
  */
