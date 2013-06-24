@@ -1,4 +1,4 @@
-#include "dispatcher.hpp"
+#include "Dispatcher.hpp"
 #include "Server.hpp"
 #include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
