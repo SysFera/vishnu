@@ -126,7 +126,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_n )
   diet_string_set(prof, 1);
   std::string res = my_serialize(prof);
 
-  BOOST_REQUIRE_EQUAL(res, "alloc$$$0$$$0$$$1$$$param1$$$$$$");
+  BOOST_REQUIRE_EQUAL(res, "alloc$$$$####$$$$0$$$$####$$$$0$$$$####$$$$1$$$$####$$$$param1$$$$####$$$$$$$$####$$$$");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_serial_b )
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_b )
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
-  std::string profSer = "alloc$$$0$$$0$$$1$$$param1$$$$$$";
+  std::string profSer = "alloc$$$$####$$$$0$$$$####$$$$0$$$$####$$$$1$$$$####$$$$param1$$$$####$$$$$$$$####$$$$";
   boost::shared_ptr<diet_profile_t> prof = my_deserialize(profSer);
   BOOST_REQUIRE_EQUAL(prof->name, "alloc");
   BOOST_REQUIRE_EQUAL(prof->IN, 0);
