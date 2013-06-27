@@ -62,7 +62,8 @@ BOOST_AUTO_TEST_CASE(ListDirContent_Base)
     }
     BOOST_REQUIRE( mkdir(sessionKey, dirFullPath1) == 0);
     // put some content into the directory
-    const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!~-_#");
+//    const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("$")("!~-_#");
+    const vector<string> fileSuffixes = ba::list_of("1.2.3")("éàè")("!~-_#");
     vector<string> localFiles = fileSuffixes;
     createRemoteFiles(sessionKey, addPrefix(localFilePath, localFiles), dirFullPath1);
 

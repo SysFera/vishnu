@@ -1,4 +1,4 @@
-#include "dispatcher.hpp"
+#include "Dispatcher.hpp"
 #include <boost/thread.hpp>
 
 
@@ -11,9 +11,14 @@ main(int argc, char* argv[]) {
   if (argc == 2) {
     confFile = argv[1];
   }
-
-  Dispatcher dispatcher(confFile);
-  dispatcher.run();
+  try{
+    Dispatcher dispatcher(confFile);
+    dispatcher.run();
+  } catch (VishnuException &e){
+    std::cout << "[Error] : An error occured when initializing the dispatcher. Starting with default parameters. \n The error was: " << e.what() << "\n\n";
+    Dispatcher dispatcher("");
+    dispatcher.run();
+  }
 
   return 0;
 }

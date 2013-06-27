@@ -258,7 +258,13 @@ main (int argc, char* argv[]) {
       displayListJobs(job);
     }
   } catch(VishnuException& e) {// catch all Vishnu runtime error
-    std::string  msg = e.getMsg()+" ["+e.getMsgComp()+"]";
+    std::string  msg = e.getMsg();
+    if (e.getMsgComp().compare("Bus initialization failure")==0){
+      msg += " ["+e.getMsgComp()+", machineId may be invalid]";
+    } else {
+      msg += " ["+e.getMsgComp()+"]";
+    }
+
     errorUsage(argv[0], msg,EXECERROR);
     //check the bad session key
     if (checkBadSessionKeyError(e)) {

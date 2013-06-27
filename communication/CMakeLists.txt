@@ -45,7 +45,7 @@ target_link_libraries (zmq_helper
 
 if(COMPILE_SERVERS)
   add_executable(dispatcher dispatcher/main.cpp
-    dispatcher/dispatcher.cpp)
+    dispatcher/Dispatcher.cpp)
   
   target_link_libraries(dispatcher
     ${ZMQ_LIBRARIES} 
