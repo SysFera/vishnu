@@ -100,7 +100,7 @@ else (LIBCRYPT_FOUND)
 endif(LIBCRYPT_FOUND)
 
 
-find_package(OPENSSL)
+find_package(OpenSSL)
 
 
 find_package(Boost 1.46
