@@ -240,7 +240,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 // To signal a communication problem (bad server receive request)
 // Otherwize client does not get any error message
-  if (tmp->OUT == -1){
+  if (tmp->OUT == -1) {
     return 1;
   }
 
@@ -298,7 +298,7 @@ diet_profile_free(diet_profile_t* prof) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
-  if (!prof){
+  if (!prof) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
 
@@ -311,7 +311,7 @@ my_serialize(diet_profile_t* prof) {
   for (int i = 0; i<(prof->OUT); ++i) {
     res << prof->params[i] << VISHNU_COMM_SEPARATOR;
   }
-  if (prof->OUT>0){
+  if (prof->OUT > 0) {
     res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
   }
 
@@ -326,7 +326,7 @@ my_deserialize(const std::string& prof) {
 
   std::vector<std::string> vecString;
 
-  if (prof.empty()){
+  if (prof.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string ");
   }
 
@@ -355,7 +355,7 @@ my_deserialize(const std::string& prof) {
 
 int
 diet_initialize(const char* cfg, int argc, char** argv) {
-  if (!cfg){
+  if (!cfg) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid NULL initialization file");
   }
   config.initFromFile(cfg);
