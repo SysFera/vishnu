@@ -163,13 +163,19 @@ JobProxy::cancelJob() {
   //OUT Parameters
   diet_string_set(cancelJobProfile,3);
 
-  if(!diet_call(cancelJobProfile)) {
+  signed ret = diet_call(cancelJobProfile);
+  switch(ret) {
+  case 0:
     if(diet_string_get(cancelJobProfile,3, errorInfo)){
       msgErrorDiet += " by receiving errorInfo message";
       raiseCommunicationMsgException(msgErrorDiet);
     }
-  }
-  else {
+    break;
+  case 1:
+    raiseCommunicationMsgException(
+      "VISHNU call failure, machineId may be invalid");
+    break;
+  default:
     raiseCommunicationMsgException("VISHNU call failure");
   }
 
