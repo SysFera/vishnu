@@ -197,13 +197,18 @@ diet_call(diet_profile_t* prof) {
   try {
       std::string mid = tokens.at(1);
       tokens.clear();
+      bool validMid(false);
 
       BOOST_FOREACH(const std::string& v, uriv) {
           boost::algorithm::split(tokens, v, boost::algorithm::is_space());
           if (mid == tokens[1]) {
               uri = tokens[0];
+              validMid = true;
               break;
           }
+      }
+      if (!validMid) {
+          uri.clear();
       }
   } catch (const std::out_of_range& err) {}
 
