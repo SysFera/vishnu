@@ -16,8 +16,11 @@
 #include <algorithm>                    // for copy, transform
 #include <stdexcept>                    // for out_of_range
 #include <utility>                      // for pair
+#include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/predicate.hpp>  // for starts_with
 #include <boost/algorithm/string/regex.hpp>  // for split_regex
+#include <boost/algorithm/string/split.hpp>
+#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <zmq.hpp>                      // for context_t
@@ -184,10 +187,32 @@ diet_call(diet_profile_t* prof) {
   }
 
   config.getConfigValues(param, uriv);
+  std::vector<std::string> tokens;
+  boost::algorithm::split(tokens, service, boost::algorithm::is_any_of("@"));
+
   if (!uriv.empty()) {
     std::istringstream iss(uriv[0]);
     iss >> uri;
   }
+  try {
+      std::string mid = tokens.at(1);
+      tokens.clear();
+      bool validMid(false);
+
+      BOOST_FOREACH(const std::string& v, uriv) {
+          boost::algorithm::split(tokens, v, boost::algorithm::is_space());
+          if (mid == tokens[1]) {
+              uri = tokens[0];
+              validMid = true;
+              break;
+          }
+      }
+      if (!validMid) {
+          uri.clear();
+      }
+  } catch (const std::out_of_range& err) {}
+
+
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
   if (!dispv.empty()) {
     disp = dispv[0];
