@@ -32,7 +32,7 @@ target_link_libraries (test_zmq_helper
   fake_zmq
   ${Boost_LIBRARIES}
   vishnu-core
-  ${OPENSSL_LIB}
+  ${OPENSSL_LIBRARIES}
   )
 
 # register tests

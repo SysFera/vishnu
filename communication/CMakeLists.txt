@@ -36,7 +36,7 @@ target_link_libraries (zmq_helper
   ${Boost_LIBRARIES}
   vishnu-core
   ${LIBCRYPTO_LIB}
-  ${OPENSSL_LIB}
+  ${OPENSSL_LIBRARIES}
 )
 
 # --------------------------------------------------------------------------
@@ -52,7 +52,7 @@ if(COMPILE_SERVERS)
     ${Boost_LIBRARIES}
     zmq_helper
     vishnu-core
-    ${OPENSSL_LIB}
+    ${OPENSSL_LIBRARIES}
     )
   
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})

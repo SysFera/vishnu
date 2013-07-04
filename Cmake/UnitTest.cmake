@@ -33,7 +33,7 @@ function( unit_test NAME )
   target_link_libraries( ${NAME}
     ${Boost_LIBRARIES}
     ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
-    ${OPENSSL_LIB}
+    ${OPENSSL_LIBRARIES}
     )
 
 
