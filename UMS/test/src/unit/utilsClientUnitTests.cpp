@@ -28,9 +28,14 @@ BOOST_AUTO_TEST_CASE( test_checkEmail_n )
   std::string email1 = "test.toto@yopmail.com";
   std::string email2 = "test.toto.test@univ-somewhere.fr";
   std::string email3 = "contact@someplace.co";
+  std::string email4 = "contact@localhost";
+  std::string email5 = "contact@univ.co.uk";
+
   BOOST_REQUIRE_NO_THROW(checkEmail(email1));
   BOOST_REQUIRE_NO_THROW(checkEmail(email2));
   BOOST_REQUIRE_NO_THROW(checkEmail(email3));
+  BOOST_REQUIRE_NO_THROW(checkEmail(email4));
+  BOOST_REQUIRE_NO_THROW(checkEmail(email5));
 }
 
 BOOST_AUTO_TEST_CASE( test_checkEmail_b )
