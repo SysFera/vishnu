@@ -32,7 +32,6 @@ int solveChangeMode (diet_profile_t* profile) {
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
-  int mapperkey;
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
@@ -49,8 +48,8 @@ int solveChangeMode (diet_profile_t* profile) {
   SessionServer sessionServer (sessionKey);
 
   try {
-
-   //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_chmod");
     mapper->code(vishnu::convertToString(mode), mapperkey);

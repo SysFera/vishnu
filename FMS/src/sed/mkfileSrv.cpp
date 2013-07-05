@@ -30,7 +30,6 @@ int solveCreateFile(diet_profile_t* profile) {
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
-  int mapperkey;
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
@@ -38,22 +37,22 @@ int solveCreateFile(diet_profile_t* profile) {
   diet_string_get(profile, 3, host);
 
 
-      localUser = user;
-      localPath = path;
-      SessionServer sessionServer (sessionKey);
+  localUser = user;
+  localPath = path;
+  SessionServer sessionServer (sessionKey);
 
-      try {
+  try {
+    int mapperkey;
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_touch");
+    mapper->code(host + ":" + path, mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
-        //MAPPER CREATION
-        Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
-        mapperkey = mapper->code("vishnu_touch");
-        mapper->code(host + ":" + path, mapperkey);
-        cmd = mapper->finalize(mapperkey);
-
-  // check the sessionKey
+    // check the sessionKey
 
     sessionServer.check();
-   //
+    //
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);

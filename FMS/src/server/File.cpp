@@ -63,18 +63,16 @@ void File::exists(const bool exist) const {
   this->exist = exist;
 }
 
-File::File():exist("false") {
-
+File::File(): exist("false") {
 }
 
 File::File(const SessionServer& sessionServer,
-           const string& path)
-           :msessionServer(sessionServer) {
-
+           const string& path):
+  msessionServer(sessionServer), exist(false) {
 
   size_t pos = path.find(':');
 
-  if (pos==string::npos) {
+  if (pos == string::npos) {
     setPath(path);
     setHost("localhost");
   } else {
@@ -277,5 +275,3 @@ int  File::getDirEntryFrom( const std::string& rawDirEntry, FMS_Data::DirEntry* 
 
 
 File::~File() {}
-
-

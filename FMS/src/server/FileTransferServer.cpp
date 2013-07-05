@@ -529,8 +529,8 @@ FileTransferServer::stopThread(const FMS_Data::StopTransferOptions& options) {
     boost::scoped_ptr<DatabaseResult> ListOfPid (FileTransferServer::getDatabaseInstance()->getResult(sqlListOfPid.c_str()));
 
     if (ListOfPid->getNbTuples() != 0){
-      int pid;
       for (size_t i = 0; i < ListOfPid->getNbTuples(); ++i) {
+        int pid;
         results.clear();
         results = ListOfPid->get(i);
         iter = results.begin();

@@ -32,8 +32,6 @@ int solveCreateDir(diet_profile_t* profile) {
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
-  int mapperkey;
-
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
@@ -41,11 +39,12 @@ int solveCreateDir(diet_profile_t* profile) {
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
 
-      localUser = user;
-      localPath = path;
-      SessionServer sessionServer (sessionKey);
-  try {
+  localUser = user;
+  localPath = path;
+  SessionServer sessionServer (sessionKey);
 
+  try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_create_dir");

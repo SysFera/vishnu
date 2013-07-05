@@ -48,11 +48,11 @@ FileProxy::exists(const bool exist) const {
 }
 
 
-FileProxy::FileProxy() : exist(false) {}
+FileProxy::FileProxy(): exist(false) {}
 
 
-FileProxy::FileProxy(const SessionProxy& sessionProxy, const string& path)
-  : msessionProxy(sessionProxy) {
+FileProxy::FileProxy(const SessionProxy& sessionProxy, const string& path):
+  msessionProxy(sessionProxy), exist(false) {
   size_t pos = path.find(':');
 
   if (pos == string::npos) {
