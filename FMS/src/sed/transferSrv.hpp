@@ -64,7 +64,6 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   std::string dest = "";
   std::string optionsSerialized = "";
 
-  int mapperkey;
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -80,7 +79,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   SessionServer sessionServer (sessionKey);
 
   try {
-
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
 
@@ -230,7 +229,6 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   std::string errMsg = "";
   std::string finishError = "";
   std::string fileTransferSerialized = "";
-  int mapperkey;
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -244,7 +242,7 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   SessionServer sessionServer (sessionKey);
 
   try {
-
+    int mapperkey;
     std::string destUserLogin(destUser);
     std::string destMachineName(destHost);
     SessionServer sessionServer (sessionKey);
@@ -434,7 +432,6 @@ solveGenerique(diet_profile_t* pb) {
   std::string optionValueSerialized = "";
   std::string listSerialized = "";
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
   std::string finishError ="";
 
@@ -447,8 +444,8 @@ solveGenerique(diet_profile_t* pb) {
   QueryParameters* options = NULL;
   List* list = NULL;
 
-
   try {
+    int mapperkey;
     //To parse the object serialized
     if (!vishnu::parseEmfObject(optionValueSerialized, options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);

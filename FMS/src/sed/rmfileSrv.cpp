@@ -28,7 +28,6 @@ int solveRemoveFile(diet_profile_t* profile) {
   std::string finishError ="";
   std::string cmd = "";
   std::string errMsg = "";
-  int mapperkey;
   std::string path = "";
   std::string user = "";
   std::string host = "";
@@ -41,57 +40,57 @@ int solveRemoveFile(diet_profile_t* profile) {
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
 
-	localUser = user;
-	localPath = path;
-	SessionServer sessionServer (sessionKey);
-	try {
+  localUser = user;
+  localPath = path;
+  SessionServer sessionServer (sessionKey);
+  try {
+    int mapperkey;
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_remove_file");
+    mapper->code(host + ":" + path, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
+    cmd = mapper->finalize(mapperkey);
 
-	  //MAPPER CREATION
-	  Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
-	  mapperkey = mapper->code("vishnu_remove_file");
-	  mapper->code(host + ":" + path, mapperkey);
-	  mapper->code(optionsSerialized, mapperkey);
-	  cmd = mapper->finalize(mapperkey);
+    // check the sessionKey
 
-	  // check the sessionKey
+    sessionServer.check();
+    //
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(host);
+    MachineServer machineServer(machine);
 
-	  sessionServer.check();
-	  //
-	  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-	  machine->setMachineId(host);
-	  MachineServer machineServer(machine);
+    // check the machine
+    machineServer.checkMachine();
 
-	  // check the machine
-	  machineServer.checkMachine();
+    // get the machineName
+    machineName = machineServer.getMachineName();
+    delete machine;
 
-	  // get the machineName
-	  machineName = machineServer.getMachineName();
-	  delete machine;
+    // get the acLogin
+    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
-	  // get the acLogin
-	  acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    FileFactory ff;
+    ff.setSSHServer(machineName);
+    boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-	  FileFactory ff;
-          ff.setSSHServer(machineName);
-	  boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
-
-	  FMS_Data::RmFileOptions_ptr options_ptr= NULL;
-	  if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
-		throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
-	  }
-	  file->rm(*options_ptr);
-	  //To register the command
-	  sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
-	} catch (VishnuException& err) {
-	  try {
-		sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
-	  } catch (VishnuException& fe) {
-		finishError =  fe.what();
-		finishError +="\n";
-	  }
-	  err.appendMsgComp(finishError);
-	  errMsg = err.buildExceptionString();
-	}
+    FMS_Data::RmFileOptions_ptr options_ptr= NULL;
+    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
+      throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
+    }
+    file->rm(*options_ptr);
+    //To register the command
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      finishError =  fe.what();
+      finishError +="\n";
+    }
+    err.appendMsgComp(finishError);
+    errMsg = err.buildExceptionString();
+  }
 
   diet_string_set(profile, 5, errMsg.c_str());
   return 0;

@@ -38,7 +38,6 @@ solveFileTransferStop(diet_profile_t* pb) {
   std::string sessionKey = "";
   std::string optionsSerialized = "";
   std::string finishError ="";
-  int mapperkey;
   std::string cmd = "";
   std::string errorInfo ="";
 
@@ -50,6 +49,7 @@ solveFileTransferStop(diet_profile_t* pb) {
 
   try {
     //MAPPER CREATION
+    int mapperkey;
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_stop_file_transfer");
     mapper->code(optionsSerialized, mapperkey);

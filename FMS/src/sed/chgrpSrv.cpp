@@ -31,7 +31,6 @@ int solveChangeGroup (diet_profile_t* profile) {
   std::string group = "";
   std::string finishError ="";
   std::string errMsg ="";
-  int mapperkey;
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -46,7 +45,7 @@ int solveChangeGroup (diet_profile_t* profile) {
   SessionServer sessionServer (sessionKey);
 
   try {
-
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_chgrp");

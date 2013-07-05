@@ -33,8 +33,8 @@ public:
    * \brief Constructor, raises an exception on error
    */
   ListFileTransfers(const SessionServer session):
-    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(session) {
-   mcommandName = "vishnu_list_file_transfers";
+    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(session),
+    mcommandName("vishnu_list_file_transfers") {
   }
   /**
    * \param params The object which encapsulates the information of ListFileTransfers options
@@ -42,8 +42,8 @@ public:
    * \brief Constructor, raises an exception on error
    */
   ListFileTransfers(FMS_Data::LsTransferOptions_ptr params, const SessionServer& session):
-    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(params, session) {
-    mcommandName = "vishnu_list_file_transfers";
+    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(params, session),
+    mcommandName("vishnu_list_file_transfers") {
   }
 
   /**

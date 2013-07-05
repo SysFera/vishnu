@@ -32,8 +32,6 @@ int contentFile(diet_profile_t* profile) {
   std::string cmd = "";
   std::string result = "";
   std::string errMsg = "";
-  int mapperkey;
-
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
@@ -46,7 +44,7 @@ int contentFile(diet_profile_t* profile) {
   SessionServer sessionServer (sessionKey);
 
   try {
-
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_content_of_file");
