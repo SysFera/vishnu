@@ -61,8 +61,7 @@ controlSignal (int signum) {
  */
 int
 main(int argc, char* argv[], char* envp[]) {
-  int res = 0;
-  int vishnuId = 0;
+  int res(0);
   ExecConfiguration config;
   DbConfiguration dbConfig(config);
   AuthenticatorConfiguration authenticatorConfig(config);
@@ -83,6 +82,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   // Read the configuration
   try {
+    int vishnuId(0);
     config.initFromFile(argv[1]);
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();

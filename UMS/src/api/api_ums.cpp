@@ -102,7 +102,7 @@ vishnu::connect(const string& userId,
 
   UserProxy userProxy(connectLogin, encryptedPassword);
   SessionProxy sessionProxy;
-  int res = sessionProxy.connect(userProxy, connectOpt);
+  sessionProxy.connect(userProxy, connectOpt);
 
   session = sessionProxy.getData();
 
