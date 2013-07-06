@@ -30,7 +30,6 @@ using namespace vishnu;
 
 int
 main (int ac, char* av[]) {
-  int counter;
   string sessionId;
   string configFile;
   string userId;
@@ -69,8 +68,8 @@ main (int ac, char* av[]) {
     cleaner(const_cast<char*>(configFile.c_str()), ac, av);// lauch the daemon cleaner if it is not already running
 
     /********* Get all the couples user/pwd ******************/
-    counter = 2;
-    while (counter<ac) {
+    int counter(2);
+    while (counter < ac) {
       string tmp(av[counter]);
       if (counter+1>=ac) {
         helpUsage(*opt);

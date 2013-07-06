@@ -158,10 +158,8 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   long dateLastConnect;
   long dateCreate;
   long dateClose;
-  int  status;
-  int  closePolicy;
 
-  for(unsigned int i = 0; i < listSession.getSessions().size(); i++) {
+  for (unsigned int i = 0; i < listSession.getSessions().size(); i++) {
 
      sessionId = (listSession.getSessions().get(i))->getSessionId();
      maxSessionIdSize = max(maxSessionIdSize, sessionId.size());
@@ -211,7 +209,7 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
   os << endl;
 
 
-  for(unsigned int i = 0; i < listSession.getSessions().size(); i++) {
+  for (unsigned int i = 0; i < listSession.getSessions().size(); i++) {
     sessionId = (listSession.getSessions().get(i))->getSessionId();
 
     userId = (listSession.getSessions().get(i))->getUserId();
@@ -241,9 +239,8 @@ operator<<(std::ostream& os, UMS_Data::ListSessions& listSession) {
       dateCloseStr = boost::posix_time::to_simple_string(pt);
     }
 
-    status = (listSession.getSessions().get(i))->getStatus();
-
-    closePolicy = (listSession.getSessions().get(i))->getClosePolicy();
+    int status = (listSession.getSessions().get(i))->getStatus();
+    int closePolicy = (listSession.getSessions().get(i))->getClosePolicy();
 
     timeOut = (listSession.getSessions().get(i))->getTimeout();
 
@@ -630,10 +627,8 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
   std::string name;
   std::string machineId;
   std::string site;
-  int  status;
 
-  for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
-
+  for (unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
      name = (lsMachine.getMachines().get(i))->getName();
      maxNameSize = max(maxNameSize, name.size());
 
@@ -642,7 +637,6 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
 
      site = (lsMachine.getMachines().get(i))->getSite();
      maxSiteSize = max(maxSiteSize, site.size());
-
   }
 
   os << setw(maxNameSize+2) << left << "Name" << setw(maxMachineIdSize+2) << left << "machineId" << setw(maxSiteSize+2) << left << "Site";
@@ -655,12 +649,11 @@ operator<<(std::ostream& os, UMS_Data::ListMachines& lsMachine) {
   os << endl;
 
 
-  for(unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
-
+  for (unsigned int i = 0; i < lsMachine.getMachines().size(); i++) {
      name = (lsMachine.getMachines().get(i))->getName();
      machineId = (lsMachine.getMachines().get(i))->getMachineId();
      site = (lsMachine.getMachines().get(i))->getSite();
-     status = (lsMachine.getMachines().get(i))->getStatus();
+     int status = (lsMachine.getMachines().get(i))->getStatus();
 
      os << setw(maxNameSize+2) << left <<  name;
      os << setw(maxMachineIdSize+2) << left << machineId;
@@ -734,13 +727,12 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
 
    std::string commandId;
    std::string commandDesc;
-   int status;
+
    size_t maxCommandIdSize = std::string("CommandId").size();
    size_t maxCommandDescSize = std::string("Vishnu Command").size();
-   size_t maxStatusSize = std::string("Status").size()+1;
+   size_t maxStatusSize = std::string("Status").size() + 1;
 
-   for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
-
+   for (unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      maxCommandIdSize = max(maxCommandIdSize, commandId.size());
 
@@ -756,11 +748,11 @@ operator<<(std::ostream& os, UMS_Data::ListCommands& lsCommand) {
   setFill(maxStatusSize, os);
   os << endl;
 
-  for(unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
+  for (unsigned int i = 0; i < lsCommand.getCommands().size(); i++) {
 
      commandId = (lsCommand.getCommands().get(i))->getCommandId();
      commandDesc = (lsCommand.getCommands().get(i))->getCmdDescription();
-     status = (lsCommand.getCommands().get(i))->getStatus();
+     int status = (lsCommand.getCommands().get(i))->getStatus();
 
      os << setw(maxCommandIdSize+2) << left << commandId;
      os << setw(maxCommandDescSize+2) << left << commandDesc;
@@ -881,14 +873,13 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
 
   std::string firstname;
   std::string lastname;
-  int privilege;
-  int status;
   std::string userId;
+
   size_t maxFirstnameSize = std::string("Firstname").size();
   size_t maxLastnameSize = std::string("Lastname").size();
   size_t maxUserIdSize = std::string("UserId").size();
 
-  for(unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
+  for (unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
 
      firstname = (lsUsers.getUsers().get(i))->getFirstname();
      maxFirstnameSize = max(maxFirstnameSize, firstname.size());
@@ -900,9 +891,12 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
      maxUserIdSize = max(maxUserIdSize, userId.size());
   }
 
-  os << setw(maxFirstnameSize+2) << left << "Firstname" << setw(maxLastnameSize+2) << left << "Lastname" << setw(maxUserIdSize+2) << left << "UserId";
-  os << setw(11) << left << "Privilege" << left << "Status";
-  os << endl;
+  os << setw(maxFirstnameSize+2) << left << "Firstname"
+     << setw(maxLastnameSize+2) << left << "Lastname"
+     << setw(maxUserIdSize+2) << left << "UserId"
+     << setw(11) << left << "Privilege" << left << "Status"
+     << endl;
+
   setFill(maxFirstnameSize, os);
   setFill(maxLastnameSize, os);
   setFill(maxUserIdSize, os);
@@ -910,13 +904,13 @@ operator<<(std::ostream& os, UMS_Data::ListUsers& lsUsers) {
   setFill(6, os);
   os << endl;
 
-  for(unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
+  for (unsigned int i = 0; i < lsUsers.getUsers().size(); i++) {
 
      firstname = (lsUsers.getUsers().get(i))->getFirstname();
      lastname = (lsUsers.getUsers().get(i))->getLastname();
      userId = (lsUsers.getUsers().get(i))->getUserId();
-     privilege = (lsUsers.getUsers().get(i))->getPrivilege();
-     status = (lsUsers.getUsers().get(i))->getStatus();
+     int privilege = (lsUsers.getUsers().get(i))->getPrivilege();
+     int status = (lsUsers.getUsers().get(i))->getStatus();
 
      os << setw(maxFirstnameSize+2) << left << firstname;
      os << setw(maxLastnameSize+2) << left << lastname;

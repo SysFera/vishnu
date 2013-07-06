@@ -164,16 +164,16 @@ int
 solveSessionClose(diet_profile_t* pb) {
   std::string sessionKey;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameter
   diet_string_get(pb,0, sessionKey);
   SessionServer sessionServer = SessionServer(sessionKey);
 
   try {
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_close");
     cmd = mapper->finalize(mapperkey);
@@ -209,9 +209,8 @@ solveUserCreate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string userSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -223,6 +222,7 @@ solveUserCreate(diet_profile_t* pb) {
   UMS_Data::User_ptr user = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_user");
@@ -276,9 +276,8 @@ solveUserUpdate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string userSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
 
   //IN Parameters
@@ -291,7 +290,8 @@ solveUserUpdate(diet_profile_t* pb) {
   UMS_Data::User_ptr user = NULL;
 
   try {
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_user");
     mapper->code(userSerialized, mapperkey);
@@ -335,9 +335,8 @@ solveUserDelete(diet_profile_t* pb) {
   std::string sessionKey;
   std::string userId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -350,6 +349,7 @@ solveUserDelete(diet_profile_t* pb) {
   user.setUserId(userId);
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_user");
@@ -436,9 +436,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
   std::string sessionKey;
   std::string userId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -451,7 +450,8 @@ solveUserPasswordReset(diet_profile_t* pb) {
   user.setUserId(userId);
 
   try {
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_reset_password");
     mapper->code(userId, mapperkey);
@@ -491,9 +491,8 @@ solveMachineCreate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string machineSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -504,6 +503,7 @@ solveMachineCreate(diet_profile_t* pb) {
   UMS_Data::Machine_ptr machine = NULL;
 
   try {
+    int mapperkey;
     std::string msgComp = "The ssh public key file content is invalid";
 
     //MAPPER CREATION
@@ -556,9 +556,8 @@ solveMachineUpdate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string machineSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -569,6 +568,7 @@ solveMachineUpdate(diet_profile_t* pb) {
   UMS_Data::Machine_ptr machine = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_machine");
@@ -614,9 +614,8 @@ solveMachineDelete(diet_profile_t* pb) {
   std::string sessionKey;
   std::string machineId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -629,6 +628,7 @@ solveMachineDelete(diet_profile_t* pb) {
   MachineServer machineServer = MachineServer(machine, sessionServer);
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_machine");
@@ -668,9 +668,8 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string laccountSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -681,6 +680,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
   UMS_Data::LocalAccount_ptr localAccount = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_local_account");
@@ -728,9 +728,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string laccountSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -740,8 +739,8 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
   UMS_Data::LocalAccount_ptr localAccount = NULL;
 
   try {
-
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_local_account");
     mapper->code(laccountSerialized, mapperkey);
@@ -787,9 +786,8 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   std::string userId;
   std::string machineId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -804,7 +802,8 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
 
   try {
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_local_account");
     mapper->code(userId, mapperkey);
@@ -847,9 +846,8 @@ solveConfigurationSave(diet_profile_t* pb) {
   std::string sessionKey;
   std::string configurationSerialized("");
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameter
   diet_string_get(pb,0, sessionKey);
@@ -858,6 +856,7 @@ solveConfigurationSave(diet_profile_t* pb) {
   ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_save_configuration");
@@ -899,9 +898,8 @@ solveConfigurationRestore(diet_profile_t* pb) {
   std::string sessionKey;
   std::string configurationSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -911,7 +909,7 @@ solveConfigurationRestore(diet_profile_t* pb) {
   UMS_Data::Configuration_ptr configuration = NULL;
 
   try {
-
+    int mapperkey;
     std::string msgComp = "The file content is invalid";
 
     //MAPPER CREATION
@@ -957,9 +955,8 @@ solveOptionValueSet(diet_profile_t* pb) {
   std::string sessionKey;
   std::string optionValueSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -970,6 +967,7 @@ solveOptionValueSet(diet_profile_t* pb) {
   UMS_Data::OptionValue_ptr optionValue = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_option");
@@ -1014,9 +1012,8 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   std::string sessionKey;
   std::string optionValueSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1026,6 +1023,7 @@ solveOptionValueSetDefault(diet_profile_t* pb) {
   UMS_Data::OptionValue_ptr optionValue = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_configure_default_option");
@@ -1073,9 +1071,8 @@ solveGenerique(diet_profile_t* pb) {
   std::string optionValueSerialized;
   std::string listSerialized = "";
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1087,6 +1084,7 @@ solveGenerique(diet_profile_t* pb) {
   List* list = NULL;
 
   try {
+    int mapperkey;
     //To parse the object serialized
     if(!parseEmfObject(optionValueSerialized, options)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
@@ -1226,9 +1224,8 @@ solveSystemAuthCreate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string authSystemSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1239,6 +1236,7 @@ solveSystemAuthCreate(diet_profile_t* pb) {
   UMS_Data::AuthSystem_ptr authSystem = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_auth_system");
@@ -1290,9 +1288,8 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string authSystemSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1302,8 +1299,8 @@ solveSystemAuthUpdate(diet_profile_t* pb) {
   UMS_Data::AuthSystem_ptr authSystem = NULL;
 
   try {
-
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_auth_system");
     mapper->code(authSystemSerialized, mapperkey);
@@ -1347,9 +1344,8 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   std::string sessionKey;
   std::string authSystemId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1362,6 +1358,7 @@ solveSystemAuthDelete(diet_profile_t* pb) {
   AuthSystemServer authSystemServer (authSystem, sessionServer);
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_auth_system");
@@ -1412,9 +1409,8 @@ solveAccountAuthCreate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string accountSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1425,6 +1421,7 @@ solveAccountAuthCreate(diet_profile_t* pb) {
   UMS_Data::AuthAccount_ptr authAccount = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_add_auth_account");
@@ -1470,9 +1467,8 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
   std::string sessionKey;
   std::string accountSerialized;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1483,6 +1479,7 @@ solveAccountAuthUpdate(diet_profile_t* pb) {
   UMS_Data::AuthAccount_ptr authAccount = NULL;
 
   try {
+    int mapperkey;
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_update_auth_account");
@@ -1529,9 +1526,8 @@ solveAccountAuthDelete(diet_profile_t* pb) {
   std::string userId;
   std::string authSystemId;
   std::string errorInfo;
-  int mapperkey;
   std::string cmd;
-  std::string finishError ="";
+  std::string finishError;
 
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
@@ -1546,7 +1542,8 @@ solveAccountAuthDelete(diet_profile_t* pb) {
   AuthAccountServer authAccountServer = AuthAccountServer(authAccount, sessionServer);
 
   try {
-     //MAPPER CREATION
+    int mapperkey;
+    //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_delete_auth_account");
     mapper->code(userId, mapperkey);
