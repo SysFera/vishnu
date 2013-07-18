@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_fromMachineId)
   options->setFromMachineId("machine1");
   listFileTransfers.processOptions(options, test_sql);
   BOOST_CHECK_EQUAL(test_sql, sqlListOfFiles+ " and (sourceMachineId='machine1' or destinationMachineId='machine1')");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_status)
@@ -45,7 +45,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_status)
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setStatus(-2);
   BOOST_CHECK_THROW(listFileTransfers.processOptions(options, test_sql), UserException);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_transferId)
@@ -56,7 +56,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_transferId)
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setTransferId("idghdfgfqghdfqdg");
   BOOST_CHECK_THROW(listFileTransfers.processOptions(options, test_sql), UserException);
-  
+
 }
 
 
@@ -68,7 +68,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_userId)
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setUserId("idghdfgfqghdfqdg");
   BOOST_CHECK_THROW(listFileTransfers.processOptions(options, test_sql), UMSVishnuException);
-  
+
 }
 
 
