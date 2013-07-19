@@ -11,9 +11,10 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <boost/interprocess/sync/file_lock.hpp>
+#include <boost/interprocess/sync/scoped_lock.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
-#include <sys/stat.h>
 
 #include "UMSVishnuException.hpp"
 #include "VishnuException.hpp"
@@ -21,6 +22,7 @@
 
 namespace bfs = boost::filesystem;
 namespace bs = boost::serialization;
+namespace bi = boost::interprocess;
 using namespace boost::archive;
 
 
@@ -139,15 +141,15 @@ operator <<(std::ostream& os, const SessionEntry& session){
 template <class T>
 void
 saveIntoFile(SessionContainer& allSessions, const char* file){
-  {
+  bi::file_lock sessionLock(file);
+  bi::scoped_lock<bi::file_lock> lock(sessionLock);
+  std::ofstream ofile (file);
 
-    std::ofstream ofile (file);
+  T ar(ofile);
 
-    T ar(ofile);
+  ar << bs::make_nvp("sessions",allSessions);
 
-    ar << bs::make_nvp("sessions",allSessions);
-  }
-  chmod(file, S_IRUSR | S_IWUSR);
+  ofile.close();
 }
 
 
@@ -242,7 +244,7 @@ getLastSession(const std::string& terminal){
     //std::cerr <<"There is no open session in this terminal\n";
 
     //exit (CLI_ERROR_NO_SESSION);
-    throw UserException (ERRCODE_CLI_ERROR_NO_SESSION,"There is no open session in this shell terminal");
+    throw UserException (ERRCODE_CLI_ERROR_NO_SESSION,"There is no open session in this terminal");
 
   }
 
