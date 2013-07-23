@@ -80,6 +80,10 @@ int main (int ac, char* av[]){
   bool isEmpty;
   GenericCli().processListOpt( opt, isEmpty,ac,av);
 
+    // if no path is provided, just display local account $HOME
+    if (path[path.length() - 1] == ':') {
+        path.append("~");
+    }
 
  if ( opt->count("allFiles")){
      lsDirOptions.setAllFiles(true);
