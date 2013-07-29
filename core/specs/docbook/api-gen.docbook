@@ -233,6 +233,14 @@
 	  
 	<para>Rename of FMS functions according to Posix names. </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>18</revnumber>
+        <date>29/07/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+	  
+	<para>Removed any references to WSDL. </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -248,14 +256,11 @@
         <listitem>
           <para>Python (v2.x) API</para>
         </listitem>
-        <listitem>
-          <para>Web services (WSDL 1.1) API</para>
-        </listitem>
       </itemizedlist>
       <para>These specifications include the definition of all methods and all data types in a format that is common
             to all APIs. Therefore the description is not tied to a particular implementation and all implementations
             will follow the same logic and will differ only when the language that is used imposes some constraints.</para>
-      <para>Specific aspects of each implementation language are described in the section 1.3.</para>
+      <para>Specific aspects of each implementation language are described in section 1.3.</para>
     </section>
     <section>
       <title>Document structure</title>
@@ -291,7 +296,7 @@
 	    by the libraries. It also details the particular implementation constraints for each language.</para>
       <section>
         <title>Methods definition format</title>
-        <para>The following paragraphs show how all methods (or &quot;operations&quot; in the Web Services terminology) are specified
+        <para>The following paragraphs show how all methods that are specified
 	      in this document. First, the generic format used for each Vishnu module is explained, then the aspects that are
 	      specific to each implementation language are detailed.</para>
         <section>
@@ -389,23 +394,6 @@
             </listitem>
           </itemizedlist>
         </section>
-        <section>
-          <title>Web Services specific aspects</title>
-          <itemizedlist>
-            <listitem>
-              <para>The input and output parameters will be implemented as Java Beans: a &quot;Request&quot; bean containing the input parameters and a &quot;Response&quot; bean containing the output parameters.</para>
-            </listitem>
-            <listitem>
-              <para>The methods will throw exceptions for each error message specified. The exception will contain additional details provided by the server.</para>
-            </listitem>
-            <listitem>
-              <para>The VishnuInitialize() and VishnuFinalize() methods are not applicable to the WS API.</para>
-            </listitem>
-            <listitem>
-              <para>Methods with restricted access (administration) are not included in the WS API.</para>
-            </listitem>
-          </itemizedlist>
-        </section>
       </section>
       <section>
         <title>Data types definition format</title>
@@ -462,42 +450,7 @@
             </listitem>
           </itemizedlist>
         </section>
-        <section>
-          <title>Web Services specific aspects</title>
-          <itemizedlist>
-            <listitem>
-              <para>When a single instance of object is used as input or output parameter, the attributes of the object will be mapped
-                     respectively to attributes of the 'Request' or 'Response' Java Bean.</para>
-            </listitem>
-            <listitem>
-              <para>When multiple instances of object are used as input or output parameters (for example list of machines or list or users)
-                     the 'Request' or 'Response' Java Bean will contain a 'data' subclass containing the instances. This follows the standard
-                     WSDL/Java mapping for Apache-CXF.
-                   </para>
-            </listitem>
-          </itemizedlist>
-        </section>
       </section>
-    </section>
-    <section>
-      <title>Web Services description</title>
-      <para>The Web Services are fully described by the following documents which are attached to the current document:</para>
-      <para>
-      <itemizedlist>
-          <listitem>
-            <para><emphasis role="bold">UMS.wsdl</emphasis> : WSDL file for the UMS module</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">TMS.wsdl</emphasis> : WSDL file for the TMS module</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">FMS.wsdl</emphasis> : WSDL file for the FMS module</para>
-          </listitem>
-          <listitem>
-            <para><emphasis role="bold">IMS.wsdl</emphasis> : WSDL file for the IMS module</para>
-          </listitem>
-        </itemizedlist>
-      </para>
     </section>
     <section>
       <title>References</title>
