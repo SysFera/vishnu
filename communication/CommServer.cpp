@@ -35,7 +35,7 @@ registerSeD(const std::string& type,
   std::string uriSed;
   std::string mid;
   std::string uriDispatcher;
-  std::string urlsup;
+  std::string uriSupervisor;
   int timeout = 10;
 
   // Getting the machine id
@@ -46,7 +46,6 @@ registerSeD(const std::string& type,
   }
 
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
-  config.getRequiredConfigValue<std::string>(vishnu::URLSUPERVISOR, urlsup);
   if (type == "fmssed") {
     config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uriSed);
   } else  if (type == "imssed") {
@@ -59,7 +58,10 @@ registerSeD(const std::string& type,
 
   /* Validate the uri and registry the SeD if not yet the case */
   validateUri(uriDispatcher);
-  if (vishnu::isNew(urlsup, mid, type)) {
+
+  // Check whether to use supervisord
+  if (config.getConfigValue<std::string>(vishnu::URISUPERVISOR, uriSupervisor) &&
+      vishnu::isNew(uriSupervisor, mid, type)) {
     try {
       DbFactory factory;
       Database* database = factory.getDatabaseInstance();
@@ -67,7 +69,7 @@ registerSeD(const std::string& type,
       std::string request = (boost::format("INSERT INTO process (dietname, launchscript,"
                                            "            machineid, pstatus, uptime, vishnuname)"
                                            " VALUES ('%1%','%2%','%3%',%4%,CURRENT_TIMESTAMP, '%5%')")
-                             %urlsup
+                             %uriSupervisor
                              %config.scriptToString()
                              %mid
                              %vishnu::convertToString(vishnu::PRUNNING)
