@@ -27,7 +27,7 @@ namespace vishnu {
     /* [13] */ {DBPOOLSIZE, "databaseConnectionsNb", INT_PARAMETER},
     /* [14] */ {AUTHENTYPE, "authenticationType", STRING_PARAMETER},
     /* [15] */ {DEFAULTBATCHCONFIGFILE, "defaultBatchConfig",STRING_PARAMETER},
-    /* [16] */ {URLSUPERVISOR, "urlSupervisor", URI_PARAMETER},
+    /* [16] */ {URISUPERVISOR, "uriSupervisor", URI_PARAMETER},
     /* [17] */ {DISP_URIADDR, "disp_uriAddr", URI_PARAMETER},
     /* [18] */ {DISP_URISUBS, "disp_uriSubs", URI_PARAMETER},
     /* [19] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER},
