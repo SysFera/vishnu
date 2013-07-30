@@ -103,6 +103,16 @@
               <para> Clean corba/sysfera-ds.</para>
             </revdescription>
           </revision>
+
+	  <revision>
+            <revnumber>11</revnumber>
+            <date>30/07/2013</date>
+            <authorinitials>SysFera</authorinitials>
+            <revdescription>
+              <para> Mise à jour du tableau des exigences pour l'environnement
+              matériel et logiciel.</para>
+            </revdescription>
+          </revision>
 	  
         </revhistory>
     </info>
@@ -113,12 +123,15 @@
             <para>Ce document présente les spécifications techniques des besoins pour le système
                 Vishnu. Elles sont basées sur les documents de Cahier des charges du
                 système Vishnu (voir Références) et sur la proposition technique de la société
-                Sysfera. Ces spécifications incluent les contraintes d'implémentation du
+                SysFera. Ces spécifications incluent les contraintes d'implémentation du
                 logiciel. L'objectif principal de ces spécifications est de valider l'adéquation de
-                la solution proposée par rapport aux contraintes de l'environnement d'utilisation.</para>
+                la solution proposée par rapport aux contraintes de
+                l'environnement d'utilisation.
+            </para>
             <para>Ce document pourra également contenir des prévisions sur les évolutions futures du
                 logiciel et préciser quelles fonctions devraient être faciles à ajouter ou
-                supprimer.</para>
+                supprimer.
+            </para>
         </section>
         <section>
             <title>Structure du document</title>
