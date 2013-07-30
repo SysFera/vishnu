@@ -109,6 +109,15 @@
               
             <para> Clean corba/sysfera-ds.</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>11</revnumber>
+        <date>30/07/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+              
+            <para> Mise à jour du tableau des exigences pour l'environnement
+              matériel et logiciel.</para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -118,12 +127,15 @@
       <para>Ce document présente les spécifications techniques des besoins pour le système
                 Vishnu. Elles sont basées sur les documents de Cahier des charges du
                 système Vishnu (voir Références) et sur la proposition technique de la société
-                Sysfera. Ces spécifications incluent les contraintes d'implémentation du
+                SysFera. Ces spécifications incluent les contraintes d'implémentation du
                 logiciel. L'objectif principal de ces spécifications est de valider l'adéquation de
-                la solution proposée par rapport aux contraintes de l'environnement d'utilisation.</para>
+                la solution proposée par rapport aux contraintes de
+                l'environnement d'utilisation.
+            </para>
       <para>Ce document pourra également contenir des prévisions sur les évolutions futures du
                 logiciel et préciser quelles fonctions devraient être faciles à ajouter ou
-                supprimer.</para>
+                supprimer.
+            </para>
     </section>
     <section>
       <title>Structure du document</title>
@@ -291,7 +303,7 @@
             <row>
               <entry><para>2.1</para></entry>
               <entry><para>Données des requêtes au système</para></entry>
-              <entry><para>Les requêtes au système vishnu sont authentifiées mais non cryptées.</para></entry>
+              <entry><para>Les requêtes au système vishnu sont authentifiées et non cryptées par défaut. Elles peuvent être cryptées si nécessaire via SSL en configurant Vishnu en conséquence.</para></entry>
             </row>
             <row>
               <entry><para>2.2</para></entry>
@@ -421,6 +433,11 @@ de SHA-1.</para>
               <entry><para>Adresse IP dynamique et nom DNS dynamique</para></entry>
             </row>
             <row>
+              <entry><para>1.1.9</para></entry>
+              <entry><para>Autres logiciels requis</para></entry>
+              <entry><para>ZMQ, SSH (client)</para></entry>
+            </row>
+            <row>
               <entry><para>1.2</para></entry>
               <entry><para>Serveurs de calcul ou de stockage</para></entry>
               <entry/>
@@ -521,8 +538,13 @@ de SHA-1.</para>
               <entry><para>Adresse IP et nom DNS statiques</para></entry>
             </row>
             <row>
+              <entry><para>1.3.2.8</para></entry>
+              <entry><para>Autres logiciels requis</para></entry>
+              <entry><para>ZMQ, SSH (client/serveur), RSync, supervisord, xmlrpc</para></entry>
+            </row>
+            <row>
               <entry><para>1.4</para></entry>
-              <entry><para>Serveur Web (pour API Web Services)</para></entry>
+              <entry><para>Serveur de Base de données</para></entry>
               <entry/>
             </row>
             <row>
@@ -542,141 +564,91 @@ de SHA-1.</para>
             </row>
             <row>
               <entry><para>1.4.1.3</para></entry>
-              <entry><para>Nombre et vitesse des processeurs</para></entry>
-              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
+              <entry><para>Mémoire vive</para></entry>
+              <entry><para>Minimum 2Go</para></entry>
             </row>
             <row>
               <entry><para>1.4.1.4</para></entry>
-              <entry><para>Mémoire vive</para></entry>
-              <entry><para>Minimum 2Go</para></entry>
+              <entry><para>Nombre et vitesse des processeurs</para></entry>
+              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
             </row>
             <row>
               <entry><para>1.4.1.5</para></entry>
               <entry><para>Espace disque</para></entry>
-              <entry><para>Minimum 500 Go (espace nécessaire au stockage de fichiers temporaires)</para></entry>
-            </row>
-            <row>
-              <entry><para>1.4.1.6</para></entry>
-              <entry><para>Interface réseau</para></entry>
-              <entry><para>Adresse IP et nom DNS statiques </para></entry>
-            </row>
-            <row>
-              <entry><para>1.4.2</para></entry>
-              <entry><para>Machine virtuelle Java</para></entry>
-              <entry><para>Java SDK v1.6.0</para></entry>
-            </row>
-            <row>
-              <entry><para>1.4.3</para></entry>
-              <entry><para>Autres logiciels requis</para></entry>
-              <entry><para>ZMQ(version 2), SSH (client/serveur), RSync, supervisord (version 3.0a12), xmlrpc (version 2.1.19)</para></entry>
-            </row>
-            <row>
-              <entry><para>1.5</para></entry>
-              <entry><para>Serveur de Base de données</para></entry>
-              <entry/>
-            </row>
-            <row>
-              <entry><para>1.5.1</para></entry>
-              <entry><para>Plateforme</para></entry>
-              <entry/>
-            </row>
-            <row>
-              <entry><para>1.5.1.1</para></entry>
-              <entry><para>Système d'exploitation</para></entry>
-              <entry><para>Debian Linux v5 (Lenny) ou ultérieure</para></entry>
-            </row>
-            <row>
-              <entry><para>1.5.1.2</para></entry>
-              <entry><para>Architecture matérielle</para></entry>
-              <entry><para>Intel x86</para></entry>
-            </row>
-            <row>
-              <entry><para>1.5.1.3</para></entry>
-              <entry><para>Mémoire vive</para></entry>
-              <entry><para>Minimum 2Go</para></entry>
-            </row>
-            <row>
-              <entry><para>1.5.1.4</para></entry>
-              <entry><para>Nombre et vitesse des processeurs</para></entry>
-              <entry><para>Monoprocesseur ou multiprocesseur, 2GHz minimum</para></entry>
-            </row>
-            <row>
-              <entry><para>1.5.1.5</para></entry>
-              <entry><para>Espace disque</para></entry>
               <entry><para>Minimum 500 Go</para></entry>
             </row>
             <row>
-              <entry><para>1.5.1.6</para></entry>
+              <entry><para>1.4.1.6</para></entry>
               <entry><para>Ports pour tunnel(s) SSH</para></entry>
               <entry><para>N ports réseau disponibles pour un/des tunnel(s) SSH où N est le nombre de serveurs de calcul ou de stockage placés derrière un firewall.</para></entry>
             </row>
             <row>
-              <entry><para>1.5.1.7</para></entry>
+              <entry><para>1.4.1.7</para></entry>
               <entry><para>Interface réseau</para></entry>
               <entry><para>Adresse IP et nom DNS statiques</para></entry>
             </row>
             <row>
-              <entry><para>1.5.2</para></entry>
+              <entry><para>1.4.2</para></entry>
               <entry><para>SGBD supportés</para></entry>
-              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- MySQL (v5.1.49)</para></entry>
+              <entry><para>L'un des deux SGBD suivantes doit être installé:</para><para>- PostGreSQL version 8.0 ou ultérieure</para><para>- MySQL version 5.1.49 ou ultérieure</para></entry>
             </row>
             <row>
-              <entry><para>1.5.3</para></entry>
+              <entry><para>1.4.3</para></entry>
               <entry><para>Réplication de la base de données</para></entry>
               <entry><para>Afin de garantir un temps de réponse maximum aux requêtes des machines de la plate-forme VISHNU, la base de donnée pourra être répliquée selon une architecture maître-esclave (écriture sur un seul serveur, lecture sur plusieurs serveurs).</para></entry>
             </row>
             <row>
-              <entry><para>1.6</para></entry>
+              <entry><para>1.5</para></entry>
               <entry><para>Infrastructure réseau</para></entry>
               <entry/>
             </row>
             <row>
-              <entry><para>1.6.1</para></entry>
+              <entry><para>1.5.1</para></entry>
               <entry><para>Connexion entre serveurs (calcul/stockage/VISHNU) et serveur de base de données</para></entry>
               <entry/>
             </row>
             <row>
-              <entry><para>1.6.1.1</para></entry>
+              <entry><para>1.5.1.1</para></entry>
               <entry><para>Débit</para></entry>
               <entry><para>Minimum 100Mb/s</para></entry>
             </row>
             <row>
-              <entry><para>1.6.1.2</para></entry>
+              <entry><para>1.5.1.2</para></entry>
               <entry><para>Temps de réponse</para></entry>
               <entry><para>Maximum 100ms</para></entry>
             </row>
             <row>
-              <entry><para>1.6.1.3</para></entry>
+              <entry><para>1.5.1.3</para></entry>
               <entry><para>Protocoles autorisés</para></entry>
               <entry><para>TCP SSH (port 22) minimum</para></entry>
             </row>
             <row>
-              <entry><para>1.6.2</para></entry>
+              <entry><para>1.5.2</para></entry>
               <entry><para>Connexion entre clients (ou serveur web) et serveurs (calcul/stockage/VISHNU)</para></entry>
               <entry><para>La connexion entre le client et le serveur se fait de manière non cryptée, ainsi les informations telles les mots de passe circulent en clair</para></entry>
             </row>
             <row>
-              <entry><para>1.6.2.1</para></entry>
+              <entry><para>1.5.2.1</para></entry>
               <entry><para>Débit</para></entry>
               <entry><para>Minimum 10Mb/s</para></entry>
             </row>
             <row>
-              <entry><para>1.6.2.2</para></entry>
+              <entry><para>1.5.2.2</para></entry>
               <entry><para>Temps de réponse</para></entry>
               <entry><para>Maximum 200ms</para></entry>
             </row>
             <row>
-              <entry><para>1.6.2.3</para></entry>
+              <entry><para>1.5.2.3</para></entry>
               <entry><para>Protocoles autorisés</para></entry>
               <entry><para>TCP SSH (port 22) minimum</para></entry>
             </row>
             <row>
-              <entry><para>1.6.3</para></entry>
+              <entry><para>1.5.3</para></entry>
               <entry><para>Connexion vers un serveur de messagerie</para></entry>
               <entry><para>Les serveurs de calcul et de stockage de la plateforme VISHNU doivent pouvoir se connecter sur un serveur de messagerie via le protocole SMTP.</para></entry>
             </row>
             <row>
-              <entry><para>1.6.3.1</para></entry>
+              <entry><para>1.5.3.1</para></entry>
               <entry><para>Compte de messagerie</para></entry>
               <entry><para>Un compte de messagerie sera utilisé par le système VISHNU pour envoyer des messages email aux utilisateurs.</para></entry>
             </row>
@@ -694,6 +666,21 @@ de SHA-1.</para>
               <entry><para>2.1.1</para></entry>
               <entry><para>SSL</para></entry>
               <entry><para>OpenSSL 0.9.8k</para></entry>
+            </row>
+            <row>
+              <entry><para>2.10</para></entry>
+              <entry><para>ZMQ</para></entry>
+              <entry><para>version 2.x</para></entry>
+            </row>
+            <row>
+              <entry><para>2.11</para></entry>
+              <entry><para>supervisord</para></entry>
+              <entry><para>version 3.0a12</para></entry>
+            </row>
+            <row>
+              <entry><para>2.12</para></entry>
+              <entry><para>xmlrpc</para></entry>
+              <entry><para>version 2.1.19</para></entry>
             </row>
             <row>
               <entry><para>2.3</para></entry>
@@ -801,7 +788,7 @@ de SHA-1.</para>
             <row>
               <entry><para>1.2</para></entry>
               <entry><para>Enregistrement des requêtes</para></entry>
-              <entry><para>Le système Vishnu conserve la trace de chaque requête utilisateur dans une base de données. Cette trace comprend les identifiants de l'utilisateur et de la machine cliente, le nom de la commande ayant permis le lancement de la requête et les paramètres de la requête. Dans le cas d'une requête soumise via l'API Web Services, la machine cliente sera le serveur web lui-même.</para></entry>
+              <entry><para>Le système Vishnu conserve la trace de chaque requête utilisateur dans une base de données. Cette trace comprend les identifiants de l'utilisateur et de la machine cliente, le nom de la commande ayant permis le lancement de la requête et les paramètres de la requête.</para></entry>
             </row>
             <row>
               <entry><para>1.3</para></entry>
@@ -870,13 +857,13 @@ de SHA-1.</para>
             </row>
             <row>
               <entry><para>3.2.1</para></entry>
-              <entry><para>Consommation mémoire moyenne des processus VISHNU</para></entry>
-              <entry><para>La consommation moyenne des processus VISHNU ne devra pas dépasser 500Mb de mémoire virtuelle </para></entry>
+              <entry><para>Consommation mémoire moyenne des processus Vishnu</para></entry>
+              <entry><para>La consommation moyenne des processus Vishnu ne devra pas dépasser 500Mb de mémoire virtuelle </para></entry>
             </row>
             <row>
               <entry><para>3.2.2</para></entry>
               <entry><para>Consommation CPU moyenne des processus VISHNU</para></entry>
-              <entry><para>La consommation CPU des processus VISHNU ne devra pas dépasser 10% lorsque le système n'est pas soumis à des requêtes utilisateur (la consommation étant essentiellement dûe aux processus de supervision)</para></entry>
+              <entry><para>La consommation CPU des processus Vishnu ne devra pas dépasser 10% lorsque le système n'est pas soumis à des requêtes utilisateur (la consommation étant essentiellement dûe aux processus de supervision)</para></entry>
             </row>
             <row>
               <entry><para>3.2.3</para></entry>
