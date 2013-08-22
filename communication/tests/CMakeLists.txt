@@ -21,6 +21,7 @@ add_library(test_zmq_helper
   ../Server.cpp
   ../SeD.cpp
   ../utils.cpp
+  ../sslhelpers.cpp
   )
 
 add_library(fake_zmq
