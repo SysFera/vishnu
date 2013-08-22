@@ -257,9 +257,9 @@ vishnuMachineId=machine_1
 #
 timeout=120
 
-# urlSupervisor (M<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
+# uriSupervisor (OS<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
 #
-urlSupervisor=http://127.0.0.1:9001
+uriSupervisor=http://127.0.0.1:9001
 
 # debugLevel (O): specifies the debug level. The higher the more debug information
 # you'll get. Default is 0.

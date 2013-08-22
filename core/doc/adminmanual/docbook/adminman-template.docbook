@@ -1348,8 +1348,8 @@ vishnuMachineId=machine_1
 #
 timeout=120
 
-#urlSupervisor (M<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
-urlSupervisor=http://127.0.0.1:9001
+#uriSupervisor (O<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
+uriSupervisor=http://127.0.0.1:9001
 ]]>
 </programlisting>
 <section>
