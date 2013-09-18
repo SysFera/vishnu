@@ -626,7 +626,6 @@ PbsProServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   } // end while
 
   // Creating job
-  job.setJobId(jobid);
   job.setBatchJobId(jobid);
   job.setJobName(name);
   job.setOwner(owner);

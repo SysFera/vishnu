@@ -877,8 +877,6 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
           TMS_Data::Job_ptr job = new TMS_Data::Job();
 
-          job->setJobId(value);
-
           if(owner!=NULL) {
             job->setOwner(owner);
           }
