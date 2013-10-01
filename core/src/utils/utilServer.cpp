@@ -265,7 +265,7 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
   case USER:
     table="users";
     fields=" (vishnu_vishnuid,pwd,userid) ";
-    val = " ("+vishnuIdString+",'tata','titi') ";
+    val = " ("+vishnuIdString+",'','') ";
     primary="numuserid";
     break;
   case JOB:
@@ -335,10 +335,12 @@ vishnu::getVishnuCounter(std::string vishnuIdString, IdType type) {
  * \param type : the type of the object
  */
 void
-vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
+vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
   std::string table;
   std::string keyname;
   std::string idname;
+  bool uniq = false;
+
   switch(type) {
   case MACHINE:
     table="machine";
@@ -374,6 +376,13 @@ vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
     throw SystemException(ERRCODE_SYSTEM,"Cannot reserve Object id, type in unrecognized");
     break;
   }
+  while (!uniq){
+    uniq = checkObjectId(table, idname, objectId);
+    if (!uniq) {
+      objectId += convertToString(key);
+    }
+  }
+
   std::string sqlReserve="UPDATE "+table+" ";
   sqlReserve+="set "+idname+"='"+objectId+"' ";
   sqlReserve+="where "+keyname+"="+convertToString(key)+";";
@@ -386,6 +395,27 @@ vishnu::reserveObjectId(int key, std::string objectId, IdType type) {
   }
 
 }
+
+bool
+vishnu::checkObjectId(std::string table,
+                      std::string idname,
+                      std::string objectId){
+  std::string request = "SELECT "+ idname + " FROM " + table + " WHERE " + idname + "='" + objectId +"';";
+  DbFactory factory;
+  Database *mdatabase;
+  mdatabase = factory.getDatabaseInstance();
+  try {
+    boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
+    if (result->getNbTuples() != 0) {
+      return false;
+    }
+  } catch (SystemException& e) {
+    throw;
+  }
+  return true;
+}
+
+
 
 /**
  * \brief Function to get information from the table vishnu
