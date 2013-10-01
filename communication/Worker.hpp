@@ -47,7 +47,6 @@ public:
       data.clear();
       try {
         data = socket.get();
-        std::cout <<"got message \n" << data <<"\n";
       } catch (zmq::error_t &error) {
         std::cerr << boost::format("E: %1%\n") % error.what();
         continue;

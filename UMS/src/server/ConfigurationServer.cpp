@@ -257,7 +257,9 @@ int ConfigurationServer::restore(int vishnuId) {
       }
 
       //To insert machines and users
-      mdatabaseVishnu->process(sqlcode.c_str());
+      if (!sqlcode.empty()) {
+        mdatabaseVishnu->process(sqlcode.c_str());
+      }
 
       //To get machines description
       for(unsigned int i = 0; i < mconfiguration->getListConfMachines().size(); i++) {
@@ -266,7 +268,9 @@ int ConfigurationServer::restore(int vishnuId) {
       }
 
       //To insert machines description
-      mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
+      if (!sqlCodeDescMachine.empty()) {
+        mdatabaseVishnu->process(sqlCodeDescMachine.c_str());
+      }
 
       //To insert localAccount
       for(unsigned int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
