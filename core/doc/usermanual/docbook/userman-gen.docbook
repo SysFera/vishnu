@@ -425,7 +425,7 @@ If there is a server in the configuration file, it is always used, for instance 
 retryTimeout corresponds to a timeout before relaunching a command if no answer is given (there is up to 3 retries for a client command).
 </para>
         <para>
-From the version 3.1.0, VISHNU support secured communications through SSL channels. To enable that, you need to compile the software with OpenSSL support, then enable the following configuration keys :
+From the version 3.1.0, VISHNU supports secured communications through SSL channels. To enable that, you need to compile the software with OpenSSL support, then enable the following configuration keys :
 </para>
         <itemizedlist>
           <listitem>
@@ -435,7 +435,7 @@ From the version 3.1.0, VISHNU support secured communications through SSL channe
           </listitem>
           <listitem>
             <para>
-<literal>sslCa=/path/to/cafile</literal> : optionnal, this points to the certificates of the authory of certification. This could be required if you are using a self-signed certificate.
+<literal>sslCa=/path/to/cafile</literal> : optionnal, this points to the certificates of the authority of certification. This could be required if you are using a self-signed certificate.
 </para>
           </listitem>
         </itemizedlist>
