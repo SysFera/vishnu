@@ -144,6 +144,31 @@ const int VISHNU_DELETE_AUTHACC           = 31;
  */
 const int VISHNU_LIST_AUTHACC       = 32;
 
+/**
+ * \brief Define user id format
+ */
+const int VISHNU_DEFINE_UID = 33;
+/**
+ * \brief Define machine id format
+ */
+const int VISHNU_DEFINE_MID = 34;
+/**
+ * \brief Define task id format
+ */
+const int VISHNU_DEFINE_TID = 35;
+/**
+ * \brief Define file transfer id format
+ */
+const int VISHNU_DEFINE_FID = 36;
+/**
+ * \brief Define authentication system id
+ */
+const int VISHNU_DEFINE_AID = 37;
+/**
+ * \brief Define work system id
+ */
+const int VISHNU_DEFINE_WID = 38;
+
 
 /**
  * \class UMSMapper
@@ -487,6 +512,54 @@ protected:
   virtual std::string
   decodeConfOp(std::vector<unsigned int> separator, const std::string& msg);
 
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeFid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeMid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeUid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeTid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeAid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeWid(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To deserialize the serial string, make a user objet, and get the values in the same string

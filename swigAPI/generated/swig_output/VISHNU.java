@@ -153,6 +153,30 @@ public class VISHNU {
     VISHNUJNI.vishnuFinalize();
   }
 
+  public static int defineUserIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineUserIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineMachineIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineMachineIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineJobIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineJobIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineTransferIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineTransferIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineAuthIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineAuthIdentifier(sessionKey, fmt);
+  }
+
+  public static int defineWorkIdentifier(String sessionKey, String fmt) throws InternalUMSException {
+    return VISHNUJNI.defineWorkIdentifier(sessionKey, fmt);
+  }
+
   public static int submitJob(String sessionKey, String machineId, String scriptFilePath, Job jobInfo, SubmitOptions options) throws InternalTMSException {
     return VISHNUJNI.submitJob(sessionKey, machineId, scriptFilePath, Job.getCPtr(jobInfo), jobInfo, SubmitOptions.getCPtr(options), options);
   }
@@ -215,30 +239,6 @@ public class VISHNU {
 
   public static int getSystemThreshold(String sessionKey, ListThreshold list, ThresholdOp op) throws InternalIMSException {
     return VISHNUJNI.getSystemThreshold(sessionKey, ListThreshold.getCPtr(list), list, ThresholdOp.getCPtr(op), op);
-  }
-
-  public static int defineUserIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineUserIdentifier(sessionKey, fmt);
-  }
-
-  public static int defineMachineIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineMachineIdentifier(sessionKey, fmt);
-  }
-
-  public static int defineJobIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineJobIdentifier(sessionKey, fmt);
-  }
-
-  public static int defineTransferIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineTransferIdentifier(sessionKey, fmt);
-  }
-
-  public static int defineAuthIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineAuthIdentifier(sessionKey, fmt);
-  }
-
-  public static int defineWorkIdentifier(String sessionKey, String fmt) throws InternalIMSException {
-    return VISHNUJNI.defineWorkIdentifier(sessionKey, fmt);
   }
 
   public static int loadShed(String sessionKey, String machineId, int loadShedType) throws InternalIMSException {

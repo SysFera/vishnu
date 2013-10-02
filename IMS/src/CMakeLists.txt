@@ -37,7 +37,6 @@ include_directories(client api utils
 
 set(client_SRCS
   client/MetricProxy.cpp
-  client/ObjectIdProxy.cpp
   client/SysInfoProxy.cpp
   client/ThresholdProxy.cpp
   client/ProcessCtlProxy.cpp
@@ -92,7 +91,6 @@ if(COMPILE_SERVERS)
     server/data/export/shell/TMSShellMapper.cpp
     server/data/export/shell/FMSShellMapper.cpp
     server/data/export/shell/IMSShellMapper.cpp
-    server/data/ObjectIdServer.cpp
     server/data/SysInfoServer.cpp
     server/data/ThresholdServer.cpp)
 

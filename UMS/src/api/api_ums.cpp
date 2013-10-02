@@ -24,6 +24,7 @@
 #include "UMSServices.hpp"
 #include "UMSVishnuException.hpp"
 #include "UserProxy.hpp"
+#include "ObjectIdProxy.hpp"
 
 using namespace std;
 
@@ -1224,4 +1225,73 @@ vishnu::vishnuInitialize(char* cfg, int argc, char** argv) {
  */
 void
 vishnu::vishnuFinalize(){
+}
+
+int
+vishnu::defineUserIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setUID(fmt);
+  return 0;
+}
+
+
+int
+vishnu::defineMachineIdentifier(const std::string& sessionKey,
+                                const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setMID(fmt);
+  return 0;
+}
+
+
+int
+vishnu::defineJobIdentifier(const std::string& sessionKey,
+                            const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setTID(fmt);
+  return 0;
+}
+
+
+int
+vishnu::defineTransferIdentifier(const std::string& sessionKey,
+                                 const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setFID(fmt);
+  return 0;
+}
+
+int
+vishnu::defineAuthIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setAID(fmt);
+  return 0;
+}
+
+int
+vishnu::defineWorkIdentifier(const std::string& sessionKey,
+                             const std::string& fmt)
+  throw (UserException, SystemException) {
+  SessionProxy sessionProxy(sessionKey);
+
+  ObjectIdProxy ob(sessionProxy);
+  ob.setWID(fmt);
+  return 0;
 }

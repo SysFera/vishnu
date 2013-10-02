@@ -146,16 +146,10 @@ ServerIMS::initMap(std::string mid) {
   mcb[SERVICES_IMS[INT_SETSYSTEMINFO]] = solveSetSysInfo;
   mcb[SERVICES_IMS[INT_SETSYSTEMTHRESHOLD]] = solveSetThreshold;
   mcb[SERVICES_IMS[INT_GETSYSTEMTHRESHOLD]] = solveGetThreshold;
-  mcb[SERVICES_IMS[INT_DEFINEUSERIDENTIFIER]] = solveSetUID;
-  mcb[SERVICES_IMS[INT_DEFINEJOBIDENTIFIER]] = solveSetJID;
-  mcb[SERVICES_IMS[INT_DEFINETRANSFERIDENTIFIER]] = solveSetTID;
-  mcb[SERVICES_IMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
   mcb[std::string(SERVICES_IMS[INT_LOADSHED])+"@"+mid] = solveLoadShed;
   mcb[SERVICES_IMS[INT_SETUPDATEFREQUENCY]] = solveGetUpFreq;
   mcb[SERVICES_IMS[INT_GETUPDATEFREQUENCY]] = solveSetUpFreq;
   mcb[std::string(SERVICES_IMS[INT_RESTART])+"@"+mid] = solveRestart;
   mcb[std::string(SERVICES_IMS[INT_STOP])+"@"+mid] = solveStop;
   mcb[SERVICES_IMS[INT_GETSYSTEMINFO]] = solveGetSysInfo;
-  mcb[SERVICES_IMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
-  mcb[SERVICES_IMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
 }

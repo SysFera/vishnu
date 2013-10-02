@@ -28,6 +28,12 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   update_auth_account
   delete_auth_account
   list_auth_accounts 
+  define_user_identifier
+  define_machine_identifier
+  define_transfer_identifier
+  define_job_identifier
+  define_auth_identifier
+  define_work_identifier
   )
 
 #declare all scripted-based commands
