@@ -43,17 +43,12 @@ IMSMapper::IMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_SET_SYSINF, "vishnu_set_system_info"));
   mmap.insert (pair<int, string>(VISHNU_SET_THRESH, "vishnu_set_system_threshold"));
   mmap.insert (pair<int, string>(VISHNU_GET_THRESH, "vishnu_get_system_threshold"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "vishnu_define_user_identifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "vishnu_define_machine_identifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "vishnu_define_job_identifier"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_FID, "vishnu_define_transfer_identifier"));
   mmap.insert (pair<int, string>(VISHNU_LOADSHED, "vishnu_load_shed"));
   mmap.insert (pair<int, string>(VISHNU_SET_FREQ, "vishnu_set_update_frequency"));
   mmap.insert (pair<int, string>(VISHNU_GET_FREQ, "vishnu_get_update_frequency"));
   mmap.insert (pair<int, string>(VISHNU_STOP, "vishnu_stop"));
   mmap.insert (pair<int, string>(VISHNU_RESTART, "vishnu_restart"));
   mmap.insert (pair<int, string>(VISHNU_GET_SYSINF, "vishnu_get_system_info"));
-  mmap.insert (pair<int, string>(VISHNU_DEFINE_AID, "vishnu_define_auth_identifier"));
 };
 
 int
@@ -171,18 +166,6 @@ IMSMapper::decode (const string& msg){
   case VISHNU_GET_THRESH   	:
     res = decodeGetThre(separatorPos, msg);
     break;
-  case VISHNU_DEFINE_FID    	:
-    res = decodeFid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_TID 	:
-    res = decodeTid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_MID 	:
-    res = decodeMid(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_UID 	:
-    res = decodeUid(separatorPos, msg);
-    break;
   case VISHNU_LOADSHED 	:
     res = decodeLoad(separatorPos, msg);
     break;
@@ -200,9 +183,6 @@ IMSMapper::decode (const string& msg){
     break;
   case VISHNU_GET_SYSINF 	:
     res = decodeGetSys(separatorPos, msg);
-    break;
-  case VISHNU_DEFINE_AID 	:
-    res = decodeAid(separatorPos, msg);
     break;
   default:
     res = "";
@@ -394,59 +374,6 @@ IMSMapper::decodeSetThre(vector<unsigned int> separator, const string& msg) {
   res += convertToString(ac->getType());
   res += " ";
   res += ac->getHandler();
-  return res;
-}
-string
-IMSMapper::decodeFid(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_DEFINE_FID))->second;
-  res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-
-string
-IMSMapper::decodeMid(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_DEFINE_MID))->second;
-  res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-
-string
-IMSMapper::decodeAid(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_DEFINE_AID))->second;
-  res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-
-string
-IMSMapper::decodeUid(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_DEFINE_UID))->second;
-  res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
-  return res;
-}
-string
-IMSMapper::decodeTid(vector<unsigned int> separator, const string& msg) {
-  string res = string("");
-  string u;
-  res += (mmap.find(VISHNU_DEFINE_TID))->second;
-  res += " ";
-  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-  res += u;
   return res;
 }
 

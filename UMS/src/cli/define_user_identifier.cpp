@@ -10,7 +10,6 @@
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "api_ums.hpp"
-#include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
@@ -23,16 +22,16 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string configFile;
-  string newAuthFormat;
+  string newUserFormat;
 
-  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newAuthFormat));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newUserFormat));
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  DefineIdentifierFunc<WORK>  workIdFunc(newAuthFormat);
-  return GenericCli().run(workIdFunc, configFile, argc, argv);
+  DefineIdentifierFunc<USER>  userIdFunc(newUserFormat);
+  return GenericCli().run(userIdFunc, configFile, argc, argv);
 
 }

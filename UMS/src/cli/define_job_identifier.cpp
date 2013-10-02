@@ -1,16 +1,14 @@
 /**
- * \file define_transfer_identifier.cpp
- * This file defines the VISHNU command to define the file transfer identifier
+ * \file define_job_identifier.cpp
+ * This file defines the VISHNU command to define the job identifier
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
-
 
 #include "CLICmd.hpp"
 #include "utilVishnu.hpp"
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "api_ums.hpp"
-#include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
@@ -23,16 +21,16 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string configFile;
-  string newTransfertFormat;
+  string newJobFormat;
 
-  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newTransfertFormat));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newJobFormat));
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  DefineIdentifierFunc<TRANSFER> transferIdFunc(newTransfertFormat);
-  return GenericCli().run(transferIdFunc, configFile, argc, argv);
+  DefineIdentifierFunc<JOB> jobIdFunc(newJobFormat);
+  return GenericCli().run(jobIdFunc, configFile, argc, argv);
 
 }

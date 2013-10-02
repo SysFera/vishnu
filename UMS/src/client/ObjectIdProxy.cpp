@@ -2,7 +2,7 @@
 #include "UserException.hpp"
 #include "utilClient.hpp"
 #include "utilVishnu.hpp"
-#include "IMSServices.hpp"
+#include "UMSServices.hpp"
 #include "DIET_client.h"
 
 using namespace vishnu;
@@ -18,7 +18,7 @@ ObjectIdProxy::~ObjectIdProxy() {
 void
 ObjectIdProxy::setUID(string fmt) {
   try {
-    defineCall(SERVICES_IMS[INT_DEFINEUSERIDENTIFIER], fmt);
+    defineCall(SERVICES_UMS[INT_DEFINEUSERIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad user format");
     throw (e);
@@ -28,7 +28,7 @@ ObjectIdProxy::setUID(string fmt) {
 void
 ObjectIdProxy::setMID(string fmt) {
   try {
-    defineCall(SERVICES_IMS[INT_DEFINEMACHINEIDENTIFIER], fmt);
+    defineCall(SERVICES_UMS[INT_DEFINEMACHINEIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad machine format");
     throw (e);
@@ -38,7 +38,7 @@ ObjectIdProxy::setMID(string fmt) {
 void
 ObjectIdProxy::setTID(string fmt) {
   try {
-    defineCall (SERVICES_IMS[INT_DEFINEJOBIDENTIFIER], fmt);
+    defineCall (SERVICES_UMS[INT_DEFINEJOBIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad task format");
     throw (e);
@@ -48,7 +48,7 @@ ObjectIdProxy::setTID(string fmt) {
 void
 ObjectIdProxy::setFID(string fmt) {
   try {
-    defineCall (SERVICES_IMS[INT_DEFINETRANSFERIDENTIFIER], fmt);
+    defineCall (SERVICES_UMS[INT_DEFINETRANSFERIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad file transfert format");
     throw (e);
@@ -58,7 +58,7 @@ ObjectIdProxy::setFID(string fmt) {
 void
 ObjectIdProxy::setAID(string fmt) {
   try {
-    defineCall (SERVICES_IMS[INT_DEFINEAUTHIDENTIFIER], fmt);
+    defineCall (SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad authentication format");
     throw (e);
@@ -68,7 +68,7 @@ ObjectIdProxy::setAID(string fmt) {
 void
 ObjectIdProxy::setWID(string fmt) {
   try {
-    defineCall (SERVICES_IMS[INT_DEFINEWORKIDENTIFIER], fmt);
+    defineCall (SERVICES_UMS[INT_DEFINEWORKIDENTIFIER], fmt);
   } catch (UserException& e) {
     e.appendMsgComp("Bad authentication format");
     throw (e);

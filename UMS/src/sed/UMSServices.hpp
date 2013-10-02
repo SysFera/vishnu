@@ -46,6 +46,12 @@ typedef enum {
   AUTHACCOUNTUPDATE,
   AUTHACCOUNTDELETE,
   AUTHACCOUNTLIST,
+  INT_DEFINEUSERIDENTIFIER,
+  INT_DEFINEJOBIDENTIFIER,
+  INT_DEFINETRANSFERIDENTIFIER,
+  INT_DEFINEMACHINEIDENTIFIER,
+  INT_DEFINEAUTHIDENTIFIER,
+  INT_DEFINEWORKIDENTIFIER,
   NB_SRV_UMS  // MUST always be the last
 } ums_service_t;
 
@@ -82,7 +88,13 @@ static const char* SERVICES_UMS[NB_SRV_UMS] = {
   "authAccountCreate",  // 29
   "authAccountUpdate",  // 30
   "authAccountDelete",  // 31
-  "authAccountList"  // 32
+  "authAccountList",  // 32
+  "int_defineUserIdentifier", // 33
+  "int_defineJobIdentifier", // 34
+  "int_defineTransferIdentifier", // 35
+  "int_defineMachineIdentifier", // 36
+  "int_defineAuthIdentifier", // 37
+  "int_defineWorkIdentifier" // 38
 };
 
 #endif  // _UMSSERVICES_HPP_

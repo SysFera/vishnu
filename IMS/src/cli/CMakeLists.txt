@@ -32,12 +32,6 @@ set(ALLCLI
   get_metric_current_value
   set_system_info
   get_system_info
-  define_user_identifier
-  define_machine_identifier
-  define_transfer_identifier
-  define_job_identifier
-  define_auth_identifier
-  define_work_identifier
   set_system_threshold
   get_system_threshold
   restart

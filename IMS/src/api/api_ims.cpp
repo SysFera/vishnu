@@ -6,7 +6,6 @@
 #include "QueryProxy.hpp"
 #include "MetricProxy.hpp"
 #include "SysInfoProxy.hpp"
-#include "ObjectIdProxy.hpp"
 #include "ThresholdProxy.hpp"
 #include "ProcessCtlProxy.hpp"
 #include "ExporterProxy.hpp"
@@ -178,80 +177,6 @@ vishnu::getSystemThreshold(const std::string& sessionKey,
 }
 
 
-int
-vishnu::defineUserIdentifier(const std::string& sessionKey,
-                             const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setUID(fmt);
-  return IMS_SUCCESS;
-}
-
-
-int
-vishnu::defineMachineIdentifier(const std::string& sessionKey,
-                                const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setMID(fmt);
-  return IMS_SUCCESS;
-}
-
-
-int
-vishnu::defineJobIdentifier(const std::string& sessionKey,
-                            const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setTID(fmt);
-  return IMS_SUCCESS;
-}
-
-
-int
-vishnu::defineTransferIdentifier(const std::string& sessionKey,
-                                 const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setFID(fmt);
-  return IMS_SUCCESS;
-}
-
-int
-vishnu::defineAuthIdentifier(const std::string& sessionKey,
-                             const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setAID(fmt);
-  return IMS_SUCCESS;
-}
-
-int
-vishnu::defineWorkIdentifier(const std::string& sessionKey,
-                             const std::string& fmt)
-  throw (UMSVishnuException, IMSVishnuException,
-         UserException, SystemException) {
-  SessionProxy sessionProxy(sessionKey);
-
-  ObjectIdProxy ob(sessionProxy);
-  ob.setWID(fmt);
-  return IMS_SUCCESS;
-}
 
 
 int
