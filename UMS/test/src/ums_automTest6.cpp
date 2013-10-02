@@ -156,5 +156,71 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   BOOST_CHECK_THROW(defineAuthIdentifier(sessionKey, formatAuth), VishnuException);
 }
 
+
+BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
+{
+
+  BOOST_TEST_MESSAGE("Use case IA3 - B: Define the identifier");
+
+  Session sess;
+  ConnectOptions cop;
+  BOOST_CHECK_EQUAL(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop ), 0);
+  // get the session key and the machine identifier
+  string sessionKey=sess.getSessionKey();
+
+  string formatUser = "$UNAME";
+  string formatMachine = "$MANAME";
+
+  try {
+    //To define the user format
+    BOOST_CHECK_EQUAL(defineUserIdentifier(sessionKey, formatUser),0 );
+    //To define the machine format
+    BOOST_CHECK_EQUAL(defineMachineIdentifier(sessionKey, formatMachine),0 );
+    //user
+    User user;
+    user.setFirstname("TestFirstname");
+    user.setLastname ("TestLastname");
+    user.setPrivilege(0) ;
+    user.setEmail    ("Test@test.com");
+    BOOST_CHECK_EQUAL(addUser(sessionKey, user), 0);
+    //To check if the userId format is correct
+    BOOST_REQUIRE(user.getUserId().find("TestLastname") == 0);
+    User user2;
+    user.setFirstname("TestFirstname");
+    user.setLastname ("TestLastname");
+    user.setPrivilege(0) ;
+    user.setEmail    ("toto@test.com");
+    BOOST_CHECK_EQUAL(addUser(sessionKey, user2), 0);
+    BOOST_REQUIRE(user2.getUserId().find("TestLastname") == 0);
+    BOOST_REQUIRE(user.getUserId() != user2.getUserId())
+    //machine
+    Machine ma;//  = ecoreUMSFactory->createMachine();
+    ma.setName              ("mana");
+    ma.setSite              ("site");
+    ma.setMachineDescription("desc");
+    ma.setLanguage          ("lang");
+    ma.setSshPublicKey      ("/id_rsa.pub");
+    BOOST_CHECK_EQUAL(addMachine(sessionKey, ma), 0);
+    //To check if the m_test_ums_user_vishnu_machineid format is correct
+    BOOST_REQUIRE(ma.getMachineId().find("mana") == 0);
+    Machine ma2;//  = ecoreUMSFactory->createMachine();
+    ma.setName              ("mana");
+    ma.setSite              ("site");
+    ma.setMachineDescription("desc");
+    ma.setLanguage          ("lang");
+    ma.setSshPublicKey      ("/id_rsa.pub");
+    BOOST_CHECK_EQUAL(addMachine(sessionKey, ma2), 0);
+    //To check if the m_test_ums_user_vishnu_machineid format is correct
+    BOOST_REQUIRE(ma2.getMachineId().find("mana") == 0);
+    BOOST_REQUIRE(ma.getMachineId() != ma2.getMachineId())
+
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
+}
+
 BOOST_AUTO_TEST_SUITE_END()
 // THE END
