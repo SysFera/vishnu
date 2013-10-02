@@ -1,4 +1,10 @@
 +--------------+
+| VISHNU 3.1.1 |
++--------------+
+* Move IMS define_*_identifier functions to UMS module
+* Update the algorithm to generate identifiers, counters are not mandatory, if an existing login is generated, a unique number will be added at the end of the login
+
++--------------+
 | VISHNU 3.1.0 |
 +--------------+
 * Added support for SSL communication with DB and zmq
@@ -14,7 +20,7 @@
 * Option VISHNU_USE_LDAP in cmake has been renamed ENABLE_LDAP to be more
 	consistent with the other options (ENABLE_JAVA, ENABLE_MYSQL,
 	ENABLE_POSTGRESQL, ENABLE_PYTHON, ENABLE_SWIG)
-	
+
 +----------------------+
 | VISHNU 3.0.0 - Beta2 |
 +----------------------+
