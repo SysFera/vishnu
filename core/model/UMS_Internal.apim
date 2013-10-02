@@ -231,6 +231,31 @@
       <ports name="errorInfo" direction="OUT" dataType="//@typeList/@types.0" description="Additional information provided when an error code is returned" longOptionName=""/>
       <usedByServices href="UMS.apim#//@modules.0/@services.37"/>
     </services>
+    <services name="int_defineUserIdentifier" description="defines the shape of the identifiers automatically generated for the users" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter="" longOptionName=""/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.38"/>
+    </services>
+    <services name="int_defineMachineIdentifier" description="defines the shape of the identifiers automatically generated for the machines" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key"/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.39"/>
+    </services>
+    <services name="int_defineJobIdentifier" description="defines the shape of the identifiers automatically generated for the jobs" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.40"/>
+    </services>
+    <services name="int_defineTransferIdentifier" description="defines the shape of the identifiers automatically generated for the file transfers" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.41"/>
+    </services>
+    <services name="int_defineAuthIdentifier" description="defines the shape of the identifiers automatically generated for the authentication systems" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_INVALID_PARAMETER ERRCODE_DBERR ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
+      <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
+      <ports name="format" dataType="//@typeList/@types.0" description="The new format to use" shortOptionLetter=""/>
+      <usedByServices href="UMS.apim#//@modules.0/@services.42"/>
+    </services>
     <resultCodeList>
       <resultCodes name="ERRCODE_UNKNOWN_USER" description="The user is unknown or the password is wrong" value="20" diagnostic=""/>
       <resultCodes name="ERRCODE_UNKNOWN_USERID" description="The userId is unknown" value="21"/>
