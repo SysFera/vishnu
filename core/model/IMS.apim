@@ -65,21 +65,21 @@
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine to stop" shortOptionLetter=""/>
       <ports name="loadShedType" dataType="//@typeList/@types.6" description="Selects a load shedding mode (SOFT: stops all services and they can be restarted, HARD: stops all services, they cannot be restarted)" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
       <ports name="op" dataType="//@typeList/@types.27" description="The option for the supervision" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.12"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.7"/>
       <details key="description" value="This function allows an administrator to shed load on a machine. Two modes are available: SOFT mode will cancel all the submitted jobs and file transfers for all VISHNU users (Note that jobs and file transfers not initiated through VISHNU will not be impacted). HARD mode will additionally stop all the VISHNU processes on the machine. If a user without administrator rights uses this function, all the user's jobs and file transfers will be cancelled on the machine. In the HARD mode, the stopped processes will not be automatically restarted.&#xA;Type values:&#xA;HARD = 1&#xA;SOFT   = 2"/>
       <details key="exCLI" value="To make a hard load shedding on machine_1:&#xA;vishnu_load_shed machine_1 1"/>
     </services>
     <services name="setUpdateFrequency" description="sets the update frequency of the IMS tables" adminOnly="true" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second" shortOptionLetter="" longOptionName=""/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.13"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.8"/>
       <details key="description" value="This function allows an admin to set the update frequency. This frequency corresponds to how often the state of the machines is automatically polled by the IMS server. The value must be in seconds."/>
       <details key="exCLI" value="To set the frequency to 100:&#xA;vishnu_set_update_frequency 100"/>
     </services>
     <services name="getUpdateFrequency" description="gets the update frequency of the IMS database" resultCodes="VISHNU_OK ERRCODE_DBERR ERRCODE_INVALID_PARAMETER ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="freq" direction="OUT" dataType="//@typeList/@types.1" description="Frequency the data are updated, in second"/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.14"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.9"/>
       <details key="description" value="This function allows a user to get the update frequency, to know  how often the state of the machines is automatically polled to get historical data."/>
       <details key="exCLI" value="To get the update frequency:&#xA;vishnu_get_update_frequency"/>
     </services>
@@ -87,7 +87,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
       <ports name="op" dataType="//@typeList/@types.27" description="The option for the supervision" optional="true" shortOptionLetter="" longOptionName="" defaultValueLiteral=""/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.16"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.11"/>
       <details key="description" value="This function allows an admin to stop a VISHNU server on a machine. The stopped process will not be restarted automatically.&#xA;The important parameters in the process are the names and the machine.&#xA;The processName must be UMS, TMS, IMS or FMS , in upper case.&#xA;"/>
       <details key="exCLI" value="To stop the UMS process on machine_1:&#xA;vishnu_stop UMS machine_1"/>
     </services>
@@ -95,7 +95,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="res" direction="OUT" dataType="//@typeList/@types.20" description="The list of the system information gotten"/>
       <ports name="options" dataType="//@typeList/@types.21" description="Optional field for system information" optional="true" shortOptionLetter=""/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.17"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.12"/>
       <details key="description" value="This function allows a user to get system information about a machine. A system information describes a machine. The option is  the machine id (if no machine id, the information for all the machines are given)"/>
       <details key="exCLI" value="To get all the system info for all the machine:&#xA;vishnu_get_system_info"/>
     </services>
@@ -103,7 +103,7 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="machineId" dataType="//@typeList/@types.0" description="The id of the machine where to restart"/>
       <ports name="op" dataType="//@typeList/@types.27" description="The option for the restart" defaultValueLiteral=""/>
-      <usedServices href="IMS_Internal.apim#//@modules.0/@services.15"/>
+      <usedServices href="IMS_Internal.apim#//@modules.0/@services.10"/>
       <details key="description" value="This function allows an admin to restart a VISHNU server on a machine. Warning when restarting a server, first it is tried to stop it, so if one is running it is stopped and then another is restarted."/>
       <details key="exCLI" value="To restart using the configuration file ums.cfg an UMS sed on machine_1:&#xA;vishnu_restart -v /tmp/ums.cfg -t 1 machine_1"/>
     </services>
