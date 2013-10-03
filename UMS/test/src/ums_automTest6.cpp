@@ -1,7 +1,7 @@
 /**
  * \file ims_automTest
- * \brief Contains IMS API test implementation
- * References: VISHNU_D5_1b_IMS-PlanTests
+ * \brief Contains UMS API test implementation
+ * References: VISHNU_D5_1b_UMS-PlanTests
  */
 /*********************************************************
 #####Tests prerequisites:#######
@@ -15,17 +15,20 @@ account of local machine must be defined
 
 *********************************************************/
 
+//UMS
+#include "UMS_Data.hpp"
 //UMS forward Headers
 #include "UMS_Data_forward.hpp"
-//IMS forward Headers
-#include "IMS_Data_forward.hpp"
-#include "IMS_fixtures.hpp"
-#include "vishnuTestUtils.hpp"
+#include "UMS_fixtures.hpp"
+#include "api_ums.hpp"
 #include "utilVishnu.hpp"
+#include "DIET_client.h"
+#include "UMS_test_utils.hpp"
 
-
+#ifdef COMPILE_TMS
 #include "TMS_Data.hpp"
 using namespace TMS_Data;
+#endif
 
 // C++ Headers
 #include <iostream>
@@ -40,7 +43,7 @@ using namespace TMS_Data;
 // namespaces declaration and  aliases
 using namespace std;
 using namespace UMS_Data;
-using namespace IMS_Data;
+using namespace UMS_Data;
 using namespace vishnu;
 namespace bpt= boost::posix_time;
 namespace bfs= boost::filesystem;
@@ -49,9 +52,12 @@ namespace bfs= boost::filesystem;
 static const string badMachineId="unknown_name";
 static const string sshCmd =" ssh -o PasswordAuthentication=no ";
 
-BOOST_FIXTURE_TEST_SUITE(define_identifier, IMSSeDFixture)
+BOOST_FIXTURE_TEST_SUITE(define_identifier, UMSSeDFixture)
 
-#ifdef COMPILE_TMS
+// FMS ID IS NOT TESTED
+// WORK ID IS NOT TESTED
+// AUTH ID IS NOT TESTED
+
 //IA3-B: Define the identifier normal call
 //Define User/Machine/Job/FileTransfer identifier: normal call
 BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
@@ -59,18 +65,17 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
 
   BOOST_TEST_MESSAGE("Use case IA3 - B: Define the identifier");
 
-  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
+  Session sess;
+  ConnectOptions cop;
+  BOOST_CHECK_EQUAL(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop ), 0);
   // get the session key and the machine identifier
-  string sessionKey=vc.getSessionKey();
+  string sessionKey=sess.getSessionKey();
 
   string formatUser = "UTEST_$CPT";
   string formatMachine = "MTEST_$CPT";
   string formatJob = "JTEST_$CPT";
   string formatFileTransfer = "FTTEST_$CPT";
   string formatAuth = "ATEST_$CPT";
-  //Job
-  const std::string scriptFilePath= "TMSSCRIPTPATH"; //FIXE
-  SubmitOptions subOptions;
 
   try {
     //To define the user format
@@ -102,46 +107,22 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call)
     BOOST_CHECK_EQUAL(addMachine(sessionKey, ma), 0);
     //To check if the m_test_ums_user_vishnu_machineid format is correct
     BOOST_REQUIRE(ma.getMachineId().find("MTEST_") == 0);
-    //job
+#ifdef COMPILE_TMS
+    //Job
+    const std::string scriptFilePath= "TMSSCRIPTPATH"; //FIXE
+    SubmitOptions subOptions;
     Job jobInfo;
     BOOST_CHECK_EQUAL(submitJob(sessionKey, m_test_ums_user_vishnu_machineid, scriptFilePath, jobInfo,subOptions),0 );
     //To check if the jobId format is correct
     BOOST_REQUIRE(jobInfo.getJobId().find("JTEST_") == 0);
+#endif // COMPILE_TMS
+
   }
   catch (VishnuException& e) {
     BOOST_MESSAGE("FAILED\n");
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);
   }
-}
-#endif // COMPILE_TMS
-
-//IA3-E1: Define the identifier with bad format
-//Define User/Machine/Job/FileTransfer identifier: bad format
-BOOST_AUTO_TEST_CASE(define_identifier_bad_format_call)
-{
-
-  BOOST_TEST_MESSAGE("Use case IA3 - E1: Define the identifier with bad format");
-  //bad Format with unknwon $TEST
-  string formatUser = "UTEST_$TEST";
-  string formatMachine = "MTEST_$TEST";
-  string formatJob = "JTEST_$TEST";
-  string formatFileTransfer = "FTTEST_$TEST";
-  string formatAuth = "ATTEST_$TEST";
-
-  VishnuConnection vc(m_test_ims_admin_vishnu_login, m_test_ims_admin_vishnu_pwd);
-  // get the session key and the machine identifier
-  string sessionKey=vc.getSessionKey();
-  //To define the user format
-  BOOST_CHECK_THROW(defineUserIdentifier(sessionKey, formatUser), VishnuException);
-  //To define the machine format
-  BOOST_CHECK_THROW(defineMachineIdentifier(sessionKey, formatMachine), VishnuException);
-  //To define the job format
-  BOOST_CHECK_THROW(defineJobIdentifier(sessionKey, formatJob), VishnuException);
-  //To define the file transfer format
-  BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
-  //To define the auth system format
-  BOOST_CHECK_THROW(defineAuthIdentifier(sessionKey, formatAuth), VishnuException);
 }
 
 //IA3-E2: Define the identifier for no admin user
@@ -157,9 +138,11 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   string formatFileTransfer = "FTTEST_$CPT";
   string formatAuth = "ATTEST_$CPT";
   //no admin user
-  VishnuConnection vc(m_test_ims_user_vishnu_login, m_test_ims_user_vishnu_pwd);
+  Session sess;
+  ConnectOptions cop;
+  BOOST_CHECK_EQUAL(connect(m_test_ums_user_vishnu_login, m_test_ums_user_vishnu_pwd, sess, cop ), 0);
   // get the session key and the machine identifier
-  string sessionKey=vc.getSessionKey();
+  string sessionKey=sess.getSessionKey();
 
   //To define the user format
   BOOST_CHECK_THROW(defineUserIdentifier(sessionKey, formatUser), VishnuException);
@@ -171,6 +154,74 @@ BOOST_AUTO_TEST_CASE(define_identifier_no_admin_call)
   BOOST_CHECK_THROW(defineTransferIdentifier(sessionKey, formatFileTransfer), VishnuException);
   //To define the auth system format
   BOOST_CHECK_THROW(defineAuthIdentifier(sessionKey, formatAuth), VishnuException);
+}
+
+
+BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
+{
+
+  BOOST_TEST_MESSAGE("Use case IA3 - B: Define the identifier");
+
+  Session sess;
+  ConnectOptions cop;
+  BOOST_CHECK_EQUAL(connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop ), 0);
+  // get the session key and the machine identifier
+  string sessionKey=sess.getSessionKey();
+
+  string formatUser = "$UNAME";
+  string formatMachine = "$MANAME";
+
+  try {
+    //To define the user format
+    BOOST_CHECK_EQUAL(defineUserIdentifier(sessionKey, formatUser),0 );
+    //To define the machine format
+    BOOST_CHECK_EQUAL(defineMachineIdentifier(sessionKey, formatMachine),0 );
+    //user
+    User user;
+    user.setFirstname("TestFirstname");
+    user.setLastname ("TestLastname");
+    user.setPrivilege(0) ;
+    user.setEmail    ("Test@test.com");
+    BOOST_CHECK_EQUAL(addUser(sessionKey, user), 0);
+    //To check if the userId format is correct
+    BOOST_REQUIRE(user.getUserId().find("TestLastname") == 0);
+    User user2;
+    user.setFirstname("TestFirstname");
+    user.setLastname ("TestLastname");
+    user.setPrivilege(0) ;
+    user.setEmail    ("toto@test.com");
+    BOOST_CHECK_EQUAL(addUser(sessionKey, user2), 0);
+    BOOST_REQUIRE(user2.getUserId().find("TestLastname") == 0);
+    BOOST_REQUIRE(user.getUserId() != user2.getUserId());
+
+    //machine
+    Machine ma;//  = ecoreUMSFactory->createMachine();
+    ma.setName              ("mana");
+    ma.setSite              ("site");
+    ma.setMachineDescription("desc");
+    ma.setLanguage          ("lang");
+    ma.setSshPublicKey      ("/id_rsa.pub");
+    BOOST_CHECK_EQUAL(addMachine(sessionKey, ma), 0);
+    //To check if the m_test_ums_user_vishnu_machineid format is correct
+    BOOST_REQUIRE(ma.getMachineId().find("mana") == 0);
+    Machine ma2;//  = ecoreUMSFactory->createMachine();
+    ma.setName              ("mana");
+    ma.setSite              ("site");
+    ma.setMachineDescription("desc");
+    ma.setLanguage          ("lang");
+    ma.setSshPublicKey      ("/id_rsa.pub");
+    BOOST_CHECK_EQUAL(addMachine(sessionKey, ma2), 0);
+    //To check if the m_test_ums_user_vishnu_machineid format is correct
+    BOOST_REQUIRE(ma2.getMachineId().find("mana") == 0);
+    BOOST_REQUIRE(ma.getMachineId() != ma2.getMachineId());
+
+
+  }
+  catch (VishnuException& e) {
+    BOOST_MESSAGE("FAILED\n");
+    BOOST_MESSAGE(e.what());
+    BOOST_CHECK(false);
+  }
 }
 
 BOOST_AUTO_TEST_SUITE_END()

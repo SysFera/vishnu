@@ -22,6 +22,7 @@ set(client_SRCS client/SessionProxy.cpp
   client/OptionValueProxy.cpp
   client/utilsClient.cpp
   client/UtilsProxy.cpp
+  client/ObjectIdProxy.cpp
   client/NetrcReader.cpp)
 
 set(cli_SRCS cli/utils.cpp
@@ -82,6 +83,7 @@ if(COMPILE_SERVERS)
     server/LocalAccountServer.cpp
     server/ConfigurationServer.cpp
     server/CommandServer.cpp
+    server/ObjectIdServer.cpp
     server/AuthSystemServer.cpp
     server/AuthAccountServer.cpp
     )

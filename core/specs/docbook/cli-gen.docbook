@@ -2630,6 +2630,276 @@
         <para><emphasis role="bold">Environment variables</emphasis></para>
         <para>This command defines no environment variables.</para>
       </section>
+      <section>
+        <title>vishnu_define_user_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_user_identifier command defines the shape of the identifiers automatically generated for the users</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_machine_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_machine_identifier command defines the shape of the identifiers automatically generated for the machines</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_job_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_job_identifier command defines the shape of the identifiers automatically generated for the jobs</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_transfer_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_transfer_identifier command defines the shape of the identifiers automatically generated for the file transfers</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_auth_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_auth_identifier command defines the shape of the identifiers automatically generated for the authentication system</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_auth_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
+      <section>
+        <title>vishnu_define_work_identifier</title>
+        <para><emphasis role="bold">Access</emphasis></para>
+        <para>This command line can be used by ADMIN users only</para>
+        <para><emphasis role="bold">Description </emphasis></para>
+        <para>The vishnu_define_work_identifier command defines the shape of the identifiers automatically generated for the work</para>
+        <para><emphasis role="bold">Example of use </emphasis></para>
+        <cmdsynopsis><command>vishnu_define_work_identifier</command><arg choice="opt"><option>-h</option></arg><arg
+              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
+        <para><emphasis role="bold">Parameters</emphasis></para>
+        <informaltable>
+          <tgroup cols="5">
+            <colspec colwidth="3.5cm"/>
+            <colspec colwidth="3cm"/>
+            <colspec colwidth="1cm"/>
+            <colspec colwidth="7cm"/>
+            <colspec colwidth="1.5cm"/>
+            <thead>
+              <row>
+                <entry>Parameter
+</entry>
+                <entry>Type
+</entry>
+                <entry>Option
+</entry>
+                <entry>Description
+</entry>
+                <entry>Required
+</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry><para>format</para></entry>
+                <entry><para>string</para></entry>
+                <entry/>
+                <entry><para>The new format to use</para></entry>
+                <entry><para>YES</para></entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+        <para><emphasis role="bold">Environment variables</emphasis></para>
+        <para>This command defines no environment variables.</para>
+      </section>
     </section>
     <section>
       <title>Parameters definitions</title>
@@ -4195,231 +4465,6 @@
         <para>This command defines no environment variables.</para>
       </section>
       <section>
-        <title>vishnu_define_user_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_user_identifier command defines the shape of the identifiers automatically generated for the users</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_user_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_define_machine_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_machine_identifier command defines the shape of the identifiers automatically generated for the machines</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_machine_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_define_job_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_job_identifier command defines the shape of the identifiers automatically generated for the jobs</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_job_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_define_transfer_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_transfer_identifier command defines the shape of the identifiers automatically generated for the file transfers</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_transfer_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_define_auth_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_auth_identifier command defines the shape of the identifiers automatically generated for the authentication system</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_auth_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
         <title>vishnu_load_shed</title>
         <para><emphasis role="bold">Access</emphasis></para>
         <para>This command line can be used by ADMIN users only</para>
@@ -4705,51 +4750,6 @@
                 <entry><para>n</para></entry>
                 <entry><para>The path to the supervisord script file on the machine</para></entry>
                 <entry><para>NO</para></entry>
-              </row>
-            </tbody>
-          </tgroup>
-        </informaltable>
-        <para><emphasis role="bold">Environment variables</emphasis></para>
-        <para>This command defines no environment variables.</para>
-      </section>
-      <section>
-        <title>vishnu_define_work_identifier</title>
-        <para><emphasis role="bold">Access</emphasis></para>
-        <para>This command line can be used by ADMIN users only</para>
-        <para><emphasis role="bold">Description </emphasis></para>
-        <para>The vishnu_define_work_identifier command defines the shape of the identifiers automatically generated for the work</para>
-        <para><emphasis role="bold">Example of use </emphasis></para>
-        <cmdsynopsis><command>vishnu_define_work_identifier</command><arg choice="opt"><option>-h</option></arg><arg
-              choice="plain"><replaceable>format</replaceable></arg></cmdsynopsis>
-        <para><emphasis role="bold">Parameters</emphasis></para>
-        <informaltable>
-          <tgroup cols="5">
-            <colspec colwidth="3.5cm"/>
-            <colspec colwidth="3cm"/>
-            <colspec colwidth="1cm"/>
-            <colspec colwidth="7cm"/>
-            <colspec colwidth="1.5cm"/>
-            <thead>
-              <row>
-                <entry>Parameter
-</entry>
-                <entry>Type
-</entry>
-                <entry>Option
-</entry>
-                <entry>Description
-</entry>
-                <entry>Required
-</entry>
-              </row>
-            </thead>
-            <tbody>
-              <row>
-                <entry><para>format</para></entry>
-                <entry><para>string</para></entry>
-                <entry/>
-                <entry><para>The new format to use</para></entry>
-                <entry><para>YES</para></entry>
               </row>
             </tbody>
           </tgroup>

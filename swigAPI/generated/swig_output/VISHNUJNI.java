@@ -1345,6 +1345,12 @@ class VISHNUJNI {
   public final static native int listAuthAccounts(String jarg1, long jarg2, ListAuthAccounts jarg2_, long jarg3, ListAuthAccOptions jarg3_) throws InternalUMSException;
   public final static native int vishnuInitialize(String jarg1) throws InternalUMSException;
   public final static native void vishnuFinalize() throws InternalUMSException;
+  public final static native int defineUserIdentifier(String jarg1, String jarg2) throws InternalUMSException;
+  public final static native int defineMachineIdentifier(String jarg1, String jarg2) throws InternalUMSException;
+  public final static native int defineJobIdentifier(String jarg1, String jarg2) throws InternalUMSException;
+  public final static native int defineTransferIdentifier(String jarg1, String jarg2) throws InternalUMSException;
+  public final static native int defineAuthIdentifier(String jarg1, String jarg2) throws InternalUMSException;
+  public final static native int defineWorkIdentifier(String jarg1, String jarg2) throws InternalUMSException;
   public final static native int submitJob(String jarg1, String jarg2, String jarg3, long jarg4, Job jarg4_, long jarg5, SubmitOptions jarg5_) throws InternalTMSException;
   public final static native int addWork(String jarg1, long jarg2, Work jarg2_, long jarg3, AddWorkOptions jarg3_) throws InternalTMSException;
   public final static native int cancelJob(String jarg1, String jarg2, String jarg3) throws InternalTMSException;
@@ -1361,12 +1367,6 @@ class VISHNUJNI {
   public final static native int setSystemInfo(String jarg1, long jarg2, SystemInfo jarg2_) throws InternalIMSException;
   public final static native int setSystemThreshold(String jarg1, long jarg2, Threshold jarg2_) throws InternalIMSException;
   public final static native int getSystemThreshold(String jarg1, long jarg2, ListThreshold jarg2_, long jarg3, ThresholdOp jarg3_) throws InternalIMSException;
-  public final static native int defineUserIdentifier(String jarg1, String jarg2) throws InternalIMSException;
-  public final static native int defineMachineIdentifier(String jarg1, String jarg2) throws InternalIMSException;
-  public final static native int defineJobIdentifier(String jarg1, String jarg2) throws InternalIMSException;
-  public final static native int defineTransferIdentifier(String jarg1, String jarg2) throws InternalIMSException;
-  public final static native int defineAuthIdentifier(String jarg1, String jarg2) throws InternalIMSException;
-  public final static native int defineWorkIdentifier(String jarg1, String jarg2) throws InternalIMSException;
   public final static native int loadShed(String jarg1, String jarg2, int jarg3) throws InternalIMSException;
   public final static native int setUpdateFrequency(String jarg1, int jarg2) throws InternalIMSException;
   public final static native int getUpdateFrequency(String jarg1, int jarg2) throws InternalIMSException;

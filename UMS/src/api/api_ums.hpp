@@ -499,6 +499,71 @@ vishnuInitialize(char* cfg, int argc, char** argv);
  */
 void
 vishnuFinalize();
+
+/**
+ * \brief To define the format of the user id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+int
+defineUserIdentifier(const std::string& sessionKey,
+                     const std::string& fmt)
+  throw (UserException, SystemException);
+
+/**
+ * \brief To define the format of the machine id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+  int
+  defineMachineIdentifier(const std::string& sessionKey,
+                          const std::string& fmt)
+    throw (UserException, SystemException);
+
+/**
+ * \brief To define the format of the job id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+int
+defineJobIdentifier(const std::string& sessionKey,
+                    const std::string& fmt)
+  throw (UserException, SystemException);
+
+/**
+ * \brief To define the format of the file transfer id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+int
+defineTransferIdentifier(const std::string& sessionKey,
+                         const std::string& fmt)
+  throw (UserException, SystemException);
+
+/**
+ * \brief To define the format of the authentication system id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+int
+defineAuthIdentifier(const std::string& sessionKey, const std::string& fmt)
+  throw (UserException, SystemException);
+
+/**
+ * \brief To define the format of the work id automatically generated in VISHNU
+ * \param sessionKey: The session key gotten after connection
+ * \param fmt: The new format
+ * \return int : an error code
+ */
+int
+defineWorkIdentifier(const std::string& sessionKey, const std::string& fmt)
+  throw (UserException, SystemException);
+
 }
 
 #endif

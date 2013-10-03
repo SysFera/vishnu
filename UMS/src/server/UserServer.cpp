@@ -79,6 +79,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
                                             "formatiduser",
                                             USER,
                                             user->getLastname());
+
       user->setUserId(idUserGenerated);
       //To get the password encrypted
       passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());

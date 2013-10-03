@@ -4727,6 +4727,30 @@ def vishnuInitialize(*args, **kwargs):
 def vishnuFinalize(*args):
   """vishnuFinalize()"""
   return _VISHNU.vishnuFinalize(*args)
+
+def defineUserIdentifier(*args, **kwargs):
+  """defineUserIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineUserIdentifier(*args, **kwargs)
+
+def defineMachineIdentifier(*args, **kwargs):
+  """defineMachineIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineMachineIdentifier(*args, **kwargs)
+
+def defineJobIdentifier(*args, **kwargs):
+  """defineJobIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineJobIdentifier(*args, **kwargs)
+
+def defineTransferIdentifier(*args, **kwargs):
+  """defineTransferIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineTransferIdentifier(*args, **kwargs)
+
+def defineAuthIdentifier(*args, **kwargs):
+  """defineAuthIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineAuthIdentifier(*args, **kwargs)
+
+def defineWorkIdentifier(*args, **kwargs):
+  """defineWorkIdentifier(string sessionKey, string fmt) -> int"""
+  return _VISHNU.defineWorkIdentifier(*args, **kwargs)
 class VishnuException(Exception):
     """Proxy of C++ VishnuException class"""
     __swig_setmethods__ = {}
@@ -5120,30 +5144,6 @@ def setSystemThreshold(*args, **kwargs):
 def getSystemThreshold(*args, **kwargs):
   """getSystemThreshold(string sessionKey, ThresholdOp op = IMS_Data::ThresholdOp()) -> int"""
   return _VISHNU.getSystemThreshold(*args, **kwargs)
-
-def defineUserIdentifier(*args, **kwargs):
-  """defineUserIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineUserIdentifier(*args, **kwargs)
-
-def defineMachineIdentifier(*args, **kwargs):
-  """defineMachineIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineMachineIdentifier(*args, **kwargs)
-
-def defineJobIdentifier(*args, **kwargs):
-  """defineJobIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineJobIdentifier(*args, **kwargs)
-
-def defineTransferIdentifier(*args, **kwargs):
-  """defineTransferIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineTransferIdentifier(*args, **kwargs)
-
-def defineAuthIdentifier(*args, **kwargs):
-  """defineAuthIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineAuthIdentifier(*args, **kwargs)
-
-def defineWorkIdentifier(*args, **kwargs):
-  """defineWorkIdentifier(string sessionKey, string fmt) -> int"""
-  return _VISHNU.defineWorkIdentifier(*args, **kwargs)
 
 def loadShed(*args, **kwargs):
   """loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"""

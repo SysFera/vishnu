@@ -73,6 +73,12 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg){
   mmap.insert (pair<int, string>(VISHNU_UPDATE_AUTHACC 	   	, "vishnu_update_auth_account"));
   mmap.insert (pair<int, string>(VISHNU_DELETE_AUTHACC 	   	, "vishnu_delete_auth_account"));
   mmap.insert (pair<int, string>(VISHNU_LIST_AUTHACC            , "vishnu_list_auth_accounts"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_UID, "vishnu_define_user_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_MID, "vishnu_define_machine_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_TID, "vishnu_define_job_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_FID, "vishnu_define_transfer_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_AID, "vishnu_define_auth_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_DEFINE_WID, "vishnu_define_work_identifier"));
 };
 
 int
@@ -262,6 +268,24 @@ UMSMapper::decode (const string& msg){
     break;
   case VISHNU_LIST_AUTHACC 	        :
     res = decodeListAuthAcc(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_FID    	:
+    res = decodeFid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_TID 	:
+    res = decodeTid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_MID 	:
+    res = decodeMid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_UID 	:
+    res = decodeUid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_AID 	:
+    res = decodeAid(separatorPos, msg);
+    break;
+  case VISHNU_DEFINE_WID 	:
+    res = decodeAid(separatorPos, msg);
     break;
   default :
     res = "";
@@ -1228,5 +1252,69 @@ UMSMapper::getUupdate(string serial){
   if (user != NULL) {
     delete user;
   }
+  return res;
+}
+
+string
+UMSMapper::decodeFid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_FID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+
+string
+UMSMapper::decodeMid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_MID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+
+string
+UMSMapper::decodeAid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_AID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+
+string
+UMSMapper::decodeUid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_UID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+string
+UMSMapper::decodeTid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_TID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+string
+UMSMapper::decodeWid(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_DEFINE_WID))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
   return res;
 }

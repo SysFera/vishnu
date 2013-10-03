@@ -1,6 +1,6 @@
 /**
- * \file define_machine_identifier.cpp
- * This file defines the VISHNU command to define the machine identifier
+ * \file define_user_identifier.cpp
+ * This file defines the VISHNU command to define the user identifier
  * \author Coulomb Kevin (kevin.coulomb@sysfera.com)
  */
 
@@ -10,7 +10,6 @@
 #include "cliError.hpp"
 #include "cliUtil.hpp"
 #include "api_ums.hpp"
-#include "api_ims.hpp"
 #include "sessionUtils.hpp"
 
 #include "GenericCli.hpp"
@@ -23,16 +22,16 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string configFile;
-  string newMachineFormat;
+  string newAuthFormat;
 
-  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newMachineFormat));
+  boost::shared_ptr<Options> opt(makeDefineIdentifierOptions(argv[0], configFile, newAuthFormat));
 
   bool isEmpty;
   //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  DefineIdentifierFunc<MACHINE> machineIdFunc(newMachineFormat);
-  return GenericCli().run(machineIdFunc, configFile, argc, argv);
+  DefineIdentifierFunc<WORK>  workIdFunc(newAuthFormat);
+  return GenericCli().run(workIdFunc, configFile, argc, argv);
 
 }

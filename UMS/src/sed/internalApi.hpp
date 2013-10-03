@@ -276,5 +276,47 @@ solveAccountAuthDelete(diet_profile_t* pb);
 */
 int
 solveAccountAuthList(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to set the user id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetUID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to set the job id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetJID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to the the transfer id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetTID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to set the machine id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetMID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to set the authsystem id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetAID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service to set the work id format
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveSetWID(diet_profile_t* pb);
 
 #endif // SERVERUMS

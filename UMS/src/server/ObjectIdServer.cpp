@@ -24,9 +24,6 @@ ObjectIdServer::setformat(std::string fmt, std::string entry){
     throw UMSVishnuException(ERRCODE_NO_ADMIN, "define "+entry+ "id  format is an admin function. A user cannot call it");
   }
   boost::trim(entry);
-  if (!containCpt(fmt)) {
-    throw UserException(10, "Invalid format, it does not contain any counter. ");
-  }
   if (fmt.find_first_of('@')!=std::string::npos) {
     throw UserException(10, "Invalid format, it cannot contain the @ character. ");
   }
