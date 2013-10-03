@@ -192,7 +192,8 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
     user.setEmail    ("toto@test.com");
     BOOST_CHECK_EQUAL(addUser(sessionKey, user2), 0);
     BOOST_REQUIRE(user2.getUserId().find("TestLastname") == 0);
-    BOOST_REQUIRE(user.getUserId() != user2.getUserId())
+    BOOST_REQUIRE(user.getUserId() != user2.getUserId());
+
     //machine
     Machine ma;//  = ecoreUMSFactory->createMachine();
     ma.setName              ("mana");
@@ -212,7 +213,8 @@ BOOST_AUTO_TEST_CASE(define_identifier_normal_call_same_login)
     BOOST_CHECK_EQUAL(addMachine(sessionKey, ma2), 0);
     //To check if the m_test_ums_user_vishnu_machineid format is correct
     BOOST_REQUIRE(ma2.getMachineId().find("mana") == 0);
-    BOOST_REQUIRE(ma.getMachineId() != ma2.getMachineId())
+    BOOST_REQUIRE(ma.getMachineId() != ma2.getMachineId());
+
 
   }
   catch (VishnuException& e) {
