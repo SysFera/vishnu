@@ -3,6 +3,9 @@
 +--------------+
 * Move IMS define_*_identifier functions to UMS module
 * Update the algorithm to generate identifiers, counters are not mandatory, if an existing login is generated, a unique number will be added at the end of the login
+* Improve serialisation and message handling
+* Fix bug when starting dispatcher with invalid default file parameter
+* Clean documentation (no WSDL mention anymore)
 
 +--------------+
 | VISHNU 3.1.0 |
