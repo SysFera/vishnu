@@ -392,6 +392,47 @@
       <title>Use case descriptions
 </title>
       <section>
+        <title>IA3. Define the Identifiers</title>
+        <informaltable>
+          <tgroup cols="2">
+            <tbody>
+              <row>
+                <entry><para>Title</para></entry>
+                <entry><para>IA3. Define the Identifiers</para></entry>
+              </row>
+              <row>
+                <entry><para>Summary</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Actors</para></entry>
+                <entry><para>Admin</para></entry>
+              </row>
+              <row>
+                <entry><para>Precondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Postcondition</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Base sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Branch sequence</para></entry>
+                <entry/>
+              </row>
+              <row>
+                <entry><para>Exception sequence</para></entry>
+                <entry/>
+              </row>
+            </tbody>
+          </tgroup>
+        </informaltable>
+      </section>
+      <section>
         <title>U1 - Session with manual closure</title>
         <informaltable>
           <tgroup cols="2">
