@@ -20,12 +20,12 @@
 %include "exception.i"
 
 
- // Added to make the mapping between std::exception and the python Exception class
- // Otherwise the VishnuException class inherits the _object class and the vishnu exception
- // Are not seen as real python exception (if not catched -> finally pops bad exception)
+// Added to make the mapping between std::exception and the python Exception class
+// Otherwise the VishnuException class inherits the _object class and the vishnu exception
+// Are not seen as real python exception (if not catched -> finally pops bad exception)
 #ifdef SWIGPYTHON
 %exceptionclass VishnuException;
-#endif SWIGPYTHON
+#endif
 
 // this includes the typemaps for STL strings
 %include "std_string.i"
@@ -33,7 +33,7 @@
 %include "std_vector.i"
 #ifdef SWIGPYTHON
 %include "pyname_compat.i"
-#endif SWIGPYTHON
+#endif
 
 // Keep in separated files and before includes, all module need their own eobject in java
 %include "ecore/EObject.hpp"
@@ -362,15 +362,6 @@ EMFTYPE(FileTransfer,FMS_Data,getFileTransfers,FileTransferList, fileTransferLis
 #ifdef COMPILE_UMS
 %include "api_ums.hpp"
 #endif
-
- // Added to make the mapping between std::exception and the python Exception class
- // Otherwise the VishnuException class inherits the _object class and the vishnu exception
- // Are not seen as real python exception (if not catched -> finally pops bad exception)
- // Keep there and not before, otherwize non exception classes also inherith from Exception and not _object in python
-//#ifdef SWIGPYTHON
-//%clearexceptionclass;
-//%exceptionclass;
-//#endif SWIGPYTHON
 
 
 #ifdef SWIGPYTHON
