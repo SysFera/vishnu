@@ -251,7 +251,7 @@
     // Copying the object
     *object = *((*(&$1))->getter().get(i));
     // Convert it to a pyobject
-    PyObject *o = SWIG_Python_NewPointerObj((void *)object, swig_type, 1);
+    PyObject *o = SWIG_NewPointerObj(static_cast<void*>(object), swig_type, 0);
  
     // Add it to the list
     PyList_SetItem(mylist,i,o);
