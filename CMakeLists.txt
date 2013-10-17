@@ -51,7 +51,8 @@ option(COMPILE_UMS "compile the module UMS" ON)
 # Options set to OFF by default
 option(COMPILE_CLIENT_CLI "compile the client command line interface" OFF)
 option(COMPILE_SERVERS "compile the servers" OFF)
-option(ENABLE_PYTHON "compile the python api" OFF)
+option(ENABLE_PYTHON "compile the python api (default: 2.x)" OFF)
+option(ENABLE_PYTHON3 "target python3 instead of python2" OFF)
 option(ENABLE_JAVA "compile the java api" OFF)
 option(ENABLE_SWIG "use swig to re-generate code for the wrappers" OFF)
 option(ENABLE_MYSQL "compile with the mysql support." OFF)
@@ -353,6 +354,9 @@ endif (COMPILE_IMS)
 
 ## KEEP AFTER VARIABLE DECLARATION
 # set dependencies
+if (ENABLE_PYTHON3)
+  set(ENABLE_PYTHON ON CACHE BOOL "Force Python compilation" FORCE)
+endif()
 if (ENABLE_PYTHON OR ENABLE_JAVA)
   if (NOT ENABLE_SWIG)
     set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)

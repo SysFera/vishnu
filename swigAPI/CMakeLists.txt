@@ -52,7 +52,12 @@ set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_SOURCE_DIR}/generated/swig_output)
 file(MAKE_DIRECTORY ${CMAKE_SWIG_OUTDIR})
 
 if(ENABLE_PYTHON)
-  find_package(PythonLibs REQUIRED)
+  if(ENABLE_PYTHON3)
+    set(VISHNU_PYTHON_SUPPORT 3)
+  else()
+    set(VISHNU_PYTHON_SUPPORT 2)
+  endif()
+  find_package(PythonLibs ${VISHNU_PYTHON_SUPPORT} REQUIRED)
   include_directories(${PYTHON_INCLUDE_PATH})
 endif(ENABLE_PYTHON)
 
