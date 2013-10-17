@@ -170,11 +170,11 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     machine->setMachineId(machineId);
     machines.getMachines().push_back(machine);
   }
-
   // Now iterate through all the machines to list jobs according to the query filter
   listOfJobs.setNbJobs(0);
   listOfJobs.setNbRunningJobs(0);
   listOfJobs.setNbWaitingJobs(0);
+
   for (int i=0; i< machines.getMachines().size(); i++) {
     machine = machines.getMachines().get(i) ;
     std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
