@@ -164,7 +164,7 @@ SSHJobExec::sshexec(const std::string& serviceName,
 
   // Treat possibly errors
   if (bfs::exists(errorPath)) {
-     merrorInfo.append(vishnu::get_file_content(errorPath, false));
+    merrorInfo.append(vishnu::get_file_content(errorPath, false));
   }
   if (bfs::exists(stderrFilePath)) {
     merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
@@ -185,7 +185,7 @@ SSHJobExec::sshexec(const std::string& serviceName,
     LOG(merrorInfo, mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
-// THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
+  // THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
   if (serviceName.compare("SUBMIT") == 0) {  // set specific arguments for submit job
     bool wellSubmitted = false;
 
@@ -258,17 +258,16 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
   // Mount the NFS repository
   LOG("[TMS][INFO] Mounting the nfs directory...", mdebugLevel);
-  if(nfsServer.size()>0 &&
-     nfsMountPoint.size()> 0) {
+  if (! nfsServer.empty() && ! nfsMountPoint.empty()) {
     mountNfsDir(nfsServer, nfsMountPoint);
   }
 
   // If succeed execute the script to the virtual machine
   // This assumes that the script is located on a shared DFS
   LOG("[TMS][INFO] Executing the script...", mdebugLevel);
-  execCmd("'mkdir -p "+workDir+" &>>"+logfile+"'"); // First create the output directory if it not exist
+  execCmd("'mkdir -p "+workDir+" & >>"+logfile+"'"); // First create the output directory if it not exist
   int pid = -1;
-  if(execCmd(scriptPath + " &>>"+logfile, true, workDir, &pid)) {
+  if(execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid)) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);

@@ -499,8 +499,8 @@ JobServer::getSedConfig() const {
  * \param content the script content to be update which the generated path
  */
 void JobServer::computeOutputDir(const std::string& parentDir,
-                             const std::string& dirSuffix,
-                             std::string& content) {
+                                 const std::string& dirSuffix,
+                                 std::string& content) {
 
   std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
   std::string outdir = parentDir + prefix + dirSuffix ;
@@ -642,10 +642,10 @@ std::string JobServer::getMachineName(const std::string& machineId){
 std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const std::string& suffix)
 {
   std::string workingDir = boost::filesystem::temp_directory_path().string();
-    string scriptPath = "";
+  string scriptPath = "";
   if(mbatchType == DELTACLOUD) {
-    string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
-    workingDir = mountPoint + "/" + suffix;
+    string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
+    workingDir = mountPoint.empty()? "/tmp/" + suffix : mountPoint + "/" + suffix;
     string inputDir =  workingDir + "/INPUT";
     scriptPath = inputDir + "/script.xsh";
     vishnu::createDir(workingDir, true); // create the working directory
@@ -677,7 +677,7 @@ std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const
 
 void JobServer::deserializeJob(std::string jobSerialized)
 {
-   TMS_Data::Job_ptr job = NULL;
+  TMS_Data::Job_ptr job = NULL;
   if (!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
     throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
   }
