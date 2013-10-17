@@ -10,12 +10,13 @@ const int REQUEST_RETRY_INTERVAL = 5;
 int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 		struct deltacloud_instance *instance)
 {
-	int timeout = 300;
+  const MAX_TIMEOUT=60;
+  int timeout = MAX_TIMEOUT;
 	int found = 1;
 
 	/* wait for up to 5 minutes for the instance to show up */
 	while (1) {
-		fprintf(stderr, "Waiting for instance to go RUNNING, %d/300\n", timeout);
+    fprintf(stderr, "Waiting for instance to go RUNNING, timeout: %d/%d\n", timeout, MAX_TIMEOUT);
 
 		if (deltacloud_get_instance_by_id(api, instid, instance) < 0) {
 			break;
@@ -28,8 +29,8 @@ int wait_for_instance_boot(struct deltacloud_api *api, const char *instid,
 		} else if (strcmp(instance->state, "PENDING") != 0) {
 			break;
 		} else {
-			timeout--;
-			if (timeout == 0) {
+      timeout-=REQUEST_RETRY_INTERVAL;
+      if (timeout <= 0) {
 				break;
 			}
 			deltacloud_free_instance(instance);

@@ -68,10 +68,10 @@ DeltaCloudServer::submit(const char* scriptPath,
     mvmUserKey = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_VM_USER_KEY], false);
   }
   if (mnfsServer.empty()) {
-    mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], false);
+    mnfsServer = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_SERVER], true);
   }
   if(mnfsMountPoint.empty()) {
-    mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], false);
+    mnfsMountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
   }
   // Set the parameters of the virtual machine instance
   std::vector<deltacloud_create_parameter> params;
@@ -98,24 +98,33 @@ DeltaCloudServer::submit(const char* scriptPath,
   }
   cleanUpParams(params);  // cleanup allocated parameters
 
-  struct deltacloud_instance instance;
+  deltacloud_instance instance;
   if(wait_for_instance_boot(mcloudApi, instid, &instance) != 0) {
-    std::string msg = (boost::format("Instance never went RUNNING; unexpected state %1%\n")%instance.state).str();
+    std::string msg = (boost::format("Instance never went RUNNING; VM state: %1%\n")%instance.state).str();
     deltacloud_instance_destroy(mcloudApi, &instance);
     finalize();
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, msg);
   }
-  vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instance.private_addresses->address); // Create the NODEFILE
 
+  deltacloud_address* instanceAddr = NULL;
+  instanceAddr = instance.private_addresses ? instance.private_addresses : instance.public_addresses;
+
+  if (! instanceAddr) {
+    deltacloud_free_instance(&instance);
+    finalize();
+    std::string msg = (boost::format("Instance does not have network address %1%\n")%instance.id).str();
+    throw TMSVishnuException(ERRCODE_UNKNOWN_BATCH_SCHEDULER, msg);
+  }
+
+  vishnu::saveInFile(job.getOutputDir()+"/NODEFILE", instanceAddr->address); // Create the NODEFILE
   std::cout << boost::format("[TMS][INFO] Virtual machine started\n"
                              " ID: %1%\n"
                              " NAME: %2%\n"
                              " IP: %3%\n"
-                             " Startime: %4%\n")%instance.id%instance.name
-               %instance.private_addresses->address%instance.launch_time;
+                             " Startime: %4%\n")%instance.id %instance.name %instanceAddr->address %instance.launch_time;
 
   // Create an ssh engine for the virtual machine & submit the script
-  SSHJobExec sshEngine(mvmUser, instance.private_addresses->address);
+  SSHJobExec sshEngine(mvmUser, instanceAddr->address);
   int jobPid = -1;
   try {
     jobPid = sshEngine.execRemoteScript(scriptPath, mnfsServer, mnfsMountPoint, job.getOutputDir());
@@ -128,7 +137,7 @@ DeltaCloudServer::submit(const char* scriptPath,
   job.setBatchJobId(vishnu::convertToString(jobPid));
   job.setVmId(instance.id);
   job.setStatus(vishnu::STATE_SUBMITTED);
-  job.setVmIp(instance.private_addresses->address);
+  job.setVmIp(instanceAddr->address);
   job.setOutputPath(job.getOutputDir()+"/stdout");
   job.setErrorPath(job.getOutputDir()+"/stderr");
   job.setNbNodes(1);
@@ -172,12 +181,13 @@ DeltaCloudServer::getJobState(const std::string& jobDescr) {
 
   SSHJobExec sshEngine(vmUser, vmIp);
   std::string statusFile = "/tmp/"+jobDescr;
-  sshEngine.execCmd("ps -o pid= -p " + pid +" | wc -l >"+statusFile, false);
+  std::string cmd = (boost::format("ps -o pid= -p %1% | wc -l > %2%")%pid %statusFile).str();
+  sshEngine.execCmd(cmd, false);
 
+  // Check if the job is completed
+  // If yes stop the virtual machine and release the resources
   int status = vishnu::STATE_RUNNING;
-  int count = vishnu::getStatusValue(statusFile);
-  if( count == 0) {
-    // stop the virtual machine to release the resources
+  if (vishnu::getStatusValue(statusFile) == 0) {
     releaseResources(vmId);
     status = vishnu::STATE_COMPLETED;
   }
@@ -281,7 +291,7 @@ void DeltaCloudServer::releaseResources(const std::string & vmid) {
                              (boost::format("Get instance failed with the following reason (%1%)")%deltacloud_get_last_error_string()).str());
   }
   std::cout << boost::format("[TMS][INFO] The instance %1% (NAME: %2%) will be stopped")%instance.id%instance.name;
-  if (deltacloud_instance_stop(mcloudApi, &instance) < 0) { // Stop the instance
+  if (deltacloud_instance_destroy(mcloudApi, &instance) < 0) { // Stop the instance
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              (boost::format("Deleting the virtual machine failed (%1%)")%deltacloud_get_last_error_string()).str());
   }
