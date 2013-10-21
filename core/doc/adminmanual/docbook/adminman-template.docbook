@@ -1420,7 +1420,7 @@ port=127.0.0.1:9001
 <para>
 TMS est une composante clé d'une architecture VISHNU. Grâce à son architecture souple, il s'intègre dans différents types d'environnements de calcul. 
 Des environnements traditionnels reposant sur des batch schedulers classiques comme LoadLeveler et SLURM, il a été étendu pour s'interfacer avec
-les gestionnaires de gestionnaires de ressources virtuelles (aussi appelés gestionnaires de cloud) tels qu'OpenStack et OpenNebula. Basé sur Delatcloud et actuellement en version beta, cette extension a été testée avec OpenStack et OpenNebula.
+les gestionnaires de ressources virtuelles (aussi appelés gestionnaires de cloud) tels qu'OpenStack et OpenNebula. Basé sur Delatcloud et actuellement en version beta, cette extension a été testée avec OpenStack et OpenNebula.
 </para>
 <para>
 L'intégration avec les gestionnaires de ressources virtuelles nécessite un mode de fonctionnement interne relativement différent de ce 
