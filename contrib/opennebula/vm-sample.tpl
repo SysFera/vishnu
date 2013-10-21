@@ -1,3 +1,9 @@
+#!/bin/bash
+# Author Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+# Copyright SysFera SA
+# Last update : 21-10-2013
+
+
 NAME   = myttyserver
 CPU    = 0.1
 MEMORY = 64
