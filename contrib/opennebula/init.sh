@@ -47,3 +47,26 @@ if [ -n "$USERNAME" ]; then
 		chmod -R 600 /home/$USERNAME/.ssh
 	fi
 fi
+
+
+# Mounting the data repository, 
+# Before check that nfs-client is installed
+#
+NFS_CLIENT=`which mount.nfs`
+
+if [ -z ${NFS_CLIENT} ]; then
+
+    echo "nfs-client is not available"
+    exit 1
+
+else    
+    if [ -z ${VISHNU_CLOUD_NFS_SERVER} ] || [ -z ${VISHNU_CLOUD_NFS_MOUNT_POINT} ]; then
+
+	echo "The data repository parameters are not suitable set"
+	exit 1
+    else
+	mkdir -p ${VISHNU_CLOUD_NFS_MOUNT_POINT}
+	mount -t nfs -o rw,rsize=8192,wsize=8192 \
+        ${VISHNU_CLOUD_NFS_SERVER}:${VISHNU_CLOUD_NFS_MOUNT_POINT} ${VISHNU_CLOUD_NFS_MOUNT_POINT}
+    fi
+fi

@@ -13,10 +13,11 @@ RAW = [ type = "kvm", data = " <serial type='pty'> <source path='/dev/pts/3'/> <
 # Context example
 CONTEXT = [
   hostname = "$NAME",
-	ip_public = "$NIC[IP, NETWORK=\"Red Virtual\"]",
-	files = "/home/oneadmin/one-templates/ttylinux/init.sh /home/oneadmin/one-templates/ttylinux/id_dsa.pub",
+  ip_public = "$NIC[IP, NETWORK=\"Red Virtual\"]",
+  files = "/home/oneadmin/one-templates/ttylinux/init.sh /home/oneadmin/one-templates/ttylinux/id_dsa.pub",
   target = "hdc",
-	root_pubkey = "id_dsa.pub",
-	username = "oneadmin",
-	user_pubkey = "id_dsa.pub"
+  root_pubkey = "id_dsa.pub",
+  username = "oneadmin",
+  VISHNU_CLOUD_NFS_SERVER = 192.168.1.108,
+  VISHNU_CLOUD_NFS_MOUNT_POINT = /mnt/cloud
 ]
