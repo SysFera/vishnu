@@ -328,6 +328,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>35</revnumber>
+<date>21/10/2013</date>
+<authorinitials>R. Chakode</authorinitials>
+<revdescription>
+<para>Ajout d'informations liées au supportd'OpenNebula</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -1411,7 +1420,7 @@ port=127.0.0.1:9001
 <para>
 TMS est une composante clé d'une architecture VISHNU. Grâce à son architecture souple, il s'intègre dans différents types d'environnements de calcul. 
 Des environnements traditionnels reposant sur des batch schedulers classiques comme LoadLeveler et SLURM, il a été étendu pour s'interfacer avec
-les gestionnaires de gestionnaires de ressources virtuelles (aussi appelés gestionnaires de cloud) tels tels qu'OpenStack et OpenNebula. Basé sur Delatcloud et actuellement en version beta, cette extension n'est actuellement testée qu'avec OpenStack. 
+les gestionnaires de gestionnaires de ressources virtuelles (aussi appelés gestionnaires de cloud) tels tels qu'OpenStack et OpenNebula. Basé sur Delatcloud et actuellement en version beta, cette extension a été testée avec OpenStack et OpenNebula.
 </para>
 <para>
 L'intégration avec les gestionnaires de ressources virtuelles nécessite un mode de fonctionnement interne relativement différent de ce 
@@ -1480,8 +1489,8 @@ Ex. <emphasis>VISHNU_CLOUD_ENDPOINT=http://192.168.1.1:3001/api</emphasis> indiq
 <listitem>
 <para>
 VISHNU_CLOUD_USER : Définit la chaine de connexion au gestionnaire de ressources virtuelles. 
-En général cela correspond au login de l'utilisateur. Cependant, pour OpenStack, ceci est une chaine sous la forme 
-<emphasis>user+tenant</emphasis>. Où <emphasis>user</emphasis> et <emphasis>tenant</emphasis> désignent respectivement le login de l'utilisateur et le nom du tenant auquel il appartient. 
+En général cela correspond au login d'un utilisateur sur le gestionnaire de cloud. Cas particulier :
+pour OpenStack, ceci doit être une chaine sous la forme <emphasis>user+tenant</emphasis>. Où <emphasis>user</emphasis> et <emphasis>tenant</emphasis> désignent respectivement le login de l'utilisateur et le nom du tenant auquel il appartient.
 </para>
 <para>
 Ex. <emphasis>VISHNU_CLOUD_USER=bob+sysfera</emphasis> définit la chaine de connexion pour l'utilisateur bob du tenant sysfera.
@@ -1505,7 +1514,7 @@ VISHNU_CLOUD_VM_USER : Définit l'identifiant de l'utilisateur sous lequel les t
 </listitem>
 <listitem>
 <para>
-VISHNU_CLOUD_VM_USER_KEY : Ce paramètre définit le nom de la clé SSH à déployer dans les machines virtuelles. La valeur doit correspondre à une clé enregistrée dans le gestionnaire de cloud. 
+VISHNU_CLOUD_VM_USER_KEY : Spécifique à OpenStack, ce paramètre définit le nom de la clé SSH à déployer dans les machines virtuelles. La valeur doit correspondre à une clé enregistrée dans le gestionnaire de cloud. Pour OpenNebula, la copie de clé SSH est réalisée via le mécanisme de contextualisation. Voir les fichiers d'exemple disponibles dans le repertoire <literal>contrib</literal> pour plus de détails.
 </para>
 </listitem>
 <listitem>
@@ -1516,12 +1525,12 @@ flavor définie dans le gestionnaire de cloud.
 </listitem>
 <listitem>
 <para>
-VISHNU_CLOUD_NFS_SERVER : Définit l'adresse du serveur NFS sur lequel sont stockées les données des applications s'exécutant au sein des machines virtuelles.
+VISHNU_CLOUD_NFS_SERVER : Définit l'adresse du serveur NFS sur lequel sont stockées les données ou des applications partagées par des machines virtuelles. Ce paramètre peut-être défini : (i) soit via le fichier <literal>.vishnurc</literal>; (ii) soit via les metadonnées (données de contextualisation) de la machine virtuelle. Cette seconde approche est recommendée si votre infrastructure de cloud supporte la contextualisation des machines virtuelles, de type cloud-init ou de type OpenNebula. Vous pouvez consulter les exemples de template et de script de contextualisation disponibles dans le repertoire <literal>contrib</literal> pour plus de détails.
 </para>
 </listitem>
 <listitem>
 <para>
-VISHNU_CLOUD_NFS_MOUNT_POINT : Désigne le point de montage sur le serveur NFS.
+VISHNU_CLOUD_NFS_MOUNT_POINT : Désigne le point de montage sur le serveur NFS. Utilisé conjointement avec le paramètre VISHNU_CLOUD_NFS_SERVER, ce paramètre peut également être défini soit via le fichier <literal>.vishnurc</literal> ou via les métadonnées de contextualisation.
 </para>
 </listitem>
 </itemizedlist>
