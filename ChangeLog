@@ -1,4 +1,9 @@
 +--------------+
+| VISHNU 3.1.x |
++--------------+
+* Added compatibility with OpenNebula
+
++--------------+
 | VISHNU 3.1.1 |
 +--------------+
 * Move IMS define_*_identifier functions to UMS module
