@@ -69,7 +69,6 @@ main(int argc, char* argv[], char* envp[]) {
   std::string sendmailScriptPath;
   struct sigaction action;
   string UMSTYPE = "umssed";
-  string mid;
   string uri;
 
   if (argc != 2) {
@@ -87,7 +86,6 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
-    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email\n";
