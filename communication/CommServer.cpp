@@ -39,7 +39,12 @@ registerSeD(const std::string& type,
   int timeout = 10;
 
   // Getting the machine id
-  config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+  if (type == "umssed") { // if ums
+    config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
+  }
+  else {
+    config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
+  }
   config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
   if (timeout <= 0) {
     timeout = 10;
