@@ -229,6 +229,14 @@ Add the use of the .netrc file of the connection and the reconnection.
 
 <para>Added options for SSL support</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>24</revnumber>
+        <date>04/11/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+
+<para>Added note about compatibility support</para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -440,6 +448,18 @@ From the version 3.1.0, VISHNU supports secured communications through SSL chann
           </listitem>
         </itemizedlist>
       </section>
+    </section>
+    <section>
+      <title>Compatibility between versions</title>
+      <para>VISHNU has a software policy to handle clients and servers versions. These controls are made on the 3 services that are entry points to VISHNU: connect, reconnect and change_password. The rules are the following ones:</para>
+      <itemizedlist>
+        <listitem>
+          <para>Reject if the major is different</para>
+        </listitem>
+        <listitem>
+          <para>Reject if the minor of the server is inferior to the minor of the client</para>
+        </listitem>
+      </itemizedlist>
     </section>
     <section>
       <title>Software usage description </title>
