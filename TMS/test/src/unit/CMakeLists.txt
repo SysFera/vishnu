@@ -6,6 +6,7 @@ include_directories(
 
 include(UnitTest)
 
+if (COMPILE_SERVERS)
 unit_test(POSIXParserUnitTests vishnu-tms-posix)
 unit_test(EnvUnitTests vishnu-tms-server)
 unit_test(ScriptGenConvertorUnitTests vishnu-tms-server )
@@ -84,3 +85,4 @@ target_link_libraries(tmssed-mock
 
 unit_test(JobServerUnitTests vishnu-tms-server-mock)
 unit_test(ListJobServerUnitTests vishnu-tms-server-mock tmssed-mock)
+endif(COMPILE_SERVERS)

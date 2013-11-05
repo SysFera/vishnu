@@ -2,6 +2,8 @@
 | VISHNU 3.1.x |
 +--------------+
 * Added compatibility with OpenNebula
+* Support swig2 and python 2.7 (ticket 384)
+* Fix ticket 379, 380, 387
 
 +--------------+
 | VISHNU 3.1.1 |
