@@ -131,6 +131,13 @@ namespace vishnu {
   bool
   isUName (const char * s);
   /**
+   * \brief Return true if the string starts with 'NAME'
+   * \param s String to test
+   * \return True if the string starts with 'NAME'
+   */
+  bool
+  isName (const char * s);
+  /**
    * \brief Return true if the string starts with 'MANAME'
    * \param s String to test
    * \return True if the string starts with 'MANAME'

@@ -77,6 +77,10 @@ vishnu::isUName (const char * s) {
   return (s[0]=='U' && s[1]=='N' && s[2]=='A' && s[3]=='M' && s[4]=='E');
 }
 bool
+vishnu::isName (const char * s) {
+  return (s[0]=='N' && s[1]=='A' && s[2]=='M' && s[3]=='E');
+}
+bool
 vishnu::isMaName (const char * s) {
   return (s[0]=='M' && s[1]=='A' && s[2]=='N' && s[3]=='A' && s[4]=='M' && s[5]=='E');
 }
@@ -162,6 +166,11 @@ vishnu::getKeywords (int* size, Format_t* array, const char* format, int cpt, Id
         array[*size].value = name;
         array[*size].start = i;
         array[*size].end = i+5;
+        (*size) ++;
+      } else if (isName (format+i+1)) {
+        array[*size].value = name;
+        array[*size].start = i;
+        array[*size].end = i+4;
         (*size) ++;
       } else if (isType (format+i+1)) {
         switch (type) {
