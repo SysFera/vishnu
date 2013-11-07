@@ -44,7 +44,7 @@ wget $DOWNLOAD_URL
 
 if [ $? -ne 0 ]; then
   echo "Can not download the tarball at $DOWNLOAD_URL"
-#  exit 1
+  exit 1
 fi
 
 # Create OBS package
