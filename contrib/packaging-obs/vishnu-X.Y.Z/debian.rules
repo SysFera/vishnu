@@ -1,0 +1,51 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+# Sample debian/rules that uses debhelper.
+#
+# This file was originally written by Joey Hess and Craig Small.
+# As a special exception, when this file is copied by dh-make into a
+# dh-make output file, you may use that output file without restriction.
+# This special exception was added by Craig Small in version 0.37 of dh-make.
+#
+# Modified to make a template file for a multi-binary package with separated
+# build-arch and build-indep targets  by Bill Allombert 2001
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	dh_auto_configure -- -DCOMPILE_UMS=ON \
+-DCOMPILE_FMS=ON \
+-DCOMPILE_IMS=OFF \
+-DCOMPILE_TMS=ON \
+-DVISHNU_USE_TORQUE=ON \
+-DENABLE_POSTGRESQL=ON \
+-DVISHNU_USE_LDAP=ON \
+-DCOMPILE_CLIENT_CLI=ON \
+-DCOMPILE_SERVERS=ON \
+-DENABLE_MYSQL=ON \
+-DBUILD_TESTING=OFF \
+-DENABLE_SWIG=OFF \
+-DENABLE_PYTHON=OFF \
+-DENABLE_JAVA=OFF \
+-DENABLE_LDAP=OFF \
+-DVISHNU_BATCH=POSIX \
+-DVISHNU_BATCH_VERSION=1.0
+
+override_dh_auto_install :
+	dh_auto_install
+# install documentation
+#	dh_installdirs $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc
+#	dh_install $(CURDIR)/core/doc/adminmanual/docbook/vishnu-adminman.docbook.pdf $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc/vishnu-admin-manual.pdf
+#	dh_install $(CURDIR)/core/doc/usermanual/docbook/vishnu-userman.docbook.pdf $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc/vishnu-user-manual.pdf
+# install config files
+	dh_install -pvishnu usr/etc/*.cfg etc
+	dh_install -pvishnu-server usr/etc/*.cfg etc
+	dh_install -pvishnu-client usr/etc/vishnu-sample.cfg etc
