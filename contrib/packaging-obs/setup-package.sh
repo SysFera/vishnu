@@ -48,14 +48,20 @@ if [ $? -ne 0 ]; then
 fi
 
 # Create OBS package
-if [ ! -z $OBS_PROJECT_DIR && -d $OBS_PROJECT_DIR ]; then
-  cd $OBS_PROJECT_DIR
-  osc up
+if [ ! -z $OBS_PROJECT_DIR ]; then
+  if [ -d $OBS_PROJECT_DIR ]; then 
+    cd $OBS_PROJECT_DIR
+  else 
+    echo "No a directory: $OBS_PROJECT_DIR"
+    exit 1
+  fi
 else
   cd /tmp/
   osc co $OBS_PROJECT
   cd $OBS_PROJECT
 fi
+
+osc up
 
 osc mkpac $PACKAGE_NAME
 cp -r $WORKING_DIR/* $PACKAGE_NAME
