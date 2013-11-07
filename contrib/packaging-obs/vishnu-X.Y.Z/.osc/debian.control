@@ -1,0 +1,37 @@
+Source: vishnu
+Section: admin
+Priority: extra
+Maintainer: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+Build-Depends: debhelper (>= 4.0.0), g++, libzmq-dev
+Standards-Version: 3.9.3
+Homepage: http://sysfera.github.io/vishnu.html
+Vcs-Git: git@github.com:SysFera/vishnu.git
+Vcs-Browser: https://github.com/SysFera/vishnu
+
+Package: vishnu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: This package contains all the vishnu bundle files.
+
+Package: libvishnu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: This package contains common vishnu library files
+
+Package: vishnu-client
+Architecture: all
+Depends: libvishnu (= ${source:Version})
+Description: The vishnu client package contains all the command line interfaces
+
+Package: vishnu-server
+Architecture: all
+Depends: libvishnu (= ${source:Version})
+Description: The vishnu server package contains the server binaries and libraries
+
+Package: vishnu-dev
+Architecture: all
+Depends: libvishnu (= ${source:Version})
+Description: The vishnu devel contains headers files and librairies for C++, 
+  Python and Java developements
+
+
