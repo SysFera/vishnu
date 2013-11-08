@@ -337,6 +337,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>36</revnumber>
+<date>08/11/2013</date>
+<authorinitials>K. Coulomb</authorinitials>
+<revdescription>
+<para>Ajout du support de SWIG2 et python2.7, mise à jour concernant les clés SSH.</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -613,13 +622,13 @@ et <emphasis>regex</emphasis> doivent être installés
 <para><emphasis role="bold">Dépendences nécessaires à la génération des APIs Python et Java</emphasis></para>
 <itemizedlist>
 <listitem>
-<para>SWIG 1.3.40 (ATTENTION : la version 2 de SWIG n'est pas supporté).</para>
+<para>SWIG 1.3.40 ou SWIG 2.0 (les 2 versions sont supportées).</para>
 </listitem>
 <listitem>
 <para>JAVA SDK 1.6.</para>
 </listitem>
 <listitem>
-<para>Python 2.6</para>
+<para>Python 2.7</para>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -693,7 +702,13 @@ l'être également (-DCOMPILE_UMS=ON, -DCOMPILE_TMS=ON et -DCOMPILE_FMS=ON).
 
 <listitem>
 <para>
-ENABLE_PYTHON : Désactivée par défaut cette option permet d'activer ou non la compilation du code PYTHON.
+ENABLE_PYTHON : Désactivée par défaut cette option permet d'activer ou non la compilation du code PYTHON pour PYTHON 2.7.
+</para>
+</listitem>
+
+<listitem>
+<para>
+ENABLE_PYTHON3 : Désactivée par défaut cette option permet d'activer ou non la compilation du code PYTHON pour PYTHON 3.3 (expérimental).
 </para>
 </listitem>
 
@@ -1728,9 +1743,7 @@ permettre la première connexion.
 </listitem>
 </itemizedlist>
 En somme, il est alors obligatoire que la clé publique du SeD soit ajoutée à tous les comptes utilisateurs des machines impliquées
-par les requêtes FMS. Toutes les clés protégées par des passphrases
-devront être stockées par un agent ssh pour permettre les
-authentifications automatiques.
+par les requêtes FMS. Toutes les clés protégées par des passphrases ne sont pas supportées.
 </para>
 </section>
 
@@ -1740,9 +1753,8 @@ authentifications automatiques.
 <para>
 Les commandes de soumission, d'annulation et de récupération des résultats de jobs éxécutées par le SeD TMS sont lancées via ssh
 sous le nom de l'utilisateur ayant émis la requête. Pour pouvoir exécuter ces commandes correctement, la clé publique du compte dédié au SeD TMS doit
-être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur. Toutes les clés protégées par des passphrases
-devront être stockées par un agent ssh pour permettre les
-authentifications automatiques.
+être ajoutée au fichier authorized_keys ($HOME/.ssh/authorized_keys) de l'utilisateur. Toutes les clés protégées par des passphrases ne
+sont pas supportées.
 </para>
 </section>
 
