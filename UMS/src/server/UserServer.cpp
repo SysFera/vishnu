@@ -282,7 +282,6 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
         //generation of a new password
         pwd = generatePassword(user.getUserId(), user.getUserId());
         user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
-
         //to get the password encryptes
         passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
 
@@ -473,8 +472,8 @@ UserServer::generatePassword(std::string value1, std::string value2) {
 
   std::string salt = "$1$"+value1 + convertToString(generateNumbers())+value2+"$";
   std::string clef = value2+convertToString(generateNumbers());
-
-  return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
+  std::string res =  boost::str(boost::format("%1%%2%") % crypt(clef.c_str(), salt.c_str()) % salt.length());
+  return res;
 }
 /**
 * \brief Function to send an email to a user

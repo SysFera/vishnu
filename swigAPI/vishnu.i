@@ -311,6 +311,15 @@ EMFTYPE(FileTransfer,FMS_Data,getFileTransfers,FileTransferList, fileTransferLis
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+%typemap(in, numinputs=0) std::string& tmpPassword (std::string temp) {
+  $1 = &temp;
+}
+
+%typemap(argout) std::string& tmpPassword {
+  PyObject *o = PyString_FromString($1->c_str());
+  $result = SWIG_Python_AppendOutput($result, o);
+}
+
 
 // Exception rule for user exception
 %typemap (throws) UserException{
