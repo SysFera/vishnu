@@ -109,7 +109,8 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, missingFiles, 0);
       std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
       jobResult.setOutputPath(moutDir+"/"+fileName);
-      jobResult.setErrorPath(moutDir+"/"+fileName);
+      std::string fileName2 = bfs::basename(lineVec[1]) + bfs::extension(lineVec[1]);
+      jobResult.setErrorPath(moutDir+"/"+fileName2);
     }
     if (!missingFiles.empty()) {
       vishnu::saveInFile(moutDir+"/MISSINGS", missingFiles);
