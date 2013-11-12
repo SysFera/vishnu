@@ -628,7 +628,7 @@ et <emphasis>regex</emphasis> doivent être installés
 <para>JAVA SDK 1.6.</para>
 </listitem>
 <listitem>
-<para>Python 2.7</para>
+<para>Python 2.6, 2.7 ou 3.3 (expérimental)</para>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -702,7 +702,7 @@ l'être également (-DCOMPILE_UMS=ON, -DCOMPILE_TMS=ON et -DCOMPILE_FMS=ON).
 
 <listitem>
 <para>
-ENABLE_PYTHON : Désactivée par défaut cette option permet d'activer ou non la compilation du code PYTHON pour PYTHON 2.7.
+ENABLE_PYTHON : Désactivée par défaut cette option permet d'activer ou non la compilation du code PYTHON pour PYTHON 2.6 ou 2.7.
 </para>
 </listitem>
 
