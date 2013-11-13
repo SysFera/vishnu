@@ -125,6 +125,18 @@
             Modified UA3 - Save configuration : added the list of user-authentication systems and the list of local user-authentication configs on file saved.
           </para></revdescription>
       </revision>
+      <revision>
+        <revnumber>11</revnumber>
+        <date>13/11/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          
+        <para>
+            Modified U4 (remove bad scenario from creating the local account with ssh key creation and sending an email)
+            Modified U1.3.5 (remove hostname from session)
+            Modified UA1.1 (add user status can be updated)
+          </para></revdescription>
+      </revision>
     </revhistory>
   </info>
   <chapter>
@@ -803,7 +815,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The user sends a request to list all her active sessions that have an open timestamp within an interval provided by the user (start and finish date)</para><para>2. The System returns all active sessions of the user matching the search criteria with the following information for each session: id, opening date, client host name, closure policy (timeout or disconnect), time before automatic closure (if applicable) and period using start and finish date </para></entry>
+                <entry><para>1. The user sends a request to list all her active sessions that have an open timestamp within an interval provided by the user (start and finish date)</para><para>2. The System returns all active sessions of the user matching the search criteria with the following information for each session: id, opening date, closure policy (timeout or disconnect), time before automatic closure (if applicable) and period using start and finish date </para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1065,11 +1077,11 @@
               </row>
               <row>
                 <entry><para>Postcondition</para></entry>
-                <entry><para>- Local user config is registered</para><para>- An email is sent to the user with a message containing an SSH public key</para></entry>
+                <entry><para>- Local user config is registered</para></entry>
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The user provides local user configuration information for a given machine (login of the local unix account on this machine, path to home directory of that unix account on this machine) </para><para>2. The System checks the user login and the machine Id</para><para>3. The System generates an ssh private/public key pair</para><para>4. The System sends an email to the user containing the public key and asking the user to add this key to the authorized_keys on the machine</para><para>5. The user updates his/her authorized_keys file on the machine by adding the public key</para></entry>
+                <entry><para>1. The user provides local user configuration information for a given machine (login of the local unix account on this machine, path to home directory of that unix account on this machine) </para><para>2. The System checks the user login and the machine Id</para><para>3. The System registers the data concerning the user</para><para>4. The user updates his/her authorized_keys file on the machine by adding the public key to his account</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>
@@ -1077,7 +1089,7 @@
               </row>
               <row>
                 <entry><para>Exception sequence</para></entry>
-                <entry><para>2a. Unknown login</para><para>2b. Unknown machine</para><para>2c. The user already has a local user configuration defined for the machine</para><para>4a. Invalid email address</para></entry>
+                <entry><para>2a. Unknown login</para><para>2b. Unknown machine</para><para>2c. The user already has a local user configuration defined for the machine</para></entry>
               </row>
               <row>
                 <entry><para>Notes</para></entry>
@@ -1487,7 +1499,7 @@
               </row>
               <row>
                 <entry><para>Base sequence</para></entry>
-                <entry><para>1. The administrator provides the user's information changes (firstname, lastname, email, privilege) </para><para>2. The System updates the user account information</para><para>3. The System returns an acknowledgment to the administrator</para></entry>
+                <entry><para>1. The administrator provides the user's information changes (firstname, lastname, email, privilege, status) </para><para>2. The System updates the user account information</para><para>3. The System returns an acknowledgment to the administrator</para></entry>
               </row>
               <row>
                 <entry><para>Branch sequence</para></entry>

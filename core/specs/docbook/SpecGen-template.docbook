@@ -111,6 +111,18 @@
           </para>
         </revdescription>
         </revision>
+	<revision>
+        <revnumber>11</revnumber>
+        <date>13/11/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+          <para>
+            Modified U4 (remove bad scenario from creating the local account with ssh key creation and sending an email)
+            Modified U1.3.5 (remove hostname from session)
+            Modified UA1.1 (add user status can be updated)
+          </para>
+        </revdescription>
+        </revision>
       </revhistory>
     </info>
   <chapter>
