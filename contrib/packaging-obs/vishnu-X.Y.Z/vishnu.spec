@@ -1,7 +1,7 @@
 Name:           vishnu
 Summary:    	VISHNU is a modular toolkit for distributed resource management
 Version:        X.Y.Z
-Release:        build<CI_CNT>.<B_CNT>
+Release:        <CI_CNT>.<B_CNT>
 Group:          System/Administration
 License:        Cecil
 URL:            http://www.sysfera.fr/sysfera-ds/vishnu.html
