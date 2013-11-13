@@ -13,6 +13,7 @@
 #include <iostream>
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <sys/stat.h>
 
 #include "UMSVishnuException.hpp"
 #include "VishnuException.hpp"
@@ -138,14 +139,15 @@ operator <<(std::ostream& os, const SessionEntry& session){
 template <class T>
 void
 saveIntoFile(SessionContainer& allSessions, const char* file){
+  {
 
-  std::ofstream ofile (file);
+    std::ofstream ofile (file);
 
-  T ar(ofile);
+    T ar(ofile);
 
-  ar << bs::make_nvp("sessions",allSessions);
-
-  ofile.close();
+    ar << bs::make_nvp("sessions",allSessions);
+  }
+  chmod(file, S_IRUSR | S_IWUSR);
 }
 
 
