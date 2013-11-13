@@ -22,7 +22,7 @@ fi
 # Get common functions and variables
 source scripts/common.sh
 
-VISHNUTAR=deliverables/release/VISHNU_v$NO_VERSION/vishnu_v${NO_VERSION}.tgz
+VISHNUTAR=deliverables/release/vishnu-$NO_VERSION/vishnu-${NO_VERSION}.tgz
 
 if [ ! -f ${VISHNUTAR} ]; then
   echo "Missing release file:  ${VISHNUTAR}"
@@ -42,8 +42,8 @@ run_cmd cp  ${VISHNUTAR} $tmpdir
 
 change_dir $tmpdir
 
-run_cmd tar xvf vishnu_v${NO_VERSION}.tgz >/dev/null 2>&1
-change_dir VISHNU_v${NO_VERSION}
+run_cmd tar xvf vishnu-${NO_VERSION}.tgz >/dev/null 2>&1
+change_dir vishnu-${NO_VERSION}
 
 run_cmd mkdir build
 change_dir build
