@@ -48,7 +48,7 @@ echo "## Preparing VISHNU v${NO_VERSION} ..."
 # Create temporary directory
 run_cmd rm -rf /tmp/prepaRel
 run_cmd mkdir -p /tmp/prepaRel
-path=/tmp/prepaRel/VISHNU_v$NO_VERSION
+path=/tmp/prepaRel/vishnu-$NO_VERSION
 run_cmd mkdir -p $path
 
 pathrel=deliverables/src
@@ -60,7 +60,7 @@ run_cmd mkdir -p deliverables/doc
 run_cmd mkdir -p deliverables/testReports
 
 # create releasepath
-releasePath=deliverables/release/VISHNU_v$NO_VERSION
+releasePath=deliverables/release/vishnu-$NO_VERSION
 run_cmd mkdir -p $releasePath
 
 remove_files deliverables/src/*
@@ -420,20 +420,20 @@ change_dir $path
 change_dir ..
 
 # Archive to send
-run_cmd_noOutput tar -czvf vishnu_v${NO_VERSION}.tgz VISHNU_v$NO_VERSION
+run_cmd_noOutput tar -czvf vishnu-${NO_VERSION}.tgz vishnu-$NO_VERSION
 
 # Moving archive in /tmp
-run_cmd mv vishnu_v${NO_VERSION}.tgz /tmp/
+run_cmd mv vishnu-${NO_VERSION}.tgz /tmp/
 
 # also copy it in the release directory
 change_dir $vishnuDir
-run_cmd cp /tmp/vishnu_v${NO_VERSION}.tgz ${releasePath}
+run_cmd cp /tmp/vishnu-${NO_VERSION}.tgz ${releasePath}
 
 # tarballs of the doc and tests
 change_dir $pathrel
 change_dir ..
-run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_doc.tgz doc
-run_cmd_noOutput tar -czvf ../${releasePath}/vishnu_v${NO_VERSION}_tests.tgz testReports
+run_cmd_noOutput tar -czvf ../${releasePath}/vishnu-${NO_VERSION}_doc.tgz doc
+run_cmd_noOutput tar -czvf ../${releasePath}/vishnu-${NO_VERSION}_tests.tgz testReports
 
 # Prepare release note
 change_dir $vishnuDir
