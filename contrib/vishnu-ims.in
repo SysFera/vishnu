@@ -1,7 +1,7 @@
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          vishnu-ims
-# Required-Start:    $network $local_fs $remote_fs diet-agent
+# Required-Start:    $network $local_fs $remote_fs
 # Required-Stop:     $remote_fs
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
@@ -15,7 +15,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 DESC="Vishnu IMS"
 NAME=tmssed
-CONFIG_FILE="@ETC_INSTALL_DIR@/vishnu/IMS.cfg"
+CONFIG_FILE="@ETC_INSTALL_DIR@/vishnu.cfg"
 DAEMON=@SBIN_DIR@/imssed
 DAEMON_ARGS="$CONFIG_FILE"
 PIDFILE=/var/run/$NAME.pid
