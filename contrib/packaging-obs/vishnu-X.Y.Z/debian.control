@@ -11,27 +11,26 @@ Vcs-Browser: https://github.com/SysFera/vishnu
 Package: vishnu
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: This package contains all the vishnu bundle files.
+Description: All vishnu binairies and librairies
 
 Package: libvishnu
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: This package contains common vishnu library files
+Description: Common vishnu library files
 
 Package: vishnu-client
 Architecture: any
 Depends: libvishnu (= ${source:Version})
-Description: The vishnu client package contains all the command line interfaces
+Description: Vishnu command line interfaces
 
 Package: vishnu-server
 Architecture: any
 Depends: libvishnu (= ${source:Version})
-Description: The vishnu server package contains the server binaries and libraries
+Description: Vishnu server binaries
 
 Package: vishnu-dev
 Architecture: any
 Depends: libvishnu (= ${source:Version})
-Description: The vishnu devel contains headers files and librairies for C++, 
-  Python and Java developements
+Description: Vishnu librairies and headers for C++, Python and Java developments
 
 
