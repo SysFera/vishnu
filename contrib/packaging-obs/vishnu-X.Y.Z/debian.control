@@ -19,17 +19,17 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: This package contains common vishnu library files
 
 Package: vishnu-client
-Architecture: all
+Architecture: any
 Depends: libvishnu (= ${source:Version})
 Description: The vishnu client package contains all the command line interfaces
 
 Package: vishnu-server
-Architecture: all
+Architecture: any
 Depends: libvishnu (= ${source:Version})
 Description: The vishnu server package contains the server binaries and libraries
 
 Package: vishnu-dev
-Architecture: all
+Architecture: any
 Depends: libvishnu (= ${source:Version})
 Description: The vishnu devel contains headers files and librairies for C++, 
   Python and Java developements
