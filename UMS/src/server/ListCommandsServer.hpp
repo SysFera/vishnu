@@ -89,14 +89,14 @@ public:
 		time_t startDate = static_cast<time_t>(options->getStartDateOption());
 		if(startDate!=-1) {
 			pt =  boost::posix_time::from_time_t(startDate);
-			std::string startDateStr =  boost::posix_time::to_simple_string(pt);
+			std::string startDateStr =  boost::posix_time::to_iso_string(pt);
 			addTimeRequest("starttime", startDateStr, sqlRequest, ">=");
 		}
 
 		time_t endDate = static_cast<time_t>(options->getEndDateOption());
 		if(endDate!=-1) {
 			pt =  boost::posix_time::from_time_t(endDate);
-			std::string endDateStr =  boost::posix_time::to_simple_string(pt);
+			std::string endDateStr =  boost::posix_time::to_iso_string(pt);
 			addTimeRequest("endtime", endDateStr, sqlRequest, "<=");
 		}
 	}

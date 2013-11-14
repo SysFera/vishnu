@@ -311,7 +311,7 @@ MetricServer::getHistMet(std::string machineId){
     if (start != -1) {
       start = convertUTCtimeINLocaltime(start);
       std::string startStr =
-        boost::posix_time::to_simple_string(boost::posix_time::from_time_t(start));
+        boost::posix_time::to_iso_string(boost::posix_time::from_time_t(start));
       std::ostringstream osValue;
       osValue << startStr;
       request.append(" and time >= ");
@@ -322,7 +322,7 @@ MetricServer::getHistMet(std::string machineId){
     time_t end = static_cast<time_t>(mhop->getEndTime());
     if (end != -1) {
       end = convertUTCtimeINLocaltime(end);
-      std::string endStr = boost::posix_time::to_simple_string(
+      std::string endStr = boost::posix_time::to_iso_string(
         boost::posix_time::from_time_t(end));
       std::ostringstream osValue;
       osValue << endStr;

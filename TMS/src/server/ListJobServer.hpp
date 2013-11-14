@@ -82,14 +82,14 @@ public:
     time_t fromSubmitDate = static_cast<time_t>(options->getFromSubmitDate());
     if(fromSubmitDate != -1) {
       fromSubmitDate = vishnu::convertUTCtimeINLocaltime(fromSubmitDate);
-      std::string submitDateStr =  boost::posix_time::to_simple_string(boost::posix_time::from_time_t(fromSubmitDate));
+      std::string submitDateStr =  boost::posix_time::to_iso_string(boost::posix_time::from_time_t(fromSubmitDate));
       addTimeRequest("submitDate", submitDateStr, sqlRequest, ">=");
     }
 
     time_t toSubmitDate = static_cast<time_t>(options->getToSubmitDate());
     if(toSubmitDate != -1) {
       toSubmitDate = vishnu::convertUTCtimeINLocaltime(toSubmitDate);
-      std::string submitDateStr =  boost::posix_time::to_simple_string(boost::posix_time::from_time_t(toSubmitDate));
+      std::string submitDateStr =  boost::posix_time::to_iso_string(boost::posix_time::from_time_t(toSubmitDate));
       addTimeRequest("submitDate", submitDateStr, sqlRequest, "<=");
     }
 
