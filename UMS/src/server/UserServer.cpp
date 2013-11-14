@@ -622,7 +622,7 @@ UserServer::getUserAccountLogin(const std::string& machineId) {
   if(acLogin.size()==0) {
     delete account;
     delete machine;
-    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You do not have a local account on this machine");
   }
 
   delete account;
@@ -682,7 +682,7 @@ UserServer::getUserAccountProperty(const std::string& machineId, const std::stri
   if(value.size()==0) {
     delete account;
     delete machine;
-    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You have not a local account on this machine");
+    throw UMSVishnuException(ERRCODE_UNKNOWN_LOCAL_ACCOUNT, "You do not have a local account on this machine");
   }
 
   delete account;
