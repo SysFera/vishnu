@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_FromSubmitDate )
   time_t test = 1121211221;
   options->setFromSubmitDate(test);
   listJobServer.processOptions(options, test_sql);
-  std::string tmp = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
+  std::string tmp = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate >= '"+tmp+"' and job.status < 5");
 
 }
@@ -97,7 +97,7 @@ BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
   time_t test = 1121211221;
   options->setToSubmitDate(test);
   listJobServer.processOptions(options, test_sql);
-  std::string tmp = boost::posix_time::to_simple_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
+  std::string tmp = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(test)));
   BOOST_CHECK_EQUAL(test_sql, sqlListOfJobs+" and submitDate <= '"+tmp+"' and job.status < 5");
 
 }
