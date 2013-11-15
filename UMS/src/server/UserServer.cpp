@@ -474,7 +474,7 @@ UserServer::generatePassword(std::string value1, std::string value2) {
   std::string salt = "$1$"+value1 + convertToString(generateNumbers())+value2+"$";
   std::string clef = value2+convertToString(generateNumbers());
 
-  return (std::string(crypt(clef.c_str(), salt.c_str())+salt.length()));
+  return (boost::str(boost::format("%1%%2%") % crypt(clef.c_str(), salt.c_str()) % salt.length()));
 }
 /**
 * \brief Function to send an email to a user
