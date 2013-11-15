@@ -2,7 +2,7 @@ Source: vishnu
 Section: admin
 Priority: extra
 Maintainer: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
-Build-Depends: debhelper (>= 4.0.0), g++, libzmq-dev
+Build-Depends: debhelper (>= 4.0.0), g++, libzmq-dev, swig, python-dev
 Standards-Version: 3.9.3
 Homepage: http://sysfera.github.io/vishnu.html
 Vcs-Git: git@github.com:SysFera/vishnu.git
