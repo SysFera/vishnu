@@ -5,7 +5,7 @@
 
 # REQUIREMENTS
 #
-# ** The VISHNU tarball MUST be available at http://www.sysfera.com/download/vishnu/vishnu-<version>.tar.gz
+# ** The VISHNU tarball MUST be available at http://www.sysfera.com/download/vishnu/vishnu-<version>.tgz
 # ** The tarball MUST contain all the source files
 # ** To run the script you MUST have osc (OBS CLI tools) installed
 
@@ -16,7 +16,7 @@ OBS_PROJECT="home:techsysfera"
 #OBS_PROJECT_DIR=/opt/software/$OBS_PROJECT
 PACKAGE_NAME=vishnu-$VERSION
 DEFAULT_PACKAGE=vishnu-$DEFAULT_VERSION
-DOWNLOAD_URL="http://www.sysfera.com/download/vishnu/$PACKAGE_NAME.tar.gz"
+DOWNLOAD_URL="http://www.sysfera.com/download/vishnu/$PACKAGE_NAME.tgz"
 WORKING_DIR=/tmp/$PACKAGE_NAME
 
 function usage

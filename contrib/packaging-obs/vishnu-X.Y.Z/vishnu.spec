@@ -5,7 +5,7 @@ Release:        <CI_CNT>.<B_CNT>
 Group:          System/Administration
 License:        Cecil
 URL:            http://www.sysfera.fr/sysfera-ds/vishnu.html
-Source0:        %{name}-%{version}.tar.gz
+Source0:        %{name}-%{version}.tgz
 BuildRoot:      %_tmppath/%name-%version-build
 
 %define _prefix /usr/local
