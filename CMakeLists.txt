@@ -104,8 +104,11 @@ endif(LIBCRYPT_FOUND)
 find_package(OpenSSL)
 
 
-find_package(Boost 1.46
-  REQUIRED program_options date_time thread filesystem system unit_test_framework serialization random regex)
+if (BUILD_TESTING)
+  find_package(Boost 1.46 REQUIRED program_options date_time thread filesystem system serialization random regex unit_test_framework)
+else (BUILD_TESTING)
+  find_package(Boost 1.46 REQUIRED program_options date_time thread filesystem system serialization random regex)
+endif(BUILD_TESTING)
 
 find_package(Threads)
 if(THREADS_FOUND)
