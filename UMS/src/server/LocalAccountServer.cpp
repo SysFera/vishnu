@@ -38,7 +38,6 @@ LocalAccountServer::add() {
   UMS_Data::Machine *machine = new UMS_Data::Machine();
   machine->setMachineId(mlocalAccount->getMachineId());
   MachineServer machineServer = MachineServer(machine);
-
   //if the user exists
   if (userServer.exist()) {
     //if the session key is for the owner of the local account or the user is an admin
@@ -50,7 +49,8 @@ LocalAccountServer::add() {
         //To get the database number id of the machine
         numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
         //To get the database number id of the user
-        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+        std::string request = (boost::format("where userid='"+mlocalAccount->getUserId()+"' and status != %1%")%vishnu::STATUS_DELETED).str();
+        numUser = userServer.getAttribut(request);
 
         if (numUser.empty()) {
           throw UMSVishnuException (ERRCODE_UNKNOWN_USERID,
