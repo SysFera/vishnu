@@ -185,7 +185,7 @@ vishnu::cp(const string& sessionKey, const string& src,
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
   }
-  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknwon copy error");
+  FMSVishnuException e(ERRCODE_RUNTIME_ERROR, "Unknown copy error");
 
   try {
     FileTransferProxy fileTransferProxy(sessionKey, src, dest);
