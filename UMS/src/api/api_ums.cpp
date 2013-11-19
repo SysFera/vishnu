@@ -391,6 +391,15 @@ vishnu::changePassword(const std::string& userId,
   throw(UserException, SystemException) {
   checkIfTextIsEmpty(passwordNew, "The new password is empty",
                      ERRCODE_INVALID_PARAM);
+  if (passwordNew.size()<MIN_PWD_SIZE){
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "The new password is too short");
+  }
+  if (passwordNew.size()<MAX_PWD_SIZE){
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "The new password is too long");
+  }
+
 
   UMS_Data::User user;
   user.setUserId(userId);
