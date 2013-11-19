@@ -170,8 +170,11 @@ private:
 
     if (mode == 1) {
       // adding a new server
+      std::vector<std::string> services = server->getServices();
+      services.push_back("heartbeat"+server->getName());
+      std::cout << "name : " << server->getName() << std::endl;
       mann_->add(server->getName(), server->getURI(),
-                 server->getServices());
+                 services);
     } else if (mode == 0) {
       mann_->remove(server->getName(), server->getURI());
     }

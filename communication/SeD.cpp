@@ -19,11 +19,16 @@
 int
 heartbeat(diet_profile_t* pb){
   diet_string_set(pb, 1, "OK");
+  std::cout << "heartbeating " << std::endl;
   return 0;
 }
 
 SeD::SeD() {
   mcb["heartbeat"] = boost::ref(heartbeat);
+  mcb["heartbeatimssed"] = boost::ref(heartbeat);
+  mcb["heartbeatfmssed"] = boost::ref(heartbeat);
+  mcb["heartbeattmssed"] = boost::ref(heartbeat);
+  mcb["heartbeatumssed"] = boost::ref(heartbeat);
 }
 
 
