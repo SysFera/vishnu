@@ -53,6 +53,8 @@ fill_sMap() {
   for (nb = 0; nb < NB_SRV_UMS; nb++) {
     (*sMap)[SERVICES_UMS[nb]] = "UMS";
   }
+  (*sMap)["heartbeatumssed"] = "UMS";
+  
 
   /* TMS services */
   for (nb = 0; nb < NB_SRV_TMS; nb++) {

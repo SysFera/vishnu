@@ -61,3 +61,4 @@ if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 endif()
 
+add_subdirectory(pinger)
