@@ -28,6 +28,8 @@ typedef std::vector<std::string> ListStrings;
 
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
+static const int MIN_PWD_SIZE=6;
+static const int MAX_PWD_SIZE=100;
 
 /**
  * \brief Function to encrypt data and password
