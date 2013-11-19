@@ -1,17 +1,17 @@
 Origin: SysFera
-Label: Maintenu par Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
+Label: Maintained by Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
 Suite: stable
 Codename: squeeze
 Version: all
 Architectures: i386 amd64 source
 Components: main
-Description: dépôt Debian 6 (Squeeze) pour les logiciels edités par SysFera
+Description: Debian 6 (Squeeze) repository for SysFera's Software
 
 Origin: SysFera
-Label: Maintenu par Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
+Label: Maintained by Rodrigue Chakode <Rodrigue.Chakode@sysfera.com>
 Suite: stable
 Codename: wheezy
 Version: all
 Architectures: i386 amd64 source
 Components: main
-Description: dépôt Debian 7 (Wheezy) pour les logiciels edités par SysFera
+Description: Debian 7 (Wheezy) repository for SysFera's Software

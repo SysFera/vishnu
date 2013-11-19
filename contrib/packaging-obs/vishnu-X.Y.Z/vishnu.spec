@@ -1,5 +1,5 @@
 Name:           vishnu
-Summary:    	VISHNU is a modular toolkit for distributed resource management
+Summary:    	  VISHNU is a modular toolkit for distributed resource management
 Version:        X.Y.Z
 Release:        <CI_CNT>.<B_CNT>
 Group:          System/Administration
@@ -37,9 +37,9 @@ on remote hosts using secure transfer protocols. The VISHNU system is also capab
 of monitoring the performance of the servers and to recover automatically from server 
 failures.
 
-%package libvishnu
+%package -n libvishnu
 Summary: vishnu librairies
-%description libvishnu
+%description -n libvishnu
 common vishnu library files
 
 %package client
@@ -119,7 +119,7 @@ rm -rf %{buildroot}
 %doc %{_prefix}/share
 %config(noreplace) %{_prefix}/etc
 
-%files libvishnu
+%files -n libvishnu
 %defattr(-,root,root)
 %{_prefix}/lib/libemf4cpp-vishnu.*
 %{_prefix}/lib/libzmq_helper.*
@@ -152,6 +152,5 @@ rm -rf %{buildroot}
 
 
 %changelog
-* Tue Nov 19 2013 Rodrigue Chakode <rodrigue.chakode@sysfera.com>
-- Initial version
-
+* Mon Aug 21 2013 Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+- See the web site to learn what changed in the different versions of the software
