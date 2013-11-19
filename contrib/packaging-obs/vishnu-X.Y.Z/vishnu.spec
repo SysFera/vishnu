@@ -40,25 +40,30 @@ failures.
 %package libvishnu
 Summary: vishnu librairies
 %description libvishnu
-This package contains common vishnu library files
+common vishnu library files
 
 %package client
 Summary: vishnu CLI and API
 Requires: libvishnu
 %description client
-This package contains CLI and API of vishnu
+CLI and API of vishnu
 
 %package server
 Summary: Dispatcher and SeDs
 Requires: libvishnu
 %description server
-This package contains the server components of vishnu
+vishnu SeDs' and Dispatcher binairies
 
-%package libvishnu-devel
+%package devel
 Summary: Headers and librairies for C++, Python and Java APIs
 Requires: libvishnu
-%description libvishnu-devel
-This contains headers files and librairies for C++, Python and Java developements
+%description devel
+Headers files and librairies for C++, Python and Java developements
+
+%package config
+Summary: Samples of configurations
+%description config
+vishnu sample configuration files
 
 %prep
 %setup -q
@@ -131,20 +136,22 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_prefix}/bin/vishnu_*
 %doc %{_prefix}/share/man/man?/vishnu*
-%config(noreplace) %{_prefix}/etc/vishnu-sample.cfg
 
 %files server
 %defattr(-,root,root)
 %{_prefix}/sbin
-%config(noreplace) %{_prefix}/etc/vishnu-sample.cfg
-%config(noreplace) %{_prefix}/etc/supervisord-sample.cfg
 
-%files libvishnu-devel
+%files devel
 %defattr(-,root,root)
 %{_prefix}/include/
 %doc %{_prefix}/share/man/man?/VISHNU.*
 
+%files config
+%defattr(-,root,root)
+%config(noreplace) %{_prefix}/etc/*.cfg
+
 
 %changelog
-* Mon Aug 21 2013 Rodrigue Chakode <rodrigue.chakode@sysfera.com>
-- See the web site to learn what changed in the different versions of the software
+* Tue Nov 19 2013 Rodrigue Chakode <rodrigue.chakode@sysfera.com>
+- Initial version
+

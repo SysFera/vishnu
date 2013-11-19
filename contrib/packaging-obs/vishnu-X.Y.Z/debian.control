@@ -8,15 +8,15 @@ Homepage: http://sysfera.github.io/vishnu.html
 Vcs-Git: git@github.com:SysFera/vishnu.git
 Vcs-Browser: https://github.com/SysFera/vishnu
 
-Package: vishnu
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: All vishnu binairies and librairies
-
 Package: libvishnu
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Common vishnu library files
+
+Package: vishnu-config
+Architecture: all
+Depends: ${shlibs:Depends}
+Description: vishnu configuration files
 
 Package: vishnu-client
 Architecture: any
@@ -26,11 +26,16 @@ Description: Vishnu command line interfaces
 Package: vishnu-server
 Architecture: any
 Depends: libvishnu (= ${source:Version})
-Description: Vishnu server binaries
+Description: vishnu server binaries
 
 Package: vishnu-dev
 Architecture: any
 Depends: libvishnu (= ${source:Version})
-Description: Vishnu librairies and headers for C++, Python and Java developments
+Description: vishnu librairies and headers for C++, Python and Java developments
+
+Package: vishnu
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, vishnu-client, vishnu-server, vishnu-dev, vishnu-config
+Description: All vishnu binairies and librairies
 
 
