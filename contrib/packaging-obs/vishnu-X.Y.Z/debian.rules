@@ -22,6 +22,7 @@ export DH_OPTIONS
 
 override_dh_auto_configure:
 	dh_auto_configure -- -DCOMPILE_UMS=ON \
+-DCMAKE_BUILD_TYPE=Release \
 -DCOMPILE_FMS=ON \
 -DCOMPILE_IMS=OFF \
 -DCOMPILE_TMS=ON \
@@ -34,10 +35,11 @@ override_dh_auto_configure:
 -DBUILD_TESTING=OFF \
 -DENABLE_SWIG=ON \
 -DENABLE_PYTHON=ON \
--DENABLE_JAVA=OFF \
+-DENABLE_JAVA=ON \
 -DENABLE_LDAP=OFF \
 -DVISHNU_BATCH=POSIX \
--DVISHNU_BATCH_VERSION=1.0
+-DVISHNU_BATCH_VERSION=1.0 \
+-DJAVA_INCLUDE_DIR=/usr/lib/jvm/java-1.6.0-openjdk-`dpkg --print-architecture`/include/
 
 override_dh_auto_install :
 	dh_auto_install

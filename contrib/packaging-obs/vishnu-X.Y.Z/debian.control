@@ -29,9 +29,9 @@ Depends: libvishnu (= ${source:Version})
 Description: vishnu server binaries
 
 Package: vishnu-dev
-Architecture: any
+Architecture: all
 Depends: libvishnu (= ${source:Version})
-Description: vishnu librairies and headers files
+Description: vishnu developement files (libraries and headers for C++, Java and Python)
 
 Package: vishnu
 Architecture: any

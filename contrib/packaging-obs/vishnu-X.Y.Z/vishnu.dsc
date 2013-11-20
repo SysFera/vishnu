@@ -6,7 +6,7 @@ Version: X.Y.Z
 Maintainer: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
 Homepage: http://sysfera.github.io/vishnu.html
 Standards-Version: 3.9.3
-Build-Depends: debhelper (>= 4.1.16), g++ (>= 4.6.3), libzmq-dev, cmake (>=2.8.5), libboost-all-dev, swig (>=1.3.40), default-jre, libmysqlclient-dev
+Build-Depends: debhelper (>= 4.1.16), g++ (>= 4.6.3), libzmq-dev, cmake (>=2.8.5), libboost-all-dev, swig (>=1.3.40), openjdk-6-jdk, libmysqlclient-dev
 Package-List: 
  vishnu deb admin extra 
 Files:   

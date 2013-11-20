@@ -4,3 +4,5 @@ usr/lib/libvishnu-core.*
 usr/lib/libvishnu-core-server.*
 usr/lib/libvishnu-?ms-server.*
 usr/lib/libvishnu-?ms-client.*
+usr/lib/*VISHNU.*
+usr/lib/swig_output/*
