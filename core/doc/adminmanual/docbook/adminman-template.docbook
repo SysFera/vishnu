@@ -614,7 +614,7 @@ et <emphasis>regex</emphasis> doivent être installés
 <para>PBSPro 10.4</para>
 </listitem>
 <listitem>
-<para>Detalcloud 1.x. Le support de Deltacloud nécessite la bibliothèque Libdeltacloud Client pour C et C++, version 0.9 ou supérieure.</para>
+<para>Detalcloud 1.x. Le support de Deltacloud nécessite la bibliothèque Libdeltacloud Client pour C et C++, version 0.9 ou supérieure</para>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -622,10 +622,10 @@ et <emphasis>regex</emphasis> doivent être installés
 <para><emphasis role="bold">Dépendences nécessaires à la génération des APIs Python et Java</emphasis></para>
 <itemizedlist>
 <listitem>
-<para>SWIG 1.3.40 ou SWIG 2.0 (les 2 versions sont supportées).</para>
+<para>SWIG 1.3.40 ou ultérieure (Attention : Les versions 2.x de SWIG ne sont supportées que depuis la version 3.2.0 de vishnu)</para>
 </listitem>
 <listitem>
-<para>JAVA SDK 1.6.</para>
+<para>JAVA SDK 1.6</para>
 </listitem>
 <listitem>
 <para>Python 2.6, 2.7 ou 3.3 (expérimental)</para>
