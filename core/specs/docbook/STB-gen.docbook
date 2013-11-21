@@ -725,7 +725,7 @@ de SHA-1.</para>
             <row>
               <entry><para>3.3</para></entry>
               <entry><para>SWIG</para></entry>
-              <entry><para>SWIG v1.3.40</para></entry>
+              <entry><para>SWIG v1.3.40 or higher</para></entry>
             </row>
             <row>
               <entry><para>3.4</para></entry>

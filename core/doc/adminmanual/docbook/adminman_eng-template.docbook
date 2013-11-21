@@ -205,9 +205,17 @@
       <revision>
       <revnumber>23</revnumber>
       <date>01/10/2012</date>
-      <authorinitials>K. Chakode</authorinitials>
+      <authorinitials>R. Chakode</authorinitials>
       <revdescription>
         <para> Adding a prerequisites section and refining of the installation process</para></revdescription>
+      </revision>
+	  
+	  <revision>
+      <revnumber>24</revnumber>
+      <date>21/11/2013</date>
+      <authorinitials>R. Chakode</authorinitials>
+      <revdescription>
+        <para>Added information abour compatibility with SWIG 2.x</para></revdescription>
       </revision>
 
     </revhistory>
@@ -452,7 +460,7 @@
           <para>Optional dependency:</para>
           <itemizedlist>
             <listitem>
-              <para>SWIG: 1.3.40. WARNING: The version 2 is not supported.</para>
+              <para>SWIG 1.3.40 or higher (WARNING: SWIG 2.x is supported only since the version 3.2.0)</para>
             </listitem>
             <listitem>
               <para>JAVA SDK: Version 1.6</para>
