@@ -48,6 +48,12 @@ using namespace std;
 int
 vishnu::touch(const string& sessionKey,const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
   SessionProxy sessionProxy(sessionKey);
@@ -68,6 +74,12 @@ vishnu::mkdir(const string& sessionKey, const string& path,
                 const CreateDirOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
            UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -90,6 +102,12 @@ vishnu::rm(const string& sessionKey, const string& path,
              const RmFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
            UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -110,6 +128,12 @@ vishnu::rm(const string& sessionKey, const string& path,
  */
 int vishnu::rmdir(const string& sessionKey,const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -134,6 +158,12 @@ int
 vishnu::chgrp(const string& sessionKey, const string& group,
                 const string& path)
   throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -157,6 +187,12 @@ vishnu::chmod(const string& sessionKey, const mode_t& mode,
                 const string& path)
   throw (UMSVishnuException, FMSVishnuException,
            UserException, SystemException) {
+
+  // Check that the path is valid
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -182,6 +218,10 @@ vishnu::cp(const string& sessionKey, const string& src,
          UserException, SystemException) {
   int result = 0;
 
+  if (! vishnu::isValidPath(dest)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -194,7 +234,6 @@ vishnu::cp(const string& sessionKey, const string& src,
   } catch (FMSVishnuException& ex){
     e.appendMsgComp(" "+src+": "+ex.what());
   }
-
 
   // If source is localhost
   if ((src.find(std::string("localhost"))!=std::string::npos)){
@@ -260,6 +299,11 @@ vishnu::acp(const string& sessionKey, const string& src, const string& dest,
             FileTransfer& transferInfo, const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
+
+  if (! vishnu::isValidPath(dest)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -283,6 +327,10 @@ vishnu::head(const string& sessionKey, const string& path,
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
   //To check the remote path
+
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
   vishnu::checkRemotePath(path);
 
   SessionProxy sessionProxy(sessionKey);
@@ -305,6 +353,10 @@ vishnu::more(const string& sessionKey, const string& path,
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
   //To check the remote path
+
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
   vishnu::checkRemotePath(path);
 
   SessionProxy sessionProxy(sessionKey);
@@ -370,6 +422,11 @@ vishnu::mv(const string& sessionKey, const string& src,
            const string& dest,const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
+
+  if (! vishnu::isValidPath(dest)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -457,6 +514,11 @@ vishnu::amv(const string& sessionKey, const string& src,
             const CpFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
+
+  if (! vishnu::isValidPath(dest)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -480,6 +542,11 @@ vishnu::tail(const string& sessionKey, const string& path,
              string& contentOfFile,const TailOfFileOptions& options)
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
+
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -504,6 +571,11 @@ vishnu::stat(const string& sessionKey, const string& path,
              FileStat& fileInfos)
   throw (UMSVishnuException, FMSVishnuException,
          UserException, SystemException) {
+
+  if (! vishnu::isValidPath(path)) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path; you should not use the following characters: <space><tab>()&,|;$");
+  }
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 

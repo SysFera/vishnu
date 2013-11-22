@@ -666,3 +666,34 @@ vishnu::statusToString(const int& status) {
   }
   return str;
 }
+
+
+
+
+/**
+ * @brief isValidPath: check if a file path doesn't contain malicious characters
+ * @param path : the path
+ * @return true if the path is valid
+ */
+bool
+vishnu::isValidPath(const std::string& path)
+{
+  bool valid = true;
+  for (std::string::const_iterator it=path.begin(), end = path.end(); it!=end; ++it) {
+    if (*it == ';'
+        || *it == '&'
+        || *it == '|'
+        || *it == ' '
+        || *it == '$'
+        || *it == '('
+        || *it == ')'
+        || *it == ','
+        || *it == '\t') {
+      valid = false;
+      break;
+    }
+  }
+  return valid;
+}
+
+

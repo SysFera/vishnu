@@ -309,5 +309,13 @@ sourceFile(const std::string& filePath);
 std::string
 statusToString(const int& status);
 
+/**
+ * @brief isValidPath: check if a file path doesn't contain malicious characters
+ * @param path : the path
+ * @return true if the path is valid
+ */
+bool
+isValidPath(const std::string& path);
+
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_
