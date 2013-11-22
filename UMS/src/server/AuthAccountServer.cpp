@@ -95,7 +95,7 @@ AuthAccountServer::addOrUpdate(bool update) {
         if (update) {
           req = mdatabaseVishnu->getRequest(VR_UPDATE_AUTHACCOUNT_LOGIN_WITH_AUTHSYSTEM_AND_USER);
           sql = (boost::format(req)
-                 %mauthAccount->getAcLogin()
+                 %mdatabaseVishnu->escapeData(mauthAccount->getAcLogin())
                  %numAuthSystem
                  %numUser
                  ).str();
@@ -105,7 +105,7 @@ AuthAccountServer::addOrUpdate(bool update) {
           sql = (boost::format(req)
                  %numAuthSystem
                  %numUser
-                 %mauthAccount->getAcLogin()
+                 %mdatabaseVishnu->escapeData(mauthAccount->getAcLogin())
                  %vishnu::STATUS_ACTIVE).str();
         }
         mdatabaseVishnu->process(sql);

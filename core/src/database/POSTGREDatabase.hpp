@@ -66,31 +66,31 @@ public :
    */
   DbConfiguration::db_type_t
   getDbType() { return DbConfiguration::POSTGRESQL; };
-/**
+  /**
  * \brief Start a transaction
  * \return The transaction ID
  */
   virtual int
   startTransaction();
-/**
+  /**
  * \brief End a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   endTransaction(int transactionID);
-/**
+  /**
  * \brief Cancel a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   cancelTransaction(int transactionID) ;
-/**
+  /**
  * \brief To commit a transaction
  * \param transactionID: The ID of the transaction
  */
   virtual void
   flush(int transactionID);
-/**
+  /**
  * \brief To get a unique id
  * \param table: The table to use to generate the id
  * \param fields: The fields of the table
@@ -101,13 +101,20 @@ public :
  */
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid, std::string primary);
-/**
+  /**
  * \brief To get a request from a request file based on a key
  * \param key the key indicating the request to get
  * \return the corresponding sql request
  */
   virtual std::string
   getRequest(const int key);
+
+  /**
+   * @brief escapeMySQLData : transform a sql data to a SQL-escaped string for MySQL
+   * @param data: the string to transform
+   * @return a espaced string
+   */
+  virtual std::string escapeData(const std::string& data);
 
 private :
 

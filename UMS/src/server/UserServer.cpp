@@ -91,9 +91,9 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         user->setStatus(vishnu::STATUS_ACTIVE);
 
         sqlUpdate+="vishnu_vishnuid="+convertToString(vishnuId)+", ";
-        sqlUpdate+="pwd='"+passwordCrypted+"', ";
-        sqlUpdate+="firstname='"+user->getFirstname()+"', ";
-        sqlUpdate+="lastname='"+user->getLastname()+"', ";
+        sqlUpdate+="pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"', ";
+        sqlUpdate+="firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"', ";
+        sqlUpdate+="lastname='"+mdatabaseVishnu->escapeData(user->getLastname())+"', ";
         sqlUpdate+="privilege="+convertToString(user->getPrivilege())+", ";
         sqlUpdate+="email='"+user->getEmail()+"', ";
         sqlUpdate+="passwordstate=0, ";
@@ -211,9 +211,9 @@ UserServer::deleteUser(UMS_Data::User user) {
   if (ret == 0){
     std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_USERS);
     std::string sqlUpdate = (boost::format(req)
-                            %vishnu::STATUS_DELETED
-                            %user.getUserId()
-                            ).str();
+                             %vishnu::STATUS_DELETED
+                             %user.getUserId()
+                             ).str();
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }
   return ret;
@@ -239,11 +239,11 @@ UserServer::changePassword(std::string newPassword) {
 
       //sql code to change the user password
       sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
-      "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+                     "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
 
       //sql code to update the passwordstate
       sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
-      "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+                          "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
 
       sqlChangePwd.append(sqlUpdatePwdState);
       mdatabaseVishnu->process(sqlChangePwd.c_str());
@@ -288,14 +288,14 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
 
         //The sql code to reset the password
         sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"' where "
-        "userid='"+user.getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+                      "userid='"+user.getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
         //sql code to update the passwordstate
         sqlUpdatePwdState = "UPDATE users SET passwordstate=0 "
-        "where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+                            "where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
         //To append the previous sql codes
         sqlResetPwd.append(sqlUpdatePwdState);
         //Execution of the sql code on the database
-        mdatabaseVishnu->process( sqlResetPwd.c_str());
+        mdatabaseVishnu->process(sqlResetPwd.c_str());
         //to get the email adress of the user
         std::string email = getAttribut("where userid='"+user.getUserId()+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'", "email");
         user.setEmail(email);
@@ -431,7 +431,7 @@ UserServer::isAdmin() {
 bool
 UserServer::isAttributOk(std::string attributName, int valueOk) {
   return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and "
-  "pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'", attributName)) == valueOk);
+                                   "pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'", attributName)) == valueOk);
 }
 
 /**

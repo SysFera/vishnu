@@ -82,7 +82,7 @@ MonitorTMS::init(int vishnuId, DbConfiguration dbConfig, const std::string& mach
 void
 MonitorTMS::run() {
   int state;
-  std::string sqlUpdatedRequest;
+  std::string query;
   std::string sqlRequest = "SELECT jobId, batchJobId, vmIp, vmId "
                            " FROM job, vsession "
                            " WHERE vsession.numsessionid=job.vsession_numsessionid "
@@ -107,7 +107,7 @@ MonitorTMS::run() {
       }
 
       std::string jobId;
-	  std::string batchJobId;
+      std::string batchJobId;
       std::string vmIp;
       std::string vmId;
       std::vector<std::string> buffer;
@@ -117,20 +117,23 @@ MonitorTMS::run() {
         buffer.clear();
         buffer = result->get(i);
         item = buffer.begin();
-		jobId = *item;
+        jobId = *item;
         ++item; batchJobId = *item;
         ++item; vmIp = *item;
         ++item; vmId = *item;
-		std::string jobDescr = (mbatchType == DELTACLOUD)? batchJobId+"@"+vmUser+"@"+vmIp+"@"+vmId : batchJobId;
+        std::string jobDescr = (mbatchType == DELTACLOUD)? batchJobId+"@"+vmUser+"@"+vmIp+"@"+vmId : batchJobId;
         try {
           state = batchServer->getJobState(jobDescr);
           if (state != vishnu::STATE_UNDEFINED) {
-            sqlUpdatedRequest = "UPDATE job SET status="+vishnu::convertToString(state)+" where jobId='"+jobId+"'";
-            mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+            query = (boost::format("UPDATE job SET status=%1%"
+                                   " WHERE jobId='%2%';")
+                     %vishnu::convertToString(state)
+                     %jobId).str();
             if (state == vishnu::STATE_COMPLETED) {
-              sqlUpdatedRequest = "UPDATE job SET endDate=CURRENT_TIMESTAMP where jobId='"+jobId+"'";
-              mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+              query.append((boost::format("UPDATE job SET endDate=CURRENT_TIMESTAMP"
+                                          " WHERE jobId='%1%';")%jobId).str());
             }
+            mdatabaseVishnu->process(query.c_str());
           }
         } catch (VishnuException& ex) {
           std::clog << boost::format("[TMSMONITOR][ERROR] %1%\n")%ex.what();

@@ -119,6 +119,13 @@ public :
   virtual std::string
   getRequest(const int key);
 
+  /**
+   * @brief escapeMySQLData : transform a sql data to a SQL-escaped string for MySQL
+   * @param data: the string to transform
+   * @return a espaced string
+   */
+  virtual std::string escapeData(const std::string& data);
+
 private :
   /**
    * \brief To get a valid connexion

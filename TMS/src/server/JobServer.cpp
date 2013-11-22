@@ -346,10 +346,11 @@ int JobServer::cancelJob()
         scanErrorMessage(errorInfo, code, message);
         throw TMSVishnuException(code, message);
       } else if(errorInfo.size()==0) {
-        std::string sqlUpdatedRequest = ""
-                                        "UPDATE job SET status="+vishnu::convertToString(vishnu::STATE_CANCELLED)+""
-                                        " WHERE jobId='"+jobId+"'";
-        mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+        std::string query = (boost::format("UPDATE job SET status=%1%"
+                                           " WHERE jobId='%2%';")
+                             %vishnu::convertToString(vishnu::STATE_CANCELLED)
+                             %jobId).str();
+        mdatabaseVishnu->process(query.c_str());
       }
     }
   } else {
@@ -594,9 +595,9 @@ void JobServer::recordJob2db()
   sqlUpdate+="batchJobId='"+mjob.getBatchJobId()+"', ";
   sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
   sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
-  sqlUpdate+="jobPath='"+mjob.getJobPath()+"', ";
-  sqlUpdate+="outputPath='"+mjob.getOutputPath()+"',";
-  sqlUpdate+="errorPath='"+mjob.getErrorPath()+"',";
+  sqlUpdate+="jobPath='"+mdatabaseVishnu->escapeData(mjob.getJobPath())+"', ";
+  sqlUpdate+="outputPath='"+mdatabaseVishnu->escapeData(mjob.getOutputPath())+"',";
+  sqlUpdate+="errorPath='"+mdatabaseVishnu->escapeData(mjob.getErrorPath())+"',";
   sqlUpdate+="scriptContent='job', ";
   sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+", ";
   sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+", ";
@@ -607,7 +608,7 @@ void JobServer::recordJob2db()
   sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"', ";
   sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
   sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
-  sqlUpdate+="jobDescription='"+mjob.getJobDescription()+"', ";
+  sqlUpdate+="jobDescription='"+mdatabaseVishnu->escapeData(mjob.getJobDescription())+"', ";
   sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+", ";
   sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
   sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";

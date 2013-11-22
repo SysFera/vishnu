@@ -95,6 +95,13 @@ virtual ~Database();
   virtual std::string
   getRequest(const int key) = 0;
 
+  /**
+   * @brief escapeMySQLData : transform a sql data to a SQL-escaped string for MySQL
+   * @param data: the string to transform
+   * @return a espaced string
+   */
+  virtual std::string escapeData(const std::string& data) = 0;
+
 
 protected :
   /**

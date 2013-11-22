@@ -60,10 +60,10 @@ AuthSystemServer::add(int vishnuId) {
                                            " AND status IS NULL")%mauthsystem->getAuthSystemId()).str();
       if (getAttribut(sqlcond, "count(*)") == "1") {
         mauthsystem->setStatus(vishnu::STATUS_ACTIVE);
-        sqlUpdate+="name='"+mauthsystem->getName()+"',";
-        sqlUpdate+="uri='"+mauthsystem->getURI()+"',";
-        sqlUpdate+="authlogin='"+mauthsystem->getAuthLogin()+"',";
-        sqlUpdate+="authpassword='"+mauthsystem->getAuthPassword()+"',";
+        sqlUpdate+="name='"+mdatabaseVishnu->escapeData(mauthsystem->getName())+"',";
+        sqlUpdate+="uri='"+mdatabaseVishnu->escapeData(mauthsystem->getURI())+"',";
+        sqlUpdate+="authlogin='"+mdatabaseVishnu->escapeData(mauthsystem->getAuthLogin())+"',";
+        sqlUpdate+="authpassword='"+mdatabaseVishnu->escapeData(mauthsystem->getAuthPassword())+"',";
         sqlUpdate+="userpwdencryption="+convertToString(mauthsystem->getUserPasswordEncryption())+",";
         sqlUpdate+="authtype="+convertToString(mauthsystem->getType())+",";
         sqlUpdate+="status="+convertToString(mauthsystem->getStatus())+" ";
