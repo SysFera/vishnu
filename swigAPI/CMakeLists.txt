@@ -44,7 +44,7 @@ if(ENABLE_SWIG)
   set_source_files_properties(vishnu.i PROPERTIES CPLUSPLUS ON)
 
   #Suppress warnings about ignored operators (out_ptr::operator= and EList::operator[])
-  set(CMAKE_SWIG_FLAGS "-w362,389")
+  set(CMAKE_SWIG_FLAGS "-w362,389 -threads")
 endif(ENABLE_SWIG)
 
 #Install swig language-specific generated files in a dedicated directory
