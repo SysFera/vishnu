@@ -60,16 +60,19 @@ fill_sMap() {
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
     (*sMap)[SERVICES_TMS[nb]] = "TMS";
   }
+  (*sMap)["heartbeattmssed"] = "TMS";
 
   /* IMS services */
   for (nb = 0; nb < NB_SRV_IMS; nb++) {
     (*sMap)[SERVICES_IMS[nb]] = "IMS";
   }
+  (*sMap)["heartbeatimssed"] = "IMS";
 
   /* FMS services */
   for (nb = 0; nb < NB_SRV_FMS; nb++) {
     (*sMap)[SERVICES_FMS[nb]] = "FMS";
   }
+  (*sMap)["heartbeatfmssed"] = "FMS";
 }
 
 

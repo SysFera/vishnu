@@ -164,22 +164,33 @@ private:
   std::string
   doCall(std::string& data) {
     int mode = boost::lexical_cast<int>(data.substr(0,1));
-
+    std::string result = "OK";
+    boost::shared_ptr<Server> server;
     // Deserialize
-    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
+    if (mode != 2)
+      server = Server::fromString(data.substr(1));
 
     if (mode == 1) {
       // adding a new server
       std::vector<std::string> services = server->getServices();
-      services.push_back("heartbeat"+server->getName());
-      std::cout << "name : " << server->getName() << std::endl;
       mann_->add(server->getName(), server->getURI(),
                  services);
     } else if (mode == 0) {
       mann_->remove(server->getName(), server->getURI());
+    } else if (mode == 2) {
+      std::vector<boost::shared_ptr<Server> > list = mann_->get();
+
+      // Setting all servers to string and
+      std::vector<boost::shared_ptr<Server> >::iterator it = list.begin();
+      result = "";
+      int size;
+      for (size = 0 ; size < list.size()-1 ; ++it, ++size){
+	result += it->get()->toString() + std::string(VISHNU_COMM_SEPARATOR);
+      }
+      result += it->get()->toString();
     }
 
-    return "OK";
+    return result;
   }
 
 };

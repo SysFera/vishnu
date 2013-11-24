@@ -25,10 +25,6 @@ heartbeat(diet_profile_t* pb){
 
 SeD::SeD() {
   mcb["heartbeat"] = boost::ref(heartbeat);
-  mcb["heartbeatimssed"] = boost::ref(heartbeat);
-  mcb["heartbeatfmssed"] = boost::ref(heartbeat);
-  mcb["heartbeattmssed"] = boost::ref(heartbeat);
-  mcb["heartbeatumssed"] = boost::ref(heartbeat);
 }
 
 

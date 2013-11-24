@@ -152,4 +152,5 @@ ServerIMS::initMap(std::string mid) {
   mcb[std::string(SERVICES_IMS[INT_RESTART])+"@"+mid] = solveRestart;
   mcb[std::string(SERVICES_IMS[INT_STOP])+"@"+mid] = solveStop;
   mcb[SERVICES_IMS[INT_GETSYSTEMINFO]] = solveGetSysInfo;
+  mcb[std::string(SERVICES_IMS[HEARTBEATIMS])+"@"+mid] = boost::ref(heartbeat);
 }

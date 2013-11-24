@@ -32,3 +32,13 @@ target_link_libraries(pinger
   ${OPENSSL_LIBRARIES}
   )
 
+add_executable(allPinger allPinger.cpp)
+  
+target_link_libraries(allPinger
+  ${ZMQ_LIBRARIES} 
+  ${Boost_LIBRARIES}
+  zmq_helper
+  vishnu-core
+  ${OPENSSL_LIBRARIES}
+  )
+

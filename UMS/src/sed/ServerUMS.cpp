@@ -10,6 +10,7 @@
 #include "Authenticator.hpp"
 #include "AuthenticatorFactory.hpp"
 #include "UMSServices.hpp"
+#include "SeD.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
 Database *ServerUMS::mdatabaseVishnu = NULL;
@@ -208,4 +209,5 @@ ServerUMS::initMap() {
   mcb[SERVICES_UMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
   mcb[SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
   mcb[SERVICES_UMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
+  mcb[SERVICES_UMS[HEARTBEATUMS]] = boost::ref(heartbeat);
 }
