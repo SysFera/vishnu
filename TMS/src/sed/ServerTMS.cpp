@@ -296,6 +296,7 @@ ServerTMS::initMap(std::string mid) {
   mcb[string(SERVICES_TMS[JOBOUTPUTGETRESULT])+"@"+mid] = functionPtr;
   functionPtr = solveJobOutPutGetCompletedJobs;
   mcb[string(SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS])+"@"+mid] = functionPtr;
+  mcb[string(SERVICES_TMS[HEARTBEATTMS])+"@"+mid] = boost::ref(heartbeat);
   // Remove ?
   functionPtr = solveGetListOfJobs;
   mcb[SERVICES_TMS[GETLISTOFJOBS_ALL]] = functionPtr;

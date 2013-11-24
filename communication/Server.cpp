@@ -20,6 +20,12 @@ Server::Server(const std::string& name, const std::vector<std::string> &serv,
     mname(name), mservices(serv), muri(uri) {
 }
 
+Server::Server(Server& serv){
+  mname = serv.getName();
+  mservices = serv.getServices();
+  muri = serv.getURI();
+}
+
 Server::~Server(){
 }
 

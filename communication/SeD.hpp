@@ -13,7 +13,9 @@
 
 typedef boost::function1<int, diet_profile_t*> CallbackFn;
 typedef std::map<std::string, CallbackFn> CallbackMap;
-;
+
+int
+heartbeat(diet_profile_t* pb);
 /**
  * \class SeD
  * \brief base class to Server*MS classes

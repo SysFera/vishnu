@@ -46,12 +46,9 @@ Annuary::add(const std::string& name, const std::string& uri,
   is_server helper(name, uri);
   std::vector<boost::shared_ptr<Server> >::iterator it =
     std::find_if(mservers.begin(), mservers.end(), helper);
-  for (int i = 0 ; i< services.size() ; i++)
-    std::cout << "service : " << services[i] << std::endl;
   if (it == mservers.end()) {
     mservers.push_back(boost::make_shared<Server>(name, services, uri));
   }
-
   return 0;
 }
 
@@ -78,9 +75,9 @@ Annuary::get(const std::string& service) {
                         std::back_inserter(res),
                         !boost::bind(&Server::hasService, _1, service));
   }
-
   return res;
 }
+
 
 void
 Annuary::print() {

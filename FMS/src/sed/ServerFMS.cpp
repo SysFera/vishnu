@@ -108,6 +108,7 @@ void
 ServerFMS::initMap() {
   int (*functionPtr)(diet_profile_t*);
 
+
   functionPtr = solveTransferFile<File::copy,File::async>;
   mcb[SERVICES_FMS[FILECOPYASYNC]] = functionPtr;
 
@@ -170,4 +171,6 @@ ServerFMS::initMap() {
 
   functionPtr = solveFileTransferStop;
   mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
+
+  mcb[SERVICES_FMS[HEARTBEATFMS]] = boost::ref(heartbeat);
 }

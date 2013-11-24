@@ -52,6 +52,7 @@ typedef enum {
   INT_DEFINEMACHINEIDENTIFIER,
   INT_DEFINEAUTHIDENTIFIER,
   INT_DEFINEWORKIDENTIFIER,
+  HEARTBEATUMS,
   NB_SRV_UMS  // MUST always be the last
 } ums_service_t;
 
@@ -94,7 +95,8 @@ static const char* SERVICES_UMS[NB_SRV_UMS] = {
   "int_defineTransferIdentifier", // 35
   "int_defineMachineIdentifier", // 36
   "int_defineAuthIdentifier", // 37
-  "int_defineWorkIdentifier" // 38
+  "int_defineWorkIdentifier", // 38
+  "heartbeatumssed" //39
 };
 
 #endif  // _UMSSERVICES_HPP_
