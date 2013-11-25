@@ -85,7 +85,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
           //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
           sqlUpdate+="date_created="+timestamp+", ";
           sqlUpdate+="date_started="+timestamp+", ";
-          sqlUpdate+="description='"+mwork->getDescription()+"', ";
+          sqlUpdate+="description='"+mdatabaseVishnu->escapeData(mwork->getDescription())+"', ";
           sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
           sqlUpdate+="due_date="+timestamp+", ";
           sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
@@ -95,7 +95,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
           sqlUpdate+="owner_id='"+owner+"', ";
           sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
           sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
-          sqlUpdate+="subject='"+mwork->getSubject()+"' ";
+          sqlUpdate+="subject='"+mdatabaseVishnu->escapeData(mwork->getSubject())+"' ";
           sqlUpdate+="WHERE identifier='"+mwork->getWorkId()+"';";
 
           mdatabaseVishnu->process(sqlUpdate);

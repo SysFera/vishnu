@@ -349,11 +349,11 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
                                          " VALUES (%1%, '%2%', '%3%', '%4%', '%5%', %6%, '%7%', %8%, %9%);")
                            %vishnuId
                            %user->getUserId()
-                           %user->getPassword()
-                           %user->getFirstname()
-                           %user->getLastname()
+                           %mdatabaseVishnu->escapeData(user->getPassword())
+                           %mdatabaseVishnu->escapeData(user->getFirstname())
+                           %mdatabaseVishnu->escapeData(user->getLastname())
                            %user->getPrivilege()
-                           %user->getEmail()
+                           %mdatabaseVishnu->escapeData(user->getEmail())
                            %vishnu::STATUS_ACTIVE
                            %convertToString(user->getStatus()-1)).str(); //Remove 1 on status because of EMF litteral storage
   return sqlInsert;

@@ -70,13 +70,19 @@ MachineServer::add(int vishnuId) {
           //To active the machine status
           mmachine->setStatus(vishnu::STATUS_ACTIVE);
 
-          sqlUpdate+="name='"+mmachine->getName()+"',";
-          sqlUpdate+="site='"+mmachine->getSite()+"',";
+          sqlUpdate+="name='"+mdatabaseVishnu->escapeData(mmachine->getName())+"',";
+          sqlUpdate+="site='"+mdatabaseVishnu->escapeData(mmachine->getSite())+"',";
           sqlUpdate+="status="+convertToString(mmachine->getStatus());
           sqlUpdate+=" where machineid='"+mmachine->getMachineId()+"';";
           mdatabaseVishnu->process(sqlUpdate);
 
-          mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, description) values ("+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+",'"+ mmachine->getLanguage()+"','"+mmachine->getMachineDescription()+"')");
+          mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, description) values ("
+                                   +getAttribut("where machineid='"+mmachine->getMachineId()+"'")
+                                   +",'"
+                                   + mdatabaseVishnu->escapeData(mmachine->getLanguage())
+                                   +"','"
+                                   +mdatabaseVishnu->escapeData(mmachine->getMachineDescription())
+                                   +"')");
 
         }//if the machine id is generated
         else {
@@ -151,8 +157,10 @@ MachineServer::update() {
 
         //if a new machine description has been defined
         if (!mmachine->getMachineDescription().empty()) {
-          sqlCommand.append("UPDATE description SET description='"+mmachine->getMachineDescription()+"'"
-                            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          sqlCommand.append("UPDATE description SET description='"
+                            +mdatabaseVishnu->escapeData(mmachine->getMachineDescription())+"'"
+                            " WHERE machine_nummachineid='"
+                            +getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
         }
 
         //If there is a change
@@ -191,9 +199,9 @@ MachineServer::deleteMachine() {
 
     std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_MACHINE);
     std::string sqlUpdate = (boost::format(req)
-                            %vishnu::STATUS_DELETED
-                            %mmachine->getMachineId()
-                            ).str();
+                             %vishnu::STATUS_DELETED
+                             %mmachine->getMachineId()
+                             ).str();
 
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }

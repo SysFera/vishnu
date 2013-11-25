@@ -47,7 +47,11 @@ using namespace std;
  */
 int
 vishnu::touch(const string& sessionKey,const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
   SessionProxy sessionProxy(sessionKey);
@@ -65,9 +69,13 @@ vishnu::touch(const string& sessionKey,const string& path)
  */
 int
 vishnu::mkdir(const string& sessionKey, const string& path,
-                const CreateDirOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-           UserException, SystemException) {
+              const CreateDirOptions& options)
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -87,9 +95,13 @@ vishnu::mkdir(const string& sessionKey, const string& path,
 */
 int
 vishnu::rm(const string& sessionKey, const string& path,
-             const RmFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-           UserException, SystemException) {
+           const RmFileOptions& options)
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -109,7 +121,11 @@ vishnu::rm(const string& sessionKey, const string& path,
  * \return 0 if everything is OK, another value otherwise
  */
 int vishnu::rmdir(const string& sessionKey,const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -132,8 +148,12 @@ int vishnu::rmdir(const string& sessionKey,const string& path)
  */
 int
 vishnu::chgrp(const string& sessionKey, const string& group,
-                const string& path)
-  throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+              const string& path)
+throw (UMSVishnuException, FMSVishnuException, UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -154,9 +174,13 @@ vishnu::chgrp(const string& sessionKey, const string& group,
  */
 int
 vishnu::chmod(const string& sessionKey, const mode_t& mode,
-                const string& path)
-  throw (UMSVishnuException, FMSVishnuException,
-           UserException, SystemException) {
+              const string& path)
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -177,10 +201,13 @@ vishnu::chmod(const string& sessionKey, const mode_t& mode,
  */
 int
 vishnu::cp(const string& sessionKey, const string& src,
-             const string& dest, const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+           const string& dest, const CpFileOptions& options)
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
   int result = 0;
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(dest);
 
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer command type: its value must be 0 (scp) or 1 (rsync)");
@@ -195,13 +222,12 @@ vishnu::cp(const string& sessionKey, const string& src,
     e.appendMsgComp(" "+src+": "+ex.what());
   }
 
-
   // If source is localhost
   if ((src.find(std::string("localhost"))!=std::string::npos)){
     // Get all the IP for the machine
 
     std::vector<std::string> list = getIPList();
-  // Try the transfert for each IP
+    // Try the transfert for each IP
     for (unsigned int i = 0; i < list.size(); i++) {
       std::string tmp = src;
       setIP(tmp, list.at(i));
@@ -217,7 +243,7 @@ vishnu::cp(const string& sessionKey, const string& src,
         return result;
       }
     }// Else use the given IP
-   // Else if destination is localhost
+    // Else if destination is localhost
   } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
@@ -258,8 +284,12 @@ vishnu::cp(const string& sessionKey, const string& src,
 int
 vishnu::acp(const string& sessionKey, const string& src, const string& dest,
             FileTransfer& transferInfo, const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(dest);
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -280,9 +310,13 @@ vishnu::acp(const string& sessionKey, const string& src, const string& dest,
 int
 vishnu::head(const string& sessionKey, const string& path,
              string& contentOfFile, const HeadOfFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
   //To check the remote path
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   vishnu::checkRemotePath(path);
 
   SessionProxy sessionProxy(sessionKey);
@@ -302,8 +336,12 @@ vishnu::head(const string& sessionKey, const string& path,
 int
 vishnu::more(const string& sessionKey, const string& path,
              string& contentOfFile)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -326,8 +364,12 @@ vishnu::more(const string& sessionKey, const string& path,
 int
 vishnu::ls(const string& sessionKey, const string& path,
            DirEntryList& dirContent, const LsDirOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -368,8 +410,12 @@ vishnu::ls(const string& sessionKey, const string& path,
 int
 vishnu::mv(const string& sessionKey, const string& src,
            const string& dest,const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(dest);
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -384,11 +430,11 @@ vishnu::mv(const string& sessionKey, const string& src,
   }
 
 
-// If source is localhost
+  // If source is localhost
   if ((src.find(std::string("localhost"))!=std::string::npos)){
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
+    // Try the transfert for each IP
     for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = src;
       setIP(tmp, list.at(i));
@@ -397,18 +443,18 @@ vishnu::mv(const string& sessionKey, const string& src,
         result = fileTransferProxy.addMvThread(options);
       } catch (VishnuException& ex){
         e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-	continue;
+        continue;
       }
-// The function returns '0' in case of success
+      // The function returns '0' in case of success
       if (result==0){
         return result;
       }
     }// Else use the given IP
-// Else if destination is localhost
+    // Else if destination is localhost
   } else if ((dest.find(std::string("localhost"))!=std::string::npos)) {
     // Get all the IP for the machine
     std::vector<std::string> list = getIPList();
-// Try the transfert for each IP
+    // Try the transfert for each IP
     for (unsigned int i = 0; i < list.size(); i++){
       std::string tmp = dest;
       setIP(tmp, list.at(i));
@@ -417,10 +463,10 @@ vishnu::mv(const string& sessionKey, const string& src,
         result = fileTransferProxy.addMvThread(options);
       } catch (VishnuException& ex){
         e.appendMsgComp(" "+list.at(i)+": "+ex.what());
-	continue;
+        continue;
       }
 
-// The function returns '0' in case of success
+      // The function returns '0' in case of success
       if (result==0){
         return result;
       }
@@ -455,8 +501,12 @@ int
 vishnu::amv(const string& sessionKey, const string& src,
             const string& dest, FileTransfer& transferInfo,
             const CpFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(dest);
+
   if ((options.getTrCommand() < 0) || options.getTrCommand() > 2) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer commad type: its value must be 0 (scp) or 1 (rsync)");
   }
@@ -478,8 +528,12 @@ vishnu::amv(const string& sessionKey, const string& src,
 int
 vishnu::tail(const string& sessionKey, const string& path,
              string& contentOfFile,const TailOfFileOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -502,8 +556,12 @@ vishnu::tail(const string& sessionKey, const string& path,
 int
 vishnu::stat(const string& sessionKey, const string& path,
              FileStat& fileInfos)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
+
+  // Check that the file path doesn't contain characters subject to security issues
+  vishnu::validatePath(path);
+
   //To check the remote path
   vishnu::checkRemotePath(path);
 
@@ -529,8 +587,8 @@ vishnu::stat(const string& sessionKey, const string& path,
 int
 vishnu::stopFileTransfer(const string& sessionKey,
                          const StopTransferOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
   StopTransferOptions optionsCompleted(options);
   FileTransferProxy fileTransferProxy(sessionKey);
 
@@ -552,8 +610,8 @@ int
 vishnu::listFileTransfers(const string& sessionKey,
                           FileTransferList& fileTransferList,
                           const LsTransferOptions& options)
-  throw (UMSVishnuException, FMSVishnuException,
-         UserException, SystemException) {
+throw (UMSVishnuException, FMSVishnuException,
+       UserException, SystemException) {
   // initialize the list of file transfers
   fileTransferList.getFileTransfers().clear();
 
@@ -566,7 +624,7 @@ vishnu::listFileTransfers(const string& sessionKey,
   SessionProxy sessionProxy(sessionKey);
 
   QueryProxy<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>
-    query(options, sessionProxy, serviceName);
+      query(options, sessionProxy, serviceName);
 
   FMS_Data::FileTransferList* listFileTransfers_ptr = query.list();
 

@@ -8,7 +8,7 @@
 #include "CommandServer.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
-
+#include <boost/format.hpp>
 using namespace vishnu;
 
 /**
@@ -57,14 +57,19 @@ CommandServer::record(CmdType cmdType,
                       std::string startTime,
                       std::string endTime) {
 
-  std::string sqlCmd = std::string("insert into command (vsession_numsessionid, starttime,"
-  "endtime, description, ctype, status, vishnuobjectid) values (");
-
-  sqlCmd.append(msessionServer.getAttribut("WHERE "
-  "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
-
-  sqlCmd.append(","+startTime+ ","+endTime+", '"+mcommand+"',"+convertToString(cmdType)+","+
-                convertToString(cmdStatus)+", '"+newVishnuObjectID+"'"+ ")");
+  std::string numsess = msessionServer.getAttribut("WHERE sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid");
+  std::string sqlCmd = (boost::format("INSERT INTO command (vsession_numsessionid, starttime,"
+                                      "   endtime, description, ctype, status, vishnuobjectid)"
+                                      " VALUES (%1%,%2%,%3%,'%4%',%5%,%6%,'%7%');"
+                                      )
+                        %numsess
+                        %startTime
+                        %endTime
+                        %mdatabaseVishnu->escapeData(mcommand)
+                        %convertToString(cmdType)
+                        %convertToString(cmdStatus)
+                        %newVishnuObjectID
+                        ).str();
 
   mdatabaseVishnu->process(sqlCmd.c_str());
   return 0;
@@ -78,10 +83,10 @@ bool
 CommandServer::isRunning() {
 
   std::string sqlCommand("SELECT numcommandid FROM command where endtime is NULL "
-  "and vsession_numsessionid=");
+                         "and vsession_numsessionid=");
 
   sqlCommand.append(msessionServer.getAttribut("WHERE "
-  "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+                                               "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
 
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getNbTuples() != 0);

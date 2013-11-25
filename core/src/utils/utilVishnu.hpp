@@ -309,5 +309,13 @@ sourceFile(const std::string& filePath);
 std::string
 statusToString(const int& status);
 
+/**
+ * @brief validateSshPath: check that a file path doesn't contain some special characters subject to security issues
+ * @param path : the path
+ * @return
+ */
+void
+validatePath(const std::string& path);
+
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_

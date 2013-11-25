@@ -75,7 +75,7 @@ registerSeD(const std::string& type,
                                            "            machineid, pstatus, uptime, vishnuname)"
                                            " VALUES ('%1%','%2%','%3%',%4%,CURRENT_TIMESTAMP, '%5%')")
                              %uriSupervisor
-                             %config.scriptToString()
+                             %database->escapeData(config.scriptToString())
                              %mid
                              %vishnu::convertToString(vishnu::PRUNNING)
                              %type

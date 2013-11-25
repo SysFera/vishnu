@@ -356,3 +356,23 @@ string
 MYSQLDatabase::getRequest(const int key){
   return mmysqlfact.get(key);
 }
+
+
+/**
+ * @brief escapeData : transform a sql data to a SQL-escaped string
+ * @param data: the string to transform
+ * @return a espaced string
+ */
+std::string
+MYSQLDatabase::escapeData(const std::string& data)
+{
+  size_t len = data.size();
+  char escapedSql[2*len + 1];
+
+  int connId;
+  MYSQL* conn = getConnection(connId);
+  size_t escapedSqlLen = mysql_real_escape_string(conn, escapedSql, data.c_str(), len);
+  releaseConnection(connId);
+
+  return std::string(escapedSql, escapedSqlLen);
+}

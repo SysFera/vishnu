@@ -265,3 +265,22 @@ POSTGREDatabase::getRequest(const int key){
   return mpgfact.get(key);
 }
 
+
+/**
+ * @brief escapeData : transform a sql data to a SQL-escaped string
+ * @param data: the string to transform
+ * @return a espaced string
+ */
+std::string
+POSTGREDatabase::escapeData(const std::string& data)
+{
+  size_t len = data.size();
+  char escapedSql[2*len + 1];
+
+  int connId;
+  PGconn* conn = getConnection(connId);
+  size_t escapedSqlLen = PQescapeStringConn(conn, escapedSql, data.c_str(), len, NULL);
+  releaseConnection(connId);
+
+  return std::string(escapedSql, escapedSqlLen);
+}

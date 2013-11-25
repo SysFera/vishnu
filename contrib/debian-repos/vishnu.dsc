@@ -1,8 +1,8 @@
 Format: 1.0
-Source: vishnu-X.Y.Z.tgz
+Source: vishnu-3.2.0.tgz
 Binary: vishnu
 Architecture: any
-Version: X.Y.Z
+Version: 3.2.0
 Maintainer: Rodrigue Chakode <rodrigue.chakode@sysfera.com>
 Homepage: http://sysfera.github.io/vishnu.html
 Standards-Version: 3.9.3
@@ -10,7 +10,7 @@ Build-Depends: debhelper (>= 4.1.16), g++ (>= 4.6.3), libzmq-dev, cmake (>=2.8.5
 Package-List: 
  vishnu deb admin extra 
 Files:   
- <TGZ_MD5SUM> <TGZ_SIZE> vishnu-X.Y.Z.tgz
- 00c912021a3aa56a93b49313751bad7d 1817 vishnu-X.Y.Z.diff.gz
+ ddbf62f1be434ff4303313ab3564e9c7 6145251 vishnu-3.2.0.tgz
+ 00c912021a3aa56a93b49313751bad7d 1817 vishnu-3.2.0.diff.gz
 
 

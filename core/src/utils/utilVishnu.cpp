@@ -666,3 +666,21 @@ vishnu::statusToString(const int& status) {
   }
   return str;
 }
+
+
+
+
+/**
+ * @brief validateSshPath: check that a file path doesn't contain some special characters subject to security issues
+ * @param path : the path
+ * @return
+ */
+void
+vishnu::validatePath(const std::string& path)
+{
+  if (path.find_first_of(";&| $(),\t#") != std::string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
+  }
+}
+
+
