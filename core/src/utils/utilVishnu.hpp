@@ -310,12 +310,12 @@ std::string
 statusToString(const int& status);
 
 /**
- * @brief isValidPath: check if a file path doesn't contain malicious characters
+ * @brief validateSshPath: check that a file path doesn't contain some special characters subject to security issues
  * @param path : the path
- * @return true if the path is valid
+ * @return
  */
-bool
-isValidPath(const std::string& path);
+void
+validatePath(const std::string& path);
 
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_

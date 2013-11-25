@@ -671,29 +671,16 @@ vishnu::statusToString(const int& status) {
 
 
 /**
- * @brief isValidPath: check if a file path doesn't contain malicious characters
+ * @brief validateSshPath: check that a file path doesn't contain some special characters subject to security issues
  * @param path : the path
- * @return true if the path is valid
+ * @return
  */
-bool
-vishnu::isValidPath(const std::string& path)
+void
+vishnu::validatePath(const std::string& path)
 {
-  bool valid = true;
-  for (std::string::const_iterator it=path.begin(), end = path.end(); it!=end; ++it) {
-    if (*it == ';'
-        || *it == '&'
-        || *it == '|'
-        || *it == ' '
-        || *it == '$'
-        || *it == '('
-        || *it == ')'
-        || *it == ','
-        || *it == '\t') {
-      valid = false;
-      break;
-    }
+  if (path.find_first_of(";&| $(),\t#") != std::string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Invalid path, the following characters are not allowed: <space><tab>()&,|;$#");
   }
-  return valid;
 }
 
 

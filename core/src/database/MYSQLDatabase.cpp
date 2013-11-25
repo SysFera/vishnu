@@ -359,11 +359,12 @@ MYSQLDatabase::getRequest(const int key){
 
 
 /**
- * @brief escapeSqlData : transform a sql data to a SQL-escaped string
+ * @brief escapeData : transform a sql data to a SQL-escaped string
  * @param data: the string to transform
  * @return a espaced string
  */
-std::string MYSQLDatabase::escapeData(const std::string& data)
+std::string
+MYSQLDatabase::escapeData(const std::string& data)
 {
   size_t len = data.size();
   char escapedSql[2*len + 1];
