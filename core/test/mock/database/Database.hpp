@@ -90,6 +90,14 @@ virtual ~Database();
   virtual int
   generateId(std::string table, std::string fields, std::string val, int tid, std::string primary) = 0;
 
+  /**
+   * @brief escapeMySQLData : transform a sql data to a SQL-escaped string for MySQL
+   * @param data: the string to transform
+   * @return a espaced string
+   */
+  virtual std::string escapeData(const std::string& data) = 0;
+
+
 protected :
   /**
    * \fn Database()
