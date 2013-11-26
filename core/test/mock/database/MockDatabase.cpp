@@ -77,3 +77,10 @@ int
 MockDatabase::generateId(std::string table, std::string fields, std::string val, int tid, std::string primary) {
   return 1;
 }
+
+
+std::string
+MockDatabase::escapeData(const std::string& data) {
+  return data;
+}
+
