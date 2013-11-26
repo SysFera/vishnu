@@ -395,7 +395,7 @@ vishnu::changePassword(const std::string& userId,
     throw UMSVishnuException(ERRCODE_INVALID_PARAM,
                              "The new password is too short, it must be at least 6 characters long");
   }
-  if (passwordNew.size()<MAX_PWD_SIZE){
+  if (passwordNew.size()>MAX_PWD_SIZE){
     throw UMSVishnuException(ERRCODE_INVALID_PARAM,
                              "The new password is too long");
   }
