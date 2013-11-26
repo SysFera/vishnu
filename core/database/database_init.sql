@@ -15,6 +15,7 @@ INSERT INTO vishnu (vishnuid, updatefreq, formatiduser, formatidmachine, formati
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (1, 'VISHNU_CLOSE_POLICY', 1);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (2, 'VISHNU_TIMEOUT', 3600);
 INSERT INTO optionu (optionid, description, defaultvalue) VALUES (3, 'VISHNU_TRANSFER_CMD', 0);
+INSERT INTO optionu (optionid, description, defaultvalue) VALUES (4, 'VISHNU_TRANSFER_TIMEOUT', 0);
 
 -- Creates the vishnu default administrator (root)
 INSERT INTO users (vishnu_vishnuid, userid, pwd, privilege, passwordstate, status)
