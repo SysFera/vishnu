@@ -197,7 +197,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
                                       const std::string& destMachineName,
                                       const FMS_Data::CpFileOptions& options) {
   FMS_Data::CpFileOptions newOptions (options);
-
+  int timeout(0);
   if (options.getTrCommand() == 2) {
     std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
 
@@ -212,11 +212,13 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
       OptionValueServer optionValueServer;
       newOptions.setTrCommand(optionValueServer.getOptionValueForUser
                               (numuserId, TRANSFERCMD_OPT));
+      timeout = optionValueServer.getOptionValueForUser(numuserId,
+                                                        TRANSFER_TIMEOUT_OPT);
     }
 
   }
 
-  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer,newOptions) );
+  boost::scoped_ptr<FileTransferCommand> tr ( FileTransferCommand::getCopyCommand(msessionServer, newOptions, timeout) );
 
   std::string trCmd= tr->getCommand();
 
