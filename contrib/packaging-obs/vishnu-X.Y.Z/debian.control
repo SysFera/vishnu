@@ -38,4 +38,9 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}, vishnu-client, vishnu-server, vishnu-dev, vishnu-config
 Description: All vishnu binairies and librairies
 
+Package: libvishnu-tms-slurm
+Architecture: any
+Depends: libvishnu (= ${source:Version})
+Description: vishnu dynamic library for slurm
+
 

@@ -29,7 +29,7 @@ mkdir -p obs-packages; cd obs-packages
 dist="wheezy"
 archs="i386 amd64"
 
-mkdir $dist; cd $dist
+mkdir -p $dist; cd $dist
 wget -N http://download.opensuse.org/repositories/home:/techsysfera/Debian_7.0/all/vishnu-config_${VERSION}_all.deb 
 wget -N http://download.opensuse.org/repositories/home:/techsysfera/Debian_7.0/all/vishnu-dev_${VERSION}_all.deb
 wget -N http://download.opensuse.org/repositories/home:/techsysfera/Debian_7.0/vishnu-${VERSION}.tgz_${VERSION}.diff.gz

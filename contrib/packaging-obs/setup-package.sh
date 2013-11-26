@@ -50,7 +50,7 @@ fi
  
 tgz_md5sum=`md5sum ${TARBALL_NAME} | awk '{print $1}'`
 tgz_size=`stat --printf "%s" ${TARBALL_NAME}`
-echo "$tgz_md5sum $tgz_size"
+echo "Tarball Info (md5sum: $tgz_md5sum size: $tgz_size)"
 sed --in-place "s/<TGZ_MD5SUM>/$tgz_md5sum/g" vishnu.dsc
 sed --in-place "s/<TGZ_SIZE>/$tgz_size/g" vishnu.dsc
 

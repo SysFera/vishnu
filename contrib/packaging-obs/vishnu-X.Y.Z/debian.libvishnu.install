@@ -1,8 +1,9 @@
-usr/lib/libemf4cpp-vishnu.*
-usr/lib/libzmq_helper.*
-usr/lib/libvishnu-core.*
-usr/lib/libvishnu-core-server.*
-usr/lib/libvishnu-?ms-server.*
-usr/lib/libvishnu-?ms-client.*
-usr/lib/*VISHNU.*
+usr/lib/libemf4cpp-vishnu.so*
+usr/lib/libzmq_helper.so*
+usr/lib/libvishnu-core.so*
+usr/lib/libvishnu-core-server.so*
+usr/lib/libvishnu-?ms-server.so*
+usr/lib/libvishnu-?ms-client.so*
+usr/lib/*VISHNU.so*
 usr/lib/swig_output/*
+usr/lib/libvishnu-tms-posix.so*
