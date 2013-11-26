@@ -13,32 +13,26 @@
 /**
  * \brief The rsync command
  */
-class RsyncCommand: public FileTransferCommand{
-
-  public:
-
-    /**
-     * \brief The default constructor
-     */
-    RsyncCommand ();
-    
-    /**
-     * \brief A constructor by value
-     * \param isRecursive a flag for recursivity
-     * \param useCompression a flag to use a compression
-     */
-    RsyncCommand (const bool& isRecursive, const bool& useCompression=true);
-
-    /**
-     * \brief To build the command
-     */
-   virtual  void build();
-
-  private:
-
-
+class RsyncCommand : public FileTransferCommand {
+public:
+  /**
+   * \brief The default constructor
+   */
+  RsyncCommand();
+  /**
+   * \brief A constructor by value
+   * \param isRecursive a flag for recursivity
+   * \param useCompression a flag to use a compression
+   * \param timeout timeout(s)
+   */
+  RsyncCommand(const bool& isRecursive,
+               const bool& useCompression=true,
+               int timeout=0);
+  /**
+   * \brief To build the command
+   */
+  virtual void
+  build();
 };
-
-
 
 #endif
