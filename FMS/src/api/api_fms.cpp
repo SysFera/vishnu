@@ -368,10 +368,16 @@ throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {
 
   // Check that the file path doesn't contain characters subject to security issues
-  vishnu::validatePath(path);
+  // if no path is provided, just display local account $HOME
+  std::string path_(path);
+  if (path[path.length() - 1] == ':') {
+    path_.append("~");
+  }
+
+  vishnu::validatePath(path_);
 
   //To check the remote path
-  vishnu::checkRemotePath(path);
+  vishnu::checkRemotePath(path_);
 
   // initialize the list of dirEntries
   dirContent.getDirEntries().clear();
@@ -379,7 +385,8 @@ throw (UMSVishnuException, FMSVishnuException,
 
   SessionProxy sessionProxy(sessionKey);
 
-  boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,path));
+  boost::scoped_ptr<FileProxy> f (FileProxyFactory::getFileProxy(sessionProxy,
+                                                                 path_));
 
   FMS_Data::DirEntryList* dirContent_ptr = f->ls(options);
 
