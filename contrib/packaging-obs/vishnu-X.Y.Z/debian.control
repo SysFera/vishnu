@@ -40,7 +40,7 @@ Description: All vishnu binairies and librairies
 
 Package: libvishnu-tms-slurm
 Architecture: any
-Depends: libvishnu (= ${source:Version})
+Depends: libvishnu (= ${source:Version}), libslurm23, ${misc:Depends}
 Description: vishnu dynamic library for slurm
 
 
