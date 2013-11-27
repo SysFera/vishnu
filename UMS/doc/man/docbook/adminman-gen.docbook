@@ -1237,7 +1237,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 0 (INACTIVE
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -3057,7 +3057,7 @@ have to add it to the authorized keys of their own account on the machine.</para
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -4664,7 +4664,7 @@ have to add it to the authorized keys of their own account on the machine.</para
 that can be preset in the user configuration stored by the VISHNU system.
 This command allows an administrator to configure the default value of an option;
 this is the value that will be applied when the user has no configuration defined for
-that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS)</para>
+that option using the vishnu_configure_option command. The current supported options are VISHNU_CLOSE_POLICY (how to close the session), VISHNU_TIMEOUT (timeout before closing a session automatically), VISHNU_TRANSFER_CMD (to use rsync or scp in FMS), VISHNU_TRANSFER_TIMEOUT (transfer command timeout in seconds)</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
