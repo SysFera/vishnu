@@ -28,8 +28,6 @@ typedef std::vector<std::string> ListStrings;
 
 static const int LDAPTYPE=0;
 static const int SSHA_METHOD=0;
-static const int MIN_PWD_SIZE=6;
-static const int MAX_PWD_SIZE=100;
 
 /**
  * \brief Function to encrypt data and password
@@ -50,6 +48,7 @@ static const std::string TMSMAPPERNAME = "TMS";
 static const std::string IMSMAPPERNAME = "IMS";
 static const std::string FMSMAPPERNAME = "FMS";
 static const int PASSWORD_MAX_SIZE = 8;
+static const int PASSWORD_MIN_SIZE = 6;
 
 static boost::shared_mutex mutex;
 /**
