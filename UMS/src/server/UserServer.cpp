@@ -471,7 +471,7 @@ UserServer::existuserId(std::string userId) {
 std::string
 UserServer::generatePassword(std::string value1, std::string value2) {
 
-  std::string salt = "$1$"+value1 + convertToString(generateNumbers())+value2+"$";
+  std::string salt = convertToString(generateNumbers());
   std::string clef = value2+convertToString(generateNumbers());
 
   return (boost::str(boost::format("%1%%2%") % crypt(clef.c_str(), salt.c_str()) % salt.length()));
