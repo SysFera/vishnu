@@ -85,11 +85,13 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
       // If there only one field reserved by getObjectId
-      if (getAttribut("where userid='"+user->getUserId()+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'","count(numuserid)") == "0") {
+      std::string sqlcond = (boost::format("WHERE userid = '%1%'"
+                                           " AND status != %2%;"
+                                           )%user->getUserId()%convertToString(vishnu::STATUS_DELETED)).str();
 
+      if (getAttribut(sqlcond, "count(numuserid)") == "0") {
         //To active the user status
         user->setStatus(vishnu::STATUS_ACTIVE);
-
         sqlUpdate+="vishnu_vishnuid="+convertToString(vishnuId)+", ";
         sqlUpdate+="pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"', ";
         sqlUpdate+="firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"', ";
@@ -131,8 +133,9 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
  */
 int
 UserServer::update(UMS_Data::User *user) {
-  std::string sqlCommand = "UPDATE users SET";
+  std::string sqlCommand = "UPDATE users SET ";
   std::string comma="";
+  bool updateDataProvided = false;
   if (exist()) {
     if (isAdmin()) {
       //if the user whose information will be updated exists
@@ -142,20 +145,21 @@ UserServer::update(UMS_Data::User *user) {
         if (!user->getFirstname().empty()) {
           sqlCommand.append(" firstname='"+user->getFirstname()+"'");
           comma=",";
+          updateDataProvided = true;
         }
 
         //if a new lastname has been defined
         if (!user->getLastname().empty()) {
           sqlCommand.append(comma + " lastname='"+user->getLastname()+"'");
           comma=",";
-
+          updateDataProvided = true;
         }
 
         //if a new email has been defined
         if (!user->getEmail().empty()) {
           sqlCommand.append(comma+" email='"+user->getEmail()+"'");
           comma=",";
-
+          updateDataProvided = true;
         }
 
         //If a new status has been defined
@@ -166,25 +170,28 @@ UserServer::update(UMS_Data::User *user) {
             if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != vishnu::STATUS_LOCKED) {
               sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
               comma=",";
-
+              updateDataProvided = true;
             } else {
               throw UMSVishnuException (ERRCODE_USER_ALREADY_LOCKED);
             }
           } else {
             sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
             comma=",";
-
+            updateDataProvided = true;
           }
         }
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
           (comma+" privilege="+convertToString(user->getPrivilege())+" ");
           comma=",";
-
+          updateDataProvided = true;
         }
-        sqlCommand.append(" where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
-        //If there is a change
-        if (!sqlCommand.empty()) {
+
+        // Process the query if there is changes
+        if (updateDataProvided) {
+          sqlCommand.append((boost::format(" WHERE userid = '%1%'"
+                                           " AND status != %2%;"
+                                           )%user->getUserId()%convertToString(vishnu::STATUS_DELETED)).str());
           mdatabaseVishnu->process(sqlCommand.c_str());
         }
       } else {
@@ -238,15 +245,24 @@ UserServer::changePassword(std::string newPassword) {
       newPassword = vishnu::cryptPassword(muser.getUserId(), newPassword);
 
       //sql code to change the user password
-      sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
-                     "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+      sqlChangePwd = (boost::format("UPDATE users SET pwd='%1%'"
+                                    " WHERE userid='%2%' AND pwd='%3%' AND status !=%4%;"
+                                    )
+                      %newPassword
+                      %muser.getUserId()
+                      %muser.getPassword()
+                      %convertToString(vishnu::STATUS_DELETED)
+                      ).str();
 
-      //sql code to update the passwordstate
-      sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
-                          "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+      //append SQL query to update the passwordstate
+      sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
+                                     " WHERE userid='%1%' AND pwd='%2% AND status=%3%;"
+                                     )
+                       %muser.getUserId()
+                       %newPassword
+                       %convertToString(vishnu::STATUS_DELETED)).str();
 
-      sqlChangePwd.append(sqlUpdatePwdState);
-      mdatabaseVishnu->process(sqlChangePwd.c_str());
+      mdatabaseVishnu->process(sqlChangePwd);
 
       //Put the new user's password
       muser.setPassword(newPassword);
