@@ -143,21 +143,21 @@ UserServer::update(UMS_Data::User *user) {
 
         //if a new fisrtname has been defined
         if (!user->getFirstname().empty()) {
-          sqlCommand.append(" firstname='"+user->getFirstname()+"'");
+          sqlCommand.append(" firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"'");
           comma=",";
           updateDataProvided = true;
         }
 
         //if a new lastname has been defined
         if (!user->getLastname().empty()) {
-          sqlCommand.append(comma + " lastname='"+user->getLastname()+"'");
+          sqlCommand.append(comma + " lastname='"+mdatabaseVishnu->escapeData(user->getLastname())+"'");
           comma=",";
           updateDataProvided = true;
         }
 
         //if a new email has been defined
         if (!user->getEmail().empty()) {
-          sqlCommand.append(comma+" email='"+user->getEmail()+"'");
+          sqlCommand.append(comma+" email='"+mdatabaseVishnu->escapeData(user->getEmail())+"'");
           comma=",";
           updateDataProvided = true;
         }
@@ -182,11 +182,10 @@ UserServer::update(UMS_Data::User *user) {
         }
         // if the user whose privilege will be updated is not an admin
         if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
-          (comma+" privilege="+convertToString(user->getPrivilege())+" ");
+          sqlCommand.append(comma+" privilege="+convertToString(user->getPrivilege())+" ");
           comma=",";
           updateDataProvided = true;
         }
-
         // Process the query if there is changes
         if (updateDataProvided) {
           sqlCommand.append((boost::format(" WHERE userid = '%1%'"
