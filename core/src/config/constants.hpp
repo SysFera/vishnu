@@ -101,8 +101,8 @@ namespace vishnu {
   } component_status_t;
   
   typedef enum {
-     SESSION_CLOSED=0,
-	 SESSION_ACTIVE=1
+    SESSION_CLOSED=0,
+    SESSION_ACTIVE=1
   }session_state_t;
 
   /**
