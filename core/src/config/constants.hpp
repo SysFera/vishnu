@@ -99,6 +99,11 @@ namespace vishnu {
     STATUS_ACTIVE=1,
     STATUS_DELETED=2
   } component_status_t;
+  
+  typedef enum {
+     SESSION_CLOSED=0,
+	 SESSION_ACTIVE=1
+  }session_state_t;
 
   /**
  * \brief A convenient data type to store a parameter
