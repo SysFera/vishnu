@@ -160,7 +160,7 @@ SessionServer::reconnect(UserServer user, MachineClientServer host,
 */
 int
 SessionServer::close() {
-  std::string sqlCommand = "UPDATE vsession SET state=0 WHERE sessionkey='";
+
   std::string closePolicyStr = "";
 
   UserServer user = UserServer(SessionServer(msession.getSessionKey()));
@@ -175,27 +175,24 @@ SessionServer::close() {
     if (state != 0) {
       //if no running commands
       if (!commanderServer.isRunning()) {
-        sqlCommand.append(msession.getSessionKey()+"';");
-        mdatabaseVishnu->process(sqlCommand);
-        sqlCommand="";
-        sqlCommand.append("UPDATE vsession SET closure=CURRENT_TIMESTAMP"
-                          " WHERE sessionkey='"+msession.getSessionKey()+"';");
-        mdatabaseVishnu->process(sqlCommand.c_str());
-      }//END if no running commands
-      else {
+        mdatabaseVishnu->process((boost::format("UPDATE vsession"
+                                                " SET state=0"
+                                                " WHERE sessionkey='%1%';")%msession.getSessionKey()).str());
+        mdatabaseVishnu->process((boost::format("UPDATE vsession"
+                                                " SET closure=CURRENT_TIMESTAMP"
+                                                " WHERE sessionkey='%1%';")%msession.getSessionKey()).str());
+      } else {
         //To get the close policy associated to the session
-        closePolicyStr = getAttribut("where sessionkey='"+msession.getSessionKey()+"'", "closepolicy");
+        closePolicyStr = (boost::format(" WHERE sessionkey='%1%';")%msession.getSessionKey()).str();
+        getAttribut(closePolicyStr, "closepolicy");
         //If the session close policy is CLOSE_ON_DISCONNECT
         if (convertToInt(closePolicyStr) == 2) {
           disconnetToTimeout(user);
-        } //END If the session close policy is CLOSE_ON_DISCONNECT
-        else {
-          UMSVishnuException e (ERRCODE_COMMAND_RUNNING);
-          throw e;
+        }  else {
+          throw  UMSVishnuException (ERRCODE_COMMAND_RUNNING);
         }
       }
-    } //if the session is not already closed
-    else {
+    } else {
       UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
       throw e;
     }
@@ -289,12 +286,11 @@ SessionServer::check() {
                                         " WHERE users.numuserid = vsession.users_numuserid"
                                         " AND vsession.sessionkey='%1%'"
                                         " AND vsession.state<>%2%")%msession.getSessionKey()%vishnu::STATUS_DELETED).str();
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlQuery.c_str()));
-  std::vector<std::string> tmp;
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlQuery));
 
   //If the session key exists
   if (result->getNbTuples() != 0) {
-    tmp = result->get(0);
+    std::vector<std::string> tmp = result->get(0);
     //If the session is active
     if (convertToInt(tmp[0]) == 1) {
       //If the user is not locked
@@ -302,25 +298,17 @@ SessionServer::check() {
         //If the passwordstate is active
         if (convertToInt(tmp[2]) == 1) {
           ret = 0;
-        }//END If the passwordstate is active
-        else {
-          UMSVishnuException e (ERRCODE_TEMPORARY_PASSWORD);
-          throw e;
+        } else {
+          throw UMSVishnuException (ERRCODE_TEMPORARY_PASSWORD);
         }
-      } //END If the user is not locked
-      else {
-        UMSVishnuException e (ERRCODE_USER_LOCKED);
-        throw e;
+      } else {
+        throw UMSVishnuException (ERRCODE_USER_LOCKED);
       }
-    } //END If the session is active
-    else {
-      UMSVishnuException e (ERRCODE_SESSIONKEY_EXPIRED);
-      throw e;
+    } else {
+      throw  UMSVishnuException (ERRCODE_SESSIONKEY_EXPIRED);
     }
-  } //END If the session key exists
-  else {
-    UMSVishnuException e (ERRCODE_SESSIONKEY_NOT_FOUND);
-    throw e;
+  } else {
+    throw UMSVishnuException (ERRCODE_SESSIONKEY_NOT_FOUND);
   }
   return ret;
 }

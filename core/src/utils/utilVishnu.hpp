@@ -49,6 +49,7 @@ static const std::string IMSMAPPERNAME = "IMS";
 static const std::string FMSMAPPERNAME = "FMS";
 static const int PASSWORD_MAX_SIZE = 8;
 static const int PASSWORD_MIN_SIZE = 6;
+static const int DEFAUT_TIMEOUT = 10;
 
 static boost::shared_mutex mutex;
 /**
@@ -318,5 +319,29 @@ statusToString(const int& status);
 void
 validatePath(const std::string& path);
 
+
+/**
+ * @brief Get port number from a given uri
+ * @param uri : the uri address
+ * @return the port number
+ */
+int
+getPortFromUri(const std::string& uri);
+
+/**
+ * @brief getHostFromUrl
+ * @param uri
+ * @return
+ */
+std::string
+getHostFromUri(const std::string& uri);
+
+/**
+ * \brief Function to validate an URI
+ * \throws a VishnuException if contains the '*'
+ * \param uri the uri to check, throw exception on error
+ */
+void
+validateUri(const std::string & uri);
 } //END NAMESPACE
 #endif // _UTILVISHNU_H_

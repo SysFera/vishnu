@@ -2,6 +2,7 @@
 #include "Server.hpp"
 #include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
+#include "utilVishnu.hpp"
 
 
 Dispatcher::Dispatcher(const std::string &confFile)
@@ -97,12 +98,7 @@ Dispatcher::configureHandlers() {
       if (pidTlsHandler > 0) {
 
         /* Intializing the Frontend TLS Handler */
-        int sslPort = getPortFromUri(uriAddr);
-        if (sslPort <= 0 ) {
-          std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uriAddr;
-          abort();
-        }
-
+        int sslPort = vishnu::getPortFromUri(uriAddr);
         config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
         config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
         TlsServer tlsFrontHandler(rsaPrivkey, sslCertificate, sslPort, FRONTEND_IPC_URI);
@@ -119,11 +115,7 @@ Dispatcher::configureHandlers() {
       } else if (pidTlsHandler ==  0) {
 
         /* Intializing the Backend TLS Handler (for subscription) */
-        int port = getPortFromUri(uriSubs);
-        if (port <= 0 ) {
-          std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uriSubs;
-          abort();
-        }
+        int port = vishnu::getPortFromUri(uriSubs);
         TlsServer tlsBackHandler(rsaPrivkey, sslCertificate, port, BACKEND_IPC_URI);
         try {
           tlsBackHandler.run();
@@ -151,6 +143,13 @@ Dispatcher::configureHandlers() {
 void
 Dispatcher::run() {
   readConfiguration();
-  configureAnnuary();
-  configureHandlers();
+  try {
+    vishnu::validateUri(uriAddr);
+    vishnu::validateUri(uriSubs);
+    configureAnnuary();
+    configureHandlers();
+  } catch (const VishnuException& ex) {
+    std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+    exit(1);
+  }
 }

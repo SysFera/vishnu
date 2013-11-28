@@ -239,7 +239,7 @@ diet_call(diet_profile_t* prof) {
   if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
   {
     config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-    return ssl_call_gen(prof, getHostFromUri(uri), getPortFromUri(uri), cafile);
+    return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
   }
 
   return diet_call_gen(prof, uri);
@@ -387,38 +387,3 @@ diet_initialize(const char* cfg, int argc, char** argv) {
   return 0;
 }
 
-
-/**
- * @brief Get port number from a given uri
- * @param uri : the uri address
- * @return the port number
- */
-int
-getPortFromUri(const std::string& uri) {
-
-  size_t pos = uri.rfind(":");
-  if (pos == std::string::npos) {
-    return -1;
-  }
-  return vishnu::convertToInt(uri.substr(pos+1, std::string::npos));
-}
-
-/**
- * @brief getHostFromUrl
- * @param uri
- * @return
- */
-std::string
-getHostFromUri(const std::string& uri) {
-
-  size_t pos1 = uri.find("://");
-  size_t pos2 = uri.rfind(":");
-
-  if (pos1 == std::string::npos || pos2 == std::string::npos) {
-    return std::string();
-  }
-
-  size_t pos = pos1+3;
-  size_t len = pos2 - pos;
-  return uri.substr(pos, len);
-}

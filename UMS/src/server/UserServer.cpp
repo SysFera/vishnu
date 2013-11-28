@@ -85,11 +85,13 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       passwordCrypted = vishnu::cryptPassword(user->getUserId(), user->getPassword());
 
       // If there only one field reserved by getObjectId
-      if (getAttribut("where userid='"+user->getUserId()+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'","count(numuserid)") == "0") {
+      std::string sqlcond = (boost::format("WHERE userid = '%1%'"
+                                           " AND status != %2%;"
+                                           )%user->getUserId()%convertToString(vishnu::STATUS_DELETED)).str();
 
+      if (getAttribut(sqlcond, "count(numuserid)") == "0") {
         //To active the user status
         user->setStatus(vishnu::STATUS_ACTIVE);
-
         sqlUpdate+="vishnu_vishnuid="+convertToString(vishnuId)+", ";
         sqlUpdate+="pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"', ";
         sqlUpdate+="firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"', ";
@@ -131,8 +133,10 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
  */
 int
 UserServer::update(UMS_Data::User *user) {
-  std::string sqlCommand = "UPDATE users SET";
+  std::string sqlquery = "UPDATE users SET ";
   std::string comma="";
+  bool updateDataProvided = false;
+  bool closeAccount = false;
   if (exist()) {
     if (isAdmin()) {
       //if the user whose information will be updated exists
@@ -140,52 +144,73 @@ UserServer::update(UMS_Data::User *user) {
 
         //if a new fisrtname has been defined
         if (!user->getFirstname().empty()) {
-          sqlCommand.append(" firstname='"+user->getFirstname()+"'");
+          sqlquery.append(" firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"'");
           comma=",";
+          updateDataProvided = true;
         }
 
         //if a new lastname has been defined
         if (!user->getLastname().empty()) {
-          sqlCommand.append(comma + " lastname='"+user->getLastname()+"'");
+          sqlquery.append(comma + " lastname='"+mdatabaseVishnu->escapeData(user->getLastname())+"'");
           comma=",";
-
+          updateDataProvided = true;
         }
 
         //if a new email has been defined
         if (!user->getEmail().empty()) {
-          sqlCommand.append(comma+" email='"+user->getEmail()+"'");
+          sqlquery.append(comma+" email='"+mdatabaseVishnu->escapeData(user->getEmail())+"'");
           comma=",";
-
+          updateDataProvided = true;
         }
 
         //If a new status has been defined
         if (user->getStatus() != vishnu::STATUS_UNDEFINED) {
           //if the user will be locked
           if (user->getStatus() == vishnu::STATUS_LOCKED) {
-            //if the user is not already locked
-            if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "status")) != vishnu::STATUS_LOCKED) {
-              sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
-              comma=",";
+            sqlquery.append(comma + " status="+convertToString(user->getStatus())+" ");
+            comma=",";
+            updateDataProvided = true;
+            closeAccount = true;
 
-            } else {
-              throw UMSVishnuException (ERRCODE_USER_ALREADY_LOCKED);
+            //if the user is not already locked
+            if (convertToInt(getAttribut(" WHERE  userid='"+user->getUserId()+"'", "status")) == vishnu::STATUS_LOCKED) {
+              std::cerr << boost::format("[WARNING] User already locked %1%\n")%user->getUserId();
             }
           } else {
-            sqlCommand.append(comma + " status="+convertToString(user->getStatus())+" ");
+            sqlquery.append(comma + " status="+convertToString(user->getStatus())+" ");
             comma=",";
-
+            updateDataProvided = true;
           }
         }
-        // if the user whose privilege will be updated is not an admin
-        if (convertToInt(getAttribut("where userid='"+user->getUserId()+"'", "privilege")) != 1) {
-          (comma+" privilege="+convertToString(user->getPrivilege())+" ");
+        // Check if the user privileges should be update
+        std::string sqlcond = (boost::format(" WHERE userid = '%1%'")%user->getUserId()).str();
+        if (convertToInt(getAttribut(sqlcond, "privilege")) != user->getPrivilege()) {
+          sqlquery.append(comma+" privilege="+convertToString(user->getPrivilege())+" ");
           comma=",";
-
+          updateDataProvided = true;
         }
-        sqlCommand.append(" where userid='"+user->getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';");
-        //If there is a change
-        if (!sqlCommand.empty()) {
-          mdatabaseVishnu->process(sqlCommand.c_str());
+
+        // Process the query if there is changes
+        if (updateDataProvided) {
+          sqlquery.append((boost::format(" WHERE userid = '%1%'"
+                                         " AND status != %2%;"
+                                         )%user->getUserId() %convertToString(vishnu::STATUS_DELETED)).str());
+          mdatabaseVishnu->process(sqlquery);
+
+          // close the current user sessions if the user account has been locked
+          if (closeAccount) {
+            sqlquery = (boost::format("UPDATE vsession"
+                                      " SET state='%1%'"
+                                      " WHERE sessionkey IN (SELECT sessionkey"
+                                      "   FROM (SELECT users_numuserid, STATE FROM vsession) AS sessioninfo, users"
+                                      "   WHERE sessioninfo.users_numuserid=users.numuserid"
+                                      "   AND users.userid='%2%' AND sessioninfo.state='%3%');"
+                                      )
+                        %convertToString(vishnu::SESSION_CLOSED)
+                        %user->getUserId()
+                        %convertToString(vishnu::SESSION_ACTIVE)).str();
+            mdatabaseVishnu->process(sqlquery);
+          }
         }
       } else {
         throw UMSVishnuException (ERRCODE_UNKNOWN_USERID);
@@ -238,15 +263,24 @@ UserServer::changePassword(std::string newPassword) {
       newPassword = vishnu::cryptPassword(muser.getUserId(), newPassword);
 
       //sql code to change the user password
-      sqlChangePwd = "UPDATE users SET pwd='"+newPassword+"'where "
-                     "userid='"+muser.getUserId()+"' and pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+      sqlChangePwd = (boost::format("UPDATE users SET pwd='%1%'"
+                                    " WHERE userid='%2%' AND pwd='%3%' AND status !=%4%;"
+                                    )
+                      %newPassword
+                      %muser.getUserId()
+                      %muser.getPassword()
+                      %convertToString(vishnu::STATUS_DELETED)
+                      ).str();
 
-      //sql code to update the passwordstate
-      sqlUpdatePwdState = "UPDATE users SET passwordstate=1 "
-                          "where userid='"+muser.getUserId()+"' and pwd='"+newPassword+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+      //append SQL query to update the passwordstate
+      sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
+                                     " WHERE userid='%1%' AND pwd='%2% AND status=%3%;"
+                                     )
+                       %muser.getUserId()
+                       %newPassword
+                       %convertToString(vishnu::STATUS_DELETED)).str();
 
-      sqlChangePwd.append(sqlUpdatePwdState);
-      mdatabaseVishnu->process(sqlChangePwd.c_str());
+      mdatabaseVishnu->process(sqlChangePwd);
 
       //Put the new user's password
       muser.setPassword(newPassword);
@@ -442,7 +476,7 @@ UserServer::isAttributOk(std::string attributName, int valueOk) {
  */
 std::string UserServer::getAttribut(std::string condition, std::string attrname) {
   std::string sqlCommand("SELECT "+attrname+" FROM users "+condition);
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand));
   return result->getFirstElement();
 }
 

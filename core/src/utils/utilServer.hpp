@@ -324,7 +324,5 @@ namespace vishnu {
    */
   int
   showVersion(std::string server);
-
-
 }
 #endif //_UTILSERVER_H_

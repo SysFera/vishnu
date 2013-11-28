@@ -151,21 +151,4 @@ int
 diet_initialize(const char* cfg, int argc, char** argv);
 
 
-/**
- * @brief Get port number from a given uri
- * @param uri : the uri address
- * @return the port number
- */
-int
-getPortFromUri(const std::string& uri);
-
-/**
- * @brief getHostFromUrl
- * @param uri
- * @return
- */
-std::string
-getHostFromUri(const std::string& uri);
-
-
 #endif // __DIETMOCK__

@@ -15,7 +15,6 @@
 #include <boost/filesystem/path.hpp>
 #include <boost/system/error_code.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-
 #include <boost/random/detail/seed.hpp>
 #include <boost/random/mersenne_twister.hpp>
 #include <boost/random/uniform_int.hpp>
@@ -23,12 +22,10 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 #include <boost/date_time/local_time/local_time.hpp>
-
-
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/find.hpp>
 #include <boost/lexical_cast.hpp>
-
+#include <boost/format.hpp>
 #include <exception>
 #include <sstream>
 #include <ctime>
@@ -37,14 +34,10 @@
 #include <string>
 #include <cstring>
 #include <vector>
-
 #include <ctype.h>
-
 #include <sys/stat.h>
-// Headers for getaddrinfo function
 #include <netdb.h>
 #include <sys/param.h>
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <ifaddrs.h>
@@ -683,4 +676,57 @@ vishnu::validatePath(const std::string& path)
   }
 }
 
+/**
+ * @brief Get port number from a given uri
+ * @param uri : the uri address
+ * @return the port number, throw exception on error
+ */
+int
+vishnu::getPortFromUri(const std::string& uri) {
 
+  size_t pos = uri.rfind(":");
+  int port = -1;
+  if (pos == std::string::npos ||
+      (port = vishnu::convertToInt(uri.substr(pos+1, std::string::npos))) <= 0) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The format of the uri is invalid or the uri contains unallowed characters");
+  }
+
+  return port;
+}
+
+/**
+ * @brief getHostFromUrl
+ * @param uri
+ * @return
+ */
+std::string
+vishnu::getHostFromUri(const std::string& uri) {
+
+  std::string host;
+  size_t pos1 = uri.find("://");
+  size_t pos2 = uri.rfind(":");
+  // Extract the host in the uri
+  if (pos1 != std::string::npos && pos2 != std::string::npos) {
+    size_t pos = pos1+3;
+    size_t len = pos2 - pos;
+    host = uri.substr(pos, len);
+  }
+  // Check that the address is valid
+  if (host.empty() || host.find_first_of("*") != std::string::npos) {
+    throw UserException(ERRCODE_INVALID_PARAM, "The format of the uri is invalid or the uri contains unallowed characters");
+  }
+
+  return host;
+}
+
+/**
+ * \brief Function to validate an URI
+ * \throws a VishnuException if contains the '*'
+ * \param uri the uri to check, throw exception on error
+ */
+void
+vishnu::validateUri(const std::string & uri) {
+  std::cerr << boost::format("[INFO] Parsing the uri (%1%)...\n")%uri;
+  vishnu::getPortFromUri(uri);
+  vishnu::getHostFromUri(uri);
+}
