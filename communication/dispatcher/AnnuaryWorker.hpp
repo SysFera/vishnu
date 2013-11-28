@@ -11,6 +11,7 @@
 #include "DIET_client.h"
 #include "UserException.hpp"
 #include "Annuary.hpp"
+#include "utilVishnu.hpp"
 
 /**
  * \class AnnuaryWorker
@@ -92,8 +93,8 @@ private:
 
     if (!uriServer.empty()) {
       if (useSsl) {
-        int port = getPortFromUri(uriServer);
-        std::string host = getHostFromUri(uriServer);
+        int port = vishnu::getPortFromUri(uriServer);
+        std::string host = vishnu::getHostFromUri(uriServer);
         ssl_call_gen(profile.get(), host, port, cafile);
       } else {
         diet_call_gen(profile.get(), uriServer);

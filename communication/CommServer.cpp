@@ -13,60 +13,41 @@
 #include "zhelpers.hpp"
 #include "SeD.hpp"
 
+/**
+ * \brief Function to unregister a server (from the annuary and database)
+ * \param type the type of the server
+ * \param config the configuration file
+ * \return 0 currently
+ */
 // TODO IMPLEMENT ME
 int
 unregisterSeD(const std::string& type, const ExecConfiguration& config) {
   return 0;
 }
 
-void
-validateUri(const std::string & uri) {
-  size_t pos = uri.find("*");
-  if (pos != std::string::npos) {
-    throw UserException(ERRCODE_INVALID_PARAM,
-                        std::string("W: character '*' is not permitted in the uri"));
-  }
-}
 
 int
-registerSeD(const std::string& type,
+registerSeD(const std::string& sedUri,
+            const std::string& dispUri,
+            const std::string& sedType,
             const ExecConfiguration& config,
             std::vector<std::string>& services) {
-  std::string uriSed;
+
   std::string mid;
-  std::string uriDispatcher;
   std::string uriSupervisor;
-  int timeout = 10;
 
   // Getting the machine id
-  if (type == "umssed") { // if ums
+  if (sedType == "umssed") { // if ums
     config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
-  }
-  else {
+  } else {
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
   }
+
+  int timeout  = vishnu::DEFAUT_TIMEOUT;
   config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
-  if (timeout <= 0) {
-    timeout = 10;
-  }
 
-  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
-  if (type == "fmssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uriSed);
-  } else  if (type == "imssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uriSed);
-  } else  if (type == "tmssed") {
-    config.getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uriSed);
-  } else { // presumably UMS
-    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uriSed);
-  }
-
-  /* Validate the uri and registry the SeD if not yet the case */
-  validateUri(uriDispatcher);
-
-  // Check whether to use supervisord
   if (config.getConfigValue<std::string>(vishnu::URISUPERVISOR, uriSupervisor) &&
-      vishnu::isNew(uriSupervisor, mid, type)) {
+      vishnu::isNew(uriSupervisor, mid, sedType)) {
     try {
       DbFactory factory;
       Database* database = factory.getDatabaseInstance();
@@ -78,16 +59,16 @@ registerSeD(const std::string& type,
                              %database->escapeData(config.scriptToString())
                              %mid
                              %vishnu::convertToString(vishnu::PRUNNING)
-                             %type
+                             %sedType
                              ).str();
 
       database->process(request.c_str());
     } catch (...) {
-      if (type == "umssed") { throw; }
+      if (sedType == "umssed") { throw; }
     }
   }
 
-  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(type, services, uriSed));
+  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(sedType, services, sedUri));
   std::string requestData = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
 
   std::string response;
@@ -96,32 +77,17 @@ registerSeD(const std::string& type,
 
     std::string host;
     int port;
-    host = getHostFromUri(uriDispatcher);
-    if (host.empty()) {
-      std::cerr << boost::format("[ERROR] *** Incorrect host address from the service uri (%1%) ***\n")%uriDispatcher;
-      /* %RELAX<MISRA_18_0_3> Because this error occurs in the forked process,
-       * abort allows to exit the whole program, intstead of having defunct process. */
-      abort();
-    }
-
-    port = getPortFromUri(uriDispatcher);
-    if (port <= 0 ) {
-      std::cerr << boost::format("[ERROR] *** Incorrect port from the service uri (%1%) ***\n")%uriDispatcher;
-      abort();
-    }
+    host = vishnu::getHostFromUri(dispUri);
+    port = vishnu::getPortFromUri(dispUri);
 
     /* Get TLS trust store if set */
     std::string cafile;
     config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-
     /* Logging */
     std::cerr << boost::format("[INFO] Registration address: %1%:%2% with TLS\n"
                                "       > Certifcate trust store (CA): %3%\n") %host %port %cafile;
-
-
     /* Now create a TLS client and go ahead */
     TlsClient tlsClient(host, port, cafile);
-
     requestData.append("\n\n");      /* required for the internal protocol */
     if (tlsClient.send(requestData) == 0) {
       response = tlsClient.recv();
@@ -131,7 +97,7 @@ registerSeD(const std::string& type,
     }
   } else {
     zmq::context_t ctx(1);
-    LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+    LazyPirateClient lpc(ctx, dispUri, timeout);
     if (!lpc.send(requestData)) {
       std::cerr << "[WARNING] failed to register in the naming service\n";
       return -1; // Dont throw exception
@@ -143,24 +109,31 @@ registerSeD(const std::string& type,
 }
 
 void
-initSeD(const std::string& type,
+initSeD(const std::string& sedType,
         const ExecConfiguration& config,
-        const std::string& uri,
+        const std::string& sedUri,
         boost::shared_ptr<SeD> server) {
 
-  const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%type).str();
+  const std::string IPC_URI = (boost::format("ipc:///tmp/vishnu-%1%.sock")%sedType).str();
+
+  std::string dispUri;
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, dispUri);
+
+  // Validate the URIs
+  vishnu::validateUri(sedUri);
+  vishnu::validateUri(dispUri);
 
   try {
     std::vector<std::string> services = server.get()->getServices();
-    registerSeD(type, config, services);
+    registerSeD(sedUri, dispUri, sedType, config, services);
   } catch (VishnuException& e) {
-    std::cout << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
+    std::cerr << boost::format("[WARNING] Failed registering the service (%1%) ***\n")%e.what();
   }
 
   bool useSsl = false;
   if (! config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) ||
       ! useSsl) { /* TLS dont required */
-    ZMQServerStart(server, uri, false, "");
+    ZMQServerStart(server, sedUri, false, "");
   } else {
     pid_t pid = fork();
     if (pid > 0) {
@@ -170,11 +143,7 @@ initSeD(const std::string& type,
     } else if (pid == 0) {
 
       /* Intializing the TLS listener if necessary */
-      int sslPort = getPortFromUri(uri);
-      if (sslPort <= 0 ) {
-        std::cerr << boost::format("[ERROR] *** Incorrect uri set for the service (%1%) ***\n")%uri;
-        abort();
-      }
+      int sslPort = vishnu::getPortFromUri(sedUri);
       std::string rsaPrivkey;
       std::string sslCertificate;
       config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
@@ -194,6 +163,6 @@ initSeD(const std::string& type,
       abort();
     }
   }
-  unregisterSeD(type, config);
+  unregisterSeD(sedType, config);
 }
 

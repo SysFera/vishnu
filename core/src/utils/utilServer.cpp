@@ -613,3 +613,5 @@ vishnu::showVersion(std::string server){
   std::cout << boost::format("%1% %2%%3%\n")%server%VISHNU_VERSION%batchInfo;
   return EXIT_SUCCESS;
 }
+
+
