@@ -350,6 +350,9 @@ vishnu::updateUser(const string& sessionKey,
     throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION,
                              "Invalid Privilege value: its value must be 0 or 1");
   }
+  if (!user.getEmail().empty()) {
+    checkEmail(user.getEmail());
+  }
 
   SessionProxy sessionProxy(sessionKey);
   UserProxy userProxy(sessionProxy);
