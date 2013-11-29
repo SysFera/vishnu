@@ -370,8 +370,12 @@ throw (UMSVishnuException, FMSVishnuException,
   // Check that the file path doesn't contain characters subject to security issues
   // if no path is provided, just display local account $HOME
   std::string path_(path);
-  if (path[path.length() - 1] == ':') {
+  size_t pos = path.find(":");
+  size_t last = path.length() - 1;
+  if (pos == last) {
     path_.append("~");
+  } else if (path[pos+1] != '/') {
+    path_.insert(pos+1, "~/");
   }
 
   vishnu::validatePath(path_);

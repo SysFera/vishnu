@@ -71,8 +71,11 @@ File::File(const SessionServer& sessionServer,
   msessionServer(sessionServer), exist(false) {
 
   size_t pos = path.find(':');
+  // FIXME: check that ':' is not part of the filename
+  // or it will prevent to list files that have ':' in their name
+  size_t da = path.find_first_of("/~");
 
-  if (pos == string::npos) {
+  if ((pos == string::npos) || (da < pos)) {
     setPath(path);
     setHost("localhost");
   } else {
