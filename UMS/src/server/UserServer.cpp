@@ -183,8 +183,7 @@ UserServer::update(UMS_Data::User *user) {
           }
         }
         // Check if the user privileges should be update
-        std::string sqlcond = (boost::format(" WHERE userid = '%1%'")%user->getUserId()).str();
-        if (convertToInt(getAttribut(sqlcond, "privilege")) != user->getPrivilege()) {
+        if (user->getPrivilege() != vishnu::PRIVILEGE_UNDEFINED) {
           sqlquery.append(comma+" privilege="+convertToString(user->getPrivilege())+" ");
           comma=",";
           updateDataProvided = true;
