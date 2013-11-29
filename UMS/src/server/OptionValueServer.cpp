@@ -202,5 +202,9 @@ int value = convertToInt(moptionValue->getValue());
   if (moptionValue->getOptionName().compare(TRANSFERCMD_OPT) == 0) {
       return ( ( value==0)|| ( value==1)  ) ;
   }
+  //if the option is VISHNU_TRANSFER_TIMEOUT
+  if (moptionValue->getOptionName().compare(TRANSFER_TIMEOUT_OPT) == 0) {
+      return (value > 0) ;
+  }
   return iscorrect;
 }
