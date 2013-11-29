@@ -11,6 +11,7 @@
 #include <vector>                       // for vector
 
 #include "UMSVishnuException.hpp"       // for UMSVishnuException, etc
+#include "constants.hpp"
 
 /**
  * \brief Function to check if a text is empty
@@ -40,5 +41,33 @@ checkEmail(const std::string& mail) {
 
   if (!boost::regex_match(mail, reg)) {
     throw UMSVishnuException(ERRCODE_INVALID_MAIL_ADRESS);
+  }
+}
+
+/**
+ * @brief checkPrivilege: Check if a privilege is valid
+ * @param privilege : the privilege value
+ */
+void
+checkPrivilege(int privilege)
+{
+  if (privilege != vishnu::PRIVILEGE_USER && privilege != vishnu::PRIVILEGE_ADMIN) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "Invalid Privilege value: valid options are 0 or 1");
+  }
+}
+
+
+/**
+ * @brief Function to check the vaidity of a component status
+ * @param state The value
+ * \return raises an exception on error
+ */
+void
+checkEntityStatus(int state)
+{
+  if (state != vishnu::STATUS_LOCKED && state != vishnu::STATUS_ACTIVE) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "Invalid state: valid options are 0 or 1");
   }
 }

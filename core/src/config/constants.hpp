@@ -105,6 +105,12 @@ namespace vishnu {
     SESSION_ACTIVE=1
   }session_state_t;
 
+  typedef enum {
+    PRIVILEGE_UNDEFINED = -1,
+    PRIVILEGE_USER = 0,
+    PRIVILEGE_ADMIN = 1
+  } privilege_type_t;
+
   /**
  * \brief A convenient data type to store a parameter
  */

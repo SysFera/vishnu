@@ -169,7 +169,7 @@ void User::eSet(::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_lastname);
     case ::UMS_Data::UMS_DataPackage::USER__PRIVILEGE:
-        return m_privilege != 0;
+        return m_privilege != -1;
     case ::UMS_Data::UMS_DataPackage::USER__EMAIL:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_email);

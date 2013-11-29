@@ -41,5 +41,21 @@ checkIfTextIsEmpty(const std::string& text,
 void
 checkEmail(const std::string& mail);
 
+/**
+ * @brief Function to check the vaidity of a privilege
+ * @param privilege the privilege value
+ * \return raises an exception on error
+ */
+void
+checkPrivilege(int privilege);
+
+/**
+ * @brief Function to check the vaidity of a component status
+ * @param state The value
+ * \return raises an exception on error
+ */
+void
+checkEntityStatus(int state);
+
 
 #endif
