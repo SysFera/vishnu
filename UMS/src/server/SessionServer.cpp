@@ -162,12 +162,10 @@ int
 SessionServer::close() {
 
   std::string closePolicyStr = "";
-
   UserServer user = UserServer(SessionServer(msession.getSessionKey()));
   CommandServer commanderServer = CommandServer(SessionServer(msession.getSessionKey()));
   //The init function initializes login and password using the sessionKey
   user.init();
-
   //If The user exist
   if (user.exist()) {
     int state = getState();
@@ -329,6 +327,7 @@ SessionServer::finish(std::string cmdDescription,
                       std::string newVishnuObjectID) {
 
   //To save the date of the last connection
+  check();
   saveConnection();
   //To save the command
   CommandServer commandServer = CommandServer(cmdDescription, *this);
@@ -412,7 +411,6 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
   values.append(msession.getAuthenId()+"')");
 
   sqlInsert.append(values);
-
   mdatabaseVishnu->process(sqlInsert.c_str());
   return 0;
 }
