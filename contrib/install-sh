@@ -1,0 +1,26 @@
+#!/bin/bash
+
+prefix_dir=$1
+
+cmake . \
+     -DCOMPILE_UMS=ON \
+     -DCOMPILE_FMS=ON \
+     -DCOMPILE_IMS=OFF \
+     -DCOMPILE_TMS=ON \
+     -DCOMPILE_CLIENT_CLI=ON \
+     -DCOMPILE_SERVERS=ON \
+     -DVISHNU_BATCH=POSIX \
+     -DENABLE_MYSQL=ON \
+     -DBUILD_TESTING=OFF \
+     -DENABLE_JAVA=OFF \
+     -DENABLE_PYTHON=OFF \
+     -DENABLE_SWIG=OFF \
+     -DENABLE_LDAP=OFF \
+     -DBOOST_ROOT=/usr \
+     -DBoost_DIR=/usr \
+     -DBoost_INCLUDE_DIR=/usr/include \
+     -DBoost_LIBRARY_DIRS=/usr/lib \
+     -DOPENSSL_INCLUDE_DIR=/usr/include \
+     -DCMAKE_INSTALL_PREFIX=${prefix_dir}
+
+make -j2 install

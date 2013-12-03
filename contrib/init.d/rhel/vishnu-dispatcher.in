@@ -1,0 +1,89 @@
+#!/bin/bash
+#
+# /etc/rc.d/init.d/dispatcher
+#
+# Starting the dispatcher service of SysferaDS system
+#
+# chkconfig: 2345 96 80
+# description: The dipstaching service of the SysFera-DS system.
+# 
+
+### BEGIN INIT INFO
+# Provides: dispatcher
+# Required-Start: $local_fs $network $remote_fs
+# Required-Stop: $local_fs $network $remote_fs
+# Default-Start:  2 3 4 5
+# Default-Stop: 0 1 6
+# Short-Description: start and stop dispatcher
+# Description: The dispatcher service is the scheduler of SysFera system
+### END INIT INFO
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+if [ -e /etc/default/sysfera ]; then
+	. /etc/default/sysfera
+else
+  CONFIG_VISHNU=/etc/vishnu.cfg
+  START_DISPATCHER=yes
+fi
+
+PATH=$PATH:/usr/local/sbin
+
+RETVAL=0
+NAME=dispatcher
+PIDFILE=/var/run/$NAME.pid
+DAEMON="$NAME $CONFIG_VISHNU"
+
+check() {
+	if [ "$START_DISPATCHER" != "y" -a "$START_DISPATCHER" != "yes" ] ; then
+		exit
+	fi
+}
+
+start() {
+	if [ -z "$SYSFERA_USER_UID" ] ; then
+		daemon --pidfile $PIDFILE "nohup $DAEMON >/dev/null 2>&1 &"
+	else
+		daemon --user $SYSFERA_USER_UID --pidfile $PIDFILE "nohup $DAEMON >/dev/null 2>&1 &"
+	fi
+	RETVAL=$?
+	if [ $RETVAL -eq 0 ] ; then
+		touch /var/lock/subsys/$NAME
+		[ ! -f $PIDFILE ] &&
+		pidofproc $NAME  > $PIDFILE
+	fi
+	return $RETVAL
+}
+
+stop() {
+	killproc -p $PIDFILE $NAME
+	RETVAL=$?
+	[ $RETVAL -eq 0 ] && rm -f /var/lock/subsys/$NAME
+	return $RETVAL
+}
+
+case "$1" in
+	start)
+		check
+		echo -n "Starting $NAME services: "
+		start
+	;;
+	stop)
+		check
+		echo -n "Shutting down $NAME services: "
+		stop
+	;;
+	status)
+		status -p $PIDFILE $NAME
+	;;
+	restart)
+		stop
+		start
+	;;
+	*)
+		echo "Usage: $NAME {start|stop|status|restart}"
+		exit 1
+	;;
+esac
+

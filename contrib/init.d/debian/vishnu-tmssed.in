@@ -13,13 +13,13 @@
 
 # PATH should only include /usr/* if it runs after the mountnfs.sh script
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
-DESC="Vishnu TMS"
+DESC="Vishnu task management system"
 NAME=tmssed
-CONFIG_FILE="@ETC_INSTALL_DIR@/vishnu.cfg"
+CONFIG_FILE="/etc/vishnu.cfg"
 DAEMON=@SBIN_DIR@/tmssed
 DAEMON_ARGS="$CONFIG_FILE"
 PIDFILE=/var/run/$NAME.pid
-SCRIPTNAME=/etc/init.d/$NAME
+SCRIPTNAME=/etc/init.d/vishnu-$NAME
 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
