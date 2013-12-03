@@ -53,7 +53,7 @@ AuthSystemServer::add(int vishnuId) {
     //if the user is an admin
     if (userServer.isAdmin()) {
       checkValues();
-      mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, ""));
+      mauthsystem->setAuthSystemId(vishnu::getObjectId(vishnuId, "formatidauth", AUTH, mauthsystem->getName()));
       // To check if the authentication id generated and the name to save do not exist,
       // except the authentication reserved by getObjectId
       std::string sqlcond = (boost::format("WHERE authsystemid='%1%'"
