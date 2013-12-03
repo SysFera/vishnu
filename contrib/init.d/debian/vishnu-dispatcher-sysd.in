@@ -1,0 +1,12 @@
+[Unit]
+Description=Vishnu request dispatching broker
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart=@SBIN_DIR@/dispatcher /etc/vishnu.cfg
+User=vishnu
+Group=vishnu
+
+[Install]
+WantedBy=multi-user.target

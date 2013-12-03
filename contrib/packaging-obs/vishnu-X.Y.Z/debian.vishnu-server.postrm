@@ -1,0 +1,10 @@
+#!/bin/bash
+ 
+set -e
+
+services="dispatcher umssed fmssed tmssed"
+for srv in; do
+ update-rc.d vishnu-$srv remove
+done
+
+

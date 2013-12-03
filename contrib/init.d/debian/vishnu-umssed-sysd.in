@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 Type=simple
-ExecStart=@SBIN_DIR@/umssed @ETC_INSTALL_DIR@/vishnu/ums.cfg
+ExecStart=@SBIN_DIR@/umssed /etc/vishnu.cfg
 User=vishnu
 Group=vishnu
 

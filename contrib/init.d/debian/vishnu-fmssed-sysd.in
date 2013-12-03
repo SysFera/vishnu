@@ -4,7 +4,7 @@ After=syslog.target
 
 [Service]
 Type=simple
-ExecStart=@SBIN_DIR@/fmssed @ETC_INSTALL_DIR@/vishnu/fms.cfg
+ExecStart=@SBIN_DIR@/fmssed /etc/vishnu.cfg
 User=vishnu
 Group=vishnu
 

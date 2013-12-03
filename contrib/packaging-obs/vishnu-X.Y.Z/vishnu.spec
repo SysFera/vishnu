@@ -1,5 +1,5 @@
 Name:           vishnu
-Summary:    	  VISHNU is a modular toolkit for distributed resource management
+Summary:    	VISHNU is a modular toolkit for distributed resource management
 Version:        X.Y.Z
 Release:        <CI_CNT>.<B_CNT>
 Group:          System/Administration
@@ -8,22 +8,14 @@ URL:            http://www.sysfera.fr/sysfera-ds/vishnu.html
 Source0:        %{name}-%{version}.tgz
 BuildRoot:      %_tmppath/%name-%version-build
 
-%define _prefix /usr/local
+Prefix: /usr
 
-BuildRequires: gcc-c++ zeromq-devel cmake >= 2.8.5 mysql-devel postgresql-devel openssl-devel 
+%define		initd_dir	%{buildroot}/etc/init.d
+%define		etc_dir		%{buildroot}/etc
+
+BuildRequires: gcc-c++ zeromq-devel cmake >= 2.8.5 mysql-devel postgresql-devel openssl-devel openldap-devel
 BuildRequires: boost-devel > 1.46 swig java-1.5.0-gcj java-1.5.0-gcj-devel python python-devel
- 
-#%if 0%{?suse_version} >= 1140
-#BuildRequires: gcc-c++ >= 4.6.3
-#%endif
 
-#%if 0%{?fedora}
-#BuildRequires: gcc-c++
-#%endif
-
-#%if 0%{?centos_version}
-#BuildRequires:  gcc-c++
-#%endif
 
 %description
 VISHNU is modular and high-level middleware for tasks, files and information 
@@ -69,6 +61,8 @@ vishnu sample configuration files
 %setup -q
 
 cmake . \
+  -DCMAKE_INSTALL_PREFIX="%_prefix" \
+  -DCMAKE_BUILD_TYPE=Release \
   -DCOMPILE_UMS=ON \
   -DCOMPILE_FMS=ON \
   -DCOMPILE_IMS=OFF \
@@ -81,7 +75,7 @@ cmake . \
   -DENABLE_SWIG=ON \
   -DENABLE_PYTHON=ON \
   -DENABLE_JAVA=ON \
-  -DENABLE_LDAP=OFF \
+  -DENABLE_LDAP=ON \
   -DBOOST_ROOT=/usr \
   -DBoost_DIR=/usr \
   -DBoost_INCLUDE_DIR=/usr/include \
@@ -93,10 +87,23 @@ cmake . \
   
 
 %build
-make -j4
+make %{?_smp_mflags}
 
 %install
-make DESTDIR=%{buildroot} install
+%make_install
+
+install -d %{etc_dir}
+install -m 644 vishnu-sample.cfg %{etc_dir}/vishnu.cfg
+
+CUR_DIR=$PWD
+
+cd contrib/init.d/rhel/
+  install -d %{initd_dir}
+for f in `ls vishnu-*.in`; do
+  install -m 755 $f %{initd_dir}/${f%%.*}
+done
+
+cd $CUR_DIR
 
 %clean
 make clean
@@ -105,19 +112,27 @@ rm -rf %{buildroot}
 %post
 /sbin/ldconfig
 
+# Add init scripts in startup
+%if 0%{?rhel_version}
+  for f in `ls /etc/init.d/vishnu-*`; do 
+    chkconfig --add `basename $f`;
+  done
+%endif
+
 %postun
 #TODO
 
 
 %files
 %defattr(-,root,root)
+/etc/init.d/vishnu-*
 %{_prefix}/lib
 %{_prefix}/bin
 %{_prefix}/include/
-%{_prefix}/lib
 %{_prefix}/sbin
 %doc %{_prefix}/share
-%config(noreplace) %{_prefix}/etc
+%config(noreplace) %{_prefix}/etc/*.cfg
+%config(noreplace) /etc/vishnu.cfg
 
 %files -n libvishnu
 %defattr(-,root,root)
@@ -139,7 +154,10 @@ rm -rf %{buildroot}
 
 %files server
 %defattr(-,root,root)
+/etc/init.d/vishnu-*
 %{_prefix}/sbin
+%config(noreplace) %{_prefix}/etc/*.cfg
+%config(noreplace) /etc/vishnu.cfg
 
 %files devel
 %defattr(-,root,root)
@@ -149,6 +167,7 @@ rm -rf %{buildroot}
 %files config
 %defattr(-,root,root)
 %config(noreplace) %{_prefix}/etc/*.cfg
+%config(noreplace) /etc/vishnu.cfg
 
 
 %changelog

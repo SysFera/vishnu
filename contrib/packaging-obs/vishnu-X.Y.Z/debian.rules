@@ -36,16 +36,15 @@ override_dh_auto_configure:
 -DENABLE_SWIG=ON \
 -DENABLE_PYTHON=ON \
 -DENABLE_JAVA=ON \
--DENABLE_LDAP=OFF \
+-DENABLE_LDAP=ON \
 -DVISHNU_BATCH=SLURM \
+-DINSTALL_SYSV=ON \
 -DVISHNU_BATCH_VERSION=2.3 \
 -DJAVA_INCLUDE_DIR=/usr/lib/jvm/java-1.6.0-openjdk-`dpkg --print-architecture`/include/
 
 override_dh_auto_install :
 	dh_auto_install
-# install documentation
-#	dh_installdirs $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc
-#	dh_install $(CURDIR)/core/doc/adminmanual/docbook/vishnu-adminman.docbook.pdf $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc/vishnu-admin-manual.pdf
-#	dh_install $(CURDIR)/core/doc/usermanual/docbook/vishnu-userman.docbook.pdf $(CURDIR)/debian/tmp/usr/share/doc/vishnu-doc/vishnu-user-manual.pdf
-# install config files
 	dh_install -pvishnu-config usr/etc/*.cfg etc
+	dh_install -pvishnu-config usr/etc/vishnu-sample.cfg etc/vishnu.cfg
+	dh_install -pvishnu-server etc/init.d/vishnu-dispatcher etc/init.d/vishnu-dispatcher
+	dh_install -pvishnu-server etc/init.d/vishnu-?mssed etc/init.d/
