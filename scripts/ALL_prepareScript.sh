@@ -170,8 +170,8 @@ change_dir Java/impl/VishnuLib
 run_cmd mvn clean
 run_cmd mvn install
 
-run_cmd cp target/VishnuLib-3.2.0-SNAPSHOT.jar ..
-run_cmd cp target/VishnuLib-3.2.0-SNAPSHOT.jar $cur/$pathrel/Java/impl/
+run_cmd cp target/VishnuLib-3.2.1.jar ..
+run_cmd cp target/VishnuLib-3.2.1.jar $cur/$pathrel/Java/impl/
 
 change_dir $cur
 
