@@ -1,7 +1,8 @@
 +--------------+
-| VISHNU 3.X.X |
+| VISHNU 3.2.1 |
 +--------------+
-* Fix ticket #359, #364, #345, #333, #382, #337, #403, #409, #392
+* Fix ticket #359, #364, #345, #333, #382, #337, #403, #409, #392, #350
+* AuthSystem names can contain the 'name' variable now
 
 +--------------+
 | VISHNU 3.2.0 |
