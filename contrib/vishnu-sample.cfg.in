@@ -146,7 +146,7 @@ ums_uriAddr=tcp://127.0.0.1:5562
 
 # sendmailScriptPath (M<UMS>): Sets the path to the script for sending emails
 #
-sendmailScriptPath=/usr/sbin/sendmail.py
+sendmailScriptPath=@CMAKE_INSTALL_PREFIX@/sbin/sendmail.py
 
 # authenticationType (M<UMS>): Defines the underlying authentication mode
 # VISHNU supports four modes of authentication:
