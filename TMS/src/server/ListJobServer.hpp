@@ -20,6 +20,7 @@
 #include "TMS_Data.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
+#include <boost/foreach.hpp>
 
 /**
  * \class ListJobServer

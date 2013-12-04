@@ -29,6 +29,7 @@
 #include "CommServer.hpp"
 #include "tmsUtils.hpp"
 #include "utilServer.hpp"
+#include <boost/format.hpp>
 
 
 

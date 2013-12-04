@@ -15,7 +15,6 @@
 #include "MonitorTMS.hpp"
 
 #include <csignal>
-
 #include <boost/format.hpp>
 
 /**
