@@ -15,7 +15,7 @@
 #include "ScriptGenConvertor.hpp"
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
-#include <boost/format/format_class.hpp>
+#include <boost/format.hpp>
 
 #include <fcntl.h>
 #include "api_fms.hpp"
