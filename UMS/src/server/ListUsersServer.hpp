@@ -63,15 +63,20 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListUsersOptions_ptr& options, std::string& sqlRequest) {
 
-
-    if(!userServer.isAdmin()) {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
-      throw e;
+    bool restricted(false);
+    if (!userServer.isAdmin()) {
+      restricted = true;
     }
-    std::string  userId = options->getUserId();
-    if(userId.size()!=0) {
+
+    std::string userId = options->getUserId();
+
+    if (restricted) {
+      UMS_Data::User user = userServer.getData();
+      std::string currentUserId = user.getUserId();
+      addOptionRequest("userid", currentUserId, sqlRequest);
+    } else if(userId.size()!=0) {
       //To check if the user id is correct
-      checkUserId(options->getUserId());
+      checkUserId(userId);
       addOptionRequest("userid", userId, sqlRequest);
     }
 
