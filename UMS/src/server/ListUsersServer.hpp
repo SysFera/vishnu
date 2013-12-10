@@ -80,8 +80,8 @@ public:
       addOptionRequest("userid", userId, sqlRequest);
     }
 
-    std::string  authSystemId = options->getAuthSystemId();
-    if(authSystemId.size()!=0) {
+    std::string authSystemId = options->getAuthSystemId();
+    if (authSystemId.size() != 0) {
       //To check if the authSystem identifier is correct
       checkAuthSystemId(authSystemId);
       //addOptionRequest("authsystemid", authSystemId, sqlRequest);
@@ -93,10 +93,10 @@ public:
                                             " AND authsystem.status!=%2%"
                                             " AND users.status!=%2%"
                                             " AND authaccount.status!=%2%"
-                                            )%authSystemId %vishnu::STATUS_DELETED).str();
+                                ) % authSystemId
+                              % vishnu::STATUS_DELETED).str();
       sqlRequest.append(" AND userid IN ("+luserCmd+")");
     }
-
   }
 
   /**
