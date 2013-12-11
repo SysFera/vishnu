@@ -61,7 +61,7 @@ option(COMPILE_FMS "compile the module FMS" OFF)
 option(COMPILE_IMS "compile the module IMS" OFF)
 option(INSTALL_SYSV "install systemV init scripts" OFF)
 option(INSTALL_SYSTEMD "install systemd services" OFF)
-
+option(COMPILE_ONLY_LIBBATCH "compile only the dynamic library for a given batch scheduler type" OFF)
 
 if (COMPILE_TMS OR COMPILE_IMS OR COMPILE_FMS)
   set (COMPILE_UMS ON CACHE BOOL "We need to build UMS" FORCE)
@@ -71,6 +71,14 @@ if (COMPILE_TMS)
   set (COMPILE_FMS ON CACHE BOOL "We need to build FMS" FORCE)
 endif()
 
+if(COMPILE_ONLY_LIBBATCH)
+  set (COMPILE_SERVERS ON)
+  set (COMPILE_TMS ON)
+  set (COMPILE_UMS OFF)
+  set (COMPILE_FMS OFF)
+  set (COMPILE_IMS OFF)
+  set (COMPILE_CLIENT_CLI OFF)
+endif(COMPILE_ONLY_LIBBATCH)
 
 set(VISHNU_BATCH "POSIX" CACHE path "Batch to use (TORQUE, LL, SLURM, LSF, SGE, PBS, POSIX, DELTACLOUD)")
 set(VISHNU_BATCH_VERSION "1" CACHE path "Version of the batch scheduler")
@@ -188,12 +196,9 @@ if (ENABLE_MYSQL)
   endif(MYSQL_FOUND)
 endif (ENABLE_MYSQL)
 
-if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL  AND NOT ENABLE_MYSQL)
+if (COMPILE_SERVERS AND NOT ENABLE_POSTGRESQL AND NOT ENABLE_MYSQL)
    message(FATAL_ERROR  "You MUST set either ENABLE_POSTGRESQL or ENABLE_MYSQL")
 endif()
-
-
-
 
 
 ######################################################################

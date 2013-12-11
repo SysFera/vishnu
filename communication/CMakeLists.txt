@@ -43,7 +43,7 @@ target_link_libraries (zmq_helper
 #add_subdirectory(ZMQHelper)
 # --------------------------------------------------------------------------
 
-if(COMPILE_SERVERS)
+if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
   add_executable(dispatcher dispatcher/main.cpp
     dispatcher/Dispatcher.cpp)
   

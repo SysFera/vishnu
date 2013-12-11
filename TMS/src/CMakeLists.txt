@@ -19,6 +19,7 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
   string (COMPARE EQUAL ${VISHNU_BATCH} "PBS" pbs)
   string (COMPARE EQUAL ${VISHNU_BATCH} "DELTACLOUD" deltacloud)
   string (COMPARE EQUAL ${VISHNU_BATCH} "POSIX" posix)
+
   if (torque OR ll OR lsf OR slurm OR sge OR pbs OR deltacloud)
     set(posix 1)
   endif()
@@ -149,7 +150,7 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     if (NOT version)
       message (FATAL_ERROR "Invalid SGE version, supported are: 11")
     endif()
-    
+
 
     find_package(SGE)
     if (SGE_FOUND)
@@ -251,7 +252,13 @@ if (COMPILE_SERVERS)
     ${USED_BATCH_INCLUDE_DIR}
     ${TESTVISHNU_SOURCE_DIR}/../third-party)
   
+
+ if(NOT COMPILE_ONLY_LIBBATCH)
+
+   # define tmsSlave related source files
   set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
+
+  # define tmsSlave binary
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
     ${Boost_LIBRARIES}
@@ -264,17 +271,18 @@ if (COMPILE_SERVERS)
     emf4cpp-vishnu
     ${USED_BATCH_LIB})
 
+  # set tmssed related source files
   set(sed_SRCS sed/tmssed.cpp
     sed/ServerTMS.cpp
     sed/internalApi.cpp
     sed/MonitorTMS.cpp
     ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
     )
-
   
   add_definitions(-DMODULE_PREFIX="${CMAKE_SHARED_MODULE_PREFIX}")
   add_definitions(-DMODULE_SUFFIX="${CMAKE_SHARED_MODULE_SUFFIX}")
 
+   # set tms library related source files
   set(server_SRCS
     server/BatchServer.cpp
     server/SSHJobExec.cpp
@@ -285,18 +293,21 @@ if (COMPILE_SERVERS)
     server/ScriptGenConvertor.cpp
     server/WorkServer.cpp
     utils/SharedLibrary.cc
-    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
-    )
+    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
+
  if(WIN32)
    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_win32.cc)
  else()
    set(server_SRCS ${server_SRCS} utils/SharedLibraryImpl_posix.cc)
  endif()
  
+  # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
   target_link_libraries(vishnu-tms-server vishnu-ums-server)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
+
+  # generate tmssed binary
   add_executable(tmssed ${sed_SRCS})
   target_link_libraries(tmssed
     ${Boost_LIBRARIES}
@@ -310,6 +321,15 @@ if (COMPILE_SERVERS)
     ${ZMQ_LIBRARIES}
     zmq_helper
     ${USED_BATCH_LIB})
+
+  # set the library for posix server => always compiled in the server
+  add_library(vishnu-tms-posix ${POSIXSERVER})
+  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
+  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
+
+  install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR})
+  install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
+ endif(NOT COMPILE_ONLY_LIBBATCH)
 
   if (torque)
     add_library(vishnu-tms-torque${VISHNU_BATCH_VERSION} ${TORQUESERVER})
@@ -346,14 +366,5 @@ if (COMPILE_SERVERS)
     target_link_libraries(vishnu-tms-deltacloud ${LIBDELTACLOUD_LIB})
     install(TARGETS vishnu-tms-deltacloud DESTINATION ${LIB_INSTALL_DIR})
   endif()
-  
-  # always compile posix server
-  add_library(vishnu-tms-posix ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
-  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
-
-  install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR}) 
-  install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
-
 endif (COMPILE_SERVERS)
 
