@@ -460,9 +460,6 @@ vishnu::addMachine(const std::string& sessionKey,
                    UMS_Data::Machine& newMachine)
 throw(UserException, SystemException)
 {
-
-  checkEntityStatus(newMachine.getStatus());
-
   checkIfTextIsEmpty(newMachine.getName(),
                      "The machine name is empty",
                      ERRCODE_INVALID_PARAM);
