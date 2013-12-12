@@ -1,4 +1,5 @@
 include_directories(client api
+  ${CONFIG_SOURCE_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR} 
   ${UMS_EMF_DATA_DIR}
@@ -43,7 +44,6 @@ install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 if(COMPILE_SERVERS)
   include_directories(${DATA_BASE_INCLUDE_DIR}
-    ${CONFIG_SOURCE_DIR}
     ${REGISTRY_SOURCE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
     ${FMS_SERVER_SOURCE_DIR})
