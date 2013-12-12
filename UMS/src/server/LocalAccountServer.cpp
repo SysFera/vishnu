@@ -56,7 +56,7 @@ LocalAccountServer::add() {
           throw UMSVishnuException (ERRCODE_UNKNOWN_USERID,
                                     "User '" + mlocalAccount->getUserId() + "' does not exist");
         }
-
+        mmutex.lock();
         //if the local account does not exist
         if (!exist(numMachine, numUser)) {
           if (!isLoginUsed(numMachine, mlocalAccount->getAcLogin())) {
@@ -71,9 +71,12 @@ LocalAccountServer::add() {
                                   %vishnu::STATUS_ACTIVE).str();
             mdatabaseVishnu->process(sqlCmd);
           } else {
+            mmutex.unlock();
             throw UMSVishnuException(ERRCODE_LOGIN_ALREADY_USED);
           }
+          mmutex.unlock();
         } else {
+          mmutex.unlock();
           throw UMSVishnuException (ERRCODE_LOCAL_ACCOUNT_EXIST);
         }
       } else {
@@ -123,6 +126,7 @@ LocalAccountServer::update() {
         sqlcond = (boost::format("WHERE userid='%1%'")%mlocalAccount->getUserId()).str();
         std::string  numUser = userServer.getAttribut(sqlcond, "numuserid");
 
+        mmutex.lock();
         //if the local account exists
         if (exist(numMachine, numUser)) {
           std::string fields("");
@@ -147,7 +151,9 @@ LocalAccountServer::update() {
                                              "   AND users_numuserid=%3%")%fields %numMachine %numUser).str();
             mdatabaseVishnu->process(sql);
           }
+          mmutex.unlock();
         } else {
+          mmutex.unlock();
           throw UMSVishnuException (ERRCODE_UNKNOWN_LOCAL_ACCOUNT);
         }
       } else {

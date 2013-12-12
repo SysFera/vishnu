@@ -83,6 +83,10 @@ private:
   * \brief An instance of vishnu database
   */
   Database *mdatabaseVishnu;
+  /**
+   * \brief Mutex to protect the id generation for the mcmd map
+   */
+  boost::mutex mmutex;
 
   /////////////////////////////////
   // Functions

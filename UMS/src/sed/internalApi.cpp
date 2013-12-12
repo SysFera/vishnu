@@ -692,7 +692,7 @@ solveLocalAccountCreate(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
-    LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
+    LocalAccountServer localAccountServer (localAccount, sessionServer);
     localAccountServer.add();
 
     // OUT Parameters
@@ -750,7 +750,7 @@ solveLocalAccountUpdate(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
-    LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
+    LocalAccountServer localAccountServer (localAccount, sessionServer);
     localAccountServer.update();
 
     // OUT Parameter
@@ -797,7 +797,7 @@ solveLocalAccountDelete(diet_profile_t* pb) {
   localAccount->setUserId(userId);
   localAccount->setMachineId(machineId);
 
-  LocalAccountServer localAccountServer = LocalAccountServer(localAccount, sessionServer);
+  LocalAccountServer localAccountServer (localAccount, sessionServer);
 
   try {
     int mapperkey;
