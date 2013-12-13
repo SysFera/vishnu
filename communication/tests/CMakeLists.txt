@@ -13,6 +13,7 @@ include_directories(${CONFIG_SOURCE_DIR}
   ${TMS_EMF_DATA_DIR}
   ${EMF4CPP_INCLUDE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${PROJECT_BINARY_DIR}
   )
 
 add_library(test_zmq_helper

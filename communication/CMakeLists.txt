@@ -18,7 +18,7 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${Boost_INCLUDE_DIR}
   ${OPENSSL_INCLUDE_DIR}
-
+  ${PROJECT_BINARY_DIR}
 )
 
 if(NOT COMPILE_ONLY_LIBBATCH)
