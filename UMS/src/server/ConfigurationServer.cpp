@@ -275,7 +275,7 @@ int ConfigurationServer::restore(int vishnuId) {
       //To insert localAccount
       for(unsigned int i = 0; i < mconfiguration->getListConfLocalAccounts().size(); i++) {
         UMS_Data::LocalAccount_ptr localAccount = mconfiguration->getListConfLocalAccounts().get(i);
-        LocalAccountServer localAccountServer = LocalAccountServer (localAccount, msessionServer);
+        LocalAccountServer localAccountServer(localAccount, msessionServer);
         localAccountServer.add();
       }
 
