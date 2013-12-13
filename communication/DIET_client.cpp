@@ -54,7 +54,7 @@ fill_sMap() {
     (*sMap)[SERVICES_UMS[nb]] = "UMS";
   }
   (*sMap)["heartbeatumssed"] = "UMS";
-  
+
 
   /* TMS services */
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
@@ -392,3 +392,31 @@ diet_initialize(const char* cfg, int argc, char** argv) {
   return 0;
 }
 
+int
+communicate_dispatcher(const std::string& requestData, std::string& response){
+  int timeout = getTimeout();
+  std::string uriDispatcher;
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
+  zmq::context_t ctx(1);
+  LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+  if (!lpc.send(requestData)) {
+    std::cerr << "[ERROR] failed to list the servers to ping \n";
+    return -1; // Dont throw exception
+  }
+  response = lpc.recv();
+  return 0;
+}
+
+void
+extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> vecString;
+  split_regex(vecString, msg, boost::regex(VISHNU_COMM_REGEX));
+  std::vector<std::string>::iterator it;
+  for (it = vecString.begin() ; it != vecString.end() ; ++it){
+    // URI is the key
+    if ( (*it).size() > 0){
+      res.push_back(Server::fromString(*it));
+    }
+  }
+}
