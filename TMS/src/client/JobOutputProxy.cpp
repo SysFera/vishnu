@@ -81,7 +81,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
   if (routputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
   }
-  if (!boost::starts_with(routputInfo, "/") ) {
+  if (! boost::starts_with(routputInfo, "/") ) {
     raiseExceptionIfNotEmptyMsg(routputInfo);
   }
   if( moutDir.size()==0 ) {
@@ -97,7 +97,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
     vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
     string line;
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
-    if(!getline(fdescStream, line)) {
+    if(! getline(fdescStream, line)) {
       line = "";
     }
     boost::trim(line);
@@ -113,10 +113,11 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
       jobResult.setErrorPath(moutDir+"/"+fileName2);
     }
     if (!missingFiles.empty()) {
-      vishnu::saveInFile(moutDir+"/MISSINGS", missingFiles);
+      vishnu::saveInFile(moutDir+"/MISSINGFILES", missingFiles);
     }
   } catch (FMSVishnuException &ex) {
-    std::cerr << boost::format("Error on file %1%: %2%")%routputInfo%ex.what();
+    vishnu::saveInFile(moutDir+"/ERROR",
+                       (boost::format("File %1%: %2%")%routputInfo%ex.what()).str());
   }
 
   diet_profile_free(getJobOutPutProfile);
@@ -204,11 +205,12 @@ JobOutputProxy::getCompletedJobsOutput() {
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
       listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);
       if (!missingFiles.empty()) {
-        vishnu::saveInFile(targetDir+"/MISSINGS", missingFiles);
+        vishnu::saveInFile(targetDir+"/MISSINGFILES", missingFiles);
       }
     }
   } catch (FMSVishnuException &ex) {
-    std::cerr << boost::format("Error on file %1%\n%2%") % routputInfo % ex.what();
+    vishnu::saveInFile(moutDir+"/ERROR",
+                       (boost::format("File %1%: %2%")%routputInfo%ex.what()).str());
   }
   diet_profile_free(getCompletedJobsOutputProfile);
   return listJobResults_ptr;

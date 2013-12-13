@@ -5,6 +5,7 @@
 #include "displayer.hpp"
 #include "constants.hpp"
 #include "tmsUtils.hpp"
+#include <boost/format.hpp>
 
 using namespace std;
 using namespace vishnu;
@@ -21,10 +22,12 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
        << endl << setw(75) << setfill('-') << "" << setfill(' ') << endl ;
 
   for (size_t i = 0 ; i < listJobs.getResults().size() ; i++) {
-    cout << setw(10) << left << (" " + listJobs.getResults().get(i)->getJobId()) ;
-    cout << " | " << listJobs.getResults().get(i)->getOutputDir() << endl;
+    JobResult* job = listJobs.getResults().get(i);
+    cout << setw(10) << left << (" " +job->getJobId()) ;
+    cout << " | " <<job->getOutputDir();
+    printJobResultSummary(job);
   }
-  cout << "Number of downloaded jobs : " << listJobs.getNbJobs() << endl;
+  cout << "\nNumber of downloaded jobs : " << listJobs.getNbJobs() << endl;
 }
 
 /**
@@ -33,11 +36,12 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
  */
 void
 displayJobOutput(TMS_Data::JobResult_ptr j){
-  cout << " ----------------------------------------------------------------" << endl;
-  cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files" << endl;
-  cout << " ----------------------------------------------------------------" << endl;
-  cout << setw(10) << left << (" " + j->getJobId()) << " | " << j->getOutputDir() << endl;
-  cout << endl;
+  cout << " ----------------------------------------------------------------\n";
+  cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files\n";
+  cout << " ----------------------------------------------------------------\n";
+  cout << setw(10) << left << (" " + j->getJobId()) << " | " << j->getOutputDir();
+  printJobResultSummary(j);
+
 }
 
 /**
@@ -613,4 +617,25 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
   os << "The number of jobs in queue is: " << listProgress.getNbJobs() << endl;
 
   return os;
+}
+
+
+/**
+ * @brief printJobResultSummary
+ * @param job
+ */
+void
+printJobResultSummary(const TMS_Data::JobResult_ptr job)
+{
+  std::string errorFile = (boost::format("%1%/ERROR")%job->getOutputDir()).str();
+  std::string missingFile = (boost::format("%1%/MISSINGFILES")%job->getOutputDir()).str();
+
+  cout << (boost::filesystem::exists(errorFile) ?
+             (boost::format("\n\tFAILURE: yes "
+                            "\n\tFAILURE DETAILS: %1%") % vishnu::get_file_content(errorFile)).str()
+           : "\n\tERROR: no");
+  cout << (boost::filesystem::exists(missingFile)?
+             ((boost::format("\n\tMISSING FILES: %1%") % vishnu::get_file_content(missingFile))).str()
+           : "\n\tMISSING FILES: no");
+  cout << endl;
 }

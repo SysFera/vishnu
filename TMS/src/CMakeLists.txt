@@ -96,12 +96,14 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
     string (COMPARE EQUAL ${batch_version_tmp} "2_2" version)
     string (COMPARE EQUAL ${batch_version_tmp} "2_3" version2)
     string (COMPARE EQUAL ${batch_version_tmp} "2_4" version3)
-    # Slurm 2.4 compile with 2.3 implementation
+    string (COMPARE EQUAL ${batch_version_tmp} "2_5" version3)
+    string (COMPARE EQUAL ${batch_version_tmp} "2_6" version3)
+    # Slurm 2.4, 2.5 and 2.6 compile with the version 2.3 API implementation
     if (version3)
       set(batch_version_tmp "2_3")
     endif()
     if (NOT (version OR version2 OR version3) )
-      message (FATAL_ERROR "Invalid SLURM version, supported are: 2.2, 2.3 or 2.4")
+      message(FATAL_ERROR "Not sure to be compliant with your version of SLURM. Tested versions are 2.x, x<=6")
     endif()
 
     # we add compilation variable definitions only on required files
