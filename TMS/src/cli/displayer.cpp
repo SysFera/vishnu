@@ -5,6 +5,7 @@
 #include "displayer.hpp"
 #include "constants.hpp"
 #include "tmsUtils.hpp"
+#include <boost/format.hpp>
 
 using namespace std;
 using namespace vishnu;
@@ -626,12 +627,15 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 void
 printJobResultSummary(const TMS_Data::JobResult_ptr job)
 {
-  cout << (boost::filesystem::exists(job->getOutputDir()+"/ERROR")?
-             "\n\tFAILURE: yes "
-             "\n\tFAILURE DETAILS: " + vishnu::get_file_content(job->getOutputDir()+"/ERROR"):
-             "\n\tERROR: no");
-  cout << (boost::filesystem::exists(job->getOutputDir()+"/MISSINGFILES")?
-             "\n\tMISSING FILES: " + vishnu::get_file_content(job->getOutputDir()+"/MISSINGFILES") :
-             "\n\tMISSING FILES: no");
-  cout << "\n";
+  std::string errorFile = (boost::format("%1%/ERROR")%job->getOutputDir()).str();
+  std::string missingFile = (boost::format("%1%/MISSINGFILES")%job->getOutputDir()).str();
+
+  cout << (boost::filesystem::exists(errorFile) ?
+             (boost::format("\n\tFAILURE: yes "
+                            "\n\tFAILURE DETAILS: %1%") % vishnu::get_file_content(errorFile)).str()
+           : "\n\tERROR: no");
+  cout << (boost::filesystem::exists(missingFile)?
+             ((boost::format("\n\tMISSING FILES: %1%") % vishnu::get_file_content(missingFile))).str()
+           : "\n\tMISSING FILES: no");
+  cout << endl;
 }
