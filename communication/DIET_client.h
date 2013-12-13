@@ -12,6 +12,7 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include "sslhelpers.hpp"
+#include "Server.hpp"
 
 /**
  * \brief Separator for zmq communication
@@ -150,5 +151,21 @@ my_serialize(diet_profile_t* prof);
 int
 diet_initialize(const char* cfg, int argc, char** argv);
 
+/**
+ * \brief To ask something to the dispatcher and get the answer
+ * \param requestData The request for the dispatcher
+ * \param response The answer from the dispatcher
+ * \return 0 on success
+ */
+int
+communicate_dispatcher(const std::string& requestData, std::string& response);
+
+/**
+ * \brief Extract the servers from a serialized message list
+ * \param msg : The message
+ * \param res : vector of deserialized servers
+ */
+void
+extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res);
 
 #endif // __DIETMOCK__
