@@ -14,10 +14,7 @@ vishnu::ping(const std::string& server,
              std::string& result,
              const std::string& mid){
   PingerProxy proxy;
-  std::string tmp;
-  if (!mid.empty())
-    tmp = std::string("@")+mid;
-  result = proxy.ping(server, tmp);
+  result = proxy.ping(server, mid);
   return 0;
 }
 

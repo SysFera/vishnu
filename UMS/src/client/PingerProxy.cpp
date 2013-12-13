@@ -35,7 +35,10 @@ std::string
 PingerProxy::ping(const std::string& server, const std::string mid){
   std::string msg;
   diet_profile_t* profile = NULL;
-  profile = diet_profile_alloc(std::string("heartbeat")+server+mid,0,0,1);
+  std::string serviceName = "heartbeat"+server;
+  if (!mid.empty())
+    serviceName += std::string("@")+mid;
+  profile = diet_profile_alloc(serviceName,0,0,1);
   if(diet_call(profile)){
     raiseCommunicationMsgException("VISHNU call failure");
   }
@@ -60,8 +63,11 @@ PingerProxy::allPing(std::map<std::string, std::string>& result){
     if (diet_call_gen(profile, it->get()->getURI())){
       result.insert(std::pair<std::string, std::string>(it->get()->getURI(), "FAILURE"));
     } else {
-      result.insert(std::pair<std::string, std::string>(it->get()->getURI(), "SUCCESS"));
+      std::string tmp;
+      diet_string_get(profile, 1, tmp);
+      result.insert(std::pair<std::string, std::string>(it->get()->getURI(), tmp));
     }
+    diet_profile_free(profile);
   }
 }
 
