@@ -7,6 +7,7 @@
 #include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
 #include <exception>                    // for exception
 #include <iterator>                     // for back_insert_iterator, etc
+#include <string>
 #include <utility>                      // for pair
 
 #include "Worker.hpp"                   // for serverWorkerSockets
@@ -14,11 +15,20 @@
 #include "zmq.hpp"
 #include "SeDWorker.hpp"
 #include "VishnuException.hpp"
+#include "vishnu_version.hpp"
 
 
 int
 heartbeat(diet_profile_t* pb){
-  diet_string_set(pb, 1, "OK");
+  std::string serviceName = std::string(pb->name);
+  std::string msg;
+  std::string batch;
+  if (serviceName.find("tms") != std::string::npos){
+    batch = (boost::format("\n%1% %2%")%VISHNU_BATCH_SCHEDULER%VISHNU_BATCH_SCHEDULER_VERSION).str();
+  }
+  msg = (boost::format("%1% %2%")%VISHNU_VERSION%batch).str();
+
+  diet_string_set(pb, 1, msg);
   std::cout << "heartbeating " << std::endl;
   return 0;
 }
