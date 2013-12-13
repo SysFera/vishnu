@@ -54,13 +54,13 @@ displayJob(TMS_Data::Job& j){
   std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
 
   cout << " ------------------------ " << endl;
-  cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")"<< endl;
-  cout << " Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED") << endl;
-  cout << " User                 : " << j.getUserId() << endl;
-  cout << " Session              : " << j.getSessionId() << endl;
-  cout << " Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")" << endl;
-  cout << " Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-  cout << " Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
+  cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")";
+  cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
+  cout << "\n User                 : " << j.getUserId() << endl;
+  cout << "\n Session              : " << j.getSessionId() << endl;
+  cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
+  cout << "\n Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
+  cout << "\n Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
   cout << "\n Output dir (remote)  : " << j.getOutputDir();
 
   boost::posix_time::ptime pt;
@@ -69,9 +69,6 @@ displayJob(TMS_Data::Job& j){
     cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
   }
   cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-  cout << "\n User                 : " << j.getUserId();
-  cout << "\n Session              : " << j.getSessionId();
-  cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
   cout << "\n Job name             : " << j.getJobName();
   cout << "\n Job path             : " << j.getJobPath();
   cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
