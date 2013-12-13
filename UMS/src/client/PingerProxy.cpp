@@ -34,22 +34,30 @@ PingerProxy::getLongestService(std::vector<std::string>& list, std::string servi
 std::string
 PingerProxy::ping(const std::string& server, const std::string mid){
   std::string msg;
-  diet_profile_t* profile = NULL;
-  std::string serviceName = "heartbeat"+server;
-  if (!mid.empty())
-    serviceName += std::string("@")+mid;
-  profile = diet_profile_alloc(serviceName,0,0,1);
-  if(diet_call(profile)){
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (server.compare("dispatcher") == 0){
+    communicate_dispatcher("3", msg);
+  } else {
+    diet_profile_t* profile = NULL;
+    std::string serviceName = "heartbeat"+server;
+    if (!mid.empty())
+      serviceName += std::string("@")+mid;
+    profile = diet_profile_alloc(serviceName,0,0,1);
+    if(diet_call(profile)){
+      raiseCommunicationMsgException("VISHNU call failure");
+    }
+    diet_string_get(profile,1, msg);
   }
-  diet_string_get(profile,1, msg);
-
-  return std::string(msg);
+  return msg;
 }
 
 void
 PingerProxy::allPing(std::map<std::string, std::string>& result){
   std::string response;
+// Ping the dispatcher
+  communicate_dispatcher("3", response);
+  result.insert(std::pair<std::string, std::string>("dispatcher", response));
+
+// Get the list of the servers in the dispatcher
   communicate_dispatcher("2", response);
   std::vector<boost::shared_ptr<Server> > servers;
   extractServersFromMessage(response, servers);

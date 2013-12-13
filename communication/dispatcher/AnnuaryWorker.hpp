@@ -12,6 +12,7 @@
 #include "UserException.hpp"
 #include "Annuary.hpp"
 #include "utilVishnu.hpp"
+#include "vishnu_version.hpp"
 
 /**
  * \class AnnuaryWorker
@@ -167,7 +168,7 @@ private:
     std::string result = "OK";
     boost::shared_ptr<Server> server;
     // Deserialize
-    if (mode != 2)
+    if (mode != 2 && mode != 3)
       server = Server::fromString(data.substr(1));
 
     if (mode == 1) {
@@ -188,6 +189,8 @@ private:
 	result += it->get()->toString() + std::string(VISHNU_COMM_SEPARATOR);
       }
       result += it->get()->toString();
+    } else if (mode == 3) { // Ping to get version
+      result = (boost::format("%1%")%VISHNU_VERSION).str();
     }
 
     return result;

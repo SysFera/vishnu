@@ -25,7 +25,7 @@ struct PingFunc{
     std::map<std::string,std::string>::iterator it;
     int res = vishnu::allPing(version);
     for (it = version.begin() ; it != version.end(); ++it)
-      std::cout << "Result : " << it->first << ", " << it->second;
+      std::cout << "Result : " << it->first << ", " << it->second << "\n";
     return res;
   }
 };
