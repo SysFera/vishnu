@@ -493,7 +493,10 @@ vishnu::updateMachine(const std::string& sessionKey,
                       const UMS_Data::Machine& machine)
 throw(UserException, SystemException) {
 
-  checkEntityStatus(machine.getStatus());
+  int status = machine.getStatus();
+  if (status != vishnu::STATUS_UNDEFINED) {
+    checkEntityStatus(status);
+  }
 
   SessionProxy sessionProxy(sessionKey);
   MachineProxy machineProxy(machine, sessionProxy);

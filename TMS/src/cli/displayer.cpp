@@ -21,10 +21,12 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
        << endl << setw(75) << setfill('-') << "" << setfill(' ') << endl ;
 
   for (size_t i = 0 ; i < listJobs.getResults().size() ; i++) {
-    cout << setw(10) << left << (" " + listJobs.getResults().get(i)->getJobId()) ;
-    cout << " | " << listJobs.getResults().get(i)->getOutputDir() << endl;
+    JobResult* job = listJobs.getResults().get(i);
+    cout << setw(10) << left << (" " +job->getJobId()) ;
+    cout << " | " <<job->getOutputDir();
+    printJobResultSummary(job);
   }
-  cout << "Number of downloaded jobs : " << listJobs.getNbJobs() << endl;
+  cout << "\nNumber of downloaded jobs : " << listJobs.getNbJobs() << endl;
 }
 
 /**
@@ -33,11 +35,12 @@ displayAllJobOutput(TMS_Data::ListJobResults& listJobs) {
  */
 void
 displayJobOutput(TMS_Data::JobResult_ptr j){
-  cout << " ----------------------------------------------------------------" << endl;
-  cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files" << endl;
-  cout << " ----------------------------------------------------------------" << endl;
-  cout << setw(10) << left << (" " + j->getJobId()) << " | " << j->getOutputDir() << endl;
-  cout << endl;
+  cout << " ----------------------------------------------------------------\n";
+  cout << setw(10) << left << " Job ID" << " |  Location of Downloaded Files\n";
+  cout << " ----------------------------------------------------------------\n";
+  cout << setw(10) << left << (" " + j->getJobId()) << " | " << j->getOutputDir();
+  printJobResultSummary(j);
+
 }
 
 /**
@@ -613,4 +616,22 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
   os << "The number of jobs in queue is: " << listProgress.getNbJobs() << endl;
 
   return os;
+}
+
+
+/**
+ * @brief printJobResultSummary
+ * @param job
+ */
+void
+printJobResultSummary(const TMS_Data::JobResult_ptr job)
+{
+  cout << (boost::filesystem::exists(job->getOutputDir()+"/ERROR")?
+             "\n\tFAILURE: yes "
+             "\n\tFAILURE DETAILS: " + vishnu::get_file_content(job->getOutputDir()+"/ERROR"):
+             "\n\tERROR: no");
+  cout << (boost::filesystem::exists(job->getOutputDir()+"/MISSINGFILES")?
+             "\n\tMISSING FILES: " + vishnu::get_file_content(job->getOutputDir()+"/MISSINGFILES") :
+             "\n\tMISSING FILES: no");
+  cout << "\n";
 }

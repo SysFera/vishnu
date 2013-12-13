@@ -105,3 +105,10 @@ operator<<(std::ostream& os, TMS_Data::ListJobs& listJobs);
  */
 std::ostream&
 operator<<(std::ostream& os, TMS_Data::ListProgression& listProgress);
+
+/**
+ * @brief printJobResultSummary
+ * @param job
+ */
+void
+printJobResultSummary(const TMS_Data::JobResult_ptr job);
