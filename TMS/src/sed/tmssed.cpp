@@ -192,7 +192,7 @@ int main(int argc, char* argv[], char* envp[]) {
       if (!res) {
         initSeD(TMSTYPE, *config, uri, server);
       } else {
-        std::cerr << "There was a problem during services initialization\n";
+        std::cerr << "[TMSSED] [ERROR] Initialization failed.\n";
         exit(1);
       }
 

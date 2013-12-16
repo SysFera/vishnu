@@ -303,9 +303,7 @@ if (COMPILE_SERVERS)
     vishnu-core
     ${LIBCRYPT_LIB}
     vishnu-core-server
-    vishnu-ums-server
     vishnu-tms-server
-    vishnu-tms-client
     ${LDAP_LIBRARIES}
     emf4cpp-vishnu
     ${ZMQ_LIBRARIES}
