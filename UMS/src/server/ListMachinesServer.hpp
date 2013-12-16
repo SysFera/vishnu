@@ -64,7 +64,9 @@ public:
                                                     " WHERE machine.nummachineid = description.machine_nummachineid"
                                                     " AND account.machine_nummachineid = machine.nummachineid "
                                                     " AND account.users_numuserid = users.numuserid "
-                                                    " AND machine.status != %1%")%vishnu::STATUS_DELETED).str();
+                                                    " AND machine.status != %1%"
+                                                    " AND account.status != %1%"
+                                                    " AND users.status != %1%")%vishnu::STATUS_DELETED).str();
     std::string sqlListofMachinesIntial =  sqlRequest;
     size_t userIdSize = options->getUserId().size();
     size_t machineIdSize = options->getMachineId().size();
