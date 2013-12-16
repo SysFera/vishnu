@@ -204,7 +204,7 @@ public:
         " AND job.status > 0 ";
 
     if(mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0) {
-      sqlListOfJobs.append(" and job.submitMachineId='"+mmachineId+"'");
+      sqlListOfJobs.append(" and job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'");
     }
 
     bool allOptionsAreNotSet = (mparameters->getNbCpu()<=0);

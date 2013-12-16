@@ -69,8 +69,8 @@ JobOutputServer::getJobOutput() {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.jobId='"+mjobResult.getJobId()+"' "
-                           "  AND job.submitMachineId='"+mmachineId+"'" ;
+                           "  AND job.jobId='"+mdatabaseVishnu->escapeData(mjobResult.getJobId())+"' "
+                           "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -159,8 +159,8 @@ JobOutputServer::getCompletedJobsOutput() {
   std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status, submitDate, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.owner='"+acLogin+"'"
-                           "  AND job.submitMachineId='"+mmachineId+"'"
+                           "  AND job.owner='"+mdatabaseVishnu->escapeData(acLogin)+"'"
+                           "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'"
                            "  AND job.status=5" ;
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -206,7 +206,7 @@ JobOutputServer::getCompletedJobsOutput() {
       std::string query = (boost::format("UPDATE job SET status=%1%"
                                          " WHERE jobId='%2%';")
                            %vishnu::convertToString(vishnu::STATE_DOWNLOADED)
-                           %jobId).str();
+                           %mdatabaseVishnu->escapeData(jobId)).str();
       mdatabaseVishnu->process(query);
     }
 

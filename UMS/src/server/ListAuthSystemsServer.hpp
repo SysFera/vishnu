@@ -75,7 +75,7 @@ public:
         if(userServer.isAdmin()) {
           checkUserId(userId);
           sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+userId+"'"
+                            "authaccount where userid='"+mdatabaseVishnu->escapeData(userId)+"'"
                             "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                             );
         }//End If the user is an admin
@@ -97,7 +97,7 @@ public:
         //If the option userId has not
         if ((userId.size() == 0) && (authSystemId.size() == 0)) {
           sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+userServer.getData().getUserId()+"'"
+                            "authaccount where userid='"+mdatabaseVishnu->escapeData(userServer.getData().getUserId())+"'"
                             "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                             );
         }
@@ -105,7 +105,7 @@ public:
     }
     else {
       sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users, "
-                        "authaccount where userid='"+userServer.getData().getUserId()+"'"
+                        "authaccount where userid='"+mdatabaseVishnu->escapeData(userServer.getData().getUserId())+"'"
                         "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                         );
     }

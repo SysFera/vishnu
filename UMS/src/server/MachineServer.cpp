@@ -66,18 +66,18 @@ MachineServer::add(int vishnuId) {
         mmachine->setMachineId(idMachineGenerated);
 
         //if the machineId does not exist
-        if (getAttribut("where machineid='"+mmachine->getMachineId()+"'","count(*)") == "1") {
+        if (getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"'","count(*)") == "1") {
           //To active the machine status
           mmachine->setStatus(vishnu::STATUS_ACTIVE);
 
           sqlUpdate+="name='"+mdatabaseVishnu->escapeData(mmachine->getName())+"',";
           sqlUpdate+="site='"+mdatabaseVishnu->escapeData(mmachine->getSite())+"',";
           sqlUpdate+="status="+convertToString(mmachine->getStatus());
-          sqlUpdate+=" where machineid='"+mmachine->getMachineId()+"';";
+          sqlUpdate+=" where machineid='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"';";
           mdatabaseVishnu->process(sqlUpdate);
 
           mdatabaseVishnu->process("insert into description (machine_nummachineid, lang, description) values ("
-                                   +getAttribut("where machineid='"+mmachine->getMachineId()+"'")
+                                   +getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"'")
                                    +",'"
                                    + mdatabaseVishnu->escapeData(mmachine->getLanguage())
                                    +"','"
@@ -128,31 +128,31 @@ MachineServer::update() {
 
       //if the machine to update exists
       std::string sqlcond = (boost::format("WHERE machineid = '%1%'"
-                                           " AND status != %2%")%mmachine->getMachineId() %vishnu::STATUS_DELETED).str();
+                                           " AND status != %2%")%mdatabaseVishnu->escapeData(mmachine->getMachineId()) %vishnu::STATUS_DELETED).str();
       if (!getAttribut(sqlcond, "nummachineid").empty()) {
 
         //if a new machine name has been defined
         if (!mmachine->getName().empty()) {
-          sqlCommand.append("UPDATE machine SET name='"+mmachine->getName()+"'\
-                            where machineId='"+mmachine->getMachineId()+"';");
+          sqlCommand.append("UPDATE machine SET name='"+mdatabaseVishnu->escapeData(mmachine->getName())+"'\
+                            where machineId='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"';");
         }
 
         //if a new site has been defined
         if (!mmachine->getSite().empty()) {
-          sqlCommand.append("UPDATE machine SET site='"+mmachine->getSite()+"'\
-                            where machineId='"+mmachine->getMachineId()+"';");
+          sqlCommand.append("UPDATE machine SET site='"+mdatabaseVishnu->escapeData(mmachine->getSite())+"'\
+                            where machineId='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"';");
         }
 
         //If a new status has been defined
         if (mmachine->getStatus() != vishnu::STATUS_UNDEFINED) {
           sqlCommand.append("UPDATE machine SET status="+convertToString(mmachine->getStatus())+
-                            " where machineId='"+mmachine->getMachineId()+"';");
+                            " where machineId='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"';");
         }
 
         //if a new language has been defined
         if (!mmachine->getLanguage().empty()) {
-          sqlCommand.append("UPDATE description SET lang='"+mmachine->getLanguage()+"'"
-                            " where machine_nummachineid='"+getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+          sqlCommand.append("UPDATE description SET lang='"+mdatabaseVishnu->escapeData(mmachine->getLanguage())+"'"
+                            " where machine_nummachineid='"+getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"'")+"';");
         }
 
         //if a new machine description has been defined
@@ -160,7 +160,7 @@ MachineServer::update() {
           sqlCommand.append("UPDATE description SET description='"
                             +mdatabaseVishnu->escapeData(mmachine->getMachineDescription())+"'"
                             " WHERE machine_nummachineid='"
-                            +getAttribut("where machineid='"+mmachine->getMachineId()+"'")+"';");
+                            +getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mmachine->getMachineId())+"'")+"';");
         }
 
         //If there is a change
@@ -200,7 +200,7 @@ MachineServer::deleteMachine() {
     std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_MACHINE);
     std::string sqlUpdate = (boost::format(req)
                              %vishnu::STATUS_DELETED
-                             %mmachine->getMachineId()
+                             %mdatabaseVishnu->escapeData(mmachine->getMachineId())
                              ).str();
 
     return mdatabaseVishnu->process(sqlUpdate.c_str());
@@ -245,7 +245,7 @@ MachineServer::getAttribut(std::string condition, std::string attrname) {
 std::string
 MachineServer::getMachineName() {
 
-  std::string  machineName = getAttribut("where machineid='"+getData()->getMachineId()+"'", "name");
+  std::string  machineName = getAttribut("where machineid='"+mdatabaseVishnu->escapeData(getData()->getMachineId())+"'", "name");
 
   return machineName;
 }
@@ -259,14 +259,14 @@ void MachineServer::checkMachine() {
   std::string sqlcond ("");
 
   sqlcond = (boost::format("WHERE machineid = '%1%'"
-                           " AND status != %2%")%mmachine->getMachineId() %vishnu::STATUS_DELETED).str();
+                           " AND status != %2%")%mdatabaseVishnu->escapeData(mmachine->getMachineId()) %vishnu::STATUS_DELETED).str();
   if (getAttribut(sqlcond, "nummachineid").empty()){
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,
                              (boost::format("No machine with this id (%1%)")%mmachine->getMachineId()).str());
   }
 
   sqlcond = (boost::format("WHERE machineid = '%1%'"
-                           " AND status = %2%")%mmachine->getMachineId() %vishnu::STATUS_LOCKED).str();
+                           " AND status = %2%")%mdatabaseVishnu->escapeData(mmachine->getMachineId()) %vishnu::STATUS_LOCKED).str();
   if(!getAttribut(sqlcond, "nummachineid").empty()) {
     throw UMSVishnuException(ERRCODE_MACHINE_LOCKED);
   }

@@ -44,12 +44,12 @@ LocalAccountServer::add() {
     if (userServer.getData().getUserId().compare(mlocalAccount->getUserId()) == 0 ||
         userServer.isAdmin()){
       //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
+      if (machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mlocalAccount->getMachineId())+"'"
                                     " and status=1").size() != 0) {
         //To get the database number id of the machine
-        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
+        numMachine = machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mlocalAccount->getMachineId())+"'");
         //To get the database number id of the user
-        std::string request = (boost::format("where userid='"+mlocalAccount->getUserId()+"' and status != %1%")%vishnu::STATUS_DELETED).str();
+        std::string request = (boost::format("where userid='"+mdatabaseVishnu->escapeData(mlocalAccount->getUserId())+"' and status != %1%")%vishnu::STATUS_DELETED).str();
         numUser = userServer.getAttribut(request);
 
         if (numUser.empty()) {
@@ -66,8 +66,8 @@ LocalAccountServer::add() {
                                                 "VALUES ('%1%', '%2%', '%3%', '%4%', %5%)")
                                   %numMachine
                                   %numUser
-                                  %mlocalAccount->getAcLogin()
-                                  %mlocalAccount->getHomeDirectory()
+                                  %mdatabaseVishnu->escapeData(mlocalAccount->getAcLogin())
+                                  %mdatabaseVishnu->escapeData(mlocalAccount->getHomeDirectory())
                                   %vishnu::STATUS_ACTIVE).str();
             mdatabaseVishnu->process(sqlCmd);
           } else {
@@ -115,15 +115,15 @@ LocalAccountServer::update() {
       // Check if if the machine exists and is not locked
       std::string sqlcond = (boost::format("WHERE machineid='%1%'"
                                            " AND status=%2%"
-                                           )%mlocalAccount->getMachineId() %vishnu::STATUS_ACTIVE).str();
+                                          )%mdatabaseVishnu->escapeData(mlocalAccount->getMachineId()) %vishnu::STATUS_ACTIVE).str();
       if (!(machineServer.getAttribut(sqlcond, "nummachineid").empty())) {
 
         // Get the database number id of the machine
-        sqlcond = (boost::format("WHERE machineid='%1%'")%mlocalAccount->getMachineId()).str();
+        sqlcond = (boost::format("WHERE machineid='%1%'")%mdatabaseVishnu->escapeData(mlocalAccount->getMachineId())).str();
         std::string numMachine = machineServer.getAttribut(sqlcond, "nummachineid");
 
         // Get the database number id of the user
-        sqlcond = (boost::format("WHERE userid='%1%'")%mlocalAccount->getUserId()).str();
+        sqlcond = (boost::format("WHERE userid='%1%'")%mdatabaseVishnu->escapeData(mlocalAccount->getUserId())).str();
         std::string  numUser = userServer.getAttribut(sqlcond, "numuserid");
 
         mmutex.lock();
@@ -132,14 +132,14 @@ LocalAccountServer::update() {
           std::string fields("");
           //if a new acLogin has been defined
           if (!mlocalAccount->getAcLogin().empty()) {
-            std::string curField = (boost::format("aclogin='%1%'")%mlocalAccount->getAcLogin()).str();
+            std::string curField = (boost::format("aclogin='%1%'")%mdatabaseVishnu->escapeData(mlocalAccount->getAcLogin())).str();
             fields += (fields.empty())? curField : ","+curField;
           }
 
 
           //if a new home directory has been defined
           if (!mlocalAccount->getHomeDirectory().empty()) {
-            std::string curField = (boost::format("home='%1%'")%mlocalAccount->getHomeDirectory()).str();
+            std::string curField = (boost::format("home='%1%'")%mdatabaseVishnu->escapeData(mlocalAccount->getHomeDirectory())).str();
             fields += (fields.empty())? curField : ","+curField;
           }
 
@@ -195,13 +195,13 @@ LocalAccountServer::deleteLocalAccount() {
         userServer.isAdmin()){
 
       //if the machine exists and it is not locked
-      if (machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'"
+      if (machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mlocalAccount->getMachineId())+"'"
                                     " and status=1").size() != 0) {
 
         //To get the database number id of the machine
-        numMachine = machineServer.getAttribut("where machineid='"+mlocalAccount->getMachineId()+"'");
+        numMachine = machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(mlocalAccount->getMachineId())+"'");
         //To get the database number id of the user
-        numUser = userServer.getAttribut("where userid='"+mlocalAccount->getUserId()+"'");
+        numUser = userServer.getAttribut("where userid='"+mdatabaseVishnu->escapeData(mlocalAccount->getUserId())+"'");
 
         //if the local account exists
         if (exist(numMachine, numUser)) {
@@ -294,7 +294,7 @@ LocalAccountServer::isLoginUsed(std::string numMachine, std::string acLogin) {
   std::string sqlcond = (boost::format("WHERE machine_nummachineid = %1%"
                                        " AND aclogin='%2%'"
                                        " AND status = %3%"
-                                       )%numMachine %acLogin %vishnu::STATUS_ACTIVE).str();
+                                      )%mdatabaseVishnu->escapeData(numMachine) %mdatabaseVishnu->escapeData(acLogin) %vishnu::STATUS_ACTIVE).str();
 
   std::string numUser = getAttribut(sqlcond, "numaccountid");
   return !(numUser.empty());

@@ -75,7 +75,7 @@ int JobServer::submitJob(std::string& scriptContent,
   try {
     msessionServer.check(); //To check the sessionKey
     std::string sessionKey = (msessionServer.getData()).getSessionKey();
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+sessionKey+"'", "numsessionid");
+    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(sessionKey)+"'", "numsessionid");
     mjob.setSessionId(sessionId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
@@ -274,21 +274,21 @@ int JobServer::cancelJob()
     sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                        " FROM job, vsession"
                        " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                       " AND jobId='"+mjob.getJobId()+"'";
+                       " AND jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
   } else {
     if(userServer.isAdmin()) {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                          " FROM job, vsession "
                          " WHERE vsession.numsessionid=job.vsession_numsessionid"
                          " AND status < 5"
-                         " AND submitMachineId='"+mmachineId+"'" ;
+                         " AND submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
     } else {
       sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
                          " FROM job, vsession"
                          " WHERE vsession.numsessionid=job.vsession_numsessionid"
                          " AND status < 5"
-                         " AND owner='"+acLogin+"'"
-                         " AND submitMachineId='"+mmachineId+"'" ;
+                         " AND owner='"+mdatabaseVishnu->escapeData(acLogin)+"'"
+                         " AND submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
     }
   }
 
@@ -349,7 +349,7 @@ int JobServer::cancelJob()
         std::string query = (boost::format("UPDATE job SET status=%1%"
                                            " WHERE jobId='%2%';")
                              %vishnu::convertToString(vishnu::STATE_CANCELLED)
-                             %jobId).str();
+                             %mdatabaseVishnu->escapeData(jobId)).str();
         mdatabaseVishnu->process(query.c_str());
       }
     }
@@ -382,8 +382,8 @@ TMS_Data::Job JobServer::getJobInfo() {
       " WHERE vsession.numsessionid=job.vsession_numsessionid "
       " AND vsession.users_numuserid=users.numuserid"
       " AND job.status >= 0"
-      " AND job.submitMachineId='"+mmachineId+"'"
-      " AND job.jobId='"+mjob.getJobId()+"'";
+      " AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'"
+      " AND job.jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -589,34 +589,34 @@ void JobServer::recordJob2db()
     throw TMSVishnuException(ERRCODE_AUTHENTERR, "Cannot record to database. Empty session id. Previous error: "+mjob.getErrorPath());
   }
   std::string sqlUpdate = "UPDATE job set ";
-  sqlUpdate+="vsession_numsessionid='"+mjob.getSessionId()+"', ";
-  sqlUpdate+="submitMachineId='"+mmachineId+"', ";
-  sqlUpdate+="submitMachineName='"+mjob.getSubmitMachineName()+"', ";
-  sqlUpdate+="batchJobId='"+mjob.getBatchJobId()+"', ";
+  sqlUpdate+="vsession_numsessionid='"+mdatabaseVishnu->escapeData(mjob.getSessionId())+"', ";
+  sqlUpdate+="submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"', ";
+  sqlUpdate+="submitMachineName='"+mdatabaseVishnu->escapeData(mjob.getSubmitMachineName())+"', ";
+  sqlUpdate+="batchJobId='"+mdatabaseVishnu->escapeData(mjob.getBatchJobId())+"', ";
   sqlUpdate+="batchType="+convertToString(mbatchType)+", ";
-  sqlUpdate+="jobName='"+mjob.getJobName()+"', ";
+  sqlUpdate+="jobName='"+mdatabaseVishnu->escapeData(mjob.getJobName())+"', ";
   sqlUpdate+="jobPath='"+mdatabaseVishnu->escapeData(mjob.getJobPath())+"', ";
   sqlUpdate+="outputPath='"+mdatabaseVishnu->escapeData(mjob.getOutputPath())+"',";
   sqlUpdate+="errorPath='"+mdatabaseVishnu->escapeData(mjob.getErrorPath())+"',";
   sqlUpdate+="scriptContent='job', ";
   sqlUpdate+="jobPrio="+convertToString(mjob.getJobPrio())+", ";
   sqlUpdate+="nbCpus="+convertToString(mjob.getNbCpus())+", ";
-  sqlUpdate+="jobWorkingDir='"+mjob.getJobWorkingDir()+"', ";
+  sqlUpdate+="jobWorkingDir='"+mdatabaseVishnu->escapeData(mjob.getJobWorkingDir())+"', ";
   sqlUpdate+="status="+convertToString(mjob.getStatus())+", ";
   sqlUpdate+="submitDate=CURRENT_TIMESTAMP, ";
-  sqlUpdate+="owner='"+mjob.getOwner()+"', ";
-  sqlUpdate+="jobQueue='"+mjob.getJobQueue()+"', ";
+  sqlUpdate+="owner='"+mdatabaseVishnu->escapeData(mjob.getOwner())+"', ";
+  sqlUpdate+="jobQueue='"+mdatabaseVishnu->escapeData(mjob.getJobQueue())+"', ";
   sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
-  sqlUpdate+="groupName='"+mjob.getGroupName()+"',";
+  sqlUpdate+="groupName='"+mdatabaseVishnu->escapeData(mjob.getGroupName())+"',";
   sqlUpdate+="jobDescription='"+mdatabaseVishnu->escapeData(mjob.getJobDescription())+"', ";
   sqlUpdate+="memLimit="+convertToString(mjob.getMemLimit())+", ";
   sqlUpdate+="nbNodes="+convertToString(mjob.getNbNodes())+", ";
-  sqlUpdate+="nbNodesAndCpuPerNode='"+mjob.getNbNodesAndCpuPerNode()+"', ";
-  sqlUpdate+="outputDir='"+mjob.getOutputDir()+"', ";
+  sqlUpdate+="nbNodesAndCpuPerNode='"+mdatabaseVishnu->escapeData(mjob.getNbNodesAndCpuPerNode())+"', ";
+  sqlUpdate+="outputDir='"+mdatabaseVishnu->escapeData(mjob.getOutputDir())+"', ";
   sqlUpdate+= mjob.getWorkId()? "workId="+convertToString(mjob.getWorkId())+", " : "";
-  sqlUpdate+="vmId='"+mjob.getVmId()+"', ";
-  sqlUpdate+="vmIp='"+mjob.getVmIp()+"' ";
-  sqlUpdate+="WHERE jobid='"+mjob.getJobId()+"';";
+  sqlUpdate+="vmId='"+mdatabaseVishnu->escapeData(mjob.getVmId())+"', ";
+  sqlUpdate+="vmIp='"+mdatabaseVishnu->escapeData(mjob.getVmIp())+"' ";
+  sqlUpdate+="WHERE jobid='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"';";
   mdatabaseVishnu->process(sqlUpdate);
 }
 

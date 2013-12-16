@@ -70,7 +70,7 @@ public:
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
 
-      sqlRequest.append(" and (sourceMachineId='"+options->getFromMachineId()+"'"+" or destinationMachineId='"+options->getFromMachineId()+"')");
+      sqlRequest.append(" and (sourceMachineId='"+mdatabaseVishnu->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabaseVishnu->escapeData(options->getFromMachineId())+"')");
 
       onlyProgressFile = false;
     }
@@ -202,7 +202,7 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
+    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabaseVishnu->escapeData(transferId)+"'";
     boost::scoped_ptr<DatabaseResult> transfer(mdatabaseVishnu->getResult(sqlTransferRequest.c_str()));
     if(transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;

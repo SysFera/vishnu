@@ -88,8 +88,8 @@ public:
                                             " AND authsystem.status!=%2%"
                                             " AND users.status!=%2%"
                                             " AND authaccount.status!=%2%"
-                                            )%authSystemId %vishnu::STATUS_DELETED).str();
-      sqlRequest.append(" AND userid IN ("+luserCmd+")");
+                                           )%mdatabaseVishnu->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
+      sqlRequest.append(" AND userid IN ("+mdatabaseVishnu->escapeData(luserCmd)+")");
     }
 
   }

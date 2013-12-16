@@ -30,15 +30,15 @@ using namespace boost::posix_time;
 bool
 vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
 
+  DbFactory factory;
+  Database *mdatabase;
+  mdatabase = factory.getDatabaseInstance();
   std::string req = (boost::format("SELECT machineid"
                                    " FROM process"
                                    " WHERE machineid='%1%'"
                                    " AND vishnuname='%2%'"
                                    " AND dietname='%3%'"
-                                   " AND pstatus<>%4%")%mid %type %urlsup %vishnu::STATUS_DELETED).str();
-  DbFactory factory;
-  Database *mdatabase;
-  mdatabase = factory.getDatabaseInstance();
+                                   " AND pstatus<>%4%")%mdatabase->escapeData(mid) %mdatabase->escapeData(type) %mdatabase->escapeData(urlsup) %vishnu::STATUS_DELETED).str();
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     if (result->getNbTuples() != 0) {
@@ -392,11 +392,11 @@ vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
     }
   }
 
+  DbFactory factory;
   std::string sqlReserve="UPDATE "+table+" ";
-  sqlReserve+="set "+idname+"='"+objectId+"' ";
+  sqlReserve+="set "+idname+"='"+factory.getDatabaseInstance()->escapeData(objectId)+"' ";
   sqlReserve+="where "+keyname+"="+convertToString(key)+";";
 
-  DbFactory factory;
   try {
     factory.getDatabaseInstance()->process(sqlReserve);
   } catch (exception const & e) {
@@ -409,10 +409,10 @@ bool
 vishnu::checkObjectId(std::string table,
                       std::string idname,
                       std::string objectId){
-  std::string request = "SELECT "+ idname + " FROM " + table + " WHERE " + idname + "='" + objectId +"';";
   DbFactory factory;
   Database *mdatabase;
   mdatabase = factory.getDatabaseInstance();
+  std::string request = "SELECT "+ idname + " FROM " + table + " WHERE " + idname + "='" + mdatabase->escapeData(objectId) +"';";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(request.c_str()));
     if (result->getNbTuples() != 0) {
@@ -454,12 +454,12 @@ void
 vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
   DbFactory factory;
   Database *databaseVishnu;
+  databaseVishnu = factory.getDatabaseInstance();
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+cptName+"+1");
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+databaseVishnu->escapeData(cptName)+"+1");
 
-  databaseVishnu = factory.getDatabaseInstance();
   databaseVishnu->process(sqlCommand.c_str(), transacId);
 
 }

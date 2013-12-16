@@ -78,11 +78,11 @@ public:
     mlistObject = ecoreFactory->createListProgression();
 
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-            " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mmachineId+"'";
+                             " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'";
 
     if(mparameters->getJobId().size()!=0) {
       std::string jobId = mparameters->getJobId();
-      sqlRequest.append(" and jobId='"+jobId+"'");
+      sqlRequest.append(" and jobId='"+mdatabaseVishnu->escapeData(jobId)+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
@@ -91,7 +91,7 @@ public:
       if(mparameters->getJobOwner().size()!=0) {
         acLogin = mparameters->getJobOwner();
       }
-      sqlRequest.append(" and owner='"+acLogin+"'");
+      sqlRequest.append(" and owner='"+mdatabaseVishnu->escapeData(acLogin)+"'");
     }
 
     sqlRequest.append("  and status < 5 order by jobId");

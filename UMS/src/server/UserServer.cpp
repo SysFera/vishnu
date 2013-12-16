@@ -87,7 +87,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
       // If there only one field reserved by getObjectId
       std::string sqlcond = (boost::format("WHERE userid = '%1%'"
                                            " AND status != %2%;"
-                                           )%user->getUserId()%convertToString(vishnu::STATUS_DELETED)).str();
+                               )%mdatabaseVishnu->escapeData(user->getUserId())%convertToString(vishnu::STATUS_DELETED)).str();
 
       if (getAttribut(sqlcond, "count(numuserid)") == "0") {
         //To active the user status
@@ -97,10 +97,10 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
         sqlUpdate+="firstname='"+mdatabaseVishnu->escapeData(user->getFirstname())+"', ";
         sqlUpdate+="lastname='"+mdatabaseVishnu->escapeData(user->getLastname())+"', ";
         sqlUpdate+="privilege="+convertToString(user->getPrivilege())+", ";
-        sqlUpdate+="email='"+user->getEmail()+"', ";
+        sqlUpdate+="email='"+mdatabaseVishnu->escapeData(user->getEmail())+"', ";
         sqlUpdate+="passwordstate=0, ";
         sqlUpdate+="status="+convertToString(user->getStatus())+" ";
-        sqlUpdate+="where userid='"+user->getUserId()+"';";
+        sqlUpdate+="where userid='"+mdatabaseVishnu->escapeData(user->getUserId())+"';";
         mdatabaseVishnu->process(sqlUpdate);
 
 
@@ -173,7 +173,7 @@ UserServer::update(UMS_Data::User *user) {
             closeAccount = true;
 
             //if the user is not already locked
-            if (convertToInt(getAttribut(" WHERE  userid='"+user->getUserId()+"'", "status")) == vishnu::STATUS_LOCKED) {
+            if (convertToInt(getAttribut(" WHERE  userid='"+mdatabaseVishnu->escapeData(user->getUserId())+"'", "status")) == vishnu::STATUS_LOCKED) {
               std::cerr << boost::format("[WARNING] User already locked %1%\n")%user->getUserId();
             }
           } else {
@@ -193,7 +193,7 @@ UserServer::update(UMS_Data::User *user) {
         if (updateDataProvided) {
           sqlquery.append((boost::format(" WHERE userid = '%1%'"
                                          " AND status != %2%;"
-                                         )%user->getUserId() %convertToString(vishnu::STATUS_DELETED)).str());
+                             )%mdatabaseVishnu->escapeData(user->getUserId()) %convertToString(vishnu::STATUS_DELETED)).str());
           mdatabaseVishnu->process(sqlquery);
 
           // close the current user sessions if the user account has been locked
@@ -206,7 +206,7 @@ UserServer::update(UMS_Data::User *user) {
                                       "   AND users.userid='%2%' AND sessioninfo.state='%3%');"
                                       )
                         %convertToString(vishnu::SESSION_CLOSED)
-                        %user->getUserId()
+                        %mdatabaseVishnu->escapeData(user->getUserId())
                         %convertToString(vishnu::SESSION_ACTIVE)).str();
             mdatabaseVishnu->process(sqlquery);
           }
@@ -236,7 +236,7 @@ UserServer::deleteUser(UMS_Data::User user) {
     std::string req = mdatabaseVishnu->getRequest(VR_UPDATE_ACCOUNT_WITH_USERS);
     std::string sqlUpdate = (boost::format(req)
                              %vishnu::STATUS_DELETED
-                             %user.getUserId()
+                             %mdatabaseVishnu->escapeData(user.getUserId())
                              ).str();
     return mdatabaseVishnu->process(sqlUpdate.c_str());
   }
@@ -257,7 +257,7 @@ UserServer::changePassword(std::string newPassword) {
   //If the user exist
   if (isAuthenticate(true)) {
     //If the identifiers used for the connection are a global VISHNU identifiers registered on UMS database
-    if (!getAttribut("where userid='"+muser.getUserId()+"'", "numuserid").empty()) {
+    if (!getAttribut("where userid='"+mdatabaseVishnu->escapeData(muser.getUserId())+"'", "numuserid").empty()) {
       //Encrypt the password with the global userId as a salt
       newPassword = vishnu::cryptPassword(muser.getUserId(), newPassword);
 
@@ -265,9 +265,9 @@ UserServer::changePassword(std::string newPassword) {
       sqlChangePwd = (boost::format("UPDATE users SET pwd='%1%'"
                                     " WHERE userid='%2%' AND pwd='%3%' AND status !=%4%;"
                                     )
-                      %newPassword
-                      %muser.getUserId()
-                      %muser.getPassword()
+                      %mdatabaseVishnu->escapeData(newPassword)
+                      %mdatabaseVishnu->escapeData(muser.getUserId())
+                      %mdatabaseVishnu->escapeData(muser.getPassword())
                       %convertToString(vishnu::STATUS_DELETED)
                       ).str();
 
@@ -275,8 +275,8 @@ UserServer::changePassword(std::string newPassword) {
       sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
                                      " WHERE userid='%1%' AND pwd='%2% AND status=%3%;"
                                      )
-                       %muser.getUserId()
-                       %newPassword
+                       %mdatabaseVishnu->escapeData(muser.getUserId())
+                       %mdatabaseVishnu->escapeData(newPassword)
                        %convertToString(vishnu::STATUS_DELETED)).str();
 
       mdatabaseVishnu->process(sqlChangePwd);
@@ -311,7 +311,7 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
     //if the user is an admin
     if (isAdmin()) {
       //if the user whose password will be reset exists
-      if (getAttribut("where userid='"+user.getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'").size() != 0) {
+      if (getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'").size() != 0) {
         //generation of a new password
         pwd = generatePassword(user.getUserId(), user.getUserId());
         user.setPassword(pwd.substr(0,PASSWORD_MAX_SIZE));
@@ -320,17 +320,17 @@ UserServer::resetPassword(UMS_Data::User& user, std::string sendmailScriptPath) 
         passwordCrypted = vishnu::cryptPassword(user.getUserId(), user.getPassword());
 
         //The sql code to reset the password
-        sqlResetPwd = "UPDATE users SET pwd='"+passwordCrypted+"' where "
-                      "userid='"+user.getUserId()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+        sqlResetPwd = "UPDATE users SET pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"' where "
+          "userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
         //sql code to update the passwordstate
         sqlUpdatePwdState = "UPDATE users SET passwordstate=0 "
-                            "where userid='"+user.getUserId()+"' and pwd='"+passwordCrypted+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
+          "where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' and pwd='"+mdatabaseVishnu->escapeData(passwordCrypted)+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"';";
         //To append the previous sql codes
         sqlResetPwd.append(sqlUpdatePwdState);
         //Execution of the sql code on the database
         mdatabaseVishnu->process(sqlResetPwd.c_str());
         //to get the email adress of the user
-        std::string email = getAttribut("where userid='"+user.getUserId()+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'", "email");
+        std::string email = getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getUserId())+"' AND status !='"+convertToString(vishnu::STATUS_DELETED)+"'", "email");
         user.setEmail(email);
         //Send email
         std::string emailBody = getMailContent(user, false);
@@ -380,14 +380,14 @@ UserServer::init(){
     //To get the users_numuserid by using the sessionServer
     numUser =
         msessionServer->getAttribut("where"
-                                    " sessionkey='"+msessionServer->getData().getSessionKey()+"'", "users_numuserid");
+                                    " sessionkey='"+mdatabaseVishnu->escapeData(msessionServer->getData().getSessionKey())+"'", "users_numuserid");
 
     //if the session key is found
     if (numUser.size() != 0) {
       //To get the session state
       sessionState =
           msessionServer->getAttribut("where"
-                                      " sessionkey='"+msessionServer->getData().getSessionKey()+"'", "state");
+                                      " sessionkey='"+mdatabaseVishnu->escapeData(msessionServer->getData().getSessionKey())+"'", "state");
 
       //if the session is active
       if (convertToInt(sessionState) == vishnu::STATUS_ACTIVE) {
@@ -417,7 +417,7 @@ UserServer::exist(bool flagForChangePwd) {
   std::string sqlcond = (boost::format("WHERE userid = '%1%'"
                                        " AND pwd='%2%'"
                                        " AND status != %3%"
-                                       )%muser.getUserId() %muser.getPassword() %vishnu::STATUS_DELETED).str();
+                           )%mdatabaseVishnu->escapeData(muser.getUserId()) %mdatabaseVishnu->escapeData(muser.getPassword()) %vishnu::STATUS_DELETED).str();
   if (!getAttribut(sqlcond, "numuserid").empty()) {
     CheckUserState(flagForChangePwd);
     return true;
@@ -451,8 +451,8 @@ UserServer::isAuthenticate(bool flagForChangePwd) {
 bool
 UserServer::isAdmin() {
 
-  return (convertToInt (getAttribut("where userid='"+muser.getUserId()+"'and "
-                                    "pwd='"+muser.getPassword()+"'", " privilege")) != 0);
+  return (convertToInt (getAttribut("where userid='"+mdatabaseVishnu->escapeData(muser.getUserId())+"'and "
+                                    "pwd='"+mdatabaseVishnu->escapeData(muser.getPassword())+"'", " privilege")) != 0);
 }
 
 /**
@@ -463,8 +463,8 @@ UserServer::isAdmin() {
  */
 bool
 UserServer::isAttributOk(std::string attributName, int valueOk) {
-  return (convertToInt(getAttribut("where userid='"+muser.getUserId()+"'and "
-                                   "pwd='"+muser.getPassword()+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'", attributName)) == valueOk);
+  return (convertToInt(getAttribut("where userid='"+mdatabaseVishnu->escapeData(muser.getUserId())+"'and "
+                                   "pwd='"+mdatabaseVishnu->escapeData(muser.getPassword())+"' AND status !='"+ convertToString(vishnu::STATUS_DELETED)+"'", attributName)) == valueOk);
 }
 
 /**
@@ -488,7 +488,7 @@ bool
 UserServer::existuserId(std::string userId) {
 
   std::string sqlcond = (boost::format("WHERE userid = '%1%'"
-                                       " AND status != %2%")%userId %vishnu::STATUS_DELETED).str();
+                                       " AND status != %2%")%mdatabaseVishnu->escapeData(userId) %vishnu::STATUS_DELETED).str();
   if (!getAttribut(sqlcond, "numuserid").empty())	{
     return true;
   }
@@ -638,11 +638,11 @@ UserServer::getUserAccountLogin(const std::string& machineId) {
   std::string numUser("");
   std::string acLogin("");
   sqlcond = (boost::format("WHERE machineid = '%1%'"
-                           " AND status = %2%")%localAccount.getData()->getMachineId() %vishnu::STATUS_ACTIVE).str();
+                           " AND status = %2%")%mdatabaseVishnu->escapeData(localAccount.getData()->getMachineId()) %vishnu::STATUS_ACTIVE).str();
   numMachine = machineServer.getAttribut(sqlcond, "nummachineid");
 
   sqlcond = (boost::format("WHERE userid = '%1%'"
-                           " AND status = %2%")%localAccount.getData()->getUserId() %vishnu::STATUS_ACTIVE).str();
+                           " AND status = %2%")%mdatabaseVishnu->escapeData(localAccount.getData()->getUserId()) %vishnu::STATUS_ACTIVE).str();
   numUser = getAttribut(sqlcond, "numuserid");
 
   if ((numMachine.size() > 0) && (numUser.size() > 0)) {
@@ -703,9 +703,9 @@ UserServer::getUserAccountProperty(const std::string& machineId, const std::stri
   MachineServer machineServer(machine);
 
   //To get the database number id of the machine
-  std::string numMachine = machineServer.getAttribut("where machineid='"+localAccount.getData()->getMachineId()+"'");
+  std::string numMachine = machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(localAccount.getData()->getMachineId())+"'");
   //To get the database number id of the user
-  std::string numUser = getAttribut("where userid='"+localAccount.getData()->getUserId()+"'");
+  std::string numUser = getAttribut("where userid='"+mdatabaseVishnu->escapeData(localAccount.getData()->getUserId())+"'");
 
   std::string value;
   if ((numMachine.size() > 0) && (numUser.size() > 0)) {

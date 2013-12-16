@@ -33,8 +33,8 @@ MachineClientServer::recordMachineClient() {
   //If the machine is not on the database
   if (!exist()) {
     std::string sqlCmd = std::string("insert into clmachine (sshkey, name) values ('");
-    sqlCmd.append(mmachineSSHKey+"','");
-    sqlCmd.append(mhostname+"')");
+    sqlCmd.append(mdatabaseVishnu->escapeData(mmachineSSHKey)+"','");
+    sqlCmd.append(mdatabaseVishnu->escapeData(mhostname)+"')");
 
     mdatabaseVishnu->process(sqlCmd.c_str());
 
@@ -52,8 +52,8 @@ std::string
 MachineClientServer::getId() {
 
   std::string sqlCommand("SELECT numclmachineid FROM clmachine where sshkey='");
-  sqlCommand.append(mmachineSSHKey+ "' and name='");
-  sqlCommand.append(mhostname+"'");
+  sqlCommand.append(mdatabaseVishnu->escapeData(mmachineSSHKey)+ "' and name='");
+  sqlCommand.append(mdatabaseVishnu->escapeData(mhostname)+"'");
 
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
