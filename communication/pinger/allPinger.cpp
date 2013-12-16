@@ -11,19 +11,6 @@
 
 #define PING_TIMEOUT 10
 
-void
-extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res){
-  using boost::algorithm::split_regex;
-  std::vector<std::string> vecString;
-  split_regex(vecString, msg, boost::regex(VISHNU_COMM_REGEX));
-  std::vector<std::string>::iterator it;
-  for (it = vecString.begin() ; it != vecString.end() ; ++it){
-    // URI is the key
-    if ( (*it).size() > 0){
-      res.push_back(Server::fromString(*it));
-    }
-  }
-}
 
 // Looking the service whose name starts by "service" and that is the longest
 std::string
@@ -31,7 +18,7 @@ getLongestService(std::vector<std::string>& list, std::string service){
   std::string res = "";
   std::vector<std::string>::iterator it;
   for (it = list.begin() ; it != list.end() ; ++it){
-    if (it->find(service) == 0 && 
+    if (it->find(service) == 0 &&
 	it->size() > res.size()){
       res = *it;
     }
@@ -39,7 +26,7 @@ getLongestService(std::vector<std::string>& list, std::string service){
   return res;
 }
 
-int 
+int
 main(int argc, char** argv){
   if (argc<2){
     std::cout << "usage : " << argv[0] << " <confFile> " << std::endl;
@@ -81,7 +68,7 @@ main(int argc, char** argv){
     if (diet_call_gen(profile, it->get()->getURI())){
       std::cout << "[ERROR] Failed to ping he may be down or unreachable \n";
     } else {
-      std::cout << "[SUCCESS] server answered \n";      
+      std::cout << "[SUCCESS] server answered \n";
     }
   }
 }
