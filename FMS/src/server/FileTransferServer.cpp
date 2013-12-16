@@ -44,7 +44,7 @@ FileTransferServer::getDatabaseInstance() {
 
 void
 FileTransferServer::checkTransferId(std::string transferId) {
-  std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+transferId+"'";
+  std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+FileTransferServer::getDatabaseInstance()->escapeData(transferId)+"'";
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
   if (transfer->getNbTuples()==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
@@ -58,7 +58,7 @@ FileTransferServer::addOptionRequest(const std::string& name,
                                      const std::string& value,
                                      std::string& request) {
   request.append(" and "+name+"=");
-  request.append("'"+value+"'");
+  request.append("'"+FileTransferServer::getDatabaseInstance()->escapeData(value)+"'");
 }
 
 
@@ -69,7 +69,7 @@ FileTransferServer::addOptionRequest(const std::string& name,
  */
 void
 FileTransferServer::checkUserId(std::string userId) {
-  std::string sqlUserRequest = "SELECT userid from users where userid='"+userId+"'";
+  std::string sqlUserRequest = "SELECT userid from users where userid='"+FileTransferServer::getDatabaseInstance()->escapeData(userId)+"'";
   boost::scoped_ptr<DatabaseResult> user(FileTransferServer::getDatabaseInstance()->getResult(sqlUserRequest.c_str()));
   if (user->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
@@ -108,11 +108,11 @@ FileTransferServer::getUserInfo(std::string& clientMachineName,
                                 std::string& userId) {
   std::vector<std::string> result;
   std::vector<std::string>::const_iterator iter;
-  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+  std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
 
   std::string sqlTransferRequest="SELECT name, userid,vsessionid from clmachine,users,vsession where vsession.clmachine_numclmachineid=clmachine.numclmachineid  "
                                  " and vsession.users_numuserid=users.numuserid and "
-                                 "vsessionid='"+ sessionId+"'";
+                                 "vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
 
   boost::scoped_ptr<DatabaseResult> transfer(FileTransferServer::getDatabaseInstance()->getResult(sqlTransferRequest.c_str()));
 
@@ -148,14 +148,14 @@ FileTransferServer::logIntoDatabase(int processId,
 
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-  std::string numsession = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "numsessionid");
+  std::string numsession = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "numsessionid");
 
   Database* db = FileTransferServer::getDatabaseInstance();
   std::string sqlUpdate="UPDATE filetransfer set ";
   sqlUpdate+="vsession_numsessionid=" + numsession + ",";
-  sqlUpdate+="userId='" + mfileTransfer.getUserId() + "',";
-  sqlUpdate+="clientMachineId='" + mfileTransfer.getClientMachineId() + "',";
-  sqlUpdate+="sourceMachineId='" + mfileTransfer.getSourceMachineId() + "',";
+  sqlUpdate+="userId='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getUserId()) + "',";
+  sqlUpdate+="clientMachineId='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getClientMachineId()) + "',";
+  sqlUpdate+="sourceMachineId='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getSourceMachineId()) + "',";
   sqlUpdate+="destinationMachineId='" + db->escapeData(mfileTransfer.getDestinationMachineId()) + "',";
   sqlUpdate+="sourceFilePath='" + db->escapeData(mfileTransfer.getSourceFilePath()) + "',";
   sqlUpdate+="destinationFilePath='" + db->escapeData(mfileTransfer.getDestinationFilePath()) + "',";
@@ -165,7 +165,7 @@ FileTransferServer::logIntoDatabase(int processId,
   sqlUpdate+="processid=" + vishnu::convertToString(processId) + ",";
   sqlUpdate+="errorMsg='" + errorMsgCleaned + "',";
   sqlUpdate+="startTime=CURRENT_TIMESTAMP ";
-  sqlUpdate+="WHERE transferid='" + mfileTransfer.getTransferId() + "';";
+  sqlUpdate+="WHERE transferid='" + FileTransferServer::getDatabaseInstance()->escapeData(mfileTransfer.getTransferId()) + "';";
 
 
   db->process(sqlUpdate);
@@ -199,11 +199,11 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   FMS_Data::CpFileOptions newOptions (options);
   int timeout(0);
   if (options.getTrCommand() == 2) {
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
 
     std::string query="SELECT users.numuserid,users_numuserid,vsessionid from users,vsession "
                            " WHERE vsession.users_numuserid=users.numuserid "
-                           "  AND vsessionid='"+ sessionId+"'";
+                           "  AND vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
 
     boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(query.c_str()));
 
@@ -339,7 +339,7 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
                                  const std::string& errorMsg) {
   std::string errorMsgCleaned=FileTransferServer::filterString(errorMsg);
 
-  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+vishnu::convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+transferId+"'"
+  std::string sqlUpdateRequest = "UPDATE filetransfer SET status="+vishnu::convertToString(status)+", errorMsg='"+errorMsgCleaned+"'"+ " where transferid='"+FileTransferServer::getDatabaseInstance()->escapeData(transferId)+"'"
                                  + " and status<>2";
   FileTransferServer::getDatabaseInstance()->process(sqlUpdateRequest.c_str());
 }
@@ -347,7 +347,7 @@ FileTransferServer::updateStatus(const FMS_Data::Status& status,
 // get error message from database
 string
 FileTransferServer::getErrorFromDatabase(const std::string& transferid) {
-  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ transferid +"'";
+  std::string sqlCommand = "SELECT errormsg from filetransfer where transferid='"+ FileTransferServer::getDatabaseInstance()->escapeData(transferid) +"'";
 
   boost::scoped_ptr<DatabaseResult> result(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
 
@@ -480,7 +480,7 @@ FileTransferServer::processOptions(const FMS_Data::StopTransferOptions& options,
   //To check if the fromMachineId is defined
   if (machineName.size() != 0) {
 
-    sqlRequest.append(" and (sourceMachineId='"+machineName+"'"+" or destinationMachineId='"+machineName+"')");
+    sqlRequest.append(" and (sourceMachineId='"+FileTransferServer::getDatabaseInstance()->escapeData(machineName)+"'"+" or destinationMachineId='"+FileTransferServer::getDatabaseInstance()->escapeData(machineName)+"')");
   }
 
   //Creation of the object user
@@ -571,10 +571,10 @@ FileTransferServer::stopThread(const std::string& transferid,const int& pid) {
 
     // get the user responsible for the stop request
 
-    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+(msessionServer.getData()).getSessionKey()+"'", "vsessionid");
+    std::string sessionId = msessionServer.getAttribut("where sessionkey='"+FileTransferServer::getDatabaseInstance()->escapeData((msessionServer.getData()).getSessionKey())+"'", "vsessionid");
 
     std::string sqlCommand="SELECT userid,vsessionid from users,vsession where vsession.users_numuserid=users.numuserid and "
-                           "vsessionid='"+ sessionId+"'";
+                           "vsessionid='"+ FileTransferServer::getDatabaseInstance()->escapeData(sessionId)+"'";
 
     boost::scoped_ptr<DatabaseResult> dbResult(FileTransferServer::getDatabaseInstance()->getResult(sqlCommand.c_str()));
 
