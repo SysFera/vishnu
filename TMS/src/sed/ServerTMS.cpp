@@ -124,6 +124,7 @@ ServerTMS::init(int& vishnuId,
                 BatchType batchType,
                 const ExecConfiguration_Ptr sedConfig) {
 
+  int errorCode = 0;
   setenv("VISHNU_DEBUG_LEVEL", vishnu::convertToString(mdebugLevel).c_str(), 0);
 
   //set the machineId
@@ -204,11 +205,11 @@ ServerTMS::init(int& vishnuId,
 
   } catch (VishnuException& e) {
     std::clog << "[TMS][ERROR] " << e.what() << " \n";
-    exit(0);
+   errorCode = 1;
   }
 
   initMap(machineId);
-  return 0;
+  return errorCode;
 }
 
 
