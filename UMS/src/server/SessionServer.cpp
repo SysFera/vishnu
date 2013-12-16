@@ -61,7 +61,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
       // if the user is admin
       if (user.isAdmin()) {
         numSubstituteUserId = user.getAttribut("where "
-                                               "userid='"+connectOpt->getSubstituteUserId()+"'");
+                                               "userid='"+mdatabaseVishnu->escapeData(connectOpt->getSubstituteUserId())+"'");
         //If the user to substitute exist
         if (user.existuserId(connectOpt->getSubstituteUserId())) {
           numUserIdToconnect = numSubstituteUserId;
@@ -80,8 +80,8 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
 
     //if there is not a numSubstituteUserId
     if (numUserIdToconnect.size() == 0) {
-      numUserIdToconnect = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-                                            " and pwd='"+user.getData().getPassword()+"'");
+      numUserIdToconnect = user.getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getData().getUserId())+"'"
+                                            " and pwd='"+mdatabaseVishnu->escapeData(user.getData().getPassword())+"'");
       msession.setUserId(user.getData().getUserId());
     } //END if There is not a numSubstituteUserId
 
@@ -127,8 +127,8 @@ SessionServer::reconnect(UserServer user, MachineClientServer host,
           existSessionKey = getSessionkey("", "", true);
         } //END if user is an admin
         else {
-          existSessionKey = getSessionkey(host.getId(), user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-                                                                         " and pwd='"+user.getData().getPassword()+"'"));
+          existSessionKey = getSessionkey(host.getId(), user.getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getData().getUserId())+"'"
+                                                                         " and pwd='"+mdatabaseVishnu->escapeData(user.getData().getPassword())+"'"));
         }
         //if there is no session key with the previous parameters
         if (existSessionKey == -1) {
@@ -175,13 +175,13 @@ SessionServer::close() {
       if (!commanderServer.isRunning()) {
         mdatabaseVishnu->process((boost::format("UPDATE vsession"
                                                 " SET state=0"
-                                                " WHERE sessionkey='%1%';")%msession.getSessionKey()).str());
+                                                " WHERE sessionkey='%1%';")%mdatabaseVishnu->escapeData(msession.getSessionKey())).str());
         mdatabaseVishnu->process((boost::format("UPDATE vsession"
                                                 " SET closure=CURRENT_TIMESTAMP"
-                                                " WHERE sessionkey='%1%';")%msession.getSessionKey()).str());
+                                                " WHERE sessionkey='%1%';")%mdatabaseVishnu->escapeData(msession.getSessionKey())).str());
       } else {
         //To get the close policy associated to the session
-        closePolicyStr = (boost::format(" WHERE sessionkey='%1%';")%msession.getSessionKey()).str();
+        closePolicyStr = (boost::format(" WHERE sessionkey='%1%';")%mdatabaseVishnu->escapeData(msession.getSessionKey())).str();
         getAttribut(closePolicyStr, "closepolicy");
         //If the session close policy is CLOSE_ON_DISCONNECT
         if (convertToInt(closePolicyStr) == 2) {
@@ -234,7 +234,7 @@ int
 SessionServer::saveConnection() {
 
   std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP"
-                           " WHERE sessionkey='"+msession.getSessionKey()+"'";
+    " WHERE sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"'";
 
   mdatabaseVishnu->process(sqlCommand.c_str());
   return 0;
@@ -283,7 +283,7 @@ SessionServer::check() {
                                         " FROM users, vsession "
                                         " WHERE users.numuserid = vsession.users_numuserid"
                                         " AND vsession.sessionkey='%1%'"
-                                        " AND vsession.state<>%2%")%msession.getSessionKey()%vishnu::STATUS_DELETED).str();
+                                        " AND vsession.state<>%2%")%mdatabaseVishnu->escapeData(msession.getSessionKey())%vishnu::STATUS_DELETED).str();
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlQuery));
 
   //If the session key exists
@@ -402,13 +402,13 @@ SessionServer::recordSessionServer(std::string idmachine, std::string iduser) {
                           "(vsessionid, clmachine_numclmachineid, users_numuserid, lastconnect, "
                           "creation, sessionKey, state, closepolicy, timeout, authid) values ";
 
-  std::string values = std::string("('" +msession.getSessionId()+"',"+idmachine+","+iduser+","
-                                   "CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+msession.getSessionKey()+"',");
+  std::string values = std::string("('" +mdatabaseVishnu->escapeData(msession.getSessionId())+"',"+idmachine+","+iduser+","
+                                   "CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, '"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"',");
 
   values.append(convertToString(msession.getStatus())+",");
   values.append(convertToString(msession.getClosePolicy())+",");
   values.append(convertToString(msession.getTimeout())+",'");
-  values.append(msession.getAuthenId()+"')");
+  values.append(mdatabaseVishnu->escapeData(msession.getAuthenId())+"')");
 
   sqlInsert.append(values);
   mdatabaseVishnu->process(sqlInsert.c_str());
@@ -444,10 +444,10 @@ SessionServer::getState(bool flagSessionId) {
 
 
   if (flagSessionId) {
-    sessionState = getAttribut("where vsessionid='"+msession.getSessionId()+"'","state");
+    sessionState = getAttribut("where vsessionid='"+mdatabaseVishnu->escapeData(msession.getSessionId())+"'","state");
   }
   else {
-    sessionState = getAttribut("where sessionkey='"+msession.getSessionKey()+"'","state");
+    sessionState = getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"'","state");
   }
 
   if (sessionState.size() != 0) {
@@ -473,16 +473,16 @@ SessionServer::getSessionkey(std::string idmachine, std::string iduser, bool fla
 
   //if the user is not an admin, the machine and the userid are checked
   if (!flagAdmin) {
-    key = getAttribut("where vsessionid='"+msession.getSessionId()+"' "
+    key = getAttribut("where vsessionid='"+mdatabaseVishnu->escapeData(msession.getSessionId())+"' "
                       "and clmachine_numclmachineid="+idmachine+" and users_numuserid="+iduser);
   }
   else {
-    key = getAttribut("where vsessionid='"+msession.getSessionId()+"'");
+    key = getAttribut("where vsessionid='"+mdatabaseVishnu->escapeData(msession.getSessionId())+"'");
   }
   if (key.size() != 0) {
     msession.setSessionKey(key);
     //To get the close policy associated to the session
-    closePolicyStr =  getAttribut("where vsessionid='"+msession.getSessionId()+"'", "closepolicy");
+    closePolicyStr =  getAttribut("where vsessionid='"+mdatabaseVishnu->escapeData(msession.getSessionId())+"'", "closepolicy");
     msession.setClosePolicy(convertToInt(closePolicyStr));
     return 0;
   }
@@ -547,18 +547,18 @@ SessionServer::disconnetToTimeout(UserServer user) {
 
   //To change the session close policy on CLOSE_ON_TIMEOUT on the database
   mdatabaseVishnu->process("UPDATE vsession SET closepolicy=1"
-                           " WHERE sessionkey='"+msession.getSessionKey()+"';");
+                           " WHERE sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"';");
 
   //To change the session close policy on CLOSE_ON_TIMEOUT on the msession object
   msession.setClosePolicy(1);
 
-  numuserId = user.getAttribut("where userid='"+user.getData().getUserId()+"'"
-                               " and pwd='"+user.getData().getPassword()+"'");
+  numuserId = user.getAttribut("where userid='"+mdatabaseVishnu->escapeData(user.getData().getUserId())+"'"
+                               " and pwd='"+mdatabaseVishnu->escapeData(user.getData().getPassword())+"'");
 
   //To get the timeout
   msession.setTimeout(optionValueServer.getOptionValueForUser(numuserId, TIMEOUT_OPT));
   mdatabaseVishnu->process("UPDATE vsession SET timeout="+convertToString(msession.getTimeout())+
-                           " WHERE sessionkey='"+msession.getSessionKey()+"';");
+                           " WHERE sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"';");
 
   return 0;
 }

@@ -32,7 +32,7 @@ UMSAuthenticator::authenticate(UMS_Data::User& user) {
                                           " WHERE userid='%1%'"
                                           " AND pwd='%2%'"
                                           " AND users.status<>%3%"
-                                          )%user.getUserId() %user.getPassword() %vishnu::STATUS_DELETED).str();
+                              )%mdatabaseVishnu->escapeData(user.getUserId()) %mdatabaseVishnu->escapeData(user.getPassword()) %vishnu::STATUS_DELETED).str();
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getFirstElement().size() != 0);
 }

@@ -27,7 +27,7 @@ ObjectIdServer::setformat(std::string fmt, std::string entry){
   if (fmt.find_first_of('@')!=std::string::npos) {
     throw UserException(10, "Invalid format, it cannot contain the @ character. ");
   }
-  std::string request = "update  vishnu set  formatid"+entry+" ='"+fmt+"' where  vishnuid ='";
+  std::string request = "update  vishnu set  formatid"+entry+" ='"+mdatabase->escapeData(fmt)+"' where  vishnuid ='";
   request += vishnu::convertToString(mvishnuId);
   request += "'";
   try{

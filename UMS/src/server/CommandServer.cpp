@@ -86,7 +86,7 @@ CommandServer::isRunning() {
                          "and vsession_numsessionid=");
 
   sqlCommand.append(msessionServer.getAttribut("WHERE "
-                                               "sessionkey='"+msessionServer.getData().getSessionKey()+"'", "numsessionid"));
+                                               "sessionkey='"+mdatabaseVishnu->escapeData(msessionServer.getData().getSessionKey())+"'", "numsessionid"));
 
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
   return (result->getNbTuples() != 0);

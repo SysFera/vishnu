@@ -49,15 +49,15 @@ OptionValueServer::configureOption(bool defaultOptions) {
   //if the user exists
   if (userServer.exist()) {
     //if the option exists
-    if (getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true).size() != 0) {
+    if (getAttribut("where description='"+mdatabaseVishnu->escapeData(moptionValue->getOptionName())+"'", "numoptionid", true).size() != 0) {
       //if the value of this option is correct
       if (isCorrectValue()) {
         //if the default table is used
         if (defaultOptions) {
           //if the user is an admin
           if (userServer.isAdmin()){
-            sqlCommand = "UPDATE optionu set defaultvalue="+moptionValue->getValue()+"\
-            where description='"+moptionValue->getOptionName()+"'";
+            sqlCommand = "UPDATE optionu set defaultvalue="+mdatabaseVishnu->escapeData(moptionValue->getValue())+"\
+            where description='"+mdatabaseVishnu->escapeData(moptionValue->getOptionName())+"'";
             mdatabaseVishnu->process(sqlCommand.c_str());
           } //END if the user is an admin
           else {
@@ -68,11 +68,11 @@ OptionValueServer::configureOption(bool defaultOptions) {
         else {
           //To get the database number of the userid
           numuserid = userServer.getAttribut("where"
-          " userid='"+userServer.getData().getUserId()+"'and pwd='"+userServer.getData().getPassword()+"'");
+                                             " userid='"+mdatabaseVishnu->escapeData(userServer.getData().getUserId())+"'and pwd='"+mdatabaseVishnu->escapeData(userServer.getData().getPassword())+"'");
 
           //To get the database number of the default option
           numoptionid = getAttribut("where "
-          "description='"+moptionValue->getOptionName()+"'", "numoptionid", true);
+                                    "description='"+mdatabaseVishnu->escapeData(moptionValue->getOptionName())+"'", "numoptionid", true);
 
           if (numoptionid.empty()) {
             UMSVishnuException e (ERRCODE_UNKNOWN_OPTION, moptionValue->getOptionName());
@@ -87,8 +87,8 @@ OptionValueServer::configureOption(bool defaultOptions) {
           if (optionu_numoptionid.size() == 0) {
             sqlCommand = "insert into optionvalue (users_numuserid, optionu_numoptionid, value) values "
             " ("+numuserid+",'"+
-            getAttribut("where description='"+moptionValue->getOptionName()+"'", "numoptionid", true)
-            +"','"+moptionValue->getValue()+"')";
+              getAttribut("where description='"+mdatabaseVishnu->escapeData(moptionValue->getOptionName())+"'", "numoptionid", true)
+              +"','"+mdatabaseVishnu->escapeData(moptionValue->getValue())+"')";
           } //End if the option has not already defined for the user
           else {
             sqlCommand = "UPDATE optionvalue set value="+moptionValue->getValue()+" "
@@ -166,7 +166,7 @@ OptionValueServer::getAttribut(std::string condition, std::string attrname, bool
 int
 OptionValueServer::getOptionValueForUser(std::string numuserId, std::string optionName) {
 
-  std::string optionId = getAttribut("where description='"+ optionName +"'", "numoptionid", true);
+  std::string optionId = getAttribut("where description='"+ mdatabaseVishnu->escapeData(optionName) +"'", "numoptionid", true);
   if (optionId.empty()) {
      throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION, optionName);
   }
@@ -174,7 +174,7 @@ OptionValueServer::getOptionValueForUser(std::string numuserId, std::string opti
   //If the option value is not defined for the user
   if (optionValue.size() == 0) {
     // get the default value of the option
-    optionValue = getAttribut("where description='"+optionName+"'", "defaultvalue", true);
+    optionValue = getAttribut("where description='"+mdatabaseVishnu->escapeData(optionName)+"'", "defaultvalue", true);
   }
   return convertToInt(optionValue);
 }

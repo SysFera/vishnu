@@ -348,7 +348,7 @@ ConfigurationServer::userToSql(UMS_Data::User_ptr user, int vishnuId) {
                                          " privilege, email, passwordstate, status)"
                                          " VALUES (%1%, '%2%', '%3%', '%4%', '%5%', %6%, '%7%', %8%, %9%);")
                            %vishnuId
-                           %user->getUserId()
+                           %mdatabaseVishnu->escapeData(user->getUserId())
                            %mdatabaseVishnu->escapeData(user->getPassword())
                            %mdatabaseVishnu->escapeData(user->getFirstname())
                            %mdatabaseVishnu->escapeData(user->getLastname())
@@ -371,9 +371,9 @@ ConfigurationServer::machineToSql(UMS_Data::Machine_ptr machine, int vishnuId) {
   std::string sqlInsert = (boost::format("INSERT INTO machine (vishnu_vishnuid, name, site, machineid, status)"
                                          " VALUES (%1%, '%2%', '%3%', '%4%', '%5%');")
                            %vishnuId
-                           %machine->getName()
-                           %machine->getSite()
-                           %machine->getMachineId()
+                           %mdatabaseVishnu->escapeData(machine->getName())
+                           %mdatabaseVishnu->escapeData(machine->getSite())
+                           %mdatabaseVishnu->escapeData(machine->getMachineId())
                            %convertToString(machine->getStatus()-1)).str(); //Remove 1 on status because of EMF litteral storage
 
 
@@ -392,8 +392,8 @@ ConfigurationServer::machineDescToSql(UMS_Data::Machine_ptr machine) {
   std::string res;
   res = "insert into description (machine_nummachineid, lang, "
         "description) values "
-        "("+machineServer.getAttribut("where machineid='"+machine->getMachineId()+"';")+","
-        "'"+ machine->getLanguage()+"','"+machine->getMachineDescription()+"');";
+    "("+machineServer.getAttribut("where machineid='"+mdatabaseVishnu->escapeData(machine->getMachineId())+"';")+","
+    "'"+ mdatabaseVishnu->escapeData(machine->getLanguage())+"','"+mdatabaseVishnu->escapeData(machine->getMachineDescription())+"');";
 
   delete machinetmp;
   return res;
@@ -412,9 +412,9 @@ ConfigurationServer::authSystemToSql(UMS_Data::AuthSystem_ptr authsystem, int vi
   //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
   std::cerr << sqlInsert << "\n";
   return (sqlInsert + "(" + convertToString(vishnuId)+", "
-          "'"+authsystem->getAuthSystemId()+"','"+authsystem->getName()+"','"
-          + authsystem->getURI()+"','"+authsystem->getAuthLogin()+"', '"+
-          authsystem->getAuthPassword() + "',"
+          "'"+mdatabaseVishnu->escapeData(authsystem->getAuthSystemId())+"','"+mdatabaseVishnu->escapeData(authsystem->getName())+"','"
+          + mdatabaseVishnu->escapeData(authsystem->getURI())+"','"+mdatabaseVishnu->escapeData(authsystem->getAuthLogin())+"', '"+
+          mdatabaseVishnu->escapeData(authsystem->getAuthPassword()) + "',"
           +convertToString(authsystem->getUserPasswordEncryption()-1)+ ","
           +convertToString(authsystem->getType()-1) +","
           +convertToString(authsystem->getStatus()-1)+");");
@@ -436,9 +436,9 @@ ConfigurationServer::ldapAuthSystemToSql(UMS_Data::AuthSystem_ptr authsystem) {
       //Remove 1 on enum types because of the storage of EMF litteral on file which is shifted of 1
       && ((authsystem->getType()-1) == LDAPTYPE) ) { // LDAP
 
-    std::string numAuth = authSystemServer.getAttribut("where authsystemid='"+authsystem->getAuthSystemId()+"'");
+    std::string numAuth = authSystemServer.getAttribut("where authsystemid='"+mdatabaseVishnu->escapeData(authsystem->getAuthSystemId())+"'");
     return (" insert into ldapauthsystem (authsystem_authsystemid, ldapbase) values "
-            "("+numAuth+", '"+authsystem->getLdapBase()+"');");
+            "("+numAuth+", '"+mdatabaseVishnu->escapeData(authsystem->getLdapBase())+"');");
   }
 
   return "";

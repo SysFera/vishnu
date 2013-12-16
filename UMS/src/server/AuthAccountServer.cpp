@@ -74,7 +74,7 @@ AuthAccountServer::addOrUpdate(bool update) {
 
     //if the user-authentication system exists and it is not locked
     req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_AND_STATUS);
-    sqlcond = (boost::format(req)%mauthAccount->getAuthSystemId() %vishnu::STATUS_ACTIVE).str();
+    sqlcond = (boost::format(req)%mdatabaseVishnu->escapeData(mauthAccount->getAuthSystemId()) %vishnu::STATUS_ACTIVE).str();
     if (!authSystemServer.getAttribut(sqlcond).empty()) {
       //To get the database number id of the machine
       req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYSID);
@@ -82,7 +82,7 @@ AuthAccountServer::addOrUpdate(bool update) {
       numAuthSystem =authSystemServer.getAttribut(sqlcond);
       //To get the database number id of the user
       req = mdatabaseVishnu->getRequest(VR_COND_USERID);
-      sqlcond = (boost::format(req)%mauthAccount->getUserId()).str();
+      sqlcond = (boost::format(req)%mdatabaseVishnu->escapeData(mauthAccount->getUserId())).str();
       numUser = userServer.getAttribut(sqlcond);
 
       // Check input data
@@ -154,17 +154,17 @@ AuthAccountServer::deleteAuthAccount() {
     //if the machine exists and it is not locked
     req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_AND_STATUS);
     sqlcond = (boost::format(req)
-               %mauthAccount->getAuthSystemId()
+               %mdatabaseVishnu->escapeData(mauthAccount->getAuthSystemId())
                %vishnu::STATUS_ACTIVE).str();
     if (!(authSystemServer.getAttribut(sqlcond, "numauthsystemid").empty())) {
       //To get the database number id of the machine
       req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYSID);
-      sqlcond = (boost::format(req)%mauthAccount->getAuthSystemId()).str();
+      sqlcond = (boost::format(req)%mdatabaseVishnu->escapeData(mauthAccount->getAuthSystemId())).str();
       numAuthSystem = authSystemServer.getAttribut(sqlcond);
       //To get the database number id of the user
       req = mdatabaseVishnu->getRequest(VR_COND_USERID);
       sqlcond = (boost::format(req)
-                 %mauthAccount->getUserId()).str();
+                 %mdatabaseVishnu->escapeData(mauthAccount->getUserId())).str();
       numUser = userServer.getAttribut(sqlcond);
 
       //if the authentification account exists
@@ -228,8 +228,8 @@ AuthAccountServer::exist(std::string idAuthSystem, std::string idUser) {
   }
   std::string req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_USER_STATUS);
   std::string sqlcond = (boost::format(req)
-                         %idAuthSystem
-                         %idUser
+                         %mdatabaseVishnu->escapeData(idAuthSystem)
+                         %mdatabaseVishnu->escapeData(idUser)
                          %vishnu::STATUS_DELETED).str();
 
   return !(getAttribut(sqlcond, "authaccountid").empty());
@@ -251,7 +251,7 @@ AuthAccountServer::isLoginUsed(std::string numAuthSystem, std::string acLogin) {
   std::string req = mdatabaseVishnu->getRequest(VR_COND_AUTHSYS_LOGIN_STATUS);
   std::string sqlcond = (boost::format(req)
                          %numAuthSystem
-                         %acLogin
+                         %mdatabaseVishnu->escapeData(acLogin)
                          %vishnu::STATUS_ACTIVE).str();
 
   return !(getAttribut(sqlcond, "users_numuserid").empty());

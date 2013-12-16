@@ -42,7 +42,7 @@ LDAPAuthenticator::authenticate(UMS_Data::User& user) {
                                           " AND authaccount.users_numuserid=users.numuserid"
                                           " AND authsystem.status<>%3%"
                                           " AND users.status<>%4%"
-                              )%user.getUserId() %LDAPTYPE %vishnu::STATUS_DELETED %vishnu::STATUS_DELETED).str();
+                              )%mdatabaseVishnu->escapeData(user.getUserId()) %LDAPTYPE %vishnu::STATUS_DELETED %vishnu::STATUS_DELETED).str();
 
   boost::scoped_ptr<DatabaseResult> result(databaseVishnu->getResult(sqlCommand.c_str()));
 
