@@ -76,7 +76,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
       if (idWorkGenerated.size() != 0) {
         mwork->setWorkId(idWorkGenerated);
         //if the workId does not exist
-        if (getAttribut("where identifier='"+mwork->getWorkId()+"'","count(*)") == "1") {
+        if (getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
           //To inactive the work status
 //          mwork->setStatus(INACTIVE_STATUS);
 // TODO
@@ -90,13 +90,13 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
           sqlUpdate+="due_date="+timestamp+", ";
           sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
           sqlUpdate+="last_updated="+timestamp+", ";
-          sqlUpdate+="machine_id="+machineId+", ";
+          sqlUpdate+="machine_id="+mdatabaseVishnu->escapeData(machineId)+", ";
           sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
           sqlUpdate+="owner_id='"+owner+"', ";
           sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
           sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
           sqlUpdate+="subject='"+mdatabaseVishnu->escapeData(mwork->getSubject())+"' ";
-          sqlUpdate+="WHERE identifier='"+mwork->getWorkId()+"';";
+          sqlUpdate+="WHERE identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"';";
 
           mdatabaseVishnu->process(sqlUpdate);
 
@@ -160,7 +160,7 @@ WorkServer::getAttribut(std::string condition, std::string attrname) {
 std::string
 WorkServer::getWorkName() {
 
-  std::string  workName = getAttribut("where identifier='"+getData()->getWorkId()+"'", "subject");
+  std::string  workName = getAttribut("where identifier='"+mdatabaseVishnu->escapeData(getData()->getWorkId())+"'", "subject");
 
   return workName;
 }
@@ -171,7 +171,7 @@ WorkServer::getWorkName() {
 */
 void WorkServer::checkWork() {
 
-  if(getAttribut("where identifier='"+mwork->getWorkId()+"'").size()==0){
+  if(getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'").size()==0){
     throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID, mwork->getWorkId()+" does not exist among the defined"
                              " work by VISHNU System");
   }

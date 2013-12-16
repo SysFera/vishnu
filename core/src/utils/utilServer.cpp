@@ -38,7 +38,7 @@ vishnu::isNew(std::string urlsup, std::string mid, std::string type) {
                                    " WHERE machineid='%1%'"
                                    " AND vishnuname='%2%'"
                                    " AND dietname='%3%'"
-                                   " AND pstatus<>%4%")%mdatabase->escapeData(mid) %mdatabaseVishnu->escapeData(type) %mdatabaseVishnu->escapeData(urlsup) %vishnu::STATUS_DELETED).str();
+                                   " AND pstatus<>%4%")%mdatabase->escapeData(mid) %mdatabase->escapeData(type) %mdatabase->escapeData(urlsup) %vishnu::STATUS_DELETED).str();
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     if (result->getNbTuples() != 0) {
@@ -392,11 +392,11 @@ vishnu::reserveObjectId(int key, std::string &objectId, IdType type) {
     }
   }
 
+  DbFactory factory;
   std::string sqlReserve="UPDATE "+table+" ";
-  sqlReserve+="set "+idname+"='"+mdatabase->escapeData(objectId)+"' ";
+  sqlReserve+="set "+idname+"='"+factory.getDatabaseInstance()->escapeData(objectId)+"' ";
   sqlReserve+="where "+keyname+"="+convertToString(key)+";";
 
-  DbFactory factory;
   try {
     factory.getDatabaseInstance()->process(sqlReserve);
   } catch (exception const & e) {
@@ -458,7 +458,7 @@ vishnu::incrementCpt(std::string cptName, int cpt, int transacId) {
 
   cpt = cpt+1;
 
-  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+database->escapeData(cptName)+"+1");
+  std::string sqlCommand("UPDATE vishnu set "+cptName+"="+databaseVishnu->escapeData(cptName)+"+1");
 
   databaseVishnu->process(sqlCommand.c_str(), transacId);
 
