@@ -181,8 +181,8 @@ ServerTMS::init(int& vishnuId,
     }
   }
 
-  DbFactory factory;
   try {
+    DbFactory factory;
     mdatabaseVishnu = factory.createDatabaseInstance(dbConfig);
 
     //initialization of vishnuId
@@ -202,13 +202,12 @@ ServerTMS::init(int& vishnuId,
     if (result->getResults().size() == 0) {
       throw SystemException (ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
-
+    initMap(machineId);
   } catch (VishnuException& e) {
     std::clog << "[TMS][ERROR] " << e.what() << " \n";
    errorCode = 1;
   }
 
-  initMap(machineId);
   return errorCode;
 }
 
