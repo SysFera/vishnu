@@ -29,12 +29,12 @@ SysInfoServer::getSysInfo() {
   std::vector<std::string>::iterator iter;
 
   if(mop.getMachineId().compare("")) {
-    std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mop.getMachineId()+"'";
+    std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mdatabase->escapeData(mop.getMachineId())+"'";
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
     if(result->getNbTuples() == 0) {
       throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
     }
-    req += " AND  machineid ='"+mop.getMachineId()+"'";
+    req += " AND  machineid ='"+mdatabase->escapeData(mop.getMachineId())+"'";
   }
   IMS_Data::IMS_DataFactory_ptr ecoreFactory = IMS_Data::IMS_DataFactory::_instance();
   IMS_Data::ListSysInfo_ptr mlistObject = ecoreFactory->createListSysInfo();
@@ -78,7 +78,7 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
   if (sys->getMachineId().compare("")==0) {
     throw UserException(ERRCODE_INVALID_PARAM, "Error missing the machine id. ");
   }
-  std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+sys->getMachineId()+"'";
+  std::string reqnmid = "SELECT nummachineid from machine where  machineid ='"+mdatabase->escapeData(sys->getMachineId())+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");
@@ -98,7 +98,7 @@ SysInfoServer::setSysInfo(IMS_Data::SystemInfo_ptr sys) {
     }
     request += "  memory ="+vishnu::convertToString(sys->getMemory());
   }
-  request += " where  machineid ='"+sys->getMachineId()+"'";
+  request += " where  machineid ='"+mdatabase->escapeData(sys->getMachineId())+"'";
 
   request += " AND vishnu_vishnuid=";
   request += vishnu::convertToString(mvishnuId);

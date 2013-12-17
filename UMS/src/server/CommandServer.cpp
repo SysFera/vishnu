@@ -68,7 +68,7 @@ CommandServer::record(CmdType cmdType,
                         %mdatabaseVishnu->escapeData(mcommand)
                         %convertToString(cmdType)
                         %convertToString(cmdStatus)
-                        %newVishnuObjectID
+                        %mdatabaseVishnu->escapeData(newVishnuObjectID)
                         ).str();
 
   mdatabaseVishnu->process(sqlCmd.c_str());
