@@ -51,7 +51,8 @@ start() {
 	if [ $RETVAL -eq 0 ] ; then
 		touch /var/lock/subsys/$NAME
 		[ ! -f $PIDFILE ] &&
-		pidofproc $NAME  > $PIDFILE
+		sleep 2
+		pidof $NAME  > $PIDFILE
 	fi
 	return $RETVAL
 }
