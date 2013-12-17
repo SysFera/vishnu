@@ -52,7 +52,7 @@ ShellExporter::exporte(std::string oldSession, std::string &content){
   // The request, ordered by starttime (=submission)
   std::string req = "SELECT command.ctype, command.description, command.starttime from "
     " command, vsession where vsession.numsessionid=command.vsession_numsessionid and "
-    " vsession.vsessionid='"+oldSession+"' order by starttime asc";
+    " vsession.vsessionid='"+mdatabase->escapeData(oldSession)+"' order by starttime asc";
 
   boost::scoped_ptr<DatabaseResult> result (mdatabase->getResult(req.c_str()));
 
@@ -81,7 +81,7 @@ ShellExporter::isClosed(std::string sid) {
   if (sid.size() < 1) {
     return res;
   }
-  std::string req = "select * from vsession where vsessionid ='"+sid+"' and state='0'";
+  std::string req = "select * from vsession where vsessionid ='"+mdatabase->escapeData(sid)+"' and state='0'";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     res = (result->getNbTuples()>0);
@@ -94,7 +94,7 @@ ShellExporter::isClosed(std::string sid) {
 bool
 ShellExporter::isAllowed(std::string oldSession, UserServer muser) {
   bool res = false;
-  std::string req = "select * from vsession, users where vsession.vsessionid='"+oldSession+"' and vsession.users_numuserid=users.numuserid and users.userid='"+muser.getData().getUserId()+"'";
+  std::string req = "select * from vsession, users where vsession.vsessionid='"+mdatabase->escapeData(oldSession)+"' and vsession.users_numuserid=users.numuserid and users.userid='"+mdatabase->escapeData(muser.getData().getUserId())+"'";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     res = (result->getNbTuples()>0);

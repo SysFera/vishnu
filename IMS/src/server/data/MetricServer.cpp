@@ -124,7 +124,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, std::string mid){
 
   // Getting the num machine id to insert
   std::string reqThre =
-  "SELECT typet, value, userid, email from threshold, users, machine where machine.machineid='" + mid + "' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
+    "SELECT typet, value, userid, email from threshold, users, machine where machine.machineid='" + mdatabase->escapeData(mid) + "' and threshold.machine_nummachineid=machine.nummachineid and users.numuserid=threshold.users_numuserid";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqThre.c_str()));
     for (size_t i = 0; i < result->getNbTuples(); i++){
@@ -162,7 +162,7 @@ MetricServer::addMetricSet(IMS_Data::ListMetric* set, std::string mid){
 
   // Getting the num machine id to insert
   std::string reqnmid =
-  "SELECT nummachineid from machine where  machineid ='" + mid + "'";
+    "SELECT nummachineid from machine where  machineid ='" + mdatabase->escapeData(mid) + "'";
   boost::scoped_ptr<DatabaseResult> result(
     mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
@@ -294,13 +294,13 @@ MetricServer::getCurMet(){
 
 IMS_Data::ListMetric*
 MetricServer::getHistMet(std::string machineId){
-  std::string request = "select cpuload, state.diskspace, state.memory, time from state, machine where machine.machineid='"+machineId+"' AND machine.nummachineid=state.machine_nummachineid ";
+  std::string request = "select cpuload, state.diskspace, state.memory, time from state, machine where machine.machineid='"+mdatabase->escapeData(machineId)+"' AND machine.nummachineid=state.machine_nummachineid ";
   std::vector<std::string>::iterator iter;
   std::vector<std::string> results;
 
   IMS_Data::MetricType type = mhop->getType();
 
-  std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+machineId+ "'";
+  std::string reqnmid = "SELECT nummachineid from machine where  machineid='"+mdatabase->escapeData(machineId)+ "'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(reqnmid.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown machine id");

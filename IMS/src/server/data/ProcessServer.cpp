@@ -38,7 +38,7 @@ ProcessServer::list(){
   std::vector<std::string>::iterator iter;
 
   if (mop->getMachineId().compare("") != 0){
-    std::string machine = "SELECT machineid from machine where machineid='"+mop->getMachineId()+"'";
+    std::string machine = "SELECT machineid from machine where machineid='"+mdatabase->escapeData(mop->getMachineId())+"'";
     boost::scoped_ptr<DatabaseResult> res(mdatabase->getResult(machine.c_str()));
     if(res->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE,"Unknown machine id to list the processes over");
@@ -78,7 +78,7 @@ ProcessServer::getCommandName(){
 
 int
 ProcessServer::connectProcess(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+proc->getProcessName()+"' AND  machineid ='"+proc->getMachineId()+"'";
+  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+mdatabase->escapeData(proc->getProcessName())+"' AND  machineid ='"+mdatabase->escapeData(proc->getMachineId())+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -90,7 +90,7 @@ ProcessServer::connectProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDOWN)+"',  uptime =CURRENT_TIMESTAMP WHERE  dietname ='"+proc->getDietId()+"' and pstatus='"+convertToString(PRUNNING)+"'";
+  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDOWN)+"',  uptime =CURRENT_TIMESTAMP WHERE  dietname ='"+mdatabase->escapeData(proc->getDietId())+"' and pstatus='"+convertToString(PRUNNING)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -101,7 +101,7 @@ ProcessServer::disconnectProcess(IMS_Data::Process_ptr proc){
 }
 int
 ProcessServer::authentifyProcess(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  dietname ='"+proc->getDietId()+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+proc->getProcessName()+"' AND  machineid ='"+proc->getMachineId()+"' AND  pstatus ='"+convertToString(PUNDEF)+"'";
+  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PRUNNING)+"',  dietname ='"+mdatabase->escapeData(proc->getDietId())+"',  uptime =CURRENT_TIMESTAMP WHERE  vishnuname ='"+mdatabase->escapeData(proc->getProcessName())+"' AND  machineid ='"+mdatabase->escapeData(proc->getMachineId())+"' AND  pstatus ='"+convertToString(PUNDEF)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -113,7 +113,7 @@ ProcessServer::authentifyProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE process SET pstatus='"+convertToString(PDELETED)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"' and pstatus="+convertToString(PRUNNING);
+  std::string request = "UPDATE process SET pstatus='"+convertToString(PDELETED)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+mdatabase->escapeData(proc->getProcessName())+"' and machineid='"+mdatabase->escapeData(proc->getMachineId())+"' and pstatus="+convertToString(PRUNNING);
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -125,7 +125,7 @@ ProcessServer::stopProcess(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::setRestarted(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE process SET pstatus='"+convertToString(PRUNNING)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+proc->getProcessName()+"' and machineid='"+proc->getMachineId()+"'";
+  std::string request = "UPDATE process SET pstatus='"+convertToString(PRUNNING)+"', uptime=CURRENT_TIMESTAMP WHERE vishnuname='"+mdatabase->escapeData(proc->getProcessName())+"' and machineid='"+mdatabase->escapeData(proc->getMachineId())+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -138,7 +138,7 @@ ProcessServer::setRestarted(IMS_Data::Process_ptr proc){
 
 int
 ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
-  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDELETED)+"',  uptime =CURRENT_TIMESTAMP WHERE  machineid ='"+proc->getMachineId()+"' AND  pstatus ='"+convertToString(PRUNNING)+"'";
+  std::string request = "UPDATE  process  SET  pstatus ='"+convertToString(PDELETED)+"',  uptime =CURRENT_TIMESTAMP WHERE  machineid ='"+mdatabase->escapeData(proc->getMachineId())+"' AND  pstatus ='"+convertToString(PRUNNING)+"'";
   try{
     mdatabase->process(request.c_str());
   }catch(SystemException& e){
@@ -151,7 +151,7 @@ ProcessServer::stopAllProcesses(IMS_Data::Process_ptr proc){
 
 bool
 ProcessServer::isIMSSeD(std::string Pname){
-  std::string req = "SELECT vishnuname from process where dietname='"+Pname+"'";
+  std::string req = "SELECT vishnuname from process where dietname='"+mdatabase->escapeData(Pname)+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
@@ -163,8 +163,8 @@ ProcessServer::isIMSSeD(std::string Pname){
 
 void
 ProcessServer::fillContent(IMS_Data::Process_ptr p) {
-  std::string req = "SELECT pstatus, dietname, uptime, launchscript from process where vishnuname='"+p->getProcessName()+"'";
-  req += " AND machineid='"+p->getMachineId()+"' order by uptime desc";
+  std::string req = "SELECT pstatus, dietname, uptime, launchscript from process where vishnuname='"+mdatabase->escapeData(p->getProcessName())+"'";
+  req += " AND machineid='"+mdatabase->escapeData(p->getMachineId())+"' order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw IMSVishnuException(ERRCODE_INVPROCESS, "Unknown process");
@@ -179,7 +179,7 @@ ProcessServer::fillContent(IMS_Data::Process_ptr p) {
 
 void
 ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
-  std::string req = "SELECT pstatus, vishnuname, machineid, uptime, launchscript from process where dietname='"+p->getDietId()+"'";
+  std::string req = "SELECT pstatus, vishnuname, machineid, uptime, launchscript from process where dietname='"+mdatabase->escapeData(p->getDietId())+"'";
   req += " order by uptime desc";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
@@ -197,7 +197,7 @@ ProcessServer::getDataFromDietId(IMS_Data::Process_ptr p) {
 
 bool
 ProcessServer::checkStopped(std::string machine, std::string type) {
-  std::string req = "select vishnuname from process where machineid='"+machine+"' and vishnuname='"+type+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
+  std::string req = "select vishnuname from process where machineid='"+mdatabase->escapeData(machine)+"' and vishnuname='"+mdatabase->escapeData(type)+"' and (pstatus='"+convertToString(PDOWN)+"' or pstatus='"+convertToString(PRUNNING)+"')";
   try {
     boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
     return(result->getNbTuples() == 0);
@@ -209,7 +209,7 @@ ProcessServer::checkStopped(std::string machine, std::string type) {
 
 void
 ProcessServer::getHost(std::string mid, std::string& hostname, std::string& acclog) {
-  std::string req = "select nummachineid, name from machine where machine.machineid='"+mid+"'";
+  std::string req = "select nummachineid, name from machine where machine.machineid='"+mdatabase->escapeData(mid)+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Machine not found");
@@ -244,7 +244,7 @@ ProcessServer::getElectedMid() {
 
 std::string
 ProcessServer::getURI(){
-  std::string req = "select dietname from process where machineid='"+mop->getMachineId()+"'";
+  std::string req = "select dietname from process where machineid='"+mdatabase->escapeData(mop->getMachineId())+"'";
   boost::scoped_ptr<DatabaseResult> result(mdatabase->getResult(req.c_str()));
   if(result->getNbTuples() == 0) {
     throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "Unrecognized machine id");
