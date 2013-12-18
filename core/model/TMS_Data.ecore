@@ -369,7 +369,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="multipleStatus" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status (unless for COMPLETED jobs where the T letter for TERMINATED is used to avoid confusion with CANCELLED). For exemple to list the cancelled and terminated jobs,  you use the format CT or 65"/>
+        <details key="content" value="lists the jobs with the specified status (combination of multiple statuses). Its format contains  the first letter or the value (interger) of each chosen status (except for the status COMPLETED where the T letter for TERMINATED is used to avoid confusion with CANCELLED). For example, to list the cancelled and terminated jobs,  you can use the format CT or 65"/>
         <details key="shortOption" value="S"/>
       </eAnnotations>
     </eStructuralFeatures>
