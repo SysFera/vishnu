@@ -355,6 +355,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>38</revnumber>
+<date>18/12/2013</date>
+<authorinitials>R. Chakode</authorinitials>
+<revdescription>
+<para>Ajout informations sur le support de SLURM 2.6 et l'option COMPILE_ONLY_LIBBATCH dans TMS</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -611,7 +620,7 @@ et <emphasis>regex</emphasis> doivent être installés
 <para>IBM LoadLeveler 2.x ou 3.x</para>
 </listitem>
 <listitem>
-<para>SLURM 2.2.x, 2.3.x ou 2.4.x</para>
+<para>SLURM : de v2.2 jusqu'à v2.6</para>
 </listitem>
 <listitem>
 <para>LSF 7.0.6.134609</para>
@@ -694,11 +703,27 @@ lorsqu'il est activé le module COMPILE_UMS dont il dépend doit être égalemen
 <para>
 COMPILE_TMS permet de préciser si le module TMS sera compilé. </para>
 <para>
-Par défaut désactivé, si TMS est activé (-DCOMPILE_TMS=ON), alors les modules UMS et FMS dont il
-dépend doivent être égalements activés (-DCOMPILE_UMS=ON et -DCOMPILE_FMS=ON).
+Le module TMS est par défaut désactivé. Lorsqu'activé (-DCOMPILE_TMS=ON), les modules UMS et FMS dont
+il dépend doivent être également activés (-DCOMPILE_UMS=ON et -DCOMPILE_FMS=ON).
 </para>
-<para>Par ailleurs lorsque TMS est activé, on doit obligatoirement sélectionner un batch scheduler
-grâce aux options VISHNU_BATCH et VISHNU_BATCH_VERSION (ex. VISHNU_BATCH=SLURM et VISHNU_BATCH_VERSION=2.2).
+<para>Par ailleurs, lorsque TMS est activé, vous devez obligatoirement sélectionner un gestionnaire batch
+grâce à l'option VISHNU_BATCH, avec en plus des précisions sur la version concernée (option
+VISHNU_BATCH_VERSION).
+Par exemple, pour activer la compilation pour SLURM 2.2, vous devez passer -DVISHNU_BATCH=SLURM et
+-DVISHNU_BATCH_VERSION=2.2 à cmake.
+</para>
+<para>
+Enfin, il faut noter que, quelque soit le gestionnaire batch sélectionné, le module TMS POSIX sera toujours compilé.
+Il permet de soumettre des tâches en mode natif, c'est-à-dire sans passer par un gestionnaire batch, sur les machines
+exécutant TMS.
+</para>
+</listitem>
+<listitem>
+<para>
+COMPILE_ONLY_LIBBATCH [vishnu &gt;= 3.2.1]: utilisée en conjonction avec COMPILE_TMS=ON, cette option permet si activée
+de ne compiler que les bibliothèques dynamiques associées au gestionnaire batch sélectionné.
+En d'autres termes, l'activation de cette option entraine automatiquement l'activation de COMPILE_TMS et
+la désactivation de la compilation de tous les autres modules et binaires de vishnu.
 </para>
 </listitem>
 <listitem>
