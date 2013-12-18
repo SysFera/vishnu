@@ -126,8 +126,8 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key" longOptionName=""/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.9" description="The stop file transfer command options" optional="true" longOptionName=""/>
       <usedServices href="FMS_Internal.apim#//@modules.0/@services.14"/>
-      <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;"/>
-      <details key="exCLI" value="To stop the file transfers on machine_1:&#xA;vishnu_stop_file_transfer -m machine_1"/>
+      <details key="description" value="Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.&#xA;The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.&#xA;The identifier may be 'all' to remove all file transfers on all machines for all users"/>
+      <details key="exCLI" value="To stop the file transfers on machine_1:&#xA;vishnu_stop_file_transfer -m machine_1, to stop all transfers on all machines:&#xA;vishnu_stop_file_transfer -i all"/>
     </services>
     <services name="listFileTransfers" description="displays the history of all file transfers submitted by User." resultCodes="ERRCODE_CONFIGNOTFOUND ERRCODE_DBERR ERRCODE_DIET ERRCODE_INVALID_PARAM ERRCODE_INVALID_PATH ERRCODE_NO_ADMIN ERRCODE_RUNTIME_ERROR ERRCODE_SESSIONKEY_EXPIRED ERRCODE_SESSIONKEY_NOT_FOUND ERRCODE_UNDEFINED ERRCODE_UNKNOWN_FILE_TRANSFER ERRCODE_UNKNOWN_LOCAL_ACCOUNT ERRCODE_UNKNOWN_MACHINE VISHNU_OK ERRCODE_UNKNOWN_USERID">
       <ports name="sessionKey" usage="API_ONLY" dataType="//@modules.0/@typeList/@types.0" description="The session key"/>
