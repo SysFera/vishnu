@@ -23,9 +23,11 @@ struct PingFunc{
 
   int
   operator()(){
-    std::string version;
+    std::map<std::string,std::string> version;
+    std::map<std::string,std::string>::iterator it;
     int res = vishnu::ping(mserver, version, mmid);
-    std::cout << "Result : " << version << "\n";
+    for (it = version.begin() ; it != version.end(); ++it)
+      std::cout << "Result : " << it->first << ", " << it->second << "\n";
     return res;
   }
 };
@@ -44,12 +46,10 @@ main (int argc, char** argv){
           ENV,
           configFile);
 
-  opt->add("serverName",
+  opt->add("serverName,n",
           "The server to ping",
-          HIDDEN,
-          server,
-          1);
-  opt->setPosition("serverName", 1);
+          CONFIG,
+          server);
 
   opt->add("machineId,i",
            "An option for listing information about a  specific machine",

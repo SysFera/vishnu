@@ -58,7 +58,7 @@ ServerFMS::ServerFMS()  {
  * \return an error code (0 if success and 1 if an error occurs)
  */
 int
-ServerFMS::init(int vishnuId, DbConfiguration dbConfig) {
+ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
 
   DbFactory factory;
 
@@ -86,7 +86,7 @@ ServerFMS::init(int vishnuId, DbConfiguration dbConfig) {
       std::cout << e.what() << std::endl;
       exit(0);
   }
-  initMap();
+  initMap(mid);
 
 
   return 0;
@@ -105,7 +105,7 @@ ServerFMS::~ServerFMS() {
 }
 
 void
-ServerFMS::initMap() {
+ServerFMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
 
 
@@ -172,5 +172,5 @@ ServerFMS::initMap() {
   functionPtr = solveFileTransferStop;
   mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
 
-  mcb[SERVICES_FMS[HEARTBEATFMS]] = boost::ref(heartbeat);
+  mcb[std::string(SERVICES_FMS[HEARTBEATFMS])+"@"+mid] = boost::ref(heartbeat);
 }
