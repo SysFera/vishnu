@@ -128,6 +128,8 @@ include_directories(
   ${EMF4CPP_INCLUDE_DIR}
 )
 
-add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
-set_target_properties(emf4cpp-vishnu PROPERTIES VERSION ${VISHNU_VERSION})
-install(TARGETS emf4cpp-vishnu DESTINATION ${LIB_INSTALL_DIR})
+if(NOT COMPILE_ONLY_LIBBATCH)
+  add_library(emf4cpp-vishnu ${ecore_SRCS} ${ecorecpp_SRCS})
+  set_target_properties(emf4cpp-vishnu PROPERTIES VERSION ${VISHNU_VERSION})
+  install(TARGETS emf4cpp-vishnu DESTINATION ${LIB_INSTALL_DIR})
+endif(NOT COMPILE_ONLY_LIBBATCH)

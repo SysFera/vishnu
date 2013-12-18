@@ -317,23 +317,24 @@ set(FMS_Data_HEADERS
   emfdata/FMS_Data/DirEntryList.hpp
   )
 
+if(NOT COMPILE_ONLY_LIBBATCH)
+  add_library(vishnu-core ${config_SRCS}
+    ${exception_SRCS}
+    ${utils_SRCS}
+    ${registry_SRCS}
+    ${UMS_Data_SRCS}
+    ${TMS_Data_SRCS}
+    ${IMS_Data_SRCS}
+    ${FMS_Data_SRCS}
+    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
+  )
 
-add_library(vishnu-core ${config_SRCS}
-  ${exception_SRCS}
-  ${utils_SRCS}
-  ${registry_SRCS}
-  ${UMS_Data_SRCS}
-  ${TMS_Data_SRCS}
-  ${IMS_Data_SRCS}
-  ${FMS_Data_SRCS}
-  ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
-)
+  target_link_libraries(vishnu-core emf4cpp-vishnu ${LIBCRYPT_LIB})
 
-target_link_libraries(vishnu-core
-  emf4cpp-vishnu
-  ${LIBCRYPT_LIB}
-)
-
+  set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
+  install(TARGETS vishnu-core DESTINATION ${LIB_INSTALL_DIR})
+  target_link_libraries(vishnu-core ${Boost_LIBRARIES})
+endif(NOT COMPILE_ONLY_LIBBATCH)
 
 set(EMF-ECORE-HEADERS
   ${EMF4CPP_INCLUDE_DIR}/ecore/EAnnotation.hpp
@@ -386,8 +387,6 @@ set(EMF-ECORECPP-NOTIFY-HEADERS
    ${EMF4CPP_INCLUDE_DIR}/ecorecpp/notify/Notifier.hpp
 )
 
-install(TARGETS vishnu-core DESTINATION ${LIB_INSTALL_DIR})
-set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
 install(FILES ${exception_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 
 install(FILES emfdata/UMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
@@ -415,8 +414,6 @@ install(FILES ${EMF4CPP_INCLUDE_DIR}/ecore_forward.hpp DESTINATION ${INCLUDE_INS
 install(FILES ${PROJECT_BINARY_DIR}/vishnu_version.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${PROJECT_BINARY_DIR}/vishnu-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
 install(FILES ${PROJECT_BINARY_DIR}/supervisord-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
-
-target_link_libraries(vishnu-core ${Boost_LIBRARIES})
 
 if(COMPILE_SERVERS)
   set(database_SRCS
@@ -479,11 +476,12 @@ if(COMPILE_SERVERS)
   include_directories(${UMS_EMF_DATA_DIR})
   set (version_manager_SRCS
        version/VersionManager.cpp)
-
+if(NOT COMPILE_ONLY_LIBBATCH)
   add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
   set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS} ${AUTH_LIBS})
 
   install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
+endif(NOT COMPILE_ONLY_LIBBATCH)
 endif()

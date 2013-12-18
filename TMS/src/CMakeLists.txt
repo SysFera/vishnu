@@ -213,26 +213,27 @@ set(cli_SRCS
 set(api_SRCS api/api_tms.cpp)
 set(api_HEADERS api/api_tms.hpp)
 
-add_library(vishnu-tms-client
-  ${client_SRCS}
-  ${cli_SRCS}
-  ${api_SRCS})
+if(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
+  add_library(vishnu-tms-client
+    ${client_SRCS}
+    ${cli_SRCS}
+    ${api_SRCS})
 
-target_link_libraries(vishnu-tms-client
-  ${Boost_LIBRARIES}
-  emf4cpp-vishnu
-  vishnu-core
-  vishnu-ums-client
-  vishnu-fms-client
-  ${LIBCRYPT_LIB}
-  ${ZMQ_LIBRARIES}
-  zmq_helper
-)
+  target_link_libraries(vishnu-tms-client
+    ${Boost_LIBRARIES}
+    emf4cpp-vishnu
+    vishnu-core
+    vishnu-ums-client
+    vishnu-fms-client
+    ${LIBCRYPT_LIB}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+  )
 
-install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
-set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
-install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-
+  install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
+  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
+  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
+endif(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
 
 ## client CLI
 if(COMPILE_CLIENT_CLI)
@@ -322,11 +323,6 @@ if (COMPILE_SERVERS)
     zmq_helper
     ${USED_BATCH_LIB})
 
-  # set the library for posix server => always compiled in the server
-  add_library(vishnu-tms-posix ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
-  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
-
   install(TARGETS tmsSlave DESTINATION ${SBIN_INSTALL_DIR})
   install(TARGETS tmssed DESTINATION ${SBIN_INSTALL_DIR})
  endif(NOT COMPILE_ONLY_LIBBATCH)
@@ -366,5 +362,10 @@ if (COMPILE_SERVERS)
     target_link_libraries(vishnu-tms-deltacloud ${LIBDELTACLOUD_LIB})
     install(TARGETS vishnu-tms-deltacloud DESTINATION ${LIB_INSTALL_DIR})
   endif()
-endif (COMPILE_SERVERS)
+
+  # set the library for posix server => always compiled in the server
+  add_library(vishnu-tms-posix ${POSIXSERVER})
+  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
+  install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
+endif(COMPILE_SERVERS)
 

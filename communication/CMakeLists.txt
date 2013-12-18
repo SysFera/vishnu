@@ -21,23 +21,27 @@ include_directories(
 
 )
 
-add_library(zmq_helper
-  DIET_client.cpp
-  Annuary.cpp
-  Server.cpp
-  SeD.cpp
-  utils.cpp
-  sslhelpers.cpp
-  ${utils_server_SRCS}
-)
+if(NOT COMPILE_ONLY_LIBBATCH)
+  add_library(zmq_helper
+    DIET_client.cpp
+    Annuary.cpp
+    Server.cpp
+    SeD.cpp
+    utils.cpp
+    sslhelpers.cpp
+    ${utils_server_SRCS}
+  )
 
-target_link_libraries (zmq_helper
-  ${ZMQ_LIBRARIES}
-  ${Boost_LIBRARIES}
-  vishnu-core
-  ${LIBCRYPTO_LIB}
-  ${OPENSSL_LIBRARIES}
-)
+  target_link_libraries (zmq_helper
+    ${ZMQ_LIBRARIES}
+    ${Boost_LIBRARIES}
+    vishnu-core
+    ${LIBCRYPTO_LIB}
+    ${OPENSSL_LIBRARIES}
+  )
+  set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
+  install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
+endif(NOT COMPILE_ONLY_LIBBATCH)
 
 # --------------------------------------------------------------------------
 #add_subdirectory(ZMQHelper)
@@ -54,10 +58,6 @@ if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
     vishnu-core
     ${OPENSSL_LIBRARIES}
     )
-  
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 endif()
-
-set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
-install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
 
