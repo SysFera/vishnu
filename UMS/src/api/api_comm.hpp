@@ -22,7 +22,7 @@ namespace vishnu {
    */
   int
   ping(const std::string& serverName,
-       std::string& result,
+       std::map<std::string, std::string>& result,
        const std::string& mid = "");
 
   /**

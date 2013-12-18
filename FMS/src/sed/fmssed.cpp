@@ -84,7 +84,7 @@ main(int argc, char* argv[], char* envp[]) {
     try {
       //Initialize the FMS Server (Opens a connection to the database)
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
-      res = server->init(vishnuId, dbConfig);
+      res = server->init(vishnuId, mid, dbConfig);
 
 
       // Initialize the Vishnu SeD

@@ -53,6 +53,7 @@ public :
    /**
     * \brief To initialize the UMS server
     * \param vishnuId  The identifier of the vishnu instance
+    * \param mid The machine identifier
     * \param dbConfig  The configuration of the database
     * \param sendmailScriptPath The path to the script for sending emails
     * \param authenticatorConfig The configuration of the authenticator
@@ -60,6 +61,7 @@ public :
     */
   int
   init(int vishnuId,
+       std::string mid,
        DbConfiguration dbConfig,
        std::string sendmailScriptPath,
        AuthenticatorConfiguration authenticatorConfig);
@@ -72,9 +74,10 @@ public :
 private:
   /**
    * \brief Init the ptr function map
+   * \param mid the machine identifier
    */
   void
-  initMap();
+  initMap(std::string mid);
 
   /**
    * \brief Constructor, private because class is singleton
