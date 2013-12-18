@@ -365,7 +365,7 @@ if (COMPILE_SERVERS)
 
   # set the library for posix server => always compiled in the server
   add_library(vishnu-tms-posix ${POSIXSERVER})
-  target_link_libraries(vishnu-tms-posix ${POSIX_LIB} vishnu-core-server vishnu-tms-server)
+  target_link_libraries(vishnu-tms-posix ${POSIX_LIB})
   install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
 endif(COMPILE_SERVERS)
 
