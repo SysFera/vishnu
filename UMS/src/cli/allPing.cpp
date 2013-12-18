@@ -42,9 +42,8 @@ main (int argc, char** argv){
           ENV,
           configFile);
 
-  opt->parse_cli(argc,argv);
-  opt->parse_env(env_name_mapper());
-  opt->notify();
+  bool isEmpty;
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   PingFunc pings;
   return GenericCli().runWithoutSessionKey(pings, configFile, argc, argv);

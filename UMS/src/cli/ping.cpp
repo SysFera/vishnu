@@ -55,9 +55,8 @@ main (int argc, char** argv){
            "An option for listing information about a  specific machine",
            CONFIG,
            mid);
-  opt->parse_cli(argc,argv);
-  opt->parse_env(env_name_mapper());
-  opt->notify();
+  bool isEmpty;
+  GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   PingFunc pings(server,mid);
   return GenericCli().runWithoutSessionKey(pings, configFile, argc, argv);
