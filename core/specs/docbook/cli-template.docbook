@@ -166,6 +166,15 @@
 	</revdescription>
       </revision>
 
+      <revision>
+	<revnumber>15</revnumber>
+	<date>17/12/2013</date>
+	<authorinitials>SysFera</authorinitials>
+	<revdescription>
+	  <para>Update documentation for list jobs (COMPLETED is represented by T for TERMINATED not C). </para>
+	</revdescription>
+      </revision>
+
       </revhistory>
     </info>
   <chapter>
