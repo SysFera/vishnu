@@ -273,12 +273,11 @@ UserServer::changePassword(std::string newPassword) {
 
       //append SQL query to update the passwordstate
       sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
-                                     " WHERE userid='%1%' AND pwd='%2% AND status=%3%;"
+                                     " WHERE userid='%1%' AND pwd='%2%' AND status!=%3%;"
                                      )
                        %mdatabaseVishnu->escapeData(muser.getUserId())
                        %mdatabaseVishnu->escapeData(newPassword)
                        %convertToString(vishnu::STATUS_DELETED)).str();
-
       mdatabaseVishnu->process(sqlChangePwd);
 
       //Put the new user's password

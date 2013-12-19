@@ -112,6 +112,7 @@ int
 SessionServer::reconnect(UserServer user, MachineClientServer host,
                          std::string sessionId) {
   msession.setSessionId(sessionId);
+  host.recordMachineClient();
 
   //If the user exists
   if (user.isAuthenticate()) {
