@@ -34,6 +34,14 @@ RETVAL=0
 NAME=umssed
 PIDFILE=/var/run/$NAME.pid
 DAEMON="$NAME $CONFIG_VISHNU"
+LOG_DIR=/var/log/vishnu
+LOG_FILE=${LOG_DIR}/${NAME}.log
+
+# create log directory
+if [ ! -d ${LOG_DIR} ]; then
+  mkdir -p ${LOG_DIR}
+  [ -n "$SYSFERA_USER_UID" ] && chown -R $SYSFERA_USER_UID:$SYSFERA_USER_UID ${LOG_DIR}
+fi
 
 check() {
 	if [ "$START_UMSSED" != "y" -a "$START_UMSSED" != "yes" ] ; then
@@ -43,9 +51,9 @@ check() {
 
 start() {
 	if [ -z "$SYSFERA_USER_UID" ] ; then
-		daemon --pidfile $PIDFILE "nohup $DAEMON >/dev/null 2>&1 &"
+                daemon --pidfile $PIDFILE "nohup $DAEMON >${LOG_FILE} 2>&1 &"
 	else
-		daemon --user $SYSFERA_USER_UID --pidfile $PIDFILE "nohup $DAEMON >/dev/null 2>&1 &"
+                daemon --user $SYSFERA_USER_UID --pidfile $PIDFILE "nohup $DAEMON >${LOG_FILE} 2>&1 &"
 	fi
 	RETVAL=$?
 	if [ $RETVAL -eq 0 ] ; then
