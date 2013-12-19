@@ -42,19 +42,19 @@ Dispatcher::configureAnnuary() {
   // Get initial configuration
   std::vector<std::string> cfgInfo;
   if (config.getConfigValues(vishnu::FMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("FMS", cfgInfo);
+    ann->setInitConfig("fmssed", cfgInfo);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::IMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("IMS", cfgInfo);
+    ann->setInitConfig("imssed", cfgInfo);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("TMS", cfgInfo);
+    ann->setInitConfig("tmssed", cfgInfo);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::UMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("UMS", cfgInfo);
+    ann->setInitConfig("umssed", cfgInfo);
     cfgInfo.clear();
   }
   ann->print();
