@@ -11,6 +11,7 @@ Vcs-Browser: https://github.com/SysFera/vishnu
 Package: libvishnu
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Provides: vishnulib
 Description: Common vishnu library files
 
 Package: vishnu-config

@@ -213,58 +213,6 @@ public class VISHNU {
     return VISHNUJNI.getCompletedJobsOutput(sessionKey, machineId, ListJobResults.getCPtr(listOfResults), listOfResults, outDir);
   }
 
-  public static int exportCommands(String sessionKey, String oldSessionId, String filename, ExportOp op) throws InternalIMSException {
-    return VISHNUJNI.exportCommands(sessionKey, oldSessionId, filename, ExportOp.getCPtr(op), op);
-  }
-
-  public static int getMetricCurrentValue(String sessionKey, String machineId, ListMetric val, CurMetricOp op) throws InternalIMSException {
-    return VISHNUJNI.getMetricCurrentValue(sessionKey, machineId, ListMetric.getCPtr(val), val, CurMetricOp.getCPtr(op), op);
-  }
-
-  public static int getMetricHistory(String sessionKey, String machineId, ListMetric list, MetricHistOp op) throws InternalIMSException {
-    return VISHNUJNI.getMetricHistory(sessionKey, machineId, ListMetric.getCPtr(list), list, MetricHistOp.getCPtr(op), op);
-  }
-
-  public static int getProcesses(String sessionKey, ListProcesses list, ProcessOp op) throws InternalIMSException {
-    return VISHNUJNI.getProcesses(sessionKey, ListProcesses.getCPtr(list), list, ProcessOp.getCPtr(op), op);
-  }
-
-  public static int setSystemInfo(String sessionKey, SystemInfo sys) throws InternalIMSException {
-    return VISHNUJNI.setSystemInfo(sessionKey, SystemInfo.getCPtr(sys), sys);
-  }
-
-  public static int setSystemThreshold(String sessionKey, Threshold threshold) throws InternalIMSException {
-    return VISHNUJNI.setSystemThreshold(sessionKey, Threshold.getCPtr(threshold), threshold);
-  }
-
-  public static int getSystemThreshold(String sessionKey, ListThreshold list, ThresholdOp op) throws InternalIMSException {
-    return VISHNUJNI.getSystemThreshold(sessionKey, ListThreshold.getCPtr(list), list, ThresholdOp.getCPtr(op), op);
-  }
-
-  public static int loadShed(String sessionKey, String machineId, int loadShedType) throws InternalIMSException {
-    return VISHNUJNI.loadShed(sessionKey, machineId, loadShedType);
-  }
-
-  public static int setUpdateFrequency(String sessionKey, int freq) throws InternalIMSException {
-    return VISHNUJNI.setUpdateFrequency(sessionKey, freq);
-  }
-
-  public static int getUpdateFrequency(String sessionKey, int freq) throws InternalIMSException {
-    return VISHNUJNI.getUpdateFrequency(sessionKey, freq);
-  }
-
-  public static int stop(String sessionKey, String machineId, SupervisorOp op) throws InternalIMSException {
-    return VISHNUJNI.stop(sessionKey, machineId, SupervisorOp.getCPtr(op), op);
-  }
-
-  public static int getSystemInfo(String sessionKey, ListSysInfo list, SysInfoOp op) throws InternalIMSException {
-    return VISHNUJNI.getSystemInfo(sessionKey, ListSysInfo.getCPtr(list), list, SysInfoOp.getCPtr(op), op);
-  }
-
-  public static int restart(String sessionKey, String machineId, SupervisorOp op) throws InternalIMSException {
-    return VISHNUJNI.restart(sessionKey, machineId, SupervisorOp.getCPtr(op), op);
-  }
-
   public static int touch(String sessionKey, String path) throws InternalFMSException {
     return VISHNUJNI.touch(sessionKey, path);
   }
