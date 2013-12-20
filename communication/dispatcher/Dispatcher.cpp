@@ -38,23 +38,25 @@ void
 Dispatcher::configureAnnuary() {
   // Prepare our context and socket
   ann = boost::make_shared<Annuary>();
+  std::string mid;
+  config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
 
   // Get initial configuration
   std::vector<std::string> cfgInfo;
   if (config.getConfigValues(vishnu::FMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("fmssed", cfgInfo);
+    ann->setInitConfig("fmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::IMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("imssed", cfgInfo);
+    ann->setInitConfig("imssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("tmssed", cfgInfo);
+    ann->setInitConfig("tmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::UMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("umssed", cfgInfo);
+    ann->setInitConfig("umssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   ann->print();

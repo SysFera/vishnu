@@ -62,7 +62,7 @@ static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
   false,  // 10
   false,  // 11
   false,   // 12
-  true
+  true // 13
 };
 
 

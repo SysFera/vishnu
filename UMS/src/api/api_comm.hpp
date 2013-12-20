@@ -21,17 +21,10 @@ namespace vishnu {
    * \return 0 if everything is OK, another value otherwise
    */
   int
-  ping(const std::string& serverName,
-       std::map<std::string, std::string>& result,
+  ping(std::map<std::string, std::string>& result,
+       const std::string& serverName = "",
        const std::string& mid = "");
 
-  /**
-   * \brief Ping all the servers
-   * \param result A map of service and their version
-   * \return 0 if everything is OK, another value otherwise
-   */
-  int
-  allPing(std::map<std::string, std::string>& result);
 }
 
 

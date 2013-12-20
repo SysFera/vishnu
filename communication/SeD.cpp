@@ -29,7 +29,6 @@ heartbeat(diet_profile_t* pb){
   msg = (boost::format("%1% %2%")%VISHNU_VERSION%batch).str();
 
   diet_string_set(pb, 1, msg);
-  std::cout << "heartbeating " << std::endl;
   return 0;
 }
 
