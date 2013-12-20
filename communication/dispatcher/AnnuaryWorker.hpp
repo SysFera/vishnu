@@ -185,14 +185,16 @@ private:
       std::vector<boost::shared_ptr<Server> >::iterator it = list.begin();
       result = "";
       int size;
-      for (size = 0 ; size < list.size()-1 ; ++it, ++size){
+      for (size = 0 ; size < (int)list.size()-1 ; ++it, ++size){
 	result += it->get()->toString() + std::string(VISHNU_COMM_SEPARATOR);
       }
-      result += it->get()->toString();
+      if (list.size()>0){
+        result += it->get()->toString();
+      }
+
     } else if (mode == 3) { // Ping to get version
       result = (boost::format("%1%")%VISHNU_VERSION).str();
     }
-
     return result;
   }
 

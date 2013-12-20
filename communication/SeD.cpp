@@ -24,7 +24,7 @@ heartbeat(diet_profile_t* pb){
   std::string msg;
   std::string batch;
   if (serviceName.find("tms") != std::string::npos){
-    batch = (boost::format("\n%1% %2%")%VISHNU_BATCH_SCHEDULER%VISHNU_BATCH_SCHEDULER_VERSION).str();
+    batch = (boost::format("\n With batch scheduler %1% %2%")%VISHNU_BATCH_SCHEDULER%VISHNU_BATCH_SCHEDULER_VERSION).str();
   }
   msg = (boost::format("%1% %2%")%VISHNU_VERSION%batch).str();
 
