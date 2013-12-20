@@ -30,12 +30,6 @@ public :
    */
   void
   ping(const std::string& server, const std::string mid, std::map<std::string, std::string>& result);
-  /**
-   * \brief Ping all the elements including the dispatcher
-   * \param result a map of URI / version (or failure as version if ping failed)
-   */
-  void
-  allPing(std::map<std::string, std::string>& result);
 
 private:
   /**

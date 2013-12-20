@@ -25,7 +25,7 @@ struct PingFunc{
   operator()(){
     std::map<std::string,std::string> version;
     std::map<std::string,std::string>::iterator it;
-    int res = vishnu::ping(mserver, version, mmid);
+    int res = vishnu::ping(version, mserver, mmid);
     for (it = version.begin() ; it != version.end(); ++it)
       std::cout << "Result : " << it->first << ", " << it->second << "\n";
     return res;
