@@ -404,6 +404,7 @@ communicate_dispatcher(const std::string& requestData, std::string& response){
     return -1; // Dont throw exception
   }
   response = lpc.recv();
+
   return 0;
 }
 
@@ -414,9 +415,10 @@ extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server>
   split_regex(vecString, msg, boost::regex(VISHNU_COMM_REGEX));
   std::vector<std::string>::iterator it;
   for (it = vecString.begin() ; it != vecString.end() ; ++it){
+    std::string val(it->c_str()); // CREATE A STRING BECAUSE IT->EMPTY = FALSE WHEN IT EMPTY
     // URI is the key
-    if ( (*it).size() > 0){
-      res.push_back(Server::fromString(*it));
+    if ( !val.empty()){
+      res.push_back(Server::fromString(val));
     }
   }
 }

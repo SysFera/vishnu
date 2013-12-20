@@ -49,7 +49,7 @@ PingerProxy::ping(const std::string& server, const std::string mid, std::map<std
   std::string response;
 // Ping the dispatcher
   communicate_dispatcher("3", response);
-  if (server=="dispatcher")
+  if (server=="dispatcher" || (server.empty() && mid.empty()))
     result.insert(std::pair<std::string, std::string>("dispatcher", response));
 
 // Get the list of the servers in the dispatcher
@@ -72,11 +72,11 @@ PingerProxy::ping(const std::string& server, const std::string mid, std::map<std
     profile = diet_profile_alloc(service,0,0,1);
     // Pinging
     if (diet_call_gen(profile, it->get()->getURI())){
-      result.insert(std::pair<std::string, std::string>(it->get()->getURI(), "FAILURE"));
+      result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), "FAILURE"));
     } else {
       std::string tmp;
       diet_string_get(profile, 1, tmp);
-      result.insert(std::pair<std::string, std::string>(it->get()->getURI(), tmp));
+      result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), tmp));
     }
     diet_profile_free(profile);
   }
