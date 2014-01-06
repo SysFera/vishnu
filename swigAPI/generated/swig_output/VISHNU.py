@@ -5114,6 +5114,61 @@ def getCompletedJobsOutput(*args, **kwargs):
   """getCompletedJobsOutput(string sessionKey, string machineId, string outDir = std::string()) -> int"""
   return _VISHNU.getCompletedJobsOutput(*args, **kwargs)
 
+def exportCommands(*args, **kwargs):
+  """
+    exportCommands(string sessionKey, string oldSessionId, string filename, 
+        ExportOp op = IMS_Data::ExportOp()) -> int
+    """
+  return _VISHNU.exportCommands(*args, **kwargs)
+
+def getMetricCurrentValue(*args, **kwargs):
+  """getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op = IMS_Data::CurMetricOp()) -> int"""
+  return _VISHNU.getMetricCurrentValue(*args, **kwargs)
+
+def getMetricHistory(*args, **kwargs):
+  """getMetricHistory(string sessionKey, string machineId, MetricHistOp op = IMS_Data::MetricHistOp()) -> int"""
+  return _VISHNU.getMetricHistory(*args, **kwargs)
+
+def getProcesses(*args, **kwargs):
+  """getProcesses(string sessionKey, ProcessOp op = IMS_Data::ProcessOp()) -> int"""
+  return _VISHNU.getProcesses(*args, **kwargs)
+
+def setSystemInfo(*args, **kwargs):
+  """setSystemInfo(string sessionKey, SystemInfo sys) -> int"""
+  return _VISHNU.setSystemInfo(*args, **kwargs)
+
+def setSystemThreshold(*args, **kwargs):
+  """setSystemThreshold(string sessionKey, Threshold threshold) -> int"""
+  return _VISHNU.setSystemThreshold(*args, **kwargs)
+
+def getSystemThreshold(*args, **kwargs):
+  """getSystemThreshold(string sessionKey, ThresholdOp op = IMS_Data::ThresholdOp()) -> int"""
+  return _VISHNU.getSystemThreshold(*args, **kwargs)
+
+def loadShed(*args, **kwargs):
+  """loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"""
+  return _VISHNU.loadShed(*args, **kwargs)
+
+def setUpdateFrequency(*args, **kwargs):
+  """setUpdateFrequency(string sessionKey, int freq) -> int"""
+  return _VISHNU.setUpdateFrequency(*args, **kwargs)
+
+def getUpdateFrequency(*args, **kwargs):
+  """getUpdateFrequency(string sessionKey, int freq) -> int"""
+  return _VISHNU.getUpdateFrequency(*args, **kwargs)
+
+def stop(*args, **kwargs):
+  """stop(string sessionKey, string machineId, SupervisorOp op) -> int"""
+  return _VISHNU.stop(*args, **kwargs)
+
+def getSystemInfo(*args, **kwargs):
+  """getSystemInfo(string sessionKey, SysInfoOp op = IMS_Data::SysInfoOp()) -> int"""
+  return _VISHNU.getSystemInfo(*args, **kwargs)
+
+def restart(*args, **kwargs):
+  """restart(string sessionKey, string machineId, SupervisorOp op) -> int"""
+  return _VISHNU.restart(*args, **kwargs)
+
 def touch(*args, **kwargs):
   """touch(string sessionKey, string path) -> int"""
   return _VISHNU.touch(*args, **kwargs)
