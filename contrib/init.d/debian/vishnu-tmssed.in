@@ -24,8 +24,8 @@ LOG_FILE=${LOG_DIR}/${NAME}.log
 
 # create log directory
 if [ ! -d ${LOG_DIR} ]; then
-  mkdir -p ${LOG_DIR}
-  [ -n "$SYSFERA_USER_UID" ] && chown -R $SYSFERA_USER_UID:$SYSFERA_USER_UID ${LOG_DIR}
+  echo "The logging directory doesn't exist: ${LOG_DIR}"
+  exit 1
 fi
 
 
