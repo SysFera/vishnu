@@ -237,6 +237,14 @@ Add the use of the .netrc file of the connection and the reconnection.
 
 <para>Added note about compatibility support</para></revdescription>
       </revision>
+      <revision>
+        <revnumber>25</revnumber>
+        <date>17/12/2013</date>
+        <authorinitials>SysFera</authorinitials>
+        <revdescription>
+
+<para>Added note about batch scheduler variables priority.</para></revdescription>
+      </revision>
     </revhistory>
     <copyright>
       <year>2012</year>
@@ -628,6 +636,7 @@ parameters are irrelevant in this case, for instance the CPU, the memory, the qu
 are ignored. The queue will always be the same. Moreover, on a machine without batch scheduler, the admin can deploy TMS and
 only this 'pseudo batch' will be used.
 </para>
+          <para>It is possible to have various values defining the same option of submission : in the option object, in the submission script and the default configuration value of the batch scheduler. The most prioritary one is the option object. Then the value in the script and lastly the default value defined by the batch scheduler. </para>
           <section>
             <title>VISHNU generic script </title>
             <para>The key words of a VISHNU generic script start with the special character <emphasis
@@ -4426,7 +4435,7 @@ The value must be an integer. Predefined values are: -1 (UNDEFINED), 1 (VERY_LOW
           <varlistentry>
             <term><option>-S <replaceable>multipleStatus</replaceable></option></term>
             <listitem>
-              <para>lists the jobs with the specified status (combination of multiple status). Its format contains  the first letter or the value (interger) of each chosen status. For exemple to list the cancelled and terminated jobs,  you use the format CT or 65.</para>
+              <para>lists the jobs with the specified status. Its format contains the first letter or the value (interger) of each chosen status (except for the status COMPLETED where the T letter for TERMINATED is used to avoid confusion with CANCELLED). It's also possible to use a combination of multiple statuses. For example, to list the cancelled and completed jobs,  you can use the format CT or 65.</para>
             </listitem>
           </varlistentry>
           <varlistentry>
@@ -6187,7 +6196,7 @@ values can be obtained using the vishnu_list_machine command).
 The src parameter must be provided in the form 'machine_id:path' (the machine_id
 values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.
 The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,
-i.e. a local copy cannot be handled by this command.
+i.e. a local copy cannot be handled by this command. You can define the transfer timeout using the vishnu global option 'VISHNU_TRANSFER_TIMEOUT'
 </para>
       </refsect1>
       <refsect1 id="options">
@@ -6684,7 +6693,7 @@ The value must be an integer. Predefined values are: 0 (SCP), 1 (RSYNC), 2 (UNDE
         <title>DESCRIPTION</title>
         <para>Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.
 The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.
-</para>
+The identifier may be 'all' to remove all file transfers on all machines for all users</para>
       </refsect1>
       <refsect1 id="options">
         <title>OPTIONS</title>
@@ -6783,7 +6792,8 @@ The command listFileTransfers can be used to check the status of the transfer af
       <refsect1 id="example">
         <title>EXAMPLE</title>
         <para>To stop the file transfers on machine_1:</para>
-        <para>vishnu_stop_file_transfer -m machine_1</para>
+        <para>vishnu_stop_file_transfer -m machine_1, to stop all transfers on all machines:</para>
+        <para>vishnu_stop_file_transfer -i all</para>
       </refsect1>
     </refentry>
     <refentry>
@@ -11245,7 +11255,7 @@ values can be obtained using the vishnu_list_machine command).
 The src parameter must be provided in the form 'machine_id:path' (the machine_id
 values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.
 The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,
-i.e. a local copy cannot be handled by this command.
+i.e. a local copy cannot be handled by this command. You can define the transfer timeout using the vishnu global option 'VISHNU_TRANSFER_TIMEOUT'
 </para>
       </refsect1>
       <refsect1 id="arguments">
@@ -11693,7 +11703,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <title>DESCRIPTION</title>
         <para>Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.
 The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.
-</para>
+The identifier may be 'all' to remove all file transfers on all machines for all users</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>
@@ -16588,7 +16598,7 @@ values can be obtained using the vishnu_list_machine command).
 The src parameter must be provided in the form 'machine_id:path' (the machine_id
 values can be obtained using the vishnu_list_machine command) or 'path' only if the file is on the local system.
 The dest parameter must be provided in a similar way. Note that one of the two locations at least must be a remote location,
-i.e. a local copy cannot be handled by this command.
+i.e. a local copy cannot be handled by this command. You can define the transfer timeout using the vishnu global option 'VISHNU_TRANSFER_TIMEOUT'
 </para>
       </refsect1>
       <refsect1 id="arguments">
@@ -17084,7 +17094,7 @@ The command listFileTransfers can be used to check the status of the transfer af
         <title>DESCRIPTION</title>
         <para>Cancels a file or directory transfer that has been initiated using a vishnu asynchronous copy or move file command.
 The command listFileTransfers can be used to check the status of the transfer after it has been cancelled, using the transfer id as the identifier.
-</para>
+The identifier may be 'all' to remove all file transfers on all machines for all users</para>
       </refsect1>
       <refsect1 id="arguments">
         <title>ARGUMENTS</title>

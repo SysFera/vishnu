@@ -19,6 +19,15 @@ DAEMON=@CMAKE_INSTALL_PREFIX@/sbin/$NAME
 DAEMON_ARGS="$CONFIG_FILE"
 PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/vishnu-$NAME
+LOG_DIR=/var/log/vishnu
+LOG_FILE=${LOG_DIR}/${NAME}.log
+
+# create log directory
+if [ ! -d ${LOG_DIR} ]; then
+  echo "The logging directory doesn't exist: ${LOG_DIR}"
+  exit 1
+fi
+
 
 # Exit if the package is not installed
 [ -x $DAEMON ] || exit 0
@@ -53,7 +62,7 @@ do_start()
 	start-stop-daemon --background --start --quiet --pidfile $PIDFILE --exec $DAEMON --test \
 		$USER || return 1
 	start-stop-daemon --background --make-pidfile --start --quiet --pidfile $PIDFILE \
-		--exec $DAEMON $USER -- $DAEMON_ARGS  || return 2
+                --exec /bin/bash -- -c "$DAEMON $USER $DAEMON_ARGS > ${LOG_FILE} 2>&1"  || return 2
 	# Add code here, if necessary, that waits for the process to be ready
 	# to handle requests from services started subsequently which depend
 	# on this one.  As a last resort, sleep for some time.

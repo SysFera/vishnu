@@ -48,3 +48,4 @@ override_dh_auto_install :
 	dh_install -pvishnu-config usr/etc/vishnu-sample.cfg etc/vishnu.cfg
 	dh_install -pvishnu-server etc/init.d/vishnu-dispatcher etc/init.d/
 	dh_install -pvishnu-server etc/init.d/vishnu-?mssed etc/init.d/
+	dh_install Java/impl/VishnuLib-*.jar lib

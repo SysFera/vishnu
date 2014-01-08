@@ -16,6 +16,7 @@ Prefix: /usr
 BuildRequires: gcc-c++ zeromq-devel cmake >= 2.8.5 mysql-devel postgresql-devel openssl-devel openldap-devel
 BuildRequires: boost-devel > 1.46 swig java-1.5.0-gcj java-1.5.0-gcj-devel python python-devel
 
+Provides: vishnulib
 
 %description
 VISHNU is modular and high-level middleware for tasks, files and information 
@@ -31,6 +32,7 @@ failures.
 
 %package -n libvishnu
 Summary: vishnu librairies
+Provides: vishnulib
 %description -n libvishnu
 common vishnu library files
 
@@ -94,6 +96,7 @@ make %{?_smp_mflags}
 
 install -d %{etc_dir}
 install -m 644 vishnu-sample.cfg %{etc_dir}/vishnu.cfg
+install -m 755 Java/impl/VishnuLib-%{version}.jar %{buildroot}/%_prefix/lib
 
 CUR_DIR=$PWD
 
@@ -145,6 +148,7 @@ rm -rf %{buildroot}
 %{_prefix}/lib/_VISHNU.*
 %{_prefix}/lib/libVISHNU.*
 %{_prefix}/lib/swig_output
+%{_prefix}/lib/VishnuLib-%{version}.jar
 
 
 %files client
