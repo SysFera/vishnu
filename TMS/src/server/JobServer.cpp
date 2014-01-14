@@ -586,7 +586,7 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
 void JobServer::recordJob2db()
 {
   if (mjob.getSessionId().empty()) {
-    throw TMSVishnuException(ERRCODE_AUTHENTERR, "Cannot record to database. Empty session id. Previous error: "+mjob.getErrorPath());
+    throw TMSVishnuException(ERRCODE_AUTHENTERR, "Error: invalid session id (empty)");
   }
   std::string sqlUpdate = "UPDATE job set ";
   sqlUpdate+="vsession_numsessionid='"+mdatabaseVishnu->escapeData(mjob.getSessionId())+"', ";
