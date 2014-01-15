@@ -35,6 +35,7 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   define_auth_identifier
   define_work_identifier
   ping
+  get_version
   )
 
 #declare all scripted-based commands

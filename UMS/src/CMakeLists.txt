@@ -25,6 +25,7 @@ set(client_SRCS client/SessionProxy.cpp
   client/UtilsProxy.cpp
   client/ObjectIdProxy.cpp
   client/PingerProxy.cpp
+  client/VersionProxy.cpp
   client/NetrcReader.cpp)
 
 set(cli_SRCS cli/utils.cpp
