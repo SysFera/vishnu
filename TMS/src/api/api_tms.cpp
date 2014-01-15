@@ -139,14 +139,12 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 /**
  * \brief The listJobs function gets a list of all submitted jobs
  * \param sessionKey : The session key
- * \param machineId : The id of the machine
  * \param listOfJobs : The constructed object list of jobs
  * \param options : Additional options for jobs listing
  * \return int : an error code
  */
 int
 vishnu::listJobs(const std::string& sessionKey,
-                 const std::string& machineId,
                  ListJobs& listOfJobs,
                  const ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
@@ -155,14 +153,15 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   UMS_Data::ListMachines machines;
   UMS_Data::Machine_ptr machine;
-  if (machineId == LIST_JOBS_ON_MACHINES_KEYWORD) {
+  const std::string machineId = options.getMachineId();
+  if (machineId.empty() || machineId == LIST_JOBS_ON_MACHINES_KEYWORD) {
     // First list all machines where the user has a local account
     UMS_Data::ListMachineOptions mopts;
     mopts.setListAllMachine(false);
     mopts.setMachineId("");
     listMachines(sessionKey, machines, mopts) ;
   } else {
-    // Here the list of machine will contain only a single machine
+    // Here the list of machine should contain only a single machine
     machine = new UMS_Data::Machine();
     machine->setMachineId(machineId);
     machines.getMachines().push_back(machine);

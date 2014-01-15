@@ -26,32 +26,31 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName : The name of the command
- * \param fjid: The id of the job
- * \param fnbCpu : The number of cpu needed
- * \param fstart : The start time of submission for the job
- * \param fend : The end of submission date for the job
- * \param fowner : The owner of the job
- * \param status : The status of the job
- * \param fpriority : The priority of the job
- * \param foutput : The output path
- * \param ferr : The error path
- * \param fqueue : The queue to set the job
- * \param fmutlStatus : lists the jobs with the specified status (combination of multiple status)
+ * \param setJobIdFct: Function to set the id of the job
+ * \param setNbCpuFct : Function to set the number of cpu allocated
+ * \param fromDate : The start time of submission for the job
+ * \param toDate : The end of submission date for the job
+ * \param setOwnerFct : Function to set the owner of the job
+ * \param status : Function to set the status of the job
+ * \param setPriorityFct : Function to set the priority of the job
+ * \param setQueueFct : Function to set the queue where the job where submitted
+ * \param setMutipleStatusesFct : lists the jobs with the specified status (combination of multiple status)
+ * \param setWorkIdFct: Function to set the job work id
  * \param configFile: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
 makeListJobOp(string pgName,
-              boost::function1<void, string>& fjid,
-              boost::function1<void, int>& fnbCpu,
+              boost::function1<void, string>& setJobIdFct,
+              boost::function1<void, int>& setNbCpuFct,
               string& fromDate,
               string& toDate,
-              boost::function1<void, string>& fowner,
+              boost::function1<void, string>& setOwnerFct,
               string& status,
-              boost::function1<void, TMS_Data::JobPriority>& fpriority,
-              boost::function1<void, string>& fqueue,
-              boost::function1<void, string>& fmutlStatus,
-              boost::function1<void, long long>& fworkId,
+              boost::function1<void, TMS_Data::JobPriority>& setPriorityFct,
+              boost::function1<void, string>& setQueueFct,
+              boost::function1<void, string>& setMutipleStatusesFct,
+              boost::function1<void, long long>& setWorkIdFct,
               string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
@@ -65,11 +64,11 @@ makeListJobOp(string pgName,
   opt->add("jobId,i",
            "The id of the job",
            CONFIG,
-           fjid);
+           setJobIdFct);
   opt->add("nbCpu,P",
            "The number of cpu needed by the job",
            CONFIG,
-           fnbCpu);
+           setNbCpuFct);
   opt->add("fromSubmitDate,d",
            "The start time for the job submission"
            "by providing the start date\n"
@@ -86,7 +85,7 @@ makeListJobOp(string pgName,
   opt->add("owner,u",
            "The owner of the job",
            CONFIG,
-           fowner);
+           setOwnerFct);
   opt->add("status,s",
            "The status of the job. The different values of job status are:\n"
            " 1 or S: for SUBMITTED job\n"
@@ -101,19 +100,19 @@ makeListJobOp(string pgName,
   opt->add("priority,p",
            "The priority of the job. The priority argument must be an integer between 1 and 5 inclusive",
            CONFIG,
-           fpriority);
+           setPriorityFct);
   opt->add("queue,q",
            "List the submitted jobs in this queue",
            CONFIG,
-           fqueue);
+           setQueueFct);
   opt->add("multipleStatus,S",
            "List the jobs with the specified status (combination of multiple status)",
            CONFIG,
-           fmutlStatus);
+           setMutipleStatusesFct);
   opt->add("workId,w",
            "Allows to gather information about jobs related to a given Work.",
            CONFIG,
-           fworkId);
+           setWorkIdFct);
 
   return opt;
 }
@@ -134,28 +133,29 @@ main (int argc, char* argv[]) {
   TMS_Data::ListJobsOptions jobOp;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fjid(boost::bind(&TMS_Data::ListJobsOptions::setJobId,boost::ref(jobOp),_1));
-  boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::ListJobsOptions::setNbCpu,boost::ref(jobOp),_1));
-  boost::function1<void,string> fown(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
-  boost::function1<void,TMS_Data::JobPriority> fpriority(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
-  boost::function1<void,string> fqueue(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
-  boost::function1<void,string> fmutlStatus(boost::bind(&TMS_Data::ListJobsOptions::setMultipleStatus,boost::ref(jobOp),_1));
-  boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::ListJobsOptions::setWorkId,boost::ref(jobOp),_1));
+  boost::function1<void,string> setJobIdFct(boost::bind(&TMS_Data::ListJobsOptions::setJobId,boost::ref(jobOp),_1));
+  boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::ListJobsOptions::setNbCpu,boost::ref(jobOp),_1));
+  boost::function1<void,string> setOwnerFct(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
+  boost::function1<void,TMS_Data::JobPriority> setPriorityFct(boost::bind(&TMS_Data::ListJobsOptions::setPriority,boost::ref(jobOp),_1));
+  boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::ListJobsOptions::setQueue,boost::ref(jobOp),_1));
+  boost::function1<void,string> setMultipleStatusesFct(boost::bind(&TMS_Data::ListJobsOptions::setMultipleStatus,boost::ref(jobOp),_1));
+  boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::ListJobsOptions::setWorkId,boost::ref(jobOp),_1));
+
   /*********** Out parameters *********************/
   TMS_Data::ListJobs job;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeListJobOp(argv[0],
-      fjid,
-      fnbCpu,
+      setJobIdFct,
+      setNbCpuFct,
       fromDate,
       toDate,
-      fown,
+      setOwnerFct,
       stateStr,
-      fpriority,
-      fqueue,
-      fmutlStatus,
-      fworkId,
+      setPriorityFct,
+      setQueueFct,
+      setMultipleStatusesFct,
+      setWorkIdFct,
                                                configFile);
 
   opt->add("isBatchJob,b",
