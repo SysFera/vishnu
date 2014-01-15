@@ -148,8 +148,8 @@ vishnu::listJobs(const std::string& sessionKey,
                  ListJobs& listOfJobs,
                  const ListJobsOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
 
   UMS_Data::ListMachines machines;
   UMS_Data::Machine_ptr machine;

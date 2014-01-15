@@ -85,7 +85,7 @@ makeSubJobOp(string pgName,
 
   // All cli options
   opt->add("machineId,r",
-           "Sets the target machine. Default is autom.",
+           "The id of the target machine. Default is autom.",
            CONFIG,
            setMachineIdFct);
   opt->add("name,n",
