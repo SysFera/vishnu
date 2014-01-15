@@ -250,11 +250,12 @@ vishnu::getMachineLoadPerformance(const string& sessionKey,
                           const UMS_Data::Machine_ptr& machine,
                           const TMS_Data::LoadCriterion_ptr& criterion) {
 
-  TMS_Data::ListJobs jobs ;
-  TMS_Data::ListJobsOptions jobOtions ;
+  TMS_Data::ListJobs jobs;
+  TMS_Data::ListJobsOptions jobOtions;
+  jobOtions.setMachineId(machine->getMachineId());
 
   try {
-    vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
+    vishnu::listJobs(sessionKey, jobs, jobOtions) ;
   } catch (SystemException& ex){
     throw SystemException (ERRCODE_RUNTIME_ERROR, ex.what());
   }
