@@ -115,6 +115,16 @@ namespace TMS_Data
          * \return Pointer to the object
          */
         virtual AddWorkOptions_ptr createAddWorkOptions();
+        /**
+         * \brief Creates a new object of class CancelOptions
+         * \return Pointer to the object
+         */
+        virtual CancelOptions_ptr createCancelOptions();
+        /**
+         * \brief Creates a new object of class JobOuputOptions
+         * \return Pointer to the object
+         */
+        virtual JobOuputOptions_ptr createJobOuputOptions();
 
         /**
          * \brief To create an object of a given class (reflective API)

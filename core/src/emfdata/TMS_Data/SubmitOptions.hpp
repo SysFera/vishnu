@@ -279,6 +279,17 @@ namespace TMS_Data
          **/
         void setPosix(::ecore::EBoolean _posix);
 
+        /**
+         * \brief To get the machineId
+         * \return The machineId attribute value
+         **/
+        ::ecore::EString const& getMachineId() const;
+        /**
+         * \brief To set the machineId
+         * \param _machineId The machineId value
+         **/
+        void setMachineId(::ecore::EString const& _machineId);
+
         // References
         /**
          * \brief To get the criterion
@@ -350,6 +361,8 @@ namespace TMS_Data
         ::ecore::EString m_specificParams;
 
         ::ecore::EBoolean m_posix;
+
+        ::ecore::EString m_machineId;
 
         // References
 

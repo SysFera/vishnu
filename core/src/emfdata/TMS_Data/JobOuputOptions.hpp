@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * TMS_Data/ProgressOptions.hpp
+ * TMS_Data/JobOuputOptions.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -18,14 +18,14 @@
  */
 
 /**
- * \file ProgressOptions.hpp
- * \brief The ProgressOptions class
+ * \file JobOuputOptions.hpp
+ * \brief The JobOuputOptions class
  * \author Generated file
  * \date 31/03/2011
  */
 
-#ifndef TMS_DATA_PROGRESSOPTIONS_HPP
-#define TMS_DATA_PROGRESSOPTIONS_HPP
+#ifndef TMS_DATA_JOBOUPUTOPTIONS_HPP
+#define TMS_DATA_JOBOUPUTOPTIONS_HPP
 
 #include <TMS_Data_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
@@ -34,7 +34,7 @@
 
 #include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(ProgressOptions_pre) START*/
+/*PROTECTED REGION ID(JobOuputOptions_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -43,21 +43,21 @@ namespace TMS_Data
 {
 
     /**
-     * \class ProgressOptions
-     * \brief Implementation of the ProgressOptions class
+     * \class JobOuputOptions
+     * \brief Implementation of the JobOuputOptions class
      */
-    class ProgressOptions: public virtual ::ecore::EObject
+    class JobOuputOptions: public virtual ::ecore::EObject
 
     {
     public:
         /**
-         * \brief The default constructor for ProgressOptions
+         * \brief The default constructor for JobOuputOptions
          */
-        ProgressOptions();
+        JobOuputOptions();
         /**
-         * \brief The destructor for ProgressOptions
+         * \brief The destructor for JobOuputOptions
          */
-        virtual ~ProgressOptions();
+        virtual ~JobOuputOptions();
 
         /**
          * \brief Internal method
@@ -68,28 +68,6 @@ namespace TMS_Data
 
 
         // Attributes
-        /**
-         * \brief To get the jobId
-         * \return The jobId attribute value
-         **/
-        ::ecore::EString const& getJobId() const;
-        /**
-         * \brief To set the jobId
-         * \param _jobId The jobId value
-         **/
-        void setJobId(::ecore::EString const& _jobId);
-
-        /**
-         * \brief To get the jobOwner
-         * \return The jobOwner attribute value
-         **/
-        ::ecore::EString const& getJobOwner() const;
-        /**
-         * \brief To set the jobOwner
-         * \param _jobOwner The jobOwner value
-         **/
-        void setJobOwner(::ecore::EString const& _jobOwner);
-
         /**
          * \brief To get the machineId
          * \return The machineId attribute value
@@ -104,7 +82,7 @@ namespace TMS_Data
         // References
 
 
-        /*PROTECTED REGION ID(ProgressOptions) START*/
+        /*PROTECTED REGION ID(JobOuputOptions) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -118,17 +96,13 @@ namespace TMS_Data
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(ProgressOptionsImpl) START*/
+        /*PROTECTED REGION ID(JobOuputOptionsImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
     protected:
         // Attributes
-
-        ::ecore::EString m_jobId;
-
-        ::ecore::EString m_jobOwner;
 
         ::ecore::EString m_machineId;
 
@@ -138,4 +112,4 @@ namespace TMS_Data
 
 } // TMS_Data
 
-#endif // TMS_DATA_PROGRESSOPTIONS_HPP
+#endif // TMS_DATA_JOBOUPUTOPTIONS_HPP
