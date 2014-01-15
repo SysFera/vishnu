@@ -41,7 +41,7 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   // first check if it's an automatic submission
   // if yes, select a machine according to the load criterion
-  if(mmachineId.compare(AUTOMATIC_SUBMIT_JOB_KEYWORD)==0) {
+  if (mmachineId.empty() || mmachineId == AUTOMATIC_SUBMIT_JOB_KEYWORD) {
     mmachineId = vishnu::findMachine(sessionKey, options_.getCriterion());
   }
 
@@ -173,7 +173,7 @@ JobProxy::cancelJob() {
     break;
   case 1:
     raiseCommunicationMsgException(
-      "VISHNU call failure, machineId may be invalid");
+          "VISHNU call failure, machineId may be invalid");
     break;
   default:
     raiseCommunicationMsgException("VISHNU call failure");
