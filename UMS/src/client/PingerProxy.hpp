@@ -11,8 +11,9 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 #include "Server.hpp"
+#include "VersionProxy.hpp"
 
-class PingerProxy{
+class PingerProxy : public VersionProxy{
 public :
   /**
    * \brief Default constructor
@@ -30,24 +31,6 @@ public :
    */
   void
   ping(const std::string& server, const std::string mid, std::map<std::string, std::string>& result);
-
-private:
-  /**
-   * \brief Return the longest service starting by the pattern service in the list
-   */
-  std::string
-  getLongestService(std::vector<std::string>& list, std::string service);
-  /**
-   * \brief Select the servers in server that correspond to the filter on the name and the machine and store them in result
-   * \param filterName filter on name
-   * \param allServer list of all servers
-   * \param result servers on the machine with this name
-   */
-  void
-  selectServerToPing(std::string filterName,
-                     std::vector<boost::shared_ptr<Server> >& allServers,
-                     std::vector<boost::shared_ptr<Server> >& result);
-
 
 };
 

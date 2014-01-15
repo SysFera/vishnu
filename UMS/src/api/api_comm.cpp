@@ -8,6 +8,7 @@
 #include <string>
 #include "api_comm.hpp"
 #include "PingerProxy.hpp"
+#include "VersionProxy.hpp"
 
 int
 vishnu::ping(std::map<std::string, std::string>& result,
@@ -15,6 +16,15 @@ vishnu::ping(std::map<std::string, std::string>& result,
              const std::string& mid){
   PingerProxy proxy;
   proxy.ping(server, mid, result);
+  return 0;
+}
+
+int
+vishnu::getVersion(std::map<std::string, std::string>& result,
+                   const std::string& server,
+                   const std::string& mid){
+  VersionProxy proxy;
+  proxy.getVersion(server, mid, result);
   return 0;
 }
 
