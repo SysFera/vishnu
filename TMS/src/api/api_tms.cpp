@@ -37,7 +37,6 @@ using namespace TMS_Data;
 /**
  * \brief The submitJob function submits job on a machine through a script pointed by scriptFilePath.
  * \param sessionKey : The session key
- * \param machineId : Is the id of the machine on which the job must be submitted
  * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
  * \param jobInfo : The  Job object containing the output information (ex: jobId and jobPath) of the job to submit
  * \param options : Is an instance of the class SubmitOptions. Each option is associated to a set operation (e.g: setNbCpu(...)) in the class.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
@@ -45,14 +44,12 @@ using namespace TMS_Data;
  */
 int
 vishnu::submitJob(const std::string& sessionKey,
-                  const std::string& machineId,
                   const std::string& scriptFilePath,
                   Job& jobInfo,
                   const SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
   //To check options value nbNodesAndCpuPerNode
   checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
 
@@ -63,7 +60,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
-  JobProxy jobProxy(sessionProxy , machineId , jobInfo);
+  JobProxy jobProxy(sessionProxy, options.getMachineId() , jobInfo);
 
   ListStrings fileParamsVec;
   std::string fileParamsStr = options.getFileParams() ;
