@@ -26,6 +26,7 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName : The name of the command
+ * \param machineId: Sets the target machine
  * \param fname: The name of the job
  * \param fqueue : The queue to set the job
  * \param fwallTime : The wall time for the job
@@ -46,11 +47,11 @@ using namespace vishnu;
  * \param loadCriterionStr : The load value to use (for now three criterions are be used:
  *  minimum number of waiting jobs, minimum number of running jobs and the total number of job )
  * \param configFile: Represents the VISHNU config file
- * \param configFile: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
 makeSubJobOp(string pgName,
+             boost::function1<void, string>& setMachineIdFct,
              boost::function1<void, string>& fname,
              boost::function1<void, string>& fqueue,
              boost::function1<void, int>& fmemory,
@@ -71,7 +72,8 @@ makeSubJobOp(string pgName,
              boost::function1<void, long long>& fworkId,
              string& loadCriterionStr,
              string& walltime,
-             string& configFile){
+             string& configFile)
+{
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -81,6 +83,10 @@ makeSubJobOp(string pgName,
            configFile);
 
   // All cli options
+  opt->add("machineId,r",
+           "sets the target machine. Default is autom.",
+           CONFIG,
+           setMachineIdFct);
   opt->add("name,n",
            "The name of the job",
            CONFIG,
@@ -190,7 +196,6 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string configFile;
   string sessionKey;
-  string machineId;
   string scriptPath;
   string walltime;
 
@@ -199,6 +204,7 @@ int main (int argc, char* argv[]){
 
   /******** Callback functions ******************/
   boost::function1<void,string> fname(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
+  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::SubmitOptions::setMachineId,boost::ref(subOp),_1));
   boost::function1<void,string> fqueue(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
   boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
   boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
@@ -218,30 +224,43 @@ int main (int argc, char* argv[]){
   vector<string> fileParamsVector ;
   std::string loadCriterionStr;
   /*********** Out parameters *********************/
-  TMS_Data::Job job;
 
+  TMS_Data::Job job;
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
-      fmemory, fnbCpu, fnbNodeAndCpu,
-      foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-      ftextParams, fspecificParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
-      loadCriterionStr, walltime, configFile);
+  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],
+      setMachineIdFct,
+      fname,
+      fqueue,
+      fmemory,
+      fnbCpu,
+      fnbNodeAndCpu,
+      foutput,
+      ferr,
+      fmailNotif,
+      fmailUser,
+      fgroup,
+      fworkingDir,
+      fcpuTime,
+      ftextParams,
+      fspecificParams,
+      ffileParams,
+      textParamsVector,
+      fileParamsVector,
+      fworkId,
+      loadCriterionStr,
+      walltime,
+      configFile);
 
   opt->add("selectQueueAutom,Q",
            "allows to select automatically a queue which has the number of nodes requested by the user.",
            CONFIG);
 
-  opt->add("machineId,i",
-           "represents the id of the machine",
-           HIDDEN,
-           machineId,1);
-  opt->setPosition("machineId",1);
-
   opt->add("scriptPath,z",
-           "represents the script of submission",
+           "The script to execute",
            HIDDEN,
-           scriptPath,1);
-  opt->setPosition("scriptPath",1);
+           scriptPath,
+           1);
+  opt->setPosition("scriptPath", 1);
 
 
   opt->add("posix,p",
@@ -324,7 +343,7 @@ int main (int argc, char* argv[]){
 
     // vishnu call : submit
     if(false==sessionKey.empty()){
-      submitJob(sessionKey, machineId, scriptPath, job, subOp);
+      submitJob(sessionKey, scriptPath, job, subOp);
     }
     displaySubmit(job);
   } catch(VishnuException& except){// catch all Vishnu runtime error
