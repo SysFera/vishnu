@@ -125,6 +125,12 @@ void ListJobsOptions::_initialize()
                 m_listAll);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MACHINEID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_machineId);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -207,6 +213,12 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
                 _newValue, m_listAll);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MACHINEID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_machineId);
+    }
+        return;
 
     }
     throw "Error";
@@ -217,8 +229,7 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__JOBID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobId);
+        return m_jobId != "";
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__NBCPU:
         return m_nbCpu != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__FROMSUBMITDATE:
@@ -244,6 +255,9 @@ void ListJobsOptions::eSet(::ecore::EInt _featureID,
         return m_workId != -1;
     case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__LISTALL:
         return m_listAll != false;
+    case ::TMS_Data::TMS_DataPackage::LISTJOBSOPTIONS__MACHINEID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_machineId);
 
     }
     throw "Error";

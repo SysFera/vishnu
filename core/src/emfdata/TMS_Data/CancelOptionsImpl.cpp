@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * TMS_Data/ProgressOptionsImpl.cpp
+ * TMS_Data/CancelOptionsImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ProgressOptions.hpp"
+#include "CancelOptions.hpp"
 #include <TMS_Data/TMS_DataPackage.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -28,18 +28,18 @@
 
 using namespace ::TMS_Data;
 
-/*PROTECTED REGION ID(ProgressOptionsImpl.cpp) START*/
+/*PROTECTED REGION ID(CancelOptionsImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void ProgressOptions::_initialize()
+void CancelOptions::_initialize()
 {
     // Supertypes
 
     // Rerefences
 
-    /*PROTECTED REGION ID(ProgressOptionsImpl__initialize) START*/
+    /*PROTECTED REGION ID(CancelOptionsImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -49,28 +49,27 @@ void ProgressOptions::_initialize()
 
 
 // EObject
-::ecore::EJavaObject ProgressOptions::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject CancelOptions::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobId);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobOwner);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_machineId);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_userId);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_all);
     }
         return _any;
 
@@ -78,53 +77,53 @@ void ProgressOptions::_initialize()
     throw "Error";
 }
 
-void ProgressOptions::eSet(::ecore::EInt _featureID,
+void CancelOptions::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobId);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobOwner);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_machineId);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_userId);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_all);
+    }
+        return;
 
     }
     throw "Error";
 }
 
-::ecore::EBoolean ProgressOptions::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean CancelOptions::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobId);
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobOwner);
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__MACHINEID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_machineId);
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_userId);
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_all);
 
     }
     throw "Error";
 }
 
-void ProgressOptions::eUnset(::ecore::EInt _featureID)
+void CancelOptions::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -133,11 +132,11 @@ void ProgressOptions::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr ProgressOptions::_eClass()
+::ecore::EClass_ptr CancelOptions::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =
-                    dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (::TMS_Data::TMS_DataPackage::_instance())->getProgressOptions();
+                    dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (::TMS_Data::TMS_DataPackage::_instance())->getCancelOptions();
     return _eclass;
 }
 

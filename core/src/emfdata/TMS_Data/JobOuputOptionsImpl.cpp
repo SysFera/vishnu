@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * TMS_Data/ProgressOptionsImpl.cpp
+ * TMS_Data/JobOuputOptionsImpl.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,7 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ProgressOptions.hpp"
+#include "JobOuputOptions.hpp"
 #include <TMS_Data/TMS_DataPackage.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -28,18 +28,18 @@
 
 using namespace ::TMS_Data;
 
-/*PROTECTED REGION ID(ProgressOptionsImpl.cpp) START*/
+/*PROTECTED REGION ID(JobOuputOptionsImpl.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
-void ProgressOptions::_initialize()
+void JobOuputOptions::_initialize()
 {
     // Supertypes
 
     // Rerefences
 
-    /*PROTECTED REGION ID(ProgressOptionsImpl__initialize) START*/
+    /*PROTECTED REGION ID(JobOuputOptionsImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -49,25 +49,13 @@ void ProgressOptions::_initialize()
 
 
 // EObject
-::ecore::EJavaObject ProgressOptions::eGet(::ecore::EInt _featureID,
+::ecore::EJavaObject JobOuputOptions::eGet(::ecore::EInt _featureID,
         ::ecore::EBoolean _resolve)
 {
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobId);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobOwner);
-    }
-        return _any;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_machineId);
@@ -78,24 +66,12 @@ void ProgressOptions::_initialize()
     throw "Error";
 }
 
-void ProgressOptions::eSet(::ecore::EInt _featureID,
+void JobOuputOptions::eSet(::ecore::EInt _featureID,
         ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobId);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-    {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobOwner);
-    }
-        return;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__MACHINEID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_machineId);
@@ -106,17 +82,11 @@ void ProgressOptions::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-::ecore::EBoolean ProgressOptions::eIsSet(::ecore::EInt _featureID)
+::ecore::EBoolean JobOuputOptions::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobId);
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobOwner);
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__MACHINEID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_machineId);
 
@@ -124,7 +94,7 @@ void ProgressOptions::eSet(::ecore::EInt _featureID,
     throw "Error";
 }
 
-void ProgressOptions::eUnset(::ecore::EInt _featureID)
+void JobOuputOptions::eUnset(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
@@ -133,11 +103,11 @@ void ProgressOptions::eUnset(::ecore::EInt _featureID)
     throw "Error";
 }
 
-::ecore::EClass_ptr ProgressOptions::_eClass()
+::ecore::EClass_ptr JobOuputOptions::_eClass()
 {
     static ::ecore::EClass_ptr
             _eclass =
-                    dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (::TMS_Data::TMS_DataPackage::_instance())->getProgressOptions();
+                    dynamic_cast< ::TMS_Data::TMS_DataPackage_ptr > (::TMS_Data::TMS_DataPackage::_instance())->getJobOuputOptions();
     return _eclass;
 }
 

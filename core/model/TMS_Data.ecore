@@ -312,9 +312,17 @@
         <details key="shortOption" value="p"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
+      <eAnnotations source="Description">
+        <details key="shortOption" value="r"/>
+        <details key="content" value="Sets the target machine"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ListJobsOptions" instanceTypeName="ListJobsOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="lists the job with the specified id"/>
         <details key="shortOption" value="i"/>
@@ -394,6 +402,12 @@
         <details key="shortOption" value="l"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="lists the jobs on the target machine"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="JobPriority" instanceTypeName="JobPriority">
     <eLiterals name="UNDEFINED" value="-1" literal="UNDEFINED"/>
@@ -425,6 +439,12 @@
       <eAnnotations source="Description">
         <details key="content" value="Specifies the owner of the job."/>
         <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Displays the progression of jobs on the given machine"/>
+        <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -806,6 +826,34 @@
       <eAnnotations source="Description">
         <details key="content" value="The current status of the job."/>
         <details key="shortOption" value="n"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CancelOptions" instanceTypeName="CancelOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Cancels only jobs submitted on the given machine"/>
+        <details key="shortOption" value="m"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Cancels only jobs submitted by the given user. Using this option requires root privileges"/>
+        <details key="shortOption" value="u"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value=" Requires root privileges. This option allows to cancel all  jobs submitted through vishnu. &#xA;This option can be combined with a filter on the target machine using the option --machineId"/>
+        <details key="shortOption" value="a"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JobOuputOptions" instanceTypeName="JobOuputOptions">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="Get the output of jobs on the given machine"/>
+        <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

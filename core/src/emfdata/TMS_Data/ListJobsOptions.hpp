@@ -201,6 +201,17 @@ namespace TMS_Data
          **/
         void setListAll(::ecore::EBoolean _listAll);
 
+        /**
+         * \brief To get the machineId
+         * \return The machineId attribute value
+         **/
+        ::ecore::EString const& getMachineId() const;
+        /**
+         * \brief To set the machineId
+         * \param _machineId The machineId value
+         **/
+        void setMachineId(::ecore::EString const& _machineId);
+
         // References
 
 
@@ -249,6 +260,8 @@ namespace TMS_Data
         ::ecore::ELong m_workId;
 
         ::ecore::EBoolean m_listAll;
+
+        ::ecore::EString m_machineId;
 
         // References
 
