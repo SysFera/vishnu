@@ -54,94 +54,104 @@ namespace TMS_Data
         static const int ADDWORKOPTIONS = 0;
 
         /**
+         * \brief Constant for CancelOptions class
+         */
+        static const int CANCELOPTIONS = 1;
+
+        /**
          * \brief Constant for Job class
          */
-        static const int JOB = 1;
+        static const int JOB = 2;
+
+        /**
+         * \brief Constant for JobOuputOptions class
+         */
+        static const int JOBOUPUTOPTIONS = 3;
 
         /**
          * \brief Constant for JobPriority class
          */
-        static const int JOBPRIORITY = 2;
+        static const int JOBPRIORITY = 4;
 
         /**
          * \brief Constant for JobResult class
          */
-        static const int JOBRESULT = 3;
+        static const int JOBRESULT = 5;
 
         /**
          * \brief Constant for JobStatus class
          */
-        static const int JOBSTATUS = 4;
+        static const int JOBSTATUS = 6;
 
         /**
          * \brief Constant for ListJobResults class
          */
-        static const int LISTJOBRESULTS = 5;
+        static const int LISTJOBRESULTS = 7;
 
         /**
          * \brief Constant for ListJobs class
          */
-        static const int LISTJOBS = 6;
+        static const int LISTJOBS = 8;
 
         /**
          * \brief Constant for ListJobsOptions class
          */
-        static const int LISTJOBSOPTIONS = 7;
+        static const int LISTJOBSOPTIONS = 9;
 
         /**
          * \brief Constant for ListProgression class
          */
-        static const int LISTPROGRESSION = 8;
+        static const int LISTPROGRESSION = 10;
 
         /**
          * \brief Constant for ListQueues class
          */
-        static const int LISTQUEUES = 9;
+        static const int LISTQUEUES = 11;
 
         /**
          * \brief Constant for LoadCriterion class
          */
-        static const int LOADCRITERION = 10;
+        static const int LOADCRITERION = 12;
 
         /**
          * \brief Constant for LoadType class
          */
-        static const int LOADTYPE = 11;
+        static const int LOADTYPE = 13;
 
         /**
          * \brief Constant for Progression class
          */
-        static const int PROGRESSION = 12;
+        static const int PROGRESSION = 14;
 
         /**
          * \brief Constant for ProgressOptions class
          */
-        static const int PROGRESSOPTIONS = 13;
+        static const int PROGRESSOPTIONS = 15;
 
         /**
          * \brief Constant for Queue class
          */
-        static const int QUEUE = 14;
+        static const int QUEUE = 16;
 
         /**
          * \brief Constant for QueuePriority class
          */
-        static const int QUEUEPRIORITY = 15;
+        static const int QUEUEPRIORITY = 17;
 
         /**
          * \brief Constant for QueueStatus class
          */
-        static const int QUEUESTATUS = 16;
+        static const int QUEUESTATUS = 18;
 
         /**
          * \brief Constant for SubmitOptions class
          */
-        static const int SUBMITOPTIONS = 17;
+        static const int SUBMITOPTIONS = 19;
 
         /**
          * \brief Constant for Work class
          */
-        static const int WORK = 18;
+        static const int WORK = 20;
 
         /**
          * \brief Constant for JOB__SESSIONID feature
@@ -404,364 +414,399 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__POSIX = 51;
 
         /**
+         * \brief Constant for SUBMITOPTIONS__MACHINEID feature
+         */
+        static const int SUBMITOPTIONS__MACHINEID = 52;
+
+        /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
          */
-        static const int LISTJOBSOPTIONS__JOBID = 52;
+        static const int LISTJOBSOPTIONS__JOBID = 53;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__NBCPU feature
          */
-        static const int LISTJOBSOPTIONS__NBCPU = 53;
+        static const int LISTJOBSOPTIONS__NBCPU = 54;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__FROMSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 54;
+        static const int LISTJOBSOPTIONS__FROMSUBMITDATE = 55;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__TOSUBMITDATE feature
          */
-        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 55;
+        static const int LISTJOBSOPTIONS__TOSUBMITDATE = 56;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__OWNER feature
          */
-        static const int LISTJOBSOPTIONS__OWNER = 56;
+        static const int LISTJOBSOPTIONS__OWNER = 57;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__STATUS feature
          */
-        static const int LISTJOBSOPTIONS__STATUS = 57;
+        static const int LISTJOBSOPTIONS__STATUS = 58;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__PRIORITY feature
          */
-        static const int LISTJOBSOPTIONS__PRIORITY = 58;
+        static const int LISTJOBSOPTIONS__PRIORITY = 59;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__QUEUE feature
          */
-        static const int LISTJOBSOPTIONS__QUEUE = 59;
+        static const int LISTJOBSOPTIONS__QUEUE = 60;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__MULTIPLESTATUS feature
          */
-        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 60;
+        static const int LISTJOBSOPTIONS__MULTIPLESTATUS = 61;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__BATCHJOB feature
          */
-        static const int LISTJOBSOPTIONS__BATCHJOB = 61;
+        static const int LISTJOBSOPTIONS__BATCHJOB = 62;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__WORKID feature
          */
-        static const int LISTJOBSOPTIONS__WORKID = 62;
+        static const int LISTJOBSOPTIONS__WORKID = 63;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__LISTALL feature
          */
-        static const int LISTJOBSOPTIONS__LISTALL = 63;
+        static const int LISTJOBSOPTIONS__LISTALL = 64;
+
+        /**
+         * \brief Constant for LISTJOBSOPTIONS__MACHINEID feature
+         */
+        static const int LISTJOBSOPTIONS__MACHINEID = 65;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBID feature
          */
-        static const int PROGRESSOPTIONS__JOBID = 64;
+        static const int PROGRESSOPTIONS__JOBID = 66;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 65;
+        static const int PROGRESSOPTIONS__JOBOWNER = 67;
+
+        /**
+         * \brief Constant for PROGRESSOPTIONS__MACHINEID feature
+         */
+        static const int PROGRESSOPTIONS__MACHINEID = 68;
 
         /**
          * \brief Constant for LISTPROGRESSION__NBJOBS feature
          */
-        static const int LISTPROGRESSION__NBJOBS = 66;
+        static const int LISTPROGRESSION__NBJOBS = 69;
 
         /**
          * \brief Constant for LISTPROGRESSION__PROGRESS feature
          */
-        static const int LISTPROGRESSION__PROGRESS = 67;
+        static const int LISTPROGRESSION__PROGRESS = 70;
 
         /**
          * \brief Constant for PROGRESSION__JOBID feature
          */
-        static const int PROGRESSION__JOBID = 68;
+        static const int PROGRESSION__JOBID = 71;
 
         /**
          * \brief Constant for PROGRESSION__JOBNAME feature
          */
-        static const int PROGRESSION__JOBNAME = 69;
+        static const int PROGRESSION__JOBNAME = 72;
 
         /**
          * \brief Constant for PROGRESSION__WALLTIME feature
          */
-        static const int PROGRESSION__WALLTIME = 70;
+        static const int PROGRESSION__WALLTIME = 73;
 
         /**
          * \brief Constant for PROGRESSION__STARTTIME feature
          */
-        static const int PROGRESSION__STARTTIME = 71;
+        static const int PROGRESSION__STARTTIME = 74;
 
         /**
          * \brief Constant for PROGRESSION__ENDTIME feature
          */
-        static const int PROGRESSION__ENDTIME = 72;
+        static const int PROGRESSION__ENDTIME = 75;
 
         /**
          * \brief Constant for PROGRESSION__PERCENT feature
          */
-        static const int PROGRESSION__PERCENT = 73;
+        static const int PROGRESSION__PERCENT = 76;
 
         /**
          * \brief Constant for PROGRESSION__STATUS feature
          */
-        static const int PROGRESSION__STATUS = 74;
+        static const int PROGRESSION__STATUS = 77;
 
         /**
          * \brief Constant for LISTQUEUES__NBQUEUES feature
          */
-        static const int LISTQUEUES__NBQUEUES = 75;
+        static const int LISTQUEUES__NBQUEUES = 78;
 
         /**
          * \brief Constant for LISTQUEUES__QUEUES feature
          */
-        static const int LISTQUEUES__QUEUES = 76;
+        static const int LISTQUEUES__QUEUES = 79;
 
         /**
          * \brief Constant for QUEUE__NAME feature
          */
-        static const int QUEUE__NAME = 77;
+        static const int QUEUE__NAME = 80;
 
         /**
          * \brief Constant for QUEUE__MAXJOBCPU feature
          */
-        static const int QUEUE__MAXJOBCPU = 78;
+        static const int QUEUE__MAXJOBCPU = 81;
 
         /**
          * \brief Constant for QUEUE__MAXPROCCPU feature
          */
-        static const int QUEUE__MAXPROCCPU = 79;
+        static const int QUEUE__MAXPROCCPU = 82;
 
         /**
          * \brief Constant for QUEUE__MEMORY feature
          */
-        static const int QUEUE__MEMORY = 80;
+        static const int QUEUE__MEMORY = 83;
 
         /**
          * \brief Constant for QUEUE__WALLTIME feature
          */
-        static const int QUEUE__WALLTIME = 81;
+        static const int QUEUE__WALLTIME = 84;
 
         /**
          * \brief Constant for QUEUE__NODE feature
          */
-        static const int QUEUE__NODE = 82;
+        static const int QUEUE__NODE = 85;
 
         /**
          * \brief Constant for QUEUE__NBRUNNINGJOBS feature
          */
-        static const int QUEUE__NBRUNNINGJOBS = 83;
+        static const int QUEUE__NBRUNNINGJOBS = 86;
 
         /**
          * \brief Constant for QUEUE__NBJOBSINQUEUE feature
          */
-        static const int QUEUE__NBJOBSINQUEUE = 84;
+        static const int QUEUE__NBJOBSINQUEUE = 87;
 
         /**
          * \brief Constant for QUEUE__STATE feature
          */
-        static const int QUEUE__STATE = 85;
+        static const int QUEUE__STATE = 88;
 
         /**
          * \brief Constant for QUEUE__PRIORITY feature
          */
-        static const int QUEUE__PRIORITY = 86;
+        static const int QUEUE__PRIORITY = 89;
 
         /**
          * \brief Constant for QUEUE__DESCRIPTION feature
          */
-        static const int QUEUE__DESCRIPTION = 87;
+        static const int QUEUE__DESCRIPTION = 90;
 
         /**
          * \brief Constant for JOBRESULT__JOBID feature
          */
-        static const int JOBRESULT__JOBID = 88;
+        static const int JOBRESULT__JOBID = 91;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTPATH feature
          */
-        static const int JOBRESULT__OUTPUTPATH = 89;
+        static const int JOBRESULT__OUTPUTPATH = 92;
 
         /**
          * \brief Constant for JOBRESULT__ERRORPATH feature
          */
-        static const int JOBRESULT__ERRORPATH = 90;
+        static const int JOBRESULT__ERRORPATH = 93;
 
         /**
          * \brief Constant for JOBRESULT__OUTPUTDIR feature
          */
-        static const int JOBRESULT__OUTPUTDIR = 91;
+        static const int JOBRESULT__OUTPUTDIR = 94;
 
         /**
          * \brief Constant for LISTJOBRESULTS__NBJOBS feature
          */
-        static const int LISTJOBRESULTS__NBJOBS = 92;
+        static const int LISTJOBRESULTS__NBJOBS = 95;
 
         /**
          * \brief Constant for LISTJOBRESULTS__RESULTS feature
          */
-        static const int LISTJOBRESULTS__RESULTS = 93;
+        static const int LISTJOBRESULTS__RESULTS = 96;
 
         /**
          * \brief Constant for LOADCRITERION__LOADTYPE feature
          */
-        static const int LOADCRITERION__LOADTYPE = 94;
+        static const int LOADCRITERION__LOADTYPE = 97;
 
         /**
          * \brief Constant for WORK__SESSIONID feature
          */
-        static const int WORK__SESSIONID = 95;
+        static const int WORK__SESSIONID = 98;
 
         /**
          * \brief Constant for WORK__APPLICATIONID feature
          */
-        static const int WORK__APPLICATIONID = 96;
+        static const int WORK__APPLICATIONID = 99;
 
         /**
          * \brief Constant for WORK__SUBJECT feature
          */
-        static const int WORK__SUBJECT = 97;
+        static const int WORK__SUBJECT = 100;
 
         /**
          * \brief Constant for WORK__PRIORITY feature
          */
-        static const int WORK__PRIORITY = 98;
+        static const int WORK__PRIORITY = 101;
 
         /**
          * \brief Constant for WORK__STATUS feature
          */
-        static const int WORK__STATUS = 99;
+        static const int WORK__STATUS = 102;
 
         /**
          * \brief Constant for WORK__ENDDATE feature
          */
-        static const int WORK__ENDDATE = 100;
+        static const int WORK__ENDDATE = 103;
 
         /**
          * \brief Constant for WORK__OWNER feature
          */
-        static const int WORK__OWNER = 101;
+        static const int WORK__OWNER = 104;
 
         /**
          * \brief Constant for WORK__ESTIMATEDHOUR feature
          */
-        static const int WORK__ESTIMATEDHOUR = 102;
+        static const int WORK__ESTIMATEDHOUR = 105;
 
         /**
          * \brief Constant for WORK__DONERATIO feature
          */
-        static const int WORK__DONERATIO = 103;
+        static const int WORK__DONERATIO = 106;
 
         /**
          * \brief Constant for WORK__DESCRIPTION feature
          */
-        static const int WORK__DESCRIPTION = 104;
+        static const int WORK__DESCRIPTION = 107;
 
         /**
          * \brief Constant for WORK__DATECREATED feature
          */
-        static const int WORK__DATECREATED = 105;
+        static const int WORK__DATECREATED = 108;
 
         /**
          * \brief Constant for WORK__DATEENDED feature
          */
-        static const int WORK__DATEENDED = 106;
+        static const int WORK__DATEENDED = 109;
 
         /**
          * \brief Constant for WORK__DATESTARTED feature
          */
-        static const int WORK__DATESTARTED = 107;
+        static const int WORK__DATESTARTED = 110;
 
         /**
          * \brief Constant for WORK__LASTUPDATED feature
          */
-        static const int WORK__LASTUPDATED = 108;
+        static const int WORK__LASTUPDATED = 111;
 
         /**
          * \brief Constant for WORK__WORKID feature
          */
-        static const int WORK__WORKID = 109;
+        static const int WORK__WORKID = 112;
 
         /**
          * \brief Constant for WORK__PROJECTID feature
          */
-        static const int WORK__PROJECTID = 110;
+        static const int WORK__PROJECTID = 113;
 
         /**
          * \brief Constant for WORK__SUBMITDATE feature
          */
-        static const int WORK__SUBMITDATE = 111;
+        static const int WORK__SUBMITDATE = 114;
 
         /**
          * \brief Constant for WORK__MACHINEID feature
          */
-        static const int WORK__MACHINEID = 112;
+        static const int WORK__MACHINEID = 115;
 
         /**
          * \brief Constant for WORK__NBCPU feature
          */
-        static const int WORK__NBCPU = 113;
+        static const int WORK__NBCPU = 116;
 
         /**
          * \brief Constant for WORK__DUEDATE feature
          */
-        static const int WORK__DUEDATE = 114;
+        static const int WORK__DUEDATE = 117;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__APPLICATIONID feature
          */
-        static const int ADDWORKOPTIONS__APPLICATIONID = 115;
+        static const int ADDWORKOPTIONS__APPLICATIONID = 118;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__SUBJECT feature
          */
-        static const int ADDWORKOPTIONS__SUBJECT = 116;
+        static const int ADDWORKOPTIONS__SUBJECT = 119;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__PRIORITY feature
          */
-        static const int ADDWORKOPTIONS__PRIORITY = 117;
+        static const int ADDWORKOPTIONS__PRIORITY = 120;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__OWNER feature
          */
-        static const int ADDWORKOPTIONS__OWNER = 118;
+        static const int ADDWORKOPTIONS__OWNER = 121;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__ESTIMATEDHOUR feature
          */
-        static const int ADDWORKOPTIONS__ESTIMATEDHOUR = 119;
+        static const int ADDWORKOPTIONS__ESTIMATEDHOUR = 122;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__DESCRIPTION feature
          */
-        static const int ADDWORKOPTIONS__DESCRIPTION = 120;
+        static const int ADDWORKOPTIONS__DESCRIPTION = 123;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__PROJECTID feature
          */
-        static const int ADDWORKOPTIONS__PROJECTID = 121;
+        static const int ADDWORKOPTIONS__PROJECTID = 124;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__MACHINEID feature
          */
-        static const int ADDWORKOPTIONS__MACHINEID = 122;
+        static const int ADDWORKOPTIONS__MACHINEID = 125;
 
         /**
          * \brief Constant for ADDWORKOPTIONS__NBCPU feature
          */
-        static const int ADDWORKOPTIONS__NBCPU = 123;
+        static const int ADDWORKOPTIONS__NBCPU = 126;
+
+        /**
+         * \brief Constant for CANCELOPTIONS__MACHINEID feature
+         */
+        static const int CANCELOPTIONS__MACHINEID = 127;
+
+        /**
+         * \brief Constant for CANCELOPTIONS__USERID feature
+         */
+        static const int CANCELOPTIONS__USERID = 128;
+
+        /**
+         * \brief Constant for CANCELOPTIONS__ALL feature
+         */
+        static const int CANCELOPTIONS__ALL = 129;
+
+        /**
+         * \brief Constant for JOBOUPUTOPTIONS__MACHINEID feature
+         */
+        static const int JOBOUPUTOPTIONS__MACHINEID = 130;
 
         // EClassifiers methods
 
@@ -878,6 +923,18 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EClass_ptr getAddWorkOptions();
+
+        /**
+         * \brief Returns the reflective object for class CancelOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getCancelOptions();
+
+        /**
+         * \brief Returns the reflective object for class JobOuputOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EClass_ptr getJobOuputOptions();
 
         // EStructuralFeatures methods
 
@@ -1195,6 +1252,12 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__posix();
 
         /**
+         * \brief Returns the reflective object for feature machineId of class SubmitOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__machineId();
+
+        /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
          * \return A pointer to the reflective object
          */
@@ -1267,6 +1330,12 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getListJobsOptions__listAll();
 
         /**
+         * \brief Returns the reflective object for feature machineId of class ListJobsOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getListJobsOptions__machineId();
+
+        /**
          * \brief Returns the reflective object for feature jobId of class ProgressOptions
          * \return A pointer to the reflective object
          */
@@ -1277,6 +1346,12 @@ namespace TMS_Data
          * \return A pointer to the reflective object
          */
         virtual ::ecore::EAttribute_ptr getProgressOptions__jobOwner();
+
+        /**
+         * \brief Returns the reflective object for feature machineId of class ProgressOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getProgressOptions__machineId();
 
         /**
          * \brief Returns the reflective object for feature nbJobs of class ListProgression
@@ -1626,6 +1701,30 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getAddWorkOptions__nbCPU();
 
+        /**
+         * \brief Returns the reflective object for feature machineId of class CancelOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getCancelOptions__machineId();
+
+        /**
+         * \brief Returns the reflective object for feature userId of class CancelOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getCancelOptions__userId();
+
+        /**
+         * \brief Returns the reflective object for feature all of class CancelOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getCancelOptions__all();
+
+        /**
+         * \brief Returns the reflective object for feature machineId of class JobOuputOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJobOuputOptions__machineId();
+
     protected:
 
         /**
@@ -1706,6 +1805,16 @@ namespace TMS_Data
          * \brief The instance for the class AddWorkOptions
          */
         ::ecore::EClass_ptr m_AddWorkOptionsEClass;
+
+        /**
+         * \brief The instance for the class CancelOptions
+         */
+        ::ecore::EClass_ptr m_CancelOptionsEClass;
+
+        /**
+         * \brief The instance for the class JobOuputOptions
+         */
+        ::ecore::EClass_ptr m_JobOuputOptionsEClass;
 
         // EEnuminstances 
 
@@ -2000,6 +2109,11 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__posix;
 
         /**
+         * \brief The instance for the feature machineId of class SubmitOptions
+         */
+        ::ecore::EAttribute_ptr m_SubmitOptions__machineId;
+
+        /**
          * \brief The instance for the feature jobId of class ListJobsOptions
          */
         ::ecore::EAttribute_ptr m_ListJobsOptions__jobId;
@@ -2060,6 +2174,11 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_ListJobsOptions__listAll;
 
         /**
+         * \brief The instance for the feature machineId of class ListJobsOptions
+         */
+        ::ecore::EAttribute_ptr m_ListJobsOptions__machineId;
+
+        /**
          * \brief The instance for the feature jobId of class ProgressOptions
          */
         ::ecore::EAttribute_ptr m_ProgressOptions__jobId;
@@ -2068,6 +2187,11 @@ namespace TMS_Data
          * \brief The instance for the feature jobOwner of class ProgressOptions
          */
         ::ecore::EAttribute_ptr m_ProgressOptions__jobOwner;
+
+        /**
+         * \brief The instance for the feature machineId of class ProgressOptions
+         */
+        ::ecore::EAttribute_ptr m_ProgressOptions__machineId;
 
         /**
          * \brief The instance for the feature nbJobs of class ListProgression
@@ -2358,6 +2482,26 @@ namespace TMS_Data
          * \brief The instance for the feature nbCPU of class AddWorkOptions
          */
         ::ecore::EAttribute_ptr m_AddWorkOptions__nbCPU;
+
+        /**
+         * \brief The instance for the feature machineId of class CancelOptions
+         */
+        ::ecore::EAttribute_ptr m_CancelOptions__machineId;
+
+        /**
+         * \brief The instance for the feature userId of class CancelOptions
+         */
+        ::ecore::EAttribute_ptr m_CancelOptions__userId;
+
+        /**
+         * \brief The instance for the feature all of class CancelOptions
+         */
+        ::ecore::EAttribute_ptr m_CancelOptions__all;
+
+        /**
+         * \brief The instance for the feature machineId of class JobOuputOptions
+         */
+        ::ecore::EAttribute_ptr m_JobOuputOptions__machineId;
 
     };
 

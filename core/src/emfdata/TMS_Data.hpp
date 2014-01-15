@@ -41,6 +41,8 @@
 #include "TMS_Data/LoadCriterion.hpp"
 #include "TMS_Data/Work.hpp"
 #include "TMS_Data/AddWorkOptions.hpp"
+#include "TMS_Data/CancelOptions.hpp"
+#include "TMS_Data/JobOuputOptions.hpp"
 
 // Package & Factory
 #include "TMS_Data/TMS_DataPackage.hpp"
