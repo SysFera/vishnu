@@ -97,7 +97,7 @@ makeListJobOp(string pgName,
            " 2 or Q: QUEUED job\n"
            " 3 or W: WAITING job\n"
            " 4 or R: RUNNING job\n"
-           " 5 or T: TERMINATED job\n"
+           " 5 or T: COMPLETED job\n"
            " 6 or C: CANCELED job\n"
            " 7 or D: DOWNLOADED job"
            " 8 or F: FAILED job",
