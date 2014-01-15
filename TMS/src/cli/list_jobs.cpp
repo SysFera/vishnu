@@ -41,6 +41,7 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeListJobOp(string pgName,
+              boost::function1<void, string>& setMachineIdFct,
               boost::function1<void, string>& setJobIdFct,
               boost::function1<void, int>& setNbCpuFct,
               string& fromDate,
@@ -61,6 +62,10 @@ makeListJobOp(string pgName,
            configFile);
 
   // All cli obligatory parameters
+  opt->add("machineId,m",
+           "The id of the target machine",
+           CONFIG,
+           setMachineIdFct);
   opt->add("jobId,i",
            "The id of the job",
            CONFIG,
@@ -87,14 +92,15 @@ makeListJobOp(string pgName,
            CONFIG,
            setOwnerFct);
   opt->add("status,s",
-           "The status of the job. The different values of job status are:\n"
-           " 1 or S: for SUBMITTED job\n"
-           " 2 or Q: for QUEUED job\n"
-           " 3 or W: for WAITING job\n"
-           " 4 or R: for RUNNING job\n"
-           " 5 or T: for TERMINATED job\n"
-           " 6 or C: for CANCELED job\n"
-           " 7 or D: for DOWNLOADED job",
+           "The status of the job:\n"
+           " 1 or S: SUBMITTED/PENDING job\n"
+           " 2 or Q: QUEUED job\n"
+           " 3 or W: WAITING job\n"
+           " 4 or R: RUNNING job\n"
+           " 5 or T: TERMINATED job\n"
+           " 6 or C: CANCELED job\n"
+           " 7 or D: DOWNLOADED job"
+           " 8 or F: FAILED job",
            CONFIG,
            status);
   opt->add("priority,p",
@@ -123,16 +129,17 @@ main (int argc, char* argv[]) {
   /******* Parsed value containers ****************/
   string configFile;
   string sessionKey;
-  string machineId;
   string stateStr = "";
   int state;
   std::string fromDate;
   std::string toDate;
 
+  int retCode = 0;
   /********** EMF data ************/
   TMS_Data::ListJobsOptions jobOp;
 
   /******** Callback functions ******************/
+  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::ListJobsOptions::setMachineId,boost::ref(jobOp),_1));
   boost::function1<void,string> setJobIdFct(boost::bind(&TMS_Data::ListJobsOptions::setJobId,boost::ref(jobOp),_1));
   boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::ListJobsOptions::setNbCpu,boost::ref(jobOp),_1));
   boost::function1<void,string> setOwnerFct(boost::bind(&TMS_Data::ListJobsOptions::setOwner,boost::ref(jobOp),_1));
@@ -146,6 +153,7 @@ main (int argc, char* argv[]) {
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeListJobOp(argv[0],
+      setMachineIdFct,
       setJobIdFct,
       setNbCpuFct,
       fromDate,
@@ -156,7 +164,7 @@ main (int argc, char* argv[]) {
       setQueueFct,
       setMultipleStatusesFct,
       setWorkIdFct,
-                                               configFile);
+      configFile);
 
   opt->add("isBatchJob,b",
            "allows to select all jobs submitted  through the underlying"
@@ -167,14 +175,8 @@ main (int argc, char* argv[]) {
            "allows to list all information",
            CONFIG);
 
-  opt->add("machineId,m",
-           "represents the id of the machine",
-           HIDDEN,
-           machineId,1);
-  opt->setPosition("machineId",1);
-
+  // pre-process options
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   // Process command
@@ -244,14 +246,9 @@ main (int argc, char* argv[]) {
       return  CLI_ERROR_COMMUNICATION ;
     }
 
-    // get the sessionKey
-    sessionKey = getLastSessionKey(getppid());
-
-    // VISHNU call : submit
-    if (!sessionKey.empty()) {
-      listJobs(sessionKey, machineId, job, jobOp);
-    }
-    if (jobOp.getOwner().size() == 0 && jobOp.getJobId().size() == 0  && jobOp.getNbCpu() <= 0
+    // Process list job
+    listJobs(getLastSessionKey(getppid()), job, jobOp);
+    if (jobOp.getOwner().empty() && jobOp.getJobId().empty()  && jobOp.getNbCpu() <= 0
         && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 && !jobOp.isListAll()) {
       std::cout << job << std::endl;
     } else {
@@ -264,16 +261,15 @@ main (int argc, char* argv[]) {
     } else {
       msg += " ["+e.getMsgComp()+"]";
     }
-
     errorUsage(argv[0], msg,EXECERROR);
     //check the bad session key
     if (checkBadSessionKeyError(e)) {
       removeBadSessionKeyFromFile(getppid());
     }
-    return e.getMsgI() ;
+    retCode = e.getMsgI();
   } catch(std::exception& e) {// catch all std runtime error
     errorUsage(argv[0],e.what());
-    return CLI_ERROR_RUNTIME;
+    retCode = CLI_ERROR_RUNTIME;
   }
-  return 0;
+  return retCode;
 }
