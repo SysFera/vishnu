@@ -81,14 +81,12 @@ namespace vishnu {
   /**
   * \brief The listJobs function gets a list of all submitted jobs
   * \param sessionKey : The session key
-  * \param machineId : The id of the machine
   * \param listOfJobs : The constructed object list of jobs
   * \param options : Additional options for jobs listing
   * \return int : an error code
   */
   int
   listJobs(const std::string& sessionKey,
-           const std::string& machineId,
            TMS_Data::ListJobs& listOfJobs,
            const TMS_Data::ListJobsOptions& options = TMS_Data::ListJobsOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
