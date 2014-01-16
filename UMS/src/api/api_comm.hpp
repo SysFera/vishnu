@@ -36,6 +36,15 @@ namespace vishnu {
   getServerVersion(std::map<std::string, std::string>& result,
                    const std::string& serverName = "",
                    const std::string& mid = "");
+  /**
+   * \brief Get the list of the servers in the dispatcher
+   * \param result The list of the servers
+   * \param mid a machineId (optionnal)
+   * \return 0 if everything is OK, another value otherwise
+   */
+  int
+  listServers(std::map<std::string, std::string>& result,
+              const std::string& mid = "");
 }
 
 
