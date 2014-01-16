@@ -31,6 +31,7 @@
 %include "std_string.i"
 %include "std_except.i"
 %include "std_vector.i"
+%include "std_map.i"
 #ifdef SWIGPYTHON
 %include "pyname_compat.i"
 #endif
@@ -164,6 +165,7 @@
 #include "FMSVishnuException.hpp"
 #ifdef COMPILE_UMS
 #include "api_ums.hpp"
+#include "api_comm.hpp"
 #endif
 #ifdef COMPILE_TMS
 #include "api_tms.hpp"
@@ -321,6 +323,40 @@ EMFTYPE(FileTransfer,FMS_Data,getFileTransfers,FileTransferList, fileTransferLis
   $result = SWIG_Python_AppendOutput($result, o);
 }
 
+namespace std {
+  %template(map_string_string) std::map<std::string, std::string>;
+}
+// Remove the list object from the input param for ping/version
+%typemap(in, numinputs=0) std::map<std::string, std::string>& result (std::map<std::string, std::string> temp) {
+  $1 = &temp;
+ }
+// c++ map -> python dict
+%typemap(argout) std::map<std::string, std::string>& result{
+  // TODO
+  //  PyDictObject *o = new PyDictObject($1);
+  //  $result = SWIG_Python_AppendOutput($result, o);
+  // Creating the out tupple (res code + list)
+  PyObject * tup = PyTuple_New(2);
+  // Setting the result code of the function in the tupple
+  PyTuple_SetItem(tup, 0, $result);
+  // Creating the list to receive the object
+  PyObject *mylist = PyDict_New();
+  // Instanciating a list object
+  std::map<std::string, std::string>::iterator iter;
+  // For each item of the list
+  for (iter = $1->begin(); iter != $1->end() ; ++iter) {
+
+    // Instanciating an object to copy each item of the C++ list (because emf destroys its objects at the end)
+    PyObject *key = PyString_FromString((iter->first).c_str());
+    PyObject *value = PyString_FromString((iter->second).c_str());
+    // Convert it to a pyobject
+    PyDict_SetItem(mylist,key, value);
+  }
+  // Add the list to the output tuples
+  PyTuple_SetItem(tup, 1, mylist);
+  // The result is the tupple
+  $result = tup;
+ }
 
 // Exception rule for user exception
 %typemap (throws) UserException{
@@ -371,6 +407,7 @@ EMFTYPE(FileTransfer,FMS_Data,getFileTransfers,FileTransferList, fileTransferLis
 
 #ifdef COMPILE_UMS
 %include "api_ums.hpp"
+%include "api_comm.hpp"
 #endif
 
 
