@@ -14,6 +14,7 @@ include_directories(
   ${TESTVISHNU_SOURCE_DIR}/../third-party
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
+  ${PROJECT_BINARY_DIR}
   )
 
 
@@ -26,6 +27,7 @@ ums_test(ums_automTest3)
 ums_test(ums_automTest4)
 ums_test(ums_automTest5)
 ums_test(ums_automTest6)
+ums_test(comm_automTest)
 
 
 # Unit tests
