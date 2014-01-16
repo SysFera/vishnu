@@ -20,9 +20,9 @@ vishnu::ping(std::map<std::string, std::string>& result,
 }
 
 int
-vishnu::getVersion(std::map<std::string, std::string>& result,
-                   const std::string& server,
-                   const std::string& mid){
+vishnu::getServerVersion(std::map<std::string, std::string>& result,
+                         const std::string& server,
+                         const std::string& mid){
   VersionProxy proxy;
   proxy.getVersion(server, mid, result);
   return 0;
