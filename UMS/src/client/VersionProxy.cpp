@@ -50,8 +50,8 @@ VersionProxy::getVersion(const std::string& server, const std::string mid, std::
   std::string response;
 // Get version of the dispatcher
   bool empty = true;
-  communicate_dispatcher("3", response);
-  if (server=="dispatcher" || (server.empty() && mid.empty())){
+  int res = communicate_dispatcher("3", response);
+  if (server=="dispatcher" || (server.empty() && mid.empty() && res!=-1)){
     result.insert(std::pair<std::string, std::string>("dispatcher", response));
     empty = false;
   }
@@ -64,6 +64,7 @@ VersionProxy::getVersion(const std::string& server, const std::string mid, std::
   extractServersFromMessage(response, allServers);
 
   selectServerToPing(server, allServers, servers);
+
 
   // For each server get its version
   std::vector<boost::shared_ptr<Server> >::iterator it;
