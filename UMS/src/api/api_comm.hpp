@@ -33,9 +33,9 @@ namespace vishnu {
    * \return 0 if everything is OK, another value otherwise
    */
   int
-  getVersion(std::map<std::string, std::string>& result,
-             const std::string& serverName = "",
-             const std::string& mid = "");
+  getServerVersion(std::map<std::string, std::string>& result,
+                   const std::string& serverName = "",
+                   const std::string& mid = "");
 }
 
 

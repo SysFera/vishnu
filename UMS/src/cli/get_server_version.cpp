@@ -25,7 +25,7 @@ struct VersionFunc{
   operator()(){
     std::map<std::string,std::string> version;
     std::map<std::string,std::string>::iterator it;
-    int res = vishnu::getVersion(version, mserver, mmid);
+    int res = vishnu::getServerVersion(version, mserver, mmid);
     for (it = version.begin() ; it != version.end(); ++it)
       std::cout << "Server: " << it->first << ", Version: " << it->second << "\n";
     return res;
