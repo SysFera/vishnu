@@ -400,7 +400,7 @@ communicate_dispatcher(const std::string& requestData, std::string& response){
   zmq::context_t ctx(1);
   LazyPirateClient lpc(ctx, uriDispatcher, timeout);
   if (!lpc.send(requestData)) {
-    std::cerr << "[ERROR] failed to list the servers to ping \n";
+    std::cerr << "[ERROR] failed to list the servers \n";
     return -1; // Dont throw exception
   }
   response = lpc.recv();

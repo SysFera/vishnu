@@ -30,6 +30,13 @@ public :
    */
   void
   getVersion(const std::string& server, const std::string mid, std::map<std::string, std::string>& result);
+  /**
+   * \brief List the servers in the dispatcher
+   * \param mid the machine identifier of the machine to ping
+   * \param result a map of server / version
+   */
+  void
+  list(const std::string mid, std::map<std::string, std::string>& result);
 
 protected:
   /**

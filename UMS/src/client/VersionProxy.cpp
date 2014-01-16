@@ -91,4 +91,31 @@ VersionProxy::getVersion(const std::string& server, const std::string mid, std::
   }
 }
 
+void
+VersionProxy::list(const std::string mid, std::map<std::string, std::string>& result){
+  std::string response;
+// Get version of the dispatcher
+  bool empty = true;
+
+
+// Get the list of the servers in the dispatcher
+  communicate_dispatcher("2", response);
+  std::vector<boost::shared_ptr<Server> > servers;
+  extractServersFromMessage(response, servers);
+
+  // For each server get its version
+  std::vector<boost::shared_ptr<Server> >::iterator it;
+  for (it = servers.begin() ; it != servers.end() ; ++it){
+    std::string service = getLongestService(it->get()->getServices(), "heartbeat");
+    // If service asked on a machine and none corresponding
+    if (!mid.empty() && service.find(mid) == std::string::npos)
+      continue;
+    result.insert(std::pair<std::string, std::string>(it->get()->getName(), it->get()->getURI()));
+    empty = false;
+  }
+  if(empty){
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "No corresponding server found");
+  }
+}
+
 
