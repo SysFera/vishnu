@@ -140,16 +140,20 @@ operator <<(std::ostream& os, const SessionEntry& session){
 
 template <class T>
 void
-saveIntoFile(SessionContainer& allSessions, const char* file){
-  bi::file_lock sessionLock(file);
-  bi::scoped_lock<bi::file_lock> lock(sessionLock);
-  std::ofstream ofile (file);
+saveIntoFile(SessionContainer& allSessions, const char* file) {
+  try {
+    bi::file_lock sessionLock(file);
+    bi::scoped_lock<bi::file_lock> lock(sessionLock);
+    std::ofstream ofile (file);
 
-  T ar(ofile);
+    T ar(ofile);
 
-  ar << bs::make_nvp("sessions",allSessions);
+    ar << bs::make_nvp("sessions",allSessions);
 
-  ofile.close();
+    ofile.close();
+  } catch (const bi::interprocess_exception& e) {
+    std::cerr << "ERROR: " << e.what() << "\n";
+  }
 }
 
 
