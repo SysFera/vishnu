@@ -201,26 +201,26 @@ int main (int argc, char* argv[]){
   string walltime;
 
   /********** EMF data ************/
-  TMS_Data::SubmitOptions subOp;
+  TMS_Data::SubmitOptions submitOptions;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
-  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::SubmitOptions::setMachineId,boost::ref(subOp),_1));
-  boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
-  boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
-  boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
-  boost::function1<void,string> setNbNodeAndCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
-  boost::function1<void,string> setStdoutPatchFct(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
-  boost::function1<void,string> setStderrPathFct(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
-  boost::function1<void,string> setMailNoticicationFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(subOp),_1));
-  boost::function1<void,string> setNotificationUserFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(subOp),_1));
-  boost::function1<void,string> setUserGroupFct(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
-  boost::function1<void,string> setWorkingGroupFct(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
-  boost::function1<void,string> serCpuTimeFct(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
-  boost::function1<void,string> setTextParamsFct(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
-  boost::function1<void,string> setSpecificParamsFct(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(subOp),_1));
-  boost::function1<void,string> setFileParamsFct(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
-  boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(subOp),_1));
+  boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::SubmitOptions::setMachineId,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
+  boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
+  boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setNbNodeAndCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setStdoutPatchFct(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setStderrPathFct(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setMailNoticicationFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setNotificationUserFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setUserGroupFct(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setWorkingGroupFct(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(submitOptions),_1));
+  boost::function1<void,string> serCpuTimeFct(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setTextParamsFct(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setSpecificParamsFct(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setFileParamsFct(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(submitOptions),_1));
+  boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(submitOptions),_1));
   vector<string> textParamsVector ;
   vector<string> fileParamsVector ;
   std::string loadCriterionStr;
@@ -276,10 +276,10 @@ int main (int argc, char* argv[]){
   // Process command
   try {
     if (opt->count("posix")) {
-      subOp.setPosix(true);
+      submitOptions.setPosix(true);
     }
     if (!walltime.empty()) {
-      subOp.setWallTime(convertStringToWallTime(walltime));
+      submitOptions.setWallTime(convertStringToWallTime(walltime));
     }
 
     //To set the load criterion
@@ -307,10 +307,10 @@ int main (int argc, char* argv[]){
     }
     TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
     loadCriterion->setLoadType(loadCriterionType);
-    subOp.setCriterion(loadCriterion);
+    submitOptions.setCriterion(loadCriterion);
 
     if(opt->count("selectQueueAutom")) {
-      subOp.setSelectQueueAutom(true);
+      submitOptions.setSelectQueueAutom(true);
     }
 
     //Validate textual parameters syntax, if any
@@ -320,7 +320,7 @@ int main (int argc, char* argv[]){
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
       if( ret != 0 ) return ret ;
-      subOp.setTextParams(paramStr) ;
+      submitOptions.setTextParams(paramStr) ;
     }
 
     //Validate file parameters syntax, if any
@@ -329,7 +329,7 @@ int main (int argc, char* argv[]){
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector) ;
       if( ret != 0 ) return ret ;
-      subOp.setFileParams(paramStr) ;
+      submitOptions.setFileParams(paramStr) ;
     }
 
     // initializing VISHNU
@@ -343,7 +343,7 @@ int main (int argc, char* argv[]){
 
     // vishnu call: submit
     if(false==sessionKey.empty()){
-      submitJob(sessionKey, scriptPath, job, subOp);
+      submitJob(sessionKey, scriptPath, job, submitOptions);
     }
 
     displaySubmit(job);
