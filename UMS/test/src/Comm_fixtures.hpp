@@ -29,15 +29,14 @@ namespace bs = boost::system;
 class CommFixture {
 
 public:
-  std::string m_test_ums_authen_type;
-  std::string m_test_ums_root_vishnu_login;
-  std::string m_test_ums_root_vishnu_pwd;
-  std::string m_test_ums_admin_vishnu_login;
-  std::string m_test_ums_admin_vishnu_pwd;
-  std::string m_test_ums_user_vishnu_login;
-  std::string m_test_ums_user_vishnu_pwd;
-  std::string m_test_ums_user_vishnu_machineid;
   UMS_Data::Configuration mconf ;
+  std::string mums_version;
+  std::string mtms_version;
+  std::string mfms_version;
+  std::string mims_version;
+  std::string mdis_version;
+  std::string mmid;
+
 
   CommFixture() {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );
@@ -54,7 +53,17 @@ public:
     }
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: Initializing client ==" );
-
+    BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: LOADING SETUP ==" );
+    std::string vishnuTestSetupPath = getenv("VISHNU_TEST_SETUP_FILE");
+    BOOST_REQUIRE(vishnuTestSetupPath.size() !=0  );
+    FileParser fileparser(vishnuTestSetupPath.c_str());
+    std::map<std::string, std::string> setupConfig = fileparser.getConfiguration();
+    mums_version = setupConfig.find("TEST_UMS_VERSION")->second ;
+    mfms_version = setupConfig.find("TEST_FMS_VERSION")->second ;
+    mtms_version = setupConfig.find("TEST_TMS_VERSION")->second ;
+    mims_version = setupConfig.find("TEST_IMS_VERSION")->second ;
+    mdis_version = setupConfig.find("TEST_DIS_VERSION")->second ;
+    mmid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second ;
   }
 
 
