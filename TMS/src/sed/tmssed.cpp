@@ -30,6 +30,7 @@
 #include "tmsUtils.hpp"
 #include "utilServer.hpp"
 #include <boost/format.hpp>
+#include <boost/thread.hpp>
 
 
 
@@ -189,6 +190,7 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server    ----- MUST BE DONE BEFORE CREATING INSTANCE
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, config);
+      boost::thread thr(boost::bind(&keepRegistered, TMSTYPE, *config, uri, server));
       if (!res) {
         initSeD(TMSTYPE, *config, uri, server);
       } else {

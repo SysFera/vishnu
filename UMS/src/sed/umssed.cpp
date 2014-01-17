@@ -9,6 +9,7 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
 #include "AuthenticatorConfiguration.hpp"
 
 //For ZMQ
@@ -105,6 +106,8 @@ main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
       res = server->init(vishnuId, mid, dbConfig, sendmailScriptPath, authenticatorConfig);
 
+      boost::thread thr(boost::bind(&keepRegistered, UMSTYPE, config, uri, server));
+
       //Declaration of signal handler
       action.sa_handler = controlSignal;
       sigemptyset (&(action.sa_mask));
@@ -140,6 +143,5 @@ main(int argc, char* argv[], char* envp[]) {
     std::cerr << argv[0] << " : "<< e.what() << "\n";
     exit(1);
   }
-
   return res;
 }

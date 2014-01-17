@@ -130,6 +130,7 @@ main(int argc, char* argv[], char* envp[]) {
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);
+  boost::thread thr(boost::bind(&keepRegistered, IMSTYPE, config, uri, server));
   thread thr2(bind(&HM::run, &hm));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   //Declaration of signal handler, to remove script children
