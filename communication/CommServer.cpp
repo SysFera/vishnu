@@ -1,6 +1,7 @@
 #include "CommServer.hpp"
 
 #include <boost/shared_ptr.hpp>
+#include <unistd.h> // for sleep
 
 #include "Database.hpp"
 #include "DbFactory.hpp"
@@ -107,6 +108,52 @@ registerSeD(const std::string& sedUri,
 
   return 0;
 }
+
+void
+keepRegistered(const std::string& sedType,
+               const ExecConfiguration& config,
+               const std::string& sedUri,
+               boost::shared_ptr<SeD> server){
+  std::vector<std::string> services = server.get()->getServices();
+  int timeout  = vishnu::DEFAUT_TIMEOUT;
+  config.getConfigValue<int>(vishnu::TIMEOUT, timeout);
+  std::string dispUri;
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, dispUri);
+  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(sedType, services, sedUri));
+  std::string requestData = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
+
+  std::string response;
+  bool useSsl = false;
+  while (true){
+    if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+
+      std::string host;
+      int port;
+      host = vishnu::getHostFromUri(dispUri);
+      port = vishnu::getPortFromUri(dispUri);
+
+      /* Get TLS trust store if set */
+      std::string cafile;
+      config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+      /* Logging */
+      /* Now create a TLS client and go ahead */
+      TlsClient tlsClient(host, port, cafile);
+      requestData.append("\n\n");      /* required for the internal protocol */
+      if (tlsClient.send(requestData) == 0) {
+        response = tlsClient.recv();
+      } else {
+      }
+    } else {
+      zmq::context_t ctx(1);
+      LazyPirateClient lpc(ctx, dispUri, timeout);
+      if (!lpc.send(requestData)) {
+      }
+      response = lpc.recv();
+    }
+    sleep(timeout);
+  }
+}
+
 
 void
 initSeD(const std::string& sedType,

@@ -45,6 +45,21 @@ registerSeD(const std::string& sedUri,
             const std::string& sedType,
             const ExecConfiguration& config,
             std::vector<std::string>& services);
+/**
+ * @brief continuously register a server in dispatcher
+ * @param sedUri The URI of the SeD
+ * @param dispUri The URI to subscribe to the Dispatcher
+ * \param sedType the type of the server
+ * \param config the configuration file
+ * \param services the list of the offered services
+ * \return 0 on SUCCESS
+ */
+void
+keepRegistered(const std::string& sedType,
+               const ExecConfiguration& config,
+               const std::string& sedUri,
+               boost::shared_ptr<SeD> server);
+
 
 /**
  * \brief initSeD registers services and starts the SeD
