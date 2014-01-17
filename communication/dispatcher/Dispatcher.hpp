@@ -30,6 +30,11 @@ public:
    */
   void
   run();
+  /**
+   * \brief Get the annuary
+   */
+  boost::shared_ptr<Annuary>
+  getAnnuary();
 
 private:
   /**

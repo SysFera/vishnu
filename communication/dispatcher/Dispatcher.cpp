@@ -62,6 +62,35 @@ Dispatcher::configureAnnuary() {
   ann->print();
 }
 
+boost::shared_ptr<Annuary>
+Dispatcher::getAnnuary(){
+  return ann;
+}
+
+
+void
+bayWatch(Dispatcher* disp, int timeout){
+  while (true){
+    // get all servers
+    std::vector<boost::shared_ptr<Server> > list = disp->getAnnuary()->get();
+    std::vector<boost::shared_ptr<Server> >::iterator iter;
+    std::string service = "heartbeat";
+    // For each server
+    for (iter = list.begin() ; iter != list.end() ; ++iter){
+      diet_profile_t* profile = NULL;
+      profile = diet_profile_alloc(service,0,0,1);
+      // try to ping them
+      if (diet_call_gen(profile, iter->get()->getURI())){
+        // If failed : remove the server
+        disp->getAnnuary()->remove(iter->get()->getName(), iter->get()->getURI());
+      }
+
+    }
+    // Sleep a bit
+    sleep(timeout);
+  }
+}
+
 
 void
 Dispatcher::configureHandlers() {
@@ -76,8 +105,10 @@ Dispatcher::configureHandlers() {
     serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, false, ""));
     boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
     boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
+    boost::thread th3(boost::bind(&bayWatch, this, timeout));
     th1.join();
     th2.join();
+    th3.join();
   } else { /* TLS required */
     std::string rsaPrivkey;
     std::string sslCertificate;
