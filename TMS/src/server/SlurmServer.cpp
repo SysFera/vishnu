@@ -56,6 +56,7 @@ SlurmServer::submit(const char* scriptPath,
                     const TMS_Data::SubmitOptions& options,
                     TMS_Data::Job& job, char** envp) {
 
+
   std::vector<std::string> cmdsOptions;
   //processes the vishnu options
   replaceEnvVariables(scriptPath);
@@ -87,7 +88,6 @@ SlurmServer::submit(const char* scriptPath,
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
 
-  uint32_t jobId = 0;
   std::string jobOutputPath ;
   std::string jobErrorPath;
   submit_response_msg_t *resp;
@@ -127,9 +127,8 @@ SlurmServer::submit(const char* scriptPath,
     jobErrorPath = desc.std_err;
   }
 
-  jobId = resp->job_id;
   //Fill the vishnu job structure
-  fillJobInfo(job, jobId);
+  fillJobInfo(job, resp->job_id);
 
   if(jobOutputPath.size()!=0) {
     replaceSymbolInToJobPath(jobOutputPath);
@@ -597,21 +596,21 @@ SlurmServer::convertSlurmPrioToVishnuPrio(const uint32_t& prio) {
 /**
  * \brief Function To fill the info concerning a job
  * \param job: The job to fill
- * \param jobId: The identifier of the job to load
+ * \param batchJobId: The identifier of the job to load
  */
 void
-SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
+SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
 
   int res;
   job_info_msg_t * job_buffer_ptr = NULL;
-  res = slurm_load_job(&job_buffer_ptr, jobId, 1);
+  res = slurm_load_job(&job_buffer_ptr, batchJobId, 1);
 
   if(!res) {
 
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
-    job.setBatchJobId(vishnu::convertToString(jobId));
-    job.setOutputPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path
-    job.setErrorPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(jobId)+".out");//default path
+    job.setBatchJobId(vishnu::convertToString(batchJobId));
+    job.setOutputPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(batchJobId)+".out");//default path
+    job.setErrorPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(batchJobId)+".out");//default path
     job.setStatus(convertSlurmStateToVishnuState(slurmJobInfo.job_state));
     if(slurmJobInfo.name!=NULL) {
       job.setJobName(slurmJobInfo.name);
@@ -648,8 +647,8 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId){
     job.setJobWorkingDir(slurmJobInfo.work_dir);
 
     //fill the msymbol map
-    msymbolMap["\%j"] = vishnu::convertToString(jobId);
-    msymbolMap["\%J"] = vishnu::convertToString(jobId);
+    msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
+    msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
   } else {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::fillJobInfo: slurm_load_jobs error");
   }

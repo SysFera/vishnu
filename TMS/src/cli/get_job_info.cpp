@@ -22,18 +22,19 @@ using namespace vishnu;
 
 struct InfoJobFunc {
 
-  std::string mmachineId;
   std::string mjobId;
 
-  InfoJobFunc(const std::string& machineId, const std::string& jobId):
-    mmachineId(machineId), mjobId(jobId)
-  {};
+  InfoJobFunc(const std::string& jobId)
+    : mjobId(jobId)
+  {
+
+  }
 
   int operator()(std::string sessionKey) {
-     TMS_Data::Job job;
-     int res = getJobInfo(sessionKey, mmachineId, mjobId, job);
-     displayJob(job);
-     return res;
+    TMS_Data::Job job;
+    int res = getJobInfo(sessionKey, mjobId, job);
+    displayJob(job);
+    return res;
   }
 };
 
@@ -43,7 +44,6 @@ main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string configFile;
-  string machineId;
   string jobId;
 
   /**************** Describe options *************/
@@ -55,17 +55,10 @@ main (int argc, char* argv[]){
            ENV,
            configFile);
 
-  // All cli obligatory parameters
-  opt->add("machineId,m",
-	   "represents the id of the machine where the job has been submitted",
-	   HIDDEN,
-	   machineId,1);
-  opt->setPosition("machineId",1);
-
   opt->add("jobId,j",
-	   "represents the id of the job",
-	   HIDDEN,
-	   jobId,1);
+           "represents the id of the job",
+           HIDDEN,
+           jobId,1);
   opt->setPosition("jobId",1);
 
   bool isEmpty;
@@ -73,6 +66,6 @@ main (int argc, char* argv[]){
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  InfoJobFunc infoJobFunc(machineId, jobId);
+  InfoJobFunc infoJobFunc(jobId);
   return GenericCli().run(infoJobFunc, configFile, argc, argv);
 }

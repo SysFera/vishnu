@@ -118,7 +118,7 @@ int JobServer::submitJob(std::string& scriptContent,
       vishnu::deleteFile(scriptPath.c_str());
     }
     std::string errorInfo = sshJobExec.getErrorInfo(); // Check if some errors occured during the submission
-    if (!errorInfo.empty()) {
+    if (! errorInfo.empty()) {
       int code;
       std::string message;
       scanErrorMessage(errorInfo, code, message);
@@ -381,8 +381,6 @@ TMS_Data::Job JobServer::getJobInfo() {
       " FROM job, vsession, users "
       " WHERE vsession.numsessionid=job.vsession_numsessionid "
       " AND vsession.users_numuserid=users.numuserid"
-      " AND job.status >= 0"
-      " AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'"
       " AND job.jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));

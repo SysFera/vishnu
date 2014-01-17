@@ -176,14 +176,14 @@ int main(int argc, char* argv[], char* envp[]) {
 
     try {
       //Check if machineId is authorized
-      if (machineId == AUTOMATIC_SUBMIT_JOB_KEYWORD) {
-        std::cerr << "\n" << AUTOMATIC_SUBMIT_JOB_KEYWORD
+      if (machineId == AUTOM_KEYWORD) {
+        std::cerr << "\n" << AUTOM_KEYWORD
                   << " is not authorized as machine identifier. "
                   << "It is a TMS keyword.\n\n";
         exit(1);
       }
-      if (0 == machineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)) {
-        std::cerr << "\n" << LIST_JOBS_ON_MACHINES_KEYWORD
+      if (machineId == ALL_KEYWORD) {
+        std::cerr << "\n" << ALL_KEYWORD
                   << " is not authorized as machine identifier. "
                   << "It is a TMS keyword.\n\n";
         exit(1);
