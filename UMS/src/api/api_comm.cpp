@@ -34,5 +34,6 @@ vishnu::listServers(std::map<std::string, std::string>& result,
                     const std::string& mid){
   VersionProxy proxy;
   proxy.list(mid, result);
+  return 0;
 }
 
