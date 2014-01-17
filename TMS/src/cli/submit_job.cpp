@@ -278,19 +278,17 @@ int main (int argc, char* argv[]){
     if (opt->count("posix")) {
       subOp.setPosix(true);
     }
-
     if (!walltime.empty()) {
       subOp.setWallTime(convertStringToWallTime(walltime));
     }
 
     //To set the load criterion
-    if ((loadCriterionStr.size() > 1)) {
-      std::cerr << "Invalid load criterion " << loadCriterionStr << std::endl;
+    if (loadCriterionStr.size() > 1) {
+      std::cerr << "Invalid load criterion " + loadCriterionStr + "\n";
       return -1;
     }
     int loadCriterionType = NBWAITINGJOBS;
-    TMS_Data::LoadCriterion_ptr loadCriterion_ptr = new TMS_Data::LoadCriterion();
-    if(!loadCriterionStr.empty()) {
+    if (loadCriterionStr.empty()) {
       switch(loadCriterionStr[0]) {
       case '2':
       case 'R':
@@ -307,8 +305,9 @@ int main (int argc, char* argv[]){
         break;
       }
     }
-    loadCriterion_ptr->setLoadType(loadCriterionType);
-    subOp.setCriterion(loadCriterion_ptr);
+    TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
+    loadCriterion->setLoadType(loadCriterionType);
+    subOp.setCriterion(loadCriterion);
 
     if(opt->count("selectQueueAutom")) {
       subOp.setSelectQueueAutom(true);
@@ -346,7 +345,9 @@ int main (int argc, char* argv[]){
     if(false==sessionKey.empty()){
       submitJob(sessionKey, scriptPath, job, subOp);
     }
+
     displaySubmit(job);
+
   } catch(VishnuException& except){// catch all Vishnu runtime error
     std::string  submitErrmsg = except.getMsg() + " [" + except.getMsgComp() + "]";
     errorUsage(bfs::basename(bfs::path(argv[0])), submitErrmsg, EXECERROR);
@@ -354,11 +355,10 @@ int main (int argc, char* argv[]){
     if (checkBadSessionKeyError(except)){
       removeBadSessionKeyFromFile(getppid());
     }
-    return except.getMsgI() ;
+    return except.getMsgI();
   } catch(std::exception& except){// catch all std runtime error
     errorUsage(argv[0],except.what());
     return CLI_ERROR_RUNTIME;
   }
-
   return 0;
 }

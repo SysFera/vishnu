@@ -16,14 +16,15 @@ using namespace std;
 namespace bfs=boost::filesystem;
 /**
  * \param session The object which encapsulates the session information
- * \param machineId The id of the machine
  * \param job The job data structure
+ * \param machineId The id of the machine. Optional
  * \brief Constructor
  */
 JobProxy::JobProxy(const SessionProxy& session,
-                   const std::string & machineId,
-                   TMS_Data::Job& job)
-  :msessionProxy(session), mmachineId(machineId), mjob(job) {
+                   TMS_Data::Job& job,
+                   const std::string& machineId)
+  :msessionProxy(session), mjob(job), mmachineId(machineId)
+{
 
 }
 
@@ -41,8 +42,14 @@ JobProxy::submitJob(const std::string& scriptContent,
 
   // first check if it's an automatic submission
   // if yes, select a machine according to the load criterion
-  if (mmachineId.empty() || mmachineId == AUTOMATIC_SUBMIT_JOB_KEYWORD) {
-    mmachineId = vishnu::findMachine(sessionKey, options_.getCriterion());
+  if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
+    if (options_.getCriterion()) {
+      mmachineId = vishnu::findMachine(sessionKey, *(options_.getCriterion()));
+    } else {
+      TMS_Data::LoadCriterion loadCriterion;
+      loadCriterion.setLoadType(NBWAITINGJOBS);
+      mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
+    }
   }
 
   // now create and initialize the service profile
@@ -196,23 +203,30 @@ TMS_Data::Job
 JobProxy::getJobInfo() {
 
   diet_profile_t* getJobInfoProfile = NULL;
-  std::string sessionKey;
   std::string jobInString;
   std::string errorInfo;
-  std::string serviceName = std::string(SERVICES_TMS[JOBINFO]) + "@";
-  serviceName.append(mmachineId);
 
-  getJobInfoProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
-  sessionKey = msessionProxy.getSessionKey();
+  // The approach is to take the machine that has the lowest load regarding the
+  // number of jobs to handle the request
+  std::string sessionKey = msessionProxy.getSessionKey();
+
+  TMS_Data::LoadCriterion loadCriterion;
+  loadCriterion.setLoadType(NBJOBS);
+  mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
+
+  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBINFO]  %mmachineId).str();
+
+  // Now prepare the service call
+  getJobInfoProfile = diet_profile_alloc(serviceName, 2, 2, 4);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(getJobInfoProfile,0, sessionKey.c_str())) {
+  if (diet_string_set(getJobInfoProfile, 0, sessionKey.c_str())) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(getJobInfoProfile,1, mmachineId.c_str())) {
+  if (diet_string_set(getJobInfoProfile, 1, mmachineId.c_str())) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }

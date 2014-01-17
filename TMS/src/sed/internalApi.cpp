@@ -198,9 +198,9 @@ solveJobInfo(diet_profile_t* pb) {
   std::string cmd = "";
 
   //IN Parameters
-  diet_string_get(pb,0, sessionKey);
-  diet_string_get(pb,1, machineId);
-  diet_string_get(pb,2, jobSerialized);
+  diet_string_get(pb, 0, sessionKey);
+  diet_string_get(pb, 1, machineId);
+  diet_string_get(pb, 2, jobSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 

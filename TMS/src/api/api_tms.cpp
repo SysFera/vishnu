@@ -60,7 +60,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
 
-  JobProxy jobProxy(sessionProxy, options.getMachineId() , jobInfo);
+  JobProxy jobProxy(sessionProxy, jobInfo, options.getMachineId());
 
   ListStrings fileParamsVec;
   std::string fileParamsStr = options.getFileParams() ;
@@ -96,9 +96,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   TMS_Data::Job job;
   job.setJobId(jobId);
 
-  return JobProxy(sessionProxy,
-                  machineId,
-                  job).cancelJob();
+  return JobProxy(sessionProxy, job, machineId).cancelJob();
 
 }
 
@@ -107,28 +105,23 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
  * \brief The getJobInfo function gets a specific job's information
 bInfo function gets information on a job from its id
  * \param sessionKey : The session key
- * \param machineId : The id of the machine
  * \param jobId : The id of the job
  * \param jobInfos : The resulting information on the job
  * \return int : an error code
  */
 int
 vishnu::getJobInfo(const std::string& sessionKey,
-                   const std::string& machineId,
                    const std::string& jobId,
                    Job& jobInfo)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
   checkEmptyString(jobId, "The job id");
 
   SessionProxy sessionProxy(sessionKey);
   jobInfo.setJobId(jobId);
 
-  JobProxy jobProxy(sessionProxy,
-                    machineId,
-                    jobInfo);
+  JobProxy jobProxy(sessionProxy, jobInfo);
 
   jobInfo = jobProxy.getJobInfo();
 
@@ -154,12 +147,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   UMS_Data::ListMachines machines;
   UMS_Data::Machine_ptr machine;
   const std::string machineId = options.getMachineId();
-  if (machineId.empty() || machineId == LIST_JOBS_ON_MACHINES_KEYWORD) {
-    // First list all machines where the user has a local account
-    UMS_Data::ListMachineOptions mopts;
-    mopts.setListAllMachine(false);
-    mopts.setMachineId("");
-    listMachines(sessionKey, machines, mopts) ;
+  if (machineId.empty() || machineId == ALL_KEYWORD) {
+    listMachinesWithUserLocalAccount(sessionKey, machines);
   } else {
     // Here the list of machine should contain only a single machine
     machine = new UMS_Data::Machine();
@@ -171,7 +160,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   listOfJobs.setNbRunningJobs(0);
   listOfJobs.setNbWaitingJobs(0);
 
-  for (int i=0; i< machines.getMachines().size(); i++) {
+  int machineCount = machines.getMachines().size();
+  for (int i=0; i< machineCount; i++) {
     machine = machines.getMachines().get(i) ;
     std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
     serviceName.append(machine->getMachineId());
@@ -187,7 +177,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       listJobs_ptr = query.list();
     } catch(...) {
       // This means the machine is not active or the user doesn't have a local account on it
-      if (machineId != LIST_JOBS_ON_MACHINES_KEYWORD) {
+      if (machineId != ALL_KEYWORD) {
         throw ;
       } else {
         continue ;
@@ -197,7 +187,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
       for (unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
         TMS_Data::Job_ptr job = ecoreFactory->createJob();
-        //To copy the content and not the pointer
+        //copy the content and not the pointer
         *job = *listJobs_ptr->getJobs().get(j);
         listOfJobs.getJobs().push_back(job);
       }
@@ -230,7 +220,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   UMS_Data::ListMachines machines;
   UMS_Data::Machine_ptr machine;
 
-  if(machineId == LIST_JOBS_ON_MACHINES_KEYWORD) {
+  if(machineId == ALL_KEYWORD) {
     // First list all machines where we have a local account
     UMS_Data::ListMachineOptions mopts;
     mopts.setListAllMachine(false);
@@ -260,7 +250,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     } catch(...) {
       // This means the machine is not active
       // or we don't have a local account on it
-      if(machineId != LIST_JOBS_ON_MACHINES_KEYWORD) {
+      if(machineId != ALL_KEYWORD) {
         throw ;
       } else {
         continue ;
@@ -303,7 +293,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   UMS_Data::ListMachines machines;
   UMS_Data::Machine_ptr machine;
 
-  if(machineId == LIST_JOBS_ON_MACHINES_KEYWORD) {
+  if(machineId == ALL_KEYWORD) {
     // First list all the machines where we have a local account
     UMS_Data::ListMachineOptions mopts;
     mopts.setListAllMachine(false);
@@ -332,7 +322,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     } catch(...) {
       // This means the machine is not active
       // or we don't have a local account on it
-      if(machineId != LIST_JOBS_ON_MACHINES_KEYWORD) {
+      if(machineId != ALL_KEYWORD) {
         throw ;
       } else {
         continue ;
