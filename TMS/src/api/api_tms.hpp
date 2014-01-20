@@ -90,16 +90,14 @@ namespace vishnu {
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
-  * \brief The getJobProgress function gets the progression status of jobs
-  * \param sessionKey : The session key
-  * \param machineId : Is the id of the machine to get the jobs progression.
-  * \param listOfProgress : Is the object containing jobs progression information
-  * \param options : Is an object containing the available options jobs for progression .
-  * \return int : an error code
+   * \brief getJobProgress: function gets the progression status of jobs
+   * \param sessionKey: The session key
+   * \param listOfProgress: The object containing jobs progression information
+   * \param options: The object containing the available options jobs for progression .
+   * \return int: an error code
   */
   int
   getJobProgress(const std::string& sessionKey,
-                 const std::string& machineId,
                  TMS_Data::ListProgression& listOfProgress,
                  const TMS_Data::ProgressOptions& options = TMS_Data::ProgressOptions())
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);

@@ -201,44 +201,41 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 }
 
 /**
- * \brief The getJobProgress function gets the progression status of jobs
- * \param sessionKey : The session key
- * \param machineId : Is the id of the machine to get the jobs progression.
- * \param listOfProgress : Is the object containing jobs progression information
- * \param options : Is an object containing the available options jobs for progression .
- * \return int : an error code
+ * \brief getJobProgress: function gets the progression status of jobs
+ * \param sessionKey: The session key
+ * \param listOfProgress: The object containing jobs progression information
+ * \param options: The object containing the available options jobs for progression .
+ * \return int: an error code
  */
 int
 vishnu::getJobProgress(const std::string& sessionKey,
-                       const std::string& machineId,
                        ListProgression& listOfProgress,
                        const ProgressOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
 
+  std::string machineId = options.getMachineId();
   UMS_Data::ListMachines machines;
-  UMS_Data::Machine_ptr machine;
-
-  if(machineId == ALL_KEYWORD) {
-    // First list all machines where we have a local account
+  if (machineId.empty() || machineId == ALL_KEYWORD) {
+    // Use all machines where the user has a local account
     UMS_Data::ListMachineOptions mopts;
     mopts.setListAllMachine(false);
     mopts.setMachineId("");
     listMachines(sessionKey, machines, mopts) ;
   } else {
-    // Here the list of machine will contain only a single machine
-    machine = new UMS_Data::Machine();
+    // Use the specified machine
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(machineId);
     machines.getMachines().push_back(machine);
   }
 
-  // Now iterate through all the machines to list queues according to the query filter
+  // Now perform the request
   listOfProgress.setNbJobs(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
-    machine = machines.getMachines().get(i) ;
-    std::string serviceName = std::string(SERVICES_TMS[GETJOBSPROGRESSION]) + "@";
-    serviceName.append(machine->getMachineId());
+
+    UMS_Data::Machine_ptr machine = machines.getMachines().get(i);
+    std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETJOBSPROGRESSION] % machine->getMachineId()).str();
 
     SessionProxy sessionProxy(sessionKey);
     QueryProxy<TMS_Data::ProgressOptions, TMS_Data::ListProgression>
@@ -248,8 +245,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     try {
       listProgression_ptr = query.list();
     } catch(...) {
-      // This means the machine is not active
-      // or we don't have a local account on it
+      // Means that the machine is not active or the user doesn't have a local account on it
       if(machineId != ALL_KEYWORD) {
         throw ;
       } else {
