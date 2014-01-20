@@ -218,17 +218,17 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   std::string machineId = options.getMachineId();
   UMS_Data::ListMachines machines;
-  if (machineId.empty() || machineId == ALL_KEYWORD) {
+  if (! machineId.empty() && machineId != ALL_KEYWORD) {
+    // Use the specified machine
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(machineId);
+    machines.getMachines().push_back(machine);
+  } else {
     // Use all machines where the user has a local account
     UMS_Data::ListMachineOptions mopts;
     mopts.setListAllMachine(false);
     mopts.setMachineId("");
     listMachines(sessionKey, machines, mopts) ;
-  } else {
-    // Use the specified machine
-    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-    machine->setMachineId(machineId);
-    machines.getMachines().push_back(machine);
   }
 
   // Now perform the request
