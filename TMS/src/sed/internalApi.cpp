@@ -466,14 +466,14 @@ int
 solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
   std::string sessionKey;
   std::string machineId;
-  std::string moutDir;
+  std::string serializedOptions;
   std::string jobsOutputSerialized;
   int mapperkey;
   std::string cmd;
 
-  diet_string_get(pb,0, sessionKey);
-  diet_string_get(pb,1, machineId);
-  diet_string_get(pb,2, moutDir);
+  diet_string_get(pb, 0, sessionKey);
+  diet_string_get(pb, 1, machineId);
+  diet_string_get(pb, 2, serializedOptions);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   try {
@@ -481,14 +481,19 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_get_completed_jobs_output");
     mapper->code(machineId, mapperkey);
-    mapper->code(moutDir, mapperkey);
+    mapper->code(serializedOptions, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
+    TMS_Data::JobOuputOptions_ptr options = NULL;
+    if(!vishnu::parseEmfObject(serializedOptions, options)) {
+      throw SystemException(ERRCODE_INVDATA, "the option object is not well built");
+    }
+
     JobOutputServer jobOutputServer(sessionServer, machineId);
-    TMS_Data::ListJobResults_ptr completedJobsOutput = jobOutputServer.getCompletedJobsOutput();
+    TMS_Data::ListJobResults_ptr completedJobsOutput = jobOutputServer.getCompletedJobsOutput(*options);
 
     ::ecorecpp::serializer::serializer _ser;
-    jobsOutputSerialized =  _ser.serialize_str(completedJobsOutput);
+    jobsOutputSerialized = _ser.serialize_str(completedJobsOutput);
 
     std::ostringstream ossFileName ;
     int nbResult = completedJobsOutput->getResults().size() ;
@@ -499,8 +504,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string()+"/vishnu-outdescr%%%%%%%").string();
     vishnu::saveInFile(outputInfo, ossFileName.str());
 
-    diet_string_set(pb,3, outputInfo.c_str());
-    diet_string_set(pb,4, jobsOutputSerialized.c_str());
+    diet_string_set(pb, 3, outputInfo.c_str());
+    diet_string_set(pb, 4, jobsOutputSerialized.c_str());
 
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {

@@ -84,7 +84,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   ::ecorecpp::serializer::serializer _ser;
   string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
 
-  if (diet_string_set(submitJobProfile,3, optionsToString.c_str())) {
+  if (diet_string_set(submitJobProfile,3, optionsToString)) {
     msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
     raiseCommunicationMsgException(msgErrorDiet);
   }

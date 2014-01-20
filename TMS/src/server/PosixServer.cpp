@@ -12,7 +12,7 @@
 #include "UMSVishnuException.hpp"
 #include "utilVishnu.hpp"
 #include "tmsUtils.hpp" // For convertStringToWallTime
-
+#include "constants.hpp"
 #include "TmsPosixClient.hpp"
 
 PosixServer::PosixServer():BatchServer(){
@@ -28,6 +28,8 @@ PosixServer::submit(const char* scriptPath,
   struct trameJob resultat;
   struct trameSubmit op;
 
+  std::cout << job.getJobId() <<"\n";
+
   memset(&op, 0, sizeof(op));
   strncpy(op.name, options.getName().c_str(), sizeof(op.name)-1);
   op.walltime = options.getWallTime();
@@ -36,18 +38,18 @@ PosixServer::submit(const char* scriptPath,
   strncpy(op.workDir, options.getWorkingDir().c_str(), sizeof(op.workDir)-1);
 
   switch(fork()) {
-    case -1:
-      return -1;
-    case 0:
-      launchDaemon();
-      exit(0);
-      break;
-    default:
-      sleep(3); // TODO : fix, sleep because need synchronisation and can't wait child that has become a daemon
-      break;
+  case -1:
+    return -1;
+  case 0:
+    launchDaemon();
+    exit(0);
+    break;
+  default:
+    sleep(3); // TODO : fix, sleep because need synchronisation and can't wait child that has become a daemon
+    break;
   }
 
-  job.setStatus(4);
+  job.setStatus(vishnu::STATE_RUNNING);
   job.setJobQueue("posix");
 
   // If no name give a default job name
@@ -66,6 +68,8 @@ PosixServer::submit(const char* scriptPath,
 
   job.setErrorPath(std::string(resultat.errorPath));
   job.setWallClockLimit(resultat.maxTime);
+
+  std::cout << job.getJobId() <<"\n";
 
   return ret;
 }

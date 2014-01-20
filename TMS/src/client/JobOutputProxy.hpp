@@ -23,31 +23,27 @@ public:
 
   /**
   * \param session The object which encapsulates the session information
-  * \param machineId The machine identifier where has been submitted
-  * \param outDir The output directory where the files will be stored 
-  * (default is current directory) 
+  * \param machineId The target machine
   * \brief Constructor, raises an exception on error
   */
 	explicit
-	JobOutputProxy( const SessionProxy& session,
-                  const std::string& machineId,
-                  const std::string& outDir);
+  JobOutputProxy(const SessionProxy& session, const std::string& machineId);
 
   /**
   * \brief Function to get the job results
   * \param jobId The Id of the
+  * \param options Object containing the user-provided options
   * \return The job results data structure
   */
-  //TMS_Data::JobResult_ptr
   TMS_Data::JobResult
-	getJobOutPut(const std::string& jobId);
+  getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputOptions& options);
 
   /**
   * \brief Function to get the results of all job submitted
   * \return The list of the job results
   */
 	TMS_Data::ListJobResults_ptr
-	getCompletedJobsOutput();
+  getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options);
 
   /**
   * \brief Destructor, raises an exception on error
@@ -64,15 +60,11 @@ private:
   * \brief The object to manipulate the session data
   */
   SessionProxy msessionProxy;
-  /**
-  * \brief The id of the machine
-  */
-  std::string mmachineId;
 
   /**
-  * \brief The output directory where the files will be stored
-  */ 
-  std::string moutDir;
+   * @brief mmachineId Id of the target machine
+   */
+  std::string mmachineId;
 };
 
 #endif

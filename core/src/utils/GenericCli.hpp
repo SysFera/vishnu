@@ -143,7 +143,7 @@ class GenericCli {
       try {
         opt->parse_cli(ac, av);
 
-        isEmpty=opt->empty();//if no value was given in the command line
+        isEmpty = opt->empty(); //if no value was given in the command line
         // Parse the cli and setting the options found
         int ret = cmd.parse(env_name_mapper());
 

@@ -30,7 +30,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-JobOuputOptions::JobOuputOptions()
+JobOuputOptions::JobOuputOptions() :
+    m_days(-1)
 {
 
     /*PROTECTED REGION ID(JobOuputOptionsImpl__JobOuputOptionsImpl) START*/
@@ -70,6 +71,58 @@ void JobOuputOptions::setMachineId(::ecore::EString const& _machineId)
                 (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJobOuputOptions__machineId(),
                 _old_machineId,
                 m_machineId
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EString const& JobOuputOptions::getOutputDir() const
+{
+    return m_outputDir;
+}
+
+void JobOuputOptions::setOutputDir(::ecore::EString const& _outputDir)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EString _old_outputDir = m_outputDir;
+#endif
+    m_outputDir = _outputDir;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJobOuputOptions__outputDir(),
+                _old_outputDir,
+                m_outputDir
+        );
+        eNotify(&notification);
+    }
+#endif
+}
+
+::ecore::EInt JobOuputOptions::getDays() const
+{
+    return m_days;
+}
+
+void JobOuputOptions::setDays(::ecore::EInt _days)
+{
+#ifdef ECORECPP_NOTIFICATION_API
+    ::ecore::EInt _old_days = m_days;
+#endif
+    m_days = _days;
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getJobOuputOptions__days(),
+                _old_days,
+                m_days
         );
         eNotify(&notification);
     }

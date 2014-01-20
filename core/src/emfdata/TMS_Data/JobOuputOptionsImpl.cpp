@@ -61,6 +61,17 @@ void JobOuputOptions::_initialize()
                 m_machineId);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__OUTPUTDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_outputDir);
+    }
+        return _any;
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__DAYS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::toAny(_any, m_days);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -77,6 +88,18 @@ void JobOuputOptions::eSet(::ecore::EInt _featureID,
                 m_machineId);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__OUTPUTDIR:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_outputDir);
+    }
+        return;
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__DAYS:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EInt >::fromAny(_newValue,
+                m_days);
+    }
+        return;
 
     }
     throw "Error";
@@ -89,6 +112,11 @@ void JobOuputOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__MACHINEID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_machineId);
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__OUTPUTDIR:
+        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
+                m_outputDir);
+    case ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__DAYS:
+        return m_days != -1;
 
     }
     throw "Error";

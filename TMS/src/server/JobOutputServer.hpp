@@ -46,10 +46,11 @@ public:
 
   /**
    * \brief Function to get the all completed jobs results
+   * \param options Object containing options
    * \return The list of job results data structure
    */
   TMS_Data::ListJobResults_ptr
-  getCompletedJobsOutput();
+  getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options);
 
   /**
    * \brief Destructor
