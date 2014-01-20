@@ -162,9 +162,10 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   int machineCount = machines.getMachines().size();
   for (int i=0; i< machineCount; i++) {
-    machine = machines.getMachines().get(i) ;
-    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFJOBS]) + "@";
-    serviceName.append(machine->getMachineId());
+
+    machine = machines.getMachines().get(i);
+    std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETLISTOFJOBS] % machine->getMachineId()).str();
+
     SessionProxy sessionProxy(sessionKey);
 
     checkJobStatus(options.getStatus()); //To check the job status options
@@ -304,9 +305,9 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   // Now iterate through all the machines to list queues according to the query filter
   listofQueues.setNbQueues(0);
   for(int i=0; i< machines.getMachines().size(); i++) {
+
     machine = machines.getMachines().get(i) ;
-    std::string serviceName = std::string(SERVICES_TMS[GETLISTOFQUEUES]) + "@";
-    serviceName.append(machine->getMachineId());
+    std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETLISTOFQUEUES] % machine->getMachineId()).str();
 
     SessionProxy sessionProxy(sessionKey);
     QueryProxy<std::string, TMS_Data::ListQueues>
