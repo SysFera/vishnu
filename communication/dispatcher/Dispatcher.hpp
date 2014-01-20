@@ -36,6 +36,14 @@ public:
   boost::shared_ptr<Annuary>
   getAnnuary();
 
+  /**
+   * \brief Function that continuously check the content of the annuary with pings and remove it if ping fails
+   *
+   */
+  static void
+  bayWatch(boost::shared_ptr<Annuary> ann, int timeout);
+
+
 private:
   /**
    * \brief Display the dispatcher configuration

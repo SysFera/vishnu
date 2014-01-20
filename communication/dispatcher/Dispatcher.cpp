@@ -69,10 +69,10 @@ Dispatcher::getAnnuary(){
 
 
 void
-bayWatch(Dispatcher* disp, int timeout){
+Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout){
   while (true){
     // get all servers
-    std::vector<boost::shared_ptr<Server> > list = disp->getAnnuary()->get();
+    std::vector<boost::shared_ptr<Server> > list = ann->get();
     std::vector<boost::shared_ptr<Server> >::iterator iter;
     std::string service = "heartbeat";
     // For each server
@@ -82,7 +82,7 @@ bayWatch(Dispatcher* disp, int timeout){
       // try to ping them
       if (diet_call_gen(profile, iter->get()->getURI())){
         // If failed : remove the server
-        disp->getAnnuary()->remove(iter->get()->getName(), iter->get()->getURI());
+        ann->remove(iter->get()->getName(), iter->get()->getURI());
       }
 
     }
@@ -105,7 +105,7 @@ Dispatcher::configureHandlers() {
     serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, false, ""));
     boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
     boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
-    boost::thread th3(boost::bind(&bayWatch, this, timeout));
+    boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout));
     th1.join();
     th2.join();
     th3.join();
