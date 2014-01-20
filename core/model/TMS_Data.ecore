@@ -856,5 +856,18 @@
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputDir" eType="ecore:EDataType Ecore.ecore#//EString">
+      <eAnnotations source="Description">
+        <details key="content" value="The directory to store the output files"/>
+        <details key="shortOption" value="o"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="days" eType="ecore:EDataType Ecore.ecore#//EInt"
+        defaultValueLiteral="-1">
+      <eAnnotations source="Description">
+        <details key="content" value="Considers only jobs submitted in the last &lt;days> days"/>
+        <details key="shortOption" value="d"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
 </ecore:EPackage>

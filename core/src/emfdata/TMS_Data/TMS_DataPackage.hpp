@@ -808,6 +808,16 @@ namespace TMS_Data
          */
         static const int JOBOUPUTOPTIONS__MACHINEID = 130;
 
+        /**
+         * \brief Constant for JOBOUPUTOPTIONS__OUTPUTDIR feature
+         */
+        static const int JOBOUPUTOPTIONS__OUTPUTDIR = 131;
+
+        /**
+         * \brief Constant for JOBOUPUTOPTIONS__DAYS feature
+         */
+        static const int JOBOUPUTOPTIONS__DAYS = 132;
+
         // EClassifiers methods
 
         /**
@@ -1725,6 +1735,18 @@ namespace TMS_Data
          */
         virtual ::ecore::EAttribute_ptr getJobOuputOptions__machineId();
 
+        /**
+         * \brief Returns the reflective object for feature outputDir of class JobOuputOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJobOuputOptions__outputDir();
+
+        /**
+         * \brief Returns the reflective object for feature days of class JobOuputOptions
+         * \return A pointer to the reflective object
+         */
+        virtual ::ecore::EAttribute_ptr getJobOuputOptions__days();
+
     protected:
 
         /**
@@ -2502,6 +2524,16 @@ namespace TMS_Data
          * \brief The instance for the feature machineId of class JobOuputOptions
          */
         ::ecore::EAttribute_ptr m_JobOuputOptions__machineId;
+
+        /**
+         * \brief The instance for the feature outputDir of class JobOuputOptions
+         */
+        ::ecore::EAttribute_ptr m_JobOuputOptions__outputDir;
+
+        /**
+         * \brief The instance for the feature days of class JobOuputOptions
+         */
+        ::ecore::EAttribute_ptr m_JobOuputOptions__days;
 
     };
 

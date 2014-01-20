@@ -36,7 +36,7 @@ namespace vishnu {
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
- /**
+  /**
   * \brief Add a work
   * \param sessionKey the session key
   * \param newWork the work to add
@@ -47,7 +47,7 @@ namespace vishnu {
   addWork(const std::string& sessionKey,
           TMS_Data::Work& newWork,
           const TMS_Data::AddWorkOptions& options = TMS_Data::AddWorkOptions())
-    throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
+  throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 
   /**
@@ -123,34 +123,31 @@ namespace vishnu {
   /**
    * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
    * \param sessionKey : The session key
-   * \param machineId : The id of the machine
    * \param jobId : The Id of the job
    * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
-   * \param outDir : The output directory where the files will be stored (default is current directory)
-   * \return int : an error code
+   * \param options : Object containing the user-provided options (e.g: it contains a possible output directory set by the user)
+   * \return 0 on success, or raises exception on error
    */
   int
   getJobOutput(const std::string& sessionKey,
-               const std::string& machineId,
                const std::string& jobId,
                TMS_Data::JobResult& outputInfo,
-               const std::string& outDir = std::string())
+               const TMS_Data::JobOuputOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
    * \brief The getCompletedJobsOutput() function gets standard output and error output files
    * of completed jobs (applies only once for each job)
-   * \param sessionKey : The session key
-   * \param machineId : The id of the machine
-   *  \param outDir : The output directory where the files will be stored (default is current directory)
+   * \param sessionKey: The session key
    * \param listOfResults : Is the list of jobs results
-   * \return int : an error code
+   * \param options: Object containing options
+   * \param listOfResults : Is the list of jobs results
+   * \return int: an error code
    */
   int
   getCompletedJobsOutput(const std::string& sessionKey,
-                   const std::string& machineId,
-                   TMS_Data::ListJobResults& listOfResults,
-                   const std::string& outDir = std::string())
+                         TMS_Data::ListJobResults& listOfResults,
+                         const TMS_Data::JobOuputOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu

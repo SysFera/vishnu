@@ -24,17 +24,17 @@ using namespace vishnu;
 
 struct JobOutputJobFunc {
 
-  std::string mmachineId;
+  TMS_Data::JobOuputOptions moptions;
   std::string mjobId;
-  std::string moutDir;
 
-  JobOutputJobFunc(const std::string& machineId, const std::string& jobId, const std::string& outDir):
-    mmachineId(machineId), mjobId(jobId), moutDir(outDir)
-  {};
+  JobOutputJobFunc(const std::string& jobId, const TMS_Data::JobOuputOptions& options)
+    : mjobId(jobId), moptions(options)
+  {
+  }
 
   int operator()(std::string sessionKey) {
     TMS_Data::JobResult jobResult;
-    int res = getJobOutput(sessionKey, mmachineId, mjobId, jobResult, moutDir);
+    int res = getJobOutput(sessionKey, mjobId, jobResult, moptions);
     displayJobOutput(&jobResult);
     return res;
   }
@@ -45,43 +45,41 @@ int main (int argc, char* argv[]){
 
   /******* Parsed value containers ****************/
   string configFile;
-  string machineId;
   string jobId;
-  std::string outDir;
+  string machineId;
+  std::string outputDir;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt(new Options(argv[0]));
-
-  // Environement option
   opt->add("configFile,c",
-      "VISHNU configuration file",
-      ENV,
-      configFile);
-
-   opt->add("outDir,o",
-     "The outputh dir of the job output",
-     CONFIG,
-     outDir);
-
-  // All cli obligatory parameters
-  opt->add("machineId,m",
-	   "represents the id of the machine",
-	   HIDDEN,
-	   machineId,1);
-  opt->setPosition("machineId",1);
-
+           "VISHNU configuration file",
+           ENV,
+           configFile);
   opt->add("jobId,j",
-	   "represents the id of the job",
-	   HIDDEN,
-	   jobId,1);
+           "The id of the job",
+           HIDDEN,
+           jobId,1);
   opt->setPosition("jobId",1);
 
+  opt->add("outDir,o",
+           "The output directory",
+           CONFIG,
+           outputDir);
+  opt->add("machineId,m",
+           "The target machine",
+           CONFIG,
+           machineId);
+
+  // process options
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  //call of the api function
-  JobOutputJobFunc jobOutputFunc(machineId, jobId, outDir);
+  TMS_Data::JobOuputOptions options;
+  options.setMachineId(machineId);
+  options.setOutputDir(outputDir);
+
+  // process the request
+  JobOutputJobFunc jobOutputFunc(jobId, options);
   return GenericCli().run(jobOutputFunc, configFile, argc, argv);
 
 }

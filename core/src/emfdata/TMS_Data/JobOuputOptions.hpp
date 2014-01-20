@@ -79,6 +79,28 @@ namespace TMS_Data
          **/
         void setMachineId(::ecore::EString const& _machineId);
 
+        /**
+         * \brief To get the outputDir
+         * \return The outputDir attribute value
+         **/
+        ::ecore::EString const& getOutputDir() const;
+        /**
+         * \brief To set the outputDir
+         * \param _outputDir The outputDir value
+         **/
+        void setOutputDir(::ecore::EString const& _outputDir);
+
+        /**
+         * \brief To get the days
+         * \return The days attribute value
+         **/
+        ::ecore::EInt getDays() const;
+        /**
+         * \brief To set the days
+         * \param _days The days value
+         **/
+        void setDays(::ecore::EInt _days);
+
         // References
 
 
@@ -105,6 +127,10 @@ namespace TMS_Data
         // Attributes
 
         ::ecore::EString m_machineId;
+
+        ::ecore::EString m_outputDir;
+
+        ::ecore::EInt m_days;
 
         // References
 

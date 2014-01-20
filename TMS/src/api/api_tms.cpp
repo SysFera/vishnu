@@ -347,31 +347,37 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 /**
  * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
  * \param sessionKey : The session key
- * \param machineId : The Id of the machine
  * \param jobId : The Id of the job
- * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
- * \param outDir : The output directory where the files will be stored (default is current directory)
- * \return int : an error code
+ * \param outputInfo : The  Job object  containing the job output information (e.g: outputPath and errorPath) of the job to submit
+ * \param options : Object containing the user-provided options (e.g: it contains a possible output directory set by the user)
+ * \return 0 on success, or raises exception on error
  */
 int
 vishnu::getJobOutput(const std::string& sessionKey,
-                     const std::string& machineId,
                      const std::string& jobId,
                      JobResult& outputInfo,
-                     const std::string& outDir)
+                     const JobOuputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
 
-  if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");
+  std::string outputDir = options.getOutputDir();
+  if (! outputDir.empty() && ! boost::filesystem::exists(outputDir)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The output directory does not exist: "+ outputDir);
   }
 
-  SessionProxy sessionProxy(sessionKey);
-  JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
+  // If no machine id provided, find where the job has been submitted
+  std::string machineId =  options.getMachineId();
+  if (machineId.empty()) {
+    TMS_Data::Job jobInfo;
+    getJobInfo(sessionKey, jobId, jobInfo);
+    machineId = jobInfo.getSubmitMachineId();
+  }
 
-  outputInfo = jobOutputProxy.getJobOutPut(jobId);
+  // Now process the request
+  SessionProxy sessionProxy(sessionKey);
+  JobOutputProxy jobOutputProxy(sessionProxy, machineId);
+  outputInfo = jobOutputProxy.getJobOutPut(jobId, options);
 
   return 0;
 }
@@ -380,40 +386,53 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
  * \brief The getCompletedJobsOutput() function gets standard output and error output files
  * of completed jobs (applies only once for each job)
  * \param sessionKey : The session key
- * \param machineId : The id of the machine
+ * \param options: object containing options
  * \param listOfResults : Is the list of jobs results
- * \param outDir : The output directory where the files will be stored (default is current directory)
+   * \param options: Object containing options
  * \return int : an error code
  */
 int
 vishnu::getCompletedJobsOutput(const std::string& sessionKey,
-                               const std::string& machineId,
                                ListJobResults& listOfResults,
-                               const std::string& outDir)
+                               const TMS_Data::JobOuputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
 
-  if((outDir.size()!=0)&&(!boost::filesystem::exists(outDir))) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The directory "+outDir+" does not exist");
+  std::string outputDir = options.getOutputDir();
+  if (! outputDir.empty() && ! boost::filesystem::exists(outputDir)) {
+    throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The ouput directory does not exist: "+outputDir);
   }
 
-  SessionProxy sessionProxy(sessionKey);
-  JobOutputProxy jobOutputProxy(sessionProxy, machineId, outDir);
+  //FIXME: get output from all machines where user has a local account
+  UMS_Data::ListMachines machines;
 
-  TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getCompletedJobsOutput();
+  if (! options.getMachineId().empty()) {
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine(); // detroy implicitly by EMF
+    machine->setMachineId(options.getMachineId());
+    machines.getMachines().push_back(machine);
+  } else {
+    vishnu::listMachinesWithUserLocalAccount(sessionKey, machines);
+  }
 
-  if(listJobResults_ptr != NULL) {
-    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-    for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
-      TMS_Data::JobResult_ptr jobResult = ecoreFactory->createJobResult();
-      //To copy the content and not the pointer
-      *jobResult = *listJobResults_ptr->getResults().get(i);
-      listOfResults.getResults().push_back(jobResult);
+  int machineCount = machines.getMachines().size();
+  for (int index = 0; index < machineCount; ++index) {
+    SessionProxy sessionProxy(sessionKey);
+    JobOutputProxy jobOutputProxy(sessionProxy, machines.getMachines().get(index)->getMachineId());
+
+    TMS_Data::ListJobResults_ptr listJobResults_ptr = jobOutputProxy.getCompletedJobsOutput(options);
+
+    if (listJobResults_ptr != NULL) {
+      TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+      for(unsigned int i = 0; i < listJobResults_ptr->getResults().size(); i++) {
+        TMS_Data::JobResult_ptr jobResult = ecoreFactory->createJobResult();
+        //To copy the content and not the pointer
+        *jobResult = *listJobResults_ptr->getResults().get(i);
+        listOfResults.getResults().push_back(jobResult);
+      }
+      listOfResults.setNbJobs(listJobResults_ptr->getNbJobs());
+      delete listJobResults_ptr;
     }
-    listOfResults.setNbJobs(listJobResults_ptr->getNbJobs());
-    delete listJobResults_ptr;
   }
   return 0;
 }

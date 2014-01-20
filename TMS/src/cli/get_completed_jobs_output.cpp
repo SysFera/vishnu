@@ -23,16 +23,16 @@ using namespace vishnu;
 
 struct JobResultsFunc {
 
-  std::string mmachineId;
-  std::string moutDir;
+  TMS_Data::JobOuputOptions moptions;
 
-  JobResultsFunc(const std::string& machineId, const std::string& outDir):
-    mmachineId(machineId), moutDir(outDir)
-  {};
+  JobResultsFunc(const TMS_Data::JobOuputOptions& options)
+    : moptions(options)
+  {
+  }
 
   int operator()(std::string sessionKey) {
     TMS_Data::ListJobResults jobResults;
-    int res = getCompletedJobsOutput(sessionKey, mmachineId, jobResults, moutDir);
+    int res = getCompletedJobsOutput(sessionKey, jobResults, moptions);
     displayAllJobOutput(jobResults);
     return res;
   }
@@ -44,9 +44,10 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string configFile;
   string machineId;
-  std::string outDir;
+  std::string outputDir;
+  int forceDownloadDays = -1;
 
-   /**************** Describe options *************/
+  /**************** Describe options *************/
   boost::shared_ptr<Options> opt (new Options(argv[0]));
 
   // Environement option
@@ -55,23 +56,30 @@ int main (int argc, char* argv[]){
            ENV,
            configFile);
 
-  opt->add("outDir,o",
-     "The outputh dir of the jobs results",
-     CONFIG,
-     outDir);
-
-  // All cli obligatory parameters
+  // Other options
   opt->add("machineId,m",
-     "represents the id of the machine",
-     HIDDEN,
-     machineId,1);
-  opt->setPosition("machineId",1);
+           "The target machine",
+           CONFIG,
+           machineId);
+  opt->add("outDir,o",
+           "The outputh dir of the jobs results",
+           CONFIG,
+           outputDir);
+  opt->add("days,d",
+           "Considers jobs submitted in the last <days> days",
+           CONFIG,
+           forceDownloadDays);
 
+  // Process the options
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  //call of the api function
-  JobResultsFunc jobResultsFunc(machineId, outDir);
+  TMS_Data::JobOuputOptions options;
+  options.setMachineId(machineId);
+  options.setOutputDir(outputDir);
+  options.setDays(forceDownloadDays);
+
+  // Process the command
+  JobResultsFunc jobResultsFunc(options);
   return GenericCli().run(jobResultsFunc, configFile, argc, argv);
 }

@@ -52,9 +52,9 @@
       <ports name="sessionKey" usage="API_ONLY" dataType="//@typeList/@types.0" description="The session key" shortOptionLetter="" longOptionName=""/>
       <ports name="jobId" dataType="//@typeList/@types.0" description="The Id of the job"/>
       <ports name="outputInfo" direction="OUT" dataType="//@modules.0/@typeList/@types.8" description="The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit"/>
-      <ports name="outputDir" dataType="//@typeList/@types.0" description="The output directory where the files will be stored (default is current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
+      <ports name="options" dataType="//@modules.0/@typeList/@types.12" description="An object containing the options provided by the user" optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.4"/>
-      <details key="description" value="This command allows to get the ouput files of a given job"/>
+      <details key="description" value="This command allows to download the ouput files of a given job from &#xA;the remote machine to the local machine. "/>
       <details key="exCLI" value="To get the output of the job J_1:&#xA;vishnu_get_job_output J_1"/>
     </services>
     <services name="getCompletedJobsOutput" description="gets the ouput files of all completed jobs" resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_SESSIONKEY_EXPIRED VISHNU_OK ERRCODE_PERMISSION_DENIED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_SSH ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">
@@ -63,7 +63,7 @@
       <ports name="outDir" dataType="//@typeList/@types.0" description="Specifies the output directory where the files will be stored (by default, the current directory)" optional="true" shortOptionLetter="o" longOptionName="" defaultValueLiteral="string()"/>
       <ports name="options" dataType="//@modules.0/@typeList/@types.12" description="Object containing options" optional="true"/>
       <usedServices href="TMS_Internal.apim#//@modules.0/@services.5"/>
-      <details key="description" value="This command allows to get the output files of completed jobs.&#xA;You can specify the target machine using the option --machineId.&#xA;If no machine is specified, if if the specified machine is &quot;all&quot;, the &#xA;request will be performed on all the machines where the user has &#xA;a local account"/>
+      <details key="description" value="This command allows to get the output files of completed jobs.&#xA;You can specify the target machine using the option --machineId.&#xA;If no machine is specified, if if the specified machine is &quot;all&quot;, the &#xA;request will be performed on all the machines where the user has &#xA;a local account&#xA;&#xA;Note that all subsequent requests for this command will ignore jobs already downloaded. &#xA;Unless the user explicitly use the option --force or -f"/>
       <details key="exCLI" value="vishnu_get_completed_jobs_output --machineId machine_1    # get the completed job on machine_1&#xA;vishnu_get_completed_jobs_output                                                 # get the output of all completed jobs"/>
     </services>
     <services name="cancelJob" description="Allows to cancel a job submitted on a given machine." resultCodes="ERRCODE_BATCH_SCHEDULER_ERROR ERRCODE_PERMISSION_DENIED VISHNU_OK ERRCODE_SESSIONKEY_EXPIRED ERRCODE_UNKNOWN_BATCH_SCHEDULER ERRCODE_UNKNOWN_MACHINE ERRCODE_UNDEFINED ERRCODE_DIET ERRCODE_DBERR ERRCODE_DBCONN ERRCODE_SYSTEM ERRCODE_ALREADY_CANCELED ERRCODE_ALREADY_TERMINATED ERRCODE_SSH ERRCODE_CLI_ERROR_DIET ERRCODE_CLI_ERROR_MISSING_PARAMETER ERRCODE_CLI_ERROR_NO_SESSION ERRCODE_CLI_ERROR_RUNTIME">

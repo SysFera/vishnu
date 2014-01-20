@@ -128,41 +128,53 @@ JobOutputServer::getJobOutput() {
 
 /**
  * \brief Function to get the all completed jobs results
+ * \param options Object containing options
  * \return The list of job results data structure
  */
 TMS_Data::ListJobResults_ptr
-JobOutputServer::getCompletedJobsOutput() {
+JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options) {
 
   //To check the sessionKey
   msessionServer.check();
 
   std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-
-  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-  machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine);
-  delete machine;
-
-  std::string outputPath;
-  std::string errorPath;
-  std::string subDateStr;
-  std::string outputDir;
-  std::string jobId;
-  int status;
   std::vector<std::string> results;
-  std::vector<std::string>::iterator  iter;
+  std::vector<std::string>::iterator iter;
 
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistJobsResult = ecoreFactory->createListJobResults();
 
   //To get the output and error path of all jobs
-  std::string sqlRequest = "SELECT jobId, outputPath, errorPath, status, submitDate, outputDir "
-                           "FROM vsession, job "
-                           "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.owner='"+mdatabaseVishnu->escapeData(acLogin)+"'"
-                           "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'"
-                           "  AND job.status=5" ;
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+  std::string sqlQuery;
+  if (options.getDays() <= 0) {
+    // Here download only newly completed jobs
+    sqlQuery = (boost::format("SELECT jobId, outputPath, errorPath, outputDir "
+                              "FROM vsession, job "
+                              "WHERE vsession.numsessionid=job.vsession_numsessionid"
+                              "  AND job.owner='%1%'"
+                              "  AND job.submitMachineId='%2%'"
+                              "  AND job.status=%3%"
+                              ) % mdatabaseVishnu->escapeData(acLogin)
+                % mdatabaseVishnu->escapeData(mmachineId)
+                % vishnu::convertToString(vishnu::STATE_COMPLETED)).str();
+  } else {
+    // Here also download jobs already downloaded
+    sqlQuery = (boost::format("SELECT jobId, outputPath, errorPath, outputDir "
+                              "FROM vsession, job "
+                              "WHERE vsession.numsessionid=job.vsession_numsessionid"
+                              "  AND submitdate >= DATE_SUB(CURDATE(),INTERVAL %1% DAY)"
+                              "  AND job.owner='%2%'"
+                              "  AND job.submitMachineId='%3%'"
+                              "  AND (job.status=%4% OR job.status=%5%)"
+                              )
+                % vishnu::convertToString(options.getDays())
+                % mdatabaseVishnu->escapeData(acLogin)
+                % mdatabaseVishnu->escapeData(mmachineId)
+                % vishnu::convertToString(vishnu::STATE_COMPLETED)
+                % vishnu::convertToString(vishnu::STATE_DOWNLOADED)).str();
+  }
+
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlQuery.c_str()));
 
   if (sqlResult->getNbTuples() == 0) {
     return mlistJobsResult;
@@ -173,24 +185,22 @@ JobOutputServer::getCompletedJobsOutput() {
     results = sqlResult->get(i);
     iter = results.begin();
 
-    jobId = *iter;
+    std::string jobId = *iter;
     ++iter;
-    outputPath = *iter;
+    std::string outputPath = *iter;
     ++iter;
-    errorPath = *iter;
+    std::string errorPath = *iter;
     ++iter;
-    status = convertToInt(*iter);
-    ++iter;
-    subDateStr = *iter;
-    ++iter;
-    outputDir = *iter;
+    std::string outputDir = *iter;
 
+    // remove the hostname on the paths
     size_t pos1 = outputPath.find(":");
-    if( pos1 != std::string::npos ) {
+    if (pos1 != std::string::npos) {
       outputPath = outputPath.substr(pos1+1);
     }
+
     size_t pos2 = errorPath.find(":");
-    if( pos2 != std::string::npos ) {
+    if (pos2 != std::string::npos) {
       errorPath = errorPath.substr(pos2+1);
     }
 
@@ -201,14 +211,13 @@ JobOutputServer::getCompletedJobsOutput() {
     curResult->setErrorPath( errorPath) ;
     mlistJobsResult->getResults().push_back(curResult);
 
-    time_t submitDate = convertLocaltimeINUTCtime(convertToTimeType(subDateStr));
-    if( vishnu::getCurrentTimeInUTC()-submitDate > 2592000 ) {  // Retention of 1 month
-      std::string query = (boost::format("UPDATE job SET status=%1%"
-                                         " WHERE jobId='%2%';")
-                           %vishnu::convertToString(vishnu::STATE_DOWNLOADED)
-                           %mdatabaseVishnu->escapeData(jobId)).str();
-      mdatabaseVishnu->process(query);
-    }
+    // Mark the job as downloaded, so it will be ignored at the subsequent calls
+    std::string query = (boost::format("UPDATE job SET status=%1% "
+                                       " WHERE jobId='%2%';"
+                                       ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
+                         % mdatabaseVishnu->escapeData(jobId)).str();
+
+    mdatabaseVishnu->process(query);
 
   }
   mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
