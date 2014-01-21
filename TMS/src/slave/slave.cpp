@@ -130,12 +130,12 @@ main(int argc, char* argv[], char* envp[]) {
       os_slaveJobFile << slaveJob;
       os_slaveJobFile.close();
     } else if (action == "CANCEL") {
-      //To cancel the job
-      std::string jobdDescr = job->getJobId();
       if (batchType == DELTACLOUD) {
-        jobdDescr += "@"+job->getVmId();
+        std::string jobdDescr = job->getJobId()+"@"+job->getVmId();
+        batchServer->cancel(jobdDescr.c_str());
+      } else {
+        batchServer->cancel(job->getBatchJobId().c_str());
       }
-      batchServer->cancel(jobdDescr.c_str());
     }
   } catch (VishnuException& ve) {
     std::string errorInfo =  ve.buildExceptionString();
