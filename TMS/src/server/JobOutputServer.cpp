@@ -53,10 +53,8 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 TMS_Data::JobResult
 JobOutputServer::getJobOutput() {
 
-  //To check the sessionKey
-  msessionServer.check();
+  msessionServer.check();  // check the sessionKey
 
-  std::string acLogin;
   std::string outputPath;
   std::string errorPath;
   std::string owner;
@@ -73,34 +71,23 @@ JobOutputServer::getJobOutput() {
                            "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
-
-  acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
-
-  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-  machine->setMachineId(mmachineId);
-  MachineServer machineServer(machine);
-  delete machine;
-
   if(sqlResult->getNbTuples() == 0) {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
 
   results.clear();
   results = sqlResult->get(0);
-  iter = results.begin();
-  outputPath = *iter;
-  ++iter;
-  errorPath = *iter;
-  ++iter;
-  owner = *iter;
-  ++iter;
-  status = convertToInt(*iter);
-  ++iter;
-  subDateStr = *iter;
-  ++iter;
-  outputDir = *iter;
 
-  if( owner.compare(acLogin) != 0 ) {
+  iter = results.begin();
+  outputPath = *iter++;
+  errorPath = *iter++;
+  owner = *iter++;
+  status = convertToInt( *iter++ );
+  subDateStr = *iter++;
+  outputDir = *iter++;
+
+  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+  if (owner != acLogin) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
                              "this job because it is for an other owner");
   }
@@ -119,9 +106,10 @@ JobOutputServer::getJobOutput() {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
 
-  mjobResult.setOutputDir( outputDir ) ;
-  mjobResult.setOutputPath( outputPath ) ;
-  mjobResult.setErrorPath( errorPath ) ;
+  mjobResult.setOutputDir(outputDir) ;
+  mjobResult.setOutputPath(outputPath) ;
+  mjobResult.setErrorPath(errorPath) ;
+  LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% mjobResult.getJobId() % owner, 1);
 
   return mjobResult;
 }
@@ -134,8 +122,7 @@ JobOutputServer::getJobOutput() {
 TMS_Data::ListJobResults_ptr
 JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options) {
 
-  //To check the sessionKey
-  msessionServer.check();
+  msessionServer.check(); // check the sessionKey
 
   std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
   std::vector<std::string> results;
@@ -216,9 +203,8 @@ JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options
                                        " WHERE jobId='%2%';"
                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
                          % mdatabaseVishnu->escapeData(jobId)).str();
-
     mdatabaseVishnu->process(query);
-
+    LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % acLogin, 1);
   }
   mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 
