@@ -280,15 +280,15 @@ namespace TMS_Data
         void setPosix(::ecore::EBoolean _posix);
 
         /**
-         * \brief To get the machineId
-         * \return The machineId attribute value
+         * \brief To get the machine
+         * \return The machine attribute value
          **/
-        ::ecore::EString const& getMachineId() const;
+        ::ecore::EString const& getMachine() const;
         /**
-         * \brief To set the machineId
-         * \param _machineId The machineId value
+         * \brief To set the machine
+         * \param _machine The machine value
          **/
-        void setMachineId(::ecore::EString const& _machineId);
+        void setMachine(::ecore::EString const& _machine);
 
         // References
         /**
@@ -362,7 +362,7 @@ namespace TMS_Data
 
         ::ecore::EBoolean m_posix;
 
-        ::ecore::EString m_machineId;
+        ::ecore::EString m_machine;
 
         // References
 

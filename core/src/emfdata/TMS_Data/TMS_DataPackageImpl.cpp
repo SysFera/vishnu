@@ -270,11 +270,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__POSIX);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
             m_SubmitOptions__posix);
-    m_SubmitOptions__machineId = new ::ecore::EAttribute();
-    m_SubmitOptions__machineId->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINEID);
+    m_SubmitOptions__machine = new ::ecore::EAttribute();
+    m_SubmitOptions__machine->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINE);
     m_SubmitOptionsEClass->getEStructuralFeatures().push_back(
-            m_SubmitOptions__machineId);
+            m_SubmitOptions__machine);
     m_SubmitOptions__criterion = new ::ecore::EReference();
     m_SubmitOptions__criterion->setFeatureID(
             ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__CRITERION);
@@ -362,11 +362,11 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID);
     m_ProgressOptionsEClass->getEStructuralFeatures().push_back(
             m_ProgressOptions__jobId);
-    m_ProgressOptions__jobOwner = new ::ecore::EAttribute();
-    m_ProgressOptions__jobOwner->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER);
+    m_ProgressOptions__user = new ::ecore::EAttribute();
+    m_ProgressOptions__user->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__USER);
     m_ProgressOptionsEClass->getEStructuralFeatures().push_back(
-            m_ProgressOptions__jobOwner);
+            m_ProgressOptions__user);
     m_ProgressOptions__machineId = new ::ecore::EAttribute();
     m_ProgressOptions__machineId->setFeatureID(
             ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID);
@@ -682,16 +682,16 @@ TMS_DataPackage::TMS_DataPackage()
             ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__MACHINEID);
     m_CancelOptionsEClass->getEStructuralFeatures().push_back(
             m_CancelOptions__machineId);
-    m_CancelOptions__userId = new ::ecore::EAttribute();
-    m_CancelOptions__userId->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID);
+    m_CancelOptions__user = new ::ecore::EAttribute();
+    m_CancelOptions__user->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USER);
     m_CancelOptionsEClass->getEStructuralFeatures().push_back(
-            m_CancelOptions__userId);
-    m_CancelOptions__all = new ::ecore::EAttribute();
-    m_CancelOptions__all->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL);
+            m_CancelOptions__user);
+    m_CancelOptions__jobId = new ::ecore::EAttribute();
+    m_CancelOptions__jobId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__JOBID);
     m_CancelOptionsEClass->getEStructuralFeatures().push_back(
-            m_CancelOptions__all);
+            m_CancelOptions__jobId);
 
     // JobOuputOptions
     m_JobOuputOptionsEClass = new ::ecore::EClass();
@@ -1478,20 +1478,20 @@ TMS_DataPackage::TMS_DataPackage()
     m_SubmitOptions__posix->setUnique(true);
     m_SubmitOptions__posix->setDerived(false);
     m_SubmitOptions__posix->setOrdered(true);
-    m_SubmitOptions__machineId->setEType(
+    m_SubmitOptions__machine->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_SubmitOptions__machineId->setName("machineId");
-    m_SubmitOptions__machineId->setDefaultValueLiteral("" "");
-    m_SubmitOptions__machineId->setLowerBound(0);
-    m_SubmitOptions__machineId->setUpperBound(1);
-    m_SubmitOptions__machineId->setTransient(false);
-    m_SubmitOptions__machineId->setVolatile(false);
-    m_SubmitOptions__machineId->setChangeable(true);
-    m_SubmitOptions__machineId->setUnsettable(false);
-    m_SubmitOptions__machineId->setID(false);
-    m_SubmitOptions__machineId->setUnique(true);
-    m_SubmitOptions__machineId->setDerived(false);
-    m_SubmitOptions__machineId->setOrdered(true);
+    m_SubmitOptions__machine->setName("machine");
+    m_SubmitOptions__machine->setDefaultValueLiteral("" "");
+    m_SubmitOptions__machine->setLowerBound(0);
+    m_SubmitOptions__machine->setUpperBound(1);
+    m_SubmitOptions__machine->setTransient(false);
+    m_SubmitOptions__machine->setVolatile(false);
+    m_SubmitOptions__machine->setChangeable(true);
+    m_SubmitOptions__machine->setUnsettable(false);
+    m_SubmitOptions__machine->setID(false);
+    m_SubmitOptions__machine->setUnique(true);
+    m_SubmitOptions__machine->setDerived(false);
+    m_SubmitOptions__machine->setOrdered(true);
     m_SubmitOptions__criterion->setEType(m_LoadCriterionEClass);
     m_SubmitOptions__criterion->setName("criterion");
     m_SubmitOptions__criterion->setDefaultValueLiteral("");
@@ -1707,24 +1707,24 @@ TMS_DataPackage::TMS_DataPackage()
     m_ProgressOptions__jobId->setUnique(true);
     m_ProgressOptions__jobId->setDerived(false);
     m_ProgressOptions__jobId->setOrdered(true);
-    m_ProgressOptions__jobOwner->setEType(
+    m_ProgressOptions__user->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ProgressOptions__jobOwner->setName("jobOwner");
-    m_ProgressOptions__jobOwner->setDefaultValueLiteral("");
-    m_ProgressOptions__jobOwner->setLowerBound(0);
-    m_ProgressOptions__jobOwner->setUpperBound(1);
-    m_ProgressOptions__jobOwner->setTransient(false);
-    m_ProgressOptions__jobOwner->setVolatile(false);
-    m_ProgressOptions__jobOwner->setChangeable(true);
-    m_ProgressOptions__jobOwner->setUnsettable(false);
-    m_ProgressOptions__jobOwner->setID(false);
-    m_ProgressOptions__jobOwner->setUnique(true);
-    m_ProgressOptions__jobOwner->setDerived(false);
-    m_ProgressOptions__jobOwner->setOrdered(true);
+    m_ProgressOptions__user->setName("user");
+    m_ProgressOptions__user->setDefaultValueLiteral("");
+    m_ProgressOptions__user->setLowerBound(0);
+    m_ProgressOptions__user->setUpperBound(1);
+    m_ProgressOptions__user->setTransient(false);
+    m_ProgressOptions__user->setVolatile(false);
+    m_ProgressOptions__user->setChangeable(true);
+    m_ProgressOptions__user->setUnsettable(false);
+    m_ProgressOptions__user->setID(false);
+    m_ProgressOptions__user->setUnique(true);
+    m_ProgressOptions__user->setDerived(false);
+    m_ProgressOptions__user->setOrdered(true);
     m_ProgressOptions__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_ProgressOptions__machineId->setName("machineId");
-    m_ProgressOptions__machineId->setDefaultValueLiteral("");
+    m_ProgressOptions__machineId->setDefaultValueLiteral("" "");
     m_ProgressOptions__machineId->setLowerBound(0);
     m_ProgressOptions__machineId->setUpperBound(1);
     m_ProgressOptions__machineId->setTransient(false);
@@ -2583,7 +2583,7 @@ TMS_DataPackage::TMS_DataPackage()
     m_CancelOptions__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_CancelOptions__machineId->setName("machineId");
-    m_CancelOptions__machineId->setDefaultValueLiteral("");
+    m_CancelOptions__machineId->setDefaultValueLiteral("" "");
     m_CancelOptions__machineId->setLowerBound(0);
     m_CancelOptions__machineId->setUpperBound(1);
     m_CancelOptions__machineId->setTransient(false);
@@ -2594,34 +2594,34 @@ TMS_DataPackage::TMS_DataPackage()
     m_CancelOptions__machineId->setUnique(true);
     m_CancelOptions__machineId->setDerived(false);
     m_CancelOptions__machineId->setOrdered(true);
-    m_CancelOptions__userId->setEType(
+    m_CancelOptions__user->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_CancelOptions__userId->setName("userId");
-    m_CancelOptions__userId->setDefaultValueLiteral("");
-    m_CancelOptions__userId->setLowerBound(0);
-    m_CancelOptions__userId->setUpperBound(1);
-    m_CancelOptions__userId->setTransient(false);
-    m_CancelOptions__userId->setVolatile(false);
-    m_CancelOptions__userId->setChangeable(true);
-    m_CancelOptions__userId->setUnsettable(false);
-    m_CancelOptions__userId->setID(false);
-    m_CancelOptions__userId->setUnique(true);
-    m_CancelOptions__userId->setDerived(false);
-    m_CancelOptions__userId->setOrdered(true);
-    m_CancelOptions__all->setEType(
+    m_CancelOptions__user->setName("user");
+    m_CancelOptions__user->setDefaultValueLiteral("");
+    m_CancelOptions__user->setLowerBound(0);
+    m_CancelOptions__user->setUpperBound(1);
+    m_CancelOptions__user->setTransient(false);
+    m_CancelOptions__user->setVolatile(false);
+    m_CancelOptions__user->setChangeable(true);
+    m_CancelOptions__user->setUnsettable(false);
+    m_CancelOptions__user->setID(false);
+    m_CancelOptions__user->setUnique(true);
+    m_CancelOptions__user->setDerived(false);
+    m_CancelOptions__user->setOrdered(true);
+    m_CancelOptions__jobId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_CancelOptions__all->setName("all");
-    m_CancelOptions__all->setDefaultValueLiteral("");
-    m_CancelOptions__all->setLowerBound(0);
-    m_CancelOptions__all->setUpperBound(1);
-    m_CancelOptions__all->setTransient(false);
-    m_CancelOptions__all->setVolatile(false);
-    m_CancelOptions__all->setChangeable(true);
-    m_CancelOptions__all->setUnsettable(false);
-    m_CancelOptions__all->setID(false);
-    m_CancelOptions__all->setUnique(true);
-    m_CancelOptions__all->setDerived(false);
-    m_CancelOptions__all->setOrdered(true);
+    m_CancelOptions__jobId->setName("jobId");
+    m_CancelOptions__jobId->setDefaultValueLiteral("");
+    m_CancelOptions__jobId->setLowerBound(0);
+    m_CancelOptions__jobId->setUpperBound(1);
+    m_CancelOptions__jobId->setTransient(false);
+    m_CancelOptions__jobId->setVolatile(false);
+    m_CancelOptions__jobId->setChangeable(true);
+    m_CancelOptions__jobId->setUnsettable(false);
+    m_CancelOptions__jobId->setID(false);
+    m_CancelOptions__jobId->setUnique(true);
+    m_CancelOptions__jobId->setDerived(false);
+    m_CancelOptions__jobId->setOrdered(true);
     // JobOuputOptions
     m_JobOuputOptionsEClass->setName("JobOuputOptions");
     m_JobOuputOptionsEClass->setAbstract(false);
@@ -3258,9 +3258,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_SubmitOptions__posix;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__machineId()
+::ecore::EAttribute_ptr TMS_DataPackage::getSubmitOptions__machine()
 {
-    return m_SubmitOptions__machineId;
+    return m_SubmitOptions__machine;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getListJobsOptions__jobId()
 {
@@ -3318,9 +3318,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_ProgressOptions__jobId;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__jobOwner()
+::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__user()
 {
-    return m_ProgressOptions__jobOwner;
+    return m_ProgressOptions__user;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getProgressOptions__machineId()
 {
@@ -3562,13 +3562,13 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_CancelOptions__machineId;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getCancelOptions__userId()
+::ecore::EAttribute_ptr TMS_DataPackage::getCancelOptions__user()
 {
-    return m_CancelOptions__userId;
+    return m_CancelOptions__user;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getCancelOptions__all()
+::ecore::EAttribute_ptr TMS_DataPackage::getCancelOptions__jobId()
 {
-    return m_CancelOptions__all;
+    return m_CancelOptions__jobId;
 }
 ::ecore::EAttribute_ptr TMS_DataPackage::getJobOuputOptions__machineId()
 {

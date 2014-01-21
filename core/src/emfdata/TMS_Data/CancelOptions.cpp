@@ -30,7 +30,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-CancelOptions::CancelOptions()
+CancelOptions::CancelOptions() :
+    m_machineId("")
 {
 
     /*PROTECTED REGION ID(CancelOptionsImpl__CancelOptionsImpl) START*/
@@ -76,52 +77,52 @@ void CancelOptions::setMachineId(::ecore::EString const& _machineId)
 #endif
 }
 
-::ecore::EString const& CancelOptions::getUserId() const
+::ecore::EString const& CancelOptions::getUser() const
 {
-    return m_userId;
+    return m_user;
 }
 
-void CancelOptions::setUserId(::ecore::EString const& _userId)
+void CancelOptions::setUser(::ecore::EString const& _user)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_userId = m_userId;
+    ::ecore::EString _old_user = m_user;
 #endif
-    m_userId = _userId;
+    m_user = _user;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getCancelOptions__userId(),
-                _old_userId,
-                m_userId
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getCancelOptions__user(),
+                _old_user,
+                m_user
         );
         eNotify(&notification);
     }
 #endif
 }
 
-::ecore::EString const& CancelOptions::getAll() const
+::ecore::EString const& CancelOptions::getJobId() const
 {
-    return m_all;
+    return m_jobId;
 }
 
-void CancelOptions::setAll(::ecore::EString const& _all)
+void CancelOptions::setJobId(::ecore::EString const& _jobId)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_all = m_all;
+    ::ecore::EString _old_jobId = m_jobId;
 #endif
-    m_all = _all;
+    m_jobId = _jobId;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getCancelOptions__all(),
-                _old_all,
-                m_all
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getCancelOptions__jobId(),
+                _old_jobId,
+                m_jobId
         );
         eNotify(&notification);
     }

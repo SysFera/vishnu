@@ -30,7 +30,8 @@
 using namespace ::TMS_Data;
 
 // Default constructor
-ProgressOptions::ProgressOptions()
+ProgressOptions::ProgressOptions() :
+    m_machineId("")
 {
 
     /*PROTECTED REGION ID(ProgressOptionsImpl__ProgressOptionsImpl) START*/
@@ -76,26 +77,26 @@ void ProgressOptions::setJobId(::ecore::EString const& _jobId)
 #endif
 }
 
-::ecore::EString const& ProgressOptions::getJobOwner() const
+::ecore::EString const& ProgressOptions::getUser() const
 {
-    return m_jobOwner;
+    return m_user;
 }
 
-void ProgressOptions::setJobOwner(::ecore::EString const& _jobOwner)
+void ProgressOptions::setUser(::ecore::EString const& _user)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_jobOwner = m_jobOwner;
+    ::ecore::EString _old_user = m_user;
 #endif
-    m_jobOwner = _jobOwner;
+    m_user = _user;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getProgressOptions__jobOwner(),
-                _old_jobOwner,
-                m_jobOwner
+                (::ecore::EStructuralFeature_ptr) ::TMS_Data::TMS_DataPackage::_instance()->getProgressOptions__user(),
+                _old_user,
+                m_user
         );
         eNotify(&notification);
     }
