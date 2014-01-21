@@ -414,9 +414,9 @@ namespace TMS_Data
         static const int SUBMITOPTIONS__POSIX = 51;
 
         /**
-         * \brief Constant for SUBMITOPTIONS__MACHINEID feature
+         * \brief Constant for SUBMITOPTIONS__MACHINE feature
          */
-        static const int SUBMITOPTIONS__MACHINEID = 52;
+        static const int SUBMITOPTIONS__MACHINE = 52;
 
         /**
          * \brief Constant for LISTJOBSOPTIONS__JOBID feature
@@ -489,9 +489,9 @@ namespace TMS_Data
         static const int PROGRESSOPTIONS__JOBID = 66;
 
         /**
-         * \brief Constant for PROGRESSOPTIONS__JOBOWNER feature
+         * \brief Constant for PROGRESSOPTIONS__USER feature
          */
-        static const int PROGRESSOPTIONS__JOBOWNER = 67;
+        static const int PROGRESSOPTIONS__USER = 67;
 
         /**
          * \brief Constant for PROGRESSOPTIONS__MACHINEID feature
@@ -794,14 +794,14 @@ namespace TMS_Data
         static const int CANCELOPTIONS__MACHINEID = 127;
 
         /**
-         * \brief Constant for CANCELOPTIONS__USERID feature
+         * \brief Constant for CANCELOPTIONS__USER feature
          */
-        static const int CANCELOPTIONS__USERID = 128;
+        static const int CANCELOPTIONS__USER = 128;
 
         /**
-         * \brief Constant for CANCELOPTIONS__ALL feature
+         * \brief Constant for CANCELOPTIONS__JOBID feature
          */
-        static const int CANCELOPTIONS__ALL = 129;
+        static const int CANCELOPTIONS__JOBID = 129;
 
         /**
          * \brief Constant for JOBOUPUTOPTIONS__MACHINEID feature
@@ -1262,10 +1262,10 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getSubmitOptions__posix();
 
         /**
-         * \brief Returns the reflective object for feature machineId of class SubmitOptions
+         * \brief Returns the reflective object for feature machine of class SubmitOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getSubmitOptions__machineId();
+        virtual ::ecore::EAttribute_ptr getSubmitOptions__machine();
 
         /**
          * \brief Returns the reflective object for feature jobId of class ListJobsOptions
@@ -1352,10 +1352,10 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getProgressOptions__jobId();
 
         /**
-         * \brief Returns the reflective object for feature jobOwner of class ProgressOptions
+         * \brief Returns the reflective object for feature user of class ProgressOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getProgressOptions__jobOwner();
+        virtual ::ecore::EAttribute_ptr getProgressOptions__user();
 
         /**
          * \brief Returns the reflective object for feature machineId of class ProgressOptions
@@ -1718,16 +1718,16 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getCancelOptions__machineId();
 
         /**
-         * \brief Returns the reflective object for feature userId of class CancelOptions
+         * \brief Returns the reflective object for feature user of class CancelOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getCancelOptions__userId();
+        virtual ::ecore::EAttribute_ptr getCancelOptions__user();
 
         /**
-         * \brief Returns the reflective object for feature all of class CancelOptions
+         * \brief Returns the reflective object for feature jobId of class CancelOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getCancelOptions__all();
+        virtual ::ecore::EAttribute_ptr getCancelOptions__jobId();
 
         /**
          * \brief Returns the reflective object for feature machineId of class JobOuputOptions
@@ -2131,9 +2131,9 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_SubmitOptions__posix;
 
         /**
-         * \brief The instance for the feature machineId of class SubmitOptions
+         * \brief The instance for the feature machine of class SubmitOptions
          */
-        ::ecore::EAttribute_ptr m_SubmitOptions__machineId;
+        ::ecore::EAttribute_ptr m_SubmitOptions__machine;
 
         /**
          * \brief The instance for the feature jobId of class ListJobsOptions
@@ -2206,9 +2206,9 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_ProgressOptions__jobId;
 
         /**
-         * \brief The instance for the feature jobOwner of class ProgressOptions
+         * \brief The instance for the feature user of class ProgressOptions
          */
-        ::ecore::EAttribute_ptr m_ProgressOptions__jobOwner;
+        ::ecore::EAttribute_ptr m_ProgressOptions__user;
 
         /**
          * \brief The instance for the feature machineId of class ProgressOptions
@@ -2511,14 +2511,14 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_CancelOptions__machineId;
 
         /**
-         * \brief The instance for the feature userId of class CancelOptions
+         * \brief The instance for the feature user of class CancelOptions
          */
-        ::ecore::EAttribute_ptr m_CancelOptions__userId;
+        ::ecore::EAttribute_ptr m_CancelOptions__user;
 
         /**
-         * \brief The instance for the feature all of class CancelOptions
+         * \brief The instance for the feature jobId of class CancelOptions
          */
-        ::ecore::EAttribute_ptr m_CancelOptions__all;
+        ::ecore::EAttribute_ptr m_CancelOptions__jobId;
 
         /**
          * \brief The instance for the feature machineId of class JobOuputOptions

@@ -312,7 +312,7 @@
         <details key="shortOption" value="p"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machine" eType="ecore:EDataType Ecore.ecore#//EString"
         defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="shortOption" value="r"/>
@@ -435,13 +435,14 @@
         <details key="shortOption" value="i"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobOwner" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="user" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Specifies the owner of the job."/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Displays the progression of jobs on the given machine"/>
         <details key="shortOption" value="m"/>
@@ -830,22 +831,23 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CancelOptions" instanceTypeName="CancelOptions">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString"
+        defaultValueLiteral="&quot;&quot;">
       <eAnnotations source="Description">
         <details key="content" value="Cancels only jobs submitted on the given machine"/>
         <details key="shortOption" value="m"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userId" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="user" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Cancels only jobs submitted by the given user. Using this option requires root privileges"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="all" eType="ecore:EDataType Ecore.ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value=" Requires root privileges. This option allows to cancel all  jobs submitted through vishnu. &#xA;This option can be combined with a filter on the target machine using the option --machineId"/>
-        <details key="shortOption" value="a"/>
+        <details key="content" value="Sets the identifier of the job to cancel. &#xA;If the user is root, and the identifier corresponds to the keyword  'all', &#xA;then all the jobs submitted through vishnu on any machine managed &#xA;by vishnu will be cancelled. &#xA;** This option should thus be used with with caution **"/>
+        <details key="shortOption" value="j"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

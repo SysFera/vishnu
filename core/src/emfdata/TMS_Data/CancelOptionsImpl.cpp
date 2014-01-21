@@ -61,15 +61,15 @@ void CancelOptions::_initialize()
                 m_machineId);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USER:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_userId);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_user);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__JOBID:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_all);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_jobId);
     }
         return _any;
 
@@ -88,16 +88,16 @@ void CancelOptions::eSet(::ecore::EInt _featureID,
                 m_machineId);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_userId);
+                m_user);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__JOBID:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_all);
+                m_jobId);
     }
         return;
 
@@ -110,14 +110,13 @@ void CancelOptions::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__MACHINEID:
+        return m_machineId != "";
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_machineId);
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__USERID:
+                m_user);
+    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__JOBID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_userId);
-    case ::TMS_Data::TMS_DataPackage::CANCELOPTIONS__ALL:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_all);
+                m_jobId);
 
     }
     throw "Error";

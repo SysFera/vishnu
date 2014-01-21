@@ -61,10 +61,9 @@ void ProgressOptions::_initialize()
                 m_jobId);
     }
         return _any;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
+    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__USER:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_jobOwner);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_user);
     }
         return _any;
     case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
@@ -89,10 +88,10 @@ void ProgressOptions::eSet(::ecore::EInt _featureID,
                 m_jobId);
     }
         return;
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
+    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__USER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_jobOwner);
+                m_user);
     }
         return;
     case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
@@ -113,12 +112,11 @@ void ProgressOptions::eSet(::ecore::EInt _featureID,
     case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBID:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_jobId);
-    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__JOBOWNER:
+    case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__USER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_jobOwner);
+                m_user);
     case ::TMS_Data::TMS_DataPackage::PROGRESSOPTIONS__MACHINEID:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_machineId);
+        return m_machineId != "";
 
     }
     throw "Error";

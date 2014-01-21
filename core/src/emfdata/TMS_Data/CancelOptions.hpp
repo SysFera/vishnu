@@ -80,26 +80,26 @@ namespace TMS_Data
         void setMachineId(::ecore::EString const& _machineId);
 
         /**
-         * \brief To get the userId
-         * \return The userId attribute value
+         * \brief To get the user
+         * \return The user attribute value
          **/
-        ::ecore::EString const& getUserId() const;
+        ::ecore::EString const& getUser() const;
         /**
-         * \brief To set the userId
-         * \param _userId The userId value
+         * \brief To set the user
+         * \param _user The user value
          **/
-        void setUserId(::ecore::EString const& _userId);
+        void setUser(::ecore::EString const& _user);
 
         /**
-         * \brief To get the all
-         * \return The all attribute value
+         * \brief To get the jobId
+         * \return The jobId attribute value
          **/
-        ::ecore::EString const& getAll() const;
+        ::ecore::EString const& getJobId() const;
         /**
-         * \brief To set the all
-         * \param _all The all value
+         * \brief To set the jobId
+         * \param _jobId The jobId value
          **/
-        void setAll(::ecore::EString const& _all);
+        void setJobId(::ecore::EString const& _jobId);
 
         // References
 
@@ -128,9 +128,9 @@ namespace TMS_Data
 
         ::ecore::EString m_machineId;
 
-        ::ecore::EString m_userId;
+        ::ecore::EString m_user;
 
-        ::ecore::EString m_all;
+        ::ecore::EString m_jobId;
 
         // References
 
