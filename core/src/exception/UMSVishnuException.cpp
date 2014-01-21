@@ -30,7 +30,7 @@ UMSVishnuException::initMsg(){
   mp.insert(std::pair<int, std::string>(ERRCODE_INVALID_MAIL_ADRESS, std::string("The mail adress is invalid")));
 
   mp.insert(std::pair<int, std::string>(ERRCODE_SESSIONKEY_NOT_FOUND, std::string("The session key is unrecognized")));
-  mp.insert(std::pair<int, std::string>(ERRCODE_SESSIONKEY_EXPIRED, std::string("The session key is expired. The session is closed.")));
+  mp.insert(std::pair<int, std::string>(ERRCODE_SESSIONKEY_EXPIRED, std::string("The session key is expired.")));
   mp.insert(std::pair<int, std::string>(ERRCODE_UNKNOWN_SESSION_ID, std::string("The session id is unknown")));
   mp.insert(std::pair<int, std::string>(ERRCODE_COMMAND_RUNNING, std::string("Commands are running")));
 
