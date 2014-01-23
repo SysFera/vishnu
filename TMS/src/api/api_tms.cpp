@@ -56,17 +56,16 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   SessionProxy sessionProxy(sessionKey);
   boost::filesystem::path completePath(scriptFilePath);
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
+
   jobInfo.setJobPath(scriptFileCompletePath);
-
-  std::string scriptContent = vishnu::get_file_content(scriptFilePath);
-
-  JobProxy jobProxy(sessionProxy, jobInfo, options.getMachineId());
+  JobProxy jobProxy(sessionProxy, jobInfo, options.getMachine());
 
   ListStrings fileParamsVec;
   std::string fileParamsStr = options.getFileParams() ;
   boost::trim(fileParamsStr) ; //TODO BUG when empty list
   boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
+  std::string scriptContent = vishnu::get_file_content(scriptFilePath);
   int ret = jobProxy.submitJob(scriptContent, options);
   jobInfo = jobProxy.getData();
 
@@ -76,28 +75,39 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 /**
  * \brief The cancelJob function cancels a job from its id
  * \param sessionKey : The session key
- * \param machineId : The id of the machine
- * \param jobId : The Id of the job
+ * \param options : An object containing user-provided options
  * \param infoMsg : The information message
  * \return int : an error code
  */
 int
 vishnu::cancelJob(const std::string& sessionKey,
-                  const std::string& machineId,
-                  const std::string& jobId)
+                  const TMS_Data::CancelOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  checkEmptyString(machineId, "The machine id");
-  checkEmptyString(jobId, "The job id");
-
   SessionProxy sessionProxy(sessionKey);
 
-  TMS_Data::Job job;
-  job.setJobId(jobId);
+  // determine the target machines
+  std::string machineId = options.getMachineId();
+  UMS_Data::ListMachines machines;
+  if (! machineId.empty() && machineId != ALL_KEYWORD) {
+    // Use the specified machine
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(machineId);
+    machines.getMachines().push_back(machine);
+  } else {
+    listMachinesWithUserLocalAccount(sessionKey, machines);
+  }
 
-  return JobProxy(sessionProxy, job, machineId).cancelJob();
+  // perform the request
+  int retCode = 0;
+  for(int i=0; i< machines.getMachines().size(); i++) {
+    TMS_Data::Job job;
+    job.setJobId(options.getJobId());
+    retCode += JobProxy(sessionProxy, job, machines.getMachines().get(i)->getMachineId()).cancelJob(options);
+  }
 
+  return retCode;
 }
 
 
@@ -112,18 +122,18 @@ bInfo function gets information on a job from its id
 int
 vishnu::getJobInfo(const std::string& sessionKey,
                    const std::string& jobId,
-                   Job& jobInfo)
+                   Job& job)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(jobId, "The job id");
 
   SessionProxy sessionProxy(sessionKey);
-  jobInfo.setJobId(jobId);
+  job.setJobId(jobId);
 
-  JobProxy jobProxy(sessionProxy, jobInfo);
+  JobProxy jobProxy(sessionProxy, job);
 
-  jobInfo = jobProxy.getJobInfo();
+  job = jobProxy.getJobInfo();
 
   return 0;
 
@@ -224,11 +234,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     machine->setMachineId(machineId);
     machines.getMachines().push_back(machine);
   } else {
-    // Use all machines where the user has a local account
-    UMS_Data::ListMachineOptions mopts;
-    mopts.setListAllMachine(false);
-    mopts.setMachineId("");
-    listMachines(sessionKey, machines, mopts) ;
+    listMachinesWithUserLocalAccount(sessionKey, machines);
   }
 
   // Now perform the request
@@ -254,7 +260,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       }
     }
 
-    if(listProgression_ptr != NULL) {
+    if (listProgression_ptr != NULL) {
       TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
       for(unsigned int i = 0; i < listProgression_ptr->getProgress().size(); i++) {
         TMS_Data::Progression_ptr progression = ecoreFactory->createProgression();
@@ -401,15 +407,13 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The ouput directory does not exist: "+outputDir);
   }
 
-  //FIXME: get output from all machines where user has a local account
   UMS_Data::ListMachines machines;
-
-  if (! options.getMachineId().empty()) {
-    UMS_Data::Machine_ptr machine = new UMS_Data::Machine(); // detroy implicitly by EMF
+  if (options.getMachineId().empty()) {
+    vishnu::listMachinesWithUserLocalAccount(sessionKey, machines);
+  } else {
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine(); // delete by EMF
     machine->setMachineId(options.getMachineId());
     machines.getMachines().push_back(machine);
-  } else {
-    vishnu::listMachinesWithUserLocalAccount(sessionKey, machines);
   }
 
   int machineCount = machines.getMachines().size();

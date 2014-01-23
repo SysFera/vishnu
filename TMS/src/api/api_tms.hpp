@@ -53,14 +53,12 @@ namespace vishnu {
   /**
   * \brief The cancelJob function cancels a job from its id
   * \param sessionKey : The session key
-  * \param machineId : The id of the machine
-  * \param jobId : The Id of the job
+  * \param options : An object containing user-provided options
   * \return int : an error code
   */
   int
   cancelJob(const std::string& sessionKey,
-            const std::string& machineId,
-            const std::string& jobId)
+            const TMS_Data::CancelOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**

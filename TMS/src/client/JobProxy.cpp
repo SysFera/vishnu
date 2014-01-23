@@ -37,7 +37,7 @@ JobProxy::JobProxy(const SessionProxy& session,
 int
 JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
-  string sessionKey = msessionProxy.getSessionKey().c_str();
+  string sessionKey = msessionProxy.getSessionKey();
   TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
 
   // first check if it's an automatic submission
@@ -55,21 +55,21 @@ JobProxy::submitJob(const std::string& scriptContent,
   // now create and initialize the service profile
   string serviceName = std::string(SERVICES_TMS[JOBSUBMIT]) + "@";
   serviceName.append(mmachineId);
-  diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName.c_str(), 4, 4, 6);
+  diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName, 4, 4, 6);
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
   //IN Parameters
-  if (diet_string_set(submitJobProfile,0, sessionKey.c_str())) {
+  if (diet_string_set(submitJobProfile,0, sessionKey)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(submitJobProfile,1, mmachineId.c_str())) {
+  if (diet_string_set(submitJobProfile,1, mmachineId)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(submitJobProfile,2, scriptContent.c_str())) {
+  if (diet_string_set(submitJobProfile,2, scriptContent)) {
     msgErrorDiet += "with optionsInString parameter "+scriptContent;
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -90,9 +90,9 @@ JobProxy::submitJob(const std::string& scriptContent,
   }
 
   _ser.resetSerializer();
-  string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob)).c_str();
+  string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  if (diet_string_set(submitJobProfile,4, jobToString.c_str())) {
+  if (diet_string_set(submitJobProfile,4, jobToString)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -132,43 +132,42 @@ JobProxy::submitJob(const std::string& scriptContent,
 
 /**
  * \brief Function to cancel job
+ * \param options An object containing options
  * \return raises an exception on error
  */
 int
-JobProxy::cancelJob() {
+JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
   diet_profile_t* cancelJobProfile = NULL;
   std::string sessionKey;
   std::string errorInfo;
-  std::string serviceName = std::string(SERVICES_TMS[JOBCANCEL]) + "@";
-  serviceName.append(mmachineId);
 
-  cancelJobProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 3);
+  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBCANCEL] % mmachineId).str();
+
+  cancelJobProfile = diet_profile_alloc(serviceName, 2, 2, 3);
   sessionKey = msessionProxy.getSessionKey();
 
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
+  std::string msgErrorDiet = "preparing sending data failed ";
   //IN Parameters
-  if (diet_string_set(cancelJobProfile,0, sessionKey.c_str())) {
+  if (diet_string_set(cancelJobProfile,0, sessionKey)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(cancelJobProfile,1, mmachineId.c_str())) {
+  if (diet_string_set(cancelJobProfile,1, mmachineId)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the job object in to optionsInString
-  string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
-
-  if (diet_string_set(cancelJobProfile,2, jobToString.c_str())) {
-    msgErrorDiet += "with jobInString parameter "+jobToString;
+  string serializedOptions =  _ser.serialize_str(const_cast<TMS_Data::CancelOptions_ptr>(&options));
+  if (diet_string_set(cancelJobProfile,2, serializedOptions)) {
+    msgErrorDiet += " on serializing options: "+serializedOptions;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
   //OUT Parameters
-  diet_string_set(cancelJobProfile,3);
+  diet_string_set(cancelJobProfile, 3);
 
   signed ret = diet_call(cancelJobProfile);
   switch(ret) {
@@ -221,12 +220,12 @@ JobProxy::getJobInfo() {
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(getJobInfoProfile, 0, sessionKey.c_str())) {
+  if (diet_string_set(getJobInfoProfile, 0, sessionKey)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(getJobInfoProfile, 1, mmachineId.c_str())) {
+  if (diet_string_set(getJobInfoProfile, 1, mmachineId)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }
@@ -236,7 +235,7 @@ JobProxy::getJobInfo() {
   //To serialize the options object in to optionsInString
   std::string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
 
-  if (diet_string_set(getJobInfoProfile,2, jobToString.c_str())) {
+  if (diet_string_set(getJobInfoProfile,2, jobToString)) {
     msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
     raiseCommunicationMsgException(msgErrorDiet);
   }

@@ -105,7 +105,7 @@ solveSubmitJob(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser;
     string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
-    diet_string_set(pb,5, updateJobSerialized.c_str());
+    diet_string_set(pb,5, updateJobSerialized);
     diet_string_set(pb,6);
 
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
@@ -120,7 +120,7 @@ solveSubmitJob(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     diet_string_set(pb,5);
-    diet_string_set(pb,6, errorInfo.c_str());
+    diet_string_set(pb,6, errorInfo);
   }
 
   return 0;
@@ -136,7 +136,7 @@ solveCancelJob(diet_profile_t* pb) {
 
   std::string sessionKey;
   std::string machineId;
-  std::string jobSerialized;
+  std::string optionSerialized;
   std::string finishError ="";
   int mapperkey;
   std::string cmd = "";
@@ -144,28 +144,31 @@ solveCancelJob(diet_profile_t* pb) {
 
   diet_string_get(pb,0, sessionKey);
   diet_string_get(pb,1, machineId);
-  diet_string_get(pb,2, jobSerialized);
+  diet_string_get(pb,2, optionSerialized);
 
   SessionServer sessionServer = SessionServer(sessionKey);
-  TMS_Data::Job_ptr job = NULL;
+  TMS_Data::CancelOptions_ptr optionObjPtr = NULL;
 
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_cancel_job");
     mapper->code(machineId, mapperkey);
-    mapper->code(jobSerialized, mapperkey);
+    mapper->code(optionSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    if(!vishnu::parseEmfObject(jobSerialized, job)) {
-      SystemException(ERRCODE_INVDATA, "solve_cancelJob: Job object is not well built");
+    if(!vishnu::parseEmfObject(optionSerialized, optionObjPtr)) {
+      SystemException(ERRCODE_INVDATA, "corrupted serialized options");
     }
 
     ServerTMS* server = ServerTMS::getInstance();
-    JobServer jobServer(sessionServer, machineId, *job, server->getSedConfig());
+    TMS_Data::Job job;
+    job.setJobId(optionObjPtr->getJobId());
+    job.setUserId(optionObjPtr->getUser());
+    JobServer jobServer(sessionServer, machineId, job, server->getSedConfig());
     jobServer.cancelJob();
 
-    diet_string_set(pb,3, errorInfo.c_str());
+    diet_string_set(pb,3, errorInfo);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -176,7 +179,7 @@ solveCancelJob(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    diet_string_set(pb,3, errorInfo.c_str());
+    diet_string_set(pb,3, errorInfo);
   }
   return 0;
 }
@@ -224,7 +227,7 @@ solveJobInfo(diet_profile_t* pb) {
     string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
 
     //OUT Parameter
-    diet_string_set(pb,3, updateJobSerialized.c_str());
+    diet_string_set(pb,3, updateJobSerialized);
     diet_string_set(pb,4);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -237,7 +240,7 @@ solveJobInfo(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     diet_string_set(pb,3);
-    diet_string_set(pb,4, errorInfo.c_str());
+    diet_string_set(pb,4, errorInfo);
   }
 
   return 0;
@@ -287,8 +290,8 @@ solveListOfQueues(diet_profile_t* pb) {
     ::ecorecpp::serializer::serializer _ser;
     listQueuesSerialized =  _ser.serialize_str(listQueues);
 
-    diet_string_set(pb,3, listQueuesSerialized.c_str());
-    diet_string_set(pb,4, errorInfo.c_str());
+    diet_string_set(pb,3, listQueuesSerialized);
+    diet_string_set(pb,4, errorInfo);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -300,7 +303,7 @@ solveListOfQueues(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     diet_string_set(pb,3);
-    diet_string_set(pb,4, errorInfo.c_str());
+    diet_string_set(pb,4, errorInfo);
   }
 
   return 0;
@@ -362,7 +365,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
       finishError +="\n";
     }
     e.appendMsgComp(finishError);
-    diet_string_set(pb,4, e.buildExceptionString().c_str());
+    diet_string_set(pb,4, e.buildExceptionString());
   }
   return 0;
 }
@@ -416,7 +419,7 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(list);
 
     //OUT Parameter
-    diet_string_set(pb,3, listSerialized.c_str());
+    diet_string_set(pb,3, listSerialized);
     diet_string_set(pb,4);
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -429,8 +432,8 @@ solveGenerique(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     //Send error
-    diet_string_set(pb,3, listSerialized.c_str());
-    diet_string_set(pb,4, errorInfo.c_str());
+    diet_string_set(pb,3, listSerialized);
+    diet_string_set(pb,4, errorInfo);
   }
   delete options;
   delete list;
@@ -504,8 +507,8 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string()+"/vishnu-outdescr%%%%%%%").string();
     vishnu::saveInFile(outputInfo, ossFileName.str());
 
-    diet_string_set(pb, 3, outputInfo.c_str());
-    diet_string_set(pb, 4, jobsOutputSerialized.c_str());
+    diet_string_set(pb, 3, outputInfo);
+    diet_string_set(pb, 4, jobsOutputSerialized);
 
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
@@ -517,7 +520,7 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
       finishError +="\n";
     }
     e.appendMsgComp(finishError);
-    diet_string_set(pb,3, e.buildExceptionString().c_str());
+    diet_string_set(pb,3, e.buildExceptionString());
   }
   return 0;
 }
@@ -575,7 +578,7 @@ solveAddWork(diet_profile_t* pb) {
     std::string workSerializedUpdate = _ser.serialize_str(work);
 
     //OUT Parameter
-    diet_string_set(pb,3, workSerializedUpdate.c_str());
+    diet_string_set(pb,3, workSerializedUpdate);
     diet_string_set(pb,4);
     //To save the connection
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, work->getWorkId());
@@ -590,7 +593,7 @@ solveAddWork(diet_profile_t* pb) {
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
     diet_string_set(pb,3);
-    diet_string_set(pb,4, errorInfo.c_str());
+    diet_string_set(pb,4, errorInfo);
   }
   delete work;
   return 0;
