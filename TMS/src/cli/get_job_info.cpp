@@ -56,7 +56,7 @@ main (int argc, char* argv[]){
            configFile);
 
   opt->add("jobId,j",
-           "represents the id of the job",
+           "The id of the job",
            HIDDEN,
            jobId,1);
   opt->setPosition("jobId",1);
