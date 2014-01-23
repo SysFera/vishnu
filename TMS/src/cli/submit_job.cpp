@@ -26,7 +26,7 @@ using namespace vishnu;
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName: The name of the command
- * \param setMachineIdFct: Function to set the target machine option
+ * \param setMachineFct: Function to set the target machine option
  * \param setProgramNameFct: Function to set the job name option
  * \param setQueueFct: Function to set the queue option
  * \param setMemoryFct: Function to set the memory needed by the job
@@ -52,7 +52,7 @@ using namespace vishnu;
  */
 boost::shared_ptr<Options>
 makeSubJobOp(string pgName,
-             boost::function1<void, string>& setMachineIdFct,
+             boost::function1<void, string>& setMachineFct,
              boost::function1<void, string>& setProgramNameFct,
              boost::function1<void, string>& setQueueFct,
              boost::function1<void, int>& setMemoryFct,
@@ -84,10 +84,10 @@ makeSubJobOp(string pgName,
            configFile);
 
   // All cli options
-  opt->add("machineId,r",
+  opt->add("machine,r",
            "The id of the target machine. Default is autom.",
            CONFIG,
-           setMachineIdFct);
+           setMachineFct);
   opt->add("name,n",
            "The name of the job",
            CONFIG,
@@ -205,7 +205,7 @@ int main (int argc, char* argv[]){
 
   /******** Callback functions ******************/
   boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
-  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::SubmitOptions::setMachineId,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setMachineFct(boost::bind(&TMS_Data::SubmitOptions::setMachine,boost::ref(submitOptions),_1));
   boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
   boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
   boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(submitOptions),_1));
@@ -228,8 +228,8 @@ int main (int argc, char* argv[]){
 
   TMS_Data::Job job;
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],
-      setMachineIdFct,
+  boost::shared_ptr<Options> opt = makeSubJobOp(argv[0],
+      setMachineFct,
       setProgramNameFct,
       setQueueFct,
       setMemoryFct,
@@ -263,17 +263,14 @@ int main (int argc, char* argv[]){
            1);
   opt->setPosition("scriptPath", 1);
 
-
   opt->add("posix,p",
            "is an option for submitting using the posix backend instead of the batch scheduler ",
            CONFIG);
 
-
+  //process options and then the command
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  // Process command
   try {
     if (opt->count("posix")) {
       submitOptions.setPosix(true);
@@ -316,7 +313,7 @@ int main (int argc, char* argv[]){
     //Validate textual parameters syntax, if any
     string paramOptName = "textParams" ;
 
-    if(opt->count(paramOptName) || !textParamsVector.empty()) {
+    if(opt->count(paramOptName) || ! textParamsVector.empty()) {
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
       if( ret != 0 ) return ret ;
