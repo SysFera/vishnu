@@ -13,6 +13,9 @@
 #include "UMS_Data.hpp"
 #include "ExecConfiguration.hpp"
 
+
+#define LOG(msg, logLevel) if (logLevel) std::cout << msg <<"\n"
+
 /**
 * \class Format_t
 * \brief The class used to get the variables of the string to parse
