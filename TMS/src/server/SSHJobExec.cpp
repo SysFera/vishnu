@@ -34,8 +34,6 @@
   vishnu::deleteFile(errorPath.c_str()); \
   }
 
-#define LOG(msg, logLevel) if (logLevel) std::cout << msg << "\n"
-
 const std::string TMS_SERVER_FILES_DIR="/tmp";
 const int SSH_CONNECT_RETRY_INTERVAL = 5;
 const int SSH_CONNECT_MAX_RETRY = 20;
@@ -213,7 +211,10 @@ SSHJobExec::sshexec(const std::string& serviceName,
       }
     }
   }
-  LOG(merrorInfo, mdebugLevel); merrorInfo.clear();
+  if (! merrorInfo.empty()) {
+    LOG(merrorInfo, mdebugLevel);
+    merrorInfo.clear();
+  }
   CLEANUP_SUBMITTING_DATA(mdebugLevel);
 }
 
