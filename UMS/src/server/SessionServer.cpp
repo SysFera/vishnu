@@ -63,7 +63,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
         numSubstituteUserId = user.getAttribut("where "
                                                "userid='"+mdatabaseVishnu->escapeData(connectOpt->getSubstituteUserId())+"'");
         //If the user to substitute exist
-        if (user.existuserId(connectOpt->getSubstituteUserId())) {
+        if (! user.getNumUserId(connectOpt->getSubstituteUserId()).empty()) {
           numUserIdToconnect = numSubstituteUserId;
           msession.setUserId(connectOpt->getSubstituteUserId());
         } //End If the user to substitute exist

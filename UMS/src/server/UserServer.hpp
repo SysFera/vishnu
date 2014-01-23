@@ -135,10 +135,10 @@ public:
   /**
    * \brief Function to check a userId
    * \param userId The userId to check
-   * \return true if the userId exists
+   * \return empty or the index of the user in the database
    */
-  bool
-  existuserId(std::string userId);
+  std::string
+  getNumUserId(std::string userId);
 
    /**
    * \brief Function to get the user account login
