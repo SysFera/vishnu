@@ -28,7 +28,7 @@ public:
   */
   explicit JobProxy(const SessionProxy& session,
                     TMS_Data::Job& job,
-                    const std::string& machineId="");
+                    const std::string& machineId = "");
   /**
   * \brief Function to submit job
   * \param scriptContent the content of the script
@@ -42,10 +42,11 @@ public:
   
   /**
   * \brief Function to cancel job
+  * \param options An object containing options
   * \return raises an exception on error
   */
   int
-  cancelJob();
+  cancelJob(const TMS_Data::CancelOptions& options);
 
   /**
    * \brief Function to get job information

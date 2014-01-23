@@ -72,17 +72,26 @@ int JobServer::submitJob(std::string& scriptContent,
   bool succeed = false;
   int errCode = ERRCODE_RUNTIME_ERROR;
   std::string errMsg  = "";
+  std::string numUserId = "NULL";
   try {
     msessionServer.check(); //To check the sessionKey
+
     std::string sessionKey = (msessionServer.getData()).getSessionKey();
     std::string sessionId = msessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(sessionKey)+"'", "numsessionid");
+
+    // Get user info
+    UserServer userServer(msessionServer);
+    std::string acLogin = userServer.getUserAccountLogin(mmachineId);
+    mjob.setUserId(userServer.getData().getUserId());
+    numUserId = userServer.getNumUserId(userServer.getData().getUserId());
+
+
     mjob.setSessionId(sessionId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
     mjob.setWorkId(options.getWorkId());
     mjob.setOutputDir("");
-    std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
     if (options.isPosix()) {
       mbatchType = POSIX;
@@ -111,6 +120,7 @@ int JobServer::submitJob(std::string& scriptContent,
       throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
     }
     sshJobExec.sshexec("SUBMIT", std::string(scriptPath)); // Submit the job
+
     // Submission with deltacloud doesn't make copy of the script
     // So the script needs to be kept until the end of the execution
     // Clean the temporary script if not deltacloud
@@ -134,9 +144,10 @@ int JobServer::submitJob(std::string& scriptContent,
       scriptContent.replace(pos, 1, " ");
       pos = scriptContent.find("'");
     }
+
     // Set the job owner for SGE and Deltacloud
     // For other batch schedulers this information is known
-    if(mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
+    if (mbatchType == SGE || mbatchType == DELTACLOUD || mbatchType == POSIX) {
       mjob.setOwner(acLogin);
     }
     pos = mjob.getOutputPath().find(":");
@@ -156,6 +167,7 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setOutputDir("");
     mjob.setStatus(vishnu::STATE_FAILED);
   }
+
   try {
     recordJob2db();
   } catch (VishnuException& ex) {
@@ -163,8 +175,11 @@ int JobServer::submitJob(std::string& scriptContent,
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
   }
 
-  if (!succeed) {
+  if (! succeed) {
     throw TMSVishnuException(errCode, mjob.getJobId()+": "+errMsg);
+  } else {
+    LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%" )
+        % mjob.getJobId() % mjob.getUserId() % mjob.getOwner(), 1);
   }
   return 0;
 }
@@ -250,112 +265,162 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
 int JobServer::cancelJob()
 {
   msessionServer.check(); //To check the sessionKey
-  std::string acLogin;
   std::string machineName;
   std::string jobSerialized;
-  BatchType   batchType;
-  std::string initialJobId;
-  std::string jobId;
-  std::string owner;
   std::vector<std::string> results;
-  std::vector<std::string>::iterator  iter;
-  acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
   machineName =  getMachineName(mmachineId);
 
   //Creation of the object user
   UserServer userServer = UserServer(msessionServer);
   userServer.init();
 
-  std::string sqlCancelRequest;
-  initialJobId = mjob.getJobId();
-  if(initialJobId.compare("all") != 0 &&
-     initialJobId.compare("ALL") != 0) {
+  // Only a admin user can use the option 'all' for the job id
+  if (mjob.getJobId() == ALL_KEYWORD && ! userServer.isAdmin()) {
+    throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
+                             (boost::format("Option privileged users can use this parameter: %1%")%ALL_KEYWORD).str());
+  }
 
-    sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
-                       " FROM job, vsession"
-                       " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                       " AND jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
+  // Only a admin user can delete jobs from another user
+  if (! mjob.getUserId().empty() && ! userServer.isAdmin()) {
+    throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
+                             (boost::format("Only privileged users can use user this option")).str());
+  }
+
+  bool cancelAllJobs = mjob.getJobId().empty() || mjob.getJobId() == ALL_KEYWORD;
+
+  std::string sqlQuery;
+  if (! cancelAllJobs) {
+    sqlQuery = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
+               " FROM job, vsession"
+               " WHERE vsession.numsessionid=job.vsession_numsessionid"
+               " AND jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
+    LOG(boost::format("[WARN] received request to cancel the job %1%")%mjob.getJobId(), 2);
   } else {
-    if(userServer.isAdmin()) {
-      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
-                         " FROM job, vsession "
-                         " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                         " AND status < 5"
-                         " AND submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
+    // This block works as follow:
+    // * if admin:
+    //    ** if JobId = 'all', then cancel all jobs submitted through vishnu, regardless of the users
+    //    ** else perform cancel as for a normal user
+    // *if normal user (not admin), cancel alls jobs submitted through vishnu by the user
+
+    bool addUserFilter = true;
+    if (userServer.isAdmin() && mjob.getJobId() == ALL_KEYWORD && mjob.getUserId().empty()) {
+      addUserFilter = false;
+    }
+
+    // set the SQL query accordingly
+    UserServer userServer(msessionServer);
+    std::string acLogin =userServer.getUserAccountLogin(mmachineId);
+    if (addUserFilter) {
+      std::string targetUser;
+      if (mjob.getUserId().empty()) {
+        sqlQuery = (boost::format("SELECT owner, job.status, jobId, batchJobId, vmId, batchType"
+                                  " FROM job, vsession "
+                                  " WHERE job.status < %1%"
+                                  " AND vsession.numsessionid=job.vsession_numsessionid"
+                                  " AND owner='%2%'"
+                                  " AND submitMachineId='%3%';"
+                                  )
+                    % vishnu::STATE_COMPLETED
+                    % mdatabaseVishnu->escapeData(acLogin)
+                    % mdatabaseVishnu->escapeData(mmachineId)
+                    ).str();
+        targetUser = userServer.getData().getUserId();
+      } else {
+        targetUser = mjob.getUserId();
+        sqlQuery = (boost::format("SELECT owner, job.status, jobId, batchJobId, vmId, batchType"
+                                  " FROM job, users "
+                                  " WHERE job.status < %1%"
+                                  " AND job.job_owner_id=users.numuserid"
+                                  " AND users.userid='%2%'"
+                                  " AND submitMachineId='%3%';"
+                                  )
+                    % vishnu::STATE_COMPLETED
+                    % mdatabaseVishnu->escapeData(targetUser)
+                    % mdatabaseVishnu->escapeData(mmachineId)
+                    ).str();
+      }
+      LOG(boost::format("[WARN] received request to cancel all jobs submitted by the user %1%")%targetUser, 2);
     } else {
-      sqlCancelRequest = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
-                         " FROM job, vsession"
-                         " WHERE vsession.numsessionid=job.vsession_numsessionid"
-                         " AND status < 5"
-                         " AND owner='"+mdatabaseVishnu->escapeData(acLogin)+"'"
-                         " AND submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
+      sqlQuery = (boost::format("SELECT owner, status, jobId, batchJobId, vmId, batchType"
+                                " FROM job, vsession "
+                                " WHERE job.status < %1%"
+                                " AND vsession.numsessionid=job.vsession_numsessionid"
+                                " AND submitMachineId='%2%';")
+                  % vishnu::STATE_COMPLETED
+                  % mdatabaseVishnu->escapeData(mmachineId)
+                  ).str();
+      LOG(boost::format("[WARN] received request to cancel all user jobs from %1%")%acLogin, 2);
     }
   }
 
-
-  boost::scoped_ptr<DatabaseResult> sqlCancelResult(mdatabaseVishnu->getResult(sqlCancelRequest.c_str()));
-  if (sqlCancelResult->getNbTuples() != 0) {
-    int status;
-
-    for (size_t i = 0; i < sqlCancelResult->getNbTuples(); ++i) {
+  boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseVishnu->getResult(sqlQuery.c_str()));
+  if (sqlQueryResult->getNbTuples() == 0) {
+    if (! cancelAllJobs) {
+      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % mjob.getJobId(), 1);
+      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, mjob.getJobId());
+    } else {
+      LOG(boost::format("[INFO] no job matching the call"), 1);
+    }
+  } else {
+    int resultCount = sqlQueryResult->getNbTuples();
+    for (size_t i = 0; i < resultCount; ++i) {
       results.clear();
-      results = sqlCancelResult->get(i);
+      results = sqlQueryResult->get(i);
 
-      iter = results.begin();
-      owner = *iter;
+      TMS_Data::Job currentJob;
+
+      std::vector<std::string>::iterator resultIterator = results.begin();
+      currentJob.setOwner( *resultIterator++ );  // IMPORTANT: gets the value and increments the iterator
+      std::string jobOwner;
       if (userServer.isAdmin()) {
-        acLogin = owner;
-      } else if(owner.compare(acLogin)!=0) {
+        jobOwner = currentJob.getOwner();
+      } else if (currentJob.getOwner() != jobOwner) {
         throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
       }
 
-      ++iter;
-      status = convertToInt(*iter);
-      if(status == vishnu::STATE_COMPLETED) {
-        throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, mjob.getJobId());
+      currentJob.setStatus(convertToInt( *resultIterator++ ));
+      switch (currentJob.getStatus()) {
+      case vishnu::STATE_COMPLETED:
+        throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, currentJob.getJobId());
+        break;
+      case vishnu::STATE_CANCELLED:
+        throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, currentJob.getJobId());
+        break;
+      default:
+        break;
       }
 
-      if(status == vishnu::STATE_CANCELLED) {
-        throw TMSVishnuException(ERRCODE_ALREADY_CANCELED, mjob.getJobId());
-      }
+      currentJob.setJobId( *resultIterator++ );
+      currentJob.setBatchJobId( *resultIterator++ );
+      currentJob.setVmId( *resultIterator++ );
+      BatchType serverBatchType = static_cast<BatchType>(convertToInt( *resultIterator++ ));
 
-      ++iter;
-      jobId = *iter;
-      ++iter;
-      mjob.setJobId(*iter); //To reset the jobId
-      ++iter;
-      mjob.setVmId(*iter);
-      ++iter;
-      batchType = static_cast<BatchType>(convertToInt(*iter));
       ::ecorecpp::serializer::serializer jobSer;
-      jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
+      jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&currentJob));
 
-      SSHJobExec sshJobExec(acLogin, machineName,
-                            batchType,
+      SSHJobExec sshJobExec(jobOwner, machineName,
+                            serverBatchType,
                             mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
                             jobSerialized);
       sshJobExec.sshexec("CANCEL");
 
       std::string errorInfo = sshJobExec.getErrorInfo();
-
-      if(errorInfo.size() !=0 &&
-         (initialJobId.compare("all")!=0 &&
-          initialJobId.compare("ALL")!=0)) {
+      if (! errorInfo.empty()) {
         int code;
         std::string message;
         scanErrorMessage(errorInfo, code, message);
         throw TMSVishnuException(code, message);
-      } else if(errorInfo.size()==0) {
+      } else {
         std::string query = (boost::format("UPDATE job SET status=%1%"
-                                           " WHERE jobId='%2%';")
-                             %vishnu::convertToString(vishnu::STATE_CANCELLED)
-                             %mdatabaseVishnu->escapeData(jobId)).str();
+                                           " WHERE jobId='%2%';"
+                                           )
+                             % vishnu::convertToString(vishnu::STATE_CANCELLED)
+                             % mdatabaseVishnu->escapeData(currentJob.getJobId())).str();
         mdatabaseVishnu->process(query.c_str());
+
+
+        LOG(boost::format("[INFO] Job cancelled: %1%")% currentJob.getJobId(), mdebugLevel);
       }
-    }
-  } else {
-    if(initialJobId.compare("all")!=0 && initialJobId.compare("ALL")!=0) {
-      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
     }
   }
 
@@ -586,8 +651,15 @@ void JobServer::recordJob2db()
   if (mjob.getSessionId().empty()) {
     throw TMSVishnuException(ERRCODE_AUTHENTERR, "Error: invalid session id (empty)");
   }
+
+  // Get the reference of the user in the database
+  UserServer userServer(msessionServer);
+  std::string numUserId = userServer.getAttribut("where userid='"+mjob.getUserId()+"'");
+
   std::string sqlUpdate = "UPDATE job set ";
   sqlUpdate+="vsession_numsessionid='"+mdatabaseVishnu->escapeData(mjob.getSessionId())+"', ";
+  sqlUpdate+="job_owner_id="+numUserId+", ";
+  sqlUpdate+="owner='"+mdatabaseVishnu->escapeData(mjob.getOwner())+"', ";
   sqlUpdate+="submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"', ";
   sqlUpdate+="submitMachineName='"+mdatabaseVishnu->escapeData(mjob.getSubmitMachineName())+"', ";
   sqlUpdate+="batchJobId='"+mdatabaseVishnu->escapeData(mjob.getBatchJobId())+"', ";
@@ -602,7 +674,6 @@ void JobServer::recordJob2db()
   sqlUpdate+="jobWorkingDir='"+mdatabaseVishnu->escapeData(mjob.getJobWorkingDir())+"', ";
   sqlUpdate+="status="+convertToString(mjob.getStatus())+", ";
   sqlUpdate+="submitDate=CURRENT_TIMESTAMP, ";
-  sqlUpdate+="owner='"+mdatabaseVishnu->escapeData(mjob.getOwner())+"', ";
   sqlUpdate+="jobQueue='"+mdatabaseVishnu->escapeData(mjob.getJobQueue())+"', ";
   sqlUpdate+="wallClockLimit="+convertToString(mjob.getWallClockLimit())+", ";
   sqlUpdate+="groupName='"+mdatabaseVishnu->escapeData(mjob.getGroupName())+"',";

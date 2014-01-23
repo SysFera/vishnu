@@ -17,35 +17,38 @@
 
 namespace po = boost::program_options;
 
-using namespace std;
-using namespace vishnu;
-
 struct CancelJobFunc {
 
-  std::string mmachineId;
-  std::string mjobId;
+  TMS_Data::CancelOptions moptions;
 
-  CancelJobFunc(const std::string& machineId, const std::string& jobId):
-    mmachineId(machineId), mjobId(jobId)
-  {};
+  CancelJobFunc(const TMS_Data::CancelOptions& options):
+    moptions(options)
+  {
+
+  }
 
   int operator()(std::string sessionKey) {
-    return cancelJob(sessionKey, mmachineId, mjobId);
+    return vishnu::cancelJob(sessionKey, moptions);
   }
 };
 
 
-int main (int argc, char* argv[]){
-
-  /******* Parsed value containers ****************/
-  string configFile;
-  string machineId;
-  string cancelJobId;
-
-  /********** EMF data ************/
-
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt (new Options(argv[0]));
+/**
+ * \brief To build options for the VISHNU submit job command
+ * \param pgName : The name of the command
+ * \param setJobIdFct: Function to set the job id in the option object
+ * \param setMachineIdFct: Function to set the target machine in the option object
+ * \param setUserFct: Function to set the target machine in the option object
+ * \param configFile: Represents the VISHNU config file
+ * \return The description of all options allowed by the command
+ */
+boost::shared_ptr<Options>
+makeCancelJobOption(std::string pgName,
+                    boost::function1<void, std::string>& setJobIdFct,
+                    boost::function1<void, std::string>& setMachineIdFct,
+                    boost::function1<void, std::string>& setUserFct,
+                    std::string& configFile) {
+  boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
   opt->add("configFile,c",
@@ -53,25 +56,40 @@ int main (int argc, char* argv[]){
            ENV,
            configFile);
 
-  // All cli obligatory parameters
-  opt->add("machineId,m",
-	   "The id of the machine where the job has been submitted",
-	   HIDDEN,
-	   machineId,1);
-  opt->setPosition("machineId",1);
+  // All cli options
+  opt->add("job,j",
+           "The id of the job",
+           CONFIG,
+           setJobIdFct);
+  opt->add("machine,m",
+           "The ID of the target machine",
+           CONFIG,
+           setMachineIdFct);
+  opt->add("user,u",
+           "Delete only jobs submitted by the given user",
+           CONFIG,
+           setUserFct);
 
-  opt->add("jobId,j",
-	   "The id of the job to cancel",
-	   HIDDEN,
-	   cancelJobId,1);
-  opt->setPosition("jobId",1);
+  return opt;
+}
 
+int main (int argc, char* argv[]){
+
+  /******* Parsed value containers ****************/
+  std::string configFile;
+
+  TMS_Data::CancelOptions options;
+  boost::function1<void,std::string> setJobIdFct(boost::bind(&TMS_Data::CancelOptions::setJobId,boost::ref(options),_1));
+  boost::function1<void,std::string> setMachineIdFct(boost::bind(&TMS_Data::CancelOptions::setMachineId,boost::ref(options),_1));
+  boost::function1<void,std::string> setUserFct(boost::bind(&TMS_Data::CancelOptions::setUser,boost::ref(options),_1));
+
+  // get options and process the request
+  boost::shared_ptr<Options> opt = makeCancelJobOption(argv[0], setJobIdFct, setMachineIdFct, setUserFct, configFile);
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  CancelJobFunc cancelJobFunc(machineId, cancelJobId);
+  CancelJobFunc cancelJobFunc(options);
   return GenericCli().run(cancelJobFunc, configFile, argc, argv);
 
 }
