@@ -124,6 +124,7 @@ keepRegistered(const std::string& sedType,
 
   std::string response;
   bool useSsl = false;
+  bool connected(false);
   while (true){
     if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
 
@@ -147,6 +148,15 @@ keepRegistered(const std::string& sedType,
       LazyPirateClient lpc(ctx, dispUri, timeout);
       lpc.send(requestData);
       response = lpc.recv();
+      if (response == "OK") {
+          if (!connected) {
+            std::cerr << "I: registered in dispatcher\n";
+          }
+          connected = true;
+      } else {
+          connected = false;
+          std::cerr << "W: not registered in dispatcher\n";
+      }
     }
     sleep(timeout);
   }
