@@ -45,7 +45,7 @@ private:
 
   /**
    * \brief Call the function
-   * \param data the serialized data containing the funcion and its parameters
+   * \param data the serialized data containing the function and its parameters
    * \return the serialized data (out data are updated)
    */
   std::string
