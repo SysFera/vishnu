@@ -185,7 +185,7 @@ solveSessionClose(diet_profile_t* pb) {
     // OUT Parameter
     diet_string_set(pb, 1);
     // To save the connection
-    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS, "", false);
   } catch (VishnuException& e) {
        try {
         sessionServer.finish(cmd, UMS, vishnu::CMDFAILED);
