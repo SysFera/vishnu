@@ -141,13 +141,11 @@ keepRegistered(const std::string& sedType,
       requestData.append("\n\n");      /* required for the internal protocol */
       if (tlsClient.send(requestData) == 0) {
         response = tlsClient.recv();
-      } else {
       }
     } else {
       zmq::context_t ctx(1);
       LazyPirateClient lpc(ctx, dispUri, timeout);
-      if (!lpc.send(requestData)) {
-      }
+      lpc.send(requestData);
       response = lpc.recv();
     }
     sleep(timeout);
