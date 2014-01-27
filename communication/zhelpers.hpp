@@ -134,7 +134,9 @@ public:
     decData = static_cast<char*>(message.data());
     //   }
     const char* pos = decData + decDataLength;
-    return std::string(static_cast<const char*>(decData), pos);
+    std::string ret = std::string(static_cast<const char*>(decData), pos);
+    ret.erase(std::remove(ret.begin(), ret.end(), '\0'), ret.end());
+    return ret;
   }
 
 private:
