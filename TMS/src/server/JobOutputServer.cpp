@@ -93,16 +93,27 @@ JobOutputServer::getJobOutput() {
   }
 
   switch(status) {
-  case 7: throw TMSVishnuException(ERRCODE_ALREADY_DOWNLOADED); break ;
-  case 6: throw TMSVishnuException(ERRCODE_ALREADY_CANCELED); break ;
-  case 5: break ; //terminated job
-  default: throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED); //status would be less than 5
+  case vishnu::STATE_COMPLETED:
+  case vishnu::STATE_DOWNLOADED:
+    break;
+  case vishnu::STATE_CANCELLED:
+  case vishnu::STATE_FAILED:
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Can't get output from cancelled or failed jobs");
+    break;
+  case vishnu::STATE_UNDEFINED:
+  case vishnu::STATE_SUBMITTED:
+  case vishnu::STATE_QUEUED:
+  case vishnu::STATE_WAITING:
+  case vishnu::STATE_RUNNING:
+  default:
+    throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED, "The job is not completed or is in a wrong state");
+    break;
   }
 
   outputPath = outputPath.substr(outputPath.find(":")+1);
   errorPath = errorPath.substr(errorPath.find(":")+1);
 
-  if(outputPath.size()==0 || errorPath.size() ==0 ) {
+  if(outputPath.empty() || errorPath.empty()) {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
 
