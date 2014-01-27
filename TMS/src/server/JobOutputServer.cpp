@@ -106,7 +106,7 @@ JobOutputServer::getJobOutput() {
   case vishnu::STATE_WAITING:
   case vishnu::STATE_RUNNING:
   default:
-    throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED, "The job is not completed or is in a wrong state");
+    throw TMSVishnuException(ERRCODE_JOB_IS_NOT_TERMINATED);
     break;
   }
 
