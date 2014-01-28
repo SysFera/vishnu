@@ -7,10 +7,12 @@
 
 #include <map>
 #include <string>
+#include <boost/algorithm/string/predicate.hpp>
+#include <boost/bind.hpp>
+#include <boost/foreach.hpp>
 #include "VersionProxy.hpp"
 #include "DIET_client.h"
 #include "utilClient.hpp"
-#include <iostream>
 #include "UMSVishnuException.hpp"
 
 VersionProxy::VersionProxy(){
@@ -21,15 +23,18 @@ VersionProxy::~VersionProxy(){
 
 // Looking the service whose name starts by "service" and that is the longest
 std::string
-VersionProxy::getLongestService(std::vector<std::string>& list, std::string service){
-  std::string res = "";
-  std::vector<std::string>::iterator it;
-  for (it = list.begin() ; it != list.end() ; ++it){
-    if (it->find(service) == 0 &&
-	it->size() > res.size()){
-      res = *it;
+VersionProxy::getLongestService(std::vector<std::string>& list,
+                                std::string service) {
+  using boost::algorithm::starts_with;
+  std::string res;
+
+  BOOST_FOREACH(const std::string& item, list) {
+    if (starts_with(item, service) &&
+        item.length() > res.length()) {
+      res = item;
     }
   }
+
   return res;
 }
 
@@ -118,5 +123,3 @@ VersionProxy::list(const std::string mid, std::map<std::string, std::string>& re
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "No corresponding server found");
   }
 }
-
-
