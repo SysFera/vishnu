@@ -7,6 +7,8 @@
 #ifndef _ANNUARYWORKERS_HPP_
 #define _ANNUARYWORKERS_HPP_
 
+
+#include <boost/algorithm/string/join.hpp>
 #include "Worker.hpp"
 #include "DIET_client.h"
 #include "UserException.hpp"
@@ -165,38 +167,51 @@ private:
   std::string
   doCall(std::string& data) {
     int mode = boost::lexical_cast<int>(data.substr(0,1));
-    std::string result = "OK";
-    boost::shared_ptr<Server> server;
+    std::string result("OK");
+
     // Deserialize
-    if (mode != 2 && mode != 3)
-      server = Server::fromString(data.substr(1));
-
-    if (mode == 1) {
-      // adding a new server
-      std::vector<std::string> services = server->getServices();
-      mann_->add(server->getName(), server->getURI(),
-                 services);
-    } else if (mode == 0) {
-      mann_->remove(server->getName(), server->getURI());
-    } else if (mode == 2) {
-      std::vector<boost::shared_ptr<Server> > list = mann_->get();
-
-      // Setting all servers to string and
-      std::vector<boost::shared_ptr<Server> >::iterator it = list.begin();
-      result = "";
-      int size;
-      for (size = 0 ; size < (int)list.size()-1 ; ++it, ++size){
-	result += it->get()->toString() + std::string(VISHNU_COMM_SEPARATOR);
-      }
-      if (list.size()>0){
-        result += it->get()->toString();
-      }
-
-    } else if (mode == 3) { // Ping to get version
-      result = (boost::format("%1%")%VISHNU_VERSION).str();
+    switch(mode) {
+    case 0:
+      removeServer(data);
+      break;
+    case 1:
+      addServer(data);
+      break;
+    case 2:
+      result = listServer(data);
+      break;
+    case 3:
+      result = boost::str(boost::format("%1%") % VISHNU_VERSION);
+      break;
+    default:  // NOOP
+      std::cerr << "[ERROR]: unrecognized command\n";
     }
     return result;
   }
+
+  void
+  removeServer(const std::string& data) {
+    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
+    mann_->remove(server->getName(), server->getURI());
+  }
+
+  void
+  addServer(const std::string& data) {
+    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
+    std::vector<std::string> services = server->getServices();
+    mann_->add(server->getName(), server->getURI(),  services);
+  }
+
+  std::string
+  listServer(const std::string& data) {
+    std::vector<boost::shared_ptr<Server> > list = mann_->get();
+    std::vector<std::string> listServers;
+    std::transform(list.begin(), list.end(),
+                   std::back_inserter(listServers),
+                   boost::bind(&Server::toString, _1));
+    return boost::algorithm::join(listServers, VISHNU_COMM_SEPARATOR);
+  }
+
 
 };
 
