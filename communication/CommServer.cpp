@@ -150,12 +150,12 @@ keepRegistered(const std::string& sedType,
       response = lpc.recv();
       if (response == "OK") {
           if (!connected) {
-            std::cerr << "I: registered in dispatcher\n";
+            std::cerr << "[INFO] Registered in dispatcher\n";
           }
           connected = true;
       } else {
           connected = false;
-          std::cerr << "W: not registered in dispatcher\n";
+          std::cerr << "[WARN] Not registered in dispatcher\n";
       }
     }
     sleep(timeout);
