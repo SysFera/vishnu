@@ -121,13 +121,14 @@ public:
   * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
   * \param cmdStatus The status of the command
   * \param newVishnuObjectID the new vishnu object Id
+  * \param checkSession tell whether to check the session key or not
   * \return raises an exception on error
   */
   int
   finish (std::string cmdDescription,
           vishnu::CmdType cmdType,
           vishnu::CmdStatus cmdStatus,
-          std::string newVishnuObjectID = "");
+          std::string newVishnuObjectID = "", bool checkSession=true);
 
   private:
   /////////////////////////////////
