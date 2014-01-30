@@ -72,21 +72,22 @@ int JobServer::submitJob(std::string& scriptContent,
   bool succeed = false;
   int errCode = ERRCODE_RUNTIME_ERROR;
   std::string errMsg  = "";
-  std::string numUserId = "NULL";
+  //std::string numUserId = "NULL";
   try {
     msessionServer.check(); //To check the sessionKey
 
     std::string sessionKey = (msessionServer.getData()).getSessionKey();
     std::string sessionId = msessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(sessionKey)+"'", "numsessionid");
+    mjob.setSessionId(sessionId);
+
+    UserServer userServer(msessionServer);
+    userServer.init();
+    mjob.setUserId(userServer.getData().getUserId());
+
+    //numUserId = userServer.getNumUserId(userServer.getData().getUserId());
 
     // Get user info
-    UserServer userServer(msessionServer);
     std::string acLogin = userServer.getUserAccountLogin(mmachineId);
-    mjob.setUserId(userServer.getData().getUserId());
-    numUserId = userServer.getNumUserId(userServer.getData().getUserId());
-
-
-    mjob.setSessionId(sessionId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
@@ -158,10 +159,9 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
     succeed = true;
   } catch (VishnuException& ex) {
+    LOG("[ERROR] "+std::string(ex.what()), 4);
     succeed = false;
     scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
-    boost::erase_all(errMsg, "'");
-    boost::erase_all(errMsg, "\"");
     mjob.setErrorPath(errMsg);
     mjob.setOutputPath("");
     mjob.setOutputDir("");
@@ -271,30 +271,42 @@ int JobServer::cancelJob()
   machineName =  getMachineName(mmachineId);
 
   //Creation of the object user
-  UserServer userServer = UserServer(msessionServer);
+  UserServer userServer(msessionServer);
   userServer.init();
+  std::string acLogin = userServer.getUserAccountLogin(mmachineId);
 
   // Only a admin user can use the option 'all' for the job id
-  if (mjob.getJobId() == ALL_KEYWORD && ! userServer.isAdmin()) {
+  std::string jobId = mjob.getJobId();
+  if (mjob.getUserId() == ALL_KEYWORD && ! userServer.isAdmin()) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
-                             (boost::format("Option privileged users can use this parameter: %1%")%ALL_KEYWORD).str());
+                             (boost::format("Option privileged users can cancel all user jobs")).str());
   }
 
   // Only a admin user can delete jobs from another user
   if (! mjob.getUserId().empty() && ! userServer.isAdmin()) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
-                             (boost::format("Only privileged users can use user this option")).str());
+                             (boost::format("Only privileged users can cancel other users jobs")).str());
   }
 
-  bool cancelAllJobs = mjob.getJobId().empty() || mjob.getJobId() == ALL_KEYWORD;
+  bool cancelAllJobs = jobId.empty() || jobId == ALL_KEYWORD || mjob.getUserId() == ALL_KEYWORD;
 
+  std::string baseSqlQuery = (boost::format("SELECT job.owner, job.status, job.jobId, job.batchJobId, job.vmId, job.batchType"
+                                            " FROM job, vsession "
+                                            " WHERE job.status < %1%"
+                                            ) % vishnu::STATE_COMPLETED
+                              ).str();
   std::string sqlQuery;
   if (! cancelAllJobs) {
-    sqlQuery = "SELECT owner, status, jobId, batchJobId, vmId, batchType"
-               " FROM job, vsession"
-               " WHERE vsession.numsessionid=job.vsession_numsessionid"
-               " AND jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
-    LOG(boost::format("[WARN] received request to cancel the job %1%")%mjob.getJobId(), 2);
+
+    sqlQuery = (boost::format("%1%"
+                              " AND vsession.numsessionid=job.vsession_numsessionid"
+                              " AND jobId='%2%';"
+                              )
+                % baseSqlQuery
+                % mdatabaseVishnu->escapeData(mjob.getJobId())
+                ).str();
+
+    LOG(boost::format("[WARN] received request to cancel the job %1%") % mjob.getJobId(), 2);
   } else {
     // This block works as follow:
     // * if admin:
@@ -303,61 +315,58 @@ int JobServer::cancelJob()
     // *if normal user (not admin), cancel alls jobs submitted through vishnu by the user
 
     bool addUserFilter = true;
-    if (userServer.isAdmin() && mjob.getJobId() == ALL_KEYWORD && mjob.getUserId().empty()) {
+    if (userServer.isAdmin() && mjob.getUserId() == ALL_KEYWORD) {
       addUserFilter = false;
     }
 
-    // set the SQL query accordingly
-    UserServer userServer(msessionServer);
-    std::string acLogin =userServer.getUserAccountLogin(mmachineId);
+    // Set the SQL query accordingly
     if (addUserFilter) {
       std::string targetUser;
       if (mjob.getUserId().empty()) {
-        sqlQuery = (boost::format("SELECT owner, job.status, jobId, batchJobId, vmId, batchType"
-                                  " FROM job, vsession "
-                                  " WHERE job.status < %1%"
+        sqlQuery = (boost::format("%1%"
                                   " AND vsession.numsessionid=job.vsession_numsessionid"
                                   " AND owner='%2%'"
                                   " AND submitMachineId='%3%';"
                                   )
-                    % vishnu::STATE_COMPLETED
+                    % baseSqlQuery
                     % mdatabaseVishnu->escapeData(acLogin)
                     % mdatabaseVishnu->escapeData(mmachineId)
                     ).str();
         targetUser = userServer.getData().getUserId();
       } else {
+        // here we'll delete jobs submitted by the given user
         targetUser = mjob.getUserId();
-        sqlQuery = (boost::format("SELECT owner, job.status, jobId, batchJobId, vmId, batchType"
-                                  " FROM job, users "
+        sqlQuery = (boost::format("SELECT job.owner, job.status, job.jobId, job.batchJobId, job.vmId, job.batchType"
+                                  " FROM users, job"
                                   " WHERE job.status < %1%"
-                                  " AND job.job_owner_id=users.numuserid"
+                                  " AND users.numuserid=job.job_owner_id"
                                   " AND users.userid='%2%'"
                                   " AND submitMachineId='%3%';"
                                   )
-                    % vishnu::STATE_COMPLETED
+                    %  vishnu::STATE_COMPLETED
                     % mdatabaseVishnu->escapeData(targetUser)
                     % mdatabaseVishnu->escapeData(mmachineId)
                     ).str();
       }
       LOG(boost::format("[WARN] received request to cancel all jobs submitted by the user %1%")%targetUser, 2);
     } else {
-      sqlQuery = (boost::format("SELECT owner, status, jobId, batchJobId, vmId, batchType"
-                                " FROM job, vsession "
-                                " WHERE job.status < %1%"
+      sqlQuery = (boost::format("%1%"
                                 " AND vsession.numsessionid=job.vsession_numsessionid"
                                 " AND submitMachineId='%2%';")
-                  % vishnu::STATE_COMPLETED
+                  % baseSqlQuery
                   % mdatabaseVishnu->escapeData(mmachineId)
                   ).str();
       LOG(boost::format("[WARN] received request to cancel all user jobs from %1%")%acLogin, 2);
     }
   }
 
-  boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseVishnu->getResult(sqlQuery.c_str()));
+  // Process the query and treat the resulting jobs
+  boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseVishnu->getResult(sqlQuery));
+
   if (sqlQueryResult->getNbTuples() == 0) {
     if (! cancelAllJobs) {
-      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % mjob.getJobId(), 1);
-      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, mjob.getJobId());
+      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % userServer.getData().getUserId(), 1);
+      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, jobId);
     } else {
       LOG(boost::format("[INFO] no job matching the call"), 1);
     }
@@ -371,14 +380,12 @@ int JobServer::cancelJob()
 
       std::vector<std::string>::iterator resultIterator = results.begin();
       currentJob.setOwner( *resultIterator++ );  // IMPORTANT: gets the value and increments the iterator
-      std::string jobOwner;
-      if (userServer.isAdmin()) {
-        jobOwner = currentJob.getOwner();
-      } else if (currentJob.getOwner() != jobOwner) {
-        throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
-      }
-
       currentJob.setStatus(convertToInt( *resultIterator++ ));
+      currentJob.setJobId( *resultIterator++ );
+      currentJob.setBatchJobId( *resultIterator++ );
+      currentJob.setVmId( *resultIterator++ );
+      BatchType serverBatchType = static_cast<BatchType>(convertToInt( *resultIterator++ ));
+
       switch (currentJob.getStatus()) {
       case vishnu::STATE_COMPLETED:
         throw TMSVishnuException(ERRCODE_ALREADY_TERMINATED, currentJob.getJobId());
@@ -390,15 +397,13 @@ int JobServer::cancelJob()
         break;
       }
 
-      currentJob.setJobId( *resultIterator++ );
-      currentJob.setBatchJobId( *resultIterator++ );
-      currentJob.setVmId( *resultIterator++ );
-      BatchType serverBatchType = static_cast<BatchType>(convertToInt( *resultIterator++ ));
+      if (currentJob.getOwner() != acLogin && ! userServer.isAdmin()) {
+        throw TMSVishnuException(ERRCODE_PERMISSION_DENIED);
+      }
 
       ::ecorecpp::serializer::serializer jobSer;
       jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&currentJob));
-
-      SSHJobExec sshJobExec(jobOwner, machineName,
+      SSHJobExec sshJobExec(currentJob.getOwner(), machineName,
                             serverBatchType,
                             mbatchVersion,  // it will work for POSIX at the POSIX backend ignores the batch version
                             jobSerialized);
@@ -445,8 +450,8 @@ TMS_Data::Job JobServer::getJobInfo() {
       "  memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid, vmId, vmIp"
       " FROM job, vsession, users "
       " WHERE vsession.numsessionid=job.vsession_numsessionid "
-      " AND vsession.users_numuserid=users.numuserid"
-      " AND job.jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
+      "   AND vsession.users_numuserid=users.numuserid"
+      "   AND job.jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 

@@ -71,7 +71,6 @@ solveSubmitJob(diet_profile_t* pb) {
   diet_string_get(pb,3, submitOptionsSerialized);
   diet_string_get(pb,4, jobSerialized);
 
-
   SessionServer sessionServer = SessionServer(sessionKey);
 
   try {
