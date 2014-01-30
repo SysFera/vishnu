@@ -95,13 +95,7 @@ private:
     std::string uriServer = elect(serv);
 
     if (!uriServer.empty()) {
-      if (useSsl) {
-        int port = vishnu::getPortFromUri(uriServer);
-        std::string host = vishnu::getHostFromUri(uriServer);
-        ssl_call_gen(profile.get(), host, port, cafile);
-      } else {
-        diet_call_gen(profile.get(), uriServer);
-      }
+      abstract_call_gen(profile.get(), uriServer);
       return my_serialize(profile.get());
     } else {
       return str(format("error %1%: the service %2% is not available")
