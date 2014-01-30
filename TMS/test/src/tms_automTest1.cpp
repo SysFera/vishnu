@@ -74,7 +74,9 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
 
       BOOST_TEST_MESSAGE("************ The script is " << scriptFilePath );
 
-      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+      subOptions.setMachine(machineId);
+
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, scriptFilePath, jobInfo, subOptions), 0);
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
@@ -83,14 +85,17 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call)
       ListJobs lsJobs;
       ListJobsOptions lsOptions;
       lsOptions.setJobId(jobInfo.getJobId());
-      BOOST_REQUIRE(listJobs(sessionKey, machineId,lsJobs,lsOptions)==0  );
+      lsOptions.setMachineId(machineId);
+      BOOST_REQUIRE(listJobs(sessionKey, lsJobs, lsOptions)==0  );
 
       BOOST_REQUIRE( (lsJobs.getJobs().size()==1) && ( *(lsJobs.getJobs().get(0)) == jobInfo )  );
 
       BOOST_TEST_MESSAGE("***********************  submit a job: normal call   ok!!!!*****************************");
 
   //  Clean up: delete the submitted job
-      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      CancelOptions cancelOptions;
+      cancelOptions.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions)==0  );
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
 
@@ -131,23 +136,26 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
 
       Job jobInfo;
       SubmitOptions subOptions;
-      BOOST_CHECK_EQUAL(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),0  );
+      subOptions.setMachine(machineId);
+      BOOST_CHECK_EQUAL(submitJob(sessionKey, scriptFilePath, jobInfo,subOptions),0  );
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       Job job;
-      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), job);
 
-      while (5!=job.getStatus()){
+      while (vishnu::STATE_COMPLETED!=job.getStatus()){
 
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), job);
       }
 
       JobResult outputInfos;
-      BOOST_CHECK_EQUAL(getJobOutput(sessionKey,machineId, jobInfo.getJobId(), outputInfos, m_test_tms_working_dir),0  );
+      JobOuputOptions ouputOptions;
+
+      BOOST_CHECK_EQUAL(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, ouputOptions), 0);
       BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
       std::string jobOutputPath = outputInfos.getOutputPath();
       //To get the content of the output
@@ -237,7 +245,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_sessionKey)
    const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
     Job jobInfo;
     SubmitOptions subOptions;
-    BOOST_CHECK_THROW(submitJob("bad sessionKey", machineId, scriptFilePath, jobInfo,subOptions) ,VishnuException );
+    subOptions.setMachine(machineId);
+    BOOST_CHECK_THROW(submitJob("bad sessionKey", scriptFilePath, jobInfo, subOptions) ,VishnuException );
     bfs::path script(scriptFilePath.c_str());
     BOOST_CHECK(bfs::remove_all(script)==1);
     BOOST_TEST_MESSAGE("***********************  submit a job: bad sessionKey    ok!!!!*****************************");
@@ -294,8 +303,8 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_content)
     const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "bad");
     Job jobInfo;
     SubmitOptions options;
-
-    BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options),VishnuException );
+    options.setMachine(machineId);
+    BOOST_CHECK_THROW(submitJob(sessionKey, scriptFilePath, jobInfo, options),VishnuException );
 
     BOOST_TEST_MESSAGE("***********************  submit a job: bad script content  ok!!!!*****************************");
 
@@ -323,8 +332,9 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_bad_script_path)
     const std::string scriptFilePath = "/home/ibrahima/Brouillon/";
     Job jobInfo;
     SubmitOptions subOptions;
+    subOptions.setMachine(machineId);
 
-    BOOST_CHECK_THROW( submitJob(sessionKey, machineId, scriptFilePath, jobInfo,subOptions),VishnuException );
+    BOOST_CHECK_THROW(submitJob(sessionKey, scriptFilePath, jobInfo,subOptions),VishnuException );
   }
 
 }
@@ -395,8 +405,6 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
   // get the session key and the machine identifier
   string sessionKey=vc.getConnexion();
 
-  string autom="autom";
-
   try {
     //Setting submitjob parameters
     std::string generic = "generic";
@@ -404,8 +412,8 @@ BOOST_AUTO_TEST_CASE(automatic_submit_a_Job_with_user_no_local_accounts)
     Job jobInfo;
     SubmitOptions subOptions;
 
-
-    BOOST_CHECK_THROW(submitJob(sessionKey, autom, scriptFilePath, jobInfo,subOptions) ,VishnuException );
+    // no machine option means autom
+    BOOST_CHECK_THROW(submitJob(sessionKey, scriptFilePath, jobInfo,subOptions) ,VishnuException );
     BOOST_TEST_MESSAGE("*********************** automatic submit job for user with no local accounts  ok!!!!*****************************");
 
   } catch (VishnuException& e) {
