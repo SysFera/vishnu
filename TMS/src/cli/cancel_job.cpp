@@ -28,7 +28,14 @@ struct CancelJobFunc {
   }
 
   int operator()(std::string sessionKey) {
-    return vishnu::cancelJob(sessionKey, moptions);
+    int exitCode = 0;
+    try {
+      exitCode = vishnu::cancelJob(sessionKey, moptions);
+    } catch (const VishnuException& ex) {
+      std::cerr << ex.what() <<"\n";
+    }
+
+    return exitCode;
   }
 };
 
@@ -84,12 +91,11 @@ int main (int argc, char* argv[]){
   boost::function1<void,std::string> setUserFct(boost::bind(&TMS_Data::CancelOptions::setUser,boost::ref(options),_1));
 
   // get options and process the request
-  boost::shared_ptr<Options> opt = makeCancelJobOption(argv[0], setJobIdFct, setMachineIdFct, setUserFct, configFile);
+  boost::shared_ptr<Options> opt = makeCancelJobOption(basename(argv[0]), setJobIdFct, setMachineIdFct, setUserFct, configFile);
   bool isEmpty;
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
   CancelJobFunc cancelJobFunc(options);
   return GenericCli().run(cancelJobFunc, configFile, argc, argv);
-
 }

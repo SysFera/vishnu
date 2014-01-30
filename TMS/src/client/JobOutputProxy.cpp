@@ -84,16 +84,18 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputO
   if (outputDir.empty()) {
     outputDir = bfs::path(bfs::current_path()).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
     vishnu::createOutputDir(outputDir);
-    jobResult.setOutputDir(outputDir);
   }
+
+  jobResult.setOutputDir(outputDir);
 
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", outputDir, copts);
+    std::string infoFile = (boost::format("%1%/%2%") % outputDir % bfs::basename(routputInfo)).str();
+    istringstream fdescStream(vishnu::get_file_content(infoFile, false));
     string line;
-    istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     if(! getline(fdescStream, line)) {
       line = "";
     }
@@ -101,20 +103,22 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputO
     ListStrings lineVec;
     boost::split(lineVec, line, boost::is_any_of(" "));
     int nbFiles = lineVec.size();
-    std::string missingFiles = "";
-    if (nbFiles > 0 && ! line.empty()) {
-      vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFiles, 0);
+
+    std::string missingFileContent = "";
+    if (! line.empty() && nbFiles > 0) {
+      vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFileContent, 0);
       std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
       jobResult.setOutputPath(outputDir+"/"+fileName);
       std::string fileName2 = bfs::basename(lineVec[1]) + bfs::extension(lineVec[1]);
       jobResult.setErrorPath(outputDir+"/"+fileName2);
     }
-    if (! missingFiles.empty()) {
-      vishnu::saveInFile(outputDir+"/MISSINGFILES", missingFiles);
+    if (! missingFileContent.empty()) {
+      std::string missingFileName = (boost::format("%1%/MISSINGFILES_%2%") % outputDir % jobId).str();
+      vishnu::saveInFile(missingFileName, missingFileContent);
     }
   } catch (FMSVishnuException &ex) {
-    vishnu::saveInFile(outputDir+"/ERROR",
-                       (boost::format("File %1%: %2%") % routputInfo % ex.what()).str());
+    std::string errorFileName = (boost::format("%1%/ERROR_%2%") % outputDir % jobId).str();
+    vishnu::saveInFile(errorFileName, ex.what());
   }
 
   diet_profile_free(getJobOutPutProfile);

@@ -627,8 +627,8 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 void
 printJobResultSummary(const TMS_Data::JobResult_ptr job)
 {
-  std::string errorFile = (boost::format("%1%/ERROR")%job->getOutputDir()).str();
-  std::string missingFile = (boost::format("%1%/MISSINGFILES")%job->getOutputDir()).str();
+  std::string errorFile = (boost::format("%1%/ERROR_%2%") % job->getOutputDir() % job->getJobId()).str();
+  std::string missingFile = (boost::format("%1%/MISSINGFILES_%2%") % job->getOutputDir() % job->getJobId()).str();
 
   cout << (boost::filesystem::exists(errorFile) ?
              (boost::format("\n\tFAILURE: yes "
