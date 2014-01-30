@@ -37,6 +37,7 @@ JobProxy::JobProxy(const SessionProxy& session,
 int
 JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
+
   string sessionKey = msessionProxy.getSessionKey();
   TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
 
