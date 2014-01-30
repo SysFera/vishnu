@@ -84,7 +84,11 @@ diet_call(diet_profile_t* prof);
  */
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri);
-
+/**
+ * \brief Generic function created to encapsulate the code
+ */
+int
+abstract_call_gen(diet_profile_t* prof, const std::string& uri);
 /**
  * @brief ssl_call_gen
  * @param prof

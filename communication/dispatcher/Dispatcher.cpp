@@ -81,9 +81,10 @@ Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& c
       diet_profile_t* profile = NULL;
       profile = diet_profile_alloc(service,0,0,1);
       // try to ping them
-      if (diet_call_gen(profile, iter->get()->getURI())){
+      if (abstract_call_gen(profile, iter->get()->getURI())){
         // If failed : remove the server
         ann->remove(iter->get()->getName(), iter->get()->getURI());
+        std::cerr << "[INFO]: removed " << iter->get()->getName() << "@" << iter->get()->getURI() << " from the annuary\n";
       }
 
     }
@@ -124,8 +125,10 @@ Dispatcher::configureHandlers() {
       serverHandler.reset(new Handler4Servers(BACKEND_IPC_URI, ann, nthread, useSsl, sslCa));
       boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
       boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
+      boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout, confFil));
       th1.join();
       th2.join();
+      th3.join();
     } else if (pid == 0) {
       pid_t pidTlsHandler = fork();
 

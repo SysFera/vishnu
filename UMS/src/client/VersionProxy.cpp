@@ -85,7 +85,7 @@ VersionProxy::getVersion(const std::string& server,
 
     profile = diet_profile_alloc(service,0,0,1);
     // Getting version
-    if (diet_call_gen(profile, it->get()->getURI())){
+    if (abstract_call_gen(profile, it->get()->getURI())){
       result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), "Server unavailable"));
     } else {
       std::string tmp;

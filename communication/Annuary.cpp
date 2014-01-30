@@ -48,6 +48,7 @@ Annuary::add(const std::string& name, const std::string& uri,
     std::find_if(mservers.begin(), mservers.end(), helper);
   if (it == mservers.end()) {
     mservers.push_back(boost::make_shared<Server>(name, services, uri));
+    std::cerr << "[INFO]: added " << name << "@" << uri << "\n";
   }
   return 0;
 }
