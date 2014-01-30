@@ -87,6 +87,10 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkEmptyString(sessionKey, "The session key");
   SessionProxy sessionProxy(sessionKey);
 
+  if (options.getJobId().empty() && options.getMachineId().empty() && options.getUser().empty()) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Neither job, machine, nor user target was specified");
+  }
+
   // determine the target machines
   std::string machineId = options.getMachineId();
   UMS_Data::ListMachines machines;
