@@ -397,13 +397,29 @@ communicate_dispatcher(const std::string& requestData, std::string& response){
   int timeout = getTimeout();
   std::string uriDispatcher;
   config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
-  zmq::context_t ctx(1);
-  LazyPirateClient lpc(ctx, uriDispatcher, timeout);
-  if (!lpc.send(requestData)) {
-    std::cerr << "[ERROR] failed to list the servers \n";
-    return -1; // Dont throw exception
+  bool useSsl = false;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+    std::string req = requestData;
+    std::string host;
+    int port;
+    host = vishnu::getHostFromUri(uriDispatcher);
+    port = vishnu::getPortFromUri(uriDispatcher);
+    std::string cafile;
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+    TlsClient tlsClient(host, port, cafile);
+    req.append("\n\n");      /* required for the internal protocol */
+    if (tlsClient.send(req) == 0) {
+      response = tlsClient.recv();
+    }
+  } else {
+    zmq::context_t ctx(1);
+    LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+    if (!lpc.send(requestData)) {
+      std::cerr << "[ERROR] failed to list the servers \n";
+      return -1; // Dont throw exception
+    }
+    response = lpc.recv();
   }
-  response = lpc.recv();
 
   return 0;
 }
@@ -422,3 +438,16 @@ extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server>
     }
   }
 }
+
+int
+abstract_call_gen(diet_profile_t* prof, const std::string& uri){
+  bool useSsl = false;
+  std::string cafile;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
+  {
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+    return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
+  }
+  return diet_call_gen(prof, uri);
+}
+

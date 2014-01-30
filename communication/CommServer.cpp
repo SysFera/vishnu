@@ -69,43 +69,6 @@ registerSeD(const std::string& sedUri,
     }
   }
 
-  boost::shared_ptr<Server> srv = boost::shared_ptr<Server> (new Server(sedType, services, sedUri));
-  std::string requestData = "1" + srv.get()->toString(); /* prefixed with 1 to say registering request */
-
-  std::string response;
-  bool useSsl = false;
-  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
-
-    std::string host;
-    int port;
-    host = vishnu::getHostFromUri(dispUri);
-    port = vishnu::getPortFromUri(dispUri);
-
-    /* Get TLS trust store if set */
-    std::string cafile;
-    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-    /* Logging */
-    std::cerr << boost::format("[INFO] Registration address: %1%:%2% with TLS\n"
-                               "       > Certifcate trust store (CA): %3%\n") %host %port %cafile;
-    /* Now create a TLS client and go ahead */
-    TlsClient tlsClient(host, port, cafile);
-    requestData.append("\n\n");      /* required for the internal protocol */
-    if (tlsClient.send(requestData) == 0) {
-      response = tlsClient.recv();
-    } else {
-      std::cerr << boost::format("[ERROR] Registration failed [%1%]\n")%tlsClient.getErrorMsg();
-      return -1;
-    }
-  } else {
-    zmq::context_t ctx(1);
-    LazyPirateClient lpc(ctx, dispUri, timeout);
-    if (!lpc.send(requestData)) {
-      std::cerr << "[WARNING] failed to register in the naming service\n";
-      return -1; // Dont throw exception
-    }
-    response = lpc.recv();
-  }
-
   return 0;
 }
 
@@ -142,6 +105,15 @@ keepRegistered(const std::string& sedType,
       requestData.append("\n\n");      /* required for the internal protocol */
       if (tlsClient.send(requestData) == 0) {
         response = tlsClient.recv();
+        if (response == "OK\n") { // \n at the end because it's in response see sslhelpers.cpp, \n is added at end of message
+          if (!connected) {
+            std::cerr << "[INFO] Registered in dispatcher\n";
+          }
+          connected = true;
+        } else {
+          connected = false;
+          std::cerr << "[WARN] Not registered in dispatcher\n";
+        }
       }
     } else {
       zmq::context_t ctx(1);
