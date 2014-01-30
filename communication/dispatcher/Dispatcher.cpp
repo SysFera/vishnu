@@ -7,7 +7,7 @@
 
 Dispatcher::Dispatcher(const std::string &confFile)
   : uriAddr("tcp://127.0.0.1:5560"),
-    uriSubs("tcp://127.0.0.1:5561"), nthread(5), timeout(10) {
+    uriSubs("tcp://127.0.0.1:5561"), confFil(confFile), nthread(5), timeout(10) {
   if (!confFile.empty()) {
     config.initFromFile(confFile);
   }
@@ -69,7 +69,8 @@ Dispatcher::getAnnuary(){
 
 
 void
-Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout){
+Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& confFile){
+  diet_initialize(confFile.c_str(), 0, NULL);
   while (true){
     // get all servers
     std::vector<boost::shared_ptr<Server> > list = ann->get();
@@ -105,7 +106,7 @@ Dispatcher::configureHandlers() {
     serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, false, ""));
     boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
     boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
-    boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout));
+    boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout, confFil));
     th1.join();
     th2.join();
     th3.join();
