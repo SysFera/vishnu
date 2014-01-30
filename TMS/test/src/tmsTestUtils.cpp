@@ -361,7 +361,7 @@ VishnuConnexion::VishnuConnexion(const string& uid, const string& upwd, const UM
 }
 
 VishnuConnexion::~VishnuConnexion(){
-  if(true==open){
+  if (true==open) {
     try {
       BOOST_REQUIRE_EQUAL(vishnu::close(msession.getSessionKey()),0);
       BOOST_TEST_MESSAGE("The session is closed");
@@ -374,7 +374,7 @@ VishnuConnexion::~VishnuConnexion(){
 
 string VishnuConnexion::getConnexion(){
   try {
-    BOOST_REQUIRE(vishnu::connect(muid,mupwd,msession,mco)==0);
+    BOOST_REQUIRE(vishnu::connect(muid, mupwd, msession, mco) == 0);
     open=true;
     BOOST_TEST_MESSAGE("The session is open");
     return msession.getSessionKey();

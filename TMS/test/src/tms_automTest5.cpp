@@ -64,8 +64,9 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
       const std::string scriptFilePath=generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
       Job jobInfo;
       SubmitOptions options;
+      options.setMachine(machineId);
 
-      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+      BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options) == 0);
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
@@ -75,8 +76,9 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
       ProgressOptions pgOptions;
 
       pgOptions.setJobId(jobInfo.getJobId());
+      pgOptions.setMachineId(machineId);
 
-      BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,listOfProgress, pgOptions),0);
+      BOOST_CHECK_EQUAL(getJobProgress(sessionKey, listOfProgress, pgOptions), 0);
 
       // Check the success of the get jobs progression function
 
@@ -89,21 +91,22 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
 
       // ensure that the job is terminated
 
-      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+      getJobInfo(sessionKey, jobInfo.getJobId(), job);
 
       while (4!=job.getStatus()){
 
         bpt::seconds sleepTime(1);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), job);
       }
 
       ListProgression jobRunningProgress;
 
       bpt::seconds sleepTime(2);
       boost::this_thread::sleep(sleepTime);
-      BOOST_CHECK_EQUAL( getJobProgress(sessionKey,machineId,jobRunningProgress, pgOptions),0);
+      pgOptions.setMachineId(machineId);
+      BOOST_CHECK_EQUAL( getJobProgress(sessionKey, jobRunningProgress, pgOptions), 0);
 
       // Check the success of the get jobs progression function
       BOOST_CHECK( (jobRunningProgress.getProgress().get(0))->getPercent() > 0);
@@ -113,7 +116,9 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_normal_call)
       BOOST_TEST_MESSAGE("*********************** get jobs progression: normal call ok!!!!*****************************");
 
       //  Clean up: delete the submitted job
-      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      CancelOptions cancelOpts;
+      cancelOpts.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
@@ -141,7 +146,8 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_bad_sessionKey)
 
     ProgressOptions pgOptions;
 
-    BOOST_CHECK_THROW(getJobProgress("bad sessionKey",machineId,listOfProgress, pgOptions),VishnuException  );
+    pgOptions.setMachineId(machineId);
+    BOOST_CHECK_THROW(getJobProgress("bad sessionKey", listOfProgress, pgOptions), VishnuException);
   }
 
   BOOST_TEST_MESSAGE("*********************** get jobs progression : bad sessionKey ok!!!!*****************************");
@@ -168,7 +174,8 @@ BOOST_AUTO_TEST_CASE(get_jobs_progression_bad_machineId)
 
   ProgressOptions pgOptions;
 
-  BOOST_CHECK_THROW(getJobProgress(sessionKey,"bad machineId",listOfProgress, pgOptions),VishnuException  );
+  pgOptions.setMachineId("bad machineId");
+  BOOST_CHECK_THROW(getJobProgress(sessionKey, listOfProgress, pgOptions), VishnuException);
 
   BOOST_TEST_MESSAGE("*********************** get jobs progression : bad machineId ok!!!!*****************************");
 
