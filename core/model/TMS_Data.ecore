@@ -840,13 +840,13 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="user" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Cancels only jobs submitted by the given user. Using this option requires root privileges"/>
+        <details key="content" value="Cancels only jobs submitted by the given user. Using this option requires root privileges&#xA;&#xA;If the user is root, and the identifier corresponds to the keyword  'all', &#xA;then all the jobs submitted through vishnu, regardless of the user or the machine,  will be cancelled. &#xA;** Option to be used with caution **"/>
         <details key="shortOption" value="u"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jobId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
-        <details key="content" value="Sets the identifier of the job to cancel. &#xA;If the user is root, and the identifier corresponds to the keyword  'all', &#xA;then all the jobs submitted through vishnu on any machine managed &#xA;by vishnu will be cancelled. &#xA;** This option should thus be used with with caution **"/>
+        <details key="content" value="Sets the identifier of the job to cancel. &#xA;If the identifier corresponds to the keyword  'all',  then all the jobs submitted &#xA;through vishnu by the user that request the command, regardless of the &#xA;target machine, will be cancelled. &#xA;** Option be used with caution **"/>
         <details key="shortOption" value="j"/>
       </eAnnotations>
     </eStructuralFeatures>
