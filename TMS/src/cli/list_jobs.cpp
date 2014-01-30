@@ -149,7 +149,7 @@ main (int argc, char* argv[]) {
   boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::ListJobsOptions::setWorkId,boost::ref(jobOp),_1));
 
   /*********** Out parameters *********************/
-  TMS_Data::ListJobs job;
+  TMS_Data::ListJobs jobs;
 
   /**************** Describe options *************/
   boost::shared_ptr<Options> opt = makeListJobOp(argv[0],
@@ -247,12 +247,16 @@ main (int argc, char* argv[]) {
     }
 
     // Process list job
-    listJobs(getLastSessionKey(getppid()), job, jobOp);
-    if (jobOp.getOwner().empty() && jobOp.getJobId().empty()  && jobOp.getNbCpu() <= 0
-        && jobOp.getFromSubmitDate() <= 0 && jobOp.getToSubmitDate() <= 0 && !jobOp.isListAll()) {
-      std::cout << job << std::endl;
+    listJobs(getLastSessionKey(getppid()), jobs, jobOp);
+    if (jobOp.getJobId().empty()
+        && jobOp.getNbCpu() <= 0
+        && jobOp.getFromSubmitDate() <= 0
+        && jobOp.getToSubmitDate() <= 0
+        && !jobOp.isListAll())
+    {
+      std::cout << jobs << "\n";
     } else {
-      displayListJobs(job);
+      displayListJobs(jobs);
     }
   } catch(VishnuException& e) {// catch all Vishnu runtime error
     std::string  msg = e.getMsg();
