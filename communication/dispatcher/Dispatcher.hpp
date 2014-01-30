@@ -38,10 +38,12 @@ public:
 
   /**
    * \brief Function that continuously check the content of the annuary with pings and remove it if ping fails
-   *
+   * \param ann The annuary to check
+   * \param timeout The frequency to sleep between each turn of check
+   * \param confFile The configuration file
    */
   static void
-  bayWatch(boost::shared_ptr<Annuary> ann, int timeout);
+  bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& confFile);
 
 
 private:
