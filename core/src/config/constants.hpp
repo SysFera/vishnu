@@ -92,7 +92,7 @@ namespace vishnu {
   } job_status_t;
 
   /**
-   * \brief States of jobs
+   * \brief States of components
    */
   typedef enum {
     STATUS_UNDEFINED=-1,
