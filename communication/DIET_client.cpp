@@ -239,22 +239,13 @@ diet_call(diet_profile_t* prof) {
     uri = disp;
   }
 
-  bool useSsl = false;
-  std::string cafile;
-  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
-  {
-    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-    return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
-  }
-
-  return diet_call_gen(prof, uri);
+  return abstract_call_gen(prof, uri);
 }
 
 int
 diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   zmq::context_t ctx(5);
   LazyPirateClient lpc(ctx, uri, getTimeout());
-
   std::string s1 = my_serialize(prof);
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
@@ -262,7 +253,6 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 
   std::string response = lpc.recv();
-
   boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
   if (!tmp) {
     std::cerr << boost::format("[ERROR] %1%\n")%response;
