@@ -31,7 +31,7 @@ using namespace ::FMS_Data;
 
 // Default constructor
 FileTransfer::FileTransfer() :
-    m_status(4), m_size(-1), m_start_time(0), m_trCommand(2)
+    m_status(4), m_size(-1), m_startTime(0), m_trCommand(2)
 {
 
     /*PROTECTED REGION ID(FileTransferImpl__FileTransferImpl) START*/
@@ -287,26 +287,26 @@ void FileTransfer::setSize(::ecore::EBigInteger _size)
 #endif
 }
 
-::ecore::ELong FileTransfer::getStart_time() const
+::ecore::ELong FileTransfer::getStartTime() const
 {
-    return m_start_time;
+    return m_startTime;
 }
 
-void FileTransfer::setStart_time(::ecore::ELong _start_time)
+void FileTransfer::setStartTime(::ecore::ELong _startTime)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::ELong _old_start_time = m_start_time;
+    ::ecore::ELong _old_startTime = m_startTime;
 #endif
-    m_start_time = _start_time;
+    m_startTime = _startTime;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::FMS_Data::FMS_DataPackage::_instance()->getFileTransfer__start_time(),
-                _old_start_time,
-                m_start_time
+                (::ecore::EStructuralFeature_ptr) ::FMS_Data::FMS_DataPackage::_instance()->getFileTransfer__startTime(),
+                _old_startTime,
+                m_startTime
         );
         eNotify(&notification);
     }

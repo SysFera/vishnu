@@ -83,10 +83,10 @@ void DirEntry::_initialize()
                 m_size);
     }
         return _any;
-    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME:
+    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CTIME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_creationTime);
+                m_ctime);
     }
         return _any;
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__TYPE:
@@ -135,10 +135,10 @@ void DirEntry::eSet(::ecore::EInt _featureID,
                 _newValue, m_size);
     }
         return;
-    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME:
+    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CTIME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_creationTime);
+                m_ctime);
     }
         return;
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__TYPE:
@@ -169,9 +169,9 @@ void DirEntry::eSet(::ecore::EInt _featureID,
         return m_perms != -1;
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__SIZE:
         return m_size != -1;
-    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME:
+    case ::FMS_Data::FMS_DataPackage::DIRENTRY__CTIME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_creationTime);
+                m_ctime);
     case ::FMS_Data::FMS_DataPackage::DIRENTRY__TYPE:
         return m_type != 6;
 

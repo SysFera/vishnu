@@ -109,10 +109,10 @@ void FileTransfer::_initialize()
                 m_size);
     }
         return _any;
-    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__STARTTIME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::toAny(_any,
-                m_start_time);
+                m_startTime);
     }
         return _any;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
@@ -191,10 +191,10 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
                 _newValue, m_size);
     }
         return;
-    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__STARTTIME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::ELong >::fromAny(_newValue,
-                m_start_time);
+                m_startTime);
     }
         return;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
@@ -243,8 +243,8 @@ void FileTransfer::eSet(::ecore::EInt _featureID,
                 m_destinationFilePath);
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__SIZE:
         return m_size != -1;
-    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME:
-        return m_start_time != 0;
+    case ::FMS_Data::FMS_DataPackage::FILETRANSFER__STARTTIME:
+        return m_startTime != 0;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND:
         return m_trCommand != 2;
     case ::FMS_Data::FMS_DataPackage::FILETRANSFER__ERRORMSG:

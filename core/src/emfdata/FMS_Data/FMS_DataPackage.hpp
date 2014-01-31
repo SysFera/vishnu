@@ -294,9 +294,9 @@ namespace FMS_Data
         static const int FILETRANSFER__SIZE = 31;
 
         /**
-         * \brief Constant for FILETRANSFER__START_TIME feature
+         * \brief Constant for FILETRANSFER__STARTTIME feature
          */
-        static const int FILETRANSFER__START_TIME = 32;
+        static const int FILETRANSFER__STARTTIME = 32;
 
         /**
          * \brief Constant for FILETRANSFER__TRCOMMAND feature
@@ -359,9 +359,9 @@ namespace FMS_Data
         static const int DIRENTRY__SIZE = 44;
 
         /**
-         * \brief Constant for DIRENTRY__CREATIONTIME feature
+         * \brief Constant for DIRENTRY__CTIME feature
          */
-        static const int DIRENTRY__CREATIONTIME = 45;
+        static const int DIRENTRY__CTIME = 45;
 
         /**
          * \brief Constant for DIRENTRY__TYPE feature
@@ -672,10 +672,10 @@ namespace FMS_Data
         virtual ::ecore::EAttribute_ptr getFileTransfer__size();
 
         /**
-         * \brief Returns the reflective object for feature start_time of class FileTransfer
+         * \brief Returns the reflective object for feature startTime of class FileTransfer
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getFileTransfer__start_time();
+        virtual ::ecore::EAttribute_ptr getFileTransfer__startTime();
 
         /**
          * \brief Returns the reflective object for feature trCommand of class FileTransfer
@@ -750,10 +750,10 @@ namespace FMS_Data
         virtual ::ecore::EAttribute_ptr getDirEntry__size();
 
         /**
-         * \brief Returns the reflective object for feature creationTime of class DirEntry
+         * \brief Returns the reflective object for feature ctime of class DirEntry
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getDirEntry__creationTime();
+        virtual ::ecore::EAttribute_ptr getDirEntry__ctime();
 
         /**
          * \brief Returns the reflective object for feature type of class DirEntry
@@ -1031,9 +1031,9 @@ namespace FMS_Data
         ::ecore::EAttribute_ptr m_FileTransfer__size;
 
         /**
-         * \brief The instance for the feature start_time of class FileTransfer
+         * \brief The instance for the feature startTime of class FileTransfer
          */
-        ::ecore::EAttribute_ptr m_FileTransfer__start_time;
+        ::ecore::EAttribute_ptr m_FileTransfer__startTime;
 
         /**
          * \brief The instance for the feature trCommand of class FileTransfer
@@ -1096,9 +1096,9 @@ namespace FMS_Data
         ::ecore::EAttribute_ptr m_DirEntry__size;
 
         /**
-         * \brief The instance for the feature creationTime of class DirEntry
+         * \brief The instance for the feature ctime of class DirEntry
          */
-        ::ecore::EAttribute_ptr m_DirEntry__creationTime;
+        ::ecore::EAttribute_ptr m_DirEntry__ctime;
 
         /**
          * \brief The instance for the feature type of class DirEntry

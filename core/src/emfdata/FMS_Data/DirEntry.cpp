@@ -181,26 +181,26 @@ void DirEntry::setSize(::ecore::EBigInteger _size)
 #endif
 }
 
-::ecore::EString const& DirEntry::getCreationTime() const
+::ecore::EString const& DirEntry::getCtime() const
 {
-    return m_creationTime;
+    return m_ctime;
 }
 
-void DirEntry::setCreationTime(::ecore::EString const& _creationTime)
+void DirEntry::setCtime(::ecore::EString const& _ctime)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_creationTime = m_creationTime;
+    ::ecore::EString _old_ctime = m_ctime;
 #endif
-    m_creationTime = _creationTime;
+    m_ctime = _ctime;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::FMS_Data::FMS_DataPackage::_instance()->getDirEntry__creationTime(),
-                _old_creationTime,
-                m_creationTime
+                (::ecore::EStructuralFeature_ptr) ::FMS_Data::FMS_DataPackage::_instance()->getDirEntry__ctime(),
+                _old_ctime,
+                m_ctime
         );
         eNotify(&notification);
     }

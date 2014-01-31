@@ -124,15 +124,15 @@ namespace FMS_Data
         void setSize(::ecore::EBigInteger _size);
 
         /**
-         * \brief To get the creationTime
-         * \return The creationTime attribute value
+         * \brief To get the ctime
+         * \return The ctime attribute value
          **/
-        ::ecore::EString const& getCreationTime() const;
+        ::ecore::EString const& getCtime() const;
         /**
-         * \brief To set the creationTime
-         * \param _creationTime The creationTime value
+         * \brief To set the ctime
+         * \param _ctime The ctime value
          **/
-        void setCreationTime(::ecore::EString const& _creationTime);
+        void setCtime(::ecore::EString const& _ctime);
 
         /**
          * \brief To get the type
@@ -180,7 +180,7 @@ namespace FMS_Data
 
         ::ecore::EBigInteger m_size;
 
-        ::ecore::EString m_creationTime;
+        ::ecore::EString m_ctime;
 
         ::FMS_Data::FileType m_type;
 
