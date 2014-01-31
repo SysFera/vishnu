@@ -10,6 +10,7 @@
 #include "api_ums.hpp"
 #include "api_fms.hpp"
 #include "api_tms.hpp"
+#include "api_comm.hpp"
 #include "utilVishnu.hpp"
 #include "constants.hpp"
 #include "cliError.hpp"
@@ -236,16 +237,25 @@ vishnu::findMachine(const std::string& sessionKey,
 
   std::string selectedMachine = "" ;
   long load = std::numeric_limits<long>::max();
-  for(int i=0; i< machineCount; i++) {
-    UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+  for (int i=0; i< machineCount; i++) {
+    std::map<std::string, std::string> pingResult;
+    UMS_Data::Machine_ptr machine = machines.getMachines().get(i);
     try {
-      if (getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
+      if (getMachineLoadPerformance(sessionKey, machine, criterion) < load
+          && vishnu::ping(pingResult, "tmssed", machine->getMachineId()) == 0) {
+
         selectedMachine = machine->getMachineId();
+        break;
       }
     } catch(...) {
       continue;
     }
   }
+
+  if (selectedMachine.empty()) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "No machine available to execute the job");
+  }
+
   return selectedMachine;
 }
 
