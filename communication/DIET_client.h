@@ -171,5 +171,9 @@ communicate_dispatcher(const std::string& requestData, std::string& response);
  */
 void
 extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res);
-
+/**
+ * \brief Fill servers with a list of servers from config file
+ */
+void
+getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers);
 #endif // __DIETMOCK__

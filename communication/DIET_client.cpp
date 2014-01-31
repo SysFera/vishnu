@@ -23,6 +23,7 @@
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 #include <zmq.hpp>                      // for context_t
 
 #include "constants.hpp"                // for ::DISP_URIADDR, etc
@@ -439,5 +440,73 @@ abstract_call_gen(diet_profile_t* prof, const std::string& uri){
     return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
   }
   return diet_call_gen(prof, uri);
+}
+
+
+void
+extractServersFromLine(const std::vector<std::string>& uriv, std::vector<boost::shared_ptr<Server> >& allServers, const std::string& module){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> tokens;
+  std::vector<std::string> tmp;
+  tmp.push_back("heartbeat");
+  std::vector<std::string>::iterator it;
+  std::string uri;
+
+  BOOST_FOREACH(const std::string& v, uriv) {
+    boost::algorithm::split(tokens, v, boost::algorithm::is_any_of(";")); // In client config files, URI are separated by ;
+    for (it = tokens.begin() ; it != tokens.end() ; ++it){
+      uri = *it;
+      allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+    }
+    tokens.clear();
+  }
+}
+
+void
+extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<boost::shared_ptr<Server> >& allServers, const std::string& module){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> tokens;
+  std::vector<std::string> tokens2;
+  std::vector<std::string> tmp;
+  tmp.push_back("heartbeat");
+  std::vector<std::string>::iterator it;
+  std::string uri;
+
+  BOOST_FOREACH(const std::string& v, uriv) {
+    boost::algorithm::split(tokens, v, boost::algorithm::is_any_of(";")); // In client config files, URI are separated by ;
+    BOOST_FOREACH(const std::string& w, tokens) {
+      boost::algorithm::split(tokens2, w, boost::algorithm::is_space());
+      uri = tokens2[0];
+      allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+    }
+    tokens.clear();
+  }
+}
+
+
+void
+getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
+  vishnu::param_type_t param;
+  std::vector<std::string> uriv;
+  param = vishnu::UMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "umssed");
+  uriv.clear();
+  param = vishnu::IMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "imssed");
+  uriv.clear();
+  param = vishnu::FMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "fmssed");
+  uriv.clear();
+  param = vishnu::TMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractMachineServersFromLine(uriv, allServers, "tmssed");
+  uriv.clear();
 }
 

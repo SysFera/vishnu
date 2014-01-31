@@ -72,6 +72,7 @@ VersionProxy::getVersion(const std::string& server,
   std::vector<boost::shared_ptr<Server> > allServers;
   std::vector<boost::shared_ptr<Server> > servers;
   extractServersFromMessage(response, allServers);
+  getServersListFromConfig(allServers);
   selectServerToPing(server, allServers, servers);
 
   // For each server get its version
@@ -110,6 +111,7 @@ VersionProxy::list(const std::string mid, std::map<std::string, std::string>& re
 // Get the list of the servers in the dispatcher
   communicate_dispatcher("2", response);
   std::vector<boost::shared_ptr<Server> > servers;
+  getServersListFromConfig(servers);
   extractServersFromMessage(response, servers);
 
   // For each server get its version
