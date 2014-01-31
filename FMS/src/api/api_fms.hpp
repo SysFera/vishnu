@@ -101,7 +101,7 @@ int acp(const std::string& sessionKey,const std::string& src, const std::string&
    * \param contentOfFile  the content of specified the file
    * \return 0 if everything is OK, another value otherwise
    */
-  int more(const std::string& sessionKey,const std::string& path, std::string& contentOfFile)
+  int cat(const std::string& sessionKey,const std::string& path, std::string& contentOfFile)
     throw (UMSVishnuException, FMSVishnuException, UserException, SystemException);
 
 

@@ -1,5 +1,5 @@
 /**
- * \file more.cpp
+ * \file cat.cpp
  * This file defines the VISHNU  content of file command
  * \author Ibrahima Cisse (ibrahima.cisse@sysfera.com)
  */
@@ -31,7 +31,7 @@ struct ContentOfFileFunc {
   int operator()(std::string sessionKey) {
     string mfileContent;
 
-    int res = more(sessionKey, mpath, mfileContent);
+    int res = cat(sessionKey, mpath, mfileContent);
     cout << mfileContent;
     return res;
   }
