@@ -72,6 +72,7 @@ main(int argc, char* argv[], char* envp[]) {
   string UMSTYPE = "umssed";
   string uri;
   std::string mid;
+  bool sub;
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -89,6 +90,7 @@ main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
+    config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
     config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email\n";
@@ -106,7 +108,10 @@ main(int argc, char* argv[], char* envp[]) {
       boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
       res = server->init(vishnuId, mid, dbConfig, sendmailScriptPath, authenticatorConfig);
 
-      boost::thread thr(boost::bind(&keepRegistered, UMSTYPE, config, uri, server));
+      if (sub) {
+        boost::thread thr(boost::bind(&keepRegistered, UMSTYPE, config, uri, server));
+      }
+
 
       //Declaration of signal handler
       action.sa_handler = controlSignal;

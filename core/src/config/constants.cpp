@@ -43,7 +43,8 @@ namespace vishnu {
     /* [29] */ {SERVER_PUBLIC_KEY, "serverPublicKey", STRING_PARAMETER},
     /* [30] */ {SERVER_PRIVATE_KEY, "serverPrivateKey", STRING_PARAMETER},
     /* [31] */ {SERVER_SSL_CERTICATE, "serverSslCertificate", STRING_PARAMETER},
-    /* [32] */ {SSL_CA, "sslCa", STRING_PARAMETER}
+    /* [32] */ {SSL_CA, "sslCa", STRING_PARAMETER},
+    /* [33] */ {SUBSCRIBE, "subscribe", BOOL_PARAMETER}
   };
 
   std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of
