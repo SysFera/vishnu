@@ -128,7 +128,6 @@ int
 main (int argc, char* argv[]) {
   /******* Parsed value containers ****************/
   string configFile;
-  string sessionKey;
   string stateStr = "";
   int state;
   std::string fromDate;
