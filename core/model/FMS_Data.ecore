@@ -227,7 +227,7 @@
         <details key="content" value="The size of the file "/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="start_time" eType="ecore:EDataType Ecore.ecore#//ELong"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="startTime" eType="ecore:EDataType Ecore.ecore#//ELong"
         defaultValueLiteral="0">
       <eAnnotations source="Description">
         <details key="content" value="The start time of the file  transfer"/>
@@ -317,7 +317,7 @@
         <details key="content" value="The size of the remote  file in bytes"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ctime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="The file creation time  (in remote host time)"/>
       </eAnnotations>

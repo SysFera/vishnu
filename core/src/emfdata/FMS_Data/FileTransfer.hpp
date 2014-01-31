@@ -171,15 +171,15 @@ namespace FMS_Data
         void setSize(::ecore::EBigInteger _size);
 
         /**
-         * \brief To get the start_time
-         * \return The start_time attribute value
+         * \brief To get the startTime
+         * \return The startTime attribute value
          **/
-        ::ecore::ELong getStart_time() const;
+        ::ecore::ELong getStartTime() const;
         /**
-         * \brief To set the start_time
-         * \param _start_time The start_time value
+         * \brief To set the startTime
+         * \param _startTime The startTime value
          **/
-        void setStart_time(::ecore::ELong _start_time);
+        void setStartTime(::ecore::ELong _startTime);
 
         /**
          * \brief To get the trCommand
@@ -246,7 +246,7 @@ namespace FMS_Data
 
         ::ecore::EBigInteger m_size;
 
-        ::ecore::ELong m_start_time;
+        ::ecore::ELong m_startTime;
 
         ::FMS_Data::TransferCommand m_trCommand;
 

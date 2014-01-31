@@ -233,11 +233,11 @@ FMS_DataPackage::FMS_DataPackage()
             ::FMS_Data::FMS_DataPackage::FILETRANSFER__SIZE);
     m_FileTransferEClass->getEStructuralFeatures().push_back(
             m_FileTransfer__size);
-    m_FileTransfer__start_time = new ::ecore::EAttribute();
-    m_FileTransfer__start_time->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::FILETRANSFER__START_TIME);
+    m_FileTransfer__startTime = new ::ecore::EAttribute();
+    m_FileTransfer__startTime->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::FILETRANSFER__STARTTIME);
     m_FileTransferEClass->getEStructuralFeatures().push_back(
-            m_FileTransfer__start_time);
+            m_FileTransfer__startTime);
     m_FileTransfer__trCommand = new ::ecore::EAttribute();
     m_FileTransfer__trCommand->setFeatureID(
             ::FMS_Data::FMS_DataPackage::FILETRANSFER__TRCOMMAND);
@@ -327,11 +327,10 @@ FMS_DataPackage::FMS_DataPackage()
     m_DirEntry__size = new ::ecore::EAttribute();
     m_DirEntry__size->setFeatureID(::FMS_Data::FMS_DataPackage::DIRENTRY__SIZE);
     m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__size);
-    m_DirEntry__creationTime = new ::ecore::EAttribute();
-    m_DirEntry__creationTime->setFeatureID(
-            ::FMS_Data::FMS_DataPackage::DIRENTRY__CREATIONTIME);
-    m_DirEntryEClass->getEStructuralFeatures().push_back(
-            m_DirEntry__creationTime);
+    m_DirEntry__ctime = new ::ecore::EAttribute();
+    m_DirEntry__ctime->setFeatureID(
+            ::FMS_Data::FMS_DataPackage::DIRENTRY__CTIME);
+    m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__ctime);
     m_DirEntry__type = new ::ecore::EAttribute();
     m_DirEntry__type->setFeatureID(::FMS_Data::FMS_DataPackage::DIRENTRY__TYPE);
     m_DirEntryEClass->getEStructuralFeatures().push_back(m_DirEntry__type);
@@ -849,20 +848,20 @@ FMS_DataPackage::FMS_DataPackage()
     m_FileTransfer__size->setUnique(true);
     m_FileTransfer__size->setDerived(false);
     m_FileTransfer__size->setOrdered(true);
-    m_FileTransfer__start_time->setEType(
+    m_FileTransfer__startTime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getELong());
-    m_FileTransfer__start_time->setName("start_time");
-    m_FileTransfer__start_time->setDefaultValueLiteral("0");
-    m_FileTransfer__start_time->setLowerBound(0);
-    m_FileTransfer__start_time->setUpperBound(1);
-    m_FileTransfer__start_time->setTransient(false);
-    m_FileTransfer__start_time->setVolatile(false);
-    m_FileTransfer__start_time->setChangeable(true);
-    m_FileTransfer__start_time->setUnsettable(false);
-    m_FileTransfer__start_time->setID(false);
-    m_FileTransfer__start_time->setUnique(true);
-    m_FileTransfer__start_time->setDerived(false);
-    m_FileTransfer__start_time->setOrdered(true);
+    m_FileTransfer__startTime->setName("startTime");
+    m_FileTransfer__startTime->setDefaultValueLiteral("0");
+    m_FileTransfer__startTime->setLowerBound(0);
+    m_FileTransfer__startTime->setUpperBound(1);
+    m_FileTransfer__startTime->setTransient(false);
+    m_FileTransfer__startTime->setVolatile(false);
+    m_FileTransfer__startTime->setChangeable(true);
+    m_FileTransfer__startTime->setUnsettable(false);
+    m_FileTransfer__startTime->setID(false);
+    m_FileTransfer__startTime->setUnique(true);
+    m_FileTransfer__startTime->setDerived(false);
+    m_FileTransfer__startTime->setOrdered(true);
     m_FileTransfer__trCommand->setEType(m_TransferCommandEEnum);
     m_FileTransfer__trCommand->setName("trCommand");
     m_FileTransfer__trCommand->setDefaultValueLiteral("2");
@@ -1053,20 +1052,20 @@ FMS_DataPackage::FMS_DataPackage()
     m_DirEntry__size->setUnique(true);
     m_DirEntry__size->setDerived(false);
     m_DirEntry__size->setOrdered(true);
-    m_DirEntry__creationTime->setEType(
+    m_DirEntry__ctime->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_DirEntry__creationTime->setName("creationTime");
-    m_DirEntry__creationTime->setDefaultValueLiteral("");
-    m_DirEntry__creationTime->setLowerBound(0);
-    m_DirEntry__creationTime->setUpperBound(1);
-    m_DirEntry__creationTime->setTransient(false);
-    m_DirEntry__creationTime->setVolatile(false);
-    m_DirEntry__creationTime->setChangeable(true);
-    m_DirEntry__creationTime->setUnsettable(false);
-    m_DirEntry__creationTime->setID(false);
-    m_DirEntry__creationTime->setUnique(true);
-    m_DirEntry__creationTime->setDerived(false);
-    m_DirEntry__creationTime->setOrdered(true);
+    m_DirEntry__ctime->setName("ctime");
+    m_DirEntry__ctime->setDefaultValueLiteral("");
+    m_DirEntry__ctime->setLowerBound(0);
+    m_DirEntry__ctime->setUpperBound(1);
+    m_DirEntry__ctime->setTransient(false);
+    m_DirEntry__ctime->setVolatile(false);
+    m_DirEntry__ctime->setChangeable(true);
+    m_DirEntry__ctime->setUnsettable(false);
+    m_DirEntry__ctime->setID(false);
+    m_DirEntry__ctime->setUnique(true);
+    m_DirEntry__ctime->setDerived(false);
+    m_DirEntry__ctime->setOrdered(true);
     m_DirEntry__type->setEType(m_FileTypeEEnum);
     m_DirEntry__type->setName("type");
     m_DirEntry__type->setDefaultValueLiteral("6");
@@ -1463,9 +1462,9 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_FileTransfer__size;
 }
-::ecore::EAttribute_ptr FMS_DataPackage::getFileTransfer__start_time()
+::ecore::EAttribute_ptr FMS_DataPackage::getFileTransfer__startTime()
 {
-    return m_FileTransfer__start_time;
+    return m_FileTransfer__startTime;
 }
 ::ecore::EAttribute_ptr FMS_DataPackage::getFileTransfer__trCommand()
 {
@@ -1515,9 +1514,9 @@ FMS_DataPackage::FMS_DataPackage()
 {
     return m_DirEntry__size;
 }
-::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__creationTime()
+::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__ctime()
 {
-    return m_DirEntry__creationTime;
+    return m_DirEntry__ctime;
 }
 ::ecore::EAttribute_ptr FMS_DataPackage::getDirEntry__type()
 {
