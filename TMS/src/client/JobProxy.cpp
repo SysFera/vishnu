@@ -11,6 +11,7 @@
 #include "tmsUtils.hpp"
 #include "TMSServices.hpp"
 #include "DIET_client.h"
+#include "TMSVishnuException.hpp"
 
 using namespace std;
 namespace bfs=boost::filesystem;
