@@ -85,6 +85,7 @@ int main(int argc, char* argv[], char* envp[]) {
   // Read the configuration
   ExecConfiguration_Ptr config(new ExecConfiguration);
   DbConfiguration dbConfig(*config);
+  bool sub;
   try {
     config->initFromFile(argv[1]);
     dbConfig.check();
@@ -92,6 +93,7 @@ int main(int argc, char* argv[], char* envp[]) {
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
     config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
     config->getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
+    config->getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
 
     if (!config->getConfigValue(vishnu::INTERVALMONITOR, interval) || interval < 0) {
       interval = 60;
@@ -190,7 +192,9 @@ int main(int argc, char* argv[], char* envp[]) {
       //Initialize the TMS Server    ----- MUST BE DONE BEFORE CREATING INSTANCE
       boost::shared_ptr<ServerTMS> server (ServerTMS::getInstance());
       res = server->init(vishnuId, dbConfig, machineId, batchType, config);
-      boost::thread thr(boost::bind(&keepRegistered, TMSTYPE, *config, uri, server));
+      if (sub) {
+        boost::thread thr(boost::bind(&keepRegistered, TMSTYPE, *config, uri, server));
+      }
       if (!res) {
         initSeD(TMSTYPE, *config, uri, server);
       } else {
