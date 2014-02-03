@@ -23,6 +23,10 @@
  */
 #define VISHNU_COMM_REGEX     "\\${4}\\#{4}\\${4}"
 /**
+ * \brief Short timeout
+ */
+#define SHORT_TIMEOUT 2
+/**
  * \brief Overload of DIET structure
  */
 typedef struct diet_profile_t {
@@ -83,12 +87,12 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri);
+diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
 /**
  * \brief Generic function created to encapsulate the code
  */
 int
-abstract_call_gen(diet_profile_t* prof, const std::string& uri);
+abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
 /**
  * @brief ssl_call_gen
  * @param prof
@@ -162,7 +166,7 @@ diet_initialize(const char* cfg, int argc, char** argv);
  * \return 0 on success
  */
 int
-communicate_dispatcher(const std::string& requestData, std::string& response);
+communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout = false);
 
 /**
  * \brief Extract the servers from a serialized message list

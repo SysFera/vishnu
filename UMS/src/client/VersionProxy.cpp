@@ -58,7 +58,7 @@ VersionProxy::getVersion(const std::string& server,
                          std::map<std::string, std::string>& result) {
   std::string response;
   bool empty = true;
-  int res = communicate_dispatcher("3", response);
+  int res = communicate_dispatcher("3", response, true);
 
   if (server == "dispatcher" ||
       (server.empty() && mid.empty() && res !=- 1)) {
@@ -68,7 +68,7 @@ VersionProxy::getVersion(const std::string& server,
 
 
 // Get the list of the servers in the dispatcher
-  communicate_dispatcher("2", response);
+  communicate_dispatcher("2", response, true);
   std::vector<boost::shared_ptr<Server> > allServers;
   std::vector<boost::shared_ptr<Server> > servers;
   extractServersFromMessage(response, allServers);
@@ -86,7 +86,7 @@ VersionProxy::getVersion(const std::string& server,
 
     profile = diet_profile_alloc(service,0,0,1);
     // Getting version
-    if (abstract_call_gen(profile, it->get()->getURI())){
+    if (abstract_call_gen(profile, it->get()->getURI(), true)){
       result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), "Server unavailable"));
     } else {
       std::string tmp;
@@ -109,10 +109,10 @@ VersionProxy::list(const std::string mid, std::map<std::string, std::string>& re
 
 
 // Get the list of the servers in the dispatcher
-  communicate_dispatcher("2", response);
+  communicate_dispatcher("2", response, true);
   std::vector<boost::shared_ptr<Server> > servers;
-  getServersListFromConfig(servers);
   extractServersFromMessage(response, servers);
+  getServersListFromConfig(servers);
 
   // For each server get its version
   std::vector<boost::shared_ptr<Server> >::iterator it;

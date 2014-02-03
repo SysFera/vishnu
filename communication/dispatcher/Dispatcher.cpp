@@ -3,6 +3,8 @@
 #include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
 #include "utilVishnu.hpp"
+#include "DIET_client.h"
+#include "VishnuException.hpp"
 
 
 Dispatcher::Dispatcher(const std::string &confFile)
@@ -70,7 +72,10 @@ Dispatcher::getAnnuary(){
 
 void
 Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& confFile){
-  diet_initialize(confFile.c_str(), 0, NULL);
+  try {
+    diet_initialize(confFile.c_str(), 0, NULL);
+  } catch (VishnuException& e){
+  }
   while (true){
     // get all servers
     std::vector<boost::shared_ptr<Server> > list = ann->get();
