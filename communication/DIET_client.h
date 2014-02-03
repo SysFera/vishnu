@@ -14,6 +14,10 @@
 #include "sslhelpers.hpp"
 #include "Server.hpp"
 
+namespace TMS_Data  {
+  class Job;
+}
+
 /**
  * \brief Separator for zmq communication
  */
@@ -147,6 +151,31 @@ my_deserialize(const std::string& prof);
  */
 std::string
 my_serialize(diet_profile_t* prof);
+
+
+/**
+ * \brief To serialize a profile into a json string
+ * \param prof The profile
+ * \return The serialized json profile
+ */
+std::string
+json_serialize(diet_profile_t* prof);
+
+/**
+ * \brief To serialize a job into a json stringt
+ * \param job The job
+ * \return The serialized json profile
+ */
+std::string
+json_serialize(const TMS_Data::Job& job);
+
+/**
+ * \brief To deserialize a json encoded profile
+ * \param prof The json string
+ * \return The deserialized profile
+ */
+boost::shared_ptr<diet_profile_t>
+json_deserialize(const std::string& jsonProfile);
 
 /**
  * \brief Overload of DIET function, to initialize

@@ -242,7 +242,7 @@ operator<<(std::ostream& os, DirEntry& dirEntry) {
   os << setw(maxSize) << right  << "perms: " << oct << perms << dec ;
   os << " (" << ConvertModeToString(perms) << ")" << std::endl;
   os << setw(maxSize) << right  << "type: " << ConvertFileTypeToString(dirEntry.getType()) << std::endl;
-  os << setw(maxSize) << right  << "creation time: " << dirEntry.getCreationTime() << std::endl;
+  os << setw(maxSize) << right  << "creation time: " << dirEntry.getCtime() << std::endl;
 
 return os;
 }
@@ -294,7 +294,7 @@ return os;
      type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
      maxTypeSize = max(maxTypeSize, type.size());
      
-     creationTime = (dirEntryList.getDirEntries().get(i))->getCreationTime();
+     creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
      maxCreationTimeSize = max(maxCreationTimeSize, creationTime.size());
      
   }
@@ -321,7 +321,7 @@ return os;
      group = (dirEntryList.getDirEntries().get(i))->getGroup();
      FileSize = (dirEntryList.getDirEntries().get(i))->getSize();
      type = ConvertFileTypeToString((dirEntryList.getDirEntries().get(i))->getType());
-     creationTime = (dirEntryList.getDirEntries().get(i))->getCreationTime();
+     creationTime = (dirEntryList.getDirEntries().get(i))->getCtime();
     
     
     os << setw(maxPermsSize+2) << left << ConvertModeToString(perms);
@@ -359,7 +359,7 @@ operator<<(std::ostream& os, FileTransfer& fileTransfer) {
   os << setw(maxSize) << right << "sourceFilePath: " << fileTransfer.getSourceFilePath()   << std::endl;
   os << setw(maxSize) << right << "destinationFilePath: " << fileTransfer.getDestinationFilePath()   << std::endl;
   os << setw(maxSize) << right << "size: " << fileTransfer.getSize()   << std::endl;
-  long start_time = fileTransfer.getStart_time();
+  long start_time = fileTransfer.getStartTime();
   if(start_time > 0) {
     boost::posix_time::ptime pt;
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(start_time));

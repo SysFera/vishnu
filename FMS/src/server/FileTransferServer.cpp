@@ -238,7 +238,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
     mfileTransfer.setStatus(3); //failed
     mfileTransfer.setSize(0); //failed
 
-    mfileTransfer.setStart_time(0);
+    mfileTransfer.setStartTime(0);
 
     logIntoDatabase(-1,srcFileServer->getErrorMsg());
 
@@ -246,7 +246,7 @@ FileTransferServer::addTransferThread(const std::string& srcUser,
   }
 
   mfileTransfer.setSize(srcFileServer->getSize());
-  mfileTransfer.setStart_time(0);
+  mfileTransfer.setStartTime(0);
 
 
   if ( (srcUser==destUser) &&  (srcMachineName== destMachineName)  && (mfileTransfer.getSourceFilePath()==mfileTransfer.getDestinationFilePath())     ){

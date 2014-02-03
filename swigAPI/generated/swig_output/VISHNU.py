@@ -2185,6 +2185,14 @@ class ListJobsOptions(EObject):
         """setListAll(self, EBoolean _listAll)"""
         return _VISHNU.ListJobsOptions_setListAll(self, *args, **kwargs)
 
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ListJobsOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ListJobsOptions_setMachineId(self, *args, **kwargs)
+
     def eGet(self, *args, **kwargs):
         """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
         return _VISHNU.ListJobsOptions_eGet(self, *args, **kwargs)
@@ -2236,13 +2244,21 @@ class ProgressOptions(EObject):
         """setJobId(self, EString _jobId)"""
         return _VISHNU.ProgressOptions_setJobId(self, *args, **kwargs)
 
-    def getJobOwner(self, *args, **kwargs):
-        """getJobOwner(self) -> EString"""
-        return _VISHNU.ProgressOptions_getJobOwner(self, *args, **kwargs)
+    def getUser(self, *args, **kwargs):
+        """getUser(self) -> EString"""
+        return _VISHNU.ProgressOptions_getUser(self, *args, **kwargs)
 
-    def setJobOwner(self, *args, **kwargs):
-        """setJobOwner(self, EString _jobOwner)"""
-        return _VISHNU.ProgressOptions_setJobOwner(self, *args, **kwargs)
+    def setUser(self, *args, **kwargs):
+        """setUser(self, EString _user)"""
+        return _VISHNU.ProgressOptions_setUser(self, *args, **kwargs)
+
+    def getMachineId(self, *args, **kwargs):
+        """getMachineId(self) -> EString"""
+        return _VISHNU.ProgressOptions_getMachineId(self, *args, **kwargs)
+
+    def setMachineId(self, *args, **kwargs):
+        """setMachineId(self, EString _machineId)"""
+        return _VISHNU.ProgressOptions_setMachineId(self, *args, **kwargs)
 
     def eGet(self, *args, **kwargs):
         """eGet(self, EInt _featureID, EBoolean _resolve) -> EJavaObject"""
@@ -2668,6 +2684,14 @@ class SubmitOptions(EObject):
     def setPosix(self, *args, **kwargs):
         """setPosix(self, EBoolean _posix)"""
         return _VISHNU.SubmitOptions_setPosix(self, *args, **kwargs)
+
+    def getMachine(self, *args, **kwargs):
+        """getMachine(self) -> EString"""
+        return _VISHNU.SubmitOptions_getMachine(self, *args, **kwargs)
+
+    def setMachine(self, *args, **kwargs):
+        """setMachine(self, EString _machine)"""
+        return _VISHNU.SubmitOptions_setMachine(self, *args, **kwargs)
 
     def getCriterion(self, *args, **kwargs):
         """getCriterion(self) -> LoadCriterion_ptr"""
@@ -4040,13 +4064,13 @@ class FileTransfer(EObject):
         """setSize(self, EBigInteger _size)"""
         return _VISHNU.FileTransfer_setSize(self, *args, **kwargs)
 
-    def getStart_time(self, *args, **kwargs):
-        """getStart_time(self) -> ELong"""
-        return _VISHNU.FileTransfer_getStart_time(self, *args, **kwargs)
+    def getStartTime(self, *args, **kwargs):
+        """getStartTime(self) -> ELong"""
+        return _VISHNU.FileTransfer_getStartTime(self, *args, **kwargs)
 
-    def setStart_time(self, *args, **kwargs):
-        """setStart_time(self, ELong _start_time)"""
-        return _VISHNU.FileTransfer_setStart_time(self, *args, **kwargs)
+    def setStartTime(self, *args, **kwargs):
+        """setStartTime(self, ELong _startTime)"""
+        return _VISHNU.FileTransfer_setStartTime(self, *args, **kwargs)
 
     def getTrCommand(self, *args, **kwargs):
         """getTrCommand(self) -> TransferCommand"""
@@ -4552,13 +4576,13 @@ class DirEntry(EObject):
         """setSize(self, EBigInteger _size)"""
         return _VISHNU.DirEntry_setSize(self, *args, **kwargs)
 
-    def getCreationTime(self, *args, **kwargs):
-        """getCreationTime(self) -> EString"""
-        return _VISHNU.DirEntry_getCreationTime(self, *args, **kwargs)
+    def getCtime(self, *args, **kwargs):
+        """getCtime(self) -> EString"""
+        return _VISHNU.DirEntry_getCtime(self, *args, **kwargs)
 
-    def setCreationTime(self, *args, **kwargs):
-        """setCreationTime(self, EString _creationTime)"""
-        return _VISHNU.DirEntry_setCreationTime(self, *args, **kwargs)
+    def setCtime(self, *args, **kwargs):
+        """setCtime(self, EString _ctime)"""
+        return _VISHNU.DirEntry_setCtime(self, *args, **kwargs)
 
     def getType(self, *args, **kwargs):
         """getType(self) -> FileType"""
@@ -4590,6 +4614,148 @@ class DirEntry(EObject):
 
 DirEntry_swigregister = _VISHNU.DirEntry_swigregister
 DirEntry_swigregister(DirEntry)
+
+class map_string_string(_object):
+    """Proxy of C++ std::map<(std::string,std::string)> class"""
+    __swig_setmethods__ = {}
+    __setattr__ = lambda self, name, value: _swig_setattr(self, map_string_string, name, value)
+    __swig_getmethods__ = {}
+    __getattr__ = lambda self, name: _swig_getattr(self, map_string_string, name)
+    __repr__ = _swig_repr
+    def iterator(self, *args, **kwargs):
+        """iterator(self) -> SwigPyIterator"""
+        return _VISHNU.map_string_string_iterator(self, *args, **kwargs)
+
+    def __iter__(self): return self.iterator()
+    def __nonzero__(self, *args, **kwargs):
+        """__nonzero__(self) -> bool"""
+        return _VISHNU.map_string_string___nonzero__(self, *args, **kwargs)
+
+    def __bool__(self, *args, **kwargs):
+        """__bool__(self) -> bool"""
+        return _VISHNU.map_string_string___bool__(self, *args, **kwargs)
+
+    def __len__(self, *args, **kwargs):
+        """__len__(self) -> size_type"""
+        return _VISHNU.map_string_string___len__(self, *args, **kwargs)
+
+    def __getitem__(self, *args, **kwargs):
+        """__getitem__(self, key_type key) -> mapped_type"""
+        return _VISHNU.map_string_string___getitem__(self, *args, **kwargs)
+
+    def __delitem__(self, *args, **kwargs):
+        """__delitem__(self, key_type key)"""
+        return _VISHNU.map_string_string___delitem__(self, *args, **kwargs)
+
+    def has_key(self, *args, **kwargs):
+        """has_key(self, key_type key) -> bool"""
+        return _VISHNU.map_string_string_has_key(self, *args, **kwargs)
+
+    def keys(self, *args, **kwargs):
+        """keys(self) -> PyObject"""
+        return _VISHNU.map_string_string_keys(self, *args, **kwargs)
+
+    def values(self, *args, **kwargs):
+        """values(self) -> PyObject"""
+        return _VISHNU.map_string_string_values(self, *args, **kwargs)
+
+    def items(self, *args, **kwargs):
+        """items(self) -> PyObject"""
+        return _VISHNU.map_string_string_items(self, *args, **kwargs)
+
+    def __contains__(self, *args, **kwargs):
+        """__contains__(self, key_type key) -> bool"""
+        return _VISHNU.map_string_string___contains__(self, *args, **kwargs)
+
+    def key_iterator(self, *args, **kwargs):
+        """key_iterator(self) -> SwigPyIterator"""
+        return _VISHNU.map_string_string_key_iterator(self, *args, **kwargs)
+
+    def value_iterator(self, *args, **kwargs):
+        """value_iterator(self) -> SwigPyIterator"""
+        return _VISHNU.map_string_string_value_iterator(self, *args, **kwargs)
+
+    def __iter__(self): return self.key_iterator()
+    def iterkeys(self): return self.key_iterator()
+    def itervalues(self): return self.value_iterator()
+    def iteritems(self): return self.iterator()
+    def __setitem__(self, *args, **kwargs):
+        """__setitem__(self, key_type key, mapped_type x)"""
+        return _VISHNU.map_string_string___setitem__(self, *args, **kwargs)
+
+    def __init__(self, *args): 
+        """
+        __init__(self, std::less<(std::string)> arg0) -> map_string_string
+        __init__(self) -> map_string_string
+        __init__(self, map_string_string arg0) -> map_string_string
+        """
+        this = _VISHNU.new_map_string_string(*args)
+        try: self.this.append(this)
+        except: self.this = this
+    def empty(self, *args, **kwargs):
+        """empty(self) -> bool"""
+        return _VISHNU.map_string_string_empty(self, *args, **kwargs)
+
+    def size(self, *args, **kwargs):
+        """size(self) -> size_type"""
+        return _VISHNU.map_string_string_size(self, *args, **kwargs)
+
+    def clear(self, *args, **kwargs):
+        """clear(self)"""
+        return _VISHNU.map_string_string_clear(self, *args, **kwargs)
+
+    def swap(self, *args, **kwargs):
+        """swap(self, map_string_string v)"""
+        return _VISHNU.map_string_string_swap(self, *args, **kwargs)
+
+    def get_allocator(self, *args, **kwargs):
+        """get_allocator(self) -> allocator_type"""
+        return _VISHNU.map_string_string_get_allocator(self, *args, **kwargs)
+
+    def begin(self, *args, **kwargs):
+        """begin(self) -> const_iterator"""
+        return _VISHNU.map_string_string_begin(self, *args, **kwargs)
+
+    def end(self, *args, **kwargs):
+        """end(self) -> const_iterator"""
+        return _VISHNU.map_string_string_end(self, *args, **kwargs)
+
+    def rbegin(self, *args, **kwargs):
+        """rbegin(self) -> const_reverse_iterator"""
+        return _VISHNU.map_string_string_rbegin(self, *args, **kwargs)
+
+    def rend(self, *args, **kwargs):
+        """rend(self) -> const_reverse_iterator"""
+        return _VISHNU.map_string_string_rend(self, *args, **kwargs)
+
+    def count(self, *args, **kwargs):
+        """count(self, key_type x) -> size_type"""
+        return _VISHNU.map_string_string_count(self, *args, **kwargs)
+
+    def erase(self, *args):
+        """
+        erase(self, key_type x) -> size_type
+        erase(self, iterator position)
+        erase(self, iterator first, iterator last)
+        """
+        return _VISHNU.map_string_string_erase(self, *args)
+
+    def find(self, *args, **kwargs):
+        """find(self, key_type x) -> iterator"""
+        return _VISHNU.map_string_string_find(self, *args, **kwargs)
+
+    def lower_bound(self, *args, **kwargs):
+        """lower_bound(self, key_type x) -> iterator"""
+        return _VISHNU.map_string_string_lower_bound(self, *args, **kwargs)
+
+    def upper_bound(self, *args, **kwargs):
+        """upper_bound(self, key_type x) -> iterator"""
+        return _VISHNU.map_string_string_upper_bound(self, *args, **kwargs)
+
+    __swig_destroy__ = _VISHNU.delete_map_string_string
+    __del__ = lambda self : None;
+map_string_string_swigregister = _VISHNU.map_string_string_swigregister
+map_string_string_swigregister(map_string_string)
 
 
 def connect(*args, **kwargs):
@@ -4751,6 +4917,18 @@ def defineAuthIdentifier(*args, **kwargs):
 def defineWorkIdentifier(*args, **kwargs):
   """defineWorkIdentifier(string sessionKey, string fmt) -> int"""
   return _VISHNU.defineWorkIdentifier(*args, **kwargs)
+
+def ping(*args, **kwargs):
+  """ping(string serverName = "", string mid = "") -> int"""
+  return _VISHNU.ping(*args, **kwargs)
+
+def getServerVersion(*args, **kwargs):
+  """getServerVersion(string serverName = "", string mid = "") -> int"""
+  return _VISHNU.getServerVersion(*args, **kwargs)
+
+def listServers(*args, **kwargs):
+  """listServers(string mid = "") -> int"""
+  return _VISHNU.listServers(*args, **kwargs)
 class VishnuException(Exception):
     """Proxy of C++ VishnuException class"""
     __swig_setmethods__ = {}
@@ -5071,8 +5249,8 @@ ERRCODE_UNKNOWN_FILETRANSFERID = cvar.ERRCODE_UNKNOWN_FILETRANSFERID
 
 def submitJob(*args, **kwargs):
   """
-    submitJob(string sessionKey, string machineId, string scriptFilePath, 
-        Job jobInfo, SubmitOptions options = TMS_Data::SubmitOptions()) -> int
+    submitJob(string sessionKey, string scriptFilePath, Job jobInfo, 
+        SubmitOptions options = TMS_Data::SubmitOptions()) -> int
     """
   return _VISHNU.submitJob(*args, **kwargs)
 
@@ -5081,22 +5259,19 @@ def addWork(*args, **kwargs):
   return _VISHNU.addWork(*args, **kwargs)
 
 def cancelJob(*args, **kwargs):
-  """cancelJob(string sessionKey, string machineId, string jobId) -> int"""
+  """cancelJob(string sessionKey, CancelOptions options) -> int"""
   return _VISHNU.cancelJob(*args, **kwargs)
 
 def getJobInfo(*args, **kwargs):
-  """
-    getJobInfo(string sessionKey, string machineId, string jobId, 
-        Job jobInfos) -> int
-    """
+  """getJobInfo(string sessionKey, string jobId, Job jobInfos) -> int"""
   return _VISHNU.getJobInfo(*args, **kwargs)
 
 def listJobs(*args, **kwargs):
-  """listJobs(string sessionKey, string machineId, ListJobsOptions options = TMS_Data::ListJobsOptions()) -> int"""
+  """listJobs(string sessionKey, ListJobsOptions options = TMS_Data::ListJobsOptions()) -> int"""
   return _VISHNU.listJobs(*args, **kwargs)
 
 def getJobProgress(*args, **kwargs):
-  """getJobProgress(string sessionKey, string machineId, ProgressOptions options = TMS_Data::ProgressOptions()) -> int"""
+  """getJobProgress(string sessionKey, ProgressOptions options = TMS_Data::ProgressOptions()) -> int"""
   return _VISHNU.getJobProgress(*args, **kwargs)
 
 def listQueues(*args, **kwargs):
@@ -5105,69 +5280,14 @@ def listQueues(*args, **kwargs):
 
 def getJobOutput(*args, **kwargs):
   """
-    getJobOutput(string sessionKey, string machineId, string jobId, 
-        JobResult outputInfo, string outDir = std::string()) -> int
+    getJobOutput(string sessionKey, string jobId, JobResult outputInfo, 
+        JobOuputOptions options) -> int
     """
   return _VISHNU.getJobOutput(*args, **kwargs)
 
 def getCompletedJobsOutput(*args, **kwargs):
-  """getCompletedJobsOutput(string sessionKey, string machineId, string outDir = std::string()) -> int"""
+  """getCompletedJobsOutput(string sessionKey, JobOuputOptions options) -> int"""
   return _VISHNU.getCompletedJobsOutput(*args, **kwargs)
-
-def exportCommands(*args, **kwargs):
-  """
-    exportCommands(string sessionKey, string oldSessionId, string filename, 
-        ExportOp op = IMS_Data::ExportOp()) -> int
-    """
-  return _VISHNU.exportCommands(*args, **kwargs)
-
-def getMetricCurrentValue(*args, **kwargs):
-  """getMetricCurrentValue(string sessionKey, string machineId, CurMetricOp op = IMS_Data::CurMetricOp()) -> int"""
-  return _VISHNU.getMetricCurrentValue(*args, **kwargs)
-
-def getMetricHistory(*args, **kwargs):
-  """getMetricHistory(string sessionKey, string machineId, MetricHistOp op = IMS_Data::MetricHistOp()) -> int"""
-  return _VISHNU.getMetricHistory(*args, **kwargs)
-
-def getProcesses(*args, **kwargs):
-  """getProcesses(string sessionKey, ProcessOp op = IMS_Data::ProcessOp()) -> int"""
-  return _VISHNU.getProcesses(*args, **kwargs)
-
-def setSystemInfo(*args, **kwargs):
-  """setSystemInfo(string sessionKey, SystemInfo sys) -> int"""
-  return _VISHNU.setSystemInfo(*args, **kwargs)
-
-def setSystemThreshold(*args, **kwargs):
-  """setSystemThreshold(string sessionKey, Threshold threshold) -> int"""
-  return _VISHNU.setSystemThreshold(*args, **kwargs)
-
-def getSystemThreshold(*args, **kwargs):
-  """getSystemThreshold(string sessionKey, ThresholdOp op = IMS_Data::ThresholdOp()) -> int"""
-  return _VISHNU.getSystemThreshold(*args, **kwargs)
-
-def loadShed(*args, **kwargs):
-  """loadShed(string sessionKey, string machineId, LoadShedType loadShedType) -> int"""
-  return _VISHNU.loadShed(*args, **kwargs)
-
-def setUpdateFrequency(*args, **kwargs):
-  """setUpdateFrequency(string sessionKey, int freq) -> int"""
-  return _VISHNU.setUpdateFrequency(*args, **kwargs)
-
-def getUpdateFrequency(*args, **kwargs):
-  """getUpdateFrequency(string sessionKey, int freq) -> int"""
-  return _VISHNU.getUpdateFrequency(*args, **kwargs)
-
-def stop(*args, **kwargs):
-  """stop(string sessionKey, string machineId, SupervisorOp op) -> int"""
-  return _VISHNU.stop(*args, **kwargs)
-
-def getSystemInfo(*args, **kwargs):
-  """getSystemInfo(string sessionKey, SysInfoOp op = IMS_Data::SysInfoOp()) -> int"""
-  return _VISHNU.getSystemInfo(*args, **kwargs)
-
-def restart(*args, **kwargs):
-  """restart(string sessionKey, string machineId, SupervisorOp op) -> int"""
-  return _VISHNU.restart(*args, **kwargs)
 
 def touch(*args, **kwargs):
   """touch(string sessionKey, string path) -> int"""
@@ -5196,9 +5316,9 @@ def head(*args, **kwargs):
   """head(string sessionKey, string path, HeadOfFileOptions options = FMS_Data::HeadOfFileOptions()) -> int"""
   return _VISHNU.head(*args, **kwargs)
 
-def more(*args, **kwargs):
-  """more(string sessionKey, string path) -> int"""
-  return _VISHNU.more(*args, **kwargs)
+def cat(*args, **kwargs):
+  """cat(string sessionKey, string path) -> int"""
+  return _VISHNU.cat(*args, **kwargs)
 
 def ls(*args, **kwargs):
   """ls(string sessionKey, string path, LsDirOptions options = FMS_Data::LsDirOptions()) -> int"""
