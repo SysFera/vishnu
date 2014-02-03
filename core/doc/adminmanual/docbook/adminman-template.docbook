@@ -364,6 +364,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>39</revnumber>
+<date>03/02/2014</date>
+<authorinitials>K. Coulomb</authorinitials>
+<revdescription>
+<para>Ajout de l'option subscribe dans les fichiers de configuration</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -1292,6 +1301,12 @@ disp_uriSubs=tcp://127.0.0.1:5561
 # preserve useless resource consumption.
 #
 disp_nbthread=5
+
+# subscribe (O<IMS|TMS|FMS|UMS>):
+# ** Indicates if the SeD have to register in the dispatcher or not
+# * 1 for yes
+# * 0 for no
+subscribe=1
 
 
 ###############################################################################
