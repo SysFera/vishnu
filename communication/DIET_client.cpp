@@ -7,6 +7,7 @@
 
 #include "DIET_client.h"
 
+#include <jansson.h>
 #include <iostream>
 #include <iterator>
 #include <map>
@@ -176,22 +177,22 @@ diet_call(diet_profile_t* prof) {
     iss >> uri;
   }
   try {
-      std::string mid = tokens.at(1);
-      tokens.clear();
-      bool validMid(false);
+    std::string mid = tokens.at(1);
+    tokens.clear();
+    bool validMid(false);
 
-      BOOST_FOREACH(const std::string& v, uriv) {
-          boost::algorithm::split(tokens, v, boost::algorithm::is_space());
-          if (tokens.size() > 1 && mid == tokens[1]) {
-              uri = tokens[0];
-              validMid = true;
-              break;
-          }
+    BOOST_FOREACH(const std::string& v, uriv) {
+      boost::algorithm::split(tokens, v, boost::algorithm::is_space());
+      if (tokens.size() > 1 && mid == tokens[1]) {
+        uri = tokens[0];
+        validMid = true;
+        break;
       }
+    }
 
-      if (!validMid) {
-          uri.clear();
-      }
+    if (!validMid) {
+      uri.clear();
+    }
   } catch (const std::out_of_range& err) {}
 
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
@@ -235,8 +236,8 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
     std::cerr << boost::format("[ERROR] %1%\n")%response;
     return 1;
   }
-// To signal a communication problem (bad server receive request)
-// Otherwize client does not get any error message
+  // To signal a communication problem (bad server receive request)
+  // Otherwize client does not get any error message
   if (tmp->OUT == -1) {
     return 1;
   }
@@ -294,9 +295,13 @@ diet_profile_free(diet_profile_t* prof) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
+
+  //return json_serialize(prof);
   if (!prof) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
+
+  std::cout << "serialized<< "<< json_serialize(prof)<< "\n\n";
 
   std::stringstream res;
   res << prof->name <<  VISHNU_COMM_SEPARATOR
@@ -316,8 +321,119 @@ my_serialize(diet_profile_t* prof) {
   return res.str();
 }
 
+
+std::string
+json_serialize(diet_profile_t* prof) {
+
+  if (!prof) {
+    throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
+  }
+
+  json_t* jsonProfile = json_object();
+  json_t* params = json_array();
+
+  if (0 != json_object_set_new(jsonProfile, "name", json_string(prof->name.c_str()))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+  }
+  if (0 != json_object_set_new(jsonProfile, "in", json_integer(prof->IN))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+  }
+  if (0 != json_object_set_new(jsonProfile, "inout", json_integer(prof->INOUT))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+  }
+  if (0 != json_object_set_new(jsonProfile, "out", json_integer(prof->OUT))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+  }
+  if (0 != json_object_set_new(jsonProfile, "params", params)) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+  }
+
+
+  // Set params
+  for (int i = 0; i<(prof->OUT); ++i) {
+    if (0 != json_array_append_new(params, json_string(prof->params[i].c_str()))) {
+      throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+    }
+  }
+  if (prof->OUT > 0) {
+    if (0 != json_array_append_new(params, json_string(prof->params[(prof->OUT)].c_str()))) {
+      throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
+    }
+  }
+
+  char* encodedJson = json_dumps(jsonProfile, 0);
+  std::string result = std::string(encodedJson);
+  free(encodedJson);
+  return result;
+}
+
+
+std::string
+json_serialize(const TMS_Data::Job& job) {
+
+  return "TODO";
+}
+
+boost::shared_ptr<diet_profile_t>
+json_deserialize(const std::string& jsonString) {
+
+  boost::shared_ptr<diet_profile_t> profile;
+
+  if (jsonString.empty()) {
+    throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string");
+  }
+
+  json_error_t *error;
+  json_t* jsonObject = json_loads(jsonString.c_str(), 0, error);
+  if (! jsonObject) {
+    throw SystemException(ERRCODE_SYSTEM, error->text);
+  }
+
+  profile.reset(new diet_profile_t);
+
+  json_t * jsonValue;
+  if (! (jsonValue = json_object_get(jsonObject, "name"))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
+  }
+  profile->name = json_string_value(jsonValue);
+
+  if (! (jsonValue = json_object_get(jsonObject, "in"))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
+  }
+  profile->IN = (int)jsonValue;
+
+  if (! (jsonValue = json_object_get(jsonObject, "inout"))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
+  }
+  profile->INOUT = (int)jsonValue;
+
+  if (! (jsonValue = json_object_get(jsonObject, "out"))) {
+    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
+  }
+  profile->OUT = (int)jsonValue;
+
+
+  json_t* params = json_object_get(jsonObject, "params");
+
+  size_t index;
+  json_array_foreach(params, index, jsonValue) {
+    profile->params[index] = json_string_value(jsonValue);
+  }
+
+  if (profile->params.size() <= profile->OUT) {
+    throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
+  }
+
+  json_decref(jsonObject);
+  return profile;
+}
+
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
+
+
+  //return json_deserialize(prof);
+
   boost::shared_ptr<diet_profile_t> res;
 
   std::vector<std::string> vecString;

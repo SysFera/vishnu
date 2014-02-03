@@ -111,6 +111,7 @@ endif(LIBCRYPT_FOUND)
 
 find_package(OpenSSL)
 
+find_package(LibJansson REQUIRED)
 
 if (BUILD_TESTING)
   find_package(Boost 1.46 REQUIRED program_options date_time thread filesystem system serialization random regex unit_test_framework)
