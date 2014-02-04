@@ -303,10 +303,10 @@ int JobServer::cancelJob()
                               " AND jobId='%2%';"
                               )
                 % baseSqlQuery
-                % mdatabaseVishnu->escapeData(mjob.getJobId())
+                % mdatabaseVishnu->escapeData(jobId)
                 ).str();
 
-    LOG(boost::format("[WARN] received request to cancel the job %1%") % mjob.getJobId(), 2);
+    LOG(boost::format("[WARN] received request to cancel the job %1%") % jobId, 2);
   } else {
     // This block works as follow:
     // * if admin:
@@ -365,8 +365,8 @@ int JobServer::cancelJob()
 
   if (sqlQueryResult->getNbTuples() == 0) {
     if (! cancelAllJobs) {
-      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % userServer.getData().getUserId(), 1);
-      throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID, jobId);
+      LOG(boost::format("[INFO] invalid cancel request with job id %1%") % jobId, 1);
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "The is not valid or is not longer running");
     } else {
       LOG(boost::format("[INFO] no job matching the call"), 1);
     }
