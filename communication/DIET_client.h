@@ -175,7 +175,7 @@ json_serialize(const TMS_Data::Job& job);
  * \return The deserialized profile
  */
 boost::shared_ptr<diet_profile_t>
-json_deserialize(const std::string& jsonProfile);
+json_deserialize(const std::string& encodedJson);
 
 /**
  * \brief Overload of DIET function, to initialize

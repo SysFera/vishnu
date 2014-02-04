@@ -296,29 +296,7 @@ diet_profile_free(diet_profile_t* prof) {
 std::string
 my_serialize(diet_profile_t* prof) {
 
-  //return json_serialize(prof);
-  if (!prof) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
-  }
-
-  std::cout << "serialized<< "<< json_serialize(prof)<< "\n\n";
-
-  std::stringstream res;
-  res << prof->name <<  VISHNU_COMM_SEPARATOR
-      << prof->IN << VISHNU_COMM_SEPARATOR
-      << prof->INOUT << VISHNU_COMM_SEPARATOR
-      << prof->OUT << VISHNU_COMM_SEPARATOR;
-
-  for (int i = 0; i<(prof->OUT); ++i) {
-    res << prof->params[i] << VISHNU_COMM_SEPARATOR;
-  }
-  if (prof->OUT > 0) {
-    res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
-  }
-
-  /*Crypt message before returning */
-
-  return res.str();
+  return json_serialize(prof);
 }
 
 
@@ -332,19 +310,19 @@ json_serialize(diet_profile_t* prof) {
   json_t* jsonProfile = json_object();
   json_t* params = json_array();
 
-  if (0 != json_object_set_new(jsonProfile, "name", json_string(prof->name.c_str()))) {
+  if (0 != json_object_set_new(jsonProfile, "NAME", json_string(prof->name.c_str()))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
   }
-  if (0 != json_object_set_new(jsonProfile, "in", json_integer(prof->IN))) {
+  if (0 != json_object_set_new(jsonProfile, "IN", json_integer(prof->IN))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
   }
-  if (0 != json_object_set_new(jsonProfile, "inout", json_integer(prof->INOUT))) {
+  if (0 != json_object_set_new(jsonProfile, "INOUT", json_integer(prof->INOUT))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
   }
-  if (0 != json_object_set_new(jsonProfile, "out", json_integer(prof->OUT))) {
+  if (0 != json_object_set_new(jsonProfile, "OUT", json_integer(prof->OUT))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
   }
-  if (0 != json_object_set_new(jsonProfile, "params", params)) {
+  if (0 != json_object_set_new(jsonProfile, "PARAMS", params)) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
   }
 
@@ -364,6 +342,10 @@ json_serialize(diet_profile_t* prof) {
   char* encodedJson = json_dumps(jsonProfile, 0);
   std::string result = std::string(encodedJson);
   free(encodedJson);
+
+  json_decref(params);
+  json_decref(jsonProfile);
+
   return result;
 }
 
@@ -375,49 +357,47 @@ json_serialize(const TMS_Data::Job& job) {
 }
 
 boost::shared_ptr<diet_profile_t>
-json_deserialize(const std::string& jsonString) {
+json_deserialize(const std::string& encodedJson) {
 
   boost::shared_ptr<diet_profile_t> profile;
 
-  if (jsonString.empty()) {
+  if (encodedJson.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string");
   }
 
-  json_error_t *error;
-  json_t* jsonObject = json_loads(jsonString.c_str(), 0, error);
+  json_error_t error;
+  json_t* jsonObject = json_loads(encodedJson.c_str(), 0, &error);
   if (! jsonObject) {
-    throw SystemException(ERRCODE_SYSTEM, error->text);
+    throw SystemException(ERRCODE_SYSTEM, error.text);
   }
 
   profile.reset(new diet_profile_t);
 
   json_t * jsonValue;
-  if (! (jsonValue = json_object_get(jsonObject, "name"))) {
+  if (! (jsonValue = json_object_get(jsonObject, "NAME"))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
   }
   profile->name = json_string_value(jsonValue);
 
-  if (! (jsonValue = json_object_get(jsonObject, "in"))) {
+  if (! (jsonValue = json_object_get(jsonObject, "IN"))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
   }
-  profile->IN = (int)jsonValue;
+  profile->IN = json_integer_value(jsonValue);
 
-  if (! (jsonValue = json_object_get(jsonObject, "inout"))) {
+  if (! (jsonValue = json_object_get(jsonObject, "INOUT"))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
   }
-  profile->INOUT = (int)jsonValue;
+  profile->INOUT = json_integer_value(jsonValue);
 
-  if (! (jsonValue = json_object_get(jsonObject, "out"))) {
+  if (! (jsonValue = json_object_get(jsonObject, "OUT"))) {
     throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
   }
-  profile->OUT = (int)jsonValue;
+  profile->OUT = json_integer_value(jsonValue);
 
-
-  json_t* params = json_object_get(jsonObject, "params");
-
+  json_t* params = json_object_get(jsonObject, "PARAMS");
   size_t index;
   json_array_foreach(params, index, jsonValue) {
-    profile->params[index] = json_string_value(jsonValue);
+    profile->params.push_back(json_string_value(jsonValue));
   }
 
   if (profile->params.size() <= profile->OUT) {
@@ -432,37 +412,7 @@ boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
 
 
-  //return json_deserialize(prof);
-
-  boost::shared_ptr<diet_profile_t> res;
-
-  std::vector<std::string> vecString;
-
-  if (prof.empty()) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string ");
-  }
-
-  boost::algorithm::split_regex(vecString, prof, boost::regex(VISHNU_COMM_REGEX));
-
-  // TODO: this is not "safe" as we can receive errors int "prof"
-  // Currently, we check that the size of vecString is at least 4:
-  // profile's name, IN, INOUT and OUT
-  if (vecString.size() >= PROFILE_ELT_NB && (vecString.at(0) != "")) {
-    res.reset(new diet_profile_t);
-    std::vector<std::string>::iterator it = vecString.begin();
-    res->name = *(it++);
-    res->IN = boost::lexical_cast<int>(*(it++));
-    res->INOUT = boost::lexical_cast<int>(*(it++));
-    res->OUT = boost::lexical_cast<int>(*(it++));
-
-    std::copy(it, vecString.end(), std::back_inserter(res->params));
-
-    if (res->params.size() <= res->OUT) {
-      throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
-    }
-  }
-
-  return res;
+  return json_deserialize(prof);
 }
 
 int
