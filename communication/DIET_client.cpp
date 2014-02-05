@@ -7,7 +7,6 @@
 
 #include "DIET_client.h"
 
-#include <jansson.h>
 #include <iostream>
 #include <iterator>
 #include <map>
@@ -36,16 +35,13 @@
 #include "IMSServices.hpp"
 #include "FMSServices.hpp"
 #include "utilVishnu.hpp"
+#include "TMS_Data/Job.hpp"
 
 // private declarations
 static ExecConfiguration config;
 
 typedef std::map<std::string, std::string> ServiceMap;
 boost::shared_ptr<ServiceMap> sMap;
-
-// defines minimal number of elements in a diet profile
-static const int PROFILE_ELT_NB = 4;
-
 
 static void
 fill_sMap() {
@@ -307,53 +303,56 @@ json_serialize(diet_profile_t* prof) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
   }
 
-  json_t* jsonProfile = json_object();
-  json_t* params = json_array();
-
-  if (0 != json_object_set_new(jsonProfile, "NAME", json_string(prof->name.c_str()))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-  }
-  if (0 != json_object_set_new(jsonProfile, "IN", json_integer(prof->IN))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-  }
-  if (0 != json_object_set_new(jsonProfile, "INOUT", json_integer(prof->INOUT))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-  }
-  if (0 != json_object_set_new(jsonProfile, "OUT", json_integer(prof->OUT))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-  }
-  if (0 != json_object_set_new(jsonProfile, "PARAMS", params)) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-  }
-
+  JsonObject jsonProfile;
+  jsonProfile.addProperty("name", prof->name);
+  jsonProfile.addProperty("in", prof->IN);
+  jsonProfile.addProperty("inout", prof->INOUT);
+  jsonProfile.addProperty("out", prof->OUT);
 
   // Set params
+  jsonProfile.addArrayProperty("params");
   for (int i = 0; i<(prof->OUT); ++i) {
-    if (0 != json_array_append_new(params, json_string(prof->params[i].c_str()))) {
-      throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-    }
+    jsonProfile.addItemToLastArray(prof->params[i]);
   }
   if (prof->OUT > 0) {
-    if (0 != json_array_append_new(params, json_string(prof->params[(prof->OUT)].c_str()))) {
-      throw SystemException(ERRCODE_SYSTEM, "Invalid profile");
-    }
+    jsonProfile.addItemToLastArray(prof->params[(prof->OUT)]);
   }
-
-  char* encodedJson = json_dumps(jsonProfile, 0);
-  std::string result = std::string(encodedJson);
-  free(encodedJson);
-
-  json_decref(params);
-  json_decref(jsonProfile);
-
-  return result;
+  return jsonProfile.encode();
 }
 
 
 std::string
 json_serialize(const TMS_Data::Job& job) {
 
-  return "TODO";
+  JsonObject jsonProfile;
+  jsonProfile.addProperty("vsession", job.getSessionId());
+  jsonProfile.addProperty("submitmachineid", job.getSubmitMachineId());
+  jsonProfile.addProperty("submitmachinename", job.getSubmitMachineName());
+  jsonProfile.addProperty("jobid", job.getJobId());
+  jsonProfile.addProperty("jobname", job.getJobName());
+  jsonProfile.addProperty("batchjobid", job.getBatchJobId());
+  jsonProfile.addProperty("jobpath", job.getJobPath());
+  jsonProfile.addProperty("outputpath", job.getOutputPath());
+  jsonProfile.addProperty("errorpath", job.getErrorPath());
+  jsonProfile.addProperty("outputdir", job.getOutputDir());
+  jsonProfile.addProperty("jobprio", job.getJobPrio());
+  jsonProfile.addProperty("nbcpus", job.getNbCpus());
+  jsonProfile.addProperty("jobworkingdir", job.getJobWorkingDir());
+  jsonProfile.addProperty("status", job.getStatus());
+  jsonProfile.addProperty("submitdate", job.getSubmitDate());
+  jsonProfile.addProperty("enddate", job.getEndDate());
+  jsonProfile.addProperty("owner", job.getOwner());
+  jsonProfile.addProperty("jobqueue", job.getJobQueue());
+  jsonProfile.addProperty("wallclocklimit", job.getWallClockLimit());
+  jsonProfile.addProperty("groupname", job.getGroupName());
+  jsonProfile.addProperty("jobdescription", job.getJobDescription());
+  jsonProfile.addProperty("memlimit", job.getMemLimit());
+  jsonProfile.addProperty("nbnodes", job.getNbNodes());
+  jsonProfile.addProperty("nbnodesandcpupernode", job.getNbNodesAndCpuPerNode());
+  jsonProfile.addProperty("vmIp", job.getVmIp());
+  jsonProfile.addProperty("vmId", job.getVmId());
+
+  return jsonProfile.encode();
 }
 
 boost::shared_ptr<diet_profile_t>
@@ -365,46 +364,18 @@ json_deserialize(const std::string& encodedJson) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string");
   }
 
-  json_error_t error;
-  json_t* jsonObject = json_loads(encodedJson.c_str(), 0, &error);
-  if (! jsonObject) {
-    throw SystemException(ERRCODE_SYSTEM, error.text);
-  }
+  JsonObject jsonObject(encodedJson);
 
   profile.reset(new diet_profile_t);
-
-  json_t * jsonValue;
-  if (! (jsonValue = json_object_get(jsonObject, "NAME"))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
-  }
-  profile->name = json_string_value(jsonValue);
-
-  if (! (jsonValue = json_object_get(jsonObject, "IN"))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
-  }
-  profile->IN = json_integer_value(jsonValue);
-
-  if (! (jsonValue = json_object_get(jsonObject, "INOUT"))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
-  }
-  profile->INOUT = json_integer_value(jsonValue);
-
-  if (! (jsonValue = json_object_get(jsonObject, "OUT"))) {
-    throw SystemException(ERRCODE_SYSTEM, "Invalid profile received");
-  }
-  profile->OUT = json_integer_value(jsonValue);
-
-  json_t* params = json_object_get(jsonObject, "PARAMS");
-  size_t index;
-  json_array_foreach(params, index, jsonValue) {
-    profile->params.push_back(json_string_value(jsonValue));
-  }
+  profile->name = jsonObject.getStringProperty("name");
+  profile->IN = jsonObject.getIntProperty("in");
+  profile->INOUT = jsonObject.getIntProperty("inout");
+  profile->OUT = jsonObject.getIntProperty("out");
+  jsonObject.getArrayProperty("params", profile->params);
 
   if (profile->params.size() <= profile->OUT) {
     throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
   }
-
-  json_decref(jsonObject);
   return profile;
 }
 

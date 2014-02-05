@@ -57,7 +57,6 @@ typedef struct diet_profile_t {
 } diet_profile_t;
 
 
-
 /**
  * \brief Overload of DIET function, allocate the profile of a service
  * \param name The name of the service
