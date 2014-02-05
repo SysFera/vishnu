@@ -149,20 +149,20 @@ public:
    * @param key The key of the property
    * @param value The value of the key
    */
-  void addProperty(const std::string& key, const std::string& value);
+  void setProperty(const std::string& key, const std::string& value);
 
   /**
    * @brief addProperty Add an integer property to the object
    * @param key The key of the property
    * @param value The value of the key
    */
-  void addProperty(const std::string& key, const int& value);
+  void setProperty(const std::string& key, const int& value);
 
   /**
    * @brief addArrayProperty Add an empty array property to the object
    * @param The key of the array
    */
-  void addArrayProperty(const std::string& key);
+  void setArrayProperty(const std::string& key);
 
   /**
    * @brief addItemToLastArray Add an item to the last array added

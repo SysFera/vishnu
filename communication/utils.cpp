@@ -68,7 +68,7 @@ JsonObject::~JsonObject() {
    * @param key The key of the property
    * @param value The value of the key
    */
-void JsonObject::addProperty(const std::string& key, const std::string& value) {
+void JsonObject::setProperty(const std::string& key, const std::string& value) {
   if (0 != json_object_set_new(m_jsonObject, key.c_str(), json_string(value.c_str()))) {
     throw SystemException(ERRCODE_SYSTEM, "Can't set object property " + key);
   }
@@ -79,7 +79,7 @@ void JsonObject::addProperty(const std::string& key, const std::string& value) {
    * @param key The key of the property
    * @param value The value of the key
    */
-void JsonObject::addProperty(const std::string& key, const int& value) {
+void JsonObject::setProperty(const std::string& key, const int& value) {
   if (0 != json_object_set_new(m_jsonObject, key.c_str(), json_integer(value))) {
     throw SystemException(ERRCODE_SYSTEM, "Can't set object property " + key);
   }
@@ -89,7 +89,7 @@ void JsonObject::addProperty(const std::string& key, const int& value) {
    * @brief addArrayProperty Add an empty array property to the object
    * @param The key of the array
    */
-void JsonObject::addArrayProperty(const std::string& key) {
+void JsonObject::setArrayProperty(const std::string& key) {
   m_lastArray = json_array();
   if (0 != json_object_set_new(m_jsonObject, key.c_str(), m_lastArray)) {
     throw SystemException(ERRCODE_SYSTEM, "Can't set the array propety + " + key);
