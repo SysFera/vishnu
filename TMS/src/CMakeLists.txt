@@ -196,6 +196,7 @@ include_directories(client api
   ${FMS_API_SOURCE_DIR}
   ${CONFIG_SOURCE_DIR}
   ${VISHNU_SOURCE_DIR}/TMS/src/sed
+  ${LIBJANSSON_INCLUDE_DIR}
 )
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
