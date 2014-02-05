@@ -12,7 +12,15 @@
 #include <vector>
 #include <boost/thread.hpp>
 #include <boost/version.hpp>
+#include "DIET_client.h"
 #include <jansson.h>
+
+
+class diet_profile_t;
+namespace TMS_Data {
+  class Job;
+  class SubmitOptions;
+}
 
 /**
  * \brief Definition of a task
@@ -136,13 +144,21 @@ class JsonObject {
 
 public:
 
+  static const int UNDEFINED_PROPERTY = -1;
+
   /**
    * @brief Constructors
    */
   JsonObject(void);
-  JsonObject(const std::string& encodedJson);
+  JsonObject(const std::string& data);
+  JsonObject(const TMS_Data::SubmitOptions& submitOptions);
 
+  /**
+   * @brief Destructor
+   */
   ~JsonObject();
+
+  void reset(const std::string& data);
 
   /**
    * @brief addProperty Add a string property to the object
@@ -156,7 +172,7 @@ public:
    * @param key The key of the property
    * @param value The value of the key
    */
-  void setProperty(const std::string& key, const int& value);
+  void setProperty(const std::string& key, int value);
 
   /**
    * @brief addArrayProperty Add an empty array property to the object
@@ -188,14 +204,16 @@ public:
    * @param key
    * @return
    */
-  json_t* getPropertyValue(const std::string& key);
+  json_t* getRequiredProperty(const std::string& key);
+
 
   /**
    * @brief getIntProperty
    * @param key
+   * @param defaultValue
    * @return
    */
-  int getIntProperty(const std::string& key);
+  int getIntProperty(const std::string& key, int defaultValue = UNDEFINED_PROPERTY);
 
   /**
    * @brief getStringProperty
@@ -212,10 +230,48 @@ public:
    */
   void getArrayProperty(const std::string& key, std::vector<std::string>& values);
 
+
+  /**
+   * @brief serialize
+   * @param prof
+   * @return
+   */
+  static std::string
+  serialize(diet_profile_t* prof);
+
+  /**
+   * @brief serialize
+   * @param job
+   * @return
+   */
+  static std::string
+  serialize(const TMS_Data::Job& job);
+
+  /**
+   * @brief deserialize
+   * @param encodedJson
+   * @return
+   */
+  static boost::shared_ptr<diet_profile_t>
+  deserialize(const std::string& encodedJson);
+
+  /**
+   * @brief getJob
+   * @return
+   */
+  TMS_Data::Job getJob();
+
+  /**
+   * @brief getSubmitOptions
+   * @return
+   */
+  TMS_Data::SubmitOptions getSubmitOptions();
+
+
 private:
   /**
-    * @brief m_json
-    */
+      * @brief m_json
+      */
   json_t* m_jsonObject;
 
   /**
