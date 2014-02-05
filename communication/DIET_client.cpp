@@ -35,7 +35,6 @@
 #include "IMSServices.hpp"
 #include "FMSServices.hpp"
 #include "utilVishnu.hpp"
-#include "TMS_Data/Job.hpp"
 
 // private declarations
 static ExecConfiguration config;
@@ -291,99 +290,12 @@ diet_profile_free(diet_profile_t* prof) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
-
-  return json_serialize(prof);
-}
-
-
-std::string
-json_serialize(diet_profile_t* prof) {
-
-  if (!prof) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
-  }
-
-  JsonObject jsonProfile;
-  jsonProfile.setProperty("name", prof->name);
-  jsonProfile.setProperty("in", prof->IN);
-  jsonProfile.setProperty("inout", prof->INOUT);
-  jsonProfile.setProperty("out", prof->OUT);
-
-  // Set params
-  jsonProfile.setArrayProperty("params");
-  for (int i = 0; i<(prof->OUT); ++i) {
-    jsonProfile.addItemToLastArray(prof->params[i]);
-  }
-  if (prof->OUT > 0) {
-    jsonProfile.addItemToLastArray(prof->params[(prof->OUT)]);
-  }
-  return jsonProfile.encode();
-}
-
-
-std::string
-json_serialize(const TMS_Data::Job& job) {
-
-  JsonObject jsonProfile;
-  jsonProfile.setProperty("vsession", job.getSessionId());
-  jsonProfile.setProperty("submitmachineid", job.getSubmitMachineId());
-  jsonProfile.setProperty("submitmachinename", job.getSubmitMachineName());
-  jsonProfile.setProperty("jobid", job.getJobId());
-  jsonProfile.setProperty("jobname", job.getJobName());
-  jsonProfile.setProperty("batchjobid", job.getBatchJobId());
-  jsonProfile.setProperty("jobpath", job.getJobPath());
-  jsonProfile.setProperty("outputpath", job.getOutputPath());
-  jsonProfile.setProperty("errorpath", job.getErrorPath());
-  jsonProfile.setProperty("outputdir", job.getOutputDir());
-  jsonProfile.setProperty("jobprio", job.getJobPrio());
-  jsonProfile.setProperty("nbcpus", job.getNbCpus());
-  jsonProfile.setProperty("jobworkingdir", job.getJobWorkingDir());
-  jsonProfile.setProperty("status", job.getStatus());
-  jsonProfile.setProperty("submitdate", job.getSubmitDate());
-  jsonProfile.setProperty("enddate", job.getEndDate());
-  jsonProfile.setProperty("owner", job.getOwner());
-  jsonProfile.setProperty("jobqueue", job.getJobQueue());
-  jsonProfile.setProperty("wallclocklimit", job.getWallClockLimit());
-  jsonProfile.setProperty("groupname", job.getGroupName());
-  jsonProfile.setProperty("jobdescription", job.getJobDescription());
-  jsonProfile.setProperty("memlimit", job.getMemLimit());
-  jsonProfile.setProperty("nbnodes", job.getNbNodes());
-  jsonProfile.setProperty("nbnodesandcpupernode", job.getNbNodesAndCpuPerNode());
-  jsonProfile.setProperty("vmIp", job.getVmIp());
-  jsonProfile.setProperty("vmId", job.getVmId());
-
-  return jsonProfile.encode();
-}
-
-boost::shared_ptr<diet_profile_t>
-json_deserialize(const std::string& encodedJson) {
-
-  boost::shared_ptr<diet_profile_t> profile;
-
-  if (encodedJson.empty()) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string");
-  }
-
-  JsonObject jsonObject(encodedJson);
-
-  profile.reset(new diet_profile_t);
-  profile->name = jsonObject.getStringProperty("name");
-  profile->IN = jsonObject.getIntProperty("in");
-  profile->INOUT = jsonObject.getIntProperty("inout");
-  profile->OUT = jsonObject.getIntProperty("out");
-  jsonObject.getArrayProperty("params", profile->params);
-
-  if (profile->params.size() <= profile->OUT) {
-    throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
-  }
-  return profile;
+  return JsonObject::serialize(prof);
 }
 
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
-
-
-  return json_deserialize(prof);
+  return JsonObject::deserialize(prof);
 }
 
 int
