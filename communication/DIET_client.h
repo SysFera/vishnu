@@ -135,13 +135,6 @@ diet_profile_free(diet_profile_t* prof);
 int
 getTimeout();
 
-/**
- * \brief To deserialize a profile
- * \param prof The serialized profile
- * \return The deserialized profile
- */
-boost::shared_ptr<diet_profile_t>
-my_deserialize(const std::string& prof);
 
 /**
  * \brief To serialize a profile
@@ -151,30 +144,13 @@ my_deserialize(const std::string& prof);
 std::string
 my_serialize(diet_profile_t* prof);
 
-
 /**
- * \brief To serialize a profile into a json string
- * \param prof The profile
- * \return The serialized json profile
- */
-std::string
-json_serialize(diet_profile_t* prof);
-
-/**
- * \brief To serialize a job into a json stringt
- * \param job The job
- * \return The serialized json profile
- */
-std::string
-json_serialize(const TMS_Data::Job& job);
-
-/**
- * \brief To deserialize a json encoded profile
- * \param prof The json string
+ * \brief To deserialize a profile
+ * \param prof The serialized profile
  * \return The deserialized profile
  */
 boost::shared_ptr<diet_profile_t>
-json_deserialize(const std::string& encodedJson);
+my_deserialize(const std::string& prof);
 
 /**
  * \brief Overload of DIET function, to initialize

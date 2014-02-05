@@ -56,8 +56,7 @@ solveSubmitJob(diet_profile_t* pb) {
 
   std::string scriptContent;
   string machineId;
-  string submitOptionsSerialized;
-  string jobSerialized;
+  string jsonEncodedOptions;
   string sessionKey;
 
   std::string errorInfo ="";
@@ -68,8 +67,7 @@ solveSubmitJob(diet_profile_t* pb) {
   diet_string_get(pb,0, sessionKey);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, scriptContent);
-  diet_string_get(pb,3, submitOptionsSerialized);
-  diet_string_get(pb,4, jobSerialized);
+  diet_string_get(pb,3, jsonEncodedOptions);
 
   SessionServer sessionServer = SessionServer(sessionKey);
 
@@ -78,34 +76,21 @@ solveSubmitJob(diet_profile_t* pb) {
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_submit_job");
     mapper->code(machineId, mapperkey);
-    mapper->code(submitOptionsSerialized, mapperkey);
-    mapper->code(jobSerialized, mapperkey);
+    mapper->code(jsonEncodedOptions, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    TMS_Data::Job_ptr job = NULL;
-    TMS_Data::SubmitOptions_ptr submitOptions = NULL;
-
-    if(!vishnu::parseEmfObject(jobSerialized, job)) {
-      throw SystemException(ERRCODE_INVDATA, "solve_submitJob: Job object is not well built");
-    }
-
-    if(!vishnu::parseEmfObject(submitOptionsSerialized, submitOptions)) {
-      throw SystemException(ERRCODE_INVDATA, "solve_submitJob: SubmitOptions object is not well built");
-    }
+    //FIXME: decode job and options
+    JsonObject options(jsonEncodedOptions);
 
     ServerTMS* server = ServerTMS::getInstance();
-    JobServer jobServer(sessionServer, machineId, *job, server->getSedConfig());
+    JobServer jobServer(sessionServer, machineId, server->getSedConfig());
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
 
     int vishnuId = server->getVishnuId();
-    jobServer.submitJob(scriptContent, *submitOptions, vishnuId, server->getDefaultBatchOption());
-    *job = jobServer.getData();
+    jobServer.submitJob(scriptContent, options, vishnuId, server->getDefaultBatchOption());
 
-    ::ecorecpp::serializer::serializer _ser;
-    string updateJobSerialized = _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(job));
-
-    diet_string_set(pb,5, updateJobSerialized);
-    diet_string_set(pb,6);
+    diet_string_set(pb,4, JsonObject::serialize(jobServer.getData()));
+    diet_string_set(pb,5);
 
     sessionServer.finish(cmd, TMS, vishnu::CMDSUCCESS, std::string(jobServer.getData().getJobId()));
 
@@ -118,8 +103,8 @@ solveSubmitJob(diet_profile_t* pb) {
     }
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
-    diet_string_set(pb,5);
-    diet_string_set(pb,6, errorInfo);
+    diet_string_set(pb,4);
+    diet_string_set(pb,5, errorInfo);
   }
 
   return 0;
