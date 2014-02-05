@@ -11,6 +11,7 @@ include_directories(client api
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/FMS/src/sed
+  ${LIBJANSSON_INCLUDE_DIR}
 )
 
 set(client_SRCS client/FileProxy
