@@ -699,7 +699,7 @@ void JobServer::recordJob2db()
  * \param machineId Id of the machine
  * \return The machine name or throw exception on error
  */
-std::string JobServer::getMachineName(const std::string& machineId){
+std::string JobServer::getMachineName(const std::string& machineId) {
   UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
   MachineServer machineServer(machine);
