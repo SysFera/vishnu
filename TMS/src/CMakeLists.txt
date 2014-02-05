@@ -306,7 +306,7 @@ if (COMPILE_SERVERS)
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server vishnu-ums-server)
+  target_link_libraries(vishnu-tms-server vishnu-ums-server zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary

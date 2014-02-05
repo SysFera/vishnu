@@ -42,7 +42,7 @@ public:
   computeOutputDirMock(const std::string& parentDir,
                        const std::string & dirSuffix,
                        std::string & content){
-    this->computeOutputDir(parentDir, dirSuffix, content);
+    this->setJobOutputDir(parentDir, dirSuffix, content);
   }
   
 

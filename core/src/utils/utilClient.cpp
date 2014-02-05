@@ -20,8 +20,7 @@
  * \return raises an exception on error
  */
 void raiseCommunicationMsgException(const std::string& msg) {
-  SystemException e(ERRCODE_COMMUNICATION, msg);
-  throw e;
+  throw SystemException (ERRCODE_COMMUNICATION, msg);
 }
 
 /**
@@ -31,7 +30,7 @@ void raiseCommunicationMsgException(const std::string& msg) {
  */
 void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
 
-  if(msg.size() > 0 ) {
+  if (! msg.empty()) {
     size_t pos = msg.find('#');
     if(pos!=std::string::npos) {
       std::string codeInString = msg.substr(0, pos);

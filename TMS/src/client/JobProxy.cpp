@@ -40,13 +40,13 @@ JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
 
   string sessionKey = msessionProxy.getSessionKey();
-  TMS_Data::SubmitOptions& options_ = const_cast<TMS_Data::SubmitOptions&>(options) ;
+  TMS_Data::SubmitOptions& updatedOptions = const_cast<TMS_Data::SubmitOptions&>(options) ;
 
   // first check if it's an automatic submission
   // if yes, select a machine according to the load criterion
   if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
-    if (options_.getCriterion()) {
-      mmachineId = vishnu::findMachine(sessionKey, *(options_.getCriterion()));
+    if (updatedOptions.getCriterion()) {
+      mmachineId = vishnu::findMachine(sessionKey, *(updatedOptions.getCriterion()));
     } else {
       TMS_Data::LoadCriterion loadCriterion;
       loadCriterion.setLoadType(NBWAITINGJOBS);
@@ -57,76 +57,54 @@ JobProxy::submitJob(const std::string& scriptContent,
   // now create and initialize the service profile
   string serviceName = std::string(SERVICES_TMS[JOBSUBMIT]) + "@";
   serviceName.append(mmachineId);
-  diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName, 4, 4, 6);
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
+  diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName, 3, 3, 5);
 
   //IN Parameters
   if (diet_string_set(submitJobProfile,0, sessionKey)) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
+    raiseCommunicationMsgException("Can't set RPC parameter  [sessionKey]");
   }
 
   if (diet_string_set(submitJobProfile,1, mmachineId)) {
-    msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseCommunicationMsgException(msgErrorDiet);
+    raiseCommunicationMsgException("Can't set RPC parameter  [machineid]");
   }
 
   if (diet_string_set(submitJobProfile,2, scriptContent)) {
-    msgErrorDiet += "with optionsInString parameter "+scriptContent;
-    raiseCommunicationMsgException(msgErrorDiet);
+    raiseCommunicationMsgException("Can't set RPC parameter [scriptContent]");
   }
 
   // Send input files, if there is any one
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
-  string inputFiles = vishnu::sendInputFiles(sessionKey, options_.getFileParams(), mmachineId, copts) ;
-  options_.setFileParams(inputFiles);
+  string inputFiles = vishnu::sendInputFiles(sessionKey, updatedOptions.getFileParams(), mmachineId, copts) ;
+  updatedOptions.setFileParams(inputFiles);
 
-  ::ecorecpp::serializer::serializer _ser;
-  string optionsToString = _ser.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options_));
-
-  if (diet_string_set(submitJobProfile,3, optionsToString)) {
-    msgErrorDiet += "with optionsInString parameter "+std::string(optionsToString);
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  _ser.resetSerializer();
-  string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
-
-  if (diet_string_set(submitJobProfile,4, jobToString)) {
-    msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-    raiseCommunicationMsgException(msgErrorDiet);
+  JsonObject jsonOptions(updatedOptions);
+  if (diet_string_set(submitJobProfile,3, jsonOptions.encode())) {
+    raiseCommunicationMsgException("Can't set RPC parameter [encoded options]");
   }
 
   //OUT Parameters
-  diet_string_set(submitJobProfile,5);
-  diet_string_set(submitJobProfile,6);
+  diet_string_set(submitJobProfile, 4);
+  diet_string_set(submitJobProfile, 5);
 
   // FIXME: do it before setting parameter 3
-  std::string cresultMsg;
-  std::string errorInfo;
-  if(!diet_call(submitJobProfile)) {
-    if(diet_string_get(submitJobProfile,5, cresultMsg)){
-      msgErrorDiet += " by receiving User serialized  message";
-      raiseCommunicationMsgException(msgErrorDiet);
+  std::string result;
+  std::string error;
+  if (! diet_call(submitJobProfile)) {
+    if (diet_string_get(submitJobProfile,4, result)){
+      raiseCommunicationMsgException("Failed receiving result message");
     }
-    if(diet_string_get(submitJobProfile,6, errorInfo)){
-      msgErrorDiet += " by receiving errorInfo message";
-      raiseCommunicationMsgException(msgErrorDiet);
+    if (diet_string_get(submitJobProfile,5, error) || ! error.empty()){
+      diet_profile_free(submitJobProfile);
+      raiseCommunicationMsgException((boost::format("Failed receiving errorInfo [%1%]")%error).str());
     }
   } else {
-    raiseCommunicationMsgException("VISHNU call failure");
+    raiseCommunicationMsgException("VISHNU RPC call failed");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  TMS_Data::Job_ptr job_ptr = NULL;
-  string serializedJob = string(cresultMsg) ;
-  parseEmfObject(serializedJob, job_ptr);
-  mjob = *job_ptr;
-  delete job_ptr;
+  JsonObject job(result);
+  mjob = job.getJob();
 
   diet_profile_free(submitJobProfile);
   return 0;

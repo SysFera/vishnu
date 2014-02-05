@@ -51,6 +51,34 @@ JobServer::JobServer(const SessionServer& sessionServer,
   }
 }
 
+
+/**
+ * \param sessionServer The object which encapsulates the session information
+ * \param machineId The machine identifier
+ * \param job The job data structure
+ * \param sedConfig A pointer to the SeD configuration
+ * \brief Constructor
+ */
+JobServer::JobServer(const SessionServer& sessionServer,
+                     const std::string& machineId,
+                     const ExecConfiguration_Ptr sedConfig):
+  msessionServer(sessionServer), mmachineId(machineId), mjob(TMS_Data::Job()), msedConfig(sedConfig) {
+  DbFactory factory;
+  mdatabaseVishnu = factory.getDatabaseInstance();
+  if (msedConfig) {
+    std::string value;
+    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, value);
+    mbatchType = vishnu::convertToBatchType(value);
+    if (mbatchType != DELTACLOUD) {
+      msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, value);
+      mbatchVersion = value;
+    } else {
+      mbatchVersion = "";
+    }
+  }
+}
+
+
 /**
  * \brief Destructor
  */
@@ -59,13 +87,13 @@ JobServer::~JobServer() { }
 /**
  * \brief Function to submit job
  * \param scriptContent the content of the script
- * \param options the options to submit job
+ * \param options a json object describing options
  * \param vishnuId The VISHNU identifier
  * \param defaultBatchOption The default batch options
  * \return raises an exception on error
  */
 int JobServer::submitJob(std::string& scriptContent,
-                         TMS_Data::SubmitOptions& options,
+                         JsonObject& options,
                          const int& vishnuId,
                          const std::vector<std::string>& defaultBatchOption)
 {
@@ -84,35 +112,37 @@ int JobServer::submitJob(std::string& scriptContent,
     userServer.init();
     mjob.setUserId(userServer.getData().getUserId());
 
-    //numUserId = userServer.getNumUserId(userServer.getData().getUserId());
-
     // Get user info
     std::string acLogin = userServer.getUserAccountLogin(mmachineId);
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
-    mjob.setWorkId(options.getWorkId());
+    mjob.setWorkId(options.getIntProperty("workid"));
     mjob.setOutputDir("");
 
-    if (options.isPosix()) {
+    if (options.getIntProperty("posix")) {
       mbatchType = POSIX;
     }
-    std::string suffix = mjob.getJobId()+vishnu::createSuffixFromCurTime();
-    std::string scriptPath = computeWorkingDir(options,suffix);
+
+    std::string suffix = vishnuJobId+vishnu::createSuffixFromCurTime();
+    setRealPaths(options, suffix);
+    std::string scriptPath = options.getStringProperty("scriptpath");
     if (scriptContent.find("VISHNU_OUTPUT_DIR") != std::string::npos || mbatchType == DELTACLOUD ) {
-      computeOutputDir(options.getWorkingDir(), suffix, scriptContent);
+      setJobOutputDir(options.getStringProperty("workingdir"), suffix, scriptContent);
     }
-    ::ecorecpp::serializer::serializer optSer;
+
     ::ecorecpp::serializer::serializer jobSer;
-    std::string submitOptionsSerialized = optSer.serialize_str(const_cast<TMS_Data::SubmitOptions_ptr>(&options));
-    std::string jobSerialized =  jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
+    std::string jobSerialized = jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
+
     std::string machineName =  getMachineName(mmachineId);
     SSHJobExec sshJobExec(acLogin, machineName,
                           mbatchType,
                           mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
-                          jobSerialized, submitOptionsSerialized);
+                          jobSerialized,
+                          options.encode());
     sshJobExec.setDebugLevel(mdebugLevel);  // Set the debug level
-    std::string convertedScript = processScript(scriptContent,options, defaultBatchOption, machineName);
+
+    std::string convertedScript = processScript(scriptContent, options, defaultBatchOption, machineName);
     vishnu::saveInFile(scriptPath, convertedScript);
     if(0 != chmod(scriptPath.c_str(),
                   S_IRUSR|S_IXUSR|
@@ -183,6 +213,7 @@ int JobServer::submitJob(std::string& scriptContent,
   }
   return 0;
 }
+
 
 /**
  * \brief Function to treat the default submission options
@@ -496,15 +527,6 @@ TMS_Data::Job JobServer::getJobInfo() {
 }
 
 /**
- * \brief Function to get job information
- * \return The job data structure
- */
-TMS_Data::Job JobServer::getData()
-{
-  return mjob;
-}
-
-/**
  * \brief Function to scan VISHNU error message
  * \param errorInfo the error information to scan
  * \param code The code The code of the error
@@ -567,15 +589,15 @@ JobServer::getSedConfig() const {
  * \param dirSuffix the suffix of the output dir
  * \param content the script content to be update which the generated path
  */
-void JobServer::computeOutputDir(const std::string& parentDir,
-                                 const std::string& dirSuffix,
-                                 std::string& content) {
+void JobServer::setJobOutputDir(const std::string& parentDir,
+                                const std::string& dirSuffix,
+                                std::string& content) {
 
   std::string prefix = (boost::algorithm::ends_with(parentDir, "/"))? "OUTPUT_" : "/OUTPUT_" ;
   std::string outdir = parentDir + prefix + dirSuffix ;
   vishnu::replaceAllOccurences(content, "$VISHNU_OUTPUT_DIR", outdir);
   vishnu::replaceAllOccurences(content, "${VISHNU_OUTPUT_DIR}", outdir);
-  mjob.setOutputDir(outdir) ;
+  mjob.setOutputDir(outdir);
   setenv("VISHNU_OUTPUT_DIR", outdir.c_str(), 1);
 }
 
@@ -710,11 +732,11 @@ std::string JobServer::getMachineName(const std::string& machineId) {
 
 /**
  * \brief Function to set the Working Directory
- * \param options the options to submit job
+ * \param options a json object describing options
  * \param suffix the suffix of the working directory
- * \return the script path
+ * \return none
  */
-std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const std::string& suffix)
+void JobServer::setRealPaths(JsonObject& jsonOptions, const std::string& suffix)
 {
   std::string workingDir = boost::filesystem::temp_directory_path().string();
   string scriptPath = "";
@@ -727,22 +749,24 @@ std::string JobServer::computeWorkingDir(TMS_Data::SubmitOptions& options, const
     vishnu::createDir(inputDir, true); // create the input directory
     string directory = "";
     try {
-      directory = vishnu::moveFileData(options.getFileParams(), inputDir);
+      directory = vishnu::moveFileData(jsonOptions.getStringProperty("fileparams"), inputDir);
     } catch(bfs::filesystem_error &ex) {
       throw SystemException(ERRCODE_RUNTIME_ERROR, ex.what());
     }
     if(directory.length() > 0) {
-      std::string fileparams = options.getFileParams();
+      std::string fileparams = jsonOptions.getStringProperty("fileparams");
       vishnu::replaceAllOccurences(fileparams, directory, inputDir);
-      options.setFileParams(fileparams);
+      jsonOptions.setProperty("fileparams", fileparams);
     }
   } else {
     scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
-    std::string home = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
-    workingDir = (options.getWorkingDir().empty()? home : options.getWorkingDir()) ;
+    std::string workingDir = jsonOptions.getStringProperty("workingdir");
+    if (workingDir.empty()) {
+      workingDir = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
+    }
   }
-  options.setWorkingDir(workingDir);
-  return scriptPath;
+  jsonOptions.setProperty("workingdir", workingDir);
+  jsonOptions.setProperty("scriptpath", scriptPath);
 }
 
 /**
@@ -768,7 +792,7 @@ void JobServer::deserializeJob(std::string jobSerialized)
  * \return the processed script content
  */
 std::string JobServer::processScript(std::string& scriptContent,
-                                     TMS_Data::SubmitOptions& options,
+                                     JsonObject& options,
                                      const std::vector<std::string>& defaultBatchOption,
                                      const std::string& machineName)
 {
@@ -777,11 +801,13 @@ std::string JobServer::processScript(std::string& scriptContent,
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_SUBMIT_MACHINE_NAME", machineName);
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_SUBMIT_MACHINE_NAME}", machineName);
 
-  if(options.getTextParams().size()) {
-    vishnu::setParams(scriptContent, options.getTextParams()) ;
+  std::string currentOption = options.getStringProperty("textparams");
+  if (! currentOption.empty()) {
+    vishnu::setParams(scriptContent, currentOption);
   }
-  if(options.getFileParams().size()) {
-    vishnu::setParams(scriptContent, options.getFileParams()) ;
+  currentOption = options.getStringProperty("fileparams");
+  if (! currentOption.empty()) {
+    vishnu::setParams(scriptContent, currentOption) ;
   }
   boost::shared_ptr<ScriptGenConvertor> scriptConvertor(vishnuScriptGenConvertor(mbatchType, scriptContent));
   if(scriptConvertor->scriptIsGeneric()) {
@@ -792,10 +818,12 @@ std::string JobServer::processScript(std::string& scriptContent,
   }
   std::string sep = " ";
   std::string directive = getBatchDirective(sep);
-  if (!options.getSpecificParams().empty()) {
-    treatSpecificParams(options.getSpecificParams(), convertedScript);
+  currentOption = options.getStringProperty("specificparams");
+  if (! currentOption.empty()) {
+    treatSpecificParams(currentOption, convertedScript);
   }
-  if (!defaultBatchOption.empty()){
+
+  if (! defaultBatchOption.empty()){
     processDefaultOptions(defaultBatchOption, convertedScript, directive);
   }
   if(mbatchType == DELTACLOUD) {
