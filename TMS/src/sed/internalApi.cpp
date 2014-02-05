@@ -401,7 +401,7 @@ solveGenerique(diet_profile_t* pb) {
 
     //To parse the object serialized
     if(!parseEmfObject(optionValueSerialized, options)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM);
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM);
     }
     QueryType query(options, sessionServer, machineId);
 
@@ -562,11 +562,11 @@ solveAddWork(diet_profile_t* pb) {
 
     //To parse the object serialized
     if(!parseEmfObject(workSerialized, work)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
     }
     //To parse the object serialized
     if(!parseEmfObject(opSerialized, workop)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
+      throw TMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
     }
 
     WorkServer workServer = WorkServer(work, sessionServer);
