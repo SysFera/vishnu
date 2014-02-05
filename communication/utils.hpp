@@ -12,6 +12,7 @@
 #include <vector>
 #include <boost/thread.hpp>
 #include <boost/version.hpp>
+#include <jansson.h>
 
 /**
  * \brief Definition of a task
@@ -20,57 +21,57 @@ typedef boost::function0<void> Task;
 
 namespace threadsafe {
 
-/**
+  /**
  * @class queue
  * @brief simple thread-safe queue
  */
-template<typename T>
-class queue {
-public:
-  queue() {};
+  template<typename T>
+  class queue {
+  public:
+    queue() {};
 
-  void
-  push(T value) {
-    boost::lock_guard<boost::mutex> lock(mutex_);
-    {
-      data_.push(value);
+    void
+    push(T value) {
+      boost::lock_guard<boost::mutex> lock(mutex_);
+      {
+        data_.push(value);
+      }
+
+      cond_.notify_one();
     }
 
-    cond_.notify_one();
-  }
-
-  bool
-  try_pop(T& value) {
-    boost::lock_guard<boost::mutex> lock(mutex_);
-    if (data_.empty()) {
-      return false;
+    bool
+    try_pop(T& value) {
+      boost::lock_guard<boost::mutex> lock(mutex_);
+      if (data_.empty()) {
+        return false;
+      }
+      value = data_.front();
+      data_.pop();
     }
-    value = data_.front();
-    data_.pop();
-  }
 
-  void
-  wait_and_pop(T& value) {
-    // we use unique_lock since we'll use it with conditions
-    boost::unique_lock<boost::mutex> lock(mutex_);
-    while (data_.empty()) {
-       cond_.wait(lock);
+    void
+    wait_and_pop(T& value) {
+      // we use unique_lock since we'll use it with conditions
+      boost::unique_lock<boost::mutex> lock(mutex_);
+      while (data_.empty()) {
+        cond_.wait(lock);
+      }
+      value = data_.front();
+      data_.pop();
     }
-    value = data_.front();
-    data_.pop();
-  }
 
-  bool
-  empty() const {
-    boost::lock_guard<boost::mutex> lock(mutex_);
-    return data_.empty();
-  }
+    bool
+    empty() const {
+      boost::lock_guard<boost::mutex> lock(mutex_);
+      return data_.empty();
+    }
 
-private:
-  mutable boost::mutex mutex_; /**< mutex protecting access */
-  boost::condition_variable cond_; /**< condition checking that we have data ready */
-  std::queue<T> data_; /**< data storage */
-};
+  private:
+    mutable boost::mutex mutex_; /**< mutex protecting access */
+    boost::condition_variable cond_; /**< condition checking that we have data ready */
+    std::queue<T> data_; /**< data storage */
+  };
 
 } /* namespace threadsafe */
 
@@ -130,6 +131,98 @@ private:
 };
 
 
+
+class JsonObject {
+
+public:
+
+  /**
+   * @brief Constructors
+   */
+  JsonObject(void);
+  JsonObject(const std::string& encodedJson);
+
+  ~JsonObject();
+
+  /**
+   * @brief addProperty Add a string property to the object
+   * @param key The key of the property
+   * @param value The value of the key
+   */
+  void addProperty(const std::string& key, const std::string& value);
+
+  /**
+   * @brief addProperty Add an integer property to the object
+   * @param key The key of the property
+   * @param value The value of the key
+   */
+  void addProperty(const std::string& key, const int& value);
+
+  /**
+   * @brief addArrayProperty Add an empty array property to the object
+   * @param The key of the array
+   */
+  void addArrayProperty(const std::string& key);
+
+  /**
+   * @brief addItemToLastArray Add an item to the last array added
+   * @param value To value of the item
+   */
+  void addItemToLastArray(const std::string& value);
+
+  /**
+   * @brief encodedString Get the encoded string corresponding to the json object
+   * @return The encoded string
+   */
+  std::string encode(void);
+
+  /**
+   * @brief decode
+   * @param encodedJson
+   */
+  void decode(const std::string& encodedJson);
+
+
+  /**
+   * @brief getPropertyValue
+   * @param key
+   * @return
+   */
+  json_t* getPropertyValue(const std::string& key);
+
+  /**
+   * @brief getIntProperty
+   * @param key
+   * @return
+   */
+  int getIntProperty(const std::string& key);
+
+  /**
+   * @brief getStringProperty
+   * @param key
+   * @return
+   */
+  std::string getStringProperty(const std::string& key);
+
+
+  /**
+   * @brief getArrayProperty
+   * @param key
+   * @param values
+   */
+  void getArrayProperty(const std::string& key, std::vector<std::string>& values);
+
+private:
+  /**
+    * @brief m_json
+    */
+  json_t* m_jsonObject;
+
+  /**
+    * @brief m_lastArray
+    */
+  json_t* m_lastArray;
+};
 
 
 #endif /* _UTILS_HPP_ */
