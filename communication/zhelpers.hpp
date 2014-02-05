@@ -117,7 +117,7 @@ public:
         if (EINTR == e.num()) {
           continue;
         } else {
-          throw e;
+          throw;
         }
       }
     } while(true);

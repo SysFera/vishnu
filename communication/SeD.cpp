@@ -57,8 +57,8 @@ SeD::call(diet_profile_t* profile) {
     rv = fn(profile);
   } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
-    throw SystemException(ERRCODE_INVDATA, e.what());
     std::cerr << boost::format("[ERROR] %1%\n") % e.what();
+    throw SystemException(ERRCODE_INVDATA, e.what());
   }
   return rv;
 }
