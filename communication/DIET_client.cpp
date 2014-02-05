@@ -304,13 +304,13 @@ json_serialize(diet_profile_t* prof) {
   }
 
   JsonObject jsonProfile;
-  jsonProfile.addProperty("name", prof->name);
-  jsonProfile.addProperty("in", prof->IN);
-  jsonProfile.addProperty("inout", prof->INOUT);
-  jsonProfile.addProperty("out", prof->OUT);
+  jsonProfile.setProperty("name", prof->name);
+  jsonProfile.setProperty("in", prof->IN);
+  jsonProfile.setProperty("inout", prof->INOUT);
+  jsonProfile.setProperty("out", prof->OUT);
 
   // Set params
-  jsonProfile.addArrayProperty("params");
+  jsonProfile.setArrayProperty("params");
   for (int i = 0; i<(prof->OUT); ++i) {
     jsonProfile.addItemToLastArray(prof->params[i]);
   }
@@ -325,32 +325,32 @@ std::string
 json_serialize(const TMS_Data::Job& job) {
 
   JsonObject jsonProfile;
-  jsonProfile.addProperty("vsession", job.getSessionId());
-  jsonProfile.addProperty("submitmachineid", job.getSubmitMachineId());
-  jsonProfile.addProperty("submitmachinename", job.getSubmitMachineName());
-  jsonProfile.addProperty("jobid", job.getJobId());
-  jsonProfile.addProperty("jobname", job.getJobName());
-  jsonProfile.addProperty("batchjobid", job.getBatchJobId());
-  jsonProfile.addProperty("jobpath", job.getJobPath());
-  jsonProfile.addProperty("outputpath", job.getOutputPath());
-  jsonProfile.addProperty("errorpath", job.getErrorPath());
-  jsonProfile.addProperty("outputdir", job.getOutputDir());
-  jsonProfile.addProperty("jobprio", job.getJobPrio());
-  jsonProfile.addProperty("nbcpus", job.getNbCpus());
-  jsonProfile.addProperty("jobworkingdir", job.getJobWorkingDir());
-  jsonProfile.addProperty("status", job.getStatus());
-  jsonProfile.addProperty("submitdate", job.getSubmitDate());
-  jsonProfile.addProperty("enddate", job.getEndDate());
-  jsonProfile.addProperty("owner", job.getOwner());
-  jsonProfile.addProperty("jobqueue", job.getJobQueue());
-  jsonProfile.addProperty("wallclocklimit", job.getWallClockLimit());
-  jsonProfile.addProperty("groupname", job.getGroupName());
-  jsonProfile.addProperty("jobdescription", job.getJobDescription());
-  jsonProfile.addProperty("memlimit", job.getMemLimit());
-  jsonProfile.addProperty("nbnodes", job.getNbNodes());
-  jsonProfile.addProperty("nbnodesandcpupernode", job.getNbNodesAndCpuPerNode());
-  jsonProfile.addProperty("vmIp", job.getVmIp());
-  jsonProfile.addProperty("vmId", job.getVmId());
+  jsonProfile.setProperty("vsession", job.getSessionId());
+  jsonProfile.setProperty("submitmachineid", job.getSubmitMachineId());
+  jsonProfile.setProperty("submitmachinename", job.getSubmitMachineName());
+  jsonProfile.setProperty("jobid", job.getJobId());
+  jsonProfile.setProperty("jobname", job.getJobName());
+  jsonProfile.setProperty("batchjobid", job.getBatchJobId());
+  jsonProfile.setProperty("jobpath", job.getJobPath());
+  jsonProfile.setProperty("outputpath", job.getOutputPath());
+  jsonProfile.setProperty("errorpath", job.getErrorPath());
+  jsonProfile.setProperty("outputdir", job.getOutputDir());
+  jsonProfile.setProperty("jobprio", job.getJobPrio());
+  jsonProfile.setProperty("nbcpus", job.getNbCpus());
+  jsonProfile.setProperty("jobworkingdir", job.getJobWorkingDir());
+  jsonProfile.setProperty("status", job.getStatus());
+  jsonProfile.setProperty("submitdate", job.getSubmitDate());
+  jsonProfile.setProperty("enddate", job.getEndDate());
+  jsonProfile.setProperty("owner", job.getOwner());
+  jsonProfile.setProperty("jobqueue", job.getJobQueue());
+  jsonProfile.setProperty("wallclocklimit", job.getWallClockLimit());
+  jsonProfile.setProperty("groupname", job.getGroupName());
+  jsonProfile.setProperty("jobdescription", job.getJobDescription());
+  jsonProfile.setProperty("memlimit", job.getMemLimit());
+  jsonProfile.setProperty("nbnodes", job.getNbNodes());
+  jsonProfile.setProperty("nbnodesandcpupernode", job.getNbNodesAndCpuPerNode());
+  jsonProfile.setProperty("vmIp", job.getVmIp());
+  jsonProfile.setProperty("vmId", job.getVmId());
 
   return jsonProfile.encode();
 }
