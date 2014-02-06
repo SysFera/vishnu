@@ -77,35 +77,15 @@ ObjectIdProxy::setWID(string fmt) {
 
 void
 ObjectIdProxy::defineCall(string name, string fmt) {
-  diet_profile_t* profile = NULL;
-  string sessionKey;
-  string errorInfo;
-  string serviceName = name;
-  string msgErrorDiet;
 
-  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
-  sessionKey = msessionProxy.getSessionKey();
-  //IN Parameters
-  if (diet_string_set(profile,0, sessionKey.c_str())) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  if (diet_string_set(profile,1, fmt.c_str())) {
-    msgErrorDiet += "with format parameter "+fmt;
-    raiseCommunicationMsgException(msgErrorDiet);
+  diet_profile_t* profile = diet_profile_alloc(name, 2);
+  diet_string_set(profile,0, msessionProxy.getSessionKey());
+  diet_string_set(profile,1, fmt);
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msgErrorDiet += " by receiving User serialized  message";
-      raiseCommunicationMsgException(msgErrorDiet);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
+  diet_profile_free(profile);
 }

@@ -62,7 +62,7 @@ main(int argc, char** argv){
   for (it = servers.begin() ; it != servers.end() ; ++it){
     diet_profile_t* profile = NULL;
     std::string service = getLongestService(it->get()->getServices(), "heartbeat");
-    profile = diet_profile_alloc(service,0,0,1);
+    profile = diet_profile_alloc(service,0);
     std::cout << "Trying to ping server " << it->get()->getName() << " located at " << it->get()->getURI() << "\n";
     // Pinging
     if (diet_call_gen(profile, it->get()->getURI())){

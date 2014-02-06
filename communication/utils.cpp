@@ -230,17 +230,12 @@ JsonObject::serialize(diet_profile_t* prof) {
 
   JsonObject jsonProfile;
   jsonProfile.setProperty("name", prof->name);
-  jsonProfile.setProperty("in", prof->IN);
-  jsonProfile.setProperty("inout", prof->INOUT);
-  jsonProfile.setProperty("out", prof->OUT);
+  jsonProfile.setProperty("param_count", prof->param_count);
 
   // Set params
   jsonProfile.setArrayProperty("params");
-  for (int i = 0; i<(prof->OUT); ++i) {
+  for (int i = 0; i< prof->param_count; ++i) {
     jsonProfile.addItemToLastArray(prof->params[i]);
-  }
-  if (prof->OUT > 0) {
-    jsonProfile.addItemToLastArray(prof->params[(prof->OUT)]);
   }
   return jsonProfile.encode();
 }
@@ -292,22 +287,19 @@ JsonObject::serialize(const TMS_Data::Job& job) {
 boost::shared_ptr<diet_profile_t>
 JsonObject::deserialize(const std::string& encodedJson) {
 
-  boost::shared_ptr<diet_profile_t> profile;
-
   if (encodedJson.empty()) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string");
   }
 
-  JsonObject jsonObject(encodedJson);
-
+  boost::shared_ptr<diet_profile_t> profile;
   profile.reset(new diet_profile_t);
+
+  JsonObject jsonObject(encodedJson);
   profile->name = jsonObject.getStringProperty("name");
-  profile->IN = jsonObject.getIntProperty("in");
-  profile->INOUT = jsonObject.getIntProperty("inout");
-  profile->OUT = jsonObject.getIntProperty("out");
+  profile->param_count = jsonObject.getIntProperty("param_count");
   jsonObject.getArrayProperty("params", profile->params);
 
-  if (profile->params.size() <= profile->OUT) {
+  if (profile->params.size() != profile->param_count) {
     throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
   }
   return profile;

@@ -211,86 +211,35 @@ QueryProxy<QueryParameters, ListObject>::getMachineId() const {
  */
 template <class QueryParameters, class ListObject>
 ListObject* QueryProxy<QueryParameters, ListObject>::list() {
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
-  std::string queryParmetersToString;
-  std::string listObjectInString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
   //If the query uses the machineId (machineId not null)
+  diet_profile_t* profile =NULL;
   if (! mmachineId.empty()) {
-    profile = diet_profile_alloc(mserviceName.c_str(), 2, 2, 4);
+    profile = diet_profile_alloc(mserviceName, 3);
   } else {
-    profile = diet_profile_alloc(mserviceName.c_str(), 1, 1, 3);
+    profile = diet_profile_alloc(mserviceName, 2);
   }
 
-  sessionKey = msessionProxy.getSessionKey();
-  queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
-  //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
+  std::string queryParmetersToString =  SerializeAdaptor<QueryParameters>::serialize(mparameters);
 
-  //If the query uses the machineId (machineId not null)
-  if (!mmachineId.empty()) {
-    if (diet_string_set(profile, 1, mmachineId)) {
-      msg += "with machineId parameter "+mmachineId;
-      raiseCommunicationMsgException(msg);
-    }
+  // Set parameters
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
 
-    if (diet_string_set(profile, 2, queryParmetersToString)) {
-      msg += "with queryParmetersToString parameter "+queryParmetersToString;
-      raiseCommunicationMsgException(msg);
-    }
-
-    //OUT Parameters
-    diet_string_set(profile,3);
-    diet_string_set(profile,4);
-
-    if (!diet_call(profile)) {
-      if (diet_string_get(profile, 3, listObjectInString)){
-        msg += "by receiving listObjectInString message";
-        raiseCommunicationMsgException(msg);
-      }
-
-      if (diet_string_get(profile,4, errorInfo)){
-        msg += "by receiving errorInfo message";
-        raiseCommunicationMsgException(msg);
-      }
-    } else {
-      raiseCommunicationMsgException("Bus initialization failure");
-    }
+  if (! mmachineId.empty()) {
+    diet_string_set(profile, 1, mmachineId);
+    diet_string_set(profile, 2, queryParmetersToString);
   } else {
-    if (diet_string_set(profile, 1, queryParmetersToString)) {
-      msg += "with queryParmetersToString parameter "+queryParmetersToString;
-      raiseCommunicationMsgException(msg);
-    }
-
-    //OUT Parameters
-    diet_string_set(profile,2);
-    diet_string_set(profile,3);
-
-    if (!diet_call(profile)) {
-      if (diet_string_get(profile,2, listObjectInString)){
-        msg += "by receiving listObjectInString message";
-        raiseCommunicationMsgException(msg);
-      }
-
-      if (diet_string_get(profile,3, errorInfo)){
-        msg += "by receiving errorInfo message";
-        raiseCommunicationMsgException(msg);
-      }
-    } else {
-      raiseCommunicationMsgException("Bus call failure");
-    }
+    diet_string_set(profile, 1, queryParmetersToString);
   }
 
-  /* To check the receiving message error */
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
+  }
+  raiseExceptionOnErrorResult(profile);
 
-  //To parse List object serialized
+  std::string listObjectInString;
+
+  diet_string_get(profile,1, listObjectInString);
   parseEmfObject(listObjectInString, mlistObject, "Error by receiving List object serialized");
 
   return mlistObject;

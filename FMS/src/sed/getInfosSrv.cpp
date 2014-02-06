@@ -35,15 +35,16 @@ int get_infos(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string localPath, localUser, userKey, machineName;
-  std::string finishError ="";
   std::string cmd = "";
   std::string fileStatSerialized = "";
-  std::string errMsg = "";
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -77,19 +78,19 @@ int get_infos(diet_profile_t* profile) {
     ff.setSSHServer(machineName);
 
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
-
     boost::scoped_ptr<FileStat> fileStat_ptr (new FileStat);
 
     if ( file->exists()) {
-
       *fileStat_ptr=file->getFileStat();
       ::ecorecpp::serializer::serializer _ser;
       fileStatSerialized = _ser.serialize_str(const_cast<FMS_Data::FileStat_ptr>(fileStat_ptr.get()));
-
     } else {
-
       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, static_cast<SSHFile*>(file.get())->getErrorMsg());
     }
+
+    // set success result
+    diet_string_set(profile, 1, fileStatSerialized);
+    diet_string_set(profile, 0, "success");
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
@@ -98,16 +99,11 @@ int get_infos(diet_profile_t* profile) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    err.appendMsgComp(finishError);
-
-    errMsg = err.buildExceptionString();
-    fileStatSerialized="";
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
-
-  diet_string_set(profile, 4, fileStatSerialized.c_str());
-  diet_string_set(profile, 5, errMsg.c_str());
   return 0;
 }

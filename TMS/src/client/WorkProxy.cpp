@@ -30,7 +30,6 @@ WorkProxy::WorkProxy(const TMS_Data::Work& work, const SessionProxy& session):
 int
 WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
 
-  diet_profile_t* addProfile = NULL;
   std::string sessionKey;
   std::string workToString;
   std::string workInString;
@@ -38,7 +37,7 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
 
   std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc(SERVICES_TMS[ADDWORK], 2, 2, 4);
+  diet_profile_t* addProfile = diet_profile_alloc(SERVICES_TMS[ADDWORK], 3);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -48,33 +47,29 @@ WorkProxy::add(const TMS_Data::AddWorkOptions& addop) {
   ::ecorecpp::serializer::serializer _ser2;
   //To serialize the options object in to optionsInString
   std::string optionsToString =
-    _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop)).c_str();
+      _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>(&addop));
   //tmp = _ser2.serialize_str(const_cast<TMS_Data::AddWorkOptions_ptr>((TMS_Data::AddWorkOptions*)(&addop)));
 
   //IN Parameters
-  if (diet_string_set(addProfile,0, sessionKey.c_str())) {
+  if (diet_string_set(addProfile,0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msg);
   }
-  if (diet_string_set(addProfile,1, workToString.c_str())) {
+  if (diet_string_set(addProfile,1, workToString)) {
     msg += "with workToString parameter "+workToString;
     raiseCommunicationMsgException(msg);
   }
-  if (diet_string_set(addProfile,2, optionsToString.c_str())) {
+  if (diet_string_set(addProfile,2, optionsToString)) {
     msg += "with workToString parameter "+workToString;
     raiseCommunicationMsgException(msg);
   }
-
-  //OUT Parameters
-  diet_string_set(addProfile,3);
-  diet_string_set(addProfile,4);
 
   if (!diet_call(addProfile)) {
-    if (diet_string_get(addProfile,3, workInString)){
+    if (diet_string_get(addProfile,0, workInString)){
       msg += "by receiving Work serialized  message";
       raiseCommunicationMsgException(msg);
     }
-    if (diet_string_get(addProfile,4, errorInfo)){
+    if (diet_string_get(addProfile,1, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseCommunicationMsgException(msg);
     }
@@ -111,7 +106,7 @@ WorkProxy::update() {
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  updateProfile = diet_profile_alloc(SERVICES_TMS[WORKUPDATE], 1, 1, 2);
+  updateProfile = diet_profile_alloc(SERVICES_TMS[WORKUPDATE], 2);
   sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
@@ -119,29 +114,23 @@ WorkProxy::update() {
   workToString =  _ser.serialize_str(const_cast<TMS_Data::Work_ptr>(&mwork));
 
   //IN Parameters
-  if (diet_string_set(updateProfile,0, sessionKey.c_str())) {
+  if (diet_string_set(updateProfile,0, sessionKey)) {
     msg += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msg);
   }
-  if (diet_string_set(updateProfile,1, workToString.c_str())) {
+  if (diet_string_set(updateProfile,1, workToString)) {
     msg += "with workToString parameter "+workToString;
     raiseCommunicationMsgException(msg);
   }
 
-  //OUT Parameters
-  diet_string_set(updateProfile,2);
-
   if (!diet_call(updateProfile)) {
-    if (diet_string_get(updateProfile,2, errorInfo)){
+    if (diet_string_get(updateProfile,0, errorInfo)){
       msg += "by receiving errorInfo message";
       raiseCommunicationMsgException(msg);
     }
-  }
-  else {
+  } else {
     raiseCommunicationMsgException("VISHNU call failure");
   }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
   raiseExceptionIfNotEmptyMsg(errorInfo);
 
   diet_profile_free(updateProfile);
@@ -155,43 +144,21 @@ WorkProxy::update() {
  */
 int
 WorkProxy::deleteWork() {
-  diet_profile_t* deleteProfile = NULL;
-  std::string sessionKey;
-  std::string workId;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  deleteProfile = diet_profile_alloc(SERVICES_TMS[WORKDELETE], 1, 1, 2);
-  sessionKey = msessionProxy.getSessionKey();
-  workId = mwork.getWorkId();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_TMS[WORKDELETE], 2);
+  std::string sessionKey = msessionProxy.getSessionKey();
+  std::string workId = mwork.getWorkId();
 
-  //IN Parameters
-  if (diet_string_set(deleteProfile,0, sessionKey.c_str())) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
+  // Set parameters
+  diet_string_set(profile,0, sessionKey);
+  diet_string_set(profile,1, workId);
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  if (diet_string_set(deleteProfile,1, workId.c_str())) {
-    msg += "with workId parameter "+workId;
-    raiseCommunicationMsgException(msg);
-  }
+  raiseExceptionOnErrorResult(profile);
 
-  //OUT Parameters
-  diet_string_set(deleteProfile,2);
-
-  if (!diet_call(deleteProfile)) {
-    if (diet_string_get(deleteProfile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  diet_profile_free(deleteProfile);
+  diet_profile_free(profile);
 
   return 0;
 }

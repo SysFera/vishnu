@@ -56,52 +56,29 @@ UserProxy::UserProxy(const UMS_Data::User& user):
  */
 int
 UserProxy::add(UMS_Data::User& user) {
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
-  std::string errorInfo;
-  std::string userInString;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(SERVICES_UMS[USERCREATE], 1, 1, 3);
+  std::string sessionKey;
+  std::string userInString;
+
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[USERCREATE], 2);
   sessionKey = msessionProxy->getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the user object in to userToString
   std::string userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, userToString)) {
-    msg += "with userToString parameter "+userToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy->getSessionKey());
+  diet_string_set(profile, 1, userToString);
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-  diet_string_set(profile,3);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, userInString)){
-      msg += " by receiving User serialized  message";
-      raiseCommunicationMsgException(msg);
-    }
-    if(diet_string_get(profile,3, errorInfo)){
-      msg += " by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
+  raiseExceptionOnErrorResult(profile);
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  UMS_Data::User_ptr user_ptr;
+  diet_string_get(profile,1, userInString);
 
   //To parse User object serialized
+  UMS_Data::User_ptr user_ptr;
   parseEmfObject(userInString, user_ptr, "Error by receiving User object serialized");
   user = *user_ptr;
   muser = user;
@@ -119,48 +96,22 @@ UserProxy::add(UMS_Data::User& user) {
  */
 int
 UserProxy::update(const UMS_Data::User& user) {
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
-  std::string userToString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(SERVICES_UMS[USERUPDATE], 1, 1, 2);
-
-  sessionKey = msessionProxy->getSessionKey();
-
-  ::ecorecpp::serializer::serializer _ser;
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[USERUPDATE], 2);
   //To serialize the user object in to userToString
-  userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
+  ::ecorecpp::serializer::serializer _ser;
+  std::string userToString =  _ser.serialize_str(const_cast<UMS_Data::User_ptr>(&user));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, userToString)) {
-    msg += "with userToString parameter "+userToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy->getSessionKey());
+  diet_string_set(profile, 1, userToString);
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
-
   return 0;
 }
 
@@ -171,40 +122,17 @@ UserProxy::update(const UMS_Data::User& user) {
  */
 int
 UserProxy::deleteUser(const UMS_Data::User& user) {
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
-  std::string userId;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(SERVICES_UMS[USERDELETE], 1, 1, 2);
-  sessionKey = msessionProxy->getSessionKey();
-  userId = user.getUserId();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[USERDELETE], 2);
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, userId)) {
-    msg += "with userId parameter "+userId;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy->getSessionKey());
+  diet_string_set(profile, 1, user.getUserId());
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 
@@ -220,7 +148,7 @@ UserProxy::deleteUser(const UMS_Data::User& user) {
 int
 UserProxy::changePassword(const std::string& password,
                           const std::string& newPassword) {
-  diet_profile_t* profile = NULL;
+
   std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
   std::string versionToString;
@@ -234,43 +162,17 @@ UserProxy::changePassword(const std::string& password,
     //To serialize the version object in to versionToString
     versionToString =  _ser.serialize_str(versionObj);
   }
-  profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDCHANGE], 3, 3, 4);
 
-  //IN Parameters
-  if(diet_string_set(profile,0, muser.getUserId().c_str())) {
-    msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
-    raiseCommunicationMsgException(msg);
-  }
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDCHANGE], 4);
+  diet_string_set(profile,0, muser.getUserId());
+  diet_string_set(profile,1, password);
+  diet_string_set(profile,2, newPassword);
+  diet_string_set(profile,3, versionToString);
 
-  if(diet_string_set(profile,1, password.c_str())) {
-    msg += "with password parameter "+password;
-    raiseCommunicationMsgException(msg);
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if(diet_string_set(profile,2, newPassword.c_str())) {
-    msg += "with newPassword parameter "+newPassword;
-    raiseCommunicationMsgException(msg);
-  }
-
-  if(diet_string_set(profile,3, versionToString.c_str())) {
-      msg += "with version parameter "+versionToString;
-      raiseCommunicationMsgException(msg);
-  }
-
-  //OUT Parameters
-  diet_string_set(profile,4);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,4, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
   delete versionObj;
@@ -285,43 +187,18 @@ UserProxy::changePassword(const std::string& password,
  */
 int
 UserProxy::resetPassword(UMS_Data::User& user) {
-  diet_profile_t* profile = NULL;
+
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDRESET], 2);
+  diet_string_set(profile, 0, msessionProxy->getSessionKey());
+  diet_string_set(profile, 1, user.getUserId());
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
+  }
+  raiseExceptionOnErrorResult(profile);
+
   std::string tmpPassword;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
-
-  profile = diet_profile_alloc(SERVICES_UMS[USERPASSWORDRESET], 1, 1, 3);
-
-  //IN Parameters
-  if (diet_string_set(profile, 0, msessionProxy->getSessionKey())) {
-    msg += "with sessionKey parameter "+msessionProxy->getSessionKey();
-    raiseCommunicationMsgException(msg);
-  }
-
-  if (diet_string_set(profile, 1, user.getUserId())) {
-    msg += "with userId parameter "+user.getUserId();
-    raiseCommunicationMsgException(msg);
-  }
-
-  //OUT Parameters
-  diet_string_set(profile, 2);
-  diet_string_set(profile, 3);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile, 2, tmpPassword)){
-      msg += "by receiving tmpPassWord message";
-      raiseCommunicationMsgException(msg);
-    }
-    if(diet_string_get(profile, 3, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  diet_string_get(profile, 1, tmpPassword);
 
   /*To set the temporary password*/
   muser.setUserId(user.getUserId());

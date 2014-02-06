@@ -10,13 +10,12 @@
 #include <string>
 #include <exception>
 #include <cstring>
-
-//EMF
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
-
 #include "SystemException.hpp"
 
+
+class diet_profile_t;
 
 /**
  * \brief Function to spread error message to C++ API, Python API, Web service API and command line program
@@ -61,7 +60,7 @@ void parseEmfObject(const std::string& objectSerialized,
   catch (std::exception& e) {
     throw SystemException(ERRCODE_INVDATA, msgComp);
   }
-
 }
+
 
 #endif

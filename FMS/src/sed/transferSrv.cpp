@@ -33,16 +33,17 @@ solveGetListOfFileTransfers(diet_profile_t* pb) {
  * \return raises an exception on error
  */
 int
-solveFileTransferStop(diet_profile_t* pb) {
+solveFileTransferStop(diet_profile_t* profile) {
 
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string finishError ="";
   std::string cmd = "";
-  std::string errorInfo ="";
 
-  diet_string_get(pb,0, sessionKey);
-  diet_string_get(pb,1, optionsSerialized);
+  diet_string_get(profile,0, sessionKey);
+  diet_string_get(profile,1, optionsSerialized);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   SessionServer sessionServer = SessionServer(sessionKey);
   FMS_Data::StopTransferOptions_ptr options_ptr = NULL;
@@ -59,24 +60,23 @@ solveFileTransferStop(diet_profile_t* pb) {
       SystemException(ERRCODE_INVDATA, "solve_fileTransferStop: options object is not well built");
     }
 
-    int vishnuId=ServerFMS::getInstance()->getVishnuId();
-
+    int vishnuId = ServerFMS::getInstance()->getVishnuId();
     boost::shared_ptr<FileTransferServer> fileTransferServer(new FileTransferServer(sessionServer,vishnuId));
-
     fileTransferServer->stopThread(*options_ptr);
 
-    diet_string_set(pb,2, errorInfo.c_str());
+    // set success result
+    diet_string_set(profile, 0, "success");
+    diet_string_set(profile, 1, "");
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& e) {
+  } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    e.appendMsgComp(finishError);
-    errorInfo =  e.buildExceptionString();
-    diet_string_set(pb,2, errorInfo.c_str());
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
   return 0;
 }

@@ -29,7 +29,11 @@ heartbeat(diet_profile_t* pb){
   }
   std::string msg = (boost::format("%1% %2%") % VISHNU_VERSION % batch).str();
 
+  // reset the profile to handle result
+  diet_profile_reset(pb, 2);
+
   diet_string_set(pb, 1, msg);
+  diet_string_set(pb, 0, "success");
   return 0;
 }
 
@@ -44,7 +48,7 @@ SeD::call(diet_profile_t* profile) {
   if (it == mcb.end()) {
     std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
 // To show it is an invalid profile
-    profile->OUT = -1;
+    profile->param_count = -1;
     return UNKNOWN_SERVICE;
   }
   CallbackFn fn = boost::ref(it->second);
@@ -100,13 +104,12 @@ public:
         continue;
       }
 
-      // Deserialize and call UMS Method
+      // Deserialize and call the target method
       if (!data.empty()) {
         try {
           boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
           server_->call(profile.get()); //FIXME: deal with possibly error
-          std::string resultSerialized = my_serialize(profile.get());
-          socket.send(resultSerialized);
+          socket.send(my_serialize(profile.get()));
         } catch (const VishnuException& ex) {
           socket.send(ex.what());
           std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
