@@ -32,29 +32,19 @@ AuthSystemProxy::AuthSystemProxy(const UMS_Data::AuthSystem& authSystem, const S
 int
 AuthSystemProxy::add() {
 
-  std::string sessionKey;
   std::string authSystemToString;
   std::string authSystemInString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
   diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMCREATE], 2);
 
-  sessionKey = msessionProxy.getSessionKey();
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the mauthSystem object in to authSystemToString
   authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, authSystemToString)) {
-    msg += "with authSystemToString parameter "+authSystemToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, authSystemToString);
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
@@ -80,28 +70,15 @@ AuthSystemProxy::add() {
 int
 AuthSystemProxy::update() {
 
-  std::string sessionKey;
-  std::string authSystemToString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
-
   diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMUPDATE], 2);
 
-  sessionKey = msessionProxy.getSessionKey();
-
-  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mauthSystem object in to authSystemToString
-  authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
+  ::ecorecpp::serializer::serializer _ser;
+  std::string authSystemToString =  _ser.serialize_str(const_cast<UMS_Data::AuthSystem_ptr>(&mauthSystem));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, authSystemToString)) {
-    msg += "with authSystemToString parameter "+authSystemToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, authSystemToString);
 
 
   if (diet_call(profile)) {
@@ -120,24 +97,10 @@ AuthSystemProxy::update() {
 int
 AuthSystemProxy::deleteAuthSystem()
 {
-  std::string sessionKey;
-  std::string sysId;
-  std::string msg = "call of function diet_string_set is rejected ";
-
   diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[AUTHSYSTEMDELETE], 2);
-  sessionKey = msessionProxy.getSessionKey();
-  sysId = mauthSystem.getAuthSystemId();
-
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-
-  if (diet_string_set(profile, 1, sysId)) {
-    msg += "with systemId parameter "+sysId;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, mauthSystem.getAuthSystemId());
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
