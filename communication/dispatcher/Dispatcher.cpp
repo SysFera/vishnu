@@ -83,15 +83,14 @@ Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& c
     std::string service = "heartbeat";
     // For each server
     for (iter = list.begin() ; iter != list.end() ; ++iter){
-      diet_profile_t* profile = NULL;
-      profile = diet_profile_alloc(service,0,0,1);
+      diet_profile_t* profile = diet_profile_alloc(service, 0);
       // try to ping them
       if (abstract_call_gen(profile, iter->get()->getURI())){
         // If failed : remove the server
         ann->remove(iter->get()->getName(), iter->get()->getURI());
         std::cerr << "[INFO]: removed " << iter->get()->getName() << "@" << iter->get()->getURI() << " from the annuary\n";
       }
-
+      diet_profile_free(profile);
     }
     // Sleep a bit
     sleep(timeout);

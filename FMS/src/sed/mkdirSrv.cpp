@@ -29,15 +29,16 @@ int solveCreateDir(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string finishError ="";
   std::string cmd = "";
-  std::string errMsg = "";
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -52,10 +53,10 @@ int solveCreateDir(diet_profile_t* profile) {
     mapper->code(optionsSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-  // check the sessionKey
+    // check the sessionKey
 
     sessionServer.check();
-   //
+    //
     UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
     machine->setMachineId(host);
     MachineServer machineServer(machine);
@@ -75,25 +76,27 @@ int solveCreateDir(diet_profile_t* profile) {
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
     FMS_Data::CreateDirOptions_ptr options_ptr= NULL;
- if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
+    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_create_dir: CreateDirOptions object is not well built");
     }
     file->mkdir(*options_ptr);
 
+    // set success result
+    diet_string_set(profile, 1, "");
+    diet_string_set(profile, 0, "success");
+
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
-    } catch (VishnuException& err) {
-      try {
-        sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      err.appendMsgComp(finishError);
-      errMsg = err.buildExceptionString();
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      err.appendMsgComp(fe.what());
     }
-
-diet_string_set(profile, 5, errMsg.c_str());
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
+  }
   return 0;
 }

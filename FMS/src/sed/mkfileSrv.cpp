@@ -27,15 +27,15 @@ int solveCreateFile(diet_profile_t* profile) {
   std::string user = "";
   std::string host = "";
   std::string sessionKey = "";
-  std::string finishError ="";
   std::string cmd = "";
-  std::string errMsg = "";
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
 
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -70,23 +70,26 @@ int solveCreateFile(diet_profile_t* profile) {
     FileFactory ff;
     ff.setSSHServer(machineName);
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
-
     file->mkfile();
+
+    // set success result
+    diet_string_set(profile, 0, "success");
+    diet_string_set(profile, 1, "");
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
-    } catch (VishnuException& err) {
-      try {
-        sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      err.appendMsgComp(finishError);
-      errMsg = err.buildExceptionString();
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      err.appendMsgComp(fe.what());
     }
 
-diet_string_set(profile, 4, errMsg.c_str());
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
+  }
+
   return 0;
 }

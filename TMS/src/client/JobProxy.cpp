@@ -57,18 +57,18 @@ JobProxy::submitJob(const std::string& scriptContent,
   // now create and initialize the service profile
   string serviceName = std::string(SERVICES_TMS[JOBSUBMIT]) + "@";
   serviceName.append(mmachineId);
-  diet_profile_t* submitJobProfile = diet_profile_alloc(serviceName, 3, 3, 5);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
 
   //IN Parameters
-  if (diet_string_set(submitJobProfile,0, sessionKey)) {
+  if (diet_string_set(profile,0, sessionKey)) {
     raiseCommunicationMsgException("Can't set RPC parameter  [sessionKey]");
   }
 
-  if (diet_string_set(submitJobProfile,1, mmachineId)) {
+  if (diet_string_set(profile,1, mmachineId)) {
     raiseCommunicationMsgException("Can't set RPC parameter  [machineid]");
   }
 
-  if (diet_string_set(submitJobProfile,2, scriptContent)) {
+  if (diet_string_set(profile,2, scriptContent)) {
     raiseCommunicationMsgException("Can't set RPC parameter [scriptContent]");
   }
 
@@ -80,33 +80,23 @@ JobProxy::submitJob(const std::string& scriptContent,
   updatedOptions.setFileParams(inputFiles);
 
   JsonObject jsonOptions(updatedOptions);
-  if (diet_string_set(submitJobProfile,3, jsonOptions.encode())) {
+  if (diet_string_set(profile,3, jsonOptions.encode())) {
     raiseCommunicationMsgException("Can't set RPC parameter [encoded options]");
   }
 
-  //OUT Parameters
-  diet_string_set(submitJobProfile, 4);
-  diet_string_set(submitJobProfile, 5);
-
   // FIXME: do it before setting parameter 3
-  std::string result;
-  std::string error;
-  if (! diet_call(submitJobProfile)) {
-    if (diet_string_get(submitJobProfile,4, result)){
-      raiseCommunicationMsgException("Failed receiving result message");
-    }
-    if (diet_string_get(submitJobProfile,5, error) || ! error.empty()){
-      diet_profile_free(submitJobProfile);
-      raiseCommunicationMsgException((boost::format("Failed receiving errorInfo [%1%]")%error).str());
-    }
-  } else {
-    raiseCommunicationMsgException("VISHNU RPC call failed");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(profile);
 
-  JsonObject job(result);
+  std::string jobSerialized;
+  diet_string_get(profile,1, jobSerialized);
+
+  JsonObject job(jobSerialized);
   mjob = job.getJob();
 
-  diet_profile_free(submitJobProfile);
+  diet_profile_free(profile);
   return 0;
 }
 
@@ -118,57 +108,42 @@ JobProxy::submitJob(const std::string& scriptContent,
 int
 JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
-  diet_profile_t* cancelJobProfile = NULL;
-  std::string sessionKey;
   std::string errorInfo;
 
-  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBCANCEL] % mmachineId).str();
+  std::string serviceName = (boost::format("%1%@%2%")
+                             % SERVICES_TMS[JOBCANCEL]
+                             % mmachineId
+                             ).str();
 
-  cancelJobProfile = diet_profile_alloc(serviceName, 2, 2, 3);
-  sessionKey = msessionProxy.getSessionKey();
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
+  std::string  sessionKey = msessionProxy.getSessionKey();
 
   std::string msgErrorDiet = "preparing sending data failed ";
   //IN Parameters
-  if (diet_string_set(cancelJobProfile,0, sessionKey)) {
+  if (diet_string_set(profile,0, sessionKey)) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_string_set(cancelJobProfile,1, mmachineId)) {
+  if (diet_string_set(profile,1, mmachineId)) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
   ::ecorecpp::serializer::serializer _ser;
   string serializedOptions =  _ser.serialize_str(const_cast<TMS_Data::CancelOptions_ptr>(&options));
-  if (diet_string_set(cancelJobProfile,2, serializedOptions)) {
+  if (diet_string_set(profile,2, serializedOptions)) {
     msgErrorDiet += " on serializing options: "+serializedOptions;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  //OUT Parameters
-  diet_string_set(cancelJobProfile, 3);
-
-  signed ret = diet_call(cancelJobProfile);
-  switch(ret) {
-  case 0:
-    if(diet_string_get(cancelJobProfile,3, errorInfo)){
-      msgErrorDiet += " by receiving errorInfo message";
-      raiseCommunicationMsgException(msgErrorDiet);
-    }
-    break;
-  case 1:
-    raiseCommunicationMsgException(
-          "VISHNU call failure, machineId may be invalid");
-    break;
-  default:
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
-  diet_profile_free(cancelJobProfile);
+  diet_profile_free(profile);
   return 0;
 }
 
@@ -181,75 +156,35 @@ JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 TMS_Data::Job
 JobProxy::getJobInfo() {
 
-  diet_profile_t* getJobInfoProfile = NULL;
-  std::string jobInString;
-  std::string errorInfo;
-
-  // The approach is to take the machine that has the lowest load regarding the
-  // number of jobs to handle the request
   std::string sessionKey = msessionProxy.getSessionKey();
-
   TMS_Data::LoadCriterion loadCriterion;
   loadCriterion.setLoadType(NBJOBS);
   mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
 
-  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBINFO]  %mmachineId).str();
+  std::string serviceName = (boost::format("%1%@%2%")
+                             % SERVICES_TMS[JOBINFO]
+                             % mmachineId
+                             ).str();
 
   // Now prepare the service call
-  getJobInfoProfile = diet_profile_alloc(serviceName, 2, 2, 4);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
+  std::string jobSerialized = JsonObject::serialize(mjob);
 
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
-  if (diet_string_set(getJobInfoProfile, 0, sessionKey)) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
+  // Set parameters
+  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 1, mmachineId);
+  diet_string_set(profile,2, jobSerialized);
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(profile);
 
-  if (diet_string_set(getJobInfoProfile, 1, mmachineId)) {
-    msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_get(profile,1, jobSerialized);
+  JsonObject jobJson(jobSerialized);
 
-
-  ::ecorecpp::serializer::serializer _ser;
-  //To serialize the options object in to optionsInString
-  std::string jobToString =  _ser.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
-
-  if (diet_string_set(getJobInfoProfile,2, jobToString)) {
-    msgErrorDiet += "with jobInString parameter "+std::string(jobToString);
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  //OUT Parameters
-  diet_string_set(getJobInfoProfile,3);
-  diet_string_set(getJobInfoProfile,4);
-
-  if(!diet_call(getJobInfoProfile)) {
-    if(diet_string_get(getJobInfoProfile,3, jobInString)){
-      msgErrorDiet += " by receiving User serialized  message";
-      raiseCommunicationMsgException(msgErrorDiet);
-    }
-    if(diet_string_get(getJobInfoProfile,4, errorInfo)){
-      msgErrorDiet += " by receiving errorInfo message";
-      raiseCommunicationMsgException(msgErrorDiet);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  TMS_Data::Job_ptr job_ptr = NULL;
-
-  parseEmfObject(std::string(jobInString), job_ptr);
-
-  mjob = *job_ptr;
-  delete job_ptr;
-
-  diet_profile_free(getJobInfoProfile);
-  return mjob;
+  diet_profile_free(profile);
+  return jobJson.getJob();
 }
 
 /**

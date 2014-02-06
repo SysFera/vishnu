@@ -33,19 +33,12 @@ MachineProxy::MachineProxy(const UMS_Data::Machine& machine,
  */
 int
 MachineProxy::add() {
-  diet_profile_t* addProfile = NULL;
-  std::string sessionKey;
-  std::string machineToString;
-  std::string machineInString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  addProfile = diet_profile_alloc(SERVICES_UMS[MACHINECREATE], 1, 1, 3);
-  sessionKey = msessionProxy.getSessionKey();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[MACHINECREATE], 2);
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the mmachine object in to machineToString
-  machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+  std::string machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
   if(sshKeyFilePath.find("\"")!=std::string::npos) {
@@ -53,45 +46,24 @@ MachineProxy::add() {
   }
 
   //IN Parameters
-  if (diet_string_set(addProfile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(addProfile, 1, machineToString)) {
-    msg += "with machineToString parameter "+machineToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, machineToString);
 
-  //OUT Parameters
-  diet_string_set(addProfile,2);
-  diet_string_set(addProfile,3);
-
-  if(!diet_call(addProfile)) {
-    if(diet_string_get(addProfile,2, machineInString)){
-      msg += "by receiving Machine serialized  message";
-      raiseCommunicationMsgException(msg);
-    }
-    if(diet_string_get(addProfile,3, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
+  raiseExceptionOnErrorResult(profile);
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  std::string machineInString;
+  diet_string_get(profile,1, machineInString);
 
+  // parse serialized machine object
   UMS_Data::Machine_ptr machine_ptr;
-
-  //To parse machine object serialized
   parseEmfObject(machineInString, machine_ptr, "Error by receiving Machine object serialized");
-
   mmachine = *machine_ptr;
   delete machine_ptr;
 
-  diet_profile_free(addProfile);
+  diet_profile_free(profile);
 
   return 0;
 
@@ -103,18 +75,12 @@ MachineProxy::add() {
  */
 int
 MachineProxy::update() {
-  diet_profile_t* updateProfile = NULL;
-  std::string sessionKey;
-  std::string machineToString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  updateProfile = diet_profile_alloc(SERVICES_UMS[MACHINEUPDATE], 1, 1, 2);
-  sessionKey = msessionProxy.getSessionKey();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[MACHINEUPDATE], 2);
 
+  // serialize the mmachine object in to machineToString
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the mmachine object in to machineToString
-  machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
+  std::string machineToString =  _ser.serialize_str(const_cast<UMS_Data::Machine_ptr>(&mmachine));
 
   std::string sshKeyFilePath = mmachine.getSshPublicKey();
   if(sshKeyFilePath.find("\"")!=std::string::npos) {
@@ -122,32 +88,15 @@ MachineProxy::update() {
   }
 
   //IN Parameters
-  if (diet_string_set(updateProfile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(updateProfile, 1, machineToString)) {
-    msg += "with machineToString parameter "+machineToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, machineToString);
 
-  //OUT Parameters
-  diet_string_set(updateProfile,2);
-
-  if(!diet_call(updateProfile)) {
-    if(diet_string_get(updateProfile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
+  raiseExceptionOnErrorResult(profile);
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  diet_profile_free(updateProfile);
+  diet_profile_free(profile);
 
   return 0;
 }
@@ -158,43 +107,19 @@ MachineProxy::update() {
  */
 int
 MachineProxy::deleteMachine() {
-  diet_profile_t* deleteProfile = NULL;
-  std::string sessionKey;
-  std::string machineId;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  deleteProfile = diet_profile_alloc(SERVICES_UMS[MACHINEDELETE], 1, 1, 2);
-  sessionKey = msessionProxy.getSessionKey();
-  machineId = mmachine.getMachineId();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[MACHINEDELETE], 2);
 
   //IN Parameters
-  if (diet_string_set(deleteProfile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(deleteProfile, 1, machineId)) {
-    msg += "with machineId parameter "+machineId;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, mmachine.getMachineId());
 
-  //OUT Parameters
-  diet_string_set(deleteProfile,2);
-
-  if(!diet_call(deleteProfile)) {
-    if(diet_string_get(deleteProfile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
+  raiseExceptionOnErrorResult(profile);
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  diet_profile_free(deleteProfile);
+  diet_profile_free(profile);
 
   return 0;
 }

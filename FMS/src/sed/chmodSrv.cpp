@@ -29,15 +29,16 @@ int solveChangeMode (diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string modeInString = "";
-  std::string finishError ="";
   std::string cmd = "";
-  std::string errMsg = "";
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, modeInString);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   istringstream is (modeInString);
   mode_t mode;
@@ -81,6 +82,9 @@ int solveChangeMode (diet_profile_t* profile) {
 
     file->chmod(mode);
 
+    diet_string_set(profile, 1, "");
+    diet_string_set(profile, 0, "success");
+
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
@@ -88,13 +92,10 @@ int solveChangeMode (diet_profile_t* profile) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    err.appendMsgComp(finishError);
-    errMsg = err.buildExceptionString();
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
-
-  diet_string_set(profile, 5, errMsg.c_str());
   return 0;
 }

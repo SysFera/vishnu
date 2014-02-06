@@ -108,13 +108,10 @@ int getTimeout() {
 
 
 diet_profile_t*
-diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
-  // TODO : Do not handle -1 for input (no input param)
+diet_profile_alloc(const std::string &name, int nbparams) {
   diet_profile_t* res = new diet_profile_t;
-  res->IN = IN;
-  res->INOUT = INOUT;
-  res->OUT = OUT;
-  (res->params).resize(OUT+1, "");
+  res->param_count = nbparams;
+  (res->params).resize(nbparams, "");
   res->name = name;
   return res;
 }
@@ -125,10 +122,23 @@ diet_string_set(diet_profile_t* prof, int pos,
   try {
     (prof->params).at(pos) = value;
   } catch (const std::out_of_range& err) {
-    throw
-    SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
+    std::cout << prof->name << " " << value<< " " << pos << "\n";
+    throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   return 0;
+}
+
+
+/**
+ * @brief Reset the data and the number of parameters in the profile
+ * @param prof The profile
+ * @param nbparams The number of parameter
+ */
+void
+diet_profile_reset(diet_profile_t* prof, int nbparams) {
+  prof->params.clear();
+  prof->param_count = nbparams;
+  prof->params.resize(nbparams, "");
 }
 
 int
@@ -226,21 +236,19 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
   }
 
   std::string response = lpc.recv();
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-  if (!tmp) {
+  boost::shared_ptr<diet_profile_t> result(my_deserialize(response));
+  if (! result) {
     std::cerr << boost::format("[ERROR] %1%\n")%response;
     return 1;
   }
   // To signal a communication problem (bad server receive request)
   // Otherwize client does not get any error message
-  if (tmp->OUT == -1) {
+  if (result->param_count == -1) {
     return 1;
   }
 
-  prof->IN = tmp->IN;
-  prof->OUT = tmp->OUT;
-  prof->INOUT = tmp->INOUT;
-  prof->params = tmp->params;
+  prof->param_count = result->param_count;
+  prof->params = result->params;
   return 0;
 }
 
@@ -258,12 +266,10 @@ ssl_call_gen(diet_profile_t* prof,
 
   std::string response = tlsClient.recv();
   try {
-    boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-    if (tmp) {
-      prof->IN = tmp->IN;
-      prof->OUT = tmp->OUT;
-      prof->INOUT = tmp->INOUT;
-      prof->params = tmp->params;
+    boost::shared_ptr<diet_profile_t> resultProfile(my_deserialize(response));
+    if (resultProfile) {
+      prof->param_count = resultProfile->param_count;
+      prof->params = resultProfile->params;
       return 0;
     } else {
       std::cerr << boost::format("[ERROR] %1%\n")%response;
@@ -432,4 +438,28 @@ getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
     extractMachineServersFromLine(uriv, allServers, "tmssed");
   uriv.clear();
 }
+
+
+/**
+ * @brief Raise exception when profile hold error status
+ * @param profile The profile to analyse
+ */
+void raiseExceptionOnErrorResult(diet_profile_t* profile) {
+  if (profile && profile->param_count == 2) {
+    std::string status;
+    std::string msg;
+    diet_string_get(profile, 0, status);
+    if (status != "success") {
+      diet_string_get(profile, 1, msg);
+      diet_profile_free(profile);
+      throw SystemException(ERRCODE_SYSTEM, msg);
+    }
+  } else {
+    if (profile) {
+      diet_profile_free(profile);
+    }
+    throw SystemException(ERRCODE_INVDATA, "Bad result profile");
+  }
+}
+
 

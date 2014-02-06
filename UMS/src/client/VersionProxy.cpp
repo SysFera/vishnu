@@ -67,7 +67,7 @@ VersionProxy::getVersion(const std::string& server,
   }
 
 
-// Get the list of the servers in the dispatcher
+  // Get the list of the servers in the dispatcher
   communicate_dispatcher("2", response, true);
   std::vector<boost::shared_ptr<Server> > allServers;
   std::vector<boost::shared_ptr<Server> > servers;
@@ -78,20 +78,19 @@ VersionProxy::getVersion(const std::string& server,
   // For each server get its version
   std::vector<boost::shared_ptr<Server> >::iterator it;
   for (it = servers.begin() ; it != servers.end() ; ++it) {
-    diet_profile_t* profile = NULL;
     std::string service = getLongestService((*it)->getServices(), "heartbeat");
     // If service asked on a machine and none corresponding
     if (!mid.empty() && service.find(mid) == std::string::npos)
       continue;
 
-    profile = diet_profile_alloc(service,0,0,1);
+    diet_profile_t* profile = diet_profile_alloc(service, 0);
     // Getting version
     if (abstract_call_gen(profile, it->get()->getURI(), true)){
       result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), "Server unavailable"));
     } else {
-      std::string tmp;
-      diet_string_get(profile, 1, tmp);
-      result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), tmp));
+      std::string versionInfo;
+      diet_string_get(profile, 1, versionInfo);
+      result.insert(std::pair<std::string, std::string>(it->get()->getName()+"@"+it->get()->getURI(), versionInfo));
     }
     diet_profile_free(profile);
     empty = false;
@@ -104,11 +103,11 @@ VersionProxy::getVersion(const std::string& server,
 void
 VersionProxy::list(const std::string mid, std::map<std::string, std::string>& result){
   std::string response;
-// Get version of the dispatcher
+  // Get version of the dispatcher
   bool empty = true;
 
 
-// Get the list of the servers in the dispatcher
+  // Get the list of the servers in the dispatcher
   communicate_dispatcher("2", response, true);
   std::vector<boost::shared_ptr<Server> > servers;
   extractServersFromMessage(response, servers);

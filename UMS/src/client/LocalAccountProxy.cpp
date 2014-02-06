@@ -20,7 +20,7 @@
  */
 LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
                                      const SessionProxy& session)
- : mlocalAccount(localAccount), msessionProxy(session) {}
+  : mlocalAccount(localAccount), msessionProxy(session) {}
 
 /**
  * \brief Function to combine add() and update() into one function
@@ -30,61 +30,27 @@ LocalAccountProxy::LocalAccountProxy(const UMS_Data::LocalAccount& localAccount,
 int
 LocalAccountProxy::_addLocalAccountInformation(bool isNewLocalAccount) {
 
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
   std::string localAccountToString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  if(isNewLocalAccount) {
-    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTCREATE], 1, 1, 3);
-  }
-  else {
-    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTUPDATE], 1, 1, 2);
+  diet_profile_t* profile;
+  if (isNewLocalAccount) {
+    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTCREATE], 2);
+  } else {
+    profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTUPDATE], 3);
   }
 
-  sessionKey = msessionProxy.getSessionKey();
-
-  ::ecorecpp::serializer::serializer _ser;
   //To serialize the mlocalAccount object in to localAccountToString
+  ::ecorecpp::serializer::serializer _ser;
   localAccountToString =  _ser.serialize_str(const_cast<UMS_Data::LocalAccount_ptr>(&mlocalAccount));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, localAccountToString)) {
-    msg += "with localAccountToString parameter "+localAccountToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, localAccountToString);
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-  if(isNewLocalAccount) {
-    diet_string_set(profile,3);
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if(!diet_call(profile)) {
-    if(isNewLocalAccount) {
-      if(diet_string_get(profile,3, errorInfo)){
-        msg += "by receiving errorInfo message";
-        raiseCommunicationMsgException(msg);
-      }
-    }
-    else {
-      if(diet_string_get(profile,2, errorInfo)){
-        msg += "by receiving errorInfo message";
-        raiseCommunicationMsgException(msg);
-      }
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 
@@ -115,47 +81,23 @@ int LocalAccountProxy::update()
  */
 int
 LocalAccountProxy::deleteLocalAccount() {
-  diet_profile_t* profile = NULL;
-  std::string sessionKey;
+
   std::string userId;
   std::string machineId;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTDELETE], 2, 2, 3);
-  sessionKey = msessionProxy.getSessionKey();
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[LOCALACCOUNTDELETE], 3);
   userId = mlocalAccount.getUserId();
   machineId = mlocalAccount.getMachineId();
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, userId)) {
-    msg += "with userId parameter "+userId;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 2, machineId)) {
-    msg += "with machineId parameter "+machineId;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, userId);
+  diet_string_set(profile, 2, machineId);
 
-  //OUT Parameters
-  diet_string_set(profile,3);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,3, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 

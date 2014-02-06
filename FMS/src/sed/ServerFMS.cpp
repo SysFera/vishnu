@@ -76,7 +76,7 @@ ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;

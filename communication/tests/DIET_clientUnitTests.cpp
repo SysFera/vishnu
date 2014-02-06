@@ -75,19 +75,15 @@ BOOST_AUTO_TEST_CASE( my_test_get_b_mod )
 
 BOOST_AUTO_TEST_CASE( my_test_alloc_n )
 {
-  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
-  BOOST_REQUIRE_EQUAL(prof->IN, 1);
-  BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
-  BOOST_REQUIRE_EQUAL(prof->OUT, 3);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1);
+  BOOST_REQUIRE_EQUAL(prof->param_count, 1);
   BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_free_n )
 {
-  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
-  BOOST_REQUIRE_EQUAL(prof->IN, 1);
-  BOOST_REQUIRE_EQUAL(prof->INOUT, 2);
-  BOOST_REQUIRE_EQUAL(prof->OUT, 3);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1);
+  BOOST_REQUIRE_EQUAL(prof->param_count, 1);
   BOOST_REQUIRE_EQUAL(std::string(prof->name), "alloc");
 
   BOOST_REQUIRE_EQUAL(diet_profile_free(prof), 0);
@@ -97,7 +93,7 @@ BOOST_AUTO_TEST_CASE( my_test_free_n )
 
 BOOST_AUTO_TEST_CASE( my_test_setStr_n )
 {
-  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1);
   BOOST_REQUIRE_NO_THROW(diet_string_set(prof, 0, "toto"));
 
   BOOST_REQUIRE_EQUAL(prof->params[0], "toto");
@@ -105,14 +101,14 @@ BOOST_AUTO_TEST_CASE( my_test_setStr_n )
 
 BOOST_AUTO_TEST_CASE( my_test_setStr_out_of_bound )
 {
-  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1);
   BOOST_REQUIRE_THROW(diet_string_set(prof, 10), SystemException);
 }
 
 BOOST_AUTO_TEST_CASE( my_test_getStr_n )
 {
   std::string userId = "";
-  diet_profile_t* prof = diet_profile_alloc("alloc", 1, 2, 3);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 1);
   diet_string_set(prof, 0, "toto");
   diet_string_get(prof, 0, userId);
 
@@ -140,9 +136,7 @@ BOOST_AUTO_TEST_CASE( my_test_deser_n )
   std::string profSer = "alloc$$$$####$$$$0$$$$####$$$$0$$$$####$$$$1$$$$####$$$$param1$$$$####$$$$$$$$####$$$$";
   boost::shared_ptr<diet_profile_t> prof = my_deserialize(profSer);
   BOOST_REQUIRE_EQUAL(prof->name, "alloc");
-  BOOST_REQUIRE_EQUAL(prof->IN, 0);
-  BOOST_REQUIRE_EQUAL(prof->INOUT, 0);
-  BOOST_REQUIRE_EQUAL(prof->OUT, 1);
+  BOOST_REQUIRE_EQUAL(prof->param_count, 0);
   BOOST_REQUIRE_EQUAL(prof->params[0], "param1");
 }
 

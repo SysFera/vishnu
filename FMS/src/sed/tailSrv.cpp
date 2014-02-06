@@ -30,16 +30,16 @@ int tailFile(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string finishError = "";
   std::string cmd = "";
-  std::string result = "";
-  std::string errMsg = "";
 
   diet_string_get(profile, 0, sessionKey);
   diet_string_get(profile, 1, path);
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -75,32 +75,29 @@ int tailFile(diet_profile_t* profile) {
     FileFactory ff;
     ff.setSSHServer(machineName);
 
-boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
+    boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-  FMS_Data::TailOfFileOptions_ptr options_ptr= NULL;
-  if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
+    FMS_Data::TailOfFileOptions_ptr options_ptr= NULL;
+    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
       throw SystemException(ERRCODE_INVDATA, "solve_Tail: TailOfFileOptions object is not well built");
-  }
+    }
 
-		result = file->tail(*options_ptr);
+    // set success result
+    diet_string_set(profile, 1, file->tail(*options_ptr));
+    diet_string_set(profile, 0, "success");
 
-  //To register the command
-  sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
+    //To register the command
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
 
   } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    err.appendMsgComp(finishError);
-
-    result = "";
-	errMsg = err.buildExceptionString();
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
-
-  diet_string_set(profile, 5, result.c_str());
-  diet_string_set(profile, 6, errMsg.c_str());
   return 0;
 }
