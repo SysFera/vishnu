@@ -172,8 +172,7 @@ diet_call(diet_profile_t* prof) {
   boost::algorithm::split(tokens, service, boost::algorithm::is_any_of("@"));
 
   if (!uriv.empty()) {
-    std::istringstream iss(uriv[0]);
-    iss >> uri;
+    uri = boost::lexical_cast<std::string>(uriv[0]);
   }
   try {
     std::string mid = tokens.at(1);
