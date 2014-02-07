@@ -163,12 +163,6 @@ diet_call(diet_profile_t* prof) {
   } else if (module == "tms") {
     param = vishnu::TMS_URIADDR;
   } else {
-    // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
-    // No module or server found
-    // throw SystemException(ERRCODE_SYSTEM,
-    //                       boost::str(
-    //                         boost::format("No corresponding %1% server found")
-    //                         % service));
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
   }
@@ -206,12 +200,6 @@ diet_call(diet_profile_t* prof) {
   }
 
   if (uri.empty() && disp.empty()) {
-    // Currently do not throw anything as diet_call is meant to return an error and not throw an exception
-    // No module or server found
-    // throw SystemException(ERRCODE_SYSTEM,
-    //                       boost::str(
-    //                         boost::format("No corresponding %1% server found")
-    //                         % service));
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
   }
