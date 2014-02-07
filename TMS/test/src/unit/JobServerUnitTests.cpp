@@ -5,6 +5,7 @@
 #include "TMSVishnuException.hpp"
 #include "JobServer.hpp"
 #include "TMSVishnuException.hpp"
+#include "utils.hpp"
 
 
 
@@ -63,7 +64,8 @@ public:
                     const std::vector<std::string>& defaultBatchOption,
                     const std::string& machineName){
 
-    return this->processScript(scriptContent, options, defaultBatchOption, machineName);
+    JsonObject jsonOptions(options);
+    return this->processScript(scriptContent, jsonOptions, defaultBatchOption, machineName);
   }
 
   

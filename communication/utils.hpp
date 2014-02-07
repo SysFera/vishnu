@@ -12,8 +12,8 @@
 #include <vector>
 #include <boost/thread.hpp>
 #include <boost/version.hpp>
-#include "DIET_client.h"
 #include <jansson.h>
+#include "DIET_client.h"
 
 
 class diet_profile_t;
@@ -266,7 +266,6 @@ public:
    * @return
    */
   TMS_Data::SubmitOptions getSubmitOptions();
-
 
 private:
   /**

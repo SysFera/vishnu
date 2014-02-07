@@ -20,7 +20,7 @@ public:
   VishnuConnection(const std::string& uid,
                    const std::string& upwd,
                    const UMS_Data::ConnectOptions& co = UMS_Data::ConnectOptions())
-  :muid(uid), mupwd(upwd), mco(co), open(false) {};
+    :muid(uid), mupwd(upwd), mco(co), open(false) {};
 
   ~VishnuConnection() {
     if(true==open) {
@@ -79,10 +79,9 @@ int createFile(const std::string& filePath) {
  */
 int
 restore(const std::string& filePath) {
+
   int READSIZE = 1000;
-  diet_profile_t* profile = NULL;
   std::ifstream file(filePath.c_str(), std::ios::in);
-  std::string errorInfo;
 
   if (!file) {
     return -1;
@@ -96,21 +95,16 @@ restore(const std::string& filePath) {
       break;
     }
 
-    profile = diet_profile_alloc(SERVICES_UMS[RESTORE], 0, 0, 1);
+    diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[RESTORE], 1);
     //IN Parameters
     diet_string_set(profile, 0, tmp);
-    //OUT Parameters
-    diet_string_set(profile, 1);
     delete [] tmp;
 
-    if (!diet_call(profile)) {
-      if (diet_string_get(profile, 1, errorInfo)) {
-        raiseCommunicationMsgException("VISHNU call failure");
-      }
-    } else {
-      raiseCommunicationMsgException("VISHNU call failure");
+    if (diet_call(profile)) {
+      raiseCommunicationMsgException("RPC call failed");
     }
-    raiseExceptionIfNotEmptyMsg(errorInfo);
+    raiseExceptionOnErrorResult(profile);
+    diet_profile_free(profile);
   }
   return 0;
 }

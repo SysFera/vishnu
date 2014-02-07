@@ -1,4 +1,5 @@
 include_directories(
+  ${COMMUNICATION_INCLUDE_DIR}
   ${UTILVISHNU_SOURCE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${EMF_DATA_DIR}
@@ -18,6 +19,8 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   ${FMS_TEST_SOURCE_DIR}
   ${CONFIG_SOURCE_DIR}
+  ${LIBJANSSON_INCLUDE_DIR}
+  ${REGISTRY_SOURCE_DIR}
   )
 
 
