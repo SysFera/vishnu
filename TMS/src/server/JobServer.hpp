@@ -8,12 +8,12 @@
 #ifndef _JOB_SERVER_H
 #define _JOB_SERVER_H
 
-#include "TMS_Data.hpp"
+#include "utils.hpp"
 #include <string>
+#include "TMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "tmsUtils.hpp"
-#include "utils.hpp"
 /**
  * \class JobServer
  * \brief JobServer class implementation

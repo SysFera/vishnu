@@ -4,6 +4,7 @@
  * \author Daouda Traore (daouda.traore@sysfera.com)
  * \date April 2011
  */
+
 #include "JobServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
@@ -16,12 +17,11 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/format.hpp>
-
 #include <fcntl.h>
 #include "api_fms.hpp"
 #include "sys/stat.h"
+#include "utils.hpp"
 
-using namespace std;
 using namespace vishnu;
 
 /**
@@ -169,7 +169,7 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setSubmitMachineId(mmachineId);
     mjob.setSubmitMachineName(machineName);
 
-    string scriptContentStr = std::string(convertedScript);
+    std::string scriptContentStr = std::string(convertedScript);
     size_t pos = scriptContentStr.find("'");
     while (pos!=std::string::npos) {
       scriptContent.replace(pos, 1, " ");
@@ -232,7 +232,7 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
     key1 =  defaultBatchOption.at(count);
     position = 0;
     int found =0;
-    while (position!=string::npos && !found) {
+    while (position!=std::string::npos && !found) {
       position = content.find(key.c_str(), position);
       if(position!=std::string::npos) {
         size_t pos1 = content.find("\n", position);
@@ -264,9 +264,9 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
   size_t pos = 0;
   size_t posLastDirective = 0;
 
-  while (pos!=string::npos) {
+  while (pos!=std::string::npos) {
     pos = content.find(key.c_str(), pos);
-    if (pos!=string::npos) {
+    if (pos!=std::string::npos) {
       size_t pos1 = 0;
       pos1 = content.find("\n", pos);
       while (content.compare(pos1-1,1,"\\") == 0) {
@@ -277,7 +277,7 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
         if(mbatchType==LOADLEVELER) {
           std::string line_tolower(line);
           std::transform(line.begin(), line.end(), line_tolower.begin(), ::tolower);
-          if(line_tolower.find("queue")!=string::npos) {
+          if(line_tolower.find("queue")!=std::string::npos) {
             break;
           }
         }
@@ -736,37 +736,37 @@ std::string JobServer::getMachineName(const std::string& machineId) {
  * \param suffix the suffix of the working directory
  * \return none
  */
-void JobServer::setRealPaths(JsonObject& jsonOptions, const std::string& suffix)
+void JobServer::setRealPaths(JsonObject& submitOptions, const std::string& suffix)
 {
   std::string workingDir = boost::filesystem::temp_directory_path().string();
-  string scriptPath = "";
+  std::string scriptPath = "";
   if(mbatchType == DELTACLOUD) {
-    string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
+    std::string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     workingDir = mountPoint.empty()? "/tmp/" + suffix : mountPoint + "/" + suffix;
-    string inputDir =  workingDir + "/INPUT";
+    std::string inputDir =  workingDir + "/INPUT";
     scriptPath = inputDir + "/script.xsh";
     vishnu::createDir(workingDir, true); // create the working directory
     vishnu::createDir(inputDir, true); // create the input directory
-    string directory = "";
+    std::string directory = "";
     try {
-      directory = vishnu::moveFileData(jsonOptions.getStringProperty("fileparams"), inputDir);
+      directory = vishnu::moveFileData(submitOptions.getStringProperty("fileparams"), inputDir);
     } catch(bfs::filesystem_error &ex) {
       throw SystemException(ERRCODE_RUNTIME_ERROR, ex.what());
     }
     if(directory.length() > 0) {
-      std::string fileparams = jsonOptions.getStringProperty("fileparams");
+      std::string fileparams = submitOptions.getStringProperty("fileparams");
       vishnu::replaceAllOccurences(fileparams, directory, inputDir);
-      jsonOptions.setProperty("fileparams", fileparams);
+      submitOptions.setProperty("fileparams", fileparams);
     }
   } else {
     scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
-    std::string workingDir = jsonOptions.getStringProperty("workingdir");
+    std::string workingDir = submitOptions.getStringProperty("workingdir");
     if (workingDir.empty()) {
       workingDir = UserServer(msessionServer).getUserAccountProperty(mmachineId, "home");
     }
   }
-  jsonOptions.setProperty("workingdir", workingDir);
-  jsonOptions.setProperty("scriptpath", scriptPath);
+  submitOptions.setProperty("workingdir", workingDir);
+  submitOptions.setProperty("scriptpath", scriptPath);
 }
 
 /**

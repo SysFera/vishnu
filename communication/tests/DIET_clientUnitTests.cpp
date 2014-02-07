@@ -117,12 +117,22 @@ BOOST_AUTO_TEST_CASE( my_test_getStr_n )
 
 BOOST_AUTO_TEST_CASE( my_test_serial_n )
 {
-  diet_profile_t* prof = diet_profile_alloc("alloc", 0, 0, 1);
+  diet_profile_t* prof = diet_profile_alloc("alloc", 2);
   diet_string_set(prof, 0, "param1");
   diet_string_set(prof, 1);
   std::string res = my_serialize(prof);
+  diet_profile_t* prof2 = my_deserialize(res).get();
 
-  BOOST_REQUIRE_EQUAL(res, "alloc$$$$####$$$$0$$$$####$$$$0$$$$####$$$$1$$$$####$$$$param1$$$$####$$$$$$$$####$$$$");
+  std::string param1;
+  std::string param2;
+  diet_string_get(prof2, 0, param1);
+  diet_string_get(prof2, 1, param2);
+  JsonObject jsonProf(res);
+
+  BOOST_REQUIRE_EQUAL(prof->name, jsonProf.getStringProperty("name"));
+  BOOST_REQUIRE_EQUAL(prof->name, prof2->name);
+  BOOST_REQUIRE_EQUAL(param1, "param1");
+  BOOST_REQUIRE_EQUAL(param2, "");
 }
 
 BOOST_AUTO_TEST_CASE( my_test_serial_b )
@@ -133,10 +143,10 @@ BOOST_AUTO_TEST_CASE( my_test_serial_b )
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
-  std::string profSer = "alloc$$$$####$$$$0$$$$####$$$$0$$$$####$$$$1$$$$####$$$$param1$$$$####$$$$$$$$####$$$$";
+  std::string profSer = "{\"name\":\"alloc\", \"param_count\":\"1\", \"params\": [\"param1\"]}";
   boost::shared_ptr<diet_profile_t> prof = my_deserialize(profSer);
   BOOST_REQUIRE_EQUAL(prof->name, "alloc");
-  BOOST_REQUIRE_EQUAL(prof->param_count, 0);
+  BOOST_REQUIRE_EQUAL(prof->param_count, 1);
   BOOST_REQUIRE_EQUAL(prof->params[0], "param1");
 }
 
