@@ -56,7 +56,8 @@ namespace vishnu {
     SERVER_PUBLIC_KEY,
     SERVER_PRIVATE_KEY,
     SERVER_SSL_CERTICATE,
-    SSL_CA
+    SSL_CA,
+    SUBSCRIBE
   } param_type_t;
 
   /**
@@ -91,7 +92,7 @@ namespace vishnu {
   } job_status_t;
 
   /**
-   * \brief States of jobs
+   * \brief States of components
    */
   typedef enum {
     STATUS_UNDEFINED=-1,
@@ -99,7 +100,7 @@ namespace vishnu {
     STATUS_ACTIVE=1,
     STATUS_DELETED=2
   } component_status_t;
-  
+
   typedef enum {
     SESSION_CLOSED=0,
     SESSION_ACTIVE=1

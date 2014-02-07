@@ -16,6 +16,7 @@ include_directories(
   ${UMS_TEST_SOURCE_DIR}
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${VISHNU_SOURCE_DIR}/communication
+  ${LIBJANSSON_INCLUDE_DIR}
   )
 
 

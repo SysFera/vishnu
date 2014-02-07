@@ -7,6 +7,7 @@
 #include <boost/smart_ptr/shared_ptr.hpp>  // for shared_ptr
 #include <exception>                    // for exception
 #include <iterator>                     // for back_insert_iterator, etc
+#include <string>
 #include <utility>                      // for pair
 
 #include "Worker.hpp"                   // for serverWorkerSockets
@@ -14,11 +15,25 @@
 #include "zmq.hpp"
 #include "SeDWorker.hpp"
 #include "VishnuException.hpp"
+#include "vishnu_version.hpp"
 
 
 int
 heartbeat(diet_profile_t* pb){
-  diet_string_set(pb, 1, "OK");
+  std::string serviceName = std::string(pb->name);
+  std::string batch;
+  if (serviceName.find("tms") != std::string::npos){
+    batch = (boost::format("\n With batch scheduler %1% %2%")
+             % VISHNU_BATCH_SCHEDULER
+             % VISHNU_BATCH_SCHEDULER_VERSION).str();
+  }
+  std::string msg = (boost::format("%1% %2%") % VISHNU_VERSION % batch).str();
+
+  // reset the profile to handle result
+  diet_profile_reset(pb, 2);
+
+  diet_string_set(pb, 1, msg);
+  diet_string_set(pb, 0, "success");
   return 0;
 }
 
@@ -33,7 +48,7 @@ SeD::call(diet_profile_t* profile) {
   if (it == mcb.end()) {
     std::cerr << boost::format("E: service not found: %1%\n") % profile->name;
 // To show it is an invalid profile
-    profile->OUT = -1;
+    profile->param_count = -1;
     return UNKNOWN_SERVICE;
   }
   CallbackFn fn = boost::ref(it->second);
@@ -46,8 +61,8 @@ SeD::call(diet_profile_t* profile) {
     rv = fn(profile);
   } catch (const std::exception &e) {
     rv = INTERNAL_ERROR;
-    throw SystemException(ERRCODE_INVDATA, e.what());
     std::cerr << boost::format("[ERROR] %1%\n") % e.what();
+    throw SystemException(ERRCODE_INVDATA, e.what());
   }
   return rv;
 }
@@ -89,13 +104,12 @@ public:
         continue;
       }
 
-      // Deserialize and call UMS Method
+      // Deserialize and call the target method
       if (!data.empty()) {
         try {
           boost::shared_ptr<diet_profile_t> profile(my_deserialize(data));
           server_->call(profile.get()); //FIXME: deal with possibly error
-          std::string resultSerialized = my_serialize(profile.get());
-          socket.send(resultSerialized);
+          socket.send(my_serialize(profile.get()));
         } catch (const VishnuException& ex) {
           socket.send(ex.what());
           std::cerr << boost::format("[ERROR] %1%\n")%ex.what();

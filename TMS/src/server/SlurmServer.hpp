@@ -117,10 +117,10 @@ class SlurmServer : public BatchServer
     /**
      * \brief Function To fill the info concerning a job
      * \param job: The job to fill
-     * \param jobId: The identifier of the job to load
+     * \param batchJobId: The identifier of the job to load
      */
     void
-    fillJobInfo(TMS_Data::Job &job, const uint32_t& jobId);
+    fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId);
 
     /**
      * \brief Function To convert vishnu job Id to slurm job Id

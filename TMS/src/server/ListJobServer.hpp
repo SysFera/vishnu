@@ -203,7 +203,7 @@ public:
         " AND vsession.users_numuserid=users.numuserid"
         " AND job.status > 0 ";
 
-    if(mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0) {
+    if(mmachineId.compare(ALL_KEYWORD)!=0) {
       sqlListOfJobs.append(" and job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'");
     }
 
@@ -220,7 +220,7 @@ public:
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with other options excepted jobId option.");
     }
 
-    if(mparameters->isBatchJob() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)==0) {
+    if(mparameters->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with machine id equal to all.");
     }
 
@@ -300,7 +300,7 @@ public:
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
 
-    if(mparameters->isBatchJob() && !mparameters->getJobId().empty() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0){
+    if(mparameters->isBatchJob() && !mparameters->getJobId().empty() && mmachineId.compare(ALL_KEYWORD)!=0){
       BatchFactory factory;
       BatchType batchType  = ServerTMS::getInstance()->getBatchType();
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
@@ -325,7 +325,7 @@ public:
       return mlistObject;
     }
 
-    if(mparameters->isBatchJob() && mmachineId.compare(LIST_JOBS_ON_MACHINES_KEYWORD)!=0 && allOptionsAreNotSet){
+    if(mparameters->isBatchJob() && mmachineId.compare(ALL_KEYWORD)!=0 && allOptionsAreNotSet){
       BatchFactory factory;
       BatchType batchType  = ServerTMS::getInstance()->getBatchType();
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();

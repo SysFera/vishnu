@@ -38,7 +38,7 @@ namespace bfs= boost::filesystem;
 BOOST_FIXTURE_TEST_SUITE(get_Completed_Jobs_output, TMSSeDFixture)
 
 
-  //get Completed Jobs output : normal call
+//get Completed Jobs output : normal call
 
 
 BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
@@ -59,38 +59,41 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
 
-      try {
+    try {
 
       //Setting submitjob parameters
 
       const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
       Job jobInfo;
       SubmitOptions options;
+      options.setMachine(machineId);
 
-      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+      BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options)==0  );
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       // wait a few seconds and check the success of cancelling job
       Job job;
+      getJobInfo(sessionKey, jobInfo.getJobId(), job);
 
-      getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+      // ensure that the job is terminated
 
-    // ensure that the job is terminated
-
-      while (5!=job.getStatus()){
+      while (vishnu::STATE_COMPLETED != job.getStatus()){
 
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
-        getJobInfo(sessionKey, machineId, jobInfo.getJobId(), job);
+        getJobInfo(sessionKey, jobInfo.getJobId(), job);
       }
 
       // Check the success of get completed jobs output function
 
       ListJobResults listOfResults;
+      JobOuputOptions outputOpts;
+      outputOpts.setMachineId(machineId);
+      outputOpts.setOutputDir(m_test_tms_working_dir);
 
-      BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey,machineId,listOfResults, m_test_tms_working_dir),0 );
+      BOOST_CHECK_EQUAL(getCompletedJobsOutput(sessionKey, listOfResults, outputOpts), 0);
 
       for (size_t i=0; i< listOfResults.getNbJobs(); ++i){
 
@@ -100,9 +103,11 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
 
         BOOST_CHECK( pathExist );
 
+        std::string outputPath = bfs::basename(listOfResults.getResults().get(i)->getOutputPath());
+        std::string errorPath = bfs::basename(listOfResults.getResults().get(i)->getErrorPath());
         if (pathExist){
-          bfs::remove (bfs::path(listOfResults.getResults().get(i)->getOutputPath()));
-          bfs::remove (bfs::path(listOfResults.getResults().get(i)->getErrorPath() ));
+          bfs::remove (bfs::path(m_test_tms_working_dir + "/" + outputPath));
+          bfs::remove (bfs::path(m_test_tms_working_dir + "/" + errorPath));
         }
       }
 
@@ -146,20 +151,26 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_sessionKey)
       const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
       Job jobInfo;
       SubmitOptions options;
+      options.setMachine(machineId);
 
-      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+      BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options) == 0);
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
       ListJobResults listOfResults;
+      JobOuputOptions outputOpts;
+      outputOpts.setMachineId(machineId);
+      outputOpts.setOutputDir(m_test_tms_working_dir);
 
-      BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey",machineId, listOfResults, m_test_tms_working_dir),VishnuException  );
+      BOOST_CHECK_THROW(getCompletedJobsOutput("bad sessionKey", listOfResults, outputOpts), VishnuException);
 
       BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad sessionKey ok!!!!*****************************");
 
-    //  Clean up: delete the submitted job
-      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      //  Clean up: delete the submitted job
+      CancelOptions cancelOpts;
+      cancelOpts.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {
@@ -196,20 +207,26 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_machineId)
       const std::string scriptFilePath = generateTmpScript(m_test_tms_machines.at(i).batch_name, "wait");
       Job jobInfo;
       SubmitOptions options;
+      options.setMachine(machineId);
 
-      BOOST_REQUIRE(submitJob(sessionKey, machineId, scriptFilePath, jobInfo,options)==0  );
+      BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo,options) == 0);
 
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
 
       ListJobResults listOfResults;
+      JobOuputOptions outputOpts;
+      outputOpts.setOutputDir(m_test_tms_working_dir);
+      outputOpts.setMachineId("bad machineId");
 
-      BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey,"bad machineId",listOfResults, m_test_tms_working_dir),VishnuException  );
+      BOOST_CHECK_THROW(getCompletedJobsOutput(sessionKey, listOfResults, outputOpts), VishnuException);
 
       BOOST_TEST_MESSAGE("*********************** get completed jobs output : bad machineId ok!!!!*****************************");
 
-    //  Clean up: delete the submitted job
-      BOOST_REQUIRE(cancelJob(sessionKey, machineId, jobInfo.getJobId())==0  );
+      //  Clean up: delete the submitted job
+      CancelOptions cancelOpts;
+      cancelOpts.setJobId(jobInfo.getJobId());
+      BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
     } catch (VishnuException& e) {

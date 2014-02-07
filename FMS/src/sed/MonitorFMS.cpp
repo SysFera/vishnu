@@ -56,14 +56,14 @@ MonitorFMS::init(int vishnuId, DbConfiguration dbConfig) {
     mdatabaseVishnu->connect();
 
     /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand));
     if (result->getResults().size() == 0) {
       throw SystemException(ERRCODE_DBERR, "The vishnuid is unrecognized");
     }
   } catch (VishnuException& e) {
+    std::cerr << e.what() <<"\n";
     exit(0);
   }
-
 }
 
 /**
@@ -83,7 +83,7 @@ MonitorFMS::run() {
                            " AND filetransfer.status=0";
   while(kill(getppid(), 0) == 0) {
     try {
-      boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+      boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlRequest));
       if (result->getNbTuples() != 0) {
         for (size_t i = 0; i < result->getNbTuples(); ++i) {
           tmp.clear();
@@ -96,7 +96,7 @@ MonitorFMS::run() {
           try {
             if(false==vishnu::process_exists(vishnu::convertToString(pid))) {
               sqlUpdatedRequest = "UPDATE filetransfer SET status=3 where transferid='"+transferId+"'";
-              mdatabaseVishnu->process(sqlUpdatedRequest.c_str());
+              mdatabaseVishnu->process(sqlUpdatedRequest);
             }
           } catch (VishnuException& ex) {
             std::clog << boost::format("[FMSMONITOR][ERROR] %1%\n")%ex.what();

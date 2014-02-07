@@ -166,7 +166,7 @@ public:
           //convert the endDate into UTC date
           std::string tmpTime = *(++iter);
           startTime = vishnu::convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
-          filetransfer->setStart_time(startTime);
+          filetransfer->setStartTime(startTime);
           filetransfer->setErrorMsg(*(++iter));
           // Check the transfer Command enum value
           int trCommand=vishnu::convertToInt(*(++iter));

@@ -10,6 +10,26 @@ set(pbs 0)
 set(deltacloud 0)
 set(posix 0)
 
+
+include_directories(client api
+  ${EMF4CPP_INCLUDE_DIR}
+  ${EMF_DATA_DIR}
+  ${UMS_EMF_DATA_DIR}
+  ${TMS_EMF_DATA_DIR}
+  ${UMS_CLIENT_PROXY_SOURCE_DIR}
+  ${UTILVISHNU_SOURCE_DIR}
+  ${VISHNU_EXCEPTION_INCLUDE_DIR}
+  ${Boost_INCLUDE_DIRS}
+  ${PROJECT_BINARY_DIR}/include/
+  ${ZMQ_INCLUDE_DIR}
+  ${UMS_API_SOURCE_DIR}
+  ${FMS_API_SOURCE_DIR}
+  ${CONFIG_SOURCE_DIR}
+  ${VISHNU_SOURCE_DIR}/TMS/src/sed
+  ${LIBJANSSON_INCLUDE_DIR}
+  ${COMMUNICATION_INCLUDE_DIR}
+)
+
 if (COMPILE_TMS AND COMPILE_SERVERS)
   string (COMPARE EQUAL ${VISHNU_BATCH} "TORQUE" torque)
   string (COMPARE EQUAL ${VISHNU_BATCH} "LL" ll)
@@ -179,25 +199,6 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
 
 endif(COMPILE_TMS AND COMPILE_SERVERS)
 
-
-include_directories(client api
-  ${EMF4CPP_INCLUDE_DIR}
-  ${EMF_DATA_DIR} 
-  ${UMS_EMF_DATA_DIR}
-  ${TMS_EMF_DATA_DIR}
-  ${UMS_CLIENT_PROXY_SOURCE_DIR}
-  ${UTILVISHNU_SOURCE_DIR}
-  ${VISHNU_EXCEPTION_INCLUDE_DIR}
-  ${Boost_INCLUDE_DIRS}
-  ${PROJECT_BINARY_DIR}/include/
-  ${ZMQ_INCLUDE_DIR}
-  ${COMMUNICATION_INCLUDE_DIR}
-  ${UMS_API_SOURCE_DIR}
-  ${FMS_API_SOURCE_DIR}
-  ${CONFIG_SOURCE_DIR}
-  ${VISHNU_SOURCE_DIR}/TMS/src/sed
-)
-
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
   ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
 
@@ -305,7 +306,7 @@ if (COMPILE_SERVERS)
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server vishnu-ums-server)
+  target_link_libraries(vishnu-tms-server vishnu-ums-server zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary

@@ -120,6 +120,14 @@ namespace TMS_Data
     class AddWorkOptions;
     typedef AddWorkOptions* AddWorkOptions_ptr;
 
+    // CancelOptions
+    class CancelOptions;
+    typedef CancelOptions* CancelOptions_ptr;
+
+    // JobOuputOptions
+    class JobOuputOptions;
+    typedef JobOuputOptions* JobOuputOptions_ptr;
+
     // Package & Factory
     class TMS_DataFactory;
     typedef TMS_DataFactory * TMS_DataFactory_ptr;

@@ -12,6 +12,11 @@
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include "sslhelpers.hpp"
+#include "Server.hpp"
+
+namespace TMS_Data  {
+  class Job;
+}
 
 /**
  * \brief Separator for zmq communication
@@ -22,21 +27,17 @@
  */
 #define VISHNU_COMM_REGEX     "\\${4}\\#{4}\\${4}"
 /**
+ * \brief Short timeout
+ */
+#define SHORT_TIMEOUT 2
+/**
  * \brief Overload of DIET structure
  */
 typedef struct diet_profile_t {
   /**
    * \brief Overload of DIET param, last IN param in the array
    */
-  int IN;
-  /**
-   * \brief Overload of DIET param, last INOUT param in the array
-   */
-  int INOUT;
-  /**
-   * \brief Overload of DIET param, last OUT param in the array
-   */
-  int OUT;
+  int param_count;
   /**
    * \brief Overload of DIET param, name of the service
    */
@@ -48,17 +49,22 @@ typedef struct diet_profile_t {
 } diet_profile_t;
 
 
-
 /**
  * \brief Overload of DIET function, allocate the profile of a service
  * \param name The name of the service
- * \param IN number of IN parameters
- * \param INOUT number of IN+INOUT parameters
- * \param OUT number of IN+INOUT+OUT parameters
+ * \param count_params number of parameters
  * \return The allocated profile
  */
 diet_profile_t*
-diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT);
+diet_profile_alloc(const std::string &name, int count_params);
+
+/**
+ * @brief Reset the data and the number of parameters in the profile
+ * @param prof The profile
+ * @param nbparams The number of parameter
+ */
+void
+diet_profile_reset(diet_profile_t* prof, int nbparams);
 
 /**
  * \brief Overload of DIET function, set a param value in a profile to a string(char *)
@@ -69,6 +75,8 @@ diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT);
  */
 int
 diet_string_set(diet_profile_t* prof, int pos, const std::string& value = "");
+
+
 
 /**
  * \brief Overload of DIET function, call to a DIET service
@@ -82,8 +90,12 @@ diet_call(diet_profile_t* prof);
  * \brief Generic function created to encapsulate the code
  */
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri);
-
+diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
+/**
+ * \brief Generic function created to encapsulate the code
+ */
+int
+abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout = false);
 /**
  * @brief ssl_call_gen
  * @param prof
@@ -123,13 +135,6 @@ diet_profile_free(diet_profile_t* prof);
 int
 getTimeout();
 
-/**
- * \brief To deserialize a profile
- * \param prof The serialized profile
- * \return The deserialized profile
- */
-boost::shared_ptr<diet_profile_t>
-my_deserialize(const std::string& prof);
 
 /**
  * \brief To serialize a profile
@@ -138,6 +143,14 @@ my_deserialize(const std::string& prof);
  */
 std::string
 my_serialize(diet_profile_t* prof);
+
+/**
+ * \brief To deserialize a profile
+ * \param prof The serialized profile
+ * \return The deserialized profile
+ */
+boost::shared_ptr<diet_profile_t>
+my_deserialize(const std::string& prof);
 
 /**
  * \brief Overload of DIET function, to initialize
@@ -150,5 +163,32 @@ my_serialize(diet_profile_t* prof);
 int
 diet_initialize(const char* cfg, int argc, char** argv);
 
+/**
+ * \brief To ask something to the dispatcher and get the answer
+ * \param requestData The request for the dispatcher
+ * \param response The answer from the dispatcher
+ * \return 0 on success
+ */
+int
+communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout = false);
 
+/**
+ * \brief Extract the servers from a serialized message list
+ * \param msg : The message
+ * \param res : vector of deserialized servers
+ */
+void
+extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res);
+/**
+ * \brief Fill servers with a list of servers from config file
+ */
+void
+getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers);
+
+
+/**
+ * @brief Raise exception when profile hold error status
+ * @param profile The profile to analyse
+ */
+void raiseExceptionOnErrorResult(diet_profile_t* profile);
 #endif // __DIETMOCK__

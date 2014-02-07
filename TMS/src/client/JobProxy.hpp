@@ -18,17 +18,17 @@
  */
 class JobProxy {
 
-  public:
+public:
 
   /**
   * \param session The object which encapsulates the session information
-  * \param machineId The id of the machine
   * \param job The job data structure
+  * \param machineId The id of the machine. Optional
   * \brief Constructor
   */
   explicit JobProxy(const SessionProxy& session,
-                    const std::string& machineId,
-                    TMS_Data::Job& job);
+                    TMS_Data::Job& job,
+                    const std::string& machineId = "");
   /**
   * \brief Function to submit job
   * \param scriptContent the content of the script
@@ -42,17 +42,18 @@ class JobProxy {
   
   /**
   * \brief Function to cancel job
+  * \param options An object containing options
   * \return raises an exception on error
   */
   int
-  cancelJob();
+  cancelJob(const TMS_Data::CancelOptions& options);
 
   /**
    * \brief Function to get job information
    * \return raises an exception on error
    */
-  TMS_Data::Job  
-  getJobInfo(); 
+  TMS_Data::Job
+  getJobInfo();
 
   /**
   * \brief Function to get job information
@@ -66,7 +67,7 @@ class JobProxy {
     */
   ~JobProxy();
 
-  private:
+private:
 
   /////////////////////////////////
   // Attributes
@@ -77,13 +78,13 @@ class JobProxy {
   */
   SessionProxy msessionProxy;
   /**
-  * \brief The id of the machine
-  */
-  std::string mmachineId;
-  /**
   * \brief The job data structure
   */
   TMS_Data::Job mjob;
+  /**
+  * \brief The id of the machine
+  */
+  std::string mmachineId;
 
 };
 #endif //_JOB_PROXY_H

@@ -334,7 +334,7 @@ throw (UMSVishnuException, FMSVishnuException,
  * \return 0 if everything is OK, another value otherwise
  */
 int
-vishnu::more(const string& sessionKey, const string& path,
+vishnu::cat(const string& sessionKey, const string& path,
              string& contentOfFile)
 throw (UMSVishnuException, FMSVishnuException,
        UserException, SystemException) {

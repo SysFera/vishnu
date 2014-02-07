@@ -33,6 +33,7 @@ include_directories(client api utils
   ${XMLRPC_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${VISHNU_SOURCE_DIR}/TMS/src/sed
+  ${LIBJANSSON_INCLUDE_DIR}
 )
 
 

@@ -159,7 +159,6 @@ public:
 
       processOptions(userServer, mparameters, sqlListOfSessions);
       sqlListOfSessions.append(" order by creation");
-      std::cout << "Request is " << sqlListOfSessions << std::endl;
       //To get the list of sessions from the database
       boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabaseVishnu->getResult(sqlListOfSessions.c_str()));
 

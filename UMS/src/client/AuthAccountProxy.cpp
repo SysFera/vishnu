@@ -30,13 +30,11 @@ AuthAccountProxy::AuthAccountProxy(const UMS_Data::AuthAccount& authAccount, con
 int
 AuthAccountProxy::_addAuthAccountInformation(std::string name) {
 
-  diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string authAccountToString;
-  std::string errorInfo;
   std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(name.c_str(), 1, 1, 2);
+  diet_profile_t* profile = diet_profile_alloc(name, 2);
 
   sessionKey = msessionProxy.getSessionKey();
 
@@ -45,30 +43,13 @@ AuthAccountProxy::_addAuthAccountInformation(std::string name) {
   authAccountToString =  _ser.serialize_str(const_cast<UMS_Data::AuthAccount_ptr>(&mauthAccount));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, authAccountToString)) {
-    msg += "with authAccountToString parameter "+authAccountToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 1, authAccountToString);
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 
@@ -102,47 +83,25 @@ AuthAccountProxy::update()
 int
 AuthAccountProxy::deleteAuthAccount()
 {
-  diet_profile_t* profile = NULL;
   std::string sessionKey;
   std::string userId;
   std::string sysId;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
-  profile = diet_profile_alloc(SERVICES_UMS[AUTHACCOUNTDELETE], 2, 2, 3);
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[AUTHACCOUNTDELETE], 3);
   sessionKey = msessionProxy.getSessionKey();
   userId = mauthAccount.getUserId();
   sysId = mauthAccount.getAuthSystemId();
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, sysId)) {
-    msg += "with systemId parameter "+sysId;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 2, userId)) {
-    msg += "with userId parameter "+userId;
-    raiseCommunicationMsgException(msg);
+  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 1, sysId);
+  diet_string_set(profile, 2, userId);
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
 
-  //OUT Parameters
-  diet_string_set(profile,3);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,3, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 

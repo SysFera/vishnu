@@ -7,11 +7,14 @@
 #ifndef _ANNUARYWORKERS_HPP_
 #define _ANNUARYWORKERS_HPP_
 
+
+#include <boost/algorithm/string/join.hpp>
 #include "Worker.hpp"
 #include "DIET_client.h"
 #include "UserException.hpp"
 #include "Annuary.hpp"
 #include "utilVishnu.hpp"
+#include "vishnu_version.hpp"
 
 /**
  * \class AnnuaryWorker
@@ -92,13 +95,7 @@ private:
     std::string uriServer = elect(serv);
 
     if (!uriServer.empty()) {
-      if (useSsl) {
-        int port = vishnu::getPortFromUri(uriServer);
-        std::string host = vishnu::getHostFromUri(uriServer);
-        ssl_call_gen(profile.get(), host, port, cafile);
-      } else {
-        diet_call_gen(profile.get(), uriServer);
-      }
+      abstract_call_gen(profile.get(), uriServer);
       return my_serialize(profile.get());
     } else {
       return str(format("error %1%: the service %2% is not available")
@@ -164,20 +161,51 @@ private:
   std::string
   doCall(std::string& data) {
     int mode = boost::lexical_cast<int>(data.substr(0,1));
+    std::string result("OK");
 
     // Deserialize
-    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
-
-    if (mode == 1) {
-      // adding a new server
-      mann_->add(server->getName(), server->getURI(),
-                 server->getServices());
-    } else if (mode == 0) {
-      mann_->remove(server->getName(), server->getURI());
+    switch(mode) {
+    case 0:
+      removeServer(data);
+      break;
+    case 1:
+      addServer(data);
+      break;
+    case 2:
+      result = listServer(data);
+      break;
+    case 3:
+      result = boost::str(boost::format("%1%") % VISHNU_VERSION);
+      break;
+    default:  // NOOP
+      std::cerr << "[ERROR]: unrecognized command\n";
     }
-
-    return "OK";
+    return result;
   }
+
+  void
+  removeServer(const std::string& data) {
+    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
+    mann_->remove(server->getName(), server->getURI());
+  }
+
+  void
+  addServer(const std::string& data) {
+    boost::shared_ptr<Server> server = Server::fromString(data.substr(1));
+    std::vector<std::string> services = server->getServices();
+    mann_->add(server->getName(), server->getURI(),  services);
+  }
+
+  std::string
+  listServer(const std::string& data) {
+    std::vector<boost::shared_ptr<Server> > list = mann_->get();
+    std::vector<std::string> listServers;
+    std::transform(list.begin(), list.end(),
+                   std::back_inserter(listServers),
+                   boost::bind(&Server::toString, _1));
+    return boost::algorithm::join(listServers, VISHNU_COMM_SEPARATOR);
+  }
+
 
 };
 

@@ -10,7 +10,9 @@ if (BUILD_TESTING)
        "PATH to the ZeroMQ installation directory")
 
   #Boost::process is required
-  include_directories(third-party)
+  include_directories(third-party
+  ${LIBJANSSON_INCLUDE_DIR}
+  )
 
   # test setup
   # for the moment, we only support in-place testing

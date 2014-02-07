@@ -25,6 +25,7 @@ typedef enum {
   ADDWORK,
   WORKUPDATE,
   WORKDELETE,
+  HEARTBEATTMS,
   NB_SRV_TMS  // MUST always be the last
 } tms_service_t;
 
@@ -43,7 +44,8 @@ static const char* SERVICES_TMS[NB_SRV_TMS] = {
   "jobSubmit_autom",  // 9
   "addwork",  // 10
   "workUpdate",  // 11
-  "workDelete"  // 12
+  "workDelete",  // 12
+  "heartbeattmssed" // 13
 };
 
 static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
@@ -59,7 +61,8 @@ static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
   false,  // 9
   false,  // 10
   false,  // 11
-  false   // 12
+  false,   // 12
+  true // 13
 };
 
 

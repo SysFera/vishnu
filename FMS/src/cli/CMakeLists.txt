@@ -31,7 +31,7 @@ set(ALLCLI
   rmdir
   chgrp
   chmod
-  more
+  cat
   ls
   cp
   acp

@@ -58,7 +58,7 @@ ServerFMS::ServerFMS()  {
  * \return an error code (0 if success and 1 if an error occurs)
  */
 int
-ServerFMS::init(int vishnuId, DbConfiguration dbConfig) {
+ServerFMS::init(int vishnuId, std::string mid, DbConfiguration dbConfig) {
 
   DbFactory factory;
 
@@ -76,7 +76,7 @@ ServerFMS::init(int vishnuId, DbConfiguration dbConfig) {
     mmapper->registerMapper();
 
     /* Checking of vishnuid on the database */
-    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+    boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand));
     if (result->getResults().size() == 0) {
       SystemException e(ERRCODE_DBERR, "The vishnuid is unrecognized");
       throw e;
@@ -86,7 +86,7 @@ ServerFMS::init(int vishnuId, DbConfiguration dbConfig) {
       std::cout << e.what() << std::endl;
       exit(0);
   }
-  initMap();
+  initMap(mid);
 
 
   return 0;
@@ -105,8 +105,9 @@ ServerFMS::~ServerFMS() {
 }
 
 void
-ServerFMS::initMap() {
+ServerFMS::initMap(std::string mid) {
   int (*functionPtr)(diet_profile_t*);
+
 
   functionPtr = solveTransferFile<File::copy,File::async>;
   mcb[SERVICES_FMS[FILECOPYASYNC]] = functionPtr;
@@ -170,4 +171,6 @@ ServerFMS::initMap() {
 
   functionPtr = solveFileTransferStop;
   mcb[SERVICES_FMS[FILETRANSFERSTOP]] = functionPtr;
+
+  mcb[std::string(SERVICES_FMS[HEARTBEATFMS])+"@"+mid] = boost::ref(heartbeat);
 }

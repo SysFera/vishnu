@@ -49,6 +49,8 @@ main(int argc, char* argv[], char* envp[]) {
   std::string FMSTYPE = "fmssed";
   std::string mid;
   std::string uri;
+  bool sub;
+
 
   if (argc != 2) {
     return usage(argv[0]);
@@ -66,6 +68,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uri);
+    config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");
     }
@@ -84,8 +87,10 @@ main(int argc, char* argv[], char* envp[]) {
     try {
       //Initialize the FMS Server (Opens a connection to the database)
       boost::shared_ptr<ServerFMS> server(ServerFMS::getInstance());
-      res = server->init(vishnuId, dbConfig);
-
+      res = server->init(vishnuId, mid, dbConfig);
+      if (sub) {
+        boost::thread thr(boost::bind(&keepRegistered, FMSTYPE, config, uri, server));
+      }
 
       // Initialize the Vishnu SeD
       if (!res) {

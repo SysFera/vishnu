@@ -60,25 +60,19 @@ SessionProxy::SessionProxy()
 int
 SessionProxy::_connect(const UserProxy& user, bool connect,
                        const UMS_Data::ConnectOptions& options) {
-  diet_profile_t* profile = NULL;
+
   char hostname[HOST_NAME_MAX_SIZE];
-  std::string sshKey1;
-  std::string sshKey2;
-  std::string sshKey3;
-  std::string sshKey4;
   std::string optionsToString;
   std::string versionToString;
-  std::string sessionInString;
-  std::string errorInfo;
+  std::string sessionSerialiazed;
   size_t length;
   char* key;
   char* encryptedKey;
-  std::string msg = "call of function diet_string_set is rejected ";
   //To set the possibles paths of the ssh key
-  sshKey1 = "/etc/ssh/ssh_host_dsa_key.pub";
-  sshKey2 = "/etc/ssh/ssh_host_rsa_key.pub";
-  sshKey3 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_dsa_key.pub";
-  sshKey4 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_rsa_key.pub";
+  std::string sshKey1 = "/etc/ssh/ssh_host_dsa_key.pub";
+  std::string sshKey2 = "/etc/ssh/ssh_host_rsa_key.pub";
+  std::string sshKey3 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_dsa_key.pub";
+  std::string sshKey4 = std::string(getenv("HOME"))+"/.vishnu/ssh_host_rsa_key.pub";
   gethostname(hostname, HOST_NAME_MAX_SIZE);
 
   std::ifstream ifile;
@@ -94,11 +88,11 @@ SessionProxy::_connect(const UserProxy& user, bool connect,
   //To check if at least on file can be oponed
   if(!checkFile1 && !checkFile2 && !checkFile3 && !checkFile4) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "can't open file "+sshKey1+" or "+sshKey2+" or "+sshKey3+":\n"+
-        "You must copy the file of your sshKey in one of three free files:\n"
-        +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
-        +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
-        +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
-        +"$HOME/.vishnu/ssh_host_rsa_key.pub");
+                             "You must copy the file of your sshKey in one of three free files:\n"
+                             +"/etc/ssh/ssh_host_dsa_key.pub, or\n"
+                             +"/etc/ssh/ssh_host_rsa_key.pub, or\n"
+                             +"$HOME/.vishnu/ssh_host_dsa_key.pub, or\n"
+                             +"$HOME/.vishnu/ssh_host_rsa_key.pub");
   }
 
   //To get the content of the first opened file and close the others files opened
@@ -149,84 +143,48 @@ SessionProxy::_connect(const UserProxy& user, bool connect,
   if (vers == NULL) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, "The format of the VISHNU VERSION is incorrect");
   } else {
-    // SERIALIZE DATA MODEL
+    //serialize the version object in to versionToString
     ::ecorecpp::serializer::serializer _serializeVersion;
-    //To serialize the version object in to versionToString
     versionToString =  _serializeVersion.serialize_str(vers);
   }
 
+  diet_profile_t* profile = NULL;
   if(connect) {
     // SERIALIZE DATA MODEL
     ::ecorecpp::serializer::serializer _ser;
     //To serialize the options object in to optionsToString
     optionsToString =  _ser.serialize_str(const_cast<UMS_Data::ConnectOptions_ptr>(&options));
-    profile = diet_profile_alloc(SERVICES_UMS[SESSIONCONNECT], 5, 5, 7);
+    profile = diet_profile_alloc(SERVICES_UMS[SESSIONCONNECT], 6);
   } else {
-    profile = diet_profile_alloc(SERVICES_UMS[SESSIONRECONNECT], 5, 5, 7);
+    profile = diet_profile_alloc(SERVICES_UMS[SESSIONRECONNECT], 6);
   }
 
   //IN Parameters
-  if(diet_string_set(profile,0, user.getData().getUserId().c_str())) {
-    msg += "with userId parameter "+user.getData().getUserId();
-    raiseCommunicationMsgException(msg);
-  }
-  if(diet_string_set(profile,1, user.getData().getPassword().c_str())) {
-    msg += "with password parameter";
-    raiseCommunicationMsgException(msg);
-  }
-  if(diet_string_set(profile,2, encryptedKey+salt.length())) {
-    msg += "with sshKey parameter sshKey path";
-    raiseCommunicationMsgException(msg);
-  }
-  if(diet_string_set(profile,3, hostname)) {
-    msg += "with hostname parameter "+std::string(hostname);
-    raiseCommunicationMsgException(msg);
-  }
-  if(connect) {
-    if(diet_string_set(profile,4, optionsToString.c_str())){
-      msg += "with optionsToString parameter ";
-      raiseCommunicationMsgException(msg);
-    }
+  diet_string_set(profile,0, user.getData().getUserId());
+  diet_string_set(profile,1, user.getData().getPassword());
+  diet_string_set(profile,2, encryptedKey+salt.length());
+  diet_string_set(profile,3, hostname);
+  if (connect) {
+    diet_string_set(profile,4, optionsToString);
   } else {
-    if(diet_string_set(profile,4, msession.getSessionId().c_str())) {
-      msg += "with sessionId parameter "+msession.getSessionId();
-      raiseCommunicationMsgException(msg);
-    }
+    diet_string_set(profile,4, msession.getSessionId());
   }
+  diet_string_set(profile,5, versionToString);
 
-  if(diet_string_set(profile,5, versionToString.c_str())) {
-      msg += "with version parameter "+versionToString;
-      raiseCommunicationMsgException(msg);
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(profile);
 
-  //OUT Parameters
-  diet_string_set(profile,6);
-  diet_string_set(profile,7);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,6, sessionInString)){
-      msg += "by receiving sessionInString value";
-      raiseCommunicationMsgException(msg);
-    }
-    if(diet_string_get(profile,7, errorInfo)) {
-      msg += "to receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  } else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-
-  UMS_Data::Session_ptr session_ptr;
+  diet_string_get(profile,1, sessionSerialiazed);
 
   //To parse Session object serialized
-  parseEmfObject(sessionInString, session_ptr, "Error by receiving Session object serialized");
+  UMS_Data::Session_ptr session_ptr;
+  parseEmfObject(sessionSerialiazed, session_ptr, "Error by receiving Session object serialized");
   msession = *session_ptr;
   delete session_ptr;
 
-  if (key!=NULL) {
+  if (key != NULL) {
     delete [] key;
   }
 
@@ -267,35 +225,21 @@ SessionProxy::reconnect(const UserProxy& user) {
  */
 int
 SessionProxy::close() {
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
 
   std::string sessionKey =  msessionKey;
 
-  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[SESSIONCLOSE], 0, 0, 1);
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[SESSIONCLOSE], 0);
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
+    raiseCommunicationMsgException("Failed setting session parameter in profile");
   }
 
-  //OUT Parameters
-  diet_string_set(profile,1);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,1, errorInfo)) {
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
-  } else {
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
-
   return 0;
 }
 

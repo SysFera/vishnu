@@ -25,53 +25,56 @@ using namespace vishnu;
 
 /**
  * \brief To build options for the VISHNU submit job command
- * \param pgName : The name of the command
- * \param fname: The name of the job
- * \param fqueue : The queue to set the job
- * \param fwallTime : The wall time for the job
- * \param fmemory : The memory needed by the job
- * \param fnbCpu : The number of cpu per node needed
- * \param fnbNodeAndCpu : The number of node and processor per node
- * \param foutput : The output path
- * \param ferr : The error path
- * \param fmailNotif : The type of the nofication (BEGIN, END, ERROR, and ALL)
- * \param fmailUser : The name of user to receive email notification
- * \param fgroup : The job group name
- * \param fworkingDir : The job working directory
- * \param fcpuTime : The cpu time limit of the job
- * \param param : Defines a textual parameter to set as environment variable before computing the command
- * \param listParams : Defines a list of textual parameters to set as environment variables before computing the command
- * \param file : Sets a file to be uploaded onto the server before computing the command
- * \param listFiles : Sets a list of files to be uploaded onto the server before computing the command
- * \param loadCriterionStr : The load value to use (for now three criterions are be used:
+ * \param pgName: The name of the command
+ * \param setMachineFct: Function to set the target machine option
+ * \param setProgramNameFct: Function to set the job name option
+ * \param setQueueFct: Function to set the queue option
+ * \param setMemoryFct: Function to set the memory needed by the job
+ * \param setNbCpuFct: Function to set the required number of cpu per node option
+ * \param setNbNodeAndCpuFct: Function to set the required number of node and processor per node
+ * \param setStdoutPathFct: Function to set the stdout path
+ * \param setStderrPathFct: Function to set the stderr path
+ * \param setMailNotificationFct: Function to set the type of the nofication (BEGIN, END, ERROR, and ALL)
+ * \param setNotificationUserFct: Function to set the user that'll receive the email notification
+ * \param setJobGroupFct: Function to set the job group
+ * \param setWorkingDirFct: Function to set the job working directory
+ * \param setCpuTimeFct: Function to set the cpu time limit of the job
+ * \param setTextParamsFct: Function to set the textual parameters of the job
+ * \param setFileParamsFct: Function to set the input file parameters of the job
+ * \param setSpecificParamsFct: Function to set the possible specific parameters for the job
+ * \param textParamsVector: The list of textual parameters
+ * \param fileParamsVector: The list of file parameters
+ * \param loadCriterionStr: The load value to use (for now three criterions are be used:
  *  minimum number of waiting jobs, minimum number of running jobs and the total number of job )
  * \param configFile: Represents the VISHNU config file
- * \param configFile: Represents the VISHNU config file
+ * \param setWorkIdFct: Function to set the job work id
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
 makeSubJobOp(string pgName,
-             boost::function1<void, string>& fname,
-             boost::function1<void, string>& fqueue,
-             boost::function1<void, int>& fmemory,
-             boost::function1<void, int>& fnbCpu,
-             boost::function1<void, string>& fnbNodeAndCpu,
-             boost::function1<void, string>& foutput,
-             boost::function1<void, string>& ferr,
-             boost::function1<void, string>& fmailNotif,
-             boost::function1<void, string>& fmailUser,
-             boost::function1<void, string>& fgroup,
-             boost::function1<void, string>& fworkingDir,
-             boost::function1<void, string>& fcpuTime,
-             boost::function1<void, string>& ftextParams,
-             boost::function1<void, string>& fspecificParams,
-             boost::function1<void, string>& ffileParams,
+             boost::function1<void, string>& setMachineFct,
+             boost::function1<void, string>& setProgramNameFct,
+             boost::function1<void, string>& setQueueFct,
+             boost::function1<void, int>& setMemoryFct,
+             boost::function1<void, int>& setNbCpuFct,
+             boost::function1<void, string>& setNbNodeAndCpuFct,
+             boost::function1<void, string>& setStdoutPathFct,
+             boost::function1<void, string>& setStderrPathFct,
+             boost::function1<void, string>& setMailNotificationFct,
+             boost::function1<void, string>& setNotificationUserFct,
+             boost::function1<void, string>& setJobGroupFct,
+             boost::function1<void, string>& setWorkingDirFct,
+             boost::function1<void, string>& setCpuTimeFct,
+             boost::function1<void, string>& setTextParamsFct,
+             boost::function1<void, string>& setFileParamsFct,
+             boost::function1<void, string>& setSpecificParamsFct,
              vector<string>& textParamsVector,
              vector<string>& fileParamsVector,
-             boost::function1<void, long long>& fworkId,
+             boost::function1<void, long long>& setWorkIdFct,
              string& loadCriterionStr,
              string& walltime,
-             string& configFile){
+             string& configFile)
+{
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -81,14 +84,18 @@ makeSubJobOp(string pgName,
            configFile);
 
   // All cli options
+  opt->add("machine,r",
+           "The id of the target machine. Default is autom.",
+           CONFIG,
+           setMachineFct);
   opt->add("name,n",
            "The name of the job",
            CONFIG,
-           fname);
+           setProgramNameFct);
   opt->add("queue,q",
            "The queue to submit the job",
            CONFIG,
-           fqueue);
+           setQueueFct);
   opt->add("wallTime,t",
            "The wall time for the job (in secondes or in the format [[HH:]MM:]SS)",
            CONFIG,
@@ -96,48 +103,48 @@ makeSubJobOp(string pgName,
   opt->add("memory,m",
            "The memory needed by the job (in MegaBytes)",
            CONFIG,
-           fmemory);
+           setMemoryFct);
   opt->add("nbCpu,P",
            "The number of cpu per node needed by the job",
            CONFIG,
-           fnbCpu);
+           setNbCpuFct);
   opt->add("nbNodesAndCpuPerNode,N",
            "The number of node and processor per node",
            CONFIG,
-           fnbNodeAndCpu);
-  opt->add("outPutPath,o",
-           "The outputh path on the remote machine of the job",
+           setNbNodeAndCpuFct);
+  opt->add("outputPath,o",
+           "The stdout path on the target machine",
            CONFIG,
-           foutput);
+           setStdoutPathFct);
   opt->add("errorPath,e",
-           "The error path on the remote machine of the job",
+           "The stderr path on the target machine",
            CONFIG,
-           ferr);
+           setStderrPathFct);
 
   opt->add("mailNotification,M",
            "Assigns the notification type of the job. Valid type values are "
            "BEGIN, END, ERROR, and ALL (any state change).",
            CONFIG,
-           fmailNotif);
+           setMailNotificationFct);
   opt->add("mailNotifyUser,u",
            "The name of user to receive email notification of state changes as defined "
            "by the option mailNotification. The default value is the submitting user.",
            CONFIG,
-           fmailUser);
+           setNotificationUserFct);
   opt->add("group,g",
            "Assigns a job group name.",
            CONFIG,
-           fgroup);
+           setJobGroupFct);
   opt->add("workingDir,D",
            "Assigns a job remote working dir",
            CONFIG,
-           fworkingDir);
+           setWorkingDirFct);
   opt->add("cpuTime,T",
            "Assigns a job cpu limit time (in seconds or in the format [[HH:]MM:]SS)",
            CONFIG,
-           fcpuTime);
+           setCpuTimeFct);
   opt->add("useLoad,L",
-           " The criterion to automatically submit a job (for now three criterions are used:"
+           "The criterion to automatically submit a job (for now three criterions are used:"
            " minimum number of waiting jobs, minimum number of running jobs and the total"
            "number of jobs). Predefined values are:\n"
            "0 or W: To select a machine that has minimum number of waiting jobs\n"
@@ -157,12 +164,12 @@ makeSubJobOp(string pgName,
            "E.g. --listParams=\"PARAM1=value1 PARAM2=value2.\n\n"
            "SEE ALSO --textParam.",
            CONFIG,
-           ftextParams);
+           setTextParamsFct);
   opt->add("specificParams,S",
            "Sets a list of space-separated textual parameters.\n"
            "E.g. --listParams=\"PARAM1=value1 PARAM2=value2.\n\n",
            CONFIG,
-           fspecificParams);
+           setSpecificParamsFct);
   opt->add("fileParam,f",
            "Sets a local file as a file parameter for the script. This file will be uploaded onto the server "
            "before computing the script.\n"
@@ -177,11 +184,11 @@ makeSubJobOp(string pgName,
            "E.g. --fileParams=\"PFILE1=/path/to/file1 PFILE2=/path/to/file2\".\n\n"
            "SEE ALSO --fileParam.",
            CONFIG,
-           ffileParams);
+           setFileParamsFct);
   opt->add("workId,w",
            "Sets the identifier of the Work to which the job is related.  ",
            CONFIG,
-           fworkId);
+           setWorkIdFct);
 
   return opt;
 }
@@ -190,118 +197,127 @@ int main (int argc, char* argv[]){
   /******* Parsed value containers ****************/
   string configFile;
   string sessionKey;
-  string machineId;
   string scriptPath;
   string walltime;
 
   /********** EMF data ************/
-  TMS_Data::SubmitOptions subOp;
+  TMS_Data::SubmitOptions submitOptions;
 
   /******** Callback functions ******************/
-  boost::function1<void,string> fname(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(subOp),_1));
-  boost::function1<void,string> fqueue(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(subOp),_1));
-  boost::function1<void,int> fmemory(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(subOp),_1));
-  boost::function1<void,int> fnbCpu(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(subOp),_1));
-  boost::function1<void,string> fnbNodeAndCpu(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(subOp),_1));
-  boost::function1<void,string> foutput(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(subOp),_1));
-  boost::function1<void,string> ferr(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(subOp),_1));
-  boost::function1<void,string> fmailNotif(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(subOp),_1));
-  boost::function1<void,string> fmailUser(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(subOp),_1));
-  boost::function1<void,string> fgroup(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(subOp),_1));
-  boost::function1<void,string> fworkingDir(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(subOp),_1));
-  boost::function1<void,string> fcpuTime(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(subOp),_1));
-  boost::function1<void,string> ftextParams(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(subOp),_1));
-  boost::function1<void,string> fspecificParams(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(subOp),_1));
-  boost::function1<void,string> ffileParams(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(subOp),_1));
-  boost::function1<void,long long> fworkId(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(subOp),_1));
+  boost::function1<void,string> setProgramNameFct(boost::bind(&TMS_Data::SubmitOptions::setName,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setMachineFct(boost::bind(&TMS_Data::SubmitOptions::setMachine,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setQueueFct(boost::bind(&TMS_Data::SubmitOptions::setQueue,boost::ref(submitOptions),_1));
+  boost::function1<void,int> setMemoryFct(boost::bind(&TMS_Data::SubmitOptions::setMemory,boost::ref(submitOptions),_1));
+  boost::function1<void,int> setNbCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbCpu,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setNbNodeAndCpuFct(boost::bind(&TMS_Data::SubmitOptions::setNbNodesAndCpuPerNode,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setStdoutPatchFct(boost::bind(&TMS_Data::SubmitOptions::setOutputPath,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setStderrPathFct(boost::bind(&TMS_Data::SubmitOptions::setErrorPath,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setMailNoticicationFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotification,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setNotificationUserFct(boost::bind(&TMS_Data::SubmitOptions::setMailNotifyUser,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setUserGroupFct(boost::bind(&TMS_Data::SubmitOptions::setGroup,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setWorkingGroupFct(boost::bind(&TMS_Data::SubmitOptions::setWorkingDir,boost::ref(submitOptions),_1));
+  boost::function1<void,string> serCpuTimeFct(boost::bind(&TMS_Data::SubmitOptions::setCpuTime,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setTextParamsFct(boost::bind(&TMS_Data::SubmitOptions::setTextParams,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setSpecificParamsFct(boost::bind(&TMS_Data::SubmitOptions::setSpecificParams,boost::ref(submitOptions),_1));
+  boost::function1<void,string> setFileParamsFct(boost::bind(&TMS_Data::SubmitOptions::setFileParams,boost::ref(submitOptions),_1));
+  boost::function1<void,long long> setWorkIdFct(boost::bind(&TMS_Data::SubmitOptions::setWorkId,boost::ref(submitOptions),_1));
   vector<string> textParamsVector ;
   vector<string> fileParamsVector ;
   std::string loadCriterionStr;
   /*********** Out parameters *********************/
-  TMS_Data::Job job;
 
+  TMS_Data::Job job;
   /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeSubJobOp(argv[0],fname,fqueue,
-      fmemory, fnbCpu, fnbNodeAndCpu,
-      foutput, ferr, fmailNotif, fmailUser, fgroup, fworkingDir, fcpuTime,
-      ftextParams, fspecificParams, ffileParams, textParamsVector, fileParamsVector, fworkId,
-      loadCriterionStr, walltime, configFile);
+  boost::shared_ptr<Options> opt = makeSubJobOp(argv[0],
+      setMachineFct,
+      setProgramNameFct,
+      setQueueFct,
+      setMemoryFct,
+      setNbCpuFct,
+      setNbNodeAndCpuFct,
+      setStdoutPatchFct,
+      setStderrPathFct,
+      setMailNoticicationFct,
+      setNotificationUserFct,
+      setUserGroupFct,
+      setWorkingGroupFct,
+      serCpuTimeFct,
+      setTextParamsFct,
+      setFileParamsFct,
+      setSpecificParamsFct,
+      textParamsVector,
+      fileParamsVector,
+      setWorkIdFct,
+      loadCriterionStr,
+      walltime,
+      configFile);
 
   opt->add("selectQueueAutom,Q",
            "allows to select automatically a queue which has the number of nodes requested by the user.",
            CONFIG);
 
-  opt->add("machineId,i",
-           "represents the id of the machine",
-           HIDDEN,
-           machineId,1);
-  opt->setPosition("machineId",1);
-
   opt->add("scriptPath,z",
-           "represents the script of submission",
+           "The script to execute",
            HIDDEN,
-           scriptPath,1);
-  opt->setPosition("scriptPath",1);
-
+           scriptPath,
+           1);
+  opt->setPosition("scriptPath", 1);
 
   opt->add("posix,p",
            "is an option for submitting using the posix backend instead of the batch scheduler ",
            CONFIG);
 
-
+  //process options and then the command
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  // Process command
   try {
     if (opt->count("posix")) {
-      subOp.setPosix(true);
+      submitOptions.setPosix(true);
     }
-
     if (!walltime.empty()) {
-      subOp.setWallTime(convertStringToWallTime(walltime));
+      submitOptions.setWallTime(convertStringToWallTime(walltime));
     }
 
     //To set the load criterion
-    if ((loadCriterionStr.size() > 1)) {
-      std::cerr << "Invalid load criterion " << loadCriterionStr << std::endl;
+    if (loadCriterionStr.size() > 1) {
+      std::cerr << "Invalid load criterion " + loadCriterionStr + "\n";
       return -1;
     }
     int loadCriterionType = NBWAITINGJOBS;
-    TMS_Data::LoadCriterion_ptr loadCriterion_ptr = new TMS_Data::LoadCriterion();
-    if(!loadCriterionStr.empty()) {
+    if (loadCriterionStr.empty()) {
       switch(loadCriterionStr[0]) {
-      case '2' :
-      case 'R' :
+      case '2':
+      case 'R':
         loadCriterionType = NBRUNNINGJOBS;
         break;
-      case '1' :
-      case 'T' :
+      case '1':
+      case 'T':
         loadCriterionType = NBJOBS;
         break;
-      case '0' ://Default
-      case 'W' :
+      case '0'://Default
+      case 'W':
       default:
         loadCriterionType = NBWAITINGJOBS;
         break;
       }
     }
-    loadCriterion_ptr->setLoadType(loadCriterionType);
-    subOp.setCriterion(loadCriterion_ptr);
+    TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
+    loadCriterion->setLoadType(loadCriterionType);
+    submitOptions.setCriterion(loadCriterion);
 
     if(opt->count("selectQueueAutom")) {
-      subOp.setSelectQueueAutom(true);
+      submitOptions.setSelectQueueAutom(true);
     }
 
     //Validate textual parameters syntax, if any
     string paramOptName = "textParams" ;
 
-    if(opt->count(paramOptName) || !textParamsVector.empty()) {
+    if(opt->count(paramOptName) || ! textParamsVector.empty()) {
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, textParamsVector);
       if( ret != 0 ) return ret ;
-      subOp.setTextParams(paramStr) ;
+      submitOptions.setTextParams(paramStr) ;
     }
 
     //Validate file parameters syntax, if any
@@ -310,7 +326,7 @@ int main (int argc, char* argv[]){
       string paramStr ;
       int ret = vishnu::validateParameters(opt, paramStr, paramOptName, fileParamsVector) ;
       if( ret != 0 ) return ret ;
-      subOp.setFileParams(paramStr) ;
+      submitOptions.setFileParams(paramStr) ;
     }
 
     // initializing VISHNU
@@ -322,11 +338,13 @@ int main (int argc, char* argv[]){
     // get the sessionKey
     sessionKey=getLastSessionKey(getppid());
 
-    // vishnu call : submit
+    // vishnu call: submit
     if(false==sessionKey.empty()){
-      submitJob(sessionKey, machineId, scriptPath, job, subOp);
+      submitJob(sessionKey, scriptPath, job, submitOptions);
     }
+
     displaySubmit(job);
+
   } catch(VishnuException& except){// catch all Vishnu runtime error
     std::string  submitErrmsg = except.getMsg() + " [" + except.getMsgComp() + "]";
     errorUsage(bfs::basename(bfs::path(argv[0])), submitErrmsg, EXECERROR);
@@ -334,11 +352,10 @@ int main (int argc, char* argv[]){
     if (checkBadSessionKeyError(except)){
       removeBadSessionKeyFromFile(getppid());
     }
-    return except.getMsgI() ;
+    return except.getMsgI();
   } catch(std::exception& except){// catch all std runtime error
     errorUsage(argv[0],except.what());
     return CLI_ERROR_RUNTIME;
   }
-
   return 0;
 }

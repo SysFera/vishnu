@@ -18,85 +18,83 @@ using namespace std;
 
 /**
  * \param session The object which encapsulates the session information
- * \param machine The object which encapsulates the machine information
- * \param outDir The output directory where the files will be stored
- * (default is current directory)
+ * \param machineId The target machine
  * \brief Constructor
  */
-JobOutputProxy::JobOutputProxy( const SessionProxy& session,
-                                const std::string& machineId,
-                                const std::string& outDir)
-  :msessionProxy(session), mmachineId(machineId), moutDir(outDir) {
+JobOutputProxy::JobOutputProxy( const SessionProxy& session, const std::string& machineId)
+  : msessionProxy(session), mmachineId(machineId)
+{
 }
 
 /**
  * \brief Function to get the job results
  * \param jobId The Id of the
+ * \param options Object containing the user-provided options
  * \return The job results data structure
  */
-//TMS_Data::JobResult_ptr
 TMS_Data::JobResult
-JobOutputProxy::getJobOutPut(const std::string& jobId) {
+JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputOptions& options) {
 
-  std::string serviceName = std::string(SERVICES_TMS[JOBOUTPUTGETRESULT]) + "@";
-  serviceName.append(mmachineId);
+  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId).str();
 
-  diet_profile_t* getJobOutPutProfile = diet_profile_alloc(serviceName.c_str(), 3, 3, 4);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
   string sessionKey = msessionProxy.getSessionKey();
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
   //IN Parameters
-  if ( diet_string_set(getJobOutPutProfile,0, sessionKey.c_str()) ) {
+  if ( diet_string_set(profile,0, sessionKey) ) {
     msgErrorDiet += "with sessionKey parameter "+sessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
-  if ( diet_string_set(getJobOutPutProfile,1, mmachineId.c_str()) ) {
+  if ( diet_string_set(profile,1, mmachineId) ) {
     msgErrorDiet += "with machineId parameter "+mmachineId;
     raiseCommunicationMsgException(msgErrorDiet);
   }
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
   ::ecorecpp::serializer::serializer _ser;
   string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
-  if ( diet_string_set(getJobOutPutProfile,2, jobResultToString.c_str()) ) {
+  if ( diet_string_set(profile,2, jobResultToString) ) {
     msgErrorDiet += "with the job result parameter " + jobResultToString;
     raiseCommunicationMsgException(msgErrorDiet);
   }
-  if (diet_string_set(getJobOutPutProfile,3, moutDir.c_str())) {
-    msgErrorDiet += "with outDir parameter "+moutDir;
+  std::string outputDir = options.getOutputDir();
+  if (diet_string_set(profile, 3, outputDir)) {
+    msgErrorDiet += "with output directory parameter "+outputDir;
     raiseCommunicationMsgException(msgErrorDiet);
   }
-
-  //OUT Parameter
-  diet_string_set(getJobOutPutProfile,4);
 
   //Call the Server
-  if (diet_call(getJobOutPutProfile)) {
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+
+  raiseExceptionOnErrorResult(profile);
+
   std::string routputInfo;
-  if (diet_string_get(getJobOutPutProfile,4, routputInfo)){
-    msgErrorDiet += " by receiving outputInfo";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_get(profile,1, routputInfo);
+
   if (routputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
   }
+
   if (! boost::starts_with(routputInfo, "/") ) {
     raiseExceptionIfNotEmptyMsg(routputInfo);
   }
-  if( moutDir.size()==0 ) {
-    moutDir = bfs::path(bfs::current_path()).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
-    vishnu::createOutputDir(moutDir);
+  if (outputDir.empty()) {
+    outputDir = bfs::path(bfs::current_path()).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
+    vishnu::createOutputDir(outputDir);
   }
-  jobResult.setOutputDir(moutDir);
+
+  jobResult.setOutputDir(outputDir);
 
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
   try {
-    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
+    vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", outputDir, copts);
+    std::string infoFile = (boost::format("%1%/%2%") % outputDir % bfs::basename(routputInfo)).str();
+    istringstream fdescStream(vishnu::get_file_content(infoFile, false));
     string line;
-    istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
     if(! getline(fdescStream, line)) {
       line = "";
     }
@@ -104,23 +102,25 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
     ListStrings lineVec;
     boost::split(lineVec, line, boost::is_any_of(" "));
     int nbFiles = lineVec.size();
-    std::string missingFiles = "";
-    if (nbFiles > 0 && line.size() >0) {
-      vishnu::copyFiles(sessionKey, mmachineId, lineVec, moutDir, copts, missingFiles, 0);
+
+    std::string missingFileContent = "";
+    if (! line.empty() && nbFiles > 0) {
+      vishnu::copyFiles(sessionKey, mmachineId, lineVec, outputDir, copts, missingFileContent, 0);
       std::string fileName = bfs::basename(lineVec[0]) + bfs::extension(lineVec[0]);
-      jobResult.setOutputPath(moutDir+"/"+fileName);
+      jobResult.setOutputPath(outputDir+"/"+fileName);
       std::string fileName2 = bfs::basename(lineVec[1]) + bfs::extension(lineVec[1]);
-      jobResult.setErrorPath(moutDir+"/"+fileName2);
+      jobResult.setErrorPath(outputDir+"/"+fileName2);
     }
-    if (!missingFiles.empty()) {
-      vishnu::saveInFile(moutDir+"/MISSINGFILES", missingFiles);
+    if (! missingFileContent.empty()) {
+      std::string missingFileName = (boost::format("%1%/MISSINGFILES_%2%") % outputDir % jobId).str();
+      vishnu::saveInFile(missingFileName, missingFileContent);
     }
-  } catch (FMSVishnuException &ex) {
-    vishnu::saveInFile(moutDir+"/ERROR",
-                       (boost::format("File %1%: %2%")%routputInfo%ex.what()).str());
+  } catch (VishnuException &ex) {
+    std::string errorFileName = (boost::format("%1%/ERROR_%2%") % outputDir % jobId).str();
+    vishnu::saveInFile(errorFileName, ex.what());
   }
 
-  diet_profile_free(getJobOutPutProfile);
+  diet_profile_free(profile);
   return jobResult;
 }
 
@@ -129,47 +129,46 @@ JobOutputProxy::getJobOutPut(const std::string& jobId) {
  * \return The list of the job results
  */
 TMS_Data::ListJobResults_ptr
-JobOutputProxy::getCompletedJobsOutput() {
-  diet_profile_t* getCompletedJobsOutputProfile = NULL;
-  std::string sessionKey;
-  TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
+JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options) {
 
-  std::string serviceName = std::string(SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]) + "@";
-  serviceName.append(mmachineId);
+  std::string serviceName = (boost::format("%1%@%2%")
+                             % SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]
+                             % mmachineId
+                             ).str();
 
-  getCompletedJobsOutputProfile = diet_profile_alloc(serviceName.c_str(), 2, 2, 4);
-  sessionKey = msessionProxy.getSessionKey();
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
+  std::string sessionKey = msessionProxy.getSessionKey();
 
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(getCompletedJobsOutputProfile,0, sessionKey.c_str())) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
+  if (diet_string_set(profile,0, sessionKey)) {
+    raiseCommunicationMsgException("Exception setting sessionkey parameter");
   }
 
-  if (diet_string_set(getCompletedJobsOutputProfile,1, mmachineId.c_str())) {
-    msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseCommunicationMsgException(msgErrorDiet);
+  if (diet_string_set(profile, 1, mmachineId)) {
+    raiseCommunicationMsgException("Exception setting machineid parameter");
   }
 
-  if (diet_string_set(getCompletedJobsOutputProfile,2, moutDir.c_str())) {
-    msgErrorDiet += "with outDir parameter "+moutDir;
-    raiseCommunicationMsgException(msgErrorDiet);
+  ::ecorecpp::serializer::serializer _serializer;
+  string optionsSerialized = _serializer.serialize_str(const_cast<TMS_Data::JobOuputOptions_ptr>(&options));
+  if (diet_string_set(profile, 2, optionsSerialized)) {
+    raiseCommunicationMsgException("Exception setting option parameter");
   }
-
-  //OUT Parameters
-  diet_string_set(getCompletedJobsOutputProfile,3);	//OUT Parameters
-  diet_string_set(getCompletedJobsOutputProfile,4);
 
   //Call the Server
-  if( diet_call(getCompletedJobsOutputProfile)) {
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  std::string routputInfo;
-  if (diet_string_get(getCompletedJobsOutputProfile,3, routputInfo) ){
-    msgErrorDiet += " by receiving outputInfo";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  raiseExceptionOnErrorResult(profile);
+
+  // Get output, which is a json object. See internalApi.cpp
+  std::string data;
+  diet_string_get(profile,1, data);
+
+  // Treat the json object
+  JsonObject jsonData(data);
+  std::string routputInfo = jsonData.getStringProperty("infofile");
+  std::string jobListSerialized = jsonData.getStringProperty("joblist");
+
   if (routputInfo.empty()) {
     throw TMSVishnuException(ERRCODE_INVDATA, "Weird behavior: no output to retrieve");
   }
@@ -177,17 +176,14 @@ JobOutputProxy::getCompletedJobsOutput() {
     raiseExceptionIfNotEmptyMsg(routputInfo);
   }
 
-  std::string listJobResultInString;
-  if (diet_string_get(getCompletedJobsOutputProfile,4, listJobResultInString)) {
-    msgErrorDiet += " by receiving User serialized  message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  parseEmfObject(listJobResultInString, listJobResults_ptr); /*To build the listJobResults_ptr */
+  TMS_Data::ListJobResults_ptr listJobResults_ptr = NULL;
+  parseEmfObject(jobListSerialized, listJobResults_ptr); /*To build the listJobResults_ptr */
 
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true);
   copts.setTrCommand(0); // for using scp
 
+  std::string outputDir = options.getOutputDir();
   try {
     vishnu::genericFileCopier(sessionKey, mmachineId, routputInfo, "", boost::filesystem::temp_directory_path().string(), copts);
     istringstream fdescStream (vishnu::get_file_content(routputInfo, false));
@@ -199,7 +195,7 @@ JobOutputProxy::getCompletedJobsOutput() {
       if (line.empty()) continue;
       boost::trim(line);
       boost::split(lineVec, line, boost::is_any_of(" "));
-      std::string baseDir = (moutDir.size()!=0)? bfs::absolute(moutDir).string() : bfs::path(bfs::current_path()).string();
+      std::string baseDir = (! outputDir.empty())? bfs::absolute(outputDir).string() : bfs::path(bfs::current_path()).string();
       std::string targetDir = baseDir + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
       vishnu::createOutputDir(targetDir);
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
@@ -209,10 +205,10 @@ JobOutputProxy::getCompletedJobsOutput() {
       }
     }
   } catch (FMSVishnuException &ex) {
-    vishnu::saveInFile(moutDir+"/ERROR",
+    vishnu::saveInFile(outputDir+"/ERROR",
                        (boost::format("File %1%: %2%")%routputInfo%ex.what()).str());
   }
-  diet_profile_free(getCompletedJobsOutputProfile);
+  diet_profile_free(profile);
   return listJobResults_ptr;
 }
 

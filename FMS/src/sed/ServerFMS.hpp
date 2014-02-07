@@ -45,11 +45,12 @@ public :
   /**
    * \brief To initialize the FMS server
    * \param vishnuId  The identifier of the vishnu instance
+   * \param mid The machine identifier
    * \param dbConfig  The configuration of the database
    * \return an error code (0 if success and 1 if an error occurs)
    */
   int
-  init(int vishnuId, DbConfiguration dbConfig);
+  init(int vishnuId, std::string mid, DbConfiguration dbConfig);
 
   /**
    * \brief Destructor, raises an exception on error
@@ -59,9 +60,10 @@ public :
 private :
   /**
    * \brief Init the ptr function map
+   * \param mid The machine identifier
    */
   void
-  initMap();
+  initMap(std::string mid);
 
   /**
    * \brief Constructor, private because class is singleton

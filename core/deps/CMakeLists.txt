@@ -47,7 +47,10 @@ set(ecore_SRCS
   emf4cpp/ecore/EGenericType.cpp
   emf4cpp/ecore/EGenericTypeImpl.cpp
   emf4cpp/ecore/ETypeParameter.cpp
-  emf4cpp/ecore/ETypeParameterImpl.cpp)
+  emf4cpp/ecore/ETypeParameterImpl.cpp
+  emf4cpp/ecore/ETypeParameterImpl.cpp
+  emf4cpp/ecore/ETypeParameterImpl.cpp
+)
 
 set(ecore_HEADERS
   emf4cpp/ecore.hpp

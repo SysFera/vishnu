@@ -91,6 +91,7 @@ main(int argc, char* argv[], char* envp[]) {
   struct sigaction action;
   string mid;
   string uri;
+  bool sub;
 
   if (argc < 2) {
     return usage(argv[0]);
@@ -109,6 +110,7 @@ main(int argc, char* argv[], char* envp[]) {
                                                sendmailScriptPath);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
     config.getRequiredConfigValue<std::string>(vishnu::IMS_URIADDR, uri);
+    config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
   } catch (UserException& e) {
     std::cerr << e.what() << "\n";
     exit(1);
@@ -130,6 +132,10 @@ main(int argc, char* argv[], char* envp[]) {
 
   // History maker thread
   HM hm = HM(sendmailScriptPath, mid);
+  if (sub) {
+    boost::thread thr(boost::bind(&keepRegistered, IMSTYPE, config, uri, server));
+  }
+
   thread thr2(bind(&HM::run, &hm));//%RELAX<MISRA_0_1_3> Because it used to launch a thread
 
   //Declaration of signal handler, to remove script children

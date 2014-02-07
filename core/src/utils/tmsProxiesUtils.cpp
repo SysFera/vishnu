@@ -10,6 +10,7 @@
 #include "api_ums.hpp"
 #include "api_fms.hpp"
 #include "api_tms.hpp"
+#include "api_comm.hpp"
 #include "utilVishnu.hpp"
 #include "constants.hpp"
 #include "cliError.hpp"
@@ -111,12 +112,12 @@ std::string vishnu::getMachineName(const std::string& sessionKey, const std::str
  * \return Throw exception on error
  */
 void vishnu::copyFiles(const std::string& sessionKey,
-               const std::string& srcMid,
-               const std::vector<std::string>& rfiles,
-               const std::string& ldestDir,
-               const FMS_Data::CpFileOptions& copts,
-               std::string& missingFiles,
-               const int& startPos) {
+                       const std::string& srcMid,
+                       const std::vector<std::string>& rfiles,
+                       const std::string& ldestDir,
+                       const FMS_Data::CpFileOptions& copts,
+                       std::string& missingFiles,
+                       const int& startPos) {
   missingFiles.clear();
   int nbFiles = rfiles.size() ;
   for (int i=startPos; i<nbFiles; i++) {
@@ -140,11 +141,11 @@ void vishnu::copyFiles(const std::string& sessionKey,
  */
 std::string
 vishnu::genericFileCopier(const std::string& sessionKey,
-                  const std::string& srcMachineId,
-                  const std::string& srcPath,
-                  const std::string& destMachineId,
-                  const std::string& destPath,
-                  const FMS_Data::CpFileOptions& copts) {
+                          const std::string& srcMachineId,
+                          const std::string& srcPath,
+                          const std::string& destMachineId,
+                          const std::string& destPath,
+                          const FMS_Data::CpFileOptions& copts) {
   string src = "";
   string dest = "";
   src = srcMachineId.empty()? srcPath : srcMachineId+":"+srcPath;
@@ -167,9 +168,9 @@ vishnu::genericFileCopier(const std::string& sessionKey,
  */
 std::string
 vishnu::sendInputFiles(const std::string& sessionKey,
-               const std::string& srcFiles,
-               const std::string& destMachineId,
-               const FMS_Data::CpFileOptions& copts) {
+                       const std::string& srcFiles,
+                       const std::string& destMachineId,
+                       const FMS_Data::CpFileOptions& copts) {
 
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
@@ -200,6 +201,22 @@ vishnu::sendInputFiles(const std::string& sessionKey,
 }
 
 /**
+ * @brief listMachinesWithUserLocalAccount
+ * @param sessionKey
+ * @param machines
+ */
+void
+vishnu::listMachinesWithUserLocalAccount(const std::string& sessionKey, UMS_Data::ListMachines& machines) {
+  // This lists all machines where the user has a local account
+  // NOTE: There is not verification about whether the machine is active or not
+  // FIXME: Improve the selection to ensure that we do not select an inactive machine
+  UMS_Data::ListMachineOptions mopts;
+  mopts.setListAllMachine(false);
+  mopts.setMachineId("");
+  vishnu::listMachines(sessionKey, machines, mopts) ;
+}
+
+/**
  * \brief Function to select a machine for automatic submission
  * \param pb is a structure which corresponds to the descriptor of a profile
  * \param The selection criterion
@@ -207,16 +224,11 @@ vishnu::sendInputFiles(const std::string& sessionKey,
  */
 std::string
 vishnu::findMachine(const std::string& sessionKey,
-            const TMS_Data::LoadCriterion_ptr& criterion) {
+                    const TMS_Data::LoadCriterion& criterion) {
 
-  // First list all active machines where we have a local account
-  // FIXME: Update the selection option so to ensure that we do not select an inactive machine
-  // or a machine where we don't have local account
-  UMS_Data::ListMachineOptions mopts;
-  mopts.setListAllMachine(false);
-  mopts.setMachineId("");
+
   UMS_Data::ListMachines machines;
-  vishnu::listMachines(sessionKey, machines, mopts) ;
+  listMachinesWithUserLocalAccount(sessionKey, machines);
 
   int machineCount = machines.getMachines().size() ;
   if( machineCount == 0) {
@@ -225,16 +237,25 @@ vishnu::findMachine(const std::string& sessionKey,
 
   std::string selectedMachine = "" ;
   long load = std::numeric_limits<long>::max();
-  for(int i=0; i< machineCount; i++) {
-    UMS_Data::Machine_ptr machine = machines.getMachines().get(i) ;
+  for (int i=0; i< machineCount; i++) {
+    std::map<std::string, std::string> pingResult;
+    UMS_Data::Machine_ptr machine = machines.getMachines().get(i);
     try {
-      if(getMachineLoadPerformance(sessionKey, machine, criterion) < load) {
+      if (getMachineLoadPerformance(sessionKey, machine, criterion) < load
+          && vishnu::ping(pingResult, "tmssed", machine->getMachineId()) == 0) {
+
         selectedMachine = machine->getMachineId();
+        break;
       }
     } catch(...) {
       continue;
     }
   }
+
+  if (selectedMachine.empty()) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE, "No machine available to execute the job");
+  }
+
   return selectedMachine;
 }
 
@@ -247,22 +268,22 @@ vishnu::findMachine(const std::string& sessionKey,
  */
 long
 vishnu::getMachineLoadPerformance(const string& sessionKey,
-                          const UMS_Data::Machine_ptr& machine,
-                          const TMS_Data::LoadCriterion_ptr& criterion) {
+                                  const UMS_Data::Machine_ptr& machine,
+                                  const TMS_Data::LoadCriterion& criterion) {
 
-  TMS_Data::ListJobs jobs ;
-  TMS_Data::ListJobsOptions jobOtions ;
+  TMS_Data::ListJobs jobs;
+  TMS_Data::ListJobsOptions jobOtions;
+  jobOtions.setMachineId(machine->getMachineId());
 
   try {
-    vishnu::listJobs(sessionKey, machine->getMachineId(), jobs, jobOtions) ;
+    vishnu::listJobs(sessionKey, jobs, jobOtions) ;
   } catch (SystemException& ex){
     throw SystemException (ERRCODE_RUNTIME_ERROR, ex.what());
   }
 
   long load = std::numeric_limits<long>::max();
-  int criterionType = (criterion)? criterion->getLoadType(): jobs.getNbWaitingJobs() ;
   try {
-    switch(criterionType) {
+    switch(criterion.getLoadType()) {
     case NBRUNNINGJOBS :
       load = jobs.getNbRunningJobs();
       break;

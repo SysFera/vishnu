@@ -3,11 +3,13 @@
 #include <boost/make_shared.hpp>
 #include <boost/thread.hpp>
 #include "utilVishnu.hpp"
+#include "DIET_client.h"
+#include "VishnuException.hpp"
 
 
 Dispatcher::Dispatcher(const std::string &confFile)
   : uriAddr("tcp://127.0.0.1:5560"),
-    uriSubs("tcp://127.0.0.1:5561"), nthread(5), timeout(10) {
+    uriSubs("tcp://127.0.0.1:5561"), confFil(confFile), nthread(5), timeout(10) {
   if (!confFile.empty()) {
     config.initFromFile(confFile);
   }
@@ -38,26 +40,61 @@ void
 Dispatcher::configureAnnuary() {
   // Prepare our context and socket
   ann = boost::make_shared<Annuary>();
+  std::string mid;
+  config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
 
   // Get initial configuration
   std::vector<std::string> cfgInfo;
   if (config.getConfigValues(vishnu::FMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("FMS", cfgInfo);
+    ann->setInitConfig("fmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::IMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("IMS", cfgInfo);
+    ann->setInitConfig("imssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("TMS", cfgInfo);
+    ann->setInitConfig("tmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   if (config.getConfigValues(vishnu::UMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("UMS", cfgInfo);
+    ann->setInitConfig("umssed", cfgInfo, mid);
     cfgInfo.clear();
   }
   ann->print();
+}
+
+boost::shared_ptr<Annuary>
+Dispatcher::getAnnuary(){
+  return ann;
+}
+
+
+void
+Dispatcher::bayWatch(boost::shared_ptr<Annuary> ann, int timeout, std::string& confFile){
+  try {
+    diet_initialize(confFile.c_str(), 0, NULL);
+  } catch (VishnuException& e){
+  }
+  while (true){
+    // get all servers
+    std::vector<boost::shared_ptr<Server> > list = ann->get();
+    std::vector<boost::shared_ptr<Server> >::iterator iter;
+    std::string service = "heartbeat";
+    // For each server
+    for (iter = list.begin() ; iter != list.end() ; ++iter){
+      diet_profile_t* profile = diet_profile_alloc(service, 0);
+      // try to ping them
+      if (abstract_call_gen(profile, iter->get()->getURI())){
+        // If failed : remove the server
+        ann->remove(iter->get()->getName(), iter->get()->getURI());
+        std::cerr << "[INFO]: removed " << iter->get()->getName() << "@" << iter->get()->getURI() << " from the annuary\n";
+      }
+      diet_profile_free(profile);
+    }
+    // Sleep a bit
+    sleep(timeout);
+  }
 }
 
 
@@ -74,8 +111,10 @@ Dispatcher::configureHandlers() {
     serverHandler.reset(new Handler4Servers(uriSubs, ann, nthread, false, ""));
     boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
     boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
+    boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout, confFil));
     th1.join();
     th2.join();
+    th3.join();
   } else { /* TLS required */
     std::string rsaPrivkey;
     std::string sslCertificate;
@@ -90,8 +129,10 @@ Dispatcher::configureHandlers() {
       serverHandler.reset(new Handler4Servers(BACKEND_IPC_URI, ann, nthread, useSsl, sslCa));
       boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
       boost::thread th2(boost::bind(&Handler4Servers::run, serverHandler.get()));
+      boost::thread th3(boost::bind(&Dispatcher::bayWatch, ann, timeout, confFil));
       th1.join();
       th2.join();
+      th3.join();
     } else if (pid == 0) {
       pid_t pidTlsHandler = fork();
 

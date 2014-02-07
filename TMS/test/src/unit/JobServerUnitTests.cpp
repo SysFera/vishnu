@@ -5,6 +5,7 @@
 #include "TMSVishnuException.hpp"
 #include "JobServer.hpp"
 #include "TMSVishnuException.hpp"
+#include "utils.hpp"
 
 
 
@@ -16,182 +17,183 @@ public:
   JobServerMock(const SessionServer& sessionServer,
                 const std::string& machineId,
                 const TMS_Data::Job& job,
-                const ExecConfiguration_Ptr sedConfig):JobServer(sessionServer, machineId, job, sedConfig){             
-                  
-                };
+                const ExecConfiguration_Ptr sedConfig):JobServer(sessionServer, machineId, job, sedConfig){
+
+  }
   /**
    * \brief Destructor
    */
-  ~JobServerMock(){               
-   };
+  ~JobServerMock(){
+  }
   void scanErrorMessageMock(const std::string& errorInfo, int& code, std::string& message){
     this->scanErrorMessage(errorInfo, code, message);
-  };
+  }
 
   void
   processDefaultOptionsMock(const std::vector<std::string>& defaultBatchOption, std::string& content, std::string& key){
     this->processDefaultOptions(defaultBatchOption, content, key);
-  };
+  }
 
   void
   insertOptionLineMock(std::string& optionLineToInsert, std::string& content, std::string& key){
     this->insertOptionLine(optionLineToInsert, content, key);
-  };
+  }
   
   void
   computeOutputDirMock(const std::string& parentDir,
-                        const std::string & dirSuffix,
-                        std::string & content){
-    this->computeOutputDir(parentDir, dirSuffix, content);                       
-   };
+                       const std::string & dirSuffix,
+                       std::string & content){
+    this->setJobOutputDir(parentDir, dirSuffix, content);
+  }
   
 
   std::string
   getBatchDirectiveMock(std::string& seperator) const{
     return this->getBatchDirective(seperator);
-  };
+  }
   
   void
   treatSpecificParamsMock(const std::string& specificParams, std::string& scriptContent){
     this->treatSpecificParams(specificParams, scriptContent);
-  };
+  }
   
   
   std::string
   processScriptMock(std::string& scriptContent,
-                            TMS_Data::SubmitOptions& options,
-                            const std::vector<std::string>& defaultBatchOption,
-                            const std::string& machineName){
+                    TMS_Data::SubmitOptions& options,
+                    const std::vector<std::string>& defaultBatchOption,
+                    const std::string& machineName){
 
-    return this->processScript(scriptContent, options, defaultBatchOption, machineName);
-  };
+    JsonObject jsonOptions(options);
+    return this->processScript(scriptContent, jsonOptions, defaultBatchOption, machineName);
+  }
 
   
   void deserializeJobMock(std::string jobSerialized){
     this->deserializeJob(jobSerialized);
-  };
-                
+  }
+
 };
 
 
 
-std::string Script_Content = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "echo toto\n";
+std::string Script_Content = "#!/bin/sh\n"
+                             "#$ -N first_job\n"
+                             "#$ -o my_first_job_gen.out\n"
+                             "#$ -e my_first_job_gen.err\n"
+                             "#$ -m b\n"
+                             "#$ -l walltime=01:00:00\n"
+                             "echo toto\n";
 
 
-std::string Script_Content_variant = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "hjqgdjqgdqjgdqj\n"
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\\\n"+
-                                        "qgdhgqjkghjgdqjhd\n"
-                                        "echo toto\n";                                        
-std::string Script_Content_result = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "#$ I am Toto\n"+
-                                        "echo toto\n";
+std::string Script_Content_variant = "#!/bin/sh\n"
+                                     "#$ -N first_job\n"
+                                     "#$ -o my_first_job_gen.out\n"
+                                     "hjqgdjqgdqjgdqj\n"
+                                     "#$ -e my_first_job_gen.err\n"
+                                     "#$ -m b\n"
+                                     "#$ -l walltime=01:00:00\\\n"
+                                     "qgdhgqjkghjgdqjhd\n"
+                                     "echo toto\n";
+std::string Script_Content_result = "#!/bin/sh\n"
+                                    "#$ -N first_job\n"
+                                    "#$ -o my_first_job_gen.out\n"
+                                    "#$ -e my_first_job_gen.err\n"
+                                    "#$ -m b\n"
+                                    "#$ -l walltime=01:00:00\n"
+                                    "#$ I am Toto\n"
+                                    "echo toto\n";
 
-std::string Script_Content_output = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "echo toto\n"+
-                                        "echo \"Output directory test\" > $VISHNU_OUTPUT_DIR/TMS_res\n";                                        
+std::string Script_Content_output = "#!/bin/sh\n"
+                                    "#$ -N first_job\n"
+                                    "#$ -o my_first_job_gen.out\n"
+                                    "#$ -e my_first_job_gen.err\n"
+                                    "#$ -m b\n"
+                                    "#$ -l walltime=01:00:00\n"
+                                    "echo toto\n"
+                                    "echo \"Output directory test\" > $VISHNU_OUTPUT_DIR/TMS_res\n";
 
-std::string Script_Content_output_result = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "echo toto\n"+
-                                        "echo \"Output directory test\" > /tmp/OUTPUT_UnitTest/TMS_res\n";
-                                        
-std::string Script_Content_result_variant = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "hjqgdjqgdqjgdqj\n"
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\\\n"+
-                                        "qgdhgqjkghjgdqjhd\n"+
-                                        "#$ I am Toto\n"+
-                                        "echo toto\n";
-                                        
-std::string ll_Script_content = std::string("#!/bin/sh\n")+
-                                      "# @ job_name=first_job\n"+
-                                      "# @ output=my_first_job_gen.out\n"+
-                                      "# @ error=my_first_job_gen.err\n"+
-                                      "# @ notification=start\n"+
-                                      "# @ wall_clock_limit=01:00:00\n"+
-                                      "# @ queue\n" +
-                                      "echo toto\n";
-std::string ll_Script_content_result = std::string("#!/bin/sh\n")+
-                                      "# @ job_name=first_job\n"+
-                                      "# @ output=my_first_job_gen.out\n"+
-                                      "# @ error=my_first_job_gen.err\n"+
-                                      "# @ notification=start\n"+
-                                      "# @ wall_clock_limit=01:00:00\n"+
-                                      "# @ I am Toto\n"+
-                                      "# @ queue\n" +
-                                      "echo toto\n";
-std::string Script_Content_spec = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "echo toto\n";
-std::string Script_Content_spec_result = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "#$ Toto gqjgdq\n"+
-                                        "echo toto\n";
+std::string Script_Content_output_result = "#!/bin/sh\n"
+                                           "#$ -N first_job\n"
+                                           "#$ -o my_first_job_gen.out\n"
+                                           "#$ -e my_first_job_gen.err\n"
+                                           "#$ -m b\n"
+                                           "#$ -l walltime=01:00:00\n"
+                                           "echo toto\n"
+                                           "echo \"Output directory test\" > /tmp/OUTPUT_UnitTest/TMS_res\n";
 
-std::string Script_Content_spec_result2 = std::string("#!/bin/sh\n")+
-                                        "#$ -N first_job\n"+
-                                        "#$ -o my_first_job_gen.out\n"+
-                                        "#$ -e my_first_job_gen.err\n"+
-                                        "#$ -m b\n"+
-                                        "#$ -l walltime=01:00:00\n"+
-                                        "#$ Toto gqjgdq\n"+
-                                        "#$ Titi jqhdkqhdkq\n"
-                                        "echo toto\n";
+std::string Script_Content_result_variant = "#!/bin/sh\n"
+                                            "#$ -N first_job\n"
+                                            "#$ -o my_first_job_gen.out\n"
+                                            "hjqgdjqgdqjgdqj\n"
+                                            "#$ -e my_first_job_gen.err\n"
+                                            "#$ -m b\n"
+                                            "#$ -l walltime=01:00:00\\\n"
+                                            "qgdhgqjkghjgdqjhd\n"
+                                            "#$ I am Toto\n"
+                                            "echo toto\n";
 
-static const std::string generic_Script = std::string("#!/bin/sh\n")+
-                                              "#% vishnu_job_name=first_job\n"+
-                                              "#% vishnu_output=my_first_job_gen.out\n"+
-                                              "#% vishnu_error=my_first_job_gen.err\n"+
-                                              "#% vishnu_mailNotification= BEGIN\n"+
-                                              "#% vishnu_wallclocklimit=01:00:00\n"+
-                                              "echo $VISHNU_SUBMIT_MACHINE_NAME\n";
-                                              
-static const std::string generic_Script_Torque = std::string("#!/bin/sh\n")+
-                                              "#PBS -N first_job\n"+
-                                              "#PBS -o my_first_job_gen.out\n"+
-                                              "#PBS -e my_first_job_gen.err\n"+
-                                              "#PBS -m b\n"+
-                                              "#PBS -l walltime=01:00:00\n"+
-                                              "#PBS I am Toto\n"+
-                                              "echo machine_1\n";
-                                        
-                                        
+std::string ll_Script_content = "#!/bin/sh\n"
+                                "# @ job_name=first_job\n"
+                                "# @ output=my_first_job_gen.out\n"
+                                "# @ error=my_first_job_gen.err\n"
+                                "# @ notification=start\n"
+                                "# @ wall_clock_limit=01:00:00\n"
+                                "# @ queue\n"
+                                "echo toto\n";
+std::string ll_Script_content_result = "#!/bin/sh\n"
+                                       "# @ job_name=first_job\n"
+                                       "# @ output=my_first_job_gen.out\n"
+                                       "# @ error=my_first_job_gen.err\n"
+                                       "# @ notification=start\n"
+                                       "# @ wall_clock_limit=01:00:00\n"
+                                       "# @ I am Toto\n"
+                                       "# @ queue\n"
+                                       "echo toto\n";
+std::string Script_Content_spec = "#!/bin/sh\n"
+                                  "#$ -N first_job\n"
+                                  "#$ -o my_first_job_gen.out\n"
+                                  "#$ -e my_first_job_gen.err\n"
+                                  "#$ -m b\n"
+                                  "#$ -l walltime=01:00:00\n"
+                                  "echo toto\n";
+std::string Script_Content_spec_result = "#!/bin/sh\n"
+                                         "#$ -N first_job\n"
+                                         "#$ -o my_first_job_gen.out\n"
+                                         "#$ -e my_first_job_gen.err\n"
+                                         "#$ -m b\n"
+                                         "#$ -l walltime=01:00:00\n"
+                                         "#$ Toto gqjgdq\n"
+                                         "echo toto\n";
+
+std::string Script_Content_spec_result2 = "#!/bin/sh\n"
+                                          "#$ -N first_job\n"
+                                          "#$ -o my_first_job_gen.out\n"
+                                          "#$ -e my_first_job_gen.err\n"
+                                          "#$ -m b\n"
+                                          "#$ -l walltime=01:00:00\n"
+                                          "#$ Toto gqjgdq\n"
+                                          "#$ Titi jqhdkqhdkq\n"
+                                          "echo toto\n";
+
+static const std::string generic_Script = "#!/bin/sh\n"
+                                          "#% vishnu_job_name=first_job\n"
+                                          "#% vishnu_output=my_first_job_gen.out\n"
+                                          "#% vishnu_error=my_first_job_gen.err\n"
+                                          "#% vishnu_mailNotification= BEGIN\n"
+                                          "#% vishnu_wallclocklimit=01:00:00\n"
+                                          "echo $VISHNU_SUBMIT_MACHINE_NAME\n";
+
+static const std::string generic_Script_Torque = "#!/bin/sh\n"
+                                                 "#PBS -N first_job\n"
+                                                 "#PBS -o my_first_job_gen.out\n"
+                                                 "#PBS -e my_first_job_gen.err\n"
+                                                 "#PBS -m b\n"
+                                                 "#PBS -l walltime=01:00:00\n"
+                                                 "#PBS I am Toto\n"
+                                                 "echo machine_1\n";
+
+
 
 BOOST_AUTO_TEST_SUITE( JobServer_unit_tests )
 
@@ -573,7 +575,7 @@ BOOST_AUTO_TEST_CASE(test_treatSpecificParams_case2)
   std::string test = Script_Content_spec;
   jobserver.treatSpecificParamsMock(specparams, test);
   BOOST_CHECK_EQUAL(test, Script_Content_spec_result2);
- 
+
   
 }
 

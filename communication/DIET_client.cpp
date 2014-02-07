@@ -23,6 +23,7 @@
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
 #include <zmq.hpp>                      // for context_t
 
 #include "constants.hpp"                // for ::DISP_URIADDR, etc
@@ -41,10 +42,6 @@ static ExecConfiguration config;
 typedef std::map<std::string, std::string> ServiceMap;
 boost::shared_ptr<ServiceMap> sMap;
 
-// defines minimal number of elements in a diet profile
-static const int PROFILE_ELT_NB = 4;
-
-
 static void
 fill_sMap() {
   unsigned int nb;
@@ -53,21 +50,26 @@ fill_sMap() {
   for (nb = 0; nb < NB_SRV_UMS; nb++) {
     (*sMap)[SERVICES_UMS[nb]] = "UMS";
   }
+  (*sMap)["heartbeatumssed"] = "UMS";
+
 
   /* TMS services */
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
     (*sMap)[SERVICES_TMS[nb]] = "TMS";
   }
+  (*sMap)["heartbeattmssed"] = "TMS";
 
   /* IMS services */
   for (nb = 0; nb < NB_SRV_IMS; nb++) {
     (*sMap)[SERVICES_IMS[nb]] = "IMS";
   }
+  (*sMap)["heartbeatimssed"] = "IMS";
 
   /* FMS services */
   for (nb = 0; nb < NB_SRV_FMS; nb++) {
     (*sMap)[SERVICES_FMS[nb]] = "FMS";
   }
+  (*sMap)["heartbeatfmssed"] = "FMS";
 }
 
 
@@ -106,13 +108,10 @@ int getTimeout() {
 
 
 diet_profile_t*
-diet_profile_alloc(const std::string &name, int IN, int INOUT, int OUT) {
-  // TODO : Do not handle -1 for input (no input param)
+diet_profile_alloc(const std::string &name, int nbparams) {
   diet_profile_t* res = new diet_profile_t;
-  res->IN = IN;
-  res->INOUT = INOUT;
-  res->OUT = OUT;
-  (res->params).resize(OUT+1, "");
+  res->param_count = nbparams;
+  (res->params).resize(nbparams, "");
   res->name = name;
   return res;
 }
@@ -123,35 +122,23 @@ diet_string_set(diet_profile_t* prof, int pos,
   try {
     (prof->params).at(pos) = value;
   } catch (const std::out_of_range& err) {
-    throw
-    SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
+    std::cout << prof->name << " " << value<< " " << pos << "\n";
+    throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   return 0;
 }
 
+
+/**
+ * @brief Reset the data and the number of parameters in the profile
+ * @param prof The profile
+ * @param nbparams The number of parameter
+ */
 void
-sendProfile(diet_profile_t* prof, const std::string& uri) {
-  zmq::context_t ctx(1);
-
-  LazyPirateClient lpc(ctx, uri, getTimeout());
-  std::string resultSerialized = my_serialize(prof);
-  if (!lpc.send(resultSerialized)) {
-    std::cerr << "E: request failed, exiting ...\n";
-    throw SystemException(ERRCODE_SYSTEM, "Unable to contact the service");
-  }
-  // Receive response
-  std::string response = lpc.recv();
-
-  if (boost::starts_with(response, "error")) {
-    throw SystemException(ERRCODE_SYSTEM, response);
-  }
-
-  //Update of profile
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-  prof->IN = tmp->IN;
-  prof->OUT = tmp->OUT;
-  prof->INOUT = tmp->INOUT;
-  prof->params = tmp->params;
+diet_profile_reset(diet_profile_t* prof, int nbparams) {
+  prof->params.clear();
+  prof->param_count = nbparams;
+  prof->params.resize(nbparams, "");
 }
 
 int
@@ -195,22 +182,22 @@ diet_call(diet_profile_t* prof) {
     iss >> uri;
   }
   try {
-      std::string mid = tokens.at(1);
-      tokens.clear();
-      bool validMid(false);
+    std::string mid = tokens.at(1);
+    tokens.clear();
+    bool validMid(false);
 
-      BOOST_FOREACH(const std::string& v, uriv) {
-          boost::algorithm::split(tokens, v, boost::algorithm::is_space());
-          if (tokens.size() > 1 && mid == tokens[1]) {
-              uri = tokens[0];
-              validMid = true;
-              break;
-          }
+    BOOST_FOREACH(const std::string& v, uriv) {
+      boost::algorithm::split(tokens, v, boost::algorithm::is_space());
+      if (tokens.size() > 1 && mid == tokens[1]) {
+        uri = tokens[0];
+        validMid = true;
+        break;
       }
+    }
 
-      if (!validMid) {
-          uri.clear();
-      }
+    if (!validMid) {
+      uri.clear();
+    }
   } catch (const std::out_of_range& err) {}
 
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
@@ -234,22 +221,14 @@ diet_call(diet_profile_t* prof) {
     uri = disp;
   }
 
-  bool useSsl = false;
-  std::string cafile;
-  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
-  {
-    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
-    return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
-  }
-
-  return diet_call_gen(prof, uri);
+  return abstract_call_gen(prof, uri);
 }
 
 int
-diet_call_gen(diet_profile_t* prof, const std::string& uri) {
+diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
+  int timeout = shortTimeout?SHORT_TIMEOUT:getTimeout();
   zmq::context_t ctx(5);
-  LazyPirateClient lpc(ctx, uri, getTimeout());
-
+  LazyPirateClient lpc(ctx, uri, timeout);
   std::string s1 = my_serialize(prof);
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
@@ -257,22 +236,19 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri) {
   }
 
   std::string response = lpc.recv();
-
-  boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-  if (!tmp) {
+  boost::shared_ptr<diet_profile_t> result(my_deserialize(response));
+  if (! result) {
     std::cerr << boost::format("[ERROR] %1%\n")%response;
     return 1;
   }
-// To signal a communication problem (bad server receive request)
-// Otherwize client does not get any error message
-  if (tmp->OUT == -1) {
+  // To signal a communication problem (bad server receive request)
+  // Otherwize client does not get any error message
+  if (result->param_count == -1) {
     return 1;
   }
 
-  prof->IN = tmp->IN;
-  prof->OUT = tmp->OUT;
-  prof->INOUT = tmp->INOUT;
-  prof->params = tmp->params;
+  prof->param_count = result->param_count;
+  prof->params = result->params;
   return 0;
 }
 
@@ -281,7 +257,6 @@ ssl_call_gen(diet_profile_t* prof,
              const std::string& host,
              const int& port,
              const std::string& cafile) {
-
   TlsClient tlsClient(host, port, cafile);
 
   if (tlsClient.send( my_serialize(prof) )) {
@@ -291,12 +266,10 @@ ssl_call_gen(diet_profile_t* prof,
 
   std::string response = tlsClient.recv();
   try {
-    boost::shared_ptr<diet_profile_t> tmp(my_deserialize(response));
-    if (tmp) {
-      prof->IN = tmp->IN;
-      prof->OUT = tmp->OUT;
-      prof->INOUT = tmp->INOUT;
-      prof->params = tmp->params;
+    boost::shared_ptr<diet_profile_t> resultProfile(my_deserialize(response));
+    if (resultProfile) {
+      prof->param_count = resultProfile->param_count;
+      prof->params = resultProfile->params;
       return 0;
     } else {
       std::cerr << boost::format("[ERROR] %1%\n")%response;
@@ -323,59 +296,12 @@ diet_profile_free(diet_profile_t* prof) {
 
 std::string
 my_serialize(diet_profile_t* prof) {
-  if (!prof) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
-  }
-
-  std::stringstream res;
-  res << prof->name <<  VISHNU_COMM_SEPARATOR
-      << prof->IN << VISHNU_COMM_SEPARATOR
-      << prof->INOUT << VISHNU_COMM_SEPARATOR
-      << prof->OUT << VISHNU_COMM_SEPARATOR;
-
-  for (int i = 0; i<(prof->OUT); ++i) {
-    res << prof->params[i] << VISHNU_COMM_SEPARATOR;
-  }
-  if (prof->OUT > 0) {
-    res << prof->params[(prof->OUT)] << VISHNU_COMM_SEPARATOR;
-  }
-
-  /*Crypt message before returning */
-
-  return res.str();
+  return JsonObject::serialize(prof);
 }
 
 boost::shared_ptr<diet_profile_t>
 my_deserialize(const std::string& prof) {
-  boost::shared_ptr<diet_profile_t> res;
-
-  std::vector<std::string> vecString;
-
-  if (prof.empty()) {
-    throw SystemException(ERRCODE_SYSTEM, "Cannot deserialize an empty string ");
-  }
-
-  boost::algorithm::split_regex(vecString, prof, boost::regex(VISHNU_COMM_REGEX));
-
-  // TODO: this is not "safe" as we can receive errors int "prof"
-  // Currently, we check that the size of vecString is at least 4:
-  // profile's name, IN, INOUT and OUT
-  if (vecString.size() >= PROFILE_ELT_NB && (vecString.at(0) != "")) {
-    res.reset(new diet_profile_t);
-    std::vector<std::string>::iterator it = vecString.begin();
-    res->name = *(it++);
-    res->IN = boost::lexical_cast<int>(*(it++));
-    res->INOUT = boost::lexical_cast<int>(*(it++));
-    res->OUT = boost::lexical_cast<int>(*(it++));
-
-    std::copy(it, vecString.end(), std::back_inserter(res->params));
-
-    if (res->params.size() <= res->OUT) {
-      throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
-    }
-  }
-
-  return res;
+  return JsonObject::deserialize(prof);
 }
 
 int
@@ -386,4 +312,154 @@ diet_initialize(const char* cfg, int argc, char** argv) {
   config.initFromFile(cfg);
   return 0;
 }
+
+int
+communicate_dispatcher(const std::string& requestData, std::string& response, bool shortTimeout){
+  int timeout = shortTimeout?SHORT_TIMEOUT:getTimeout();
+  std::string uriDispatcher;
+  config.getRequiredConfigValue<std::string>(vishnu::DISP_URISUBS, uriDispatcher);
+  bool useSsl = false;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl) {
+    std::string req = requestData;
+    std::string host;
+    int port;
+    host = vishnu::getHostFromUri(uriDispatcher);
+    port = vishnu::getPortFromUri(uriDispatcher);
+    std::string cafile;
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+    TlsClient tlsClient(host, port, cafile);
+    req.append("\n\n");      /* required for the internal protocol */
+    if (tlsClient.send(req) == 0) {
+      response = tlsClient.recv();
+    }
+  } else {
+    zmq::context_t ctx(1);
+    LazyPirateClient lpc(ctx, uriDispatcher, timeout);
+    if (!lpc.send(requestData)) {
+      return -1; // Dont throw exception
+    }
+    response = lpc.recv();
+  }
+
+  return 0;
+}
+
+void
+extractServersFromMessage(std::string msg, std::vector<boost::shared_ptr<Server> >& res){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> vecString;
+  split_regex(vecString, msg, boost::regex(VISHNU_COMM_REGEX));
+  std::vector<std::string>::iterator it;
+  for (it = vecString.begin() ; it != vecString.end() ; ++it){
+    std::string val(it->c_str()); // CREATE A STRING BECAUSE IT->EMPTY = FALSE WHEN IT EMPTY
+    // URI is the key
+    if ( !val.empty()){
+      res.push_back(Server::fromString(val));
+    }
+  }
+}
+
+int
+abstract_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout){
+  bool useSsl = false;
+  std::string cafile;
+  if (config.getConfigValue<bool>(vishnu::USE_SSL, useSsl) && useSsl)
+  {
+    config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
+    return ssl_call_gen(prof, vishnu::getHostFromUri(uri), vishnu::getPortFromUri(uri), cafile);
+  }
+  return diet_call_gen(prof, uri, shortTimeout);
+}
+
+
+void
+extractServersFromLine(const std::vector<std::string>& uriv, std::vector<boost::shared_ptr<Server> >& allServers, const std::string& module){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> tokens;
+  std::vector<std::string> tmp;
+  tmp.push_back("heartbeat");
+  std::vector<std::string>::iterator it;
+  std::string uri;
+
+  BOOST_FOREACH(const std::string& v, uriv) {
+    boost::algorithm::split(tokens, v, boost::algorithm::is_any_of(";")); // In client config files, URI are separated by ;
+    for (it = tokens.begin() ; it != tokens.end() ; ++it){
+      uri = *it;
+      allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+    }
+    tokens.clear();
+  }
+}
+
+void
+extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<boost::shared_ptr<Server> >& allServers, const std::string& module){
+  using boost::algorithm::split_regex;
+  std::vector<std::string> tokens;
+  std::vector<std::string> tokens2;
+  std::vector<std::string> tmp;
+  tmp.push_back("heartbeat");
+  std::vector<std::string>::iterator it;
+  std::string uri;
+
+  BOOST_FOREACH(const std::string& v, uriv) {
+    boost::algorithm::split(tokens, v, boost::algorithm::is_any_of(";")); // In client config files, URI are separated by ;
+    BOOST_FOREACH(const std::string& w, tokens) {
+      boost::algorithm::split(tokens2, w, boost::algorithm::is_space());
+      uri = tokens2[0];
+      allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
+    }
+    tokens.clear();
+  }
+}
+
+
+void
+getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
+  vishnu::param_type_t param;
+  std::vector<std::string> uriv;
+  param = vishnu::UMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "umssed");
+  uriv.clear();
+  param = vishnu::IMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "imssed");
+  uriv.clear();
+  param = vishnu::FMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractServersFromLine(uriv, allServers, "fmssed");
+  uriv.clear();
+  param = vishnu::TMS_URIADDR;
+  config.getConfigValues(param, uriv);
+  if (uriv.size()>0)
+    extractMachineServersFromLine(uriv, allServers, "tmssed");
+  uriv.clear();
+}
+
+
+/**
+ * @brief Raise exception when profile hold error status
+ * @param profile The profile to analyse
+ */
+void raiseExceptionOnErrorResult(diet_profile_t* profile) {
+  if (profile && profile->param_count == 2) {
+    std::string status;
+    std::string msg;
+    diet_string_get(profile, 0, status);
+    if (status != "success") {
+      diet_string_get(profile, 1, msg);
+      diet_profile_free(profile);
+      throw SystemException(ERRCODE_SYSTEM, msg);
+    }
+  } else {
+    if (profile) {
+      diet_profile_free(profile);
+    }
+    throw SystemException(ERRCODE_INVDATA, "Bad result profile");
+  }
+}
+
 

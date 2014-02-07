@@ -63,7 +63,7 @@ SessionServer::connectSession(UserServer user, MachineClientServer host, UMS_Dat
         numSubstituteUserId = user.getAttribut("where "
                                                "userid='"+mdatabaseVishnu->escapeData(connectOpt->getSubstituteUserId())+"'");
         //If the user to substitute exist
-        if (user.existuserId(connectOpt->getSubstituteUserId())) {
+        if (! user.getNumUserId(connectOpt->getSubstituteUserId()).empty()) {
           numUserIdToconnect = numSubstituteUserId;
           msession.setUserId(connectOpt->getSubstituteUserId());
         } //End If the user to substitute exist
@@ -234,7 +234,7 @@ int
 SessionServer::saveConnection() {
 
   std::string sqlCommand = "UPDATE vsession SET lastconnect=CURRENT_TIMESTAMP"
-    " WHERE sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"'";
+                           " WHERE sessionkey='"+mdatabaseVishnu->escapeData(msession.getSessionKey())+"'";
 
   mdatabaseVishnu->process(sqlCommand.c_str());
   return 0;
@@ -278,24 +278,26 @@ SessionServer::getSessionToclosebyTimeout() {
  */
 int
 SessionServer::check() {
-  int ret = -1;
+
+  int retCode = -1;
+
   std::string sqlQuery = (boost::format("SELECT state, status, passwordstate"
                                         " FROM users, vsession "
                                         " WHERE users.numuserid = vsession.users_numuserid"
                                         " AND vsession.sessionkey='%1%'"
-                                        " AND vsession.state<>%2%")%mdatabaseVishnu->escapeData(msession.getSessionKey())%vishnu::STATUS_DELETED).str();
+                                        " AND vsession.state<>%2%"
+                                        )
+                          % mdatabaseVishnu->escapeData(msession.getSessionKey())
+                          % vishnu::STATUS_DELETED).str();
   boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlQuery));
 
   //If the session key exists
   if (result->getNbTuples() != 0) {
     std::vector<std::string> tmp = result->get(0);
-    //If the session is active
-    if (convertToInt(tmp[0]) == 1) {
-      //If the user is not locked
-      if (convertToInt(tmp[1]) == 1) {
-        //If the passwordstate is active
-        if (convertToInt(tmp[2]) == 1) {
-          ret = 0;
+    if (convertToInt(tmp[0]) == vishnu::SESSION_ACTIVE) {
+      if (convertToInt(tmp[1]) == vishnu::STATUS_ACTIVE) {
+        if (convertToInt(tmp[2]) == vishnu::STATUS_ACTIVE) {
+          retCode = 0;
         } else {
           throw UMSVishnuException (ERRCODE_TEMPORARY_PASSWORD);
         }
@@ -308,7 +310,7 @@ SessionServer::check() {
   } else {
     throw UMSVishnuException (ERRCODE_SESSIONKEY_NOT_FOUND);
   }
-  return ret;
+  return retCode;
 }
 
 /**
@@ -324,10 +326,12 @@ int
 SessionServer::finish(std::string cmdDescription,
                       CmdType cmdType,
                       CmdStatus cmdStatus,
-                      std::string newVishnuObjectID) {
+                      std::string newVishnuObjectID, bool checkSession) {
 
   //To save the date of the last connection
-  check();
+  if (checkSession) {
+    check();
+  }
   saveConnection();
   //To save the command
   CommandServer commandServer = CommandServer(cmdDescription, *this);

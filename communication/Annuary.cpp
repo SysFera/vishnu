@@ -48,8 +48,8 @@ Annuary::add(const std::string& name, const std::string& uri,
     std::find_if(mservers.begin(), mservers.end(), helper);
   if (it == mservers.end()) {
     mservers.push_back(boost::make_shared<Server>(name, services, uri));
+    std::cerr << "[INFO]: added " << name << "@" << uri << "\n";
   }
-
   return 0;
 }
 
@@ -76,9 +76,9 @@ Annuary::get(const std::string& service) {
                         std::back_inserter(res),
                         !boost::bind(&Server::hasService, _1, service));
   }
-
   return res;
 }
+
 
 void
 Annuary::print() {
@@ -102,16 +102,18 @@ Annuary::print() {
  * \param cfgInfo the value of the module configuration
  */
 void
-Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo) {
+Annuary::setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo, std::string mid) {
   boost::lock_guard<boost::recursive_mutex> lock(mmutex);
   BOOST_FOREACH(const std::string& entry, cfgInfo) {
     std::istringstream iss(entry);
     std::string uri;
-    std::string mid;
+    std::string mid_tmp = mid;
     iss >> uri;
-    iss >> mid;
+    iss >> mid_tmp;
+    if (mid_tmp.empty())
+      mid_tmp=mid;
     std::vector<std::string> services;
-    fillServices(services, module, mid);
+    fillServices(services, module, mid_tmp);
     mservers.push_back(boost::make_shared<Server>(module, services, uri));
   }
 }
@@ -124,11 +126,15 @@ Annuary::fillServices(std::vector< std::string> &services,
   unsigned int nb;
   std::string tmpserv;
 
-  if (name == "UMS") {
+  if (name == "umssed") {
     for (nb = 0; nb < NB_SRV_UMS; nb++) {
-      services.push_back(SERVICES_UMS[nb]);
+      tmpserv = SERVICES_UMS[nb];
+      if (MACHINE_SPECIC_SERVICES_UMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
     }
-  } else if (name == "TMS") {
+  } else if (name == "tmssed") {
     for (nb = 0; nb < NB_SRV_TMS; nb++) {
       tmpserv = SERVICES_TMS[nb];
       if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
@@ -136,7 +142,7 @@ Annuary::fillServices(std::vector< std::string> &services,
       }
       services.push_back(tmpserv);
     }
-  } else if (name == "IMS") {
+  } else if (name == "imssed") {
     for (nb = 0; nb < NB_SRV_IMS; nb++) {
       tmpserv = SERVICES_IMS[nb];
       if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
@@ -144,9 +150,13 @@ Annuary::fillServices(std::vector< std::string> &services,
       }
       services.push_back(tmpserv);
     }
-  } else if (name == "FMS") {
+  } else if (name == "fmssed") {
     for (nb = 0; nb < NB_SRV_FMS; nb++) {
-      services.push_back(SERVICES_FMS[nb]);
+      tmpserv = SERVICES_FMS[nb];
+      if (MACHINE_SPECIC_SERVICES_FMS[nb]) {
+        tmpserv += "@" + mid;
+      }
+      services.push_back(tmpserv);
     }
   } else { // Routage
     services.push_back("routage");

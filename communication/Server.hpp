@@ -35,6 +35,12 @@ public:
          const std::string& uri);
 
   /**
+   * \brief Copy constructor
+   * \param the server
+   */
+  Server(Server& serv);
+ 
+  /**
    * \brief Destructor
    */
   ~Server();

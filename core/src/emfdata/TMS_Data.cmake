@@ -55,6 +55,10 @@ set(TMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/WorkImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptionsImpl.cpp
    )
    
 set(TMS_Data_HEADERS
@@ -76,6 +80,8 @@ set(TMS_Data_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Work.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptions.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptions.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data.hpp DESTINATION include/emf4cpp/)
@@ -96,6 +102,8 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/ListJobResults.hpp DESTINATIO
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/LoadCriterion.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/Work.hpp DESTINATION include/emf4cpp/TMS_Data)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptions.hpp DESTINATION include/emf4cpp/TMS_Data)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${EMF4CPP_INCLUDE_DIR})
 
@@ -105,4 +113,5 @@ target_link_libraries(emf4cpp-TMS_Data emf4cpp-ecore emf4cpp-ecorecpp)
 set_target_properties(emf4cpp-TMS_Data PROPERTIES VERSION 0.0.1 SOVERSION 1)
 
 install(TARGETS emf4cpp-TMS_Data DESTINATION ${LIB_INSTALL_DIR})
+
 

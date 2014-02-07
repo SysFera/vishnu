@@ -29,9 +29,7 @@ int solveListDir(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string finishError ="";
   std::string result = "";
-  std::string errMsg = "" ;
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -40,69 +38,69 @@ int solveListDir(diet_profile_t* profile) {
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
 
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
+
   localUser = user;
   localPath = path;
   SessionServer sessionServer (sessionKey);
 
-    try {
-      FMS_Data::DirEntryList* ls;
-      int mapperkey;
-      //MAPPER CREATION
-      Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
-      mapperkey = mapper->code("vishnu_ls");
-      mapper->code(host + ":" + path, mapperkey);
-      mapper->code(optionsSerialized, mapperkey);
-      cmd = mapper->finalize(mapperkey);
-      // check the sessionKey
+  try {
+    int mapperkey;
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_ls");
+    mapper->code(host + ":" + path, mapperkey);
+    mapper->code(optionsSerialized, mapperkey);
+    cmd = mapper->finalize(mapperkey);
+    // check the sessionKey
 
-      sessionServer.check();
-      //
-      UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-      machine->setMachineId(host);
-      MachineServer machineServer(machine);
+    sessionServer.check();
+    //
+    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+    machine->setMachineId(host);
+    MachineServer machineServer(machine);
 
-      // check the machine
-      machineServer.checkMachine();
+    // check the machine
+    machineServer.checkMachine();
 
-      // get the machineName
-      machineName = machineServer.getMachineName();
-      delete machine;
+    // get the machineName
+    machineName = machineServer.getMachineName();
+    delete machine;
 
-      // get the acLogin
-      acLogin = UserServer(sessionServer).getUserAccountLogin(host);
+    // get the acLogin
+    acLogin = UserServer(sessionServer).getUserAccountLogin(host);
 
 
-      FileFactory ff;
-      ff.setSSHServer(machineName);
+    FileFactory ff;
+    ff.setSSHServer(machineName);
 
-      boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
+    boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
-      FMS_Data::LsDirOptions_ptr options_ptr= NULL;
-      if (!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
-        throw SystemException(ERRCODE_INVDATA, "solve_LsDir: LsDirOptions object is not well built");
-      }
-
-      ls = file->ls(*options_ptr);
-
-      ::ecorecpp::serializer::serializer _ser;
-
-      result =  _ser.serialize_str(const_cast<FMS_Data::DirEntryList*>(ls));
-
-      //To register the command
-      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
-
-    } catch (VishnuException& err) {
-      try {
-        sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
-      } catch (VishnuException& fe) {
-        finishError =  fe.what();
-        finishError +="\n";
-      }
-      err.appendMsgComp(finishError);
-      errMsg = err.buildExceptionString();
-      result = "";
+    FMS_Data::LsDirOptions_ptr options_ptr= NULL;
+    if (!vishnu::parseEmfObject(optionsSerialized, options_ptr )) {
+      throw SystemException(ERRCODE_INVDATA, "solve_LsDir: LsDirOptions object is not well built");
     }
-    diet_string_set(profile, 5, result.c_str());
-    diet_string_set(profile, 6, errMsg.c_str());
-    return 0;
+
+    ::ecorecpp::serializer::serializer _ser;
+    result =  _ser.serialize_str(const_cast<FMS_Data::DirEntryList*>( file->ls(*options_ptr) ));
+
+    // set success result
+    diet_string_set(profile, 1, result);
+    diet_string_set(profile, 0, "success");
+
+    //To register the command
+    sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
+
+  } catch (VishnuException& err) {
+    try {
+      sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
+    } catch (VishnuException& fe) {
+      err.appendMsgComp(fe.what());
+    }
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
+  }
+  return 0;
 }

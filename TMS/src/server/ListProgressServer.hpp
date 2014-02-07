@@ -21,6 +21,7 @@
 #include "TMS_Data.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
+#include "constants.hpp"
 
 /**
  * \class ListProgressServer
@@ -38,8 +39,8 @@ public:
   ListProgressServer(const SessionServer session, const std::string& machineId):
     QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(session)
   {
-   mcommandName = "vishnu_get_job_progress";
-   mmachineId = machineId;
+    mcommandName = "vishnu_get_job_progress";
+    mmachineId = machineId;
   }
   /**
    * \param params The object which encapsulates the information of ListProgressServer options
@@ -80,7 +81,7 @@ public:
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
                              " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'";
 
-    if(mparameters->getJobId().size()!=0) {
+    if (! mparameters->getJobId().empty()) {
       std::string jobId = mparameters->getJobId();
       sqlRequest.append(" and jobId='"+mdatabaseVishnu->escapeData(jobId)+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
@@ -88,8 +89,8 @@ public:
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     } else {
-      if(mparameters->getJobOwner().size()!=0) {
-        acLogin = mparameters->getJobOwner();
+      if (! mparameters->getUser().empty()) {
+        acLogin = mparameters->getUser();
       }
       sqlRequest.append(" and owner='"+mdatabaseVishnu->escapeData(acLogin)+"'");
     }
@@ -126,17 +127,17 @@ public:
         if(startTime!=0) {
           job->setStartTime(startTime);
 
-          if(status==5) {
+          if (status == vishnu::STATE_COMPLETED) {
             job->setPercent(100);
-          } else if(status==4) {
+          } else if(status == vishnu::STATE_RUNNING) {
             time_t currentTime = vishnu::getCurrentTimeInUTC();
             int percent = 0;
             time_t gap = currentTime-startTime;
-            if(walltime==0) {
-               walltime = 60;
+            if (walltime == 0) {
+              walltime = 60;
             }
 
-            if(gap < walltime) {
+            if (gap < walltime) {
               double ratio =  100*(double(gap)/walltime);
               if(ratio > 0.0 && ratio <= 1.0) {
                 percent = 1;
@@ -180,7 +181,7 @@ public:
   {
   }
 
-  private:
+private:
 
   /////////////////////////////////
   // Attributes
@@ -191,7 +192,7 @@ public:
   * \brief The name of the ListProgressServer command line
   */
   std::string mcommandName;
-   /**
+  /**
   * \brief The identifier of the machine in which the jobs whill be listed
   */
   std::string mmachineId;

@@ -178,6 +178,12 @@ void SubmitOptions::_initialize()
                 m_posix);
     }
         return _any;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
+                m_machine);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -311,6 +317,12 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 _newValue, m_posix);
     }
         return;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINE:
+    {
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
+                m_machine);
+    }
+        return;
 
     }
     throw "Error";
@@ -373,6 +385,8 @@ void SubmitOptions::eSet(::ecore::EInt _featureID,
                 m_specificParams);
     case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__POSIX:
         return m_posix != false;
+    case ::TMS_Data::TMS_DataPackage::SUBMITOPTIONS__MACHINE:
+        return m_machine != "";
 
     }
     throw "Error";

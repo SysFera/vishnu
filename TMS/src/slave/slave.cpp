@@ -57,7 +57,7 @@ void usage(char* cmd) {
  * \return The result of the diet sed call
  */
 int
-main(int argc, char* argv[], char* envp[]) {
+main(int argc, char* argv[]) {
 
   int ret = EXIT_SUCCESS;
   std::string action;
@@ -102,25 +102,27 @@ main(int argc, char* argv[], char* envp[]) {
     //To create batchServer Factory
     BatchFactory factory;
     batchServer = factory.getBatchServerInstance(batchType, batchVersion);
-    if (batchServer==NULL) {
+    if (! batchServer) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: getBatchServerInstance return NULL instance");
     }
+
     std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
-    if (!parseEmfObject(jobSerialized, job)) {
+    if (! parseEmfObject(jobSerialized, job)) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: job object is not well built");
     }
 
     if (action == "SUBMIT") {
-      std::string options  = vishnu::get_file_content(optionsPath);
-      if(!parseEmfObject(std::string(options), submitOptions)) {
-        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
-      }
-      if (!job->getOutputDir().empty()) {
+//      std::string options  = vishnu::get_file_content(optionsPath);
+//      if (! parseEmfObject(options, submitOptions)) {
+//        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
+//      }
+      JsonObject jsonOptions(vishnu::get_file_content(optionsPath));
+      if (! job->getOutputDir().empty()) {
         bool isWorkingDir = (batchType == DELTACLOUD)? true : false;
         vishnu::createDir(job->getOutputDir(), isWorkingDir); // Create the output directory
       }
       //Submits the job
-      if (batchServer->submit(jobScriptPath, *submitOptions, *job)!=0) {
+      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), *job) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
       //To serialize the job object
@@ -130,12 +132,12 @@ main(int argc, char* argv[], char* envp[]) {
       os_slaveJobFile << slaveJob;
       os_slaveJobFile.close();
     } else if (action == "CANCEL") {
-      //To cancel the job
-      std::string jobdDescr = job->getJobId();
       if (batchType == DELTACLOUD) {
-        jobdDescr += "@"+job->getVmId();
+        std::string jobdDescr = job->getJobId()+"@"+job->getVmId();
+        batchServer->cancel(jobdDescr.c_str());
+      } else {
+        batchServer->cancel(job->getBatchJobId().c_str());
       }
-      batchServer->cancel(jobdDescr.c_str());
     }
   } catch (VishnuException& ve) {
     std::string errorInfo =  ve.buildExceptionString();

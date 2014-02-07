@@ -11,6 +11,7 @@ include_directories(client api
   ${ZMQ_INCLUDE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
+  ${LIBJANSSON_INCLUDE_DIR}
   )
 
 set(client_SRCS client/SessionProxy.cpp
@@ -24,6 +25,8 @@ set(client_SRCS client/SessionProxy.cpp
   client/utilsClient.cpp
   client/UtilsProxy.cpp
   client/ObjectIdProxy.cpp
+  client/PingerProxy.cpp
+  client/VersionProxy.cpp
   client/NetrcReader.cpp)
 
 set(cli_SRCS cli/utils.cpp
@@ -37,8 +40,8 @@ set(cli_SRCS cli/utils.cpp
   cli/authenticationSystemUtils.cpp
   cli/authenticationAccountUtils.cpp)
 
-set(api_SRCS api/api_ums.cpp)
-set(api_HEADERS api/api_ums.hpp)
+set(api_SRCS api/api_ums.cpp api/api_comm.cpp)
+set(api_HEADERS api/api_ums.hpp api/api_comm.hpp)
 
 add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
 set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})

@@ -7,7 +7,9 @@ include_directories(${Boost_INCLUDE_DIRS}
   ${AUTHENTICATOR_INCLUDE_DIR}
   ${VERSION_MANAGER_SOURCE_DIR}
   ${COMMUNICATION_INCLUDE_DIR}
+  ${LIBJANSSON_INCLUDE_DIR}
   )
+
 
 #################### config ###################################################
 set(config_SRCS config/CommonParser.cpp
@@ -200,6 +202,8 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/LoadCriterion.hpp
   emfdata/TMS_Data/Work.hpp
   emfdata/TMS_Data/AddWorkOptions.hpp
+  emfdata/TMS_Data/CancelOptions.hpp
+  emfdata/TMS_Data/JobOuputOptions.hpp
 )
 
 set(IMS_Data_SRCS
@@ -237,7 +241,12 @@ set(IMS_Data_SRCS
   emfdata/IMS_Data/ListSysInfo.cpp
   emfdata/IMS_Data/ListSysInfoImpl.cpp
   emfdata/IMS_Data/SupervisorOp.cpp
-  emfdata/IMS_Data/SupervisorOpImpl.cpp)
+  emfdata/IMS_Data/SupervisorOpImpl.cpp
+  emfdata/TMS_Data/CancelOptions.cpp
+  emfdata/TMS_Data/CancelOptionsImpl.cpp
+  emfdata/TMS_Data/JobOuputOptions.cpp
+  emfdata/TMS_Data/JobOuputOptionsImpl.cpp
+)
 
 set(IMS_Data_HEADERS
   emfdata/IMS_Data.hpp

@@ -102,64 +102,31 @@ LocalFileProxy::transferFile(const string& dest,
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
   }
 
-  diet_profile_t* profile;
-  std::string errMsg = "";
-
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 6);
   std::string sessionKey=this->getSession().getSessionKey();
-
-  bool isAsyncTransfer = (serviceName == SERVICES_FMS[FILECOPYASYNC]
-                          || serviceName == SERVICES_FMS[FILEMOVEASYNC]);
-  if(!isAsyncTransfer) {
-    profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 6);
-  } else {
-    profile = diet_profile_alloc(const_cast<char*>(serviceName.c_str()), 5, 5, 7);
-  }
-
-
-  //IN Parameters
-  diet_string_set(profile, 0, sessionKey.c_str());
-  diet_string_set(profile, 1, localFullPath.string().c_str()); // local source file
+  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 1, localFullPath.string()); // local source file
   diet_string_set(profile, 2, localUser);
-  diet_string_set(profile, 3, srcHost.c_str());
-  diet_string_set(profile, 4, dest.c_str());
+  diet_string_set(profile, 3, srcHost);
+  diet_string_set(profile, 4, dest);
 
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the options object in to optionsInString
   string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
 
-  diet_string_set(profile,5 , optionsToString.c_str());
-
-  if(!isAsyncTransfer) {
-    diet_string_set(profile, 6);
-  } else {
-    diet_string_set(profile, 6);
-    diet_string_set(profile, 7);
-  }
+  diet_string_set(profile,5 , optionsToString);
 
   if (diet_call(profile)) {
-    raiseCommunicationMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("RPC call failed");
   }
 
-  if(!isAsyncTransfer) {
-    diet_string_get(profile, 6, errMsg);
+  raiseExceptionOnErrorResult(profile);
 
-    /*To raise a vishnu exception if the received message is not empty*/
-    raiseExceptionIfNotEmptyMsg(errMsg);
-  } else {
+  std::string fileTransferInString;
+  diet_string_get(profile, 1, fileTransferInString);
 
-    std::string fileTransferInString = "";
-    diet_string_get(profile, 6, fileTransferInString);
-    diet_string_get(profile, 7, errMsg);
-
-    /*To raise a vishnu exception if the received message is not empty*/
-    raiseExceptionIfNotEmptyMsg(errMsg);
-
-    FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
-
-    parseEmfObject(fileTransferInString, fileTransfer_ptr);
-
-    fileTransfer = *fileTransfer_ptr;
-  }
+  FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
+  parseEmfObject(fileTransferInString, fileTransfer_ptr);
+  fileTransfer = *fileTransfer_ptr;
 
   return 0;
 }

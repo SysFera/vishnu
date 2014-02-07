@@ -42,8 +42,8 @@ typedef enum {
   NBRUNNINGJOBS = 2
 } LoadType;
 
-static const std::string AUTOMATIC_SUBMIT_JOB_KEYWORD="autom";
-static const std::string LIST_JOBS_ON_MACHINES_KEYWORD="all";
+static const std::string AUTOM_KEYWORD="autom";
+static const std::string ALL_KEYWORD="all";
 
 namespace vishnu
 {
@@ -214,6 +214,14 @@ sendInputFiles(const std::string& sessionKey,
                const FMS_Data::CpFileOptions& copts);
 
 /**
+ * @brief listMachinesWithUserLocalAccount
+ * @param sessionKey
+ * @param machines
+ */
+void
+listMachinesWithUserLocalAccount(const std::string& sessionKey, UMS_Data::ListMachines& machines);
+
+/**
  * \brief Function to select a machine for automatic submission
  * \param sessionKey the session key
  * \param criterion The selection criterion
@@ -221,7 +229,8 @@ sendInputFiles(const std::string& sessionKey,
  */
 std::string
 findMachine(const std::string& sessionKey,
-            const TMS_Data::LoadCriterion_ptr& criterion);
+            const TMS_Data::LoadCriterion& criterion);
+
 
 /**
  * \brief Function to compute the load performance of a given machine
@@ -232,7 +241,8 @@ findMachine(const std::string& sessionKey,
   static long
   getMachineLoadPerformance(const std::string& sessionKey,
                             const UMS_Data::Machine_ptr& machine,
-                            const TMS_Data::LoadCriterion_ptr& criterion);
+                            const TMS_Data::LoadCriterion& criterion);
+
 
 
   /**

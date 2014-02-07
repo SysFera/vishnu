@@ -29,9 +29,7 @@ int headFile(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string finishError = "";
   std::string result = "";
-  std::string errMsg = "";
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -40,6 +38,8 @@ int headFile(diet_profile_t* profile) {
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
 
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -82,7 +82,9 @@ int headFile(diet_profile_t* profile) {
       throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
     }
 
-	result = file->head(*options_ptr);
+    // set success result
+    diet_string_set(profile, 1, file->head(*options_ptr));
+    diet_string_set(profile, 0, "success");
 
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
@@ -90,15 +92,11 @@ int headFile(diet_profile_t* profile) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    err.appendMsgComp(finishError);
-
-	result = "";
-	errMsg = err.buildExceptionString().c_str();
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
-  diet_string_set(profile, 5, result.c_str());
-  diet_string_set(profile, 6, errMsg.c_str());
   return 0;
 }

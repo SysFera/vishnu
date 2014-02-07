@@ -251,7 +251,7 @@ int  File::getDirEntryFrom( const std::string& rawDirEntry, FMS_Data::DirEntry* 
 
   dirEntry->setSize(stringToDirEntry.getSize());
 
-  dirEntry->setCreationTime(stringToDirEntry.getDateTime() );
+  dirEntry->setCtime(stringToDirEntry.getDateTime() );
 
   switch (rawDirEntry.at(0)){
     case '-':

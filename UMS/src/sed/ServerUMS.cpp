@@ -10,6 +10,7 @@
 #include "Authenticator.hpp"
 #include "AuthenticatorFactory.hpp"
 #include "UMSServices.hpp"
+#include "SeD.hpp"
 
 //{{RELAX<MISRA_0_1_3> Because these variables are used in this class
 Database *ServerUMS::mdatabaseVishnu = NULL;
@@ -70,6 +71,7 @@ ServerUMS::ServerUMS() {
  */
 int
 ServerUMS::init(int vishnuId,
+                std::string mid,
                 DbConfiguration dbConfig,
                 std::string sendmailScriptPath,
                 AuthenticatorConfiguration authenticatorConfig) {
@@ -111,7 +113,7 @@ ServerUMS::init(int vishnuId,
   }
 
 // initialization of the service table
-  initMap();
+  initMap(mid);
 
   return 0;
 }
@@ -132,7 +134,7 @@ ServerUMS::~ServerUMS() {
 }
 
 void
-ServerUMS::initMap() {
+ServerUMS::initMap(std::string mid) {
 
   int (*functionPtr)(diet_profile_t*);
 
@@ -208,4 +210,5 @@ ServerUMS::initMap() {
   mcb[SERVICES_UMS[INT_DEFINEMACHINEIDENTIFIER]] = solveSetMID;
   mcb[SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
   mcb[SERVICES_UMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
+  mcb[std::string(SERVICES_UMS[HEARTBEATUMS])+"@"+mid] = boost::ref(heartbeat);
 }

@@ -18,16 +18,13 @@
 using namespace std;
 
 
-
-
 /* mkdir Vishnu callback function. Proceed to the group change using the
  client parameters. Returns an error message if something gone wrong. */
 /* The directory to create is passed as client parameter. */
 int solveRemoveFile(diet_profile_t* profile) {
+
   string localPath, localUser, userKey, acLogin, machineName;
-  std::string finishError ="";
   std::string cmd = "";
-  std::string errMsg = "";
   std::string path = "";
   std::string user = "";
   std::string host = "";
@@ -39,6 +36,9 @@ int solveRemoveFile(diet_profile_t* profile) {
   diet_string_get(profile, 2, user);
   diet_string_get(profile, 3, host);
   diet_string_get(profile, 4, optionsSerialized);
+
+  // reset the profile to handle result
+  diet_profile_reset(profile, 2);
 
   localUser = user;
   localPath = path;
@@ -79,19 +79,22 @@ int solveRemoveFile(diet_profile_t* profile) {
       throw SystemException(ERRCODE_INVDATA, "solve_remove_file: RmFileOptions object is not well built");
     }
     file->rm(*options_ptr);
+
+    // set success result
+    diet_string_set(profile, 0, "success");
+    diet_string_set(profile, 1, "");
+
     //To register the command
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& err) {
     try {
       sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDFAILED);
     } catch (VishnuException& fe) {
-      finishError =  fe.what();
-      finishError +="\n";
+      err.appendMsgComp(fe.what());
     }
-    err.appendMsgComp(finishError);
-    errMsg = err.buildExceptionString();
+    // set error result
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, err.what());
   }
-
-  diet_string_set(profile, 5, errMsg.c_str());
   return 0;
 }

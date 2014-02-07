@@ -18,7 +18,8 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${Boost_INCLUDE_DIR}
   ${OPENSSL_INCLUDE_DIR}
-
+  ${PROJECT_BINARY_DIR}
+  ${LIBJANSSON_INCLUDE_DIR}
 )
 
 if(NOT COMPILE_ONLY_LIBBATCH)
@@ -38,6 +39,7 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     vishnu-core
     ${LIBCRYPTO_LIB}
     ${OPENSSL_LIBRARIES}
+    ${LIBJANSSON_LIB}
   )
   set_target_properties(zmq_helper PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS zmq_helper DESTINATION ${LIB_INSTALL_DIR})
@@ -61,3 +63,4 @@ if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 endif()
 
+add_subdirectory(pinger)

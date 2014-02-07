@@ -24,17 +24,18 @@ using namespace vishnu;
 
 struct JobProgressFunc {
 
-  std::string mmachineId;
   TMS_Data::ProgressOptions mprogOp;
 
-  JobProgressFunc(const std::string& machineId, const TMS_Data::ProgressOptions& progOp):
-    mmachineId(machineId), mprogOp(progOp)
-  {};
+  JobProgressFunc(const TMS_Data::ProgressOptions& progOp):
+    mprogOp(progOp)
+  {
+
+  }
 
   int operator()(std::string sessionKey) {
     TMS_Data::ListProgression prog;
-    int res = getJobProgress(sessionKey, mmachineId, prog, mprogOp);
-    if(mprogOp.getJobId().size()==0 && mprogOp.getJobOwner().size()==0) {
+    int res = getJobProgress(sessionKey, prog, mprogOp);
+    if (mprogOp.getJobId().empty() && mprogOp.getUser().empty()) {
       std::cout << prog << std::endl;
     } else {
       displayJobProgress(prog);
@@ -48,16 +49,18 @@ struct JobProgressFunc {
 /**
  * \brief To build options for the VISHNU submit job command
  * \param pgName : The name of the command
- * \param fjid: The id of the job
- * \param fown: The owner of the job
+ * \param setJobIdFct: Function to set the job id in the option object
+ * \param setUser: Function to set the job owner in the option object
+ * \param setMachineIdFct: Function to set the target machine in the option object
  * \param configFile: Represents the VISHNU config file
  * \return The description of all options allowed by the command
  */
 boost::shared_ptr<Options>
 makeGetJobProgOp(string pgName,
-		 boost::function1<void, string>& fjid,
-		 boost::function1<void, string>& fown,
-		 string& configFile){
+                 boost::function1<void, string>& setJobIdFct,
+                 boost::function1<void, string>& setUser,
+                 boost::function1<void, string>& setMachineIdFct,
+                 string& configFile) {
   boost::shared_ptr<Options> opt(new Options(pgName));
 
   // Environement option
@@ -67,14 +70,18 @@ makeGetJobProgOp(string pgName,
            configFile);
 
   // All cli options
-  opt->add("jobid,i",
-	   "The id of the job",
-	   CONFIG,
-	   fjid);
-  opt->add("jobOwner,u",
-	   "The owner of the job",
-	   CONFIG,
-	   fown);
+  opt->add("jobId,i",
+           "The id of the job",
+           CONFIG,
+           setJobIdFct);
+  opt->add("user,u",
+           "The owner of the job",
+           CONFIG,
+           setUser);
+  opt->add("machine,m",
+           "The ID of the target machine",
+           CONFIG,
+           setMachineIdFct);
 
   return opt;
 }
@@ -82,32 +89,21 @@ makeGetJobProgOp(string pgName,
 
 int main (int argc, char* argv[]){
 
-  /******* Parsed value containers ****************/
   string configFile;
-  string machineId;
 
-  /********** EMF data ************/
+  // Declare the obtions object, the related callbacks
   TMS_Data::ProgressOptions progOp;
+  boost::function1<void,string> setJobIdFct(boost::bind(&TMS_Data::ProgressOptions::setJobId,boost::ref(progOp),_1));
+  boost::function1<void,string> setUserFct(boost::bind(&TMS_Data::ProgressOptions::setUser,boost::ref(progOp),_1));
+  boost::function1<void,string> setMachineIdFct(boost::bind(&TMS_Data::ProgressOptions::setMachineId,boost::ref(progOp),_1));
 
-  /******** Callback functions ******************/
-  boost::function1<void,string> fjid(boost::bind(&TMS_Data::ProgressOptions::setJobId,boost::ref(progOp),_1));
-  boost::function1<void,string> fown(boost::bind(&TMS_Data::ProgressOptions::setJobOwner,boost::ref(progOp),_1));
+  boost::shared_ptr<Options> opt = makeGetJobProgOp(argv[0], setJobIdFct, setUserFct, setMachineIdFct, configFile);
 
-
-  /**************** Describe options *************/
-  boost::shared_ptr<Options> opt=makeGetJobProgOp(argv[0], fjid, fown, configFile);
-
-  opt->add("machineId,m",
-	   "represents the id of the machine",
-	   HIDDEN,
-	   machineId,1);
-  opt->setPosition("machineId",1);
-
+  //To process list optionss
   bool isEmpty;
-  //To process list options
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
   //call of the api function
-  JobProgressFunc jobProgressFunc(machineId, progOp);
+  JobProgressFunc jobProgressFunc(progOp);
   return GenericCli().run(jobProgressFunc, configFile, argc, argv);
 }

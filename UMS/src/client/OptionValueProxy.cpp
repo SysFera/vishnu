@@ -29,49 +29,26 @@ OptionValueProxy::OptionValueProxy(const UMS_Data::OptionValue& optionValue, con
  */
 int
 OptionValueProxy::setOptionValue(bool defaultValue) {
+
   diet_profile_t* profile = NULL;
-  std::string sessionKey;
-  std::string optionValueToString;
-  std::string errorInfo;
-  std::string msg = "call of function diet_string_set is rejected ";
-
-  if(defaultValue) {
-    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESETDEFAULT], 1, 1, 2);
+  if (defaultValue) {
+    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESETDEFAULT], 2);
+  } else {
+    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESET], 2);
   }
-  else {
-    profile = diet_profile_alloc(SERVICES_UMS[OPTIONVALUESET], 1, 1, 2);
-  }
-  sessionKey = msessionProxy.getSessionKey();
 
-  ::ecorecpp::serializer::serializer _ser;
   //To serialize the moptionValue object in to optionValueToString
-  optionValueToString =  _ser.serialize_str(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
+  ::ecorecpp::serializer::serializer _ser;
+  std::string optionValueToString =  _ser.serialize_str(const_cast<UMS_Data::OptionValue_ptr>(&moptionValue));
 
   //IN Parameters
-  if (diet_string_set(profile, 0, sessionKey)) {
-    msg += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msg);
-  }
-  if (diet_string_set(profile, 1, optionValueToString)) {
-    msg += "with optionValueToString parameter "+optionValueToString;
-    raiseCommunicationMsgException(msg);
-  }
+  diet_string_set(profile, 0, msessionProxy.getSessionKey());
+  diet_string_set(profile, 1, optionValueToString);
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msg += "by receiving errorInfo message";
-      raiseCommunicationMsgException(msg);
-    }
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
-  }
-
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
+  raiseExceptionOnErrorResult(profile);
 
   diet_profile_free(profile);
 

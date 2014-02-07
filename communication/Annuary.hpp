@@ -73,9 +73,10 @@ public:
    * \brief Initialize the annuary with the configuration of the given module
    * \param module The name of the module
    * \param cfgInfo list of the initialisation data
+   * \param mid a machine identifier
    */
   void
-  setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo);
+  setInitConfig(const std::string& module, std::vector<std::string>& cfgInfo, std::string mid = "");
 
   /**
    * \brief Prints the content of the annuary

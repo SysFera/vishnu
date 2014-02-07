@@ -17,7 +17,7 @@ FileTransferProxy::FileTransferProxy(const std::string& sessionKey):msessionKey(
 FileTransferProxy::FileTransferProxy(const std::string& sessionKey,
                                      const std::string& srcFilePath,
                                      const std::string& destFilePath): msessionKey(sessionKey),
- msrcFilePath(srcFilePath), mdestFilePath(destFilePath){
+  msrcFilePath(srcFilePath), mdestFilePath(destFilePath){
 }
 
 int FileTransferProxy::addCpThread(const CpFileOptions& options){
@@ -71,48 +71,33 @@ int FileTransferProxy::addMvAsyncThread(const CpFileOptions& options){
 
 int FileTransferProxy::stopThread(const StopTransferOptions& options) {
 
-  diet_profile_t* profile = NULL;
-
-  std::string errorInfo = "";
   std::string serviceName = SERVICES_FMS[FILETRANSFERSTOP];
 
-  profile = diet_profile_alloc(serviceName.c_str(), 1, 1, 2);
+  diet_profile_t* profile = diet_profile_alloc(serviceName, 2);
 
   std::string msgErrorDiet = "call of function diet_string_set is rejected ";
   //IN Parameters
-  if (diet_string_set(profile,0, msessionKey.c_str())) {
+  if (diet_string_set(profile,0, msessionKey)) {
     msgErrorDiet += "with sessionKey parameter "+msessionKey;
     raiseCommunicationMsgException(msgErrorDiet);
   }
-
 
   ::ecorecpp::serializer::serializer _ser;
   //To serialize the option object in to optionsInString
   string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::StopTransferOptions_ptr>(&options));
 
-  if (diet_string_set(profile,1, optionsToString.c_str())) {
+  if (diet_string_set(profile,1, optionsToString)) {
     msgErrorDiet += "with jobInString parameter " + optionsToString;
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  //OUT Parameters
-  diet_string_set(profile,2);
-
-  if(!diet_call(profile)) {
-    if(diet_string_get(profile,2, errorInfo)){
-      msgErrorDiet += " by receiving errorInfo message";
-      raiseCommunicationMsgException(msgErrorDiet);
-    }
-  }
-  else {
-    raiseCommunicationMsgException("VISHNU call failure");
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
 
-  /*To raise a vishnu exception if the receiving message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errorInfo);
-  diet_profile_free(profile);
+  raiseExceptionOnErrorResult(profile);
+
   return 0;
-
 }
 
 

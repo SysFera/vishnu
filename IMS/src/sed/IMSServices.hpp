@@ -25,6 +25,7 @@ typedef enum {
   INT_RESTART,
   INT_STOP,
   INT_GETSYSTEMINFO,
+  HEARTBEATIMS,
   NB_SRV_IMS  // MUST always be the last
 } ims_service_t;
 
@@ -41,7 +42,8 @@ static const char* SERVICES_IMS[NB_SRV_IMS] = {
   "int_getUpdateFrequency", // 13
   "int_restart", // 14
   "int_stop", // 15
-  "int_getSystemInfo" // 16
+  "int_getSystemInfo", // 16
+  "heartbeatimssed" // 17
 };
 
 static const bool MACHINE_SPECIC_SERVICES_IMS[NB_SRV_IMS] = {
@@ -57,7 +59,8 @@ static const bool MACHINE_SPECIC_SERVICES_IMS[NB_SRV_IMS] = {
   false,  // 13
   true,   // 14
   true,   // 15
-  false  // 16
+  false,  // 16
+  true // 17
 };
 
 

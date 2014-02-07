@@ -8,12 +8,12 @@
 #ifndef _JOB_SERVER_H
 #define _JOB_SERVER_H
 
-#include "TMS_Data.hpp"
+#include "utils.hpp"
 #include <string>
+#include "TMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "tmsUtils.hpp"
-
 /**
  * \class JobServer
  * \brief JobServer class implementation
@@ -32,18 +32,29 @@ public:
                      const TMS_Data::Job& job,
                      const ExecConfiguration_Ptr sedConfig);
 
+  /**
+  * \param sessionServer The object which encapsulates the session information
+  * \param machineId The machine identifier
+  * \param jsonJob an JsonObject describing the job
+  * \param sedConfig A pointer to the SeD configuration
+  * \brief Constructor
+  */
+  explicit JobServer(const SessionServer& sessionServer,
+                     const std::string& machineId,
+                     const ExecConfiguration_Ptr sedConfig);
+
 
   /**
    * \brief Function to submit job
    * \param scriptContent the content of the script
-   * \param options the options to submit job
+ * \param options a json object describing options
    * \param vishnuId The VISHNU identifier
    * \param defaultBatchOption the default options on the batch scheduler
    * \return raises an exception on error
    */
   int
   submitJob(std::string& scriptContent,
-            TMS_Data::SubmitOptions& options,
+            JsonObject& options,
             const int& vishnuId,
             const std::vector<std::string>& defaultBatchOption);
 
@@ -70,8 +81,7 @@ public:
    * \brief Function to get job data
    * \return The job data structure
    */
-  TMS_Data::Job
-  getData();
+  const TMS_Data::Job& getData() {return mjob;}
 
   /**
    * \brief To set the main configuration
@@ -140,7 +150,7 @@ protected:
   * \param content the script content to be update which the generated path
   */
   void
-  computeOutputDir(const std::string& parentDir,
+  setJobOutputDir(const std::string& parentDir,
                    const std::string & dirSuffix,
                    std::string & content);
 
@@ -178,24 +188,23 @@ protected:
 
   /**
    * \brief Function to set the Working Directory
-   * \param options the options to submit job
+   * \param options a json object describing options
    * \param suffix the suffix of the working directory
    * \return the script path
    */
-  std::string
-  computeWorkingDir(TMS_Data::SubmitOptions& options,
-                    const std::string& suffix);
+  void
+  setRealPaths(JsonObject& jsonOptions, const std::string& suffix);
   /**
    * \brief Function to process the script with options
    * \param scriptContent the script content
-   * \param options the options to submit job
+   * \param options a JsonObject containing options
    * \param defaultBatchOption The default batch options
    * \param machineName the name of the machine
    * \return the processed script content
    */
   std::string
   processScript(std::string& scriptContent,
-                TMS_Data::SubmitOptions& options,
+                JsonObject& options,
                 const std::vector<std::string>& defaultBatchOption,
                 const std::string& machineName);
   /**
