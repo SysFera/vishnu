@@ -645,65 +645,28 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
 
 FMS_Data::DirEntryList*
 RemoteFileProxy::ls(const LsDirOptions& options) const {
-  FMS_Data::DirEntryList* result;
-  std::string errMsg = "";
-  std::string ls = "";
 
-  std::string serviceName(SERVICES_FMS[DIRLIST]);
-  std::string sessionKey=this->getSession().getSessionKey();
-
-  diet_profile_t* lsProfile = diet_profile_alloc(serviceName, 5);
-
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
-  //IN Parameters
-  if(diet_string_set(lsProfile, 0, sessionKey)){
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(lsProfile, 1, getPath())){
-    msgErrorDiet += "with file path parameter "+getPath();
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(lsProfile, 2, localUser)){
-    msgErrorDiet += "with local user parameter "+localUser;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_set(lsProfile, 3, getHost())) {
-    msgErrorDiet += "with host parameter "+getHost();
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
+  // serialize the options object
   ::ecorecpp::serializer::serializer _ser;
-  //To serialize the options object in to optionsInString
-  string optionsToString =  _ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options));
+  string optionsSerialized =  _ser.serialize_str(const_cast<FMS_Data::LsDirOptions_ptr>(&options));
 
-  if(diet_string_set(lsProfile, 4, optionsToString)){
-    msgErrorDiet += "with directory content option values ";
-    raiseCommunicationMsgException(msgErrorDiet);
+  // initialize profile
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_FMS[DIRLIST], 5);
+  diet_string_set(profile, 0, this->getSession().getSessionKey());
+  diet_string_set(profile, 1, getPath());
+  diet_string_set(profile, 2, localUser);
+  diet_string_set(profile, 3, getHost());
+  diet_string_set(profile, 4, optionsSerialized);
+
+  if (diet_call(profile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(profile);
 
-  if (diet_call(lsProfile)) {
-    raiseCommunicationMsgException("error while contacting the file management service");
-  }
-
-  //Output parameters
-  if(diet_string_get(lsProfile, 0, ls)){
-    msgErrorDiet += " by receiving directory content information";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if(diet_string_get(lsProfile, 1, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
-
-  parseEmfObject(ls, result, "Error by receiving List object serialized");
+  std::string rpcResult;
+  diet_string_get(profile, 1, rpcResult);
+  FMS_Data::DirEntryList* result;
+  parseEmfObject(rpcResult, result, "Error by receiving List object serialized");
 
   return result;
 }

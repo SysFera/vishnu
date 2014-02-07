@@ -83,7 +83,7 @@ int solveListDir(diet_profile_t* profile) {
     }
 
     ::ecorecpp::serializer::serializer _ser;
-    result =  _ser.serialize_str(const_cast<FMS_Data::DirEntryList*>( file->ls(*options_ptr) ));
+    result =  _ser.serialize_str(const_cast<FMS_Data::DirEntryList*>(file->ls(*options_ptr)));
 
     // set success result
     diet_string_set(profile, 1, result);
