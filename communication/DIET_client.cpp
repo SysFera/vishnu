@@ -258,9 +258,8 @@ ssl_call_gen(diet_profile_t* prof,
       prof->param_count = resultProfile->param_count;
       prof->params = resultProfile->params;
       return 0;
-    } else {
-      std::cerr << boost::format("[ERROR] %1%\n")%response;
     }
+    std::cerr << boost::format("[ERROR] %1%\n")%response;
   } catch (const VishnuException& ex) {
     std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
   }
