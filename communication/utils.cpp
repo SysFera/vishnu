@@ -232,7 +232,7 @@ std::string JsonObject::getStringProperty(const std::string& key) {
 /**
  * @brief getArrayProperty
  * @param key
- * @param values
+ * @param values values must be strings or it will crash
  */
 void JsonObject::getArrayProperty(const std::string& key, std::vector<std::string>& values) {
 
