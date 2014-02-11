@@ -57,8 +57,8 @@ set(TMS_Data_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/AddWorkOptionsImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptions.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/CancelOptionsImpl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptions.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOuputOptionsImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOutputOptions.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/TMS_Data/JobOutputOptionsImpl.cpp
    )
    
 set(TMS_Data_HEADERS

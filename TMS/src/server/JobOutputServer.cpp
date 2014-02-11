@@ -17,13 +17,11 @@ using namespace vishnu;
 
 
 /**
- * \param session The object which encapsulates the session information
  * \param machineid The machine identifier
  * \brief Constructor
  */
-JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
-                                 const std::string& machineId):
-  msessionServer(sessionServer), mmachineId(machineId)
+JobOutputServer::JobOutputServer(const std::string& machineId)
+  : mmachineId(machineId)
 {
   mlistJobsResult = NULL;
   DbFactory factory;
@@ -31,15 +29,13 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 }
 
 /**
- * \param session The object which encapsulates the session information
  * \param machineid The machine identifier
  * \param jobResult The job result data structure
  * \brief Constructor
  */
-JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
-                                 const std::string& machineId,
+JobOutputServer::JobOutputServer(const std::string& machineId,
                                  const TMS_Data::JobResult& jobResult):
-  mjobResult(jobResult), msessionServer(sessionServer), mmachineId(machineId)
+  mjobResult(jobResult), mmachineId(machineId)
 {
   mlistJobsResult = NULL;
   DbFactory factory;
@@ -47,13 +43,15 @@ JobOutputServer::JobOutputServer(const SessionServer& sessionServer,
 }
 /**
  * \brief Function to get the job results
- * \param jobId The Id of the
+ * \param options Object containing options
  * \return The job results data structure
  */
 TMS_Data::JobResult
-JobOutputServer::getJobOutput() {
+JobOutputServer::getJobOutput(JsonObject* options) {
 
-  msessionServer.check();  // check the sessionKey
+
+  std::string acLogin = options->getStringProperty("owner");
+  std::string jobId = options->getStringProperty("jobId");
 
   std::string outputPath;
   std::string errorPath;
@@ -67,7 +65,7 @@ JobOutputServer::getJobOutput() {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.jobId='"+mdatabaseVishnu->escapeData(mjobResult.getJobId())+"' "
+                           "  AND job.jobId='"+mdatabaseVishnu->escapeData(jobId)+"' "
                            "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
@@ -86,7 +84,6 @@ JobOutputServer::getJobOutput() {
   subDateStr = *iter++;
   outputDir = *iter++;
 
-  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
   if (owner != acLogin) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
                              "this job because it is for an other owner");
@@ -131,11 +128,12 @@ JobOutputServer::getJobOutput() {
  * \return The list of job results data structure
  */
 TMS_Data::ListJobResults_ptr
-JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options) {
+JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
 
-  msessionServer.check(); // check the sessionKey
 
-  std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
+  std::string acLogin = options->getStringProperty("owner");
+  int days = options->getIntProperty("days");
+
   std::vector<std::string> results;
   std::vector<std::string>::iterator iter;
 
@@ -144,7 +142,7 @@ JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options
 
   //To get the output and error path of all jobs
   std::string sqlQuery;
-  if (options.getDays() <= 0) {
+  if (days <= 0) {
     // Here download only newly completed jobs
     sqlQuery = (boost::format("SELECT jobId, outputPath, errorPath, outputDir "
                               "FROM vsession, job "
@@ -165,7 +163,7 @@ JobOutputServer::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options
                               "  AND job.submitMachineId='%3%'"
                               "  AND (job.status=%4% OR job.status=%5%)"
                               )
-                % vishnu::convertToString(options.getDays())
+                % vishnu::convertToString(days)
                 % mdatabaseVishnu->escapeData(acLogin)
                 % mdatabaseVishnu->escapeData(mmachineId)
                 % vishnu::convertToString(vishnu::STATE_COMPLETED)

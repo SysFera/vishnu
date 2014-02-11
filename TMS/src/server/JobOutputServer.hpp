@@ -12,6 +12,7 @@
 #include <string>
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
+#include "utils.hpp"
 /**
  * \class JobOutputServer
  * \brief JobOutputServer class implementation
@@ -25,24 +26,21 @@ public:
    * \param machineId The machine identifier
    * \brief Constructor
    */
-  JobOutputServer(const SessionServer& sessionServer,
-                  const std::string& machineId);
+  JobOutputServer(const std::string& machineId);
 
   /**
-   * \param sessionServer The object which encapsulates the session information
    * \param machineId The machine identifier
    * \param jobResult The job result data structure
    * \brief Constructor
    */
-  JobOutputServer(const SessionServer& sessionServer,
-                  const std::string& machineId,
-                  const TMS_Data::JobResult& jobResult);
+  JobOutputServer(const std::string& machineId, const TMS_Data::JobResult& jobResult);
   /**
    * \brief Function to get the job results
+   * \param options Object containing options
    * \return The job results data structure
    */
   TMS_Data::JobResult
-  getJobOutput();
+  getJobOutput(JsonObject* options);
 
   /**
    * \brief Function to get the all completed jobs results
@@ -50,7 +48,7 @@ public:
    * \return The list of job results data structure
    */
   TMS_Data::ListJobResults_ptr
-  getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options);
+  getCompletedJobsOutput(JsonObject* options);
 
   /**
    * \brief Destructor
@@ -64,11 +62,6 @@ public:
    * \brief job results data structure
    */
   TMS_Data::JobResult mjobResult;
-
-  /**
-   * \brief The object which encapsulates the session information
-   */
-  SessionServer msessionServer;
 
   /**
    * \brief The machine identifier

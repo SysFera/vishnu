@@ -17,7 +17,6 @@
 #include <sstream>
 
 #include "QueryServer.hpp"
-#include "SessionServer.hpp"
 #include "TMS_Data.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
@@ -32,27 +31,14 @@ class ListProgressServer: public QueryServer<TMS_Data::ProgressOptions, TMS_Data
 public:
 
   /**
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The identifier of the machine on which the jobs whill be listed
    * \brief Constructor, raises an exception on error
    */
-  ListProgressServer(const SessionServer session, const std::string& machineId):
-    QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(session)
+  ListProgressServer(const std::string& machineId)
+    : QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(),
+    mcommandName("vishnu_get_job_progress"),
+    mmachineId(machineId)
   {
-    mcommandName = "vishnu_get_job_progress";
-    mmachineId = machineId;
-  }
-  /**
-   * \param params The object which encapsulates the information of ListProgressServer options
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \param machineId The identifier of the machine on which the job has been submitted
-   * \brief Constructor, raises an exception on error
-   */
-  ListProgressServer(TMS_Data::ProgressOptions_ptr params, const SessionServer& session, const std::string& machineId):
-    QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(params, session)
-  {
-    mcommandName = "vishnu_get_job_progress";
-    mmachineId = machineId;
   }
 
   /**
@@ -61,19 +47,14 @@ public:
    * \return raises an exception on error
    */
   TMS_Data::ListProgression*
-  list() {
-
-    //To check the sessionKey
-    msessionServer.check();
+  list(TMS_Data::ProgressOptions_ptr options) {
 
     std::vector<std::string> results;
-    std::vector<std::string>::iterator  iter;
+    std::vector<std::string>::iterator iter;
     std::string batchJobId;
     int status;
     long startTime;
     long walltime;
-
-    std::string acLogin = UserServer(msessionServer).getUserAccountLogin(mmachineId);
 
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
@@ -81,18 +62,15 @@ public:
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
                              " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'";
 
-    if (! mparameters->getJobId().empty()) {
-      std::string jobId = mparameters->getJobId();
+    if (! options->getJobId().empty()) {
+      std::string jobId = options->getJobId();
       sqlRequest.append(" and jobId='"+mdatabaseVishnu->escapeData(jobId)+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     } else {
-      if (! mparameters->getUser().empty()) {
-        acLogin = mparameters->getUser();
-      }
-      sqlRequest.append(" and owner='"+mdatabaseVishnu->escapeData(acLogin)+"'");
+      sqlRequest.append(" and owner='"+mdatabaseVishnu->escapeData(options->getUser())+"'");
     }
 
     sqlRequest.append("  and status < 5 order by jobId");
@@ -186,7 +164,6 @@ private:
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
-
 
   /**
   * \brief The name of the ListProgressServer command line

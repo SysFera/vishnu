@@ -23,23 +23,14 @@ class ListQueuesServer
 public:
 
   /**
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \param machineId The machine identifier
    * \param batchType The batch scheduler Type
    * \param batchVersion The batch scheduler version
    * \param option The option value
    * \brief Constructor, raises an exception on error
    */
-  explicit ListQueuesServer(const SessionServer& session,
-                            const std::string& machineId,
-                            const BatchType& batchType,
+  explicit ListQueuesServer(const BatchType& batchType,
                             const std::string& batchVersion,
                             const std::string& option);
-  /**
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
-   */
-  ListQueuesServer(const SessionServer& session);
 
  /**
   * \brief Function to list machines information

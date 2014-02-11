@@ -23,14 +23,14 @@ using namespace vishnu;
 
 struct JobResultsFunc {
 
-  TMS_Data::JobOuputOptions moptions;
+  TMS_Data::JobOutputOptions moptions;
 
-  JobResultsFunc(const TMS_Data::JobOuputOptions& options)
+  JobResultsFunc(const TMS_Data::JobOutputOptions& options)
     : moptions(options)
   {
   }
 
-  int operator()(std::string sessionKey) {
+  int operator()(const std::string& sessionKey) {
     TMS_Data::ListJobResults jobResults;
     int res = getCompletedJobsOutput(sessionKey, jobResults, moptions);
     displayAllJobOutput(jobResults);
@@ -74,7 +74,7 @@ int main (int argc, char* argv[]){
   bool isEmpty;
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  TMS_Data::JobOuputOptions options;
+  TMS_Data::JobOutputOptions options;
   options.setMachineId(machineId);
   options.setOutputDir(outputDir);
   options.setDays(forceDownloadDays);

@@ -64,9 +64,9 @@ namespace TMS_Data
         static const int JOB = 2;
 
         /**
-         * \brief Constant for JobOuputOptions class
+         * \brief Constant for JobOutputOptions class
          */
-        static const int JOBOUPUTOPTIONS = 3;
+        static const int JOBOUTPUTOPTIONS = 3;
 
         /**
          * \brief Constant for JobPriority class
@@ -804,19 +804,19 @@ namespace TMS_Data
         static const int CANCELOPTIONS__JOBID = 129;
 
         /**
-         * \brief Constant for JOBOUPUTOPTIONS__MACHINEID feature
+         * \brief Constant for JOBOUTPUTOPTIONS__MACHINEID feature
          */
-        static const int JOBOUPUTOPTIONS__MACHINEID = 130;
+        static const int JOBOUTPUTOPTIONS__MACHINEID = 130;
 
         /**
-         * \brief Constant for JOBOUPUTOPTIONS__OUTPUTDIR feature
+         * \brief Constant for JOBOUTPUTOPTIONS__OUTPUTDIR feature
          */
-        static const int JOBOUPUTOPTIONS__OUTPUTDIR = 131;
+        static const int JOBOUTPUTOPTIONS__OUTPUTDIR = 131;
 
         /**
-         * \brief Constant for JOBOUPUTOPTIONS__DAYS feature
+         * \brief Constant for JOBOUTPUTOPTIONS__DAYS feature
          */
-        static const int JOBOUPUTOPTIONS__DAYS = 132;
+        static const int JOBOUTPUTOPTIONS__DAYS = 132;
 
         // EClassifiers methods
 
@@ -941,10 +941,10 @@ namespace TMS_Data
         virtual ::ecore::EClass_ptr getCancelOptions();
 
         /**
-         * \brief Returns the reflective object for class JobOuputOptions
+         * \brief Returns the reflective object for class JobOutputOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EClass_ptr getJobOuputOptions();
+        virtual ::ecore::EClass_ptr getJobOutputOptions();
 
         // EStructuralFeatures methods
 
@@ -1730,22 +1730,22 @@ namespace TMS_Data
         virtual ::ecore::EAttribute_ptr getCancelOptions__jobId();
 
         /**
-         * \brief Returns the reflective object for feature machineId of class JobOuputOptions
+         * \brief Returns the reflective object for feature machineId of class JobOutputOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getJobOuputOptions__machineId();
+        virtual ::ecore::EAttribute_ptr getJobOutputOptions__machineId();
 
         /**
-         * \brief Returns the reflective object for feature outputDir of class JobOuputOptions
+         * \brief Returns the reflective object for feature outputDir of class JobOutputOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getJobOuputOptions__outputDir();
+        virtual ::ecore::EAttribute_ptr getJobOutputOptions__outputDir();
 
         /**
-         * \brief Returns the reflective object for feature days of class JobOuputOptions
+         * \brief Returns the reflective object for feature days of class JobOutputOptions
          * \return A pointer to the reflective object
          */
-        virtual ::ecore::EAttribute_ptr getJobOuputOptions__days();
+        virtual ::ecore::EAttribute_ptr getJobOutputOptions__days();
 
     protected:
 
@@ -1834,9 +1834,9 @@ namespace TMS_Data
         ::ecore::EClass_ptr m_CancelOptionsEClass;
 
         /**
-         * \brief The instance for the class JobOuputOptions
+         * \brief The instance for the class JobOutputOptions
          */
-        ::ecore::EClass_ptr m_JobOuputOptionsEClass;
+        ::ecore::EClass_ptr m_JobOutputOptionsEClass;
 
         // EEnuminstances 
 
@@ -2521,19 +2521,19 @@ namespace TMS_Data
         ::ecore::EAttribute_ptr m_CancelOptions__jobId;
 
         /**
-         * \brief The instance for the feature machineId of class JobOuputOptions
+         * \brief The instance for the feature machineId of class JobOutputOptions
          */
-        ::ecore::EAttribute_ptr m_JobOuputOptions__machineId;
+        ::ecore::EAttribute_ptr m_JobOutputOptions__machineId;
 
         /**
-         * \brief The instance for the feature outputDir of class JobOuputOptions
+         * \brief The instance for the feature outputDir of class JobOutputOptions
          */
-        ::ecore::EAttribute_ptr m_JobOuputOptions__outputDir;
+        ::ecore::EAttribute_ptr m_JobOutputOptions__outputDir;
 
         /**
-         * \brief The instance for the feature days of class JobOuputOptions
+         * \brief The instance for the feature days of class JobOutputOptions
          */
-        ::ecore::EAttribute_ptr m_JobOuputOptions__days;
+        ::ecore::EAttribute_ptr m_JobOutputOptions__days;
 
     };
 

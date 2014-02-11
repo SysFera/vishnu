@@ -21,25 +21,25 @@
 class JobServer {
 public:
   /**
-  * \param sessionServer The object which encapsulates the session information
+  * \param sessionKey The session key
   * \param machineId The machine identifier
   * \param job The job data structure
   * \param sedConfig A pointer to the SeD configuration
   * \brief Constructor
   */
-  explicit JobServer(const SessionServer& sessionServer,
+  explicit JobServer(const std::string& sessionKey,
                      const std::string& machineId,
                      const TMS_Data::Job& job,
                      const ExecConfiguration_Ptr sedConfig);
 
   /**
-  * \param sessionServer The object which encapsulates the session information
+  * \param sessionKey The session key
   * \param machineId The machine identifier
   * \param jsonJob an JsonObject describing the job
   * \param sedConfig A pointer to the SeD configuration
   * \brief Constructor
   */
-  explicit JobServer(const SessionServer& sessionServer,
+  explicit JobServer(const std::string& sessionKey,
                      const std::string& machineId,
                      const ExecConfiguration_Ptr sedConfig);
 
@@ -54,7 +54,7 @@ public:
    */
   int
   submitJob(std::string& scriptContent,
-            JsonObject& options,
+            JsonObject* options,
             const int& vishnuId,
             const std::vector<std::string>& defaultBatchOption);
 
@@ -65,10 +65,11 @@ public:
 
   /**
    * \brief Function to cancel job
+   * \param options Object containing options
    * \return raises an exception on error
    */
   int
-  cancelJob();
+  cancelJob(JsonObject* options);
 
   /**
    * \brief Function to get job information
@@ -193,7 +194,7 @@ protected:
    * \return the script path
    */
   void
-  setRealPaths(JsonObject& jsonOptions, const std::string& suffix);
+  setRealPaths(JsonObject* options, const std::string& suffix);
   /**
    * \brief Function to process the script with options
    * \param scriptContent the script content
@@ -204,7 +205,7 @@ protected:
    */
   std::string
   processScript(std::string& scriptContent,
-                JsonObject& options,
+                JsonObject* options,
                 const std::vector<std::string>& defaultBatchOption,
                 const std::string& machineName);
   /**
@@ -214,6 +215,14 @@ protected:
   void
   deserializeJob(std::string jobSerialized);
 
+
+
+  /**
+   * @brief Submit job using ssh mechanism
+   * @param options: an object containing options
+   */
+  void handleSshSubmit(JsonObject* options);
+
 private:
   /**
    * \brief job data structure
@@ -221,9 +230,9 @@ private:
   TMS_Data::Job mjob;
 
   /**
-   * \brief The object which encapsulates the session information
+   * \brief The sessionKey
    */
-  SessionServer msessionServer;
+  std::string msessionKey;
 
   /**
    * \brief The machine identifier

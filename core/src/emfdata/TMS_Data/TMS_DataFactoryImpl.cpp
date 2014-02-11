@@ -34,7 +34,7 @@
 #include <TMS_Data/Work.hpp>
 #include <TMS_Data/AddWorkOptions.hpp>
 #include <TMS_Data/CancelOptions.hpp>
-#include <TMS_Data/JobOuputOptions.hpp>
+#include <TMS_Data/JobOutputOptions.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -80,8 +80,8 @@ TMS_DataFactory::TMS_DataFactory()
         return createAddWorkOptions();
     case TMS_DataPackage::CANCELOPTIONS:
         return createCancelOptions();
-    case TMS_DataPackage::JOBOUPUTOPTIONS:
-        return createJobOuputOptions();
+    case TMS_DataPackage::JOBOUTPUTOPTIONS:
+        return createJobOutputOptions();
     default:
         throw "IllegalArgumentException";
     }
@@ -245,8 +245,8 @@ CancelOptions_ptr TMS_DataFactory::createCancelOptions()
 {
     return new CancelOptions();
 }
-JobOuputOptions_ptr TMS_DataFactory::createJobOuputOptions()
+JobOutputOptions_ptr TMS_DataFactory::createJobOutputOptions()
 {
-    return new JobOuputOptions();
+    return new JobOutputOptions();
 }
 

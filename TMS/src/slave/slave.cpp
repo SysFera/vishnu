@@ -112,10 +112,6 @@ main(int argc, char* argv[]) {
     }
 
     if (action == "SUBMIT") {
-//      std::string options  = vishnu::get_file_content(optionsPath);
-//      if (! parseEmfObject(options, submitOptions)) {
-//        throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: SubmitOptions object is not well built");
-//      }
       JsonObject jsonOptions(vishnu::get_file_content(optionsPath));
       if (! job->getOutputDir().empty()) {
         bool isWorkingDir = (batchType == DELTACLOUD)? true : false;

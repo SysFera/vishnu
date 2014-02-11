@@ -203,7 +203,7 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/Work.hpp
   emfdata/TMS_Data/AddWorkOptions.hpp
   emfdata/TMS_Data/CancelOptions.hpp
-  emfdata/TMS_Data/JobOuputOptions.hpp
+  emfdata/TMS_Data/JobOutputOptions.hpp
 )
 
 set(IMS_Data_SRCS
@@ -244,8 +244,8 @@ set(IMS_Data_SRCS
   emfdata/IMS_Data/SupervisorOpImpl.cpp
   emfdata/TMS_Data/CancelOptions.cpp
   emfdata/TMS_Data/CancelOptionsImpl.cpp
-  emfdata/TMS_Data/JobOuputOptions.cpp
-  emfdata/TMS_Data/JobOuputOptionsImpl.cpp
+  emfdata/TMS_Data/JobOutputOptions.cpp
+  emfdata/TMS_Data/JobOutputOptionsImpl.cpp
 )
 
 set(IMS_Data_HEADERS

@@ -114,7 +114,7 @@ public:
    * \return raises an exception on error
    */
   FMS_Data::FileTransferList*
-    list() {
+    list(QueryParameters* parameters) {
 
       std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
         "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg,"
@@ -127,9 +127,7 @@ public:
       FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
       mlistObject = ecoreFactory->createFileTransferList();
 
-      msessionServer.check();
-
-      processOptions(mparameters, sqlListOfFiles);
+      processOptions(parameters, sqlListOfFiles);
       sqlListOfFiles.append(" order by startTime");
 
 

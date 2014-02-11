@@ -851,7 +851,7 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JobOuputOptions" instanceTypeName="JobOuputOptions">
+  <eClassifiers xsi:type="ecore:EClass" name="JobOutputOptions" instanceTypeName="JobOutputOptions">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="machineId" eType="ecore:EDataType Ecore.ecore#//EString">
       <eAnnotations source="Description">
         <details key="content" value="Get the output of jobs on the given machine"/>

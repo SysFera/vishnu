@@ -16,7 +16,6 @@
 
 
 #include "QueryServer.hpp"
-#include "SessionServer.hpp"
 #include "TMS_Data.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
@@ -31,23 +30,11 @@ class ListJobServer: public QueryServer<TMS_Data::ListJobsOptions, TMS_Data::Lis
 public:
 
   /**
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \param machineId The identifier of the machine in which the jobs will be listed
    * \brief Constructor, raises an exception on error
    */
-  ListJobServer(const SessionServer session, std::string machineId):
-    QueryServer<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>(session) {
-    mcommandName = "vishnu_list_jobs";
-    mmachineId = machineId;
-  }
-  /**
-   * \param params The object which encapsulates the information of ListJobServer options
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \param machineId The identifier of the machine in which the jobs will be listed
-   * \brief Constructor, raises an exception on error
-   */
-  ListJobServer(TMS_Data::ListJobsOptions_ptr params, const SessionServer& session, std::string machineId):
-    QueryServer<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>(params, session) {
+  ListJobServer(std::string machineId)
+    : QueryServer<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>() {
     mcommandName = "vishnu_list_jobs";
     mmachineId = machineId;
   }
@@ -193,8 +180,8 @@ public:
    * \return raises an exception on error
    */
   TMS_Data::ListJobs*
-  list() {
-    std::string sqlListOfJobs =
+  list(TMS_Data::ListJobsOptions_ptr options) {
+    std::string sqlQuery =
         "SELECT vsessionid, submitMachineId, submitMachineName, jobId, jobName, workId, jobPath,"
         " outputPath, errorPath, jobPrio, nbCpus, jobWorkingDir, job.status, submitDate, endDate, owner, jobQueue,"
         " wallClockLimit, groupName, jobDescription, memLimit, nbNodes, nbNodesAndCpuPerNode, batchJobId, userid "
@@ -204,23 +191,23 @@ public:
         " AND job.status > 0 ";
 
     if(mmachineId.compare(ALL_KEYWORD)!=0) {
-      sqlListOfJobs.append(" and job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'");
+      sqlQuery.append(" and job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'");
     }
 
-    bool allOptionsAreNotSet = (mparameters->getNbCpu()<=0);
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getFromSubmitDate()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getToSubmitDate()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getStatus()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getMultipleStatus().empty());
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getPriority()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getOwner().empty());
-    allOptionsAreNotSet = allOptionsAreNotSet && (mparameters->getQueue().empty());
+    bool allOptionsAreNotSet = (options->getNbCpu()<=0);
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getFromSubmitDate()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getToSubmitDate()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getStatus()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getMultipleStatus().empty());
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getPriority()==-1);
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getOwner().empty());
+    allOptionsAreNotSet = allOptionsAreNotSet && (options->getQueue().empty());
 
-    if(mparameters->isBatchJob() && !allOptionsAreNotSet) {
+    if(options->isBatchJob() && !allOptionsAreNotSet) {
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with other options excepted jobId option.");
     }
 
-    if(mparameters->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
+    if(options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with machine id equal to all.");
     }
 
@@ -230,12 +217,10 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListJobs();
 
-    msessionServer.check();
+    processOptions(options, sqlQuery);
+    sqlQuery.append(" order by submitDate");
 
-    processOptions(mparameters, sqlListOfJobs);
-    sqlListOfJobs.append(" order by submitDate");
-
-    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlListOfJobs.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlQuery.c_str()));
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
     std::string batchJobId;
@@ -300,7 +285,7 @@ public:
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
 
-    if(mparameters->isBatchJob() && !mparameters->getJobId().empty() && mmachineId.compare(ALL_KEYWORD)!=0){
+    if(options->isBatchJob() && !options->getJobId().empty() && mmachineId.compare(ALL_KEYWORD)!=0){
       BatchFactory factory;
       BatchType batchType  = ServerTMS::getInstance()->getBatchType();
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
@@ -325,7 +310,7 @@ public:
       return mlistObject;
     }
 
-    if(mparameters->isBatchJob() && mmachineId.compare(ALL_KEYWORD)!=0 && allOptionsAreNotSet){
+    if(options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)!=0 && allOptionsAreNotSet){
       BatchFactory factory;
       BatchType batchType  = ServerTMS::getInstance()->getBatchType();
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
@@ -359,7 +344,6 @@ private:
   /////////////////////////////////
   // Attributes
   /////////////////////////////////
-
 
   /**
    * \brief The name of the ListJobServer command line

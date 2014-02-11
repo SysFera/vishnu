@@ -202,17 +202,15 @@ int main(int argc, char* argv[], char* envp[]) {
         exit(1);
       }
 
-      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
-
-      // check the machine
-      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
-      machine->setMachineId(machineId);
-      MachineServer machineServer(machine);
-      machineServer.checkMachine();
-      if (machine) {
-        delete machine;
-      }
-
+      // FIXME: check the machine
+      //      UMS_Data::UMS_DataFactory_ptr ecoreFactory = UMS_Data::UMS_DataFactory::_instance();
+      //      UMS_Data::Machine_ptr machine = ecoreFactory->createMachine();
+      //      machine->setMachineId(machineId);
+      //      MachineServer machineServer(machine);
+      //      machineServer.checkMachine();
+      //      if (machine) {
+      //        delete machine;
+      //      }
     } catch (VishnuException& e) {
       std::cerr << e.what() << "\n";
       exit(1);

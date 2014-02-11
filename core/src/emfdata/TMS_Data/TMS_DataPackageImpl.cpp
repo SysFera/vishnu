@@ -693,26 +693,26 @@ TMS_DataPackage::TMS_DataPackage()
     m_CancelOptionsEClass->getEStructuralFeatures().push_back(
             m_CancelOptions__jobId);
 
-    // JobOuputOptions
-    m_JobOuputOptionsEClass = new ::ecore::EClass();
-    m_JobOuputOptionsEClass->setClassifierID(JOBOUPUTOPTIONS);
-    m_JobOuputOptionsEClass->setEPackage(this);
-    getEClassifiers().push_back(m_JobOuputOptionsEClass);
-    m_JobOuputOptions__machineId = new ::ecore::EAttribute();
-    m_JobOuputOptions__machineId->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__MACHINEID);
-    m_JobOuputOptionsEClass->getEStructuralFeatures().push_back(
-            m_JobOuputOptions__machineId);
-    m_JobOuputOptions__outputDir = new ::ecore::EAttribute();
-    m_JobOuputOptions__outputDir->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__OUTPUTDIR);
-    m_JobOuputOptionsEClass->getEStructuralFeatures().push_back(
-            m_JobOuputOptions__outputDir);
-    m_JobOuputOptions__days = new ::ecore::EAttribute();
-    m_JobOuputOptions__days->setFeatureID(
-            ::TMS_Data::TMS_DataPackage::JOBOUPUTOPTIONS__DAYS);
-    m_JobOuputOptionsEClass->getEStructuralFeatures().push_back(
-            m_JobOuputOptions__days);
+    // JobOutputOptions
+    m_JobOutputOptionsEClass = new ::ecore::EClass();
+    m_JobOutputOptionsEClass->setClassifierID(JOBOUTPUTOPTIONS);
+    m_JobOutputOptionsEClass->setEPackage(this);
+    getEClassifiers().push_back(m_JobOutputOptionsEClass);
+    m_JobOutputOptions__machineId = new ::ecore::EAttribute();
+    m_JobOutputOptions__machineId->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOBOUTPUTOPTIONS__MACHINEID);
+    m_JobOutputOptionsEClass->getEStructuralFeatures().push_back(
+            m_JobOutputOptions__machineId);
+    m_JobOutputOptions__outputDir = new ::ecore::EAttribute();
+    m_JobOutputOptions__outputDir->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOBOUTPUTOPTIONS__OUTPUTDIR);
+    m_JobOutputOptionsEClass->getEStructuralFeatures().push_back(
+            m_JobOutputOptions__outputDir);
+    m_JobOutputOptions__days = new ::ecore::EAttribute();
+    m_JobOutputOptions__days->setFeatureID(
+            ::TMS_Data::TMS_DataPackage::JOBOUTPUTOPTIONS__DAYS);
+    m_JobOutputOptionsEClass->getEStructuralFeatures().push_back(
+            m_JobOutputOptions__days);
 
     // Create enums
 
@@ -2622,52 +2622,52 @@ TMS_DataPackage::TMS_DataPackage()
     m_CancelOptions__jobId->setUnique(true);
     m_CancelOptions__jobId->setDerived(false);
     m_CancelOptions__jobId->setOrdered(true);
-    // JobOuputOptions
-    m_JobOuputOptionsEClass->setName("JobOuputOptions");
-    m_JobOuputOptionsEClass->setAbstract(false);
-    m_JobOuputOptionsEClass->setInterface(false);
-    m_JobOuputOptions__machineId->setEType(
+    // JobOutputOptions
+    m_JobOutputOptionsEClass->setName("JobOutputOptions");
+    m_JobOutputOptionsEClass->setAbstract(false);
+    m_JobOutputOptionsEClass->setInterface(false);
+    m_JobOutputOptions__machineId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_JobOuputOptions__machineId->setName("machineId");
-    m_JobOuputOptions__machineId->setDefaultValueLiteral("");
-    m_JobOuputOptions__machineId->setLowerBound(0);
-    m_JobOuputOptions__machineId->setUpperBound(1);
-    m_JobOuputOptions__machineId->setTransient(false);
-    m_JobOuputOptions__machineId->setVolatile(false);
-    m_JobOuputOptions__machineId->setChangeable(true);
-    m_JobOuputOptions__machineId->setUnsettable(false);
-    m_JobOuputOptions__machineId->setID(false);
-    m_JobOuputOptions__machineId->setUnique(true);
-    m_JobOuputOptions__machineId->setDerived(false);
-    m_JobOuputOptions__machineId->setOrdered(true);
-    m_JobOuputOptions__outputDir->setEType(
+    m_JobOutputOptions__machineId->setName("machineId");
+    m_JobOutputOptions__machineId->setDefaultValueLiteral("");
+    m_JobOutputOptions__machineId->setLowerBound(0);
+    m_JobOutputOptions__machineId->setUpperBound(1);
+    m_JobOutputOptions__machineId->setTransient(false);
+    m_JobOutputOptions__machineId->setVolatile(false);
+    m_JobOutputOptions__machineId->setChangeable(true);
+    m_JobOutputOptions__machineId->setUnsettable(false);
+    m_JobOutputOptions__machineId->setID(false);
+    m_JobOutputOptions__machineId->setUnique(true);
+    m_JobOutputOptions__machineId->setDerived(false);
+    m_JobOutputOptions__machineId->setOrdered(true);
+    m_JobOutputOptions__outputDir->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_JobOuputOptions__outputDir->setName("outputDir");
-    m_JobOuputOptions__outputDir->setDefaultValueLiteral("");
-    m_JobOuputOptions__outputDir->setLowerBound(0);
-    m_JobOuputOptions__outputDir->setUpperBound(1);
-    m_JobOuputOptions__outputDir->setTransient(false);
-    m_JobOuputOptions__outputDir->setVolatile(false);
-    m_JobOuputOptions__outputDir->setChangeable(true);
-    m_JobOuputOptions__outputDir->setUnsettable(false);
-    m_JobOuputOptions__outputDir->setID(false);
-    m_JobOuputOptions__outputDir->setUnique(true);
-    m_JobOuputOptions__outputDir->setDerived(false);
-    m_JobOuputOptions__outputDir->setOrdered(true);
-    m_JobOuputOptions__days->setEType(
+    m_JobOutputOptions__outputDir->setName("outputDir");
+    m_JobOutputOptions__outputDir->setDefaultValueLiteral("");
+    m_JobOutputOptions__outputDir->setLowerBound(0);
+    m_JobOutputOptions__outputDir->setUpperBound(1);
+    m_JobOutputOptions__outputDir->setTransient(false);
+    m_JobOutputOptions__outputDir->setVolatile(false);
+    m_JobOutputOptions__outputDir->setChangeable(true);
+    m_JobOutputOptions__outputDir->setUnsettable(false);
+    m_JobOutputOptions__outputDir->setID(false);
+    m_JobOutputOptions__outputDir->setUnique(true);
+    m_JobOutputOptions__outputDir->setDerived(false);
+    m_JobOutputOptions__outputDir->setOrdered(true);
+    m_JobOutputOptions__days->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEInt());
-    m_JobOuputOptions__days->setName("days");
-    m_JobOuputOptions__days->setDefaultValueLiteral("-1");
-    m_JobOuputOptions__days->setLowerBound(0);
-    m_JobOuputOptions__days->setUpperBound(1);
-    m_JobOuputOptions__days->setTransient(false);
-    m_JobOuputOptions__days->setVolatile(false);
-    m_JobOuputOptions__days->setChangeable(true);
-    m_JobOuputOptions__days->setUnsettable(false);
-    m_JobOuputOptions__days->setID(false);
-    m_JobOuputOptions__days->setUnique(true);
-    m_JobOuputOptions__days->setDerived(false);
-    m_JobOuputOptions__days->setOrdered(true);
+    m_JobOutputOptions__days->setName("days");
+    m_JobOutputOptions__days->setDefaultValueLiteral("-1");
+    m_JobOutputOptions__days->setLowerBound(0);
+    m_JobOutputOptions__days->setUpperBound(1);
+    m_JobOutputOptions__days->setTransient(false);
+    m_JobOutputOptions__days->setVolatile(false);
+    m_JobOutputOptions__days->setChangeable(true);
+    m_JobOutputOptions__days->setUnsettable(false);
+    m_JobOutputOptions__days->setID(false);
+    m_JobOutputOptions__days->setUnique(true);
+    m_JobOutputOptions__days->setDerived(false);
+    m_JobOutputOptions__days->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -3045,9 +3045,9 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_CancelOptionsEClass;
 }
-::ecore::EClass_ptr TMS_DataPackage::getJobOuputOptions()
+::ecore::EClass_ptr TMS_DataPackage::getJobOutputOptions()
 {
-    return m_JobOuputOptionsEClass;
+    return m_JobOutputOptionsEClass;
 }
 
 ::ecore::EAttribute_ptr TMS_DataPackage::getJob__sessionId()
@@ -3570,16 +3570,16 @@ TMS_DataPackage::TMS_DataPackage()
 {
     return m_CancelOptions__jobId;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getJobOuputOptions__machineId()
+::ecore::EAttribute_ptr TMS_DataPackage::getJobOutputOptions__machineId()
 {
-    return m_JobOuputOptions__machineId;
+    return m_JobOutputOptions__machineId;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getJobOuputOptions__outputDir()
+::ecore::EAttribute_ptr TMS_DataPackage::getJobOutputOptions__outputDir()
 {
-    return m_JobOuputOptions__outputDir;
+    return m_JobOutputOptions__outputDir;
 }
-::ecore::EAttribute_ptr TMS_DataPackage::getJobOuputOptions__days()
+::ecore::EAttribute_ptr TMS_DataPackage::getJobOutputOptions__days()
 {
-    return m_JobOuputOptions__days;
+    return m_JobOutputOptions__days;
 }
 

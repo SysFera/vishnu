@@ -214,27 +214,27 @@ set(cli_SRCS
 set(api_SRCS api/api_tms.cpp)
 set(api_HEADERS api/api_tms.hpp)
 
-if(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
-  add_library(vishnu-tms-client
-    ${client_SRCS}
-    ${cli_SRCS}
-    ${api_SRCS})
-
-  target_link_libraries(vishnu-tms-client
-    ${Boost_LIBRARIES}
-    emf4cpp-vishnu
-    vishnu-core
-    vishnu-ums-client
-    vishnu-fms-client
-    ${LIBCRYPT_LIB}
-    ${ZMQ_LIBRARIES}
-    zmq_helper
-  )
-
-  install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
-  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
-  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-endif(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
+#if(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
+#  add_library(vishnu-tms-client
+#    ${client_SRCS}
+#    ${cli_SRCS}
+#    ${api_SRCS})
+#
+#  target_link_libraries(vishnu-tms-client
+#    ${Boost_LIBRARIES}
+#    emf4cpp-vishnu
+#    vishnu-core
+#    vishnu-ums-client
+#    vishnu-fms-client
+#    ${LIBCRYPT_LIB}
+#    ${ZMQ_LIBRARIES}
+#    zmq_helper
+#  )
+#
+#  install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
+#  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
+#  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
+#endif(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
 
 ## client CLI
 if(COMPILE_CLIENT_CLI)
@@ -268,7 +268,7 @@ if (COMPILE_SERVERS)
     vishnu-core
     ${LIBCRYPT_LIB}
     vishnu-core-server
-    vishnu-ums-server
+#    vishnu-ums-server
     vishnu-tms-server
     emf4cpp-vishnu
     ${USED_BATCH_LIB})
@@ -306,7 +306,9 @@ if (COMPILE_SERVERS)
   # generate vishnu-tms-server library
   add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server vishnu-ums-server zmq_helper)
+  target_link_libraries(vishnu-tms-server
+#    vishnu-ums-server
+    zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary

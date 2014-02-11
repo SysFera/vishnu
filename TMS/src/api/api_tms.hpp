@@ -15,7 +15,6 @@
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
-
 #include "TMS_Data.hpp"
 
 
@@ -128,7 +127,7 @@ namespace vishnu {
   getJobOutput(const std::string& sessionKey,
                const std::string& jobId,
                TMS_Data::JobResult& outputInfo,
-               const TMS_Data::JobOuputOptions& options)
+               const TMS_Data::JobOutputOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
   /**
@@ -143,7 +142,7 @@ namespace vishnu {
   int
   getCompletedJobsOutput(const std::string& sessionKey,
                          TMS_Data::ListJobResults& listOfResults,
-                         const TMS_Data::JobOuputOptions& options)
+                         const TMS_Data::JobOutputOptions& options)
   throw (UMSVishnuException, TMSVishnuException, UserException, SystemException);
 
 }//END namespace vishnu

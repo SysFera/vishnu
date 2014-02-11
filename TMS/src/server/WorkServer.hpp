@@ -15,10 +15,9 @@
 #include <exception>
 #include "VishnuException.hpp"
 #include "TMSVishnuException.hpp"
-#include "SessionServer.hpp"
 #include "TMS_Data.hpp"
 #include "TMS_Data_forward.hpp"
-
+#include "Database.hpp"
 
 
 
@@ -37,9 +36,9 @@ public:
   /**
   * \brief Constructor
   * \param work The work data structure
-  * \param session The object which encapsulates session data
+  * \param sessionKey The session key
   */
-  WorkServer(TMS_Data::Work*& work, SessionServer& session);
+  WorkServer(TMS_Data::Work*& work, const std::string& sessionKey);
   /**
   * \brief Function to add a new VISHNU work
   * \param vishnuId The identifier of the vishnu instance
@@ -104,9 +103,9 @@ private:
   */
   TMS_Data::AddWorkOptions *mworkop;
   /**
-  * \brief An object which encapsulates session data
+  * \brief The session key
   */
-  SessionServer msessionServer;
+  std::string msessionKey;
   /**
   * \brief An instance of vishnu database
   */

@@ -60,17 +60,9 @@ JobProxy::submitJob(const std::string& scriptContent,
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
 
   //IN Parameters
-  if (diet_string_set(profile,0, sessionKey)) {
-    raiseCommunicationMsgException("Can't set RPC parameter  [sessionKey]");
-  }
-
-  if (diet_string_set(profile,1, mmachineId)) {
-    raiseCommunicationMsgException("Can't set RPC parameter  [machineid]");
-  }
-
-  if (diet_string_set(profile,2, scriptContent)) {
-    raiseCommunicationMsgException("Can't set RPC parameter [scriptContent]");
-  }
+  diet_string_set(profile,0, sessionKey);
+  diet_string_set(profile,1, mmachineId);
+  diet_string_set(profile,2, scriptContent);
 
   // Send input files, if there is any one
   FMS_Data::CpFileOptions copts;
@@ -80,9 +72,8 @@ JobProxy::submitJob(const std::string& scriptContent,
   updatedOptions.setFileParams(inputFiles);
 
   JsonObject jsonOptions(updatedOptions);
-  if (diet_string_set(profile,3, jsonOptions.encode())) {
-    raiseCommunicationMsgException("Can't set RPC parameter [encoded options]");
-  }
+  jsonOptions.setProperty("owner");
+  diet_string_set(profile,3, jsonOptions.encode());
 
   // FIXME: do it before setting parameter 3
   if (diet_call(profile)) {

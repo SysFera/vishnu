@@ -9,6 +9,20 @@
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "utilServer.hpp"
+#include "SystemException.hpp"
+#include "boost/scoped_ptr.hpp"
+
+#ifdef TMS_STANDALONE
+#define CHECK_SESSION() SessionServer sessionServer(msessionKey); \
+  sessionServer.check(); \
+  std::string sessionId = sessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(msessionKey)+"'", "numsessionid"); \
+  UserServer userServer(sessionServer); \
+  userServer.init(); \
+#define IS_ADMIN userServer.isAdmin()
+#else
+#define CHECK_SESSION()
+#define IS_ADMIN false
+#endif
 
 /**
 * \brief Constructor
@@ -23,10 +37,10 @@ WorkServer::WorkServer(TMS_Data::Work*& work)
 /**
 * \brief Constructor
 * \param work The work data structure
-* \param session The object which encapsulates session data
+* \param sessionKey The session key
 */
-WorkServer::WorkServer(TMS_Data::Work*& work, SessionServer& session)
-  : mwork(work), mworkop(NULL), msessionServer(session) {
+WorkServer::WorkServer(TMS_Data::Work*& work, const std::string& sessionKey)
+  : mwork(work), mworkop(NULL), msessionKey(sessionKey) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -38,7 +52,9 @@ WorkServer::WorkServer(TMS_Data::Work*& work, SessionServer& session)
 */
 int
 WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
-  std::string sqlInsert = "insert into work (date_created, date_started, description, done_ratio, due_date, estimated_hours, identifier, last_updated, machine_id, nbcpus, owner_id, priority, status, subject) values ";
+
+  CHECK_SESSION();
+
   std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;
 
@@ -51,77 +67,59 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   mwork->setProjectId(mworkop->getProjectId());
   mwork->setNbCPU(mworkop->getNbCPU());
 
-
-  UserServer userServer = UserServer(msessionServer);
-  userServer.init();
-
-  //std::string appId = "1";
-  //std::string projectId = "1";
   std::string timestamp = "CURRENT_TIMESTAMP";
   std::string owner = "1";
   std::string machineId = "1";
 
-  //if the user exists
-  if (userServer.exist()) {
-    //if the user is an admin
-    if (userServer.isAdmin()) {
+  //if the user is an admin
+  if (IS_ADMIN) {
 
-      //Generation of workid
-      idWorkGenerated = vishnu::getObjectId(vishnuId,
-                                            "formatidwork",
-                                            vishnu::WORK,
-                                            mwork->getSubject());
+    //Generation of workid
+    idWorkGenerated = vishnu::getObjectId(vishnuId,
+                                          "formatidwork",
+                                          vishnu::WORK,
+                                          mwork->getSubject());
 
-      //if the work id is generated
-      if (idWorkGenerated.size() != 0) {
-        mwork->setWorkId(idWorkGenerated);
-        //if the workId does not exist
-        if (getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
-          //To inactive the work status
-//          mwork->setStatus(INACTIVE_STATUS);
-// TODO
-          mwork->setStatus(0);
-          //FIXME : set ApplicationId of mwork currently null
-          //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
-          sqlUpdate+="date_created="+timestamp+", ";
-          sqlUpdate+="date_started="+timestamp+", ";
-          sqlUpdate+="description='"+mdatabaseVishnu->escapeData(mwork->getDescription())+"', ";
-          sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
-          sqlUpdate+="due_date="+timestamp+", ";
-          sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
-          sqlUpdate+="last_updated="+timestamp+", ";
-          sqlUpdate+="machine_id="+mdatabaseVishnu->escapeData(machineId)+", ";
-          sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
-          sqlUpdate+="owner_id='"+owner+"', ";
-          sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
-          sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
-          sqlUpdate+="subject='"+mdatabaseVishnu->escapeData(mwork->getSubject())+"' ";
-          sqlUpdate+="WHERE identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"';";
+    //if the work id is generated
+    if (idWorkGenerated.size() != 0) {
+      mwork->setWorkId(idWorkGenerated);
+      //if the workId does not exist
+      if (getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
+        //To inactive the work status
+        //          mwork->setStatus(INACTIVE_STATUS);
+        // TODO
+        mwork->setStatus(0);
+        //FIXME : set ApplicationId of mwork currently null
+        //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
+        sqlUpdate+="date_created="+timestamp+", ";
+        sqlUpdate+="date_started="+timestamp+", ";
+        sqlUpdate+="description='"+mdatabaseVishnu->escapeData(mwork->getDescription())+"', ";
+        sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
+        sqlUpdate+="due_date="+timestamp+", ";
+        sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
+        sqlUpdate+="last_updated="+timestamp+", ";
+        sqlUpdate+="machine_id="+mdatabaseVishnu->escapeData(machineId)+", ";
+        sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
+        sqlUpdate+="owner_id='"+owner+"', ";
+        sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
+        sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
+        sqlUpdate+="subject='"+mdatabaseVishnu->escapeData(mwork->getSubject())+"' ";
+        sqlUpdate+="WHERE identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"';";
 
-          mdatabaseVishnu->process(sqlUpdate);
+        mdatabaseVishnu->process(sqlUpdate);
 
-        }//if the machine id is generated
-        else {
-          SystemException e (ERRCODE_SYSTEM, "There is a problem to parse the formatidwork");
-          throw e;
-        }
-      }//END if the formatidmachine is defined
-      else {
-        SystemException e (ERRCODE_SYSTEM, "The formatidwork is not defined");
-        throw e;
+      } else { //if the machine id is generated
+        throw SystemException (ERRCODE_SYSTEM, "There is a problem to parse the formatidwork");
       }
-    } //End if the user is an admin
-    else {
-      UMSVishnuException e (ERRCODE_NO_ADMIN);
+    } else { //END if the formatidmachine is defined
+      SystemException e (ERRCODE_SYSTEM, "The formatidwork is not defined");
       throw e;
     }
-  }//End if the user exists
-  else {
-    UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-    throw e;
+  } else { //End if the user is an admin
+    throw TMSVishnuException (ERRCODE_PERMISSION_DENIED, "No sufficient permission");
   }
   return 0;
-} //END: add()
+}
 
 /**
 * \brief Destructor

@@ -124,9 +124,9 @@ namespace TMS_Data
     class CancelOptions;
     typedef CancelOptions* CancelOptions_ptr;
 
-    // JobOuputOptions
-    class JobOuputOptions;
-    typedef JobOuputOptions* JobOuputOptions_ptr;
+    // JobOutputOptions
+    class JobOutputOptions;
+    typedef JobOutputOptions* JobOutputOptions_ptr;
 
     // Package & Factory
     class TMS_DataFactory;
