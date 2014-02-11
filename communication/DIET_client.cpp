@@ -122,7 +122,8 @@ diet_string_set(diet_profile_t* prof, int pos,
   try {
     (prof->params).at(pos) = value;
   } catch (const std::out_of_range& err) {
-    std::cout << prof->name << " " << value<< " " << pos << "\n";
+    std::cout << boost::format("%1% %2% %3%\n") % prof->name
+      % value % pos;
     throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   return 0;
