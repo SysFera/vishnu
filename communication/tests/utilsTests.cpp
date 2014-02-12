@@ -3,7 +3,7 @@
 #include <vector>
 #include "DIET_client.h"
 #include "utils.hpp"
-
+#include "TMS_Data/Job.hpp"
 
 BOOST_AUTO_TEST_SUITE( utils_tests)
 
@@ -95,6 +95,38 @@ BOOST_AUTO_TEST_CASE( ProfileDeserialization ) {
   BOOST_REQUIRE(std::equal(params.begin(), params.end(), reference.begin()));
 }
 
+BOOST_AUTO_TEST_CASE( TMS_DataSerialization ) {
+  TMS_Data::Job job;
+  std::string res = JsonObject::serialize(job);
+  BOOST_REQUIRE_EQUAL(res, "{\"outputdir\": \"\", \"errorpath\": \"\", \"submitmachineid\": \"\", \"jobname\": \"\", \"jobid\": \"\", \"owner\": \"\", \"vmIp\": \"\", \"status\": -1, \"submitmachinename\": \"\", \"vsession\": \"\", \"jobqueue\": \"\", \"jobprio\": -1, \"submitdate\": -1, \"batchjobid\": \"\", \"jobpath\": \"\", \"outputpath\": \"\", \"enddate\": -1, \"nbcpus\": -1, \"userid\": \"\", \"nbnodes\": -1, \"jobworkingdir\": \"\", \"wallclocklimit\": -1, \"groupname\": \"\", \"jobdescription\": \"\", \"nbnodesandcpupernode\": \"\", \"memlimit\": -1, \"vmId\": \"\"}");
+  job.setJobName("toto");
+  job.setJobId("J_3");
+  job.setJobPath("/home/georges/bin/myjob.sh");
+  job.setOutputPath("/home/georges/outputs");
+  job.setErrorPath("/home/georges/errors");
+  job.setJobWorkingDir("/home/georges/workingdir");
+  job.setNbCpus(8);
+  job.setNbNodes(3);
+  job.setUserId("U_7");
+  job.setSubmitDate(1392201353); //  02/12/14 @ 10:35:53am UTC
+  BOOST_REQUIRE_EQUAL(JsonObject::serialize(job),
+      "{\"outputdir\": \"\", \"errorpath\": \"/home/georges/errors\", \"submitmachineid\": \"\", \"jobname\": \"toto\", \"jobid\": \"J_3\", \"owner\": \"\", \"vmIp\": \"\", \"status\": -1, \"submitmachinename\": \"\", \"vsession\": \"\", \"jobqueue\": \"\", \"jobprio\": -1, \"submitdate\": 1392201353, \"batchjobid\": \"\", \"jobpath\": \"/home/georges/bin/myjob.sh\", \"outputpath\": \"/home/georges/outputs\", \"enddate\": -1, \"nbcpus\": 8, \"userid\": \"U_7\", \"nbnodes\": 3, \"jobworkingdir\": \"/home/georges/workingdir\", \"wallclocklimit\": -1, \"groupname\": \"\", \"jobdescription\": \"\", \"nbnodesandcpupernode\": \"\", \"memlimit\": -1, \"vmId\": \"\"}");
+}
 
+BOOST_AUTO_TEST_CASE( TMS_DataDeserialization ) {
+  JsonObject o("{\"outputdir\": \"\", \"errorpath\": \"/home/georges/errors\", \"submitmachineid\": \"\", \"jobname\": \"toto\", \"jobid\": \"J_3\", \"owner\": \"\", \"vmIp\": \"\", \"status\": -1, \"submitmachinename\": \"\", \"vsession\": \"\", \"jobqueue\": \"\", \"jobprio\": -1, \"submitdate\": 1392201353, \"batchjobid\": \"\", \"jobpath\": \"/home/georges/bin/myjob.sh\", \"outputpath\": \"/home/georges/outputs\", \"enddate\": -1, \"nbcpus\": 8, \"userid\": \"U_7\", \"nbnodes\": 3, \"jobworkingdir\": \"/home/georges/workingdir\", \"wallclocklimit\": -1, \"groupname\": \"\", \"jobdescription\": \"\", \"nbnodesandcpupernode\": \"\", \"memlimit\": -1, \"vmId\": \"\"}");
+  TMS_Data::Job job = o.getJob();
+  BOOST_REQUIRE_EQUAL(job.getJobName(), "toto");
+  BOOST_REQUIRE_EQUAL(job.getJobId(), "J_3");
+  BOOST_REQUIRE_EQUAL(job.getJobPath(), "/home/georges/bin/myjob.sh");
+  BOOST_REQUIRE_EQUAL(job.getOutputPath(), "/home/georges/outputs");
+  BOOST_REQUIRE_EQUAL(job.getErrorPath(), "/home/georges/errors");
+  BOOST_REQUIRE_EQUAL(job.getJobWorkingDir(), "/home/georges/workingdir");
+  BOOST_REQUIRE_EQUAL(job.getNbCpus(), 8);
+  BOOST_REQUIRE_EQUAL(job.getNbNodes(), 3);
+  BOOST_TEST_MESSAGE(job.getUserId());
+  BOOST_REQUIRE_EQUAL(job.getUserId(), "U_7");
+  BOOST_REQUIRE_EQUAL(job.getSubmitDate(), 1392201353);
+}
 
 BOOST_AUTO_TEST_SUITE_END()
