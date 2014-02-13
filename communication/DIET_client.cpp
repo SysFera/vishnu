@@ -98,10 +98,12 @@ get_module(const std::string& service) {
  * @brief getTimeout
  * @return
  */
-int getTimeout() {
-  int timeout = -1;
-  if (!config.getConfigValue(vishnu::TIMEOUT, timeout) || timeout <= 0) {
-    timeout =  DEFAULT_TIMEOUT;
+int
+getTimeout() {
+  int timeout(DEFAULT_TIMEOUT);
+  config.getConfigValue(vishnu::TIMEOUT, timeout);
+  if (timeout <= 0) {
+    timeout = DEFAULT_TIMEOUT;
   }
   return timeout;
 }
