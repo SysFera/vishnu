@@ -4,6 +4,7 @@
 #include "DIET_client.h"
 #include "utils.hpp"
 #include "TMS_Data/Job.hpp"
+#include "TMS_Data/SubmitOptions.hpp"
 
 BOOST_AUTO_TEST_SUITE( utils_tests)
 
@@ -128,5 +129,11 @@ BOOST_AUTO_TEST_CASE( TMS_DataDeserialization ) {
   BOOST_REQUIRE_EQUAL(job.getUserId(), "U_7");
   BOOST_REQUIRE_EQUAL(job.getSubmitDate(), 1392201353);
 }
+
+BOOST_AUTO_TEST_CASE( GetSubmitOptionsJson ) {
+    BOOST_FAIL("Failing test, calling "
+               "TMS_Data::LoadCriterion::getCriterion crashes");
+}
+
 
 BOOST_AUTO_TEST_SUITE_END()
