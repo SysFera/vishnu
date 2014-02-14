@@ -9,15 +9,14 @@
 #ifndef _UTILVISHNU_H_
 #define _UTILVISHNU_H_
 
+#include <unistd.h>
 #include <iostream>
 #include <string>
 #include <vector>
 #include <ctime>
-
 #include <boost/filesystem.hpp>
 #include <boost/thread/shared_mutex.hpp>
-
-#include "UMS_Data_forward.hpp"         // for Version_ptr
+#include "UMS_Data_forward.hpp"
 
 namespace bfs = boost::filesystem;
 

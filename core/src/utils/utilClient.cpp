@@ -5,7 +5,6 @@
  * \date April 2011
  */
 #include "utilClient.hpp"
-
 #include <iostream>                     // for basic_istream::operator>>, etc
 #include "FMSVishnuException.hpp"       // for FMSVishnuException
 #include "IMSVishnuException.hpp"       // for IMSVishnuException

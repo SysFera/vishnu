@@ -13,15 +13,16 @@
 #include "boost/scoped_ptr.hpp"
 
 #ifdef TMS_STANDALONE
-#define CHECK_SESSION() SessionServer sessionServer(msessionKey); \
+#define CHECK_UMS_SESSION()
+#define IS_ADMIN false
+#else
+#include "SessionServer.hpp"
+#define CHECK_UMS_SESSION() SessionServer sessionServer(msessionKey); \
   sessionServer.check(); \
   std::string sessionId = sessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(msessionKey)+"'", "numsessionid"); \
   UserServer userServer(sessionServer); \
-  userServer.init(); \
+  userServer.init();
 #define IS_ADMIN userServer.isAdmin()
-#else
-#define CHECK_SESSION()
-#define IS_ADMIN false
 #endif
 
 /**
@@ -53,7 +54,7 @@ WorkServer::WorkServer(TMS_Data::Work*& work, const std::string& sessionKey)
 int
 WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
 
-  CHECK_SESSION();
+  CHECK_UMS_SESSION();
 
   std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;

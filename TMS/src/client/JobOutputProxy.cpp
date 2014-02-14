@@ -33,41 +33,28 @@ JobOutputProxy::JobOutputProxy( const SessionProxy& session, const std::string& 
  * \return The job results data structure
  */
 TMS_Data::JobResult
-JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputOptions& options) {
+JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutputOptions& options) {
 
   std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId).str();
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
   string sessionKey = msessionProxy.getSessionKey();
-  std::string msgErrorDiet = "call of function diet_string_set is rejected ";
 
   //IN Parameters
-  if ( diet_string_set(profile,0, sessionKey) ) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  if ( diet_string_set(profile,1, mmachineId) ) {
-    msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
   ::ecorecpp::serializer::serializer _ser;
   string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
-  if ( diet_string_set(profile,2, jobResultToString) ) {
-    msgErrorDiet += "with the job result parameter " + jobResultToString;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
   std::string outputDir = options.getOutputDir();
-  if (diet_string_set(profile, 3, outputDir)) {
-    msgErrorDiet += "with output directory parameter "+outputDir;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+
+  diet_string_set(profile,0, sessionKey);
+  diet_string_set(profile,1, mmachineId);
+  diet_string_set(profile,2, jobResultToString);
+  diet_string_set(profile, 3, outputDir);
 
   //Call the Server
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
   }
-
   raiseExceptionOnErrorResult(profile);
 
   std::string routputInfo;
@@ -129,7 +116,7 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputO
  * \return The list of the job results
  */
 TMS_Data::ListJobResults_ptr
-JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options) {
+JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options) {
 
   std::string serviceName = (boost::format("%1%@%2%")
                              % SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]
@@ -149,7 +136,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options)
   }
 
   ::ecorecpp::serializer::serializer _serializer;
-  string optionsSerialized = _serializer.serialize_str(const_cast<TMS_Data::JobOuputOptions_ptr>(&options));
+  string optionsSerialized = _serializer.serialize_str(const_cast<TMS_Data::JobOutputOptions_ptr>(&options));
   if (diet_string_set(profile, 2, optionsSerialized)) {
     raiseCommunicationMsgException("Exception setting option parameter");
   }

@@ -36,7 +36,8 @@ set(exception_HEADERS exception/VishnuException.hpp
   exception/IMSVishnuException.hpp)
 
 #################### utils ####################################################
-set(utils_SRCS utils/utilVishnu.cpp
+set(utils_SRCS
+  utils/utilVishnu.cpp
   utils/utilClient.cpp
   utils/Options.cpp
   utils/sessionUtils.cpp
@@ -335,11 +336,9 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     ${TMS_Data_SRCS}
     ${IMS_Data_SRCS}
     ${FMS_Data_SRCS}
-    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp
-  )
+    ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
 
   target_link_libraries(vishnu-core emf4cpp-vishnu ${LIBCRYPT_LIB})
-
   set_target_properties(vishnu-core PROPERTIES VERSION ${VISHNU_VERSION})
   install(TARGETS vishnu-core DESTINATION ${LIB_INSTALL_DIR})
   target_link_libraries(vishnu-core ${Boost_LIBRARIES})
@@ -397,71 +396,58 @@ set(EMF-ECORECPP-NOTIFY-HEADERS
 )
 
 install(FILES ${exception_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-
 install(FILES emfdata/UMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/UMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${UMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/UMS_Data)
-
 install(FILES emfdata/TMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/TMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${TMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/TMS_Data)
-
 install(FILES emfdata/FMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/FMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${FMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/FMS_Data)
-
 install(FILES emfdata/IMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/IMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${IMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/IMS_Data)
-
 install(FILES ${EMF-ECORE-HEADERS}  DESTINATION ${INCLUDE_INSTALL_DIR}/ecore)
 install(FILES ${EMF-ECORECPP-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp)
 install(FILES ${EMF-ECORECPP-MAPPING-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp/mapping)
 install(FILES ${EMF-ECORECPP-NOTIFY-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp/notify)
 install(FILES ${EMF4CPP_INCLUDE_DIR}/ecore_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
-
 install(FILES ${PROJECT_BINARY_DIR}/vishnu_version.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${PROJECT_BINARY_DIR}/vishnu-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
 install(FILES ${PROJECT_BINARY_DIR}/supervisord-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
 
-if(COMPILE_SERVERS)
+if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS OR COMPILE_SERVER_IMS)
   set(database_SRCS
-    database/DbConfiguration.cpp
-    database/DbFactory.cpp
-    database/Database.cpp
-    database/DatabaseResult.cpp
-    database/RequestFactory.cpp
-    )
+     database/DbConfiguration.cpp
+     database/DbFactory.cpp
+     database/Database.cpp
+     database/DatabaseResult.cpp
+     database/RequestFactory.cpp)
 
-  set(utils_server_SRCS utils/utilServer.cpp 
-#    utils/Logger.cpp
-    )
+  set(utils_server_SRCS utils/utilServer.cpp)
 
   if(MYSQL_FOUND AND ENABLE_MYSQL)
-    set(database_SRCS ${database_SRCS} database/MYSQLDatabase.cpp
-      database/MYSQLRequestFactory.cpp)
+    set(database_SRCS ${database_SRCS}
+       database/MYSQLDatabase.cpp
+       database/MYSQLRequestFactory.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
     set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_MYSQL")
-  endif()
+  endif(MYSQL_FOUND AND ENABLE_MYSQL)
 
   if(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
     set(database_SRCS ${database_SRCS} database/POSTGREDatabase.cpp
       database/PGSQLRequestFactory.cpp)
     set(DB_LIBS ${DATABASE_LIBS})
     set(DBFACT_COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS} -DUSE_POSTGRES")
-  endif()
-  # we add compilation variable definitions only on required files
-  set_source_files_properties(
-    database/DbFactory.cpp
-    PROPERTIES COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS}"
-    )
+  endif(POSTGRESQL_FOUND AND ENABLE_POSTGRESQL)
 
-  if ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
+  # we add compilation variable definitions only on required files
+  set_source_files_properties(database/DbFactory.cpp PROPERTIES COMPILE_FLAGS "${DBFACT_COMPILE_FLAGS}")
+
+  if(OPENSSL_FOUND AND ENABLE_LDAP AND LDAP_FOUND)
     # we add compilation variable definitions only on required files
-    set_source_files_properties(
-      authenticator/AuthenticatorFactory.cpp
-      PROPERTIES COMPILE_FLAGS "-DUSE_LDAP"
-      )
+    set_source_files_properties(authenticator/AuthenticatorFactory.cpp PROPERTIES COMPILE_FLAGS "-DUSE_LDAP")
 
     set(authenticator_SRCS
       authenticator/AuthenticatorConfiguration.cpp
@@ -474,23 +460,25 @@ if(COMPILE_SERVERS)
       authenticator/ldap/LDAPProxy.cpp)
 
     set(AUTH_LIBS ${LDAP_LIBRARIES})
-  else ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
+  else(OPENSSL_FOUND AND ENABLE_LDAP AND LDAP_FOUND)
     set(authenticator_SRCS
       authenticator/AuthenticatorConfiguration.cpp
       authenticator/AuthenticatorFactory.cpp
       authenticator/Authenticator.cpp
       authenticator/UMSAuthenticator.cpp)
-  endif ((OPENSSL_FOUND) AND (ENABLE_LDAP) AND (LDAP_FOUND))
+  endif(OPENSSL_FOUND AND ENABLE_LDAP AND LDAP_FOUND)
  
   include_directories(${UMS_EMF_DATA_DIR})
-  set (version_manager_SRCS
-       version/VersionManager.cpp)
-if(NOT COMPILE_ONLY_LIBBATCH)
-  add_library(vishnu-core-server ${database_SRCS} ${utils_server_SRCS} ${authenticator_SRCS} ${version_manager_SRCS})
-  set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
-  install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
-  target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS} ${AUTH_LIBS})
-
-  install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
-endif(NOT COMPILE_ONLY_LIBBATCH)
-endif()
+  set (version_manager_SRCS version/VersionManager.cpp)
+  if(NOT COMPILE_ONLY_LIBBATCH)
+     add_library(vishnu-core-server
+                 ${database_SRCS}
+                 ${utils_server_SRCS}
+                 ${authenticator_SRCS}
+                 ${version_manager_SRCS})
+     set_target_properties(vishnu-core-server PROPERTIES VERSION ${VISHNU_VERSION})
+     install(TARGETS vishnu-core-server DESTINATION ${LIB_INSTALL_DIR})
+     target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS} ${AUTH_LIBS})
+     install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
+  endif(NOT COMPILE_ONLY_LIBBATCH)
+endif(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS OR COMPILE_SERVER_IMS)

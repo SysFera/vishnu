@@ -1088,7 +1088,7 @@ solveGenerique(diet_profile_t* pb) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     }
 
-    QueryType query(options, sessionServer);
+    QueryType query(sessionServer);
 
     // MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
@@ -1096,7 +1096,7 @@ solveGenerique(diet_profile_t* pb) {
     mapper->code(optionValueSerialized, mapperkey);
     cmd = mapper->finalize(mapperkey);
 
-    list = query.list();
+    list = query.list(options);
 
     ::ecorecpp::serializer::serializer _ser;
     listSerialized =  _ser.serialize_str(list);

@@ -18,8 +18,14 @@
 
 class diet_profile_t;
 namespace TMS_Data {
-  class Job;
+  class Session;
   class SubmitOptions;
+  class Job;
+  class CancelOptions;
+}
+
+namespace UMS_Data {
+  class Session;
 }
 
 /**
@@ -152,6 +158,8 @@ public:
   JsonObject(void);
   JsonObject(const std::string& data);
   JsonObject(const TMS_Data::SubmitOptions& submitOptions);
+  JsonObject(const UMS_Data::Session& sessionInfo);
+  JsonObject(const TMS_Data::CancelOptions& options);
 
   /**
    * @brief Destructor
@@ -188,9 +196,10 @@ public:
 
   /**
    * @brief encodedString Get the encoded string corresponding to the json object
+   *\param flag The flag for encoding
    * @return The encoded string
    */
-  std::string encode(void);
+  std::string encode(int flag=0);
 
   /**
    * @brief decode
@@ -231,21 +240,25 @@ public:
   void getArrayProperty(const std::string& key, std::vector<std::string>& values);
 
 
+
   /**
    * @brief serialize
    * @param prof
+   * @param flag
    * @return
    */
   static std::string
-  serialize(diet_profile_t* prof);
+  serialize(diet_profile_t* prof, int flag=0);
+
 
   /**
    * @brief serialize
    * @param job
+   * @param flag
    * @return
    */
   static std::string
-  serialize(const TMS_Data::Job& job);
+  serialize(const TMS_Data::Job& job, int flag=0);
 
   /**
    * @brief deserialize

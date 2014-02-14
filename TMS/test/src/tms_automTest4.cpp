@@ -89,7 +89,7 @@ BOOST_AUTO_TEST_CASE(get_completed_jobs_output_normal_call)
       // Check the success of get completed jobs output function
 
       ListJobResults listOfResults;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setMachineId(machineId);
       outputOpts.setOutputDir(m_test_tms_working_dir);
 
@@ -159,7 +159,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_sessionKey)
 
 
       ListJobResults listOfResults;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setMachineId(machineId);
       outputOpts.setOutputDir(m_test_tms_working_dir);
 
@@ -215,7 +215,7 @@ BOOST_AUTO_TEST_CASE(get_completed_job_output_bad_machineId)
 
 
       ListJobResults listOfResults;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setOutputDir(m_test_tms_working_dir);
       outputOpts.setMachineId("bad machineId");
 

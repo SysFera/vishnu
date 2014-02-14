@@ -43,27 +43,25 @@ set(cli_SRCS cli/utils.cpp
 set(api_SRCS api/api_ums.cpp api/api_comm.cpp)
 set(api_HEADERS api/api_ums.hpp api/api_comm.hpp)
 
-add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
-set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
-target_link_libraries(vishnu-ums-client
-  ${Boost_LIBRARIES}
-  emf4cpp-vishnu
-  vishnu-core
-  ${CMAKE_DL_LIBS}
-  ${ZMQ_LIBRARIES}
-  zmq_helper
-)
-
-install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
-install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-
 ## client CLI
-if(COMPILE_CLIENT_CLI)
+if(COMPILE_CLIENT_UMS)
   add_subdirectory(cli)
+  
+  add_library(vishnu-ums-client ${client_SRCS} ${cli_SRCS} ${api_SRCS})
+  set_target_properties(vishnu-ums-client PROPERTIES VERSION ${VISHNU_VERSION})
+  target_link_libraries(vishnu-ums-client
+    ${Boost_LIBRARIES}
+    emf4cpp-vishnu
+    vishnu-core
+    ${CMAKE_DL_LIBS}
+    ${ZMQ_LIBRARIES}
+    zmq_helper)
+  install(TARGETS vishnu-ums-client DESTINATION ${LIB_INSTALL_DIR})
+  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 endif()
 
 
-if(COMPILE_SERVERS)
+if(COMPILE_SERVER_UMS)
   include_directories(
     ${DATA_BASE_INCLUDE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
@@ -105,10 +103,9 @@ if(COMPILE_SERVERS)
     ${LDAP_LIBRARIES}
     ${CMAKE_DL_LIBS}
     ${ZMQ_LIBRARIES}
-    zmq_helper
-    )
+    zmq_helper)
 
 
   install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
-endif()
+endif(COMPILE_SERVER_UMS)
 

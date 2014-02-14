@@ -91,7 +91,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call)
       // Check the success of get jobs output function
       JobResult outputInfos;
       std::string workingdir(m_test_tms_working_dir);
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setOutputDir(workingdir);
 
       BOOST_CHECK_EQUAL(getJobOutput(sessionKey, job.getJobId(), outputInfos, outputOpts), 0);
@@ -167,7 +167,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_normal_call_with_outputdir)
       JobResult outputInfos;
       std::string workingdir(m_test_tms_working_dir);
 
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setOutputDir(workingdir);
       BOOST_CHECK_EQUAL(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, outputOpts), 0);
 
@@ -234,7 +234,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_sessionKey)
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       JobResult outputInfos;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setOutputDir(m_test_tms_working_dir);
 
       BOOST_CHECK_THROW(getJobOutput("bad sessionKey", jobInfo.getJobId(), outputInfos, outputOpts), VishnuException);
@@ -288,7 +288,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_machineId)
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       JobResult outputInfos;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setMachineId("bad machineId");
       outputOpts.setOutputDir(m_test_tms_working_dir);
 
@@ -344,7 +344,7 @@ BOOST_AUTO_TEST_CASE(get_job_output_unterminated)
       BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
 
       JobResult outputInfos;
-      JobOuputOptions outputOpts;
+      JobOutputOptions outputOpts;
       outputOpts.setOutputDir(m_test_tms_working_dir);
 
       BOOST_CHECK_THROW(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, outputOpts),VishnuException  );

@@ -16,7 +16,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/scoped_ptr.hpp>
-
 #include "utils.hpp"
 
 /**

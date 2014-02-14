@@ -14,32 +14,45 @@
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "tmsUtils.hpp"
+
+#ifdef TMS_STANDALONE
+#include "mungeUtils.hpp"
+#define IS_ADMIN false
+const bool USE_DATABASE = false;
+#define CHECK_UMS_SESSION()
+#else
+#define CHECK_UMS_SESSION() SessionServer sessionServer(msessionKey); \
+  sessionServer.check(); \
+  sessionServer.init();
+const bool USE_DATABASE = true;
+#endif
+
+
 /**
  * \class JobServer
  * \brief JobServer class implementation
  */
 class JobServer {
 public:
-  /**
-  * \param sessionKey The session key
-  * \param machineId The machine identifier
-  * \param job The job data structure
-  * \param sedConfig A pointer to the SeD configuration
-  * \brief Constructor
-  */
-  explicit JobServer(const std::string& sessionKey,
-                     const std::string& machineId,
-                     const TMS_Data::Job& job,
-                     const ExecConfiguration_Ptr sedConfig);
+
+  enum BacthExecModeT {
+    SshExecMode = 0,
+    NativeExecMode = 1
+  };
+
+  enum BacthActionT {
+    SubmitBatchAction = 0,
+    CancelBatchAction = 1
+  };
 
   /**
-  * \param sessionKey The session key
+  * \param sessionInfo The session info in a json object
   * \param machineId The machine identifier
   * \param jsonJob an JsonObject describing the job
   * \param sedConfig A pointer to the SeD configuration
   * \brief Constructor
   */
-  explicit JobServer(const std::string& sessionKey,
+  explicit JobServer(JsonObject* sessionInfo,
                      const std::string& machineId,
                      const ExecConfiguration_Ptr sedConfig);
 
@@ -73,10 +86,11 @@ public:
 
   /**
    * \brief Function to get job information
+   * \param jobId The id of the job
    * \return The job data structure
    */
   TMS_Data::Job
-  getJobInfo();
+  getJobInfo(const std::string& jobId);
 
   /**
    * \brief Function to get job data
@@ -152,8 +166,8 @@ protected:
   */
   void
   setJobOutputDir(const std::string& parentDir,
-                   const std::string & dirSuffix,
-                   std::string & content);
+                  const std::string & dirSuffix,
+                  std::string & content);
 
   /*
    * \brief Return the directive associated to the batch scheduler
@@ -208,22 +222,30 @@ protected:
                 JsonObject* options,
                 const std::vector<std::string>& defaultBatchOption,
                 const std::string& machineName);
-  /**
-   * \brief Function to deserialize job
-   * \param jobSerialized the Serialized job
-   */
-  void
-  deserializeJob(std::string jobSerialized);
-
-
 
   /**
    * @brief Submit job using ssh mechanism
+   * @param scriptPath The path of the script to executed
    * @param options: an object containing options
    */
-  void handleSshSubmit(JsonObject* options);
+  void
+  handleSshSubmit(const std::string& scriptPath, JsonObject* options);
+
+  /**
+   * @brief Handle action to batch scheduler
+   * @param action action The type of action
+   * @param options user-specific options
+   * @param scriptPath The path of the script to executed. Only required for submit action
+   */
+  void
+  handleNativeBatchExec(int action, JsonObject* options, const std::string& scriptPath);
 
 private:
+  /**
+   * @brief json object containing session info
+   */
+  JsonObject* msessionInfo;
+
   /**
    * \brief job data structure
    */
@@ -263,6 +285,20 @@ private:
    * \brief Holds the level of debug
    */
   int mdebugLevel;
+
+  /**
+   * @brief lastError
+   */
+  std::string lastError;
+
+#ifdef TMS_STANDALONE
+  /**
+   * @brief mmungeCredential
+   */
+  MungeCredential mmungeCredential;
+#endif
+
+
 };
 
 #endif

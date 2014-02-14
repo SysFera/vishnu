@@ -31,21 +31,13 @@ public:
    * \brief Constructor, raises an exception on error
    * \param session The object which encapsulates the session information (ex: identifier of the session)
    */
-  ListOptionsValuesServer(const SessionServer session):
-    QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(session)
+  ListOptionsValuesServer(const SessionServer session)
+    : QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(),
+      mcommandName("vishnu_list_options"),
+      msessionServer(session)
   {
-    mcommandName = "vishnu_list_options";
   }
-  /**
-   * \brief Constructor, raises an exception on error
-   * \param params The object which encapsulates the information of ListOptionsValuesServer options
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   */
-  ListOptionsValuesServer(UMS_Data::ListOptOptions_ptr params, const SessionServer& session):
-    QueryServer<UMS_Data::ListOptOptions, UMS_Data::ListOptionsValues>(params, session)
-  {
-    mcommandName = "vishnu_list_options";
-  }
+
 
   /**
    * \brief Function to treat the ListOptionsValuesServer options
@@ -57,38 +49,38 @@ public:
   void
   processOptions(UserServer userServer, const UMS_Data::ListOptOptions_ptr& options, std::string& sqlRequest)
   {
-      std::string sqlListofOptionValues = "SELECT description, value, userid from optionu, optionvalue, users"
-                                     " where optionu.numoptionid=optionvalue.optionu_numoptionid and"
-                                     " optionvalue.users_numuserid=users.numuserid";
+    std::string sqlListofOptionValues = "SELECT description, value, userid from optionu, optionvalue, users"
+                                        " where optionu.numoptionid=optionvalue.optionu_numoptionid and"
+                                        " optionvalue.users_numuserid=users.numuserid";
 
-     size_t userIdSize = options->getUserId().size();
-     size_t nameSize = options->getOptionName().size();
-     bool listAllDefault = options->isListAllDeftValue();
+    size_t userIdSize = options->getUserId().size();
+    size_t nameSize = options->getOptionName().size();
+    bool listAllDefault = options->isListAllDeftValue();
 
-     if ((!userServer.isAdmin()) && (userIdSize!=0)) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
-     }
+    if ((!userServer.isAdmin()) && (userIdSize!=0)) {
+      UMSVishnuException e (ERRCODE_NO_ADMIN);
+      throw e;
+    }
 
-     if(!listAllDefault) {
+    if(!listAllDefault) {
 
-       if(userIdSize==0) {
-          sqlRequest = sqlListofOptionValues;
-          addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
-       } else {
-          //To check if the user id is correct
-          checkUserId(options->getUserId());
+      if(userIdSize==0) {
+        sqlRequest = sqlListofOptionValues;
+        addOptionRequest("userid", userServer.getData().getUserId(), sqlRequest);
+      } else {
+        //To check if the user id is correct
+        checkUserId(options->getUserId());
 
-          sqlRequest = sqlListofOptionValues;
-          addOptionRequest("userid", options->getUserId(), sqlRequest);
-       }
+        sqlRequest = sqlListofOptionValues;
+        addOptionRequest("userid", options->getUserId(), sqlRequest);
+      }
 
-       if(nameSize!=0) {
-          //To check if the option name is correct
-          checkOptionName(options->getOptionName());
+      if(nameSize!=0) {
+        //To check if the option name is correct
+        checkOptionName(options->getOptionName());
 
-          addOptionRequest("description", options->getOptionName(), sqlRequest);
-       }
+        addOptionRequest("description", options->getOptionName(), sqlRequest);
+      }
     }
 
   }
@@ -99,7 +91,7 @@ public:
    * \return raises an exception on error
    */
   UMS_Data::ListOptionsValues*
-  list() {
+  list(UMS_Data::ListOptOptions_ptr option) {
     std::string sqlListofOptions = "SELECT description, defaultvalue from optionu";
 
     std::vector<std::string>::iterator ii;
@@ -108,38 +100,38 @@ public:
     mlistObject = ecoreFactory->createListOptionsValues();
 
 
-      //Creation of the object user
-      UserServer userServer = UserServer(msessionServer);
-      userServer.init();
-      //if the user exists
-      if (userServer.exist()) {
-        //To process options
-        processOptions(userServer, mparameters, sqlListofOptions);
+    //Creation of the object user
+    UserServer userServer = UserServer(msessionServer);
+    userServer.init();
+    //if the user exists
+    if (userServer.exist()) {
+      //To process options
+      processOptions(userServer, option, sqlListofOptions);
 
-        //To get the list of options values from the database
-        boost::scoped_ptr<DatabaseResult> ListofOptions (mdatabaseVishnu->getResult(sqlListofOptions.c_str()));
+      //To get the list of options values from the database
+      boost::scoped_ptr<DatabaseResult> ListofOptions (mdatabaseVishnu->getResult(sqlListofOptions.c_str()));
 
-        if (ListofOptions->getNbTuples() != 0){
-          for (size_t i = 0; i < ListofOptions->getNbTuples(); ++i) {
-            results.clear();
-            results = ListofOptions->get(i);
-            ii = results.begin();
+      if (ListofOptions->getNbTuples() != 0){
+        for (size_t i = 0; i < ListofOptions->getNbTuples(); ++i) {
+          results.clear();
+          results = ListofOptions->get(i);
+          ii = results.begin();
 
-            UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();;
-            optionValue->setOptionName(*ii);
-            optionValue->setValue(*(++ii));
-            mlistObject->getOptionValues().push_back(optionValue);
+          UMS_Data::OptionValue_ptr optionValue = ecoreFactory->createOptionValue();;
+          optionValue->setOptionName(*ii);
+          optionValue->setValue(*(++ii));
+          mlistObject->getOptionValues().push_back(optionValue);
         }
       }
     }
     else {
-        UMSVishnuException e (ERRCODE_UNKNOWN_USER);
-        throw e;
+      UMSVishnuException e (ERRCODE_UNKNOWN_USER);
+      throw e;
     }
-  return mlistObject;
+    return mlistObject;
   }
 
-   /**
+  /**
     * \brief Function to get the name of the ListOptionsValuesServer command line
     * \return The the name of the ListOptionsValuesServer command line
     */
@@ -156,17 +148,18 @@ public:
   {
   }
 
-  private:
+private:
 
-  /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
-
-
- /**
+  /**
   * \brief The name of the ListOptionsValuesServer command line
   */
   std::string mcommandName;
+
+  /**
+  * \brief The SessionServer object containing the encrypted identifier of the session
+  *  generated by VISHNU
+  */
+  SessionServer msessionServer;
 };
 
 #endif

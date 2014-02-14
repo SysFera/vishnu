@@ -363,7 +363,7 @@ int
 vishnu::getJobOutput(const std::string& sessionKey,
                      const std::string& jobId,
                      JobResult& outputInfo,
-                     const JobOuputOptions& options)
+                     const JobOutputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
@@ -401,7 +401,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 int
 vishnu::getCompletedJobsOutput(const std::string& sessionKey,
                                ListJobResults& listOfResults,
-                               const TMS_Data::JobOuputOptions& options)
+                               const TMS_Data::JobOutputOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");

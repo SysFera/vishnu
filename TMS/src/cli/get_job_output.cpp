@@ -24,10 +24,10 @@ using namespace vishnu;
 
 struct JobOutputJobFunc {
 
-  TMS_Data::JobOuputOptions moptions;
+  TMS_Data::JobOutputOptions moptions;
   std::string mjobId;
 
-  JobOutputJobFunc(const std::string& jobId, const TMS_Data::JobOuputOptions& options)
+  JobOutputJobFunc(const std::string& jobId, const TMS_Data::JobOutputOptions& options)
     : mjobId(jobId), moptions(options)
   {
   }
@@ -74,7 +74,7 @@ int main (int argc, char* argv[]){
   bool isEmpty;
   GenericCli().processListOpt(opt, isEmpty, argc, argv);
 
-  TMS_Data::JobOuputOptions options;
+  TMS_Data::JobOutputOptions options;
   options.setMachineId(machineId);
   options.setOutputDir(outputDir);
 

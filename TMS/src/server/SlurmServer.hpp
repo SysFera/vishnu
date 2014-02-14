@@ -33,7 +33,7 @@ class SlurmServer : public BatchServer
      * \return raises an exception on error
      */
     int
-    submit(const char* scriptPath,
+    submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
           TMS_Data::Job& job,
           char** envp=NULL);
@@ -44,7 +44,7 @@ class SlurmServer : public BatchServer
      * \return raises an exception on error
      */
     int
-    cancel(const char* jobId) ;
+    cancel(const std::string& jobId) ;
 
     /**
      * \brief Function to get the status of the job
@@ -94,7 +94,7 @@ class SlurmServer : public BatchServer
      * \return raises an exception on error
      */
     void
-    processOptions(const char* scriptPath,
+    processOptions(const std::string& scriptPath,
                    const TMS_Data::SubmitOptions& options,
                    std::vector<std::string>& cmdsOptions);
 
@@ -173,7 +173,7 @@ class SlurmServer : public BatchServer
      * \return The value of the resource
      */
     std::string
-    getSlurmResourceValue(const char* file,
+    getSlurmResourceValue(const std::string& file,
           const std::string& shortOptionLetterSyntax,
           const std::string& longOptionLetterSyntax);
 
@@ -181,7 +181,7 @@ class SlurmServer : public BatchServer
      * \brief Function to replace some environment varia*bles in a string
      * \param scriptpath The script path to modify
      */
-    void replaceEnvVariables(const char* scriptPath);
+    void replaceEnvVariables(const std::string& scriptPath);
 
     /**
      * \brief ListQueues returned

@@ -69,7 +69,6 @@ main(int argc, char* argv[]) {
   BatchType batchType;
   std::string batchVersion;
 
-
   if(argc < 6) { // Too few arguments
     usage(argv[0]);
   }
@@ -94,10 +93,7 @@ main(int argc, char* argv[]) {
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, msg);
   }
 
-  TMS_Data::Job_ptr job = NULL;
-  TMS_Data::SubmitOptions_ptr submitOptions = NULL;
   BatchServer* batchServer;
-
   try {
     //To create batchServer Factory
     BatchFactory factory;
@@ -106,33 +102,30 @@ main(int argc, char* argv[]) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: getBatchServerInstance return NULL instance");
     }
 
-    std::string jobSerialized = vishnu::get_file_content(jobSerializedPath);
-    if (! parseEmfObject(jobSerialized, job)) {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: job object is not well built");
-    }
+    JsonObject jsonJob(vishnu::get_file_content(jobSerializedPath));
+    TMS_Data::Job job = jsonJob.getJob();
 
     if (action == "SUBMIT") {
       JsonObject jsonOptions(vishnu::get_file_content(optionsPath));
-      if (! job->getOutputDir().empty()) {
+      if (! job.getOutputDir().empty()) {
         bool isWorkingDir = (batchType == DELTACLOUD)? true : false;
-        vishnu::createDir(job->getOutputDir(), isWorkingDir); // Create the output directory
+        vishnu::createDir(job.getOutputDir(), isWorkingDir); // Create the output directory
       }
+
       //Submits the job
-      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), *job) != 0) {
+      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), job) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
       //To serialize the job object
-      ::ecorecpp::serializer::serializer _ser;
-      std::string slaveJob = _ser.serialize_str(job);
       std::ofstream os_slaveJobFile(slaveJobFile);
-      os_slaveJobFile << slaveJob;
+      os_slaveJobFile << JsonObject::serialize(job);
       os_slaveJobFile.close();
     } else if (action == "CANCEL") {
       if (batchType == DELTACLOUD) {
-        std::string jobdDescr = job->getJobId()+"@"+job->getVmId();
+        std::string jobdDescr = job.getJobId()+"@"+job.getVmId();
         batchServer->cancel(jobdDescr.c_str());
       } else {
-        batchServer->cancel(job->getBatchJobId().c_str());
+        batchServer->cancel(job.getBatchJobId().c_str());
       }
     }
   } catch (VishnuException& ve) {
@@ -148,8 +141,6 @@ main(int argc, char* argv[]) {
     os_error.close();
     ret = EXIT_FAILURE;
   }
-  delete job;
-  delete submitOptions;
   delete batchServer;
   return ret;
 }

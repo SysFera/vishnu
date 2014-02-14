@@ -3,7 +3,9 @@
 #include "SystemException.hpp"
 #include "TMS_Data/Job.hpp"
 #include "TMS_Data/SubmitOptions.hpp"
+#include "TMS_Data/CancelOptions.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
+#include "UMS_Data/Session.hpp"
 
 
 ThreadPool::ThreadPool()
@@ -90,6 +92,33 @@ JsonObject::JsonObject(const TMS_Data::SubmitOptions& submitOptions)
               const_cast<TMS_Data::SubmitOptions&>(submitOptions).getCriterion()->getLoadType());
 }
 
+
+
+JsonObject::JsonObject(const UMS_Data::Session& sessionInfo)
+  : m_jsonObject(json_object()) {
+
+  setProperty("sessionid", sessionInfo.getSessionId());
+  setProperty("userid", sessionInfo.getUserId());
+  setProperty("sessionkey", sessionInfo.getSessionKey());
+  setProperty("lastconnect", sessionInfo.getDateLastConnect());
+  setProperty("firstconnect", sessionInfo.getDateCreation());
+  setProperty("expire", sessionInfo.getDateClosure());
+  setProperty("status", sessionInfo.getStatus());
+  setProperty("closepolicy", sessionInfo.getClosePolicy());
+  setProperty("timeout", sessionInfo.getTimeout());
+  setProperty("authenid", sessionInfo.getAuthenId());
+}
+
+JsonObject::JsonObject(const TMS_Data::CancelOptions& options)
+  : m_jsonObject(json_object()) {
+
+  setProperty("machineid", options.getMachineId());
+  setProperty("user", options.getUser());
+  setProperty("jobid", options.getJobId());
+}
+
+
+
 /**
  * @brief JsonObject::~JsonObject
  */
@@ -142,10 +171,11 @@ void JsonObject::addItemToLastArray(const std::string& value) {
 
 /**
    * @brief encodedString Get the encoded string corresponding to the json object
+   * \param flag The flag for encoding
    * @return The encoded string
    */
-std::string JsonObject::encode(void) {
-  char* encodedJson = json_dumps(m_jsonObject, 0);
+std::string JsonObject::encode(int flag) {
+  char* encodedJson = json_dumps(m_jsonObject, flag);
   std::string result = std::string(encodedJson);
   free(encodedJson);
   return result;
@@ -219,10 +249,11 @@ void JsonObject::getArrayProperty(const std::string& key, std::vector<std::strin
 /**
  * @brief JsonObject::serialize
  * @param prof
+ * @param flag
  * @return
  */
 std::string
-JsonObject::serialize(diet_profile_t* prof) {
+JsonObject::serialize(diet_profile_t* prof, int flag) {
 
   if (!prof) {
     throw SystemException(ERRCODE_SYSTEM, "Cannot serialize a null pointer profile");
@@ -237,16 +268,17 @@ JsonObject::serialize(diet_profile_t* prof) {
   for (int i = 0; i< prof->param_count; ++i) {
     jsonProfile.addItemToLastArray(prof->params[i]);
   }
-  return jsonProfile.encode();
+  return jsonProfile.encode(flag);
 }
 
 /**
  * @brief JsonObject::serialize
  * @param job
+ * @param flag
  * @return
  */
 std::string
-JsonObject::serialize(const TMS_Data::Job& job) {
+JsonObject::serialize(const TMS_Data::Job& job, int flag) {
 
   JsonObject jsonProfile;
   jsonProfile.setProperty("vsession", job.getSessionId());
@@ -276,7 +308,7 @@ JsonObject::serialize(const TMS_Data::Job& job) {
   jsonProfile.setProperty("vmIp", job.getVmIp());
   jsonProfile.setProperty("vmId", job.getVmId());
 
-  return jsonProfile.encode();
+  return jsonProfile.encode(flag);
 }
 
 /**

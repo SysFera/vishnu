@@ -9,6 +9,7 @@
 #define __TMSPOSIXCLIENT__HH__
 
 #include <time.h>
+#include <string>
 
 /**
  * \brief Signature for the socket communications
@@ -227,7 +228,7 @@ struct Response {
  * \return 0 on success
  */
 int
-reqSend(const char *destination, const struct Request *req);
+reqSend(const std::string& destination, const struct Request *req);
 
 /**
  * \brief function to submit a command with the option subs and tu get the response
@@ -237,7 +238,7 @@ reqSend(const char *destination, const struct Request *req);
  * \return 0 on success
  */
 int
-reqSubmit(const char* command, struct trameJob *response, struct trameSubmit *sub);
+reqSubmit(const std::string& command, struct trameJob *response, struct trameSubmit *sub);
 
 /**
  * \brief function to make a echo. Test function.
@@ -246,7 +247,7 @@ reqSubmit(const char* command, struct trameJob *response, struct trameSubmit *su
  * \return 0 on success
  */
 int
-reqEcho(const char *chaine, char *ret);
+reqEcho(const std::string& chaine, char *ret);
 
 /**
  * \brief function to cancel a job
@@ -254,7 +255,7 @@ reqEcho(const char *chaine, char *ret);
  * \return 0 on success
  */
 int
-reqCancel(const char *jobId);
+reqCancel(const std::string& jobId);
 
 /**
  * \brief function to get data about jobId
@@ -263,7 +264,7 @@ reqCancel(const char *jobId);
  * \return 0 on success
  */
 int
-reqInfo(const char *jobId, struct trameJob *response);
+reqInfo(const std::string& jobId, struct trameJob *response);
 
 /**
  * \brief function to launch the daemon that will handle the jobs for a given user

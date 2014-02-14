@@ -13,8 +13,6 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
-
-
 #include "DatabaseResult.hpp"
 #include "utilVishnu.hpp"
 #include "DbFactory.hpp"

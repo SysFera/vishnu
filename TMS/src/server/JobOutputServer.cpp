@@ -21,9 +21,8 @@ using namespace vishnu;
  * \brief Constructor
  */
 JobOutputServer::JobOutputServer(const std::string& machineId)
-  : mmachineId(machineId)
+  : mmachineId(machineId), mlistJobsResult(NULL)
 {
-  mlistJobsResult = NULL;
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }
@@ -34,10 +33,9 @@ JobOutputServer::JobOutputServer(const std::string& machineId)
  * \brief Constructor
  */
 JobOutputServer::JobOutputServer(const std::string& machineId,
-                                 const TMS_Data::JobResult& jobResult):
-  mjobResult(jobResult), mmachineId(machineId)
+                                 const TMS_Data::JobResult& jobResult)
+  : mjobResult(jobResult), mmachineId(machineId), mlistJobsResult(NULL)
 {
-  mlistJobsResult = NULL;
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
 }

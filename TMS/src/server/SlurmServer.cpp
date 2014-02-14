@@ -52,7 +52,7 @@ SlurmServer::SlurmServer():BatchServer() {
  * \return raises an exception on error
  */
 int
-SlurmServer::submit(const char* scriptPath,
+SlurmServer::submit(const std::string& scriptPath,
                     const TMS_Data::SubmitOptions& options,
                     TMS_Data::Job& job, char** envp) {
 
@@ -65,7 +65,7 @@ SlurmServer::submit(const char* scriptPath,
   int argc = cmdsOptions.size()+2;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
-  argv[argc-1] = const_cast<char*>(scriptPath);
+  argv[argc-1] = const_cast<char*>(scriptPath.c_str());
   for(int i=0; i < cmdsOptions.size(); i++) {
     argv[i+1] = const_cast<char*>(cmdsOptions[i].c_str());
   }
@@ -74,16 +74,16 @@ SlurmServer::submit(const char* scriptPath,
   //parse the scripthPath and sets the options values
   slurm_parse_script(argc, argv, &desc);
 
-  std::string errorMsg;
   //Check the job output path
+  std::string errorMsg;
   errorMsg = checkSLURMOutPutPath(desc.std_out);
-  if(errorMsg.size()!=0) {
+  if (! errorMsg.empty()) {
     xfree(desc.script);
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
   //Check the job error path
   errorMsg = checkSLURMOutPutPath(desc.std_err, "job error path");
-  if(errorMsg.size()!=0) {
+  if(! errorMsg.empty()) {
     xfree(desc.script);
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
@@ -105,13 +105,13 @@ SlurmServer::submit(const char* scriptPath,
     } else {
       errorMsg ="";
     }
-    if ((errorMsg == "") || (retries >= VISHNU_MAX_RETRIES)) {
+    if (errorMsg.empty() || retries >= VISHNU_MAX_RETRIES) {
       errorMsg = "Batch job submission failed: "+std::string(slurm_strerror(errno));
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+errorMsg);
     }
 
     if (retries || errno == ESLURM_NODES_BUSY) {
-      std::cout << errorMsg << std::endl;
+      std::cout << errorMsg << "\n";
     } else {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+errorMsg);
     }
@@ -280,7 +280,7 @@ bool SlurmServer::containsAnExcludedSlurmSymbols(const std::string& path, std::s
  * \return raises an exception on error
  */
 void
-SlurmServer::processOptions(const char* scriptPath,
+SlurmServer::processOptions(const std::string& scriptPath,
                             const TMS_Data::SubmitOptions& options,
                             std::vector<std::string>&cmdsOptions) {
 
@@ -464,7 +464,7 @@ uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
  * \return raises an exception on error
  */
 int
-SlurmServer::cancel(const char* jobId) {
+SlurmServer::cancel(const std::string& jobId) {
 
   uint32_t slurmJobId = convertToSlurmJobId(jobId);
 
@@ -838,14 +838,14 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
  * \return The value of the resource
  */
 std::string
-SlurmServer::getSlurmResourceValue(const char* file,
+SlurmServer::getSlurmResourceValue(const std::string& file,
                                    const std::string& shortOptionLetterSyntax,
                                    const std::string& longOptionLetterSyntax) {
 
   std::string resourceValue;
   std::string slurmPrefix = "#SBATCH";
   std::string line;
-  ifstream ifile(file);
+  ifstream ifile(file.c_str());
   if (ifile.is_open()) {
     while (!ifile.eof()) {
       getline(ifile, line);
@@ -883,7 +883,7 @@ SlurmServer::getSlurmResourceValue(const char* file,
  * \brief Function to replace some environment varia*bles in a string
  * \param scriptpath The script path to modify
  */
-void SlurmServer::replaceEnvVariables(const char* scriptPath){
+void SlurmServer::replaceEnvVariables(const std::string& scriptPath){
 
   std::string scriptContent = vishnu::get_file_content(scriptPath);
   size_t pos;
@@ -909,7 +909,7 @@ void SlurmServer::replaceEnvVariables(const char* scriptPath){
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", fileName);
     scriptContent.insert(scriptContent.size()-1, "\n rm "+fileName+"\n");
   }
-  ofstream ofs(scriptPath);
+  ofstream ofs(scriptPath.c_str());
   ofs << scriptContent;
   ofs.close();
 }

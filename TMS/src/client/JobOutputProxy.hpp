@@ -36,14 +36,14 @@ public:
   * \return The job results data structure
   */
   TMS_Data::JobResult
-  getJobOutPut(const std::string& jobId, const TMS_Data::JobOuputOptions& options);
+  getJobOutPut(const std::string& jobId, const TMS_Data::JobOutputOptions& options);
 
   /**
   * \brief Function to get the results of all job submitted
   * \return The list of the job results
   */
 	TMS_Data::ListJobResults_ptr
-  getCompletedJobsOutput(const TMS_Data::JobOuputOptions& options);
+  getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options);
 
   /**
   * \brief Destructor, raises an exception on error

@@ -18,7 +18,7 @@
 #include "TmsPosixClient.hpp"
 
 int
-reqSend(const char *destination, const struct Request* req, struct Response* ret) {
+reqSend(const std::string& destination, const struct Request* req, struct Response* ret) {
   int sfd;
   struct sockaddr_un addr;
   int sv_errno;
@@ -33,7 +33,7 @@ reqSend(const char *destination, const struct Request* req, struct Response* ret
 
   memset(&addr, 0, sizeof(struct sockaddr_un));
   addr.sun_family = AF_UNIX;
-  strncpy(addr.sun_path, destination, sizeof(addr.sun_path) -1);
+  strncpy(addr.sun_path, destination.c_str(), sizeof(addr.sun_path) -1);
 
   if ( connect(sfd,(struct sockaddr *)&addr, sizeof(struct sockaddr_un)) == -1) {
     sv_errno = errno;
@@ -62,7 +62,7 @@ reqSend(const char *destination, const struct Request* req, struct Response* ret
 }
 
 int
-reqSubmit(const char *command, struct trameJob *response, struct trameSubmit *sub) {
+reqSubmit(const std::string& command, struct trameJob *response, struct trameSubmit *sub) {
   struct Request req;
   struct Response ret;
   char name_sock[255];
@@ -74,7 +74,7 @@ reqSubmit(const char *command, struct trameJob *response, struct trameSubmit *su
   memset(&req, 0, sizeof(struct Request));
   strncpy(req.sig, SIGNATURE, sizeof(req.sig));
   strncpy(req.req, LB_REQ_SUBMIT, sizeof(req.req));
-  strncpy(req.data.submit.cmd, command, sizeof(req.data.submit)-1);
+  strncpy(req.data.submit.cmd, command.c_str(), sizeof(req.data.submit)-1);
 
   strncpy(req.data.submit.outPutPath, sub->outPutPath, sizeof(req.data.submit.outPutPath)-1);
   strncpy(req.data.submit.errorPath, sub->errorPath, sizeof(req.data.submit.errorPath)-1);
@@ -92,7 +92,7 @@ reqSubmit(const char *command, struct trameJob *response, struct trameSubmit *su
 }
 
 int
-reqEcho(const char* chaine, char* ret) {
+reqEcho(const std::string& chaine, char* ret) {
   struct Request req;
   struct Response res;
   int resultat;
@@ -105,7 +105,7 @@ reqEcho(const char* chaine, char* ret) {
   memset(&req, 0, sizeof(struct Request));
   strncpy(req.sig, SIGNATURE, sizeof(req.sig));
   strncpy(req.req, LB_REQ_ECHO, sizeof(req.req));
-  strncpy(req.data.echo.data, chaine, sizeof(req.data.echo.data)-1);
+  strncpy(req.data.echo.data, chaine.c_str(), sizeof(req.data.echo.data)-1);
 
   resultat = reqSend(name_sock, &req, &res);
   if (resultat < 0) {
@@ -132,21 +132,21 @@ static char *strccpy(char* dest, const char* src, int lg, char car) {
 
 
 int
-reqCancel(const char* jobId) {
+reqCancel(const std::string& jobId) {
   struct Request req;
   struct Response res;
   int resultat;
   char name_sock[255];
   char euid[255];
 
-  strccpy(euid, jobId, sizeof(euid), '-');
+  strccpy(euid, jobId.c_str(), sizeof(euid), '-');
 
   snprintf(name_sock, sizeof(name_sock), "%s/%s%s", "/tmp", SV_SOCK, euid);
 
   memset(&req, 0, sizeof(struct Request));
   strncpy(req.sig, SIGNATURE, sizeof(req.sig));
   strncpy(req.req, LB_REQ_CANCEL, sizeof(req.req));
-  strncpy(req.data.cancel.jobId,jobId, sizeof(req.data.cancel.jobId)-1);
+  strncpy(req.data.cancel.jobId, jobId.c_str(), sizeof(req.data.cancel.jobId)-1);
 
   resultat = reqSend(name_sock, &req, &res);
   if (resultat < 0) {

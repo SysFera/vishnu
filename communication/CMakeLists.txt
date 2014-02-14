@@ -49,7 +49,7 @@ endif(NOT COMPILE_ONLY_LIBBATCH)
 #add_subdirectory(ZMQHelper)
 # --------------------------------------------------------------------------
 
-if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
+if(COMPILE_DISPATCHER)
   add_executable(dispatcher dispatcher/main.cpp
     dispatcher/Dispatcher.cpp)
   
@@ -61,6 +61,6 @@ if(COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
     ${OPENSSL_LIBRARIES}
     )
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
-endif()
+endif(COMPILE_DISPATCHER)
 
 add_subdirectory(pinger)

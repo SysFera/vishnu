@@ -10,6 +10,7 @@ find_path(LIBJANSSON_INCLUDE_DIR
   PATHS
   ${LIBJANSSON_DIR}/include
   $ENV{LIBJANSSON_DIR}/include
+  /usr/include
   /usr/local/include
   /opt/local/include
   ${LIBJANSSON_INCLUDE_DIR}
@@ -21,6 +22,7 @@ find_library(LIBJANSSON_LIB
   PATHS
   ${LIBJANSSON_DIR}/lib
   $ENV{LIBJANSSON_DIR}/lib
+  /usr/lib
   /usr/local/lib
   /opt/local/lib
   ${LIBJANSSON_LIBRARY_DIR}

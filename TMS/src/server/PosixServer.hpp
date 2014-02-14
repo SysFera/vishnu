@@ -32,7 +32,7 @@ class PosixServer : public BatchServer
      * \return raises an exception on error
      */
     int
-      submit(const char* scriptPath,
+      submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
           TMS_Data::Job& job,
           char** envp=NULL);
@@ -43,7 +43,7 @@ class PosixServer : public BatchServer
      * \return raises an exception on error
      */
     int
-      cancel(const char* jobId) ;
+      cancel(const std::string& jobId) ;
 
     /**
      * \brief Function to get the status of the job

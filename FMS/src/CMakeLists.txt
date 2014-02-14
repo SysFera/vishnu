@@ -23,27 +23,25 @@ set(client_SRCS client/FileProxy
 set(api_SRCS api/api_fms.cpp)
 set(api_HEADERS api/api_fms.hpp)
 
-add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
-SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
-target_link_libraries(vishnu-fms-client
-  ${Boost_LIBRARIES}
-  emf4cpp-vishnu
-  vishnu-core
-  vishnu-ums-client
-  ${LIBCRYPT_LIB}
-  ${ZMQ_LIBRARIES}
-  zmq_helper
-)
 
 ## client CLI
-if(COMPILE_CLIENT_CLI)
+if(COMPILE_CLIENT_FMS)
   add_subdirectory(cli)
+  add_library(vishnu-fms-client ${client_SRCS} ${api_SRCS})
+  SET_TARGET_PROPERTIES(vishnu-fms-client PROPERTIES VERSION ${VISHNU_VERSION})
+  target_link_libraries(vishnu-fms-client
+    ${Boost_LIBRARIES}
+    emf4cpp-vishnu
+    vishnu-core
+    vishnu-ums-client
+    ${LIBCRYPT_LIB}
+    ${ZMQ_LIBRARIES}
+    zmq_helper)
+  install(TARGETS vishnu-fms-client DESTINATION ${LIB_INSTALL_DIR})
+  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 endif()
 
-install(TARGETS vishnu-fms-client DESTINATION ${LIB_INSTALL_DIR})
-install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-
-if(COMPILE_SERVERS)
+if(COMPILE_SERVER_FMS)
   include_directories(${DATA_BASE_INCLUDE_DIR}
     ${REGISTRY_SOURCE_DIR}
     ${UMS_SERVER_SOURCE_DIR}
@@ -88,7 +86,5 @@ if(COMPILE_SERVERS)
     emf4cpp-vishnu
     ${LIBCRYPT_LIB}
     ${ZMQ_LIBRARIES}
-    zmq_helper
-    )
-
-endif()
+    zmq_helper)
+endif(COMPILE_SERVER_FMS)

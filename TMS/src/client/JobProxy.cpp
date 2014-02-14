@@ -13,6 +13,10 @@
 #include "DIET_client.h"
 #include "TMSVishnuException.hpp"
 
+#ifdef TMS_STANDALONE
+#include "mungeUtils.hpp"
+#endif
+
 using namespace std;
 namespace bfs=boost::filesystem;
 /**
@@ -39,19 +43,25 @@ int
 JobProxy::submitJob(const std::string& scriptContent,
                     const TMS_Data::SubmitOptions& options) {
 
-  string sessionKey = msessionProxy.getSessionKey();
-  TMS_Data::SubmitOptions& updatedOptions = const_cast<TMS_Data::SubmitOptions&>(options) ;
+  JsonObject sessionInfo(msessionProxy.getData());
+  std::string sessionKey = msessionProxy.getSessionKey();
 
-  // first check if it's an automatic submission
-  // if yes, select a machine according to the load criterion
+#ifdef TMS_STANDALONE
+  sessionInfo.setProperty("credential", MungeCredential::createCredentials(""));
+#endif
+
+  JsonObject jsonOptions(options);
+
+  // select a machine if not machine set
   if (mmachineId.empty() || mmachineId == AUTOM_KEYWORD) {
-    if (updatedOptions.getCriterion()) {
-      mmachineId = vishnu::findMachine(sessionKey, *(updatedOptions.getCriterion()));
+    TMS_Data::LoadCriterion loadCriterion;
+    int criterion = jsonOptions.getIntProperty("criterion");
+    if (criterion < 0 ) {
+      loadCriterion.setLoadType(criterion);
     } else {
-      TMS_Data::LoadCriterion loadCriterion;
       loadCriterion.setLoadType(NBWAITINGJOBS);
-      mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
     }
+    mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
   }
 
   // now create and initialize the service profile
@@ -60,7 +70,7 @@ JobProxy::submitJob(const std::string& scriptContent,
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
 
   //IN Parameters
-  diet_string_set(profile,0, sessionKey);
+  diet_string_set(profile,0, sessionInfo.encode());
   diet_string_set(profile,1, mmachineId);
   diet_string_set(profile,2, scriptContent);
 
@@ -68,11 +78,9 @@ JobProxy::submitJob(const std::string& scriptContent,
   FMS_Data::CpFileOptions copts;
   copts.setIsRecursive(true) ;
   copts.setTrCommand(0);
-  string inputFiles = vishnu::sendInputFiles(sessionKey, updatedOptions.getFileParams(), mmachineId, copts) ;
-  updatedOptions.setFileParams(inputFiles);
+  string inputFiles = vishnu::sendInputFiles(sessionKey, options.getFileParams(), mmachineId, copts) ;
+  jsonOptions.setProperty("fileparams", inputFiles);
 
-  JsonObject jsonOptions(updatedOptions);
-  jsonOptions.setProperty("owner");
   diet_string_set(profile,3, jsonOptions.encode());
 
   // FIXME: do it before setting parameter 3
@@ -99,34 +107,19 @@ JobProxy::submitJob(const std::string& scriptContent,
 int
 JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
-  std::string errorInfo;
-
   std::string serviceName = (boost::format("%1%@%2%")
                              % SERVICES_TMS[JOBCANCEL]
                              % mmachineId
                              ).str();
 
+  JsonObject sessionInfo(msessionProxy.getData());
+  JsonObject jsonOptions(options);
+
+  // Set RPC parameters
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
-  std::string  sessionKey = msessionProxy.getSessionKey();
-
-  std::string msgErrorDiet = "preparing sending data failed ";
-  //IN Parameters
-  if (diet_string_set(profile,0, sessionKey)) {
-    msgErrorDiet += "with sessionKey parameter "+sessionKey;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  if (diet_string_set(profile,1, mmachineId)) {
-    msgErrorDiet += "with machineId parameter "+mmachineId;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  ::ecorecpp::serializer::serializer _ser;
-  string serializedOptions =  _ser.serialize_str(const_cast<TMS_Data::CancelOptions_ptr>(&options));
-  if (diet_string_set(profile,2, serializedOptions)) {
-    msgErrorDiet += " on serializing options: "+serializedOptions;
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
+  diet_string_set(profile,0, sessionInfo.encode());
+  diet_string_set(profile,1, mmachineId);
+  diet_string_set(profile,2, jsonOptions.encode());
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
@@ -147,7 +140,9 @@ JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 TMS_Data::Job
 JobProxy::getJobInfo() {
 
+  JsonObject sessionInfo(msessionProxy.getData());
   std::string sessionKey = msessionProxy.getSessionKey();
+
   TMS_Data::LoadCriterion loadCriterion;
   loadCriterion.setLoadType(NBJOBS);
   mmachineId = vishnu::findMachine(sessionKey, loadCriterion);
@@ -159,20 +154,18 @@ JobProxy::getJobInfo() {
 
   // Now prepare the service call
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
-  std::string jobSerialized = JsonObject::serialize(mjob);
-
-  // Set parameters
-  diet_string_set(profile, 0, sessionKey);
+  diet_string_set(profile, 0, sessionInfo.encode());
   diet_string_set(profile, 1, mmachineId);
-  diet_string_set(profile,2, jobSerialized);
+  diet_string_set(profile,2, mjob.getJobId());
 
   if (diet_call(profile)) {
     raiseCommunicationMsgException("RPC call failed");
   }
   raiseExceptionOnErrorResult(profile);
 
-  diet_string_get(profile,1, jobSerialized);
-  JsonObject jobJson(jobSerialized);
+  std::string jobData;
+  diet_string_get(profile,1, jobData);
+  JsonObject jobJson(jobData);
 
   diet_profile_free(profile);
   return jobJson.getJob();

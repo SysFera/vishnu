@@ -46,7 +46,7 @@ using namespace std;
 using namespace vishnu;
 
 #ifdef TMS_STANDALONE
-#define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4)  SessionServer sessionServer(sessionKey); \
+#define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4)  SessionServer sessionServer(sessionData); \
   sessionServer.finish(arg1, arg2, arg3, arg4)
 #else
 #define FINISH_COMMAND(sessionKey, arg1, arg2, arg3, arg4) (boost::format("Command completed: %1%. status: %2%.")% arg1 % arg2).str()
@@ -63,13 +63,10 @@ solveSubmitJob(diet_profile_t* pb) {
   std::string scriptContent;
   string machineId;
   string jsonEncodedOptions;
-  string sessionKey;
-
-  int mapperkey;
-  std::string cmd = "";
+  string sessionData;
 
   // get profile parameters
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, scriptContent);
   diet_string_get(pb,3, jsonEncodedOptions);
@@ -80,29 +77,29 @@ solveSubmitJob(diet_profile_t* pb) {
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_submit_job");
+    int mapperkey = mapper->code("vishnu_submit_job");
     mapper->code(machineId, mapperkey);
     mapper->code(jsonEncodedOptions, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
     //FIXME: decode job and options
-    JsonObject options(jsonEncodedOptions);
-
+    JsonObject sessionInfo(sessionData);
     ServerTMS* server = ServerTMS::getInstance();
-    JobServer jobServer(sessionKey, machineId, server->getSedConfig());
+
+    JobServer jobServer(&sessionInfo, machineId, server->getSedConfig());
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
 
-    int vishnuId = server->getVishnuId();
-    jobServer.submitJob(scriptContent, &options, vishnuId, server->getDefaultBatchOption());
+    JsonObject options(jsonEncodedOptions);
+    jobServer.submitJob(scriptContent, &options, server->getVishnuId(), server->getDefaultBatchOption());
 
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, JsonObject::serialize(jobServer.getData()));
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, jobServer.getData().getJobId());
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, jobServer.getData().getJobId());
 
   } catch (VishnuException& ex) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -121,13 +118,11 @@ solveSubmitJob(diet_profile_t* pb) {
 int
 solveCancelJob(diet_profile_t* pb) {
 
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
   std::string optionSerialized;
-  int mapperkey;
-  std::string cmd = "";
 
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, optionSerialized);
 
@@ -138,24 +133,25 @@ solveCancelJob(diet_profile_t* pb) {
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_cancel_job");
+    int mapperkey = mapper->code("vishnu_cancel_job");
     mapper->code(machineId, mapperkey);
     mapper->code(optionSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
-
+    JsonObject sessionInfo(sessionData);
     ServerTMS* server = ServerTMS::getInstance();
+    JobServer jobServer(&sessionInfo, machineId, server->getSedConfig());
+
     JsonObject options(optionSerialized);
-    JobServer jobServer(sessionKey, machineId, server->getSedConfig());
     jobServer.cancelJob(&options);
 
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, "");
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& ex) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -173,38 +169,36 @@ solveCancelJob(diet_profile_t* pb) {
 int
 solveJobInfo(diet_profile_t* pb) {
 
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
-  std::string jobSerialized;
-  int mapperkey;
-  std::string cmd = "";
+  std::string jobId;
 
   //IN Parameters
-  diet_string_get(pb, 0, sessionKey);
+  diet_string_get(pb, 0, sessionData);
   diet_string_get(pb, 1, machineId);
-  diet_string_get(pb, 2, jobSerialized);
+  diet_string_get(pb, 2, jobId);
 
   // reset the profile to send back result
   diet_profile_reset(pb, 2);
   try{
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_get_job_info");
+    int mapperkey = mapper->code("vishnu_get_job_info");
     mapper->code(machineId, mapperkey);
-    mapper->code(jobSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    mapper->code(jobId, mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
-    JsonObject jobJson(jobSerialized);
-    JobServer jobServer(sessionKey, machineId, jobJson.getJob(), ServerTMS::getInstance()->getSedConfig());
+    JsonObject sessionInfo(sessionData);
+    JobServer jobServer(&sessionInfo, machineId, ServerTMS::getInstance()->getSedConfig());
+    std::string jobSerialized = JsonObject::serialize(jobServer.getJobInfo(jobSerialized));
 
-    jobSerialized = JsonObject::serialize(jobServer.getJobInfo());
     diet_string_set(pb,1, jobSerialized);
     diet_string_set(pb,0, "success");
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       e.appendMsgComp(fe.what());
     }
@@ -223,14 +217,12 @@ solveJobInfo(diet_profile_t* pb) {
 int
 solveListOfQueues(diet_profile_t* pb) {
 
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
   std::string optionSerialized;
   std::string listQueuesSerialized;
-  int mapperkey;
-  std::string cmd = "";
 
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, optionSerialized);
 
@@ -247,11 +239,10 @@ solveListOfQueues(diet_profile_t* pb) {
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-
-    mapperkey = mapper->code("vishnu_list_queues");
+    int mapperkey = mapper->code("vishnu_list_queues");
     mapper->code(machineId, mapperkey);
     mapper->code(optionSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
     listQueues = queryQueues.list();
 
@@ -261,10 +252,10 @@ solveListOfQueues(diet_profile_t* pb) {
 
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, listQueuesSerialized);
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& ex) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -283,14 +274,13 @@ solveListOfQueues(diet_profile_t* pb) {
 int
 solveJobOutPutGetResult(diet_profile_t* pb) {
 
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
   std::string optionsSerialized;
   std::string moutDir;
-  std::string cmd = "";
 
   //IN Parameters
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, optionsSerialized);
   diet_string_get(pb,3, moutDir);
@@ -305,7 +295,7 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     mapper->code(machineId, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
     mapper->code(moutDir, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
 
     //Start dealing with output
@@ -319,10 +309,10 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, outputInfo);
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       e.appendMsgComp(fe.what());
     }
@@ -342,22 +332,20 @@ template <class QueryParameters, class List, class QueryType>
 int
 solveGenerique(diet_profile_t* pb) {
 
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
   std::string optionValueSerialized;
   std::string listSerialized = "";
-  int mapperkey;
-  std::string cmd;
 
   //IN Parameters
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, optionValueSerialized);
 
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
-  //FIXME: SessionServer sessionServer  = SessionServer(sessionKey);
+  //FIXME: SessionServer sessionServer  = SessionServer(sessionData);
 
   QueryParameters* options = NULL;
   List* list = NULL;
@@ -372,10 +360,10 @@ solveGenerique(diet_profile_t* pb) {
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code(query.getCommandName());
+    int mapperkey = mapper->code(query.getCommandName());
     mapper->code(machineId, mapperkey);
     mapper->code(optionValueSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
     list = query.list(options);
 
@@ -386,11 +374,11 @@ solveGenerique(diet_profile_t* pb) {
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, listSerialized);
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
 
   } catch (VishnuException& ex) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -429,21 +417,20 @@ solveGetListOfJobsProgression(diet_profile_t* pb) {
  */
 int
 solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
-  std::string sessionKey;
+  std::string sessionData;
   std::string machineId;
   std::string serializedOptions;
   std::string jobListsSerialized;
   int mapperkey;
   std::string cmd;
 
-  diet_string_get(pb, 0, sessionKey);
+  diet_string_get(pb, 0, sessionData);
   diet_string_get(pb, 1, machineId);
   diet_string_get(pb, 2, serializedOptions);
 
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
-  //SessionServer sessionServer = SessionServer(sessionKey);
   try {
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
@@ -451,11 +438,6 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     mapper->code(machineId, mapperkey);
     mapper->code(serializedOptions, mapperkey);
     cmd = mapper->finalize(mapperkey);
-
-    //    TMS_Data::JobOutputOptions_ptr options = NULL;
-    //    if(!vishnu::parseEmfObject(serializedOptions, options)) {
-    //      throw SystemException(ERRCODE_INVDATA, "the option object is not well built");
-    //    }
 
     JsonObject options(serializedOptions);
     JobOutputServer jobOutputServer(machineId);
@@ -481,10 +463,10 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
     diet_string_set(pb, 0, "success");
     diet_string_set(pb, 1, data.encode());
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDSUCCESS, "");
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDSUCCESS, "");
   } catch (VishnuException& e) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       e.appendMsgComp(fe.what());
     }
@@ -503,21 +485,19 @@ solveJobOutPutGetCompletedJobs(diet_profile_t* pb) {
  */
 int
 solveAddWork(diet_profile_t* pb) {
-  std::string sessionKey;
+  std::string sessionData;
   std::string workSerialized;
   std::string opSerialized;
-  int mapperkey;
-  std::string cmd;
 
   //IN Parameters
-  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,0, sessionData);
   diet_string_get(pb,1, workSerialized);
   diet_string_get(pb,2, opSerialized);
 
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
-  //FIXME: SessionServer sessionServer = SessionServer(sessionKey);
+  //FIXME: SessionServer sessionServer = SessionServer(sessionData);
 
   TMS_Data::AddWorkOptions_ptr workop = NULL;
   TMS_Data::Work_ptr work = NULL;
@@ -527,10 +507,10 @@ solveAddWork(diet_profile_t* pb) {
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(TMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_add_work");
+    int mapperkey = mapper->code("vishnu_add_work");
     mapper->code(workSerialized, mapperkey);
     mapper->code(opSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
+    std::string cmd = mapper->finalize(mapperkey);
 
     //To parse the object serialized
     if(!parseEmfObject(workSerialized, work)) {
@@ -552,10 +532,10 @@ solveAddWork(diet_profile_t* pb) {
     diet_string_set(pb,0, "success");
     diet_string_set(pb,1, workSerializedUpdate);
 
-    FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, work->getWorkId());
+    FINISH_COMMAND(sessionData, cmd, TMS, vishnu::CMDFAILED, work->getWorkId());
   } catch (VishnuException& e) {
     try {
-      FINISH_COMMAND(sessionKey, cmd, TMS, vishnu::CMDFAILED, "");
+      FINISH_COMMAND(sessionData, "", TMS, vishnu::CMDFAILED, "");
     } catch (VishnuException& fe) {
       e.appendMsgComp(fe.what());
     }

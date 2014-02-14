@@ -5,6 +5,13 @@
  * \date April 2011
  */
 
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <sys/stat.h>
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/format.hpp>
 #include "JobServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
@@ -14,70 +21,32 @@
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
 #include "ScriptGenConvertor.hpp"
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/format.hpp>
-#include <fcntl.h>
 #include "api_fms.hpp"
-#include "sys/stat.h"
 #include "utils.hpp"
+#include "BatchFactory.hpp"
+
 
 using namespace vishnu;
 
+/**
+ * \param sessionInfo The session info in a json object
+ * \param machineId The machine identifier
+ * \param job The job data structure
+ * \param sedConfig A pointer to the SeD configuration
+ * \brief Constructor
+ */
+JobServer::JobServer(JsonObject* sessionInfo,
+                     const std::string& machineId,
+                     const ExecConfiguration_Ptr sedConfig)
+  : msessionInfo(sessionInfo), mmachineId(machineId), mjob(TMS_Data::Job()), msedConfig(sedConfig) {
+
 #ifdef TMS_STANDALONE
-#define CHECK_SESSION() SessionServer sessionServer(msessionKey); \
-  sessionServer.check(); \
-  std::string sessionId = sessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(msessionKey)+"'", "numsessionid"); \
-  mjob.setSessionId(sessionId); \
-  UserServer userServer(sessionServer); \
-  userServer.init(); \
-  mjob.setUserId(userServer.getData().getUserId()); \
-  mjob.setOwner(userServer.getUserAccountLogin(mmachineId));
-#define IS_ADMIN userServer.isAdmin()
-#else
-#define CHECK_SESSION()
-#define IS_ADMIN false
+  if (mmungeCredential.decode(msessionInfo->getStringProperty("credential")) != EMUNGE_SUCCESS) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                             (boost::format("Munge error: %1%") % mmungeCredential.lastError()).str());
+  }
 #endif
 
-/**
- * \param sessionServer The object which encapsulates the session information
- * \param machineId The machine identifier
- * \param job The job data structure
- * \param sedConfig A pointer to the SeD configuration
- * \brief Constructor
- */
-JobServer::JobServer(const std::string& sessionKey,
-                     const std::string& machineId,
-                     const TMS_Data::Job& job,
-                     const ExecConfiguration_Ptr sedConfig):
-  msessionKey(sessionKey), mmachineId(machineId), mjob(job), msedConfig(sedConfig) {
-  DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
-  if (msedConfig) {
-    std::string value;
-    msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, value);
-    mbatchType = vishnu::convertToBatchType(value);
-    if (mbatchType != DELTACLOUD) {
-      msedConfig->getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, value);
-      mbatchVersion = value;
-    } else {
-      mbatchVersion = "";
-    }
-  }
-}
-
-
-/**
- * \param sessionServer The object which encapsulates the session information
- * \param machineId The machine identifier
- * \param job The job data structure
- * \param sedConfig A pointer to the SeD configuration
- * \brief Constructor
- */
-JobServer::JobServer(const std::string& sessionKey,
-                     const std::string& machineId,
-                     const ExecConfiguration_Ptr sedConfig):
-  msessionKey(sessionKey), mmachineId(machineId), mjob(TMS_Data::Job()), msedConfig(sedConfig) {
   DbFactory factory;
   mdatabaseVishnu = factory.getDatabaseInstance();
   if (msedConfig) {
@@ -112,16 +81,18 @@ int JobServer::submitJob(std::string& scriptContent,
                          const int& vishnuId,
                          const std::vector<std::string>& defaultBatchOption)
 {
+  if (USE_DATABASE) {
+    CHECK_UMS_SESSION();
+  }
+
   bool succeed = false;
   int errCode = ERRCODE_RUNTIME_ERROR;
-  std::string errMsg  = "";
   try {
-    CHECK_SESSION();
 
     // Get user info
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", JOB, mmachineId);
     mjob.setSubmitMachineId(mmachineId);
-    mjob.setSubmitMachineName(getMachineName(mmachineId));
+    mjob.setSubmitMachineName("localhost");
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
     mjob.setWorkId(options->getIntProperty("workid"));
@@ -150,7 +121,11 @@ int JobServer::submitJob(std::string& scriptContent,
       throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
     }
 
-    handleSshSubmit(options);
+#ifdef TMS_STANDALONE
+    handleNativeBatchExec(SubmitBatchAction, options, scriptPath);
+#else
+    handleSshSubmit(scriptPath, options);
+#endif
 
     size_t pos = mjob.getOutputPath().find(":");
     std::string prefixOutputPath = (pos == std::string::npos)? mjob.getSubmitMachineName()+":" : "";
@@ -162,25 +137,24 @@ int JobServer::submitJob(std::string& scriptContent,
   } catch (VishnuException& ex) {
     LOG("[ERROR] "+std::string(ex.what()), 4);
     succeed = false;
-    scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
-    mjob.setErrorPath(errMsg);
+    scanErrorMessage(ex.buildExceptionString(), errCode, lastError);
+    mjob.setErrorPath(lastError);
     mjob.setOutputPath("");
     mjob.setOutputDir("");
     mjob.setStatus(vishnu::STATE_FAILED);
   }
 
-
-#ifdef TMS_STANDALONE
-  try {
-    recordJob2db();
-  } catch (VishnuException& ex) {
-    succeed = false;
-    scanErrorMessage(ex.buildExceptionString(), errCode, errMsg);
+  if (USE_DATABASE) {
+    try {
+      recordJob2db();
+    } catch (VishnuException& ex) {
+      succeed = false;
+      scanErrorMessage(ex.buildExceptionString(), errCode, lastError);
+    }
   }
-#endif
 
   if (! succeed) {
-    throw TMSVishnuException(errCode, mjob.getJobId()+": "+errMsg);
+    throw TMSVishnuException(errCode, lastError);
   } else {
     LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%" )
         % mjob.getJobId() % mjob.getUserId() % mjob.getOwner(), 1);
@@ -188,25 +162,22 @@ int JobServer::submitJob(std::string& scriptContent,
   return 0;
 }
 
-
 /**
  * @brief Submit job using ssh mechanism
+ * @param scriptPath The path of the script to executed
  * @param options: an object containing options
  */
-void JobServer::handleSshSubmit(JsonObject* options) {
+void
+JobServer::handleSshSubmit(const std::string& scriptPath, JsonObject* options) {
 
-  std::string scriptPath = options->getStringProperty("scriptpath");
-  ::ecorecpp::serializer::serializer jobSer;
-  std::string jobSerialized = jobSer.serialize_str(const_cast<TMS_Data::Job_ptr>(&mjob));
   SSHJobExec sshJobExec(mjob.getOwner(),
                         mjob.getSubmitMachineName(),
                         mbatchType,
                         mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
-                        jobSerialized,
+                        JsonObject::serialize(mjob),
                         options->encode());
 
   sshJobExec.setDebugLevel(mdebugLevel);
-
   sshJobExec.sshexec("SUBMIT", scriptPath);
 
   // Submission with deltacloud doesn't make copy of the script
@@ -222,7 +193,73 @@ void JobServer::handleSshSubmit(JsonObject* options) {
     scanErrorMessage(errorInfo, code, message);
     throw TMSVishnuException(code, message);
   }
-  deserializeJob(sshJobExec.getJobSerialized());
+
+  mjob = sshJobExec.getResultJob();
+}
+
+/**
+ * @brief Handle action to batch scheduler
+ * @param action action The type of action
+ * @param options user-specific options
+ * @param scriptPath The path of the script to executed. Only required for submit action
+ */
+void
+JobServer::handleNativeBatchExec(int action, JsonObject* options, const std::string& scriptPath) {
+
+  if (getuid() != 0) {
+    throw SystemException(ERRCODE_RUNTIME_ERROR, "Root privileges are required");
+  }
+
+  BatchFactory factory;
+  BatchServer* batchServer = factory.getBatchServerInstance(mbatchType, mbatchVersion);
+  if (! batchServer) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "getBatchServerInstance return NULL");
+  }
+
+  //  if (mmungeCredential.decode() != EMUNGE_SUCCESS) {
+  //    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+  //                             (boost::format("Munge error: %1%") % mmungeCredential.lastError()).str());
+  //  }
+
+  mjob.setOwner(mmungeCredential.getSystemUserName());
+  if (mjob.getOwner().empty()) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                             (boost::format("No user associated to the uid: %1%") % mmungeCredential.getUid()).str());
+  }
+
+  pid_t pid = fork();
+  if (pid <= -1) {
+    throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Fork failed");
+  }
+  if (pid == 0) {
+    int handlerExitCode = setuid(mmungeCredential.getUid());
+    if (handlerExitCode != 0) {
+      LOG("[ERROR] " + std::string(strerror(errno)), 2);
+      exit(handlerExitCode);
+    }
+    switch(action) {
+    case SubmitBatchAction:
+      handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), mjob);
+      break;
+
+    case CancelBatchAction:
+      if (mbatchType == DELTACLOUD) {
+        handlerExitCode = batchServer->cancel(mjob.getJobId()+"@"+mjob.getVmId());
+      } else {
+        handlerExitCode = batchServer->cancel(mjob.getBatchJobId());
+      }
+      break;
+    default:
+      break;
+    }
+    exit(handlerExitCode);
+  } else {
+    int retCode;
+    waitpid(pid, &retCode, 0);
+    if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
+      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Unexpected batch exec terminaison");
+    }
+  }
 }
 
 /**
@@ -269,8 +306,8 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
  * \return raises an exception on error
  */
 void
-JobServer::insertOptionLine( std::string& optionLineToInsert,
-                             std::string& content, std::string& key) {
+JobServer::insertOptionLine(std::string& optionLineToInsert,
+                            std::string& content, std::string& key) {
   size_t pos = 0;
   size_t posLastDirective = 0;
 
@@ -306,7 +343,7 @@ JobServer::insertOptionLine( std::string& optionLineToInsert,
  */
 int JobServer::cancelJob(JsonObject* options)
 {
-  CHECK_SESSION();
+  CHECK_UMS_SESSION();
 
   std::string jobId = options->getStringProperty("jobId");
   std::string userId = options->getStringProperty("userId");
@@ -469,11 +506,12 @@ int JobServer::cancelJob(JsonObject* options)
 
 /**
  * \brief Function to get job information
+ * \param jobId The id of the job
  * \return The job data structure
  */
-TMS_Data::Job JobServer::getJobInfo() {
+TMS_Data::Job JobServer::getJobInfo(const std::string& jobId) {
 
-  CHECK_SESSION();
+  CHECK_UMS_SESSION();
 
   std::vector<std::string> results;
   std::vector<std::string>::iterator  iter;
@@ -485,7 +523,7 @@ TMS_Data::Job JobServer::getJobInfo() {
       " FROM job, vsession, users "
       " WHERE vsession.numsessionid=job.vsession_numsessionid "
       "   AND vsession.users_numuserid=users.numuserid"
-      "   AND job.jobId='"+mdatabaseVishnu->escapeData(mjob.getJobId())+"'";
+      "   AND job.jobId='"+mdatabaseVishnu->escapeData(jobId)+"'";
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
 
@@ -678,17 +716,9 @@ void JobServer::treatSpecificParams(const std::string& specificParams,
  */
 void JobServer::recordJob2db()
 {
-  if (mjob.getSessionId().empty()) {
-    throw TMSVishnuException(ERRCODE_AUTHENTERR, "Error: invalid session id (empty)");
-  }
-
-  // Get the reference of the user in the database
-  //  UserServer userServer(SessionServer(msessionKey));
-  //  std::string numUserId = userServer.getAttribut("where userid='"+mjob.getUserId()+"'");
-
   std::string sqlUpdate = "UPDATE job set ";
-  sqlUpdate+="vsession_numsessionid='"+mdatabaseVishnu->escapeData(mjob.getSessionId())+"', ";
-  //FIXME: sqlUpdate+="job_owner_id="+numUserId+", ";
+  sqlUpdate+="vsession_numsessionid='"+mdatabaseVishnu->escapeData(msessionInfo->getStringProperty("sessionid"))+"', ";
+  sqlUpdate+="job_owner_id="+msessionInfo->getStringProperty("uid")+", ";
   sqlUpdate+="owner='"+mdatabaseVishnu->escapeData(mjob.getOwner())+"', ";
   sqlUpdate+="submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"', ";
   sqlUpdate+="submitMachineName='"+mdatabaseVishnu->escapeData(mjob.getSubmitMachineName())+"', ";
@@ -727,7 +757,7 @@ void JobServer::recordJob2db()
 std::string JobServer::getMachineName(const std::string& machineId) {
   std::string machineName = "localhost";
 
-#ifdef TMS_STANDALONE
+#ifndef TMS_STANDALONE
   UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
   machine->setMachineId(machineId);
   MachineServer machineServer(machine);
@@ -770,28 +800,17 @@ void JobServer::setRealPaths(JsonObject* options, const std::string& suffix)
     scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
     std::string workingDir = options->getStringProperty("workingdir");
     if (workingDir.empty()) {
-      //FIXME: workingDir = UserServer(SessionServer(msessionKey)).getUserAccountProperty(mmachineId, "home");
-      workingDir = "$HOME";
+#ifdef TMS_STANDALONE
+      workingDir = mmungeCredential.getHome();
+#else
+      workingDir = UserServer(SessionServer(msessionKey)).getUserAccountProperty(mmachineId, "home");
+#endif
     }
   }
   options->setProperty("workingdir", workingDir);
   options->setProperty("scriptpath", scriptPath);
 }
 
-/**
- * \brief Function to deserialize job
- * \param jobSerialized the Serialized job
- */
-
-void JobServer::deserializeJob(std::string jobSerialized)
-{
-  TMS_Data::Job_ptr job = NULL;
-  if (!vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-    throw SystemException(ERRCODE_INVDATA, "JobServer::submitJob : job object is not well built");
-  }
-  mjob = *job;
-  delete job;
-}
 
 /**
  * \brief Function to process the script with options

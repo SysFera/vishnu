@@ -27,7 +27,6 @@
 #include <boost/format.hpp>
 
 #define CLEANUP_SUBMITTING_DATA(debugLevel) if (!debugLevel) { \
-  vishnu::deleteFile(jobSerializedPath.c_str()); \
   vishnu::deleteFile(submitOptionsSerializedPath.c_str()); \
   vishnu::deleteFile(jobUpdateSerializedPath.c_str()); \
   vishnu::deleteFile(stderrFilePath.c_str()); \
@@ -74,14 +73,6 @@ SSHJobExec::SSHJobExec(const std::string& user,
 SSHJobExec::~SSHJobExec() {
 
 }
-/**
- * \brief Function to return the job serialized content
- * \return  job serialized content
- */
-std::string
-SSHJobExec::getJobSerialized() {
-  return mjobSerialized;
-}
 
 /**
  * \brief Function to return the error message of a service
@@ -114,52 +105,55 @@ SSHJobExec::checkSshParams() {
  * \return raises an exception on error
  */
 void
-SSHJobExec::sshexec(const std::string& serviceName,
+SSHJobExec::sshexec(const std::string& actionName,
                     const std::string& script_path) {
   checkSshParams();
-  std::string jobSerializedPath;
   std::string submitOptionsSerializedPath;
-  std::string jobUpdateSerializedPath;
-  std::string cmdDetails;
 
-  jobSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobSerialized%%%%%%").string();
-  vishnu::saveInFile(jobSerializedPath, mjobSerialized);
 
+  std::string jobUpdateSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobResultSerialized%%%%%%").string();
   submitOptionsSerializedPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/submitOptionsSerialized%%%%%%").string();
   vishnu::saveInFile(submitOptionsSerializedPath, msubmitOptionsSerialized);
 
-  jobUpdateSerializedPath =  bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobUpdateSerialized%%%%%%").string();
 
-  cmdDetails = "" ;
-  if (serviceName.compare("SUBMIT")==0) {  // set specific arguments for submit job
-    cmdDetails += jobUpdateSerializedPath
-                  + " " +  submitOptionsSerializedPath
-                  + " " + script_path;
+  std::string detailsForSubmit = "" ;
+  if (actionName == "SUBMIT") {
+    detailsForSubmit = (boost::format("%1% %2% %3%")
+                        % jobUpdateSerializedPath
+                        % submitOptionsSerializedPath
+                        % script_path
+                        )
+                       .str();
   }
 
   // For traditional batch scheduler we need to submit the job through ssh
-  std::ostringstream cmd;
+  std::string cmd;
   if (mbatchType != DELTACLOUD) {
-    cmd << "ssh -l " << muser << " " << mhostname << " "
-        << " -o NoHostAuthenticationForLocalhost=yes "
-        << " -o PasswordAuthentication=no ";
+    cmd = (boost::format("ssh -l %1% %2% -o NoHostAuthenticationForLocalhost=yes -o PasswordAuthentication=no ")
+           % muser
+           % mhostname
+           ).str();
   }
 
   std::string errorPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/errorPath%%%%%%").string();
   std::string stderrFilePath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/stderr%%%%%%").string();
+  std::string jobPath = bfs::unique_path(TMS_SERVER_FILES_DIR+"/jobSerialized%%%%%%").string();
 
-  std::string slaveDirectory = vishnu::getCurrentBinaryDir();
-  cmd << slaveDirectory << "/tmsSlave "
-      << serviceName << " "
-      << convertBatchTypeToString(mbatchType) << " "
-      << mbatchVersion << " "
-      << jobSerializedPath << " " <<  errorPath << " "
-      << cmdDetails
-      << " 2> " << stderrFilePath;
+  vishnu::saveInFile(jobPath, mjobSerialized);
+
+  cmd += (boost::format("%1%/tmsSlave %2% %3% %4% %5% %6% %7% 2> %8%")
+          % vishnu::getCurrentBinaryDir()
+          % actionName
+          % convertBatchTypeToString(mbatchType)
+          % mbatchVersion
+          % jobPath
+          % errorPath
+          % detailsForSubmit
+          % stderrFilePath
+          ).str();
 
   // Execute the command
-  int ret = system((cmd.str()).c_str());
-
+  int ret = system(cmd.c_str());
   // Treat possibly errors
   if (bfs::exists(errorPath)) {
     merrorInfo.append(vishnu::get_file_content(errorPath, false));
@@ -169,7 +163,7 @@ SSHJobExec::sshexec(const std::string& serviceName,
   }
 
   // Check if something went false
-  if (ret) {
+  if (ret != 0) {
     if (merrorInfo.find("password") != std::string::npos) {
       merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
     }
@@ -177,31 +171,22 @@ SSHJobExec::sshexec(const std::string& serviceName,
       merrorInfo.append("==> SLURM ERROR");
     }
     if (merrorInfo.empty()) {
-      merrorInfo = (boost::format("Unknown error while executing the command: %1%\nError code: %2%")%cmd.str()%ret).str();
+      merrorInfo = (boost::format("Unknown error while executing the command: %1%\nError code: %2%")
+                    % cmd % ret
+                    ).str();
     }
     CLEANUP_SUBMITTING_DATA(mdebugLevel);
     LOG(merrorInfo, mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
   // THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
-  if (serviceName.compare("SUBMIT") == 0) {  // set specific arguments for submit job
-    bool wellSubmitted = false;
+  if (actionName == "SUBMIT") {
 
-    // The command has been executed successfully
-    std::string jobSerialized = vishnu::get_file_content(jobUpdateSerializedPath, false);
-    TMS_Data::Job_ptr job = NULL;
-    if (vishnu::parseEmfObject(std::string(jobSerialized), job)) {
-      ::ecorecpp::serializer::serializer _ser;
-      mjobSerialized = _ser.serialize_str(job);
-      wellSubmitted = true;
-      delete job;
-    } else {
-      merrorInfo.append("SSHJobExec::sshexec: job object is not well built");
-      CLEANUP_SUBMITTING_DATA(mdebugLevel);
-      LOG(merrorInfo, mdebugLevel);
-      throw TMSVishnuException(ERRCODE_INVDATA, merrorInfo);
-    }
-    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (wellSubmitted==false)) {
+    JsonObject jsonJob(vishnu::get_file_content(jobUpdateSerializedPath, false));
+    mjob = jsonJob.getJob();
+    bool submitSucceed = false;
+
+    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (submitSucceed==false)) {
       merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
       if (mbatchType==LOADLEVELER) {
         merrorInfo.append("\n==>LOADLEVELER ERROR");
@@ -268,7 +253,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   LOG("[TMS][INFO] Executing the script...", mdebugLevel);
   execCmd("'mkdir -p "+workDir+" & >>"+logfile+"'"); // First create the output directory if it not exist
   int pid = -1;
-  if(execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid)) {
+  if ( execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid) ) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);

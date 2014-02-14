@@ -10,7 +10,6 @@ set(pbs 0)
 set(deltacloud 0)
 set(posix 0)
 
-
 include_directories(client api
   ${EMF4CPP_INCLUDE_DIR}
   ${EMF_DATA_DIR}
@@ -30,7 +29,7 @@ include_directories(client api
   ${COMMUNICATION_INCLUDE_DIR}
 )
 
-if (COMPILE_TMS AND COMPILE_SERVERS)
+if (COMPILE_SERVER_TMS)
   string (COMPARE EQUAL ${VISHNU_BATCH} "TORQUE" torque)
   string (COMPARE EQUAL ${VISHNU_BATCH} "LL" ll)
   string (COMPARE EQUAL ${VISHNU_BATCH} "SLURM" slurm)
@@ -171,7 +170,6 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
       message (FATAL_ERROR "Invalid SGE version, supported are: 11")
     endif()
 
-
     find_package(SGE)
     if (SGE_FOUND)
     else (SGE_FOUND)
@@ -196,8 +194,7 @@ if (COMPILE_TMS AND COMPILE_SERVERS)
       set(LIBDELTACLOUD_DIR "" cache path "LIBDELTACLOUD installation path")
     endif(LIBDELTACLOUD_FOUND)
   endif (deltacloud)
-
-endif(COMPILE_TMS AND COMPILE_SERVERS)
+endif(COMPILE_SERVER_TMS)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/server/SGEConfig.hpp.in
   ${PROJECT_BINARY_DIR}/include/SGEConfig.hpp)
@@ -214,35 +211,34 @@ set(cli_SRCS
 set(api_SRCS api/api_tms.cpp)
 set(api_HEADERS api/api_tms.hpp)
 
-#if(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
-#  add_library(vishnu-tms-client
-#    ${client_SRCS}
-#    ${cli_SRCS}
-#    ${api_SRCS})
-#
-#  target_link_libraries(vishnu-tms-client
-#    ${Boost_LIBRARIES}
-#    emf4cpp-vishnu
-#    vishnu-core
-#    vishnu-ums-client
-#    vishnu-fms-client
-#    ${LIBCRYPT_LIB}
-#    ${ZMQ_LIBRARIES}
-#    zmq_helper
-#  )
-#
-#  install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
-#  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
-#  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
-#endif(COMPILE_TMS AND COMPILE_SERVERS AND NOT COMPILE_ONLY_LIBBATCH)
-
 ## client CLI
-if(COMPILE_CLIENT_CLI)
+if(COMPILE_CLIENT_TMS)
   add_subdirectory(cli)
+  add_library(vishnu-tms-client
+    ${client_SRCS}
+    ${cli_SRCS}
+    ${api_SRCS}
+    ${utils_SRCS}
+    ${MUNGE_UTILS_SRC})
+
+  target_link_libraries(vishnu-tms-client
+    ${Boost_LIBRARIES}
+    emf4cpp-vishnu
+    vishnu-core
+    vishnu-ums-client
+    vishnu-fms-client
+    ${LIBCRYPT_LIB}
+    ${ZMQ_LIBRARIES}
+    zmq_helper
+    ${MUNGE_LIB})
+
+  install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
+  set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
+  install(FILES ${api_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR})
 endif()
 
 
-if (COMPILE_SERVERS)
+if (COMPILE_SERVER_TMS)
   include(config.cmake)
   include_directories(server
     utils
@@ -256,7 +252,6 @@ if (COMPILE_SERVERS)
   
 
  if(NOT COMPILE_ONLY_LIBBATCH)
-
    # define tmsSlave related source files
   set(slave_SRCS slave/slave.cpp ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
 
@@ -264,11 +259,8 @@ if (COMPILE_SERVERS)
   add_executable(tmsSlave ${slave_SRCS})
   target_link_libraries(tmsSlave
     ${Boost_LIBRARIES}
-    ${DATABASE_LIBS}
     vishnu-core
-    ${LIBCRYPT_LIB}
     vishnu-core-server
-#    vishnu-ums-server
     vishnu-tms-server
     emf4cpp-vishnu
     ${USED_BATCH_LIB})
@@ -304,11 +296,9 @@ if (COMPILE_SERVERS)
  endif()
  
   # generate vishnu-tms-server library
-  add_library(vishnu-tms-server ${server_SRCS})
+  add_library(vishnu-tms-server ${server_SRCS} ${MUNGE_UTILS_SRC})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server
-#    vishnu-ums-server
-    zmq_helper)
+  target_link_libraries(vishnu-tms-server zmq_helper ${MUNGE_LIB})
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary
@@ -370,5 +360,9 @@ if (COMPILE_SERVERS)
   add_library(vishnu-tms-posix ${POSIXSERVER})
   target_link_libraries(vishnu-tms-posix ${POSIX_LIB})
   install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
-endif(COMPILE_SERVERS)
+endif(COMPILE_SERVER_TMS)
 
+if(ENABLE_MUNGE)
+  set_source_files_properties(${client_SRCS} ${server_SRCS} PROPERTIES COMPILE_FLAGS "-DHAVE_MUNGE")
+  set_source_files_properties(${client_SRCS} ${server_SRCS} PROPERTIES COMPILE_FLAGS "-DTMS_STANDALONE")
+endif(ENABLE_MUNGE)

@@ -20,7 +20,7 @@ PosixServer::PosixServer():BatchServer(){
 
 
 int
-PosixServer::submit(const char* scriptPath,
+PosixServer::submit(const std::string& scriptPath,
                     const TMS_Data::SubmitOptions& options,
                     TMS_Data::Job& job,
                     char** envp){
@@ -76,7 +76,7 @@ PosixServer::submit(const char* scriptPath,
 
 
 int
-PosixServer::cancel(const char* jobId){
+PosixServer::cancel(const std::string& jobId){
   return reqCancel(jobId);
 }
 

@@ -730,4 +730,3 @@ vishnu::validateUri(const std::string & uri) {
   vishnu::getPortFromUri(uri);
   vishnu::getHostFromUri(uri);
 }
-

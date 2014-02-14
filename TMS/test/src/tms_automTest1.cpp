@@ -153,7 +153,7 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       }
 
       JobResult outputInfos;
-      JobOuputOptions ouputOptions;
+      JobOutputOptions ouputOptions;
 
       BOOST_CHECK_EQUAL(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, ouputOptions), 0);
       BOOST_TEST_MESSAGE("************ outputInfos.getOutputPath() = " << outputInfos.getOutputPath());
