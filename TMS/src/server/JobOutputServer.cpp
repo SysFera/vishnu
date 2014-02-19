@@ -7,38 +7,27 @@
 #include "JobOutputServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "LocalAccountServer.hpp"
-#include "UserServer.hpp"
 #include "SSHJobExec.hpp"
 #include "utilServer.hpp"
 #include "DbFactory.hpp"
 #include <boost/format.hpp>
 
-using namespace vishnu;
-
-
 /**
- * \param machineid The machine identifier
  * \brief Constructor
+ * \param authKey The session info
+ * \param machineId The machine identifier
  */
-JobOutputServer::JobOutputServer(const std::string& machineId)
-  : mmachineId(machineId), mlistJobsResult(NULL)
+JobOutputServer::JobOutputServer(const std::string& authKey,
+                                 const std::string& machineId)
+  : mauthKey(authKey), mmachineId(machineId), mlistJobsResult(NULL)
 {
   DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
+  mdatabaseInstance = factory.getDatabaseInstance();
+
+  vishnu::validateAuthKey(mauthKey, mmachineId, mdatabaseInstance, muserSessionInfo);
 }
 
-/**
- * \param machineid The machine identifier
- * \param jobResult The job result data structure
- * \brief Constructor
- */
-JobOutputServer::JobOutputServer(const std::string& machineId,
-                                 const TMS_Data::JobResult& jobResult)
-  : mjobResult(jobResult), mmachineId(machineId), mlistJobsResult(NULL)
-{
-  DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
-}
+
 /**
  * \brief Function to get the job results
  * \param options Object containing options
@@ -48,7 +37,6 @@ TMS_Data::JobResult
 JobOutputServer::getJobOutput(JsonObject* options) {
 
 
-  std::string acLogin = options->getStringProperty("owner");
   std::string jobId = options->getStringProperty("jobId");
 
   std::string outputPath;
@@ -63,10 +51,10 @@ JobOutputServer::getJobOutput(JsonObject* options) {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.jobId='"+mdatabaseVishnu->escapeData(jobId)+"' "
-                           "  AND job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'" ;
+                           "  AND job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' "
+                           "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'" ;
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlRequest.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlRequest));
   if(sqlResult->getNbTuples() == 0) {
     throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
   }
@@ -78,11 +66,11 @@ JobOutputServer::getJobOutput(JsonObject* options) {
   outputPath = *iter++;
   errorPath = *iter++;
   owner = *iter++;
-  status = convertToInt( *iter++ );
+  status = vishnu::convertToInt( *iter++ );
   subDateStr = *iter++;
   outputDir = *iter++;
 
-  if (owner != acLogin) {
+  if (owner != muserSessionInfo.user_aclogin) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED, "You can't get the output of "
                              "this job because it is for an other owner");
   }
@@ -128,8 +116,6 @@ JobOutputServer::getJobOutput(JsonObject* options) {
 TMS_Data::ListJobResults_ptr
 JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
 
-
-  std::string acLogin = options->getStringProperty("owner");
   int days = options->getIntProperty("days");
 
   std::vector<std::string> results;
@@ -148,8 +134,8 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
                               "  AND job.owner='%1%'"
                               "  AND job.submitMachineId='%2%'"
                               "  AND job.status=%3%"
-                              ) % mdatabaseVishnu->escapeData(acLogin)
-                % mdatabaseVishnu->escapeData(mmachineId)
+                              ) % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
+                % mdatabaseInstance->escapeData(mmachineId)
                 % vishnu::convertToString(vishnu::STATE_COMPLETED)).str();
   } else {
     // Here also download jobs already downloaded
@@ -162,13 +148,13 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
                               "  AND (job.status=%4% OR job.status=%5%)"
                               )
                 % vishnu::convertToString(days)
-                % mdatabaseVishnu->escapeData(acLogin)
-                % mdatabaseVishnu->escapeData(mmachineId)
+                % mdatabaseInstance->escapeData(muserSessionInfo.user_aclogin)
+                % mdatabaseInstance->escapeData(mmachineId)
                 % vishnu::convertToString(vishnu::STATE_COMPLETED)
                 % vishnu::convertToString(vishnu::STATE_DOWNLOADED)).str();
   }
 
-  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseVishnu->getResult(sqlQuery.c_str()));
+  boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlQuery.c_str()));
 
   if (sqlResult->getNbTuples() == 0) {
     return mlistJobsResult;
@@ -209,9 +195,9 @@ JobOutputServer::getCompletedJobsOutput(JsonObject* options) {
     std::string query = (boost::format("UPDATE job SET status=%1% "
                                        " WHERE jobId='%2%';"
                                        ) % vishnu::convertToString(vishnu::STATE_DOWNLOADED)
-                         % mdatabaseVishnu->escapeData(jobId)).str();
-    mdatabaseVishnu->process(query);
-    LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % acLogin, 1);
+                         % mdatabaseInstance->escapeData(jobId)).str();
+    mdatabaseInstance->process(query);
+    LOG(boost::format("[INFO] Request to job ouput: %1%. aclogin: %2%")% jobId % muserSessionInfo.user_aclogin, 1);
   }
   mlistJobsResult->setNbJobs(mlistJobsResult->getResults().size());
 

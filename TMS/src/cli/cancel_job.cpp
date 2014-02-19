@@ -20,14 +20,13 @@ namespace po = boost::program_options;
 struct CancelJobFunc {
 
   TMS_Data::CancelOptions moptions;
-
   CancelJobFunc(const TMS_Data::CancelOptions& options):
     moptions(options)
   {
 
   }
 
-  int operator()(std::string sessionKey) {
+  int operator()(const std::string& sessionKey) {
     int exitCode = 0;
     try {
       exitCode = vishnu::cancelJob(sessionKey, moptions);

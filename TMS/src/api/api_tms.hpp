@@ -16,12 +16,13 @@
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
 #include "TMS_Data.hpp"
+#include "UMS_Data/Session.hpp"
 
 
 namespace vishnu {
   /**
   * \brief The submitJob function submits job on a machine through the use of a script (scriptFilePath).
-  * \param sessionKey : The session key
+  * \param session : Session information
   * \param scriptFilePath : The path to the file containing the characteristics (job command, and batch scheduler directive required or optional) of the job to submit.
   * \param jobInfo : The  Job object containing the output information (ex: jobId and jobPath) of the job to submit
   * \param options : Is an instance of the class SubmitOptions. Each optionnal value is associated to a set operation (e.g: setNbCpu(...)) in the class SubmitOptions.  If no set operation is not called on the instance object  options, the job is submitted with the options defined in the scriptFilePath. Otherewise the job is submitted with the optionnal values set by the options object and optionnal values defined in the scriptFilePath, but optionnal values set by SubmitOptions object take precedence over those in scriptFilePath. With in the object options or within the scriptFilePath, the last occurance of an optionnal value takes precedence over earlier occurance.
@@ -51,7 +52,7 @@ namespace vishnu {
 
   /**
   * \brief The cancelJob function cancels a job from its id
-  * \param sessionKey : The session key
+  * \param session : The session information
   * \param options : An object containing user-provided options
   * \return int : an error code
   */
@@ -62,10 +63,10 @@ namespace vishnu {
 
   /**
   * \brief The getJobInfo function gets information on a job from its id
-  * \param sessionKey : The session key
-  * \param jobId : The id of the job
-  * \param jobInfos : The resulting information on the job
-  * \return int : an error code
+  * \param session: The session information
+  * \param jobId: The id of the job
+  * \param jobInfos: The resulting information on the job
+  * \return int: an error code
   */
   int
   getJobInfo(const std::string& sessionKey,
@@ -117,7 +118,7 @@ namespace vishnu {
 
   /**
    * \brief The getJobOutput function gets outputPath and errorPath of a job from its id
-   * \param sessionKey : The session key
+   * \param session : The session information
    * \param jobId : The Id of the job
    * \param outputInfo : The  Job object  containing the job output information (ex: outputPath and errorPath) of the job to submit
    * \param options : Object containing the user-provided options (e.g: it contains a possible output directory set by the user)

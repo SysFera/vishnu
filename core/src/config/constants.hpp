@@ -57,7 +57,8 @@ namespace vishnu {
     SERVER_PRIVATE_KEY,
     SERVER_SSL_CERTICATE,
     SSL_CA,
-    SUBSCRIBE
+    SUBSCRIBE,
+    STANDALONE
   } param_type_t;
 
   /**

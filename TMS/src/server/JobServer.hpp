@@ -15,18 +15,6 @@
 #include "MachineServer.hpp"
 #include "tmsUtils.hpp"
 
-#ifdef TMS_STANDALONE
-#include "mungeUtils.hpp"
-#define IS_ADMIN false
-const bool USE_DATABASE = false;
-#define CHECK_UMS_SESSION()
-#else
-#define CHECK_UMS_SESSION() SessionServer sessionServer(msessionKey); \
-  sessionServer.check(); \
-  sessionServer.init();
-const bool USE_DATABASE = true;
-#endif
-
 
 /**
  * \class JobServer
@@ -46,13 +34,13 @@ public:
   };
 
   /**
-  * \param sessionInfo The session info in a json object
+  * \param authKey The session info
   * \param machineId The machine identifier
   * \param jsonJob an JsonObject describing the job
   * \param sedConfig A pointer to the SeD configuration
   * \brief Constructor
   */
-  explicit JobServer(JsonObject* sessionInfo,
+  explicit JobServer(const std::string& authKey,
                      const std::string& machineId,
                      const ExecConfiguration_Ptr sedConfig);
 
@@ -183,8 +171,8 @@ protected:
    * \param scriptContent The content of the script when required
    */
   void
-  treatSpecificParams(const std::string& specificParams,
-                      std::string& scriptContent);
+  handleSpecificParams(const std::string& specificParams,
+                       std::string& scriptContent);
 
 
   /**
@@ -192,14 +180,6 @@ protected:
    */
   void
   recordJob2db();
-
-  /**
-   * \brief Function to get the hostname of a machine id
-   * \param machineId Id of the machine
-   * \return The machine name or throw exception on error
-   */
-  std::string
-  getMachineName(const std::string& machineId);
 
   /**
    * \brief Function to set the Working Directory
@@ -240,11 +220,20 @@ protected:
   void
   handleNativeBatchExec(int action, JsonObject* options, const std::string& scriptPath);
 
-private:
   /**
-   * @brief json object containing session info
+   * @brief Get the uid corresponding to given system user name
+   * @param username
+   * @return
    */
-  JsonObject* msessionInfo;
+  uid_t
+  getSystemUid(const std::string& name);
+
+private:
+
+  /**
+   * @brief Session info
+   */
+  std::string mauthKey;
 
   /**
    * \brief job data structure
@@ -252,9 +241,9 @@ private:
   TMS_Data::Job mjob;
 
   /**
-   * \brief The sessionKey
+   * @brief Information about the user and the session
    */
-  std::string msessionKey;
+  UserSessionInfo muserSessionInfo;
 
   /**
    * \brief The machine identifier
@@ -274,7 +263,7 @@ private:
   /**
    * \brief An instance of vishnu database
    */
-  Database *mdatabaseVishnu;
+  Database* mdatabaseInstance;
 
   /**
   * \brief The configuration of the SeD
@@ -289,16 +278,7 @@ private:
   /**
    * @brief lastError
    */
-  std::string lastError;
-
-#ifdef TMS_STANDALONE
-  /**
-   * @brief mmungeCredential
-   */
-  MungeCredential mmungeCredential;
-#endif
-
-
+  std::string mlastError;
 };
 
 #endif

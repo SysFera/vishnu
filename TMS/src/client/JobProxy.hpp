@@ -9,9 +9,6 @@
 #define _JOB_PROXY_H
 
 #include "TMS_Data.hpp"
-#include "SessionProxy.hpp"
-#include "MachineProxy.hpp"
-
 /**
  * \class JobProxy
  * \brief JobProxy class implementation
@@ -21,22 +18,22 @@ class JobProxy {
 public:
 
   /**
-  * \param session The object which encapsulates the session information
-  * \param job The job data structure
+  * \param sessionKey The object which encapsulates the session information
   * \param machineId The id of the machine. Optional
   * \brief Constructor
   */
-  explicit JobProxy(const SessionProxy& session,
-                    TMS_Data::Job& job,
+  explicit JobProxy(const std::string& sessionKey,
                     const std::string& machineId = "");
   /**
   * \brief Function to submit job
+  * \param scriptPath the local path of the script
   * \param scriptContent the content of the script
   * \param options the options to submit job
   * \return raises an exception on error
   */
   int
-  submitJob(const std::string& scriptContent,
+  submitJob(const std::string& scriptPath,
+            const std::string& scriptContent,
             const TMS_Data::SubmitOptions& options);
 
   
@@ -50,10 +47,11 @@ public:
 
   /**
    * \brief Function to get job information
+   * \param jobId the identifier of the job
    * \return raises an exception on error
    */
   TMS_Data::Job
-  getJobInfo();
+  getJobInfo(const std::string& jobId);
 
   /**
   * \brief Function to get job information
@@ -74,9 +72,9 @@ private:
   /////////////////////////////////
 
   /**
-  * \brief The object to manipulate the session data
+  * \brief The session object
   */
-  SessionProxy msessionProxy;
+  std::string msessionKey;
   /**
   * \brief The job data structure
   */

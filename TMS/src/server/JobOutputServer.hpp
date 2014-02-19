@@ -26,14 +26,8 @@ public:
    * \param machineId The machine identifier
    * \brief Constructor
    */
-  JobOutputServer(const std::string& machineId);
-
-  /**
-   * \param machineId The machine identifier
-   * \param jobResult The job result data structure
-   * \brief Constructor
-   */
-  JobOutputServer(const std::string& machineId, const TMS_Data::JobResult& jobResult);
+  JobOutputServer(const std::string& authKey,
+                  const std::string& machineId);
   /**
    * \brief Function to get the job results
    * \param options Object containing options
@@ -57,6 +51,15 @@ public:
 
 
   private:
+  /**
+   * @brief Session info
+   */
+  std::string mauthKey;
+
+  /**
+   * @brief Information about the user and the session
+   */
+  UserSessionInfo muserSessionInfo;
 
   /**
    * \brief job results data structure
@@ -76,7 +79,7 @@ public:
   /**
    * \brief An instance of vishnu database
    */
-  Database *mdatabaseVishnu;
+  Database *mdatabaseInstance;
 };
 
 #endif

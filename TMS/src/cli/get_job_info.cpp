@@ -30,7 +30,7 @@ struct InfoJobFunc {
 
   }
 
-  int operator()(std::string sessionKey) {
+  int operator()(const std::string& sessionKey) {
     TMS_Data::Job job;
     int res = getJobInfo(sessionKey, mjobId, job);
     displayJob(job);

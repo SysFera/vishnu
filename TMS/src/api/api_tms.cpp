@@ -50,15 +50,12 @@ vishnu::submitJob(const std::string& sessionKey,
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  //To check options value nbNodesAndCpuPerNode
   checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
 
-  SessionProxy sessionProxy(sessionKey);
   boost::filesystem::path completePath(scriptFilePath);
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
 
-  jobInfo.setJobPath(scriptFileCompletePath);
-  JobProxy jobProxy(sessionProxy, jobInfo, options.getMachine());
+  JobProxy jobProxy(sessionKey, options.getMachine());
 
   ListStrings fileParamsVec;
   std::string fileParamsStr = options.getFileParams() ;
@@ -66,7 +63,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
-  int ret = jobProxy.submitJob(scriptContent, options);
+  int ret = jobProxy.submitJob(scriptFileCompletePath, scriptContent, options);
   jobInfo = jobProxy.getData();
 
   return ret;
@@ -74,7 +71,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
 /**
  * \brief The cancelJob function cancels a job from its id
- * \param sessionKey : The session key
+ * \param session : The session information
  * \param options : An object containing user-provided options
  * \param infoMsg : The information message
  * \return int : an error code
@@ -85,7 +82,6 @@ vishnu::cancelJob(const std::string& sessionKey,
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
-  SessionProxy sessionProxy(sessionKey);
 
   if (options.getJobId().empty() && options.getMachineId().empty() && options.getUser().empty()) {
     throw UserException(ERRCODE_INVALID_PARAM, "Neither job, machine, nor user target was specified");
@@ -106,9 +102,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   // perform the request
   int retCode = 0;
   for(int i=0; i< machines.getMachines().size(); i++) {
-    TMS_Data::Job job;
-    job.setJobId(options.getJobId());
-    retCode += JobProxy(sessionProxy, job, machines.getMachines().get(i)->getMachineId()).cancelJob(options);
+    retCode += JobProxy(sessionKey, machines.getMachines().get(i)->getMachineId()).cancelJob(options);
   }
 
   return retCode;
@@ -118,7 +112,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 /**
  * \brief The getJobInfo function gets a specific job's information
 bInfo function gets information on a job from its id
- * \param sessionKey : The session key
+ * \param session : The session information
  * \param jobId : The id of the job
  * \param jobInfos : The resulting information on the job
  * \return int : an error code
@@ -132,12 +126,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(jobId, "The job id");
 
-  SessionProxy sessionProxy(sessionKey);
-  job.setJobId(jobId);
-
-  JobProxy jobProxy(sessionProxy, job);
-
-  job = jobProxy.getJobInfo();
+  JobProxy jobProxy(sessionKey);
+  job = jobProxy.getJobInfo(jobId);
 
   return 0;
 
@@ -390,8 +380,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 }
 
 /**
- * \brief The getCompletedJobsOutput() function gets standard output and error output files
- * of completed jobs (applies only once for each job)
+ * \brief Gets standard output files of all completed jobs (applies only once for each job)
  * \param sessionKey : The session key
  * \param options: object containing options
  * \param listOfResults : Is the list of jobs results

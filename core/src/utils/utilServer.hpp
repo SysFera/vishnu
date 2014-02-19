@@ -12,6 +12,7 @@
 #include "ecorecpp.hpp" // EMF4CPP utils
 #include "UMS_Data.hpp"
 #include "ExecConfiguration.hpp"
+#include "Database.hpp"
 
 
 #define LOG(msg, logLevel) if (logLevel) std::cout << msg <<"\n"
@@ -34,6 +35,39 @@ struct Format_t{
    * \brief The value of the variable
    */
   std::string value;
+};
+
+
+struct UserSessionInfo {
+  /**
+   * @brief The session number
+   */
+  int num_session;
+
+  /**
+   * @brief The user number
+   */
+  int num_user;
+
+  /**
+   * @brief The user privilege
+   */
+  int user_privilege;
+
+  /**
+   * @brief The user local account
+   */
+  std::string user_aclogin;
+
+  /**
+   * @brief The user local account home
+   */
+  std::string user_achome;
+
+  /**
+   * @brief The target machine name
+   */
+  std::string machine_name;
 };
 
 namespace vishnu {
@@ -61,7 +95,7 @@ namespace vishnu {
    */
   typedef enum{
     CMDFAILED = 0, /*!< command failed */
-    CMDSUCCESS = 1,/*!< command success */
+    CMDSUCCESS = 1 /*!< command success */
   } CmdStatus;
 
   /**
@@ -327,5 +361,18 @@ namespace vishnu {
    */
   int
   showVersion(std::string server);
+
+  /**
+   * @brief Validate session key and return details on the user and the session
+   * @param authKey The authentication key
+   * @param machineId The machine Id
+   * @param databasePtr A pointer to a database instance
+   * @param info The resulting information
+   */
+  void
+  validateAuthKey(const std::string& authKey,
+                  const std::string& machineId,
+                  Database* databasePtr,
+                  UserSessionInfo& info);
 }
 #endif //_UTILSERVER_H_

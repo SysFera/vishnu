@@ -20,6 +20,7 @@
 #include "DbFactory.hpp"
 #include "Server.hpp"
 #include "vishnu_version.hpp"
+#include "TMSVishnuException.hpp"
 
 using namespace std;
 using namespace boost::posix_time;
@@ -610,6 +611,57 @@ vishnu::showVersion(std::string server){
   }
   std::cout << boost::format("%1% %2%%3%\n")%server%VISHNU_VERSION%batchInfo;
   return EXIT_SUCCESS;
+}
+
+
+/**
+ * @brief Validate session key and return details on the user and the session
+ * @param authKey The authentication key
+ * @param machineId The machine Id
+ * @param databasePtr A pointer to a database instance
+ * @param info The resulting information
+ */
+void
+vishnu::validateAuthKey(const std::string& authKey,
+                           const std::string& machineId,
+                           Database* database,
+                           UserSessionInfo& info)
+{
+  std::string sqlQuery = (boost::format("SELECT vsession.numsessionid, machine.name,"
+                                        "  users.numuserid, users.privilege, "
+                                        "  account.aclogin, account.home"
+                                        " FROM vsession, users, account, machine"
+                                        " WHERE vsession.sessionkey='%1%'"
+                                        "  AND vsession.state=%2%"
+                                        "  AND users.numuserid=vsession.users_numuserid"
+                                        "  AND users.numuserid=account.users_numuserid"
+                                        "  AND account.status=%3%"
+                                        "  AND account.machine_nummachineid=machine.nummachineid"
+                                        "  AND machine.machineid='%4%';"
+                                        )
+                          % database->escapeData(authKey)
+                          % vishnu::SESSION_ACTIVE
+                          % vishnu::STATUS_ACTIVE
+                          % database->escapeData(machineId)
+                          ).str();
+
+  boost::scoped_ptr<DatabaseResult> sqlResult(database->getResult(sqlQuery));
+  if (sqlResult->getNbTuples() != 1) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "Can't get user local account. Check that:"
+                             "  * your session is still active"
+                             "  * you have a local account on this server");
+  }
+
+  std::vector<std::string> rowResult = sqlResult->get(0);
+  std::vector<std::string>::iterator rowResultIter = rowResult.begin();
+
+  info.num_session = vishnu::convertToInt(*rowResultIter++);
+  info.machine_name = *rowResultIter++;
+  info.num_user = vishnu::convertToInt(*rowResultIter++);
+  info.user_privilege = vishnu::convertToInt(*rowResultIter++);
+  info.user_aclogin = *rowResultIter++;
+  info.user_achome = *rowResultIter++;
 }
 
 

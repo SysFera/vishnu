@@ -339,7 +339,7 @@ int main (int argc, char* argv[]){
     sessionKey=getLastSessionKey(getppid());
 
     // vishnu call: submit
-    if(false==sessionKey.empty()){
+    if(! sessionKey.empty()){
       submitJob(sessionKey, scriptPath, job, submitOptions);
     }
 
