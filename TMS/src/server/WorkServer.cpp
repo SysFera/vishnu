@@ -12,38 +12,20 @@
 #include "SystemException.hpp"
 #include "boost/scoped_ptr.hpp"
 
-#ifdef TMS_STANDALONE
-#define CHECK_UMS_SESSION()
-#define IS_ADMIN false
-#else
-#include "SessionServer.hpp"
-#define CHECK_UMS_SESSION() SessionServer sessionServer(msessionKey); \
-  sessionServer.check(); \
-  std::string sessionId = sessionServer.getAttribut("where sessionkey='"+mdatabaseVishnu->escapeData(msessionKey)+"'", "numsessionid"); \
-  UserServer userServer(sessionServer); \
-  userServer.init();
-#define IS_ADMIN userServer.isAdmin()
-#endif
-
 /**
 * \brief Constructor
-* \param work The work data structure
-*/
-WorkServer::WorkServer(TMS_Data::Work*& work)
-  : mwork(work), mworkop(NULL) {
-  DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
-}
-
-/**
-* \brief Constructor
-* \param work The work data structure
 * \param sessionKey The session key
+* \param machineId The machine id
+* \param work The work data structure
 */
-WorkServer::WorkServer(TMS_Data::Work*& work, const std::string& sessionKey)
-  : mwork(work), mworkop(NULL), msessionKey(sessionKey) {
+WorkServer::WorkServer(const std::string& sessionKey,
+                       const std::string& machineId,
+                       TMS_Data::Work* work)
+  : msessionKey(sessionKey), mmachineId(machineId), mwork(work), mworkop(NULL) {
   DbFactory factory;
-  mdatabaseVishnu = factory.getDatabaseInstance();
+  mdatabaseInstance = factory.getDatabaseInstance();
+
+  vishnu::validateAuthKey(msessionKey, mmachineId, mdatabaseInstance, muserSessionInfo);
 }
 
 /**
@@ -53,8 +35,6 @@ WorkServer::WorkServer(TMS_Data::Work*& work, const std::string& sessionKey)
 */
 int
 WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
-
-  CHECK_UMS_SESSION();
 
   std::string sqlUpdate = "update work set ";
   std::string idWorkGenerated;
@@ -73,7 +53,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
   std::string machineId = "1";
 
   //if the user is an admin
-  if (IS_ADMIN) {
+  if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
 
     //Generation of workid
     idWorkGenerated = vishnu::getObjectId(vishnuId,
@@ -85,7 +65,7 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
     if (idWorkGenerated.size() != 0) {
       mwork->setWorkId(idWorkGenerated);
       //if the workId does not exist
-      if (getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
+      if (getAttribut("where identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"'","count(*)") == "1") {
         //To inactive the work status
         //          mwork->setStatus(INACTIVE_STATUS);
         // TODO
@@ -94,20 +74,20 @@ WorkServer::add(int vishnuId, TMS_Data::AddWorkOptions*& mworkop) {
         //sqlUpdate+="application_id="+convertToString(mwork->getApplicationId())+", ";
         sqlUpdate+="date_created="+timestamp+", ";
         sqlUpdate+="date_started="+timestamp+", ";
-        sqlUpdate+="description='"+mdatabaseVishnu->escapeData(mwork->getDescription())+"', ";
+        sqlUpdate+="description='"+mdatabaseInstance->escapeData(mwork->getDescription())+"', ";
         sqlUpdate+="done_ratio="+vishnu::convertToString(mwork->getDoneRatio())+", ";
         sqlUpdate+="due_date="+timestamp+", ";
         sqlUpdate+="estimated_hours="+vishnu::convertToString(mwork->getEstimatedHour())+", ";
         sqlUpdate+="last_updated="+timestamp+", ";
-        sqlUpdate+="machine_id="+mdatabaseVishnu->escapeData(machineId)+", ";
+        sqlUpdate+="machine_id="+mdatabaseInstance->escapeData(machineId)+", ";
         sqlUpdate+="nbcpus="+vishnu::convertToString(mwork->getNbCPU())+", ";
         sqlUpdate+="owner_id='"+owner+"', ";
         sqlUpdate+="priority="+vishnu::convertToString(mwork->getPriority())+", ";
         sqlUpdate+="status="+vishnu::convertToString(mwork->getStatus())+", ";
-        sqlUpdate+="subject='"+mdatabaseVishnu->escapeData(mwork->getSubject())+"' ";
-        sqlUpdate+="WHERE identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"';";
+        sqlUpdate+="subject='"+mdatabaseInstance->escapeData(mwork->getSubject())+"' ";
+        sqlUpdate+="WHERE identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"';";
 
-        mdatabaseVishnu->process(sqlUpdate);
+        mdatabaseInstance->process(sqlUpdate);
 
       } else { //if the machine id is generated
         throw SystemException (ERRCODE_SYSTEM, "There is a problem to parse the formatidwork");
@@ -148,7 +128,7 @@ std::string
 WorkServer::getAttribut(std::string condition, std::string attrname) {
 
   std::string sqlCommand("SELECT "+attrname+" FROM work "+condition);
-  boost::scoped_ptr<DatabaseResult> result(mdatabaseVishnu->getResult(sqlCommand.c_str()));
+  boost::scoped_ptr<DatabaseResult> result(mdatabaseInstance->getResult(sqlCommand.c_str()));
   return result->getFirstElement();
 }
 
@@ -159,7 +139,7 @@ WorkServer::getAttribut(std::string condition, std::string attrname) {
 std::string
 WorkServer::getWorkName() {
 
-  std::string  workName = getAttribut("where identifier='"+mdatabaseVishnu->escapeData(getData()->getWorkId())+"'", "subject");
+  std::string  workName = getAttribut("where identifier='"+mdatabaseInstance->escapeData(getData()->getWorkId())+"'", "subject");
 
   return workName;
 }
@@ -170,7 +150,7 @@ WorkServer::getWorkName() {
 */
 void WorkServer::checkWork() {
 
-  if(getAttribut("where identifier='"+mdatabaseVishnu->escapeData(mwork->getWorkId())+"'").size()==0){
+  if(getAttribut("where identifier='"+mdatabaseInstance->escapeData(mwork->getWorkId())+"'").size()==0){
     throw TMSVishnuException(ERRCODE_UNKNOWN_WORKID, mwork->getWorkId()+" does not exist among the defined"
                              " work by VISHNU System");
   }

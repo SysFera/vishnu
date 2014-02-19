@@ -25,6 +25,7 @@
 #include "utils.hpp"
 #include "BatchFactory.hpp"
 #include <pwd.h>
+#include <cstdlib>
 
 
 /**
@@ -133,7 +134,7 @@ int JobServer::submitJob(std::string& scriptContent,
   } catch (VishnuException& ex) {
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
     std::string errorPath = (boost::format("/%1%/vishnu-%2%.err")
-                             % vishnu::getVar("HOME")
+                             % std::getenv("HOME")
                              % mjob.getJobId()
                              ).str();
     vishnu::saveInFile(errorPath, mlastError);
