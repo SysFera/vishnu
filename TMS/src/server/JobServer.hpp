@@ -179,7 +179,7 @@ protected:
    * \brief Function to save the encapsulated job into the database
    */
   void
-  recordJob2db();
+  finalizeExecution();
 
   /**
    * \brief Function to set the Working Directory

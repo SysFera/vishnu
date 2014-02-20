@@ -11,9 +11,8 @@
 #include <algorithm>
 #include <limits>
 #include <iomanip>
-
 #include <boost/algorithm/string.hpp>
-
+#include <boost/format.hpp>
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
@@ -119,15 +118,12 @@ SlurmServer::submit(const std::string& scriptPath,
     std::string path = std::string(desc.std_out);
     replaceSymbolInToJobPath(path);
     job.setOutputPath(path);
-  } else {
-    std::cout << "null std_out \n";
   }
+
   if (desc.std_err != NULL) {
     std::string path = std::string(desc.std_err);
     replaceSymbolInToJobPath(path);
     job.setErrorPath(path);
-  } else {
-    std::cout << "null std_err \n";
   }
 
   //Fill the vishnu job structure
@@ -597,54 +593,63 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
   int res;
   job_info_msg_t * job_buffer_ptr = NULL;
   res = slurm_load_job(&job_buffer_ptr, batchJobId, 1);
-
-  if(!res) {
-
-    job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
-    job.setBatchJobId(vishnu::convertToString(batchJobId));
-    job.setOutputPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(batchJobId)+".out");//default path
-    job.setErrorPath(std::string(slurmJobInfo.work_dir)+"/slurm-"+convertToString(batchJobId)+".out");//default path
-    job.setStatus(convertSlurmStateToVishnuState(slurmJobInfo.job_state));
-    if(slurmJobInfo.name!=NULL) {
-      job.setJobName(slurmJobInfo.name);
-    }
-    job.setSubmitDate(slurmJobInfo.submit_time);
-    struct passwd* user = getpwuid(slurmJobInfo.user_id);
-    if(user!=NULL) {
-      job.setOwner(user->pw_name);
-    }
-    struct group* grp = getgrgid(slurmJobInfo.group_id);
-    if(grp!=NULL) {
-      job.setGroupName(grp->gr_name);
-    }
-    if(slurmJobInfo.partition!=NULL) {
-      job.setJobQueue(slurmJobInfo.partition);
-    }
-    //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
-    if(slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
-      job.setWallClockLimit(60*(slurmJobInfo.time_limit));
-    }
-    job.setEndDate(slurmJobInfo.end_time);
-    if(slurmJobInfo.comment!=NULL) {
-      job.setJobDescription(slurmJobInfo.comment);
-    }
-    job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
-    job.setMemLimit(slurmJobInfo.pn_min_memory);
-    uint32_t nbNodes = slurmJobInfo.num_nodes;
-    uint32_t nbCpus =  slurmJobInfo.pn_min_cpus;
-    job.setNbCpus(nbCpus);
-    job.setNbNodes(nbNodes);
-    job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
-
-    //To fill the job working dir
-    job.setJobWorkingDir(slurmJobInfo.work_dir);
-
-    //fill the msymbol map
-    msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
-    msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
-  } else {
-    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::fillJobInfo: slurm_load_jobs error");
+  if(res != 0) {
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
+                             "SLURM ERROR: SlurmServer::fillJobInfo: slurm_load_jobs error");
   }
+  job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
+  std::string id = vishnu::convertToString(batchJobId);
+  job.setBatchJobId(id);
+  job.setStatus(convertSlurmStateToVishnuState(slurmJobInfo.job_state));
+
+  //set default path
+  std::string stdOutPath = (boost::format("%1%/slurm-%2%.out") % slurmJobInfo.work_dir % id).str();
+  if (job.getOutputPath().empty()) {
+    job.setOutputPath(stdOutPath);
+  }
+  if (job.getErrorPath().empty()) {
+    job.setErrorPath(stdOutPath);
+  }
+
+  if (slurmJobInfo.name != NULL) {
+    job.setJobName(slurmJobInfo.name);
+  }
+
+  job.setSubmitDate(slurmJobInfo.submit_time);
+  struct passwd* user = getpwuid(slurmJobInfo.user_id);
+  if (user != NULL) {
+    job.setOwner(user->pw_name);
+  }
+  struct group* grp = getgrgid(slurmJobInfo.group_id);
+  if (grp != NULL) {
+    job.setGroupName(grp->gr_name);
+  }
+  if (slurmJobInfo.partition != NULL) {
+    job.setJobQueue(slurmJobInfo.partition);
+  }
+  //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
+  if(slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
+    job.setWallClockLimit(60*(slurmJobInfo.time_limit));
+  }
+  job.setEndDate(slurmJobInfo.end_time);
+  if(slurmJobInfo.comment!=NULL) {
+    job.setJobDescription(slurmJobInfo.comment);
+  }
+  job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
+  job.setMemLimit(slurmJobInfo.pn_min_memory);
+  uint32_t nbNodes = slurmJobInfo.num_nodes;
+  uint32_t nbCpus =  slurmJobInfo.pn_min_cpus;
+  job.setNbCpus(nbCpus);
+  job.setNbNodes(nbNodes);
+  job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
+
+  //To fill the job working dir
+  job.setJobWorkingDir(slurmJobInfo.work_dir);
+
+  //fill the msymbol map
+  msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
+  msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
+
 
   if(job_buffer_ptr!=NULL) {
     slurm_free_job_info_msg(job_buffer_ptr);

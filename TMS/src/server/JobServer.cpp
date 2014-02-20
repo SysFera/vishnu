@@ -124,16 +124,14 @@ int JobServer::submitJob(std::string& scriptContent,
       handleSshSubmit(scriptPath, options);
     }
 
-    size_t pos = mjob.getOutputPath().find(":");
-    std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
-    mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
-    pos = mjob.getErrorPath().find(":");
-    std::string prefixErrorPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
-    mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
+    LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%")
+        % mjob.getJobId() % muserSessionInfo.userid % muserSessionInfo.user_aclogin, 1);
 
   } catch (VishnuException& ex) {
-
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
+
+    LOG((boost::format("[ERROR] Submission failed: %1% [%2%]")%mjob.getJobId() %mlastError).str(), 4);
+
     std::string errorPath = (boost::format("/%1%/vishnu-%2%.err")
                              % std::getenv("HOME")
                              % mjob.getJobId()
@@ -143,16 +141,8 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setOutputPath("");
     mjob.setOutputDir("");
     mjob.setStatus(vishnu::STATE_FAILED);
-    LOG((boost::format("[ERROR] Submission failed: %1% [%2%]")%mjob.getJobId() %mlastError).str(), 4);
-  }
-
-  recordJob2db();
-
-  if (! mlastError.empty()) {
-    throw TMSVishnuException(errCode, mlastError);
-  } else {
-    LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%" )
-        % mjob.getJobId() % muserSessionInfo.userid % muserSessionInfo.user_aclogin, 1);
+    finalizeExecution();
+    throw;
   }
   return 0;
 }
@@ -188,8 +178,8 @@ JobServer::handleSshSubmit(const std::string& scriptPath, JsonObject* options) {
     scanErrorMessage(errorInfo, code, message);
     throw TMSVishnuException(code, message);
   }
-
   mjob = sshJobExec.getResultJob();
+  finalizeExecution();
 }
 
 /**
@@ -220,6 +210,7 @@ JobServer::handleNativeBatchExec(int action, JsonObject* options, const std::str
     switch(action) {
     case SubmitBatchAction:
       handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), mjob);
+      finalizeExecution();
       break;
 
     case CancelBatchAction:
@@ -784,8 +775,17 @@ JobServer::processScript(std::string& scriptContent,
      * \brief Function to save the encapsulated job into the database
      */
 void
-JobServer::recordJob2db()
+JobServer::finalizeExecution()
 {
+  // Append the machine name to the error and output path if necessary
+  size_t pos = mjob.getOutputPath().find(":");
+  std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
+  mjob.setOutputPath(prefixOutputPath+mjob.getOutputPath());
+  pos = mjob.getErrorPath().find(":");
+  std::string prefixErrorPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
+  mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
+
+  // Update the database with the result
   std::string sqlUpdate = "UPDATE job set ";
   sqlUpdate+="vsession_numsessionid="+vishnu::convertToString(muserSessionInfo.num_session)+", ";
   sqlUpdate+="job_owner_id="+vishnu::convertToString(muserSessionInfo.num_user)+", ";
@@ -835,3 +835,4 @@ JobServer::getSystemUid(const std::string& name)
   }
   return info->pw_uid;
 }
+
