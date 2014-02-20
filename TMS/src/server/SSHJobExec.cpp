@@ -250,7 +250,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
 
   // If succeed execute the script to the virtual machine
   // This assumes that the script is located on a shared DFS
-  LOG("[TMS][INFO] Executing the script...", mdebugLevel);
+  LOG("[INFO] Executing the script...", mdebugLevel);
   execCmd("'mkdir -p "+workDir+" & >>"+logfile+"'"); // First create the output directory if it not exist
   int pid = -1;
   if ( execCmd(scriptPath + " & >>"+logfile, true, workDir, &pid) ) {
@@ -258,7 +258,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
                              "execRemoteScript:: failed when executing the script "
                              + scriptPath + " in the virtual machine "+mhostname);
   }
-  LOG("[TMS][INFO] Submission completed. PID:"+pid, mdebugLevel);
+  LOG("[INFO] Submission completed. PID:"+pid, mdebugLevel);
   return pid;
 }
 

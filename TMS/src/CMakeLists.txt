@@ -218,8 +218,7 @@ if(COMPILE_CLIENT_TMS)
     ${client_SRCS}
     ${cli_SRCS}
     ${api_SRCS}
-    ${utils_SRCS}
-    ${MUNGE_UTILS_SRC})
+    ${utils_SRCS})
 
   target_link_libraries(vishnu-tms-client
     ${Boost_LIBRARIES}
@@ -229,8 +228,7 @@ if(COMPILE_CLIENT_TMS)
     vishnu-fms-client
     ${LIBCRYPT_LIB}
     ${ZMQ_LIBRARIES}
-    zmq_helper
-    ${MUNGE_LIB})
+    zmq_helper)
 
   install(TARGETS vishnu-tms-client DESTINATION ${LIB_INSTALL_DIR})
   set_target_properties(vishnu-tms-client PROPERTIES VERSION ${VISHNU_VERSION})
@@ -296,9 +294,9 @@ if (COMPILE_SERVER_TMS)
  endif()
  
   # generate vishnu-tms-server library
-  add_library(vishnu-tms-server ${server_SRCS} ${MUNGE_UTILS_SRC})
+  add_library(vishnu-tms-server ${server_SRCS})
   set_target_properties(vishnu-tms-server PROPERTIES VERSION ${VISHNU_VERSION})
-  target_link_libraries(vishnu-tms-server zmq_helper ${MUNGE_LIB})
+  target_link_libraries(vishnu-tms-server zmq_helper)
   install(TARGETS vishnu-tms-server DESTINATION ${LIB_INSTALL_DIR})
 
   # generate tmssed binary
@@ -362,7 +360,3 @@ if (COMPILE_SERVER_TMS)
   install(TARGETS vishnu-tms-posix DESTINATION ${LIB_INSTALL_DIR})
 endif(COMPILE_SERVER_TMS)
 
-if(ENABLE_MUNGE)
-  set_source_files_properties(${client_SRCS} ${server_SRCS} PROPERTIES COMPILE_FLAGS "-DHAVE_MUNGE")
-  set_source_files_properties(${client_SRCS} ${server_SRCS} PROPERTIES COMPILE_FLAGS "-DTMS_STANDALONE")
-endif(ENABLE_MUNGE)

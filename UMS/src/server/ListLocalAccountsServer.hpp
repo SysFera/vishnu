@@ -117,7 +117,7 @@ public:
       //To process options
       processOptions(userServer, option, sqlListofLocalAccount);
 
-      boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseVishnu->getResult(sqlListofLocalAccount.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofLocalAccount (mdatabaseInstance->getResult(sqlListofLocalAccount.c_str()));
       if (ListofLocalAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofLocalAccount->getNbTuples(); ++i) {
           results.clear();

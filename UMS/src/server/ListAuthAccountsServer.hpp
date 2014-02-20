@@ -116,7 +116,7 @@ public:
       //To process options
       processOptions(userServer, option, sql);
 
-      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseVishnu->getResult(sql.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofAuthAccount (mdatabaseInstance->getResult(sql.c_str()));
       if (ListofAuthAccount->getNbTuples() != 0){
         for (size_t i = 0; i < ListofAuthAccount->getNbTuples(); ++i) {
           results.clear();

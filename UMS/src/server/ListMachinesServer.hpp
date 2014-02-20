@@ -118,7 +118,7 @@ public:
       //To process options
       processOptions(userServer, option, sqlListofMachines);
 
-      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabaseVishnu->getResult(sqlListofMachines.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofMachines (mdatabaseInstance->getResult(sqlListofMachines.c_str()));
       if (ListofMachines->getNbTuples() != 0){
         for (size_t i = 0; i < ListofMachines->getNbTuples(); ++i) {
           results.clear();

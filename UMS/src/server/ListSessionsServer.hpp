@@ -151,7 +151,7 @@ public:
       processOptions(userServer, option, sqlListOfSessions);
       sqlListOfSessions.append(" order by creation");
       //To get the list of sessions from the database
-      boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabaseVishnu->getResult(sqlListOfSessions.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListOfSessions (mdatabaseInstance->getResult(sqlListOfSessions.c_str()));
 
       if (ListOfSessions->getNbTuples() != 0){
         for (size_t i = 0; i < ListOfSessions->getNbTuples(); ++i) {

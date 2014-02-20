@@ -59,18 +59,20 @@ public:
     TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createListProgression();
 
-    std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId from vsession, job where"
-                             " vsession.numsessionid=job.vsession_numsessionid and submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'";
+    std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId "
+                             " FROM vsession, job "
+                             " WHERE vsession.numsessionid=job.vsession_numsessionid "
+                             "  AND submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'";
 
     if (! options->getJobId().empty()) {
       std::string jobId = options->getJobId();
-      sqlRequest.append(" and jobId='"+mdatabaseVishnu->escapeData(jobId)+"'");
+      sqlRequest.append(" and jobId='"+mdatabaseInstance->escapeData(jobId)+"'");
       boost::scoped_ptr<DatabaseResult> sqlResult(ServerTMS::getInstance()->getDatabaseVishnu()->getResult(sqlRequest.c_str()));
       if(sqlResult->getNbTuples() == 0) {
         throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
       }
     } else {
-      sqlRequest.append(" and owner='"+mdatabaseVishnu->escapeData(options->getUser())+"'");
+      sqlRequest.append(" and owner='"+mdatabaseInstance->escapeData(options->getUser())+"'");
     }
 
     sqlRequest.append("  and status < 5 order by jobId");

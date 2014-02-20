@@ -623,12 +623,12 @@ vishnu::showVersion(std::string server){
  */
 void
 vishnu::validateAuthKey(const std::string& authKey,
-                           const std::string& machineId,
-                           Database* database,
-                           UserSessionInfo& info)
+                        const std::string& machineId,
+                        Database* database,
+                        UserSessionInfo& info)
 {
   std::string sqlQuery = (boost::format("SELECT vsession.numsessionid, machine.name,"
-                                        "  users.numuserid, users.privilege, "
+                                        "  users.numuserid, users.userid, users.privilege, "
                                         "  account.aclogin, account.home"
                                         " FROM vsession, users, account, machine"
                                         " WHERE vsession.sessionkey='%1%'"
@@ -659,6 +659,53 @@ vishnu::validateAuthKey(const std::string& authKey,
   info.num_session = vishnu::convertToInt(*rowResultIter++);
   info.machine_name = *rowResultIter++;
   info.num_user = vishnu::convertToInt(*rowResultIter++);
+  info.userid = *rowResultIter++;
+  info.user_privilege = vishnu::convertToInt(*rowResultIter++);
+  info.user_aclogin = *rowResultIter++;
+  info.user_achome = *rowResultIter++;
+}
+
+
+/**
+ * @brief Validate session key and return details on the user and the session
+ * @param authKey The authentication key
+ * @param databasePtr A pointer to a database instance
+ * @param info The resulting information
+ */
+void
+vishnu::validateAuthKey(const std::string& authKey,
+                        Database* database,
+                        UserSessionInfo& info)
+{
+  std::string sqlQuery = (boost::format("SELECT vsession.numsessionid, "
+                                        "  users.numuserid, users.userid, users.privilege, "
+                                        "  account.aclogin, account.home"
+                                        " FROM vsession, users, account, machine"
+                                        " WHERE vsession.sessionkey='%1%'"
+                                        "  AND vsession.state=%2%"
+                                        "  AND users.numuserid=vsession.users_numuserid"
+                                        "  AND users.numuserid=account.users_numuserid"
+                                        "  AND account.status=%3%"
+                                        )
+                          % database->escapeData(authKey)
+                          % vishnu::SESSION_ACTIVE
+                          % vishnu::STATUS_ACTIVE
+                          ).str();
+
+  boost::scoped_ptr<DatabaseResult> sqlResult(database->getResult(sqlQuery));
+  if (sqlResult->getNbTuples() != 1) {
+    throw TMSVishnuException(ERRCODE_INVALID_PARAM,
+                             "Can't get user local account. Check that:"
+                             "  * your session is still active"
+                             "  * you have a local account on this server");
+  }
+
+  std::vector<std::string> rowResult = sqlResult->get(0);
+  std::vector<std::string>::iterator rowResultIter = rowResult.begin();
+
+  info.num_session = vishnu::convertToInt(*rowResultIter++);
+  info.num_user = vishnu::convertToInt(*rowResultIter++);
+  info.userid = *rowResultIter++;
   info.user_privilege = vishnu::convertToInt(*rowResultIter++);
   info.user_aclogin = *rowResultIter++;
   info.user_achome = *rowResultIter++;

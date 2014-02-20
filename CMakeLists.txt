@@ -152,9 +152,6 @@ if(NOT LIBCRYPT_FOUND)
   set(LIBCRYPT_DIR "" cache path "LIBCRYPT installation path")
 endif(NOT LIBCRYPT_FOUND)
 
-find_package(Munge)
-
-
 if (BUILD_TESTING)
   find_package(Boost 1.46 REQUIRED program_options date_time thread filesystem system serialization random regex unit_test_framework)
 else (BUILD_TESTING)
@@ -262,7 +259,6 @@ set(CONFIG_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/config)
 set(EMF_DATA_DIR ${VISHNU_SOURCE_DIR}/core/src/emfdata)
 set(AUTHENTICATOR_INCLUDE_DIR ${VISHNU_SOURCE_DIR}/core/src/authenticator)
 set(VERSION_MANAGER_SOURCE_DIR ${VISHNU_SOURCE_DIR}/core/src/version)
-set(MUNGE_UTILS_SRC ${VISHNU_SOURCE_DIR}/core/src/utils/mungeUtils.cpp)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/vishnu_version.hpp.in
     ${PROJECT_BINARY_DIR}/vishnu_version.hpp)

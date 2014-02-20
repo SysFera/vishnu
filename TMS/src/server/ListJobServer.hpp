@@ -191,7 +191,7 @@ public:
         " AND job.status > 0 ";
 
     if(mmachineId.compare(ALL_KEYWORD)!=0) {
-      sqlQuery.append(" and job.submitMachineId='"+mdatabaseVishnu->escapeData(mmachineId)+"'");
+      sqlQuery.append(" and job.submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'");
     }
 
     bool allOptionsAreNotSet = (options->getNbCpu()<=0);
@@ -220,7 +220,7 @@ public:
     processOptions(options, sqlQuery);
     sqlQuery.append(" order by submitDate");
 
-    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseVishnu->getResult(sqlQuery.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseInstance->getResult(sqlQuery.c_str()));
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
     std::string batchJobId;

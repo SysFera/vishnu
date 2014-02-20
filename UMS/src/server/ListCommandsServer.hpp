@@ -125,7 +125,7 @@ public:
     processOptions(userServer, option, sqlListOfCommands);
 		sqlListOfCommands.append(" order by starttime");
 		//To get the list of commands from the database
-		boost::scoped_ptr<DatabaseResult> ListOfCommands (mdatabaseVishnu->getResult(sqlListOfCommands.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfCommands (mdatabaseInstance->getResult(sqlListOfCommands.c_str()));
 		for (size_t i = 0; i < ListOfCommands->getNbTuples(); ++i) {
 
 			results.clear();

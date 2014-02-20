@@ -56,6 +56,10 @@ JobServer::JobServer(const std::string& authKey,
     }
   }
 
+  if (! msedConfig->getConfigValue<int>(vishnu::STANDALONE, mstandaloneSed)) {
+    mstandaloneSed = false;
+  }
+
   vishnu::validateAuthKey(mauthKey, mmachineId, mdatabaseInstance, muserSessionInfo);
 }
 
@@ -78,11 +82,6 @@ int JobServer::submitJob(std::string& scriptContent,
                          const int& vishnuId,
                          const std::vector<std::string>& defaultBatchOption)
 {
-  bool standaloneSed;
-  if (! msedConfig->getConfigValue<bool>(vishnu::STANDALONE, standaloneSed)) {
-    standaloneSed = false;
-  }
-
   mlastError.clear();
   int errCode = ERRCODE_RUNTIME_ERROR;
   try {
@@ -119,10 +118,10 @@ int JobServer::submitJob(std::string& scriptContent,
       throw SystemException(ERRCODE_INVDATA, "Unable to make the script executable" + scriptPath) ;
     }
 
-    if (standaloneSed) {
-      handleSshSubmit(scriptPath, options);
-    } else {
+    if (mstandaloneSed != 0) {
       handleNativeBatchExec(SubmitBatchAction, options, scriptPath);
+    } else {
+      handleSshSubmit(scriptPath, options);
     }
 
     size_t pos = mjob.getOutputPath().find(":");
@@ -131,7 +130,9 @@ int JobServer::submitJob(std::string& scriptContent,
     pos = mjob.getErrorPath().find(":");
     std::string prefixErrorPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";
     mjob.setErrorPath(prefixErrorPath+mjob.getErrorPath());
+
   } catch (VishnuException& ex) {
+
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
     std::string errorPath = (boost::format("/%1%/vishnu-%2%.err")
                              % std::getenv("HOME")
@@ -145,15 +146,13 @@ int JobServer::submitJob(std::string& scriptContent,
     LOG((boost::format("[ERROR] Submission failed: %1% [%2%]")%mjob.getJobId() %mlastError).str(), 4);
   }
 
-  if (! standaloneSed) {
-    recordJob2db();
-  }
+  recordJob2db();
 
   if (! mlastError.empty()) {
     throw TMSVishnuException(errCode, mlastError);
   } else {
     LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%" )
-        % mjob.getJobId() % mjob.getUserId() % muserSessionInfo.user_aclogin, 1);
+        % mjob.getJobId() % muserSessionInfo.userid % muserSessionInfo.user_aclogin, 1);
   }
   return 0;
 }
@@ -698,8 +697,9 @@ void JobServer::handleSpecificParams(const std::string& specificParams,
 void
 JobServer::setRealPaths(JsonObject* options, const std::string& suffix)
 {
-  std::string workingDir = boost::filesystem::temp_directory_path().string();
-  std::string scriptPath = "";
+  std::string workingDir = muserSessionInfo.user_achome;
+  std::string scriptPath;
+
   if(mbatchType == DELTACLOUD) {
     std::string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     workingDir = mountPoint.empty()? "/tmp/" + suffix : mountPoint + "/" + suffix;
@@ -719,11 +719,11 @@ JobServer::setRealPaths(JsonObject* options, const std::string& suffix)
       options->setProperty("fileparams", fileparams);
     }
   } else {
-    scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
-    std::string workingDir = options->getStringProperty("workingdir");
-    if (workingDir.empty()) {
-      workingDir = muserSessionInfo.user_achome;
+    std::string path = options->getStringProperty("workingdir");
+    if (! path.empty()) {
+      workingDir = path;
     }
+    scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
   }
   options->setProperty("workingdir", workingDir);
   options->setProperty("scriptpath", scriptPath);

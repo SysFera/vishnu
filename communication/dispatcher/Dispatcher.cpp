@@ -5,6 +5,7 @@
 #include "utilVishnu.hpp"
 #include "DIET_client.h"
 #include "VishnuException.hpp"
+#include <signal.h>
 
 
 Dispatcher::Dispatcher(const std::string &confFile)
@@ -124,7 +125,10 @@ Dispatcher::configureHandlers() {
     config.getConfigValue<std::string>(vishnu::SSL_CA, sslCa);
 
     pid_t pid = fork();
-    if (pid > 0) {
+    if (pid < 0) {
+      std::cerr << "[ERROR] Problem initializing the service\n";
+      vishnu::exitProcessOnError(-1);
+    } else if (pid > 0) {
       clientHandler.reset(new Handler4Clients(FRONTEND_IPC_URI, ann, nthread, useSsl, sslCa));
       serverHandler.reset(new Handler4Servers(BACKEND_IPC_URI, ann, nthread, useSsl, sslCa));
       boost::thread th1(boost::bind(&Handler4Clients::run, clientHandler.get()));
@@ -133,11 +137,17 @@ Dispatcher::configureHandlers() {
       th1.join();
       th2.join();
       th3.join();
+
+      vishnu::exitProcessOnChildError(pid);
+
     } else if (pid == 0) {
       pid_t pidTlsHandler = fork();
+      if (pidTlsHandler < 0) {
+        std::cerr << "[ERROR] Problem initializing the service\n";
+        vishnu::exitProcessOnError(-1);
+      } else if (pidTlsHandler > 0) { // Parent process
 
-      if (pidTlsHandler > 0) {
-
+        int retCode = 0;
         /* Intializing the Frontend TLS Handler */
         int sslPort = vishnu::getPortFromUri(uriAddr);
         config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
@@ -146,36 +156,38 @@ Dispatcher::configureHandlers() {
         try {
           tlsFrontHandler.run();
         } catch(VishnuException& ex) {
-          std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
-          abort();
+          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          retCode = -1;
         } catch(...) {
-          std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsFrontHandler.getErrorMsg();
-          abort();
+          std::cerr << boost::format("[ERROR] %1%\n")%tlsFrontHandler.getErrorMsg();
+          retCode = -1;
         }
 
-      } else if (pidTlsHandler ==  0) {
+        if (retCode != 0) {
+          kill(pidTlsHandler, SIGKILL);
+          vishnu::exitProcessOnError(retCode);
+        }
+
+        vishnu::exitProcessOnChildError(pid);
+
+      } else if (pidTlsHandler ==  0) { // child process
 
         /* Intializing the Backend TLS Handler (for subscription) */
+        int retCode = 0;
         int port = vishnu::getPortFromUri(uriSubs);
         TlsServer tlsBackHandler(rsaPrivkey, sslCertificate, port, BACKEND_IPC_URI);
         try {
           tlsBackHandler.run();
         } catch(VishnuException& ex) {
-          std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
-          abort();
+          std::cerr << boost::format("[ERROR] %1%\n")%ex.what();
+          retCode = -1;
         } catch(...) {
-          std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsBackHandler.getErrorMsg();
-          abort();
+          std::cerr << boost::format("[ERROR] %1%\n")%tlsBackHandler.getErrorMsg();
+          retCode = -1;
         }
 
-      } else {
-        std::cerr << "[ERROR] *** Problem initializing the service ***\n";
-        abort();
+        vishnu::exitProcessOnError(retCode);
       }
-
-    } else {
-      std::cerr << "[ERROR] *** Problem initializing the service ***\n";
-      abort();
     }
   }
 }

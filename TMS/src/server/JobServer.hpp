@@ -236,14 +236,14 @@ private:
   std::string mauthKey;
 
   /**
-   * \brief job data structure
-   */
-  TMS_Data::Job mjob;
-
-  /**
    * @brief Information about the user and the session
    */
   UserSessionInfo muserSessionInfo;
+
+  /**
+   * \brief job data structure
+   */
+  TMS_Data::Job mjob;
 
   /**
    * \brief The machine identifier
@@ -269,6 +269,11 @@ private:
   * \brief The configuration of the SeD
   */
   ExecConfiguration_Ptr msedConfig;
+
+  /**
+   * @brief mstandaloneSed
+   */
+  int mstandaloneSed;
 
   /**
    * \brief Holds the level of debug

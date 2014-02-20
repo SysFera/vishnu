@@ -7,6 +7,11 @@
  */
 
 #include "utilVishnu.hpp"
+#include "UserException.hpp"
+#include "SystemException.hpp"
+#include "FMSVishnuException.hpp"
+#include "UMS_Data.hpp"
+#include "constants.hpp"
 
 #include <boost/asio.hpp>
 #include <boost/bind.hpp>
@@ -45,12 +50,7 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <net/if.h>
-
-#include "UserException.hpp"
-#include "SystemException.hpp"
-#include "FMSVishnuException.hpp"
-#include "UMS_Data.hpp"
-#include "constants.hpp"
+#include <sys/wait.h>
 
 namespace bfs=boost::filesystem; // an alias for boost filesystem namespace
 namespace bs=boost::system;
@@ -729,4 +729,29 @@ vishnu::validateUri(const std::string & uri) {
   std::cerr << boost::format("[INFO] Parsing the uri (%1%)...\n")%uri;
   vishnu::getPortFromUri(uri);
   vishnu::getHostFromUri(uri);
+}
+
+/**
+ * @brief Exit a process if a given is different to zero
+ * @param code The code
+ */
+void
+vishnu::exitProcessOnError(int code) {
+  if (code != 0) {
+    exit(code);
+  }
+}
+
+/**
+ * @brief Exit a process if its child failed
+ * @param child The pid of the child process
+ */
+void
+vishnu::exitProcessOnChildError(pid_t child) {
+  int retCode;
+  waitpid(child, &retCode, 0);
+  if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
+    kill(-1, SIGKILL);
+    exit(retCode);
+  }
 }

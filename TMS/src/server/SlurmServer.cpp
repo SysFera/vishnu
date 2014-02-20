@@ -75,8 +75,7 @@ SlurmServer::submit(const std::string& scriptPath,
   slurm_parse_script(argc, argv, &desc);
 
   //Check the job output path
-  std::string errorMsg;
-  errorMsg = checkSLURMOutPutPath(desc.std_out);
+  std::string errorMsg = checkSLURMOutPutPath(desc.std_out);
   if (! errorMsg.empty()) {
     xfree(desc.script);
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
@@ -88,13 +87,11 @@ SlurmServer::submit(const std::string& scriptPath,
     throw UMSVishnuException(ERRCODE_INVALID_PARAM, errorMsg);
   }
 
-  std::string jobOutputPath ;
-  std::string jobErrorPath;
   submit_response_msg_t *resp;
   int retries = 0;
   int VISHNU_MAX_RETRIES = 5;
   //To submit the job
-  while(slurm_submit_batch_job(&desc, &(resp)) < 0) {
+  while (slurm_submit_batch_job(&desc, &(resp)) < 0) {
 
     if (errno == ESLURM_ERROR_ON_DESC_TO_RECORD_COPY) {
       errorMsg = "Slurm job queue full, sleeping and retrying.";
@@ -118,30 +115,26 @@ SlurmServer::submit(const std::string& scriptPath,
     sleep (++retries);
   }
 
-  jobOutputPath ;
-  jobErrorPath;
-  if(desc.std_out!=NULL) {
-    jobOutputPath = desc.std_out;
+  if (desc.std_out != NULL) {
+    std::string path = std::string(desc.std_out);
+    replaceSymbolInToJobPath(path);
+    job.setOutputPath(path);
+  } else {
+    std::cout << "null std_out \n";
   }
-  if(desc.std_err!=NULL) {
-    jobErrorPath = desc.std_err;
+  if (desc.std_err != NULL) {
+    std::string path = std::string(desc.std_err);
+    replaceSymbolInToJobPath(path);
+    job.setErrorPath(path);
+  } else {
+    std::cout << "null std_err \n";
   }
 
   //Fill the vishnu job structure
   fillJobInfo(job, resp->job_id);
 
-  if(jobOutputPath.size()!=0) {
-    replaceSymbolInToJobPath(jobOutputPath);
-    job.setOutputPath(jobOutputPath);
-  }
-  if(jobErrorPath.size()!=0) {
-    replaceSymbolInToJobPath(jobErrorPath);
-    job.setErrorPath(jobErrorPath);
-  }
-
   xfree(desc.script);
   slurm_free_submit_response_response_msg(resp);
-
   return 0;
 }
 

@@ -67,7 +67,7 @@ public:
         if(userServer.isAdmin()) {
           checkUserId(userId);
           sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+mdatabaseVishnu->escapeData(userId)+"'"
+                            "authaccount where userid='"+mdatabaseInstance->escapeData(userId)+"'"
                             "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                             );
         }//End If the user is an admin
@@ -89,7 +89,7 @@ public:
         //If the option userId has not
         if ((userId.size() == 0) && (authSystemId.size() == 0)) {
           sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users,"
-                            "authaccount where userid='"+mdatabaseVishnu->escapeData(userServer.getData().getUserId())+"'"
+                            "authaccount where userid='"+mdatabaseInstance->escapeData(userServer.getData().getUserId())+"'"
                             "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                             );
         }
@@ -97,7 +97,7 @@ public:
     }
     else {
       sqlRequest.append(" and authsystemid IN (SELECT authsystemid from authsystem, users, "
-                        "authaccount where userid='"+mdatabaseVishnu->escapeData(userServer.getData().getUserId())+"'"
+                        "authaccount where userid='"+mdatabaseInstance->escapeData(userServer.getData().getUserId())+"'"
                         "and authaccount.authsystem_authsystemid=authsystem.numauthsystemid and authaccount.users_numuserid=users.numuserid)"
                         );
     }
@@ -129,7 +129,7 @@ public:
       processOptions(userServer, option, sql);
       sql.append(" order by authsystemid");
       //To get the list of authSystems from the database
-      boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseVishnu->getResult(sql.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofAuthSystems (mdatabaseInstance->getResult(sql.c_str()));
       if (ListofAuthSystems->getNbTuples() != 0){
         for (size_t i = 0; i < ListofAuthSystems->getNbTuples(); ++i) {
           results.clear();

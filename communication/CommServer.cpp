@@ -121,13 +121,13 @@ keepRegistered(const std::string& sedType,
       lpc.send(requestData);
       response = lpc.recv();
       if (response == "OK") {
-          if (!connected) {
-            std::cerr << "[INFO] Registered in dispatcher\n";
-          }
-          connected = true;
+        if (!connected) {
+          std::cerr << "[INFO] Registered in dispatcher\n";
+        }
+        connected = true;
       } else {
-          connected = false;
-          std::cerr << "[WARN] Not registered in dispatcher\n";
+        connected = false;
+        std::cerr << "[WARN] Not registered in dispatcher\n";
       }
     }
     sleep(timeout);
@@ -163,11 +163,20 @@ initSeD(const std::string& sedType,
     ZMQServerStart(server, sedUri, false, "");
   } else {
     pid_t pid = fork();
-    if (pid > 0) {
+
+    if (pid < 0) {  // Fork failed
+      std::cerr << "[ERROR]Problem initializing the service\n";
+      exit(-1);
+
+    } else if (pid > 0) {  // Parent process
+
       std::string cafile;
       config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
       ZMQServerStart(server, IPC_URI, useSsl, cafile);
-    } else if (pid == 0) {
+
+      vishnu::exitProcessOnChildError(pid);
+
+    } else if (pid == 0) { // Child process
 
       /* Intializing the TLS listener if necessary */
       int sslPort = vishnu::getPortFromUri(sedUri);
@@ -176,18 +185,17 @@ initSeD(const std::string& sedType,
       config.getRequiredConfigValue<std::string>(vishnu::SERVER_PRIVATE_KEY, rsaPrivkey);
       config.getRequiredConfigValue<std::string>(vishnu::SERVER_SSL_CERTICATE, sslCertificate);
       TlsServer tlsHandler(rsaPrivkey, sslCertificate, sslPort, IPC_URI);
+      int retCode = 0;
       try {
         tlsHandler.run();
       } catch(VishnuException& ex) {
         std::cerr << boost::format("[ERROR] *** %1% ***\n")%ex.what();
-        abort();
+        retCode = -1;
       } catch(...) {
         std::cerr << boost::format("[ERROR] *** %1% ***\n")%tlsHandler.getErrorMsg();
-        abort();
+        retCode = -1;
       }
-    } else {
-      std::cerr << "[ERROR] *** Problem initializing the service ***\n";
-      abort();
+      vishnu::exitProcessOnError(retCode);
     }
   }
   unregisterSeD(sedType, config);

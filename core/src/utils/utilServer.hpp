@@ -15,7 +15,7 @@
 #include "Database.hpp"
 
 
-#define LOG(msg, logLevel) if (logLevel) std::cout << msg <<"\n"
+#define LOG(msg, logLevel) if (logLevel) std::clog << msg <<"\n"
 
 /**
 * \class Format_t
@@ -53,6 +53,11 @@ struct UserSessionInfo {
    * @brief The user privilege
    */
   int user_privilege;
+
+  /**
+   * @brief userid
+   */
+  std::string userid;
 
   /**
    * @brief The user local account
@@ -372,6 +377,18 @@ namespace vishnu {
   void
   validateAuthKey(const std::string& authKey,
                   const std::string& machineId,
+                  Database* databasePtr,
+                  UserSessionInfo& info);
+
+
+  /**
+   * @brief Validate session key and return details on the user and the session
+   * @param authKey The authentication key
+   * @param databasePtr A pointer to a database instance
+   * @param info The resulting information
+   */
+  void
+  validateAuthKey(const std::string& authKey,
                   Database* databasePtr,
                   UserSessionInfo& info);
 }

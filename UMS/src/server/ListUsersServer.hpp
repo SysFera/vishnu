@@ -75,8 +75,8 @@ public:
                                             " AND authsystem.status!=%2%"
                                             " AND users.status!=%2%"
                                             " AND authaccount.status!=%2%"
-                                            )%mdatabaseVishnu->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
-      sqlRequest.append(" AND userid IN ("+mdatabaseVishnu->escapeData(luserCmd)+")");
+                                            )%mdatabaseInstance->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
+      sqlRequest.append(" AND userid IN ("+mdatabaseInstance->escapeData(luserCmd)+")");
     }
 
   }
@@ -108,7 +108,7 @@ public:
       processOptions(userServer, option, sqlListofUsers);
       sqlListofUsers.append(" order by userid");
       //To get the list of users from the database
-      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseVishnu->getResult(sqlListofUsers.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofUsers (mdatabaseInstance->getResult(sqlListofUsers.c_str()));
       if (ListofUsers->getNbTuples() != 0){
         for (size_t i = 0; i < ListofUsers->getNbTuples(); ++i) {
           results.clear();
@@ -173,7 +173,7 @@ private:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabaseInstance;
 
 #endif
 

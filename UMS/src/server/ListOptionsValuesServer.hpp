@@ -109,7 +109,7 @@ public:
       processOptions(userServer, option, sqlListofOptions);
 
       //To get the list of options values from the database
-      boost::scoped_ptr<DatabaseResult> ListofOptions (mdatabaseVishnu->getResult(sqlListofOptions.c_str()));
+      boost::scoped_ptr<DatabaseResult> ListofOptions (mdatabaseInstance->getResult(sqlListofOptions.c_str()));
 
       if (ListofOptions->getNbTuples() != 0){
         for (size_t i = 0; i < ListofOptions->getNbTuples(); ++i) {

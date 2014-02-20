@@ -36,7 +36,7 @@ public:
   {
     mlistObject = NULL;
     DbFactory factory;
-    mdatabaseVishnu = factory.getDatabaseInstance();
+    mdatabaseInstance = factory.getDatabaseInstance();
   }
 
   /**
@@ -68,7 +68,7 @@ protected:
    */
   void addOptionRequest(const std::string& name, const std::string& value, std::string& request) {
     request.append(" and "+name+"=");
-    request.append("'"+mdatabaseVishnu->escapeData(value)+"'");
+    request.append("'"+mdatabaseInstance->escapeData(value)+"'");
   }
 
   /**
@@ -108,7 +108,7 @@ protected:
    */
   void addCondition(const std::string& name, const std::string& value, std::string& request) {
     request.append(" where "+name+"=");
-    request.append("'"+mdatabaseVishnu->escapeData(value)+"'");
+    request.append("'"+mdatabaseInstance->escapeData(value)+"'");
   }
 
   /**
@@ -154,8 +154,8 @@ protected:
     std::string sqlUserRequest = (boost::format("SELECT userid"
                                                 " FROM users"
                                                 " WHERE userid='%1%'"
-                                                " AND status<>%2%")%mdatabaseVishnu->escapeData(userId) %vishnu::STATUS_DELETED).str();
-    boost::scoped_ptr<DatabaseResult> user(mdatabaseVishnu->getResult(sqlUserRequest.c_str()));
+                                                " AND status<>%2%")%mdatabaseInstance->escapeData(userId) %vishnu::STATUS_DELETED).str();
+    boost::scoped_ptr<DatabaseResult> user(mdatabaseInstance->getResult(sqlUserRequest.c_str()));
     if(user->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_USERID);
     }
@@ -169,8 +169,8 @@ protected:
     std::string sqlMachineRequest = (boost::format("SELECT machineid"
                                                    " FROM machine"
                                                    " WHERE machineid='%1%'"
-                                                   " AND status<>%2%")%mdatabaseVishnu->escapeData(machineId) %vishnu::STATUS_DELETED).str();
-    boost::scoped_ptr<DatabaseResult> machine(mdatabaseVishnu->getResult(sqlMachineRequest.c_str()));
+                                                   " AND status<>%2%")%mdatabaseInstance->escapeData(machineId) %vishnu::STATUS_DELETED).str();
+    boost::scoped_ptr<DatabaseResult> machine(mdatabaseInstance->getResult(sqlMachineRequest.c_str()));
     if(machine->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
@@ -183,8 +183,8 @@ protected:
   void checkClientMachineName(std::string clmachineId) {
     std::string sqlclMachineRequest = (boost::format("SELECT name"
                                                      " FROM clmachine"
-                                                     " WHERE name='%1%'")%mdatabaseVishnu->escapeData(clmachineId)).str();
-    boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseVishnu->getResult(sqlclMachineRequest.c_str()));
+                                                     " WHERE name='%1%'")%mdatabaseInstance->escapeData(clmachineId)).str();
+    boost::scoped_ptr<DatabaseResult> clmachine(mdatabaseInstance->getResult(sqlclMachineRequest.c_str()));
     if(clmachine->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
     }
@@ -198,8 +198,8 @@ protected:
   void checkOptionName(std::string name) {
     std::string sqlNameRequest = (boost::format("SELECT description"
                                                 " FROM optionu"
-                                                " WHERE description='%1%'")%mdatabaseVishnu->escapeData(name)).str();
-    boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseVishnu->getResult(sqlNameRequest.c_str()));
+                                                " WHERE description='%1%'")%mdatabaseInstance->escapeData(name)).str();
+    boost::scoped_ptr<DatabaseResult> nameResults(mdatabaseInstance->getResult(sqlNameRequest.c_str()));
     if(nameResults->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_OPTION);
     }
@@ -213,8 +213,8 @@ protected:
     std::string sqlSessionRequest = (boost::format("SELECT vsessionid"
                                                    " FROM vsession"
                                                    " WHERE vsessionid='%1%'"
-                                                   " AND state<>%2%")%mdatabaseVishnu->escapeData(sessionId) %vishnu::STATUS_DELETED).str();
-    boost::scoped_ptr<DatabaseResult> session(mdatabaseVishnu->getResult(sqlSessionRequest.c_str()));
+                                                   " AND state<>%2%")%mdatabaseInstance->escapeData(sessionId) %vishnu::STATUS_DELETED).str();
+    boost::scoped_ptr<DatabaseResult> session(mdatabaseInstance->getResult(sqlSessionRequest.c_str()));
     if(session->getNbTuples()==0) {
       throw UMSVishnuException(ERRCODE_UNKNOWN_SESSION_ID);
     }
@@ -249,8 +249,8 @@ protected:
   checkJobId(std::string jobId) {
     std::string sqlJobRequest = (boost::format("SELECT numjobid"
                                                " FROM job"
-                                               " WHERE jobId='%1%'")%mdatabaseVishnu->escapeData(jobId)).str();
-    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+                                               " WHERE jobId='%1%'")%mdatabaseInstance->escapeData(jobId)).str();
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseInstance->getResult(sqlJobRequest.c_str()));
     if(result->getNbTuples() == 0) {
       throw TMSVishnuException(ERRCODE_UNKNOWN_JOBID);
     }
@@ -265,8 +265,8 @@ protected:
     std::string sqlJobRequest = (boost::format("SELECT authsystemid"
                                                " FROM authsystem"
                                                " WHERE authsystemid='%1%'"
-                                               " AND status<>%2%")%mdatabaseVishnu->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
-    boost::scoped_ptr<DatabaseResult> result (mdatabaseVishnu->getResult(sqlJobRequest.c_str()));
+                                               " AND status<>%2%")%mdatabaseInstance->escapeData(authSystemId) %vishnu::STATUS_DELETED).str();
+    boost::scoped_ptr<DatabaseResult> result (mdatabaseInstance->getResult(sqlJobRequest.c_str()));
     if(result->getNbTuples() == 0) {
       throw TMSVishnuException(ERRCODE_UNKNOWN_AUTH_SYSTEM);
     }
@@ -285,7 +285,7 @@ protected:
   /**
   * \brief An instance of vishnu database
   */
-  Database *mdatabaseVishnu;
+  Database *mdatabaseInstance;
 
 };
 
