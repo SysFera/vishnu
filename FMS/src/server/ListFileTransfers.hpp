@@ -16,7 +16,6 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include "QueryServer.hpp"
-#include "SessionServer.hpp"
 #include "FMS_Data.hpp"
 #include "FileTypes.hpp"
 #include "utilVishnu.hpp"
@@ -29,21 +28,14 @@ class ListFileTransfers: public QueryServer<FMS_Data::LsTransferOptions, FMS_Dat
 public:
 
   /**
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
    * \brief Constructor, raises an exception on error
+   * \param authKey The session token
    */
-  ListFileTransfers(const SessionServer session):
-    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(session),
-    mcommandName("vishnu_list_file_transfers") {
-  }
-  /**
-   * \param params The object which encapsulates the information of ListFileTransfers options
-   * \param session The object which encapsulates the session information (ex: identifier of the session)
-   * \brief Constructor, raises an exception on error
-   */
-  ListFileTransfers(FMS_Data::LsTransferOptions_ptr params, const SessionServer& session):
-    QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(params, session),
-    mcommandName("vishnu_list_file_transfers") {
+  ListFileTransfers(const std::string& authKey)
+    :  mauthKey(authKey), QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(),
+      mcommandName("vishnu_list_file_transfers")
+  {
+    vishnu::validateAuthKey(mauthKey, mdatabaseInstance, muserSessionInfo);
   }
 
   /**
@@ -70,26 +62,19 @@ public:
     if (options->getFromMachineId().size() != 0) {
       //To add the fromMachineId on the request
 
-      sqlRequest.append(" and (sourceMachineId='"+mdatabaseVishnu->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabaseVishnu->escapeData(options->getFromMachineId())+"')");
+      sqlRequest.append(" and (sourceMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"'"+" or destinationMachineId='"+mdatabaseInstance->escapeData(options->getFromMachineId())+"')");
 
       onlyProgressFile = false;
     }
 
-    //To check if the userId is defined
-    if (options->getUserId().size() != 0) {
+    // check if the userId filter is defined
+    if (! options->getUserId().empty()) {
 
-      //Creation of the object user
-      UserServer userServer = UserServer(msessionServer);
-
-      userServer.init();
-      if (!userServer.isAdmin()) {
-        UMSVishnuException e (ERRCODE_NO_ADMIN);
-        throw e;
+      if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN) {
+        throw UMSVishnuException (ERRCODE_NO_ADMIN);
       }
 
-      //To check the user Id
       checkUserId(options->getUserId());
-      //To add the userId on the request
       addOptionRequest("userId", options->getUserId(), sqlRequest);
       onlyProgressFile = false;
     }
@@ -114,68 +99,69 @@ public:
    * \return raises an exception on error
    */
   FMS_Data::FileTransferList*
-    list(QueryParameters* parameters) {
+  list(FMS_Data::LsTransferOptions_ptr options) {
 
-      std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, sourceMachineId, "
-        "destinationMachineId, sourceFilePath, destinationFilePath, fileSize, startTime,errorMsg,"
-        " trCommand from filetransfer, vsession "
-          "where vsession.numsessionid=filetransfer.vsession_numsessionid";
+    std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, clientMachineId, "
+                                 "   sourceMachineId, destinationMachineId, sourceFilePath,"
+                                 "   destinationFilePath, fileSize, startTime,errorMsg, trCommand "
+                                 " FROM filetransfer, vsession "
+                                 " WHERE vsession.numsessionid=filetransfer.vsession_numsessionid";
 
-      std::vector<std::string>::iterator iter;
-      std::vector<std::string> results;
+    std::vector<std::string>::iterator iter;
+    std::vector<std::string> results;
 
-      FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
-      mlistObject = ecoreFactory->createFileTransferList();
+    FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
+    mlistObject = ecoreFactory->createFileTransferList();
 
-      processOptions(parameters, sqlListOfFiles);
-      sqlListOfFiles.append(" order by startTime");
-
-
-      boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseVishnu->getResult(sqlListOfFiles.c_str()));
-
-      time_t startTime;
+    processOptions(options, sqlListOfFiles);
+    sqlListOfFiles.append(" order by startTime");
 
 
-      if (ListOfFiles->getNbTuples() != 0){
+    boost::scoped_ptr<DatabaseResult> ListOfFiles (mdatabaseInstance->getResult(sqlListOfFiles));
+
+    time_t startTime;
 
 
-        for (size_t i = 0; i < ListOfFiles->getNbTuples(); ++i) {
-          results.clear();
-          results = ListOfFiles->get(i);
-          iter = results.begin();
-
-          FMS_Data::FileTransfer_ptr filetransfer = ecoreFactory->createFileTransfer();
+    if (ListOfFiles->getNbTuples() != 0){
 
 
-          filetransfer->setTransferId(*iter);
-          int trStatus=vishnu::convertToInt(*(++iter));
-          filetransfer->setStatus((trStatus >=0&& trStatus<5 ? trStatus:4));
-          filetransfer->setUserId(*(++iter));
-          filetransfer->setClientMachineId(*(++iter));
-          filetransfer->setSourceMachineId(*(++iter));
-          filetransfer->setDestinationMachineId(*(++iter));
-          filetransfer->setSourceFilePath(*(++iter));
-          filetransfer->setDestinationFilePath(*(++iter));
-          //std::istringstream  iss(*(++iter));
-         // file_size_t fileSize;
+      for (size_t i = 0; i < ListOfFiles->getNbTuples(); ++i) {
+        results.clear();
+        results = ListOfFiles->get(i);
+        iter = results.begin();
 
-          //iss >> fileSize;
-          filetransfer->setSize(boost::lexical_cast<file_size_t>(*(++iter)));
-          //convert the endDate into UTC date
-          std::string tmpTime = *(++iter);
-          startTime = vishnu::convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
-          filetransfer->setStartTime(startTime);
-          filetransfer->setErrorMsg(*(++iter));
-          // Check the transfer Command enum value
-          int trCommand=vishnu::convertToInt(*(++iter));
+        FMS_Data::FileTransfer_ptr filetransfer = ecoreFactory->createFileTransfer();
 
-          filetransfer->setTrCommand( (trCommand >=0&& trCommand<3 ? trCommand:2) );
-          mlistObject->getFileTransfers().push_back(filetransfer);
-        }
+
+        filetransfer->setTransferId(*iter);
+        int trStatus=vishnu::convertToInt(*(++iter));
+        filetransfer->setStatus((trStatus >=0&& trStatus<5 ? trStatus:4));
+        filetransfer->setUserId(*(++iter));
+        filetransfer->setClientMachineId(*(++iter));
+        filetransfer->setSourceMachineId(*(++iter));
+        filetransfer->setDestinationMachineId(*(++iter));
+        filetransfer->setSourceFilePath(*(++iter));
+        filetransfer->setDestinationFilePath(*(++iter));
+        //std::istringstream  iss(*(++iter));
+        // file_size_t fileSize;
+
+        //iss >> fileSize;
+        filetransfer->setSize(boost::lexical_cast<file_size_t>(*(++iter)));
+        //convert the endDate into UTC date
+        std::string tmpTime = *(++iter);
+        startTime = vishnu::convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
+        filetransfer->setStartTime(startTime);
+        filetransfer->setErrorMsg(*(++iter));
+        // Check the transfer Command enum value
+        int trCommand=vishnu::convertToInt(*(++iter));
+
+        filetransfer->setTrCommand( (trCommand >=0&& trCommand<3 ? trCommand:2) );
+        mlistObject->getFileTransfers().push_back(filetransfer);
       }
-
-      return mlistObject;
     }
+
+    return mlistObject;
+  }
 
   /**
    * \brief Function to get the name of the ListFileTransfers command line
@@ -200,9 +186,9 @@ private:
    * \param transferId the file transfer identifier
    */
   void checkTransferId(std::string transferId) {
-    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabaseVishnu->escapeData(transferId)+"'";
-    boost::scoped_ptr<DatabaseResult> transfer(mdatabaseVishnu->getResult(sqlTransferRequest.c_str()));
-    if(transfer->getNbTuples()==0) {
+    std::string sqlTransferRequest = "SELECT transferId from filetransfer where transferId='"+mdatabaseInstance->escapeData(transferId)+"'";
+    boost::scoped_ptr<DatabaseResult> transfer(mdatabaseInstance->getResult(sqlTransferRequest));
+    if (transfer->getNbTuples()==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Invalid transfer identifier");;
     }
   }
@@ -213,7 +199,7 @@ private:
    */
   void checkStatus(int status) {
 
-    if(status < 0 || status > 4) {
+    if (status < 0 || status > 4) {
       throw UserException(ERRCODE_INVALID_PARAM, "The file transfer status option value is incorrect");
     }
   }
@@ -222,11 +208,20 @@ private:
   // Attributes
   /////////////////////////////////
 
-
   /**
   * \brief The name of the ListFileTransfers command line
   */
   std::string mcommandName;
+
+  /**
+   * @brief Session info
+   */
+  std::string mauthKey;
+
+  /**
+   * @brief Information about the user and the session
+   */
+  UserSessionInfo muserSessionInfo;
 };
 
 #endif

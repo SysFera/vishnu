@@ -146,7 +146,7 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     // Perfor the transfer now
     if (transferMode==File::sync){
 
-     if(transferType==File::copy){
+      if(transferType==File::copy){
         fileTransferServer->addCpThread(srcUser, srcHost, srcUserKey, destUser, destMachineName,*options_ptr);
       }
 
@@ -258,25 +258,25 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
 
     if (transferMode==File::sync){
 
-     if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_cp");
-    }
+      if(transferType==File::copy){
+        mapperkey = mapper->code("vishnu_cp");
+      }
 
       if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_mv");
-    }
+        mapperkey = mapper->code("vishnu_mv");
+      }
 
     }
 
     else{
 
       if(transferType==File::copy){
-      mapperkey = mapper->code("vishnu_acp");
-    }
+        mapperkey = mapper->code("vishnu_acp");
+      }
 
       if(transferType==File::move){
-      mapperkey = mapper->code("vishnu_amv");
-    }
+        mapperkey = mapper->code("vishnu_amv");
+      }
 
     }
     mapper->code(srcHost + ":" + srcPath, mapperkey);
@@ -452,7 +452,7 @@ solveGenerique(diet_profile_t* pb) {
     }
 
 
-  QueryType query(options, sessionServer);
+    QueryType query(sessionKey);
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::FMSMAPPERNAME);
@@ -462,7 +462,7 @@ solveGenerique(diet_profile_t* pb) {
 
     //  perform the query
 
-    list = query.list();
+    list = query.list(options);
 
     ::ecorecpp::serializer::serializer _ser;
 
