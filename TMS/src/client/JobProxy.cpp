@@ -104,7 +104,6 @@ JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
   // Set RPC parameters
   JsonObject optionsData(options);
-
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
   diet_string_set(profile,0, msessionKey);
   diet_string_set(profile,1, mmachineId);

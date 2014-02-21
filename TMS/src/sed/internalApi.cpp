@@ -175,6 +175,7 @@ solveJobInfo(diet_profile_t* pb) {
 
   // reset the profile to send back result
   diet_profile_reset(pb, 2);
+
   try{
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);
@@ -184,7 +185,7 @@ solveJobInfo(diet_profile_t* pb) {
     std::string cmd = mapper->finalize(mapperkey);
 
     JobServer jobServer(authKey, machineId, ServerTMS::getInstance()->getSedConfig());
-    std::string jobSerialized = JsonObject::serialize(jobServer.getJobInfo(jobSerialized));
+    std::string jobSerialized = JsonObject::serialize(jobServer.getJobInfo(jobId));
 
     diet_string_set(pb,1, jobSerialized);
     diet_string_set(pb,0, "success");

@@ -177,9 +177,11 @@ protected:
 
   /**
    * \brief Function to save the encapsulated job into the database
+   * @param action The type of action to finalize (submit, cancel...)
+   * @param job The concerned job
    */
   void
-  finalizeExecution();
+  finalizeExecution(int action, TMS_Data::Job& job);
 
   /**
    * \brief Function to set the Working Directory
@@ -205,20 +207,29 @@ protected:
 
   /**
    * @brief Submit job using ssh mechanism
+   * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
+   * @param job The target job concerned by the action
    * @param options: an object containing options
-   */
+  */
   void
-  handleSshSubmit(const std::string& scriptPath, JsonObject* options);
+  handleSshSubmit(int action,
+                  const std::string& scriptPath,
+                  JsonObject* options,
+                  TMS_Data::Job& job);
 
   /**
-   * @brief Handle action to batch scheduler
-   * @param action action The type of action
-   * @param options user-specific options
-   * @param scriptPath The path of the script to executed. Only required for submit action
-   */
+   * @brief Submit job using ssh mechanism
+   * @param action action The type of action (cancel, submit...)
+   * @param scriptPath The path of the script to executed
+   * @param job The target job concerned by the action
+   * @param options: an object containing options
+  */
   void
-  handleNativeBatchExec(int action, JsonObject* options, const std::string& scriptPath);
+  handleNativeBatchExec(int action,
+                        const std::string& scriptPath,
+                        JsonObject* options,
+                        TMS_Data::Job& job);
 
   /**
    * @brief Get the uid corresponding to given system user name

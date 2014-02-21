@@ -86,25 +86,29 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   if (options.getJobId().empty() && options.getMachineId().empty() && options.getUser().empty()) {
     throw UserException(ERRCODE_INVALID_PARAM, "Neither job, machine, nor user target was specified");
   }
-
-  // determine the target machines
-  std::string machineId = options.getMachineId();
-  UMS_Data::ListMachines machines;
-  if (! machineId.empty() && machineId != ALL_KEYWORD) {
-    // Use the specified machine
-    UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
-    machine->setMachineId(machineId);
-    machines.getMachines().push_back(machine);
-  } else {
-    listMachinesWithUserLocalAccount(sessionKey, machines);
-  }
-
-  // perform the request
   int retCode = 0;
-  for(int i=0; i< machines.getMachines().size(); i++) {
-    retCode += JobProxy(sessionKey, machines.getMachines().get(i)->getMachineId()).cancelJob(options);
-  }
+  if (! options.getJobId().empty()) { // cancel a specific job
+    TMS_Data::Job job;
+    vishnu::getJobInfo(sessionKey, options.getJobId(), job);
+    retCode = JobProxy(sessionKey, job.getSubmitMachineId()).cancelJob(options);
 
+  } else {
+
+    std::string machineId = options.getMachineId();
+    UMS_Data::ListMachines machines;
+    if (! machineId.empty() && machineId != ALL_KEYWORD) { // cancel job on the specified machine
+      UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+      machine->setMachineId(machineId);
+      machines.getMachines().push_back(machine);
+    } else {                                              // cancel job on all machines
+      listMachinesWithUserLocalAccount(sessionKey, machines);
+    }
+
+    // now perform the request
+    for (int i=0; i< machines.getMachines().size(); ++i) {
+      retCode += JobProxy(sessionKey, machines.getMachines().get(i)->getMachineId()).cancelJob(options);
+    }
+  }
   return retCode;
 }
 

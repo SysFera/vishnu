@@ -152,12 +152,12 @@ SSHJobExec::sshexec(const std::string& actionName,
           % stderrFilePath
           ).str();
 
-  // Execute the command
+  // Execute the command and treat the possibly errors
   int ret = system(cmd.c_str());
-  // Treat possibly errors
   if (bfs::exists(errorPath)) {
     merrorInfo.append(vishnu::get_file_content(errorPath, false));
   }
+
   if (bfs::exists(stderrFilePath)) {
     merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
   }
@@ -168,10 +168,11 @@ SSHJobExec::sshexec(const std::string& actionName,
       merrorInfo.append(" You must copy the publickey in your authorized_keys file.");
     }
     if (WEXITSTATUS(ret) == 1 && mbatchType==SLURM) {//ATTENTION: 1 corresponds of the error_exit value in ../slurm_parser/opt.c
-      merrorInfo.append("==> SLURM ERROR");
+      merrorInfo.append(" SLURM ERROR");
     }
     if (merrorInfo.empty()) {
-      merrorInfo = (boost::format("Unknown error while executing the command: %1%\nError code: %2%")
+      merrorInfo = (boost::format("Unknown error while executing the command: %1%"
+                                  "\nError code: %2%")
                     % cmd % ret
                     ).str();
     }
@@ -179,23 +180,23 @@ SSHJobExec::sshexec(const std::string& actionName,
     LOG(merrorInfo, mdebugLevel);
     throw SystemException(ERRCODE_SSH, merrorInfo);
   }
-  // THE FOLLOWINF CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
-  if (actionName == "SUBMIT") {
 
+  // THE FOLLOWIND CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
+  if (actionName == "SUBMIT") {
     JsonObject jsonJob(vishnu::get_file_content(jobUpdateSerializedPath, false));
     mjob = jsonJob.getJob();
-    bool submitSucceed = false;
 
-    if ((mbatchType==LOADLEVELER || mbatchType==LSF) && (submitSucceed==false)) {
+    if (mbatchType==LOADLEVELER || mbatchType==LSF) {
       merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
       if (mbatchType==LOADLEVELER) {
-        merrorInfo.append("\n==>LOADLEVELER ERROR");
+        merrorInfo.append("\n LOADLEVELER ERROR");
       }
       if (mbatchType==LSF) {
-        merrorInfo.append("\n==>LSF ERROR");
+        merrorInfo.append("\n LSF ERROR");
       }
     }
   }
+
   if (! merrorInfo.empty()) {
     LOG(merrorInfo, mdebugLevel);
     merrorInfo.clear();

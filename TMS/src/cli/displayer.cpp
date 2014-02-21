@@ -57,19 +57,18 @@ displayJob(TMS_Data::Job& j){
   pos = j.getErrorPath().find(":");
   std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
 
-  cout << " ------------------------ " << endl;
   cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")";
   cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-  cout << "\n User                 : " << j.getUserId() << endl;
-  cout << "\n Session              : " << j.getSessionId() << endl;
+  cout << "\n User                 : " << j.getUserId();
+  cout << "\n Session              : " << j.getSessionId();
   cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
-  cout << "\n Output path (remote) : " << prefixOutputPath+j.getOutputPath() << endl;
-  cout << "\n Error path  (remote) : " << prefixErrorPath+j.getErrorPath() << endl;
+  cout << "\n Output path (remote) : " << prefixOutputPath+j.getOutputPath();
+  cout << "\n Error path  (remote) : " << prefixErrorPath+j.getErrorPath();
   cout << "\n Output dir (remote)  : " << j.getOutputDir();
 
   boost::posix_time::ptime pt;
   cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
-  if(j.getVmId().size() > 0) {
+  if (j.getVmId().size() > 0) {
     cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
   }
   cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
@@ -79,7 +78,7 @@ displayJob(TMS_Data::Job& j){
   cout << "\n CPU per Node         : " << j.getNbCpus();
   cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
   cout << "\n Status               : " << vishnu::convertJobStateToString(j.getStatus());
-  if(j.getSubmitDate() > 0) {
+  if (j.getSubmitDate() > 0) {
     pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
     cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
   } else  {

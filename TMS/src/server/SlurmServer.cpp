@@ -455,10 +455,8 @@ uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
 int
 SlurmServer::cancel(const std::string& jobId) {
 
-  uint32_t slurmJobId = convertToSlurmJobId(jobId);
-
-  int res = slurm_kill_job(slurmJobId, SIGKILL, false);
-  if(res) {
+  int res = slurm_kill_job(convertToSlurmJobId(jobId), SIGKILL, false);
+  if (res) {
     char* errorMsg = slurm_strerror(res);
     if(errorMsg!=NULL) {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
@@ -477,11 +475,9 @@ SlurmServer::cancel(const std::string& jobId) {
 int
 SlurmServer::getJobState(const std::string& jobId) {
 
-  uint32_t slurmJobId = convertToSlurmJobId(jobId);
-
   int res;
   job_info_msg_t * job_buffer_ptr = NULL;
-  res = slurm_load_job(&job_buffer_ptr, slurmJobId, 1);
+  res = slurm_load_job(&job_buffer_ptr, convertToSlurmJobId(jobId), 1);
 
   int state = vishnu::STATE_COMPLETED;
   if(!res) {
@@ -510,11 +506,9 @@ SlurmServer::getJobStartTime(const std::string& jobId) {
 
   time_t startTime = 0;
 
-  uint32_t slurmJobId = convertToSlurmJobId(jobId);
-
   int res;
   job_info_msg_t * job_buffer_ptr = NULL;
-  res = slurm_load_job(&job_buffer_ptr, slurmJobId, 1);
+  res = slurm_load_job(&job_buffer_ptr, convertToSlurmJobId(jobId), 1);
 
   if(!res) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];

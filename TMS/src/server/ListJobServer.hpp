@@ -203,11 +203,11 @@ public:
     allOptionsAreNotSet = allOptionsAreNotSet && (options->getOwner().empty());
     allOptionsAreNotSet = allOptionsAreNotSet && (options->getQueue().empty());
 
-    if(options->isBatchJob() && !allOptionsAreNotSet) {
+    if (options->isBatchJob() && !allOptionsAreNotSet) {
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with other options excepted jobId option.");
     }
 
-    if(options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
+    if (options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
       throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with machine id equal to all.");
     }
 
@@ -220,7 +220,7 @@ public:
     processOptions(options, sqlQuery);
     sqlQuery.append(" order by submitDate");
 
-    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseInstance->getResult(sqlQuery.c_str()));
+    boost::scoped_ptr<DatabaseResult> ListOfJobs (mdatabaseInstance->getResult(sqlQuery));
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
     std::string batchJobId;
@@ -285,7 +285,9 @@ public:
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
 
-    if(options->isBatchJob() && !options->getJobId().empty() && mmachineId.compare(ALL_KEYWORD)!=0){
+    if (options->isBatchJob()
+        && !options->getJobId().empty()
+        && mmachineId.compare(ALL_KEYWORD) !=0 ){
       BatchFactory factory;
       BatchType batchType  = ServerTMS::getInstance()->getBatchType();
       std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
@@ -299,7 +301,7 @@ public:
             int state = batchServer->getJobState(*iter);
             ++iter;
             if (state != vishnu::STATE_UNDEFINED &&
-                (mlistObject->getJobs().get(i))->getStatus()!=vishnu::STATE_COMPLETED &&
+                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_COMPLETED &&
                 (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_CANCELLED &&
                 (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_DOWNLOADED) {
               (mlistObject->getJobs().get(i))->setStatus(state);
