@@ -174,8 +174,6 @@ initSeD(const std::string& sedType,
       config.getConfigValue<std::string>(vishnu::SSL_CA, cafile);
       ZMQServerStart(server, IPC_URI, useSsl, cafile);
 
-      vishnu::exitProcessOnChildError(pid);
-
     } else if (pid == 0) { // Child process
 
       /* Intializing the TLS listener if necessary */

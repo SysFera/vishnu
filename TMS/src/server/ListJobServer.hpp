@@ -228,10 +228,10 @@ public:
     time_t endDate;
     std::vector<std::string> ignoredIds;
 
-    if (ListOfJobs->getNbTuples() != 0) {
-      int jobStatus;
+    int nbJobs = ListOfJobs->getNbTuples();
+    if (nbJobs != 0) {
 
-      for (size_t i = 0; i < ListOfJobs->getNbTuples(); ++i) {
+      for (size_t i = 0; i < nbJobs; ++i) {
         results.clear();
         results = ListOfJobs->get(i);
         ii = results.begin();
@@ -250,15 +250,15 @@ public:
         job->setJobPrio(vishnu::convertToInt(*(++ii)));
         job->setNbCpus(vishnu::convertToInt(*(++ii)));
         job->setJobWorkingDir(*(++ii));
-        jobStatus = vishnu::convertToInt(*(++ii));
+        job->setStatus(vishnu::convertToInt(*(++ii)));
 
-        if (jobStatus == vishnu::STATE_RUNNING) {
+        if (job->getStatus() == vishnu::STATE_RUNNING) {
           nbRunningJobs++;
-        } else if(jobStatus >= vishnu::STATE_SUBMITTED && jobStatus <= vishnu::STATE_WAITING) {
+        } else if(job->getStatus() >= vishnu::STATE_SUBMITTED
+                  && job->getStatus() <= vishnu::STATE_WAITING) {
           nbWaitingJobs++;
         }
 
-        job->setStatus(jobStatus);
         //convert the endDate into UTC date
         submitDate = vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++ii)));
         job->setSubmitDate(submitDate);
@@ -320,7 +320,6 @@ public:
 
       batchServer->fillListOfJobs(mlistObject, ignoredIds);
     }
-
     return mlistObject;
   }
 

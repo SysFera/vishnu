@@ -28,8 +28,6 @@ PosixServer::submit(const std::string& scriptPath,
   struct trameJob resultat;
   struct trameSubmit op;
 
-  std::cout << job.getJobId() <<"\n";
-
   memset(&op, 0, sizeof(op));
   strncpy(op.name, options.getName().c_str(), sizeof(op.name)-1);
   op.walltime = options.getWallTime();
@@ -53,7 +51,7 @@ PosixServer::submit(const std::string& scriptPath,
   job.setJobQueue("posix");
 
   // If no name give a default job name
-  if (options.getName() == ""){
+  if (options.getName().empty()){
     job.setJobName("posix_job");
   } else {
     job.setJobName(options.getName());
@@ -68,8 +66,6 @@ PosixServer::submit(const std::string& scriptPath,
 
   job.setErrorPath(std::string(resultat.errorPath));
   job.setWallClockLimit(resultat.maxTime);
-
-  std::cout << job.getJobId() <<"\n";
 
   return ret;
 }

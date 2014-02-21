@@ -120,7 +120,7 @@ int JobServer::submitJob(std::string& scriptContent,
     if (mstandaloneSed != 0) {
       handleNativeBatchExec(SubmitBatchAction, scriptPath, options, mjob);
     } else {
-      handleSshSubmit(SubmitBatchAction, scriptPath, options, mjob);
+      handleSshBatchExec(SubmitBatchAction, scriptPath, options, mjob);
     }
   } catch (VishnuException& ex) {
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
@@ -147,7 +147,7 @@ int JobServer::submitJob(std::string& scriptContent,
  * @param options: an object containing options
 */
 void
-JobServer::handleSshSubmit(int action,
+JobServer::handleSshBatchExec(int action,
                            const std::string& scriptPath,
                            JsonObject* options,
                            TMS_Data::Job& job) {
@@ -207,7 +207,8 @@ JobServer::handleNativeBatchExec(int action,
   if (pid <= -1) {
     throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Fork failed");
   }
-  if (pid == 0) {
+
+  if (pid == 0) { // child process
     int handlerExitCode = setuid(getSystemUid(muserSessionInfo.user_aclogin));
     if (handlerExitCode != 0) {
       LOG("[ERROR] " + std::string(strerror(errno)), 2);
@@ -221,6 +222,7 @@ JobServer::handleNativeBatchExec(int action,
       if (mbatchType == DELTACLOUD) {
         handlerExitCode = batchServer->cancel(job.getJobId()+"@"+job.getVmId());
       } else {
+        std::cout << "to cancel "<< job.getBatchJobId()<<"\n";
         handlerExitCode = batchServer->cancel(job.getBatchJobId());
       }
       job.setStatus(vishnu::STATE_CANCELLED);
@@ -231,7 +233,7 @@ JobServer::handleNativeBatchExec(int action,
     }
     finalizeExecution(action, job);
     exit(handlerExitCode);
-  } else {
+  } else { // parent process
     int retCode;
     waitpid(pid, &retCode, 0);
     if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
@@ -457,7 +459,7 @@ int JobServer::cancelJob(JsonObject* options)
       if (mstandaloneSed != 0) {
         handleNativeBatchExec(CancelBatchAction, "", options, currentJob);
       } else {
-        handleSshSubmit(CancelBatchAction, "", options, currentJob);
+        handleSshBatchExec(CancelBatchAction, "", options, currentJob);
       }
     }
   }

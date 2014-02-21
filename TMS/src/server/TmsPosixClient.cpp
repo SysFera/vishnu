@@ -156,21 +156,21 @@ reqCancel(const std::string& jobId) {
 }
 
 int
-reqInfo(const char* jobId, struct trameJob *response) {
+reqInfo(const std::string& jobId, struct trameJob *response) {
   struct Request req;
   struct Response ret;
   int resultat;
   char name_sock[255];
   char euid[255];
 
-  strccpy(euid, jobId, sizeof(euid), '-');
+  strccpy(euid, jobId.c_str(), sizeof(euid), '-');
 
   snprintf(name_sock, sizeof(name_sock), "%s/%s%s", "/tmp", SV_SOCK, euid);
 
   memset(&req, 0, sizeof(struct Request));
   strncpy(req.sig, SIGNATURE, sizeof(req.sig));
   strncpy(req.req, LB_REQ_GINFO, sizeof(req.req));
-  strncpy(req.data.info.jobId, jobId, sizeof(req.data.info.jobId)-1);
+  strncpy(req.data.info.jobId, jobId.c_str(), sizeof(req.data.info.jobId)-1);
 
   resultat = reqSend(name_sock, &req, &ret);
 

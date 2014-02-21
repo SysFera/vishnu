@@ -213,7 +213,7 @@ protected:
    * @param options: an object containing options
   */
   void
-  handleSshSubmit(int action,
+  handleSshBatchExec(int action,
                   const std::string& scriptPath,
                   JsonObject* options,
                   TMS_Data::Job& job);

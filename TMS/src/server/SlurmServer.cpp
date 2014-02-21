@@ -475,21 +475,20 @@ SlurmServer::cancel(const std::string& jobId) {
 int
 SlurmServer::getJobState(const std::string& jobId) {
 
-  int res;
-  job_info_msg_t * job_buffer_ptr = NULL;
-  res = slurm_load_job(&job_buffer_ptr, convertToSlurmJobId(jobId), 1);
-
   int state = vishnu::STATE_COMPLETED;
-  if(!res) {
+
+  job_info_msg_t * job_buffer_ptr = NULL;
+  int res = slurm_load_job(&job_buffer_ptr, convertToSlurmJobId(jobId), 1);
+  if (res == 0) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     state = convertSlurmStateToVishnuState(slurmJobInfo.job_state);
   } else {
-    if(res==SLURM_PROTOCOL_SOCKET_IMPL_TIMEOUT || res==SLURM_PROTOCOL_VERSION_ERROR) {
+    if (res==SLURM_PROTOCOL_SOCKET_IMPL_TIMEOUT || res==SLURM_PROTOCOL_VERSION_ERROR) {
       state = vishnu::STATE_UNDEFINED;
     }
   }
 
-  if(job_buffer_ptr!=NULL) {
+  if (job_buffer_ptr != NULL) {
     slurm_free_job_info_msg(job_buffer_ptr);
   }
 

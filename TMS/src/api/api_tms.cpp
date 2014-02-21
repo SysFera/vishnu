@@ -176,8 +176,8 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
     SessionProxy sessionProxy(sessionKey);
 
-    checkJobStatus(options.getStatus()); //To check the job status options
-    checkJobPriority(options.getPriority()); //To check the job priority options
+    checkJobStatus(options.getStatus()); // check the job status options
+    checkJobPriority(options.getPriority()); //check the job priority options
 
     QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
         query(options, sessionProxy, serviceName, machine->getMachineId());
@@ -193,6 +193,7 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
       }
     }
     if (listJobs_ptr != NULL) {
+
       TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
       for (unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
         TMS_Data::Job_ptr job = ecoreFactory->createJob();

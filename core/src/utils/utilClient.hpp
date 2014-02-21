@@ -46,7 +46,6 @@ void parseEmfObject(const std::string& objectSerialized,
                     T*& object_ptr,
                     const std::string& msgComp = std::string()) {
   object_ptr = NULL;
-//  std::cout << "object: ->" << objectSerialized << "<- " << std::endl;
   try {
     //CREATE DATA MODEL
     T tmpObject;
@@ -61,6 +60,5 @@ void parseEmfObject(const std::string& objectSerialized,
     throw SystemException(ERRCODE_INVDATA, msgComp);
   }
 }
-
 
 #endif
