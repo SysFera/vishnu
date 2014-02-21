@@ -591,7 +591,7 @@ void
 SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
 
   int res;
-  job_info_msg_t * job_buffer_ptr = NULL;
+  job_info_msg_t* job_buffer_ptr = NULL;
   res = slurm_load_job(&job_buffer_ptr, batchJobId, 1);
   if(res != 0) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
@@ -628,11 +628,11 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
     job.setJobQueue(slurmJobInfo.partition);
   }
   //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
-  if(slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
+  if (slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
     job.setWallClockLimit(60*(slurmJobInfo.time_limit));
   }
   job.setEndDate(slurmJobInfo.end_time);
-  if(slurmJobInfo.comment!=NULL) {
+  if (slurmJobInfo.comment != NULL) {
     job.setJobDescription(slurmJobInfo.comment);
   }
   job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
@@ -651,7 +651,7 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
   msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
 
 
-  if(job_buffer_ptr!=NULL) {
+  if (job_buffer_ptr != NULL) {
     slurm_free_job_info_msg(job_buffer_ptr);
   }
 
@@ -670,7 +670,7 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
   job_info_msg_t * allJobs = NULL;
   int res = slurm_load_jobs((time_t)NULL, &allJobs, 1);
 
-  if(!res) {
+  if (res == 0) {
     job_info_t *job = NULL;
     job = allJobs->job_array;
     for (uint32_t i = 0; i < allJobs->record_count; i++) {
@@ -685,6 +685,10 @@ SlurmServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
         break;
       }
     }
+  }
+
+  if (allJobs != NULL) {
+    slurm_free_job_info_msg(allJobs);
   }
 
   return res;
