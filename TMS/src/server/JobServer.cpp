@@ -109,8 +109,7 @@ int JobServer::submitJob(std::string& scriptContent,
     vishnu::saveInFile(scriptPath, processScript(scriptContent,
                                                  options,
                                                  defaultBatchOption,
-                                                 muserSessionInfo.machine_name)
-                       );
+                                                 muserSessionInfo.machine_name));
     if(0 != chmod(scriptPath.c_str(),
                   S_IRUSR|S_IXUSR|
                   S_IRGRP|S_IXGRP|
@@ -123,15 +122,8 @@ int JobServer::submitJob(std::string& scriptContent,
     } else {
       handleSshSubmit(scriptPath, options);
     }
-
-    LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%")
-        % mjob.getJobId() % muserSessionInfo.userid % muserSessionInfo.user_aclogin, 1);
-
   } catch (VishnuException& ex) {
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
-
-    LOG((boost::format("[ERROR] Submission failed: %1% [%2%]")%mjob.getJobId() %mlastError).str(), 4);
-
     std::string errorPath = (boost::format("/%1%/vishnu-%2%.err")
                              % std::getenv("HOME")
                              % mjob.getJobId()
@@ -250,7 +242,7 @@ JobServer::processDefaultOptions(const std::vector<std::string>& defaultBatchOpt
     key1 =  defaultBatchOption.at(count);
     position = 0;
     int found =0;
-    while (position!=std::string::npos && !found) {
+    while (position != std::string::npos && ! found) {
       position = content.find(key.c_str(), position);
       if(position!=std::string::npos) {
         size_t pos1 = content.find("\n", position);
@@ -465,7 +457,6 @@ int JobServer::cancelJob(JsonObject* options)
                              % mdatabaseInstance->escapeData(currentJob.getJobId())).str();
         mdatabaseInstance->process(query);
 
-
         LOG(boost::format("[INFO] Job cancelled: %1%")% currentJob.getJobId(), mdebugLevel);
       }
     }
@@ -568,9 +559,8 @@ void JobServer::scanErrorMessage(const std::string& errorInfo, int& code, std::s
      */
 long long JobServer::convertToTimeType(std::string date) {
 
-  if (date.size()==0 ||
-      // For mysql, the empty date is 0000-00-00, not empty, need this test to avoid problem in ptime
-      date.find("0000-00-00")!=std::string::npos) {
+  if (date.empty()  // For mysql empty date is 0000-00-00, not empty. Need this test to avoid problem in ptime
+      || date.find("0000-00-00")!=std::string::npos) {
     return 0;
   }
 
@@ -579,7 +569,6 @@ long long JobServer::convertToTimeType(std::string date) {
   boost::posix_time::time_duration::sec_type time = (pt - epoch).total_seconds();
 
   return (long long) time_t(time);
-
 }
 
 /**
@@ -777,6 +766,17 @@ JobServer::processScript(std::string& scriptContent,
 void
 JobServer::finalizeExecution()
 {
+  if (mlastError.empty()) {
+    LOG(boost::format("[INFO] Job created: %1%. User: %2%. Owner: %3%")
+        % mjob.getJobId()
+        % muserSessionInfo.userid
+        % muserSessionInfo.user_aclogin, 1);
+  } else {
+    LOG((boost::format("[ERROR] Submission failed: %1% [%2%]")
+         % mjob.getJobId()
+         % mlastError).str(), 4);
+  }
+
   // Append the machine name to the error and output path if necessary
   size_t pos = mjob.getOutputPath().find(":");
   std::string prefixOutputPath = (pos == std::string::npos)? muserSessionInfo.machine_name+":" : "";

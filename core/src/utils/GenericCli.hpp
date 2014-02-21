@@ -52,7 +52,7 @@ public:
         return  ERRCODE_CLI_ERROR_COMMUNICATION ;
       }
 
-      std::string sessionKey = getLastSessionKey(getpid());
+      std::string sessionKey = getLastSessionKey(getppid());
 
       // VISHNU call
       if(! sessionKey.empty()){
