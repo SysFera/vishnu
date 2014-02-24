@@ -4,6 +4,7 @@ include_directories(
    ${EMF_DATA_DIR}
    ${EMF4CPP_INCLUDE_DIR}
    ${VISHNU_EXCEPTION_INCLUDE_DIR}
+   ${DATABASE_INCLUDE_DIR}
 )
 
 
