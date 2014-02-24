@@ -25,7 +25,7 @@ include_directories(
 include(UnitTest)
 
 if (COMPILE_SERVERS)
-unit_test(POSIXParserUnitTests vishnu-tms-posix vishnu-core-server vishnu-tms-server)
+unit_test(POSIXParserUnitTests vishnu-tms-posix vishnu-core-server vishnu-tms-server mockDb)
 unit_test(EnvUnitTests vishnu-tms-server)
 unit_test(ScriptGenConvertorUnitTests vishnu-tms-server )
 
