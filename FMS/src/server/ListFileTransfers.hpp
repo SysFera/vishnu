@@ -19,6 +19,7 @@
 #include "FMS_Data.hpp"
 #include "FileTypes.hpp"
 #include "utilVishnu.hpp"
+#include "utilServer.hpp"
 /**
  * \class ListFileTransfers
  * \brief ListFileTransfers class implementation
@@ -35,7 +36,6 @@ public:
     :  mauthKey(authKey), QueryServer<FMS_Data::LsTransferOptions, FMS_Data::FileTransferList>(),
       mcommandName("vishnu_list_file_transfers")
   {
-    vishnu::validateAuthKey(mauthKey, mdatabaseInstance, muserSessionInfo);
   }
 
   /**
@@ -109,6 +109,7 @@ public:
 
     std::vector<std::string>::iterator iter;
     std::vector<std::string> results;
+    vishnu::validateAuthKey(mauthKey, mdatabaseInstance, muserSessionInfo);
 
     FMS_Data::FMS_DataFactory_ptr ecoreFactory = FMS_Data::FMS_DataFactory::_instance();
     mlistObject = ecoreFactory->createFileTransferList();

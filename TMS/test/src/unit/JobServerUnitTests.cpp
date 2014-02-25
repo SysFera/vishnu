@@ -13,11 +13,10 @@
 class JobServerMock :  public JobServer
 {
 public:
-  
-  JobServerMock(const SessionServer& sessionServer,
+
+  JobServerMock(const std::string& key,
                 const std::string& machineId,
-                const TMS_Data::Job& job,
-                const ExecConfiguration_Ptr sedConfig):JobServer(sessionServer, machineId, job, sedConfig){
+                const ExecConfiguration_Ptr sedConfig):JobServer(key, machineId, sedConfig){
 
   }
   /**
@@ -38,26 +37,26 @@ public:
   insertOptionLineMock(std::string& optionLineToInsert, std::string& content, std::string& key){
     this->insertOptionLine(optionLineToInsert, content, key);
   }
-  
+
   void
   computeOutputDirMock(const std::string& parentDir,
                        const std::string & dirSuffix,
                        std::string & content){
     this->setJobOutputDir(parentDir, dirSuffix, content);
   }
-  
+
 
   std::string
   getBatchDirectiveMock(std::string& seperator) const{
     return this->getBatchDirective(seperator);
   }
-  
+
   void
-  treatSpecificParamsMock(const std::string& specificParams, std::string& scriptContent){
-    this->treatSpecificParams(specificParams, scriptContent);
+  handleSpecificParamsMock(const std::string& specificParams, std::string& scriptContent){
+    this->handleSpecificParams(specificParams, scriptContent);
   }
-  
-  
+
+
   std::string
   processScriptMock(std::string& scriptContent,
                     TMS_Data::SubmitOptions& options,
@@ -65,13 +64,9 @@ public:
                     const std::string& machineName){
 
     JsonObject jsonOptions(options);
-    return this->processScript(scriptContent, jsonOptions, defaultBatchOption, machineName);
+    return this->processScript(scriptContent, &jsonOptions, defaultBatchOption, machineName);
   }
 
-  
-  void deserializeJobMock(std::string jobSerialized){
-    this->deserializeJob(jobSerialized);
-  }
 
 };
 
@@ -202,11 +197,11 @@ BOOST_AUTO_TEST_SUITE( JobServer_unit_tests )
 BOOST_AUTO_TEST_CASE( test_scanErrorMessage )
 {
   const std::string error_info = "1# Memory access ERROR ";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string message = "";
   int code;
   jobserver.scanErrorMessageMock(error_info, code, message);
@@ -217,11 +212,11 @@ BOOST_AUTO_TEST_CASE( test_scanErrorMessage )
 BOOST_AUTO_TEST_CASE( test_scanErrorMessage_bad_error_info )
 {
   const std::string bad_error_info = "1 Memory access";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string message = "";
   int code;
   jobserver.scanErrorMessageMock(bad_error_info, code, message);
@@ -232,11 +227,11 @@ BOOST_AUTO_TEST_CASE( test_scanErrorMessage_bad_error_info )
 BOOST_AUTO_TEST_CASE( test_scanErrorMessage_bad_error_code )
 {
   const std::string bad_error_code = "Memory# access";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string message = "";
   int code;
   jobserver.scanErrorMessageMock(bad_error_code, code, message);
@@ -247,28 +242,28 @@ BOOST_AUTO_TEST_CASE( test_scanErrorMessage_bad_error_code )
 BOOST_AUTO_TEST_CASE(test_insertOptionLine)
 {
   std::string option = "#$ I am Toto\n";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "#$";
-  jobserver.insertOptionLineMock(option, Script_Content, key);
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "#$";
+  jobserver.insertOptionLineMock(option, Script_Content, mykey);
   BOOST_CHECK_EQUAL(Script_Content, Script_Content_result);
-  
+
 }
 BOOST_AUTO_TEST_CASE(test_insertOptionLine_variant)
 {
   std::string option = "#$ I am Toto\n";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "#$";
-  jobserver.insertOptionLineMock(option, Script_Content_variant, key);
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "#$";
+  jobserver.insertOptionLineMock(option, Script_Content_variant, mykey);
   BOOST_CHECK_EQUAL(Script_Content_variant, Script_Content_result_variant);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_insertOptionLine_LL)
@@ -277,16 +272,16 @@ BOOST_AUTO_TEST_CASE(test_insertOptionLine_LL)
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
   std::string option = "# @ I am Toto\n";
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "# @";
-  jobserver.insertOptionLineMock(option, ll_Script_content, key);
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "# @";
+  jobserver.insertOptionLineMock(option, ll_Script_content, mykey);
   BOOST_CHECK_EQUAL(ll_Script_content,ll_Script_content_result);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_processDefaultOptions)
@@ -294,15 +289,15 @@ BOOST_AUTO_TEST_CASE(test_processDefaultOptions)
   std::vector<std::string> defaultBatchOption;
   defaultBatchOption.push_back("I am");
   defaultBatchOption.push_back("Toto");
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "#$";
-  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content, key);
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "#$";
+  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content, mykey);
   BOOST_CHECK_EQUAL(Script_Content,Script_Content_result);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_processDefaultOptions_exist)
@@ -310,307 +305,307 @@ BOOST_AUTO_TEST_CASE(test_processDefaultOptions_exist)
   std::vector<std::string> defaultBatchOption;
   defaultBatchOption.push_back("I am");
   defaultBatchOption.push_back("Toto");
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "#$";
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "#$";
   std::string test = Script_Content_result;
-  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content_result, key);
+  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content_result, mykey);
   BOOST_CHECK_EQUAL(Script_Content_result, test);
-  
+
 }
 BOOST_AUTO_TEST_CASE(test_processDefaultOptions_variant)
 {
   std::vector<std::string> defaultBatchOption;
   defaultBatchOption.push_back("I am");
   defaultBatchOption.push_back("Toto");
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
-  std::string key = "#$";
-  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content_variant, key);
+  JobServerMock jobserver(key, machineId, sedConfig);
+  std::string mykey = "#$";
+  jobserver.processDefaultOptionsMock(defaultBatchOption,Script_Content_variant, mykey);
   BOOST_CHECK_EQUAL(Script_Content_variant, Script_Content_result_variant);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_computeOutputDir)
 {
 
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string parentDir = "/tmp";
   std::string dirSuffix = "UnitTest";
   jobserver.computeOutputDirMock(parentDir, dirSuffix, Script_Content_output);
   BOOST_CHECK_EQUAL(Script_Content_output, Script_Content_output_result);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_computeOutputDir_no_output)
 {
-  
-  SessionServer session;
+
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig = NULL;
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string parentDir = "/tmp";
   std::string dirSuffix = "UnitTest";
   std::string test = Script_Content;
   jobserver.computeOutputDirMock(parentDir, dirSuffix, Script_Content);
   BOOST_CHECK_EQUAL(Script_Content, test);
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_Slurm)
 {
-  
+
   std::string config = "batchSchedulerType=SLURM\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#SBATCH");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_Torque)
 {
-  
+
   std::string config = "batchSchedulerType=TORQUE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#PBS");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_LL)
 {
-  
+
   std::string config = "batchSchedulerType=LOADLEVELER\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "# @");
   BOOST_CHECK_EQUAL(separator, " = ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_LSF)
 {
-  
+
   std::string config = "batchSchedulerType=LSF\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#BSUB");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_SGE)
 {
-  
+
   std::string config = "batchSchedulerType=SGE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#$");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_PBSPRO)
 {
-  
+
   std::string config = "batchSchedulerType=PBS\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#PBS");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_POSIX)
 {
-  
+
   std::string config = "batchSchedulerType=POSIX\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "#%");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_DELTACLOUD)
 {
-  
+
   std::string config = "batchSchedulerType=DELTACLOUD\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
 BOOST_AUTO_TEST_CASE(test_getBatchDirective_UNDEFINED)
 {
-  
+
   std::string config = "batchSchedulerType=no\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::string separator = "";
   std::string directive = jobserver.getBatchDirectiveMock(separator);
   BOOST_CHECK_EQUAL(directive, "");
   BOOST_CHECK_EQUAL(separator, " ");
-  
+
 }
 
-BOOST_AUTO_TEST_CASE(test_treatSpecificParams_case1)
+BOOST_AUTO_TEST_CASE(test_handleSpecificParams_case1)
 {
-  
+
   std::string config = "batchSchedulerType=SGE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   const std::string specparams = "Toto=gqjgdq";
   std::string test = Script_Content_spec;
-  jobserver.treatSpecificParamsMock(specparams, test);
+  jobserver.handleSpecificParamsMock(specparams, test);
   BOOST_CHECK_EQUAL(test, Script_Content_spec_result);
-  
-  
+
+
 }
 
-BOOST_AUTO_TEST_CASE(test_treatSpecificParams_case2)
+BOOST_AUTO_TEST_CASE(test_handleSpecificParams_case2)
 {
-  
+
   std::string config = "batchSchedulerType=SGE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   const std::string specparams = "Toto=gqjgdq Titi=jqhdkqhdkq";
   std::string test = Script_Content_spec;
-  jobserver.treatSpecificParamsMock(specparams, test);
+  jobserver.handleSpecificParamsMock(specparams, test);
   BOOST_CHECK_EQUAL(test, Script_Content_spec_result2);
 
-  
+
 }
 
-BOOST_AUTO_TEST_CASE(test_treatSpecificParams_case3)
+BOOST_AUTO_TEST_CASE(test_handleSpecificParams_case3)
 {
-  
+
   std::string config = "batchSchedulerType=SGE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   const std::string specparams = "Toto gqjgdq Titijqhdkqhdkq";
   std::string test = Script_Content_spec;
-  jobserver.treatSpecificParamsMock(specparams, test);
+  jobserver.handleSpecificParamsMock(specparams, test);
   BOOST_CHECK_EQUAL(test, Script_Content_spec);
-  
-  
+
+
 }
 
 BOOST_AUTO_TEST_CASE(test_processScript_generic_Torque)
 {
-  
+
   std::string config = "batchSchedulerType=TORQUE\nbatchSchedulerVersion=2.5\n";
   std::string configpath = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-config%%%%%%%").string();
   vishnu::saveInFile(configpath, config);
-  SessionServer session;
+  std::string key = "sessionkey";
   std::string machineId;
   TMS_Data::Job job;
   ExecConfiguration_Ptr sedConfig  = new ExecConfiguration();
   sedConfig->initFromFile(configpath);
-  JobServerMock jobserver(session, machineId, job, sedConfig);
+  JobServerMock jobserver(key, machineId, sedConfig);
   std::vector<std::string> defaultBatchOption;
   defaultBatchOption.push_back("I am");
   defaultBatchOption.push_back("Toto");
@@ -618,8 +613,8 @@ BOOST_AUTO_TEST_CASE(test_processScript_generic_Torque)
   TMS_Data::SubmitOptions options;
   std::string test = generic_Script;
   BOOST_CHECK_EQUAL(jobserver.processScriptMock(test,options, defaultBatchOption, machine), generic_Script_Torque);
-  
-  
+
+
 }
 
 

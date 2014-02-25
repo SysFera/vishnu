@@ -13,8 +13,8 @@ std::string sqlListOfFiles = "SELECT transferId, filetransfer.status, userId, cl
 
 BOOST_AUTO_TEST_CASE( test_processOptions_no_options )
 {
-  SessionServer session;
-  ListFileTransfers listFileTransfers(session);
+  std::string key = "sessionkey";
+  ListFileTransfers listFileTransfers(key);
   std::string test_sql = sqlListOfFiles;
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   listFileTransfers.processOptions(options, test_sql);
@@ -23,12 +23,12 @@ BOOST_AUTO_TEST_CASE( test_processOptions_no_options )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_fromMachineId)
 {
+  std::string key = "sessionkey";
   DbFactory factory;
   ExecConfiguration execConfig;
   DbConfiguration dbConfig(execConfig);
   factory.createDatabaseInstance(dbConfig);
-  SessionServer session;
-  ListFileTransfers listFileTransfers(session);
+  ListFileTransfers listFileTransfers(key);
   std::string test_sql = sqlListOfFiles;
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setFromMachineId("machine1");
@@ -39,8 +39,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_fromMachineId)
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_status)
 {
-  SessionServer session;
-  ListFileTransfers listFileTransfers(session);
+  std::string key = "sessionkey";
+  ListFileTransfers listFileTransfers(key);
   std::string test_sql = sqlListOfFiles;
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setStatus(-2);
@@ -50,8 +50,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_status)
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_transferId)
 {
-  SessionServer session;
-  ListFileTransfers listFileTransfers(session);
+  std::string key = "sessionkey";
+  ListFileTransfers listFileTransfers(key);
   std::string test_sql = sqlListOfFiles;
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setTransferId("idghdfgfqghdfqdg");
@@ -62,8 +62,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_transferId)
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_userId)
 {
-  SessionServer session;
-  ListFileTransfers listFileTransfers(session);
+  std::string key = "sessionkey";
+  ListFileTransfers listFileTransfers(key);
   std::string test_sql = sqlListOfFiles;
   FMS_Data::LsTransferOptions_ptr options = new FMS_Data::LsTransferOptions;
   options->setUserId("idghdfgfqghdfqdg");

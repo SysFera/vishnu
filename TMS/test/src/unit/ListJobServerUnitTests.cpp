@@ -24,9 +24,8 @@ std::string sqlListOfJobs =
 BOOST_AUTO_TEST_CASE( test_processOptions_no_options )
 {
   //TMS_Data::ListJobsOptions, TMS_Data::ListJobs, ListJobServer
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
 
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
@@ -36,9 +35,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_no_options )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_nbCpu )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
 
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
@@ -49,9 +47,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_nbCpu )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_Bad_Nbcpu )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setNbCpu(-2);
@@ -61,9 +58,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_Bad_Nbcpu )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_FromSubmitDate )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   time_t test = 1121211221;
@@ -76,9 +72,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_FromSubmitDate )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_Bad_FromSubmitDate )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setFromSubmitDate(-1);
@@ -89,9 +84,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_Bad_FromSubmitDate )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   time_t test = 1121211221;
@@ -104,9 +98,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_ToSubmitDate )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_Bad_ToSubmitDate )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setFromSubmitDate(-1);
@@ -117,9 +110,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_Bad_ToSubmitDate )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_JobState )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setStatus(5);
@@ -130,9 +122,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobState )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobState )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setStatus(-5);
@@ -141,9 +132,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobState )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_multiple_JobState )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setMultipleStatus("SQWRTCDF");
@@ -153,9 +143,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_multiple_JobState )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_multiple_JobState )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setMultipleStatus("hty");
@@ -164,9 +153,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_multiple_JobState )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_JobPriority )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setPriority(2);
@@ -177,9 +165,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobPriority )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobPriority )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setPriority(-5);
@@ -188,9 +175,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_bad_JobPriority )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_JobOwner )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setOwner("Unit");
@@ -201,9 +187,8 @@ BOOST_AUTO_TEST_CASE( test_processOptions_JobOwner )
 
 BOOST_AUTO_TEST_CASE( test_processOptions_WorkId )
 {
-  SessionServer session;
   std::string machineId;
-  ListJobServer listJobServer(session, machineId);
+  ListJobServer listJobServer(machineId);
   std::string test_sql = sqlListOfJobs;
   TMS_Data::ListJobsOptions_ptr options = new TMS_Data::ListJobsOptions();
   options->setWorkId(2);

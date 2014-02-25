@@ -14,6 +14,7 @@
 #include <iostream>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/format.hpp>
+#include <boost/scoped_ptr.hpp>
 #include "DbFactory.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
