@@ -14,7 +14,6 @@
 #include "Server.hpp"                   // for Server
 #include "UMSServices.hpp"
 #include "TMSServices.hpp"
-#include "IMSServices.hpp"
 #include "FMSServices.hpp"
 
 Annuary::Annuary(const std::vector<boost::shared_ptr<Server> >& serv)
@@ -138,14 +137,6 @@ Annuary::fillServices(std::vector< std::string> &services,
     for (nb = 0; nb < NB_SRV_TMS; nb++) {
       tmpserv = SERVICES_TMS[nb];
       if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
-        tmpserv += "@" + mid;
-      }
-      services.push_back(tmpserv);
-    }
-  } else if (name == "imssed") {
-    for (nb = 0; nb < NB_SRV_IMS; nb++) {
-      tmpserv = SERVICES_IMS[nb];
-      if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
         tmpserv += "@" + mid;
       }
       services.push_back(tmpserv);

@@ -32,7 +32,6 @@
 #include "ExecConfiguration.hpp"
 #include "TMSServices.hpp"
 #include "UMSServices.hpp"
-#include "IMSServices.hpp"
 #include "FMSServices.hpp"
 #include "utilVishnu.hpp"
 
@@ -58,12 +57,6 @@ fill_sMap() {
     (*sMap)[SERVICES_TMS[nb]] = "TMS";
   }
   (*sMap)["heartbeattmssed"] = "TMS";
-
-  /* IMS services */
-  for (nb = 0; nb < NB_SRV_IMS; nb++) {
-    (*sMap)[SERVICES_IMS[nb]] = "IMS";
-  }
-  (*sMap)["heartbeatimssed"] = "IMS";
 
   /* FMS services */
   for (nb = 0; nb < NB_SRV_FMS; nb++) {
@@ -161,8 +154,6 @@ diet_call(diet_profile_t* prof) {
     param = vishnu::UMS_URIADDR;
   } else if (module == "fms") {
     param = vishnu::FMS_URIADDR;
-  } else if (module == "ims") {
-    param = vishnu::IMS_URIADDR;
   } else if (module == "tms") {
     param = vishnu::TMS_URIADDR;
   } else {
@@ -410,11 +401,6 @@ getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
   config.getConfigValues(param, uriv);
   if (uriv.size()>0)
     extractServersFromLine(uriv, allServers, "umssed");
-  uriv.clear();
-  param = vishnu::IMS_URIADDR;
-  config.getConfigValues(param, uriv);
-  if (uriv.size()>0)
-    extractServersFromLine(uriv, allServers, "imssed");
   uriv.clear();
   param = vishnu::FMS_URIADDR;
   config.getConfigValues(param, uriv);
