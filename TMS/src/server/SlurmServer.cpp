@@ -439,12 +439,7 @@ SlurmServer::processOptions(const std::string& scriptPath,
  * \return the converted slurm job id
  */
 uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
-
-  uint32_t slurmJobId;
-  std::istringstream is(jobId);
-  is >> slurmJobId;
-
-  return slurmJobId;
+  return boost::lexical_cast<uint32_t>(jobId);
 }
 
 /**
