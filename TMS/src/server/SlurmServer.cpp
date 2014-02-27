@@ -451,15 +451,15 @@ int
 SlurmServer::cancel(const std::string& jobId) {
 
   int res = slurm_kill_job(convertToSlurmJobId(jobId), SIGKILL, false);
-  if (res) {
-    char* errorMsg = slurm_strerror(res);
-    if(errorMsg!=NULL) {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+std::string(errorMsg));
+  if (res != 0) {
+    char* errorMsg = slurm_strerror(errno);
+    if(errorMsg != NULL) {
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, std::string(errorMsg));
     } else {
-      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: SlurmServer::cancel: Unknown error");
+      throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SlurmServer::cancel: Unknown error");
     }
   }
-  return 0;
+  return res;
 }
 
 /**
@@ -504,12 +504,12 @@ SlurmServer::getJobStartTime(const std::string& jobId) {
   job_info_msg_t * job_buffer_ptr = NULL;
   res = slurm_load_job(&job_buffer_ptr, convertToSlurmJobId(jobId), 1);
 
-  if(!res) {
+  if (res == 0) {
     job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
     startTime = slurmJobInfo.start_time;
   }
 
-  if(job_buffer_ptr!=NULL) {
+  if (job_buffer_ptr != NULL) {
     slurm_free_job_info_msg(job_buffer_ptr);
   }
 
