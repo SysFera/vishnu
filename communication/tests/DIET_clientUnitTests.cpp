@@ -5,7 +5,6 @@
 #include "TMSServices.hpp"
 #include "UMSServices.hpp"
 #include "FMSServices.hpp"
-#include "IMSServices.hpp"
 
 
 BOOST_AUTO_TEST_SUITE( DIET_client_mock_unit_tests )
@@ -44,26 +43,6 @@ BOOST_AUTO_TEST_CASE( my_test_get_n_tms_at )
     if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
       BOOST_MESSAGE("Checking module " << SERVICES_TMS[nb] << "@cluster");
       BOOST_REQUIRE_EQUAL(get_module(std::string(SERVICES_TMS[nb]) + "@cluster"), "TMS");
-    }
-  }
-}
-
-BOOST_AUTO_TEST_CASE( my_test_get_n_ims )
-{
-  unsigned int nb;
-  for (nb = 0; nb < NB_SRV_IMS; nb++) {
-    BOOST_MESSAGE("Checking module " << SERVICES_IMS[nb]);
-    BOOST_REQUIRE_EQUAL(get_module(SERVICES_IMS[nb]), "IMS");
-  }
-}
-
-BOOST_AUTO_TEST_CASE( my_test_get_n_ims_at )
-{
-  unsigned int nb;
-  for (nb = 0; nb < NB_SRV_IMS; nb++) {
-    if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
-      BOOST_MESSAGE("Checking module " << SERVICES_IMS[nb] << "@cluster");
-      BOOST_REQUIRE_EQUAL(get_module(std::string(SERVICES_IMS[nb]) + "@cluster"), "IMS");
     }
   }
 }

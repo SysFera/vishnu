@@ -29,7 +29,6 @@ namespace bs = boost::system;
 class CommFixture {
 
 public:
-  UMS_Data::Configuration mconf ;
   std::string mums_version;
   std::string mtms_version;
   std::string mfms_version;

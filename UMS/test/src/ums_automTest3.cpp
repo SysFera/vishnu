@@ -52,7 +52,6 @@ BOOST_AUTO_TEST_CASE( Account_base )
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
   std::string key = "";
-  Configuration conf ;
   ListLocalAccounts_ptr lia  = ecoreFactory->createListLocalAccounts();
   ListLocalAccOptions lioa ;
 
@@ -143,7 +142,6 @@ BOOST_AUTO_TEST_CASE( Account_failure )
   use->setPrivilege(pri) ;
   use->setEmail    (mail);
   std::string key = "";
-  Configuration conf ;
   ListLocalAccounts_ptr lia  = ecoreFactory->createListLocalAccounts();
   ListLocalAccOptions lioa ;
 

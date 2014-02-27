@@ -36,7 +36,6 @@ public:
   std::string m_test_ums_user_vishnu_login;
   std::string m_test_ums_user_vishnu_pwd;
   std::string m_test_ums_user_vishnu_machineid;
-  UMS_Data::Configuration mconf ;
 
   UMSSeDFixture() {
     BOOST_TEST_MESSAGE( "== Test setup [BEGIN]: Initializing client ==" );

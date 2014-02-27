@@ -5,7 +5,6 @@
 #include "Annuary.hpp"
 #include "UMSServices.hpp"
 #include "FMSServices.hpp"
-#include "IMSServices.hpp"
 #include "TMSServices.hpp"
 
 std::vector<boost::shared_ptr<Server> > mservers;
@@ -119,25 +118,6 @@ BOOST_AUTO_TEST_CASE( test_remove_bad_empty )
   ann.remove(name, uri);
   ann.remove(name, uri);
   BOOST_REQUIRE(ann.get().empty());
-}
-
-BOOST_AUTO_TEST_CASE( test_setInitConfig_IMS_n )
-{
-  Annuary ann;
-  ann.setInitConfig("IMS", cfgInfo);
-
-  unsigned int nb;
-  std::string tmpserv;
-
-  for (nb = 0; nb < NB_SRV_IMS; nb++) {
-    tmpserv = SERVICES_IMS[nb];
-    if (MACHINE_SPECIC_SERVICES_IMS[nb]) {
-      BOOST_REQUIRE(!ann.get(tmpserv + "@cluster1").empty());
-      BOOST_REQUIRE(!ann.get(tmpserv + "@cluster2").empty());
-    } else {
-      BOOST_REQUIRE_EQUAL(ann.get(tmpserv).size(), 2);
-    }
-  }
 }
 
 BOOST_AUTO_TEST_CASE( test_setInitConfig_TMS_n )
