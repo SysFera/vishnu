@@ -450,7 +450,6 @@ uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
 int
 SlurmServer::cancel(const std::string& jobId) {
 
-  std::cout << "to cancel " << jobId<<">>\n";
   int res = slurm_kill_job(convertToSlurmJobId(jobId), SIGKILL, false);
   if (res != 0) {
     char* errorMsg = slurm_strerror(errno);
