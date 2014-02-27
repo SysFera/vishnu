@@ -273,8 +273,8 @@ SlurmServer::processOptions(const std::string& scriptPath,
                             const TMS_Data::SubmitOptions& options,
                             std::vector<std::string>&cmdsOptions) {
 
-  if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
-    throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
+  if(! options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
+    throw UserException(ERRCODE_INVALID_PARAM, "NbCpu and NbNodesAndCpuPerNode options must be used together");
   }
 
   if(options.isSelectQueueAutom() && !options.getQueue().empty() ) {
@@ -420,8 +420,8 @@ SlurmServer::processOptions(const std::string& scriptPath,
           long qwalltimeMax = queue->getWallTime();
           int qCpuMax = queue->getMaxProcCpu();
 
-          if((walltime <= qwalltimeMax || qwalltimeMax==0) &&
-             (cpu <= qCpuMax)){
+          if ((walltime <= qwalltimeMax || qwalltimeMax==0)
+             && (cpu <= qCpuMax)){
             cmdsOptions.push_back("-p");
             cmdsOptions.push_back(queueName);
             break;
@@ -450,6 +450,7 @@ uint32_t SlurmServer::convertToSlurmJobId(const std::string& jobId) {
 int
 SlurmServer::cancel(const std::string& jobId) {
 
+  std::cout << "to cancel " << jobId<<">>\n";
   int res = slurm_kill_job(convertToSlurmJobId(jobId), SIGKILL, false);
   if (res != 0) {
     char* errorMsg = slurm_strerror(errno);

@@ -9,7 +9,6 @@
 #include <iterator>                     // for back_insert_iterator, etc
 #include <string>
 #include <utility>                      // for pair
-
 #include "Worker.hpp"                   // for serverWorkerSockets
 #include "zhelpers.hpp"
 #include "zmq.hpp"

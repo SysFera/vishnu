@@ -162,7 +162,11 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
   boost::regex reg("^\"?(\\d+)(?::(\\d+))?(?::(\\d+))?(?::(\\d+))?\"?$");
   boost::smatch groups;
 
-  long time = 0;
+  long time = 21600; // Fix default value to 6 hour
+
+  if (walltime.empty()) {
+    return time;  // Default value;
+  }
 
   if (boost::regex_match(walltime, groups, reg)) {
     boost::smatch::const_iterator it;
@@ -173,8 +177,7 @@ vishnu::convertStringToWallTime(const std::string& walltime) {
     /* Count the number of not empty groups (-1, as the first element
      * in the group is the full string)
      */
-    unsigned int nbFound =
-      groups.size() - 1 - std::count(it, groups.end(), "");
+    unsigned int nbFound = groups.size() - 1 - std::count(it, groups.end(), "");
 
     if (nbFound == 4) {  // days:hours:minutes:seconds
       time += 86400 * boost::lexical_cast<long>(groups[1]);

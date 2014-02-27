@@ -82,21 +82,24 @@ int JobServer::submitJob(std::string& scriptContent,
                          const int& vishnuId,
                          const std::vector<std::string>& defaultBatchOption)
 {
-  mlastError.clear();
-  int errCode = ERRCODE_RUNTIME_ERROR;
-  try {
+  if (scriptContent.empty()) {
+    throw UserException(ERRCODE_INVALID_PARAM, "Empty script content");
+  }
 
+  try {
     // Get user info
     std::string vishnuJobId = vishnu::getObjectId(vishnuId, "formatidjob", vishnu::JOB, mmachineId);
     mjob.setSubmitMachineId(mmachineId);
     mjob.setJobId(vishnuJobId);
     mjob.setStatus(vishnu::STATE_UNDEFINED);
     mjob.setOutputDir("");
-    mjob.setWorkId(options->getIntProperty("workid"));
+    mjob.setWorkId(options->getIntProperty("workid", 0));
     mjob.setJobPath(options->getStringProperty("scriptpath"));
     mjob.setOwner(muserSessionInfo.user_aclogin);
 
-    if (options->getIntProperty("posix")) {
+    int usePosix = options->getIntProperty("posix");
+    if (usePosix != JsonObject::UNDEFINED_PROPERTY
+        && usePosix != 0) {
       mbatchType = POSIX;
     }
 
@@ -124,12 +127,11 @@ int JobServer::submitJob(std::string& scriptContent,
       handleSshBatchExec(SubmitBatchAction, scriptPath, options, mjob, mbatchType, mbatchVersion);
     }
   } catch (VishnuException& ex) {
-    scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
     std::string errorPath = (boost::format("/%1%/vishnu-%2%.err")
                              % std::getenv("HOME")
                              % mjob.getJobId()
                              ).str();
-    vishnu::saveInFile(errorPath, mlastError);
+    vishnu::saveInFile(errorPath, ex.what());
     mjob.setErrorPath(errorPath);
     mjob.setOutputPath("");
     mjob.setOutputDir("");
@@ -223,29 +225,35 @@ JobServer::handleNativeBatchExec(int action,
       LOG("[ERROR] " + std::string(strerror(errno)), 2);
       exit(handlerExitCode);
     }
-    switch(action) {
-    case SubmitBatchAction:
-      handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), job);
-      break;
-    case CancelBatchAction:
-      if (mbatchType == DELTACLOUD) {
-        handlerExitCode = batchServer->cancel(job.getJobId()+"@"+job.getVmId());
-      } else {
-        handlerExitCode = batchServer->cancel(job.getBatchJobId());
+    try {
+      handlerExitCode = 0;
+      switch(action) {
+      case SubmitBatchAction:
+        handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), job);
+        break;
+      case CancelBatchAction:
+        if (mbatchType == DELTACLOUD) {
+          handlerExitCode = batchServer->cancel(job.getJobId()+"@"+job.getVmId());
+        } else {
+          handlerExitCode = batchServer->cancel(job.getBatchJobId());
+        }
+        job.setStatus(vishnu::STATE_CANCELLED);
+        break;
+      default:
+        throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
+        break;
       }
-      job.setStatus(vishnu::STATE_CANCELLED);
-      break;
-    default:
-      throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
-      break;
+      finalizeExecution(action, job);
+    } catch(const VishnuException & ex) {
+      handlerExitCode = -1;
+      LOG((boost::format("[ERROR] %1%") % ex.what()).str(), 4);
     }
-    finalizeExecution(action, job);
     exit(handlerExitCode);
   } else { // parent process
     int retCode;
     waitpid(pid, &retCode, 0);
     if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
-      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Unexpected batch exec terminaison");
+      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Batch operation failed");
     }
   }
 }
