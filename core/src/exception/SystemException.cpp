@@ -25,9 +25,6 @@ SystemException::getTypeS() const{
   case 2 :
    errorTypeStr= "FMS";
     break;
-  case 3 :
-   errorTypeStr= "IMS";
-    break;
   case 4 :
    errorTypeStr= "NONE";
     break;

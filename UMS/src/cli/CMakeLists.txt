@@ -15,7 +15,6 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   add_user update_user delete_user
   change_password reset_password
   add_local_account update_local_account delete_local_account
-  save_configuration restore_configuration
   add_machine update_machine delete_machine
   configure_default_option configure_option
   list_local_accounts list_machines list_history_cmd list_options
@@ -37,6 +36,7 @@ set(ALLCLI current_session_id connect connect_m reconnect reconnect_m close
   ping
   get_server_version
   list_servers
+  export_commands
   )
 
 #declare all scripted-based commands

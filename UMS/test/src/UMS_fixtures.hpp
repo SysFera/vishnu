@@ -72,8 +72,6 @@ public:
 
     UMS_Data::ConnectOptions cop;
     UMS_Data::Session sess;
-    vishnu::connect(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd, sess, cop );
-    vishnu::saveConfiguration(sess.getSessionKey(), mconf);
 
 
     BOOST_TEST_MESSAGE( "== Test setup [END]: LOADING SETUP ==");
@@ -83,8 +81,6 @@ public:
   ~UMSSeDFixture() {
     UMS_Data::ConnectOptions cop;
     UMS_Data::Session sess;
-    vishnu::connect(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd, sess, cop );
-    vishnu::restoreConfiguration(sess.getSessionKey(), mconf.getFilePath());
 
     BOOST_TEST_MESSAGE( "== Test teardown [BEGIN]: UMSSeDFixture ==" );
     BOOST_TEST_MESSAGE( "== Test teardown [END]: UMSSeDFixture ==" );

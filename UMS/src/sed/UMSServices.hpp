@@ -27,8 +27,6 @@ typedef enum {
   LOCALACCOUNTCREATE,
   LOCALACCOUNTUPDATE,
   LOCALACCOUNTDELETE,
-  CONFIGURATIONSAVE,
-  CONFIGURATIONRESTORE,
   OPTIONVALUESET,
   OPTIONVALUESETDEFAULT,
   SESSIONLIST,
@@ -53,6 +51,7 @@ typedef enum {
   INT_DEFINEAUTHIDENTIFIER,
   INT_DEFINEWORKIDENTIFIER,
   HEARTBEATUMS,
+  EXPORT,
   NB_SRV_UMS  // MUST always be the last
 } ums_service_t;
 
@@ -71,8 +70,6 @@ static const char* SERVICES_UMS[NB_SRV_UMS] = {
   "localAccountCreate",  // 11
   "localAccountUpdate",  // 12
   "localAccountDelete",  // 13
-  "configurationSave",  // 14
-  "configurationRestore",  // 15
   "optionValueSet",  // 16
   "optionValueSetDefault",  // 17
   "sessionList",  // 18
@@ -96,7 +93,8 @@ static const char* SERVICES_UMS[NB_SRV_UMS] = {
   "int_defineMachineIdentifier", // 36
   "int_defineAuthIdentifier", // 37
   "int_defineWorkIdentifier", // 38
-  "heartbeatumssed" //39
+  "heartbeatumssed", //39 -2
+  "exportCommands" // 40
 };
 
 static const bool MACHINE_SPECIC_SERVICES_UMS[NB_SRV_UMS] = {
@@ -114,8 +112,6 @@ static const bool MACHINE_SPECIC_SERVICES_UMS[NB_SRV_UMS] = {
   false,  // 11
   false,   // 12
   false,   // 13
-  false,   // 14
-  false,   // 15
   false,   // 16
   false,   // 17
   false,   // 18
@@ -139,7 +135,8 @@ static const bool MACHINE_SPECIC_SERVICES_UMS[NB_SRV_UMS] = {
   false,  // 36
   false,  // 37
   false,   // 38
-  true // 39
+  true, // 39 -2
+  false // 40
 };
 
 #endif  // _UMSSERVICES_HPP_

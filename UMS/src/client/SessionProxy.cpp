@@ -228,7 +228,7 @@ SessionProxy::close() {
 
   std::string sessionKey =  msessionKey;
 
-  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[SESSIONCLOSE], 0);
+  diet_profile_t* profile = diet_profile_alloc(SERVICES_UMS[SESSIONCLOSE], 1);
   //IN Parameters
   if (diet_string_set(profile, 0, sessionKey)) {
     raiseCommunicationMsgException("Failed setting session parameter in profile");

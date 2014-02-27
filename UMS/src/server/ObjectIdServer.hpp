@@ -11,7 +11,6 @@
 #include <string>
 #include <ecore.hpp> // Ecore metamodel
 #include <ecorecpp.hpp> // EMF4CPP utils
-#include "IMS_Data.hpp"
 #include "SessionServer.hpp"
 #include "Database.hpp"
 

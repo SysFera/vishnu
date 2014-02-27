@@ -60,14 +60,6 @@ const int VISHNU_UPDATE_LOCAL_ACCOUNT     = 10;
  */
 const int VISHNU_DELETE_LOCAL_ACCOUNT     = 11;
 /**
- * \brief Save configuration key
- */
-const int VISHNU_SAVE_CONFIGURATION       = 12;
-/**
- * \brief Restore configuration key
- */
-const int VISHNU_RESTORE_CONFIGURATION    = 13;
-/**
  * \brief Add machine key
  */
 const int VISHNU_ADD_MACHINE 	          = 14;
@@ -168,6 +160,10 @@ const int VISHNU_DEFINE_AID = 37;
  * \brief Define work system id
  */
 const int VISHNU_DEFINE_WID = 38;
+/**
+ * \brief To export commands
+ */
+const int VISHNU_EXPORT     = 39;
 
 
 /**
@@ -381,24 +377,6 @@ protected:
    * \brief To decode the add user call sequence of the string returned by finalize
    * \param separator A vector containing the position of the separator in the message msg
    * \param msg The message to decode
-   * \return The cli like save configuration command
-   */
-  virtual std::string
-  decodeSaveConf(std::vector<unsigned int> separator, const std::string& msg);
-
-  /**
-   * \brief To decode the add user call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
-   * \return The cli like crestore configuration command
-   */
-  virtual std::string
-  decodeRestoreConf(std::vector<unsigned int> separator, const std::string& msg);
-
-  /**
-   * \brief To decode the add user call sequence of the string returned by finalize
-   * \param separator A vector containing the position of the separator in the message msg
-   * \param msg The message to decode
    * \return The cli like add machine command
    */
   virtual std::string
@@ -560,6 +538,14 @@ protected:
    */
   virtual std::string
   decodeWid(std::vector<unsigned int> separator, const std::string& msg);
+  /**
+   * \brief To decode the close call sequence of the string returned by finalize
+   * \param separator A vector containing the position of the separator in the message msg
+   * \param msg The message to decode
+   * \return The cli like close command
+   */
+  virtual std::string
+  decodeExp(std::vector<unsigned int> separator, const std::string& msg);
 
   /**
    * \brief To deserialize the serial string, make a user objet, and get the values in the same string

@@ -7,7 +7,6 @@
 #include "utilClient.hpp"
 #include <iostream>                     // for basic_istream::operator>>, etc
 #include "FMSVishnuException.hpp"       // for FMSVishnuException
-#include "IMSVishnuException.hpp"       // for IMSVishnuException
 #include "TMSVishnuException.hpp"       // for TMSVishnuException
 #include "UMSVishnuException.hpp"       // for UMSVishnuException
 #include "utilVishnu.hpp"
@@ -46,8 +45,6 @@ void raiseExceptionIfNotEmptyMsg(const std::string& msg) {
           throw TMSVishnuException(code, message);
         }else if ((code >= 200) && (code < 300)){
           throw FMSVishnuException(code, message);
-        } else if ((code >= 300) && (code < 400)) {
-          throw IMSVishnuException(code, message);
         } else {
           std::string tmp = "Invalid code: ";
           tmp += vishnu::convertToString(code);

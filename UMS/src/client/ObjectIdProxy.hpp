@@ -9,7 +9,6 @@
 #define __OBJECTIDPROXY__HH__
 
 #include <string>
-#include "IMS_Data.hpp"
 #include "SessionProxy.hpp"
 
 

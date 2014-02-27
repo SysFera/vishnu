@@ -44,7 +44,6 @@ namespace vishnu {
 static const std::string ROOTUSERNAME = "root";
 static const std::string UMSMAPPERNAME = "UMS";
 static const std::string TMSMAPPERNAME = "TMS";
-static const std::string IMSMAPPERNAME = "IMS";
 static const std::string FMSMAPPERNAME = "FMS";
 static const int PASSWORD_MAX_SIZE = 8;
 static const int PASSWORD_MIN_SIZE = 6;

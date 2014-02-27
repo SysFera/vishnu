@@ -13,6 +13,8 @@
 #include "vishnu_version.hpp"
 #include "VersionManager.hpp"
 #include "ObjectIdServer.hpp"
+#include "ExportServer.hpp"
+#include "ExportFactory.hpp"
 
 using namespace vishnu;
 
@@ -840,110 +842,6 @@ solveLocalAccountDelete(diet_profile_t* pb) {
 }
 
 
-/**
-* \brief Function to solve the service solveConfigurationSave
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
-int
-solveConfigurationSave(diet_profile_t* pb) {
-  std::string sessionKey;
-  std::string configurationSerialized("");
-  std::string cmd;
-
-  // IN Parameter
-  diet_string_get(pb, 0, sessionKey);
-
-  // reset profile to handle result
-  diet_profile_reset(pb, 2);
-
-  SessionServer sessionServer = SessionServer(sessionKey);
-  ConfigurationServer configurationServer = ConfigurationServer(sessionServer);
-
-  try {
-    int mapperkey;
-    // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_save_configuration");
-    cmd = mapper->finalize(mapperkey);
-
-    configurationServer.save();
-    ::ecorecpp::serializer::serializer _ser;
-    configurationSerialized =  _ser.serialize_str(configurationServer.getData());
-
-    // OUT Parameters
-    diet_string_set(pb, 0, "success");
-    diet_string_set(pb, 1, configurationSerialized);
-    // To save the connection
-    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& ex) {
-    try {
-      sessionServer.finish(cmd, UMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      ex.appendMsgComp(fe.what());
-    }
-    diet_string_set(pb, 0, "error");
-    diet_string_set(pb, 1, ex.what());
-  }
-  return 0;
-}
-
-/**
-* \brief Function to solve the service solveConfigurationRestore
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
-int
-solveConfigurationRestore(diet_profile_t* pb) {
-  std::string sessionKey;
-  std::string configurationSerialized;
-  std::string cmd;
-
-  // IN Parameters
-  diet_string_get(pb, 0, sessionKey);
-  diet_string_get(pb, 1, configurationSerialized);
-
-  // reset profile to handle result
-  diet_profile_reset(pb, 2);
-
-  SessionServer sessionServer = SessionServer(sessionKey);
-  UMS_Data::Configuration_ptr configuration = NULL;
-
-  try {
-    int mapperkey;
-    std::string msgComp = "The file content is invalid";
-
-    // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
-    mapperkey = mapper->code("vishnu_restore_configuration");
-    mapper->code(configurationSerialized, mapperkey);
-    cmd = mapper->finalize(mapperkey);
-
-    if (!parseEmfObject(configurationSerialized, configuration, msgComp)) {
-      throw UMSVishnuException(ERRCODE_INVALID_PARAM, msgComp);
-    }
-
-    ConfigurationServer configurationServer = ConfigurationServer(configuration, sessionServer);
-    configurationServer.restore(ServerUMS::getInstance()->getVishnuId());
-
-    // OUT Parameter
-    diet_string_set(pb, 0, "success");
-    diet_string_set(pb, 1);
-    // To save the connection
-    sessionServer.finish(cmd, UMS, vishnu::CMDSUCCESS);
-  } catch (VishnuException& ex) {
-    try {
-      sessionServer.finish(cmd, UMS, vishnu::CMDFAILED);
-    } catch (VishnuException& fe) {
-      ex.appendMsgComp(fe.what());
-    }
-
-    diet_string_set(pb, 0, "error");
-    diet_string_set(pb, 1, ex.what());
-  }
-  return 0;
-}
-
 
 /**
 * \brief Function to solve the service solveOptionValueSet
@@ -1595,7 +1493,7 @@ solveSetUID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_user_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1612,11 +1510,11 @@ solveSetUID(diet_profile_t* pb) {
     diet_string_set(pb, 1);
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -1645,7 +1543,7 @@ solveSetJID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_job_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1662,11 +1560,11 @@ solveSetJID(diet_profile_t* pb) {
     diet_string_set(pb, 1, "");
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -1695,7 +1593,7 @@ solveSetTID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_transfer_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1711,11 +1609,11 @@ solveSetTID(diet_profile_t* pb) {
     diet_string_set(pb, 1, "");
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -1744,7 +1642,7 @@ solveSetMID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_machine_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1760,11 +1658,11 @@ solveSetMID(diet_profile_t* pb) {
     diet_string_set(pb, 1, "");
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -1793,7 +1691,7 @@ solveSetAID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_auth_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1809,11 +1707,11 @@ solveSetAID(diet_profile_t* pb) {
     diet_string_set(pb, 1, "");
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
@@ -1842,7 +1740,7 @@ solveSetWID(diet_profile_t* pb) {
   try {
     userServer.init();
     // MAPPER CREATION
-    Mapper *mapper = MapperRegistry::getInstance()->getMapper(IMSMAPPERNAME);
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
     mapperkey = mapper->code("vishnu_define_work_identifier");
     mapper->code(std::string(fmt), mapperkey);
     cmd = mapper->finalize(mapperkey);
@@ -1858,17 +1756,75 @@ solveSetWID(diet_profile_t* pb) {
     diet_string_set(pb, 1, "");
 
     // Finishing the command as a success
-    sessionServer.finish(cmd, IMS, CMDSUCCESS);
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
   } catch (VishnuException& ex) {
     try {
       // Finishing the command as an error
-      sessionServer.finish(cmd, IMS, CMDFAILED);
+      sessionServer.finish(cmd, UMS, CMDFAILED);
     } catch (VishnuException& fe) {
       ex.appendMsgComp(fe.what());
     }
 
     diet_string_set(pb, 0, "error");
     diet_string_set(pb, 1, ex.what());
+  }
+  return 0;
+}
+
+
+int
+solveExport(diet_profile_t* pb){
+
+  std::string sessionKey;
+  std::string oldSessionId;
+  std::string filename ;
+  std::string content;
+  int mapperkey;
+  std::string cmd;
+  std::string error;
+  std::string retErr = "";
+
+  diet_string_get(pb,0, sessionKey);
+  diet_string_get(pb,1, oldSessionId);
+  diet_string_get(pb,2, filename);
+
+  SessionServer sessionServer = SessionServer(std::string(sessionKey));
+  UserServer userServer = UserServer(sessionServer);
+
+  try {
+    userServer.init();
+    //MAPPER CREATION
+    Mapper *mapper = MapperRegistry::getInstance()->getMapper(UMSMAPPERNAME);
+    mapperkey = mapper->code("vishnu_export_commands");
+    mapper->code(std::string(oldSessionId), mapperkey);
+    mapper->code(std::string(filename), mapperkey);
+    cmd = mapper->finalize(mapperkey);
+    sessionServer.check();
+
+    // Creating the process server with the options
+    ExportServer* exp = ExportFactory::getExporter(userServer);
+
+    // Exporting and setting the results in content
+    exp->exporte(oldSessionId, content);
+
+    // Setting out diet param
+    diet_string_set(pb,3, content.c_str());
+    diet_string_set(pb,4, retErr.c_str());
+
+    // Finishing the command as a success
+    sessionServer.finish(cmd, UMS, CMDSUCCESS);
+  } catch (VishnuException& e){
+    try{
+      // Finishing the command as an error
+      sessionServer.finish(cmd, UMS, CMDFAILED);
+    }catch(VishnuException& fe){
+      error = fe.what();
+    }
+    e.appendMsgComp(error);
+    retErr = e.buildExceptionString();
+    // Setting diet output parameters
+    diet_string_set(pb,3, "");
+    diet_string_set(pb,4, retErr.c_str());
   }
   return 0;
 }

@@ -106,6 +106,7 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
         //Send email
         std::string emailBody = getMailContent(*user, true);
+        std::cout << "sending mail " << emailBody << std::endl;
         sendMailToUser(*user, emailBody, "Vishnu message: user created", sendmailScriptPath);
 
       }// END If the user to add exists
@@ -273,7 +274,7 @@ UserServer::changePassword(std::string newPassword) {
 
       //append SQL query to update the passwordstate
       sqlChangePwd += (boost::format("UPDATE users SET passwordstate=1 "
-                                     " WHERE userid='%1%' AND pwd='%2% AND status=%3%;"
+                                     " WHERE userid='%1%' AND pwd='%2%' AND status=%3%;"
                                      )
                        %mdatabaseVishnu->escapeData(muser.getUserId())
                        %mdatabaseVishnu->escapeData(newPassword)

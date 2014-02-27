@@ -20,12 +20,12 @@ set(client_SRCS client/SessionProxy.cpp
   client/UserProxy.cpp
   client/MachineProxy.cpp
   client/LocalAccountProxy.cpp
-  client/ConfigurationProxy.cpp
   client/OptionValueProxy.cpp
   client/utilsClient.cpp
   client/UtilsProxy.cpp
   client/ObjectIdProxy.cpp
   client/PingerProxy.cpp
+  client/ExporterProxy.cpp
   client/VersionProxy.cpp
   client/NetrcReader.cpp)
 
@@ -82,11 +82,16 @@ if(COMPILE_SERVER_UMS)
     server/OptionValueServer.cpp
     server/MachineServer.cpp
     server/LocalAccountServer.cpp
-    server/ConfigurationServer.cpp
     server/CommandServer.cpp
     server/ObjectIdServer.cpp
     server/AuthSystemServer.cpp
     server/AuthAccountServer.cpp
+    server/ExportServer.cpp
+    server/ExportFactory.cpp
+    server/export/shell/ShellExporter.cpp
+    server/export/shell/UMSShellMapper.cpp
+    server/export/shell/TMSShellMapper.cpp
+    server/export/shell/FMSShellMapper.cpp
     )
 
   add_library(vishnu-ums-server ${server_SRCS})

@@ -86,22 +86,6 @@ BOOST_AUTO_TEST_CASE( Account_base )
     BOOST_CHECK    (close             (sess.getSessionKey()                )==0);
   }
 
-  BOOST_MESSAGE(" Testing save conf"    );
-  {
-    BOOST_CHECK    (connect(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, sess, cop )==0);
-    BOOST_CHECK    (saveConfiguration(sess.getSessionKey(), conf          )==0);
-    BOOST_CHECK    (close            (sess.getSessionKey()                )==0);
-  }
-
-  BOOST_MESSAGE(" Testing restore conf"    );
-  {
-    BOOST_CHECK    (connect             (m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd  , sess  , cop)==0);
-    BOOST_MESSAGE("Configuration = "+conf.getFilePath());
-    BOOST_CHECK    (restoreConfiguration(sess.getSessionKey(), conf.getFilePath()            )==0);
-    BOOST_CHECK    (changePassword(m_test_ums_admin_vishnu_login, m_test_ums_admin_vishnu_pwd, m_test_ums_admin_vishnu_pwd       )==0);
-    BOOST_CHECK    (changePassword(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd , m_test_ums_root_vishnu_pwd       )==0);
-    BOOST_CHECK    (close               (sess.getSessionKey()                   )==0);
-  }
 
   BOOST_MESSAGE(" Testing normal list local account U4.3B" );
   {
@@ -219,14 +203,6 @@ BOOST_AUTO_TEST_CASE( Account_failure )
     BOOST_CHECK    (close             (sess.getSessionKey()                 )==0);
   }
 
-  BOOST_MESSAGE(" Testing restore conf"    );
-  {
-    BOOST_CHECK    (connect             (m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd , sess  , cop)==0);
-    BOOST_CHECK    (saveConfiguration   (sess.getSessionKey(), conf             )==0);
-    //  conf->setFilePath("bad");
-    BOOST_CHECK_THROW      (restoreConfiguration(sess.getSessionKey(), "toto"            ), VishnuException);
-    BOOST_CHECK    (close               (sess.getSessionKey()                   )==0);
-  }
 
   BOOST_MESSAGE(" Testing bad machine on list local account U4.3E" );
   {

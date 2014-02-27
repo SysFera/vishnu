@@ -43,7 +43,6 @@
 #include "UMS_Data/Machine.hpp"
 #include "UMS_Data/ListMachines.hpp"
 #include "UMS_Data/ListMachineOptions.hpp"
-#include "UMS_Data/Configuration.hpp"
 #include "UMS_Data/OptionValue.hpp"
 #include "UMS_Data/ListOptionsValues.hpp"
 #include "UMS_Data/ListOptOptions.hpp"

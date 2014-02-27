@@ -16,7 +16,6 @@
 #include "SessionServer.hpp"
 #include "MachineServer.hpp"
 #include "LocalAccountServer.hpp"
-#include "ConfigurationServer.hpp"
 #include "QueryServer.hpp"
 #include "ListUsersServer.hpp"
 #include "ListMachinesServer.hpp"
@@ -132,20 +131,6 @@ solveLocalAccountUpdate(diet_profile_t* pb);
 int
 solveLocalAccountDelete(diet_profile_t* pb);
 
-/**
-* \brief Function to solve the service solveConfigurationSave
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
-int
-solveConfigurationSave(diet_profile_t* pb);
-/**
-* \brief Function to solve the service solveConfigurationRestore
-* \param pb is a structure which corresponds to the descriptor of a profile
-* \return raises an exception on error
-*/
-int
-solveConfigurationRestore(diet_profile_t* pb);
 /**
 * \brief Function to solve the service solveOptionValueSet
 * \param pb is a structure which corresponds to the descriptor of a profile
@@ -318,5 +303,12 @@ solveSetAID(diet_profile_t* pb);
  */
 int
 solveSetWID(diet_profile_t* pb);
+/**
+ * \brief Function to solve the service export
+ * \param pb is a structure which corresponds to the descriptor of a profile
+ * \return raises an exception on error
+ */
+int
+solveExport(diet_profile_t* pb);
 
 #endif // SERVERUMS

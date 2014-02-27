@@ -55,8 +55,6 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg) {
   mmap.insert(pair<int, string>(VISHNU_ADD_LOCAL_ACCOUNT       , "vishnu_add_local_account"));
   mmap.insert(pair<int, string>(VISHNU_UPDATE_LOCAL_ACCOUNT    , "vishnu_update_local_account"));
   mmap.insert(pair<int, string>(VISHNU_DELETE_LOCAL_ACCOUNT    , "vishnu_delete_local_account"));
-  mmap.insert(pair<int, string>(VISHNU_SAVE_CONFIGURATION      , "vishnu_save_configuration"));
-  mmap.insert(pair<int, string>(VISHNU_RESTORE_CONFIGURATION   , "vishnu_restore_configuration"));
   mmap.insert(pair<int, string>(VISHNU_ADD_MACHINE             , "vishnu_add_machine"));
   mmap.insert(pair<int, string>(VISHNU_UPDATE_MACHINE          , "vishnu_update_machine"));
   mmap.insert(pair<int, string>(VISHNU_DELETE_MACHINE          , "vishnu_delete_machine"));
@@ -82,6 +80,7 @@ UMSMapper::UMSMapper(MapperRegistry* reg, string na):Mapper(reg) {
   mmap.insert(pair<int, string>(VISHNU_DEFINE_FID              , "vishnu_define_transfer_identifier"));
   mmap.insert(pair<int, string>(VISHNU_DEFINE_AID              , "vishnu_define_auth_identifier"));
   mmap.insert(pair<int, string>(VISHNU_DEFINE_WID              , "vishnu_define_work_identifier"));
+  mmap.insert (pair<int, string>(VISHNU_EXPORT                 , "vishnu_export_commands"));
 };
 
 int
@@ -209,12 +208,6 @@ UMSMapper::decode(const string& msg) {
   case VISHNU_DELETE_LOCAL_ACCOUNT    :
     res = decodeDelAcc(separatorPos, msg);
     break;
-  case VISHNU_SAVE_CONFIGURATION      :
-    res = decodeSaveConf(separatorPos, msg);
-    break;
-  case VISHNU_RESTORE_CONFIGURATION   :
-    res = decodeRestoreConf(separatorPos, msg);
-    break;
   case VISHNU_ADD_MACHINE 	       :
     res = decodeAddM(separatorPos, msg);
     break;
@@ -289,6 +282,9 @@ UMSMapper::decode(const string& msg) {
     break;
   case VISHNU_DEFINE_WID 	:
     res = decodeAid(separatorPos, msg);
+    break;
+  case VISHNU_EXPORT           	    :
+    res = decodeExp(separatorPos, msg);
     break;
   default :
     res = "";
@@ -718,37 +714,6 @@ UMSMapper::decodeListAuthSys(vector<unsigned int> separator, const string& msg) 
   return res;
 }
 
-
-// %RELAX<MISRA_0_1_3> Because no explicit parameter to close session, useless to parse, just return the function name
-string
-UMSMapper::decodeSaveConf(vector<unsigned int> separator, const string& msg) {
-  return (mmap.find(VISHNU_SAVE_CONFIGURATION))->second;
-}
-
-string
-UMSMapper::decodeRestoreConf(vector<unsigned int> separator, const string& msg) {
-  string a;
-  string res = string("");
-  res += (mmap.find(VISHNU_RESTORE_CONFIGURATION))->second;
-  res += " ";
-  a = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
-
-  ecorecpp::parser::parser parser;
-  UMS_Data::Configuration_ptr ac = NULL;
-
-  // To parse the object serialized
-  if (!parseEmfObject(std::string(std::string(a)), ac)) {
-    throw UMSVishnuException(ERRCODE_INVALID_PARAM);
-  }
-
-  res += ac->getFilePath();
-
-  if (ac != NULL) {
-    delete ac;
-  }
-
-  return res;
-}
 
 string
 UMSMapper::decodeAddM(vector<unsigned int> separator, const string& msg) {
@@ -1315,6 +1280,20 @@ UMSMapper::decodeWid(vector<unsigned int> separator, const string& msg) {
   res += (mmap.find(VISHNU_DEFINE_WID))->second;
   res += " ";
   u    = msg.substr(separator.at(0)+1, msg.size()-separator.at(0));
+  res += u;
+  return res;
+}
+
+string
+UMSMapper::decodeExp(vector<unsigned int> separator, const string& msg) {
+  string res = string("");
+  string u;
+  res += (mmap.find(VISHNU_EXPORT))->second;
+  res += " ";
+  u    = msg.substr(separator.at(0)+1, separator.at(1)-2);
+  res += u;
+  res += " ";
+  u    = msg.substr(separator.at(1)+1, msg.size()-separator.at(1));
   res += u;
   return res;
 }

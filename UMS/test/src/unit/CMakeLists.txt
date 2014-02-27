@@ -21,7 +21,6 @@ if (COMPILE_SERVERS)
     ${VISHNU_SOURCE_DIR}/UMS/src/server/OptionValueServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/MachineServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/LocalAccountServer.cpp
-    ${VISHNU_SOURCE_DIR}/UMS/src/server/ConfigurationServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/CommandServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/AuthSystemServer.cpp
     ${VISHNU_SOURCE_DIR}/UMS/src/server/AuthAccountServer.cpp

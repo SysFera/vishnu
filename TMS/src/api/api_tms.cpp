@@ -18,7 +18,6 @@
 #include "SessionProxy.hpp"
 #include "MachineProxy.hpp"
 #include "LocalAccountProxy.hpp"
-#include "ConfigurationProxy.hpp"
 #include "OptionValueProxy.hpp"
 #include "QueryProxy.hpp"
 #include "utilVishnu.hpp"

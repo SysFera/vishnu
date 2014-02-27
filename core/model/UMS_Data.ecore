@@ -460,43 +460,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Configuration" instanceTypeName="Configuration">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listConfUsers" upperBound="-1"
-        eType="#//User" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is the list of users objects"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listConfMachines" upperBound="-1"
-        eType="#//Machine" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is a list of machines objects"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="listConfLocalAccounts"
-        upperBound="-1" eType="#//LocalAccount" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is the list of LocalAccount objects"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthSystems" upperBound="-1"
-        eType="#//AuthSystem" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is the list of user-authentication systems"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ListConfAuthAccounts" upperBound="-1"
-        eType="#//AuthAccount" containment="true">
-      <eAnnotations source="Description">
-        <details key="content" value="is the list of users objects"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="Description">
-        <details key="content" value="the full path to the file that contains the saved configuration"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OptionValue" instanceTypeName="OptionValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optionName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&quot;&quot;">

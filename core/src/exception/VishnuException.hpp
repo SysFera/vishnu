@@ -37,10 +37,6 @@ public:
      */
     FMS  	    = 2 ,
     /**
-     * \brief IMS exception
-     */
-    IMS  	    = 3 ,
-    /**
      * \brief internal exception
      */
     INTERNAL  = 4 ,
@@ -156,7 +152,7 @@ protected :
    */
   std::string   mmsgc;
   /**
-   *  \brief The type of the exception (UMS, TMS, FMS, IMS, NONE)
+   *  \brief The type of the exception (UMS, TMS, FMS, NONE)
    */
   ExceptionType mtype;
   /**

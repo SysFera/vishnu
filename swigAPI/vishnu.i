@@ -55,7 +55,6 @@
 %include "UMS_Data/ListLocalAccOptions.hpp"
 %include "UMS_Data/Machine.hpp"
 %include "UMS_Data/ListMachineOptions.hpp"
-%include "UMS_Data/Configuration.hpp"
 %include "UMS_Data/OptionValue.hpp"
 %include "UMS_Data/ListOptOptions.hpp"
 %include "UMS_Data/AuthAccount.hpp"
@@ -76,20 +75,6 @@
 %include "TMS_Data/LoadCriterion.hpp"
 %include "TMS_Data/Work.hpp"
 %include "TMS_Data/AddWorkOptions.hpp"
-
-// All EMF includes (same as in IMS_Data.hpp)
-%include "IMS_Data_forward.hpp"
-%include "IMS_Data/ExportOp.hpp"
-%include "IMS_Data/CurMetricOp.hpp"
-%include "IMS_Data/Metric.hpp"
-%include "IMS_Data/MetricHistOp.hpp"
-%include "IMS_Data/Process.hpp"
-%include "IMS_Data/ProcessOp.hpp"
-%include "IMS_Data/SysInfoOp.hpp"
-%include "IMS_Data/SupervisorOp.hpp"
-%include "IMS_Data/SystemInfo.hpp"
-%include "IMS_Data/Threshold.hpp"
-%include "IMS_Data/ThresholdOp.hpp"
 
 // All EMF includes (same as in FMS_Data.hpp)
 %include "FMS_Data_forward.hpp"
@@ -119,10 +104,6 @@
 %include "TMS_Data/ListJobs.hpp"
 %include "TMS_Data/ListProgression.hpp"
 %include "TMS_Data/ListQueues.hpp"
-%include "IMS_Data/ListMetric.hpp"
-%include "IMS_Data/ListProcesses.hpp"
-%include "IMS_Data/ListSysInfo.hpp"
-%include "IMS_Data/ListThreshold.hpp"
 %include "FMS_Data/FileTransferList.hpp"
 %include "FMS_Data/DirEntryList.hpp"
 %include "UMS_Data/ListAuthSystems.hpp"
@@ -141,10 +122,6 @@
 %template(EProgressionList) ::ecorecpp::mapping::EList<::TMS_Data::Progression>;
 %template(EQueueList) ::ecorecpp::mapping::EList<::TMS_Data::Queue>;
 %template(EJobResultList) ::ecorecpp::mapping::EList<::TMS_Data::JobResult>;
-%template(EMetricList) ::ecorecpp::mapping::EList<::IMS_Data::Metric>;
-%template(EProcessesList) ::ecorecpp::mapping::EList<::IMS_Data::Process>;
-%template(ESysInfoList) ::ecorecpp::mapping::EList<::IMS_Data::SystemInfo>;
-%template(EThresholdList) ::ecorecpp::mapping::EList<::IMS_Data::Threshold>;
 %template(EFileTransferList) ::ecorecpp::mapping::EList<::FMS_Data::FileTransfer>;
 %template(EDirEntryList) ::ecorecpp::mapping::EList<::FMS_Data::DirEntry>;
 #endif
@@ -154,14 +131,12 @@
 #define SWIG_FILE_WITH_INIT
 #include "UMS_Data.hpp"
 #include "TMS_Data.hpp"
-#include "IMS_Data.hpp"
 #include "FMS_Data.hpp"
 #include "VishnuException.hpp"
 #include "UserException.hpp"
 #include "SystemException.hpp"
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
-#include "IMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
 #ifdef COMPILE_UMS
 #include "api_ums.hpp"
@@ -169,9 +144,6 @@
 #endif
 #ifdef COMPILE_TMS
 #include "api_tms.hpp"
-#endif
-#ifdef COMPILE_IMS
-#include "api_ims.hpp"
 #endif
 #ifdef COMPILE_FMS
 #include "api_fms.hpp"
@@ -192,7 +164,7 @@
 
 // Macro to map emf lists and python list in both ways (python->C++ and C++->python)
 // type : type of the contained object (User, Session, ...)
-// cont : C++ namespace (UMS_Data, IMS_Data, ...)
+// cont : C++ namespace (UMS_Data, FMS_Data, ...)
 // getter : The C++ getter function name to get the iterative list from the global class (getSessions, getUsers, ...)
 // list : The list class name (ListUsers, ListSessions, ...)
 // name : name of the param in out, ex listUsers
@@ -287,14 +259,6 @@ EMFTYPE(Progression,TMS_Data,getProgress,ListProgression, listOfProgress, "TMS_D
 EMFTYPE(Queue,TMS_Data,getQueues,ListQueues, listofQueues, "TMS_Data::Queue", TMS_DataFactory, createQueue)
 EMFTYPE(JobResult,TMS_Data,getResults,ListJobResults, listOfResults, "TMS_Data::JobResult", TMS_DataFactory, createJobResult)
 
-
-// Mapping lists for ims module
-
-EMFTYPE(Metric,IMS_Data,getMetric,ListMetric, val, "IMS_Data::Metric", IMS_DataFactory, createMetric)
-EMFTYPE(Metric,IMS_Data,getMetric,ListMetric, list, "IMS_Data::Metric", IMS_DataFactory, createMetric)
-EMFTYPE(Process,IMS_Data,getProcess,ListProcesses, list, "IMS_Data::Process", IMS_DataFactory, createProcess)
-EMFTYPE(SystemInfo,IMS_Data,getSysInfo,ListSysInfo, list, "IMS_Data::SystemInfo", IMS_DataFactory, createSystemInfo)
-EMFTYPE(Threshold,IMS_Data,getThreshold,ListThreshold, list, "IMS_Data::Threshold", IMS_DataFactory, createThreshold)
 
 // Mapping lists for fms module
 
@@ -417,7 +381,6 @@ namespace std {
 %include "SystemException.hpp"
 %include "UMSVishnuException.hpp"
 %include "TMSVishnuException.hpp"
-%include "IMSVishnuException.hpp"
 %include "FMSVishnuException.hpp"
 #endif
 
@@ -473,74 +436,6 @@ namespace std {
 %include "api_tms.hpp"
 #endif
 
-//  ***************************** IMS MODULE  *****************************
-
-
-#ifdef SWIGPYTHON
-// Remove output parameters from the command
-%typemap(in, numinputs=0) int& freq(int temp) {
-  $1 = &temp;
-}
-
-
-%typemap(argout) int& freq {
-  PyObject *o = PyInt_FromLong(*$1);
-  $result = SWIG_Python_AppendOutput($result, o);
- }
-#endif
-
-#ifdef SWIGJAVA
-%include "typemaps.i"
-%apply int *OUTPUT { int &freq };
-
-
-// Exception rule for system exception
-%typemap (throws) SystemException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
-    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
-    if (clazz) {
-      jenv->ThrowNew(clazz, ret.c_str());
-    }
-    return $null;
- }
-
-// Exception rule for user exception
-%typemap (throws) UserException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
-    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
-    if (clazz) {
-      jenv->ThrowNew(clazz, ret.c_str());
-    }
-    return $null;
- }
-
-// Exception rule for information exception
-%typemap (throws) IMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
-    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
-    if (clazz) {
-      jenv->ThrowNew(clazz, ret.c_str());
-    }
-    return $null;
- }
-// Exception rule for user exception
-%typemap (throws) UMSVishnuException{
-    jclass clazz = jenv->FindClass("com/sysfera/vishnu/api/vishnu/internal/InternalIMSException");
-    std::string ret = $1.buildExceptionString() + "#" + $1.getMsg();
-    if (clazz) {
-      jenv->ThrowNew(clazz, ret.c_str());
-    }
-    return $null;
- }
-
-// Add throw to method declaration
-%javaexception ("InternalIMSException") { $action }
-
-#endif
-
-#ifdef COMPILE_IMS
-%include "api_ims.hpp"
-#endif
 
 //  ***************************** FMS MODULE  *****************************
 

@@ -18,7 +18,6 @@ ServerUMS *ServerUMS::minstance = NULL;
 UMSMapper *ServerUMS::mmapper = NULL;
 TMSMapper *ServerUMS::mmapperTMS = NULL;
 FMSMapper *ServerUMS::mmapperFMS = NULL;
-IMSMapper *ServerUMS::mmapperIMS = NULL;
 Authenticator *ServerUMS::mauthenticator = NULL;
 
 //}}RELAX<MISRA_0_1_3>
@@ -93,8 +92,6 @@ ServerUMS::init(int vishnuId,
     mdatabaseVishnu->connect();
     mmapperTMS = new TMSMapper(MapperRegistry::getInstance(), TMSMAPPERNAME);
     mmapperTMS->registerMapper();
-    mmapperIMS = new IMSMapper(MapperRegistry::getInstance(), IMSMAPPERNAME);
-    mmapperIMS->registerMapper();
     mmapperFMS = new FMSMapper(MapperRegistry::getInstance(), FMSMAPPERNAME);
     mmapperFMS->registerMapper();
     mmapper = new UMSMapper(MapperRegistry::getInstance(), UMSMAPPERNAME);
@@ -166,10 +163,6 @@ ServerUMS::initMap(std::string mid) {
   mcb[SERVICES_UMS[LOCALACCOUNTUPDATE]] = functionPtr;
   functionPtr = solveLocalAccountDelete;
   mcb[SERVICES_UMS[LOCALACCOUNTDELETE]] = functionPtr;
-  functionPtr = solveConfigurationSave;
-  mcb[SERVICES_UMS[CONFIGURATIONSAVE]] = functionPtr;
-  functionPtr = solveConfigurationRestore;
-  mcb[SERVICES_UMS[CONFIGURATIONRESTORE]] = functionPtr;
   functionPtr = solveOptionValueSet;
   mcb[SERVICES_UMS[OPTIONVALUESET]] = functionPtr;
   functionPtr = solveOptionValueSetDefault;
@@ -211,4 +204,5 @@ ServerUMS::initMap(std::string mid) {
   mcb[SERVICES_UMS[INT_DEFINEAUTHIDENTIFIER]] = solveSetAID;
   mcb[SERVICES_UMS[INT_DEFINEWORKIDENTIFIER]] = solveSetWID;
   mcb[std::string(SERVICES_UMS[HEARTBEATUMS])+"@"+mid] = boost::ref(heartbeat);
+  mcb[SERVICES_UMS[EXPORT]] = solveExport;
 }

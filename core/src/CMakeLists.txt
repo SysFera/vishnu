@@ -1,7 +1,7 @@
 include_directories(${Boost_INCLUDE_DIRS}
   config exception utils emfdata database
   ../deps/emf4cpp ${UMS_SERVER_SOURCE_DIR} ${TMS_SERVER_SOURCE_DIR}
-  ${IMS_SERVER_SOURCE_DIR} ${FMS_SERVER_SOURCE_DIR}
+  ${FMS_SERVER_SOURCE_DIR}
   ${PROJECT_BINARY_DIR}
   ${DATABASE_INCLUDE_DIR}
   ${AUTHENTICATOR_INCLUDE_DIR}
@@ -23,7 +23,6 @@ set(exception_SRCS exception/VishnuException.cpp
   exception/UserException.cpp
   exception/UMSVishnuException.cpp
   exception/TMSVishnuException.cpp
-  exception/IMSVishnuException.cpp
   exception/FMSVishnuException.cpp
   exception/InternalVishnuException.cpp)
 
@@ -33,7 +32,7 @@ set(exception_HEADERS exception/VishnuException.hpp
   exception/UMSVishnuException.hpp
   exception/TMSVishnuException.hpp
   exception/FMSVishnuException.hpp
-  exception/IMSVishnuException.hpp)
+  )
 
 #################### utils ####################################################
 set(utils_SRCS
@@ -49,7 +48,6 @@ set(registry_SRCS registry/MapperRegistry.cpp
   registry/Mapper.cpp
   registry/UMSMapper.cpp
   registry/FMSMapper.cpp
-  registry/IMSMapper.cpp
   registry/TMSMapper.cpp)
 
 #################### emfdata ##################################################
@@ -91,8 +89,6 @@ set(UMS_Data_SRCS
   emfdata/UMS_Data/ListMachinesImpl.cpp
   emfdata/UMS_Data/ListMachineOptions.cpp
   emfdata/UMS_Data/ListMachineOptionsImpl.cpp
-  emfdata/UMS_Data/Configuration.cpp
-  emfdata/UMS_Data/ConfigurationImpl.cpp
   emfdata/UMS_Data/OptionValue.cpp
   emfdata/UMS_Data/OptionValueImpl.cpp
   emfdata/UMS_Data/ListOptionsValues.cpp
@@ -136,7 +132,6 @@ set(UMS_Data_HEADERS
   emfdata/UMS_Data/Machine.hpp
   emfdata/UMS_Data/ListMachines.hpp
   emfdata/UMS_Data/ListMachineOptions.hpp
-  emfdata/UMS_Data/Configuration.hpp
   emfdata/UMS_Data/OptionValue.hpp
   emfdata/UMS_Data/ListOptionsValues.hpp
   emfdata/UMS_Data/ListOptOptions.hpp
@@ -182,6 +177,10 @@ set(TMS_Data_SRCS
   emfdata/TMS_Data/WorkImpl.cpp
   emfdata/TMS_Data/AddWorkOptions.cpp
   emfdata/TMS_Data/AddWorkOptionsImpl.cpp
+  emfdata/TMS_Data/CancelOptions.cpp
+  emfdata/TMS_Data/JobOutputOptions.cpp
+  emfdata/TMS_Data/CancelOptionsImpl.cpp
+  emfdata/TMS_Data/JobOutputOptionsImpl.cpp
 )
 
 set(TMS_Data_HEADERS
@@ -207,69 +206,6 @@ set(TMS_Data_HEADERS
   emfdata/TMS_Data/JobOutputOptions.hpp
 )
 
-set(IMS_Data_SRCS
-  emfdata/IMS_Data.cpp
-  emfdata/IMS_Data/IMS_DataPackage.cpp
-  emfdata/IMS_Data/IMS_DataFactory.cpp
-  emfdata/IMS_Data/IMS_DataPackageImpl.cpp
-  emfdata/IMS_Data/IMS_DataFactoryImpl.cpp
-  emfdata/IMS_Data/Metric.cpp
-  emfdata/IMS_Data/MetricImpl.cpp
-  emfdata/IMS_Data/ListMetric.cpp
-  emfdata/IMS_Data/ListMetricImpl.cpp
-  emfdata/IMS_Data/ListProcesses.cpp
-  emfdata/IMS_Data/ListProcessesImpl.cpp
-  emfdata/IMS_Data/SystemInfo.cpp
-  emfdata/IMS_Data/SystemInfoImpl.cpp
-  emfdata/IMS_Data/Process.cpp
-  emfdata/IMS_Data/ProcessImpl.cpp
-  emfdata/IMS_Data/ExportOp.cpp
-  emfdata/IMS_Data/ExportOpImpl.cpp
-  emfdata/IMS_Data/MetricHistOp.cpp
-  emfdata/IMS_Data/MetricHistOpImpl.cpp
-  emfdata/IMS_Data/CurMetricOp.cpp
-  emfdata/IMS_Data/CurMetricOpImpl.cpp
-  emfdata/IMS_Data/ProcessOp.cpp
-  emfdata/IMS_Data/ProcessOpImpl.cpp
-  emfdata/IMS_Data/ThresholdOp.cpp
-  emfdata/IMS_Data/ThresholdOpImpl.cpp
-  emfdata/IMS_Data/ListThreshold.cpp
-  emfdata/IMS_Data/ListThresholdImpl.cpp
-  emfdata/IMS_Data/Threshold.cpp
-  emfdata/IMS_Data/ThresholdImpl.cpp
-  emfdata/IMS_Data/SysInfoOp.cpp
-  emfdata/IMS_Data/SysInfoOpImpl.cpp
-  emfdata/IMS_Data/ListSysInfo.cpp
-  emfdata/IMS_Data/ListSysInfoImpl.cpp
-  emfdata/IMS_Data/SupervisorOp.cpp
-  emfdata/IMS_Data/SupervisorOpImpl.cpp
-  emfdata/TMS_Data/CancelOptions.cpp
-  emfdata/TMS_Data/CancelOptionsImpl.cpp
-  emfdata/TMS_Data/JobOutputOptions.cpp
-  emfdata/TMS_Data/JobOutputOptionsImpl.cpp
-)
-
-set(IMS_Data_HEADERS
-  emfdata/IMS_Data.hpp
-  emfdata/IMS_Data_forward.hpp
-  emfdata/IMS_Data/IMS_DataPackage.hpp
-  emfdata/IMS_Data/IMS_DataFactory.hpp
-  emfdata/IMS_Data/Metric.hpp
-  emfdata/IMS_Data/ListMetric.hpp
-  emfdata/IMS_Data/ListProcesses.hpp
-  emfdata/IMS_Data/SystemInfo.hpp
-  emfdata/IMS_Data/Process.hpp
-  emfdata/IMS_Data/ExportOp.hpp
-  emfdata/IMS_Data/MetricHistOp.hpp
-  emfdata/IMS_Data/CurMetricOp.hpp
-  emfdata/IMS_Data/ProcessOp.hpp
-  emfdata/IMS_Data/ThresholdOp.hpp
-  emfdata/IMS_Data/ListThreshold.hpp
-  emfdata/IMS_Data/Threshold.hpp
-  emfdata/IMS_Data/SysInfoOp.hpp
-  emfdata/IMS_Data/ListSysInfo.hpp
-  emfdata/IMS_Data/SupervisorOp.hpp
-   )
 set(FMS_Data_SRCS
   emfdata/FMS_Data.cpp
   emfdata/FMS_Data/FMS_DataPackage.cpp
@@ -334,7 +270,6 @@ if(NOT COMPILE_ONLY_LIBBATCH)
     ${registry_SRCS}
     ${UMS_Data_SRCS}
     ${TMS_Data_SRCS}
-    ${IMS_Data_SRCS}
     ${FMS_Data_SRCS}
     ${UTILVISHNU_SOURCE_DIR}/tmsUtils.cpp)
 
@@ -405,9 +340,6 @@ install(FILES ${TMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/TMS_Data)
 install(FILES emfdata/FMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES emfdata/FMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
 install(FILES ${FMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/FMS_Data)
-install(FILES emfdata/IMS_Data.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
-install(FILES emfdata/IMS_Data_forward.hpp DESTINATION ${INCLUDE_INSTALL_DIR})
-install(FILES ${IMS_Data_HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/IMS_Data)
 install(FILES ${EMF-ECORE-HEADERS}  DESTINATION ${INCLUDE_INSTALL_DIR}/ecore)
 install(FILES ${EMF-ECORECPP-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp)
 install(FILES ${EMF-ECORECPP-MAPPING-HEADERS} DESTINATION ${INCLUDE_INSTALL_DIR}/ecorecpp/mapping)
@@ -417,7 +349,7 @@ install(FILES ${PROJECT_BINARY_DIR}/vishnu_version.hpp DESTINATION ${INCLUDE_INS
 install(FILES ${PROJECT_BINARY_DIR}/vishnu-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
 install(FILES ${PROJECT_BINARY_DIR}/supervisord-sample.cfg DESTINATION ${ETC_INSTALL_DIR})
 
-if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS OR COMPILE_SERVER_IMS)
+if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS )
   set(database_SRCS
      database/DbConfiguration.cpp
      database/DbFactory.cpp
@@ -481,4 +413,4 @@ if(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS OR COMPILE_SER
      target_link_libraries(vishnu-core-server vishnu-core ${DB_LIBS} ${AUTH_LIBS})
      install(PROGRAMS utils/sendmail.py DESTINATION ${SBIN_INSTALL_DIR})
   endif(NOT COMPILE_ONLY_LIBBATCH)
-endif(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS OR COMPILE_SERVER_IMS)
+endif(COMPILE_SERVER_UMS OR COMPILE_SERVER_FMS OR COMPILE_SERVER_TMS )

@@ -110,8 +110,7 @@ namespace vishnu {
   typedef enum{
     UMS = 0,/*!< For UMS command type */
     TMS = 1,/*!< For TMS command type */
-    FMS = 2,/*!< For FMS command type */
-    IMS = 3/*!< For IMS command type */
+    FMS = 2 /*!< For FMS command type */
   } CmdType;
 
   /**

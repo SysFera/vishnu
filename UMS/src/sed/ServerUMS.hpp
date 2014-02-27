@@ -14,7 +14,6 @@
 #include "UMSMapper.hpp"
 #include "TMSMapper.hpp"
 #include "FMSMapper.hpp"
-#include "IMSMapper.hpp"
 #include "MapperRegistry.hpp"
 #include "DbConfiguration.hpp"
 #include "AuthenticatorConfiguration.hpp"
@@ -120,10 +119,6 @@ private:
    * \brief Instance of UMSMapper
    */
   static FMSMapper *mmapperFMS;
-  /**
-   * \brief Instance of UMSMapper
-   */
-  static IMSMapper *mmapperIMS;
   /**
    * \brief Instance of Authenticator
    */

@@ -177,9 +177,6 @@ public:
 		case vishnu::FMS :
 			cmd = "FMS";
 			break;
-		case vishnu::IMS :
-			cmd = "IMS";
-			break;
 		default:
 			cmd = "Unknown Command";
 			break;
@@ -205,9 +202,6 @@ public:
 			break;
 		case vishnu::FMS :
 			mapperName = vishnu::FMSMAPPERNAME;
-			break;
-		case vishnu::IMS :
-			mapperName = vishnu::IMSMAPPERNAME;
 			break;
 		default:
 			mapperName = "Uknown Mapper Name";
