@@ -94,6 +94,7 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setOutputDir("");
     mjob.setWorkId(options->getIntProperty("workid"));
     mjob.setJobPath(options->getStringProperty("scriptpath"));
+    mjob.setOwner(muserSessionInfo.user_aclogin);
 
     if (options->getIntProperty("posix")) {
       mbatchType = POSIX;
@@ -118,9 +119,9 @@ int JobServer::submitJob(std::string& scriptContent,
     }
 
     if (mstandaloneSed != 0) {
-      handleNativeBatchExec(SubmitBatchAction, scriptPath, options, mjob);
+      handleNativeBatchExec(SubmitBatchAction, scriptPath, options, mjob, mbatchType, mbatchVersion);
     } else {
-      handleSshBatchExec(SubmitBatchAction, scriptPath, options, mjob);
+      handleSshBatchExec(SubmitBatchAction, scriptPath, options, mjob, mbatchType, mbatchVersion);
     }
   } catch (VishnuException& ex) {
     scanErrorMessage(ex.buildExceptionString(), errCode, mlastError);
@@ -145,17 +146,21 @@ int JobServer::submitJob(std::string& scriptContent,
  * @param scriptPath The path of the script to executed
  * @param job The target job concerned by the action
  * @param options: an object containing options
+ * @param batchType The batch type
+ * @param batchVersion The batch version
 */
 void
 JobServer::handleSshBatchExec(int action,
-                           const std::string& scriptPath,
-                           JsonObject* options,
-                           TMS_Data::Job& job) {
+                              const std::string& scriptPath,
+                              JsonObject* options,
+                              TMS_Data::Job& job,
+                              int batchType,
+                              const std::string& batchVersion) {
 
   SSHJobExec sshJobExec(muserSessionInfo.user_aclogin,
                         muserSessionInfo.machine_name,
-                        mbatchType,
-                        mbatchVersion, // it will work for POSIX at the POSIX backend ignores the batch version
+                        static_cast<BatchType>(batchType),
+                        batchVersion, // ignored for POSIX backend
                         JsonObject::serialize(job),
                         options->encode());
 
@@ -188,17 +193,21 @@ JobServer::handleSshBatchExec(int action,
  * @brief Submit job using ssh mechanism
  * @param action action The type of action (cancel, submit...)
  * @param scriptPath The path of the script to executed
- * @param job The target job concerned by the action
  * @param options: an object containing options
+ * @param job The target job concerned by the action
+ * @param batchType The batch type. Ignored for POSIX backend
+ * @param batchVersion The batch version. Ignored for POSIX backend
 */
 void
 JobServer::handleNativeBatchExec(int action,
                                  const std::string& scriptPath,
                                  JsonObject* options,
-                                 TMS_Data::Job& job) {
+                                 TMS_Data::Job& job,
+                                 int batchType,
+                                 const std::string& batchVersion) {
 
   BatchFactory factory;
-  BatchServer* batchServer = factory.getBatchServerInstance(mbatchType, mbatchVersion);
+  BatchServer* batchServer = factory.getBatchServerInstance(batchType, batchVersion);
   if (! batchServer) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "getBatchServerInstance return NULL");
   }
@@ -222,7 +231,6 @@ JobServer::handleNativeBatchExec(int action,
       if (mbatchType == DELTACLOUD) {
         handlerExitCode = batchServer->cancel(job.getJobId()+"@"+job.getVmId());
       } else {
-        std::cout << "to cancel "<< job.getBatchJobId()<<"\n";
         handlerExitCode = batchServer->cancel(job.getBatchJobId());
       }
       job.setStatus(vishnu::STATE_CANCELLED);
@@ -439,6 +447,7 @@ int JobServer::cancelJob(JsonObject* options)
       currentJob.setJobId( *resultIterator++ );
       currentJob.setBatchJobId( *resultIterator++ );
       currentJob.setVmId( *resultIterator++ );
+      int batchType = vishnu::convertToInt(*resultIterator);
 
       switch (currentJob.getStatus()) {
       case vishnu::STATE_COMPLETED:
@@ -457,9 +466,9 @@ int JobServer::cancelJob(JsonObject* options)
       }
 
       if (mstandaloneSed != 0) {
-        handleNativeBatchExec(CancelBatchAction, "", options, currentJob);
+        handleNativeBatchExec(CancelBatchAction, "", options, currentJob, batchType, mbatchVersion);
       } else {
-        handleSshBatchExec(CancelBatchAction, "", options, currentJob);
+        handleSshBatchExec(CancelBatchAction, "", options, currentJob, batchType, mbatchVersion);
       }
     }
   }

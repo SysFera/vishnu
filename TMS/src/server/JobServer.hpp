@@ -211,25 +211,33 @@ protected:
    * @param scriptPath The path of the script to executed
    * @param job The target job concerned by the action
    * @param options: an object containing options
+   * @param batchType The batch type
+   * @param batchVersion The batch version. Ignored for POSIX backend
   */
   void
   handleSshBatchExec(int action,
-                  const std::string& scriptPath,
-                  JsonObject* options,
-                  TMS_Data::Job& job);
+                     const std::string& scriptPath,
+                     JsonObject* options,
+                     TMS_Data::Job& job,
+                     int batchType,
+                     const std::string& batchVersion);
 
   /**
    * @brief Submit job using ssh mechanism
    * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
-   * @param job The target job concerned by the action
    * @param options: an object containing options
+   * @param job The target job concerned by the action
+   * @param batchType The batch type
+   * @param batchVersion The batch version. Ignored for POSIX backend
   */
   void
   handleNativeBatchExec(int action,
                         const std::string& scriptPath,
                         JsonObject* options,
-                        TMS_Data::Job& job);
+                        TMS_Data::Job& job,
+                        int batchType,
+                        const std::string& batchVersion);
 
   /**
    * @brief Get the uid corresponding to given system user name
