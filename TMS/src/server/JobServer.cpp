@@ -703,7 +703,11 @@ JobServer::setRealPaths(JsonObject* options, const std::string& suffix)
     std::string mountPoint = vishnu::getVar(vishnu::CLOUD_ENV_VARS[vishnu::CLOUD_NFS_MOUNT_POINT], true);
     workingDir = mountPoint.empty()? "/tmp/" + suffix : mountPoint + "/" + suffix;
     std::string inputDir =  workingDir + "/INPUT";
-    scriptPath = inputDir + "/script.xsh";
+    scriptPath = (boost::format("/%1%/vishnu-job-script-%2%%3%")
+                  % inputDir
+                  % mjob.getJobId()
+                  % bfs::unique_path("%%%%%%").string()
+                  ).str();
     vishnu::createDir(workingDir, true); // create the working directory
     vishnu::createDir(inputDir, true); // create the input directory
     std::string directory = "";
@@ -722,7 +726,11 @@ JobServer::setRealPaths(JsonObject* options, const std::string& suffix)
     if (! path.empty()) {
       workingDir = path;
     }
-    scriptPath = workingDir +"/"+ bfs::unique_path("job_script%%%%%%").string();
+    scriptPath = (boost::format("/%1%/vishnuJobScript%2%-%3%")
+                  % workingDir
+                  % bfs::unique_path("%%%%%%").string()
+                  % mjob.getJobId()
+                  ).str();
   }
   options->setProperty("workingdir", workingDir);
   options->setProperty("scriptpath", scriptPath);
