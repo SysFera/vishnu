@@ -102,6 +102,10 @@ LocalFileProxy::transferFile(const string& dest,
     throw FMSVishnuException(ERRCODE_INVALID_PATH, "The local to local transfer is not available");
   }
 
+  bool isAsyncTransfer = (serviceName == SERVICES_FMS[FILECOPYASYNC]
+                          || serviceName == SERVICES_FMS[FILEMOVEASYNC]);
+
+
   diet_profile_t* profile = diet_profile_alloc(serviceName, 6);
   std::string sessionKey=this->getSession().getSessionKey();
   diet_string_set(profile, 0, sessionKey);
@@ -121,12 +125,14 @@ LocalFileProxy::transferFile(const string& dest,
 
   raiseExceptionOnErrorResult(profile);
 
-  std::string fileTransferInString;
-  diet_string_get(profile, 1, fileTransferInString);
+  if (isAsyncTransfer) {
+    std::string fileTransferInString;
+    diet_string_get(profile, 1, fileTransferInString);
 
-  FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
-  parseEmfObject(fileTransferInString, fileTransfer_ptr);
-  fileTransfer = *fileTransfer_ptr;
+    FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
+    parseEmfObject(fileTransferInString, fileTransfer_ptr);
+    fileTransfer = *fileTransfer_ptr;
+  }
 
   return 0;
 }

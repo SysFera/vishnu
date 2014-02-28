@@ -666,6 +666,8 @@ RemoteFileProxy::transferFile(const std::string& dest,
   string optionsToString =  _ser.serialize_str(const_cast<TypeOfOption*>(&options));
   diet_string_set(transferFileProfile,6 , optionsToString);
 
+  std::cout <<"iciiiiiiiiiiiiiiiiiiiiiii \n";
+
   if (diet_call(transferFileProfile)) {
     raiseCommunicationMsgException("RPC call failed");
   }

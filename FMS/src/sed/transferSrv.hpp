@@ -73,6 +73,9 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
   diet_string_get(profile, 4, dest);
   diet_string_get(profile, 5, optionsSerialized);
 
+  // reset profile to handle result
+  diet_profile_reset(profile, 2);
+
 
   std:: string destPath=File::extName(dest);
   std:: string destHost=File::extHost(dest);
@@ -196,11 +199,15 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
     errMsg = err.buildExceptionString();
   }
 
-  if (transferMode==File::sync) {
-    diet_string_set(profile, 6, errMsg.c_str());
+  if (errMsg.empty()){
+    diet_string_set(profile, 0, "success");
+    if (transferMode==File::sync) {
+    } else {
+      diet_string_set(profile, 1, fileTransferSerialized.c_str());
+    }
   } else {
-    diet_string_set(profile, 6, fileTransferSerialized.c_str());
-    diet_string_set(profile, 7, errMsg.c_str());
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, errMsg);
   }
 
   return 0;
@@ -214,7 +221,6 @@ template < File::TransferType transferType, File::TransferMode transferMode> int
  */
 
 template <File::TransferType transferType, File::TransferMode transferMode> int solveTransferRemoteFile(diet_profile_t* profile){
-
 
   std::string srcPath = "";
   std::string destUser = "";
@@ -238,6 +244,9 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
   diet_string_get(profile, 4, destHost);
   diet_string_get(profile, 5, destPath);
   diet_string_get(profile, 6, optionsSerialized);
+
+  // reset profile to handle result
+  diet_profile_reset(profile, 2);
 
   SessionServer sessionServer (sessionKey);
 
@@ -401,15 +410,16 @@ template <File::TransferType transferType, File::TransferMode transferMode> int 
     errMsg = err.buildExceptionString().c_str();
   }
 
-  if (transferMode==File::sync){
-
-    diet_string_set(profile, 7, errMsg.c_str());
-
-  }
-  else{
-    diet_string_set(profile, 7, fileTransferSerialized.c_str());
-    diet_string_set(profile, 8, errMsg.c_str());
-
+  if (errMsg.empty()){
+    diet_string_set(profile, 0, "success");
+    if (transferMode==File::sync) {
+      diet_string_set(profile, 1, "");
+    } else {
+      diet_string_set(profile, 1, fileTransferSerialized.c_str());
+    }
+  } else {
+    diet_string_set(profile, 0, "error");
+    diet_string_set(profile, 1, errMsg);
   }
   return 0;
 
@@ -438,6 +448,9 @@ solveGenerique(diet_profile_t* pb) {
   //IN Parameters
   diet_string_get(pb,0, sessionKey);
   diet_string_get(pb,1, optionValueSerialized);
+
+  // reset profile to handle result
+  diet_profile_reset(pb, 2);
 
   SessionServer sessionServer  = SessionServer(sessionKey);
 
@@ -469,8 +482,8 @@ solveGenerique(diet_profile_t* pb) {
     listSerialized =  _ser.serialize_str(const_cast<List*>(list));
 
     //OUT Parameter
-    diet_string_set(pb,2, listSerialized.c_str());
-    diet_string_set(pb,3);
+    diet_string_set(pb, 0, "success");
+    diet_string_set(pb, 1, listSerialized.c_str());
     sessionServer.finish(cmd, vishnu::FMS, vishnu::CMDSUCCESS);
   } catch (VishnuException& e) {
     try {
@@ -482,8 +495,9 @@ solveGenerique(diet_profile_t* pb) {
     e.appendMsgComp(finishError);
     errorInfo =  e.buildExceptionString();
     //OUT Parameter
-    diet_string_set(pb,2, listSerialized.c_str());
-    diet_string_set(pb,3, errorInfo.c_str());
+    // set error result
+    diet_string_set(pb, 0, "error");
+    diet_string_set(pb, 1, errorInfo);
   }
   delete options;
   delete list;
