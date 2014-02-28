@@ -151,16 +151,9 @@ RemoteFileProxy::chgrp(const string& group) {
   }
 
   if (diet_call(chgrpProfile)) {
-    raiseCommunicationMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if (diet_string_get(chgrpProfile, 0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
+  raiseExceptionOnErrorResult(chgrpProfile);
 
   return 0;
 }
@@ -210,17 +203,10 @@ RemoteFileProxy::chmod(const mode_t mode) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_call(chmodProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(chmodProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  //Output parameter
-  if (diet_string_get(chmodProfile, 0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  raiseExceptionIfNotEmptyMsg(errMsg);
+  raiseExceptionOnErrorResult(chmodProfile);
 
   return 0;
 }
@@ -272,21 +258,16 @@ RemoteFileProxy::head(const HeadOfFileOptions& options) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_call(headProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(headProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(headProfile);
 
   //Output parameter
-  if(diet_string_get(headProfile, 0, fileHead)){
+  if(diet_string_get(headProfile, 1, fileHead)){
     msgErrorDiet += " by receiving fileHead message";
     raiseCommunicationMsgException(msgErrorDiet);
   }
-
-  if(diet_string_get(headProfile, 1, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  raiseExceptionIfNotEmptyMsg(errMsg);
 
   result = fileHead;
   return result;
@@ -328,23 +309,15 @@ RemoteFileProxy::getContent() {
   }
 
 
-  if (diet_call(getContentProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(getContentProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(getContentProfile);
 
-  if(diet_string_get(getContentProfile, 0, fileContent)){
+  if(diet_string_get(getContentProfile, 1, fileContent)){
     msgErrorDiet += " by receiving fileContent message";
     raiseCommunicationMsgException(msgErrorDiet);
   }
-
-  if(diet_string_get(getContentProfile, 1, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
-
 
   return fileContent;
 }
@@ -386,18 +359,10 @@ RemoteFileProxy::mkfile(const mode_t mode) {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_call(mkfileProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(mkfileProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if(diet_string_get(mkfileProfile, 0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
-
+  raiseExceptionOnErrorResult(mkfileProfile);
   exists(true);
 
   return 0;
@@ -445,15 +410,9 @@ RemoteFileProxy::mkdir(const CreateDirOptions& options) {
   diet_string_set(mkdirProfile, 4, optionsToString);
 
   if (diet_call(mkdirProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if(diet_string_get(mkdirProfile, 0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  raiseExceptionIfNotEmptyMsg(errMsg);
+  raiseExceptionOnErrorResult(mkdirProfile);
 
   exists(true);
 
@@ -503,16 +462,10 @@ RemoteFileProxy::rm(const RmFileOptions& options) {
   diet_string_set(rmProfile, 4, optionsToString);
 
   if (diet_call(rmProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(rmProfile);
 
-  if(diet_string_get(rmProfile,0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-
-  /*To raise a vishnu exception if the received message is not empty*/
-  raiseExceptionIfNotEmptyMsg(errMsg);
 
   exists(true);
   return 0;
@@ -554,15 +507,10 @@ RemoteFileProxy::rmdir() {
     raiseCommunicationMsgException(msgErrorDiet);
   }
 
-  if (diet_call(rmdirProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(rmdirProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
-
-  if(diet_string_get(rmdirProfile, 0, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  raiseExceptionIfNotEmptyMsg(errMsg);
+  raiseExceptionOnErrorResult(rmdirProfile);
 
   exists(true);
   return 0;
@@ -619,20 +567,15 @@ RemoteFileProxy::tail(const TailOfFileOptions& options) {
   }
 
 
-  if (diet_call(tailProfile)){
-    raiseCommunicationMsgException("error while contacting the file management service");
+  if (diet_call(tailProfile)) {
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(tailProfile);
 
-  if(diet_string_get(tailProfile, 0, fileTail)){
+  if(diet_string_get(tailProfile, 1, fileTail)){
     msgErrorDiet += " by receiving fileTail message";
     raiseCommunicationMsgException(msgErrorDiet);
   }
-
-  if(diet_string_get(tailProfile, 1, errMsg)){
-    msgErrorDiet += " by receiving errorInfo message";
-    raiseCommunicationMsgException(msgErrorDiet);
-  }
-  raiseExceptionIfNotEmptyMsg(errMsg);
 
   result = fileTail;
   return result;
@@ -724,21 +667,15 @@ RemoteFileProxy::transferFile(const std::string& dest,
   diet_string_set(transferFileProfile,6 , optionsToString);
 
   if (diet_call(transferFileProfile)) {
-    raiseCommunicationMsgException("error while contacting the file management service");
+    raiseCommunicationMsgException("RPC call failed");
   }
+  raiseExceptionOnErrorResult(transferFileProfile);
 
-  if(!isAsyncTransfer) {
-    diet_string_get(transferFileProfile, 0, errMsg);
-    raiseExceptionIfNotEmptyMsg(errMsg);
-  } else {
-    diet_string_get(transferFileProfile, 0, fileTransferInString);
-    diet_string_get(transferFileProfile, 1, errMsg);
-    raiseExceptionIfNotEmptyMsg(errMsg);
-
+  if(isAsyncTransfer) {
+    diet_string_get(transferFileProfile, 1, fileTransferInString);
     FMS_Data::FileTransfer_ptr fileTransfer_ptr = NULL;
     parseEmfObject(fileTransferInString, fileTransfer_ptr);
     fileTransfer = *fileTransfer_ptr;
-
   }
 
   return 0;
