@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type="text/xsl"
-        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?><!--;TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user) --><book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);IMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);IMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user);IMS.apim#PYTHON(user)" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+        href="http://docbook.sourceforge.net/release/xsl/current/manpages/docbook.xsl"?><!--;TMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user) --><book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(user);TMS.apim#MAN(user);FMS.apim#MAN(user);UMS.apim#CPP(user);TMS.apim#CPP(user);FMS.apim#CPP(user);UMS.apim#PYTHON(user);TMS.apim#PYTHON(user);FMS.apim#PYTHON(user)" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
 <info>
 <title>User Manual</title>
 <productname>VISHNU</productname>
@@ -246,6 +246,15 @@ Add the use of the .netrc file of the connection and the reconnection.
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>26</revnumber>
+<date>28/02/2014</date>
+<authorinitials>K. Coulomb</authorinitials>
+<revdescription>
+<para>Remove IMS.</para>
+</revdescription>
+</revision>
+
 </revhistory>
 
 <copyright>
@@ -309,13 +318,13 @@ the VISHNU installation procedure and the way to use it.
 <para>Chapter 2 describes the VISHNU software (installation procedure, usage description and troubleshooting).</para>
 </listitem>
 <listitem>
-<para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS, FMS and IMS package.</para>
+<para>Chapter 3, Chapter 4, Chapter 5 and Chapter 6 contain the VISHNU commands reference respectively for UMS, TMS and FMS package.</para>
 </listitem>
 <listitem>
-<para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS, FMS and IMS package.</para>
+<para>Chapter 7, Chapter 8, Chapter 9 and Chapter 10 contain the C++ API reference respectively for UMS, TMS and FMS package.</para>
 </listitem>
 <listitem>
-<para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS, FMS and IMS package.</para>
+<para>Chapter 11, Chapter 12, Chapter 13 and Chapter 14 contain the Python API reference respectively for UMS, TMS and FMS package.</para>
 </listitem>
 </itemizedlist>
 </section>
@@ -341,9 +350,6 @@ VISHNU is designed to easy the access to high-performance computing resources. T
 <itemizedlist>
 <listitem>
 <para>User management services (UMS): authentication and session management.</para>
-</listitem>
-<listitem>
-<para>Information management services (IMS): monitoring and control services.</para>
 </listitem>
 <listitem>
 <para>Tasks management services (TMS): submission of tasks (jobs) on computing resources.</para>
@@ -427,11 +433,6 @@ This section details the main steps of the installation process for the clients,
 <para><emphasis role="bold">To compile the FMS package : </emphasis></para>
 <para>&gt; cmake -DCOMPILE_UMS=ON -DCOMPILE_FMS=ON -DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
 </listitem>
-<listitem>
-<para><emphasis role="bold">To compile the IMS package : </emphasis></para>
-<para>&gt; cmake -DCOMPILE_UMS=ON -DCOMPILE_TMS=ON -DCOMPILE_FMS=ON -DCOMPILE_IMS=ON </para>
-<para>-DCMAKE_INSTALL_PREFIX=/opt/vishnu ..</para>
-</listitem>
 </itemizedlist>
 </listitem>
 </itemizedlist>
@@ -490,7 +491,7 @@ From the version 3.1.0, VISHNU supports secured communications through SSL chann
 
 <section>
 <title>Software usage description </title>
-<para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), one that deals with the files management (FMS) and one that handles the information of the system (IMS). These clients can be installed altogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be described to present the services they offer to the users.</para>
+<para>VISHNU is composed of 4 main packages, one that deals with the users and the machine (UMS), one that deals with the batch schedulers (TMS), and one that deals with the files management (FMS). These clients can be installed altogether or just one or two. Please contact your VISHNU admin to know the corresponding servers you can have before installing the client. It is important to note that the client can be installed without the server being on the platform, the call will end up with an exception and the message "Vishnu not available". Below each package will be described to present the services they offer to the users.</para>
 <para>More information about the datatypes can be found in the [VISHNU_API] document.</para>
 <para><emphasis role="bold">WARNING: The lists are INOUT parameters, the results are appended, they do not overwrite the existing list. Moreover, the get function on the lists do not check the bounds, it is like using the [] operator.</emphasis></para>
 <section><!-- UMS Package -->
@@ -972,23 +973,6 @@ The user can create (or remove) a regular file located in a remote host by using
 </section>
 </section>
 
-<section><!-- IMS description-->
-<title>IMS package </title>
-<section>
-<title>Export of commands</title>
-<para>
-The user can export the commands made during a session in shell format. The file must have been created before the call, the file will contain a shell script that can be executed. For safety reasons, the connect and change password cannot be in the file. Thus, to execute the shell script, the connect command must be added after the first line of the file that declares the shell format.
-</para>
-</section>
-<section>
-<title>Get system information</title>
-<para>The get system information is to get information about a machine of the system. It can give information about the memory and/or diskspace available on the machine.</para>
-</section>
-<section>
-<title>Get the metric </title>
-<para>The user can get the current metrics on a machine or the history of the metrics on a machine to know the evolution of the metric. The user can choose to get the metrics of a specific type (parameters are 1, 2, 3 respectively free CPUload, free diskspace and free memory). Note, when getting the history of metrics, by default, only the first 1000 results are gotten. This is to avoid having to much results with a single command (the metric table may be filled very fastly).</para>
-</section> 
-</section>
 <section>
 <title>Troubleshooting functions </title>
 

@@ -9,7 +9,7 @@ if [[ ! -f copyright ]]; then
 fi
 
 
-FIND_DIR="FMS TMS UMS IMS core communication"
+FIND_DIR="FMS TMS UMS core communication"
 EXCLUDE_DIR="TMS/src/slurm_parser TMS/src/deltacloudcommon TMS/src/utils_pbs TMS/src/utils_torque core/deps core/test/third-party core/tools core/src/emfdata/"
 EXTENSIONS="cc cpp hpp hh c h"
 

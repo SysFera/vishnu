@@ -1,7 +1,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Attention: il faut bien respecter les nommages 'umssed', 'imssed',
+; Attention: il faut bien respecter les nommages 'umssed',
 ; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
 
 ; Définir le SeD UMS comme un processus à surveiller
@@ -15,12 +15,6 @@ command=/opt/vishnu/sbin/umssed /opt/vishnu/etc/vishnu-sample.cfg
 ; command indique la commande à exécuter. A modifier selon votre installation
 [program:fmssed]
 command=/opt/vishnu/sbin/fmssed /opt/vishnu/etc/vishnu-sample.cfg
-
-; Définir le SeD IMS comme un processus à surveiller
-; Son alias est imssed
-; command indique la commande à exécuter. A modifier selon votre installation
-[program:imssed]
-command=/opt/vishnu/sbin/imssed /opt/vishnu/etc/vishnu-sample.cfg
 
 ; Définir le SeD TMS comme un processus à surveiller
 ; Son alias est tmssed

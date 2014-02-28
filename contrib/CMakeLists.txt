@@ -16,9 +16,6 @@ if(COMPILE_SERVERS)
   if(COMPILE_FMS)
     set(INIT_FILES ${INIT_FILES} init.d/debian/vishnu-fmssed)
   endif()
-  if(COMPILE_IMS)
-    set(INIT_FILES ${INIT_FILES} init.d/debian/vishnu-imssed)
-  endif()
 
   # install sysV init scripts
   if(INSTALL_SYSV)

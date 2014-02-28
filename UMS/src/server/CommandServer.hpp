@@ -37,7 +37,7 @@ public:
   getCommand();
   /**
   * \brief Function to record the command on the database
-  * \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+  * \param cmdType The type of the command (UMS, TMS, FMS)
   * \param cmdStatus The status of the command
   * \param newVishnuObjectID the new vishnu object Id
   * \param startTime The start time of command

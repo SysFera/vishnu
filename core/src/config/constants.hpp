@@ -45,7 +45,6 @@ namespace vishnu {
     DISP_URISUBS,
     DISP_NBTHREAD,
     FMS_URIADDR,
-    IMS_URIADDR,
     TMS_URIADDR,
     UMS_URIADDR,
     CLOUDENDPOINT,

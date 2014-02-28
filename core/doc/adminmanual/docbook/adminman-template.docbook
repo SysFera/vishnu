@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin);IMS.apim#MAN(admin);IMS.apim#CPP(admin);IMS.apim#PYTHON(admin)" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
+<?xml version="1.0" encoding="UTF-8"?><book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" label="UMS.apim#MAN(admin);UMS.apim#CPP(admin);UMS.apim#PYTHON(admin)" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">
 <!--<book xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://docbook.org/ns/docbook">-->
 <info>
 <title>VISHNU - Le guide de l'administrateur</title>
@@ -373,6 +373,15 @@ suppression du chapite lié aux web services</para>
 </revdescription>
 </revision>
 
+<revision>
+<revnumber>40</revnumber>
+<date>28/02/2014</date>
+<authorinitials>K. Coulomb</authorinitials>
+<revdescription>
+<para>Suppression de IMS</para>
+</revdescription>
+</revision>
+
 </revhistory>
 </info>
 <chapter>
@@ -471,10 +480,6 @@ La suite comprend VISHNU et le WebBoard.
 VISHNU.</para>
 </listitem>
 <listitem>
-<para>IMS (Information Management Service): désigne le système de gestion
-d'information dans VISHNU.</para>
-</listitem>
-<listitem>
 <para>TMS : Task Management Service ou système de gestion de tâches</para>
 </listitem>
 <listitem>
@@ -482,9 +487,6 @@ d'information dans VISHNU.</para>
 </listitem>
 <listitem>
 <para>SeD FMS : désigne l'exécutable qui supporte le service FMS. </para>
-</listitem>
-<listitem>
-<para>SeD IMS : désigne l'exécutable qui supporte le service VISHNU. </para>
 </listitem>
 <listitem>
 <para>SeD TMS : désigne l'exécutable qui supporte le service TMS. </para>
@@ -495,9 +497,6 @@ d'information dans VISHNU.</para>
 <listitem>
 <para>Client FMS : désigne l'ensemble des programmes pour accéder
 aux services FMS. </para>
-</listitem>
-<listitem>
-<para>Client IMS : désigne l'ensemble des programmes pour accéder aux services IMS. </para>
 </listitem>
 <listitem>
 <para>Client TMS : désigne l'ensemble des programmes qui permettent d'accéder
@@ -592,29 +591,6 @@ et <emphasis>regex</emphasis> doivent être installés
 <para>MySQL 5.1 minimum</para>
 </listitem>
 </itemizedlist>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<para><emphasis role="bold">Dépendances spécifiques pour le module UMS</emphasis></para>
-<itemizedlist>
-<listitem>
-<para>OpenLDAP 2.4 ou ultérieure</para>
-</listitem>
-</itemizedlist>
-</listitem>
-<listitem>
-<para><emphasis role="bold">Dépendances spécifiques pour IMS</emphasis></para>
-<itemizedlist>
-<listitem>
-<para>Sigar 1.6.4 disponible sur sourceforge (http://sourceforge.net/projects/sigar/files/sigar/1.6/)</para>
-</listitem>
-<listitem>
-<para>Supervisord 3.0.a, installable à partir des outils Python (ex. pip install supervisor)</para>
-</listitem>
-<listitem>
-<para>Xmlrpc-c 2.1.19
-</para>
 </listitem>
 </itemizedlist>
 </listitem>
@@ -735,13 +711,6 @@ En d'autres termes, l'activation de cette option entraine automatiquement l'acti
 la désactivation de la compilation de tous les autres modules et binaires de vishnu.
 </para>
 </listitem>
-<listitem>
-<para>
-COMPILE_IMS indique si le module IMS sera compilé. </para>
-<para>IMS est désactivé par défaut. Lorsqu'il est activé, tous les autres modules doivent
-l'être également (-DCOMPILE_UMS=ON, -DCOMPILE_TMS=ON et -DCOMPILE_FMS=ON).
-</para>
-</listitem>
 
 <listitem>
 <para>
@@ -770,8 +739,7 @@ ENABLE_LDAP permet d'activer le support LDAP pour l'authentification. Cette opti
 ENABLE_SWIG permet d'activer la generation du code des adapteurs PYTHON et JAVA.
 </para>
 <para>Désactivée par défaut cette option doit obligatoirement être activée si on choisit de ne pas compiler
-tous les modules VISHNU. C'est-à-dire lorsqu'au moins l'une des options COMPILE_UMS, COMPILE_TMS, COMPILE_FMS
-ou COMPILE_IMS est à OFF. Par ailleurs, l'activation de cette option nécessite que SWIG ait été installé au préalable.
+tous les modules VISHNU. C'est-à-dire lorsqu'au moins l'une des options COMPILE_UMS, COMPILE_TMS ou COMPILE_FMS est à OFF. Par ailleurs, l'activation de cette option nécessite que SWIG ait été installé au préalable.
 </para>
 </listitem>
 <listitem>
@@ -932,11 +900,6 @@ $INSTALL_PREFIX/sbin/tmssed : binaire du SeD TMS
 </listitem>
 <listitem>
 <para>
-$INSTALL_PREFIX/sbin/imssed : binaire du SeD IMS
-</para>
-</listitem>
-<listitem>
-<para>
 $INSTALL_PREFIX/bin : contient les clients ligne de commande dont les noms sont
 préfixés par <emphasis>vishnu_*</emphasis>.
 </para>
@@ -972,7 +935,7 @@ $INSTALL_PREFIX/etc : contient des exemples de fichiers de configuration.
 le répertoire core/database du package d'installation VISHNU. Seules des bases
 de données PostgreSQL ou MySQL sont actuellement supportées. Une seule base de
 données est nécessaire et suffisante pour l'ensemble des composants d'une
-infrastructure VISHNU (UMS, TMS, IMS et IMS).
+infrastructure VISHNU (UMS, TMS, et FMS).
 </para>
 
 
@@ -1194,11 +1157,6 @@ SeD FMS: $INSTALL_PREFIX/sbin/fmssed
 SeD TMS : $INSTALL_PREFIX/sbin/tmssed
 </para>
 </listitem>
-<listitem>
-<para>
-SeD IMS : $INSTALL_PREFIX/sbin/imssed
-</para>
-</listitem>
 </itemizedlist>
 </para>
 </section>
@@ -1234,7 +1192,6 @@ NOTER QUE LES FORMATS DES URIs ACCEPTES SONT LES MÊMES QUE CEUX ACCEPTES PAR ZE
 #
 # Definitions
 # FMS: File Management System
-# IMS: Information Management System
 # TMS: Task Management System
 # UMS: User Management System
 # FQDN: Full Qualified Domain Name
@@ -1243,31 +1200,31 @@ NOTER QUE LES FORMATS DES URIs ACCEPTES SONT LES MÊMES QUE CEUX ACCEPTES PAR ZE
 ###############################################################################
 #               Common Parameters                                             #
 ###############################################################################
-# vishnuId (M<FMS,IMS,TMS,UMS>): Sets the identifier of the VISHNU instance
+# vishnuId (M<FMS,TMS,UMS>): Sets the identifier of the VISHNU instance
 #
 vishnuId=1
 
-# databaseType (M<FMS,IMS,TMS,UMS>): Defines the type of the database.
+# databaseType (M<FMS,TMS,UMS>): Defines the type of the database.
 # Possible values are 'mysql' or 'postgresql'
 #
 databaseType=mysql
 
-# databaseHost (M<FMS,IMS,TMS,UMS>): Defines the IP address or the FQDN of the
+# databaseHost (M<FMS,TMS,UMS>): Defines the IP address or the FQDN of the
 # database server.
 # Here we assume that the database and VISHNU are hosted on the same server
 #
 databaseHost=localhost
 
-# databaseName (M<FMS,IMS,TMS,UMS>): Sets the name of the database instance
+# databaseName (M<FMS,TMS,UMS>): Sets the name of the database instance
 #
 databaseName=vishnu
 
-# databaseUserName (M<FMS,IMS,TMS,UMS>): Sets the login name for authenticating
+# databaseUserName (M<FMS,TMS,UMS>): Sets the login name for authenticating
 # against the database
 #
 databaseUserName=vishnu
 
-# databaseUserPassword (M<FMS,IMS,TMS,UMS>): Sets the password associated to
+# databaseUserPassword (M<FMS,TMS,UMS>): Sets the password associated to
 # the database user
 #
 databaseUserPassword=vishnu
@@ -1285,9 +1242,9 @@ databaseUserPassword=vishnu
 #
 disp_uriAddr=tcp://127.0.0.1:5560
 
-# disp_uriSubs (M<Dispatcher>|O<IMS|TMS|FMS|UMS>):
+# disp_uriSubs (M<Dispatcher>|O<TMS|FMS|UMS>):
 # ** For the Dispatcher, it indicates the address to listen on for SeD subscription
-# ** For SeD (FMS, IMS, TMS, UMS), this corresponds to the address from which
+# ** For SeD (FMS, TMS, UMS), this corresponds to the address from which
 #    the module will register itself to the Dispatcher
 #
 disp_uriSubs=tcp://127.0.0.1:5561
@@ -1302,7 +1259,7 @@ disp_uriSubs=tcp://127.0.0.1:5561
 #
 disp_nbthread=5
 
-# subscribe (O<IMS|TMS|FMS|UMS>):
+# subscribe (O<TMS|FMS|UMS>):
 # ** Indicates if the SeD have to register in the dispatcher or not
 # * 1 for yes
 # * 0 for no
@@ -1357,26 +1314,6 @@ sendmailScriptPath=/opt/software/GIT/vishnu_1/core/src/utils/sendmail.py
 #     E.g. fms_uriAddr=tcp://127.0.0.1:5563 localsed;tcp://192.168.1.1:5563 lansed
 #
 fms_uriAddr=tcp://127.0.0.1:5563
-
-
-###############################################################################
-#                IMS Related Parameters                                       #
-###############################################################################
-
-# ims_uriAddr (M<IMS>|O<Dispatcher,Client>):
-#   * For IMS, this sets the address and the port on which the IMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to IMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: ims_uriAddr=uri_imssed1 sed1_name;uri_imssed2 sed2_name;...
-#     uri_imssed<i> should correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs.
-#     E.g. ims_uriAddr=tcp://127.0.0.1:5564 localsed;tcp://192.168.1.1:5564 lansed
-#
-ims_uriAddr=tcp://127.0.0.1:5564
-
-
 ###############################################################################
 #                TMS Related Parameters                                       #
 ###############################################################################
@@ -1386,7 +1323,7 @@ ims_uriAddr=tcp://127.0.0.1:5564
 #   * For Dispactcher and clients it indicates address(es) for connecting
 #     to TMS SeDs.
 #     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: ims_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
+#     in the form of: tms_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
 #     uri_tmssed<i> correspond to valid  URIs. sed<i>_name set the
 #     names associated to the SeDs.
 #     E.g. tms_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
@@ -1413,20 +1350,17 @@ intervalMonitor=30
 #                Other Parameters                                             #
 ###############################################################################
 
-# vishnuMachineId (M<FMS,IMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
-# IMS and TMS, this key corresponds to the identifier of the machine in VISHNU
+# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
+# and TMS, this key corresponds to the identifier of the machine in VISHNU
 # environment.
 # When set, it MUST correspond to valid machine identifier.
 #
 vishnuMachineId=machine_1
 
-# timeout (M<Dispatcher>|O<FMS,IMS,TMS,UMS>): In seconds, this defines the
+# timeout (M<Dispatcher>|O<FMS,TMS,UMS>): In seconds, this defines the
 # duration afer which a request is considered as expired.
 #
 timeout=120
-
-#uriSupervisor (O<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
-uriSupervisor=http://127.0.0.1:9001
 ]]>
 </programlisting>
 <section>
@@ -1442,7 +1376,7 @@ Vous pouvez vous en inspirer pour l'adapter à votre installation. Tout texte ap
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;; PARAMETRES LIES A LA PRISE EN CHARGE DES COMPOSANTS DE VISHNU ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Attention: il faut bien respecter les nommages 'umssed', 'imssed',
+; Attention: il faut bien respecter les nommages 'umssed',
 ; 'tmssed', 'fmssed'. Sinon ils ne seront pas bien pris en charge
 
 ; Définir le SeD UMS comme un processus à surveiller
@@ -1456,12 +1390,6 @@ command=umssed ~/conf/ums_config.cfg ; Commande comme on ferait dans un terminal
 ; command indique la commande à exécuter. A modifier selon votre installation
 [program:fmssed]
 command=fmssed ~/conf/fms_config.cfg
-
-; Définir le SeD IMS comme un processus à surveiller
-; Son alias est imssed
-; command indique la commande à exécuter. A modifier selon votre installation
-[program:imssed]
-command=imssed ~/conf/ims_config.cfg
 
 ; Définir le SeD TMS comme un processus à surveiller
 ; Son alias est tmssed
@@ -1689,7 +1617,7 @@ fichier de configuration n'est pas fourni, des options par défaut sont utilisé
 </listitem>
 <listitem>
 <para>
-Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS, TMS, FMS et IMS (voir le manuel de l'utilisateur VISHNU pour plus d'informations sur les commandes utilisateurs disponibles).
+Les modules de VISHNU sont prêts à être utilisés. Pour ce faire, un client doit se connecter et soumettre des requêtes à VISHNU au moyen des commandes UMS, TMS et FMS (voir le manuel de l'utilisateur VISHNU pour plus d'informations sur les commandes utilisateurs disponibles).
 </para>
 </listitem>
 </orderedlist>
@@ -2262,7 +2190,7 @@ Seul un administrateur peut réinitialiser le mot de passe d'un utilisateur de V
 </orderedlist>
 </section>
 <section>
-<title>Gestion des machines (UMS+IMS)</title>
+<title>Gestion des machines (UMS)</title>
 <orderedlist>
 <listitem>
 <para>L'ajout d'une machine se fait à l'aide de la commande 'vishnu_add_machine'. Cette commande prend en paramètre le nom de la machine, le site ou elle se trouve, le language de la description qui sera donnée pour la machine, le fichier contenant la clé publique et la description. Ces paramètres sont obligatoires, en passant par le shell, la description n'a pas besoin d'être fournie en paramètre mais elle est alors demandée à l'administrateur avant d'ajouter la machine. A la fin de l'ajout, l'identifiant généré pour la machine est renvoyé.</para>
@@ -2357,62 +2285,7 @@ Dans la fonction 'vishnu_stop_file_transfers', l'administrateur peut annuler tou
 </orderedlist>
 </section>
 <section>
-<title>Gestion des processus VISHNU et délestage (IMS)</title>
-<itemizedlist>
-<listitem>
-<para>
-L'administrateur peut lister les processus VISHNU, sur toute la plateforme ou sur une machine particulière.
-Fonction associée : vishnu_get_processes.
-</para>
-</listitem>
-<listitem>
-<para>
-L'administrateur peut arrêter un processus VISHNU, ce processus ne sera pas redémarrer automatiquement.
-Attention : l'administrateur doit avoir un compte sur la machine.
-Fonction associée : vishnu_stop 
-</para>
-</listitem>
-<listitem>
-<para>
-L'administrateur peut redémarrer un processus VISHNU sur une machine, ce processus doit avoir déjà tourné
-pour VISHNU sur cette machine et l'administrateur doit avoir un compte sur la machine.
-Fonction associée : vishnu_restart 
-</para>
-</listitem>
-<listitem>
-<para>L'administrateur peut délester une machine selon deux modes. Dans le mode HARD, tout les processus VISHNU
-de la machine sont arretés. Dans le mode SOFT, seul FMS et TMS sont touchés, on arrête tout leurs transferts
-et jobs en cours.
-Fonction associée : vishnu_load_shed </para>
-</listitem>
-</itemizedlist>
-</section>
-<section>
-<title>Surveillance de l'état des machines (IMS)</title>
-<itemizedlist>
-<listitem>
-<para>Un administrateur peut fixer la fréquence de mise à jour de l'enregistrement de l'état des machines.
-Fonction associée : vishnu_set_update_frequency</para>
-</listitem>
-<listitem>
-<para>Un administrateur peut obtenir la fréquence de mise à jour de l'enregistrement de l'état des machines.
-Fonction associée : vishnu_get_update_frequency</para>
-</listitem>
-<listitem>
-<para>Un administrateur peut fixer un seuil sur une machine. Ce seuil peut être l'utilisation du CPU, la
-mémoire libre restante ou l'espace disque restant. Lors de l'enregistrement de l'état d'une machine,
-si un seuil est atteint sur cette machine, l'administrateur est notifié par mail de ce dépassement.
-Fonction associée : vishnu_set_threshold</para>
-</listitem>
-<listitem>
-<para>Un administrateur peut obtenir les seuils fixés sur une machine. Pour plus d'informations sur les seuils
-voir la partie pour fixer les seuils ci-dessus.
-Fonction associée : vishnu_get_threshold</para>
-</listitem>
-</itemizedlist>
-</section>
-<section>
-<title>Définition des formats des identifiants (IMS)</title>
+<title>Définition des formats des identifiants (UMS)</title>
 <itemizedlist>
 <listitem>
 <para>
@@ -2595,7 +2468,6 @@ fichier doit contenir un ensemble de paramètres :
 
 # Definitions
 # FMS: File Management System
-# IMS: Information Management System
 # TMS: Task Management System
 # UMS: User Management System
 

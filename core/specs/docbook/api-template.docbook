@@ -243,6 +243,14 @@
 	  <para>Update documentation for list jobs (COMPLETED is represented by T for TERMINATED not C). </para>
 	</revdescription>
       </revision>
+      <revision>
+	<revnumber>20</revnumber>
+	<date>28/02/2014</date>
+	<authorinitials>K. Coulomb</authorinitials>
+	<revdescription>
+	  <para>IMS removed. </para>
+	</revdescription>
+      </revision>
 
 
       </revhistory>
@@ -276,9 +284,6 @@
         </listitem>
         <listitem>
           <para>FMS: Files Management Service</para>
-        </listitem>
-        <listitem>
-          <para>IMS: Information Management Service</para>
         </listitem>
       </itemizedlist></para>
       <para>Each module  corresponds to a chapter in the document, and each chapter contains the following sections:
@@ -483,9 +488,6 @@
   </chapter> 
   <chapter annotations="TMS.apim#APIOPS+APIDATA">
     <title>API specification for Tasks Management Service (TMS)</title>
-  </chapter>
-  <chapter annotations="IMS.apim#APIOPS+APIDATA">
-    <title>API specification for Information Management Service (IMS)</title>
   </chapter>
   <chapter annotations="FMS.apim#APIOPS+APIDATA">
     <title>API specification for File Management Service (FMS)</title>

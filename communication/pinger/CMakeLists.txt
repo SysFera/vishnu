@@ -11,7 +11,6 @@ include_directories(
   ${VISHNU_SOURCE_DIR}/TMS/src/sed
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${VISHNU_SOURCE_DIR}/FMS/src/sed
-  ${VISHNU_SOURCE_DIR}/IMS/src/sed
   ${Boost_INCLUDE_DIR}
   ${OPENSSL_INCLUDE_DIR}
 

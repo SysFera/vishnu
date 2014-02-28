@@ -11,5 +11,4 @@ vishnuMachineId=machine_1
 intervalMonitor=1
 tms_uriAddr=@TEST_ZMQ_TMS_SED1_URI@
 disp_uriSubs=@TEST_ZMQ_DISPATCHER_URI_SUB@
-uriSupervisor=@TEST_IMS_SUPERVISOR_URL@
 cloudEndpoint=@TEST_CLOUD_ENDPOINT@

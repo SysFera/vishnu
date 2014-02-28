@@ -106,27 +106,6 @@ BOOST_AUTO_TEST_CASE( tms_version )
 
 }
 
-BOOST_AUTO_TEST_CASE( ims_version )
-{
-  std::map<std::string, std::string> result;
-  std::map<std::string, std::string>::iterator it;
-  BOOST_MESSAGE(" Testing IMS get version" );
-  {
-    if (mims_version!=std::string("NO")){
-      BOOST_CHECK  (getServerVersion(result, "imssed")==0);
-      BOOST_CHECK (result.size() == 1);
-      it = result.begin();
-      std::string vers = it->second;
-      boost::algorithm::trim(vers);
-      const char* car = vers.c_str(); // Use a char* because otherwize a **** invisible character is in the end of the string and fucks comparison
-      std::string neo(car);
-      BOOST_CHECK (neo == mims_version);
-    } else {
-      BOOST_CHECK_THROW  (getServerVersion(result, "imssed"), VishnuException);
-    }
-  }
-
-}
 
 BOOST_AUTO_TEST_CASE( all_version )
 {
@@ -136,9 +115,6 @@ BOOST_AUTO_TEST_CASE( all_version )
   BOOST_MESSAGE(" Testing all servers version" );
   {
     BOOST_CHECK  (getServerVersion(result)==0);
-    if (mims_version!=std::string("NO")){
-      cpt ++;
-    }
     if (mums_version!=std::string("NO")){
       cpt ++;
     }
@@ -163,9 +139,6 @@ BOOST_AUTO_TEST_CASE( all_list )
   BOOST_MESSAGE(" Testing list all servers " );
   {
     BOOST_CHECK  (listServers(result)==0);
-    if (mims_version!=std::string("NO")){
-      cpt ++;
-    }
     if (mums_version!=std::string("NO")){
       cpt ++;
     }
@@ -188,9 +161,6 @@ BOOST_AUTO_TEST_CASE( machine_list )
   BOOST_MESSAGE(" Testing list all servers " );
   {
     BOOST_CHECK  (listServers(result, mmid)==0); // Suppose all servers on same machine
-    if (mims_version!=std::string("NO")){
-      cpt ++;
-    }
     if (mums_version!=std::string("NO")){
       cpt ++;
     }
@@ -289,27 +259,6 @@ BOOST_AUTO_TEST_CASE( tms_ping )
 
 }
 
-BOOST_AUTO_TEST_CASE( ims_ping )
-{
-  std::map<std::string, std::string> result;
-  std::map<std::string, std::string>::iterator it;
-  BOOST_MESSAGE(" Testing IMS ping" );
-  {
-    if (mims_version!=std::string("NO")){
-      BOOST_CHECK  (ping(result, "imssed")==0);
-      BOOST_CHECK (result.size() == 1);
-      it = result.begin();
-      std::string vers = it->second;
-      boost::algorithm::trim(vers);
-      const char* car = vers.c_str(); // Use a char* because otherwize a **** invisible character is in the end of the string and fucks comparison
-      std::string neo(car);
-      BOOST_CHECK (neo != UNAVAILABLE);
-    } else {
-      BOOST_CHECK_THROW  (ping(result, "imssed"), VishnuException);
-    }
-  }
-
-}
 
 BOOST_AUTO_TEST_CASE( all_ping )
 {
@@ -319,9 +268,6 @@ BOOST_AUTO_TEST_CASE( all_ping )
   BOOST_MESSAGE(" Testing all servers version" );
   {
     BOOST_CHECK  (ping(result)==0);
-    if (mims_version!=std::string("NO")){
-      cpt ++;
-    }
     if (mums_version!=std::string("NO")){
       cpt ++;
     }

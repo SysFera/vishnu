@@ -316,7 +316,7 @@ SessionServer::check() {
 /**
 * \brief Function to finalize the service
 * \param cmdDescription The description of the command
-* \param cmdType The type of the command (UMS, TMS, FMS, IMS)
+* \param cmdType The type of the command (UMS, TMS, FMS)
 * \param cmdStatus The status of the command
 * \param newVishnuObjectID the new vishnu object
 * \return raises an exception on error

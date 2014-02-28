@@ -23,8 +23,6 @@ The root directory VISHNU_Vx.y.z
 		      |
 		      |---------- FMS directory that contains the sources of the FMS module
                       |
-                      |---------- IMS directory that contains the sources of the IMS module
-                      |
                       |---------- Java directory that contains the Vishnu java library and its sources
                       |
                       |---------- communication directory that contains the sources of the communication bus

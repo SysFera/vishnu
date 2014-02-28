@@ -5,7 +5,6 @@
 #include "UMSVishnuException.hpp"
 #include "TMSVishnuException.hpp"
 #include "FMSVishnuException.hpp"
-#include "IMSVishnuException.hpp"
 
 BOOST_AUTO_TEST_SUITE( utilClient_unit_tests )
 
@@ -55,11 +54,6 @@ BOOST_AUTO_TEST_CASE( test_raiseExceptionIfNotEmptyMsg_n_split )
     BOOST_REQUIRE_THROW(raiseExceptionIfNotEmptyMsg(tmp), FMSVishnuException);
   }
 
-  // 300 <= error code < 400 -> throws IMSVishnuException
-  for (i = 300; i < 400; i++) {
-    tmp = (boost::format("%1%#%2%") % i % message).str();
-    BOOST_REQUIRE_THROW(raiseExceptionIfNotEmptyMsg(tmp), IMSVishnuException);
-  }
 }
 
 BOOST_AUTO_TEST_CASE( test_raiseExceptionIfNotEmptyMsg_b_format )

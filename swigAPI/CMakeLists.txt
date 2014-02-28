@@ -12,15 +12,10 @@ include_directories(
   ${Boost_INCLUDE_DIRS}
   ${UMS_API_SOURCE_DIR}
   ${TMS_API_SOURCE_DIR}
-  ${IMS_API_SOURCE_DIR}
   ${FMS_API_SOURCE_DIR}
   ${TMS_EMF_DATA_DIR}
   ${TMS_DATA_DIR}
-  ${IMS_UTIL_DIR}
   ${TMS_CLIENT_PROXY_SOURCE_DIR}
-  ${IMS_EMF_DATA_DIR}
-  ${IMS_DATA_DIR}
-  ${IMS_CLIENT_PROXY_SOURCE_DIR}
   ${FMS_EMF_DATA_DIR}
   ${FMS_DATA_DIR}
   ${FMS_CLIENT_PROXY_SOURCE_DIR}
@@ -91,13 +86,6 @@ if(COMPILE_TMS)
   set (SWIG_LINK_LIB
     ${SWIG_LINK_LIB}
     vishnu-tms-client)
-endif()
-if(COMPILE_IMS)
-  add_definitions(-DCOMPILE_IMS)
-  set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_IMS" )
-  set (SWIG_LINK_LIB
-    ${SWIG_LINK_LIB}
-    vishnu-ims-client)
 endif()
 if(COMPILE_FMS)
   set( CMAKE_SWIG_FLAGS ${CMAKE_SWIG_FLAGS} "-DCOMPILE_FMS" )

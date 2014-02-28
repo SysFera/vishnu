@@ -289,42 +289,6 @@ copy_rel_file FMS/design/docbook/\*-gen\.html ../doc/concept/
 copy_rel_dir FMS/design/docbook/images/png ../doc/concept/images
 
 ###############################################################################
-#                                    I M S                                    #
-###############################################################################
-create_dir IMS
-
-# Copy source files
-copy_dir IMS/src IMS
-
-# Copy tests
-create_dir IMS/test
-copy_dir IMS/test/src IMS/test
-
-# Copy man pages
-create_dir IMS/doc/man
-copy_file  IMS/doc/man/CMakeLists.txt IMS/doc/man/
-copy_dir IMS/doc/man/man1 IMS/doc/man/
-copy_dir IMS/doc/man/man3 IMS/doc/man/
-
-# Copy tests in release
-copy_rel_file IMS/test/testReports/\*\.pdf ../testReports/
-copy_rel_file IMS/test/testReports/\*\.docbook ../testReports/
-copy_rel_file IMS/test/testReports/\*\.html ../testReports/
-
-# Copy test plans in release
-copy_rel_file IMS/test/testPlan/\*\.pdf ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*\.docbook ../doc/concept/
-copy_rel_file IMS/test/testPlan/\*\.html ../doc/concept/
-copy_rel_file IMS/test/testPlan/images/\* ../doc/concept/images
-
-# Copy design in release
-copy_rel_file IMS/design/docbook/\*-gen\.pdf ../doc/concept/
-copy_rel_file IMS/design/docbook/\*-gen\.docbook ../doc/concept/
-copy_rel_file IMS/design/docbook/\*-gen\.html ../doc/concept/
-copy_rel_dir IMS/design/docbook/images/png ../doc/concept/images
-
-
-###############################################################################
 #                                    CORE                                     #
 ###############################################################################
 # Copy design in release

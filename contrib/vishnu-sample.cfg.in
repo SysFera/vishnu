@@ -17,7 +17,6 @@
 #
 # Definitions
 # FMS: File Management System
-# IMS: Information Management System
 # TMS: Task Management System
 # UMS: User Management System
 # FQDN: Full Qualified Domain Name
@@ -26,56 +25,56 @@
 ###############################################################################
 #               Common Parameters                                             #
 ###############################################################################
-# vishnuId (M<FMS,IMS,TMS,UMS>): Sets the identifier of the VISHNU instance
+# vishnuId (M<FMS,TMS,UMS>): Sets the identifier of the VISHNU instance
 #
 vishnuId=1
 
-# databaseType (M<FMS,IMS,TMS,UMS>): Defines the type of the database.
+# databaseType (M<FMS,TMS,UMS>): Defines the type of the database.
 # Possible values are 'mysql' or 'postgresql'
 #
 databaseType=mysql
 
-# databaseHost (M<FMS,IMS,TMS,UMS>): Defines the IP address or the FQDN of the
+# databaseHost (M<FMS,TMS,UMS>): Defines the IP address or the FQDN of the
 # database server.
 # Here we assume that the database and VISHNU are hosted on the same server
 #
 databaseHost=localhost
 
-# databasePort (OS<FMS,IMS,TMS,UMS>): Defines the port of the database server.
+# databasePort (OS<FMS,TMS,UMS>): Defines the port of the database server.
 #
 #databasePort=3306
 
-# databaseName (M<FMS,IMS,TMS,UMS>): Sets the name of the database instance
+# databaseName (M<FMS,TMS,UMS>): Sets the name of the database instance
 #
 databaseName=vishnu
 
-# databaseUserName (M<FMS,IMS,TMS,UMS>): Sets the login name for authenticating
+# databaseUserName (M<FMS,TMS,UMS>): Sets the login name for authenticating
 # against the database
 #
 databaseUserName=vishnu_user
 
-# databaseUserPassword (M<FMS,IMS,TMS,UMS>): Sets the password associated to
+# databaseUserPassword (M<FMS,TMS,UMS>): Sets the password associated to
 # the database user
 #
 databaseUserPassword=vishnu_user
 
-# databaseConnectionsNb (OS<FMS,IMS,TMS,UMS>): Sets the size of the pool of
+# databaseConnectionsNb (OS<FMS,TMS,UMS>): Sets the size of the pool of
 # threads to handle database connexions
 #
 #databaseConnectionsNb=10
 
-# useSsl (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets whether to enable TLS connections
+# useSsl (OS<Dispatcher,FMS,TMS,UMS>): Sets whether to enable TLS connections
 # Set to a non-zero value to enable SSL connection.
 #
 #useSsl=0
 
-# serverSslCertificate (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets the path to the
+# serverSslCertificate (OS<Dispatcher,FMS,TMS,UMS>): Sets the path to the
 # server certificate
 # This parameter is required if the parameter useSsl is set to a non-zero value
 #
 #serverSslCertificate=/opt/etc/sysfera/cert/server-cert.pem
 
-# serverPrivateKey (OS<Dispatcher,FMS,IMS,TMS,UMS>): Sets the path to the
+# serverPrivateKey (OS<Dispatcher,FMS,TMS,UMS>): Sets the path to the
 # server private key
 # This parameter is required if the parameter useSsl is set to a non-zero value
 #
@@ -86,12 +85,12 @@ databaseUserPassword=vishnu_user
 #
 #sslCa=/opt/etc/sysfera/cert/ca.pem
 
-# databaseUseSsl (OS<FMS,IMS,TMS,UMS>): Sets whether to use SSL-ciphered connection
+# databaseUseSsl (OS<FMS,TMS,UMS>): Sets whether to use SSL-ciphered connection
 # Set to non-zero value to enable SSL connection.
 #
 #databaseUseSsl=0
 
-# databaseSslCa (OS<FMS,IMS,TMS,UMS>): Sets the path to the authority certificates
+# databaseSslCa (OS<FMS,TMS,UMS>): Sets the path to the authority certificates
 # This parameter is necessary only when the parameter databaseUseSsl is set to non-zero
 #
 #databaseSslCa=/opt/etc/sysfera/mysql-ssl/ca.pem
@@ -109,9 +108,9 @@ databaseUserPassword=vishnu_user
 #
 disp_uriAddr=tcp://127.0.0.1:5560
 
-# disp_uriSubs (M<Dispatcher>|O<IMS|TMS|FMS|UMS>):
+# disp_uriSubs (M<Dispatcher>|O<TMS|FMS|UMS>):
 # ** For the Dispatcher, it indicates the address to listen on for SeD subscription
-# ** For SeD (FMS, IMS, TMS, UMS), this corresponds to the address from which
+# ** For SeD (FMS, TMS, UMS), this corresponds to the address from which
 #    the module will register itself to the Dispatcher
 #
 disp_uriSubs=tcp://127.0.0.1:5561
@@ -178,24 +177,6 @@ fms_uriAddr=tcp://127.0.0.1:5563
 
 
 ###############################################################################
-#                IMS Related Parameters                                       #
-###############################################################################
-
-# ims_uriAddr (M<IMS>|O<Dispatcher,Client>):
-#   * For IMS, this sets the address and the port on which the IMS SeD
-#     will listen on
-#   * For Dispactcher and clients it indicates address(es) for connecting
-#     to IMS SeDs.
-#     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: ims_uriAddr=uri_imssed1 sed1_name;uri_imssed2 sed2_name;...
-#     uri_imssed<i> should correspond to valid URIs. sed<i>_name set the
-#     names associated to the SeDs.
-#     E.g. ims_uriAddr=tcp://127.0.0.1:5564 localsed;tcp://192.168.1.1:5564 lansed
-#
-ims_uriAddr=tcp://127.0.0.1:5564
-
-
-###############################################################################
 #                TMS Related Parameters                                       #
 ###############################################################################
 # tms_uriAddr (M<TMS>|O<Dispatcher,Client>):
@@ -204,7 +185,7 @@ ims_uriAddr=tcp://127.0.0.1:5564
 #   * For Dispactcher and clients it indicates address(es) for connecting
 #     to TMS SeDs.
 #     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: ims_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
+#     in the form of: tms_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
 #     uri_tmssed<i> correspond to valid  URIs. sed<i>_name set the
 #     names associated to the SeDs.
 #     E.g. tms_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
@@ -245,22 +226,17 @@ intervalMonitor=30
 #                Other Parameters                                             #
 ###############################################################################
 
-# vishnuMachineId (M<FMS,IMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
-# IMS and TMS, this key corresponds to the identifier of the machine in VISHNU
+# vishnuMachineId (M<FMS,TMS>|O<UMS>): Optional for UMS and mandatory for FMS,
+# and TMS, this key corresponds to the identifier of the machine in VISHNU
 # environment.
 # When set, it MUST correspond to valid machine identifier.
 #
 vishnuMachineId=machine_1
 
-# timeout (M<Dispatcher>|O<FMS,IMS,TMS,UMS,Client>): In seconds, this defines the
+# timeout (M<Dispatcher>|O<FMS,TMS,UMS,Client>): In seconds, this defines the
 # duration afer which a request is considered as expired.
 #
 timeout=120
-
-# uriSupervisor (OS<FMS,IMS,TMS,UMS>): Specifies the address of Supervisord
-#
-uriSupervisor=http://127.0.0.1:9001
-
 # debugLevel (O): specifies the debug level. The higher the more debug information
 # you'll get. Default is 0.
 #

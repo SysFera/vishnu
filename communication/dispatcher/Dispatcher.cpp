@@ -50,10 +50,6 @@ Dispatcher::configureAnnuary() {
     ann->setInitConfig("fmssed", cfgInfo, mid);
     cfgInfo.clear();
   }
-  if (config.getConfigValues(vishnu::IMS_URIADDR, cfgInfo)) {
-    ann->setInitConfig("imssed", cfgInfo, mid);
-    cfgInfo.clear();
-  }
   if (config.getConfigValues(vishnu::TMS_URIADDR, cfgInfo)) {
     ann->setInitConfig("tmssed", cfgInfo, mid);
     cfgInfo.clear();

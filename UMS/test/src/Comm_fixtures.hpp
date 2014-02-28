@@ -32,7 +32,6 @@ public:
   std::string mums_version;
   std::string mtms_version;
   std::string mfms_version;
-  std::string mims_version;
   std::string mdis_version;
   std::string mmid;
 
@@ -60,7 +59,6 @@ public:
     mums_version = setupConfig.find("TEST_UMS_VERSION")->second ;
     mfms_version = setupConfig.find("TEST_FMS_VERSION")->second ;
     mtms_version = setupConfig.find("TEST_TMS_VERSION")->second ;
-    mims_version = setupConfig.find("TEST_IMS_VERSION")->second ;
     mdis_version = setupConfig.find("TEST_DIS_VERSION")->second ;
     mmid = setupConfig.find("TEST_VISHNU_MACHINEID1")->second ;
   }
