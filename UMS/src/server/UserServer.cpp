@@ -106,7 +106,6 @@ UserServer::add(UMS_Data::User*& user, int vishnuId, std::string sendmailScriptP
 
         //Send email
         std::string emailBody = getMailContent(*user, true);
-        std::cout << "sending mail " << emailBody << std::endl;
         sendMailToUser(*user, emailBody, "Vishnu message: user created", sendmailScriptPath);
 
       }// END If the user to add exists
