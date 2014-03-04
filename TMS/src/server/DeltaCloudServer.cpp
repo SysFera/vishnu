@@ -43,14 +43,14 @@ DeltaCloudServer::~DeltaCloudServer() {
  * \return raises an exception on error
  */
 int
-DeltaCloudServer::submit(const char* scriptPath,
+DeltaCloudServer::submit(const std::string& scriptPath,
                          const TMS_Data::SubmitOptions& options,
                          TMS_Data::Job& job,
                          char** envp) {
 
   initialize(); // Initialize Delatacloud API
   retrieveSpecificParams(options.getSpecificParams()); // First set specific parameters
-  replaceEnvVariables(scriptPath);
+  replaceEnvVariables(scriptPath.c_str());
 
 
   // Get configuration parameters
@@ -127,7 +127,7 @@ DeltaCloudServer::submit(const char* scriptPath,
   SSHJobExec sshEngine(mvmUser, instanceAddr->address);
   int jobPid = -1;
   try {
-    jobPid = sshEngine.execRemoteScript(scriptPath, mnfsServer, mnfsMountPoint, job.getOutputDir());
+    jobPid = sshEngine.execRemoteScript(scriptPath.c_str(), mnfsServer, mnfsMountPoint, job.getOutputDir());
   } catch(...) {
     throw;
   }
@@ -153,9 +153,9 @@ DeltaCloudServer::submit(const char* scriptPath,
  * \return raises an exception on error
  */
 int
-DeltaCloudServer::cancel(const char* jobDescr) {
+DeltaCloudServer::cancel(const std::string& jobDescr) {
 
-  ListStrings jobInfos = getJobInfos(jobDescr, 2);
+  ListStrings jobInfos = getJobInfos(jobDescr.c_str(), 2);
   try {
     releaseResources(jobInfos[1]); // Stop the virtual machine to release resources
   } catch(...) {
@@ -377,7 +377,7 @@ void DeltaCloudServer::retrieveSpecificParams(const std::string& specificParams)
  */
 void DeltaCloudServer::replaceEnvVariables(const char* scriptPath) {
   std::string scriptContent = vishnu::get_file_content(scriptPath);
-  
+
   //To replace VISHNU_BATCHJOB_ID
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_ID", "$$");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_ID}", "$$");

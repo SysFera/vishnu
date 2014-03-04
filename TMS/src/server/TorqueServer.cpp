@@ -43,7 +43,7 @@ TorqueServer::TorqueServer():BatchServer() {
  * \return raises an exception on error
  */
 int
-TorqueServer::submit(const char* scriptPath,
+TorqueServer::submit(const std::string& scriptPath,
                      const TMS_Data::SubmitOptions& options,
                      TMS_Data::Job& job, char** envp) {
 
@@ -55,12 +55,12 @@ TorqueServer::submit(const char* scriptPath,
 
   std::vector<std::string> cmdsOptions;
   //processes the options
-  replaceEnvVariables(scriptPath);
-  processOptions(scriptPath, options, cmdsOptions);
+  replaceEnvVariables(scriptPath.c_str());
+  processOptions(scriptPath.c_str(), options, cmdsOptions);
   argc = cmdsOptions.size()+2;
   char* argv[argc];
   argv[0] = (char*) "vishnu_submit_job";
-  argv[1] = const_cast<char*>(scriptPath);
+  argv[1] = const_cast<char*>(scriptPath.c_str());
   for(int i=0; i < cmdsOptions.size(); i++) {
    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
@@ -290,9 +290,9 @@ TorqueServer::processOptions(const char* scriptPath,
  * \return raises an exception on error
  */
 int
-TorqueServer::cancel(const char* jobId) {
+TorqueServer::cancel(const std::string& jobId) {
   char remoteServer[PBS_MAXSERVERNAME + PBS_MAXPORTNUM + 2];
-  return pbs_cancel(jobId, remoteServer);
+  return pbs_cancel(jobId.c_str(), remoteServer);
 }
 
 /**

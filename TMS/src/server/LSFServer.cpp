@@ -47,7 +47,7 @@ LSFServer::LSFServer():BatchServer() {
  * \return raises an exception on error
  */
 int
-LSFServer::submit(const char* scriptPath,
+LSFServer::submit(const std::string& scriptPath,
     const TMS_Data::SubmitOptions& options,
     TMS_Data::Job& job, char** envp) {
 
@@ -77,19 +77,19 @@ LSFServer::submit(const char* scriptPath,
   req.maxNumProcessors = 1;
   req.beginTime = 0;
   req.termTime  = 0;
-  std::string cmd = std::string(vishnu::get_file_content(scriptPath));
+  std::string cmd = std::string(vishnu::get_file_content(scriptPath.c_str()));
   req.command = strdup(cmd.c_str());
   req.nxf = 0;
   req.delOptions = 0;
   req.numAskedHosts = 0;
   req.jsdlFlag = -1;
   //parse the file
-  if(LSFParser::parse_file(scriptPath, &req) < 0) {
+  if(LSFParser::parse_file(scriptPath.c_str(), &req) < 0) {
     return -1;
   };
   //processes the vishnu options
-  replaceEnvVariables(scriptPath);
-  processOptions(scriptPath, options, &req);
+  replaceEnvVariables(scriptPath.c_str());
+  processOptions(scriptPath.c_str(), options, &req);
 
   if(req.outFile!=NULL) {
      bfs::path outPath(bfs::system_complete(bfs::path(req.outFile)));
@@ -297,7 +297,7 @@ LSFServer::processOptions(const char* scriptPath,
     req->options |=SUB_QUEUE;
     req->queue = strdup(queuesList.c_str());
   }
-  
+
 
 }
 
@@ -420,9 +420,9 @@ LS_LONG_INT LSFServer::convertToLSFJobId(const std::string& jobId) {
  * \return raises an exception on error
  */
 int
-LSFServer::cancel(const char* jobId) {
+LSFServer::cancel(const std::string& jobId) {
 
-  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId);
+  LS_LONG_INT lsfJobId = convertToLSFJobId(jobId.c_str());
   if (lsb_init(NULL) < 0) {
     lsb_perror((char*)"LSFServer::cancel: lsb_init() failed");
     return -1;//error messages are written to stderr, VISHNU redirects these messages into a file

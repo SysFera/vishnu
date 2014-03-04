@@ -59,7 +59,7 @@ SGEServer::SGEServer():BatchServer() {
  * \return raises an exception on error
  */
 int
-SGEServer::submit(const char* scriptPath,
+SGEServer::submit(const std::string& scriptPath,
     const TMS_Data::SubmitOptions& options,
     TMS_Data::Job& job, char** envp) {
 
@@ -76,7 +76,7 @@ SGEServer::submit(const char* scriptPath,
   char Directory[256];
   bool isjobname = false;
   std::string jobDIRECTORY;
-  boost::filesystem::path myPath(scriptPath);
+  boost::filesystem::path myPath(scriptPath.c_str());
 
   string Walltime;
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
@@ -95,7 +95,7 @@ SGEServer::submit(const char* scriptPath,
 
   }
 
-  std::string scriptContent = vishnu::get_file_content(scriptPath);
+  std::string scriptContent = vishnu::get_file_content(scriptPath.c_str());
   std::istringstream iss(scriptContent);
   std::string line;
   std::string scriptoption;
@@ -170,7 +170,7 @@ SGEServer::submit(const char* scriptPath,
     }
   }
 
-  drmaa_errno = drmaa_set_attribute(jt, DRMAA_REMOTE_COMMAND, scriptPath ,
+  drmaa_errno = drmaa_set_attribute(jt, DRMAA_REMOTE_COMMAND, scriptPath.c_str() ,
                                     diagnosis, sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
@@ -178,8 +178,8 @@ SGEServer::submit(const char* scriptPath,
 
                              "SGE ERROR: "+std::string(diagnosis));
   }
-  replaceEnvVariables(scriptPath);
-  processOptions(scriptPath,options,cmdsOptions,jt);
+  replaceEnvVariables(scriptPath.c_str());
+  processOptions(scriptPath.c_str(),options,cmdsOptions,jt);
 
   for(int i=0; i < cmdsOptions.size(); i++) {
     scriptoption += const_cast<char*>(cmdsOptions[i].c_str());
@@ -347,7 +347,7 @@ SGEServer::submit(const char* scriptPath,
 }
 
 int
-SGEServer::cancel(const char* jobId) {
+SGEServer::cancel(const std::string& jobId) {
 
 
 
@@ -359,7 +359,7 @@ SGEServer::cancel(const char* jobId) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
   }
-  drmaa_errno = drmaa_control(jobId, DRMAA_CONTROL_TERMINATE, diagnosis,
+  drmaa_errno = drmaa_control(jobId.c_str(), DRMAA_CONTROL_TERMINATE, diagnosis,
                               sizeof(diagnosis)-1);
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
@@ -826,7 +826,7 @@ SGEServer::processOptions(const char* scriptPath,
     cmdsOptions.push_back(" -l ");
     cmdsOptions.push_back("s_cpu="+options.getCpuTime());
   }
-  
+
 
 }
 
@@ -858,7 +858,7 @@ void SGEServer::replaceEnvVariables(const char* scriptPath){
   //To replace VISHNU_BATCHJOB_NUM_NODES
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$NHOSTS");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$NHOSTS");
-  
+
   ofstream ofs(scriptPath);
   ofs << scriptContent;
   ofs.close();

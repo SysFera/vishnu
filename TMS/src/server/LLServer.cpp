@@ -27,17 +27,17 @@ LLServer::LLServer():BatchServer() {
  * \return raises an exception on error
  */
 int
-LLServer::submit(const char* scriptPath,
+LLServer::submit(const std::string& scriptPath,
                  const TMS_Data::SubmitOptions& options,
                  TMS_Data::Job& job, char** envp) {
 
   //Puts the options values into the scriptPath
-  replaceEnvVariables(scriptPath);
-  processOptions(scriptPath, options);
+  replaceEnvVariables(scriptPath.c_str());
+  processOptions(scriptPath.c_str(), options);
 
 
   LL_job llJobInfo;
-  if(llsubmit(const_cast<char*>(scriptPath), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {
+  if(llsubmit(const_cast<char*>(scriptPath.c_str()), NULL, NULL, &llJobInfo, LL_JOB_VERSION)) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LLServer::submit: the submission failed");
   }
 
@@ -82,12 +82,12 @@ LLServer::submit(const char* scriptPath,
  * \return raises an exception on error
  */
 int
-LLServer::cancel(const char* jobId) {
+LLServer::cancel(const std::string& jobId) {
 
   std::ostringstream cmd;
   std::string  cancelCommand="llcancel";
 
-  cmd << cancelCommand << " " << jobId;
+  cmd << cancelCommand << " " << jobId.c_str();
   if(system((cmd.str()).c_str())) {
     return -1; //error messages are written to stderr, VISHNU redirects these messages into a file
   }
@@ -232,7 +232,7 @@ LLServer::processOptions(const char* scriptPath,
           };
         }
       }
-    }   
+    }
   }
 }
 
@@ -1011,7 +1011,7 @@ void LLServer::replaceEnvVariables(const char* scriptPath){
   //To replace VISHNU_BATCHJOB_NUM_NODES
   vishnu::replaceAllOccurences(scriptContent, "$VISHNU_BATCHJOB_NUM_NODES", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
   vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NUM_NODES}", "$(cat  $LOADL_HOSTFILE | sort | uniq | wc -l)");
-  
+
   ofstream ofs(scriptPath);
   ofs << scriptContent;
   ofs.close();
