@@ -646,7 +646,7 @@ vishnu::validateAuthKey(const std::string& authKey,
                           ).str();
 
   boost::scoped_ptr<DatabaseResult> sqlResult(database->getResult(sqlQuery));
-  if (sqlResult->getNbTuples() != 1) {
+  if (sqlResult->getNbTuples() < 1) {
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                              "Can't get user information from the session token provided");
   }

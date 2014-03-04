@@ -50,19 +50,25 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
   checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
+  // Copy the option object because API -> const and we need to allocate the loadCriterion if not
+  SubmitOptions optionstmp = options;
+  if (!optionstmp.getCriterion()){
+    TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
+    optionstmp.setCriterion(loadCriterion);
+  }
 
   boost::filesystem::path completePath(scriptFilePath);
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
 
-  JobProxy jobProxy(sessionKey, options.getMachine());
+  JobProxy jobProxy(sessionKey, optionstmp.getMachine());
 
   ListStrings fileParamsVec;
-  std::string fileParamsStr = options.getFileParams() ;
+  std::string fileParamsStr = optionstmp.getFileParams() ;
   boost::trim(fileParamsStr) ; //TODO BUG when empty list
   boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
-  int ret = jobProxy.submitJob(scriptFileCompletePath, scriptContent, options);
+  int ret = jobProxy.submitJob(scriptFileCompletePath, scriptContent, optionstmp);
   jobInfo = jobProxy.getData();
 
   return ret;
