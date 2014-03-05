@@ -66,6 +66,8 @@ BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_n )
   std::string wall11535070ab = "\"133:12:11:10\"";
 
 
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(""), defaultTime);
+
   long reference = defaultTime + 10;
   // Only seconds
   BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10), reference);
