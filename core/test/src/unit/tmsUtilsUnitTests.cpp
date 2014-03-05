@@ -47,6 +47,7 @@ BOOST_AUTO_TEST_CASE( test_checkJobnbnodecpu_n )
 
 BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_n )
 {
+  const long defaultTime(21600);
   std::string wall10 = "10";
   std::string wall10b = "\"10";
   std::string wall10a = "10\"";
@@ -65,29 +66,33 @@ BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_n )
   std::string wall11535070ab = "\"133:12:11:10\"";
 
 
+  long reference = defaultTime + 10;
   // Only seconds
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10), 10);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10b), 10);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10a), 10);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10ab), 10);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10b), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10a), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall10ab), reference);
 
+  reference = defaultTime + 670;
   // minutes:seconds
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670), 670);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670b), 670);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670a), 670);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670ab), 670);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670b), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670a), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall670ab), reference);
 
+  reference = defaultTime + 43870;
   // hours:minutes:seconds
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870), 43870);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870b), 43870);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870a), 43870);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870ab), 43870);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870b), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870a), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall43870ab), reference);
 
+  reference = defaultTime + 11535070;
   // days:hours:minutes:seconds
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070), 11535070);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070b), 11535070);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070a), 11535070);
-  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070ab), 11535070);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070b), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070a), reference);
+  BOOST_REQUIRE_EQUAL(vishnu::convertStringToWallTime(wall11535070ab), reference);
 }
 
 BOOST_AUTO_TEST_CASE( test_convertStringToWallTime_b )
