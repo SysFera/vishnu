@@ -45,11 +45,12 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
   ::ecorecpp::serializer::serializer _ser;
   string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
   std::string outputDir = options.getOutputDir();
+  JsonObject optionsData(options);
 
   diet_string_set(profile,0, sessionKey);
   diet_string_set(profile,1, mmachineId);
-  diet_string_set(profile,2, jobResultToString);
-  diet_string_set(profile, 3, outputDir);
+  diet_string_set(profile,2, optionsData.encode());
+  diet_string_set(profile, 3, jobId);
 
   //Call the Server
   if (diet_call(profile)) {

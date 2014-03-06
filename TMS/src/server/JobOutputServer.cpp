@@ -34,10 +34,10 @@ JobOutputServer::JobOutputServer(const std::string& authKey,
  * \return The job results data structure
  */
 TMS_Data::JobResult
-JobOutputServer::getJobOutput(JsonObject* options) {
+JobOutputServer::getJobOutput(JsonObject* options, std::string jobid) {
 
 
-  std::string jobId = options->getStringProperty("jobId");
+  std::string jobId = jobid;
 
   std::string outputPath;
   std::string errorPath;

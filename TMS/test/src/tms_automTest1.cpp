@@ -145,11 +145,13 @@ BOOST_AUTO_TEST_CASE(submit_a_Job_normal_call2)
       getJobInfo(sessionKey, jobInfo.getJobId(), job);
 
       while (vishnu::STATE_COMPLETED!=job.getStatus()){
+        BOOST_TEST_MESSAGE("************ The job status is " << job.getStatus() );
 
         bpt::seconds sleepTime(5);
         boost::this_thread::sleep(sleepTime);
 
         getJobInfo(sessionKey, jobInfo.getJobId(), job);
+        BOOST_TEST_MESSAGE("************ The job status2 is " << job.getStatus() );
       }
 
       JobResult outputInfos;

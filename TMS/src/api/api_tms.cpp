@@ -47,28 +47,32 @@ vishnu::submitJob(const std::string& sessionKey,
                   Job& jobInfo,
                   const SubmitOptions& options)
 throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
+// Dirty cast to modify a const object because the loadcriterion field may not be allocated -> allocating him
+  const void * tmp = &options;
+  SubmitOptions* optionstmp = (SubmitOptions*)tmp;
+  TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
 
   checkEmptyString(sessionKey, "The session key");
-  checkJobNbNodesAndNbCpuPerNode(options.getNbNodesAndCpuPerNode());
+  checkJobNbNodesAndNbCpuPerNode(optionstmp->getNbNodesAndCpuPerNode());
   // Copy the option object because API -> const and we need to allocate the loadCriterion if not
-  SubmitOptions optionstmp = options;
-  if (!optionstmp.getCriterion()){
-    TMS_Data::LoadCriterion_ptr loadCriterion =  new TMS_Data::LoadCriterion();
-    optionstmp.setCriterion(loadCriterion);
+  if (optionstmp->getCriterion()){
+    loadCriterion->setLoadType(optionstmp->getCriterion()->getLoadType());
   }
+  optionstmp->setCriterion(loadCriterion);
+
 
   boost::filesystem::path completePath(scriptFilePath);
   std::string scriptFileCompletePath = (boost::filesystem::path(boost::filesystem::system_complete(completePath))).string();
 
-  JobProxy jobProxy(sessionKey, optionstmp.getMachine());
+  JobProxy jobProxy(sessionKey, optionstmp->getMachine());
 
   ListStrings fileParamsVec;
-  std::string fileParamsStr = optionstmp.getFileParams() ;
+  std::string fileParamsStr = optionstmp->getFileParams() ;
   boost::trim(fileParamsStr) ; //TODO BUG when empty list
   boost::split(fileParamsVec, fileParamsStr, boost::is_any_of(" "), boost::token_compress_on) ;
 
   std::string scriptContent = vishnu::get_file_content(scriptFilePath);
-  int ret = jobProxy.submitJob(scriptFileCompletePath, scriptContent, optionstmp);
+  int ret = jobProxy.submitJob(scriptFileCompletePath, scriptContent, *optionstmp);
   jobInfo = jobProxy.getData();
 
   return ret;
@@ -157,60 +161,44 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
 
   checkEmptyString(sessionKey, "The session key");
 
-  UMS_Data::ListMachines machines;
-  UMS_Data::Machine_ptr machine;
-  const std::string machineId = options.getMachineId();
-  if (machineId.empty() || machineId == ALL_KEYWORD) {
-    listMachinesWithUserLocalAccount(sessionKey, machines);
-  } else {
-    // Here the list of machine should contain only a single machine
-    machine = new UMS_Data::Machine();
-    machine->setMachineId(machineId);
-    machines.getMachines().push_back(machine);
-  }
-  // Now iterate through all the machines to list jobs according to the query filter
+  UMS_Data::Machine_ptr machine = new UMS_Data::Machine();
+  const std::string machineId = ALL_KEYWORD;
+
+  // Here the list of machine should contain only a single machine
+  machine->setMachineId(machineId);
+
   listOfJobs.setNbJobs(0);
   listOfJobs.setNbRunningJobs(0);
   listOfJobs.setNbWaitingJobs(0);
 
-  int machineCount = machines.getMachines().size();
-  for (int i=0; i< machineCount; i++) {
 
-    machine = machines.getMachines().get(i);
-    std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETLISTOFJOBS] % machine->getMachineId()).str();
+  std::string serviceName = (boost::format("%1%") % SERVICES_TMS[GETLISTOFJOBS_ALL]).str();
+  SessionProxy sessionProxy(sessionKey);
 
-    SessionProxy sessionProxy(sessionKey);
+  checkJobStatus(options.getStatus()); // check the job status options
+  checkJobPriority(options.getPriority()); //check the job priority options
 
-    checkJobStatus(options.getStatus()); // check the job status options
-    checkJobPriority(options.getPriority()); //check the job priority options
+  QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
+    query(options, sessionProxy, serviceName, machine->getMachineId());
+  TMS_Data::ListJobs* listJobs_ptr = NULL;
+  try {
+    listJobs_ptr = query.list();
+  } catch(...) {
+    throw ;
+  }
+  if (listJobs_ptr != NULL) {
 
-    QueryProxy<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>
-        query(options, sessionProxy, serviceName, machine->getMachineId());
-    TMS_Data::ListJobs* listJobs_ptr = NULL;
-    try {
-      listJobs_ptr = query.list();
-    } catch(...) {
-      // This means the machine is not active or the user doesn't have a local account on it
-      if (machineId != ALL_KEYWORD) {
-        throw ;
-      } else {
-        continue ;
-      }
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+    for (unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
+      TMS_Data::Job_ptr job = ecoreFactory->createJob();
+      //copy the content and not the pointer
+      *job = *listJobs_ptr->getJobs().get(j);
+      listOfJobs.getJobs().push_back(job);
     }
-    if (listJobs_ptr != NULL) {
-
-      TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-      for (unsigned int j = 0; j < listJobs_ptr->getJobs().size(); j++) {
-        TMS_Data::Job_ptr job = ecoreFactory->createJob();
-        //copy the content and not the pointer
-        *job = *listJobs_ptr->getJobs().get(j);
-        listOfJobs.getJobs().push_back(job);
-      }
-      listOfJobs.setNbJobs(listOfJobs.getNbJobs()+listJobs_ptr->getJobs().size());
-      listOfJobs.setNbRunningJobs(listOfJobs.getNbRunningJobs()+listJobs_ptr->getNbRunningJobs());
-      listOfJobs.setNbWaitingJobs(listOfJobs.getNbWaitingJobs()+listJobs_ptr->getNbWaitingJobs());
-      delete listJobs_ptr;
-    }
+    listOfJobs.setNbJobs(listOfJobs.getNbJobs()+listJobs_ptr->getJobs().size());
+    listOfJobs.setNbRunningJobs(listOfJobs.getNbRunningJobs()+listJobs_ptr->getNbRunningJobs());
+    listOfJobs.setNbWaitingJobs(listOfJobs.getNbWaitingJobs()+listJobs_ptr->getNbWaitingJobs());
+    delete listJobs_ptr;
   }
   return 0;
 }

@@ -34,7 +34,7 @@ public:
    * \return The job results data structure
    */
   TMS_Data::JobResult
-  getJobOutput(JsonObject* options);
+  getJobOutput(JsonObject* options, std::string jobid);
 
   /**
    * \brief Function to get the all completed jobs results

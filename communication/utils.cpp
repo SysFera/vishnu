@@ -4,6 +4,7 @@
 #include "TMS_Data/Job.hpp"
 #include "TMS_Data/SubmitOptions.hpp"
 #include "TMS_Data/CancelOptions.hpp"
+#include "TMS_Data/JobOutputOptions.hpp"
 #include "TMS_Data/LoadCriterion.hpp"
 #include "UMS_Data/Session.hpp"
 
@@ -115,6 +116,14 @@ JsonObject::JsonObject(const TMS_Data::CancelOptions& options)
   setProperty("machineid", options.getMachineId());
   setProperty("user", options.getUser());
   setProperty("jobid", options.getJobId());
+}
+
+JsonObject::JsonObject(const TMS_Data::JobOutputOptions& options)
+  : m_jsonObject(json_object()) {
+
+  setProperty("machineid", options.getMachineId());
+  setProperty("outputdir", options.getOutputDir());
+  setProperty("days", options.getDays());
 }
 
 

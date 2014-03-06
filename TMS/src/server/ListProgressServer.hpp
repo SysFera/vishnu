@@ -31,14 +31,14 @@ class ListProgressServer: public QueryServer<TMS_Data::ProgressOptions, TMS_Data
 public:
 
   /**
-   * \param machineId The identifier of the machine on which the jobs whill be listed
    * \brief Constructor, raises an exception on error
    */
-  ListProgressServer(const std::string& machineId)
+  ListProgressServer(const std::string& authkey)
     : QueryServer<TMS_Data::ProgressOptions, TMS_Data::ListProgression>(),
-    mcommandName("vishnu_get_job_progress"),
-    mmachineId(machineId)
+    mcommandName("vishnu_get_job_progress")
   {
+    UserSessionInfo userSessionInfo;
+    vishnu::validateAuthKey(authkey, mdatabaseInstance, userSessionInfo);
   }
 
   /**
@@ -61,8 +61,13 @@ public:
 
     std::string sqlRequest = "SELECT jobId, jobName, wallClockLimit, endDate, status, batchJobId "
                              " FROM vsession, job "
-                             " WHERE vsession.numsessionid=job.vsession_numsessionid "
-                             "  AND submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'";
+      " WHERE vsession.numsessionid=job.vsession_numsessionid ";
+
+    std::string machineId = options->getMachineId();
+    if (!machineId.empty()){
+      checkMachineId(machineId);
+      sqlRequest += "  AND submitMachineId='"+mdatabaseInstance->escapeData(machineId)+"'";
+    }
 
     if (! options->getJobId().empty()) {
       std::string jobId = options->getJobId();
@@ -171,10 +176,6 @@ private:
   * \brief The name of the ListProgressServer command line
   */
   std::string mcommandName;
-  /**
-  * \brief The identifier of the machine in which the jobs whill be listed
-  */
-  std::string mmachineId;
 };
 
 #endif

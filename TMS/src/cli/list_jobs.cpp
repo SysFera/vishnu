@@ -165,11 +165,6 @@ main (int argc, char* argv[]) {
       setWorkIdFct,
       configFile);
 
-  opt->add("isBatchJob,b",
-           "allows to select all jobs submitted  through the underlying"
-           " batch scheduler (jobs submitted through vishnu and out of vishnu)",
-           CONFIG);
-
   opt->add("isListAll,l",
            "allows to list all information",
            CONFIG);
@@ -230,10 +225,6 @@ main (int argc, char* argv[]) {
 
     if (opt->count("toSubmitDate")) {
       jobOp.setToSubmitDate(convertLocaltimeINUTCtime(string_to_time_t(toDate)));
-    }
-
-    if (opt->count("isBatchJob")) {
-      jobOp.setBatchJob(true);
     }
 
     if (opt->count("isListAll")) {

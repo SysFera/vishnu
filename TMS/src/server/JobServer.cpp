@@ -369,6 +369,7 @@ int JobServer::cancelJob(JsonObject* options)
                               ).str();
   std::string sqlQuery;
   if (! cancelAllJobs) {
+
     sqlQuery = (boost::format("%1%"
                               " AND vsession.numsessionid=job.vsession_numsessionid"
                               " AND jobId='%2%';"
@@ -379,6 +380,7 @@ int JobServer::cancelJob(JsonObject* options)
 
     LOG(boost::format("[WARN] received request to cancel the job %1%") % jobId, 2);
   } else {
+
     // This block works as follow:
     // * if admin:
     //    ** if JobId = 'all', then cancel all jobs submitted through vishnu, regardless of the users
@@ -430,7 +432,6 @@ int JobServer::cancelJob(JsonObject* options)
       LOG(boost::format("[WARN] received request to cancel all user jobs from %1%") % muserSessionInfo.user_aclogin, 2);
     }
   }
-
   // Process the query and treat the resulting jobs
   boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseInstance->getResult(sqlQuery));
 
@@ -796,8 +797,9 @@ void
 JobServer::finalizeExecution(int action, TMS_Data::Job& job)
 {
   if (action == CancelBatchAction) {
-    std::string query = (boost::format("UPDATE job set status=%1%;")
+    std::string query = (boost::format("UPDATE job set status=%1% where jobid='%2%';")
                          % vishnu::convertToString(job.getStatus())
+                         % job.getJobId()
                          ).str();
     mdatabaseInstance->process(query);
     LOG(boost::format("[INFO] Job cancelled: %1%")% job.getJobId(), mdebugLevel);

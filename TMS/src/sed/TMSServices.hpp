@@ -15,7 +15,6 @@ typedef enum {
   JOBSUBMIT = 0,
   JOBCANCEL,
   JOBINFO,
-  GETLISTOFJOBS,
   GETJOBSPROGRESSION,
   GETLISTOFQUEUES,
   JOBOUTPUTGETRESULT,
@@ -35,7 +34,6 @@ static const char* SERVICES_TMS[NB_SRV_TMS] = {
   "jobSubmit",  // 0
   "jobCancel",  // 1
   "jobInfo",    // 2
-  "getListOfJobs",  // 3
   "getJobsProgression",  // 4
   "getListOfQueues",  // 5
   "jobOutputGetResult",  // 6
@@ -52,7 +50,6 @@ static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
   true,   // 0
   true,   // 1
   true,   // 2
-  true,   // 3
   true,   // 4
   true,   // 5
   true,   // 6

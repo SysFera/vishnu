@@ -272,13 +272,13 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
   std::string authKey;
   std::string machineId;
   std::string optionsSerialized;
-  std::string moutDir;
+  std::string jobid;
 
   //IN Parameters
   diet_string_get(pb,0, authKey);
   diet_string_get(pb,1, machineId);
   diet_string_get(pb,2, optionsSerialized);
-  diet_string_get(pb,3, moutDir);
+  diet_string_get(pb,3, jobid);
 
   // reset profile to handle result
   diet_profile_reset(pb, 2);
@@ -289,14 +289,14 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     int mapperkey = mapper->code("vishnu_get_job_output");
     mapper->code(machineId, mapperkey);
     mapper->code(optionsSerialized, mapperkey);
-    mapper->code(moutDir, mapperkey);
+    mapper->code(jobid, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
 
     //Start dealing with output
     JobOutputServer jobOutputServer(authKey, machineId);
     JsonObject options(optionsSerialized);
-    TMS_Data::JobResult result = jobOutputServer.getJobOutput(&options);
+    TMS_Data::JobResult result = jobOutputServer.getJobOutput(&options, jobid);
     std::string jobFiles = vishnu::getResultFiles(result, false) ;
     std::string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
     vishnu::saveInFile(outputInfo, jobFiles);
@@ -340,8 +340,6 @@ solveGenerique(diet_profile_t* pb) {
   // reset profile to handle result
   diet_profile_reset(pb, 2);
 
-  //FIXME: SessionServer sessionServer  = SessionServer(authKey);
-
   QueryParameters* options = NULL;
   List* list = NULL;
 
@@ -351,7 +349,7 @@ solveGenerique(diet_profile_t* pb) {
     if (! vishnu::parseEmfObject(optionValueSerialized, options)) {
       throw TMSVishnuException(ERRCODE_INVALID_PARAM);
     }
-    QueryType query(machineId);
+    QueryType query(authKey);
 
     //MAPPER CREATION
     Mapper *mapper = MapperRegistry::getInstance()->getMapper(vishnu::TMSMAPPERNAME);

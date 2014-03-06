@@ -98,9 +98,13 @@ private:
       abstract_call_gen(profile.get(), uriServer);
       return my_serialize(profile.get());
     } else {
-      return str(format("error %1%: the service %2% is not available")
-                 % ERRCODE_INVALID_PARAM
-                 % servname);
+      // reset profile to handle result
+      diet_profile_t* pb = diet_profile_alloc("response", 2);
+      diet_string_set(pb, 0, "error");
+      diet_string_set(pb, 1, str(format("error %1%: the service %2% is not available")
+                                 % ERRCODE_INVALID_PARAM
+                                 % servname));
+      return my_serialize(pb);
     }
   }
 

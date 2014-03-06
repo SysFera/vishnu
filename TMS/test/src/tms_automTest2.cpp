@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE(list_job_normal_call)
 
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -130,7 +130,7 @@ BOOST_AUTO_TEST_CASE(list_job_normal_call)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  } 
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -152,7 +152,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
 
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -187,7 +187,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_sessionKey)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }  
+  }
 }
 
 //------------------------------------------------------------------------------------------------------------------------
@@ -202,14 +202,14 @@ BOOST_AUTO_TEST_CASE(list_job_bad_machineId)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -246,7 +246,7 @@ BOOST_AUTO_TEST_CASE(list_job_bad_machineId)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }  
+  }
 }
 
 //list job on all machines: normal call
@@ -257,14 +257,14 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
 
 
   VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-  
+
   // get the session key and the machine identifier
-  
+
   string sessionKey=vc.getConnexion();
-  
+
   for(int i = 0; i < m_test_tms_machines.size();++i)
   {
-    
+
     std::string machineId= m_test_tms_machines.at(i).machine_id;
 
     try {
@@ -331,6 +331,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
       CancelOptions cancelOptions;
       cancelOptions.setJobId(machine1FirstJob.getJobId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions) == 0);
+      cancelOptions.setJobId(machine1SecondJob.getJobId());
       BOOST_REQUIRE(cancelJob(sessionKey, cancelOptions) == 0);
       bfs::path script(scriptFilePath.c_str());
       BOOST_CHECK(bfs::remove_all(script)==1);
@@ -338,7 +339,7 @@ BOOST_AUTO_TEST_CASE(list_jobs_on_all_machines_normal_call)
       BOOST_MESSAGE(e.what());
       BOOST_CHECK(false);
     }
-  }  
+  }
 }
 
 
@@ -355,7 +356,7 @@ BOOST_AUTO_TEST_CASE(list_job_on_machine_bad_sessionKey)
   string sessionKey=vc.getConnexion();
 
   string machineId="all";
-  
+
 
   try {
 
@@ -366,7 +367,7 @@ BOOST_AUTO_TEST_CASE(list_job_on_machine_bad_sessionKey)
     BOOST_CHECK_THROW(listJobs("bad sessionKey ", lsJobs, lsOptions), VishnuException);
     BOOST_TEST_MESSAGE("*********************** list jobs on all machines: bad sessionkey ok!!!!*****************************");
 
-  
+
   } catch (VishnuException& e) {
     BOOST_MESSAGE(e.what());
     BOOST_CHECK(false);

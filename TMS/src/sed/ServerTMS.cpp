@@ -286,8 +286,6 @@ ServerTMS::initMap(std::string mid) {
   mcb[string(SERVICES_TMS[JOBCANCEL])+"@"+mid] = functionPtr;
   functionPtr = solveJobInfo;
   mcb[string(SERVICES_TMS[JOBINFO])+"@"+mid] = functionPtr;
-  functionPtr = solveGetListOfJobs;
-  mcb[string(SERVICES_TMS[GETLISTOFJOBS])+"@"+mid] = functionPtr;
   functionPtr = solveGetListOfJobsProgression;
   mcb[string(SERVICES_TMS[GETJOBSPROGRESSION])+"@"+mid] = functionPtr;
   functionPtr = solveListOfQueues;

@@ -22,6 +22,7 @@ namespace TMS_Data {
   class SubmitOptions;
   class Job;
   class CancelOptions;
+  class JobOutputOptions;
 }
 
 namespace UMS_Data {
@@ -160,6 +161,8 @@ public:
   JsonObject(const TMS_Data::SubmitOptions& submitOptions);
   JsonObject(const UMS_Data::Session& sessionInfo);
   JsonObject(const TMS_Data::CancelOptions& options);
+  JsonObject(const TMS_Data::JobOutputOptions& options);
+
 
   /**
    * @brief Destructor

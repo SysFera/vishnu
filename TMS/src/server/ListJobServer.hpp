@@ -33,10 +33,11 @@ public:
    * \param machineId The identifier of the machine in which the jobs will be listed
    * \brief Constructor, raises an exception on error
    */
-  ListJobServer(std::string machineId)
+  ListJobServer(std::string authkey)
     : QueryServer<TMS_Data::ListJobsOptions, TMS_Data::ListJobs>() {
     mcommandName = "vishnu_list_jobs";
-    mmachineId = machineId;
+    UserSessionInfo userSessionInfo;
+    vishnu::validateAuthKey(authkey, mdatabaseInstance, userSessionInfo);
   }
 
   /**
@@ -190,25 +191,9 @@ public:
         " AND vsession.users_numuserid=users.numuserid"
         " AND job.status > 0 ";
 
-    if(mmachineId.compare(ALL_KEYWORD)!=0) {
-      sqlQuery.append(" and job.submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'");
-    }
-
-    bool allOptionsAreNotSet = (options->getNbCpu()<=0);
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getFromSubmitDate()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getToSubmitDate()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getStatus()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getMultipleStatus().empty());
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getPriority()==-1);
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getOwner().empty());
-    allOptionsAreNotSet = allOptionsAreNotSet && (options->getQueue().empty());
-
-    if (options->isBatchJob() && !allOptionsAreNotSet) {
-      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with other options excepted jobId option.");
-    }
-
-    if (options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)==0) {
-      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: the batchJob option is incompatible with machine id equal to all.");
+    if (!options->getMachineId().empty()) {
+      checkMachineId(options->getMachineId());
+      sqlQuery.append(" and job.submitMachineId='"+mdatabaseInstance->escapeData(options->getMachineId())+"'");
     }
 
     std::vector<std::string>::iterator ii;
@@ -285,41 +270,6 @@ public:
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
 
-    if (options->isBatchJob()
-        && !options->getJobId().empty()
-        && mmachineId.compare(ALL_KEYWORD) !=0 ){
-      BatchFactory factory;
-      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-      std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
-      boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType, batchVersion));
-
-      if (mlistObject != NULL) {
-        std::vector<std::string>::const_iterator iter = ignoredIds.begin();
-        for (unsigned int i = 0; i < mlistObject->getJobs().size(); i++) {
-          if (iter != ignoredIds.end()){
-            (mlistObject->getJobs().get(i))->setJobId(*iter);
-            int state = batchServer->getJobState(*iter);
-            ++iter;
-            if (state != vishnu::STATE_UNDEFINED &&
-                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_COMPLETED &&
-                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_CANCELLED &&
-                (mlistObject->getJobs().get(i))->getStatus() != vishnu::STATE_DOWNLOADED) {
-              (mlistObject->getJobs().get(i))->setStatus(state);
-            }
-          }
-        }
-      }
-      return mlistObject;
-    }
-
-    if(options->isBatchJob() && mmachineId.compare(ALL_KEYWORD)!=0 && allOptionsAreNotSet){
-      BatchFactory factory;
-      BatchType batchType  = ServerTMS::getInstance()->getBatchType();
-      std::string batchVersion  = ServerTMS::getInstance()->getBatchVersion();
-      boost::scoped_ptr<BatchServer> batchServer(factory.getBatchServerInstance(batchType, batchVersion));
-
-      batchServer->fillListOfJobs(mlistObject, ignoredIds);
-    }
     return mlistObject;
   }
 
@@ -350,10 +300,6 @@ private:
    * \brief The name of the ListJobServer command line
    */
   std::string mcommandName;
-  /**
-   * \brief The name of the machine in which the jobs whill be listed
-   */
-  std::string mmachineId;
 };
 
 #endif
