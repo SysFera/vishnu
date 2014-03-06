@@ -341,12 +341,14 @@ JsonObject::deserialize(const std::string& encodedJson) {
   profile.reset(new diet_profile_t);
 
   JsonObject jsonObject(encodedJson);
+
   profile->name = jsonObject.getStringProperty("name");
-  profile->param_count = jsonObject.getIntProperty("param_count");
+  profile->param_count = jsonObject.getIntProperty("param_count", 0);
   jsonObject.getArrayProperty("params", profile->params);
 
   if (profile->params.size() != profile->param_count) {
-    throw SystemException(ERRCODE_INVDATA, "Incoherent profile, wrong number of parameters");
+    throw SystemException(ERRCODE_INVDATA,
+                          "Incoherent profile, wrong number of parameters");
   }
   return profile;
 }
