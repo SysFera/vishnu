@@ -234,7 +234,11 @@ int JsonObject::getIntProperty(const std::string& key, int defaultValue) {
  */
 std::string JsonObject::getStringProperty(const std::string& key) {
   json_t* jsonValue = json_object_get(m_jsonObject, key.c_str());
-  return jsonValue? json_string_value(jsonValue) : "";
+  std::string res;
+  if (jsonValue) {
+      res.assign(json_string_value(jsonValue));
+  }
+  return res;
 }
 
 
