@@ -100,12 +100,12 @@ BOOST_AUTO_TEST_CASE( my_test_serial_n )
   diet_string_set(prof, 0, "param1");
   diet_string_set(prof, 1);
   std::string res = my_serialize(prof);
-  diet_profile_t* prof2 = my_deserialize(res).get();
+  boost::shared_ptr<diet_profile_t> prof2 = my_deserialize(res);
 
   std::string param1;
   std::string param2;
-  diet_string_get(prof2, 0, param1);
-  diet_string_get(prof2, 1, param2);
+  diet_string_get(prof2.get(), 0, param1);
+  diet_string_get(prof2.get(), 1, param2);
   JsonObject jsonProf(res);
 
   BOOST_REQUIRE_EQUAL(prof->name, jsonProf.getStringProperty("name"));
