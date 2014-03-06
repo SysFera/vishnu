@@ -122,7 +122,7 @@ BOOST_AUTO_TEST_CASE( my_test_serial_b )
 
 BOOST_AUTO_TEST_CASE( my_test_deser_n )
 {
-  std::string profSer = "{\"name\":\"alloc\", \"param_count\":\"1\", \"params\": [\"param1\"]}";
+  std::string profSer = "{\"name\":\"alloc\", \"param_count\": 1, \"params\": [\"param1\"]}";
   boost::shared_ptr<diet_profile_t> prof = my_deserialize(profSer);
   BOOST_REQUIRE_EQUAL(prof->name, "alloc");
   BOOST_REQUIRE_EQUAL(prof->param_count, 1);
