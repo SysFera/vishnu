@@ -131,10 +131,10 @@ BOOST_AUTO_TEST_CASE( test_setInitConfig_TMS_n )
   for (nb = 0; nb < NB_SRV_TMS; nb++) {
     tmpserv = SERVICES_TMS[nb];
     if (MACHINE_SPECIC_SERVICES_TMS[nb]) {
-      BOOST_REQUIRE(!ann.get(tmpserv + "@cluster1").empty());
-      BOOST_REQUIRE(!ann.get(tmpserv + "@cluster2").empty());
+      BOOST_REQUIRE(ann.get(tmpserv + "@cluster1").empty());
+      BOOST_REQUIRE(ann.get(tmpserv + "@cluster2").empty());
     } else {
-      BOOST_REQUIRE_EQUAL(ann.get(tmpserv).size(), 2);
+      BOOST_REQUIRE_EQUAL(ann.get(tmpserv).size(), 0);
     }
   }
 }
@@ -146,7 +146,7 @@ BOOST_AUTO_TEST_CASE( test_setInitConfig_FMS_n )
   unsigned int nb;
   for (nb = 0; nb < NB_SRV_FMS; nb++) {
     BOOST_MESSAGE("Checking " << SERVICES_FMS[nb]);
-    BOOST_REQUIRE_EQUAL(ann.get(SERVICES_FMS[nb]).size(), 2);
+    BOOST_REQUIRE_EQUAL(ann.get(SERVICES_FMS[nb]).size(), 0);
   }
 }
 
@@ -157,7 +157,7 @@ BOOST_AUTO_TEST_CASE( test_setInitConfig_UMS_n )
   unsigned int nb;
   for (nb = 0; nb < NB_SRV_UMS; nb++) {
     BOOST_MESSAGE("Checking " << SERVICES_UMS[nb]);
-    BOOST_REQUIRE_EQUAL(ann.get(SERVICES_UMS[nb]).size(), 2);
+    BOOST_REQUIRE_EQUAL(ann.get(SERVICES_UMS[nb]).size(), 0);
   }
 }
 
