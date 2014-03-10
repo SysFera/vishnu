@@ -31,20 +31,18 @@ namespace vishnu {
     /* [17] */ {DISP_URIADDR, "disp_uriAddr", URI_PARAMETER},
     /* [18] */ {DISP_URISUBS, "disp_uriSubs", URI_PARAMETER},
     /* [19] */ {DISP_NBTHREAD, "disp_nbthread", INT_PARAMETER},
-    /* [20] */ {FMS_URIADDR, "fms_uriAddr", URI_PARAMETER},
-    /* [22] */ {TMS_URIADDR, "tms_uriAddr", URI_PARAMETER},
-    /* [23] */ {UMS_URIADDR, "ums_uriAddr", URI_PARAMETER},
-    /* [24] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER},
-    /* [25] */ {DEBUG_LEVEL, "debugLevel", INT_PARAMETER},
-    /* [26] */ {DB_USE_SSL, "databaseUseSsl", BOOL_PARAMETER},
-    /* [27] */ {DB_SSL_CA_FILE, "databaseSslCa", STRING_PARAMETER},
-    /* [28] */ {USE_SSL, "useSsl", BOOL_PARAMETER},
-    /* [29] */ {SERVER_PUBLIC_KEY, "serverPublicKey", STRING_PARAMETER},
-    /* [30] */ {SERVER_PRIVATE_KEY, "serverPrivateKey", STRING_PARAMETER},
-    /* [31] */ {SERVER_SSL_CERTICATE, "serverSslCertificate", STRING_PARAMETER},
-    /* [32] */ {SSL_CA, "sslCa", STRING_PARAMETER},
-    /* [33] */ {SUBSCRIBE, "subscribe", BOOL_PARAMETER},
-    /* [34] */ {STANDALONE, "standalone", BOOL_PARAMETER}
+    /* [20] */ {SED_URIADDR, "sed_uriAddr", URI_PARAMETER},
+    /* [21] */ {CLOUDENDPOINT, "cloudEndpoint", STRING_PARAMETER},
+    /* [22] */ {DEBUG_LEVEL, "debugLevel", INT_PARAMETER},
+    /* [23] */ {DB_USE_SSL, "databaseUseSsl", BOOL_PARAMETER},
+    /* [24] */ {DB_SSL_CA_FILE, "databaseSslCa", STRING_PARAMETER},
+    /* [25] */ {USE_SSL, "useSsl", BOOL_PARAMETER},
+    /* [26] */ {SERVER_PUBLIC_KEY, "serverPublicKey", STRING_PARAMETER},
+    /* [27] */ {SERVER_PRIVATE_KEY, "serverPrivateKey", STRING_PARAMETER},
+    /* [28] */ {SERVER_SSL_CERTICATE, "serverSslCertificate", STRING_PARAMETER},
+    /* [29] */ {SSL_CA, "sslCa", STRING_PARAMETER},
+    /* [30] */ {SUBSCRIBE, "subscribe", BOOL_PARAMETER},
+    /* [31] */ {STANDALONE, "standalone", BOOL_PARAMETER}
   };
 
   std::map<cloud_env_vars_t, std::string> CLOUD_ENV_VARS =  boost::assign::map_list_of

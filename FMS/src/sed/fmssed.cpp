@@ -67,7 +67,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config.getRequiredConfigValue<int>(vishnu::INTERVALMONITOR, interval);
     config.getRequiredConfigValue<std::string>(vishnu::MACHINEID, mid);
-    config.getRequiredConfigValue<std::string>(vishnu::FMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, uri);
     config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
     if (interval < 0) {
       throw UserException(ERRCODE_INVALID_PARAM, "The Monitor interval value is incorrect");

@@ -9,6 +9,6 @@ databaseUserPassword=@TEST_DB_PASSWORD@
 batchSchedulerType=@TEST_BATCH_TYPE@
 vishnuMachineId=machine_2
 intervalMonitor=1
-tms_uriAddr=@TEST_ZMQ_TMS_SED2_URI@
+sed_uriAddr=@TEST_ZMQ_TMS_SED2_URI@
 disp_uriSubs=@TEST_ZMQ_DISPATCHER_URI_SUB@
 cloudEndpoint=@TEST_CLOUD_ENDPOINT@

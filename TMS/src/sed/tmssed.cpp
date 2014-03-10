@@ -104,7 +104,7 @@ int main(int argc, char* argv[], char* envp[]) {
     dbConfig.check();
     config->getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     config->getConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, defaultBatchConfig);
-    config->getRequiredConfigValue<std::string>(vishnu::TMS_URIADDR, uri);
+    config->getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, uri);
     config->getRequiredConfigValue<std::string>(vishnu::MACHINEID, machineId);
     config->getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
 

@@ -151,11 +151,11 @@ diet_call(diet_profile_t* prof) {
 
   vishnu::param_type_t param;
   if (module == "ums") {
-    param = vishnu::UMS_URIADDR;
+    param = vishnu::SED_URIADDR;
   } else if (module == "fms") {
-    param = vishnu::FMS_URIADDR;
+    param = vishnu::SED_URIADDR;
   } else if (module == "tms") {
-    param = vishnu::TMS_URIADDR;
+    param = vishnu::SED_URIADDR;
   } else {
     std::cerr << boost::format("No corresponding %1% server found") % service;
     return 1;
@@ -410,17 +410,17 @@ void
 getServersListFromConfig(std::vector<boost::shared_ptr<Server> >& allServers){
   vishnu::param_type_t param;
   std::vector<std::string> uriv;
-  param = vishnu::UMS_URIADDR;
+  param = vishnu::SED_URIADDR;
   config.getConfigValues(param, uriv);
   if (uriv.size()>0)
     extractServersFromLine(uriv, allServers, "umssed");
   uriv.clear();
-  param = vishnu::FMS_URIADDR;
+  param = vishnu::SED_URIADDR;
   config.getConfigValues(param, uriv);
   if (uriv.size()>0)
     extractServersFromLine(uriv, allServers, "fmssed");
   uriv.clear();
-  param = vishnu::TMS_URIADDR;
+  param = vishnu::SED_URIADDR;
   config.getConfigValues(param, uriv);
   if (uriv.size()>0)
     extractMachineServersFromLine(uriv, allServers, "tmssed");

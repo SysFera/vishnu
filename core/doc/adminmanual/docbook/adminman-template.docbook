@@ -1270,18 +1270,18 @@ subscribe=1
 #                UMS Related Parameters                                       #
 ###############################################################################
 
-# ums_uriAddr (M<UMS>|O<Dispatcher,Client>):
+# sed_uriAddr (M<UMS>|O<Dispatcher,Client>):
 #   * For UMS, this sets the address and the port on which the UMS SeD
 #     will listen on
 #   * For Dispactcher and clients it indicates address(es) for connecting
 #     to UMS SeDs.
 #     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: ums_uriAddr=uri_umssed1 sed1_name;uri_umssed2 sed2_name;...
+#     in the form of: sed_uriAddr=uri_umssed1 sed1_name;uri_umssed2 sed2_name;...
 #     uri_umssed<i> correspond to valid URIs. sed<i>_name set the
 #     names associated to the SeDs
-#     E.g. ums_uriAddr=tcp://127.0.0.1:5562 localsed;tcp://192.168.1.1:5562 lansed
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5562 localsed;tcp://192.168.1.1:5562 lansed
 #
-ums_uriAddr=tcp://127.0.0.1:5562
+sed_uriAddr=tcp://127.0.0.1:5562
 
 # sendmailScriptPath (M<UMS>): Sets the path to the script for sending emails
 #
@@ -1302,33 +1302,33 @@ sendmailScriptPath=/opt/software/GIT/vishnu_1/core/src/utils/sendmail.py
 #                FMS Specfic Parameters                                       #
 ###############################################################################
 
-# fms_uriAddr (M<FMS>|O<Dispatcher,Client>):
+# sed_uriAddr (M<FMS>|O<Dispatcher,Client>):
 #   * For FMS, this sets the address and the port on which the FMS SeD
 #     will listen on
 #   * For Dispactcher and clients it indicates address(es) for connecting
 #     to FMS SeDs.
 #     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: fms_uriAddr=uri_fmssed1 sed1_name;uri_fmssed2 sed2_name;...
+#     in the form of: sed_uriAddr=uri_fmssed1 sed1_name;uri_fmssed2 sed2_name;...
 #     uri_fmssed<i> correspond to valid URIs. sed<i>_name set the
 #     names associated to the SeDs
-#     E.g. fms_uriAddr=tcp://127.0.0.1:5563 localsed;tcp://192.168.1.1:5563 lansed
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5563 localsed;tcp://192.168.1.1:5563 lansed
 #
-fms_uriAddr=tcp://127.0.0.1:5563
+sed_uriAddr=tcp://127.0.0.1:5563
 ###############################################################################
 #                TMS Related Parameters                                       #
 ###############################################################################
-# tms_uriAddr (M<TMS>|O<Dispatcher,Client>):
+# sed_uriAddr (M<TMS>|O<Dispatcher,Client>):
 #   * For TMS, this sets the address and the port on which the TMS SeD
 #     will listen on
 #   * For Dispactcher and clients it indicates address(es) for connecting
 #     to TMS SeDs.
 #     For Dispatcher this should correspond to a list of colon-seperated pair
-#     in the form of: tms_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
+#     in the form of: sed_uriAddr=uri_tmssed1 sed1_name;uri_tmssed2 sed2_name;...
 #     uri_tmssed<i> correspond to valid  URIs. sed<i>_name set the
 #     names associated to the SeDs.
-#     E.g. tms_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
+#     E.g. sed_uriAddr=tcp://127.0.0.1:5565 localsed;tcp://192.168.1.1:5565 lansed
 #
-tms_uriAddr=tcp://127.0.0.1:5565
+sed_uriAddr=tcp://127.0.0.1:5565
 
 # batchSchedulerType (M<TMS>): Defines the type of the batch scheduler TMS
 # will handle.

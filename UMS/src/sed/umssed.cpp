@@ -90,7 +90,7 @@ main(int argc, char* argv[], char* envp[]) {
     config.getRequiredConfigValue<int>(vishnu::VISHNUID, vishnuId);
     dbConfig.check();
     config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
-    config.getRequiredConfigValue<std::string>(vishnu::UMS_URIADDR, uri);
+    config.getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, uri);
     config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
     config.getConfigValue<std::string>(vishnu::MACHINEID, mid);
     if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
