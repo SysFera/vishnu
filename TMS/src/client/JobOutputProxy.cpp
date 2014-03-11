@@ -126,6 +126,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
   std::string sessionKey = msessionProxy.getSessionKey();
+  JsonObject optionsData(options);
 
   //IN Parameters
   if (diet_string_set(profile,0, sessionKey)) {
@@ -136,9 +137,7 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
     raiseCommunicationMsgException("Exception setting machineid parameter");
   }
 
-  ::ecorecpp::serializer::serializer _serializer;
-  string optionsSerialized = _serializer.serialize_str(const_cast<TMS_Data::JobOutputOptions_ptr>(&options));
-  if (diet_string_set(profile, 2, optionsSerialized)) {
+  if (diet_string_set(profile, 2, optionsData.encode())) {
     raiseCommunicationMsgException("Exception setting option parameter");
   }
 

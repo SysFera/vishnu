@@ -107,6 +107,12 @@ public:
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
 protected:
+  /**
+   * \brief Check the machineid is correct
+   * \param machineId the machineId to check
+   */
+  void
+  checkMachineId(std::string machineId);
 
   /**
    * \brief Function to scan VISHNU error message

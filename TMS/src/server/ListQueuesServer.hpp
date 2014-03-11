@@ -28,7 +28,8 @@ public:
    * \param option The option value
    * \brief Constructor, raises an exception on error
    */
-  explicit ListQueuesServer(const BatchType& batchType,
+  explicit ListQueuesServer(const std::string& authkey,
+                            const BatchType& batchType,
                             const std::string& batchVersion,
                             const std::string& option);
 

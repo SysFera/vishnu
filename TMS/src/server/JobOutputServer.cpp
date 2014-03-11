@@ -51,8 +51,11 @@ JobOutputServer::getJobOutput(JsonObject* options, std::string jobid) {
   std::string sqlRequest = "SELECT outputPath, errorPath, owner, status, submitDate, outputDir "
                            "FROM vsession, job "
                            "WHERE vsession.numsessionid=job.vsession_numsessionid"
-                           "  AND job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' "
-                           "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(mmachineId)+"'" ;
+                           "  AND job.jobId='"+mdatabaseInstance->escapeData(jobId)+"' ";
+  std::string machineTmp = options->getStringProperty("machineid");
+  if (!machineTmp.empty()){
+    sqlRequest += "  AND job.submitMachineId='"+mdatabaseInstance->escapeData(machineTmp)+"'" ;
+  }
 
   boost::scoped_ptr<DatabaseResult> sqlResult(mdatabaseInstance->getResult(sqlRequest));
   if(sqlResult->getNbTuples() == 0) {

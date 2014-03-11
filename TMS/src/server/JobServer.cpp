@@ -59,7 +59,7 @@ JobServer::JobServer(const std::string& authKey,
   if (! msedConfig->getConfigValue<int>(vishnu::STANDALONE, mstandaloneSed)) {
     mstandaloneSed = false;
   }
-
+  checkMachineId(machineId);
   vishnu::validateAuthKey(mauthKey, mmachineId, mdatabaseInstance, muserSessionInfo);
 }
 
@@ -341,7 +341,7 @@ int JobServer::cancelJob(JsonObject* options)
 {
 
   std::string jobId = options->getStringProperty("jobid");
-  std::string userId = options->getStringProperty("userid");
+  std::string userId = options->getStringProperty("user");
 
   // Only a admin user can use the option 'all' for the job id
   if (userId == ALL_KEYWORD
@@ -356,6 +356,16 @@ int JobServer::cancelJob(JsonObject* options)
     throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
                              (boost::format("Only privileged users can cancel other users jobs")).str());
   }
+  // Checking the jobid belongs to the user
+  if (!jobId.empty()){
+    std::string reqTmp = (boost::format("select job.owner from job, vsession where job.jobid='%1%' and job.vsession_numsessionid=vsession.numsessionid and vsession.sessionkey='%2%'") %mdatabaseInstance->escapeData(jobId) %mdatabaseInstance->escapeData(mauthKey)).str();
+    boost::scoped_ptr<DatabaseResult> sqlQueryResult(mdatabaseInstance->getResult(reqTmp));
+    if (sqlQueryResult->getNbTuples() == 0) {
+      throw TMSVishnuException(ERRCODE_PERMISSION_DENIED,
+                               (boost::format("Only privileged users can cancel other users jobs")).str());
+    }
+  }
+
 
   bool cancelAllJobs = jobId.empty()
                        || jobId == ALL_KEYWORD
@@ -386,7 +396,6 @@ int JobServer::cancelJob(JsonObject* options)
     //    ** if JobId = 'all', then cancel all jobs submitted through vishnu, regardless of the users
     //    ** else perform cancel as for a normal user
     // *if normal user (not admin), cancel alls jobs submitted through vishnu by the user
-
     bool addUserFilter = true;
     if (muserSessionInfo.user_privilege == vishnu::PRIVILEGE_ADMIN && userId == ALL_KEYWORD) {
       addUserFilter = false;
@@ -881,3 +890,14 @@ JobServer::getSystemUid(const std::string& name)
   return info->pw_uid;
 }
 
+void
+JobServer::checkMachineId(std::string machineId) {
+  std::string sqlMachineRequest = (boost::format("SELECT machineid"
+                                                 " FROM machine"
+                                                 " WHERE machineid='%1%'"
+                                                 " AND status<>%2%")%mdatabaseInstance->escapeData(machineId) %vishnu::STATUS_DELETED).str();
+  boost::scoped_ptr<DatabaseResult> machine(mdatabaseInstance->getResult(sqlMachineRequest.c_str()));
+  if(machine->getNbTuples()==0) {
+    throw UMSVishnuException(ERRCODE_UNKNOWN_MACHINE);
+  }
+}

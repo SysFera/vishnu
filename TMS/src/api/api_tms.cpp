@@ -285,56 +285,29 @@ throw (UMSVishnuException, TMSVishnuException, UserException, SystemException) {
   checkEmptyString(sessionKey, "The session key");
   checkEmptyString(machineId, "The machine id");
 
-  UMS_Data::ListMachines machines;
-  UMS_Data::Machine_ptr machine;
+  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETLISTOFQUEUES] % machineId).str();
 
-  if(machineId == ALL_KEYWORD) {
-    // First list all the machines where we have a local account
-    UMS_Data::ListMachineOptions mopts;
-    mopts.setListAllMachine(false);
-    mopts.setMachineId("");
-    listMachines(sessionKey, machines, mopts) ;
-  } else {
-    machine = new UMS_Data::Machine();
-    machine->setMachineId(machineId);
-    machines.getMachines().push_back(machine);
+  SessionProxy sessionProxy(sessionKey);
+  QueryProxy<std::string, TMS_Data::ListQueues>
+    query(queueName, sessionProxy, serviceName, machineId);
+
+  TMS_Data::ListQueues* listQueues_ptr = NULL ;
+  try {
+    listQueues_ptr = query.list();
+  } catch(...) {
+      throw ;
   }
 
-  // Now iterate through all the machines to list queues according to the query filter
-  listofQueues.setNbQueues(0);
-  for(int i=0; i< machines.getMachines().size(); i++) {
-
-    machine = machines.getMachines().get(i) ;
-    std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[GETLISTOFQUEUES] % machine->getMachineId()).str();
-
-    SessionProxy sessionProxy(sessionKey);
-    QueryProxy<std::string, TMS_Data::ListQueues>
-        query(queueName, sessionProxy, serviceName, machine->getMachineId());
-
-    TMS_Data::ListQueues* listQueues_ptr = NULL ;
-    try {
-      listQueues_ptr = query.list();
-    } catch(...) {
-      // This means the machine is not active
-      // or we don't have a local account on it
-      if(machineId != ALL_KEYWORD) {
-        throw ;
-      } else {
-        continue ;
-      }
+  if(listQueues_ptr != NULL) {
+    TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
+    for(unsigned int i = 0; i < listQueues_ptr->getQueues().size(); i++) {
+      TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
+      //To copy the content and not the pointer
+      *queue = *listQueues_ptr->getQueues().get(i);
+      listofQueues.getQueues().push_back(queue);
     }
-
-    if(listQueues_ptr != NULL) {
-      TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
-      for(unsigned int i = 0; i < listQueues_ptr->getQueues().size(); i++) {
-        TMS_Data::Queue_ptr queue = ecoreFactory->createQueue();
-        //To copy the content and not the pointer
-        *queue = *listQueues_ptr->getQueues().get(i);
-        listofQueues.getQueues().push_back(queue);
-      }
-      listofQueues.setNbQueues(listofQueues.getNbQueues()+listQueues_ptr->getQueues().size());
-      delete listQueues_ptr;
-    }
+    listofQueues.setNbQueues(listofQueues.getNbQueues()+listQueues_ptr->getQueues().size());
+    delete listQueues_ptr;
   }
   return 0;
 }

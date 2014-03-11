@@ -227,7 +227,9 @@ solveListOfQueues(diet_profile_t* pb) {
   TMS_Data::ListQueues_ptr listQueues = NULL;
 
 
-  ListQueuesServer queryQueues(ServerTMS::getInstance()->getBatchType(),
+
+  ListQueuesServer queryQueues(authKey,
+                               ServerTMS::getInstance()->getBatchType(),
                                ServerTMS::getInstance()->getBatchVersion(),
                                optionSerialized);
 

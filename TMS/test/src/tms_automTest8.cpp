@@ -182,7 +182,6 @@ BOOST_AUTO_TEST_CASE(cancel_a_Job_bad_machineId)
 
       CancelOptions cancelopts;
       cancelopts.setMachineId("bad machineId");
-      cancelopts.setJobId(jobInfo.getJobId());
       BOOST_CHECK_THROW(cancelJob(sessionKey, cancelopts), VishnuException);
 
       BOOST_TEST_MESSAGE("***********************  cancel a job: bad machine id  ok!!!!*****************************");
@@ -307,6 +306,11 @@ BOOST_AUTO_TEST_CASE(cancel_all_jobs_as_admin)
   // get a session key for the root user
   VishnuConnexion vc(m_test_ums_root_vishnu_login, m_test_ums_root_vishnu_pwd);
   string adminSessionKey=vc.getConnexion();
+
+  //Cancel all jobs      // Now test the cancellation
+  CancelOptions cancelOpts;
+  cancelOpts.setUser("all");
+  BOOST_CHECK(cancelJob(adminSessionKey, cancelOpts) == 0);
 
   // get another connexion for a simple user
   VishnuConnexion vc2(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);

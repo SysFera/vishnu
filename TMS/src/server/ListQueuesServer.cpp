@@ -9,6 +9,7 @@
 
 #include <string>
 
+#include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include "BatchServer.hpp"
 #include "BatchFactory.hpp"
@@ -19,13 +20,19 @@
  * \brief Constructor, raises an exception on error
  * \param session The object which encapsulates the session information (ex: identifier of the session)
  */
-ListQueuesServer::ListQueuesServer(const BatchType& batchType,
+ListQueuesServer::ListQueuesServer(const std::string& authkey,
+                                   const BatchType& batchType,
                                    const std::string& batchVersion,
                                    const std::string& option)
  : moption(option), mlistQueues(NULL)
 {
-   BatchFactory factory;
-   mbatchServer = factory.getBatchServerInstance(batchType, batchVersion);
+  DbFactory dbfactory;
+  Database* databaseInstance;
+  databaseInstance = dbfactory.getDatabaseInstance();
+  BatchFactory factory;
+  mbatchServer = factory.getBatchServerInstance(batchType, batchVersion);
+  UserSessionInfo userSessionInfo;
+  vishnu::validateAuthKey(authkey, databaseInstance, userSessionInfo);
 }
 
 /**
