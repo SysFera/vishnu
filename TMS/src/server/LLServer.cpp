@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
+#include <boost/format.hpp>
 #include "llapi.h"
 #include "LLServer.hpp"
 #include "TMSVishnuException.hpp"
@@ -15,21 +16,21 @@ using namespace std;
  * \brief Constructor
  */
 LLServer::LLServer():BatchServer() {
- mlistQueues = NULL;
+  mlistQueues = NULL;
 }
 
 /**
  * \brief Function to submit LL job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+ * \param jobSteps The list of job steps
  * \param envp The list of environment variables used by LL submission function
  * \return raises an exception on error
  */
 int
 LLServer::submit(const std::string& scriptPath,
                  const TMS_Data::SubmitOptions& options,
-                 TMS_Data::Job& job, char** envp) {
+                 std::vector<TMS_Data::Job>& jobSteps, char** envp) {
 
   //Puts the options values into the scriptPath
   replaceEnvVariables(scriptPath.c_str());
@@ -41,37 +42,43 @@ LLServer::submit(const std::string& scriptPath,
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LLServer::submit: the submission failed");
   }
 
-  std::ostringstream llJobId;
-  llJobId<< (llJobInfo.step_list[0])->id.from_host;
-  llJobId<< "." << (llJobInfo.step_list[0])->id.cluster;
-  llJobId<< "." << (llJobInfo.step_list[0])->id.proc;
+  for (int step = 0; step < llJobInfo.steps; ++step) {
+    TMS_Data::Job currentJobStep;
+    std::string stepJobId = boost::str(boost::format("%1%.%2%.%3%")
+                                       % (llJobInfo.step_list[step])->id.from_host
+                                       % (llJobInfo.step_list[step])->id.cluster
+                                       % (llJobInfo.step_list[step])->id.proc);
+    currentJobStep.setBatchJobId(stepJobId);
+    currentJobStep.setStatus(convertLLStateToVishnuState(llJobInfo.step_list[step]->status));
+    currentJobStep.setJobName(std::string(llJobInfo.job_name));
+    currentJobStep.setSubmitDate((llJobInfo.step_list[step])->q_date);
+    currentJobStep.setEndDate((llJobInfo.step_list[step])->completion_date);
+    currentJobStep.setOwner(std::string(llJobInfo.owner));
+    currentJobStep.setJobQueue(std::string((llJobInfo.step_list[step])->stepclass));
+    currentJobStep.setWallClockLimit(llJobInfo.step_list[step]->limits.soft_wall_clock_limit);
+    currentJobStep.setGroupName(std::string((llJobInfo.step_list[step])->group_name));
+    currentJobStep.setJobDescription(std::string((llJobInfo.step_list[step])->comment));
+    currentJobStep.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[step])->prio));
+    currentJobStep.setMemLimit(llJobInfo.step_list[step]->memory_requested);
+    currentJobStep.setNbCpus(llJobInfo.step_list[step]->cpus_per_core);
+    currentJobStep.setNbNodes(llJobInfo.step_list[step]->max_processors);
+    currentJobStep.setJobWorkingDir(llJobInfo.step_list[step]->iwd);
+    currentJobStep.setOutputPath(boost::str(boost::format("%1%/%2%")
+                                            % (llJobInfo.step_list[step])->iwd
+                                            % (llJobInfo.step_list[step])->out));
+    currentJobStep.setErrorPath(boost::str(boost::format("%1%/%2%")
+                                           % (llJobInfo.step_list[step])->iwd
+                                           % (llJobInfo.step_list[step])->err));
+    if (currentJobStep.getNbNodes() > 0) {
+      currentJobStep.setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
+                                                        % currentJobStep.getNbNodes()
+                                                        % currentJobStep.getNbCpus()));
+    }
 
-  job.setBatchJobId(llJobId.str());
-  job.setOutputPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->out)) ;
-  job.setErrorPath(std::string(std::string(llJobInfo.step_list[0]->iwd)+"/"+(llJobInfo.step_list[0])->err));
-  job.setStatus(convertLLStateToVishnuState(llJobInfo.step_list[0]->status));
-  job.setJobName(std::string(llJobInfo.job_name));
-  job.setSubmitDate((llJobInfo.step_list[0])->q_date);
-  job.setOwner(std::string(llJobInfo.owner));
-  job.setJobQueue(std::string((llJobInfo.step_list[0])->stepclass));
-  job.setWallClockLimit(llJobInfo.step_list[0]->limits.soft_wall_clock_limit);
-  job.setEndDate(-1);
-  job.setGroupName(std::string((llJobInfo.step_list[0])->group_name));
-  job.setJobDescription(std::string((llJobInfo.step_list[0])->comment));
-  job.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[0])->prio));
-
-  job.setMemLimit(llJobInfo.step_list[0]->memory_requested);
-  int nbCpu = llJobInfo.step_list[0]->cpus_per_core;
-  job.setNbCpus(nbCpu);
-  int node = llJobInfo.step_list[0]->max_processors;
-  job.setNbNodes(node);
-  if(node!=-1) {
-    job.setNbNodesAndCpuPerNode(vishnu::convertToString(node)+":"+vishnu::convertToString(nbCpu));
+    jobSteps.push_back(currentJobStep);
   }
-  //To fill the job working dir
-  job.setJobWorkingDir(llJobInfo.step_list[0]->iwd);
 
-  llfree_job_info(&llJobInfo,LL_JOB_VERSION);
+  llfree_job_info(&llJobInfo, LL_JOB_VERSION);
 
   return 0;
 }
@@ -84,15 +91,12 @@ LLServer::submit(const std::string& scriptPath,
 int
 LLServer::cancel(const std::string& jobId) {
 
-  std::ostringstream cmd;
-  std::string  cancelCommand="llcancel";
-
-  cmd << cancelCommand << " " << jobId.c_str();
-  if(system((cmd.str()).c_str())) {
+  std::string  cancelCommand= boost::str(boost::format("llcancel %1%") % jobId);
+  if(system(cancelCommand.c_str())) {
     return -1; //error messages are written to stderr, VISHNU redirects these messages into a file
   }
 
- return 0;
+  return 0;
 }
 
 /**
@@ -337,29 +341,29 @@ LLServer::getJobState(const std::string& jobId) {
         if(!rc) {
           int res = 0;
           switch(state) {
-            case STATE_NOTQUEUED:
-              res = 1;
-              break;
-            case STATE_PENDING:case STATE_HOLD:
-              res = 2;
-              break;
-            case STATE_IDLE:case STATE_VACATE_PENDING:case STATE_VACATED:case STATE_PREEMPTED:
-            case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:
-              res = 3;
-              break;
-            case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
-              res = 4;
-              break;
-            case STATE_COMPLETED:case STATE_TERMINATED:
-              res = 5;
-              break;
-            case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
-            case STATE_CANCELED:case STATE_REMOVED:
-              res = 6;
-              break;
-            default:
-              res = 0;
-              break;
+          case STATE_NOTQUEUED:
+            res = 1;
+            break;
+          case STATE_PENDING:case STATE_HOLD:
+            res = 2;
+            break;
+          case STATE_IDLE:case STATE_VACATE_PENDING:case STATE_VACATED:case STATE_PREEMPTED:
+          case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:
+            res = 3;
+            break;
+          case STATE_RUNNING:case STATE_STARTING:case STATE_COMPLETE_PENDING:
+            res = 4;
+            break;
+          case STATE_COMPLETED:case STATE_TERMINATED:
+            res = 5;
+            break;
+          case STATE_REJECT_PENDING:case STATE_REMOVE_PENDING:case STATE_REJECTED:
+          case STATE_CANCELED:case STATE_REMOVED:
+            res = 6;
+            break;
+          default:
+            res = 0;
+            break;
           }
           if (res > 0) {
             return res;
@@ -385,7 +389,7 @@ LLServer::getJobState(const std::string& jobId) {
     }
     queryInfos = ll_next_obj(queryObject);
   }
- return 5;
+  return 5;
 }
 
 /**
@@ -691,16 +695,16 @@ LLServer::computeNbRunJobsAndQueueJobs(std::map<std::string, size_t>& run,
           if(!rc)
           {
             switch(state) {
-              case STATE_RUNNING:case STATE_STARTING:
-                run[jclass]++;
-                break;
-              case STATE_IDLE:case STATE_PENDING:case STATE_PREEMPTED:
-              case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:case STATE_HOLD:
-                que[jclass]++;
-                break;
-              default:
-                res = 0;
-                break;
+            case STATE_RUNNING:case STATE_STARTING:
+              run[jclass]++;
+              break;
+            case STATE_IDLE:case STATE_PENDING:case STATE_PREEMPTED:
+            case STATE_PREEMPT_PENDING:case STATE_RESUME_PENDING:case STATE_HOLD:
+              que[jclass]++;
+              break;
+            default:
+              res = 0;
+              break;
             }
           }
         }
@@ -722,75 +726,75 @@ int
 LLServer::convertLLStateToVishnuState(int state) {
   int res = 0;
   switch(state) {
-    case STATE_IDLE:
-      res = 3;
-      break;
-    case STATE_RUNNING:
-      res = 4;
-      break;
-    case STATE_STARTING:
-      res = 4;
-      break;
-    case STATE_COMPLETE_PENDING:
-      res = 4;
-      break;
-    case STATE_REJECT_PENDING:
-      res = 6;
-      break;
-    case STATE_REMOVE_PENDING:
-      res = 6;
-      break;
-    case STATE_VACATE_PENDING:
-      res = 3;
-      break;
-    case STATE_VACATED:
-      res = 3;
-      break;
-    case STATE_REJECTED:
-      res = 6;
-      break;
-    case STATE_CANCELED:
-      res = 6;
-      break;
-    case STATE_REMOVED:
-      res = 6;
-      break;
-    case STATE_PENDING:
-      res = 2;
-      break;
-    case STATE_PREEMPTED:
-      res = 3;
-      break;
-    case STATE_PREEMPT_PENDING:
-      res = 3;
-      break;
-    case STATE_RESUME_PENDING:
-      res = 3;
-      break;
-    case STATE_COMPLETED:
-      res = 5;
-      break;
-    case STATE_TERMINATED:
-      res = 5;
-      break;
-    case STATE_HOLD:
-      res = 2;
-      break;
-    case STATE_DEFERRED:
-      res = 1;
-      break;
-    case STATE_SUBMISSION_ERR:
-      res = 1;
-      break;
-    case STATE_NOTQUEUED:
-      res = 1;
-      break;
-    case STATE_NOTRUN:
-      res = 1;
-      break;
-    default:
-      res = 5;
-      break;
+  case STATE_IDLE:
+    res = 3;
+    break;
+  case STATE_RUNNING:
+    res = 4;
+    break;
+  case STATE_STARTING:
+    res = 4;
+    break;
+  case STATE_COMPLETE_PENDING:
+    res = 4;
+    break;
+  case STATE_REJECT_PENDING:
+    res = 6;
+    break;
+  case STATE_REMOVE_PENDING:
+    res = 6;
+    break;
+  case STATE_VACATE_PENDING:
+    res = 3;
+    break;
+  case STATE_VACATED:
+    res = 3;
+    break;
+  case STATE_REJECTED:
+    res = 6;
+    break;
+  case STATE_CANCELED:
+    res = 6;
+    break;
+  case STATE_REMOVED:
+    res = 6;
+    break;
+  case STATE_PENDING:
+    res = 2;
+    break;
+  case STATE_PREEMPTED:
+    res = 3;
+    break;
+  case STATE_PREEMPT_PENDING:
+    res = 3;
+    break;
+  case STATE_RESUME_PENDING:
+    res = 3;
+    break;
+  case STATE_COMPLETED:
+    res = 5;
+    break;
+  case STATE_TERMINATED:
+    res = 5;
+    break;
+  case STATE_HOLD:
+    res = 2;
+    break;
+  case STATE_DEFERRED:
+    res = 1;
+    break;
+  case STATE_SUBMISSION_ERR:
+    res = 1;
+    break;
+  case STATE_NOTQUEUED:
+    res = 1;
+    break;
+  case STATE_NOTRUN:
+    res = 1;
+    break;
+  default:
+    res = 5;
+    break;
   }
   return res;
 }
@@ -810,9 +814,9 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
   } else if(prio > 0 && prio <= 50) {
     return 3;
   } else if(prio > 50 && prio <= 100) {
-     return 4;
+    return 4;
   } else if(prio > 100) {
-     return 5;
+    return 5;
   }
 }
 
@@ -822,7 +826,7 @@ LLServer::convertLLPrioToVishnuPrio(const int& prio) {
  * \param ignoredIds the list of job ids to ignore
  */
 void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-    const std::vector<string>& ignoredIds) {
+                              const std::vector<string>& ignoredIds) {
 
   LL_element *queryObject;
   LL_element *queryInfos, *step, *credential;
@@ -957,7 +961,7 @@ void LLServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
  */
 std::string
 LLServer::getLLResourceValue(const char* file,
-    const std::string& optionLetterSyntax) {
+                             const std::string& optionLetterSyntax) {
 
   std::string resourceValue;
   std::string LLPrefix = "#@";

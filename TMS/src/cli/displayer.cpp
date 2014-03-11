@@ -49,60 +49,60 @@ displayJobOutput(TMS_Data::JobResult_ptr j){
  * \param j: The job to display the info
  */
 void
-displayJob(TMS_Data::Job& j){
+displayJob(TMS_Data::Job& job){
 
 
-  size_t pos = j.getOutputPath().find(":");
-  std::string prefixOutputPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
-  pos = j.getErrorPath().find(":");
-  std::string prefixErrorPath = (pos == std::string::npos)? j.getSubmitMachineName()+":" : "";
+  size_t pos = job.getOutputPath().find(":");
+  std::string prefixOutputPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
+  pos = job.getErrorPath().find(":");
+  std::string prefixErrorPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
 
-  cout << " Job                  : " << j.getJobId()  << " (Batch ID : "<<j.getBatchJobId() <<")";
-  cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-  cout << "\n User                 : " << j.getUserId();
-  cout << "\n Session              : " << j.getSessionId();
-  cout << "\n Machine              : " << j.getSubmitMachineId() << " (Host: " << j.getSubmitMachineName() << ")";
-  cout << "\n Output path (remote) : " << prefixOutputPath+j.getOutputPath();
-  cout << "\n Error path  (remote) : " << prefixErrorPath+j.getErrorPath();
-  cout << "\n Output dir (remote)  : " << j.getOutputDir();
+  cout << " Job                  : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
+  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "UNDEFINED");
+  cout << "\n User                 : " << job.getUserId();
+  cout << "\n Session              : " << job.getSessionId();
+  cout << "\n Machine              : " << job.getSubmitMachineId() << " (Host: " << job.getSubmitMachineName() << ")";
+  cout << "\n Output path (remote) : " << prefixOutputPath+job.getOutputPath();
+  cout << "\n Error path  (remote) : " << prefixErrorPath+job.getErrorPath();
+  cout << "\n Output dir (remote)  : " << job.getOutputDir();
 
   boost::posix_time::ptime pt;
-  cout << "\n Job                  : " << j.getJobId()  << " (Batch/Process ID: " << j.getBatchJobId() <<")";
-  if (j.getVmId().size() > 0) {
-    cout << "\n Virtual Machine      : " << j.getVmId() << " (IP: " << j.getVmIp()<< ")";
+  cout << "\n Job                  : " << job.getJobId()  << " (Batch/Process ID: " << job.getBatchJobId() <<")";
+  if (! job.getVmId().empty()) {
+    cout << "\n Virtual Machine      : " << job.getVmId() << " (IP: " << job.getVmIp()<< ")";
   }
-  cout << "\n Work                 : " << (j.getWorkId()!=-1? convertToString(j.getWorkId()) : "UNDEFINED");
-  cout << "\n Job name             : " << j.getJobName();
-  cout << "\n Job path             : " << j.getJobPath();
-  cout << "\n Priority             : " << j.getJobPrio() << " (" << convertJobPriorityToString(j.getJobPrio()) << ")";
-  cout << "\n CPU per Node         : " << j.getNbCpus();
-  cout << "\n Working dir (remote) : " << j.getJobWorkingDir();
-  cout << "\n Status               : " << vishnu::convertJobStateToString(j.getStatus());
-  if (j.getSubmitDate() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getSubmitDate()));
+  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "UNDEFINED");
+  cout << "\n Job name             : " << job.getJobName();
+  cout << "\n Job path             : " << job.getJobPath();
+  cout << "\n Priority             : " << job.getJobPrio() << " (" << convertJobPriorityToString(job.getJobPrio()) << ")";
+  cout << "\n CPU per Node         : " << job.getNbCpus();
+  cout << "\n Working dir (remote) : " << job.getJobWorkingDir();
+  cout << "\n Status               : " << vishnu::convertJobStateToString(job.getStatus());
+  if (job.getSubmitDate() > 0) {
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(job.getSubmitDate()));
     cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
   } else  {
     cout << "\n Submit date          : UNDEFINED";
   }
 
-  if(j.getEndDate() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(j.getEndDate()));
+  if(job.getEndDate() > 0) {
+    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(job.getEndDate()));
     cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
   } else {
     cout << "\n End date             : UNDEFINED";
   }
-  cout << "\n Owner                : " << j.getOwner();
-  cout << "\n Queue                : " << j.getJobQueue();
-  cout << "\n Wall clock limit     : " << convertWallTimeToString(j.getWallClockLimit());
-  cout << "\n Group name           : " << j.getGroupName();
-  cout << "\n Description          : " << j.getJobDescription();
-  if(j.getMemLimit() > 0) {
-    cout << "\n Max memory           : " << j.getMemLimit();
+  cout << "\n Owner                : " << job.getOwner();
+  cout << "\n Queue                : " << job.getJobQueue();
+  cout << "\n Wall clock limit     : " << convertWallTimeToString(job.getWallClockLimit());
+  cout << "\n Group name           : " << job.getGroupName();
+  cout << "\n Description          : " << job.getJobDescription();
+  if(job.getMemLimit() > 0) {
+    cout << "\n Max memory           : " << job.getMemLimit();
   } else {
     cout << "\n Max memory           : UNDEFINED";
   }
-  cout << "\n Nodes                : " << j.getNbNodes();
-  cout << "\n NbNodesAndCpuPerNode : " << j.getNbNodesAndCpuPerNode();
+  cout << "\n Nodes                : " << job.getNbNodes();
+  cout << "\n NbNodesAndCpuPerNode : " << job.getNbNodesAndCpuPerNode();
   cout << endl;
 }
 

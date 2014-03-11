@@ -103,29 +103,36 @@ main(int argc, char* argv[]) {
     }
 
     JsonObject jsonJob(vishnu::get_file_content(jobSerializedPath));
-    TMS_Data::Job job = jsonJob.getJob();
+    TMS_Data::Job defaultJobInfo = jsonJob.getJob();
 
     if (action == "SUBMIT") {
       JsonObject jsonOptions(vishnu::get_file_content(optionsPath));
-      if (! job.getOutputDir().empty()) {
+      if (! defaultJobInfo.getOutputDir().empty()) {
         bool isWorkingDir = (batchType == DELTACLOUD)? true : false;
-        vishnu::createDir(job.getOutputDir(), isWorkingDir); // Create the output directory
+        vishnu::createDir(defaultJobInfo.getOutputDir(), isWorkingDir); // Create the output directory
       }
 
       //Submits the job
-      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), job) != 0) {
+      std::vector<TMS_Data::Job> jobSteps;
+      if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), jobSteps) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
-      //To serialize the job object
+
+      // serialize the result
+      JsonObject jobStepsJson;
+      jobStepsJson.setProperty("nbsteps", jobSteps.size());
+      for (int step = 0; step < jobSteps.size(); ++step) {
+        jobStepsJson.setProperty(boost::str(boost::format("step@%1%") % step), JsonObject::serialize(jobSteps[step]));
+      }
       std::ofstream os_slaveJobFile(slaveJobFile);
-      os_slaveJobFile << JsonObject::serialize(job);
+      os_slaveJobFile << jobStepsJson.encode();
       os_slaveJobFile.close();
     } else if (action == "CANCEL") {
       if (batchType == DELTACLOUD) {
-        std::string jobdDescr = job.getJobId()+"@"+job.getVmId();
-        batchServer->cancel(jobdDescr.c_str());
+        std::string jobdDescr = boost::str(boost::format("%1%@%2%") % defaultJobInfo.getJobId() % defaultJobInfo.getVmId());
+        batchServer->cancel(jobdDescr);
       } else {
-        batchServer->cancel(job.getBatchJobId().c_str());
+        batchServer->cancel(defaultJobInfo.getBatchJobId());
       }
     }
   } catch (VishnuException& ve) {

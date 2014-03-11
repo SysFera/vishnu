@@ -56,7 +56,7 @@ public:
   int
   submitJob(std::string& scriptContent,
             JsonObject* options,
-            const int& vishnuId,
+            int vishnuId,
             const std::vector<std::string>& defaultBatchOption);
 
   /**
@@ -233,7 +233,7 @@ protected:
    * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
    * @param options: an object containing options
-   * @param job The target job concerned by the action
+   * @param requestJobInfo The default information provided to the job
    * @param batchType The batch type
    * @param batchVersion The batch version. Ignored for POSIX backend
   */
@@ -241,7 +241,7 @@ protected:
   handleNativeBatchExec(int action,
                         const std::string& scriptPath,
                         JsonObject* options,
-                        TMS_Data::Job& job,
+                        TMS_Data::Job& requestJobInfo,
                         int batchType,
                         const std::string& batchVersion);
 

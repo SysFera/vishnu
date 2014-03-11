@@ -64,14 +64,6 @@ convertToString(T val) {
 }
 
 /**
- * \brief Function to convert a given date into correspondant long value
- * \param date The date to convert
- * \return The converted value
- */
-long long
-convertToTimeType(const std::string& date);
-
-/**
  * \brief Function to convert a string to int
  * \param  val a value to convert to int
  * \return int value of the corresponding string
@@ -202,14 +194,6 @@ getCurrentTimeInUTC();
  */
 time_t
 convertUTCtimeINLocaltime(const time_t& localtime);
-
-/**
- * \brief Function to localtime into UTC (seconds)
- * \param localtime the local time
- * \return the diffence time (seconds)
- */
-time_t
-convertLocaltimeINUTCtime(const time_t& localtime);
 
 /**
  * \brief Function to return the difference between localtime and UTC time (seconds)

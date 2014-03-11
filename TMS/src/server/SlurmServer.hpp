@@ -28,14 +28,14 @@ class SlurmServer : public BatchServer
      * \brief Function to submit Slurm job
      * \param scriptPath the path to the script containing the job characteristique
      * \param options the options to submit job
-     * \param job The job data structure
+     * \param stepJobs List of steps
      * \param envp The list of environment variables used by Slurm submission function
      * \return raises an exception on error
      */
     int
     submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
-          TMS_Data::Job& job,
+          std::vector<TMS_Data::Job>& stepJobs,
           char** envp=NULL);
 
     /**
@@ -116,11 +116,11 @@ class SlurmServer : public BatchServer
 
     /**
      * \brief Function To fill the info concerning a job
-     * \param job: The job to fill
+     * \param stepJobs: List of job steps
      * \param batchJobId: The identifier of the job to load
      */
     void
-    fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId);
+    fillJobInfo(std::vector<TMS_Data::Job>& stepJobs,  const uint32_t& batchJobId);
 
     /**
      * \brief Function To convert vishnu job Id to slurm job Id

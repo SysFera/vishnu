@@ -46,14 +46,15 @@ SlurmServer::SlurmServer():BatchServer() {
  * \brief Function to submit Slurm job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+   * \param jobSteps The list of job steps
  * \param envp The list of environment variables used by Slurm submission function
  * \return raises an exception on error
  */
 int
 SlurmServer::submit(const std::string& scriptPath,
                     const TMS_Data::SubmitOptions& options,
-                    TMS_Data::Job& job, char** envp) {
+                    std::vector<TMS_Data::Job>& jobSteps,
+                    char** envp) {
 
 
   std::vector<std::string> cmdsOptions;
@@ -111,23 +112,26 @@ SlurmServer::submit(const std::string& scriptPath,
     } else {
       throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "SLURM ERROR: "+errorMsg);
     }
-    sleep (++retries);
-  }
-
-  if (desc.std_out != NULL) {
-    std::string path = std::string(desc.std_out);
-    replaceSymbolInToJobPath(path);
-    job.setOutputPath(path);
-  }
-
-  if (desc.std_err != NULL) {
-    std::string path = std::string(desc.std_err);
-    replaceSymbolInToJobPath(path);
-    job.setErrorPath(path);
+    sleep(++retries);
   }
 
   //Fill the vishnu job structure
-  fillJobInfo(job, resp->job_id);
+  fillJobInfo(jobSteps, resp->job_id);
+
+  // Set default error and output paths when applicable
+  for (int step = 0; step < jobSteps.size(); ++step) {
+    if (desc.std_out != NULL) {
+      std::string path = std::string(desc.std_out);
+      replaceSymbolInToJobPath(path);
+      jobSteps[step].setOutputPath(path);
+    }
+
+    if (desc.std_err != NULL) {
+      std::string path = std::string(desc.std_err);
+      replaceSymbolInToJobPath(path);
+      jobSteps[step].setErrorPath(path);
+    }
+  }
 
   xfree(desc.script);
   slurm_free_submit_response_response_msg(resp);
@@ -421,7 +425,7 @@ SlurmServer::processOptions(const std::string& scriptPath,
           int qCpuMax = queue->getMaxProcCpu();
 
           if ((walltime <= qwalltimeMax || qwalltimeMax==0)
-             && (cpu <= qCpuMax)){
+              && (cpu <= qCpuMax)){
             cmdsOptions.push_back("-p");
             cmdsOptions.push_back(queueName);
             break;
@@ -567,11 +571,11 @@ SlurmServer::convertSlurmPrioToVishnuPrio(const uint32_t& prio) {
 
 /**
  * \brief Function To fill the info concerning a job
- * \param job: The job to fill
+ * \param stepJobs List of steps
  * \param batchJobId: The identifier of the job to load
  */
 void
-SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
+SlurmServer::fillJobInfo(std::vector<TMS_Data::Job>& stepJobs, const uint32_t& batchJobId){
 
   int res;
   job_info_msg_t* job_buffer_ptr = NULL;
@@ -579,59 +583,63 @@ SlurmServer::fillJobInfo(TMS_Data::Job &job, const uint32_t& batchJobId){
   if(res != 0 || ! job_buffer_ptr) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "error calling slurm_load_jobs");
   }
-  job_info_t slurmJobInfo = job_buffer_ptr->job_array[0];
-  std::string id = vishnu::convertToString(batchJobId);
-  job.setBatchJobId(id);
-  job.setStatus(convertSlurmStateToVishnuState(slurmJobInfo.job_state));
 
-  //set default path
-  std::string stdOutPath = (boost::format("%1%/slurm-%2%.out") % slurmJobInfo.work_dir % id).str();
-  if (job.getOutputPath().empty()) {
-    job.setOutputPath(stdOutPath);
-  }
-  if (job.getErrorPath().empty()) {
-    job.setErrorPath(stdOutPath);
-  }
+  for (int step = 0; step <job_buffer_ptr->record_count; ++step) {
+    std::string id = vishnu::convertToString(batchJobId);
+    TMS_Data::Job currentStepJob;
+    currentStepJob.setBatchJobId(id);
+    currentStepJob.setStatus(convertSlurmStateToVishnuState(job_buffer_ptr->job_array[step].job_state));
 
-  if (slurmJobInfo.name != NULL) {
-    job.setJobName(slurmJobInfo.name);
-  }
+    //set default path
+    std::string stdOutPath = (boost::format("%1%/slurm-%2%.out") % job_buffer_ptr->job_array[step].work_dir % id).str();
+    if (currentStepJob.getOutputPath().empty()) {
+      currentStepJob.setOutputPath(stdOutPath);
+    }
+    if (currentStepJob.getErrorPath().empty()) {
+      currentStepJob.setErrorPath(stdOutPath);
+    }
 
-  job.setSubmitDate(slurmJobInfo.submit_time);
-  struct passwd* user = getpwuid(slurmJobInfo.user_id);
-  if (user != NULL) {
-    job.setOwner(user->pw_name);
-  }
-  struct group* grp = getgrgid(slurmJobInfo.group_id);
-  if (grp != NULL) {
-    job.setGroupName(grp->gr_name);
-  }
-  if (slurmJobInfo.partition != NULL) {
-    job.setJobQueue(slurmJobInfo.partition);
-  }
-  //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
-  if (slurmJobInfo.time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
-    job.setWallClockLimit(60*(slurmJobInfo.time_limit));
-  }
-  job.setEndDate(slurmJobInfo.end_time);
-  if (slurmJobInfo.comment != NULL) {
-    job.setJobDescription(slurmJobInfo.comment);
-  }
-  job.setJobPrio(convertSlurmPrioToVishnuPrio(slurmJobInfo.priority));
-  job.setMemLimit(slurmJobInfo.pn_min_memory);
-  uint32_t nbNodes = slurmJobInfo.num_nodes;
-  uint32_t nbCpus =  slurmJobInfo.pn_min_cpus;
-  job.setNbCpus(nbCpus);
-  job.setNbNodes(nbNodes);
-  job.setNbNodesAndCpuPerNode(convertToString(nbNodes)+":"+convertToString(nbCpus));
+    if (job_buffer_ptr->job_array[step].name != NULL) {
+      currentStepJob.setJobName(job_buffer_ptr->job_array[step].name);
+    }
 
-  //To fill the job working dir
-  job.setJobWorkingDir(slurmJobInfo.work_dir);
+    struct passwd* user = getpwuid(job_buffer_ptr->job_array[step].user_id);
+    if (user != NULL) {
+      currentStepJob.setOwner(user->pw_name);
+    }
+    struct group* grp = getgrgid(job_buffer_ptr->job_array[step].group_id);
+    if (grp != NULL) {
+      currentStepJob.setGroupName(grp->gr_name);
+    }
+    if (job_buffer_ptr->job_array[step].partition != NULL) {
+      currentStepJob.setJobQueue(job_buffer_ptr->job_array[step].partition);
+    }
+    //Here we multiplie the time_limit by 60 because SLURM time_limit is in minutes
+    if (job_buffer_ptr->job_array[step].time_limit < ((std::numeric_limits<uint32_t>::max())/60)) {
+      currentStepJob.setWallClockLimit(60*(job_buffer_ptr->job_array[step].time_limit));
+    }
+    currentStepJob.setEndDate(job_buffer_ptr->job_array[step].end_time);
+    if (job_buffer_ptr->job_array[step].comment != NULL) {
+      currentStepJob.setJobDescription(job_buffer_ptr->job_array[step].comment);
+    }
 
-  //fill the msymbol map
-  msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
-  msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
+    currentStepJob.setSubmitDate(job_buffer_ptr->job_array[step].start_time);
+    currentStepJob.setEndDate(job_buffer_ptr->job_array[step].end_time);
+    currentStepJob.setJobPrio(convertSlurmPrioToVishnuPrio(job_buffer_ptr->job_array[step].priority));
+    currentStepJob.setMemLimit(job_buffer_ptr->job_array[step].pn_min_memory);
+    currentStepJob.setNbCpus(job_buffer_ptr->job_array[step].pn_min_cpus);
+    currentStepJob.setNbNodes(job_buffer_ptr->job_array[step].num_nodes);
+    currentStepJob.setJobWorkingDir(job_buffer_ptr->job_array[step].work_dir);
+    currentStepJob.setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
+                                                      % currentStepJob.getNbNodes()
+                                                      % currentStepJob.getNbCpus()));
 
+    //fill the msymbol map
+    msymbolMap["\%j"] = vishnu::convertToString(batchJobId);
+    msymbolMap["\%J"] = vishnu::convertToString(batchJobId);
+
+    stepJobs.push_back(currentStepJob);
+  }
 
   slurm_free_job_info_msg(job_buffer_ptr);
 }
@@ -783,25 +791,34 @@ void SlurmServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
 
   job_info_msg_t * job_buffer_ptr = NULL;
   int res = slurm_load_jobs((time_t) NULL, &job_buffer_ptr, SHOW_ALL);
-  if(!res) {
-    uint32_t batchId;
-    int jobStatus;
+  if (res == 0) {
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
+
+    std::vector<TMS_Data::Job> stepJobs;
     for (uint32_t i=0; i < job_buffer_ptr->record_count; i++) {
-      batchId = (job_buffer_ptr->job_array[i]).job_id;
+      uint32_t batchId = (job_buffer_ptr->job_array[i]).job_id;
       std::vector<std::string>::const_iterator iter;
       iter = std::find(ignoredIds.begin(), ignoredIds.end(), convertToString(batchId));
       if (iter==ignoredIds.end()) {
         TMS_Data::Job_ptr job = new TMS_Data::Job();
-        fillJobInfo(*job, batchId);
-        jobStatus = job->getStatus();
-        if (jobStatus == vishnu::STATE_RUNNING) {
-          nbRunningJobs++;
-        } else if(jobStatus >= 1 && jobStatus <= 3) {
-          nbWaitingJobs++;
+        stepJobs.clear();
+        fillJobInfo(stepJobs, batchId);
+
+        for (int step = 0; step < stepJobs.size(); ++step) {
+          switch (stepJobs[step].getStatus()) {
+          case vishnu::STATE_RUNNING:
+            nbRunningJobs++;
+            break;
+          case vishnu::STATE_SUBMITTED:
+          case vishnu::STATE_WAITING:
+          case vishnu::STATE_QUEUED:
+            nbWaitingJobs++;
+          default:
+            break;
+          }
+          listOfJobs->getJobs().push_back(job);
         }
-        listOfJobs->getJobs().push_back(job);
       }
     }
     listOfJobs->setNbJobs(listOfJobs->getJobs().size());

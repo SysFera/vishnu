@@ -150,7 +150,7 @@ public:
         filetransfer->setSize(boost::lexical_cast<file_size_t>(*(++iter)));
         //convert the endDate into UTC date
         std::string tmpTime = *(++iter);
-        startTime = vishnu::convertLocaltimeINUTCtime(convertToTimeType(tmpTime));
+        startTime = vishnu::string_to_time_t(tmpTime);
         filetransfer->setStartTime(startTime);
         filetransfer->setErrorMsg(*(++iter));
         // Check the transfer Command enum value

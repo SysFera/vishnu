@@ -79,7 +79,7 @@ JobServer::~JobServer() { }
  */
 int JobServer::submitJob(std::string& scriptContent,
                          JsonObject* options,
-                         const int& vishnuId,
+                         int vishnuId,
                          const std::vector<std::string>& defaultBatchOption)
 {
   if (scriptContent.empty()) {
@@ -98,8 +98,7 @@ int JobServer::submitJob(std::string& scriptContent,
     mjob.setOwner(muserSessionInfo.user_aclogin);
 
     int usePosix = options->getIntProperty("posix");
-    if (usePosix != JsonObject::UNDEFINED_PROPERTY
-        && usePosix != 0) {
+    if (usePosix != JsonObject::UNDEFINED_PROPERTY && usePosix != 0) {
       mbatchType = POSIX;
     }
 
@@ -196,7 +195,7 @@ JobServer::handleSshBatchExec(int action,
  * @param action action The type of action (cancel, submit...)
  * @param scriptPath The path of the script to executed
  * @param options: an object containing options
- * @param job The target job concerned by the action
+ * @param requestJobInfo The default information provided to the job
  * @param batchType The batch type. Ignored for POSIX backend
  * @param batchVersion The batch version. Ignored for POSIX backend
 */
@@ -204,7 +203,7 @@ void
 JobServer::handleNativeBatchExec(int action,
                                  const std::string& scriptPath,
                                  JsonObject* options,
-                                 TMS_Data::Job& job,
+                                 TMS_Data::Job& requestJobInfo,
                                  int batchType,
                                  const std::string& batchVersion) {
 
@@ -228,22 +227,43 @@ JobServer::handleNativeBatchExec(int action,
     try {
       handlerExitCode = 0;
       switch(action) {
-      case SubmitBatchAction:
-        handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), job);
+      case SubmitBatchAction: {
+        std::vector<TMS_Data::Job> jobSteps;
+        handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
+
+        int stepCount = jobSteps.size();
+        if (stepCount == 1) {
+          jobSteps[0].setSubmitMachineId(requestJobInfo.getSubmitMachineId());
+          jobSteps[0].setWorkId(requestJobInfo.getWorkId());
+          jobSteps[0].setJobPath(requestJobInfo.getJobPath());
+          jobSteps[0].setOwner(requestJobInfo.getOwner());
+          jobSteps[0].setJobId(requestJobInfo.getJobId());
+          finalizeExecution(action, jobSteps[0]);
+        } else {
+          for (int step = 0; step < stepCount; ++step) {
+            jobSteps[step].setSubmitMachineId(requestJobInfo.getSubmitMachineId());
+            jobSteps[step].setWorkId(requestJobInfo.getWorkId());
+            jobSteps[step].setJobPath(requestJobInfo.getJobPath());
+            jobSteps[step].setOwner(requestJobInfo.getOwner());
+            jobSteps[step].setJobId(boost::str(boost::format("%1%.%2%") % requestJobInfo.getJobId() % step));
+            finalizeExecution(action, jobSteps[step]);
+          }
+        }
+      }
         break;
       case CancelBatchAction:
         if (mbatchType == DELTACLOUD) {
-          handlerExitCode = batchServer->cancel(job.getJobId()+"@"+job.getVmId());
+          handlerExitCode = batchServer->cancel(requestJobInfo.getJobId()+"@"+requestJobInfo.getVmId());
         } else {
-          handlerExitCode = batchServer->cancel(job.getBatchJobId());
+          handlerExitCode = batchServer->cancel(requestJobInfo.getBatchJobId());
         }
-        job.setStatus(vishnu::STATE_CANCELLED);
+        requestJobInfo.setStatus(vishnu::STATE_CANCELLED);
+        finalizeExecution(action, requestJobInfo);
         break;
       default:
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
         break;
       }
-      finalizeExecution(action, job);
     } catch(const VishnuException & ex) {
       handlerExitCode = -1;
       LOG((boost::format("[ERROR] %1%") % ex.what()).str(), 4);
@@ -537,8 +557,8 @@ TMS_Data::Job JobServer::getJobInfo(const std::string& jobId) {
   mjob.setNbCpus(vishnu::convertToInt(*(++iter)));
   mjob.setJobWorkingDir(*(++iter));
   mjob.setStatus(vishnu::convertToInt(*(++iter)));
-  mjob.setSubmitDate(vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++iter)))); //convert the submitDate into UTC date
-  mjob.setEndDate(vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++iter)))); //convert the endDate into UTC date
+  mjob.setSubmitDate(vishnu::string_to_time_t(*(++iter)));
+  mjob.setEndDate(vishnu::string_to_time_t(*(++iter)));
   mjob.setOwner(*(++iter));
   mjob.setJobQueue(*(++iter));
   mjob.setWallClockLimit(vishnu::convertToInt(*(++iter)));

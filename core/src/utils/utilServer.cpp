@@ -483,16 +483,13 @@ vishnu::getObjectId(int vishnuId,
   pthread_mutex_lock(&(mutex));
 
   //To get the counter
-  int counter;
-  counter = getVishnuCounter(vishnuIdString,type);
+  int counter = getVishnuCounter(vishnuIdString,type);
   //To get the formatiduser
   std::string format = getAttrVishnu(formatName, vishnuIdString).c_str();
 
-  if (format.size() != 0) {
-    idGenerated =
-        getGeneratedName(format.c_str(), counter, type, stringforgeneration);
-
-    if (idGenerated.size() != 0) {
+  if (! format.empty()) {
+    idGenerated = getGeneratedName(format.c_str(), counter, type, stringforgeneration);
+    if (! idGenerated.empty()) {
     } else {
       SystemException e (ERRCODE_SYSTEM, "There is a problem during the id generation with the format:"+ formatName);
       pthread_mutex_unlock(&(mutex));

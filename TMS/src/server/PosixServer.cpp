@@ -22,7 +22,7 @@ PosixServer::PosixServer():BatchServer(){
 int
 PosixServer::submit(const std::string& scriptPath,
                     const TMS_Data::SubmitOptions& options,
-                    TMS_Data::Job& job,
+                    std::vector<TMS_Data::Job>& stepJobs,
                     char** envp){
   int ret;
   struct trameJob resultat;
@@ -47,6 +47,7 @@ PosixServer::submit(const std::string& scriptPath,
     break;
   }
 
+  TMS_Data::Job job;
   job.setStatus(vishnu::STATE_RUNNING);
   job.setJobQueue("posix");
 
@@ -67,6 +68,7 @@ PosixServer::submit(const std::string& scriptPath,
   job.setErrorPath(std::string(resultat.errorPath));
   job.setWallClockLimit(resultat.maxTime);
 
+  stepJobs.push_back(job);
   return ret;
 }
 

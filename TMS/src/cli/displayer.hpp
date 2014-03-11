@@ -20,7 +20,7 @@ displayJobOutput(TMS_Data::JobResult_ptr j);
  * \param j: The job to display the info
  */
 void
-displayJob(TMS_Data::Job& j);
+displayJob(TMS_Data::Job& job);
 
 /**
  * \brief To display the job info in a list

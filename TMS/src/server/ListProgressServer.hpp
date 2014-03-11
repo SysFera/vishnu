@@ -97,7 +97,7 @@ public:
         job->setJobName(*(++iter));
         walltime = vishnu::convertToInt(*(++iter));
         job->setWallTime(walltime);
-        job->setEndTime(vishnu::convertToTimeType(*(++iter)));
+        job->setEndTime(vishnu::string_to_time_t(*(++iter)));
         status = vishnu::convertToInt(*(++iter));
         job->setStatus(status);
         batchJobId = *(++iter);

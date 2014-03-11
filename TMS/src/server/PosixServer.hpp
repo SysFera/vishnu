@@ -27,14 +27,14 @@ class PosixServer : public BatchServer
      * \brief Function to submit Posix job
      * \param scriptPath the path to the script containing the job characteristique
      * \param options the options to submit job
-     * \param job The job data structure
+     * \param stepJobs List of steps
      * \param envp The list of environment variables used by Posix submission function
      * \return raises an exception on error
      */
     int
       submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
-          TMS_Data::Job& job,
+          std::vector<TMS_Data::Job>& stepJobs,
           char** envp=NULL);
 
     /**

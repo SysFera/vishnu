@@ -58,32 +58,6 @@ namespace bs=boost::system;
 using namespace boost::posix_time;
 using namespace boost::gregorian;
 
-
-
-/**
- * \brief Function to convert a given date into correspondant long value
- * \param date The date to convert
- * \return The converted value
- */
-long long
-vishnu::convertToTimeType(const std::string& date) {
-  /* For mysql, the empty date is 0000-00-00, not empty,
-     need this test to avoid problem in ptime */
-  if ((date.size() == 0) ||
-      date.find("0000-00-00") != std::string::npos) {
-    return 0;
-  }
-
-  try{
-    boost::posix_time::ptime pt(time_from_string(date));
-    boost::posix_time::ptime epoch(boost::gregorian::date(1970, 1, 1));
-    time_duration::sec_type time = (pt - epoch).total_seconds();
-  } catch (std::exception& e){
-    throw UserException(ERRCODE_INVALID_PARAM, "Error converting date :"+date+" to time, error is :" +e.what());
-  }
-  return (long long) time_t(time);
-}
-
 /**
  * \brief Function to convert a string to int
  * \param  val a value to convert to int
@@ -333,22 +307,6 @@ vishnu::convertUTCtimeINLocaltime(const time_t& utctime) {
 
   long diff = currentTime-std::time(0);
   return (utctime+diff);
-}
-
-/**
- * \brief Function to localtime into UTC (seconds)
- * \return the diffence time (seconds)
- */
-time_t
-vishnu::convertLocaltimeINUTCtime(const time_t& localtime) {
-  //the current time
-  boost::posix_time::ptime now =
-      boost::posix_time::microsec_clock::local_time();
-
-  time_t currentTime = string_to_time_t(to_simple_string(now));
-
-  long diff = currentTime - std::time(0);
-  return (localtime - diff);
 }
 
 /**
@@ -755,3 +713,5 @@ vishnu::exitProcessOnChildError(pid_t child) {
     exit(retCode);
   }
 }
+
+

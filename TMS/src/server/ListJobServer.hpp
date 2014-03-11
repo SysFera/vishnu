@@ -244,11 +244,9 @@ public:
           nbWaitingJobs++;
         }
 
-        //convert the endDate into UTC date
-        submitDate = vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++ii)));
+        submitDate = vishnu::string_to_time_t(*(++ii));
         job->setSubmitDate(submitDate);
-        //convert the endDate into UTC date
-        endDate = vishnu::convertLocaltimeINUTCtime(vishnu::convertToTimeType(*(++ii)));
+        endDate = vishnu::string_to_time_t(*(++ii));
         job->setEndDate(endDate);
         job->setOwner(*(++ii));
         job->setJobQueue(*(++ii));
