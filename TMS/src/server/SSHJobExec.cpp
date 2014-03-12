@@ -243,7 +243,7 @@ SSHJobExec::execRemoteScript(const std::string& scriptPath,
   }
 
   // Mount the NFS repository
-  LOG("[TMS][INFO] Mounting the nfs directory...", mdebugLevel);
+  LOG("[INFO] Mounting the nfs directory...", mdebugLevel);
   if (! nfsServer.empty() && ! nfsMountPoint.empty()) {
     mountNfsDir(nfsServer, nfsMountPoint);
   }
