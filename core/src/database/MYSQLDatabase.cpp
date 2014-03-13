@@ -253,6 +253,7 @@ MYSQLDatabase::getConnection(int& id){
     // I do not use modulo '%' because i need to be sure i>0
     if (i==mconfig.getDbPoolSize()) {
       i=0;
+      sleep(10);
     }
   }
   throw SystemException(ERRCODE_DBCONN, "Cannot get available DB connection");
