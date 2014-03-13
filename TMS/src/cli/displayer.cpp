@@ -58,7 +58,7 @@ displayJob(TMS_Data::Job& job){
   std::string prefixErrorPath = (pos == std::string::npos)? job.getSubmitMachineName()+":" : "";
 
   cout << " Job                  : " << job.getJobId()  << " (Batch ID : "<<job.getBatchJobId() <<")";
-  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "UNDEFINED");
+  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
   cout << "\n User                 : " << job.getUserId();
   cout << "\n Session              : " << job.getSessionId();
   cout << "\n Machine              : " << job.getSubmitMachineId() << " (Host: " << job.getSubmitMachineName() << ")";
@@ -71,7 +71,7 @@ displayJob(TMS_Data::Job& job){
   if (! job.getVmId().empty()) {
     cout << "\n Virtual Machine      : " << job.getVmId() << " (IP: " << job.getVmIp()<< ")";
   }
-  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "UNDEFINED");
+  cout << "\n Work                 : " << (job.getWorkId()!=-1? convertToString(job.getWorkId()) : "-");
   cout << "\n Job name             : " << job.getJobName();
   cout << "\n Job path             : " << job.getJobPath();
   cout << "\n Priority             : " << job.getJobPrio() << " (" << convertJobPriorityToString(job.getJobPrio()) << ")";
@@ -79,17 +79,17 @@ displayJob(TMS_Data::Job& job){
   cout << "\n Working dir (remote) : " << job.getJobWorkingDir();
   cout << "\n Status               : " << vishnu::convertJobStateToString(job.getStatus());
   if (job.getSubmitDate() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(job.getSubmitDate()));
+    pt =  boost::posix_time::from_time_t(job.getSubmitDate());
     cout << "\n Submit date          : " << boost::posix_time::to_simple_string(pt);
   } else  {
-    cout << "\n Submit date          : UNDEFINED";
+    cout << "\n Submit date          : -";
   }
 
   if(job.getEndDate() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(job.getEndDate()));
+    pt =  boost::posix_time::from_time_t(job.getEndDate());
     cout << "\n End date             : " << boost::posix_time::to_simple_string(pt);
   } else {
-    cout << "\n End date             : UNDEFINED";
+    cout << "\n End date             : -";
   }
   cout << "\n Owner                : " << job.getOwner();
   cout << "\n Queue                : " << job.getJobQueue();
@@ -99,7 +99,7 @@ displayJob(TMS_Data::Job& job){
   if(job.getMemLimit() > 0) {
     cout << "\n Max memory           : " << job.getMemLimit();
   } else {
-    cout << "\n Max memory           : UNDEFINED";
+    cout << "\n Max memory           : -";
   }
   cout << "\n Nodes                : " << job.getNbNodes();
   cout << "\n NbNodesAndCpuPerNode : " << job.getNbNodesAndCpuPerNode();
@@ -131,16 +131,16 @@ displayProgress(Progression& p){
   cout << " Job name  : " << p.getJobName() << endl;
   cout << " Wall time : " << convertWallTimeToString(p.getWallTime()) << endl;
   if(p.getStartTime() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getStartTime()));
+    pt =  boost::posix_time::from_time_t(p.getStartTime());
     cout << "Start time : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << "Start time : UNDEFINED" << endl;
+    cout << "Start time : -" << endl;
   }
   if(p.getEndTime() > 0) {
-    pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(p.getEndTime()));
+    pt =  boost::posix_time::from_time_t(p.getEndTime());
     cout << " End time  : " << boost::posix_time::to_simple_string(pt) << endl;
   } else {
-    cout << " End time  : UNDEFINED" << endl;
+    cout << " End time  : -" << endl;
   }
   cout << " Percent   : " << p.getPercent() << "%" << endl;
   cout << " Status    : " << vishnu::convertJobStateToString(p.getStatus()) << endl;
@@ -181,27 +181,27 @@ displayQueue(Queue& q){
   if(q.getMaxJobCpu() > 0) {
     cout << "Max job cpu  : " << q.getMaxJobCpu() << endl;
   } else {
-    cout << "Max job cpu  : UNDEFINED " << endl;
+    cout << "Max job cpu  : - " << endl;
   }
   if(q.getMaxProcCpu() > 0) {
     cout << "Max proc cpu : " << q.getMaxProcCpu() << endl;
   } else {
-    cout << "Max proc cpu : UNDEFINED " << endl;
+    cout << "Max proc cpu : - " << endl;
   }
   if(q.getMemory() > 0) {
     cout << " Memory      : " << q.getMemory() << endl;
   } else {
-    cout << " Memory      : UNDEFINED " << endl;
+    cout << " Memory      : - " << endl;
   }
   if(q.getWallTime() > 0) {
     cout << " Wall time   : " << convertWallTimeToString(q.getWallTime()) << endl;
   } else {
-    cout << " Wall time   : UNDEFINED " << endl;
+    cout << " Wall time   : - " << endl;
   }
   if(q.getNode() > 0) {
     cout << " Node        : " << q.getNode() << endl;
   } else {
-    cout << " Node        : UNDEFINED  " << endl;
+    cout << " Node        : -  " << endl;
   }
   cout << "Running jobs : " << q.getNbRunningJobs() << endl;
   cout << "Job in queue : " << q.getNbJobsInQueue() << endl;
@@ -548,13 +548,13 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
 
     startTime = (listProgress.getProgress().get(i))->getStartTime();
     if(startTime > 0) {
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(startTime));
+      pt =  boost::posix_time::from_time_t(startTime);
       maxStartTimeSize = std::max(maxStartTimeSize, boost::posix_time::to_simple_string(pt).size());
     }
 
     endTime = (listProgress.getProgress().get(i))->getEndTime();
     if(endTime > 0) {
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(endTime));
+      pt =  boost::posix_time::from_time_t(endTime);
       maxEndTimeSize = std::max(maxEndTimeSize, boost::posix_time::to_simple_string(pt).size());
     }
 
@@ -593,13 +593,13 @@ operator<<(std::ostream& os, ListProgression& listProgress) {
     os << setw(maxJobNameSize+2) << left << jobName;
     os << setw(maxWalltimeSize+2) << left << vishnu::convertWallTimeToString(walltime);
     if(startTime > 0) {
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(startTime));
+      pt =  boost::posix_time::from_time_t(startTime);
       os << setw(maxStartTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
     } else {
       os << setw(maxStartTimeSize+2) << left << " --- ";
     }
     if(endTime > 0) {
-      pt =  boost::posix_time::from_time_t(convertUTCtimeINLocaltime(endTime));
+      pt =  boost::posix_time::from_time_t(endTime);
       os << setw(maxEndTimeSize+2) << left << boost::posix_time::to_simple_string(pt);
     } else {
       os << setw(maxEndTimeSize+2) << left <<  " --- ";

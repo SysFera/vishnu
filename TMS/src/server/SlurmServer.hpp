@@ -35,7 +35,7 @@ class SlurmServer : public BatchServer
     int
     submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
-          std::vector<TMS_Data::Job>& stepJobs,
+          TMS_Data::ListJobs& jobSteps,
           char** envp=NULL);
 
     /**
@@ -120,7 +120,7 @@ class SlurmServer : public BatchServer
      * \param batchJobId: The identifier of the job to load
      */
     void
-    fillJobInfo(std::vector<TMS_Data::Job>& stepJobs,  const uint32_t& batchJobId);
+    fillJobInfo(TMS_Data::ListJobs& jobSteps,  const uint32_t& batchJobId);
 
     /**
      * \brief Function To convert vishnu job Id to slurm job Id

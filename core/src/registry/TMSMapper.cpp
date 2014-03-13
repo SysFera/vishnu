@@ -399,17 +399,15 @@ TMSMapper::decodeListJob(vector<unsigned int> separator, const string& msg){
     res += " -P ";
     res += convertToString(l);
   }
-  l = j->getFromSubmitDate();
-  if (l>0){
-    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
+  if (j->getFromSubmitDate()>0){
+    pt = boost::posix_time::from_time_t(j->getFromSubmitDate());
     u = boost::posix_time::to_simple_string(pt);
     res += " -d '";
     res += u;
     res += "'";
   }
-  l = j->getToSubmitDate();
-  if (l>0){
-    pt = boost::posix_time::from_time_t(vishnu::convertUTCtimeINLocaltime(l));
+  if (j->getToSubmitDate()>0){
+    pt = boost::posix_time::from_time_t(j->getToSubmitDate());
     u = boost::posix_time::to_simple_string(pt);
     res += " -D '";
     res += u;

@@ -38,7 +38,7 @@ public:
   int
   submit(const std::string& scriptPath,
          const TMS_Data::SubmitOptions& options,
-         std::vector<TMS_Data::Job>& jobSteps,
+         TMS_Data::ListJobs& jobSteps,
          char** envp=NULL);
 
   /**

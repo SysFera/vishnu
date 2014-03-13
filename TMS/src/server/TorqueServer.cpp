@@ -14,10 +14,9 @@
 extern "C" {
 #include "pbs_ifl.h" //Torque includes
 #include "pbs_error.h"
-#include "cmds.h"
 #include "pbs_sub.h"
+#include "cmds.h"
 }
-
 #include "TorqueServer.hpp"
 #include "TMSVishnuException.hpp"
 #include "utilVishnu.hpp"
@@ -38,14 +37,15 @@ TorqueServer::TorqueServer():BatchServer() {
  * \brief Function to submit Torque job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+ * \param jobSteps The list of job steps
  * \param envp The list of environment variables used by Torque submission function
  * \return raises an exception on error
  */
 int
 TorqueServer::submit(const std::string& scriptPath,
                      const TMS_Data::SubmitOptions& options,
-                     TMS_Data::Job& job, char** envp) {
+                     TMS_Data::ListJobs& jobSteps,
+                     char** envp) {
 
   char destination[PBS_MAXDEST];
   char scriptTmp[MAXPATHLEN + 1] = "";
@@ -62,7 +62,7 @@ TorqueServer::submit(const std::string& scriptPath,
   argv[0] = (char*) "vishnu_submit_job";
   argv[1] = const_cast<char*>(scriptPath.c_str());
   for(int i=0; i < cmdsOptions.size(); i++) {
-   argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
+    argv[i+2] = const_cast<char*>(cmdsOptions[i].c_str());
   }
 
 
@@ -121,10 +121,11 @@ TorqueServer::submit(const std::string& scriptPath,
 
   pbs_disconnect(connect);
 
-  if(p_status!=NULL) {
-    fillJobInfo(job, p_status);
+  if (p_status != NULL) {
+    jobSteps.getJobs().push_back(new TMS_Data::Job());
+    fillJobInfo(*(jobSteps.getJobs().get(0)), p_status);
   }
-  job.setBatchJobId(std::string(jobId));
+  jobSteps.getJobs().get(0)->setBatchJobId(std::string(jobId));
 
   return 0;
 }
@@ -272,7 +273,7 @@ TorqueServer::processOptions(const char* scriptPath,
           int qCpuMin = ((resourceMin->getQueues()).get(0))->getMaxProcCpu();
 
           if(walltime >= qwalltimeMin && (walltime <= qwalltimeMax || qwalltimeMax==0) &&
-              (cpu >= qCpuMin && cpu <= qCpuMax)){
+             (cpu >= qCpuMin && cpu <= qCpuMax)){
             cmdsOptions.push_back("-q");
             cmdsOptions.push_back(queueName);
             break;
@@ -323,9 +324,9 @@ TorqueServer::pbs_cancel(const char* jobId,
   }
 
   if(isLocal) {
-     connect = cnt2server(serverOut);
+    connect = cnt2server(serverOut);
   } else {
-     connect = cnt2server(remoteServer);
+    connect = cnt2server(remoteServer);
   }
 
   if (connect <= 0)
@@ -344,9 +345,9 @@ TorqueServer::pbs_cancel(const char* jobId,
   if (stat && (pbs_errno != PBSE_UNKJOBID)) {
     char* errmsg = pbs_geterrmsg(connect);
     if(errmsg!=NULL) {
-       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: " << errmsg  << " " << tmsJobIdOut << std::endl;
+      pbs_del_error <<  "TORQUE ERROR: pbs_deljob: " << errmsg  << " " << tmsJobIdOut << std::endl;
     } else {
-       pbs_del_error <<  "TORQUE ERROR: pbs_deljob: Server returned error " << pbs_errno << " for job " << tmsJobIdOut << std::endl;
+      pbs_del_error <<  "TORQUE ERROR: pbs_deljob: Server returned error " << pbs_errno << " for job " << tmsJobIdOut << std::endl;
     }
     pbs_disconnect(connect);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, pbs_del_error.str());
@@ -406,17 +407,17 @@ TorqueServer::getJobState(const std::string& jobId) {
   }
 
   if(p_status!=NULL) {
-      a = p_status->attribs;
-      while(a!=NULL) {
-         if(!strcmp(a->name, ATTR_state)){
-          state = convertTorqueStateToVishnuState(std::string(a->value));
-          break;
-         }
-      a = a->next;
+    a = p_status->attribs;
+    while(a!=NULL) {
+      if(!strcmp(a->name, ATTR_state)){
+        state = convertTorqueStateToVishnuState(std::string(a->value));
+        break;
       }
+      a = a->next;
+    }
   }
 
-return state;
+  return state;
 }
 
 /**
@@ -466,7 +467,7 @@ TorqueServer::getJobStartTime(const std::string& jobId) {
     }
   }
 
-return startTime;
+  return startTime;
 }
 
 /**
@@ -509,20 +510,20 @@ TorqueServer::convertTorquePrioToVishnuPrio(const int& prio) {
   } else if(prio >= 0 && prio < 512) {
     return 3;
   } else if(prio >= 512 && prio < 1023) {
-     return 4;
+    return 4;
   } else if(prio >= 1023) {
-     return 5;
+    return 5;
   }
 }
 
 /**
- * \brief Function To fill the info concerning a job
- * \param job: The job to fill
+ * \brief Function To fill the info concerning job steps
+ * \param job: The job to fill parameters
  * \param p: The batch status structure containing the job info
  */
 void
-TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
-  struct attrl *a;
+TorqueServer::fillJobInfo(TMS_Data::Job& job, struct batch_status *p){
+  struct attrl* jobAttributes;
   size_t pos_found;
   string str;
 
@@ -552,57 +553,48 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
   str = str.substr(0, pos_found);
   jobid = str;
 
-  a = p->attribs;
+  jobAttributes = p->attribs;
   // Getting all the attributes of the job
-  while(a!=NULL) {
-    if(a->name!=NULL) {
-      // Getting the value
-      str = string(a->value);
-      // Getting the attribute the value corresponds to
-      if(!strcmp(a->name, ATTR_name)){ // job name
+  while (jobAttributes != NULL) {
+    if (jobAttributes->name != NULL) {
+      str = string(jobAttributes->value);
+      if(!strcmp(jobAttributes->name, ATTR_name)){ // job name
         name = str;
       }
-      else if(!strcmp(a->name, ATTR_owner)){ // job owner
-        pos_found =  string(a->value).find("@");
+      else if(!strcmp(jobAttributes->name, ATTR_owner)){ // job owner
+        pos_found =  string(jobAttributes->value).find("@");
         str = str.substr(0, pos_found);
         owner = str;
       }
-      else if(!strcmp(a->name, ATTR_used)){ // cpu time
-        if(!strcmp(a->resource, "cput")) {
+      else if(!strcmp(jobAttributes->name, ATTR_used)){ // cpu time
+        if(!strcmp(jobAttributes->resource, "cput")) {
           timeu = str;
         }
-      }
-      else if(!strcmp(a->name, ATTR_state)){ // state
+      } else if(!strcmp(jobAttributes->name, ATTR_state)){ // state
         state = str;
-      }
-      else if(!strcmp(a->name, ATTR_queue)){ // queue
-        pos_found =  std::string(a->value).find("@");
+      } else if(!strcmp(jobAttributes->name, ATTR_queue)){ // queue
+        pos_found =  std::string(jobAttributes->value).find("@");
         str = str.substr(0, pos_found);
         location = str;
-      }
-      else if (!strcmp(a->name, ATTR_o)){ // output
+      } else if (!strcmp(jobAttributes->name, ATTR_o)){ // output
         output = str;
-      }
-      else if (!strcmp(a->name, ATTR_e)){ // error
+      } else if (!strcmp(jobAttributes->name, ATTR_e)){ // error
         error = str;
-      }
-      else if (!strcmp(a->name, ATTR_p)){ // priority
+      } else if (!strcmp(jobAttributes->name, ATTR_p)){ // priority
         prio = str;
-      }
-      else if (!strcmp(a->name, ATTR_l)){ // resource_list
-
-        if(!strcmp(a->resource, "mem")){
+      } else if (!strcmp(jobAttributes->name, ATTR_l)){ // resource_list
+        if (!strcmp(jobAttributes->resource, "mem")){
           mem = str;
         }
-        else if(!strcmp(a->resource, "walltime")){
+        else if(!strcmp(jobAttributes->resource, "walltime")){
           wall = str;
         }
-        else if(!strcmp(a->resource, "nodes")){ // node and nodeandcpupernode
+        else if(!strcmp(jobAttributes->resource, "nodes")){ // node and nodeandcpupernode
           node = str;
         }
-      } else if(!strcmp(a->name, ATTR_v)) { // working_dir
+      } else if(!strcmp(jobAttributes->name, ATTR_v)) { // working_dir
         std::string env = "PBS_O_WORKDIR";
-        string value = a->value;
+        string value = jobAttributes->value;
         size_t pos = value.find(env);
         if(pos!=std::string::npos) {
           pos = value.find("=",pos+env.size());
@@ -613,15 +605,15 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
         } else {
           workingDir= value.substr(pos+1);
         }
-      } else if (!strcmp(a->name, ATTR_g)){ // group
+      } else if (!strcmp(jobAttributes->name, ATTR_g)){ // group
         group = str;
-      } else if(!strcmp(a->name, ATTR_qtime)){
+      } else if(!strcmp(jobAttributes->name, ATTR_qtime)){
         qtime = str;
       }
-      else if (!strcmp(a->name, ATTR_etime)){ // end time ?
+      else if (!strcmp(jobAttributes->name, ATTR_etime)){ // end time ?
         etime =str;
       }
-      a = a->next;
+      jobAttributes = jobAttributes->next;
     }// end if name != null
   } // end while
 
@@ -688,7 +680,6 @@ TorqueServer::fillJobInfo(TMS_Data::Job &job, struct batch_status *p){
     job.setNbNodes(1);
     job.setNbNodesAndCpuPerNode("1:1");
   }
-
   job.setJobWorkingDir(workingDir);
 }
 
@@ -1010,9 +1001,9 @@ TorqueServer::findAndInsert(const std::string& valueToFind,
 
   std::string tmp;
   if(end!=std::string::npos) {
-   tmp = src.substr(begin, end-begin);
+    tmp = src.substr(begin, end-begin);
   } else {
-   tmp = src.substr(begin);
+    tmp = src.substr(begin);
   }
   if(tmp.find(valueToFind)==std::string::npos) {
     src.insert(begin+tmp.size(), valueToInsert);
@@ -1037,29 +1028,29 @@ TorqueServer::computeNbNodesAndNbCpu(const std::string& nextNodeContent,
                                      int& nbCpu,
                                      int& maxNbCpu) {
 
-    std::string nbCpuStr;
-    size_t posColon = nextNodeContent.find(':');
-    std::string nextNode = nextNodeContent.substr(0, posColon);
-    size_t pos = nextNodeContent.find(ppn);
-    if(pos!=std::string::npos) {
-      size_t posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
-      if(posFirstChar!=std::string::npos) {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
-      } else {
-        nbCpuStr = nextNodeContent.substr(pos+ppn.size());
-      }
-      nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
-      maxNbCpu = (maxNbCpu < vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):maxNbCpu;
+  std::string nbCpuStr;
+  size_t posColon = nextNodeContent.find(':');
+  std::string nextNode = nextNodeContent.substr(0, posColon);
+  size_t pos = nextNodeContent.find(ppn);
+  if(pos!=std::string::npos) {
+    size_t posFirstChar = nextNodeContent.find_first_not_of("0123456789", pos+ppn.size());
+    if(posFirstChar!=std::string::npos) {
+      nbCpuStr = nextNodeContent.substr(pos+ppn.size(), posFirstChar-(pos+ppn.size()));
     } else {
-      nbCpu = 1;
-      maxNbCpu = 1;
+      nbCpuStr = nextNodeContent.substr(pos+ppn.size());
     }
+    nbCpu = (nbCpu > vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):nbCpu;
+    maxNbCpu = (maxNbCpu < vishnu::convertToInt(nbCpuStr))?vishnu::convertToInt(nbCpuStr):maxNbCpu;
+  } else {
+    nbCpu = 1;
+    maxNbCpu = 1;
+  }
 
-    if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
-      nbNodes += vishnu::convertToInt(nextNode);
-    } else {
-      nbNodes +=1;
-    }
+  if(nextNode.find_first_not_of("0123456789")==std::string::npos) {
+    nbNodes += vishnu::convertToInt(nextNode);
+  } else {
+    nbNodes +=1;
+  }
 }
 
 /**
@@ -1116,58 +1107,58 @@ TorqueServer::convertTorqueMem(const std::string& memStr) {
 void TorqueServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
                                   const std::vector<string>& ignoredIds) {
 
-   int connect = cnt2server(serverOut);
+  int connect = cnt2server(serverOut);
 
-   if (connect <= 0)
-   {
-     std::ostringstream connect_error;
+  if (connect <= 0)
+  {
+    std::ostringstream connect_error;
 
-     connect_error << "TORQUE ERROR: pbs_selstat: cannot connect to server ";
-     connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbs_strerror(pbs_errno) << std::endl;
+    connect_error << "TORQUE ERROR: pbs_selstat: cannot connect to server ";
+    connect_error <<  pbs_server << " (errno=" << pbs_errno << ") " << pbs_strerror(pbs_errno) << std::endl;
 
-     if (getenv("PBSDEBUG") != NULL)
-     {
-       connect_error <<  "TORQUE ERROR: pbs_server daemon may not be running on host";
-       connect_error <<  " or hostname in file '$TORQUEHOME/server_name' may be incorrect" << endl;
-     }
-     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
-   }
+    if (getenv("PBSDEBUG") != NULL)
+    {
+      connect_error <<  "TORQUE ERROR: pbs_server daemon may not be running on host";
+      connect_error <<  " or hostname in file '$TORQUEHOME/server_name' may be incorrect" << endl;
+    }
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, connect_error.str());
+  }
 
-   struct batch_status* p_status = pbs_selstat(connect, NULL, NULL);
-   pbs_disconnect(connect);
+  struct batch_status* p_status = pbs_selstat(connect, NULL, NULL);
+  pbs_disconnect(connect);
 
-   if(p_status != NULL) {
-     int jobStatus;
-     long nbRunningJobs = 0;
-     long nbWaitingJobs = 0;
-     struct batch_status *p;
-     for(p = p_status; p != NULL; p = p->next) {
-       // Getting job idx
-       std::string batchId = p->name;
-       size_t pos_found =  batchId.find(".");
-       if (pos_found != std::string::npos) {
-         pos_found = batchId.find(".", pos_found+1);
-       }
-       batchId = batchId.substr(0, pos_found);
-       std::vector<std::string>::const_iterator iter;
-       iter = std::find(ignoredIds.begin(), ignoredIds.end(), batchId);
-       if(iter==ignoredIds.end()) {
-         TMS_Data::Job_ptr job = new TMS_Data::Job();
-         fillJobInfo(*job, p);
-         jobStatus = job->getStatus();
-         if(jobStatus==4) {
-           nbRunningJobs++;
-         } else if(jobStatus >= 1 && jobStatus <= 3) {
-           nbWaitingJobs++;
-         }
+  if(p_status != NULL) {
+    int jobStatus;
+    long nbRunningJobs = 0;
+    long nbWaitingJobs = 0;
+    struct batch_status *p;
+    for(p = p_status; p != NULL; p = p->next) {
+      // Getting job idx
+      std::string batchId = p->name;
+      size_t pos_found =  batchId.find(".");
+      if (pos_found != std::string::npos) {
+        pos_found = batchId.find(".", pos_found+1);
+      }
+      batchId = batchId.substr(0, pos_found);
+      std::vector<std::string>::const_iterator iter;
+      iter = std::find(ignoredIds.begin(), ignoredIds.end(), batchId);
+      if(iter==ignoredIds.end()) {
+        TMS_Data::Job_ptr job = new TMS_Data::Job();
+        fillJobInfo(*job, p);
+        jobStatus = job->getStatus();
+        if(jobStatus==4) {
+          nbRunningJobs++;
+        } else if(jobStatus >= 1 && jobStatus <= 3) {
+          nbWaitingJobs++;
+        }
 
-         listOfJobs->getJobs().push_back(job);
-       }
-     }
-     listOfJobs->setNbJobs(listOfJobs->getJobs().size());
-     listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
-     listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
-   }
+        listOfJobs->getJobs().push_back(job);
+      }
+    }
+    listOfJobs->setNbJobs(listOfJobs->getJobs().size());
+    listOfJobs->setNbRunningJobs(listOfJobs->getNbRunningJobs()+nbRunningJobs);
+    listOfJobs->setNbWaitingJobs(listOfJobs->getNbWaitingJobs()+nbWaitingJobs);
+  }
 }
 
 /**

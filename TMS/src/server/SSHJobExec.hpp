@@ -46,11 +46,13 @@ public:
      * \brief Function to execute command by using ssh
      * \param serviceName the name of the service to execute
      * \param script_path the path to script to submit
+     * \param jobSteps The list of steps
      * \return raises an exception on error
      */
   void
   sshexec(const std::string& serviceName,
-          const std::string& script_path="");
+          const std::string& script_path,
+          boost::shared_ptr<TMS_Data::ListJobs> jobSteps);
 
   /**
      * \brief Function to execute a script remotely
@@ -144,12 +146,6 @@ public:
     */
   void setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
-  /**
-    * @brief getResultJob
-    * @return
-    */
-  TMS_Data::Job getResultJob(void) { return mjob; }
-
 private:
 
   /**
@@ -199,11 +195,6 @@ private:
      * \brief The hostname of the machine
      */
   std::string mhostname;
-
-  /**
-   * @brief mjob
-   */
-  TMS_Data::Job mjob;
 
   /**
      * \brief Holds the level of debug

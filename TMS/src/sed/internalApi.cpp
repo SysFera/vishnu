@@ -294,13 +294,15 @@ solveJobOutPutGetResult(diet_profile_t* pb) {
     mapper->code(jobid, mapperkey);
     std::string cmd = mapper->finalize(mapperkey);
 
-
     //Start dealing with output
     JobOutputServer jobOutputServer(authKey, machineId);
     JsonObject options(optionsSerialized);
     TMS_Data::JobResult result = jobOutputServer.getJobOutput(&options, jobid);
     std::string jobFiles = vishnu::getResultFiles(result, false) ;
-    std::string outputInfo = bfs::unique_path(boost::filesystem::temp_directory_path().string() +"/vishnu-"+result.getJobId()+"-outdescr%%%%%%%").string(); // extension by convention
+    std::string outputInfo = bfs::unique_path(boost::str(boost::format("%1%/vishnu-%2%-outdescr%3%")
+                                                         % boost::filesystem::temp_directory_path().string()
+                                                         % jobid
+                                                         % "%%%%%%%")).string();
     vishnu::saveInFile(outputInfo, jobFiles);
 
     diet_string_set(pb,0, "success");

@@ -22,7 +22,7 @@ PosixServer::PosixServer():BatchServer(){
 int
 PosixServer::submit(const std::string& scriptPath,
                     const TMS_Data::SubmitOptions& options,
-                    std::vector<TMS_Data::Job>& stepJobs,
+                    TMS_Data::ListJobs& jobSteps,
                     char** envp){
   int ret;
   struct trameJob resultat;
@@ -47,28 +47,28 @@ PosixServer::submit(const std::string& scriptPath,
     break;
   }
 
-  TMS_Data::Job job;
-  job.setStatus(vishnu::STATE_RUNNING);
-  job.setJobQueue("posix");
+  TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
+  jobPtr->setStatus(vishnu::STATE_RUNNING);
+  jobPtr->setJobQueue("posix");
 
   // If no name give a default job name
   if (options.getName().empty()){
-    job.setJobName("posix_job");
+    jobPtr->setJobName("posix_job");
   } else {
-    job.setJobName(options.getName());
+    jobPtr->setJobName(options.getName());
   }
 
-  strncpy(op.jobName, job.getJobName().c_str(), sizeof(op.jobName)-1);
+  strncpy(op.jobName, jobPtr->getJobName().c_str(), sizeof(op.jobName)-1);
 
   ret = reqSubmit(scriptPath, &resultat, &op);
 
-  job.setOutputPath(std::string(resultat.outPutPath));
-  job.setBatchJobId(std::string(resultat.jobId));
+  jobPtr->setOutputPath(std::string(resultat.outPutPath));
+  jobPtr->setBatchJobId(std::string(resultat.jobId));
 
-  job.setErrorPath(std::string(resultat.errorPath));
-  job.setWallClockLimit(resultat.maxTime);
+  jobPtr->setErrorPath(std::string(resultat.errorPath));
+  jobPtr->setWallClockLimit(resultat.maxTime);
 
-  stepJobs.push_back(job);
+  jobSteps.getJobs().push_back(jobPtr);
   return ret;
 }
 

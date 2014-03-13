@@ -51,35 +51,29 @@ public:
 
     //To check if the jobId is defined
     if (options->getJobId().size() != 0) {
-      //To check if the jobIf exists
       checkJobId(options->getJobId());
-      //To add the jobId on the request
       addOptionRequest("jobId", options->getJobId(), sqlRequest);
     }
 
     //To check if the number of cpu is defined and positive
     if (options->getNbCpu() > 0) {
-      //To add the number of the cpu to the request
       addOptionRequest("nbCpus", vishnu::convertToString(options->getNbCpu()), sqlRequest);
     } else {
-      //If the options is not the default value -1
       if (options->getNbCpu() != -1) {
         throw UserException(ERRCODE_INVALID_PARAM, "The number of cpu is incorrect");
       }
     }
 
     time_t fromSubmitDate = static_cast<time_t>(options->getFromSubmitDate());
-    if(fromSubmitDate != -1) {
-      fromSubmitDate = vishnu::convertUTCtimeINLocaltime(fromSubmitDate);
-      std::string submitDateStr =  boost::posix_time::to_iso_string(boost::posix_time::from_time_t(fromSubmitDate));
-      addTimeRequest("submitDate", submitDateStr, sqlRequest, ">=");
+    if (fromSubmitDate > 0) {
+      std::string textTime = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(fromSubmitDate));
+      addTimeRequest("submitDate", textTime, sqlRequest,">=");
     }
 
     time_t toSubmitDate = static_cast<time_t>(options->getToSubmitDate());
-    if(toSubmitDate != -1) {
-      toSubmitDate = vishnu::convertUTCtimeINLocaltime(toSubmitDate);
-      std::string submitDateStr =  boost::posix_time::to_iso_string(boost::posix_time::from_time_t(toSubmitDate));
-      addTimeRequest("submitDate", submitDateStr, sqlRequest, "<=");
+    if(toSubmitDate > 0) {
+      std::string textTime = boost::posix_time::to_iso_string(boost::posix_time::from_time_t(toSubmitDate));
+      addTimeRequest("submitDate", textTime, sqlRequest,"<=");
     }
 
     //Check the job status
@@ -209,8 +203,6 @@ public:
     long nbRunningJobs = 0;
     long nbWaitingJobs = 0;
     std::string batchJobId;
-    time_t submitDate;
-    time_t endDate;
     std::vector<std::string> ignoredIds;
 
     int nbJobs = ListOfJobs->getNbTuples();
@@ -243,11 +235,8 @@ public:
                   && job->getStatus() <= vishnu::STATE_WAITING) {
           nbWaitingJobs++;
         }
-
-        submitDate = vishnu::string_to_time_t(*(++ii));
-        job->setSubmitDate(submitDate);
-        endDate = vishnu::string_to_time_t(*(++ii));
-        job->setEndDate(endDate);
+        job->setSubmitDate( vishnu::string_to_time_t(*(++ii)) );
+        job->setEndDate( vishnu::string_to_time_t(*(++ii)) );
         job->setOwner(*(++ii));
         job->setJobQueue(*(++ii));
         job->setWallClockLimit(vishnu::convertToInt(*(++ii)));
@@ -256,7 +245,6 @@ public:
         job->setMemLimit(vishnu::convertToInt(*(++ii)));
         job->setNbNodes(vishnu::convertToInt(*(++ii)));
         job->setNbNodesAndCpuPerNode(*(++ii));
-
         batchJobId = *(++ii);
         job->setBatchJobId(batchJobId);
         ignoredIds.push_back(batchJobId);
@@ -267,7 +255,6 @@ public:
       mlistObject->setNbRunningJobs(nbRunningJobs);
       mlistObject->setNbWaitingJobs(nbWaitingJobs);
     }
-
     return mlistObject;
   }
 

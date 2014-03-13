@@ -307,7 +307,7 @@ solveUserUpdate(diet_profile_t* pb) {
     cmd = mapper->finalize(mapperkey);
 
     // To parse the object serialized
-    if (!parseEmfObject(userSerialized, user)) {
+    if (! parseEmfObject(userSerialized, user)) {
       throw UMSVishnuException(ERRCODE_INVALID_PARAM);
     };
 

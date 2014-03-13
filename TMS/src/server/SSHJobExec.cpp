@@ -102,11 +102,13 @@ SSHJobExec::checkSshParams() {
  * \brief Function to execute command by using ssh
  * \param serviceName the name of the service to execute
  * \param script_path the path to script to submit
+ * \param jobSteps The list of steps
  * \return raises an exception on error
  */
 void
 SSHJobExec::sshexec(const std::string& actionName,
-                    const std::string& script_path) {
+                    const std::string& script_path,
+                    boost::shared_ptr<TMS_Data::ListJobs> jobSteps) {
   checkSshParams();
   std::string submitOptionsSerializedPath;
 
@@ -182,18 +184,24 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   // THE FOLLOWIND CODE IS ONLY FOR SUBMIT : YOU CRASH CANCEL OTHERWIZE
   if (actionName == "SUBMIT") {
-    JsonObject jsonJob(vishnu::get_file_content(jobUpdateSerializedPath, false));
-    mjob = jsonJob.getJob();
-
-    if (mbatchType==LOADLEVELER || mbatchType==LSF) {
-      merrorInfo.append(vishnu::get_file_content(stderrFilePath, false));
-      if (mbatchType==LOADLEVELER) {
-        merrorInfo.append("\n LOADLEVELER ERROR");
-      }
-      if (mbatchType==LSF) {
-        merrorInfo.append("\n LSF ERROR");
-      }
+    // treat result
+    TMS_Data::ListJobs_ptr jobStepsPtr;
+    if (! vishnu::parseEmfObject(vishnu::get_file_content(jobUpdateSerializedPath, false),
+                                 jobStepsPtr)) {
+      LOG("sshexec: cannot parse result", mdebugLevel);
+      merrorInfo.clear();
     }
+    jobSteps.reset(jobStepsPtr);
+    merrorInfo.append("stderr: ").append(vishnu::get_file_content(stderrFilePath, false));
+  } else {
+    TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
+    JsonObject jobJson(mjobSerialized);
+    *jobPtr = jobJson.getJob();
+    jobPtr->setStatus(vishnu::STATE_CANCELLED);
+
+    jobSteps.reset(new TMS_Data::ListJobs());
+    jobSteps.get()->getJobs().push_back(jobPtr);
+
   }
 
   if (! merrorInfo.empty()) {

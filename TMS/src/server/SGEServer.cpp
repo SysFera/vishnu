@@ -9,13 +9,12 @@
 #include <sstream>
 #include <algorithm>
 #include <limits>
-
 #include <boost/algorithm/string.hpp>
 #include <boost/process/all.hpp>
 #include <boost/process/stream_id.hpp>
 #include <boost/process/stream_type.hpp>
 #include <boost/assign/list_of.hpp>
-
+#include <boost/format.hpp>
 #include <unistd.h>
 #include <pwd.h>
 #include <grp.h>
@@ -54,14 +53,15 @@ SGEServer::SGEServer():BatchServer() {
  * \brief Function to submit SGE job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+ * \param jobSteps The list of job steps
  * \param envp The list of environment variables used by SGE submission function
  * \return raises an exception on error
  */
 int
 SGEServer::submit(const std::string& scriptPath,
-    const TMS_Data::SubmitOptions& options,
-    TMS_Data::Job& job, char** envp) {
+                  const TMS_Data::SubmitOptions& options,
+                  TMS_Data::ListJobs& jobSteps,
+                  char** envp) {
 
 
   drmaa_job_template_t *jt = NULL;
@@ -81,17 +81,17 @@ SGEServer::submit(const std::string& scriptPath,
   string Walltime;
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
 
-  if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&(drmaa_errno!=
-      DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+  if (drmaa_errno!= DRMAA_ERRNO_SUCCESS
+      && drmaa_errno != DRMAA_ERRNO_ALREADY_ACTIVE_SESSION) {
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "SGE ERROR: "+std::string(diagnosis));
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
   }
 
   drmaa_errno = drmaa_allocate_job_template(&jt, diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS) {
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "SGE ERROR: "+std::string(diagnosis));
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
 
   }
 
@@ -120,15 +120,14 @@ SGEServer::submit(const std::string& scriptPath,
         if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
           drmaa_exit(NULL, 0);
           throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-
-                                   "SGE ERROR: "+std::string(diagnosis));
+                                   boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
         }
       } else {
         pos = line.find("-o");
         if(pos!=std::string::npos){
           if(boost::algorithm::contains(line, ":")){
-              value = line.substr(pos+3);
-              boost::algorithm::trim(value);
+            value = line.substr(pos+3);
+            boost::algorithm::trim(value);
           } else{
             std::string stemp =line.substr(pos+3);
             boost::algorithm::trim(stemp);
@@ -140,7 +139,7 @@ SGEServer::submit(const std::string& scriptPath,
           if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
             drmaa_exit(NULL, 0);
             throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                                     "SGE ERROR: "+std::string(diagnosis));
+                                     boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
           }
         } else {
           pos = line.find("-e");
@@ -158,7 +157,7 @@ SGEServer::submit(const std::string& scriptPath,
             if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
               drmaa_exit(NULL, 0);
               throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                                       "SGE ERROR: "+std::string(diagnosis));
+                                       boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
 
             }
           } else{
@@ -175,17 +174,17 @@ SGEServer::submit(const std::string& scriptPath,
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-
-                             "SGE ERROR: "+std::string(diagnosis));
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
   }
   replaceEnvVariables(scriptPath.c_str());
   processOptions(scriptPath.c_str(),options,cmdsOptions,jt);
 
+  TMS_Data::Job_ptr jobPtr = new TMS_Data::Job();
   for(int i=0; i < cmdsOptions.size(); i++) {
     scriptoption += const_cast<char*>(cmdsOptions[i].c_str());
     if (boost::algorithm::starts_with(cmdsOptions[i], "s_rt")){
       Walltime = cmdsOptions[i].substr(5);
-      job.setWallClockLimit(vishnu::convertStringToWallTime(Walltime));
+      jobPtr->setWallClockLimit(vishnu::convertStringToWallTime(Walltime));
     }
   }
 
@@ -196,12 +195,11 @@ SGEServer::submit(const std::string& scriptPath,
   if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-
-                             "SGE ERROR: "+std::string(diagnosis));
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
   }
   //To submit the job
   while ((drmaa_errno=drmaa_run_job(jobid, sizeof(jobid)-1, jt, diagnosis,
-               sizeof(diagnosis)-1)) == DRMAA_ERRNO_DRM_COMMUNICATION_FAILURE) {
+                                    sizeof(diagnosis)-1)) == DRMAA_ERRNO_DRM_COMMUNICATION_FAILURE) {
     retries++;
     if(retries == VISHNU_MAX_RETRIES){
       drmaa_exit(NULL, 0);
@@ -217,7 +215,7 @@ SGEServer::submit(const std::string& scriptPath,
 
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "SGE ERROR: "+std::string(diagnosis));
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
 
 
   }
@@ -227,11 +225,10 @@ SGEServer::submit(const std::string& scriptPath,
                                     sizeof(diagnosis)-1);
   if (drmaa_errno==DRMAA_ERRNO_SUCCESS){
 
-    job.setJobName(jobName);
+    jobPtr->setJobName(jobName);
     isjobname = true;
 
   }
-
 
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_WD,Directory, size,diagnosis,
                                     sizeof(diagnosis)-1);
@@ -242,7 +239,7 @@ SGEServer::submit(const std::string& scriptPath,
     jobDIRECTORY = getenv("HOME");
 
   }
-  job.setJobWorkingDir(jobDIRECTORY);
+  jobPtr->setJobWorkingDir(jobDIRECTORY);
 
   drmaa_errno = drmaa_get_attribute(jt,DRMAA_ERROR_PATH,jobErrorPath, size,
                                     diagnosis, sizeof(diagnosis)-1);
@@ -274,16 +271,16 @@ SGEServer::submit(const std::string& scriptPath,
         jobErrorPathStr = jobDIRECTORY +"/"+jobErrorPathStr;
       }
     }
-    job.setErrorPath(jobErrorPathStr);
+    jobPtr->setErrorPath(jobErrorPathStr);
 
   } else{
     if(isjobname){
-      std::string jobErrorFile(jobDIRECTORY+"/"+job.getJobName()+".e"+jobidstring);//default path
-      job.setErrorPath(jobErrorFile);
+      std::string jobErrorFile(jobDIRECTORY+"/"+jobPtr->getJobName()+".e"+jobidstring);//default path
+      jobPtr->setErrorPath(jobErrorFile);
     }else{
 
       std::string jobErrorFile(jobDIRECTORY+"/"+myPath.filename().c_str()+".e"+jobidstring);//default path
-      job.setErrorPath(jobErrorFile);
+      jobPtr->setErrorPath(jobErrorFile);
     }
 
   }
@@ -294,55 +291,56 @@ SGEServer::submit(const std::string& scriptPath,
     vishnu::replaceAllOccurences(jobOutputPathStr,"$JOB_ID",jobid);
     if(boost::algorithm::contains(jobOutputPathStr, "$")){
       drmaa_exit(NULL, 0);
-      throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use another environment variable than $JOB_ID.\n");
-
+      throw UserException(ERRCODE_INVALID_PARAM,
+                          "Conflict: You can't use another environment variable than $JOB_ID.\n");
     }
+
     size_t pos = jobOutputPathStr.find_last_of(':');
     if((pos!=string::npos)&&(pos!=0)){
       std::string part1 = jobOutputPathStr.substr(0,pos+1);
       std::string part2 = jobOutputPathStr.substr(pos+1);
-      if(!boost::algorithm::starts_with(part2, "/")){
-          jobOutputPathStr = part1+jobDIRECTORY+"/"+part2;
-
+      if (! boost::algorithm::starts_with(part2, "/")){
+        jobOutputPathStr = boost::str(boost::format("%1%%2%/%3%") % part1 % jobDIRECTORY % part2);
       }
     } else if (pos==0){
       jobOutputPathStr = jobOutputPathStr.substr(1);
-
       if(!boost::algorithm::starts_with(jobOutputPathStr, "/")){
-        jobOutputPathStr = jobDIRECTORY +"/"+jobOutputPathStr;
+        jobOutputPathStr = boost::str(boost::format("%1%/%2%") % jobDIRECTORY % jobOutputPathStr);
       }
 
     } else if(pos==string::npos){
-      if(!boost::algorithm::starts_with(jobOutputPathStr, "/")){
-        jobOutputPathStr = jobDIRECTORY +"/"+jobOutputPathStr;
+      if (!boost::algorithm::starts_with(jobOutputPathStr, "/")) {
+        jobOutputPathStr = boost::str(boost::format("%1%/%2%") % jobDIRECTORY % jobOutputPathStr);
       }
     }
 
-    job.setOutputPath(jobOutputPathStr);
+    jobPtr->setOutputPath(jobOutputPathStr);
 
-  }else{
+  } else{
     if(isjobname){
-      std::string jobOutputFile(jobDIRECTORY+"/"+job.getJobName()+".o"+jobidstring); //default path
-      job.setOutputPath(jobOutputFile);
-    }else{
-
-      std::string jobOutputFile(jobDIRECTORY+"/"+myPath.filename().c_str()+".o"+jobidstring);//default path
-      job.setOutputPath(jobOutputFile);
+      jobPtr->setOutputPath( boost::str(boost::format("%1%/%2%.o%3%")
+                                        % jobDIRECTORY
+                                        % jobPtr->getJobName()
+                                        % jobidstring) );
+    } else {
+      jobPtr->setOutputPath( boost::str(boost::format("%1%/%2%.o%3%")
+                                        % jobDIRECTORY
+                                        % myPath.filename().string()
+                                        % jobidstring) );
     }
-
   }
 
-  job.setStatus(getJobState(jobid));
-  job.setBatchJobId(jobid);
+  jobPtr->setStatus(getJobState(jobid));
+  jobPtr->setBatchJobId(jobid);
 
   drmaa_errno = drmaa_delete_job_template(jt, diagnosis, sizeof(diagnosis)-1);
-  if (drmaa_errno!=DRMAA_ERRNO_SUCCESS){
+  if (drmaa_errno != DRMAA_ERRNO_SUCCESS){
     drmaa_exit(NULL, 0);
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
-                             "SGE ERROR: "+std::string(diagnosis));
-
+                             boost::str(boost::format("SGE ERROR: %1%") % diagnosis));
   }
   drmaa_exit(NULL, 0);
+  jobSteps.getJobs().push_back(jobPtr);
   return 0;
 }
 
@@ -355,7 +353,7 @@ SGEServer::cancel(const std::string& jobId) {
   int drmaa_errno;
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&
-    (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+      (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
   }
@@ -385,35 +383,35 @@ SGEServer::getJobState(const std::string& jobId) {
   char diagnosis[DRMAA_ERROR_STRING_BUFFER];
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&
-    (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+      (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
   }
   drmaa_job_ps(jobId.c_str(), &state, diagnosis, sizeof(diagnosis)-1);
 
   switch (state) {
-    case DRMAA_PS_UNDETERMINED:
-     ret = vishnu::STATE_UNDEFINED;
-     break;
-    case DRMAA_PS_QUEUED_ACTIVE:
-    case DRMAA_PS_SYSTEM_ON_HOLD:
-    case DRMAA_PS_USER_ON_HOLD:
-    case DRMAA_PS_USER_SYSTEM_ON_HOLD:
-    case DRMAA_PS_SYSTEM_SUSPENDED:
-    case DRMAA_PS_USER_SUSPENDED:
-    case DRMAA_PS_USER_SYSTEM_SUSPENDED:
-     ret = vishnu::STATE_WAITING;
-     break;
-   case DRMAA_PS_RUNNING:
-     ret = vishnu::STATE_RUNNING;
-     break;
-   case DRMAA_PS_DONE:
-   case DRMAA_PS_FAILED:
-     ret = vishnu::STATE_COMPLETED;
-     break;
-   default:
-     ret = vishnu::STATE_COMPLETED;
-     break;
+  case DRMAA_PS_UNDETERMINED:
+    ret = vishnu::STATE_UNDEFINED;
+    break;
+  case DRMAA_PS_QUEUED_ACTIVE:
+  case DRMAA_PS_SYSTEM_ON_HOLD:
+  case DRMAA_PS_USER_ON_HOLD:
+  case DRMAA_PS_USER_SYSTEM_ON_HOLD:
+  case DRMAA_PS_SYSTEM_SUSPENDED:
+  case DRMAA_PS_USER_SUSPENDED:
+  case DRMAA_PS_USER_SYSTEM_SUSPENDED:
+    ret = vishnu::STATE_WAITING;
+    break;
+  case DRMAA_PS_RUNNING:
+    ret = vishnu::STATE_RUNNING;
+    break;
+  case DRMAA_PS_DONE:
+  case DRMAA_PS_FAILED:
+    ret = vishnu::STATE_COMPLETED;
+    break;
+  default:
+    ret = vishnu::STATE_COMPLETED;
+    break;
 
   } /* switch */
 
@@ -440,7 +438,7 @@ SGEServer::getJobStartTime(const std::string& jobId) {
 
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&
-    (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+      (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
   }
@@ -506,7 +504,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
   int drmaa_errno;
   drmaa_errno = drmaa_init(NULL, diagnosis, sizeof(diagnosis)-1);
   if ((drmaa_errno!= DRMAA_ERRNO_SUCCESS)&&
-    (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
+      (drmaa_errno!= DRMAA_ERRNO_ALREADY_ACTIVE_SESSION)){
     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR,
                              "SGE ERROR: "+std::string(diagnosis));
   }
@@ -631,8 +629,8 @@ SGEServer::listQueues(const std::string& optqueueName) {
                         boost::algorithm::contains(*itt, "o")){
               state =0;
             } else if (boost::algorithm::contains(*itt, "")){
-                queue->setState(2);
-                state =1;
+              queue->setState(2);
+              state =1;
             }
           }
           if(state){
@@ -688,7 +686,7 @@ SGEServer::listQueues(const std::string& optqueueName) {
 }
 
 void SGEServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-                                  const std::vector<string>& ignoredIds) {
+                               const std::vector<string>& ignoredIds) {
 
 }
 
@@ -711,9 +709,9 @@ SGEServer::~SGEServer() {
  */
 void
 SGEServer::processOptions(const char* scriptPath,
-                    const TMS_Data::SubmitOptions& options,
-                    std::vector<std::string>&cmdsOptions,
-                    drmaa_job_template_t *jobt) {
+                          const TMS_Data::SubmitOptions& options,
+                          std::vector<std::string>&cmdsOptions,
+                          drmaa_job_template_t *jobt) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
@@ -743,9 +741,9 @@ SGEServer::processOptions(const char* scriptPath,
   if(options.getOutputPath().size()!=0) {
     std::ostringstream os_str;
     if(boost::algorithm::contains(options.getOutputPath(), ":")){
-       os_str << options.getOutputPath();
+      os_str << options.getOutputPath();
     } else{
-        os_str << ":" << options.getOutputPath();
+      os_str << ":" << options.getOutputPath();
     }
 
     drmaa_errno = drmaa_set_attribute(jobt,DRMAA_OUTPUT_PATH,
@@ -761,9 +759,9 @@ SGEServer::processOptions(const char* scriptPath,
     std::ostringstream os_str;
 
     if(boost::algorithm::contains(options.getErrorPath(), ":")){
-       os_str << options.getErrorPath();
+      os_str << options.getErrorPath();
     } else{
-        os_str << ":"<<options.getErrorPath();
+      os_str << ":"<<options.getErrorPath();
     }
 
     drmaa_errno = drmaa_set_attribute(jobt,DRMAA_ERROR_PATH,

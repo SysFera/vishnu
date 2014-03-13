@@ -113,19 +113,14 @@ main(int argc, char* argv[]) {
       }
 
       //Submits the job
-      std::vector<TMS_Data::Job> jobSteps;
+      TMS_Data::ListJobs jobSteps;
       if (batchServer->submit(jobScriptPath, jsonOptions.getSubmitOptions(), jobSteps) != 0) {
         throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "slave: the submission failed");
       }
 
-      // serialize the result
-      JsonObject jobStepsJson;
-      jobStepsJson.setProperty("nbsteps", jobSteps.size());
-      for (int step = 0; step < jobSteps.size(); ++step) {
-        jobStepsJson.setProperty(boost::str(boost::format("step@%1%") % step), JsonObject::serialize(jobSteps[step]));
-      }
+      // store the serialized result
       std::ofstream os_slaveJobFile(slaveJobFile);
-      os_slaveJobFile << jobStepsJson.encode();
+      os_slaveJobFile << vishnu::emfSerializer<TMS_Data::ListJobs>(&jobSteps);
       os_slaveJobFile.close();
     } else if (action == "CANCEL") {
       if (batchType == DELTACLOUD) {

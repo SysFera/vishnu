@@ -29,14 +29,14 @@ class TorqueServer : public BatchServer
      * \brief Function to submit Torque job
      * \param scriptPath the path to the script containing the job characteristique
      * \param options the options to submit job
-     * \param job The job data structure
+     * \param jobSteps The list of job steps
      * \param envp The list of environment variables used by Torque submission function
      * \return raises an exception on error
      */
     int
     submit(const std::string& scriptPath,
           const TMS_Data::SubmitOptions& options,
-          TMS_Data::Job& job,
+          TMS_Data::ListJobs& jobSteps,
           char** envp=NULL);
 
     /**
@@ -128,13 +128,12 @@ class TorqueServer : public BatchServer
     convertTorquePrioToVishnuPrio(const int& prio);
 
     /**
-     * \brief Function To fill the info concerning a job
-     * \param job: The job to fill
+     * \brief Function To fill the info concerning job steps
+ * \param job: The job to fill parameters
      * \param p: The batch status structure containing the job info
      */
     void
-    fillJobInfo(TMS_Data::Job &job,
-                struct batch_status *p);
+    fillJobInfo(TMS_Data::Job& job, struct batch_status *p);
 
     /**
      * \brief Function to get the number of nodes in the torque node format

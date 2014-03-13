@@ -35,15 +35,13 @@ JobOutputProxy::JobOutputProxy( const SessionProxy& session, const std::string& 
 TMS_Data::JobResult
 JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutputOptions& options) {
 
-  std::string serviceName = (boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId).str();
+  std::string serviceName = boost::str(boost::format("%1%@%2%") % SERVICES_TMS[JOBOUTPUTGETRESULT]  %mmachineId);
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 4);
   string sessionKey = msessionProxy.getSessionKey();
 
   //IN Parameters
   TMS_Data::JobResult jobResult; jobResult.setJobId(jobId);
-  ::ecorecpp::serializer::serializer _ser;
-  string jobResultToString =  _ser.serialize_str(const_cast<TMS_Data::JobResult_ptr>(&jobResult));
   std::string outputDir = options.getOutputDir();
   JsonObject optionsData(options);
 
@@ -119,10 +117,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
 TMS_Data::ListJobResults_ptr
 JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options) {
 
-  std::string serviceName = (boost::format("%1%@%2%")
+  std::string serviceName = boost::str(boost::format("%1%@%2%")
                              % SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]
-                             % mmachineId
-                             ).str();
+                             % mmachineId);
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
   std::string sessionKey = msessionProxy.getSessionKey();

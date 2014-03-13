@@ -180,6 +180,13 @@ protected:
   handleSpecificParams(const std::string& specificParams,
                        std::string& scriptContent);
 
+  /**
+   * @brief Update the result job steps with the base information of the job and save them
+   * @param jobSteps The list of steps
+   * @param baseJobInfo The base job info
+   */
+  void
+  updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& defaultJobInfo);
 
   /**
    * \brief Function to save the encapsulated job into the database
@@ -215,7 +222,7 @@ protected:
    * @brief Submit job using ssh mechanism
    * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
-   * @param job The target job concerned by the action
+   * @param baseJobInfo The base job info
    * @param options: an object containing options
    * @param batchType The batch type
    * @param batchVersion The batch version. Ignored for POSIX backend
@@ -224,7 +231,7 @@ protected:
   handleSshBatchExec(int action,
                      const std::string& scriptPath,
                      JsonObject* options,
-                     TMS_Data::Job& job,
+                     TMS_Data::Job& baseJobInfo,
                      int batchType,
                      const std::string& batchVersion);
 
@@ -233,7 +240,7 @@ protected:
    * @param action action The type of action (cancel, submit...)
    * @param scriptPath The path of the script to executed
    * @param options: an object containing options
-   * @param requestJobInfo The default information provided to the job
+   * @param baseJobInfo The default information provided to the job
    * @param batchType The batch type
    * @param batchVersion The batch version. Ignored for POSIX backend
   */
@@ -241,7 +248,7 @@ protected:
   handleNativeBatchExec(int action,
                         const std::string& scriptPath,
                         JsonObject* options,
-                        TMS_Data::Job& requestJobInfo,
+                        TMS_Data::Job& baseJobInfo,
                         int batchType,
                         const std::string& batchVersion);
 

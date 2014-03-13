@@ -54,7 +54,7 @@ static char *DefaultXauthPath = "/usr/bin/xauth";
 #define MAX_QSUB_PREFIX_LEN 32
 
 #define MAX_PROCS_DIGITS  15 /* A 15 digit number is a lot of processors. 100 trillion 
-                                     will this be enough for the future? */
+  will this be enough for the future? */
 
 static char PBS_DPREFIX_DEFAULT[] = "#PBS";
 
@@ -88,16 +88,16 @@ void initialize_pbs_error_msg(char PBS_ERROR_MSG[]) {
   int i=0;
   for(; i < MAX_ERROR_MSG_SIZE; i++) {
     PBS_ERROR_MSG[i] = '\0';
-  } 
+  }
 }
 
 /* adapted from openssh */
 
 static char *x11_get_proto(
 
-  char *EMsg)  /* O (optional,minsize=1024) */
+    char *EMsg)  /* O (optional,minsize=1024) */
 
-  {
+{
   char line[512];
   char proto[512], data[512], screen[512];
   char *authstring;
@@ -115,23 +115,23 @@ static char *x11_get_proto(
     EMsg[0] = '\0';
 
   if ((display = getenv("DISPLAY")) == NULL)
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: DISPLAY not set\n");
 
     return(NULL);
-    }
+  }
 
   if (stat(xauth_path, &st))
-    {
+  {
     perror("pbs_submit: xauth: ");
 
     return(NULL);
-    }
+  }
 
   /* Try to get Xauthority information for the display. */
 
   if (strncmp(display, "localhost:", 10) == 0)
-    {
+  {
     /*
      * Handle FamilyLocal case where $DISPLAY does
      * not match an authorization entry.  For this we
@@ -143,13 +143,13 @@ static char *x11_get_proto(
     snprintf(line, sizeof(line), "%s list unix:%s 2>/dev/null",
              xauth_path,
              display + 10);
-    }
+  }
   else
-    {
+  {
     snprintf(line, sizeof(line), "%s list %.200s 2>/dev/null",
              xauth_path,
              display);
-    }
+  }
 
   p = strchr(display, ':');
 
@@ -167,33 +167,24 @@ static char *x11_get_proto(
 
   f = popen(line, "r");
 
-  if (f == NULL)
-    {
+  if (f == NULL) {
     sprintf(PBS_ERROR_MSG, "execution of '%s' failed, errno=%d (%s)\n",
             line,
             errno,
             pbs_strerror(errno));
-    }
-  else if (fgets(line, sizeof(line), f) == 0)
-    {
+  } else if (fgets(line, sizeof(line), f) == 0) {
     sprintf(PBS_ERROR_MSG, "cannot read data from '%s', errno=%d (%s)\n",
             line,
             errno,
             pbs_strerror(errno));
-    }
-  else if (sscanf(line, "%*s %511s %511s",
-                  proto,
-                  data) != 2)
-    {
-    sprintf(PBS_ERROR_MSG, "cannot parse output from '%s'\n",
-            line);
-    }
-  else
-    {
+  } else if (sscanf(line, "%*s %511s %511s",
+                    proto,
+                    data) != 2) {
+    sprintf(PBS_ERROR_MSG, "cannot parse output from '%s'\n",line);
+  } else {
     /* SUCCESS */
-
     got_data = 1;
-    }
+  }
 
   if (f != NULL)
     pclose(f);
@@ -208,7 +199,7 @@ static char *x11_get_proto(
    * for the local connection.
    */
   if (!got_data)
-    {
+  {
     u_int32_t _rand = 0;
     int i;
 
@@ -216,53 +207,53 @@ static char *x11_get_proto(
     strncpy(proto, "MIT-MAGIC-COOKIE-1", sizeof proto);
 
     for (i = 0; i < 16; i++)
-      {
+    {
       if (i % 4 == 0)
         _rand = rand();
 
       snprintf(data + 2 * i, sizeof data - 2 * i, "%02x", _rand & 0xff);
 
       _rand >>= 8;
-      }
     }
+  }
 
 #endif
 
   if (!got_data)
-    {
+  {
     /* FAILURE */
 
     return(NULL);
-    }
+  }
 
   authstring = malloc(strlen(proto) + strlen(data) + strlen(screen) + 4);
 
   if (authstring == NULL)
-    {
+  {
     /* FAILURE */
 
     return(NULL);
-    }
+  }
 
   sprintf(authstring, "%s:%s:%s",
-    proto,
-    data,
-    screen);
+          proto,
+          data,
+          screen);
 
   return(authstring);
-  }  /* END x11_get_proto() */
+}  /* END x11_get_proto() */
 
 
 
 
 char *smart_strtok(
 
-  char  *line,          /* I */
-  char  *delims,        /* I */
-  char **ptrPtr,        /* O */
-  int    ign_backslash) /* I */
+    char  *line,          /* I */
+    char  *delims,        /* I */
+    char **ptrPtr,        /* O */
+    int    ign_backslash) /* I */
 
-  {
+{
   char *head = NULL;
   char *start = NULL;
 
@@ -281,15 +272,15 @@ char *smart_strtok(
   char *ptr;
 
   if (line != NULL)
-    {
+  {
     *ptrPtr = line;
-    }
+  }
   else if (ptrPtr == NULL)
-    {
+  {
     /* FAILURE */
 
     return(head);
-    }
+  }
 
   start = *ptrPtr;
 
@@ -305,129 +296,129 @@ char *smart_strtok(
   ptr = *ptrPtr;
 
   while (*ptr != '\0')
-    {
+  {
     if (*ptr == '\'')
-      {
+    {
       sq_count++;
 
       if ((head != NULL) && !(sq_count % 2) && !(dq_count % 2))
-        {
+      {
         ptr++;
 
         ignchar = TRUE;
-        }
-      else 
-        {
+      }
+      else
+      {
         ignore = TRUE;
 
         if (ign_backslash == TRUE)
-          {
+        {
           /* check if backslash precedes delimiter */
 
           if ((ptr > start) && (*(ptr-1) == '\\'))
-            {
+          {
             /* check if backslash is backslashed */
 
             if ((ptr > start + 1) && (*(ptr-2) != '\\'))
-              {
+            {
               /* delimiter is backslashed, ignore */
 
               ignore = FALSE;
               
               sq_count--;
-              }
             }
           }
+        }
 
         if (ignore == TRUE)
-          {
+        {
           ptr++;
 
           ignchar = TRUE;
-          }
         }
       }
+    }
     else if (*ptr == '\"')
-      {
+    {
       dq_count++;
 
       if ((head != NULL) && !(sq_count % 2) && !(dq_count % 2))
-        {
+      {
         ptr++;
 
         ignchar = TRUE;
-        }
-      else 
-        {
+      }
+      else
+      {
         ignore = TRUE;
 
         if (ign_backslash == TRUE)
-          {
+        {
           /* check if backslash precedes delimiter */
 
           if ((ptr > start) && (*(ptr-1) == '\\'))
-            {
+          {
             /* check if backslash is backslashed */
 
             if ((ptr > start + 1) && (*(ptr-2) != '\\'))
-              {
+            {
               /* delimiter is backslashed, ignore */
 
               ignore = FALSE;
               
               dq_count--;
-              }
             }
           }
+        }
 
         if (ignore == TRUE)
-          {
+        {
           ptr++;
 
           ignchar = TRUE;
-          }
         }
       }
+    }
     else if (*ptr == '[' )
-      {
+    {
       sb_count = 1;
-      }
+    }
     else if (*ptr == ']')
-      {
+    {
       sb_count = 0;
-      }
+    }
     else if (*ptr == '{')
-      {
+    {
       sb_count = 1;
-      }
+    }
     else if (*ptr == '}')
-      {
+    {
       sb_count = 0;
-      }
+    }
     else if (!(sq_count % 2) && !(dq_count % 2) && (sb_count == 0))
-      {
+    {
       /* not in quotations, locate delimiter */
 
       for (dindex = 0; delims[dindex] != '\0'; dindex++)
-        {
+      {
         if (*ptr != delims[dindex])
           continue;
 
         if ((ign_backslash == TRUE) && (head != NULL))
-          {
+        {
           /* check if backslash precedes delimiter */
           if ((ptr > head) && (*(ptr-1) == '\\'))
-            {
+          {
             /* check if backslash is backslashed */
 
             if ((ptr > head + 1) && (*(ptr-1) != '\\'))
-              {
+            {
               /* delimiter is backslashed, ignore */
 
               continue;
-              }
             }
           }
+        }
 
         /* delimiter found */
 
@@ -436,7 +427,7 @@ char *smart_strtok(
         ptr++;
         
         if (head != NULL)
-          {
+        {
           *ptrPtr = ptr;
 
           tmpLine[tindex] = '\0';
@@ -447,26 +438,26 @@ char *smart_strtok(
           free(tmpLine);
 
           return(head);
-          }
+        }
 
         ignchar = TRUE;
 
         break;
-        } /* END for (dindex) */
-      }
+      } /* END for (dindex) */
+    }
 
     if ((ignchar != TRUE) && (*ptr != '\0'))
-      {
+    {
       if (head == NULL)
         head = ptr;
 
       tmpLine[tindex++] = ptr[0];
 
       ptr++;
-      }
+    }
 
     ignchar = FALSE;
-    } /* END while (*ptr != '\0') */
+  } /* END while (*ptr != '\0') */
 
   tmpLine[tindex] = '\0';
 
@@ -478,7 +469,7 @@ char *smart_strtok(
   *ptrPtr = ptr;
 
   return(head);
-  } /* END smart_strtok */
+} /* END smart_strtok */
 
 
 
@@ -488,60 +479,60 @@ int get_name_value(start, name, value)
 char  *start;
 char **name;
 char **value;
-  {
-  static char *tok_ptr;
-  char *curr_ptr;
-  char *equals;
+{
+static char *tok_ptr;
+char *curr_ptr;
+char *equals;
 
-  /* we've reached the end */
-  if ((start == NULL) &&
-      (*tok_ptr == '\0'))
-    return(0);
+/* we've reached the end */
+if ((start == NULL) &&
+(*tok_ptr == '\0'))
+return(0);
 
-  curr_ptr = smart_strtok(start,",",&tok_ptr,FALSE);
+curr_ptr = smart_strtok(start,",",&tok_ptr,FALSE);
 
-  if ((curr_ptr == NULL))
-    return(0);
-     
-  if ((*curr_ptr == '=') || 
-      (*curr_ptr == '\0'))
-    {
-    /* no name, fail */
-    return(-1);
-    }
+if ((curr_ptr == NULL))
+return(0);
 
-  /* skip leading spaces */
-  while (isspace((int)*curr_ptr) && (*curr_ptr))
-    curr_ptr++;
+if ((*curr_ptr == '=') ||
+(*curr_ptr == '\0'))
+{
+  /* no name, fail */
+  return(-1);
+}
 
-  *name = curr_ptr;
+/* skip leading spaces */
+while (isspace((int)*curr_ptr) && (*curr_ptr))
+curr_ptr++;
 
-  equals = *name;
+*name = curr_ptr;
 
-  /* skip over name */
-  while ((*equals) && (!isspace((int)*equals)) && (*equals != '='))
-    equals++;
+equals = *name;
 
-  /* strip blanks */
-  while ((*equals) && (isspace((int)*equals)))
-    *equals++ = '\0';
+/* skip over name */
+while ((*equals) && (!isspace((int)*equals)) && (*equals != '='))
+equals++;
 
-  if (*equals != '=')
-    return (-1); /* should have found a = as first non blank */
+/* strip blanks */
+while ((*equals) && (isspace((int)*equals)))
+*equals++ = '\0';
 
-  *equals++ = '\0';
+if (*equals != '=')
+return (-1); /* should have found a = as first non blank */
 
-  /* skip leading white space */
-  while (isspace((int)*equals) && *equals)
-    equals++;
+*equals++ = '\0';
 
-  if (*equals == '\0')
-    return(-1);
+/* skip leading white space */
+while (isspace((int)*equals) && *equals)
+equals++;
 
-  *value = equals;
+if (*equals == '\0')
+return(-1);
 
-  return (1);
-  }
+*value = equals;
+
+return (1);
+}
 
 
 
@@ -550,29 +541,29 @@ char **value;
 
 char *set_dir_prefix(
 
-  char *prefix,
-  int   diropt)
+    char *prefix,
+    int   diropt)
 
-  {
+{
   char *s;
 
   if (notNULL(prefix))
-    {
+  {
     return(prefix);
-    }
+  }
 
   if (diropt == TRUE)
-    {
+  {
     return("");
-    }
+  }
 
   if ((s = getenv("PBS_DPREFIX")) != NULL)
-    {
+  {
     return(s);
-    }
+  }
 
   return(PBS_DPREFIX_DEFAULT);
-  }  /* END set_dir_prefix() */
+}  /* END set_dir_prefix() */
 
 
 
@@ -580,38 +571,38 @@ char *set_dir_prefix(
 
 int isexecutable(
 
-  char *s)  /* I */
+    char *s)  /* I */
 
-  {
+{
   char *c;
 
   c = s;
 
   if ((*c == ':') || ((*c == '#') && (*(c + 1) == '!')))
-    {
+  {
     return(FALSE);
-    }
+  }
 
   while (isspace(*c))
     c++;
 
   if (notNULL(c))
-    {
+  {
     return(*c != '#');
-    }
+  }
 
   return(FALSE);
-  }
+}
 
 
 
 
 char *ispbsdir(
 
-  char *s,
-  char *prefix)
+    char *s,
+    char *prefix)
 
-  {
+{
   char *it;
   int l;
 
@@ -622,12 +613,12 @@ char *ispbsdir(
   l = strlen(prefix);
 
   if ((l > 0) && (strncmp(it, prefix, l) == 0))
-    {
+  {
     return(it + l);
-    }
+  }
 
   return((char *)NULL);
-  }
+}
 
 
 
@@ -635,10 +626,10 @@ char *ispbsdir(
 
 int istext(
 
-  FILE   *fd,      /* I */
-  int    *IsText)  /* O (optional) */
+    FILE   *fd,      /* I */
+    int    *IsText)  /* O (optional) */
 
-  {
+{
   int i;
   int c;
 
@@ -646,31 +637,31 @@ int istext(
     *IsText = FALSE;
 
   if (fd == NULL)
-    {
+  {
     return(0);
-    }
+  }
 
   if (fd == stdin)
-    {
+  {
     return(1);
-    }
+  }
 
   /* read first characters to ensure this is ASCII text */
 
   for (i = 0;i < MMAX_VERIFY_BYTES;i++)
-    {
+  {
     c = fgetc(fd);
 
     if (c == EOF)
       break;
 
     if (!isprint(c) && !isspace(c))
-      {
+    {
       fseek(fd, 0, SEEK_SET);
 
       return(0);
-      }
-    }  /* END for (i) */
+    }
+  }  /* END for (i) */
 
   if (IsText != NULL)
     *IsText = TRUE;
@@ -678,7 +669,7 @@ int istext(
   fseek(fd, 0, SEEK_SET);
 
   return(1);
-  }  /* END FileIsText() */
+}  /* END FileIsText() */
 
 
 
@@ -687,13 +678,13 @@ int istext(
 
 int get_script(
 
-  int    ArgC,    /* I */
-  char **ArgV,    /* I */
-  FILE  *file,    /* I */
-  char  *script,  /* O (minsize=X) */
-  char  *prefix)  /* I */
+    int    ArgC,    /* I */
+    char **ArgV,    /* I */
+    FILE  *file,    /* I */
+    char  *script,  /* O (minsize=X) */
+    char  *prefix)  /* I */
 
-  {
+{
   char  s[MAX_LINE_LEN + 1];
   char *sopt;
   int   exec = FALSE;
@@ -721,39 +712,39 @@ int get_script(
   /* check that the file is text */
 
   if (istext(file, NULL) == 0)
-    {
+  {
     sprintf(PBS_ERROR_MSG,
             "pbs_submit:  file must be an ascii script\n");
 
     return(4);
-    }
+  }
 
   if (stat(PBS_Filter, &sfilter) != -1)
-    {
+  {
     /* run the copy through the submit filter. */
 
     if ((tmpfd = mkstemp(tmp_name2)) < 0)
-      {
+    {
       sprintf(PBS_ERROR_MSG,
               "pbs_submit: could not create filter o/p %s\n",
               tmp_name2);
 
       return(4);
-      }
+    }
 
     close(tmpfd);
 
     strcpy(cfilter, PBS_Filter);
 
     for (index = 1;index < ArgC;index++)
-      {
+    {
       if (ArgV[index] != NULL)
-        {
+      {
         strcat(cfilter, " ");
 
         strcat(cfilter, ArgV[index]);
-        }
-      }    /* END for (index) */
+      }
+    }    /* END for (index) */
 
     strcat(cfilter, " >");
 
@@ -762,37 +753,37 @@ int get_script(
     filter_pipe = popen(cfilter, "w");
 
     while ((in = fgets(s, MAX_LINE_LEN, file)) != NULL)
-      {
+    {
       if (fputs(in, filter_pipe) < 0)
-        {
+      {
         sprintf(PBS_ERROR_MSG, "pbs_submit: error writing to filter stdin\n");
 
         unlink(tmp_name2);
 
         return(3);
-        }
       }
+    }
 
     rc = pclose(filter_pipe);
 
     if (WEXITSTATUS(rc) == (unsigned char)SUBMIT_FILTER_ADMIN_REJECT_CODE)
-      {
+    {
       sprintf(PBS_ERROR_MSG, "pbs_submit: Your job has been administratively rejected by the queueing system.\n");
       strcat(PBS_ERROR_MSG, "pbs_submit: There may be a more detailed explanation prior to this notice.\n");
 
       unlink(tmp_name2);
 
       return(3);
-      }
+    }
 
     if (WEXITSTATUS(rc))
-      {
+    {
       sprintf(PBS_ERROR_MSG, "pbs_submit: submit filter returned an error code, aborting job submission.\n");
 
       unlink(tmp_name2);
 
       return(3);
-      }
+    }
 
     /* get rid of the i/p copy. */
 
@@ -803,7 +794,7 @@ int get_script(
     /* open the filtered script. */
 
     if ((file = fopen(tmp_name2, "r")) == NULL)
-      {
+    {
       sprintf(PBS_ERROR_MSG, "pbs_submit: could not open filter o/p %s\n",
               tmp_name2);
 
@@ -812,7 +803,7 @@ int get_script(
       file = filesaved;
 
       return(3);
-      }
+    }
 
     /* Get rid of the filtered o/p; data remains accessible until    */
     /* file is closed.                                               */
@@ -822,30 +813,30 @@ int get_script(
     /* Complete redirection.                                         */
 
     fclose(filesaved);
-    }  /* END if (stat(PBS_Filter,&sfilter) != -1) */
+  }  /* END if (stat(PBS_Filter,&sfilter) != -1) */
 
   /* END WRAPPER */
 
   if ((tmpfd = mkstemp(tmp_name)) < 0)
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: could not create copy of script %s\n",
             tmp_name);
 
     return(4);
-    }
+  }
 
   if ((TMP_FILE = fdopen(tmpfd, "w+")) == NULL)
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: could not create copy of script %s\n",
             tmp_name);
     
     unlink(tmp_name);
 
     return(4);
-    }
+  }
 
   while ((in = fgets(s, MAX_LINE_LEN, file)) != NULL)
-    {
+  {
     int len;
 
     /* replace DOS EOL ('^M') characters */
@@ -853,21 +844,21 @@ int get_script(
     len = strlen(in);
 
     if ((len >= 2) && (in[len - 2] == '\r') && (in[len - 1] == '\n'))
-      {
+    {
       in[len - 2] = '\n';
       in[len - 1] = '\0';
-      }
+    }
 
     if (!exec && ((sopt = ispbsdir(s, prefix)) != NULL))
-      {
+    {
       while ((*(cont = in + strlen(in) - 2) == '\\') && (*(cont + 1) == '\n'))
-        {
+      {
         /* next line is continuation of this line */
 
         *cont = '\0';  /* clear newline from our copy */
 
         if (fputs(in, TMP_FILE) < 0)
-          {
+        {
           sprintf(PBS_ERROR_MSG, "pbs_submit: error writing copy of script, %s\n",
                   tmp_name);
 
@@ -876,12 +867,12 @@ int get_script(
           unlink(tmp_name);
 
           return(3);
-          }
+        }
 
         in = cont;
 
         if ((in = fgets(in, MAX_LINE_LEN - (in - s), file)) == NULL)
-          {
+        {
           sprintf(PBS_ERROR_MSG, "pbs_submit: unexpected end-of-file or read error in script\n");
 
           fclose(TMP_FILE);
@@ -889,21 +880,21 @@ int get_script(
           unlink(tmp_name);
 
           return(6);
-          }
-        }    /* END while ((*(cont = in + strlen(in) - 2) == '\\') && (*(cont + 1) == '\n')) */
+        }
+      }    /* END while ((*(cont = in + strlen(in) - 2) == '\\') && (*(cont + 1) == '\n')) */
 
       if (do_dir(sopt) != 0)
-        {
-        return(-1);
-        }
-      }      /* END if (!exec && ((sopt = ispbsdir(s,prefix)) != NULL)) */
-    else if (!exec && isexecutable(s))
       {
-      exec = TRUE;
+        return(-1);
       }
+    }      /* END if (!exec && ((sopt = ispbsdir(s,prefix)) != NULL)) */
+    else if (!exec && isexecutable(s))
+    {
+      exec = TRUE;
+    }
 
     if (fputs(in, TMP_FILE) < 0)
-      {
+    {
       sprintf(PBS_ERROR_MSG, "pbs_submit: error writing copy of script, %s\n",
               tmp_name);
 
@@ -912,22 +903,22 @@ int get_script(
       unlink(tmp_name);
 
       return(3);
-      }
-    }   /* END while ((in = fgets(s,MAX_LINE_LEN,file)) != NULL) */
+    }
+  }   /* END while ((in = fgets(s,MAX_LINE_LEN,file)) != NULL) */
 
   fclose(TMP_FILE);
 
   if (ferror(file))
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: error reading script file\n");
 
     return(5);
-    }
+  }
 
   strcpy(script, tmp_name);
   
   return 0;
-  }  /* END get_script() */
+}  /* END get_script() */
 
 
 
@@ -935,11 +926,11 @@ int get_script(
 
 int make_argv(
 
-  int  *argc,
-  char *argv[],
-  char *line)
+    int  *argc,
+    char *argv[],
+    char *line)
 
-  {
+{
   char *l, *b, *c, *buffer;
   int len;
   char quote;
@@ -947,10 +938,10 @@ int make_argv(
   buffer = malloc(strlen(line) + 1);
 
   if (buffer == NULL)
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: out of memory\n");
     return 2; //old code : exit(2);
-    }
+  }
 
   *argc = 0;
 
@@ -965,9 +956,9 @@ int make_argv(
   c = l;
 
   while (*c != '\0')
-    {
+  {
     if ((*c == '"') || (*c == '\''))
-      {
+    {
       quote = *c;
       c++;
 
@@ -975,23 +966,23 @@ int make_argv(
         *b++ = *c++;
 
       if (*c == '\0')
-        {
+      {
         sprintf(PBS_ERROR_MSG, "pbs_submit: unmatched %c\n",
                 *c);
 
         return 1 ;//old code : exit(1);
-        }
+      }
 
       c++;
-      }
+    }
     else if (*c == '\\')
-      {
+    {
       c++;
 
       *b++ = *c++;
-      }
+    }
     else if (isspace(*c))
-      {
+    {
       len = c - l;
 
       assert(len > 0);
@@ -1002,11 +993,11 @@ int make_argv(
       argv[*argc] = (char *)malloc(len + 1);
 
       if (argv[*argc] == NULL)
-        {
+      {
         sprintf(PBS_ERROR_MSG, "pbs_submit: out of memory\n");
 
         return 2; //odl code : exit(2);
-        }
+      }
 
       *b = '\0';
 
@@ -1018,15 +1009,15 @@ int make_argv(
       l = c;
 
       b = buffer;
-      }
-    else
-      {
-      *b++ = *c++;
-      }
     }
+    else
+    {
+      *b++ = *c++;
+    }
+  }
 
   if (c != l)
-    {
+  {
     len = c - l;
 
     assert(len > 0);
@@ -1037,29 +1028,29 @@ int make_argv(
     argv[*argc] = (char *) malloc(len + 1);
 
     if (argv[*argc] == NULL)
-      {
+    {
       sprintf(PBS_ERROR_MSG, "pbs_submit: out of memory\n");
       return 2; //old exit(2);
-      }
+    }
 
     *b = '\0';
 
     strcpy(argv[(*argc)++], buffer);
-    }
+  }
 
   free(buffer);
 
   return 0;
-  }  /* END make_argv() */
+}  /* END make_argv() */
 
 
 
 
 int do_dir(
 
-  char *opts)
+    char *opts)
 
-  {
+{
   static int opt_pass = 1;
   int argc;
 
@@ -1067,20 +1058,20 @@ int do_dir(
   static char *vect[MAX_ARGV_LEN + 1];
 
   if (opt_pass == 1)
-    {
+  {
     argc = 0;
 
     while (argc < MAX_ARGV_LEN + 1)
       vect[argc++] = NULL;
-    }
+  }
 
   int res = make_argv(&argc, vect, opts);
   if(res) {
-    return res; 
+    return res;
   };
 
   return(parse_file(argc, vect, opt_pass++));
-  }  /* END do_dir() */
+}  /* END do_dir() */
 
 
 
@@ -1140,11 +1131,11 @@ char *v_value = NULL;
 
 char *copy_env_value(
 
-  char *dest,      /* destination  */
-  char *pv,        /* value string */
-  int   quote_flg) /* non-zero then assume single word (quoting on) */
+    char *dest,      /* destination  */
+    char *pv,        /* value string */
+    int   quote_flg) /* non-zero then assume single word (quoting on) */
 
-  {
+{
   int go = 1;
   int q_ch = 0;
 
@@ -1152,79 +1143,79 @@ char *copy_env_value(
     ++dest;
 
   while (go && *pv)
-    {
+  {
     switch (*pv)
+    {
+
+    case '"':
+
+    case '\'':
+
+      if (q_ch)
       {
+        /* local quoting is in progress */
 
-      case '"':
-
-      case '\'':
-
-        if (q_ch)
-          {
-          /* local quoting is in progress */
-
-          if (q_ch == (int)*pv)
-            {
-            q_ch = 0;  /* end quote */
-            }
-          else
-            {
-            *dest++ = '\\'; /* escape quote */
-            *dest++ = *pv;
-            }
-          }
-        else if (quote_flg)
-          {
-          /* global quoting is on */
-
-          *dest++ = '\\';  /* escape quote */
-          *dest++ = *pv;
-          }
+        if (q_ch == (int)*pv)
+        {
+          q_ch = 0;  /* end quote */
+        }
         else
-          {
-          q_ch = (int) * pv;  /* turn local quoting on */
-          }
-
-        break;
-
-      case '\\':
-
-        *dest++ = '\\';  /* escape back-slash */
-        *dest++ = *pv;
-
-        break;
-
-      case '\n':
-
-        *dest++ = '\\';  /* escape newline */
-        *dest++ = *pv;
-
-        break;
-
-      case ',':
-
-        if (q_ch || quote_flg)
-          {
-          *dest++ = '\\';
+        {
+          *dest++ = '\\'; /* escape quote */
           *dest++ = *pv;
-          }
-        else
-          {
-          go = 0;  /* end of value string */
-          }
+        }
+      }
+      else if (quote_flg)
+      {
+        /* global quoting is on */
 
-        break;
-
-      default:
-
+        *dest++ = '\\';  /* escape quote */
         *dest++ = *pv;
-
-        break;
+      }
+      else
+      {
+        q_ch = (int) * pv;  /* turn local quoting on */
       }
 
+      break;
+
+    case '\\':
+
+      *dest++ = '\\';  /* escape back-slash */
+      *dest++ = *pv;
+
+      break;
+
+    case '\n':
+
+      *dest++ = '\\';  /* escape newline */
+      *dest++ = *pv;
+
+      break;
+
+    case ',':
+
+      if (q_ch || quote_flg)
+      {
+        *dest++ = '\\';
+        *dest++ = *pv;
+      }
+      else
+      {
+        go = 0;  /* end of value string */
+      }
+
+      break;
+
+    default:
+
+      *dest++ = *pv;
+
+      break;
+    }
+
     pv++;
-    }  /* END while (go && *pv) */
+  }  /* END while (go && *pv) */
 
   *dest = '\0';
 
@@ -1232,16 +1223,16 @@ char *copy_env_value(
     return(NULL); /* error-unterminated quote */
 
   return(pv);
-  }
+}
 
 
 
 
 int set_job_env(
 
-  char **envp)  /* I */
+    char **envp)  /* I */
 
-  {
+{
   char **evp;
   char *job_env;
   char *s, *c, *env, l;
@@ -1251,7 +1242,7 @@ int set_job_env(
   int   eindex;
 
   const char *EList[] =
-    {
+  {
     "HOME",
     "LANG",
     "LOGNAME",
@@ -1260,32 +1251,32 @@ int set_job_env(
     "SHELL",
     "TZ",
     NULL
-    };
+  };
 
   /* Calculate how big to make the variable string. */
 
   len = PBS_MAXHOSTNAME * 2 + MAXPATHLEN;
 
   if (v_opt)
-    {
+  {
     len += strlen(v_value);
-    }
+  }
 
   if (V_opt)
-    {
+  {
     evp = envp;
 
     while (notNULL(*evp))
-      {
+    {
       /* add 1 for ',' */
       len += strlen(*evp) + 1;
 
       evp++;
-      }
     }
+  }
 
   for (eindex = 0;EList[eindex] != NULL;eindex++)
-    {
+  {
     env = getenv(EList[eindex]);
 
     if (env == NULL)
@@ -1294,31 +1285,31 @@ int set_job_env(
     /* prepend 'PBS_O_' to each var and add '2' for ',' and '=' */
 
     len += strlen(env) + strlen(EList[eindex]) + strlen("PBS_O_") + 2;
-    }  /* END for (eindex) */
+  }  /* END for (eindex) */
 
   if (PBS_InitDir[0] != '\0')
-    {
+  {
     len += strlen("PBS_O_INITDIR=") + strlen(PBS_InitDir) + 1;
-    }
+  }
 
   if (PBS_RootDir[0] != '\0')
-    {
+  {
     len += strlen("PBS_O_ROOTDIR=") + strlen(PBS_RootDir) + 1;
-    }
+  }
 
   if (PBS_WorkDir[0] != '\0')
-    {
+  {
     len += strlen("PBS_O_WORKDIR=") + strlen(PBS_WorkDir) + 1;
-    }
+  }
 
   len += strlen("PBS_SERVER=") + 1;
 
   len++; /* Terminating '0' */
 
   if ((job_env = (char *)malloc(len)) == NULL)
-    {
+  {
     return(FALSE);
-    }
+  }
 
   *job_env = '\0';
 
@@ -1336,121 +1327,121 @@ int set_job_env(
   c = getenv("LANG");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_LANG=");
     strcat(job_env, c);
-    }
+  }
 
   c = getenv("LOGNAME");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_LOGNAME=");
     strcat(job_env, c);
-    }
+  }
 
   c = getenv("PATH");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_PATH=");
     strcat(job_env, c);
-    }
+  }
 
   c = getenv("MAIL");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_MAIL=");
     strcat(job_env, c);
-    }
+  }
 
   c = getenv("SHELL");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_SHELL=");
     strcat(job_env, c);
-    }
+  }
 
   c = getenv("TZ");
 
   if (c != NULL)
-    {
+  {
     strcat(job_env, ",PBS_O_TZ=");
     strcat(job_env, c);
-    }
+  }
 
   if (pbs_submit_host[0] != '\0' ||
-     (rc = gethostname(pbs_submit_host, PBS_MAXHOSTNAME + 1)) == 0)
-    {
+      (rc = gethostname(pbs_submit_host, PBS_MAXHOSTNAME + 1)) == 0)
+  {
     if ((rc = get_fullhostname(pbs_submit_host, pbs_submit_host, PBS_MAXHOSTNAME, NULL)) == 0)
-      {
+    {
       strcat(job_env, ",PBS_O_HOST=");
       strcat(job_env, pbs_submit_host);
-      }   
     }
-    
+  }
+
   if (rc != 0)
-    {
+  {
     sprintf(PBS_ERROR_MSG, "pbs_submit: cannot get (full) local host name\n");
     return 3;//exit(3);
-    }
-    
+  }
+
   if (server_host[0] != '\0')
-    {
+  {
     if (get_fullhostname(server_host, server_host, PBS_MAXHOSTNAME, NULL) == 0)
-      {
+    {
       strcat(job_env,",PBS_SERVER=");
       strcat(job_env,server_host);
-      }
+    }
     else
-      {
+    {
       sprintf(PBS_ERROR_MSG,"pbs_submit: cannot get full server host name\n");
       return 3; //exit(3);
-      }
     }
+  }
   else
-    {
+  {
     c = pbs_default();
     if (*c != '\0')
-      {
+    {
       strncpy(server_host, c, sizeof(server_host));
       strcat(job_env,",PBS_SERVER=");
       strcat(job_env,server_host);
-      }
+    }
     else
-      {
+    {
       strcat(job_env,",PBS_SERVER=");
       strcat(job_env,pbs_submit_host);
-      }
     }
+  }
 
   if (owner_uid[0] != '\0')
-    {
+  {
     strcat(job_env, ",PBS_O_UID=");
     strcat(job_env, owner_uid);
-    }
+  }
 
   /* load init dir into env if specified */
 
   if (PBS_InitDir[0] != '\0')
-    {
+  {
     /* load init dir into env */
 
     strcat(job_env, ",PBS_O_INITDIR=");
 
     strcat(job_env, PBS_InitDir);
-    }
+  }
 
   if (PBS_RootDir[0] != '\0')
-    {
+  {
     /* load init dir into env */
 
     strcat(job_env, ",PBS_O_ROOTDIR=");
 
     strcat(job_env, PBS_RootDir);
-    }
+  }
 
   /* get current working directory, use $PWD if available, it is more */
   /* NFS automounter "friendly".  But must double check that is right */
@@ -1458,15 +1449,15 @@ int set_job_env(
   /* load work dir into env if specified */
 
   if (PBS_WorkDir[0] != '\0')
-    {
+  {
     /* load work dir into env */
 
     strcat(job_env, ",PBS_O_WORKDIR=");
 
     strcat(job_env, PBS_WorkDir);
-    }
+  }
   else
-    {
+  {
     s = job_env + strlen(job_env);
 
     strcat(job_env, ",PBS_O_WORKDIR=");
@@ -1474,51 +1465,51 @@ int set_job_env(
     c = getenv("PWD");
 
     if (c != NULL)
-      {
+    {
 
       struct stat statbuf;
       dev_t dev;
       ino_t ino;
 
       if (stat(c, &statbuf) < 0)
-        {
+      {
         c = NULL; /* cannot stat, cannot trust it */
-        }
+      }
       else
-        {
+      {
         dev = statbuf.st_dev;
         ino = statbuf.st_ino;
 
         if (stat(".", &statbuf) < 0)
-          {
+        {
           /* compare against "." */
 
           perror("pbs_submit: cannot stat current directory: ");
           return 3; //old: exit(3);
 
-          }
+        }
 
         if (!memcmp(&dev, &statbuf.st_dev, sizeof(dev_t)) &&
             !memcmp(&ino, &statbuf.st_ino, sizeof(ino_t)))
-          {
+        {
           strcat(job_env, c);
-          }
-        else
-          {
-          c = NULL;
-          }
         }
-      }    /* END if (c != NULL) */
+        else
+        {
+          c = NULL;
+        }
+      }
+    }    /* END if (c != NULL) */
 
     if (c == NULL)
-      {
+    {
       /* fall back to using the cwd */
       c = job_env + strlen(job_env);
 
       if (getcwd(c, MAXPATHLEN + 1) == NULL)
         *s = '\0';
-      }
     }
+  }
 
   /* Send these variables with the job. */
   /* POSIX requirement: If a variable is given without a value, supply the
@@ -1527,32 +1518,32 @@ int set_job_env(
   /* MY requirement:    There can be no white space in -v value. */
 
   if (v_opt)
-    {
+  {
     c = v_value;
 
 state1:         /* goto label : Initial state comes here */
 
     switch (*c)
-      {
+    {
 
-      case ',':
+    case ',':
 
-      case '=':
+    case '=':
 
-        return FALSE;
+      return FALSE;
 
-        /*NOTREACHED*/
+      /*NOTREACHED*/
 
-        break;
+      break;
 
-      case '\0':
+    case '\0':
 
-        goto final;
+      goto final;
 
-        /*NOTRREACHED*/
+      /*NOTRREACHED*/
 
-        break;
-      }
+      break;
+    }
 
     s = c;
 
@@ -1561,47 +1552,47 @@ state1:         /* goto label : Initial state comes here */
 state2:         /* goto label : Variable name */
 
     switch (*c)
+    {
+
+    case ',':
+
+    case '\0':
+
+      goto state3;
+
+      /*NOTREACHED*/
+
+      break;
+
+    case '=':
+      /* if we just have the '=' and no value after it then we look in
+         the environment same as if the '=' was not there */
+
+      if ((c[1] == ',') || (c[1] == '\0'))
       {
-
-      case ',':
-
-      case '\0':
-
+        *c = '\0';
+        c++;
         goto state3;
 
         /*NOTREACHED*/
+      }
 
-        break;
+      goto state4;
 
-      case '=':
-        /* if we just have the '=' and no value after it then we look in
-         the environment same as if the '=' was not there */
+      /*NOTREACHED*/
 
-        if ((c[1] == ',') || (c[1] == '\0'))
-          {
-          *c = '\0';
-          c++;
-          goto state3;
+      break;
 
-          /*NOTREACHED*/
-          }
+    default:
 
-        goto state4;
+      c++;
 
-        /*NOTREACHED*/
+      goto state2;
 
-        break;
+      /*NOTREACHED*/
 
-      default:
-
-        c++;
-
-        goto state2;
-
-        /*NOTREACHED*/
-
-        break;
-      }  /* END switch (*c) */
+      break;
+    }  /* END switch (*c) */
 
 state3:         /* No value - get it from pbs_submit environment */
 
@@ -1612,12 +1603,12 @@ state3:         /* No value - get it from pbs_submit environment */
     env = getenv(s);
 
     if (env == NULL)
-      {
+    {
       env = "";
-      }
+    }
 
     if (strlen(job_env) + 2 + strlen(s) + 2*strlen(env) >= len)
-      {
+    {
       /* increase size of job env buffer */
 
       len += 2 * strlen(env) + 1;
@@ -1625,11 +1616,11 @@ state3:         /* No value - get it from pbs_submit environment */
       job_env = (char *)realloc(job_env, len);
 
       if (job_env == NULL)
-        {
-          free(job_env); 
-          return(FALSE);
-        }
+      {
+        free(job_env);
+        return(FALSE);
       }
+    }
 
     strcat(job_env, ",");
 
@@ -1637,9 +1628,9 @@ state3:         /* No value - get it from pbs_submit environment */
     strcat(job_env, "=");
 
     if (copy_env_value(job_env, env, 1) == NULL)
-      {
+    {
       return(FALSE);
-      }
+    }
 
     if (l == ',')
       c++;
@@ -1651,7 +1642,7 @@ state4:         /* goto label - Value specified */
     *c++ = '\0';
 
     if (strlen(job_env) + 2 + strlen(s) + 2*strlen(c) >= len)
-      {
+    {
       /* increase size of job env buffer */
 
       len += 2 * strlen(c) + 1;
@@ -1659,11 +1650,11 @@ state4:         /* goto label - Value specified */
       job_env = (char *)realloc(job_env, len);
 
       if (job_env == NULL)
-        {
-         free(job_env);
+      {
+        free(job_env);
         return(FALSE);
-        }
       }
+    }
 
     strcat(job_env, ",");
 
@@ -1671,39 +1662,39 @@ state4:         /* goto label - Value specified */
     strcat(job_env, "=");
 
     if ((c = copy_env_value(job_env, c, 0)) == NULL)
-      {
+    {
       return(FALSE);
-      }
+    }
 
     goto state1;
-    }  /* END if (v_opt) */
+  }  /* END if (v_opt) */
 
 final:
 
   if (V_opt != 0)
-    {
+  {
     /* Send every environment variable with the job. */
 
     evp = envp;
 
     while (notNULL(*evp))
-      {
+    {
       s = *evp;
 
       while ((*s != '=') && *s)
         ++s;
 
       if (!*s)
-        {
+      {
         evp++;
 
         continue;
-        }
+      }
 
       *s = '\0';  /* NOTE: *s is clobbering our current, real, environ */
 
       if (strlen(job_env) + 2 + strlen(*evp) + 2*strlen(s + 1) >= len)
-        {
+      {
         /* increase size of job env buffer */
 
         len += 2 * strlen(s + 1) + 1;
@@ -1712,11 +1703,11 @@ final:
 
         /*if (job_env == NULL)
           {
-          *s = '='; // restore our existing environ 
+          *s = '='; // restore our existing environ
 
           return(FALSE);
           }*/
-        }
+      }
 
       strcat(job_env, ",");
 
@@ -1728,15 +1719,15 @@ final:
       *s = '='; /* restore our existing environ */
 
       evp++;
-      }
-    }    /* END if (V_opt) */
+    }
+  }    /* END if (V_opt) */
 
   set_attr(&attrib, ATTR_v, job_env);
 
   free(job_env);
 
   return(TRUE);
-  }  /* END set_job_env() */
+}  /* END set_job_env() */
 
 
 /** 
@@ -1744,17 +1735,17 @@ final:
  *
  * @see main() - parent
  *
- * NOTE:  return 0 on success 
- * NOTE:  only run submitfilter if pass < 10 
- */ 
+ * NOTE:  return 0 on success
+ * NOTE:  only run submitfilter if pass < 10
+ */
 
 int parse_file(
 
-  int    argc,  /* I */
-  char **argv,  /* I */
-  int    pass)  /* I */
+    int    argc,  /* I */
+    char **argv,  /* I */
+    int    pass)  /* I */
 
-  {
+{
   int i;
   int c;
   int errflg = 0;
@@ -1792,1159 +1783,1159 @@ int parse_file(
   passet = pass + 1;
 
   if (pass > 0)
-    {
+  {
 #ifdef linux
     optind = 0;  /* prime getopt's starting point */
 #else
     optind = 1;  /* prime getopt's starting point */
 #endif
-    }
+  }
 
   while ((c = getopt(argc, argv, GETOPT_ARGS)) != EOF)
-    {
+  {
     switch (c)
+    {
+
+    case 'a':
+
+      if_cmd_line(a_opt)
       {
+        a_opt = passet;
 
-      case 'a':
-
-        if_cmd_line(a_opt)
-          {
-          a_opt = passet;
-
-          if ((after = cvtdate(optarg)) < 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -a value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          sprintf(a_value, "%ld",
-
-                  (long)after);
-
-          set_attr(&attrib, ATTR_a, a_value);
-          }
-
-        break;
-
-      case 'A':
-
-        if_cmd_line(A_opt)
-          {
-          A_opt = passet;
-
-          set_attr(&attrib, ATTR_A, optarg);
-          }
-
-        break;
-
-      case 'b':
-
-        if_cmd_line(b_opt)
-          {
-          b_opt = passet;
-
-          cnt2server_retry = atoi(optarg);
-          }
-
-        break;
-
-      case 'c': //TODO: to check pbs version in this case
- 
-      #if 0
-        if_cmd_line(c_opt)
-          {
-          c_opt = passet;
-
-          /* remove whitespace */
-
-          while (isspace((int)*optarg))
-            optarg++;
-
-          if (strlen(optarg) == 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -c value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          pc = optarg;
-
-          /* OLD FORMAT:  -c { n | s | c | c=X }
-           * New format: -c [ { <old format items> | <new items> } ',' ]
-           * new items: none | shutdown | checkpoint | name=xyz | dir=xyz | interval=X
-           */
-#if 0 
-
-          if (strlen(optarg) == 1)
-          {
-            if ((*pc != 'n') && (*pc != 's') && (*pc != 'c'))
-            {
-              fprintf(stderr, "qsub: illegal -c value\n");
-              
-              errflg++;
-
-              break;
-            }
-          }
-          else
-          {
-            if (strncmp(optarg, "c=", 2) != 0)
-            {
-              fprintf(stderr, "qsub: illegal -c value\n");
-              errflg++;
-
-              break;
-            }
-
-            pc += 2;
-
-            if (*pc == '\0')
-            {
-              fprintf(stderr, "qsub: illegal -c value\n");
-
-              errflg++;
-
-              break;
-            }
-            while (isdigit(*pc))
-              pc++;
-
-            if (*pc != '\0')
-            {
-              fprintf(stderr, "qsub: illegal -c value\n");
-              errflg++;
-
-              break;
-            }
-          }
-
-#else
-          nitems = csv_length(optarg);
-
-          for (i = 0; i < nitems; i++)
-            {
-            if ((ptr = csv_nth(optarg, i)) != NULL)
-              {
-              strcpy(search_string, ptr);
-              ptr = strchr(search_string, '=');
-
-              if (ptr)
-                *ptr = 0;
-              else
-                ptr = &search_string[strlen(search_string)];
-
-              while (ptr > search_string && *(ptr - 1) == ' ')
-                *--ptr = 0;
-
-              if (csv_find_string(checkpoint_strings, search_string) == NULL)
-                {
-                sprintf(tmp_err_msg, "pbs_submit: illegal -c value \"%s\"\n", ptr);
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-                errflg++;
-                goto err;
-                }
-              }
-            }
-
-#endif
-          set_attr(&attrib, ATTR_c, optarg);
-          }  /* END if_cmd_line() */
-#endif
-        break;
-
-      case 'C':
-
-        if_cmd_line(C_opt)
-          {
-          C_opt = passet;
-
-          strcpy(dir_prefix, optarg);
-          }
-
-        break;
-
-      case 'd':
-
-        if (optarg != NULL)
-          {
-          if (optarg[0] != '/')
-            {
-            /* make '-d' relative to current directory, not $HOME */
-
-            char tmpPWD[1024];
-
-            char *mypwd;
-
-            mypwd = getcwd(tmpPWD, sizeof(tmpPWD));
-
-            if (mypwd == NULL)
-              {
-              sprintf(tmp_err_msg, "pbs_submit: unable to get cwd: %d (%s)\n",
-                      errno,
-                      strerror(errno));
-              strcat(PBS_ERROR_MSG, tmp_err_msg);
-              errflg++;
-
-              /* we don't want to return yet, but we also don't want a segfault either */
-
-              /* NOTE:  if cwd cannot be resolved, set errflag which will cause exit later */
-
-              tmpPWD[0] = '\0';
-
-              mypwd = tmpPWD;
-              }
-
-            if ((strlen(mypwd) + strlen(optarg)) >= sizeof(PBS_InitDir))
-              {
-              sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
-                      (long)sizeof(PBS_InitDir));
-              strcat(PBS_ERROR_MSG, tmp_err_msg);
-              errflg++;
-              }
-
-            snprintf(PBS_InitDir, sizeof(PBS_InitDir), "%s/%s",
-
-                     mypwd,
-                     optarg);
-            }  /* END if (optarg[0] != '/') */
-          else
-            {
-            if (strlen(optarg) >= sizeof(PBS_InitDir))
-              {
-              sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
-                      (long)sizeof(PBS_InitDir));
-              strcat(PBS_ERROR_MSG, tmp_err_msg);
-              errflg++;
-              }
-
-            strncpy(PBS_InitDir, optarg, sizeof(PBS_InitDir));
-            } /* end optarg[1] != '/' */
-
-          if (validate_path != 0)
-            {
-            /* validate local existence of '-d' working directory */
-            if (chdir(PBS_InitDir) == -1)
-              {
-                sprintf(tmp_err_msg, "pbs_submit: cannot chdir to '%s' errno: %d (%s)\n",
-                      optarg,
-                      errno,
-                      strerror(errno));
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-              errflg++;
-              }
-            }
-          }    /* END if (optarg != NULL) */
-        else
-          {
-          sprintf(tmp_err_msg, "pbs_submit: illegal -d value\n");
+        if ((after = cvtdate(optarg)) < 0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -a value\n");
           strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
-          }
 
-        break;
+          break;
+        }
 
-      case 'D':
+        sprintf(a_value, "%ld",
 
-        if (optarg != NULL)
-          {
-          strncpy(PBS_RootDir, optarg, sizeof(PBS_RootDir));
-          }
-        else
-          {
-          sprintf(tmp_err_msg, "pbs_submit: illegal -D value\n");
-          strcat(PBS_ERROR_MSG, tmp_err_msg);
-          errflg++;
-          }
+                (long)after);
 
-        break;
+        set_attr(&attrib, ATTR_a, a_value);
+      }
 
-      case 'e':
+      break;
 
-        if_cmd_line(e_opt)
-          {
-          int rc = 0;
-          e_opt = passet;
+    case 'A':
 
-          if (pbs_submit_host[0] != '\0')
-            rc = prepare_path(optarg,path_out,pbs_submit_host);
-          else
-            rc = prepare_path(optarg,path_out,NULL);
+      if_cmd_line(A_opt)
+      {
+        A_opt = passet;
 
-          if ((rc == 0) || (rc == 3))
-            {
-            set_attr(&attrib, ATTR_e, path_out);
-            }
-          else
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -e value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-            }
-          }
-        break;
-        
-#if !defined(PBS_NO_POSIX_VIOLATION)
-      
-      case 'f': //TODO: to check pbs version in this case
-     
-        #if 0 
-          if_cmd_line(f_opt)
-          {
-          f_opt = passet;
-          
-          set_attr(&attrib, ATTR_f, "TRUE");
-          }
-        #endif
+        set_attr(&attrib, ATTR_A, optarg);
+      }
 
-        break;
-      
-#endif
+      break;
 
-      case 'h':
+    case 'b':
 
-        if_cmd_line(h_opt)
-          {
-          h_opt = passet;
+      if_cmd_line(b_opt)
+      {
+        b_opt = passet;
 
-          set_attr(&attrib, ATTR_h, "u");
-          }
+        cnt2server_retry = atoi(optarg);
+      }
 
-        break;
+      break;
 
-      case 'j':
+    case 'c': //TODO: to check pbs version in this case
 
-        /* FORMAT:  {oe|eo|n} */
+#if 0
+      if_cmd_line(c_opt)
+      {
+        c_opt = passet;
 
-        if_cmd_line(j_opt)
-          {
-          j_opt = passet;
-
-          if (strcmp(optarg, "oe") != 0 &&
-              strcmp(optarg, "eo") != 0 &&
-              strcmp(optarg, "n") != 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -j value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_j, optarg);
-          }
-
-        break;
-
-      case 'k':
-
-        /* FORMAT:  {o|e} */
-
-        if_cmd_line(k_opt)
-          {
-          k_opt = passet;
-
-          if (strcmp(optarg, "o") != 0 &&
-              strcmp(optarg, "e") != 0 &&
-              strcmp(optarg, "oe") != 0 &&
-              strcmp(optarg, "eo") != 0 &&
-              strcmp(optarg, "n") != 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -k value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_k, optarg);
-          }
-
-        break;
-
-      case 'l':
-
-        l_opt = passet;
-
-        /* a ,procs= in the node spec is illegal. Validate the node spec */
-        if(strstr(optarg, ",procs="))
-          {
-          printf("illegal node spec: %s\n", optarg);
-          return(-1);
-          }
-
-          /* Normal evaluation of batch job resources. */
-          if(attrib)
-            {
-            if(attrib->resource)
-              {
-              /* right here we are looking for a +procs=x in the node spec */
-              char *proc_ptr = NULL;
-              char *patch_ptr;
-              /* struct attrl *proc_attrib = NULL; */
-              char  proc_val[MAX_PROCS_DIGITS + 1]; 
-              int i = 0;
-
-              proc_val[0] = 0; /* Initialize */
-
-              proc_ptr = strstr(attrib->value, "procs=");
-              if(proc_ptr)
-                {
-                /* we have the procs keyword in the node_spec. We need to take it out and
-                   install it to the Resource_List */
-                patch_ptr = proc_ptr;
-                /* Get the procs value */
-                patch_ptr = strchr(patch_ptr, '=');
-                if(patch_ptr == NULL)
-                  {
-                  return(-1);
-                  }
-                else
-                  {
-                  patch_ptr++;
-                  while(*patch_ptr != '+' && !isspace((int) *patch_ptr) && *patch_ptr != '\0'
-                        && i < MAX_PROCS_DIGITS)
-                    {
-                    proc_val[i++] = *patch_ptr++;
-                    }
-                  proc_val[i] = 0;
-
-                  /* we have a procs=x in our node spec. Add the resources */
-                  sprintf(tmpLine, "procs=%s", proc_val);
-                  if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
-                    {                                                                  
-                    sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
-                    strcat(PBS_ERROR_MSG, tmp_err_msg);
-                    errflg++;
-                    }
-                  }
-
-                while(*patch_ptr != '+' && !isspace((int) *patch_ptr) && *patch_ptr != '\0')
-                  {
-                  patch_ptr++;
-                  }
-
-                /* remove the procs=x from the node spec.
-                   If patch_ptr has a '+' then the procs=x
-                   is followed by more specificaitons. Remove
-                   the procs=x from the spec and splice the rest
-                   of the specification back together
-                 */
-                if(*patch_ptr == '+')
-                  {
-                  
-                  patch_ptr++;
-                  *proc_ptr = 0;
-                  strcat(attrib->value, patch_ptr);
-                  }
-                else
-                  {
-                  /* Remove the procs=x from the node spec.
-                     If we are here procs=x is at the end
-                     of the node specification
-                   */
-                  if(*(proc_ptr - 1)  == '+')
-                    {
-                    proc_ptr--;
-                    }
-                  *proc_ptr = 0;
-                  }
-                } /* END if(proc_ptr)*/
-              } /* END if(attrib->resource ) */
-            } /* END if(attrib) */
-
-          if (set_resources(&attrib, optarg, (pass == 0)) != 0)
-            {                                                                  
-            sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg); 
-            errflg++;
-            }
-
-
-          if (strstr(optarg, "walltime") != NULL)
-            {
-
-            struct attrl *attr;
-            char   *ptr;
-
-            /* if walltime range specified, break into minwclimit and walltime resources */
-
-            for (attr = attrib;attr != NULL;attr = attr->next)
-              {
-              if (!strcmp(attr->name, "walltime"))
-                {
-                if ((ptr = strchr(attr->value, '-')))
-                  {
-
-                  *ptr = '\0';
-
-                  ptr++;
-
-                  /* set minwclimit to min walltime range value */
-
-                  snprintf(tmpLine, sizeof(tmpLine), "minwclimit=%s",
-                           attr->value);
-
-                  if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
-                    {
-                    sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
-                    strcat(PBS_ERROR_MSG, tmp_err_msg);
-                    errflg++;
-                    }
-
-                  /* set walltime to max walltime range value */
-
-                  strcpy(tmpLine, ptr);
-
-                  strcpy(attr->value, tmpLine);
-                  }
-
-                break;
-                }
-              }  /* END for (attr) */
-            }
-
-        break;
-
-      case 'm':
-
-        if_cmd_line(m_opt)
-          {
-          /* FORMAT: {a|b|e|n} */
-
-          m_opt = passet;
-
-          while (isspace((int)*optarg))
-            optarg++;
-
-          if (strlen(optarg) == 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          if (strcmp(optarg, "n") != 0)
-            {
-            pc = optarg;
-
-            while (*pc)
-              {
-              if ((*pc != 'a') && (*pc != 'b') && (*pc != 'e'))
-                {
-                sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-                errflg++;
-
-                break;
-                }
-
-              pc++;
-              }
-            }    /* END if (strcmp(optarg,"n") != 0) */
-
-          set_attr(&attrib, ATTR_m, optarg);
-          }
-
-        break;
-
-      case 'M':
-
-        if_cmd_line(M_opt)
-          {
-          M_opt = passet;
-
-          if (parse_at_list(optarg, FALSE, FALSE))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -M value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_M, optarg);
-          }
-
-        break;
-
-      case 'N':
-
-        if_cmd_line(N_opt)
-          {
-          N_opt = passet;
-
-          /* NOTE:  did enforce alpha start previously - relax this constraint
-                    allowing numeric job names (CRI - 6/26/07) */
-          if (check_job_name(optarg, 0) == 0)
-            {
-            set_attr(&attrib, ATTR_N, optarg);
-            }
-          else
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -N value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-            }
-          }
-
-        break;
-
-      case 'o':
-
-        if_cmd_line(o_opt)
-          {
-          int rc = 0;
-          o_opt = passet;
-
-          if (pbs_submit_host[0] != '\0')
-            rc = prepare_path(optarg,path_out,pbs_submit_host);
-          else
-            rc = prepare_path(optarg,path_out,NULL);
-
-          if ((rc == 0) || (rc == 3))
-            {
-            set_attr(&attrib, ATTR_o, path_out);
-            }
-          else
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -o value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-            }
-          }
-
-        break;
-
-      case 'p':
-
-        if_cmd_line(p_opt)
-          {
-          p_opt = passet;
-
-          while (isspace((int)*optarg))
-            optarg++;
-
-          pc = optarg;
-
-          if ((*pc == '-') || (*pc == '+'))
-            pc++;
-
-          if (strlen(pc) == 0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          while (*pc != '\0')
-            {
-            if (!isdigit(*pc))
-              {
-              sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
-              strcat(PBS_ERROR_MSG, tmp_err_msg);
-              errflg++;
-
-              break;
-              }
-
-            pc++;
-            }
-
-          i = atoi(optarg);
-
-          if ((i < -1024) || (i > 1023))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_p, optarg);
-          }
-
-        break;
-
-#if !defined(PBS_NO_POSIX_VIOLATION)
-
-      case 'P': //TODO: to check pbs version in this case
-       #if 0
-        if (strlen(optarg) > 0)
-          {
-          char *user;
-          char *group;
-          char *colon;
-
-          // make sure this is the super user *
-          if (geteuid() != (uid_t)0)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: Must be the super user to submit a proxy job\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-            }
-          user = optarg;
-          colon = strchr(user,':');
-
-          if (colon != NULL)
-            {
-            group = colon+1;
-            *colon = '\0';
-            set_attr(&attrib, ATTR_g, group);
-            }
-
-          set_attr(&attrib, ATTR_P, user);
-          }
-        else
-          {
-          sprintf(tmp_err_msg, "pbs_submit: -P requires a user name\n");
-          strcat(PBS_ERROR_MSG, tmp_err_msg);
-          errflg++;
-          }
-    #endif 
-        break;
-
-#endif /* PBS_NO_POSIX_VIOLATION */
-
-      case 'q':
-
-        if_cmd_line(q_opt)
-          {
-          q_opt = passet;
-
-          strcpy(destination, optarg);
-          }
-
-        break;
-
-      case 'r':
-
-        if_cmd_line(r_opt)
-          {
-          r_opt = passet;
-
-          if (strlen(optarg) != 1)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          if ((*optarg != 'y') && (*optarg != 'n'))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_r, optarg);
-          }
-
-        break;
-
-      case 'S':
-
-        if_cmd_line(S_opt)
-          {
-          S_opt = passet;
-
-          if (parse_at_list(optarg, TRUE, TRUE))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -S value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_S, optarg);
-          }
-
-        break;
-
-#if !defined(PBS_NO_POSIX_VIOLATION)
-
-      case 't':
-
-        if_cmd_line(t_opt)
-          {
-          t_opt = passet;
-          /* validate before sending request to server? */
-          set_attr(&attrib, ATTR_t, optarg);
-          }
-
-        break;
-
-      case 'T':
-
-        if_cmd_line(T_opt)
-          {
-          T_opt = passet;
-
-          /* validate before sending request to server? */
-
-          set_attr(&attrib,ATTR_jobtype,optarg);
-          }
-
-        break;
-
-#endif
-
-      case 'u':
-
-        if_cmd_line(u_opt)
-          {
-          u_opt = passet;
-
-          if (parse_at_list(optarg, TRUE, FALSE))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: illegal -u value\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          set_attr(&attrib, ATTR_u, optarg);
-          }
-
-        break;
-
-      case 'v':
-
-        if_cmd_line(v_opt)
-          {
-          v_opt = passet;
-
-          if (v_value != NULL)
-            free(v_value);
-
-          v_value = (char *)malloc(strlen(optarg) + 1);
-
-          if (v_value == NULL)
-            {
-            sprintf(tmp_err_msg, "pbs_submit: out of memory\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-
-            break;
-            }
-
-          strcpy(v_value, optarg);
-          }
-
-        break;
-
-      case 'V':
-
-        if_cmd_line(V_opt)
-          {
-          V_opt = passet;
-          }
-
-        break;
-
-      case 'w':
-
-        if (optarg != NULL)
-          {
-          strncpy(PBS_WorkDir, optarg, sizeof(PBS_WorkDir));
-          }
-        else
-          {
-          sprintf(tmp_err_msg, "pbs_submit: illegal -w value\n");
-          strcat(PBS_ERROR_MSG, tmp_err_msg);
-          errflg++;
-          }
-
-        break;
-
-      case 'W':
+        /* remove whitespace */
 
         while (isspace((int)*optarg))
           optarg++;
 
         if (strlen(optarg) == 0)
-          {
-          /* value is empty */
-
-          sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -c value\n");
           strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
 
           break;
+        }
+
+        pc = optarg;
+
+        /* OLD FORMAT:  -c { n | s | c | c=X }
+           * New format: -c [ { <old format items> | <new items> } ',' ]
+           * new items: none | shutdown | checkpoint | name=xyz | dir=xyz | interval=X
+           */
+#if 0 
+
+        if (strlen(optarg) == 1)
+        {
+          if ((*pc != 'n') && (*pc != 's') && (*pc != 'c'))
+          {
+            fprintf(stderr, "qsub: illegal -c value\n");
+
+            errflg++;
+
+            break;
+          }
+        }
+        else
+        {
+          if (strncmp(optarg, "c=", 2) != 0)
+          {
+            fprintf(stderr, "qsub: illegal -c value\n");
+            errflg++;
+
+            break;
           }
 
-        i = get_name_value(optarg, &keyword, &valuewd);
+          pc += 2;
 
-        if (i != 1)
+          if (*pc == '\0')
           {
-          char tmpLine[65536];
+            fprintf(stderr, "qsub: illegal -c value\n");
 
-          /* assume resource manager extension */
+            errflg++;
 
-          snprintf(tmpLine, sizeof(tmpLine), "x=%s",
-                   optarg);
-
-          i = get_name_value(tmpLine, &keyword, &valuewd);
+            break;
           }
+          while (isdigit(*pc))
+            pc++;
 
-        while (i == 1)
+          if (*pc != '\0')
           {
-          if (!strcmp(keyword, ATTR_depend))
+            fprintf(stderr, "qsub: illegal -c value\n");
+            errflg++;
+
+            break;
+          }
+        }
+
+#else
+        nitems = csv_length(optarg);
+
+        for (i = 0; i < nitems; i++)
+        {
+          if ((ptr = csv_nth(optarg, i)) != NULL)
+          {
+            strcpy(search_string, ptr);
+            ptr = strchr(search_string, '=');
+
+            if (ptr)
+              *ptr = 0;
+            else
+              ptr = &search_string[strlen(search_string)];
+
+            while (ptr > search_string && *(ptr - 1) == ' ')
+              *--ptr = 0;
+
+            if (csv_find_string(checkpoint_strings, search_string) == NULL)
             {
-            if_cmd_line(Depend_opt)
-              {
-              int rtn = 0;
-              Depend_opt = passet;
-
-              pdepend = malloc(PBS_DEPEND_LEN);
-
-              if ((pdepend == NULL) ||
-                   (rtn = parse_depend_list(valuewd,pdepend,PBS_DEPEND_LEN)))
-                {
-                /* cannot parse 'depend' value */
-
-                if (rtn == 2)
-                  {
-                  sprintf(tmp_err_msg,"pbs_submit: -W value exceeded max length (%d)\n",
-                    PBS_DEPEND_LEN);
-                  strcat(PBS_ERROR_MSG, tmp_err_msg);
-                  }
-                else
-                  {
-                  sprintf(tmp_err_msg,"pbs_submit: illegal -W value\n");
-                  strcat(PBS_ERROR_MSG, tmp_err_msg);
-                  }
-
-                errflg++;
-
-                break;
-                }
-
-              set_attr(&attrib, ATTR_depend, pdepend);
-              }
-            }
-          else if (!strcmp(keyword, ATTR_stagein))
-            {
-            if_cmd_line(Stagein_opt)
-              {
-              Stagein_opt = passet;
-
-              if (parse_stage_list(valuewd))
-                {
-                /* cannot parse 'stagein' value */
-
-                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-                errflg++;
-
-                break;
-                }
-
-              set_attr(&attrib, ATTR_stagein, valuewd);
-              }
-            }
-          else if (!strcmp(keyword, ATTR_stageout))
-            {
-            if_cmd_line(Stageout_opt)
-              {
-              Stageout_opt = passet;
-
-              if (parse_stage_list(valuewd))
-                {
-                /* cannot parse 'stageout' value */
-
-                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-                errflg++;
-
-                break;
-                }
-
-              set_attr(&attrib, ATTR_stageout, valuewd);
-              }
-            }
-          else if (!strcmp(keyword, ATTR_t))
-            {
-            if_cmd_line(t_opt)
-              {
-              t_opt = passet;
-
-              set_attr(&attrib, ATTR_t, valuewd);
-              }
-            }
-          else if (!strcmp(keyword, ATTR_g))
-            {
-            if_cmd_line(Grouplist_opt)
-              {
-              Grouplist_opt = passet;
-
-              if (parse_at_list(valuewd, TRUE, FALSE))
-                {
-                /* cannot parse 'grouplist' value */
-
-                sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
-                strcat(PBS_ERROR_MSG, tmp_err_msg);
-                errflg++;
-
-                break;
-                }
-
-              set_attr(&attrib, ATTR_g, valuewd);
-              }
-            }
-          else if (!strcmp(keyword, ATTR_umask))
-            {
-            int len;
-            len = strlen(valuewd);
-            if (valuewd[0] == '0')
-              --len;
-
-            if (len > 3)
-              {
-              sprintf(tmp_err_msg, "Invalid umask value, too many digits: %s\n", 
-                      valuewd); 
+              sprintf(tmp_err_msg, "pbs_submit: illegal -c value \"%s\"\n", ptr);
               strcat(PBS_ERROR_MSG, tmp_err_msg);
               errflg++;
-             
-              break;
-              } 
-
-            Umask_opt = passet;
-            if (valuewd[0] == '0')
-              {
-              /* value is octal, convert to decimal */
-              long mask;
-              char buf[4];
-
-              mask = strtol(valuewd, NULL, 8);
-              snprintf(buf, 4, "%ld", mask); 
-
-              /* value is octal, convert to decimal */
-              set_attr(&attrib,ATTR_umask,buf); 
-              }
-            else
-              {
-              set_attr(&attrib,ATTR_umask,valuewd);
-              }
+              goto err;
             }
+          }
+        }
+
+#endif
+        set_attr(&attrib, ATTR_c, optarg);
+      }  /* END if_cmd_line() */
+#endif
+      break;
+
+    case 'C':
+
+      if_cmd_line(C_opt)
+      {
+        C_opt = passet;
+
+        strcpy(dir_prefix, optarg);
+      }
+
+      break;
+
+    case 'd':
+
+      if (optarg != NULL)
+      {
+        if (optarg[0] != '/')
+        {
+          /* make '-d' relative to current directory, not $HOME */
+
+          char tmpPWD[1024];
+
+          char *mypwd;
+
+          mypwd = getcwd(tmpPWD, sizeof(tmpPWD));
+
+          if (mypwd == NULL)
+          {
+            sprintf(tmp_err_msg, "pbs_submit: unable to get cwd: %d (%s)\n",
+                    errno,
+                    strerror(errno));
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+
+            /* we don't want to return yet, but we also don't want a segfault either */
+
+            /* NOTE:  if cwd cannot be resolved, set errflag which will cause exit later */
+
+            tmpPWD[0] = '\0';
+
+            mypwd = tmpPWD;
+          }
+
+          if ((strlen(mypwd) + strlen(optarg)) >= sizeof(PBS_InitDir))
+          {
+            sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
+                    (long)sizeof(PBS_InitDir));
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+          }
+
+          snprintf(PBS_InitDir, sizeof(PBS_InitDir), "%s/%s",
+
+                   mypwd,
+                   optarg);
+        }  /* END if (optarg[0] != '/') */
+        else
+        {
+          if (strlen(optarg) >= sizeof(PBS_InitDir))
+          {
+            sprintf(tmp_err_msg, "pbs_submit: -d arg is longer than %ld characters\n",
+                    (long)sizeof(PBS_InitDir));
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+          }
+
+          strncpy(PBS_InitDir, optarg, sizeof(PBS_InitDir));
+        } /* end optarg[1] != '/' */
+
+        if (validate_path != 0)
+        {
+          /* validate local existence of '-d' working directory */
+          if (chdir(PBS_InitDir) == -1)
+          {
+            sprintf(tmp_err_msg, "pbs_submit: cannot chdir to '%s' errno: %d (%s)\n",
+                    optarg,
+                    errno,
+                    strerror(errno));
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+          }
+        }
+      }    /* END if (optarg != NULL) */
+      else
+      {
+        sprintf(tmp_err_msg, "pbs_submit: illegal -d value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+
+      break;
+
+    case 'D':
+
+      if (optarg != NULL)
+      {
+        strncpy(PBS_RootDir, optarg, sizeof(PBS_RootDir));
+      }
+      else
+      {
+        sprintf(tmp_err_msg, "pbs_submit: illegal -D value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+
+      break;
+
+    case 'e':
+
+      if_cmd_line(e_opt)
+      {
+        int rc = 0;
+        e_opt = passet;
+
+        if (pbs_submit_host[0] != '\0')
+          rc = prepare_path(optarg,path_out,pbs_submit_host);
+        else
+          rc = prepare_path(optarg,path_out,NULL);
+
+        if ((rc == 0) || (rc == 3))
+        {
+          set_attr(&attrib, ATTR_e, path_out);
+        }
+        else
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -e value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+        }
+      }
+      break;
+
+#if !defined(PBS_NO_POSIX_VIOLATION)
+      
+    case 'f': //TODO: to check pbs version in this case
+
 #if 0
-          else if (!strcmp(keyword, ATTR_f)) //TODO: to check pbs version in this case
+      if_cmd_line(f_opt)
+      {
+        f_opt = passet;
+
+        set_attr(&attrib, ATTR_f, "TRUE");
+      }
+#endif
+
+      break;
+      
+#endif
+
+    case 'h':
+
+      if_cmd_line(h_opt)
+      {
+        h_opt = passet;
+
+        set_attr(&attrib, ATTR_h, "u");
+      }
+
+      break;
+
+    case 'j':
+
+      /* FORMAT:  {oe|eo|n} */
+
+      if_cmd_line(j_opt)
+      {
+        j_opt = passet;
+
+        if (strcmp(optarg, "oe") != 0 &&
+            strcmp(optarg, "eo") != 0 &&
+            strcmp(optarg, "n") != 0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -j value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_j, optarg);
+      }
+
+      break;
+
+    case 'k':
+
+      /* FORMAT:  {o|e} */
+
+      if_cmd_line(k_opt)
+      {
+        k_opt = passet;
+
+        if (strcmp(optarg, "o") != 0 &&
+            strcmp(optarg, "e") != 0 &&
+            strcmp(optarg, "oe") != 0 &&
+            strcmp(optarg, "eo") != 0 &&
+            strcmp(optarg, "n") != 0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -k value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_k, optarg);
+      }
+
+      break;
+
+    case 'l':
+
+      l_opt = passet;
+
+      /* a ,procs= in the node spec is illegal. Validate the node spec */
+      if(strstr(optarg, ",procs="))
+      {
+        printf("illegal node spec: %s\n", optarg);
+        return(-1);
+      }
+
+      /* Normal evaluation of batch job resources. */
+      if(attrib)
+      {
+        if(attrib->resource)
+        {
+          /* right here we are looking for a +procs=x in the node spec */
+          char *proc_ptr = NULL;
+          char *patch_ptr;
+          /* struct attrl *proc_attrib = NULL; */
+          char  proc_val[MAX_PROCS_DIGITS + 1];
+          int i = 0;
+
+          proc_val[0] = 0; /* Initialize */
+
+          proc_ptr = strstr(attrib->value, "procs=");
+          if(proc_ptr)
+          {
+            /* we have the procs keyword in the node_spec. We need to take it out and
+                   install it to the Resource_List */
+            patch_ptr = proc_ptr;
+            /* Get the procs value */
+            patch_ptr = strchr(patch_ptr, '=');
+            if(patch_ptr == NULL)
             {
-            
-            switch (valuewd[0])
+              return(-1);
+            }
+            else
+            {
+              patch_ptr++;
+              while(*patch_ptr != '+' && !isspace((int) *patch_ptr) && *patch_ptr != '\0'
+                    && i < MAX_PROCS_DIGITS)
               {
-            
-              /* accept 1, TRUE,true,YES,yes, 0, FALSE, false, NO, no */
-              case 1:
-              case 'T':
-              case 't':
-              case 'Y':
-              case 'y':
-                f_opt = passet;
-                set_attr(&attrib, ATTR_f, "TRUE");
-                break;
-                
-              case 0:
-              case 'F':
-              case 'f':
-              case 'N':
-              case 'n':
-                f_opt = passet;
-                set_attr(&attrib, ATTR_f, "FALSE");
-                break;
-              
-              default:
-                sprintf(tmp_err_msg, "invalid %s value: %s\n", ATTR_f, valuewd);
+                proc_val[i++] = *patch_ptr++;
+              }
+              proc_val[i] = 0;
+
+              /* we have a procs=x in our node spec. Add the resources */
+              sprintf(tmpLine, "procs=%s", proc_val);
+              if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
+              {
+                sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
                 strcat(PBS_ERROR_MSG, tmp_err_msg);
                 errflg++;
               }
-              
             }
-#endif
-          else
+
+            while(*patch_ptr != '+' && !isspace((int) *patch_ptr) && *patch_ptr != '\0')
             {
-            /* generic job attribute specified */
-
-            set_attr(&attrib, keyword, valuewd);
+              patch_ptr++;
             }
 
-          i = get_name_value(NULL, &keyword, &valuewd);
-          }  /* END while (i == 1) */
+            /* remove the procs=x from the node spec.
+                   If patch_ptr has a '+' then the procs=x
+                   is followed by more specificaitons. Remove
+                   the procs=x from the spec and splice the rest
+                   of the specification back together
+                 */
+            if(*patch_ptr == '+')
+            {
 
-        if (i == -1)
+              patch_ptr++;
+              *proc_ptr = 0;
+              strcat(attrib->value, patch_ptr);
+            }
+            else
+            {
+              /* Remove the procs=x from the node spec.
+                     If we are here procs=x is at the end
+                     of the node specification
+                   */
+              if(*(proc_ptr - 1)  == '+')
+              {
+                proc_ptr--;
+              }
+              *proc_ptr = 0;
+            }
+          } /* END if(proc_ptr)*/
+        } /* END if(attrib->resource ) */
+      } /* END if(attrib) */
+
+      if (set_resources(&attrib, optarg, (pass == 0)) != 0)
+      {
+        sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+
+
+      if (strstr(optarg, "walltime") != NULL)
+      {
+
+        struct attrl *attr;
+        char   *ptr;
+
+        /* if walltime range specified, break into minwclimit and walltime resources */
+
+        for (attr = attrib;attr != NULL;attr = attr->next)
+        {
+          if (!strcmp(attr->name, "walltime"))
           {
-          sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+            if ((ptr = strchr(attr->value, '-')))
+            {
+
+              *ptr = '\0';
+
+              ptr++;
+
+              /* set minwclimit to min walltime range value */
+
+              snprintf(tmpLine, sizeof(tmpLine), "minwclimit=%s",
+                       attr->value);
+
+              if (set_resources(&attrib, tmpLine, (pass == 0)) != 0)
+              {
+                sprintf(tmp_err_msg, "pbs_submit: illegal -l value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
+                errflg++;
+              }
+
+              /* set walltime to max walltime range value */
+
+              strcpy(tmpLine, ptr);
+
+              strcpy(attr->value, tmpLine);
+            }
+
+            break;
+          }
+        }  /* END for (attr) */
+      }
+
+      break;
+
+    case 'm':
+
+      if_cmd_line(m_opt)
+      {
+        /* FORMAT: {a|b|e|n} */
+
+        m_opt = passet;
+
+        while (isspace((int)*optarg))
+          optarg++;
+
+        if (strlen(optarg) == 0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
           strcat(PBS_ERROR_MSG, tmp_err_msg);
           errflg++;
+
+          break;
+        }
+
+        if (strcmp(optarg, "n") != 0)
+        {
+          pc = optarg;
+
+          while (*pc)
+          {
+            if ((*pc != 'a') && (*pc != 'b') && (*pc != 'e'))
+            {
+              sprintf(tmp_err_msg, "pbs_submit: illegal -m value\n");
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
+              errflg++;
+
+              break;
+            }
+
+            pc++;
+          }
+        }    /* END if (strcmp(optarg,"n") != 0) */
+
+        set_attr(&attrib, ATTR_m, optarg);
+      }
+
+      break;
+
+    case 'M':
+
+      if_cmd_line(M_opt)
+      {
+        M_opt = passet;
+
+        if (parse_at_list(optarg, FALSE, FALSE))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -M value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_M, optarg);
+      }
+
+      break;
+
+    case 'N':
+
+      if_cmd_line(N_opt)
+      {
+        N_opt = passet;
+
+        /* NOTE:  did enforce alpha start previously - relax this constraint
+                    allowing numeric job names (CRI - 6/26/07) */
+        if (check_job_name(optarg, 0) == 0)
+        {
+          set_attr(&attrib, ATTR_N, optarg);
+        }
+        else
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -N value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+        }
+      }
+
+      break;
+
+    case 'o':
+
+      if_cmd_line(o_opt)
+      {
+        int rc = 0;
+        o_opt = passet;
+
+        if (pbs_submit_host[0] != '\0')
+          rc = prepare_path(optarg,path_out,pbs_submit_host);
+        else
+          rc = prepare_path(optarg,path_out,NULL);
+
+        if ((rc == 0) || (rc == 3))
+        {
+          set_attr(&attrib, ATTR_o, path_out);
+        }
+        else
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -o value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+        }
+      }
+
+      break;
+
+    case 'p':
+
+      if_cmd_line(p_opt)
+      {
+        p_opt = passet;
+
+        while (isspace((int)*optarg))
+          optarg++;
+
+        pc = optarg;
+
+        if ((*pc == '-') || (*pc == '+'))
+          pc++;
+
+        if (strlen(pc) == 0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        while (*pc != '\0')
+        {
+          if (!isdigit(*pc))
+          {
+            sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+
+            break;
           }
 
-        break;
+          pc++;
+        }
+
+        i = atoi(optarg);
+
+        if ((i < -1024) || (i > 1023))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -p value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_p, optarg);
+      }
+
+      break;
 
 #if !defined(PBS_NO_POSIX_VIOLATION)
 
-      case 'X':
+    case 'P': //TODO: to check pbs version in this case
+#if 0
+      if (strlen(optarg) > 0)
+      {
+        char *user;
+        char *group;
+        char *colon;
 
-        if_cmd_line(Forwardx11_opt)
-          {
-          Forwardx11_opt = passet;
+        // make sure this is the super user *
+        if (geteuid() != (uid_t)0)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: Must be the super user to submit a proxy job\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+        }
+        user = optarg;
+        colon = strchr(user,':');
 
-          if (!getenv("DISPLAY"))
-            {
-            sprintf(tmp_err_msg, "pbs_submit: DISPLAY not set\n");
-            strcat(PBS_ERROR_MSG, tmp_err_msg);
-            errflg++;
-            }
-          }
+        if (colon != NULL)
+        {
+          group = colon+1;
+          *colon = '\0';
+          set_attr(&attrib, ATTR_g, group);
+        }
 
-        break;
+        set_attr(&attrib, ATTR_P, user);
+      }
+      else
+      {
+        sprintf(tmp_err_msg, "pbs_submit: -P requires a user name\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+#endif
+      break;
 
-      case 'x':
+#endif /* PBS_NO_POSIX_VIOLATION */
 
-        if_cmd_line(Run_Inter_opt)
-          {
-          Run_Inter_opt = passet;
-          }
+    case 'q':
 
-        break;
-        
+      if_cmd_line(q_opt)
+      {
+        q_opt = passet;
+
+        strcpy(destination, optarg);
+      }
+
+      break;
+
+    case 'r':
+
+      if_cmd_line(r_opt)
+      {
+        r_opt = passet;
+
+        if (strlen(optarg) != 1)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        if ((*optarg != 'y') && (*optarg != 'n'))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -r value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_r, optarg);
+      }
+
+      break;
+
+    case 'S':
+
+      if_cmd_line(S_opt)
+      {
+        S_opt = passet;
+
+        if (parse_at_list(optarg, TRUE, TRUE))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -S value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        set_attr(&attrib, ATTR_S, optarg);
+      }
+
+      break;
+
+#if !defined(PBS_NO_POSIX_VIOLATION)
+
+    case 't':
+
+      if_cmd_line(t_opt)
+      {
+        t_opt = passet;
+        /* validate before sending request to server? */
+        set_attr(&attrib, ATTR_t, optarg);
+      }
+
+      break;
+
+    case 'T':
+
+      if_cmd_line(T_opt)
+      {
+        T_opt = passet;
+
+        /* validate before sending request to server? */
+
+        set_attr(&attrib,ATTR_jobtype,optarg);
+      }
+
+      break;
+
 #endif
 
-      case 'z':
+    case 'u':
 
-        if_cmd_line(z_opt)
-        z_opt = passet;
+      if_cmd_line(u_opt)
+      {
+        u_opt = passet;
 
-        break;
+        if (parse_at_list(optarg, TRUE, FALSE))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: illegal -u value\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
 
-      case '?':
+          break;
+        }
 
-      default :
+        set_attr(&attrib, ATTR_u, optarg);
+      }
 
+      break;
+
+    case 'v':
+
+      if_cmd_line(v_opt)
+      {
+        v_opt = passet;
+
+        if (v_value != NULL)
+          free(v_value);
+
+        v_value = (char *)malloc(strlen(optarg) + 1);
+
+        if (v_value == NULL)
+        {
+          sprintf(tmp_err_msg, "pbs_submit: out of memory\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+
+          break;
+        }
+
+        strcpy(v_value, optarg);
+      }
+
+      break;
+
+    case 'V':
+
+      if_cmd_line(V_opt)
+      {
+        V_opt = passet;
+      }
+
+      break;
+
+    case 'w':
+
+      if (optarg != NULL)
+      {
+        strncpy(PBS_WorkDir, optarg, sizeof(PBS_WorkDir));
+      }
+      else
+      {
+        sprintf(tmp_err_msg, "pbs_submit: illegal -w value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+
+      break;
+
+    case 'W':
+
+      while (isspace((int)*optarg))
+        optarg++;
+
+      if (strlen(optarg) == 0)
+      {
+        /* value is empty */
+
+        sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
         errflg++;
 
         break;
       }
-    }  /* END while ((c = getopt(argc,argv,GETOPT_ARGS)) != EOF) */
+
+      i = get_name_value(optarg, &keyword, &valuewd);
+
+      if (i != 1)
+      {
+        char tmpLine[65536];
+
+        /* assume resource manager extension */
+
+        snprintf(tmpLine, sizeof(tmpLine), "x=%s",
+                 optarg);
+
+        i = get_name_value(tmpLine, &keyword, &valuewd);
+      }
+
+      while (i == 1)
+      {
+        if (!strcmp(keyword, ATTR_depend))
+        {
+          if_cmd_line(Depend_opt)
+          {
+            int rtn = 0;
+            Depend_opt = passet;
+
+            pdepend = malloc(PBS_DEPEND_LEN);
+
+            if ((pdepend == NULL) ||
+                (rtn = parse_depend_list(valuewd,pdepend,PBS_DEPEND_LEN)))
+            {
+              /* cannot parse 'depend' value */
+
+              if (rtn == 2)
+              {
+                sprintf(tmp_err_msg,"pbs_submit: -W value exceeded max length (%d)\n",
+                        PBS_DEPEND_LEN);
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
+              }
+              else
+              {
+                sprintf(tmp_err_msg,"pbs_submit: illegal -W value\n");
+                strcat(PBS_ERROR_MSG, tmp_err_msg);
+              }
+
+              errflg++;
+
+              break;
+            }
+
+            set_attr(&attrib, ATTR_depend, pdepend);
+          }
+        }
+        else if (!strcmp(keyword, ATTR_stagein))
+        {
+          if_cmd_line(Stagein_opt)
+          {
+            Stagein_opt = passet;
+
+            if (parse_stage_list(valuewd))
+            {
+              /* cannot parse 'stagein' value */
+
+              sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
+              errflg++;
+
+              break;
+            }
+
+            set_attr(&attrib, ATTR_stagein, valuewd);
+          }
+        }
+        else if (!strcmp(keyword, ATTR_stageout))
+        {
+          if_cmd_line(Stageout_opt)
+          {
+            Stageout_opt = passet;
+
+            if (parse_stage_list(valuewd))
+            {
+              /* cannot parse 'stageout' value */
+
+              sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
+              errflg++;
+
+              break;
+            }
+
+            set_attr(&attrib, ATTR_stageout, valuewd);
+          }
+        }
+        else if (!strcmp(keyword, ATTR_t))
+        {
+          if_cmd_line(t_opt)
+          {
+            t_opt = passet;
+
+            set_attr(&attrib, ATTR_t, valuewd);
+          }
+        }
+        else if (!strcmp(keyword, ATTR_g))
+        {
+          if_cmd_line(Grouplist_opt)
+          {
+            Grouplist_opt = passet;
+
+            if (parse_at_list(valuewd, TRUE, FALSE))
+            {
+              /* cannot parse 'grouplist' value */
+
+              sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+              strcat(PBS_ERROR_MSG, tmp_err_msg);
+              errflg++;
+
+              break;
+            }
+
+            set_attr(&attrib, ATTR_g, valuewd);
+          }
+        }
+        else if (!strcmp(keyword, ATTR_umask))
+        {
+          int len;
+          len = strlen(valuewd);
+          if (valuewd[0] == '0')
+            --len;
+
+          if (len > 3)
+          {
+            sprintf(tmp_err_msg, "Invalid umask value, too many digits: %s\n",
+                    valuewd);
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+
+            break;
+          }
+
+          Umask_opt = passet;
+          if (valuewd[0] == '0')
+          {
+            /* value is octal, convert to decimal */
+            long mask;
+            char buf[4];
+
+            mask = strtol(valuewd, NULL, 8);
+            snprintf(buf, 4, "%ld", mask);
+
+            /* value is octal, convert to decimal */
+            set_attr(&attrib,ATTR_umask,buf);
+          }
+          else
+          {
+            set_attr(&attrib,ATTR_umask,valuewd);
+          }
+        }
+#if 0
+        else if (!strcmp(keyword, ATTR_f)) //TODO: to check pbs version in this case
+        {
+
+          switch (valuewd[0])
+          {
+
+          /* accept 1, TRUE,true,YES,yes, 0, FALSE, false, NO, no */
+          case 1:
+          case 'T':
+          case 't':
+          case 'Y':
+          case 'y':
+            f_opt = passet;
+            set_attr(&attrib, ATTR_f, "TRUE");
+            break;
+
+          case 0:
+          case 'F':
+          case 'f':
+          case 'N':
+          case 'n':
+            f_opt = passet;
+            set_attr(&attrib, ATTR_f, "FALSE");
+            break;
+
+          default:
+            sprintf(tmp_err_msg, "invalid %s value: %s\n", ATTR_f, valuewd);
+            strcat(PBS_ERROR_MSG, tmp_err_msg);
+            errflg++;
+          }
+
+        }
+#endif
+        else
+        {
+          /* generic job attribute specified */
+
+          set_attr(&attrib, keyword, valuewd);
+        }
+
+        i = get_name_value(NULL, &keyword, &valuewd);
+      }  /* END while (i == 1) */
+
+      if (i == -1)
+      {
+        sprintf(tmp_err_msg, "pbs_submit: illegal -W value\n");
+        strcat(PBS_ERROR_MSG, tmp_err_msg);
+        errflg++;
+      }
+
+      break;
+
+#if !defined(PBS_NO_POSIX_VIOLATION)
+
+    case 'X':
+
+      if_cmd_line(Forwardx11_opt)
+      {
+        Forwardx11_opt = passet;
+
+        if (!getenv("DISPLAY"))
+        {
+          sprintf(tmp_err_msg, "pbs_submit: DISPLAY not set\n");
+          strcat(PBS_ERROR_MSG, tmp_err_msg);
+          errflg++;
+        }
+      }
+
+      break;
+
+    case 'x':
+
+      if_cmd_line(Run_Inter_opt)
+      {
+        Run_Inter_opt = passet;
+      }
+
+      break;
+
+#endif
+
+    case 'z':
+
+      if_cmd_line(z_opt)
+          z_opt = passet;
+
+      break;
+
+    case '?':
+
+    default :
+
+      errflg++;
+
+      break;
+    }
+  }  /* END while ((c = getopt(argc,argv,GETOPT_ARGS)) != EOF) */
 
 err:
 
   if (!errflg && pass)
-    {
+  {
     errflg = (optind != argc);
     
     if (errflg)
@@ -2954,10 +2945,10 @@ err:
         strcat(PBS_ERROR_MSG, argv[optind]);
       strcat(PBS_ERROR_MSG, "\n");
     }
-    }
+  }
 
   return(errflg);
-  }  /* END parse_file() */
+}  /* END parse_file() */
 
 
 
@@ -2970,7 +2961,7 @@ err:
 void
 set_opt_defaults(void)
 
-  {
+{
   if (c_opt == FALSE)
     set_attr(&attrib, ATTR_c, default_ckpt);
 
@@ -2990,34 +2981,34 @@ set_opt_defaults(void)
     set_attr(&attrib, ATTR_p, "0");
 
   if (r_opt == FALSE)
-    {
+  {
     if (rerunnable_by_default)
       set_attr(&attrib, ATTR_r, "TRUE");
     else
       set_attr(&attrib, ATTR_r, "FALSE");
-    }
+  }
   
   if (f_opt == FALSE) //TODO: to check pbs vesrion in this case
 #if 0  
-    {
+  {
     if (fault_tolerant_by_default)
       set_attr(&attrib, ATTR_f, "TRUE");
     else
       set_attr(&attrib, ATTR_f, "FALSE");
-    }
+  }
 #endif
   return;
-  }  /* END set_opt_defaults() */
+}  /* END set_opt_defaults() */
 
 
 #define TCONST_CFGFILE "torque.cfg"
 
 int load_config(
 
-  char *config_buf, /* O */
-  int   BufSize)    /* I */
+    char *config_buf, /* O */
+    int   BufSize)    /* I */
 
-  {
+{
   FILE *config_stream;
 
   char home_dir[MAXPATHLEN];
@@ -3027,11 +3018,11 @@ int load_config(
   char *ptr;
 
   if (length >= MAXPATHLEN)
-    {
+  {
     /* FAILURE */
 
     return(1);
-    }
+  }
 
   home_dir[0] = '\0';
 
@@ -3042,37 +3033,37 @@ int load_config(
   strcat(home_dir, TCONST_CFGFILE);
 
   if ((config_stream = fopen(home_dir, "r")) == NULL)
-    {
+  {
     /* FAILURE */
 
     return(1);
-    }
+  }
 
   if ((fread(config_buf, BufSize, 1, config_stream) <= 0) && (ferror(config_stream) != 0))
-    {
-     fclose(config_stream);
+  {
+    fclose(config_stream);
     /* FAILURE */
     
     return(1);
-    }
+  }
 
   ptr = config_buf;
 
   while ((ptr = strchr(ptr, '#')) != NULL)
-    {
+  {
     ptr++;
 
     for (;(*ptr != '\0') && (*ptr != '\n');ptr++)
-      {
+    {
       *ptr = ' ';
-      }
-    }   /* END while ((ptr = strchr(ptr,'#')) != NULL) */
+    }
+  }   /* END while ((ptr = strchr(ptr,'#')) != NULL) */
 
-   fclose(config_stream);
+  fclose(config_stream);
   /* SUCCESS */
 
   return 0;
-  }  /* END load_config() */
+}  /* END load_config() */
 
 
 
@@ -3080,10 +3071,10 @@ int load_config(
 
 char *get_param(
 
-  char *param,      /* I */
-  char *config_buf) /* I */
+    char *param,      /* I */
+    char *config_buf) /* I */
 
-  {
+{
   char tmpLine[1024];
 
   char *param_val;
@@ -3098,21 +3089,21 @@ char *get_param(
   /* NOTE: currently case-sensitive (FIXME) */
 
   if ((param_val = strstr(config_buf, param)) == NULL)
-    {
+  {
     return(NULL);
-    }
+  }
 
   strncpy(tmpLine, param_val, sizeof(tmpLine));
 
   strtok(tmpLine, " \t\n");
 
   if ((new_val = (char *)strtok(NULL, "\t \n")) == NULL)
-    {
+  {
     return(NULL);
-    }
+  }
 
   return(new_val);
-  }  /* END get_param() */
+}  /* END get_param() */
 
 
 
@@ -3120,7 +3111,7 @@ char *get_param(
 
 
 /** 
- * pbs_prepare_script  
+ * pbs_prepare_script
  *
  * @see parse_file() - child
  */
@@ -3215,7 +3206,7 @@ int pbs_prepare_script(
   if (getenv("PBSDEBUG") != NULL)
   {
     sprintf(PBS_ERROR_MSG, "xauth_path=%s\n",
-        xauth_path);
+            xauth_path);
   }
 
   if (load_config(config_buf, sizeof(config_buf)) == 0)
@@ -3363,7 +3354,7 @@ int pbs_prepare_script(
 
       if (getenv("PBSDEBUG") != NULL)
         sprintf(PBS_ERROR_MSG, "x11auth string: %s\n",
-            x11authstr);
+                x11authstr);
     }
     else
     {
@@ -3379,11 +3370,11 @@ int pbs_prepare_script(
       set_attr(&attrib, ATTR_N, "STDIN");
 
     if ((errflg = get_script(
-            argc,
-            argv,
-            stdin,
-            script_tmp,    /* O */
-            set_dir_prefix(dir_prefix, C_opt))) > 0)
+           argc,
+           argv,
+           stdin,
+           script_tmp,    /* O */
+           set_dir_prefix(dir_prefix, C_opt))) > 0)
     {
       unlink(script_tmp);
       return 1;
@@ -3401,8 +3392,8 @@ int pbs_prepare_script(
     if (stat(script, &statbuf) < 0)
     {
       sprintf(PBS_ERROR_MSG, "pbs_submit: script file '%s' cannot be loaded - %s\n",
-          script,
-          strerror(errno));
+              script,
+              strerror(errno));
       return 1;
     }
 
@@ -3432,11 +3423,11 @@ int pbs_prepare_script(
       }
 
       if ((errflg = get_script(
-              argc,
-              argv,
-              f,
-              script_tmp, /* O */
-              set_dir_prefix(dir_prefix, C_opt))) > 0)
+             argc,
+             argv,
+             f,
+             script_tmp, /* O */
+             set_dir_prefix(dir_prefix, C_opt))) > 0)
       {
         unlink(script_tmp);
         return 1;
@@ -3464,7 +3455,7 @@ int pbs_prepare_script(
   if (parse_destination_id(destination, &q_n_out, &s_n_out))
   {
     sprintf(PBS_ERROR_MSG, "pbs_submit: illegally formed destination: %s\n",
-        destination);
+            destination);
 
     unlink(script_tmp);
     return 2;
@@ -3485,14 +3476,14 @@ int pbs_prepare_script(
   if (connect <= 0)
   {
     sprintf(PBS_ERROR_MSG, "pbs_submit: cannot connect to server %s (errno=%d) %s\n",
-        pbs_server,
-        pbs_errno,
-        pbs_strerror(pbs_errno));
+            pbs_server,
+            pbs_errno,
+            pbs_strerror(pbs_errno));
 
     if (getenv("PBSDEBUG") != NULL)
     {
       sprintf(PBS_ERROR_MSG, "pbs_submit: pbs_server daemon may not be running on host %s or hostname in file '$TORQUEHOME/server_name' may be incorrect)\n",
-          pbs_server);
+              pbs_server);
     }
 
     unlink(script_tmp);
@@ -3512,7 +3503,7 @@ int pbs_prepare_script(
   strcpy(destination_cpy, destination);
   strcpy(server_out_cpy, server_out);
 
-  *attrib_cpy = attrib; 
+  *attrib_cpy = attrib;
 
   return 0;
 }  

@@ -55,7 +55,6 @@ JobServer::JobServer(const std::string& authKey,
       mbatchVersion = "";
     }
   }
-
   if (! msedConfig->getConfigValue<int>(vishnu::STANDALONE, mstandaloneSed)) {
     mstandaloneSed = false;
   }
@@ -145,7 +144,7 @@ int JobServer::submitJob(std::string& scriptContent,
  * @brief Submit job using ssh mechanism
  * @param action action The type of action (cancel, submit...)
  * @param scriptPath The path of the script to executed
- * @param job The target job concerned by the action
+ * @param baseJobInfo The base job info
  * @param options: an object containing options
  * @param batchType The batch type
  * @param batchVersion The batch version
@@ -154,7 +153,7 @@ void
 JobServer::handleSshBatchExec(int action,
                               const std::string& scriptPath,
                               JsonObject* options,
-                              TMS_Data::Job& job,
+                              TMS_Data::Job& baseJobInfo,
                               int batchType,
                               const std::string& batchVersion) {
 
@@ -162,32 +161,32 @@ JobServer::handleSshBatchExec(int action,
                         muserSessionInfo.machine_name,
                         static_cast<BatchType>(batchType),
                         batchVersion, // ignored for POSIX backend
-                        JsonObject::serialize(job),
+                        JsonObject::serialize(baseJobInfo),
                         options->encode());
 
   sshJobExec.setDebugLevel(mdebugLevel);
+  boost::shared_ptr<TMS_Data::ListJobs> jobSteps;
 
   switch(action) {
   case SubmitBatchAction:
-    sshJobExec.sshexec("SUBMIT", scriptPath);
+    sshJobExec.sshexec("SUBMIT", scriptPath, jobSteps);
     // Submission with deltacloud doesn't make copy of the script
     // So the script needs to be kept until the end of the execution
     // Clean the temporary script if not deltacloud
     if (mbatchType != DELTACLOUD && mdebugLevel) {
       vishnu::deleteFile(scriptPath.c_str());
     }
-    job = sshJobExec.getResultJob();
+    updateAndSaveJobSteps(*(jobSteps.get()), baseJobInfo);
     break;
   case CancelBatchAction:
-    sshJobExec.sshexec("CANCEL");
-    job.setStatus(vishnu::STATE_CANCELLED);
+    sshJobExec.sshexec("CANCEL", "", jobSteps);
+    finalizeExecution(action, *(jobSteps.get()->getJobs().get(0)));
     break;
   default:
     throw TMSVishnuException(ERRCODE_INVALID_PARAM, "unknown batch action");
     break;
   }
 
-  finalizeExecution(action, job);
 }
 
 /**
@@ -195,7 +194,7 @@ JobServer::handleSshBatchExec(int action,
  * @param action action The type of action (cancel, submit...)
  * @param scriptPath The path of the script to executed
  * @param options: an object containing options
- * @param requestJobInfo The default information provided to the job
+ * @param baseJobInfo The default information provided to the job
  * @param batchType The batch type. Ignored for POSIX backend
  * @param batchVersion The batch version. Ignored for POSIX backend
 */
@@ -203,10 +202,9 @@ void
 JobServer::handleNativeBatchExec(int action,
                                  const std::string& scriptPath,
                                  JsonObject* options,
-                                 TMS_Data::Job& requestJobInfo,
+                                 TMS_Data::Job& baseJobInfo,
                                  int batchType,
                                  const std::string& batchVersion) {
-
   BatchFactory factory;
   BatchServer* batchServer = factory.getBatchServerInstance(batchType, batchVersion);
   if (! batchServer) {
@@ -228,44 +226,26 @@ JobServer::handleNativeBatchExec(int action,
       handlerExitCode = 0;
       switch(action) {
       case SubmitBatchAction: {
-        std::vector<TMS_Data::Job> jobSteps;
+        TMS_Data::ListJobs jobSteps;
         handlerExitCode = batchServer->submit(scriptPath, options->getSubmitOptions(), jobSteps, NULL);
-
-        int stepCount = jobSteps.size();
-        if (stepCount == 1) {
-          jobSteps[0].setSubmitMachineId(requestJobInfo.getSubmitMachineId());
-          jobSteps[0].setWorkId(requestJobInfo.getWorkId());
-          jobSteps[0].setJobPath(requestJobInfo.getJobPath());
-          jobSteps[0].setOwner(requestJobInfo.getOwner());
-          jobSteps[0].setJobId(requestJobInfo.getJobId());
-          finalizeExecution(action, jobSteps[0]);
-        } else {
-          for (int step = 0; step < stepCount; ++step) {
-            jobSteps[step].setSubmitMachineId(requestJobInfo.getSubmitMachineId());
-            jobSteps[step].setWorkId(requestJobInfo.getWorkId());
-            jobSteps[step].setJobPath(requestJobInfo.getJobPath());
-            jobSteps[step].setOwner(requestJobInfo.getOwner());
-            jobSteps[step].setJobId(boost::str(boost::format("%1%.%2%") % requestJobInfo.getJobId() % step));
-            finalizeExecution(action, jobSteps[step]);
-          }
-        }
+        updateAndSaveJobSteps(jobSteps, baseJobInfo);
       }
         break;
       case CancelBatchAction:
         if (mbatchType == DELTACLOUD) {
-          handlerExitCode = batchServer->cancel(requestJobInfo.getJobId()+"@"+requestJobInfo.getVmId());
+          handlerExitCode = batchServer->cancel(baseJobInfo.getJobId()+"@"+baseJobInfo.getVmId());
         } else {
-          handlerExitCode = batchServer->cancel(requestJobInfo.getBatchJobId());
+          handlerExitCode = batchServer->cancel(baseJobInfo.getBatchJobId());
         }
-        requestJobInfo.setStatus(vishnu::STATE_CANCELLED);
-        finalizeExecution(action, requestJobInfo);
+        baseJobInfo.setStatus(vishnu::STATE_CANCELLED);
+        finalizeExecution(action, baseJobInfo);
         break;
       default:
         throw TMSVishnuException(ERRCODE_INVALID_PARAM, "Unknown batch action");
         break;
       }
     } catch(const VishnuException & ex) {
-      handlerExitCode = -1;
+      handlerExitCode = ex.getTypeI();
       LOG((boost::format("[ERROR] %1%") % ex.what()).str(), 4);
     }
     exit(handlerExitCode);
@@ -273,7 +253,7 @@ JobServer::handleNativeBatchExec(int action,
     int retCode;
     waitpid(pid, &retCode, 0);
     if (! WIFEXITED(retCode) || WEXITSTATUS(retCode) != 0) {
-      throw TMSVishnuException(ERRCODE_RUNTIME_ERROR, "Batch operation failed");
+      throw TMSVishnuException(retCode, "Batch operation failed");
     }
   }
 }
@@ -815,6 +795,36 @@ JobServer::processScript(std::string& scriptContent,
     vishnu::replaceAllOccurences(scriptContent, "${VISHNU_BATCHJOB_NODEFILE}", mjob.getOutputDir()+"/NODEFILE");
   }
   return convertedScript;
+}
+
+
+/**
+ * @brief Update the result job steps with the base information of the job and save them
+ * @param jobSteps The list of steps
+ * @param baseJobInfo The base job info
+ */
+void
+JobServer::updateAndSaveJobSteps(TMS_Data::ListJobs& jobSteps, TMS_Data::Job& baseJobInfo)
+{
+  if (jobSteps.getJobs().size() == 1) {
+    TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(0);
+    currentJobPtr->setSubmitMachineId(baseJobInfo.getSubmitMachineId());
+    currentJobPtr->setWorkId(baseJobInfo.getWorkId());
+    currentJobPtr->setJobPath(baseJobInfo.getJobPath());
+    currentJobPtr->setOwner(baseJobInfo.getOwner());
+    currentJobPtr->setJobId(baseJobInfo.getJobId());
+    finalizeExecution(SubmitBatchAction, *currentJobPtr);
+  } else {
+    for (int step = 0; step < jobSteps.getJobs().size(); ++step) {
+      TMS_Data::Job_ptr currentJobPtr = jobSteps.getJobs().get(step);
+      currentJobPtr->setSubmitMachineId(baseJobInfo.getSubmitMachineId());
+      currentJobPtr->setWorkId(baseJobInfo.getWorkId());
+      currentJobPtr->setJobPath(baseJobInfo.getJobPath());
+      currentJobPtr->setOwner(baseJobInfo.getOwner());
+      currentJobPtr->setJobId(boost::str(boost::format("%1%.%2%") % baseJobInfo.getJobId() % step));
+      finalizeExecution(SubmitBatchAction, *currentJobPtr);
+    }
+  }
 }
 
 /**

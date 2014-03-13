@@ -145,16 +145,19 @@ vishnu::string_to_time_t(const std::string& ts) {
   namespace bps= boost::posix_time;
   namespace bg=boost::gregorian;
 
-  bps::ptime t;
-
-  if (std::string::npos == ts.find(":")) {
-    t = bps::ptime(bg::from_string(ts));
-  } else {
-    t = bps::ptime (bps::time_from_string(ts));
-  }
-
+  bps::ptime result;
   bps::ptime epoch(bg::date(1970,1,1));
-  bps::time_duration::sec_type x = (t - epoch).total_seconds();
+
+  try {
+    if (std::string::npos == ts.find(":")) {
+      result = bps::ptime(bg::from_string(ts));
+    } else {
+      result = bps::ptime(bps::time_from_string(ts));
+    }
+  } catch (...) {
+    result = epoch;
+  }
+  bps::time_duration::sec_type x = (result - epoch).total_seconds();
   return std::time_t(x);
 }
 
@@ -173,8 +176,6 @@ vishnu::string_lc_to_utc_time_t(const std::string& ts,
   namespace bps= boost::posix_time;
   namespace bg=boost::gregorian;
   namespace blt=boost::local_time;
-
-  std::cout << " convert " << ts << " " << utcOffset << " in utc time\n";
 
   boost::local_time::time_zone_ptr tz(new boost::local_time::posix_time_zone(utcOffset));
 

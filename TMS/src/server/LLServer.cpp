@@ -30,7 +30,7 @@ LLServer::LLServer():BatchServer() {
 int
 LLServer::submit(const std::string& scriptPath,
                  const TMS_Data::SubmitOptions& options,
-                 std::vector<TMS_Data::Job>& jobSteps, char** envp) {
+                 TMS_Data::ListJobs& jobSteps, char** envp) {
 
   //Puts the options values into the scriptPath
   replaceEnvVariables(scriptPath.c_str());
@@ -43,39 +43,39 @@ LLServer::submit(const std::string& scriptPath,
   }
 
   for (int step = 0; step < llJobInfo.steps; ++step) {
-    TMS_Data::Job currentJobStep;
-    std::string stepJobId = boost::str(boost::format("%1%.%2%.%3%")
-                                       % (llJobInfo.step_list[step])->id.from_host
-                                       % (llJobInfo.step_list[step])->id.cluster
-                                       % (llJobInfo.step_list[step])->id.proc);
-    currentJobStep.setBatchJobId(stepJobId);
-    currentJobStep.setStatus(convertLLStateToVishnuState(llJobInfo.step_list[step]->status));
-    currentJobStep.setJobName(std::string(llJobInfo.job_name));
-    currentJobStep.setSubmitDate((llJobInfo.step_list[step])->q_date);
-    currentJobStep.setEndDate((llJobInfo.step_list[step])->completion_date);
-    currentJobStep.setOwner(std::string(llJobInfo.owner));
-    currentJobStep.setJobQueue(std::string((llJobInfo.step_list[step])->stepclass));
-    currentJobStep.setWallClockLimit(llJobInfo.step_list[step]->limits.soft_wall_clock_limit);
-    currentJobStep.setGroupName(std::string((llJobInfo.step_list[step])->group_name));
-    currentJobStep.setJobDescription(std::string((llJobInfo.step_list[step])->comment));
-    currentJobStep.setJobPrio(convertLLPrioToVishnuPrio((llJobInfo.step_list[step])->prio));
-    currentJobStep.setMemLimit(llJobInfo.step_list[step]->memory_requested);
-    currentJobStep.setNbCpus(llJobInfo.step_list[step]->cpus_per_core);
-    currentJobStep.setNbNodes(llJobInfo.step_list[step]->max_processors);
-    currentJobStep.setJobWorkingDir(llJobInfo.step_list[step]->iwd);
-    currentJobStep.setOutputPath(boost::str(boost::format("%1%/%2%")
-                                            % (llJobInfo.step_list[step])->iwd
-                                            % (llJobInfo.step_list[step])->out));
-    currentJobStep.setErrorPath(boost::str(boost::format("%1%/%2%")
-                                           % (llJobInfo.step_list[step])->iwd
-                                           % (llJobInfo.step_list[step])->err));
-    if (currentJobStep.getNbNodes() > 0) {
-      currentJobStep.setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
-                                                        % currentJobStep.getNbNodes()
-                                                        % currentJobStep.getNbCpus()));
+    TMS_Data::Job_ptr currentJobStepPtr = new TMS_Data::Job();
+    std::string jobStepId = boost::str(boost::format("%1%.%2%.%3%")
+                                       % llJobInfo.step_list[step]->id.from_host
+                                       % llJobInfo.step_list[step]->id.cluster
+                                       % llJobInfo.step_list[step]->id.proc);
+    currentJobStepPtr->setBatchJobId(jobStepId);
+    currentJobStepPtr->setStatus(convertLLStateToVishnuState(llJobInfo.step_list[step]->status));
+    currentJobStepPtr->setJobName(std::string(llJobInfo.job_name));
+    currentJobStepPtr->setSubmitDate(llJobInfo.step_list[step]->q_date);
+    currentJobStepPtr->setEndDate(llJobInfo.step_list[step]->completion_date);
+    currentJobStepPtr->setOwner(std::string(llJobInfo.owner));
+    currentJobStepPtr->setJobQueue(std::string(llJobInfo.step_list[step]->stepclass));
+    currentJobStepPtr->setWallClockLimit(llJobInfo.step_list[step]->limits.soft_wall_clock_limit);
+    currentJobStepPtr->setGroupName(std::string(llJobInfo.step_list[step]->group_name));
+    currentJobStepPtr->setJobDescription(std::string(llJobInfo.step_list[step]->comment));
+    currentJobStepPtr->setJobPrio(convertLLPrioToVishnuPrio(llJobInfo.step_list[step]->prio));
+    currentJobStepPtr->setMemLimit(llJobInfo.step_list[step]->memory_requested);
+    currentJobStepPtr->setNbCpus(llJobInfo.step_list[step]->cpus_per_core);
+    currentJobStepPtr->setNbNodes(llJobInfo.step_list[step]->max_processors);
+    currentJobStepPtr->setJobWorkingDir(llJobInfo.step_list[step]->iwd);
+    currentJobStepPtr->setOutputPath(boost::str(boost::format("%1%/%2%")
+                                                % llJobInfo.step_list[step]->iwd
+                                                % llJobInfo.step_list[step]->out));
+    currentJobStepPtr->setErrorPath(boost::str(boost::format("%1%/%2%")
+                                               % llJobInfo.step_list[step]->iwd
+                                               % llJobInfo.step_list[step]->err));
+    if (currentJobStepPtr->getNbNodes() > 0) {
+      currentJobStepPtr->setNbNodesAndCpuPerNode(boost::str(boost::format("%1%:%2%")
+                                                            % currentJobStepPtr->getNbNodes()
+                                                            % currentJobStepPtr->getNbCpus()));
     }
 
-    jobSteps.push_back(currentJobStep);
+    jobSteps.getJobs().push_back(currentJobStepPtr);
   }
 
   llfree_job_info(&llJobInfo, LL_JOB_VERSION);

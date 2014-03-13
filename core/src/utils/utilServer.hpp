@@ -326,6 +326,12 @@ namespace vishnu {
     return true;
   }
 
+  template<class T>
+  std::string emfSerializer(T* objectPtr) {
+    ::ecorecpp::serializer::serializer _ser;
+    return _ser.serialize_str(const_cast<T*>(objectPtr));
+  }
+
   /**
    * \brief Function to parse a system error message
    * \param errorMsg the error message

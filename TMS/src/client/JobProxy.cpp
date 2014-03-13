@@ -53,7 +53,7 @@ JobProxy::submitJob(const std::string& scriptPath,
   }
 
   // now create and initialize the service profile
-  string serviceName = (boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId).str();
+  string serviceName = boost::str(boost::format("%1%@%2%")% SERVICES_TMS[JOBSUBMIT] % mmachineId);
 
   // Send input files
   FMS_Data::CpFileOptions copts;
@@ -97,10 +97,9 @@ JobProxy::submitJob(const std::string& scriptPath,
 int
 JobProxy::cancelJob(const TMS_Data::CancelOptions& options) {
 
-  std::string serviceName = (boost::format("%1%@%2%")
+  std::string serviceName = boost::str(boost::format("%1%@%2%")
                              % SERVICES_TMS[JOBCANCEL]
-                             % mmachineId
-                             ).str();
+                             % mmachineId);
 
   // Set RPC parameters
   JsonObject optionsData(options);
@@ -132,10 +131,9 @@ JobProxy::getJobInfo(const std::string& jobId) {
   loadCriterion.setLoadType(NBJOBS);
   mmachineId = vishnu::findMachine(msessionKey, loadCriterion);
 
-  std::string serviceName = (boost::format("%1%@%2%")
+  std::string serviceName = boost::str(boost::format("%1%@%2%")
                              % SERVICES_TMS[JOBINFO]
-                             % mmachineId
-                             ).str();
+                             % mmachineId);
 
   // Now prepare the service call
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);

@@ -29,7 +29,6 @@ int headFile(diet_profile_t* profile) {
   std::string host = "";
   std::string sessionKey = "";
   std::string optionsSerialized = "";
-  std::string result = "";
   std::string cmd = "";
 
   diet_string_get(profile, 0, sessionKey);
@@ -78,7 +77,7 @@ int headFile(diet_profile_t* profile) {
     boost::scoped_ptr<File> file (ff.getFileServer(sessionServer,localPath, acLogin, userKey));
 
     FMS_Data::HeadOfFileOptions_ptr options_ptr= NULL;
-    if(!vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
+    if(! vishnu::parseEmfObject(optionsSerialized, options_ptr) ) {
       throw SystemException(ERRCODE_INVDATA, "solve_Head: HeadOfFileOptions object is not well built");
     }
 
