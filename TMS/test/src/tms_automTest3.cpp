@@ -256,61 +256,6 @@ BOOST_AUTO_TEST_CASE(get_job_output_bad_sessionKey)
 
 //------------------------------------------------------------------------------------
 
-// get job out : bad parameters: bad machineId
-
-
-BOOST_AUTO_TEST_CASE(get_job_output_bad_machineId)
-{
-
-  BOOST_TEST_MESSAGE("Testing normal bad machineId for the get jobs output function corresponding to use case T2.6" );
-
-
-  VishnuConnexion vc(m_test_tms_user_vishnu_login, m_test_tms_user_vishnu_pwd);
-
-  // get the session key and the machine identifier
-
-  string sessionKey=vc.getConnexion();
-
-  for(int i = 0; i < m_test_tms_machines.size();++i)
-  {
-
-    std::string machineId= m_test_tms_machines.at(i).machine_id;
-
-    try {
-      //Setting submitjob parameters
-
-      const std::string scriptFilePath=generateTmpScript(m_test_tms_machines.at(i).batch_name, "fast");
-      Job jobInfo;
-      SubmitOptions options;
-      options.setMachine(machineId);
-      BOOST_REQUIRE(submitJob(sessionKey, scriptFilePath, jobInfo, options)==0  );
-
-      BOOST_TEST_MESSAGE("************ The job identifier is " << jobInfo.getJobId() );
-
-      JobResult outputInfos;
-      JobOutputOptions outputOpts;
-      outputOpts.setMachineId("bad machineId");
-      outputOpts.setOutputDir(m_test_tms_working_dir);
-
-      BOOST_CHECK_THROW(getJobOutput(sessionKey, jobInfo.getJobId(), outputInfos, outputOpts), VishnuException);
-
-      BOOST_TEST_MESSAGE("*********************** get jobs output : bad machine id ok!!!!*****************************");
-
-      //  Clean up: delete the submitted job
-      CancelOptions cancelOpts;
-      cancelOpts.setJobId(jobInfo.getJobId());
-      BOOST_REQUIRE(cancelJob(sessionKey, cancelOpts) == 0);
-      bfs::path script(scriptFilePath.c_str());
-      BOOST_CHECK(bfs::remove_all(script)==1);
-    } catch (VishnuException& e) {
-      BOOST_MESSAGE(e.what());
-      BOOST_CHECK(false);
-    }
-  }
-}
-
-//------------------------------------------------------------------------------------
-
 // get job out : try to get the output of non terminated job
 
 BOOST_AUTO_TEST_CASE(get_job_output_unterminated)
