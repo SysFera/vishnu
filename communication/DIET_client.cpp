@@ -185,7 +185,17 @@ diet_call(diet_profile_t* prof) {
     if (!validMid) {
       uri.clear();
     }
-  } catch (const std::out_of_range& err) {}
+  } catch (const std::out_of_range& err) {
+    if (param == vishnu::TMS_URIADDR){
+      BOOST_FOREACH(const std::string& v, uriv) {
+        boost::algorithm::split(tokens, v, boost::algorithm::is_space());
+        if (tokens.size() > 1) {
+          uri = tokens[0];
+          break;
+        }
+      }
+    }
+  }
 
   config.getConfigValues(vishnu::DISP_URIADDR, dispv);
   if (!dispv.empty()) {
@@ -386,6 +396,9 @@ extractMachineServersFromLine(const std::vector<std::string>& uriv, std::vector<
     BOOST_FOREACH(const std::string& w, tokens) {
       boost::algorithm::split(tokens2, w, boost::algorithm::is_space());
       uri = tokens2[0];
+      if ( tokens2.size()>1 ){
+        tmp.push_back("heartbeattmssed@"+tokens2[1]);
+      }
       allServers.push_back(boost::make_shared<Server>(module, tmp, uri));
     }
     tokens.clear();
