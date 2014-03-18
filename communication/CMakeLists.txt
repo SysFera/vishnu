@@ -63,4 +63,3 @@ if(COMPILE_DISPATCHER)
   install(TARGETS dispatcher DESTINATION ${SBIN_INSTALL_DIR})
 endif(COMPILE_DISPATCHER)
 
-add_subdirectory(pinger)
