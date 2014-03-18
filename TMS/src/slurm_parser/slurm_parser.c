@@ -2,7 +2,7 @@
 #include <sys/wait.h>
 #include <netinet/in.h>
 #include <sys/types.h>
-
+#include <sys/resource.h>
 #include <string.h>
 
 #include "slurm_parser.h"
