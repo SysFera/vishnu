@@ -241,3 +241,6 @@ timeout=120
 # you'll get. Default is 0.
 #
 # debugLevel=0
+
+# subscribe(M<FMS,TMS,UMS>): If not 0, the servers will try to register in the dispatcher
+subscribe=0
