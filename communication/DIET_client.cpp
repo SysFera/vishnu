@@ -186,7 +186,7 @@ diet_call(diet_profile_t* prof) {
       uri.clear();
     }
   } catch (const std::out_of_range& err) {
-    if (param == vishnu::TMS_URIADDR){
+    if (param == vishnu::SED_URIADDR){
       BOOST_FOREACH(const std::string& v, uriv) {
         boost::algorithm::split(tokens, v, boost::algorithm::is_space());
         if (tokens.size() > 1) {

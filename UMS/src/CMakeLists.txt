@@ -12,6 +12,8 @@ include_directories(client api
   ${COMMUNICATION_INCLUDE_DIR}
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${LIBJANSSON_INCLUDE_DIR}
+  ${REGISTRY_SOURCE_DIR}
+  ${UMS_SED_SOURCE_DIR}
   )
 
 set(client_SRCS client/SessionProxy.cpp

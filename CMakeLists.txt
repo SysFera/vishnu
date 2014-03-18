@@ -394,3 +394,4 @@ endif (COMPILE_CLIENT_TMS OR COMPILE_SERVER_TMS)
 # module that adds an uninstall target
 include(CMakeUninstall)
 add_subdirectory(contrib)
+add_subdirectory(XMS/src)
