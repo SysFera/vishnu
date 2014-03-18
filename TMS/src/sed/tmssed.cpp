@@ -134,8 +134,10 @@ int main(int argc, char* argv[], char* envp[]) {
     case SLURM: {
       if (batchVersion != "2.2" &&
           batchVersion != "2.3" &&
-          batchVersion != "2.4") {
-        versError = "2.2, 2.3 and 2.4";
+          batchVersion != "2.4" && 
+		  batchVersion != "2.5" && 
+		  batchVersion != "2.6") {
+         versError = "2.x, 2 <= x << 6";
       }
       break;
     }
