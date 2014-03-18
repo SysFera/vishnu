@@ -10,15 +10,11 @@
 #include <sstream>
 #include <algorithm>
 #include <limits>
-
 #include <sys/types.h>
 #include <pwd.h>
-
 #include "boost/filesystem.hpp"
 #include<boost/algorithm/string.hpp>
-
 #include <lsf/lsbatch.h>
-
 #include "LSFServer.hpp"
 #include "BatchServer.hpp"
 #include "TMSVishnuException.hpp"
@@ -42,14 +38,15 @@ LSFServer::LSFServer():BatchServer() {
  * \brief Function to submit LSF job
  * \param scriptPath the path to the script containing the job characteristique
  * \param options the options to submit job
- * \param job The job data structure
+ * \param jobSteps The list of job steps
  * \param envp The list of environment variables used by LSF submission function
  * \return raises an exception on error
  */
 int
 LSFServer::submit(const std::string& scriptPath,
-    const TMS_Data::SubmitOptions& options,
-    TMS_Data::Job& job, char** envp) {
+                  const TMS_Data::SubmitOptions& options,
+                  TMS_Data::ListJobs& jobSteps,
+                  char** envp) {
 
   struct submit  req;
   struct submitReply  reply;
@@ -92,12 +89,12 @@ LSFServer::submit(const std::string& scriptPath,
   processOptions(scriptPath.c_str(), options, &req);
 
   if(req.outFile!=NULL) {
-     bfs::path outPath(bfs::system_complete(bfs::path(req.outFile)));
-     req.outFile = strdup((outPath.native()).c_str()) ;
+    bfs::path outPath(bfs::system_complete(bfs::path(req.outFile)));
+    req.outFile = strdup((outPath.native()).c_str()) ;
   }
   if(req.errFile!=NULL) {
-     bfs::path errPath(bfs::system_complete(bfs::path(req.errFile)));
-     req.errFile = strdup((errPath.native()).c_str()) ;
+    bfs::path errPath(bfs::system_complete(bfs::path(req.errFile)));
+    req.errFile = strdup((errPath.native()).c_str()) ;
   }
   //Check the job output path
   std::string errorMsg = checkLSFOutPutPath(req.outFile);
@@ -114,19 +111,20 @@ LSFServer::submit(const std::string& scriptPath,
 
   if (batchJobId < 0) {
     switch (lsberrno) {
-      case LSBE_QUEUE_USE:
-      case LSBE_QUEUE_CLOSED:
-        lsb_perror(reply.queue);
-       return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
-      default:
-       lsb_perror(NULL);
+    case LSBE_QUEUE_USE:
+    case LSBE_QUEUE_CLOSED:
+      lsb_perror(reply.queue);
+      return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
+    default:
+      lsb_perror(NULL);
       return -1;//error messages are written to stderr, VISHNU redirects these messages into a file
     }
   }
 
   int numJobs = lsb_openjobinfo(batchJobId, NULL, NULL, NULL, NULL, JOBID_ONLY);
-  struct jobInfoEnt *jobInfo = lsb_readjobinfo(&numJobs);
+  jobInfoEnt* jobInfo = lsb_readjobinfo(&numJobs);
   lsb_closejobinfo();
+
   if (jobInfo == NULL) {
     //error messages are written to stderr, VISHNU redirects these messages into a file
     lsb_perror((char*)"LSFServer::submit: lsb_redjobinfo() failed");
@@ -143,15 +141,16 @@ LSFServer::submit(const std::string& scriptPath,
   }
 
   //Fill the vishnu job structure
-  fillJobInfo(job, jobInfo);
+  jobSteps.getJobs().push_back(new TMS_Data::Job());
+  fillJobInfo(*(jobSteps.getJobs().get(0)), jobInfo);
 
   if(!jobOutputPath.empty()) {
     replaceSymbolInToJobPath(jobOutputPath);
-    job.setOutputPath(jobOutputPath);
+    jobSteps.getJobs().get(0)->setOutputPath(jobOutputPath);
   }
   if(!jobErrorPath.empty()) {
     replaceSymbolInToJobPath(jobErrorPath);
-    job.setErrorPath(jobErrorPath);
+    jobSteps.getJobs().get(0)->setErrorPath(jobErrorPath);
   }
 
   return 0;
@@ -167,8 +166,8 @@ LSFServer::submit(const std::string& scriptPath,
  */
 void
 LSFServer::processOptions(const char* scriptPath,
-    const TMS_Data::SubmitOptions& options,
-    struct submit* req) {
+                          const TMS_Data::SubmitOptions& options,
+                          struct submit* req) {
 
   if(!options.getNbNodesAndCpuPerNode().empty() && options.getNbCpu()!=-1) {
     throw UserException(ERRCODE_INVALID_PARAM, "Conflict: You can't use the NbCpu option and NbNodesAndCpuPerNode option together.\n");
@@ -206,7 +205,7 @@ LSFServer::processOptions(const char* scriptPath,
     std::vector<std::string> tmpHosts;
     for(int i=0; i < req->numAskedHosts; i++) {
       if(req->askedHosts[i]!=NULL) {
-       tmpHosts.push_back(req->askedHosts[i]);
+        tmpHosts.push_back(req->askedHosts[i]);
       }
     }
     std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
@@ -236,23 +235,23 @@ LSFServer::processOptions(const char* scriptPath,
       hostInfo = lsb_hostinfo(hosts, &numhosts);
       if(nbNodes > numhosts) {
         throw UserException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERRROR: "
-                  "The number of nodes is greater than the number of total nodes.");
+                            "The number of nodes is greater than the number of total nodes.");
       }
 
       //set the number of processor
       req->numProcessors = vishnu::convertToInt(cpuPerNode);
       req->maxNumProcessors = req->numProcessors = req->numProcessors*nbNodes;
-     }
+    }
   }
 
   if(!(options.getMailNotification().empty())) {
     std::string notification = options.getMailNotification();
     if(notification.compare("BEGIN")==0) {
-       req->options |=SUB_NOTIFY_BEGIN;
+      req->options |=SUB_NOTIFY_BEGIN;
     } else if(notification.compare("END")==0) {
-       req->options |=SUB_NOTIFY_END;
+      req->options |=SUB_NOTIFY_END;
     } else if(notification.compare("ERROR")==0) {//not exist in LSF
-       req->options |=SUB_NOTIFY_END; //send mail after execution or failure of the job
+      req->options |=SUB_NOTIFY_END; //send mail after execution or failure of the job
     } else if(notification.compare("ALL")==0) {
       req->options |=SUB_NOTIFY_BEGIN;
       req->options |=SUB_NOTIFY_END;
@@ -267,17 +266,17 @@ LSFServer::processOptions(const char* scriptPath,
   }
 
   if(!(options.getGroup().empty())) {
-     req->options |=SUB_USER_GROUP;
-     req->userGroup = strdup(options.getGroup().c_str());
+    req->options |=SUB_USER_GROUP;
+    req->userGroup = strdup(options.getGroup().c_str());
   }
 
   if(!(options.getWorkingDir().empty())) {
-     req->options3 |= SUB3_CWD;
-     req->cwd = strdup(options.getWorkingDir().c_str());
-   }
+    req->options3 |= SUB3_CWD;
+    req->cwd = strdup(options.getWorkingDir().c_str());
+  }
 
   if(!(options.getCpuTime().empty())) {
-     req->rLimits[LSF_RLIMIT_CPU] = convertStringToWallTime(options.getCpuTime())/60;
+    req->rLimits[LSF_RLIMIT_CPU] = convertStringToWallTime(options.getCpuTime())/60;
   }
 
   if(options.isSelectQueueAutom()) {
@@ -286,12 +285,12 @@ LSFServer::processOptions(const char* scriptPath,
     if(listOfQueues != NULL) {
       TMS_Data::Queue* queue;
       for(unsigned int i = 0; i < listOfQueues->getNbQueues(); i++) {
-         queue =  listOfQueues->getQueues().get(i);
-         if(!queuesList.empty()) {
-           queuesList = queuesList+" "+queue->getName();
-         } else {
-           queuesList = queue->getName();
-         }
+        queue =  listOfQueues->getQueues().get(i);
+        if(!queuesList.empty()) {
+          queuesList = queuesList+" "+queue->getName();
+        } else {
+          queuesList = queue->getName();
+        }
       }
     }
     req->options |=SUB_QUEUE;
@@ -509,21 +508,21 @@ LSFServer::convertLSFStateToVishnuState(const unsigned int& state) {
 
   int res = 0;
   switch(state) {
-    case JOB_STAT_PEND:case JOB_STAT_PSUSP:case JOB_STAT_SSUSP:case JOB_STAT_USUSP:case JOB_STAT_WAIT:
-      res = 3;//WAITING
-      break;
-    case JOB_STAT_RUN:
-      res = 4;//RUNNING
-      break;
-    case JOB_STAT_DONE:case JOB_STAT_PDONE:case JOB_STAT_PERR: case JOB_STAT_UNKWN:
-      res = 5; //TERMINATED
-      break;
-    case JOB_STAT_EXIT:
-      res = 6; //CANCELLED
-      break;
-    default:
-      res = 5;
-      break;
+  case JOB_STAT_PEND:case JOB_STAT_PSUSP:case JOB_STAT_SSUSP:case JOB_STAT_USUSP:case JOB_STAT_WAIT:
+    res = 3;//WAITING
+    break;
+  case JOB_STAT_RUN:
+    res = 4;//RUNNING
+    break;
+  case JOB_STAT_DONE:case JOB_STAT_PDONE:case JOB_STAT_PERR: case JOB_STAT_UNKWN:
+    res = 5; //TERMINATED
+    break;
+  case JOB_STAT_EXIT:
+    res = 6; //CANCELLED
+    break;
+  default:
+    res = 5;
+    break;
   }
   return res;
 }
@@ -591,7 +590,7 @@ LSFServer::fillJobInfo(TMS_Data::Job &job, struct jobInfoEnt* jobInfo){
   std::vector<std::string>::iterator endTmp=std::unique(tmpHosts.begin(), tmpHosts.end());
   int node = endTmp-tmpHosts.begin();
   if(node <= 0) {
-   node = 1;
+    node = 1;
   }
   int tmpNbCpu = jobInfo->submit.numProcessors/node;
   int nbCpu = (tmpNbCpu*node < jobInfo->submit.numProcessors)?tmpNbCpu+1:tmpNbCpu;
@@ -631,16 +630,16 @@ LSFServer::listQueues(const std::string& OptqueueName) {
   TMS_Data::TMS_DataFactory_ptr ecoreFactory = TMS_Data::TMS_DataFactory::_instance();
   mlistQueues = ecoreFactory->createListQueues();
   if (lsb_init(NULL) < 0) {
-   errorMsg = "LSFServer::listQueues: lsb_init() failed";
-   throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
+    errorMsg = "LSFServer::listQueues: lsb_init() failed";
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
 
   if(!OptqueueName.empty()) {
-   queues = new char*[1];
-   queues[0]= strdup(OptqueueName.c_str());
-   numQueues = 1;
-   queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
-   delete queues;
+    queues = new char*[1];
+    queues[0]= strdup(OptqueueName.c_str());
+    numQueues = 1;
+    queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
+    delete queues;
   } else {
     queueInfo = lsb_queueinfo(queues, &numQueues, host, user, options);
   }
@@ -683,14 +682,14 @@ LSFServer::listQueues(const std::string& OptqueueName) {
     queue->setDescription(std::string(queueInfo[i].description));
     queue->setMemory(queueInfo[i].rLimits[LSF_RLIMIT_RSS]);
 
-     //To compute the number of nodes in the queue
+    //To compute the number of nodes in the queue
     string hostListSrt = queueInfo[i].hostList;
     std::istringstream hostListStreamStr;
     std::vector<std::string> hostListStreamTokens;
     hostListStreamStr.str(hostListSrt);
     std::copy(istream_iterator<string>(hostListStreamStr),
-      istream_iterator<string>(),
-      back_inserter<vector<string> >(hostListStreamTokens));
+              istream_iterator<string>(),
+              back_inserter<vector<string> >(hostListStreamTokens));
     queue->setNode(hostListStreamTokens.size());
 
     queue->setMaxProcCpu(queueInfo[i].procLimit);
@@ -712,13 +711,13 @@ LSFServer::listQueues(const std::string& OptqueueName) {
  * \param ignoredIds the list of job ids to ignore
  */
 void LSFServer::fillListOfJobs(TMS_Data::ListJobs*& listOfJobs,
-    const std::vector<string>& ignoredIds) {
+                               const std::vector<string>& ignoredIds) {
 
   std::string errorMsg;
 
   if (lsb_init(NULL) < 0) {
-     errorMsg = "LSFServer::fillListOfJobs: lsb_init() failed";
-     throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
+    errorMsg = "LSFServer::fillListOfJobs: lsb_init() failed";
+    throw TMSVishnuException(ERRCODE_BATCH_SCHEDULER_ERROR, "LSF ERROR: "+errorMsg);
   }
 
   int numJobs = lsb_openjobinfo(0, NULL, (char*)"all", NULL, NULL, CUR_JOB);
