@@ -129,11 +129,12 @@ main(int argc, char* argv[], char* envp[]) {
 
 
   // command-line
-  if (argc !=  2) {
+  if (argc != 2) {
     return usage(argv[0]);
   }
 
-  if (strcmp(argv[1], "-v") || strcmp(argv[1], "--v")) {
+  if ((0 == strcmp(argv[1], "-v")) ||
+      (0 == strcmp(argv[1], "--v"))) {
     return vishnu::showVersion();
   }
 
