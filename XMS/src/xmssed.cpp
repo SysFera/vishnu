@@ -1,3 +1,4 @@
+#include <sys/wait.h>
 #include <csignal>
 #include <cstring>
 #include <iostream>
@@ -6,6 +7,8 @@
 #include "AuthenticatorConfiguration.hpp"
 #include "utilServer.hpp"
 #include "MonitorXMS.hpp"
+#include "ServerUMS.hpp"
+#include "CommServer.hpp"
 
 
 
@@ -22,32 +25,32 @@ usage(const char* cmd) {
 }
 
 struct SedConfig {
-  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0) {}
+  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0), sub(false) {}
   ExecConfiguration config;
   DbConfiguration dbConfig;
   AuthenticatorConfiguration authenticatorConfig;
   std::string mid;
+  std::string uri;
   BatchType batchType;
   std::string batchVersion;
+  std::string sendmailScriptPath;
   int vishnuId;
+  bool sub;
 };
 
 
 void
 readConfiguration(const std::string& initFile, SedConfig& cfg) {
-  std::string sendmailScriptPath;
-  std::string uri;
-  bool sub(false);
 
   try {
     cfg.config.initFromFile(initFile);
     cfg.config.getRequiredConfigValue<int>(vishnu::VISHNUID, cfg.vishnuId);
     cfg.dbConfig.check();
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, sendmailScriptPath);
-    cfg.config.getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, uri);
-    cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, sub);
+    cfg.config.getRequiredConfigValue<std::string>(vishnu::SENDMAILSCRIPT, cfg.sendmailScriptPath);
+    cfg.config.getRequiredConfigValue<std::string>(vishnu::SED_URIADDR, cfg.uri);
+    cfg.config.getRequiredConfigValue<bool>(vishnu::SUBSCRIBE, cfg.sub);
     cfg.config.getConfigValue<std::string>(vishnu::MACHINEID, cfg.mid);
-    if(!boost::filesystem::is_regular_file(sendmailScriptPath)) {
+    if(!boost::filesystem::is_regular_file(cfg.sendmailScriptPath)) {
       std::cerr << "Error: cannot open the script file for sending email on";
       exit(1);
     }
@@ -122,11 +125,27 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
 }
 
 
+void
+controlSignal (int signum) {
+  int res;
+  switch (signum) {
+  case SIGCHLD:
+    res = waitpid (-1, NULL, WNOHANG);
+    while (res > 0) {
+      res = waitpid (-1, NULL, WNOHANG);
+    }
+    break;
+  default:
+    break;
+  }
+}
 
 int
 main(int argc, char* argv[], char* envp[]) {
   // initialisation
-
+  int res(0);
+  struct sigaction action;
+  std::string UMSTYPE = "umssed";
 
   // command-line
   if (argc != 2) {
@@ -151,6 +170,27 @@ main(int argc, char* argv[], char* envp[]) {
   pid = fork();
   
   if (pid > 0) {
+    //Initialize the UMS Server (Opens a connection to the database)
+    boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
+    res = server->init(cfg.vishnuId, cfg.mid, cfg.dbConfig, cfg.sendmailScriptPath, cfg.authenticatorConfig);
+
+    if (cfg.sub) {
+      boost::thread thr(boost::bind(&keepRegistered, UMSTYPE, cfg.config, cfg.uri, server));
+    }
+
+    //Declaration of signal handler
+    action.sa_handler = controlSignal;
+    sigemptyset (&(action.sa_mask));
+    action.sa_flags = 0;
+    sigaction (SIGCHLD, &action, NULL);
+
+    // Initialize the Vishnu SeD
+    if (!res) {
+      initSeD(UMSTYPE, cfg.config, cfg.uri, server);
+    } else {
+      std::cerr << "There was a problem during services initialization\n";
+      exit(1);
+    }
   } else if (pid == 0) {
       MonitorXMS monitor;
       cfg.dbConfig.setDbPoolSize(1);

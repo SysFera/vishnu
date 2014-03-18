@@ -23,8 +23,12 @@ include_directories(
   ${AUTHENTICATOR_INCLUDE_DIR})
 
 set(sed_SRCS xmssed.cpp
-  MonitorXMS.cpp)
+  MonitorXMS.cpp
+  ServerUMS.cpp
+  internalApiUMS.cpp
+  ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp)
 
 add_executable(xmssed ${sed_SRCS})
-target_link_libraries(xmssed vishnu-core-server vishnu-ums-server
+target_link_libraries(xmssed vishnu-core vishnu-core-server
+  vishnu-ums-server
   vishnu-tms-server)
