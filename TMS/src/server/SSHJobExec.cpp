@@ -141,7 +141,7 @@ SSHJobExec::sshexec(const std::string& actionName,
 
   vishnu::saveInFile(jobPath, mjobSerialized);
 
-  cmd += (boost::format("tmsSlave %2% %3% %4% %5% %6% %7% 2> %8%")
+  cmd += (boost::format("tmsSlave %1% %2% %3% %4% %5% %6% 2> %7%")
           % actionName
           % convertBatchTypeToString(mbatchType)
           % mbatchVersion
