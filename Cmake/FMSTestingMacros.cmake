@@ -50,7 +50,8 @@ macro( fms_test NAME )
       ${Boost_INCLUDE_DIRS}
       ${PROJECT_BINARY_DIR}/include
       ${UMS_TEST_DIR}
-      ${FMS_TEST_DIR})
+      ${FMS_TEST_DIR}
+      ${XMS_SED_SOURCE_DIR})
 
     # link libraries
     target_link_libraries( ${NAME}

@@ -292,7 +292,8 @@ set(FMS_API_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/api)
 set(FMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/FMS/src/sed)
 set(FMS_UTIL_DIR ${VISHNU_SOURCE_DIR}/FMS/src/utils)
 
-
+#XMS
+set(XMS_SED_SOURCE_DIR ${VISHNU_SOURCE_DIR}/XMS/src)
 
 # gather executables and libraries under one roof
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)

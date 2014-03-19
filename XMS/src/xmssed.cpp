@@ -4,10 +4,8 @@
 #include <iostream>
 #include <boost/format.hpp>
 #include <boost/filesystem/operations.hpp>
-#include "AuthenticatorConfiguration.hpp"
-#include "utilServer.hpp"
 #include "MonitorXMS.hpp"
-#include "ServerUMS.hpp"
+#include "ServerXMS.hpp"
 #include "CommServer.hpp"
 
 
@@ -24,24 +22,9 @@ usage(const char* cmd) {
   return 1;
 }
 
-struct SedConfig {
-  SedConfig() : dbConfig(config), authenticatorConfig(config), vishnuId(0), sub(false) {}
-  ExecConfiguration config;
-  DbConfiguration dbConfig;
-  AuthenticatorConfiguration authenticatorConfig;
-  std::string mid;
-  std::string uri;
-  BatchType batchType;
-  std::string batchVersion;
-  std::string sendmailScriptPath;
-  int vishnuId;
-  bool sub;
-};
-
 
 void
 readConfiguration(const std::string& initFile, SedConfig& cfg) {
-
   try {
     cfg.config.initFromFile(initFile);
     cfg.config.getRequiredConfigValue<int>(vishnu::VISHNUID, cfg.vishnuId);
@@ -54,7 +37,7 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
       std::cerr << "Error: cannot open the script file for sending email on";
       exit(1);
     }
-
+    cfg.config.getRequiredConfigValue<std::string>(vishnu::DEFAULTBATCHCONFIGFILE, cfg.defaultBatchConfig);
     std::string batchTypeStr;
     cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHTYPE, batchTypeStr);
     cfg.batchType = vishnu::convertToBatchType(batchTypeStr);
@@ -63,6 +46,7 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
       exit(1);
     }
 
+    cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
     if (cfg.batchType != DELTACLOUD) {
       cfg.config.getRequiredConfigValue<std::string>(vishnu::BATCHVERSION, cfg.batchVersion);
     }
@@ -121,6 +105,7 @@ readConfiguration(const std::string& initFile, SedConfig& cfg) {
     cfg.authenticatorConfig.check();
 
   } catch (const std::exception& e) {
+      std::cerr << e.what() << "\n";
   }
 }
 
@@ -145,7 +130,7 @@ main(int argc, char* argv[], char* envp[]) {
   // initialisation
   int res(0);
   struct sigaction action;
-  std::string UMSTYPE = "umssed";
+  std::string XMSTYPE = "xmssed";
 
   // command-line
   if (argc != 2) {
@@ -156,7 +141,6 @@ main(int argc, char* argv[], char* envp[]) {
       (0 == strcmp(argv[1], "--v"))) {
     return vishnu::showVersion();
   }
-
 
   system("touch -f $HOME/.vishnurc"); // Create empty file it don't exist
   vishnu::sourceFile(std::string(getenv("HOME"))+"/.vishnurc"); // Source the rc file
@@ -171,11 +155,12 @@ main(int argc, char* argv[], char* envp[]) {
   
   if (pid > 0) {
     //Initialize the UMS Server (Opens a connection to the database)
-    boost::shared_ptr<ServerUMS> server(ServerUMS::getInstance());
-    res = server->init(cfg.vishnuId, cfg.mid, cfg.dbConfig, cfg.sendmailScriptPath, cfg.authenticatorConfig);
+    boost::shared_ptr<ServerXMS> serverXMS(ServerXMS::getInstance());
+    res = serverXMS->init(cfg);
 
     if (cfg.sub) {
-      boost::thread thr(boost::bind(&keepRegistered, UMSTYPE, cfg.config, cfg.uri, server));
+      boost::thread thr(boost::bind(&keepRegistered, XMSTYPE,
+                                    cfg.config, cfg.uri, serverXMS));
     }
 
     //Declaration of signal handler
@@ -186,24 +171,23 @@ main(int argc, char* argv[], char* envp[]) {
 
     // Initialize the Vishnu SeD
     if (!res) {
-      initSeD(UMSTYPE, cfg.config, cfg.uri, server);
+      initSeD(XMSTYPE, cfg.config, cfg.uri, serverXMS);
+      exit(0);
     } else {
       std::cerr << "There was a problem during services initialization\n";
       exit(1);
     }
   } else if (pid == 0) {
-      MonitorXMS monitor;
-      cfg.dbConfig.setDbPoolSize(1);
-      monitor.init(cfg.vishnuId, cfg.dbConfig, cfg.authenticatorConfig,
-                   cfg.mid, cfg.batchType, cfg.batchVersion);
-      ppid = getppid();
-      while (kill(ppid, 0) == 0) {
-          monitor.run();
-      }
+    MonitorXMS monitor;
+    cfg.dbConfig.setDbPoolSize(1);
+    monitor.init(cfg.vishnuId, cfg.dbConfig, cfg.authenticatorConfig,
+                 cfg.mid, cfg.batchType, cfg.batchVersion);
+    ppid = getppid();
+    while (kill(ppid, 0) == 0) {
+      monitor.run();
+    }
   } else {
     std::cerr << "There was a problem initializing the server\n";
     return 1;
   }
-  
-
 }

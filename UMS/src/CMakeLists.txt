@@ -13,7 +13,7 @@ include_directories(client api
   ${VISHNU_SOURCE_DIR}/UMS/src/sed
   ${LIBJANSSON_INCLUDE_DIR}
   ${REGISTRY_SOURCE_DIR}
-  ${UMS_SED_SOURCE_DIR}
+  ${XMS_SED_SOURCE_DIR}
   )
 
 set(client_SRCS client/SessionProxy.cpp
@@ -71,14 +71,6 @@ if(COMPILE_SERVER_UMS)
     ${REGISTRY_SOURCE_DIR}
     ${AUTHENTICATOR_INCLUDE_DIR})
 
-  set(sed_SRCS
-    sed/umssed.cpp
-    sed/ServerUMS.cpp
-    sed/internalApi.cpp
-    sed/MonitorUMS.cpp
-    ${COMMUNICATION_INCLUDE_DIR}/CommServer.cpp
-    ${logger_SRCS})
-
   set(server_SRCS server/SessionServer.cpp
     server/UserServer.cpp
     server/MachineClientServer.cpp
@@ -102,17 +94,5 @@ if(COMPILE_SERVER_UMS)
 
   target_link_libraries(vishnu-ums-server vishnu-core vishnu-core-server ${CMAKE_DL_LIBS})
 
-  add_executable(umssed ${sed_SRCS})
-  target_link_libraries(umssed 
-    vishnu-ums-server
-    emf4cpp-vishnu
-    ${LIBCRYPT_LIB}
-    ${LDAP_LIBRARIES}
-    ${CMAKE_DL_LIBS}
-    ${ZMQ_LIBRARIES}
-    zmq_helper)
-
-
-  install(TARGETS umssed DESTINATION ${SBIN_INSTALL_DIR})
 endif(COMPILE_SERVER_UMS)
 

@@ -6,7 +6,7 @@
  */
 
 #include "ServerTMS.hpp"
-#include "internalApi.hpp"
+#include "internalApiTMS.hpp"
 #include "DbFactory.hpp"
 #include "utilVishnu.hpp"
 #include <boost/scoped_ptr.hpp>

@@ -14,6 +14,7 @@ include_directories(${CONFIG_SOURCE_DIR}
   ${VISHNU_EXCEPTION_INCLUDE_DIR}
   ${PROJECT_BINARY_DIR}
   ${LIBJANSSON_INCLUDE_DIR}
+  ${XMS_SED_SOURCE_DIR}
   )
 
 add_library(test_zmq_helper
