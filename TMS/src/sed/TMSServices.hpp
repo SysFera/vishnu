@@ -20,7 +20,6 @@ typedef enum {
   JOBOUTPUTGETRESULT,
   JOBOUTPUTGETCOMPLETEDJOBS,
   GETLISTOFJOBS_ALL,
-  JOBSUBMIT_AUTOM,
   ADDWORK,
   WORKUPDATE,
   WORKDELETE,
@@ -39,7 +38,6 @@ static const char* SERVICES_TMS[NB_SRV_TMS] = {
   "jobOutputGetResult",  // 6
   "jobOutputGetCompletedJobs",  // 7
   "getListOfJobs_all",  // 8
-  "jobSubmit_autom",  // 9
   "addwork",  // 10
   "workUpdate",  // 11
   "workDelete",  // 12
@@ -55,7 +53,6 @@ static const bool MACHINE_SPECIC_SERVICES_TMS[NB_SRV_TMS] = {
   true,   // 6
   true,   // 7
   false,  // 8
-  false,  // 9
   false,  // 10
   false,  // 11
   false,   // 12
