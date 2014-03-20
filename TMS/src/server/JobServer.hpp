@@ -106,14 +106,13 @@ public:
   void
   setDebugLevel(const int& debugLevel) { mdebugLevel = debugLevel; }
 
-protected:
+private:
   /**
    * \brief Check the machineid is correct
    * \param machineId the machineId to check
    */
   void
   checkMachineId(std::string machineId);
-
   /**
    * \brief Function to scan VISHNU error message
    * \param errorInfo the error information to scan
@@ -198,12 +197,16 @@ protected:
 
   /**
    * \brief Function to set the Working Directory
+   * \param scriptContent The script content
    * \param options a json object describing options
-   * \param suffix the suffix of the working directory
+   * \param jobId The job id
    * \return the script path
    */
   void
-  setRealPaths(JsonObject* options, const std::string& suffix);
+  setRealFilePaths(std::string& scriptContent,
+                   JsonObject* options,
+                   const std::string& jobId);
+
   /**
    * \brief Function to process the script with options
    * \param scriptContent the script content
@@ -259,6 +262,18 @@ protected:
    */
   uid_t
   getSystemUid(const std::string& name);
+
+  /**
+   * @brief create the executable for submit job script
+   * @param content The script content
+   * @param options The submit options
+   * @param defaultBatchOption The default batch options
+   * @return The script path
+   */
+  std::string
+  createJobScriptExecutaleFile(std::string& content,
+                               JsonObject* options,
+                               const std::vector<std::string>& defaultBatchOption);
 
 private:
 
