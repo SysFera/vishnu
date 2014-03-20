@@ -174,9 +174,9 @@ vishnu::sendInputFiles(const std::string& sessionKey,
 
   ListStrings listFiles ;
   boost::split(listFiles, srcFiles, boost::is_space()) ;
-  string rdestDir = "VISHNU_INPUT"+vishnu::createSuffixFromCurTime()+bfs::unique_path("%%").string();
+  string remoteDestinationDir = vishnu::generatedUniquePatternFromCurTime("VISHNU_INPUT")+bfs::unique_path("%%").string();
   if (listFiles.size() > 0 && srcFiles.size() != 0) {
-    string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%rdestDir).str();
+    string fqdnDestDir = (boost::format("%1%:%2%")%destMachineId%remoteDestinationDir).str();
     if (vishnu::mkdir(sessionKey, fqdnDestDir)) {
       throw FMSVishnuException(ERRCODE_RUNTIME_ERROR, "unable to create the remote directory for input files: "+fqdnDestDir);
     }
@@ -192,7 +192,7 @@ vishnu::sendInputFiles(const std::string& sessionKey,
     if ((colonPos == string::npos) && !bfs::exists(path)) {
       throw FMSVishnuException(ERRCODE_FILENOTFOUND, path);
     }
-    string rpath = rdestDir + "/" + bfs::path(path).filename().string();
+    string rpath = remoteDestinationDir + "/" + bfs::path(path).filename().string();
     genericFileCopier(sessionKey, filerMachineId, path, destMachineId, rpath, copts);
     paramsBuf << ((paramsBuf.str().empty())? "" : " ") + param << "=$HOME/" << rpath ;
   }

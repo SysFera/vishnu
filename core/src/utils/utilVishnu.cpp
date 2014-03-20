@@ -422,7 +422,7 @@ vishnu::checkEmptyString(const std::string& str,
  * \return the suffix created
  * */
 std::string
-vishnu::createSuffixFromCurTime() {
+vishnu::generatedUniquePatternFromCurTime(const std::string& prefix) {
   std::ostringstream ossBuf;
   time_t rawtime;
   time(&rawtime);
@@ -434,7 +434,8 @@ vishnu::createSuffixFromCurTime() {
          << ( tinfo->tm_hour < 10? "0": "" )<< tinfo->tm_hour
          << ( tinfo->tm_min < 10? "0": "" )<< tinfo->tm_min
          << ( tinfo->tm_sec < 10? "0": "" )<< tinfo->tm_sec;
-  return ossBuf.str();
+
+  return boost::str(boost::format("%1%_%2%") % prefix % ossBuf.str());;
 }
 
 /**

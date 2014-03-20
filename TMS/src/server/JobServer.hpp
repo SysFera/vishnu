@@ -51,9 +51,9 @@ public:
  * \param options a json object describing options
    * \param vishnuId The VISHNU identifier
    * \param defaultBatchOption the default options on the batch scheduler
-   * \return raises an exception on error
+   * \return The resulting job ID. Raises an exception on error
    */
-  int
+  std::string
   submitJob(std::string& scriptContent,
             JsonObject* options,
             int vishnuId,
@@ -81,10 +81,13 @@ public:
   getJobInfo(const std::string& jobId);
 
   /**
-   * \brief Function to get job data
+   * \brief get Information about a given-job steps
+   * \param jobId The id of the job
+   * \param jobSteps List of job steps
    * \return The job data structure
    */
-  const TMS_Data::Job& getData() {return mjob;}
+  void
+  getJobStepInfo(const std::string& jobId, TMS_Data::ListJobs& jobSteps);
 
   /**
    * \brief To set the main configuration
@@ -151,17 +154,6 @@ private:
   void
   insertOptionLine(std::string& optionLineToInsert, std::string& content, std::string& key);
 
-  /**
-  * \brief Function to set the path of output directory
-  * \param parentDir The directory in which to create the output dir
-  * \param dirSuffix the suffix of the output dir
-  * \param content the script content to be update which the generated path
-  */
-  void
-  setJobOutputDir(const std::string& parentDir,
-                  const std::string & dirSuffix,
-                  std::string & content);
-
   /*
    * \brief Return the directive associated to the batch scheduler
    * \param seperator Hold the seperator used to define parameter
@@ -200,7 +192,6 @@ private:
    * \param scriptContent The script content
    * \param options a json object describing options
    * \param jobId The job id
-   * \return the script path
    */
   void
   setRealFilePaths(std::string& scriptContent,
@@ -286,11 +277,6 @@ private:
    * @brief Information about the user and the session
    */
   UserSessionInfo muserSessionInfo;
-
-  /**
-   * \brief job data structure
-   */
-  TMS_Data::Job mjob;
 
   /**
    * \brief The machine identifier

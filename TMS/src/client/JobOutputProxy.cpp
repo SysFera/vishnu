@@ -67,7 +67,9 @@ JobOutputProxy::getJobOutPut(const std::string& jobId, const TMS_Data::JobOutput
     raiseExceptionIfNotEmptyMsg(routputInfo);
   }
   if (outputDir.empty()) {
-    outputDir = bfs::path(bfs::current_path()).string() + "/DOWNLOAD_" + jobId  + vishnu::createSuffixFromCurTime();
+    outputDir = boost::str(boost::format("%1%/DOWNLOAD_%2%")
+                           % bfs::path(bfs::current_path()).string()
+                           % vishnu::generatedUniquePatternFromCurTime(jobId));
     vishnu::createOutputDir(outputDir);
   }
 
@@ -118,8 +120,8 @@ TMS_Data::ListJobResults_ptr
 JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options) {
 
   std::string serviceName = boost::str(boost::format("%1%@%2%")
-                             % SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]
-                             % mmachineId);
+                                       % SERVICES_TMS[JOBOUTPUTGETCOMPLETEDJOBS]
+                                       % mmachineId);
 
   diet_profile_t* profile = diet_profile_alloc(serviceName, 3);
   std::string sessionKey = msessionProxy.getSessionKey();
@@ -180,7 +182,9 @@ JobOutputProxy::getCompletedJobsOutput(const TMS_Data::JobOutputOptions& options
       boost::trim(line);
       boost::split(lineVec, line, boost::is_any_of(" "));
       std::string baseDir = (! outputDir.empty())? bfs::absolute(outputDir).string() : bfs::path(bfs::current_path()).string();
-      std::string targetDir = baseDir + "/DOWNLOAD_" + lineVec[0] + vishnu::createSuffixFromCurTime();
+      std::string targetDir = boost::str(boost::format("%1%/DOWNLOAD_%2%")
+                                         % baseDir
+                                         % vishnu::generatedUniquePatternFromCurTime(lineVec[0]));
       vishnu::createOutputDir(targetDir);
       vishnu::copyFiles(sessionKey, mmachineId, lineVec, targetDir, copts, missingFiles, 1);
       listJobResults_ptr->getResults().get(numJob++)->setOutputDir(targetDir);

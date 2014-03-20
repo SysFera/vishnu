@@ -24,6 +24,11 @@ public:
   */
   explicit JobProxy(const std::string& sessionKey,
                     const std::string& machineId = "");
+   /**
+    * \brief Destructor
+   */
+  ~JobProxy();
+
   /**
   * \brief Function to submit job
   * \param scriptPath the local path of the script
@@ -60,17 +65,7 @@ public:
   TMS_Data::Job
   getData() const;
 
-  /**
-    * \brief Destructor
-    */
-  ~JobProxy();
-
 private:
-
-  /////////////////////////////////
-  // Attributes
-  /////////////////////////////////
-
   /**
   * \brief The session object
   */

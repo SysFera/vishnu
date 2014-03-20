@@ -118,7 +118,7 @@ diet_string_set(diet_profile_t* prof, int pos,
     (prof->params).at(pos) = value;
   } catch (const std::out_of_range& err) {
     std::cout << boost::format("%1% %2% %3%\n") % prof->name
-      % value % pos;
+                 % value % pos;
     throw SystemException(ERRCODE_SYSTEM, "Invalid index, unallocated parameter");
   }
   return 0;
@@ -221,6 +221,7 @@ diet_call_gen(diet_profile_t* prof, const std::string& uri, bool shortTimeout) {
   zmq::context_t ctx(5);
   LazyPirateClient lpc(ctx, uri, timeout);
   std::string s1 = my_serialize(prof);
+
   if (!lpc.send(s1)) {
     std::cerr << "E: request failed, exiting ...\n";
     return -1;

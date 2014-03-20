@@ -86,12 +86,16 @@ solveSubmitJob(diet_profile_t* pb) {
     jobServer.setDebugLevel(server->getDebugLevel()); // Set the debug level
 
     JsonObject options(jsonEncodedOptions);
-    jobServer.submitJob(scriptContent, &options, server->getVishnuId(), server->getDefaultBatchOption());
+
+    std::string jobId = jobServer.submitJob(scriptContent,
+                                            &options,
+                                            server->getVishnuId(),
+                                            server->getDefaultBatchOption());
 
     diet_string_set(pb,0, "success");
-    diet_string_set(pb,1, JsonObject::serialize(jobServer.getData()));
+    diet_string_set(pb,1, JsonObject::serialize(jobServer.getJobInfo(jobId)));
 
-    FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, jobServer.getData().getJobId());
+    FINISH_COMMAND(authKey, cmd, vishnu::TMS, vishnu::CMDSUCCESS, jobId);
 
   } catch (VishnuException& ex) {
     try {

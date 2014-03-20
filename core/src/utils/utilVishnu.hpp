@@ -258,7 +258,7 @@ checkEmptyString(const std::string& str,
  * \return tha suffix created
  * */
 std::string
-createSuffixFromCurTime() ;
+generatedUniquePatternFromCurTime(const std::string& prefix) ;
 
 /**
  * \brief Function to make a link from a given
